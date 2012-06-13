@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.emfstorebridge.actions;
 
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.ecp.common.util.DialogHandler;
 import org.eclipse.emf.emfstore.client.model.ProjectSpace;
 import org.eclipse.emf.emfstore.client.model.Usersession;
