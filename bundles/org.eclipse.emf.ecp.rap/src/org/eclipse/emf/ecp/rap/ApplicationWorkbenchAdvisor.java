@@ -1,5 +1,9 @@
 package org.eclipse.emf.ecp.rap;
 
+import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
+import org.eclipse.ui.application.WorkbenchAdvisor;
+import org.eclipse.ui.application.WorkbenchWindowAdvisor;
+
 
 /**
  * This workbench advisor creates the window advisor, and specifies

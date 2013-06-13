@@ -1,5 +1,8 @@
 package org.eclipse.emf.ecp.rap;
 
+import org.eclipse.ui.IPageLayout;
+import org.eclipse.ui.IPerspectiveFactory;
+
 
 /**
  * Configures the perspective layout. This class is contributed through the

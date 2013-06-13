@@ -95,6 +95,9 @@ public class MEEditorInput implements IEditorInput {
 	public boolean equals(Object obj) {
 		if (obj instanceof MEEditorInput) {
 			MEEditorInput other = (MEEditorInput) obj;
+			if (other.modelElementContext == null) {
+				return false;
+			}
 			boolean ret = modelElementContext.getModelElement().equals(other.modelElementContext.getModelElement());
 			return ret;
 		}
