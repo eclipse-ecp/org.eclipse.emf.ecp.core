@@ -139,26 +139,16 @@ public final class TreeViewerFactory {
 		return viewer;
 	}
 
-	/**
-	 * @param labelProvider
-	 * @param contentProvider
-	 * @param input
-	 * @param labelDecorator
-	 * @param viewer
-	 */
 	private static void createTreeViewer(ILabelProvider labelProvider, ITreeContentProvider contentProvider,
 		Object input, ILabelDecorator labelDecorator, TreeViewer viewer, boolean sort) {
+		if (labelDecorator != null && !(labelProvider instanceof DecoratingLabelProvider)) {
+			labelProvider = new DecoratingLabelProvider(labelProvider, labelDecorator);
+		}
 		viewer.setContentProvider(contentProvider);
 		viewer.setLabelProvider(labelProvider);
 		if (sort) {
 			viewer.setSorter(new ViewerSorter());
 		}
 		viewer.setInput(input);
-
-		if (labelDecorator != null) {
-			if (!(labelProvider instanceof DecoratingLabelProvider)) {
-				viewer.setLabelProvider(new DecoratingLabelProvider(labelProvider, labelDecorator));
-			}
-		}
 	}
 }
