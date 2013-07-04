@@ -12,8 +12,8 @@
 package org.eclipse.emf.ecp.internal.ui.composites;
 
 import org.eclipse.emf.ecp.core.util.ECPProperties;
-import org.eclipse.emf.ecp.internal.ui.Messages;
 import org.eclipse.emf.ecp.internal.ui.dialogs.PropertyDialog;
+import org.eclipse.emf.ecp.internal.ui.messages.Messages;
 import org.eclipse.emf.ecp.internal.ui.model.PropertiesContentProvider;
 import org.eclipse.emf.ecp.internal.ui.model.PropertiesLabelProvider;
 

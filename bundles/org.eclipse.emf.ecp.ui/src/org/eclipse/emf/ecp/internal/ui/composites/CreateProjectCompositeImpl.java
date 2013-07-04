@@ -15,7 +15,7 @@ package org.eclipse.emf.ecp.internal.ui.composites;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
-import org.eclipse.emf.ecp.internal.ui.Messages;
+import org.eclipse.emf.ecp.internal.ui.messages.Messages;
 import org.eclipse.emf.ecp.internal.ui.model.ProvidersLabelProvider;
 import org.eclipse.emf.ecp.spi.ui.UIProvider;
 import org.eclipse.emf.ecp.spi.ui.UIProviderRegistry;

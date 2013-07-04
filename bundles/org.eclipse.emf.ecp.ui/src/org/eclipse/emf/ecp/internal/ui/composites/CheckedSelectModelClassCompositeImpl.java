@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.internal.ui.composites;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecp.internal.ui.Messages;
+import org.eclipse.emf.ecp.internal.ui.messages.Messages;
 import org.eclipse.emf.ecp.ui.common.CheckedModelClassComposite;
 
 import org.eclipse.jface.layout.GridDataFactory;

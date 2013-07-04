@@ -15,7 +15,7 @@ package org.eclipse.emf.ecp.internal.wizards.page;
 
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
-import org.eclipse.emf.ecp.internal.ui.Messages;
+import org.eclipse.emf.ecp.internal.ui.messages.Messages;
 import org.eclipse.emf.ecp.internal.ui.model.RepositoriesContentProvider;
 import org.eclipse.emf.ecp.internal.ui.model.RepositoriesLabelProvider;
 import org.eclipse.emf.ecp.internal.wizards.ShareWizard;

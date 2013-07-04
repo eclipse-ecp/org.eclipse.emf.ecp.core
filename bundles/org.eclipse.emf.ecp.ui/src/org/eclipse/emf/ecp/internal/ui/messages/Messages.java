@@ -11,7 +11,7 @@
  * 
  *******************************************************************************/
 
-package org.eclipse.emf.ecp.internal.ui;
+package org.eclipse.emf.ecp.internal.ui.messages;
 
 import org.eclipse.osgi.util.NLS;
 

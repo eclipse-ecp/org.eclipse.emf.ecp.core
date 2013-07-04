@@ -13,8 +13,8 @@ package org.eclipse.emf.ecp.internal.ui.dialogs;
 
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.internal.ui.Activator;
-import org.eclipse.emf.ecp.internal.ui.Messages;
 import org.eclipse.emf.ecp.internal.ui.composites.PropertiesComposite;
+import org.eclipse.emf.ecp.internal.ui.messages.Messages;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;

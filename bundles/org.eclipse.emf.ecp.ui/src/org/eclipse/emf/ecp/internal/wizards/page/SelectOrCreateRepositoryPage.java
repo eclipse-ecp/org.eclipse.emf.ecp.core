@@ -13,7 +13,7 @@
 
 package org.eclipse.emf.ecp.internal.wizards.page;
 
-import org.eclipse.emf.ecp.internal.ui.Messages;
+import org.eclipse.emf.ecp.internal.ui.messages.Messages;
 import org.eclipse.emf.ecp.internal.wizards.ShareWizard;
 
 import org.eclipse.jface.wizard.IWizardPage;

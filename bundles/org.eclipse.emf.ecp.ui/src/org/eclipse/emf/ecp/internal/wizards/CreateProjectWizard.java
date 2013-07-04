@@ -16,7 +16,7 @@ package org.eclipse.emf.ecp.internal.wizards;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.ui.Activator;
-import org.eclipse.emf.ecp.internal.ui.Messages;
+import org.eclipse.emf.ecp.internal.ui.messages.Messages;
 import org.eclipse.emf.ecp.ui.common.CreateProjectComposite;
 import org.eclipse.emf.ecp.ui.common.CreateProjectComposite.CreateProjectChangeListener;
 
