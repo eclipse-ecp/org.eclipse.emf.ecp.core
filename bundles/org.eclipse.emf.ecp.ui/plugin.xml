@@ -6,5 +6,16 @@
    <extension-point id="modelElementOpener" name="Modelelement Opener" schema="schema/modelElementOpener.exsd"/>
    <extension-point id="dropAdapter" name="ECP UI DropAdapaters" schema="schema/dropAdapter.exsd"/>
    <extension-point id="modelExplorerSettings" name="ECP Model Explorer Settings" schema="schema/modelExplorerSettings.exsd"/>
+   
+   <extension
+         point="org.eclipse.core.runtime.adapters">
+      <factory
+            adaptableType="org.eclipse.emf.ecp.core.util.ECPPropertiesAware"
+            class="org.eclipse.emf.ecp.internal.ui.PropertiesActionFilter$AdapterFactory">
+         <adapter
+               type="org.eclipse.ui.IActionFilter">
+         </adapter>
+      </factory>
+   </extension>
 	
 </plugin>
