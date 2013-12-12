@@ -20,6 +20,7 @@ import org.eclipse.emf.ecp.view.spi.model.provider.ViewEditPlugin;
  * This is the central singleton for the Custom edit plugin.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
+ * 
  * @generated
  */
 public final class CustomEditPlugin extends EMFPlugin {
@@ -27,6 +28,7 @@ public final class CustomEditPlugin extends EMFPlugin {
 	 * Keep track of the singleton.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public static final CustomEditPlugin INSTANCE = new CustomEditPlugin();
@@ -35,6 +37,7 @@ public final class CustomEditPlugin extends EMFPlugin {
 	 * Keep track of the singleton.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	private static Implementation plugin;
@@ -43,20 +46,21 @@ public final class CustomEditPlugin extends EMFPlugin {
 	 * Create the instance.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public CustomEditPlugin() {
-		super
-		  (new ResourceLocator [] {
-		     EcoreEditPlugin.INSTANCE,
-		     ViewEditPlugin.INSTANCE,
-		   });
+		super(new ResourceLocator[] {
+			EcoreEditPlugin.INSTANCE,
+			ViewEditPlugin.INSTANCE,
+		});
 	}
 
 	/**
 	 * Returns the singleton instance of the Eclipse plugin.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the singleton instance.
 	 * @generated
 	 */
@@ -69,6 +73,7 @@ public final class CustomEditPlugin extends EMFPlugin {
 	 * Returns the singleton instance of the Eclipse plugin.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the singleton instance.
 	 * @generated
 	 */
@@ -80,6 +85,7 @@ public final class CustomEditPlugin extends EMFPlugin {
 	 * The actual implementation of the Eclipse <b>Plugin</b>.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public static class Implementation extends EclipsePlugin {
@@ -87,6 +93,7 @@ public final class CustomEditPlugin extends EMFPlugin {
 		 * Creates an instance.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
 		public Implementation() {

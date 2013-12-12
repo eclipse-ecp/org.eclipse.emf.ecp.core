@@ -5,11 +5,11 @@
     editorDirectory="/org.eclipse.emf.ecp.view.model.editor/src" modelPluginID="org.eclipse.emf.ecp.view.model"
     modelName="View" editPluginClass="org.eclipse.emf.ecp.view.spi.model.provider.ViewEditPlugin"
     editorPluginClass="org.eclipse.emf.ecp.view.model.presentation.ViewEditorPlugin"
-    codeFormatting="true" commentFormatting="true" testSuiteClass="org.eclipse.emf.ecp.view.model.tests.ViewAllTests"
+    nonNLSMarkers="true" codeFormatting="true" commentFormatting="true" testSuiteClass="org.eclipse.emf.ecp.view.model.tests.ViewAllTests"
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
     editPluginID="org.eclipse.emf.ecp.view.model.edit" editorPluginID="org.eclipse.emf.ecp.view.model.editor"
     language="" usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore"
-    interfaceNamePattern="V{0}" classNamePattern="V{0}Impl">
+    interfaceNamePattern="V{0}" classNamePattern="V{0}Impl" importOrganizing="true">
   <foreignModel>view.ecore</foreignModel>
   <genPackages prefix="View" basePackage="org.eclipse.emf.ecp.view.spi" disposableProviderFactory="true"
       extensibleProviderFactory="true" childCreationExtenders="true" ecorePackage="view.ecore#/">

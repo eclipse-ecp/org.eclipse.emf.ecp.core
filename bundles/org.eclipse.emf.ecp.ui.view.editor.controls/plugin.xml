@@ -29,7 +29,7 @@
             class="org.eclipse.emf.ecp.view.editor.controls.ControlRootEClassControl"
             id="org.eclipse.emf.ecp.view.editor.controls.rootEClass">
          <staticTest
-               priority="2"
+               priority="3"
                singleValue="true"
                supportedClassType="org.eclipse.emf.ecore.EClass"
                supportedEObject="org.eclipse.emf.ecp.view.spi.model.VView"

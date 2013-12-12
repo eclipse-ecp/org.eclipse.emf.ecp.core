@@ -30,7 +30,7 @@ import org.eclipse.emf.ecp.internal.wizards.SelectModelElementWizard;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.ui.common.CompositeFactory;
 import org.eclipse.emf.ecp.ui.common.SelectionComposite;
-import org.eclipse.emf.ecp.view.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -51,7 +51,7 @@ public class ECPReferenceServiceImpl implements ReferenceService {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.context.ViewModelService#instantiate(org.eclipse.emf.ecp.view.context.ViewModelContext)
+	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#instantiate(org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	public void instantiate(ViewModelContext context) {
 		this.context = context;
@@ -61,7 +61,7 @@ public class ECPReferenceServiceImpl implements ReferenceService {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.context.ViewModelService#dispose()
+	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#dispose()
 	 */
 	public void dispose() {
 		ecpProject = null;
@@ -71,7 +71,7 @@ public class ECPReferenceServiceImpl implements ReferenceService {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.context.ViewModelService#getPriority()
+	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#getPriority()
 	 */
 	public int getPriority() {
 		// TODO Auto-generated method stub

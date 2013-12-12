@@ -55,7 +55,7 @@
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn="org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer:"/>
+                  <meta.attribute kind="java" basedOn="org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer:"/>
                </appinfo>
             </annotation>
          </attribute>
@@ -65,7 +65,7 @@
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":org.eclipse.emf.ecp.view.model.VElement"/>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.emf.ecp.view.spi.model.VElement"/>
                </appinfo>
             </annotation>
          </attribute>

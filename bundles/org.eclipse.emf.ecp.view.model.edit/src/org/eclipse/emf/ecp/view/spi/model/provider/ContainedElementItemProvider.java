@@ -76,8 +76,8 @@ public class ContainedElementItemProvider
 	{
 		String label = ((VContainedElement) object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_ContainedElement_type") :
-			getString("_UI_ContainedElement_type") + " " + label;
+			getString("_UI_ContainedElement_type") : //$NON-NLS-1$
+			getString("_UI_ContainedElement_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

@@ -15,8 +15,8 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.util.EContentAdapter;
-import org.eclipse.emf.ecp.view.context.ModelChangeNotification;
-import org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener;
+import org.eclipse.emf.ecp.view.spi.context.ModelChangeNotification;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener;
 
 /**
  * @author Edgar

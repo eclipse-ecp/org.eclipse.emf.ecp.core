@@ -21,12 +21,12 @@ import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTRenderingHelper;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.view.spi.custom.model.ECPCustomControlChangeListener;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage;
 import org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -136,7 +136,7 @@ public class ECPAbstractCustomControlSWTStub extends ECPAbstractCustomControlSWT
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.ui.view.custom.ECPAbstractCustomControl#disposeCustomControl()
+	 * @see org.eclipse.emf.ecp.view.spi.custom.ui.ECPAbstractCustomControl#disposeCustomControl()
 	 */
 	@Override
 	protected void disposeCustomControl() {

@@ -19,12 +19,12 @@ import java.math.BigDecimal;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.view.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.internal.rule.RuleService;
-import org.eclipse.emf.ecp.view.internal.rule.RuleServiceHelper;
+import org.eclipse.emf.ecp.view.internal.rule.RuleServiceHelperImpl;
 import org.eclipse.emf.ecp.view.internal.unset.UnsetService;
 import org.eclipse.emf.ecp.view.rule.test.CommonRuleTest;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
@@ -141,13 +141,13 @@ public class UnsetRuleIntegrationTest extends CommonRuleTest {
 	// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	private void services(EObject domain) {
-		context = new ViewModelContextImpl(view, domain);
+		context = ViewModelContextFactory.INSTANCE.createViewModelContext(view, domain);
 
 		final UnsetService unsetService = new UnsetService();
 		unsetService.instantiate(context);
 
 		final RuleService ruleService = new RuleService();
-		final RuleServiceHelper ruleServiceHelper = new RuleServiceHelper();
+		final RuleServiceHelperImpl ruleServiceHelper = new RuleServiceHelperImpl();
 		ruleService.instantiate(context);
 		ruleServiceHelper.instantiate(context);
 	}

@@ -187,7 +187,7 @@ public class VLabelImpl extends VContainedElementImpl implements VLabel
 			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (style: ");
+		result.append(" (style: "); //$NON-NLS-1$
 		result.append(style);
 		result.append(')');
 		return result.toString();

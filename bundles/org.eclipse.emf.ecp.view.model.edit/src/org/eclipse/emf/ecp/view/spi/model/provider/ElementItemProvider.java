@@ -93,8 +93,8 @@ public class ElementItemProvider
 			(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
-				getString("_UI_Element_name_feature"),
-				getString("_UI_PropertyDescriptor_description", "_UI_Element_name_feature", "_UI_Element_type"),
+				getString("_UI_Element_name_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_Element_name_feature", "_UI_Element_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				VViewPackage.Literals.ELEMENT__NAME,
 				true,
 				false,
@@ -117,8 +117,8 @@ public class ElementItemProvider
 			(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
-				getString("_UI_Element_visible_feature"),
-				getString("_UI_PropertyDescriptor_description", "_UI_Element_visible_feature", "_UI_Element_type"),
+				getString("_UI_Element_visible_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_Element_visible_feature", "_UI_Element_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				VViewPackage.Literals.ELEMENT__VISIBLE,
 				true,
 				false,
@@ -141,8 +141,8 @@ public class ElementItemProvider
 			(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
-				getString("_UI_Element_enabled_feature"),
-				getString("_UI_PropertyDescriptor_description", "_UI_Element_enabled_feature", "_UI_Element_type"),
+				getString("_UI_Element_enabled_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_Element_enabled_feature", "_UI_Element_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				VViewPackage.Literals.ELEMENT__ENABLED,
 				true,
 				false,
@@ -165,8 +165,8 @@ public class ElementItemProvider
 			(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
-				getString("_UI_Element_readonly_feature"),
-				getString("_UI_PropertyDescriptor_description", "_UI_Element_readonly_feature", "_UI_Element_type"),
+				getString("_UI_Element_readonly_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_Element_readonly_feature", "_UI_Element_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				VViewPackage.Literals.ELEMENT__READONLY,
 				true,
 				false,
@@ -223,8 +223,8 @@ public class ElementItemProvider
 	{
 		String label = ((VElement) object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_Element_type") :
-			getString("_UI_Element_type") + " " + label;
+			getString("_UI_Element_type") : //$NON-NLS-1$
+			getString("_UI_Element_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

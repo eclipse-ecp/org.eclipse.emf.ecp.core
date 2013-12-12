@@ -17,12 +17,12 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
-import org.eclipse.emf.ecp.view.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorization;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationFactory;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategory;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
@@ -157,7 +157,7 @@ public class CategorizationTreeContentRefreshTest {
 
 	@Test
 	public void testHideAllOnInit() throws ECPRendererException {
-		final ViewModelContext vmc = new ViewModelContextImpl(view, player);
+		final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(view, player);
 		ecpSwtView = ECPSWTViewRenderer.INSTANCE.render(shell, vmc);
 		final Tree tree = getTree(ecpSwtView.getSWTControl());
 
@@ -171,7 +171,7 @@ public class CategorizationTreeContentRefreshTest {
 		player.setHeight(EXPECTED_HEIGHT);
 		player.setIsProfessional(EXPECTED_PROF);
 
-		final ViewModelContext vmc = new ViewModelContextImpl(view, player);
+		final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(view, player);
 		ecpSwtView = ECPSWTViewRenderer.INSTANCE.render(shell, vmc);
 		final Tree tree = getTree(ecpSwtView.getSWTControl());
 
@@ -186,7 +186,7 @@ public class CategorizationTreeContentRefreshTest {
 	@Test
 	public void testShowCategorizationWithoutChildOnInit() throws ECPRendererException {
 		player.setName(EXPECTED_NAME);
-		final ViewModelContext vmc = new ViewModelContextImpl(view, player);
+		final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(view, player);
 		ecpSwtView = ECPSWTViewRenderer.INSTANCE.render(shell, vmc);
 		final Tree tree = getTree(ecpSwtView.getSWTControl());
 
@@ -200,7 +200,7 @@ public class CategorizationTreeContentRefreshTest {
 	public void testShowCategorizationWithChildOnInit() throws ECPRendererException {
 		player.setName(EXPECTED_NAME);
 		player.setHeight(EXPECTED_HEIGHT);
-		final ViewModelContext vmc = new ViewModelContextImpl(view, player);
+		final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(view, player);
 		ecpSwtView = ECPSWTViewRenderer.INSTANCE.render(shell, vmc);
 		final Tree tree = getTree(ecpSwtView.getSWTControl());
 
@@ -215,7 +215,7 @@ public class CategorizationTreeContentRefreshTest {
 	public void testShowCategoryAndCategorizationWithoutChildOnInit() throws ECPRendererException {
 		player.setName(EXPECTED_NAME);
 		player.setIsProfessional(EXPECTED_PROF);
-		final ViewModelContext vmc = new ViewModelContextImpl(view, player);
+		final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(view, player);
 		ecpSwtView = ECPSWTViewRenderer.INSTANCE.render(shell, vmc);
 
 		final Tree tree = getTree(ecpSwtView.getSWTControl());
@@ -230,7 +230,7 @@ public class CategorizationTreeContentRefreshTest {
 	@Test
 	public void testHideCategorizationWithChildOnInit() throws ECPRendererException {
 		player.setHeight(EXPECTED_HEIGHT);
-		final ViewModelContext vmc = new ViewModelContextImpl(view, player);
+		final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(view, player);
 		ecpSwtView = ECPSWTViewRenderer.INSTANCE.render(shell, vmc);
 		final Tree tree = getTree(ecpSwtView.getSWTControl());
 
@@ -242,7 +242,7 @@ public class CategorizationTreeContentRefreshTest {
 	public void testShowRootCategoryHideCategorizationWithChildOnInit() throws ECPRendererException {
 		player.setHeight(EXPECTED_HEIGHT);
 		player.setIsProfessional(EXPECTED_PROF);
-		final ViewModelContext vmc = new ViewModelContextImpl(view, player);
+		final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(view, player);
 		ecpSwtView = ECPSWTViewRenderer.INSTANCE.render(shell, vmc);
 		final Tree tree = getTree(ecpSwtView.getSWTControl());
 
@@ -254,7 +254,7 @@ public class CategorizationTreeContentRefreshTest {
 	@Test
 	public void testShowRootCategoryHideCategorizationWithoutChildOnInit() throws ECPRendererException {
 		player.setIsProfessional(EXPECTED_PROF);
-		final ViewModelContext vmc = new ViewModelContextImpl(view, player);
+		final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(view, player);
 		ecpSwtView = ECPSWTViewRenderer.INSTANCE.render(shell, vmc);
 		final Tree tree = getTree(ecpSwtView.getSWTControl());
 
@@ -269,7 +269,7 @@ public class CategorizationTreeContentRefreshTest {
 		player.setHeight(EXPECTED_HEIGHT);
 		player.setIsProfessional(EXPECTED_PROF);
 
-		final ViewModelContext vmc = new ViewModelContextImpl(view, player);
+		final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(view, player);
 		ecpSwtView = ECPSWTViewRenderer.INSTANCE.render(shell, vmc);
 		ecpSwtView.getSWTControl().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		shell.open();
@@ -299,7 +299,7 @@ public class CategorizationTreeContentRefreshTest {
 		player.setHeight(EXPECTED_HEIGHT);
 		player.setIsProfessional(EXPECTED_PROF);
 
-		final ViewModelContext vmc = new ViewModelContextImpl(view, player);
+		final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(view, player);
 		ecpSwtView = ECPSWTViewRenderer.INSTANCE.render(shell, vmc);
 		ecpSwtView.getSWTControl().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		shell.open();
@@ -328,7 +328,7 @@ public class CategorizationTreeContentRefreshTest {
 		player.setHeight(EXPECTED_HEIGHT);
 		player.setIsProfessional(EXPECTED_PROF);
 
-		final ViewModelContext vmc = new ViewModelContextImpl(view, player);
+		final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(view, player);
 		ecpSwtView = ECPSWTViewRenderer.INSTANCE.render(shell, vmc);
 		ecpSwtView.getSWTControl().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		shell.open();
@@ -359,7 +359,7 @@ public class CategorizationTreeContentRefreshTest {
 		player.setHeight(EXPECTED_HEIGHT);
 		player.setIsProfessional(EXPECTED_PROF);
 
-		final ViewModelContext vmc = new ViewModelContextImpl(view, player);
+		final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(view, player);
 		ecpSwtView = ECPSWTViewRenderer.INSTANCE.render(shell, vmc);
 		ecpSwtView.getSWTControl().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		shell.open();
@@ -387,7 +387,7 @@ public class CategorizationTreeContentRefreshTest {
 
 	@Test
 	public void testShowAllDynamic() throws ECPRendererException {
-		final ViewModelContext vmc = new ViewModelContextImpl(view, player);
+		final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(view, player);
 		ecpSwtView = ECPSWTViewRenderer.INSTANCE.render(shell, vmc);
 
 		shell.open();
@@ -415,7 +415,7 @@ public class CategorizationTreeContentRefreshTest {
 
 	@Test
 	public void testShowCategorizationDynamic() throws ECPRendererException {
-		final ViewModelContext vmc = new ViewModelContextImpl(view, player);
+		final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(view, player);
 		ecpSwtView = ECPSWTViewRenderer.INSTANCE.render(shell, vmc);
 
 		shell.open();
@@ -438,7 +438,7 @@ public class CategorizationTreeContentRefreshTest {
 
 	@Test
 	public void testShowSubCategoryDynamic() throws ECPRendererException {
-		final ViewModelContext vmc = new ViewModelContextImpl(view, player);
+		final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(view, player);
 		ecpSwtView = ECPSWTViewRenderer.INSTANCE.render(shell, vmc);
 
 		shell.open();
@@ -464,7 +464,7 @@ public class CategorizationTreeContentRefreshTest {
 
 	@Test
 	public void testShowRootCategoryDynamic() throws ECPRendererException {
-		final ViewModelContext vmc = new ViewModelContextImpl(view, player);
+		final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(view, player);
 		ecpSwtView = ECPSWTViewRenderer.INSTANCE.render(shell, vmc);
 
 		shell.open();

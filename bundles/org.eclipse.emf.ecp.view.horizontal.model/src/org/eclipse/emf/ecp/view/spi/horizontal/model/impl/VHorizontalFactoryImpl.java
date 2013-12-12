@@ -79,7 +79,7 @@ public class VHorizontalFactoryImpl extends EFactoryImpl implements VHorizontalF
 		case VHorizontalPackage.HORIZONTAL_LAYOUT:
 			return createHorizontalLayout();
 		default:
-			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 

@@ -3,9 +3,10 @@
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.emf.ecp.view.custom.model/src" editDirectory="/org.eclipse.emf.ecp.view.custom.model.edit/src"
     editorDirectory="/org.eclipse.emf.ecp.view.custom.model.editor/src" modelPluginID="org.eclipse.emf.ecp.view.custom.model"
     modelName="Custom" modelPluginClass="" editPluginClass="org.eclipse.emf.ecp.view.spi.custom.model.provider.CustomEditPlugin"
-    importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
-    editPluginID="org.eclipse.emf.ecp.view.custom.model.edit" usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model"
-    interfaceNamePattern="V{0}" classNamePattern="V{0}Impl">
+    nonNLSMarkers="true" codeFormatting="true" commentFormatting="true" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="5.0" copyrightFields="false" editPluginID="org.eclipse.emf.ecp.view.custom.model.edit"
+    usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model"
+    interfaceNamePattern="V{0}" classNamePattern="V{0}Impl" importOrganizing="true">
   <foreignModel>custom.ecore</foreignModel>
   <genPackages prefix="Custom" basePackage="org.eclipse.emf.ecp.view.spi" disposableProviderFactory="true"
       interfacePackageSuffix="model" metaDataPackageSuffix="model" classPackageSuffix="model.impl"

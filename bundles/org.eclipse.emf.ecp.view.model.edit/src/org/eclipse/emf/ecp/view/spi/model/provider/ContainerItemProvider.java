@@ -115,8 +115,8 @@ public class ContainerItemProvider
 	{
 		String label = ((VContainer) object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_Container_type") :
-			getString("_UI_Container_type") + " " + label;
+			getString("_UI_Container_type") : //$NON-NLS-1$
+			getString("_UI_Container_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

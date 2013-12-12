@@ -12,8 +12,8 @@
 package org.eclipse.emf.ecp.view.model.provider.xmi;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.internal.ui.view.IViewProvider;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.provider.IViewProvider;
 
 /**
  * @author Jonas
@@ -24,7 +24,7 @@ public class ExtensionXMIViewModelProvider implements IViewProvider {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.internal.ui.view.IViewProvider#canRender(org.eclipse.emf.ecore.EObject)
+	 * @see org.eclipse.emf.ecp.view.spi.provider.IViewProvider#canRender(org.eclipse.emf.ecore.EObject)
 	 */
 	public int canRender(EObject eObject) {
 		if (ViewModelFileExtensionsManager.getInstance().hasViewModelFor(eObject)) {
@@ -36,7 +36,7 @@ public class ExtensionXMIViewModelProvider implements IViewProvider {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.internal.ui.view.IViewProvider#generate(org.eclipse.emf.ecore.EObject)
+	 * @see org.eclipse.emf.ecp.view.spi.provider.IViewProvider#generate(org.eclipse.emf.ecore.EObject)
 	 */
 	public VView generate(EObject eObject) {
 		return ViewModelFileExtensionsManager.getInstance().createView(eObject);

@@ -22,7 +22,9 @@ import java.util.Set;
 
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
+import org.eclipse.emf.ecp.view.internal.validation.ValidationService;
+import org.eclipse.emf.ecp.view.internal.validation.ViewValidationListener;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
@@ -30,8 +32,6 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalFactory;
 import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalLayout;
-import org.eclipse.emf.ecp.view.validation.ValidationService;
-import org.eclipse.emf.ecp.view.validation.ViewValidationListener;
 import org.eclipse.emf.ecp.view.validation.test.model.Book;
 import org.eclipse.emf.ecp.view.validation.test.model.Library;
 import org.eclipse.emf.ecp.view.validation.test.model.TestFactory;
@@ -1465,7 +1465,7 @@ public class ValidationServiceTest {
 		// Validation ///////////////////////////////////////
 		final Thread thread = new Thread(new Runnable() {
 			public void run() {
-				validationService.instantiate(new ViewModelContextImpl(view, library));
+				validationService.instantiate(ViewModelContextFactory.INSTANCE.createViewModelContext(view, library));
 			}
 		});
 		thread.start();
@@ -1502,7 +1502,7 @@ public class ValidationServiceTest {
 
 		// Validation ///////////////////////////////////////
 		try {
-			validationService.instantiate(new ViewModelContextImpl(view, library));
+			validationService.instantiate(ViewModelContextFactory.INSTANCE.createViewModelContext(view, library));
 		} catch (final NullPointerException ex) {
 			fail("Listener was called when not expected to be called");
 		}
@@ -1515,7 +1515,7 @@ public class ValidationServiceTest {
 		final List<ViewValidationListener> listeners = new ArrayList<ViewValidationListener>();
 
 		final ValidationService service = setupViewModelAndRegisterListeners(view, library, listeners);
-		service.instantiate(new ViewModelContextImpl(view, library));
+		service.instantiate(ViewModelContextFactory.INSTANCE.createViewModelContext(view, library));
 
 		final Set<Diagnostic> diagnostics = new HashSet<Diagnostic>();
 
@@ -1546,7 +1546,7 @@ public class ValidationServiceTest {
 	// //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	private void instantiateValidationService(VView view, final EObject domainModel) {
-		new ViewModelContextImpl(view, domainModel);
+		ViewModelContextFactory.INSTANCE.createViewModelContext(view, domainModel);
 	}
 
 	/**

@@ -88,9 +88,9 @@ public class DiagnosticItemProvider
 			(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
-				getString("_UI_Diagnostic_diagnostics_feature"),
-				getString("_UI_PropertyDescriptor_description", "_UI_Diagnostic_diagnostics_feature",
-					"_UI_Diagnostic_type"),
+				getString("_UI_Diagnostic_diagnostics_feature"), //$NON-NLS-1$
+				getString(
+					"_UI_PropertyDescriptor_description", "_UI_Diagnostic_diagnostics_feature", "_UI_Diagnostic_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				VViewPackage.Literals.DIAGNOSTIC__DIAGNOSTICS,
 				true,
 				false,
@@ -110,7 +110,7 @@ public class DiagnosticItemProvider
 	@Override
 	public Object getImage(Object object)
 	{
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Diagnostic"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Diagnostic")); //$NON-NLS-1$
 	}
 
 	/**
@@ -123,7 +123,7 @@ public class DiagnosticItemProvider
 	@Override
 	public String getText(Object object)
 	{
-		return getString("_UI_Diagnostic_type");
+		return getString("_UI_Diagnostic_type"); //$NON-NLS-1$
 	}
 
 	/**

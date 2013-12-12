@@ -21,9 +21,9 @@ import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.internal.edit.Activator;
-import org.eclipse.emf.ecp.view.context.ModelChangeNotification;
-import org.eclipse.emf.ecp.view.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener;
+import org.eclipse.emf.ecp.view.spi.context.ModelChangeNotification;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
@@ -341,7 +341,7 @@ public abstract class ECPAbstractControl {
 		if (diagnostic == null) {
 			return;
 		}
-		Display.getDefault().syncExec(new Runnable() {
+		Display.getDefault().asyncExec(new Runnable() {
 			public void run() {
 				resetValidation();
 				for (final Object object : diagnostic.getDiagnostics()) {

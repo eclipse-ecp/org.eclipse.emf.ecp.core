@@ -28,6 +28,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
+ * 
  * @see org.eclipse.emf.ecp.view.spi.custom.model.VCustomFactory
  * @model kind="package"
  * @generated
@@ -37,6 +38,7 @@ public interface VCustomPackage extends EPackage {
 	 * The package name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	String eNAME = "custom";
@@ -45,6 +47,7 @@ public interface VCustomPackage extends EPackage {
 	 * The package namespace URI.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	String eNS_URI = "http://org/eclipse/emf/ecp/view/custom/model";
@@ -53,6 +56,7 @@ public interface VCustomPackage extends EPackage {
 	 * The package namespace name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	String eNS_PREFIX = "org.eclipse.emf.ecp.view.custom.model";
@@ -61,14 +65,18 @@ public interface VCustomPackage extends EPackage {
 	 * The singleton instance of the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	VCustomPackage eINSTANCE = org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomPackageImpl.init();
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.custom.model.impl.VHardcodedDomainModelReferenceImpl <em>Hardcoded Domain Model Reference</em>}' class.
+	 * The meta object id for the '
+	 * {@link org.eclipse.emf.ecp.view.spi.custom.model.impl.VHardcodedDomainModelReferenceImpl
+	 * <em>Hardcoded Domain Model Reference</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.impl.VHardcodedDomainModelReferenceImpl
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomPackageImpl#getHardcodedDomainModelReference()
 	 * @generated
@@ -79,6 +87,7 @@ public interface VCustomPackage extends EPackage {
 	 * The feature id for the '<em><b>Control Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -88,6 +97,7 @@ public interface VCustomPackage extends EPackage {
 	 * The feature id for the '<em><b>Domain Model References</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -97,6 +107,7 @@ public interface VCustomPackage extends EPackage {
 	 * The feature id for the '<em><b>Control Checked</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -106,15 +117,19 @@ public interface VCustomPackage extends EPackage {
 	 * The number of structural features of the '<em>Hardcoded Domain Model Reference</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
 	int HARDCODED_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT = VViewPackage.DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 3;
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference <em>Hardcoded Domain Model Reference</em>}'.
+	 * Returns the meta object for class '
+	 * {@link org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference
+	 * <em>Hardcoded Domain Model Reference</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for class '<em>Hardcoded Domain Model Reference</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference
 	 * @generated
@@ -122,9 +137,12 @@ public interface VCustomPackage extends EPackage {
 	EClass getHardcodedDomainModelReference();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference#getControlId <em>Control Id</em>}'.
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference#getControlId <em>Control Id</em>}
+	 * '.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the attribute '<em>Control Id</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference#getControlId()
 	 * @see #getHardcodedDomainModelReference()
@@ -133,9 +151,12 @@ public interface VCustomPackage extends EPackage {
 	EAttribute getHardcodedDomainModelReference_ControlId();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference#getDomainModelReferences <em>Domain Model References</em>}'.
+	 * Returns the meta object for the containment reference list '
+	 * {@link org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference#getDomainModelReferences
+	 * <em>Domain Model References</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the containment reference list '<em>Domain Model References</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference#getDomainModelReferences()
 	 * @see #getHardcodedDomainModelReference()
@@ -144,9 +165,12 @@ public interface VCustomPackage extends EPackage {
 	EReference getHardcodedDomainModelReference_DomainModelReferences();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference#isControlChecked <em>Control Checked</em>}'.
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference#isControlChecked
+	 * <em>Control Checked</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the attribute '<em>Control Checked</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference#isControlChecked()
 	 * @see #getHardcodedDomainModelReference()
@@ -158,6 +182,7 @@ public interface VCustomPackage extends EPackage {
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the factory that creates the instances of the model.
 	 * @generated
 	 */
@@ -173,13 +198,17 @@ public interface VCustomPackage extends EPackage {
 	 * <li>and each data type</li>
 	 * </ul>
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	interface Literals {
 		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.custom.model.impl.VHardcodedDomainModelReferenceImpl <em>Hardcoded Domain Model Reference</em>}' class.
+		 * The meta object literal for the '
+		 * {@link org.eclipse.emf.ecp.view.spi.custom.model.impl.VHardcodedDomainModelReferenceImpl
+		 * <em>Hardcoded Domain Model Reference</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.custom.model.impl.VHardcodedDomainModelReferenceImpl
 		 * @see org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomPackageImpl#getHardcodedDomainModelReference()
 		 * @generated
@@ -190,25 +219,31 @@ public interface VCustomPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Control Id</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
-		EAttribute HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_ID = eINSTANCE.getHardcodedDomainModelReference_ControlId();
+		EAttribute HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_ID = eINSTANCE
+			.getHardcodedDomainModelReference_ControlId();
 
 		/**
 		 * The meta object literal for the '<em><b>Domain Model References</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
-		EReference HARDCODED_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCES = eINSTANCE.getHardcodedDomainModelReference_DomainModelReferences();
+		EReference HARDCODED_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCES = eINSTANCE
+			.getHardcodedDomainModelReference_DomainModelReferences();
 
 		/**
 		 * The meta object literal for the '<em><b>Control Checked</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
-		EAttribute HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_CHECKED = eINSTANCE.getHardcodedDomainModelReference_ControlChecked();
+		EAttribute HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_CHECKED = eINSTANCE
+			.getHardcodedDomainModelReference_ControlChecked();
 
 	}
 

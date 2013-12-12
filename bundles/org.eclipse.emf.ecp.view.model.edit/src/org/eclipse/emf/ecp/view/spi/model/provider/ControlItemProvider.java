@@ -82,9 +82,9 @@ public class ControlItemProvider
 			(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
-				getString("_UI_Control_labelAlignment_feature"),
-				getString("_UI_PropertyDescriptor_description", "_UI_Control_labelAlignment_feature",
-					"_UI_Control_type"),
+				getString("_UI_Control_labelAlignment_feature"), //$NON-NLS-1$
+				getString(
+					"_UI_PropertyDescriptor_description", "_UI_Control_labelAlignment_feature", "_UI_Control_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				VViewPackage.Literals.CONTROL__LABEL_ALIGNMENT,
 				true,
 				false,
@@ -138,7 +138,7 @@ public class ControlItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Control"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Control")); //$NON-NLS-1$
 	}
 
 	/**

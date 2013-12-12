@@ -29,16 +29,17 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
-import org.eclipse.emf.ecp.view.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.internal.rule.RuleService;
-import org.eclipse.emf.ecp.view.internal.rule.RuleServiceHelper;
+import org.eclipse.emf.ecp.view.internal.rule.RuleServiceHelperImpl;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emf.ecp.view.spi.rule.RuleServiceHelper;
 import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.Rule;
 import org.eclipse.emf.ecp.view.spi.rule.model.RuleFactory;
@@ -217,8 +218,8 @@ public class RuleServiceTest extends CommonRuleTest {
 	 */
 	private RuleService instantiateRuleService(final EObject domainModel) {
 		final RuleService ruleService = new RuleService();
-		final RuleServiceHelper ruleServiceHelper = new RuleServiceHelper();
-		context = new ViewModelContextImpl(view, domainModel);
+		final RuleServiceHelperImpl ruleServiceHelper = new RuleServiceHelperImpl();
+		context = ViewModelContextFactory.INSTANCE.createViewModelContext(view, domainModel);
 		ruleService.instantiate(context);
 		ruleServiceHelper.instantiate(context);
 		return ruleService;
@@ -396,7 +397,8 @@ public class RuleServiceTest extends CommonRuleTest {
 	}
 
 	/**
-	 * Test {@link org.eclipse.emf.ecp.view.spi.rule.model.OrCondition OrCondition} with the second condition being true.
+	 * Test {@link org.eclipse.emf.ecp.view.spi.rule.model.OrCondition OrCondition} with the second condition being
+	 * true.
 	 * Controls should be visible.
 	 */
 	@Test
@@ -411,7 +413,8 @@ public class RuleServiceTest extends CommonRuleTest {
 	}
 
 	/**
-	 * Test {@link org.eclipse.emf.ecp.view.spi.rule.model.OrCondition OrCondition} with none of the conditions being true.
+	 * Test {@link org.eclipse.emf.ecp.view.spi.rule.model.OrCondition OrCondition} with none of the conditions being
+	 * true.
 	 * Controls should not be visible.
 	 */
 	@Test
@@ -426,7 +429,8 @@ public class RuleServiceTest extends CommonRuleTest {
 	}
 
 	/**
-	 * Test {@link org.eclipse.emf.ecp.view.spi.rule.model.OrCondition OrCondition} with first condition being true while
+	 * Test {@link org.eclipse.emf.ecp.view.spi.rule.model.OrCondition OrCondition} with first condition being true
+	 * while
 	 * initializing the rule service.
 	 * Controls should be visible.
 	 */
@@ -442,7 +446,8 @@ public class RuleServiceTest extends CommonRuleTest {
 	}
 
 	/**
-	 * Test {@link org.eclipse.emf.ecp.view.spi.rule.model.OrCondition OrCondition} with second condition being true while
+	 * Test {@link org.eclipse.emf.ecp.view.spi.rule.model.OrCondition OrCondition} with second condition being true
+	 * while
 	 * initializing the rule service.
 	 * Controls should be visible.
 	 */
@@ -458,7 +463,8 @@ public class RuleServiceTest extends CommonRuleTest {
 	}
 
 	/**
-	 * Test {@link org.eclipse.emf.ecp.view.spi.rule.model.OrCondition OrCondition} with both conditions being true while
+	 * Test {@link org.eclipse.emf.ecp.view.spi.rule.model.OrCondition OrCondition} with both conditions being true
+	 * while
 	 * initializing the rule service.
 	 * Controls should be visible.
 	 */
@@ -513,7 +519,8 @@ public class RuleServiceTest extends CommonRuleTest {
 	}
 
 	/**
-	 * Test {@link org.eclipse.emf.ecp.view.spi.rule.model.OrCondition OrCondition} with none of the conditions being true.
+	 * Test {@link org.eclipse.emf.ecp.view.spi.rule.model.OrCondition OrCondition} with none of the conditions being
+	 * true.
 	 * Controls should not be visible.
 	 */
 	@Test
@@ -603,7 +610,8 @@ public class RuleServiceTest extends CommonRuleTest {
 	}
 
 	/**
-	 * Test {@link org.eclipse.emf.ecp.view.spi.rule.model.AndCondition AndCondition} with first condition being true while
+	 * Test {@link org.eclipse.emf.ecp.view.spi.rule.model.AndCondition AndCondition} with first condition being true
+	 * while
 	 * initializing the rule service.
 	 * Controls should not be visible.
 	 */
@@ -619,7 +627,8 @@ public class RuleServiceTest extends CommonRuleTest {
 	}
 
 	/**
-	 * Test {@link org.eclipse.emf.ecp.view.spi.rule.model.AndCondition AndCondition} with second condition being true while
+	 * Test {@link org.eclipse.emf.ecp.view.spi.rule.model.AndCondition AndCondition} with second condition being true
+	 * while
 	 * initializing the rule service.
 	 * Controls should not be visible.
 	 */
@@ -635,7 +644,8 @@ public class RuleServiceTest extends CommonRuleTest {
 	}
 
 	/**
-	 * Test {@link org.eclipse.emf.ecp.view.spi.rule.model.AndCondition AndCondition} with none of the conditions being true
+	 * Test {@link org.eclipse.emf.ecp.view.spi.rule.model.AndCondition AndCondition} with none of the conditions being
+	 * true
 	 * while initializing the rule service.
 	 * Controls should not be visible.
 	 */
@@ -2344,7 +2354,8 @@ public class RuleServiceTest extends CommonRuleTest {
 	}
 
 	/**
-	 * Should return the control because of the {@link org.eclipse.emf.ecp.view.spi.rule.model.EnableRule EnableRule} on the
+	 * Should return the control because of the {@link org.eclipse.emf.ecp.view.spi.rule.model.EnableRule EnableRule} on
+	 * the
 	 * control.
 	 */
 	@Test

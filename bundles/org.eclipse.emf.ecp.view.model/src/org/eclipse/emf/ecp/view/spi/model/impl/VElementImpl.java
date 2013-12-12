@@ -509,13 +509,13 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (name: ");
+		result.append(" (name: "); //$NON-NLS-1$
 		result.append(name);
-		result.append(", visible: ");
+		result.append(", visible: "); //$NON-NLS-1$
 		result.append(visible);
-		result.append(", enabled: ");
+		result.append(", enabled: "); //$NON-NLS-1$
 		result.append(enabled);
-		result.append(", readonly: ");
+		result.append(", readonly: "); //$NON-NLS-1$
 		result.append(readonly);
 		result.append(')');
 		return result.toString();

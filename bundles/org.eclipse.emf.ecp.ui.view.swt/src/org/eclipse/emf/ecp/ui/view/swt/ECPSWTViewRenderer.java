@@ -13,8 +13,8 @@ package org.eclipse.emf.ecp.ui.view.swt;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
-import org.eclipse.emf.ecp.ui.view.swt.internal.ECPSWTViewRendererImpl;
-import org.eclipse.emf.ecp.view.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.internal.swt.ECPSWTViewRendererImpl;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.swt.widgets.Composite;
 
@@ -61,7 +61,6 @@ public interface ECPSWTViewRenderer {
 	 * @param viewModelContext the {@link ViewModelContext} to use
 	 * @return an ECPSWTView providing an interface to the rendered view
 	 * @throws ECPRendererException if there is an exception during rendering
-	 * @since 1.2
 	 */
 	ECPSWTView render(Composite parent, ViewModelContext viewModelContext) throws ECPRendererException;
 

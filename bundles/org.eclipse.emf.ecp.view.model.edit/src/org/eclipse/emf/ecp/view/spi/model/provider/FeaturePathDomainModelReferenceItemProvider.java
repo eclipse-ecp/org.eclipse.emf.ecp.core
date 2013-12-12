@@ -82,14 +82,14 @@ public class FeaturePathDomainModelReferenceItemProvider
 	 */
 	protected void addDomainModelEFeaturePropertyDescriptor(Object object)
 	{
-		itemPropertyDescriptors.add
+		itemPropertyDescriptors
+			.add
 			(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
-				getString("_UI_FeaturePathDomainModelReference_domainModelEFeature_feature"),
-				getString("_UI_PropertyDescriptor_description",
-					"_UI_FeaturePathDomainModelReference_domainModelEFeature_feature",
-					"_UI_FeaturePathDomainModelReference_type"),
+				getString("_UI_FeaturePathDomainModelReference_domainModelEFeature_feature"), //$NON-NLS-1$
+				getString(
+					"_UI_PropertyDescriptor_description", "_UI_FeaturePathDomainModelReference_domainModelEFeature_feature", "_UI_FeaturePathDomainModelReference_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				VViewPackage.Literals.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE,
 				true,
 				false,
@@ -109,7 +109,7 @@ public class FeaturePathDomainModelReferenceItemProvider
 	@Override
 	public Object getImage(Object object)
 	{
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/FeaturePathDomainModelReference"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/FeaturePathDomainModelReference")); //$NON-NLS-1$
 	}
 
 	/**
@@ -122,7 +122,7 @@ public class FeaturePathDomainModelReferenceItemProvider
 	@Override
 	public String getText(Object object)
 	{
-		return getString("_UI_FeaturePathDomainModelReference_type");
+		return getString("_UI_FeaturePathDomainModelReference_type"); //$NON-NLS-1$
 	}
 
 	/**

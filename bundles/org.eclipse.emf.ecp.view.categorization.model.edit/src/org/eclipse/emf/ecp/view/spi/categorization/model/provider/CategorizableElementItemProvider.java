@@ -85,13 +85,14 @@ public class CategorizableElementItemProvider
 	 */
 	protected void addLabelObjectPropertyDescriptor(Object object)
 	{
-		itemPropertyDescriptors.add
+		itemPropertyDescriptors
+			.add
 			(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
-				getString("_UI_CategorizableElement_labelObject_feature"),
-				getString("_UI_PropertyDescriptor_description", "_UI_CategorizableElement_labelObject_feature",
-					"_UI_CategorizableElement_type"),
+				getString("_UI_CategorizableElement_labelObject_feature"), //$NON-NLS-1$
+				getString(
+					"_UI_PropertyDescriptor_description", "_UI_CategorizableElement_labelObject_feature", "_UI_CategorizableElement_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				VCategorizationPackage.Literals.CATEGORIZABLE_ELEMENT__LABEL_OBJECT,
 				false,
 				false,
@@ -113,8 +114,8 @@ public class CategorizableElementItemProvider
 	{
 		String label = ((VCategorizableElement) object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_CategorizableElement_type") :
-			getString("_UI_CategorizableElement_type") + " " + label;
+			getString("_UI_CategorizableElement_type") : //$NON-NLS-1$
+			getString("_UI_CategorizableElement_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

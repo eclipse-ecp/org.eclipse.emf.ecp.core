@@ -227,12 +227,14 @@ public class VLabelPackageImpl extends EPackageImpl implements VLabelPackage
 		labelEClass.getESuperTypes().add(theViewPackage.getContainedElement());
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(labelEClass, VLabel.class, "Label", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getLabel_Style(), this.getVLabelStyle(), "style", null, 0, 1, VLabel.class, !IS_TRANSIENT,
-			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(labelEClass, VLabel.class, "Label", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(
+			getLabel_Style(),
+			this.getVLabelStyle(),
+			"style", null, 0, 1, VLabel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		// Initialize enums and add enum literals
-		initEEnum(vLabelStyleEEnum, VLabelStyle.class, "VLabelStyle");
+		initEEnum(vLabelStyleEEnum, VLabelStyle.class, "VLabelStyle"); //$NON-NLS-1$
 		addEEnumLiteral(vLabelStyleEEnum, VLabelStyle.H0);
 		addEEnumLiteral(vLabelStyleEEnum, VLabelStyle.H1);
 		addEEnumLiteral(vLabelStyleEEnum, VLabelStyle.H2);

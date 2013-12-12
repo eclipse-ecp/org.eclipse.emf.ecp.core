@@ -92,8 +92,8 @@ public class ActionItemProvider
 			(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
-				getString("_UI_Action_bundle_feature"),
-				getString("_UI_PropertyDescriptor_description", "_UI_Action_bundle_feature", "_UI_Action_type"),
+				getString("_UI_Action_bundle_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_Action_bundle_feature", "_UI_Action_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				VCategorizationPackage.Literals.ACTION__BUNDLE,
 				true,
 				false,
@@ -116,8 +116,8 @@ public class ActionItemProvider
 			(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
-				getString("_UI_Action_className_feature"),
-				getString("_UI_PropertyDescriptor_description", "_UI_Action_className_feature", "_UI_Action_type"),
+				getString("_UI_Action_className_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_Action_className_feature", "_UI_Action_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				VCategorizationPackage.Literals.ACTION__CLASS_NAME,
 				true,
 				false,
@@ -137,7 +137,7 @@ public class ActionItemProvider
 	@Override
 	public Object getImage(Object object)
 	{
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Action"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Action")); //$NON-NLS-1$
 	}
 
 	/**
@@ -152,8 +152,8 @@ public class ActionItemProvider
 	{
 		String label = ((VAction) object).getClassName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_Action_type") :
-			getString("_UI_Action_type") + " " + label;
+			getString("_UI_Action_type") : //$NON-NLS-1$
+			getString("_UI_Action_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

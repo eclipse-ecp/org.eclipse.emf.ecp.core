@@ -13,7 +13,7 @@ package org.eclipse.emf.ecp.edit.internal.swt.util;
 
 import java.util.List;
 
-import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
+import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 

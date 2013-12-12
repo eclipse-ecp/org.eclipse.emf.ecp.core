@@ -79,7 +79,7 @@ public class VVerticalFactoryImpl extends EFactoryImpl implements VVerticalFacto
 		case VVerticalPackage.VERTICAL_LAYOUT:
 			return createVerticalLayout();
 		default:
-			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 

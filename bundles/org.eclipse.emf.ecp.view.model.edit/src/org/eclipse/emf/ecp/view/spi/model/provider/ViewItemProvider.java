@@ -80,8 +80,8 @@ public class ViewItemProvider
 			(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
-				getString("_UI_View_rootEClass_feature"),
-				getString("_UI_PropertyDescriptor_description", "_UI_View_rootEClass_feature", "_UI_View_type"),
+				getString("_UI_View_rootEClass_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_View_rootEClass_feature", "_UI_View_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				VViewPackage.Literals.VIEW__ROOT_ECLASS,
 				true,
 				false,
@@ -133,7 +133,7 @@ public class ViewItemProvider
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/View"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/View")); //$NON-NLS-1$
 	}
 
 	/**

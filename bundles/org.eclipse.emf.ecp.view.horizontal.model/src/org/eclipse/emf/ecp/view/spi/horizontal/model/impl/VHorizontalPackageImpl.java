@@ -190,8 +190,8 @@ public class VHorizontalPackageImpl extends EPackageImpl implements VHorizontalP
 		horizontalLayoutEClass.getESuperTypes().add(theViewPackage.getContainer());
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(horizontalLayoutEClass, VHorizontalLayout.class, "HorizontalLayout", !IS_ABSTRACT, !IS_INTERFACE,
-			IS_GENERATED_INSTANCE_CLASS);
+		initEClass(horizontalLayoutEClass, VHorizontalLayout.class,
+			"HorizontalLayout", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		// Create resource
 		createResource(eNS_URI);

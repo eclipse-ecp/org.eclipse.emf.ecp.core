@@ -13,18 +13,18 @@ package org.eclipse.emf.ecp.view.spi.groupedgrid.swt;
 
 import java.util.List;
 
-import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
-import org.eclipse.emf.ecp.ui.view.swt.internal.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.ui.view.swt.internal.SWTRendererFactory;
-import org.eclipse.emf.ecp.view.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.groupedgrid.model.VGroup;
 import org.eclipse.emf.ecp.view.spi.groupedgrid.model.VGroupedGrid;
 import org.eclipse.emf.ecp.view.spi.groupedgrid.model.VRow;
 import org.eclipse.emf.ecp.view.spi.groupedgrid.model.VSpan;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VAttachment;
+import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
+import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
+import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
+import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
+import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;

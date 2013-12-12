@@ -190,8 +190,8 @@ public class VVerticalPackageImpl extends EPackageImpl implements VVerticalPacka
 		verticalLayoutEClass.getESuperTypes().add(theViewPackage.getContainer());
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(verticalLayoutEClass, VVerticalLayout.class, "VerticalLayout", !IS_ABSTRACT, !IS_INTERFACE,
-			IS_GENERATED_INSTANCE_CLASS);
+		initEClass(verticalLayoutEClass, VVerticalLayout.class,
+			"VerticalLayout", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		// Create resource
 		createResource(eNS_URI);

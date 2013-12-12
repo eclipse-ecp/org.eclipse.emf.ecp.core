@@ -20,7 +20,7 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor;
 import org.eclipse.emf.ecp.edit.spi.util.ECPModelElementChangeListener;
-import org.eclipse.emf.ecp.view.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
@@ -80,7 +80,7 @@ public class LinkCellEditor extends CellEditor implements ECPCellEditor {
 	 * {@inheritDoc}
 	 * 
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#instantiate(org.eclipse.emf.ecore.EStructuralFeature,
-	 *      org.eclipse.emf.ecp.view.context.ViewModelContext)
+	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	public void instantiate(EStructuralFeature eStructuralFeature, ViewModelContext viewModelContext) {
 

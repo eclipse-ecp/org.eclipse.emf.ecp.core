@@ -21,8 +21,6 @@ import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecp.view.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.context.ViewModelService;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree;
 import org.eclipse.emf.ecp.view.dynamictree.model.ModelFactory;
@@ -31,6 +29,8 @@ import org.eclipse.emf.ecp.view.dynamictree.model.TestElementContainer;
 import org.eclipse.emf.ecp.view.spi.categorization.model.ECPAction;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VAction;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizableElement;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -45,7 +45,7 @@ public class DynamicTreeModelService implements ViewModelService {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.context.ViewModelService#instantiate(org.eclipse.emf.ecp.view.context.ViewModelContext)
+	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#instantiate(org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	public void instantiate(ViewModelContext context) {
 		final VElement viewModel = context.getViewModel();
@@ -180,7 +180,7 @@ public class DynamicTreeModelService implements ViewModelService {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.context.ViewModelService#dispose()
+	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#dispose()
 	 */
 	public void dispose() {
 		// TODO Auto-generated method stub
@@ -190,7 +190,7 @@ public class DynamicTreeModelService implements ViewModelService {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.context.ViewModelService#getPriority()
+	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#getPriority()
 	 */
 	public int getPriority() {
 		return 0;

@@ -28,7 +28,7 @@ import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.xml.type.internal.XMLCalendar;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor;
-import org.eclipse.emf.ecp.view.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.jface.databinding.swt.WidgetValueProperty;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.swt.SWT;
@@ -92,7 +92,7 @@ public class XmlDateCellEditor extends CellEditor implements ECPCellEditor {
 	 * {@inheritDoc}
 	 * 
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#instantiate(org.eclipse.emf.ecore.EStructuralFeature,
-	 *      org.eclipse.emf.ecp.view.context.ViewModelContext)
+	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	public void instantiate(EStructuralFeature feature, ViewModelContext viewModelContext) {
 

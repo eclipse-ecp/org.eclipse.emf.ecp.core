@@ -84,8 +84,8 @@ public class LabelItemProvider
 			(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
-				getString("_UI_Label_style_feature"),
-				getString("_UI_PropertyDescriptor_description", "_UI_Label_style_feature", "_UI_Label_type"),
+				getString("_UI_Label_style_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_Label_style_feature", "_UI_Label_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				VLabelPackage.Literals.LABEL__STYLE,
 				true,
 				false,
@@ -105,7 +105,7 @@ public class LabelItemProvider
 	@Override
 	public Object getImage(Object object)
 	{
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Label"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Label")); //$NON-NLS-1$
 	}
 
 	/**
@@ -120,8 +120,8 @@ public class LabelItemProvider
 	{
 		String label = ((VLabel) object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_Label_type") :
-			getString("_UI_Label_type") + " " + label;
+			getString("_UI_Label_type") : //$NON-NLS-1$
+			getString("_UI_Label_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

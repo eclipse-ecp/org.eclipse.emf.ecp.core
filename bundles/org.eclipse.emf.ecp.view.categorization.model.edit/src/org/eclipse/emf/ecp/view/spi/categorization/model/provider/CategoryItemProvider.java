@@ -120,7 +120,7 @@ public class CategoryItemProvider
 	@Override
 	public Object getImage(Object object)
 	{
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Category"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Category")); //$NON-NLS-1$
 	}
 
 	/**
@@ -135,7 +135,7 @@ public class CategoryItemProvider
 	{
 		final String label = ((VCategory) object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_Category_type") : label;
+			getString("_UI_Category_type") : label; //$NON-NLS-1$
 	}
 
 	/**

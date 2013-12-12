@@ -122,8 +122,8 @@ public class AbstractCategorizationItemProvider
 	{
 		String label = ((VAbstractCategorization) object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_AbstractCategorization_type") :
-			getString("_UI_AbstractCategorization_type") + " " + label;
+			getString("_UI_AbstractCategorization_type") : //$NON-NLS-1$
+			getString("_UI_AbstractCategorization_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

@@ -14,11 +14,11 @@ package org.eclipse.emf.ecp.view.model.generator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.internal.ui.view.IViewProvider;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emf.ecp.view.spi.provider.IViewProvider;
 
 /**
  * View Provider.
@@ -29,7 +29,7 @@ public class ViewProvider implements IViewProvider {
 	 * 
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.internal.ui.view.IViewProvider#generate(org.eclipse.emf.ecore.EObject)
+	 * @see org.eclipse.emf.ecp.view.spi.provider.IViewProvider#generate(org.eclipse.emf.ecore.EObject)
 	 */
 	public VView generate(EObject eObject) {
 		final VView view = VViewFactory.eINSTANCE.createView();
@@ -77,7 +77,7 @@ public class ViewProvider implements IViewProvider {
 	 * 
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.internal.ui.view.IViewProvider#canRender(org.eclipse.emf.ecore.EObject)
+	 * @see org.eclipse.emf.ecp.view.spi.provider.IViewProvider#canRender(org.eclipse.emf.ecore.EObject)
 	 */
 	public int canRender(EObject eObject) {
 		return 1;

@@ -190,7 +190,7 @@ public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
 		groupEClass.getESuperTypes().add(theViewPackage.getContainer());
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(groupEClass, VGroup.class, "Group", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(groupEClass, VGroup.class, "Group", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		// Create resource
 		createResource(eNS_URI);

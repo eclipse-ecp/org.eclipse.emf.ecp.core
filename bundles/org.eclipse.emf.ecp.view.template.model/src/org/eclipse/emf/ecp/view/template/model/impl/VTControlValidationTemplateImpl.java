@@ -1044,35 +1044,35 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (okColorHEX: ");
+		result.append(" (okColorHEX: "); //$NON-NLS-1$
 		result.append(okColorHEX);
-		result.append(", okImageURL: ");
+		result.append(", okImageURL: "); //$NON-NLS-1$
 		result.append(okImageURL);
-		result.append(", okOverlayURL: ");
+		result.append(", okOverlayURL: "); //$NON-NLS-1$
 		result.append(okOverlayURL);
-		result.append(", infoColorHEX: ");
+		result.append(", infoColorHEX: "); //$NON-NLS-1$
 		result.append(infoColorHEX);
-		result.append(", infoImageURL: ");
+		result.append(", infoImageURL: "); //$NON-NLS-1$
 		result.append(infoImageURL);
-		result.append(", infoOverlayURL: ");
+		result.append(", infoOverlayURL: "); //$NON-NLS-1$
 		result.append(infoOverlayURL);
-		result.append(", warningColorHEX: ");
+		result.append(", warningColorHEX: "); //$NON-NLS-1$
 		result.append(warningColorHEX);
-		result.append(", warningImageURL: ");
+		result.append(", warningImageURL: "); //$NON-NLS-1$
 		result.append(warningImageURL);
-		result.append(", warningOverlayURL: ");
+		result.append(", warningOverlayURL: "); //$NON-NLS-1$
 		result.append(warningOverlayURL);
-		result.append(", errorColorHEX: ");
+		result.append(", errorColorHEX: "); //$NON-NLS-1$
 		result.append(errorColorHEX);
-		result.append(", errorImageURL: ");
+		result.append(", errorImageURL: "); //$NON-NLS-1$
 		result.append(errorImageURL);
-		result.append(", errorOverlayURL: ");
+		result.append(", errorOverlayURL: "); //$NON-NLS-1$
 		result.append(errorOverlayURL);
-		result.append(", cancelColorHEX: ");
+		result.append(", cancelColorHEX: "); //$NON-NLS-1$
 		result.append(cancelColorHEX);
-		result.append(", cancelImageURL: ");
+		result.append(", cancelImageURL: "); //$NON-NLS-1$
 		result.append(cancelImageURL);
-		result.append(", cancelOverlayURL: ");
+		result.append(", cancelOverlayURL: "); //$NON-NLS-1$
 		result.append(cancelOverlayURL);
 		result.append(')');
 		return result.toString();

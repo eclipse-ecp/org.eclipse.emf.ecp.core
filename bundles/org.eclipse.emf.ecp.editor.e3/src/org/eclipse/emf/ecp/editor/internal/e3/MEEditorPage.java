@@ -16,13 +16,13 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.editor.e3.ECPEditorContext;
-import org.eclipse.emf.ecp.internal.ui.view.ViewProviderHelper;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
-import org.eclipse.emf.ecp.view.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -123,7 +123,8 @@ public class MEEditorPage extends FormPage {
 
 		final EObject domainObject = modelElementContext.getDomainObject();
 		final VView view = ViewProviderHelper.getView(domainObject);
-		final ViewModelContext vmc = new ViewModelContextImpl(view, domainObject, new ECPReferenceServiceImpl());
+		final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(view, domainObject,
+			new ECPReferenceServiceImpl());
 		try {
 			ecpView = ECPSWTViewRenderer.INSTANCE.render(body, vmc);
 		} catch (final ECPRendererException ex) {

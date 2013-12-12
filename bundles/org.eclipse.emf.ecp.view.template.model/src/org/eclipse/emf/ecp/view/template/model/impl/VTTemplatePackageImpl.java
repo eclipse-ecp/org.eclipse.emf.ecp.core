@@ -398,59 +398,76 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 		// Add supertypes to classes
 
 		// Initialize classes, features, and operations; add parameters
-		initEClass(viewTemplateEClass, VTViewTemplate.class, "ViewTemplate", !IS_ABSTRACT, !IS_INTERFACE,
-			IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getViewTemplate_ControlValidationConfiguration(), this.getControlValidationTemplate(), null,
-			"controlValidationConfiguration", null, 1, 1, VTViewTemplate.class, !IS_TRANSIENT, !IS_VOLATILE,
-			IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(viewTemplateEClass, VTViewTemplate.class,
+			"ViewTemplate", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(
+			getViewTemplate_ControlValidationConfiguration(),
+			this.getControlValidationTemplate(),
+			null,
+			"controlValidationConfiguration", null, 1, 1, VTViewTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		initEClass(controlValidationTemplateEClass, VTControlValidationTemplate.class, "ControlValidationTemplate",
-			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getControlValidationTemplate_OkColorHEX(), ecorePackage.getEString(), "okColorHEX", null, 0, 1,
-			VTControlValidationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
-			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getControlValidationTemplate_OkImageURL(), ecorePackage.getEString(), "okImageURL", null, 0, 1,
-			VTControlValidationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
-			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getControlValidationTemplate_OkOverlayURL(), ecorePackage.getEString(), "okOverlayURL", null, 0,
-			1, VTControlValidationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
-			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getControlValidationTemplate_InfoColorHEX(), ecorePackage.getEString(), "infoColorHEX", null, 0,
-			1, VTControlValidationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
-			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getControlValidationTemplate_InfoImageURL(), ecorePackage.getEString(), "infoImageURL", null, 0,
-			1, VTControlValidationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
-			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getControlValidationTemplate_InfoOverlayURL(), ecorePackage.getEString(), "infoOverlayURL",
-			null, 0, 1, VTControlValidationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
-			!IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getControlValidationTemplate_WarningColorHEX(), ecorePackage.getEString(), "warningColorHEX",
-			null, 0, 1, VTControlValidationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
-			!IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getControlValidationTemplate_WarningImageURL(), ecorePackage.getEString(), "warningImageURL",
-			null, 0, 1, VTControlValidationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
-			!IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getControlValidationTemplate_WarningOverlayURL(), ecorePackage.getEString(),
-			"warningOverlayURL", null, 0, 1, VTControlValidationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE,
-			IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getControlValidationTemplate_ErrorColorHEX(), ecorePackage.getEString(), "errorColorHEX", null,
-			0, 1, VTControlValidationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
-			!IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getControlValidationTemplate_ErrorImageURL(), ecorePackage.getEString(), "errorImageURL", null,
-			0, 1, VTControlValidationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
-			!IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getControlValidationTemplate_ErrorOverlayURL(), ecorePackage.getEString(), "errorOverlayURL",
-			null, 0, 1, VTControlValidationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
-			!IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getControlValidationTemplate_CancelColorHEX(), ecorePackage.getEString(), "cancelColorHEX",
-			null, 0, 1, VTControlValidationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
-			!IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getControlValidationTemplate_CancelImageURL(), ecorePackage.getEString(), "cancelImageURL",
-			null, 0, 1, VTControlValidationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
-			!IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getControlValidationTemplate_CancelOverlayURL(), ecorePackage.getEString(), "cancelOverlayURL",
-			null, 0, 1, VTControlValidationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
-			!IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(controlValidationTemplateEClass, VTControlValidationTemplate.class,
+			"ControlValidationTemplate", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(
+			getControlValidationTemplate_OkColorHEX(),
+			ecorePackage.getEString(),
+			"okColorHEX", null, 0, 1, VTControlValidationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(
+			getControlValidationTemplate_OkImageURL(),
+			ecorePackage.getEString(),
+			"okImageURL", null, 0, 1, VTControlValidationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(
+			getControlValidationTemplate_OkOverlayURL(),
+			ecorePackage.getEString(),
+			"okOverlayURL", null, 0, 1, VTControlValidationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(
+			getControlValidationTemplate_InfoColorHEX(),
+			ecorePackage.getEString(),
+			"infoColorHEX", null, 0, 1, VTControlValidationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(
+			getControlValidationTemplate_InfoImageURL(),
+			ecorePackage.getEString(),
+			"infoImageURL", null, 0, 1, VTControlValidationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(
+			getControlValidationTemplate_InfoOverlayURL(),
+			ecorePackage.getEString(),
+			"infoOverlayURL", null, 0, 1, VTControlValidationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(
+			getControlValidationTemplate_WarningColorHEX(),
+			ecorePackage.getEString(),
+			"warningColorHEX", null, 0, 1, VTControlValidationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(
+			getControlValidationTemplate_WarningImageURL(),
+			ecorePackage.getEString(),
+			"warningImageURL", null, 0, 1, VTControlValidationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(
+			getControlValidationTemplate_WarningOverlayURL(),
+			ecorePackage.getEString(),
+			"warningOverlayURL", null, 0, 1, VTControlValidationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(
+			getControlValidationTemplate_ErrorColorHEX(),
+			ecorePackage.getEString(),
+			"errorColorHEX", null, 0, 1, VTControlValidationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(
+			getControlValidationTemplate_ErrorImageURL(),
+			ecorePackage.getEString(),
+			"errorImageURL", null, 0, 1, VTControlValidationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(
+			getControlValidationTemplate_ErrorOverlayURL(),
+			ecorePackage.getEString(),
+			"errorOverlayURL", null, 0, 1, VTControlValidationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(
+			getControlValidationTemplate_CancelColorHEX(),
+			ecorePackage.getEString(),
+			"cancelColorHEX", null, 0, 1, VTControlValidationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(
+			getControlValidationTemplate_CancelImageURL(),
+			ecorePackage.getEString(),
+			"cancelImageURL", null, 0, 1, VTControlValidationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(
+			getControlValidationTemplate_CancelOverlayURL(),
+			ecorePackage.getEString(),
+			"cancelOverlayURL", null, 0, 1, VTControlValidationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		// Create resource
 		createResource(eNS_URI);

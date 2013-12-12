@@ -11,9 +11,9 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.util;
 
-import org.eclipse.emf.ecp.internal.ui.view.renderer.LayoutHelper;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingConfiguration;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRowFactory;
+import org.eclipse.emf.ecp.view.spi.renderer.LayoutHelper;
+import org.eclipse.emf.ecp.view.spi.renderer.RenderingConfiguration;
+import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRowFactory;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Layout;
 

@@ -36,9 +36,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.util.Diagnostician;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.custom.model.ECPCustomControlChangeListener;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomFactory;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage;
@@ -50,6 +48,8 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
+import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
+import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.SWTViewTestHelper;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
@@ -95,7 +95,8 @@ public class ECPAbstractCustomControlSWTTest {
 		controlModel.setDomainModelReference(domainModelReference);
 		// customControl.init(ViewTestHelper.createECPControlContext(domainObject,
 		// SWTViewTestHelper.createShell()), null);
-		customControl.init(new ViewModelContextImpl(controlModel, domainObject), controlModel);
+		customControl.init(ViewModelContextFactory.INSTANCE.createViewModelContext(controlModel, domainObject),
+			controlModel);
 		testComposite = new Composite(SWTViewTestHelper.createShell(), SWT.NONE);
 
 		// for (final VDomainModelReference modelReference : allFeatures) {
@@ -309,7 +310,8 @@ public class ECPAbstractCustomControlSWTTest {
 		Diagnostic validate = new Diagnostician().validate(domainObject);
 		// customControl.init(ViewTestHelper.createECPControlContext(domainObject,
 		// SWTViewTestHelper.createShell()), null);
-		customControl.init(new ViewModelContextImpl(controlModel, domainObject), controlModel);
+		customControl.init(ViewModelContextFactory.INSTANCE.createViewModelContext(controlModel, domainObject),
+			controlModel);
 		customControl.createControls(testComposite);
 		customControl.handleValidation(validate.getChildren().get(0));
 		// Check Label, Check Image
@@ -367,11 +369,12 @@ public class ECPAbstractCustomControlSWTTest {
 
 	@Test
 	public void testInit() {
-		customControl.init(new ViewModelContextImpl(controlModel, domainObject), controlModel);
+		customControl.init(ViewModelContextFactory.INSTANCE.createViewModelContext(controlModel, domainObject),
+			controlModel);
 	}
 
 	/**
-	 * Test method for {@link org.eclipse.emf.ecp.ui.view.custom.ECPAbstractCustomControl#getECPCustomControlFeatures()}
+	 * Test method for {@link org.eclipse.emf.ecp.view.spi.custom.ui.ECPAbstractCustomControl#getECPCustomControlFeatures()}
 	 * .
 	 */
 	@Test
@@ -382,7 +385,7 @@ public class ECPAbstractCustomControlSWTTest {
 	}
 
 	/**
-	 * Test method for {@link org.eclipse.emf.ecp.ui.view.custom.ECPAbstractCustomControl#showLabel()}.
+	 * Test method for {@link org.eclipse.emf.ecp.view.spi.custom.ui.ECPAbstractCustomControl#showLabel()}.
 	 */
 	@Test
 	public void testShowLabel() {
@@ -390,7 +393,7 @@ public class ECPAbstractCustomControlSWTTest {
 	}
 
 	/**
-	 * Test method for {@link org.eclipse.emf.ecp.ui.view.custom.ECPAbstractCustomControl#dispose()}.
+	 * Test method for {@link org.eclipse.emf.ecp.view.spi.custom.ui.ECPAbstractCustomControl#dispose()}.
 	 */
 	@Test
 	public void testDispose() {
@@ -405,7 +408,7 @@ public class ECPAbstractCustomControlSWTTest {
 	}
 
 	/**
-	 * Test method for {@link org.eclipse.emf.ecp.ui.view.custom.ECPAbstractCustomControl#disposeCustomControl()}.
+	 * Test method for {@link org.eclipse.emf.ecp.view.spi.custom.ui.ECPAbstractCustomControl#disposeCustomControl()}.
 	 */
 	@Test
 	public void testDisposeCustomControl() {
@@ -413,7 +416,7 @@ public class ECPAbstractCustomControlSWTTest {
 	}
 
 	/**
-	 * Test method for {@link org.eclipse.emf.ecp.ui.view.custom.ECPAbstractCustomControl#getHelper()}.
+	 * Test method for {@link org.eclipse.emf.ecp.view.spi.custom.ui.ECPAbstractCustomControl#getHelper()}.
 	 */
 	@Test
 	public void testGetHelper() {

@@ -24,10 +24,10 @@ import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTValidationHelper;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SingleColumnRow;
 import org.eclipse.emf.ecp.edit.spi.ECPAbstractControl;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
-import org.eclipse.emf.ecp.ui.view.custom.ECPAbstractCustomControl;
 import org.eclipse.emf.ecp.view.internal.custom.swt.Activator;
+import org.eclipse.emf.ecp.view.spi.custom.ui.ECPAbstractCustomControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
 import org.eclipse.jface.databinding.viewers.ViewerSupport;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -153,7 +153,7 @@ public abstract class ECPAbstractCustomControlSWT extends
 	 * 
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.edit.spi.ECPControl#setEditable(boolean)
+	 * @see org.eclipse.emf.ecp.edit.spi.ECPAbstractControl#setEditable(boolean)
 	 */
 	@Override
 	public void setEditable(boolean isEditable) {
@@ -174,7 +174,7 @@ public abstract class ECPAbstractCustomControlSWT extends
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.edit.spi.ECPControl#handleValidation(org.eclipse.emf.common.util.Diagnostic)
+	 * @see org.eclipse.emf.ecp.edit.spi.ECPAbstractControl#handleValidation(org.eclipse.emf.common.util.Diagnostic)
 	 */
 	@Override
 	public final void handleValidation(Diagnostic diagnostic) {
@@ -265,7 +265,7 @@ public abstract class ECPAbstractCustomControlSWT extends
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.edit.spi.ECPControl#resetValidation()
+	 * @see org.eclipse.emf.ecp.edit.spi.ECPAbstractControl#resetValidation()
 	 */
 	@Override
 	public final void resetValidation() {

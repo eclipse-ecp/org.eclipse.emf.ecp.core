@@ -64,7 +64,7 @@
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":org.eclipse.emf.ecp.edit.internal.swt.util.RenderingResultRowFactory"/>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRowFactory"/>
                </appinfo>
             </annotation>
          </attribute>
@@ -79,7 +79,7 @@
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":org.eclipse.emf.ecp.internal.ui.view.renderer.LayoutHelper"/>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.emf.ecp.view.spi.renderer.LayoutHelper"/>
                </appinfo>
             </annotation>
          </attribute>

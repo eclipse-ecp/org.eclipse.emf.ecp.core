@@ -102,13 +102,14 @@ public class ControlValidationTemplateItemProvider
 	 */
 	protected void addOkColorHEXPropertyDescriptor(Object object)
 	{
-		itemPropertyDescriptors.add
+		itemPropertyDescriptors
+			.add
 			(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
-				getString("_UI_ControlValidationTemplate_okColorHEX_feature"),
-				getString("_UI_PropertyDescriptor_description", "_UI_ControlValidationTemplate_okColorHEX_feature",
-					"_UI_ControlValidationTemplate_type"),
+				getString("_UI_ControlValidationTemplate_okColorHEX_feature"), //$NON-NLS-1$
+				getString(
+					"_UI_PropertyDescriptor_description", "_UI_ControlValidationTemplate_okColorHEX_feature", "_UI_ControlValidationTemplate_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				VTTemplatePackage.Literals.CONTROL_VALIDATION_TEMPLATE__OK_COLOR_HEX,
 				true,
 				false,
@@ -127,13 +128,14 @@ public class ControlValidationTemplateItemProvider
 	 */
 	protected void addOkImageURLPropertyDescriptor(Object object)
 	{
-		itemPropertyDescriptors.add
+		itemPropertyDescriptors
+			.add
 			(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
-				getString("_UI_ControlValidationTemplate_okImageURL_feature"),
-				getString("_UI_PropertyDescriptor_description", "_UI_ControlValidationTemplate_okImageURL_feature",
-					"_UI_ControlValidationTemplate_type"),
+				getString("_UI_ControlValidationTemplate_okImageURL_feature"), //$NON-NLS-1$
+				getString(
+					"_UI_PropertyDescriptor_description", "_UI_ControlValidationTemplate_okImageURL_feature", "_UI_ControlValidationTemplate_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				VTTemplatePackage.Literals.CONTROL_VALIDATION_TEMPLATE__OK_IMAGE_URL,
 				true,
 				false,
@@ -152,13 +154,14 @@ public class ControlValidationTemplateItemProvider
 	 */
 	protected void addOkOverlayURLPropertyDescriptor(Object object)
 	{
-		itemPropertyDescriptors.add
+		itemPropertyDescriptors
+			.add
 			(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
-				getString("_UI_ControlValidationTemplate_okOverlayURL_feature"),
-				getString("_UI_PropertyDescriptor_description", "_UI_ControlValidationTemplate_okOverlayURL_feature",
-					"_UI_ControlValidationTemplate_type"),
+				getString("_UI_ControlValidationTemplate_okOverlayURL_feature"), //$NON-NLS-1$
+				getString(
+					"_UI_PropertyDescriptor_description", "_UI_ControlValidationTemplate_okOverlayURL_feature", "_UI_ControlValidationTemplate_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				VTTemplatePackage.Literals.CONTROL_VALIDATION_TEMPLATE__OK_OVERLAY_URL,
 				true,
 				false,
@@ -177,13 +180,14 @@ public class ControlValidationTemplateItemProvider
 	 */
 	protected void addInfoColorHEXPropertyDescriptor(Object object)
 	{
-		itemPropertyDescriptors.add
+		itemPropertyDescriptors
+			.add
 			(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
-				getString("_UI_ControlValidationTemplate_infoColorHEX_feature"),
-				getString("_UI_PropertyDescriptor_description", "_UI_ControlValidationTemplate_infoColorHEX_feature",
-					"_UI_ControlValidationTemplate_type"),
+				getString("_UI_ControlValidationTemplate_infoColorHEX_feature"), //$NON-NLS-1$
+				getString(
+					"_UI_PropertyDescriptor_description", "_UI_ControlValidationTemplate_infoColorHEX_feature", "_UI_ControlValidationTemplate_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				VTTemplatePackage.Literals.CONTROL_VALIDATION_TEMPLATE__INFO_COLOR_HEX,
 				true,
 				false,
@@ -202,13 +206,14 @@ public class ControlValidationTemplateItemProvider
 	 */
 	protected void addInfoImageURLPropertyDescriptor(Object object)
 	{
-		itemPropertyDescriptors.add
+		itemPropertyDescriptors
+			.add
 			(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
-				getString("_UI_ControlValidationTemplate_infoImageURL_feature"),
-				getString("_UI_PropertyDescriptor_description", "_UI_ControlValidationTemplate_infoImageURL_feature",
-					"_UI_ControlValidationTemplate_type"),
+				getString("_UI_ControlValidationTemplate_infoImageURL_feature"), //$NON-NLS-1$
+				getString(
+					"_UI_PropertyDescriptor_description", "_UI_ControlValidationTemplate_infoImageURL_feature", "_UI_ControlValidationTemplate_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				VTTemplatePackage.Literals.CONTROL_VALIDATION_TEMPLATE__INFO_IMAGE_URL,
 				true,
 				false,
@@ -227,13 +232,14 @@ public class ControlValidationTemplateItemProvider
 	 */
 	protected void addInfoOverlayURLPropertyDescriptor(Object object)
 	{
-		itemPropertyDescriptors.add
+		itemPropertyDescriptors
+			.add
 			(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
-				getString("_UI_ControlValidationTemplate_infoOverlayURL_feature"),
-				getString("_UI_PropertyDescriptor_description", "_UI_ControlValidationTemplate_infoOverlayURL_feature",
-					"_UI_ControlValidationTemplate_type"),
+				getString("_UI_ControlValidationTemplate_infoOverlayURL_feature"), //$NON-NLS-1$
+				getString(
+					"_UI_PropertyDescriptor_description", "_UI_ControlValidationTemplate_infoOverlayURL_feature", "_UI_ControlValidationTemplate_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				VTTemplatePackage.Literals.CONTROL_VALIDATION_TEMPLATE__INFO_OVERLAY_URL,
 				true,
 				false,
@@ -252,13 +258,14 @@ public class ControlValidationTemplateItemProvider
 	 */
 	protected void addWarningColorHEXPropertyDescriptor(Object object)
 	{
-		itemPropertyDescriptors.add
+		itemPropertyDescriptors
+			.add
 			(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
-				getString("_UI_ControlValidationTemplate_warningColorHEX_feature"),
-				getString("_UI_PropertyDescriptor_description",
-					"_UI_ControlValidationTemplate_warningColorHEX_feature", "_UI_ControlValidationTemplate_type"),
+				getString("_UI_ControlValidationTemplate_warningColorHEX_feature"), //$NON-NLS-1$
+				getString(
+					"_UI_PropertyDescriptor_description", "_UI_ControlValidationTemplate_warningColorHEX_feature", "_UI_ControlValidationTemplate_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				VTTemplatePackage.Literals.CONTROL_VALIDATION_TEMPLATE__WARNING_COLOR_HEX,
 				true,
 				false,
@@ -277,13 +284,14 @@ public class ControlValidationTemplateItemProvider
 	 */
 	protected void addWarningImageURLPropertyDescriptor(Object object)
 	{
-		itemPropertyDescriptors.add
+		itemPropertyDescriptors
+			.add
 			(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
-				getString("_UI_ControlValidationTemplate_warningImageURL_feature"),
-				getString("_UI_PropertyDescriptor_description",
-					"_UI_ControlValidationTemplate_warningImageURL_feature", "_UI_ControlValidationTemplate_type"),
+				getString("_UI_ControlValidationTemplate_warningImageURL_feature"), //$NON-NLS-1$
+				getString(
+					"_UI_PropertyDescriptor_description", "_UI_ControlValidationTemplate_warningImageURL_feature", "_UI_ControlValidationTemplate_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				VTTemplatePackage.Literals.CONTROL_VALIDATION_TEMPLATE__WARNING_IMAGE_URL,
 				true,
 				false,
@@ -302,13 +310,14 @@ public class ControlValidationTemplateItemProvider
 	 */
 	protected void addWarningOverlayURLPropertyDescriptor(Object object)
 	{
-		itemPropertyDescriptors.add
+		itemPropertyDescriptors
+			.add
 			(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
-				getString("_UI_ControlValidationTemplate_warningOverlayURL_feature"),
-				getString("_UI_PropertyDescriptor_description",
-					"_UI_ControlValidationTemplate_warningOverlayURL_feature", "_UI_ControlValidationTemplate_type"),
+				getString("_UI_ControlValidationTemplate_warningOverlayURL_feature"), //$NON-NLS-1$
+				getString(
+					"_UI_PropertyDescriptor_description", "_UI_ControlValidationTemplate_warningOverlayURL_feature", "_UI_ControlValidationTemplate_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				VTTemplatePackage.Literals.CONTROL_VALIDATION_TEMPLATE__WARNING_OVERLAY_URL,
 				true,
 				false,
@@ -327,13 +336,14 @@ public class ControlValidationTemplateItemProvider
 	 */
 	protected void addErrorColorHEXPropertyDescriptor(Object object)
 	{
-		itemPropertyDescriptors.add
+		itemPropertyDescriptors
+			.add
 			(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
-				getString("_UI_ControlValidationTemplate_errorColorHEX_feature"),
-				getString("_UI_PropertyDescriptor_description", "_UI_ControlValidationTemplate_errorColorHEX_feature",
-					"_UI_ControlValidationTemplate_type"),
+				getString("_UI_ControlValidationTemplate_errorColorHEX_feature"), //$NON-NLS-1$
+				getString(
+					"_UI_PropertyDescriptor_description", "_UI_ControlValidationTemplate_errorColorHEX_feature", "_UI_ControlValidationTemplate_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				VTTemplatePackage.Literals.CONTROL_VALIDATION_TEMPLATE__ERROR_COLOR_HEX,
 				true,
 				false,
@@ -352,13 +362,14 @@ public class ControlValidationTemplateItemProvider
 	 */
 	protected void addErrorImageURLPropertyDescriptor(Object object)
 	{
-		itemPropertyDescriptors.add
+		itemPropertyDescriptors
+			.add
 			(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
-				getString("_UI_ControlValidationTemplate_errorImageURL_feature"),
-				getString("_UI_PropertyDescriptor_description", "_UI_ControlValidationTemplate_errorImageURL_feature",
-					"_UI_ControlValidationTemplate_type"),
+				getString("_UI_ControlValidationTemplate_errorImageURL_feature"), //$NON-NLS-1$
+				getString(
+					"_UI_PropertyDescriptor_description", "_UI_ControlValidationTemplate_errorImageURL_feature", "_UI_ControlValidationTemplate_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				VTTemplatePackage.Literals.CONTROL_VALIDATION_TEMPLATE__ERROR_IMAGE_URL,
 				true,
 				false,
@@ -377,13 +388,14 @@ public class ControlValidationTemplateItemProvider
 	 */
 	protected void addErrorOverlayURLPropertyDescriptor(Object object)
 	{
-		itemPropertyDescriptors.add
+		itemPropertyDescriptors
+			.add
 			(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
-				getString("_UI_ControlValidationTemplate_errorOverlayURL_feature"),
-				getString("_UI_PropertyDescriptor_description",
-					"_UI_ControlValidationTemplate_errorOverlayURL_feature", "_UI_ControlValidationTemplate_type"),
+				getString("_UI_ControlValidationTemplate_errorOverlayURL_feature"), //$NON-NLS-1$
+				getString(
+					"_UI_PropertyDescriptor_description", "_UI_ControlValidationTemplate_errorOverlayURL_feature", "_UI_ControlValidationTemplate_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				VTTemplatePackage.Literals.CONTROL_VALIDATION_TEMPLATE__ERROR_OVERLAY_URL,
 				true,
 				false,
@@ -402,13 +414,14 @@ public class ControlValidationTemplateItemProvider
 	 */
 	protected void addCancelColorHEXPropertyDescriptor(Object object)
 	{
-		itemPropertyDescriptors.add
+		itemPropertyDescriptors
+			.add
 			(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
-				getString("_UI_ControlValidationTemplate_cancelColorHEX_feature"),
-				getString("_UI_PropertyDescriptor_description", "_UI_ControlValidationTemplate_cancelColorHEX_feature",
-					"_UI_ControlValidationTemplate_type"),
+				getString("_UI_ControlValidationTemplate_cancelColorHEX_feature"), //$NON-NLS-1$
+				getString(
+					"_UI_PropertyDescriptor_description", "_UI_ControlValidationTemplate_cancelColorHEX_feature", "_UI_ControlValidationTemplate_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				VTTemplatePackage.Literals.CONTROL_VALIDATION_TEMPLATE__CANCEL_COLOR_HEX,
 				true,
 				false,
@@ -427,13 +440,14 @@ public class ControlValidationTemplateItemProvider
 	 */
 	protected void addCancelImageURLPropertyDescriptor(Object object)
 	{
-		itemPropertyDescriptors.add
+		itemPropertyDescriptors
+			.add
 			(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
-				getString("_UI_ControlValidationTemplate_cancelImageURL_feature"),
-				getString("_UI_PropertyDescriptor_description", "_UI_ControlValidationTemplate_cancelImageURL_feature",
-					"_UI_ControlValidationTemplate_type"),
+				getString("_UI_ControlValidationTemplate_cancelImageURL_feature"), //$NON-NLS-1$
+				getString(
+					"_UI_PropertyDescriptor_description", "_UI_ControlValidationTemplate_cancelImageURL_feature", "_UI_ControlValidationTemplate_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				VTTemplatePackage.Literals.CONTROL_VALIDATION_TEMPLATE__CANCEL_IMAGE_URL,
 				true,
 				false,
@@ -452,13 +466,14 @@ public class ControlValidationTemplateItemProvider
 	 */
 	protected void addCancelOverlayURLPropertyDescriptor(Object object)
 	{
-		itemPropertyDescriptors.add
+		itemPropertyDescriptors
+			.add
 			(createItemPropertyDescriptor
 			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
-				getString("_UI_ControlValidationTemplate_cancelOverlayURL_feature"),
-				getString("_UI_PropertyDescriptor_description",
-					"_UI_ControlValidationTemplate_cancelOverlayURL_feature", "_UI_ControlValidationTemplate_type"),
+				getString("_UI_ControlValidationTemplate_cancelOverlayURL_feature"), //$NON-NLS-1$
+				getString(
+					"_UI_PropertyDescriptor_description", "_UI_ControlValidationTemplate_cancelOverlayURL_feature", "_UI_ControlValidationTemplate_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				VTTemplatePackage.Literals.CONTROL_VALIDATION_TEMPLATE__CANCEL_OVERLAY_URL,
 				true,
 				false,
@@ -478,7 +493,7 @@ public class ControlValidationTemplateItemProvider
 	@Override
 	public Object getImage(Object object)
 	{
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/ControlValidationTemplate"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/ControlValidationTemplate")); //$NON-NLS-1$
 	}
 
 	/**
@@ -493,8 +508,8 @@ public class ControlValidationTemplateItemProvider
 	{
 		String label = ((VTControlValidationTemplate) object).getOkColorHEX();
 		return label == null || label.length() == 0 ?
-			getString("_UI_ControlValidationTemplate_type") :
-			getString("_UI_ControlValidationTemplate_type") + " " + label;
+			getString("_UI_ControlValidationTemplate_type") : //$NON-NLS-1$
+			getString("_UI_ControlValidationTemplate_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

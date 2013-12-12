@@ -79,7 +79,7 @@ public class AttachmentItemProvider
 	@Override
 	public String getText(Object object)
 	{
-		return getString("_UI_Attachment_type");
+		return getString("_UI_Attachment_type"); //$NON-NLS-1$
 	}
 
 	/**

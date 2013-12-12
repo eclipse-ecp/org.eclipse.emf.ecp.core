@@ -10,7 +10,7 @@
    <extension
          point="org.eclipse.emf.ecp.view.context.viewServices">
       <viewService
-            class="org.eclipse.emf.ecp.view.internal.rule.RuleServiceHelper">
+            class="org.eclipse.emf.ecp.view.internal.rule.RuleServiceHelperImpl">
       </viewService>
    </extension>
 

@@ -4,9 +4,9 @@
     modelDirectory="/org.eclipse.emf.ecp.view.categorization.model/src" modelPluginID="org.eclipse.emf.ecp.view.categorization.model"
     templateDirectory="" redirection="" modelName="Categorization" modelPluginClass=""
     editPluginClass="org.eclipse.emf.ecp.view.spi.categorization.model.provider.CategorizationEditPlugin"
-    rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" codeFormatting="true"
-    commentFormatting="true" importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0"
-    copyrightFields="false" usedGenPackages="../../org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model"
+    nonNLSMarkers="true" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    codeFormatting="true" commentFormatting="true" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="5.0" copyrightFields="false" usedGenPackages="../../org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model"
     interfaceNamePattern="V{0}" classNamePattern="V{0}Impl" importOrganizing="true">
   <foreignModel>categorization.ecore</foreignModel>
   <genPackages prefix="Categorization" basePackage="org.eclipse.emf.ecp.view.spi"

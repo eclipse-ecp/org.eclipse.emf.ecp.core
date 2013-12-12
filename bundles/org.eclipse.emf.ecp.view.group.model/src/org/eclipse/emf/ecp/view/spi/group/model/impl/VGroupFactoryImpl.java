@@ -79,7 +79,7 @@ public class VGroupFactoryImpl extends EFactoryImpl implements VGroupFactory
 		case VGroupPackage.GROUP:
 			return createGroup();
 		default:
-			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 

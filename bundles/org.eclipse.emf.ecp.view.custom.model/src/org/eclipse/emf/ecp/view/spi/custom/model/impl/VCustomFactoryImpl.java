@@ -24,6 +24,7 @@ import org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference;
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Factory</b>.
  * <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class VCustomFactoryImpl extends EFactoryImpl implements VCustomFactory {
@@ -31,16 +32,17 @@ public class VCustomFactoryImpl extends EFactoryImpl implements VCustomFactory {
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public static VCustomFactory init() {
 		try {
-			VCustomFactory theCustomFactory = (VCustomFactory)EPackage.Registry.INSTANCE.getEFactory(VCustomPackage.eNS_URI);
+			VCustomFactory theCustomFactory = (VCustomFactory) EPackage.Registry.INSTANCE
+				.getEFactory(VCustomPackage.eNS_URI);
 			if (theCustomFactory != null) {
 				return theCustomFactory;
 			}
-		}
-		catch (Exception exception) {
+		} catch (Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new VCustomFactoryImpl();
@@ -50,6 +52,7 @@ public class VCustomFactoryImpl extends EFactoryImpl implements VCustomFactory {
 	 * Creates an instance of the factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public VCustomFactoryImpl() {
@@ -59,20 +62,23 @@ public class VCustomFactoryImpl extends EFactoryImpl implements VCustomFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE: return createHardcodedDomainModelReference();
-			default:
-				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+		case VCustomPackage.HARDCODED_DOMAIN_MODEL_REFERENCE:
+			return createHardcodedDomainModelReference();
+		default:
+			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public VHardcodedDomainModelReference createHardcodedDomainModelReference() {
@@ -83,15 +89,17 @@ public class VCustomFactoryImpl extends EFactoryImpl implements VCustomFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public VCustomPackage getCustomPackage() {
-		return (VCustomPackage)getEPackage();
+		return (VCustomPackage) getEPackage();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @deprecated
 	 * @generated
 	 */

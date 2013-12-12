@@ -170,7 +170,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (diagnostics: ");
+		result.append(" (diagnostics: "); //$NON-NLS-1$
 		result.append(diagnostics);
 		result.append(')');
 		return result.toString();

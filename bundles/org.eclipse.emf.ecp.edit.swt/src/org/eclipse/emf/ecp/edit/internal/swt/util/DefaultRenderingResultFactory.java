@@ -11,8 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.util;
 
-import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRow;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRowFactory;
+import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
+import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRowFactory;
 import org.eclipse.swt.widgets.Control;
 
 /**
@@ -24,7 +24,7 @@ public final class DefaultRenderingResultFactory implements RenderingResultRowFa
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.internal.ui.view.renderer.RenderingResultRowFactory#createRenderingResultRow(org.eclipse.swt.widgets.Control[])
+	 * @see org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRowFactory#createRenderingResultRow(org.eclipse.swt.widgets.Control[])
 	 */
 	public RenderingResultRow<Control> createRenderingResultRow(Control... controls) {
 		if (controls == null) {

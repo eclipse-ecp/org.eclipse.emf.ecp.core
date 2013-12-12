@@ -13,7 +13,7 @@ package org.eclipse.emf.ecp.edit.spi;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecp.view.context.ViewModelService;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 
 /**
  * @author Eugen Neufeld

@@ -15,7 +15,7 @@ package org.eclipse.emf.ecp.edit.internal.swt.util;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.view.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 
 /**
  * A common super interface for all CellEditors contributed to ECP.

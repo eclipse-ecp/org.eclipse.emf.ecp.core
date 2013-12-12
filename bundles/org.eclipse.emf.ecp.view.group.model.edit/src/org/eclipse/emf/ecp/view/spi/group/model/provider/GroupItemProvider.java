@@ -78,7 +78,7 @@ public class GroupItemProvider
 	@Override
 	public Object getImage(Object object)
 	{
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Group"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Group")); //$NON-NLS-1$
 	}
 
 	/**
@@ -93,8 +93,8 @@ public class GroupItemProvider
 	{
 		String label = ((VGroup) object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_Group_type") :
-			getString("_UI_Group_type") + " " + label;
+			getString("_UI_Group_type") : //$NON-NLS-1$
+			getString("_UI_Group_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

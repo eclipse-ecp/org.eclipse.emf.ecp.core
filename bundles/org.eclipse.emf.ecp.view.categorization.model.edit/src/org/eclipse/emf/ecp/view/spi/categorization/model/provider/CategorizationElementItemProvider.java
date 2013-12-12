@@ -124,7 +124,7 @@ public class CategorizationElementItemProvider
 	@Override
 	public Object getImage(Object object)
 	{
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/CategorizationElement"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/CategorizationElement")); //$NON-NLS-1$
 	}
 
 	/**
@@ -139,7 +139,7 @@ public class CategorizationElementItemProvider
 	{
 		final String label = ((VCategorizationElement) object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_CategorizationElement_type") : label;
+			getString("_UI_CategorizationElement_type") : label; //$NON-NLS-1$
 	}
 
 	/**

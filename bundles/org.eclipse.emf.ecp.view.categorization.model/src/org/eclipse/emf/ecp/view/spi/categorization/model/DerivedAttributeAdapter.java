@@ -50,8 +50,14 @@ public class DerivedAttributeAdapter extends AdapterImpl {
 		}
 	};
 
-	/*
-	 * Convenience constructor for a local and navigated dependency
+	/**
+	 * Convenience constructor for a local and navigated dependency.
+	 * 
+	 * @param source the source {@link EObject}
+	 * @param derivedFeature the derived {@link EStructuralFeature}
+	 * @param navigationFeature the feature used for navigation
+	 * @param dependantFeature the {@link EStructuralFeature} being derived
+	 * @param localFeature the local {@link EStructuralFeature} being derived
 	 */
 	public DerivedAttributeAdapter(EObject source, EStructuralFeature derivedFeature,
 		EStructuralFeature navigationFeature, EStructuralFeature dependantFeature, EStructuralFeature localFeature) {
@@ -60,8 +66,13 @@ public class DerivedAttributeAdapter extends AdapterImpl {
 		addLocalDependency(localFeature);
 	}
 
-	/*
-	 * Convenience constructor for a navigated dependency
+	/**
+	 * Convenience constructor for a navigated dependency.
+	 * 
+	 * @param source the source {@link EObject}
+	 * @param derivedFeature the derived {@link EStructuralFeature}
+	 * @param navigationFeature the feature used for navigation
+	 * @param dependantFeature the {@link EStructuralFeature} being derived
 	 */
 	public DerivedAttributeAdapter(EObject source, EStructuralFeature derivedFeature,
 		EStructuralFeature navigationFeature, EStructuralFeature dependantFeature) {
@@ -69,8 +80,12 @@ public class DerivedAttributeAdapter extends AdapterImpl {
 		addNavigatedDependency(navigationFeature, dependantFeature);
 	}
 
-	/*
-	 * Convenience constructor for a local dependency
+	/**
+	 * Convenience constructor for a local dependency.
+	 * 
+	 * @param source the source {@link EObject}
+	 * @param derivedFeature the derived {@link EStructuralFeature}
+	 * @param localFeature the local {@link EStructuralFeature} being derived
 	 */
 	public DerivedAttributeAdapter(EObject source, EStructuralFeature derivedFeature,
 		EStructuralFeature localFeature) {
@@ -78,6 +93,12 @@ public class DerivedAttributeAdapter extends AdapterImpl {
 		addLocalDependency(localFeature);
 	}
 
+	/**
+	 * Constructor with source object and the derived feature.
+	 * 
+	 * @param source the source {@link EObject}
+	 * @param derivedFeature the derived {@link EStructuralFeature}
+	 */
 	public DerivedAttributeAdapter(EObject source, EStructuralFeature derivedFeature) {
 		super();
 		this.source = (InternalEObject) source;
@@ -85,12 +106,23 @@ public class DerivedAttributeAdapter extends AdapterImpl {
 		source.eAdapters().add(this);
 	}
 
+	/**
+	 * Adds a navigated dependency for a derived feature.
+	 * 
+	 * @param navigationFeature the feature used for navigation
+	 * @param dependantFeature the {@link EStructuralFeature} being derived
+	 */
 	public void addNavigatedDependency(EStructuralFeature navigationFeature,
 		EStructuralFeature dependantFeature) {
 		this.dependantFeature = dependantFeature;
 		this.navigationFeature = navigationFeature;
 	}
 
+	/**
+	 * Adds a local dependency for a derived feature.
+	 * 
+	 * @param localFeature the local {@link EStructuralFeature} being derived
+	 */
 	public void addLocalDependency(EStructuralFeature localFeature) {
 		localFeatures.add(localFeature);
 	}

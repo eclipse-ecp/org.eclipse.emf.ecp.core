@@ -15,15 +15,15 @@ package org.eclipse.emf.ecp.view.custom.ui.swt.test;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 
-import org.eclipse.emf.ecp.internal.ui.view.renderer.NoPropertyDescriptorFoundExeption;
-import org.eclipse.emf.ecp.internal.ui.view.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomFactory;
 import org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
+import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.SWTViewTestHelper;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
@@ -141,7 +141,7 @@ public class SWTCustomControlTest {
 		customControl.setDomainModelReference(domainModelReference);
 
 		final Fan domainModel = BowlingFactory.eINSTANCE.createFan();
-		new ViewModelContextImpl(view, domainModel);
+		ViewModelContextFactory.INSTANCE.createViewModelContext(view, domainModel);
 
 		assertNotNull(domainModel.getFavouriteMerchandise());
 	}

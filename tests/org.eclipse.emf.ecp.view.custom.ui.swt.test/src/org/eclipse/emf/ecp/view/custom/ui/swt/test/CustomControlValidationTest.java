@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.view.custom.ui.swt.test;
 import static org.junit.Assert.assertEquals;
 
 import org.eclipse.emf.common.util.Diagnostic;
-import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomFactory;
 import org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -57,7 +57,7 @@ public class CustomControlValidationTest {
 		final Player player = BowlingFactory.eINSTANCE.createPlayer();
 		player.getEMails().add("bla");
 
-		new ViewModelContextImpl(view, player);
+		ViewModelContextFactory.INSTANCE.createViewModelContext(view, player);
 
 		assertEquals("Severity must be ok", Diagnostic.OK, modelControl.getDiagnostic().getHighestSeverity());
 	}
@@ -66,7 +66,7 @@ public class CustomControlValidationTest {
 	public void testValidateOnInitInvalid() {
 		final Player player = BowlingFactory.eINSTANCE.createPlayer();
 
-		new ViewModelContextImpl(view, player);
+		ViewModelContextFactory.INSTANCE.createViewModelContext(view, player);
 		assertEquals("Severity must be error", Diagnostic.ERROR, modelControl.getDiagnostic().getHighestSeverity());
 	}
 
@@ -75,7 +75,7 @@ public class CustomControlValidationTest {
 		final Player player = BowlingFactory.eINSTANCE.createPlayer();
 		player.getEMails().add("bla");
 
-		new ViewModelContextImpl(view, player);
+		ViewModelContextFactory.INSTANCE.createViewModelContext(view, player);
 		player.getEMails().clear();
 		assertEquals("Severity must be error", Diagnostic.ERROR, modelControl.getDiagnostic().getHighestSeverity());
 	}
@@ -84,7 +84,7 @@ public class CustomControlValidationTest {
 	public void testValidateChangeInvalidToValid() {
 		final Player player = BowlingFactory.eINSTANCE.createPlayer();
 
-		new ViewModelContextImpl(view, player);
+		ViewModelContextFactory.INSTANCE.createViewModelContext(view, player);
 		player.getEMails().add("bla");
 		assertEquals("Severity must be ok", Diagnostic.OK, modelControl.getDiagnostic().getHighestSeverity());
 

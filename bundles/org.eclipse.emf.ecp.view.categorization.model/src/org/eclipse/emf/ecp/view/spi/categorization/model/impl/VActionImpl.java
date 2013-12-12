@@ -246,9 +246,9 @@ public class VActionImpl extends MinimalEObjectImpl.Container implements VAction
 			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (bundle: ");
+		result.append(" (bundle: "); //$NON-NLS-1$
 		result.append(bundle);
-		result.append(", className: ");
+		result.append(", className: "); //$NON-NLS-1$
 		result.append(className);
 		result.append(')');
 		return result.toString();

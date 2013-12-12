@@ -23,7 +23,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecp.view.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.dynamictree.model.DomainIntermediate;
 import org.eclipse.emf.ecp.view.dynamictree.model.DomainRoot;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem;
@@ -34,6 +33,7 @@ import org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage;
 import org.eclipse.emf.ecp.view.dynamictree.model.TestElement;
 import org.eclipse.emf.ecp.view.dynamictree.model.TestElementContainer;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VAction;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
@@ -93,7 +93,7 @@ public class DynamicContainmentTreeTest {
 		viewControl.setDomainModelReference(createFeaturePathDomainModelReference);
 		tree.setComposite(viewControl);
 
-		new ViewModelContextImpl(tree, root);
+		ViewModelContextFactory.INSTANCE.createViewModelContext(tree, root);
 		// node = NodeBuilders.INSTANCE.build(tree, new DynamicContainmentTreeTestEditContext(
 		// root, new ViewModelContextImpl(tree, root)));
 	}

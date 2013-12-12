@@ -25,7 +25,7 @@ import org.eclipse.emf.ecp.edit.internal.swt.controls.NumericalHelper;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.edit.spi.ViewLocaleService;
-import org.eclipse.emf.ecp.view.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.CellEditorProperties;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
@@ -59,7 +59,7 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 	 * {@inheritDoc}
 	 * 
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#instantiate(org.eclipse.emf.ecore.EStructuralFeature,
-	 *      org.eclipse.emf.ecp.view.context.ViewModelContext)
+	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	public void instantiate(EStructuralFeature eStructuralFeature, ViewModelContext viewModelContext) {
 		this.eStructuralFeature = eStructuralFeature;

@@ -3,55 +3,15 @@ Bundle-ManifestVersion: 2
 Bundle-Name: MPI UI View
 Bundle-SymbolicName: org.eclipse.emf.ecp.ui.view;singleton:=true
 Bundle-Version: 1.1.1.qualifier
-Bundle-Activator: org.eclipse.emf.ecp.internal.ui.view.Activator
+Bundle-Activator: org.eclipse.emf.ecp.view.internal.ui.Activator
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.emf.ecp.view.model;bundle-version="[1.1.0,2.0.0)";visibility:=reexport,
  org.eclipse.emf.ecp.view.context;bundle-version="[1.1.0,2.0.0)";visibility:=reexport,
  org.eclipse.emf.ecp.edit;bundle-version="1.1.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: org.eclipse.emf.ecp.internal.ui.view;version="1.1.0";
-  x-friends:="org.eclipse.emf.ecp.explorereditorbridge,
-   org.eclipse.emf.ecp.ui.view.swt,
-   org.eclipse.emf.ecp.ui.view.test,
-   org.eclipse.emf.ecp.view.groupedgrid.ui.swt,
-   org.eclipse.emf.ecp.view.model.provider.generator,
-   org.eclipse.emf.ecp.view.model.provider.xmi,
-   org.eclipse.emf.ecp.view.dynamictree.model.test,
-   org.eclipse.emf.ecp.view.dynamictree.ui,
-   org.eclipse.emf.ecp.view.ui.editor.test",
- org.eclipse.emf.ecp.internal.ui.view.renderer;version="1.1.0";
-  x-friends:="org.eclipse.emf.ecp.ui.view.swt,
-   org.eclipse.emf.ecp.ui.view.swt.test,
-   org.eclipse.emf.ecp.ui.view.test,
-   org.eclipse.emf.ecp.view.custom.ui,
-   org.eclipse.emf.ecp.view.custom.ui.swt,
-   org.eclipse.emf.ecp.view.custom.ui.swt.test,
-   org.eclipse.emf.ecp.view.customcomposite.ui.swt.test,
-   org.eclipse.emf.ecp.view.customcomposite.ui.test,
-   org.eclipse.emf.ecp.view.group.ui.swt,
-   org.eclipse.emf.ecp.view.group.ui.swt.test,
-   org.eclipse.emf.ecp.view.group.ui.test,
-   org.eclipse.emf.ecp.view.groupedgrid.ui,
-   org.eclipse.emf.ecp.view.groupedgrid.ui.swt,
-   org.eclipse.emf.ecp.view.horizontal.ui.swt.test,
-   org.eclipse.emf.ecp.view.horizontal.ui.test,
-   org.eclipse.emf.ecp.view.label.ui.swt,
-   org.eclipse.emf.ecp.view.rule.test,
-   org.eclipse.emf.ecp.view.rule.ui.swt.test,
-   org.eclipse.emf.ecp.view.separator.ui.swt,
-   org.eclipse.emf.ecp.view.separator.ui.swt.test,
-   org.eclipse.emf.ecp.view.separator.ui.test,
-   org.eclipse.emf.ecp.view.table.ui.swt.test,
-   org.eclipse.emf.ecp.view.table.ui.test,
-   org.eclipse.emf.ecp.view.test.common.swt,
-   org.eclipse.emf.ecp.view.ui.editor.test,
-   org.eclipse.emf.ecp.view.vertical.ui.swt.test,
-   org.eclipse.emf.ecp.view.vertical.ui.test,
-   org.eclipse.emf.ecp.view.dynamictree.model.test,
-   org.eclipse.emf.ecp.view.custom.ui.swt.example,
-   org.eclipse.emf.ecp.edit.swt,
-   org.eclipse.emf.ecp.view.dynamictree.ui,
-   org.eclipse.emf.ecp.view.dynamictree.ui.swt",
- org.eclipse.emf.ecp.ui.view;version="1.1.0"
+Export-Package: org.eclipse.emf.ecp.ui.view;version="1.1.1",
+ org.eclipse.emf.ecp.view.internal.ui;version="1.1.1";x-internal:=true,
+ org.eclipse.emf.ecp.view.spi.provider;version="1.1.1",
+ org.eclipse.emf.ecp.view.spi.renderer;version="1.1.1"
 Bundle-Vendor: Eclipse Modeling Project

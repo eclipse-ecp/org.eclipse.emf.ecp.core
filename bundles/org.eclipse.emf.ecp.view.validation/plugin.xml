@@ -5,7 +5,7 @@
    <extension
          point="org.eclipse.emf.ecp.view.context.viewServices">
       <viewService
-            class="org.eclipse.emf.ecp.view.validation.ValidationService">
+            class="org.eclipse.emf.ecp.view.internal.validation.ValidationService">
       </viewService>
    </extension>
    

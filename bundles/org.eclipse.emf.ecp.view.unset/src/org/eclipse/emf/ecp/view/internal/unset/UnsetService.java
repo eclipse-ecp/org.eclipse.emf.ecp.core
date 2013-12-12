@@ -24,10 +24,10 @@ import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecp.view.context.ModelChangeNotification;
-import org.eclipse.emf.ecp.view.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.context.ViewModelContext.ModelChangeListener;
-import org.eclipse.emf.ecp.view.context.ViewModelService;
+import org.eclipse.emf.ecp.view.spi.context.ModelChangeNotification;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
@@ -42,6 +42,9 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * 
  */
 public class UnsetService implements ViewModelService {
+
+	private static final String DOMAIN_MODEL_NULL_EXCEPTION = "Domain model must not be null."; //$NON-NLS-1$
+	private static final String VIEW_MODEL_NULL_EXCEPTION = "View model must not be null."; //$NON-NLS-1$
 
 	private ViewModelContext context;
 	private ModelChangeListener viewChangeListener;
@@ -67,7 +70,7 @@ public class UnsetService implements ViewModelService {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.context.ViewModelService#instantiate(org.eclipse.emf.ecp.view.context.ViewModelContext)
+	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#instantiate(org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	public void instantiate(ViewModelContext context) {
 		this.context = context;
@@ -98,12 +101,12 @@ public class UnsetService implements ViewModelService {
 
 		final VElement view = context.getViewModel();
 		if (view == null) {
-			throw new IllegalStateException("View model must not be null");
+			throw new IllegalStateException(VIEW_MODEL_NULL_EXCEPTION);
 		}
 
 		final EObject domainModel = context.getDomainModel();
 		if (domainModel == null) {
-			throw new IllegalStateException("Domain model must not be null");
+			throw new IllegalStateException(DOMAIN_MODEL_NULL_EXCEPTION);
 		}
 
 		initMaps(view, false);
@@ -267,7 +270,7 @@ public class UnsetService implements ViewModelService {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.context.ViewModelService#dispose()
+	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#dispose()
 	 */
 	public void dispose() {
 		context.unregisterViewChangeListener(viewChangeListener);
@@ -276,7 +279,7 @@ public class UnsetService implements ViewModelService {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.context.ViewModelService#getPriority()
+	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#getPriority()
 	 */
 	public int getPriority() {
 		return 5;
