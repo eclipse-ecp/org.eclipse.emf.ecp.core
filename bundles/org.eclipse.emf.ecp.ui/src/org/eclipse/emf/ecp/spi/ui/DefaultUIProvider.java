@@ -12,15 +12,12 @@
 package org.eclipse.emf.ecp.spi.ui;
 
 import java.io.IOException;
-import java.lang.reflect.AccessibleObject;
-import java.lang.reflect.Field;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -34,6 +31,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecp.common.ChildrenDescriptorCollector;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
@@ -46,12 +44,9 @@ import org.eclipse.emf.ecp.internal.ui.Activator;
 import org.eclipse.emf.ecp.internal.ui.composites.PropertiesComposite;
 import org.eclipse.emf.ecp.internal.ui.util.ECPHandlerHelper;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
-import org.eclipse.emf.edit.EMFEditPlugin;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emf.edit.provider.IChildCreationExtender;
-import org.eclipse.emf.edit.provider.IChildCreationExtender.Descriptor;
 import org.eclipse.emf.edit.ui.action.CreateChildAction;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 import org.eclipse.jface.action.Action;
@@ -220,42 +215,8 @@ public class DefaultUIProvider extends Element implements UIProvider {
 			populateNewRoot(resource, manager);
 		} else if (element instanceof EObject) {
 			final EditingDomain domain = project.getEditingDomain();
-			final Collection<?> descriptors = domain.getNewChildDescriptors(element, null);
-			final EObject eObject = (EObject) element;
-			final Set<String> alreadyReadNameSpaces = new LinkedHashSet<String>();
-			alreadyReadNameSpaces.add(eObject.eClass().getEPackage().getNsURI());
-			for (final EClass eClass : eObject.eClass().getEAllSuperTypes()) {
-				final String namespace = eClass.getEPackage().getNsURI();
-				if (alreadyReadNameSpaces.contains(namespace)) {
-					continue;
-				}
-				for (final Descriptor descriptor : EMFEditPlugin.getChildCreationExtenderDescriptorRegistry()
-					.getDescriptors(namespace)) {
-					final IChildCreationExtender createChildCreationExtender = descriptor.createChildCreationExtender();
-					try {
-						final Field declaredField = descriptor.getClass().getDeclaredField("contributor");
-						AccessibleObject.setAccessible(new AccessibleObject[] { declaredField }, true);
-						final String value = (String) declaredField.get(descriptor);
-						if (value.startsWith(eObject.eClass().getEPackage().getNsPrefix())) {
-							continue;
-						}
-					} catch (final NoSuchFieldException ex) {
-						Activator.log(ex);
-						continue;
-					} catch (final IllegalArgumentException ex) {
-						Activator.log(ex);
-						continue;
-					} catch (final IllegalAccessException ex) {
-						Activator.log(ex);
-						continue;
-					}
-					final Collection newChildDescriptors = createChildCreationExtender
-						.getNewChildDescriptors(eObject, domain);
-					descriptors.addAll(newChildDescriptors);
-				}
-				alreadyReadNameSpaces.add(namespace);
-			}
-
+			final ChildrenDescriptorCollector childrenDescriptorCollector = new ChildrenDescriptorCollector();
+			final Collection<?> descriptors = childrenDescriptorCollector.getDescriptors((EObject) element);
 			if (descriptors != null) {
 				fillContextMenuWithDescriptors(manager, descriptors, domain, element, project);
 			}

@@ -15,21 +15,27 @@ package org.eclipse.emf.ecp.view.spi.core.swt;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPControlSWT;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTRenderingHelper;
 import org.eclipse.emf.ecp.edit.spi.ECPAbstractControl;
 import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
 import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
+import org.eclipse.emf.ecp.view.spi.context.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
@@ -67,8 +73,8 @@ public class SWTControlRenderer extends AbstractSWTRenderer<VControl> {
 	 *      org.eclipse.emf.ecp.view.spi.model.VElement, org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	@Override
-	protected List<RenderingResultRow<Control>> renderModel(Composite parent, VControl vControl,
-		ViewModelContext viewContext) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+	protected List<RenderingResultRow<Control>> renderModel(final Composite parent, final VControl vControl,
+		final ViewModelContext viewContext) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		final ECPControlFactory controlFactory = Activator.getDefault().getECPControlFactory();
 
 		if (controlFactory == null) {
@@ -119,15 +125,48 @@ public class SWTControlRenderer extends AbstractSWTRenderer<VControl> {
 				control.setEditable(vControl.isEnabled());
 			}
 
-			List<RenderingResultRow<org.eclipse.swt.widgets.Control>> result = new ArrayList<RenderingResultRow<org.eclipse.swt.widgets.Control>>();
+			final List<RenderingResultRow<org.eclipse.swt.widgets.Control>> result = new ArrayList<RenderingResultRow<org.eclipse.swt.widgets.Control>>();
 			final Control next = createControls.iterator().next().getControls().iterator().next();
 			if (label != null) {
 				result.add(SWTRenderingHelper.INSTANCE.getResultRowFactory()
 					.createRenderingResultRow(label, next));
 			}
 			else {
-				result = createControls;
+				result.addAll(createControls);
 			}
+
+			final ModelChangeListener listener = new ModelChangeListener() {
+
+				public void notifyRemove(Notifier notifier) {
+					// TODO Auto-generated method stub
+
+				}
+
+				public void notifyChange(ModelChangeNotification notification) {
+					if (notification.getNotifier() != vControl) {
+						return;
+					}
+					if (notification.getStructuralFeature() == VViewPackage.eINSTANCE.getElement_Visible()) {
+						applyVisible(vControl, result);
+					}
+				}
+
+				public void notifyAdd(Notifier notifier) {
+					// TODO Auto-generated method stub
+
+				}
+			};
+			viewContext.registerViewChangeListener(listener);
+			parent.addDisposeListener(new DisposeListener() {
+
+				private static final long serialVersionUID = 1L;
+
+				public void widgetDisposed(DisposeEvent e) {
+					viewContext.unregisterViewChangeListener(listener);
+				}
+			});
+			applyVisible(vControl, result);
+
 			return result;
 
 		}

@@ -16,3 +16,5 @@ Require-Bundle: org.junit;bundle-version="[4.0.0,5.0.0)",
  org.eclipse.emf.ecp.view.table.model;bundle-version="1.0.0",
  org.eclipse.emf.ecp.view.categorization.model;bundle-version="1.1.0"
 Export-Package: org.eclipse.emf.ecp.view.model.integrationtest;version="1.1.0";x-internal:=true
+Import-Package: org.eclipse.emf.ecp.common
+

@@ -14,9 +14,13 @@ package org.eclipse.emf.ecp.view.model.integrationtest;
 import static org.junit.Assert.assertEquals;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecp.common.ChildrenDescriptorCollector;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage;
 import org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage;
 import org.eclipse.emf.ecp.view.spi.groupedgrid.model.VGroupedGridPackage;
@@ -45,9 +49,8 @@ public class ChildrenDescriptorExtensionTest {
 	private static final int NUMBER_OF_COMPOSITES = NUMBER_OF_MAIN_COMPOSITES + NUMBER_OF_EXTERNAL_COMPOSITES;
 	// categorization, category
 	private static final int NUMBER_OF_CATEGORIZATIONS = 2;
-	// TODO: Should be not -3, span and rules are missing
 	private static final int CATEGORIZATION_CHILD_COUNT = ABSTRACTCATEGORIZATION_CHILD_COUNT
-		+ NUMBER_OF_CATEGORIZATIONS - 3;
+		+ NUMBER_OF_CATEGORIZATIONS;
 	private static final int COMPOSITECOLLECTION_CHILD_COUNT = COMPOSITE_CHILD_COUNT + NUMBER_OF_COMPOSITES;
 	private static final int VIEW_CHILD_COUNT = NUMBER_OF_COMPOSITES + RENDERABLE_CHILD_COUNT;
 	private static final int SHOWRULE_CHILD_COUNT = 3;
@@ -57,30 +60,25 @@ public class ChildrenDescriptorExtensionTest {
 	private static final int ANDCONDITION_CHILD_COUNT = 3;
 	// TODO: Should be not -10, labels, groupedgrid, span, 2 rules, vertical, horizontal, separator,table, group
 	// are missing
-	private static final int CATEGORY_CHILD_COUNT = NUMBER_OF_COMPOSITES + ABSTRACTCATEGORIZATION_CHILD_COUNT - 10;
+	// TODO: upper hierarchy is missing, can't find children
+	private static final int CATEGORY_CHILD_COUNT = NUMBER_OF_COMPOSITES + ABSTRACTCATEGORIZATION_CHILD_COUNT - 10 + 3;
 	// VDomainModelReference -> VFeaturePathDR, VPredefinedDR, VTableDR
 	private static final int CONTROL_CHILD_COUNT = COMPOSITE_CHILD_COUNT + 3;
-	// TODO: Should be not -4, span and rules are missing, VPredefinedDR missing
-	private static final int TABLECONTROL_CHILD_COUNT = CONTROL_CHILD_COUNT + 1 - 4;
+	private static final int TABLECONTROL_CHILD_COUNT = CONTROL_CHILD_COUNT + 1;
 	private static final int TABLECOLUMN_CHILD_COUNT = 0;
-	// TODO: Should be not -3, span and rules are missing
-	private static final int SEPARATOR_CHILD_COUNT = RENDERABLE_CHILD_COUNT - 3;
+	private static final int SEPARATOR_CHILD_COUNT = RENDERABLE_CHILD_COUNT;
 	private static final int COLUMNCOMPOSITE_CHILD_COUNT = COMPOSITECOLLECTION_CHILD_COUNT;
 	private static final int COLUMN_CHILD_COUNT = COMPOSITECOLLECTION_CHILD_COUNT;
-	// TODO: Should be not -10, labels, groupedgrid, span, 2 rules, vertical, horizontal, separator,table,
-	// categorizationelement
-	// are missing
-	private static final int GROUP_CHILD_COUNT = COMPOSITECOLLECTION_CHILD_COUNT - 10;
+	private static final int GROUP_CHILD_COUNT = COMPOSITECOLLECTION_CHILD_COUNT;
 	private static final int ACTION_CHILD_COUNT = 0;
-	// TODO: Should be not -2, rules are missing
-	private static final int GROUPEDGRID_CHILD_COUNT = RENDERABLE_CHILD_COUNT + 1 - 2;
+	private static final int GROUPEDGRID_CHILD_COUNT = RENDERABLE_CHILD_COUNT + 1;
 	private static final int GRIDEDGROUP_CHILD_COUNT = 1;
 	// TODO: Should be not -7, labels, group, vertical, horizontal, separator ,table,categorizationelement are missing
+	// TODO: upper hierarchy is missing, can't find children
 	private static final int GRIDEDGROUPROW_CHILD_COUNT = NUMBER_OF_COMPOSITES - 7;
 	private static final int GRIDEDGROUPSPAN_CHILD_COUNT = 0;
 
-	private final AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(new ComposedAdapterFactory(
-		ComposedAdapterFactory.Descriptor.Registry.INSTANCE), new BasicCommandStack());
+	private final ChildrenDescriptorCollector descriptorCollector = new ChildrenDescriptorCollector();
 
 	@Test
 	public void testGroupedGridChildDescriptors() {
@@ -243,8 +241,19 @@ public class ChildrenDescriptorExtensionTest {
 	 * @return
 	 */
 	private int getChildrenSize(EClass eClass) {
+		final EObject eObject = getEObjectWithResource(eClass);
+		return descriptorCollector.getDescriptors(eObject).size();
+	}
+
+	private EObject getEObjectWithResource(EClass eClass) {
 		final EObject eObject = EcoreUtil.create(eClass);
-		return domain.getNewChildDescriptors(eObject, null).size();
+		final AdapterFactoryEditingDomain adapterFactoryEditingDomain = new AdapterFactoryEditingDomain(
+			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE),
+			new BasicCommandStack());
+		final ResourceSet resourceSet = adapterFactoryEditingDomain.getResourceSet();
+		final Resource virtualResource = resourceSet.createResource(URI.createURI("VIRTUAL_URI"));
+		virtualResource.getContents().add(eObject);
+		return eObject;
 	}
 
 }

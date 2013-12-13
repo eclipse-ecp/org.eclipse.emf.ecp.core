@@ -77,6 +77,9 @@ public abstract class AbstractSWTRenderer<R extends VElement> {
 				if (notification.getNotifier() != vElement) {
 					return;
 				}
+				if (notification.getStructuralFeature() == VViewPackage.eINSTANCE.getElement_Visible()) {
+					applyVisible(vElement, result);
+				}
 				if (notification.getStructuralFeature() == VViewPackage.eINSTANCE.getElement_Enabled()
 					&& !vElement.isReadonly()) {
 					applyEnable(vElement, result);
@@ -114,7 +117,13 @@ public abstract class AbstractSWTRenderer<R extends VElement> {
 		}
 	}
 
-	private static void applyEnable(VElement vElement, List<RenderingResultRow<Control>> resultRows) {
+	/**
+	 * Allows implementers to set the whole result row to enabled.
+	 * 
+	 * @param vElement the current {@link VElement}
+	 * @param resultRows the list of {@link RenderingResultRow} elements to check
+	 */
+	protected static void applyEnable(VElement vElement, List<RenderingResultRow<Control>> resultRows) {
 		for (final RenderingResultRow<Control> row : resultRows) {
 			for (final Control control : row.getControls()) {
 				control.setEnabled(vElement.isEnabled());
@@ -122,7 +131,13 @@ public abstract class AbstractSWTRenderer<R extends VElement> {
 		}
 	}
 
-	private static void applyVisible(VElement vElement, List<RenderingResultRow<Control>> resultRows) {
+	/**
+	 * Allows implementers to check and set the visibility on the whole result row.
+	 * 
+	 * @param vElement the current {@link VElement}
+	 * @param resultRows the list of {@link RenderingResultRow} elements to check
+	 */
+	protected static void applyVisible(VElement vElement, List<RenderingResultRow<Control>> resultRows) {
 		for (final RenderingResultRow<Control> row : resultRows) {
 			for (final Control control : row.getControls()) {
 				final Object layoutData = control.getLayoutData();
