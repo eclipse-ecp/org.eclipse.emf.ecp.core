@@ -41,9 +41,9 @@ public class SelectModelElementCompositeImpl extends AbstractFilteredSelectionCo
 
 	private final Object input;
 
-	private ComposedAdapterFactory composedAdapterFactory;
+	private final ComposedAdapterFactory composedAdapterFactory;
 
-	private AdapterFactoryLabelProvider adapterFactoryLabelProvider;
+	private final AdapterFactoryLabelProvider adapterFactoryLabelProvider;
 
 	/**
 	 * Default Constructor for the SelectModelElementCompositeImpl.
@@ -60,11 +60,21 @@ public class SelectModelElementCompositeImpl extends AbstractFilteredSelectionCo
 		this.input = input;
 	}
 
-	private ILabelProvider getLabelProvider() {
+	/**
+	 * Returns the label provider.
+	 * 
+	 * @return the label provider
+	 */
+	protected ILabelProvider getLabelProvider() {
 		return adapterFactoryLabelProvider;
 	}
 
-	private Object getInput() {
+	/**
+	 * Returns the viewer input.
+	 * 
+	 * @return the input
+	 */
+	protected Object getInput() {
 		return input;
 	}
 
@@ -77,7 +87,7 @@ public class SelectModelElementCompositeImpl extends AbstractFilteredSelectionCo
 	/** {@inheritDoc} **/
 	@Override
 	protected TableViewer createViewer(Composite composite) {
-		TableViewer lv = new TableViewer(composite);
+		final TableViewer lv = new TableViewer(composite);
 		lv.setLabelProvider(getLabelProvider());
 		lv.setContentProvider(ArrayContentProvider.getInstance());
 		lv.setInput(getInput());
@@ -98,7 +108,7 @@ public class SelectModelElementCompositeImpl extends AbstractFilteredSelectionCo
 	 */
 	private final class ModelElementViewerFilter extends ECPViewerFilter {
 
-		private ILabelProvider labelProvider;
+		private final ILabelProvider labelProvider;
 
 		public ModelElementViewerFilter(ILabelProvider labelProvider) {
 			this.labelProvider = labelProvider;
@@ -113,24 +123,24 @@ public class SelectModelElementCompositeImpl extends AbstractFilteredSelectionCo
 				return false;
 			}
 			// TODO is this ok so?
-			EObject eObjectToFilter = (EObject) element;
+			final EObject eObjectToFilter = (EObject) element;
 
-			String eObjectName = labelProvider.getText(eObjectToFilter);
+			final String eObjectName = labelProvider.getText(eObjectToFilter);
 
 			String searchString = getSearchTerm();
 			if (!searchString.startsWith("*")) {
 				searchString = "*" + searchString + "*";
 			}
-			Pattern pattern = Pattern.compile(wildcardToRegex(searchString), Pattern.CASE_INSENSITIVE);
-			Matcher matcher = pattern.matcher(eObjectName);
+			final Pattern pattern = Pattern.compile(wildcardToRegex(searchString), Pattern.CASE_INSENSITIVE);
+			final Matcher matcher = pattern.matcher(eObjectName);
 			return matcher.matches();
 		}
 
 		private String wildcardToRegex(String wildcard) {
-			StringBuffer s = new StringBuffer(wildcard.length());
+			final StringBuffer s = new StringBuffer(wildcard.length());
 			s.append('^');
 			for (int i = 0, is = wildcard.length(); i < is; i++) {
-				char c = wildcard.charAt(i);
+				final char c = wildcard.charAt(i);
 				switch (c) {
 				case '*':
 					s.append(".*");

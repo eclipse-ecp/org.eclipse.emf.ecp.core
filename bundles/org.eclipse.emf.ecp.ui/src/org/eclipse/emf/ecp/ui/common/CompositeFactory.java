@@ -21,6 +21,7 @@ import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
 import org.eclipse.emf.ecp.internal.ui.composites.AddRepositoryCompositeImpl;
+import org.eclipse.emf.ecp.internal.ui.composites.CheckedEStructuralFeatureCompositeImpl;
 import org.eclipse.emf.ecp.internal.ui.composites.CheckedSelectModelClassCompositeImpl;
 import org.eclipse.emf.ecp.internal.ui.composites.CheckoutProjectCompositeImpl;
 import org.eclipse.emf.ecp.internal.ui.composites.CreateProjectCompositeImpl;
@@ -70,6 +71,16 @@ public final class CompositeFactory {
 
 	public static SelectionComposite<TableViewer> getTableSelectionComposite(Object rootObject) {
 		return new SelectModelElementCompositeImpl(rootObject);
+	}
+
+	/**
+	 * Creates a {@link CompositeProvider} for a composite displaying a table with checkboxes.
+	 * 
+	 * @param rootObject the viewer input
+	 * @return the composite provider
+	 */
+	public static CheckedEStructuralFeatureComposite getCheckedTableSelectionComposite(Object rootObject) {
+		return new CheckedEStructuralFeatureCompositeImpl(rootObject);
 	}
 
 }

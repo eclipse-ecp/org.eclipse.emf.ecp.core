@@ -77,6 +77,9 @@ public final class Messages extends NLS {
 	public static String PropertyDialog_Value;
 	public static String RepositoryPropertiesDialog_DialogTitle;
 	public static String RepositoryPropertiesDialog_RepositoryProvider;
+	public static String SelectEStructuralFeaturesWizard_Title;
+	public static String SelectEStructuralFeaturesWizard_PageTitle;
+	public static String SelectEStructuralFeaturesWizard_PageDescription;
 	public static String SelectOrCreateRepositoryPage_CreateNewRepository;
 	public static String SelectOrCreateRepositoryPage_PageDescription_ExistingOrNewRepository;
 	public static String SelectOrCreateRepositoryPage_PageTitle_ExistingOrNewRepository;

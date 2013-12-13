@@ -33,14 +33,15 @@ Import-Package: org.eclipse.core.commands;version="0.0.0",
  org.eclipse.swt.widgets;version="0.0.0"
 Export-Package: org.eclipse.emf.ecp.edit.internal.swt;version="1.1.1";x-friends:="org.eclipse.emf.ecp.ui.view.editor.controls",
  org.eclipse.emf.ecp.edit.internal.swt.actions;version="1.1.1";x-friends:="org.eclipse.emf.ecp.ui.view.editor.controls,org.eclipse.emf.ecp.edit.ecore.swt",
- org.eclipse.emf.ecp.edit.internal.swt.controls;version="1.1.1";x-friends:="org.eclipse.emf.ecp.ui.view.swt,org.eclipse.emf.ecp.ui.view.editor.controls",
+ org.eclipse.emf.ecp.edit.internal.swt.controls;version="1.1.1";x-friends:="org.eclipse.emf.ecp.ui.view.swt,org.eclipse.emf.ecp.ui.view.editor.controls,org.eclipse.emf.ecp.view.table.ui.swt",
  org.eclipse.emf.ecp.edit.internal.swt.reference;version="1.1.1";x-friends:="org.eclipse.emf.ecp.edit.ecore.swt",
- org.eclipse.emf.ecp.edit.internal.swt.table;version="1.1.1";x-internal:=true,
+ org.eclipse.emf.ecp.edit.internal.swt.table;version="1.1.1";x-friends:="org.eclipse.emf.ecp.view.table.ui.swt",
  org.eclipse.emf.ecp.edit.internal.swt.util;version="1.1.1";
   x-friends:="org.eclipse.emf.ecp.editor,
    org.eclipse.emf.ecp.explorereditorbridge,
    org.eclipse.emf.ecp.ui.view.swt,
    org.eclipse.emf.ecp.ui.view.editor.controls,
    org.eclipse.emf.ecp.view.groupedgrid.ui.swt,
-   org.eclipse.emf.ecp.edit.ecore.swt"
+   org.eclipse.emf.ecp.edit.ecore.swt,
+   org.eclipse.emf.ecp.view.table.ui.swt"
 Bundle-Vendor: %Bundle-Vendor

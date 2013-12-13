@@ -24,7 +24,7 @@ public class Activator extends Plugin {
 	/**
 	 * The constant holding the id of this plugin.
 	 */
-	public static final String PLUGIN_ID = "org.eclipse.emf.ecp.voew.context"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "org.eclipse.emf.ecp.view.context"; //$NON-NLS-1$
 
 	/** The instance. */
 	private static Activator instance;

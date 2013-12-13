@@ -104,7 +104,8 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage
 
 		// Obtain or create and register package
 		VTablePackageImpl theTablePackage = (VTablePackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof VTablePackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI) : new VTablePackageImpl());
+			.get(eNS_URI)
+			: new VTablePackageImpl());
 
 		isInited = true;
 
@@ -293,7 +294,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage
 			getTableControl_Columns(),
 			this.getTableColumn(),
 			null,
-			"columns", null, 1, -1, VTableControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"columns", null, 0, -1, VTableControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(
 			getTableControl_AddRemoveDisabled(),
 			ecorePackage.getEBoolean(),

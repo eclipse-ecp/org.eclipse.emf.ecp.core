@@ -138,10 +138,12 @@ public class SWTTableTest {
 		final Control render = SWTViewTestHelper.render(handle.getTableControl(), domainElement, shell);
 		assertTrue(render instanceof Composite);
 
+		assertEquals(domainElement.eClass().getEAttributes().size(), handle.getTableControl().getColumns().size());
+
 		final Control control = getTable(render);
 		assertTrue(control instanceof Table);
 		final Table table = (Table) control;
-		assertEquals(1, table.getColumnCount());
+		assertEquals(3, table.getColumnCount());
 	}
 
 	@Test

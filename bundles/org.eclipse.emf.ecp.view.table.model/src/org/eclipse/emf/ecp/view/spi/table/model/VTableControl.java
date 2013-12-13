@@ -45,7 +45,7 @@ public interface VTableControl extends VControl
 	 * 
 	 * @return the value of the '<em>Columns</em>' containment reference list.
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage#getTableControl_Columns()
-	 * @model containment="true" required="true"
+	 * @model containment="true"
 	 * @generated
 	 */
 	EList<VTableColumn> getColumns();

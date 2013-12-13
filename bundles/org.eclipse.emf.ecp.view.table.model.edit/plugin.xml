@@ -32,5 +32,42 @@
             uri="http://org/eclipse/emf/ecp/view/model"
             class="org.eclipse.emf.ecp.view.spi.table.model.provider.TableItemProviderAdapterFactory$ViewChildCreationExtender"/>
    </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="org.eclipse.emf.ecp.view.internal.table.model.handler.GenerateColumnsHandler"
+            id="org.eclipse.emf.ecp.view.table.model.edit.generateColumns"
+            name="Generate Columns">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.emf.ecp.ui.ModelExplorerView">
+         <command
+               commandId="org.eclipse.emf.ecp.view.table.model.edit.generateColumns"
+               icon="icons/full/obj16/TableColumn.gif"
+               label="Generate Columns"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="activeMenuSelection">
+                  <and>
+                     <count
+                           value="1">
+                     </count>
+                     <iterate>
+                        <instanceof
+                              value="org.eclipse.emf.ecp.view.spi.table.model.VTableControl">
+                        </instanceof>
+                     </iterate>
+                  </and>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
 
 </plugin>
