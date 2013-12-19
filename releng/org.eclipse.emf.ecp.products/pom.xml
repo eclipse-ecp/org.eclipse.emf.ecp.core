@@ -39,6 +39,10 @@
               <id>org.eclipse.emf.ecp.3x</id>
 			  <attachId>ecp.3x</attachId>
             </product>
+			<product>
+			  <id>org.eclipse.emf.ecp.application.e4.demo</id>
+			  <attachId>ecp.4x</attachId>
+			</product>
           </products>
         </configuration>
       </plugin>

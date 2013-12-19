@@ -14,13 +14,10 @@ package org.eclipse.emf.ecp.view.spi.table.swt;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.table.TableColumnConfiguration;
 import org.eclipse.emf.ecp.edit.internal.swt.table.TableControlConfiguration;
-import org.eclipse.emf.ecp.view.internal.table.generator.TableColumnGenerator;
 import org.eclipse.emf.ecp.view.internal.ui.Activator;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
@@ -75,16 +72,6 @@ public class SWTTableControlRenderer extends AbstractSWTRenderer<VTableControl> 
 
 		final TableControlConfiguration tcc = new TableControlConfiguration();
 		tcc.setAddRemoveDisabled(vTableControl.isAddRemoveDisabled());
-
-		if (vTableControl.getColumns() == null || vTableControl.getColumns().size() < 1) {
-			final Setting firstSetting = settings.next();
-			final EStructuralFeature structuralFeature = firstSetting.getEStructuralFeature();
-			final EClassifier eType = structuralFeature.getEType();
-			if (eType instanceof EClass) {
-				final EClass clazz = (EClass) eType;
-				TableColumnGenerator.generateColumns(clazz, vTableControl);
-			}
-		}
 
 		for (final VTableColumn column : vTableControl.getColumns()) {
 			tcc.getColumns().add(

@@ -252,7 +252,9 @@ public class LinkControl extends SingleControl {
 	 */
 	@Override
 	protected void updateValidationColor(Color color) {
-		hyperlink.setBackground(color);
+		if (hyperlink != null) {
+			hyperlink.setBackground(color);
+		}
 	}
 
 	private void updateChangeListener(final EObject value) {

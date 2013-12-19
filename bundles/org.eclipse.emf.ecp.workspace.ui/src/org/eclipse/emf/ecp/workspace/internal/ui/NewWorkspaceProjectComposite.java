@@ -66,6 +66,52 @@ import org.eclipse.ui.model.WorkbenchLabelProvider;
  */
 public class NewWorkspaceProjectComposite extends Composite {
 
+	/**
+	 * @author Jonas
+	 *
+	 */
+	private final class ImportWorkspaceAdapter extends SelectionAdapter {
+		@Override
+		public void widgetSelected(SelectionEvent e) {
+			ElementTreeSelectionDialog dialog = new ElementTreeSelectionDialog(Display.getDefault()
+				.getActiveShell(), new WorkbenchLabelProvider(), new BaseWorkbenchContentProvider());
+			dialog.setInput(ResourcesPlugin.getWorkspace().getRoot());
+			dialog.setAllowMultiple(false);
+			dialog.setValidator(new ISelectionStatusValidator() {
+
+				public IStatus validate(Object[] selection) {
+					if (selection.length == 1) {
+						if (selection[0] instanceof File) {
+							File file = (File) selection[0];
+							if (file.getType() == File.FILE) {
+								return new Status(IStatus.OK, Activator.PLUGIN_ID, IStatus.OK, null, null);
+							}
+						}
+					}
+					return new Status(IStatus.ERROR, Activator.PLUGIN_ID, IStatus.ERROR, "Please Select a File",
+						null);
+				}
+			});
+			dialog.setTitle("Select XMI");
+
+			if (dialog.open() == Dialog.OK) {
+				if (dialog.getFirstResult() instanceof File) {
+					File file = (File) dialog.getFirstResult();
+					ResourceSet resourceSet = new ResourceSetImpl();
+					Resource resource = resourceSet.createResource(URI.createPlatformResourceURI(file.getFullPath()
+						.toString(), true));
+					try {
+						resource.load(null);
+						importFileText.setText(URI.createPlatformResourceURI(file.getFullPath().toString(), true)
+							.toString());
+					} catch (IOException ex) {
+						MessageDialog.openError(getShell(), "Error", "Error parsing XMI-File!");
+					}
+				}
+			}
+		}
+	}
+
 	private CompositeStateObserver compositeStateObserver;
 	private ECPProperties properties;
 	private boolean complete;
@@ -204,47 +250,7 @@ public class NewWorkspaceProjectComposite extends Composite {
 		importFileButton.setText("Browse File System ...");
 
 		importWorkspaceButton = new Button(importProjectComposite, SWT.NONE);
-		importWorkspaceButton.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				ElementTreeSelectionDialog dialog = new ElementTreeSelectionDialog(Display.getDefault()
-					.getActiveShell(), new WorkbenchLabelProvider(), new BaseWorkbenchContentProvider());
-				dialog.setInput(ResourcesPlugin.getWorkspace().getRoot());
-				dialog.setAllowMultiple(false);
-				dialog.setValidator(new ISelectionStatusValidator() {
-
-					public IStatus validate(Object[] selection) {
-						if (selection.length == 1) {
-							if (selection[0] instanceof File) {
-								File file = (File) selection[0];
-								if (file.getType() == File.FILE) {
-									return new Status(IStatus.OK, Activator.PLUGIN_ID, IStatus.OK, null, null);
-								}
-							}
-						}
-						return new Status(IStatus.ERROR, Activator.PLUGIN_ID, IStatus.ERROR, "Please Select a File",
-							null);
-					}
-				});
-				dialog.setTitle("Select XMI");
-
-				if (dialog.open() == Dialog.OK) {
-					if (dialog.getFirstResult() instanceof File) {
-						File file = (File) dialog.getFirstResult();
-						ResourceSet resourceSet = new ResourceSetImpl();
-						Resource resource = resourceSet.createResource(URI.createPlatformResourceURI(file.getFullPath()
-							.toString(), true));
-						try {
-							resource.load(null);
-							importFileText.setText(URI.createPlatformResourceURI(file.getFullPath().toString(), true)
-								.toString());
-						} catch (IOException ex) {
-							MessageDialog.openError(getShell(), "Error", "Error parsing XMI-File!");
-						}
-					}
-				}
-			}
-		});
+		importWorkspaceButton.addSelectionListener(new ImportWorkspaceAdapter());
 		importWorkspaceButton.setText("Browse Workspace ...");
 	}
 

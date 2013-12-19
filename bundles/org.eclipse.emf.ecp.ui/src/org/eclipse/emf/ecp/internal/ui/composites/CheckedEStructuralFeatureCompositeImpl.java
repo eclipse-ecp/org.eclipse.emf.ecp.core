@@ -11,8 +11,10 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.internal.ui.composites;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -24,9 +26,7 @@ import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.ICheckStateListener;
 import org.eclipse.jface.viewers.ICheckStateProvider;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -45,8 +45,8 @@ public class CheckedEStructuralFeatureCompositeImpl extends SelectModelElementCo
 	CheckedEStructuralFeatureComposite {
 
 	private final Object[] input;
-	private Object[] selectedItems;
 	private FilteredViewerContentProvider provider;
+	private final Map<Object, Boolean> objectToCheckedMap;
 
 	/**
 	 * Constructor.
@@ -56,7 +56,7 @@ public class CheckedEStructuralFeatureCompositeImpl extends SelectModelElementCo
 	public CheckedEStructuralFeatureCompositeImpl(Object input) {
 		super(input);
 		this.input = (Object[]) input;
-		selectedItems = new Object[0];
+		objectToCheckedMap = new LinkedHashMap<Object, Boolean>();
 	}
 
 	/**
@@ -80,8 +80,7 @@ public class CheckedEStructuralFeatureCompositeImpl extends SelectModelElementCo
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				getViewer().setCheckedElements(input);
-				setChecked();
-				provider.setCheckState(true);
+				provider.setCheckStateForAll(true);
 			}
 		});
 
@@ -94,16 +93,10 @@ public class CheckedEStructuralFeatureCompositeImpl extends SelectModelElementCo
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				getViewer().setCheckedElements(new Object[0]);
-				setChecked();
-				provider.setCheckState(false);
+				provider.setCheckStateForAll(false);
 			}
 		});
 
-		getViewer().addSelectionChangedListener(new ISelectionChangedListener() {
-			public void selectionChanged(SelectionChangedEvent event) {
-				setChecked();
-			}
-		});
 		return composite;
 	}
 
@@ -135,10 +128,6 @@ public class CheckedEStructuralFeatureCompositeImpl extends SelectModelElementCo
 		return (CheckboxTableViewer) super.getViewer();
 	}
 
-	private void setChecked() {
-		selectedItems = getViewer().getCheckedElements();
-	}
-
 	/**
 	 * {@inheritDoc}
 	 * 
@@ -146,7 +135,14 @@ public class CheckedEStructuralFeatureCompositeImpl extends SelectModelElementCo
 	 */
 	@Override
 	public Object[] getSelection() {
-		return selectedItems;
+		final List<Object> result = new ArrayList<Object>();
+		for (int i = 0; i < input.length; i++) {
+			final Object cur = input[i];
+			if (objectToCheckedMap.containsKey(cur) && objectToCheckedMap.get(cur)) {
+				result.add(cur);
+			}
+		}
+		return result.toArray();
 	}
 
 	/**
@@ -157,10 +153,7 @@ public class CheckedEStructuralFeatureCompositeImpl extends SelectModelElementCo
 	 */
 	private class FilteredViewerContentProvider implements IStructuredContentProvider, ICheckStateProvider {
 
-		private final Map<Object, Boolean> objectToCheckedMap;
-
 		public FilteredViewerContentProvider(CheckboxTableViewer viewer) {
-			objectToCheckedMap = new LinkedHashMap<Object, Boolean>();
 			viewer.addCheckStateListener(new ICheckStateListener() {
 				public void checkStateChanged(CheckStateChangedEvent event) {
 					objectToCheckedMap.put(event.getElement(), event.getChecked());
@@ -193,7 +186,7 @@ public class CheckedEStructuralFeatureCompositeImpl extends SelectModelElementCo
 			return false;
 		}
 
-		public void setCheckState(boolean state) {
+		public void setCheckStateForAll(boolean state) {
 			final Set<Object> keySet = objectToCheckedMap.keySet();
 			for (final Object o : keySet) {
 				objectToCheckedMap.put(o, state);

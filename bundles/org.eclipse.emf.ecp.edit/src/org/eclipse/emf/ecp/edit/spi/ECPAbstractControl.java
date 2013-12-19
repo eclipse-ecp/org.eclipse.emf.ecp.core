@@ -243,6 +243,7 @@ public abstract class ECPAbstractControl {
 		if (dataBindingContext != null) {
 			dataBindingContext.dispose();
 		}
+		dataBindingContext = null;
 		viewModelContext.unregisterViewChangeListener(viewChangeListener);
 		viewModelContext = null;
 

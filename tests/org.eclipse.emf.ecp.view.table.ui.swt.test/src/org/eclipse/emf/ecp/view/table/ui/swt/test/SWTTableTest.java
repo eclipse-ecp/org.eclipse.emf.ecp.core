@@ -17,17 +17,24 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.List;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
+import org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
+import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
+import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableColumn;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
@@ -147,6 +154,27 @@ public class SWTTableTest {
 	}
 
 	@Test
+	public void testTableWithoutColumnsWithoutViewServices() throws NoRendererFoundException,
+		NoPropertyDescriptorFoundExeption {
+		final TableControlHandle handle = createInitializedTableWithoutTableColumns();
+		final List<RenderingResultRow<Control>> resultRows = SWTRendererFactory.INSTANCE.render(shell,
+			handle.getTableControl(),
+			new ViewModelContextWithoutServices(handle.getTableControl()));
+		if (resultRows == null) {
+			fail();
+		}
+		final Control render = resultRows.get(0).getMainControl();
+		assertTrue(render instanceof Composite);
+
+		assertEquals(0, handle.getTableControl().getColumns().size());
+
+		final Control control = getTable(render);
+		assertTrue(control instanceof Table);
+		final Table table = (Table) control;
+		assertEquals(1, table.getColumnCount());
+	}
+
+	@Test
 	public void testTableWithTwoColumns() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		// setup model
 		final TableControlHandle handle = createTableWithTwoTableColumns();
@@ -158,6 +186,26 @@ public class SWTTableTest {
 		final Table table = (Table) control;
 		assertEquals(2, table.getColumnCount());
 
+	}
+
+	@Test
+	public void testTableWithTwoColumnsWithoutViewServices() throws NoRendererFoundException,
+		NoPropertyDescriptorFoundExeption {
+		// setup model
+		final TableControlHandle handle = createTableWithTwoTableColumns();
+		final List<RenderingResultRow<Control>> resultRows = SWTRendererFactory.INSTANCE.render(shell,
+			handle.getTableControl(),
+			new ViewModelContextWithoutServices(handle.getTableControl()));
+		if (resultRows == null) {
+			fail();
+		}
+		final Control render = resultRows.get(0).getMainControl();
+		assertTrue(render instanceof Composite);
+
+		final Control control = getTable(render);
+		assertTrue(control instanceof Table);
+		final Table table = (Table) control;
+		assertEquals(2, table.getColumnCount());
 	}
 
 	private Control getTable(Control render) {
@@ -209,6 +257,104 @@ public class SWTTableTest {
 		final VTableControl tc = VTableFactory.eINSTANCE.createTableControl();
 		tc.setDomainModelReference(VViewFactory.eINSTANCE.createFeaturePathDomainModelReference());
 		return tc;
+	}
+
+	/**
+	 * Stub implementation without getting services from ex. point.
+	 * 
+	 * @author jfaltermeier
+	 * 
+	 */
+	private class ViewModelContextWithoutServices implements ViewModelContext {
+
+		private final VElement view;
+
+		public ViewModelContextWithoutServices(VElement view) {
+			this.view = view;
+			ViewModelUtil.resolveDomainReferences(getViewModel(), getDomainModel());
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getViewModel()
+		 */
+		public VElement getViewModel() {
+			return view;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getDomainModel()
+		 */
+		public EObject getDomainModel() {
+			return domainElement;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#registerViewChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener)
+		 */
+		public void registerViewChangeListener(ModelChangeListener modelChangeListener) {
+			// not needed
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#unregisterViewChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener)
+		 */
+		public void unregisterViewChangeListener(ModelChangeListener modelChangeListener) {
+			// not needed
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#registerDomainChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener)
+		 */
+		public void registerDomainChangeListener(ModelChangeListener modelChangeListener) {
+			// not needed
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#unregisterDomainChangeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener)
+		 */
+		public void unregisterDomainChangeListener(ModelChangeListener modelChangeListener) {
+			// not needed
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#dispose()
+		 */
+		public void dispose() {
+			// not needed
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#hasService(java.lang.Class)
+		 */
+		public <T> boolean hasService(Class<T> serviceType) {
+			return false;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getService(java.lang.Class)
+		 */
+		public <T> T getService(Class<T> serviceType) {
+			return null;
+		}
+
 	}
 
 }

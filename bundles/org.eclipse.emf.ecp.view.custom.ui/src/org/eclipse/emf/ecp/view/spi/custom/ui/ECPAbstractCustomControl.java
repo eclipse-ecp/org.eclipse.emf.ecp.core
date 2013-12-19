@@ -196,7 +196,7 @@ public abstract class ECPAbstractCustomControl extends ECPAbstractControl implem
 	protected void registerChangeListener(VDomainModelReference modelReference,
 		final ECPCustomControlChangeListener changeListener) {
 		if (adapterMap.containsKey(modelReference)) {
-			// FIXME handling if an listener already exists
+			return;
 		}
 		final Setting setting = getFirstSetting(modelReference);
 		final Adapter newAdapter = new AdapterImpl() {

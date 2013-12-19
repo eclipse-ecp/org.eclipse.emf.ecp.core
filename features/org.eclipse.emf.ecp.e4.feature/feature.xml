@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.emf.ecp.e4.feature"
+      label="EMF Client Platform UI e4 Feature"
+      version="1.1.1.qualifier"
+      provider-name="Eclipse Modeling Project"
+      license-feature="org.eclipse.emf.ecp.license.feature"
+      license-feature-version="1.1.1.qualifier">
+
+   <description url="http://www.example.com/description">
+      Integration of the EMF Client Platform UI for e4.
+   </description>
+
+   <copyright url="%copyrightURL">
+      %copyright
+   </copyright>
+
+   <license url="http://www.example.com/license">
+      [Enter License Description here.]
+   </license>
+
+   <plugin
+         id="org.eclipse.emf.ecp.application.e4"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.emf.ecp.ui.e4"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

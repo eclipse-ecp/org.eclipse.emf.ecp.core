@@ -34,6 +34,8 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
@@ -136,6 +138,12 @@ public abstract class ECPAbstractCustomControlSWT extends
 	 */
 	public final List<RenderingResultRow<Control>> createControls(Composite composite) {
 		renderingResult = createControl(composite);
+		composite.addDisposeListener(new DisposeListener() {
+
+			public void widgetDisposed(DisposeEvent e) {
+				dispose();
+			}
+		});
 		return renderingResult;
 	}
 

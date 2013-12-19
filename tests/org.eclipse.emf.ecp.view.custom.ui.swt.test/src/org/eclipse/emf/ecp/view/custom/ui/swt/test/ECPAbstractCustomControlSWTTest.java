@@ -374,8 +374,8 @@ public class ECPAbstractCustomControlSWTTest {
 	}
 
 	/**
-	 * Test method for {@link org.eclipse.emf.ecp.view.spi.custom.ui.ECPAbstractCustomControl#getECPCustomControlFeatures()}
-	 * .
+	 * Test method for
+	 * {@link org.eclipse.emf.ecp.view.spi.custom.ui.ECPAbstractCustomControl#getECPCustomControlFeatures()} .
 	 */
 	@Test
 	public void testGetEditableFeatures() {
@@ -405,6 +405,15 @@ public class ECPAbstractCustomControlSWTTest {
 		customControl.dispose();
 		assertTrue(customControl.isDisposed());
 		assertTrue(validationLabel.isDisposed());
+	}
+
+	@Test
+	public void testDisposeOnShellDispose() {
+		final Composite composite = new Composite(SWTViewTestHelper.createShell(), SWT.NONE);
+		customControl.createControls(composite);
+		assertFalse(customControl.isDisposed());
+		composite.dispose();
+		assertTrue(customControl.isDisposed());
 	}
 
 	/**

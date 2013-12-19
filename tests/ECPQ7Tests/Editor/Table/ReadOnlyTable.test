@@ -8,45 +8,39 @@ Element-Version: 3.0
 External-Reference: 
 Id: _oawGcUYVEeO347zZ7X5NJw
 Q7-Runtime-Version: 1.3.9.201310250528
-Save-Time: 12/11/13 6:02 PM
+Save-Time: 12/19/13 4:54 PM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
 Content-Type: text/ecl
 Entry-Name: .content
 
-with [get-editor View | get-editbox -after [get-label "Name*"]] {
-    set-text TableTest
-}
-with [get-view "Model Explorer" | get-tree] {
-    select "Project/TableTest" | get-menu Control | click
-    select "Project/TableTest"
-}
-get-editor TableTest | get-button "Link Root EClas" | click
+
+
+get-editor View | get-button "Link Root EClas" | click
 with [get-window "Select an EClass."] {
     get-tree | select "bowling/Matchup \\[org.eclipse.emf.emfstore.bowling.Matchup\\]"
     get-button OK | click
 }
-get-view "Model Explorer" | get-tree | select "Project/TableTest/Control"
-with [get-editor Control | get-editbox -after [get-label "Name*"]] {
-    set-text matchupView
+with [get-view "Model Explorer" | get-tree] {
+    select "Project/View" | get-menu TableControl | click
+    select "Project/View/TableControl" | get-menu "Table Domain Model Reference" | click
 }
-get-view "Model Explorer" | get-tree | select "Project/TableTest/matchupView" 
-    | get-menu "Feature Path Domain Model Reference" | click
-get-editor "Feature Path Domain Model Reference" | get-button "Link Domain Model EFeature" | click
+get-editor "Table Domain Model Reference" | get-button "Link Domain Model EFeature" | click
 with [get-window "Select a EStructuralFeature"] {
     get-tree | select "games : Game"
     get-button OK | click
 }
-get-view "Model Explorer" | get-tree | select "Project/TableTest/matchupView"
-with [get-view "Model Explorer" | get-tree] {
-    select "Project/TableTest/matchupView" | double-click
-    select "TestProject/Tournament Amateur/Matchup" | double-click
-    select "Project/TableTest/matchupView"
+get-view "Model Explorer" | get-tree | select "Project/View/TableControl" | get-menu Column | click
+get-editor "Column false" | get-button "Link Attribute" | click
+with [get-window "Select Attribute for TableColumn"] {
+    get-table | select "frames : EInt"
+    get-button OK | click
 }
-get-editor matchupView | get-button -after [get-label Readonly] | check
+get-view "Model Explorer" | get-tree | select "Project/View/TableControl"
+get-editor TableControl | get-button -after [get-label Readonly] | check
 with [get-view "Model Explorer"] {
-    get-tree | select "Project/TableTest"
+    get-tree | select "Project"
    try { try { get-button "Save Project" | click} - catch { wait 500 | get-button "Save Project" | click }} -catch{try { get-button "Save Project" | click} - catch { wait 500 | get-button "Save Project" | click }}
 }
 
@@ -56,8 +50,8 @@ with [get-editor Matchup | get-control Any -after [get-label Games] -index 1] {
     get-property "getChildren().Control[0].isVisible()" | equals false | verify-true
     get-property "getChildren().Control[1].isVisible()" | equals false | verify-true
 }
-get-view "Model Explorer" | get-tree | select "Project/TableTest"
-get-editor TableTest | get-button "Delete Reference" | click
+get-view "Model Explorer" | get-tree | select "Project"
+get-editor View | get-button "Delete Reference" | click
 with [get-view "Model Explorer"] {
     get-tree | select Project
     try { get-button "Save Project" | click} - catch { wait 500 | get-button "Save Project" | click }

@@ -9,7 +9,7 @@
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.internal.table.model.handler;
+package org.eclipse.emf.ecp.view.internal.table.editor;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;

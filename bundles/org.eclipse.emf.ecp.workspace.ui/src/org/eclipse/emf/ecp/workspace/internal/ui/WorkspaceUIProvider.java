@@ -19,11 +19,9 @@ import org.eclipse.emf.ecp.spi.ui.CompositeStateObserver;
 import org.eclipse.emf.ecp.spi.ui.DefaultUIProvider;
 import org.eclipse.emf.ecp.workspace.internal.core.WorkspaceProvider;
 import org.eclipse.jface.action.IMenuManager;
-import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.ui.model.WorkbenchLabelProvider;
 
 /**
  * @author Eike Stepper
@@ -32,7 +30,6 @@ public class WorkspaceUIProvider extends DefaultUIProvider {
 
 	private static final Image PROJECT_OPEN = Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID,
 		"icons/page_code.gif").createImage(); //$NON-NLS-1$
-	private static final ILabelProvider WORKBENCH_LABEL_PROVIDER = new WorkbenchLabelProvider();
 
 	/**
 	 * Default constructor of an UIProvider.
@@ -49,7 +46,7 @@ public class WorkspaceUIProvider extends DefaultUIProvider {
 	@Override
 	public Image getImage(Object element) {
 		if (element instanceof ECPProject) {
-			ECPProject project = (ECPProject) element;
+			final ECPProject project = (ECPProject) element;
 			if (project.isOpen()) {
 				return PROJECT_OPEN;
 			}

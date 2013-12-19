@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -105,7 +106,7 @@ public class TableControl extends SWTControl {
 
 	private static final String FIXED_COLUMNS = "org.eclipse.rap.rwt.fixedColumns"; //$NON-NLS-1$
 
-	private static final String ICON_ADD = "icons/add.png";
+	private static final String ICON_ADD = "icons/add.png"; //$NON-NLS-1$
 
 	private TableViewer tableViewer;
 	private ComposedAdapterFactory composedAdapterFactory;
@@ -224,7 +225,8 @@ public class TableControl extends SWTControl {
 		return tableViewer;
 	}
 
-	private void createFixedValidationStatusColumn(TableViewer tableViewer) {
+	private void createFixedValidationStatusColumn(TableViewer tableViewer,
+		final List<EStructuralFeature> structuralFeatures) {
 		final TableViewerColumn column = TableViewerColumnBuilder.create()
 			.setMoveable(false)
 			.setText(ControlMessages.TableControl_ValidationStatusColumn)
@@ -235,7 +237,8 @@ public class TableControl extends SWTControl {
 
 			@Override
 			public void update(ViewerCell cell) {
-				final Set<VDiagnostic> allDiagnostics = getAllDiagnostics((EObject) cell.getElement());
+				final Set<VDiagnostic> allDiagnostics = getAllDiagnostics((EObject) cell.getElement(),
+					structuralFeatures);
 				Integer mostSevere = Diagnostic.OK;
 
 				for (final VDiagnostic vDiagnostic : allDiagnostics) {
@@ -258,7 +261,7 @@ public class TableControl extends SWTControl {
 			@Override
 			public String getToolTipText(Object element) {
 				final StringBuffer tooltip = new StringBuffer();
-				final Set<VDiagnostic> allDiagnostics = getAllDiagnostics((EObject) element);
+				final Set<VDiagnostic> allDiagnostics = getAllDiagnostics((EObject) element, structuralFeatures);
 
 				for (final VDiagnostic vDiagnostic : allDiagnostics) {
 					if (vDiagnostic.getHighestSeverity() == Diagnostic.OK) {
@@ -299,7 +302,7 @@ public class TableControl extends SWTControl {
 		final List<EStructuralFeature> structuralFeatures = new ArrayList<EStructuralFeature>();
 		structuralFeatures.addAll(readOnlyConfig.keySet());
 		if (!getControl().isReadonly()) {
-			createFixedValidationStatusColumn(tableViewer);
+			createFixedValidationStatusColumn(tableViewer, structuralFeatures);
 		}
 
 		for (final EStructuralFeature feature : structuralFeatures) {
@@ -562,7 +565,10 @@ public class TableControl extends SWTControl {
 
 	/**
 	 * {@inheritDoc}
+	 * 
+	 * @deprecated
 	 */
+	@Deprecated
 	@Override
 	public void handleValidation(Diagnostic diagnostic) {
 		if (diagnostic.getData().isEmpty()) {
@@ -577,7 +583,10 @@ public class TableControl extends SWTControl {
 
 	/**
 	 * {@inheritDoc}
+	 * 
+	 * @deprecated
 	 */
+	@Deprecated
 	@Override
 	public void resetValidation() {
 		if (validationLabel == null || validationLabel.isDisposed()) {
@@ -589,7 +598,10 @@ public class TableControl extends SWTControl {
 
 	/**
 	 * {@inheritDoc}
+	 * 
+	 * @deprecated
 	 */
+	@Deprecated
 	@Override
 	public void setEditable(boolean isEditable) {
 		if (addButton != null) {
@@ -805,22 +817,29 @@ public class TableControl extends SWTControl {
 	}
 
 	private VDiagnostic getDiagnosticForFeature(EObject domainObject, EStructuralFeature feature) {
-		if (getControl().isReadonly()) {
+		final ValidationService validationService = getViewModelContext().getService(ValidationService.class);
+		if (getControl().isReadonly() || validationService == null) {
 			return null;
 		}
-		final Map<EStructuralFeature, VDiagnostic> diagnosticPerFeature =
-			getViewModelContext().getService(ValidationService.class).getDiagnosticPerFeature(domainObject);
+		final Map<EStructuralFeature, VDiagnostic> diagnosticPerFeature = validationService
+			.getDiagnosticPerFeature(domainObject);
 		return diagnosticPerFeature.get(feature);
 	}
 
-	private Set<VDiagnostic> getAllDiagnostics(EObject domainObject) {
-		if (getControl().isReadonly()) {
+	private Set<VDiagnostic> getAllDiagnostics(EObject domainObject, List<EStructuralFeature> features) {
+		final ValidationService validationService = getViewModelContext().getService(ValidationService.class);
+		if (getControl().isReadonly() || validationService == null) {
 			return Collections.emptySet();
 		}
-		final Set<VDiagnostic> allDiagnostics = getViewModelContext().getService(ValidationService.class)
-			.getAllDiagnostics(
-				domainObject);
-		return allDiagnostics;
+		final Map<EStructuralFeature, VDiagnostic> diagnosticPerFeature =
+			validationService.getDiagnosticPerFeature(domainObject);
+		final Set<VDiagnostic> result = new LinkedHashSet<VDiagnostic>();
+		for (final EStructuralFeature feature : features) {
+			if (diagnosticPerFeature.containsKey(feature)) {
+				result.add(diagnosticPerFeature.get(feature));
+			}
+		}
+		return result;
 	}
 
 	/**

@@ -8,7 +8,7 @@
  * 
  * Contributors:
  ******************************************************************************/
-package org.eclipse.emf.ecp.ui.platform;
+package org.eclipse.emf.ecp.internal.ui;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.ConfigurationScope;
@@ -37,7 +37,7 @@ public final class PreferenceHelper {
 	 * @return the value if it exists, otherwise the defaultValue
 	 */
 	public static String getPreference(String key, String defaultValue) {
-		String value = Platform.getPreferencesService().getRootNode().node(ConfigurationScope.SCOPE)
+		final String value = Platform.getPreferencesService().getRootNode().node(ConfigurationScope.SCOPE)
 			.node(PREFERENCE_NODE).get(key, defaultValue);
 		return value;
 	}
@@ -55,7 +55,7 @@ public final class PreferenceHelper {
 			try {
 				Platform.getPreferencesService().getRootNode().node(ConfigurationScope.SCOPE).node(PREFERENCE_NODE)
 					.flush();
-			} catch (BackingStoreException e) {
+			} catch (final BackingStoreException e) {
 				Activator.log(
 					"Could not persist the preference change: {" + key + ", " + value + "}", e);
 			}

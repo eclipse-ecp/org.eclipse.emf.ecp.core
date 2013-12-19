@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmlns:ui="http://www.eclipse.org/ui/2010/UIModel/application/ui" xmi:id="_0JoRAJgREeKJoJcmiy2C6w" elementId="org.eclipse.e4.ide.application">
+  <children xsi:type="basic:TrimmedWindow" xmi:id="_0JoRAZgREeKJoJcmiy2C6w" label="org.eclipse.emf.ecp.application.e4" width="800" height="600">
+    <children xsi:type="basic:PartSashContainer" xmi:id="_AErb0JgUEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.partsashcontainer.1" selectedElement="_lM0okJgTEeKJoJcmiy2C6w">
+      <children xsi:type="basic:PartSashContainer" xmi:id="_lM0okJgTEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.partsashcontainer.0" horizontal="true">
+        <children xsi:type="basic:PartStack" xmi:id="_8GAbsJoUEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.partstack.2">
+          <children xsi:type="basic:Part" xmi:id="_nOXCgJgTEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.part.navigator" contributionURI="bundleclass://org.eclipse.emf.ecp.ui.e4/org.eclipse.emf.ecp.ui.e4.view.ECPModelView" label="Model Navigator" closeable="true">
+            <menus xsi:type="menu:PopupMenu" xmi:id="_dAsF4JgZEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.popupmenu.navigator" label="Navigator menu">
+              <children xsi:type="menu:HandledMenuItem" xmi:id="_ibQRIJgZEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.handledmenuitem.newProject" label="New Project" command="_ogB3AJgZEeKJoJcmiy2C6w"/>
+              <children xsi:type="menu:HandledMenuItem" xmi:id="_c1wWwJoSEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.handledmenuitem.project.newModelElement" label="New Model Element" command="_StwzEJoSEeKJoJcmiy2C6w"/>
+              <children xsi:type="menu:HandledMenuItem" xmi:id="_Kb8pcGfMEeOSxuzzXgfhAA" elementId="org.eclipse.emf.ecp.e4.application.handledmenuitem.project.deleteProject" label="Delete Project" iconURI="platform:/plugin/org.eclipse.emf.ecp.application.e4/icons/delete.gif" command="_-EYP0GfLEeOSxuzzXgfhAA">
+                <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_9gTzQGfoEeOSxuzzXgfhAA" coreExpressionId="org.eclipse.emf.ecp.application.e4.isProjectSelected"/>
+              </children>
+              <children xsi:type="menu:HandledMenuItem" xmi:id="_SUSpQGfNEeOSxuzzXgfhAA" elementId="org.eclipse.emf.ecp.e4.application.handledmenuitem.project.deleteModelElement" label="Delete Model Element" iconURI="platform:/plugin/org.eclipse.emf.ecp.application.e4/icons/delete.gif" command="_lKS7YGfMEeOSxuzzXgfhAA">
+                <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_ZtxHgGfpEeOSxuzzXgfhAA" coreExpressionId="org.eclipse.emf.ecp.application.e4.isModelElementSelected"/>
+              </children>
+              <children xsi:type="menu:DynamicMenuContribution" xmi:id="_amzu4ErKEeOavfZiWcfdwA" elementId="org.eclipse.emf.ecp.application.e4.childrenDescriptorElements" contributionURI="bundleclass://org.eclipse.emf.ecp.ui.e4/org.eclipse.emf.ecp.ui.e4.view.DynamicCreateChildrenElementsMenuContribution"/>
+            </menus>
+            <toolbar xmi:id="_uWMcwJoUEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.toolbar.0">
+              <children xsi:type="menu:HandledToolItem" xmi:id="_CPQPoJrKEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.handledtoolitem.1" command="_ogB3AJgZEeKJoJcmiy2C6w"/>
+            </toolbar>
+          </children>
+        </children>
+        <children xsi:type="basic:PartStack" xmi:id="_nrd1QJgTEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.partstack.0">
+          <tags>editorPart</tags>
+        </children>
+      </children>
+      <children xsi:type="basic:PartStack" xmi:id="_wpiYYJoUEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.partstack.1">
+        <children xsi:type="basic:Part" xmi:id="_CJd-EJgUEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.part.repository" contributionURI="bundleclass://org.eclipse.emf.ecp.ui.e4/org.eclipse.emf.ecp.ui.e4.view.ECPRepositoryView" label="Repository View">
+          <menus xsi:type="menu:PopupMenu" xmi:id="_WzCwgJgcEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.popupmenu.repository" label="Repo Popup">
+            <children xsi:type="menu:HandledMenuItem" xmi:id="_bKyM0JgcEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.handledmenuitem.checkout" label="Checkout" iconURI="platform:/plugin/org.eclipse.emf.ecp.application.e4/icons/sample.gif" command="_eOWrgJgcEeKJoJcmiy2C6w"/>
+          </menus>
+        </children>
+      </children>
+    </children>
+    <trimBars xmi:id="_MWSIoJgaEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.trimbar.0">
+      <children xsi:type="menu:ToolBar" xmi:id="_M4bMYJgaEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.toolbar.1">
+        <children xsi:type="menu:HandledToolItem" xmi:id="_N5wtkJgaEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.handledtoolitem.0" label="New Project" command="_ogB3AJgZEeKJoJcmiy2C6w"/>
+      </children>
+    </trimBars>
+  </children>
+  <handlers xmi:id="_q5IcYJgZEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.handler.newProject" contributionURI="bundleclass://org.eclipse.emf.ecp.ui.e4/org.eclipse.emf.ecp.ui.e4.handlers.NewProjectHandler" command="_ogB3AJgZEeKJoJcmiy2C6w"/>
+  <handlers xmi:id="_fb0kMJgcEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.handler.checkoutProject" contributionURI="bundleclass://org.eclipse.emf.ecp.ui.e4/org.eclipse.emf.ecp.ui.e4.handlers.CheckoutProjectHandler" command="_eOWrgJgcEeKJoJcmiy2C6w"/>
+  <handlers xmi:id="_XchBMJoSEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.handler.project.newModelElement" contributionURI="bundleclass://org.eclipse.emf.ecp.ui.e4/org.eclipse.emf.ecp.ui.e4.handlers.NewModelElementHandler" command="_StwzEJoSEeKJoJcmiy2C6w"/>
+  <handlers xmi:id="_77hs8GfLEeOSxuzzXgfhAA" elementId="org.eclipse.emf.ecp.e4.application.handler.deleteProject" contributionURI="bundleclass://org.eclipse.emf.ecp.ui.e4/org.eclipse.emf.ecp.ui.e4.handlers.DeleteProjectHandler" command="_-EYP0GfLEeOSxuzzXgfhAA"/>
+  <handlers xmi:id="_tsLc4GfMEeOSxuzzXgfhAA" elementId="org.eclipse.emf.ecp.e4.application.handler.deleteModelElement" contributionURI="bundleclass://org.eclipse.emf.ecp.ui.e4/org.eclipse.emf.ecp.ui.e4.handlers.DeleteModelElementHandler" command="_lKS7YGfMEeOSxuzzXgfhAA"/>
+  <descriptors xmi:id="_5aBzoJgREeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.partdescriptor.editor" label="" tooltip="" allowMultiple="true" category="editorPart" closeable="true" contributionURI="bundleclass://org.eclipse.emf.ecp.ui.e4/org.eclipse.emf.ecp.ui.e4.editor.ECPE4Editor"/>
+  <commands xmi:id="_ogB3AJgZEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.command.newProject" commandName="New Project"/>
+  <commands xmi:id="_eOWrgJgcEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.command.checkoutProject" commandName="Checkout"/>
+  <commands xmi:id="_StwzEJoSEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.command.project.newModelElement" commandName="New Model element"/>
+  <commands xmi:id="_X2_JIJoyEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.application.command.repository.emfstore.login" commandName="New Model element"/>
+  <commands xmi:id="_-EYP0GfLEeOSxuzzXgfhAA" elementId="org.eclipse.emf.ecp.e4.application.e4.command.deleteProject" commandName="Delete Project"/>
+  <commands xmi:id="_lKS7YGfMEeOSxuzzXgfhAA" elementId="org.eclipse.emf.ecp.e4.application.command.deleteModelElement" commandName="Delete Model Element"/>
+  <addons xmi:id="_0JoRApgREeKJoJcmiy2C6w" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
+  <addons xmi:id="_0JoRA5gREeKJoJcmiy2C6w" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
+  <addons xmi:id="_0JoRBJgREeKJoJcmiy2C6w" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>
+  <addons xmi:id="_0JoRBZgREeKJoJcmiy2C6w" elementId="org.eclipse.e4.ui.workbench.commands.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.CommandProcessingAddon"/>
+  <addons xmi:id="_uoddMGdDEeOCMcJ61jhHBQ" elementId="org.eclipse.e4.ui.workbench.commands.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.HandlerProcessingAddon"/>
+  <addons xmi:id="_0JoRBpgREeKJoJcmiy2C6w" elementId="org.eclipse.e4.ui.workbench.contexts.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.ContextProcessingAddon"/>
+  <addons xmi:id="_0JoRB5gREeKJoJcmiy2C6w" elementId="org.eclipse.e4.ui.workbench.bindings.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.swt/org.eclipse.e4.ui.workbench.swt.util.BindingProcessingAddon"/>
+</application:Application>

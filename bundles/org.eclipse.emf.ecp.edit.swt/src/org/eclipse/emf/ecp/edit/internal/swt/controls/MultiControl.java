@@ -509,10 +509,10 @@ public abstract class MultiControl extends SWTControl {
 	@Deprecated
 	@Override
 	public void resetValidation() {
-		updateValidationColor(null);
 		if (validationLabel == null || validationLabel.isDisposed()) {
 			return;
 		}
+		updateValidationColor(null);
 		validationLabel.setImage(null);
 		validationLabel.setToolTipText(""); //$NON-NLS-1$
 	}

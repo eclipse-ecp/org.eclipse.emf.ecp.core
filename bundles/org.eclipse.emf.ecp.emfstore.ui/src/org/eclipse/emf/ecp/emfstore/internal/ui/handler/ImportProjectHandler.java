@@ -24,7 +24,7 @@ import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.emfstore.internal.ui.Activator;
-import org.eclipse.emf.ecp.ui.platform.PreferenceHelper;
+import org.eclipse.emf.ecp.internal.ui.PreferenceHelper;
 import org.eclipse.emf.emfstore.client.ESLocalProject;
 import org.eclipse.emf.emfstore.client.ESWorkspaceProvider;
 import org.eclipse.emf.emfstore.internal.client.importexport.ExportImportControllerExecutor;

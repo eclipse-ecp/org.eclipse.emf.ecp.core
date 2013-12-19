@@ -93,6 +93,9 @@
    <feature url="features/org.eclipse.emf.ecp.ecore.feature_1.1.1.qualifier.jar" id="org.eclipse.emf.ecp.ecore.feature" version="1.1.1.qualifier">
       <category name="org.eclipse.emf.ecp.extra.category"/>
    </feature>
+   <feature url="features/org.eclipse.emf.ecp.e4.feature_1.1.1.qualifier.jar" id="org.eclipse.emf.ecp.e4.feature" version="1.1.1.qualifier">
+      <category name="org.eclipse.emf.ecp.e4.category"/>
+   </feature>
    <category-def name="org.eclipse.emf.ecp.category" label="EMF Client Platform"/>
    <category-def name="org.eclipse.emf.ecp.provider.category" label="EMF Client Platform Providers (at least one is required)"/>
    <category-def name="org.eclipse.emf.ecp.3x.category" label="Eclipse 3.x UI"/>
@@ -100,4 +103,5 @@
    <category-def name="org.eclipse.emf.ecp.sdk.category" label="SDK"/>
    <category-def name="org.eclipse.emf.ecp.view" label="View Models"/>
    <category-def name="org.eclipse.emf.ecp.view.editor" label="View Model Editor"/>
+   <category-def name="org.eclipse.emf.ecp.e4.category" label="ECP E4"/>
 </site>
