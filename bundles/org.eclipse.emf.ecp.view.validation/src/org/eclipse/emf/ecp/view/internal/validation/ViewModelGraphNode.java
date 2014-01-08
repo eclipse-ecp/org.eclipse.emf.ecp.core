@@ -14,11 +14,12 @@ package org.eclipse.emf.ecp.view.internal.validation;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
-import java.util.PriorityQueue;
 import java.util.Set;
 
 import org.eclipse.emf.ecp.common.UniqueSetting;
+import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 
 /**
  * <p>
@@ -29,18 +30,17 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  * type {@code T}
  * </p>
  * 
- * @param <T> the type of the value stored by this node
  * 
  * @author emueller
  */
-public class ViewModelGraphNode<T> {
+public class ViewModelGraphNode {
 
-	private T initValue;
-	private Set<ViewModelGraphNode<T>> parents;
+	private final VDiagnostic initValue;
+	private final Set<ViewModelGraphNode> parents;
 	private final UniqueSetting setting;
-	private final PriorityQueue<ViewModelGraphNode<T>> children;
+	private final Set<ViewModelGraphNode> children;
 	private final boolean isDomainObject;
-	private T value;
+	private VDiagnostic value;
 
 	/**
 	 * Constructor.
@@ -54,21 +54,23 @@ public class ViewModelGraphNode<T> {
 	 * @param comparator
 	 *            the {@link Comparator} that is used to maintain the aggregated values
 	 */
-	public ViewModelGraphNode(UniqueSetting setting, T value, boolean isDomainObject,
-		final Comparator<T> comparator) {
+	public ViewModelGraphNode(UniqueSetting setting, VDiagnostic value, boolean isDomainObject,
+		final Comparator<VDiagnostic> comparator) {
 		this.setting = setting;
 		this.value = value;
-		this.initValue = value;
+		initValue = value;
 		this.isDomainObject = isDomainObject;
-		this.parents = new LinkedHashSet<ViewModelGraphNode<T>>();
-		this.children = new PriorityQueue<ViewModelGraphNode<T>>(10, new Comparator<ViewModelGraphNode<T>>() {
-			public int compare(ViewModelGraphNode<T> node1, ViewModelGraphNode<T> node2) {
-				final T node1Value = node1.getValue();
-				final T node2Value = node2.getValue();
-				// inverse result: head of priority queue is the least element
-				return -comparator.compare(node1Value, node2Value);
-			}
-		});
+		parents = new LinkedHashSet<ViewModelGraphNode>();
+		// children = new PriorityQueue<ViewModelGraphNode>(10,
+		// new Comparator<ViewModelGraphNode>() {
+		// public int compare(ViewModelGraphNode node1, ViewModelGraphNode node2) {
+		// final VDiagnostic node1Value = node1.getValue();
+		// final VDiagnostic node2Value = node2.getValue();
+		// // inverse result: head of priority queue is the least element
+		// return -comparator.compare(node1Value, node2Value);
+		// }
+		// });
+		children = new LinkedHashSet<ViewModelGraphNode>();
 	}
 
 	/**
@@ -77,14 +79,18 @@ public class ViewModelGraphNode<T> {
 	 * 
 	 * @return the aggregated value for this node
 	 */
-	public T getValue() {
+	public VDiagnostic getValue() {
 
 		if (isLocked()) {
 			return initValue;
 		}
 
 		if (hasChildren()) {
-			return children.element().getValue();
+			final VDiagnostic result = VViewFactory.eINSTANCE.createDiagnostic();
+			for (final ViewModelGraphNode child : children) {
+				result.getDiagnostics().addAll(child.getValue().getDiagnostics());
+			}
+			return result;
 		}
 		// TODO: why can we not return initValue?
 		// because some caller may have called setValue
@@ -127,7 +133,7 @@ public class ViewModelGraphNode<T> {
 	 * @param childNode
 	 *            the child node to be added
 	 */
-	public void addChild(ViewModelGraphNode<T> childNode) {
+	public void addChild(ViewModelGraphNode childNode) {
 		childNode.addParent(this);
 		addToChildrenQueue(childNode);
 	}
@@ -139,7 +145,7 @@ public class ViewModelGraphNode<T> {
 	 * @param childNode
 	 *            the child node to be removed
 	 */
-	public void removeChild(ViewModelGraphNode<T> childNode) {
+	public void removeChild(ViewModelGraphNode childNode) {
 		children.remove(childNode);
 		childNode.getParents().remove(this);
 		if (!hasChildren()) {
@@ -153,13 +159,13 @@ public class ViewModelGraphNode<T> {
 	 * @param value
 	 *            the value to be set
 	 */
-	public void setValue(T value) {
+	public void setValue(VDiagnostic value) {
 		this.value = value;
 
 		// TODO: add doc why we need to update all parents
 		// (corner case: children of a parents node may all validate ok, even
 		// if one child has validation errors)
-		for (final ViewModelGraphNode<T> parent : getParents()) {
+		for (final ViewModelGraphNode parent : getParents()) {
 			parent.addToChildrenQueue(this);
 			parent.setValue(parent.getValue());
 		}
@@ -170,7 +176,7 @@ public class ViewModelGraphNode<T> {
 	 * 
 	 * @return the parent nodes
 	 */
-	public Set<ViewModelGraphNode<T>> getParents() {
+	public Set<ViewModelGraphNode> getParents() {
 		return parents;
 	}
 
@@ -180,11 +186,11 @@ public class ViewModelGraphNode<T> {
 	 * @param parent
 	 *            the parent node
 	 */
-	private void addParent(ViewModelGraphNode<T> parent) {
+	private void addParent(ViewModelGraphNode parent) {
 		parents.add(parent);
 	}
 
-	private void addToChildrenQueue(ViewModelGraphNode<T> childNode) {
+	private void addToChildrenQueue(ViewModelGraphNode childNode) {
 		// remove and add to keep queue sorted
 		children.remove(childNode);
 		children.add(childNode);
@@ -216,7 +222,7 @@ public class ViewModelGraphNode<T> {
 	 *            the node to be checked whether it is contained in the mapping
 	 * @return {@code true}, if the node is contained, {@code false} otherwise
 	 */
-	public boolean containsChild(ViewModelGraphNode<T> node) {
+	public boolean containsChild(ViewModelGraphNode node) {
 		return children.contains(node);
 	}
 
@@ -234,7 +240,7 @@ public class ViewModelGraphNode<T> {
 	 * 
 	 * @return an iterator over the children of this node.
 	 */
-	public Iterator<ViewModelGraphNode<T>> getChildren() {
+	public Iterator<ViewModelGraphNode> getChildren() {
 		return children.iterator();
 	}
 

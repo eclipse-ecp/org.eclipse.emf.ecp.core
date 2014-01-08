@@ -182,8 +182,8 @@ public abstract class ECPAbstractControl {
 				}
 			}
 			if (count == 0) {
-				Activator.logException(new IllegalArgumentException(control.getName() + " : " +
-					"The passed VDomainModelReference resolves to no setting."));
+				Activator.logException(new IllegalArgumentException(control.getName() + " : " + //$NON-NLS-1$
+					"The passed VDomainModelReference resolves to no setting.")); //$NON-NLS-1$
 			}
 		}
 		return firstSetting;
@@ -211,7 +211,7 @@ public abstract class ECPAbstractControl {
 			}
 			if (count == 0) {
 				throw new IllegalArgumentException(
-					"The passed VDomainModelReference resolves to no EStructuralFeature.");
+					"The passed VDomainModelReference resolves to no EStructuralFeature."); //$NON-NLS-1$
 			}
 		}
 		return firstFeature;

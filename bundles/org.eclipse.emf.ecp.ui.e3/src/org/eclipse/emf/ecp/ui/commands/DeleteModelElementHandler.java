@@ -15,15 +15,16 @@ package org.eclipse.emf.ecp.ui.commands;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.ui.util.ECPHandlerHelper;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
+
 /**
- * This Handler uses the {@link ECPHandlerHelper#deleteModelElement(org.eclipse.emf.ecp.core.ECPProject, java.util.Collection)} method
- * to delete the selected {@link EObject EObjects}.
+ * This Handler uses the
+ * {@link ECPHandlerHelper#deleteModelElement(org.eclipse.emf.ecp.core.ECPProject, java.util.Collection)} method
+ * to delete the selected {@link org.eclipse.emf.ecore.EObject EObjects}.
  * 
  * @author Eugen Neufeld
  */
@@ -32,10 +33,11 @@ public class DeleteModelElementHandler extends AbstractHandler {
 	/** {@inheritDoc} */
 	@SuppressWarnings("unchecked")
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		IStructuredSelection selection = (IStructuredSelection) HandlerUtil.getActiveMenuSelection(event);
+		final IStructuredSelection selection = (IStructuredSelection) HandlerUtil.getActiveMenuSelection(event);
 
-		InternalProject project=(InternalProject)ECPUtil.getECPProjectManager().getProject(selection.getFirstElement());
-			
+		final InternalProject project = (InternalProject) ECPUtil.getECPProjectManager().getProject(
+			selection.getFirstElement());
+
 		ECPHandlerHelper.deleteModelElement(project, selection.toList());
 		return null;
 	}

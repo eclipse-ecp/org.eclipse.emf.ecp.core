@@ -74,12 +74,12 @@ public class CDOBranchWrapper implements ECPCheckoutSource {
 
 	/** {@inheritDoc} */
 	public String getDefaultCheckoutName() {
-		return repository.getName() + "." + getName();
+		return repository.getName() + "." + getName(); //$NON-NLS-1$
 	}
 
 	/** {@inheritDoc} */
 	public void checkout(String projectName, ECPProperties projectProperties) throws ECPProjectWithNameExistsException {
-		projectProperties.addProperty("branchPath", branchPath);
+		projectProperties.addProperty("branchPath", branchPath); //$NON-NLS-1$
 		ECPUtil.getECPProjectManager().createProject(getRepository(), projectName, projectProperties);
 	}
 

@@ -16,6 +16,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -29,9 +30,11 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.EValidator;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecp.common.UniqueSetting;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
@@ -44,7 +47,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
  * @author jfaltermeier
  * @author emueller
  */
-public class ViewValidator extends ViewModelGraph<VDiagnostic> {
+public class ViewValidator extends ViewModelGraph {
 
 	private final Queue<EObject> validationQueue = new LinkedList<EObject>();
 
@@ -126,62 +129,94 @@ public class ViewValidator extends ViewModelGraph<VDiagnostic> {
 		final Diagnostic diagnostic = getDiagnosticForEObject(eObject);
 
 		if (diagnostic.getSeverity() == Diagnostic.OK) {
-			for (final VControl control : validationRegistry.getRenderablesForEObject(eObject)) {
-				final VDomainModelReference modelReference = control.getDomainModelReference();
-				final Iterator<Setting> settings = modelReference.getIterator();
-				while (settings.hasNext()) {
-					final Setting setting = settings.next();
-					if (setting.getEStructuralFeature().getEContainingClass().isInstance(eObject)) {
-						update(control, eObject, setting.getEStructuralFeature(), getDefaultValue());
-					}
-				}
-
-			}
-		} else {
-
-			final Map<EStructuralFeature, Diagnostic> featureToValidationResult = new LinkedHashMap<EStructuralFeature,
-				Diagnostic>();
-			for (final Diagnostic childDiagnostic : diagnostic.getChildren()) {
-				if (childDiagnostic.getData().size() != 2) {
-					continue;
-				}
-
-				final EStructuralFeature feature = (EStructuralFeature) childDiagnostic.getData().get(1);
-				featureToValidationResult.put(feature, childDiagnostic);
-			}
+			handleOKDiagnostic(eObject, diagnostic);
+		}
+		else {
+			final Map<Setting, Set<Diagnostic>> featureToValidationResult = collectChangedSettings(eObject, diagnostic);
 
 			// TODO: if we ever get performance problems this is likely the place to start
 			// validation registry should be queryable with a control and a feature
 			// -> merge SettingsMapping and the registry
-			for (final EStructuralFeature invalidFeature : featureToValidationResult.keySet()) {
-				for (final VControl control : validationRegistry.getRenderablesForEObject(eObject)) {
+			final Set<UpdateTriple> updateTriplets = new LinkedHashSet<ViewValidator.UpdateTriple>();
+			for (final Setting invalidSetting : featureToValidationResult.keySet()) {
+				for (final VControl control : validationRegistry.getRenderablesForEObject(invalidSetting)) {
+					final VDomainModelReference modelReference = control.getDomainModelReference();
+					final Iterator<Setting> settings = modelReference.getIterator();
+					final VDiagnostic vDiagnostic = VViewFactory.eINSTANCE.createDiagnostic();
+					while (settings.hasNext()) {
+						final Setting setting = settings.next();
+
+						if (setting.getEObject().equals(invalidSetting.getEObject())
+							&& setting.getEStructuralFeature().equals(invalidSetting.getEStructuralFeature())) {
+							vDiagnostic.getDiagnostics().addAll(featureToValidationResult.get(invalidSetting));
+							updateTriplets.add(new UpdateTriple(control, setting, vDiagnostic));
+						}
+
+					}
+				}
+			}
+			for (final UpdateTriple triple : updateTriplets) {
+				update(triple.control, triple.setting.getEObject(), triple.setting.getEStructuralFeature(),
+					triple.diagnostic);
+			}
+
+		}
+	}
+
+	private Map<Setting, Set<Diagnostic>> collectChangedSettings(EObject eObject, Diagnostic diagnostic) {
+		final Map<Setting, Set<Diagnostic>> featureToValidationResult = new LinkedHashMap<Setting,
+			Set<Diagnostic>>();
+		final Set<EStructuralFeature> validatedFeatures = new LinkedHashSet<EStructuralFeature>();
+		for (final Diagnostic childDiagnostic : diagnostic.getChildren()) {
+			if (childDiagnostic.getData().size() != 2) {
+				continue;
+			}
+
+			final EStructuralFeature feature = (EStructuralFeature) childDiagnostic.getData().get(1);
+			validatedFeatures.add(feature);
+			final InternalEObject eObject2 = (InternalEObject) childDiagnostic.getData().get(0);
+			final Setting setting = eObject2.eSetting(feature);
+			if (!featureToValidationResult.containsKey(setting)) {
+				featureToValidationResult.put(setting, new LinkedHashSet<Diagnostic>());
+			}
+			featureToValidationResult.get(setting).add(childDiagnostic);
+		}
+		for (final EStructuralFeature feature : eObject.eClass().getEAllStructuralFeatures()) {
+			if (validatedFeatures.contains(feature)) {
+				continue;
+			}
+			final InternalEObject eObject2 = (InternalEObject) eObject;
+			final Setting setting = eObject2.eSetting(feature);
+			if (!featureToValidationResult.containsKey(setting)) {
+				featureToValidationResult.put(setting, new LinkedHashSet<Diagnostic>());
+			}
+			featureToValidationResult.get(setting).add(Diagnostic.OK_INSTANCE);
+		}
+		return featureToValidationResult;
+	}
+
+	private void handleOKDiagnostic(EObject eObject, Diagnostic diagnostic) {
+		// TODO hack or ok?
+		final Set<EObject> okEObjects = new LinkedHashSet<EObject>();
+		okEObjects.add(eObject);
+		if (diagnostic.getChildren() != null) {
+			for (final Diagnostic childDiagnostic : diagnostic.getChildren()) {
+				okEObjects.add((EObject) childDiagnostic.getData().get(0));
+			}
+		}
+		for (final EObject okEObject : okEObjects) {
+			for (final EStructuralFeature esf : okEObject.eClass().getEAllStructuralFeatures()) {
+				final Setting diagSetting = ((InternalEObject) okEObject).eSetting(esf);
+				for (final VControl control : validationRegistry.getRenderablesForEObject(diagSetting)) {
 					final VDomainModelReference modelReference = control.getDomainModelReference();
 					final Iterator<Setting> settings = modelReference.getIterator();
 					while (settings.hasNext()) {
 						final Setting setting = settings.next();
-
-						final VDiagnostic vDiagnostic = VViewFactory.eINSTANCE.createDiagnostic();
-						if (setting.getEStructuralFeature().equals(invalidFeature)) {
-							vDiagnostic.getDiagnostics().add(featureToValidationResult.get(invalidFeature));
-							update(control, eObject, setting.getEStructuralFeature(),
-								vDiagnostic);
-						} else {
-							// check if feature is not contained in current diagnostics
-							if (!featureToValidationResult.containsKey(setting.getEStructuralFeature())) {
-								update(control, eObject, setting.getEStructuralFeature(),
-									vDiagnostic);
-							} else {
-								// check if feature is not contained in current diagnostics
-								if (!featureToValidationResult.containsKey(setting.getEStructuralFeature())
-									&&
-									eObject.eClass().getEAllStructuralFeatures()
-										.contains(setting.getEStructuralFeature())) {
-									update(control, eObject, setting.getEStructuralFeature(),
-										getDefaultValue());
-								}
-							}
+						if (setting.getEStructuralFeature().getEContainingClass().isInstance(okEObject)) {
+							update(control, okEObject, setting.getEStructuralFeature(), getDefaultValue());
 						}
 					}
+
 				}
 			}
 		}
@@ -196,6 +231,21 @@ public class ViewValidator extends ViewModelGraph<VDiagnostic> {
 
 		for (final EObject eObject : eObjects) {
 			validate(eObject);
+		}
+
+	}
+
+	/**
+	 * Validates all given eObjects.
+	 * 
+	 * @param eObjects the eObjects to validate
+	 */
+	// FIXME remove
+	@Deprecated
+	public void validateSettings(Collection<UniqueSetting> eObjects) {
+
+		for (final UniqueSetting eObject : eObjects) {
+			validate(eObject.getEObject());
 		}
 
 	}
@@ -251,4 +301,27 @@ public class ViewValidator extends ViewModelGraph<VDiagnostic> {
 		return diagnostics;
 	}
 
+	/**
+	 * Helper Class to map triples.
+	 * 
+	 * @author Eugen Neufeld
+	 * 
+	 */
+	private class UpdateTriple {
+		private final VControl control;
+		private final Setting setting;
+		private final VDiagnostic diagnostic;
+
+		/**
+		 * @param control
+		 * @param setting
+		 * @param diagnostic
+		 */
+		public UpdateTriple(VControl control, Setting setting, VDiagnostic diagnostic) {
+			super();
+			this.control = control;
+			this.setting = setting;
+			this.diagnostic = diagnostic;
+		}
+	}
 }

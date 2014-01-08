@@ -47,7 +47,7 @@ public class ECPFocusCellDrawHighlighter extends FocusCellHighlighter {
 	private final ColumnViewer viewer;
 
 	/**
-	 * Create a new instance which can be passed to a
+	 * Create a new instance which can be passed to a.
 	 * 
 	 * @param viewer
 	 *            the viewer
@@ -151,7 +151,7 @@ public class ECPFocusCellDrawHighlighter extends FocusCellHighlighter {
 
 	/**
 	 * The color to use when rendering the background of the selected cell when
-	 * the control has the input focus
+	 * the control has the input focus.
 	 * 
 	 * @param cell
 	 *            the cell which is colored
@@ -163,7 +163,7 @@ public class ECPFocusCellDrawHighlighter extends FocusCellHighlighter {
 
 	/**
 	 * The color to use when rendering the foreground (=text) of the selected
-	 * cell when the control has the input focus
+	 * cell when the control has the input focus.
 	 * 
 	 * @param cell
 	 *            the cell which is colored
@@ -175,7 +175,7 @@ public class ECPFocusCellDrawHighlighter extends FocusCellHighlighter {
 
 	/**
 	 * The color to use when rendering the foreground (=text) of the selected
-	 * cell when the control has <b>no</b> input focus
+	 * cell when the control has <b>no</b> input focus.
 	 * 
 	 * @param cell
 	 *            the cell which is colored
@@ -188,7 +188,7 @@ public class ECPFocusCellDrawHighlighter extends FocusCellHighlighter {
 
 	/**
 	 * The color to use when rendering the background of the selected cell when
-	 * the control has <b>no</b> input focus
+	 * the control has <b>no</b> input focus.
 	 * 
 	 * @param cell
 	 *            the cell which is colored
@@ -200,7 +200,7 @@ public class ECPFocusCellDrawHighlighter extends FocusCellHighlighter {
 	}
 
 	/**
-	 * Controls whether the whole cell or only the text-area is highlighted
+	 * Controls whether the whole cell or only the text-area is highlighted.
 	 * 
 	 * @param cell
 	 *            the cell which is highlighted

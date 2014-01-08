@@ -1,7 +1,9 @@
 package org.eclipse.emf.ecp.ide.editor.view;
 
+import org.eclipse.emf.ecp.ide.view.service.IDEViewModelRegistry;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -45,6 +47,13 @@ public class Activator extends AbstractUIPlugin {
 	 */
 	public static Activator getDefault() {
 		return plugin;
+	}
+	
+	public static IDEViewModelRegistry getViewModelRegistry(){
+		ServiceReference<IDEViewModelRegistry> serviceReference = getDefault().getBundle().getBundleContext().getServiceReference(IDEViewModelRegistry.class);
+		if(serviceReference==null)
+			return null;
+		return getDefault().getBundle().getBundleContext().getService(serviceReference);
 	}
 
 }

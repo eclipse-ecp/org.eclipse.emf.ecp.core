@@ -26,7 +26,7 @@ public interface ECPRepository extends ECPContainer {
 	/**
 	 * The type of this ECPElement.
 	 */
-	String TYPE = "Repository";
+	String TYPE = "Repository"; //$NON-NLS-1$
 
 	/**
 	 * Returns the label for the {@link ECPRepository}.

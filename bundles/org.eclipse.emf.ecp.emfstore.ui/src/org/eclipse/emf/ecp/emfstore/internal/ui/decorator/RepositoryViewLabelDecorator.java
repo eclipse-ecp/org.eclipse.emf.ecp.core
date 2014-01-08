@@ -23,7 +23,6 @@ import org.eclipse.emf.emfstore.client.ESServer;
 import org.eclipse.emf.emfstore.client.ESUsersession;
 import org.eclipse.emf.emfstore.client.observer.ESLoginObserver;
 import org.eclipse.emf.emfstore.client.observer.ESLogoutObserver;
-import org.eclipse.emf.emfstore.internal.client.model.ServerInfo;
 import org.eclipse.emf.emfstore.internal.client.model.impl.api.ESServerImpl;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.ILabelProviderListener;
@@ -33,7 +32,8 @@ import org.eclipse.jface.viewers.LabelProviderChangedEvent;
 import org.eclipse.swt.widgets.Display;
 
 /**
- * Decorates the label of a {@link ServerInfo} object according to its login state.
+ * Decorates the label of a {@link org.eclipse.emf.emfstore.internal.client.model.ServerInfo} object according to its
+ * login state.
  * 
  * @author Eugen Neufeld
  * @see ILightweightLabelDecorator
@@ -46,11 +46,11 @@ public class RepositoryViewLabelDecorator extends LabelProvider implements ILigh
 	 */
 	public void decorate(Object element, IDecoration decoration) {
 		if (element instanceof ECPRepository) {
-			InternalRepository repository = (InternalRepository) element;
-			ECPProvider provider = repository.getProvider();
+			final InternalRepository repository = (InternalRepository) element;
+			final ECPProvider provider = repository.getProvider();
 
 			if (provider != null && EMFStoreProvider.NAME.equalsIgnoreCase(provider.getName())) {
-				ESServer server = EMFStoreProvider.INSTANCE.getServerInfo(repository);
+				final ESServer server = EMFStoreProvider.INSTANCE.getServerInfo(repository);
 				if (server.getLastUsersession() != null && server.getLastUsersession().isLoggedIn()) {
 					decoration.addOverlay(Activator.getImageDescriptor("icons/bullet_green.png"),
 						IDecoration.BOTTOM_RIGHT);
@@ -118,8 +118,8 @@ public class RepositoryViewLabelDecorator extends LabelProvider implements ILigh
 				// TODO cast
 				fireLabelProviderChanged(new LabelProviderChangedEvent(RepositoryViewLabelDecorator.this,
 
-				// EMFStoreProvider.INSTANCE.getRepository(((ESServerImpl) usersession.getServer())
-				// .toInternalAPI())));
+					// EMFStoreProvider.INSTANCE.getRepository(((ESServerImpl) usersession.getServer())
+					// .toInternalAPI())));
 					((EMFStoreProvider) ECPUtil.getResolvedElement(ECPUtil.getECPProviderRegistry()
 						.getProvider(EMFStoreProvider.NAME))).getRepository(((ESServerImpl) usersession.getServer())
 						.toInternalAPI())));

@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  * 
  * Contributors:
- *    Eike Stepper - initial API and implementation
+ * Eike Stepper - initial API and implementation
  *******************************************************************************/
 package org.eclipse.emf.ecp.ui.views;
 
@@ -47,194 +47,254 @@ import org.eclipse.ui.part.ViewPart;
  */
 public abstract class TreeView extends ViewPart implements ISelectionProvider, ISetSelectionTarget
 {
-  public static final String GLOBAL_ADDITIONS = "global_additions"; //$NON-NLS-1$
+	/**
+	 * ID for the separator in the context menu of the {@link TreeView} to add global contributions to (placed on top).
+	 */
+	public static final String GLOBAL_ADDITIONS = "global_additions"; //$NON-NLS-1$
 
-  private final String id;
+	private final String id;
 
-  private TreeViewer viewer;
+	private TreeViewer viewer;
 
+	private Action refreshAction;
 
-  private Action refreshAction;
+	/**
+	 * Default constructor.
+	 * 
+	 * @param id the ID of the Tree View, used to identify the {@link TreeView}
+	 */
+	public TreeView(String id)
+	{
+		this.id = id;
+	}
 
-  public TreeView(String id)
-  {
-    this.id = id;
-  }
- 
-  public final String getID()
-  {
-    return id;
-  }
-  
-  public final TreeViewer getViewer()
-  {
-    return viewer;
-  }
-  
-  public final Action getRefreshAction()
-  {
-    return refreshAction;
-  }
+	/**
+	 * Retrieves the ID of this {@link TreeView}.
+	 * 
+	 * @return the id as a {@link String}
+	 */
+	public final String getID()
+	{
+		return id;
+	}
 
-  @Override
-  public void init(IViewSite site) throws PartInitException
-  {
-    super.init(site);
-    site.setSelectionProvider(this);
-  }
+	/**
+	 * Returns JFace {@link TreeViewer} used in this {@link TreeViewer}.
+	 * 
+	 * @return a {@link TreeViewer}
+	 */
+	public final TreeViewer getViewer()
+	{
+		return viewer;
+	}
 
-  @Override
-  public final void createPartControl(Composite parent)
-  {
-    try
-    {
-      viewer = createViewer(parent);
-      if (viewer == null)
-      {
-        throw new IllegalStateException(Messages.TreeView_Exception_ViewerNotCreated);
-      }
+	/**
+	 * Return the refresh action, which triggers a reload on the TreeViewer.
+	 * 
+	 * @return an {@link Action}
+	 */
+	public final Action getRefreshAction()
+	{
+		return refreshAction;
+	}
 
-      refreshAction = new RefreshViewerAction(viewer);
+	@Override
+	public void init(IViewSite site) throws PartInitException
+	{
+		super.init(site);
+		site.setSelectionProvider(this);
+	}
 
-      hookContextMenu();
-      hookDoubleClickAction();
-      contributeToActionBars();
-    }
-    catch (RuntimeException ex)
-    {
-      Activator.log(ex);
-      throw ex;
-    }
-    catch (Error ex)
-    {
-      Activator.log(ex);
-      throw ex;
-    }
-  }
+	@Override
+	public final void createPartControl(Composite parent)
+	{
+		try
+		{
+			viewer = createViewer(parent);
+			if (viewer == null)
+			{
+				throw new IllegalStateException(Messages.TreeView_Exception_ViewerNotCreated);
+			}
 
-  @Override
-  public void setFocus()
-  {
-    if (viewer != null)
-    {
-      viewer.getControl().setFocus();
-    }
-  }
-  /**{@inheritDoc} */
-  public IStructuredSelection getSelection()
-  {
-    if (viewer != null)
-    {
-      return (IStructuredSelection)viewer.getSelection();
-    }
+			refreshAction = new RefreshViewerAction(viewer);
 
-    return StructuredSelection.EMPTY;
-  }
-  /**{@inheritDoc} */
-  public void setSelection(ISelection selection)
-  {
-    if (viewer != null)
-    {
-      viewer.setSelection(selection);
-    }
-  }
-  /**{@inheritDoc} */
-  public void addSelectionChangedListener(ISelectionChangedListener listener)
-  {
-    if (viewer != null)
-    {
-      viewer.addSelectionChangedListener(listener);
-    }
-  }
-  /**{@inheritDoc} */
-  public void removeSelectionChangedListener(ISelectionChangedListener listener)
-  {
-    if (viewer != null)
-    {
-      viewer.removeSelectionChangedListener(listener);
-    }
-  }
-  /**{@inheritDoc} */
-  public void selectReveal(ISelection selection)
-  {
-    if (viewer != null)
-    {
-      viewer.setSelection(selection, true);
-    }
-  }
-  
-  protected void showMessage(String message)
-  {
-    MessageDialog.openInformation(viewer.getControl().getShell(), getTitle(), message);
-  }
- 
-  protected ILabelDecorator createLabelDecorator()
-  {
-    return PlatformUI.getWorkbench().getDecoratorManager().getLabelDecorator();
-  }
-  
-  protected abstract TreeViewer createViewer(Composite parent);
+			hookContextMenu();
+			hookDoubleClickAction();
+			contributeToActionBars();
+		} catch (final RuntimeException ex)
+		{
+			Activator.log(ex);
+			throw ex;
+		} catch (final Error ex)
+		{
+			Activator.log(ex);
+			throw ex;
+		}
+	}
 
- 
-  /**{@inheritDoc} */
-  protected void fillLocalPullDown(IMenuManager manager)
-  {
-    manager.add(new Separator());
-    manager.add(refreshAction);
-  }
-  
-  protected void fillLocalToolBar(IToolBarManager manager)
-  {
-    manager.add(refreshAction);
-    manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
-   
-  }
-  
-  protected void fillContextMenu(IMenuManager manager)
-  {
-    manager.add(new Separator(GLOBAL_ADDITIONS));
-    manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
-    manager.add(new Separator());
-  }
-  
-  protected void doubleClicked(DoubleClickEvent event)
-  {
-  }
+	@Override
+	public void setFocus()
+	{
+		if (viewer != null)
+		{
+			viewer.getControl().setFocus();
+		}
+	}
 
-  private void contributeToActionBars()
-  {
-    IActionBars bars = getViewSite().getActionBars();
-    // fillLocalPullDown(bars.getMenuManager());
-    fillLocalToolBar(bars.getToolBarManager());
-  }
+	/** {@inheritDoc} */
+	public IStructuredSelection getSelection()
+	{
+		if (viewer != null)
+		{
+			return (IStructuredSelection) viewer.getSelection();
+		}
 
-  private void hookDoubleClickAction()
-  {
-    viewer.addDoubleClickListener(new IDoubleClickListener()
-    {
-      public void doubleClick(DoubleClickEvent event)
-      {
-        TreeView.this.doubleClicked(event);
-      }
-    });
-  }
+		return StructuredSelection.EMPTY;
+	}
 
-  private void hookContextMenu()
-  {
-    MenuManager manager = new MenuManager("#PopupMenu"); //$NON-NLS-1$
-    manager.setRemoveAllWhenShown(true);
-    manager.addMenuListener(new IMenuListener()
-    {
-      public void menuAboutToShow(IMenuManager manager)
-      {
-        TreeView.this.fillContextMenu(manager);
-      }
-    });
+	/** {@inheritDoc} */
+	public void setSelection(ISelection selection)
+	{
+		if (viewer != null)
+		{
+			viewer.setSelection(selection);
+		}
+	}
 
-    Control control = viewer.getControl();
+	/** {@inheritDoc} */
+	public void addSelectionChangedListener(ISelectionChangedListener listener)
+	{
+		if (viewer != null)
+		{
+			viewer.addSelectionChangedListener(listener);
+		}
+	}
 
-    Menu menu = manager.createContextMenu(control);
-    control.setMenu(menu);
-    getSite().registerContextMenu(getID(), manager, viewer);
-  }
+	/** {@inheritDoc} */
+	public void removeSelectionChangedListener(ISelectionChangedListener listener)
+	{
+		if (viewer != null)
+		{
+			viewer.removeSelectionChangedListener(listener);
+		}
+	}
+
+	/** {@inheritDoc} */
+	public void selectReveal(ISelection selection)
+	{
+		if (viewer != null)
+		{
+			viewer.setSelection(selection, true);
+		}
+	}
+
+	/**
+	 * Shows a message to the user.
+	 * 
+	 * @param message the message as a String
+	 */
+	protected void showMessage(String message)
+	{
+		MessageDialog.openInformation(viewer.getControl().getShell(), getTitle(), message);
+	}
+
+	/**
+	 * Creates a label decorator.
+	 * 
+	 * @return the label decorator to be used by the TreeView
+	 */
+	protected ILabelDecorator createLabelDecorator()
+	{
+		return PlatformUI.getWorkbench().getDecoratorManager().getLabelDecorator();
+	}
+
+	/**
+	 * Creates the {@link TreeViewer}. To be implemented by sub classes.
+	 * 
+	 * @param parent the parent composite to place the TreeViewer on.
+	 * @return the {@link TreeViewer}
+	 */
+	protected abstract TreeViewer createViewer(Composite parent);
+
+	/**
+	 * Fills the menue of the view. Can be overridden by sub classes.
+	 * 
+	 * @param manager the {@link IMenuManager} to be filled.
+	 */
+	protected void fillLocalPullDown(IMenuManager manager)
+	{
+		manager.add(new Separator());
+		manager.add(refreshAction);
+	}
+
+	/**
+	 * Fills the toolbar of the view. Can be overridden by sub classes.
+	 * 
+	 * @param manager the {@link IToolBarManager} to be filled.
+	 */
+	protected void fillLocalToolBar(IToolBarManager manager)
+	{
+		manager.add(refreshAction);
+		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+
+	}
+
+	/**
+	 * Fills the contect menu of the view. Can be overriden by sub classes.
+	 * 
+	 * @param manager the {@link IMenuManager} to be filled.
+	 */
+	protected void fillContextMenu(IMenuManager manager)
+	{
+		manager.add(new Separator(GLOBAL_ADDITIONS));
+		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+		manager.add(new Separator());
+	}
+
+	/**
+	 * Called if a double click is triggered in the TreeViewer. Can be overridden by sub classes to add some behavior on
+	 * double click.
+	 * 
+	 * @param event the {@link DoubleClickEvent}
+	 */
+	protected void doubleClicked(DoubleClickEvent event)
+	{
+	}
+
+	private void contributeToActionBars()
+	{
+		final IActionBars bars = getViewSite().getActionBars();
+		// fillLocalPullDown(bars.getMenuManager());
+		fillLocalToolBar(bars.getToolBarManager());
+	}
+
+	private void hookDoubleClickAction()
+	{
+		viewer.addDoubleClickListener(new IDoubleClickListener()
+		{
+			public void doubleClick(DoubleClickEvent event)
+			{
+				TreeView.this.doubleClicked(event);
+			}
+		});
+	}
+
+	private void hookContextMenu()
+	{
+		final MenuManager manager = new MenuManager("#PopupMenu"); //$NON-NLS-1$
+		manager.setRemoveAllWhenShown(true);
+		manager.addMenuListener(new IMenuListener()
+		{
+			public void menuAboutToShow(IMenuManager manager)
+			{
+				TreeView.this.fillContextMenu(manager);
+			}
+		});
+
+		final Control control = viewer.getControl();
+
+		final Menu menu = manager.createContextMenu(control);
+		control.setMenu(menu);
+		getSite().registerContextMenu(getID(), manager, viewer);
+	}
 }

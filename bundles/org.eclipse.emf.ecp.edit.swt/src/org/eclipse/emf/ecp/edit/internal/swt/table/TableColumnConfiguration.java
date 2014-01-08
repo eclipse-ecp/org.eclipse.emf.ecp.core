@@ -14,12 +14,12 @@ package org.eclipse.emf.ecp.edit.internal.swt.table;
 import org.eclipse.emf.ecore.EAttribute;
 
 public class TableColumnConfiguration {
-	private boolean readOnly;
-	private EAttribute columnAttribute;
+	private final boolean readOnly;
+	private final EAttribute columnAttribute;
 
 	/**
-	 * @param readOnly
-	 * @param columnAttribute
+	 * @param readOnly whether the column is read-only
+	 * @param columnAttribute the {@link EAttribute} to be displayed in this column
 	 */
 	public TableColumnConfiguration(boolean readOnly, EAttribute columnAttribute) {
 		super();
@@ -27,6 +27,10 @@ public class TableColumnConfiguration {
 		this.columnAttribute = columnAttribute;
 	}
 
+	/**
+	 * 
+	 * @return if the column is read-only
+	 */
 	public boolean isReadOnly() {
 		return readOnly;
 	}
@@ -55,7 +59,7 @@ public class TableColumnConfiguration {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		TableColumnConfiguration other = (TableColumnConfiguration) obj;
+		final TableColumnConfiguration other = (TableColumnConfiguration) obj;
 		if (columnAttribute == null) {
 			if (other.columnAttribute != null) {
 				return false;

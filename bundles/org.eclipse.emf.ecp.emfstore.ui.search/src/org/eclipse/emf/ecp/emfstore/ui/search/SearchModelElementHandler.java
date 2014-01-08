@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -28,9 +28,9 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.emfstore.client.ESLocalProject;
-import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.window.Window;
 import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 import org.eclipse.ui.handlers.HandlerUtil;
 
@@ -45,37 +45,39 @@ public class SearchModelElementHandler extends AbstractHandler {
 	 * {@inheritDoc}
 	 */
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		IStructuredSelection selection = (IStructuredSelection) HandlerUtil.getCurrentSelection(event);
-		InternalProject project = (InternalProject)ECPUtil.getECPProjectManager().getProject(selection.getFirstElement());
+		final IStructuredSelection selection = (IStructuredSelection) HandlerUtil.getCurrentSelection(event);
+		final InternalProject project = (InternalProject) ECPUtil.getECPProjectManager().getProject(
+			selection.getFirstElement());
 
-		ESLocalProject projectSpace = EMFStoreProvider.INSTANCE.getProjectSpace(project);
-		
+		final ESLocalProject projectSpace = EMFStoreProvider.INSTANCE.getProjectSpace(project);
+
 		if (projectSpace == null) {
 			return null;
 		}
 
-		Set<EObject> eObjects = projectSpace.getAllModelElements();
+		final Set<EObject> eObjects = projectSpace.getAllModelElements();
 
 		if (project == null) {
 			MessageDialog.openInformation(HandlerUtil.getActiveShell(event), "Information",
 				"You must first select the Project.");
 		} else {
-			ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
+			final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
 				new ReflectiveItemProviderAdapterFactory(),
 				new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
-			AdapterFactoryLabelProvider adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(composedAdapterFactory);
-			ElementListSelectionDialog dialog = new ElementListSelectionDialog(HandlerUtil.getActiveShell(event),
+			final AdapterFactoryLabelProvider adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(
+				composedAdapterFactory);
+			final ElementListSelectionDialog dialog = new ElementListSelectionDialog(HandlerUtil.getActiveShell(event),
 				adapterFactoryLabelProvider);
 			dialog.setElements(eObjects.toArray());
 			dialog.setMultipleSelection(false);
 			dialog.setMessage("Enter model element name prefix or pattern (e.g. *Trun?)");
 			dialog.setTitle("Search Model Element");
-			if (dialog.open() == Dialog.OK) {
-				Object[] selections = dialog.getResult();
+			if (dialog.open() == Window.OK) {
+				final Object[] selections = dialog.getResult();
 
 				if (selections != null && selections.length == 1 && selections[0] instanceof EObject) {
 					ECPHandlerHelper.openModelElement(selections[0],
-						 project);
+						project);
 				}
 			}
 			adapterFactoryLabelProvider.dispose();

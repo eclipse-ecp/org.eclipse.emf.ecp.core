@@ -35,7 +35,7 @@ public class Activator extends Plugin {
 	/**
 	 * The PlugIn ID.
 	 */
-	public static final String PLUGIN_ID = "org.eclipse.emf.ecp.cdo.core";
+	public static final String PLUGIN_ID = "org.eclipse.emf.ecp.cdo.core"; //$NON-NLS-1$
 
 	private static Activator instance;
 

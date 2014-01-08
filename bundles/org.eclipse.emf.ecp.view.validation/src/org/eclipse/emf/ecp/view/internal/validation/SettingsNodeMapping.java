@@ -21,20 +21,20 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.common.UniqueSetting;
+import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 
 /**
  * Maps a {@link UniqueSetting} to a {@link ViewModelGraphNode}.
  * 
  * @author emueller
  * 
- * @param <T> the value stored by the nodes
  */
-public class SettingsNodeMapping<T> {
+public class SettingsNodeMapping {
 
 	private static final EStructuralFeature ALL_FEATURES = null;
 
-	private final Map<UniqueSetting, ViewModelGraphNode<T>> settings;
-	private final Comparator<T> comparator;
+	private final Map<UniqueSetting, ViewModelGraphNode> settings;
+	private final Comparator<VDiagnostic> comparator;
 
 	/**
 	 * Constructor.
@@ -43,8 +43,8 @@ public class SettingsNodeMapping<T> {
 	 *            the comparator that will be used by the constructed nodes when calling
 	 *            {@link #createNode(EObject, EStructuralFeature, Object, boolean)}
 	 */
-	public SettingsNodeMapping(Comparator<T> comparator) {
-		settings = new LinkedHashMap<UniqueSetting, ViewModelGraphNode<T>>();
+	public SettingsNodeMapping(Comparator<VDiagnostic> comparator) {
+		settings = new LinkedHashMap<UniqueSetting, ViewModelGraphNode>();
 		this.comparator = comparator;
 	}
 
@@ -57,9 +57,9 @@ public class SettingsNodeMapping<T> {
 	 *            a {@link EStructuralFeature} of the {@link EObject}
 	 * @return the node for the given setting
 	 */
-	public ViewModelGraphNode<T> getNode(EObject eObject, EStructuralFeature feature) {
+	public ViewModelGraphNode getNode(EObject eObject, EStructuralFeature feature) {
 		final UniqueSetting setting = UniqueSetting.createSetting(eObject, feature);
-		final ViewModelGraphNode<T> node = settings.get(setting);
+		final ViewModelGraphNode node = settings.get(setting);
 
 		if (node == null) {
 			return null;
@@ -75,13 +75,13 @@ public class SettingsNodeMapping<T> {
 	 * @param eObject the {@link EObject} to find all GraphNodes for
 	 * @return the set of all {@link ViewModelGraphNode ViewModelGraphNodes} for the provided {@link EObject}
 	 */
-	public Set<ViewModelGraphNode<T>> getAllNodes(EObject eObject) {
+	public Set<ViewModelGraphNode> getAllNodes(EObject eObject) {
 
-		final Set<ViewModelGraphNode<T>> result = new LinkedHashSet<ViewModelGraphNode<T>>();
+		final Set<ViewModelGraphNode> result = new LinkedHashSet<ViewModelGraphNode>();
 		final EList<EStructuralFeature> eAllStructuralFeatures = eObject.eClass().getEAllStructuralFeatures();
 		for (final EStructuralFeature eStructuralFeature : eAllStructuralFeatures) {
 			final UniqueSetting setting = UniqueSetting.createSetting(eObject, eStructuralFeature);
-			final ViewModelGraphNode<T> viewModelGraphNode = settings.get(setting);
+			final ViewModelGraphNode viewModelGraphNode = settings.get(setting);
 			if (viewModelGraphNode != null) {
 				result.add(viewModelGraphNode);
 			}
@@ -104,10 +104,10 @@ public class SettingsNodeMapping<T> {
 	 *            whether the object contained by the node is a domain object
 	 * @return the constructed {@link ViewModelGraphNode} for the given setting
 	 */
-	public ViewModelGraphNode<T> createNode(EObject eObject, EStructuralFeature feature,
-		T value, boolean isDomainObject) {
+	public ViewModelGraphNode createNode(EObject eObject, EStructuralFeature feature,
+		VDiagnostic value, boolean isDomainObject) {
 		final UniqueSetting setting = UniqueSetting.createSetting(eObject, feature);
-		ViewModelGraphNode<T> node = settings.get(setting);
+		ViewModelGraphNode node = settings.get(setting);
 
 		if (node == null) {
 			node = createNode(setting, value, isDomainObject);
@@ -119,8 +119,9 @@ public class SettingsNodeMapping<T> {
 		return node;
 	}
 
-	private ViewModelGraphNode<T> createNode(UniqueSetting setting, T initValue, boolean isDomainObject) {
-		return new ViewModelGraphNode<T>(setting, initValue, isDomainObject, comparator);
+	private ViewModelGraphNode createNode(UniqueSetting setting, VDiagnostic initValue,
+		boolean isDomainObject) {
+		return new ViewModelGraphNode(setting, initValue, isDomainObject, comparator);
 	}
 
 	/**

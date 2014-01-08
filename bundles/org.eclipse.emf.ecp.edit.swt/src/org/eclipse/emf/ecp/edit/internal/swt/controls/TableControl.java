@@ -233,49 +233,7 @@ public class TableControl extends SWTControl {
 			.setWidth(80)
 			.build(tableViewer);
 
-		column.setLabelProvider(new CellLabelProvider() {
-
-			@Override
-			public void update(ViewerCell cell) {
-				final Set<VDiagnostic> allDiagnostics = getAllDiagnostics((EObject) cell.getElement(),
-					structuralFeatures);
-				Integer mostSevere = Diagnostic.OK;
-
-				for (final VDiagnostic vDiagnostic : allDiagnostics) {
-					if (vDiagnostic.getHighestSeverity() > mostSevere) {
-						mostSevere = vDiagnostic.getHighestSeverity();
-					}
-				}
-
-				cell.setImage(getValidationIcon(mostSevere));
-
-				// switch (mostSevere) {
-				// case Diagnostic.OK:
-				// cell.setImage(null);
-				// return;
-				// default:
-				// cell.setImage(Activator.getImage(ICON_VALIDATION_ERROR));
-				// }
-			}
-
-			@Override
-			public String getToolTipText(Object element) {
-				final StringBuffer tooltip = new StringBuffer();
-				final Set<VDiagnostic> allDiagnostics = getAllDiagnostics((EObject) element, structuralFeatures);
-
-				for (final VDiagnostic vDiagnostic : allDiagnostics) {
-					if (vDiagnostic.getHighestSeverity() == Diagnostic.OK) {
-						continue;
-					}
-					if (tooltip.length() > 0) {
-						tooltip.append("\n"); //$NON-NLS-1$
-					}
-					tooltip.append(vDiagnostic.getMessage());
-				}
-
-				return tooltip.toString();
-			}
-		});
+		column.setLabelProvider(new ValidationStatusCellLabelProvider(structuralFeatures));
 	}
 
 	private EObject getInstanceOf(EClass clazz) {
@@ -514,7 +472,7 @@ public class TableControl extends SWTControl {
 	private Button addButton;
 	private Setting mainSetting;
 
-	private boolean isDisposing = false;
+	private boolean isDisposing;
 
 	private void createAddRowButton(final EClass clazz, final Composite buttonComposite) {
 		addButton = new Button(buttonComposite, SWT.None);
@@ -592,6 +550,7 @@ public class TableControl extends SWTControl {
 		if (validationLabel == null || validationLabel.isDisposed()) {
 			return;
 		}
+		validationLabel.setToolTipText(""); //$NON-NLS-1$
 		validationLabel.setImage(null);
 
 	}
@@ -611,6 +570,62 @@ public class TableControl extends SWTControl {
 			removeButton.setVisible(isEditable);
 		}
 		editable = isEditable;
+	}
+
+	/**
+	 * @author Jonas
+	 *
+	 */
+	private final class ValidationStatusCellLabelProvider extends CellLabelProvider {
+		private final List<EStructuralFeature> structuralFeatures;
+
+		/**
+		 * @param structuralFeatures
+		 */
+		private ValidationStatusCellLabelProvider(List<EStructuralFeature> structuralFeatures) {
+			this.structuralFeatures = structuralFeatures;
+		}
+
+		@Override
+		public void update(ViewerCell cell) {
+			final Set<VDiagnostic> allDiagnostics = getAllDiagnostics((EObject) cell.getElement(),
+				structuralFeatures);
+			Integer mostSevere = Diagnostic.OK;
+
+			for (final VDiagnostic vDiagnostic : allDiagnostics) {
+				if (vDiagnostic.getHighestSeverity() > mostSevere) {
+					mostSevere = vDiagnostic.getHighestSeverity();
+				}
+			}
+
+			cell.setImage(getValidationIcon(mostSevere));
+
+			// switch (mostSevere) {
+			// case Diagnostic.OK:
+			// cell.setImage(null);
+			// return;
+			// default:
+			// cell.setImage(Activator.getImage(ICON_VALIDATION_ERROR));
+			// }
+		}
+
+		@Override
+		public String getToolTipText(Object element) {
+			final StringBuffer tooltip = new StringBuffer();
+			final Set<VDiagnostic> allDiagnostics = getAllDiagnostics((EObject) element, structuralFeatures);
+
+			for (final VDiagnostic vDiagnostic : allDiagnostics) {
+				if (vDiagnostic.getHighestSeverity() == Diagnostic.OK) {
+					continue;
+				}
+				if (tooltip.length() > 0) {
+					tooltip.append("\n"); //$NON-NLS-1$
+				}
+				tooltip.append(vDiagnostic.getMessage());
+			}
+
+			return tooltip.toString();
+		}
 	}
 
 	/**
@@ -686,7 +701,7 @@ public class TableControl extends SWTControl {
 
 	/**
 	 * ECP specficic cell label provider that does also implement {@link IColorProvider} in
-	 * order to correctly
+	 * order to correctly.
 	 * 
 	 * @author emueller
 	 * 

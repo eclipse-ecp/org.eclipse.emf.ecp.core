@@ -184,6 +184,7 @@ public final class ECPHandlerHelper {
 	 * @param ecpProject the {@link ECPProject} to add the {@link EObject} to
 	 * @param shell the {@link Shell} used to display the UI
 	 * @param open whether to open the corresponding editor or not
+	 * @return the created {@link EObject}
 	 */
 	public static EObject addModelElement(final ECPProject ecpProject, final Shell shell, boolean open) {
 		final SelectionComposite<TreeViewer> helper = CompositeFactory.getSelectModelClassComposite(ecpProject);

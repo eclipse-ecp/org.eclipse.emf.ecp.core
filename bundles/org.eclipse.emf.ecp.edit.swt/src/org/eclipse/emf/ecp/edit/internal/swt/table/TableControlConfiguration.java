@@ -20,8 +20,8 @@ import java.util.List;
  */
 public class TableControlConfiguration {
 
-	private boolean addRemoveDisabled = false;
-	private List<TableColumnConfiguration> columns = new ArrayList<TableColumnConfiguration>();
+	private boolean addRemoveDisabled;
+	private final List<TableColumnConfiguration> columns = new ArrayList<TableColumnConfiguration>();
 
 	public List<TableColumnConfiguration> getColumns() {
 		return columns;

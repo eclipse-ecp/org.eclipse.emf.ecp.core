@@ -1,3 +1,15 @@
+/*******************************************************************************
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Eugen Neufeld - initial API and implementation
+ * 
+ *******************************************************************************/
 package org.eclipse.emf.ecp.ui.e4.view;
 
 import java.util.ArrayList;
@@ -39,12 +51,12 @@ public class DynamicCreateChildrenElementsMenuContribution {
 		final Object sel = selectionService.getSelection();
 		if (sel != null) {
 			if (sel instanceof Collection) {
-				Collection<?> col = (Collection<?>) sel;
+				final Collection<?> col = (Collection<?>) sel;
 				return new ArrayList<Object>(col);
 			} else if (sel instanceof Object[]) {
 				return Arrays.asList((Object[]) sel);
 			} else if (sel instanceof IStructuredSelection) {
-				IStructuredSelection ssel = (IStructuredSelection) sel;
+				final IStructuredSelection ssel = (IStructuredSelection) sel;
 				return ssel.toList();
 			} else {
 				return Arrays.asList(sel);
@@ -65,10 +77,10 @@ public class DynamicCreateChildrenElementsMenuContribution {
 		if (elements.length == 1 && elements[0] instanceof EObject) {
 			final EObject eObject = (EObject) elements[0];
 			final ECPProject project = ECPUtil.getECPProjectManager()
-					.getProject(eObject);
+				.getProject(eObject);
 			final EditingDomain domain = project.getEditingDomain();
 			final Collection<?> childDescriptors = new ChildrenDescriptorCollector()
-					.getDescriptors(eObject);
+				.getDescriptors(eObject);
 
 			for (final Object childDescriptor : childDescriptors) {
 				final CommandParameter cp = (CommandParameter) childDescriptor;
@@ -76,21 +88,21 @@ public class DynamicCreateChildrenElementsMenuContribution {
 					continue;
 				}
 				if (!cp.getEReference().isMany()
-						&& eObject.eIsSet(cp.getEStructuralFeature())) {
+					&& eObject.eIsSet(cp.getEStructuralFeature())) {
 					continue;
 				} else if (cp.getEReference().isMany()
-						&& cp.getEReference().getUpperBound() != -1
-						&& cp.getEReference().getUpperBound() <= ((List<?>) eObject
-								.eGet(cp.getEReference())).size()) {
+					&& cp.getEReference().getUpperBound() != -1
+					&& cp.getEReference().getUpperBound() <= ((List<?>) eObject
+						.eGet(cp.getEReference())).size()) {
 					continue;
 				}
 
 				final CustomCreateChildAction createChildAction = new CustomCreateChildAction(
-						domain, new StructuredSelection(eObject),
-						childDescriptor, cp, project);
+					domain, new StructuredSelection(eObject),
+					childDescriptor, cp, project);
 
 				final MDirectMenuItem dynamicItem = MMenuFactory.INSTANCE
-						.createDirectMenuItem();
+					.createDirectMenuItem();
 
 				dynamicItem.setLabel(createChildAction.getText());
 				dynamicItem.setTooltip(createChildAction.getToolTipText());
@@ -110,8 +122,8 @@ public class DynamicCreateChildrenElementsMenuContribution {
 	class CustomCreateChildAction extends CreateChildAction {
 
 		public CustomCreateChildAction(EditingDomain editingDomain,
-				ISelection selection, Object descriptor, CommandParameter cp,
-				ECPProject project) {
+			ISelection selection, Object descriptor, CommandParameter cp,
+			ECPProject project) {
 			super(editingDomain, selection, descriptor);
 			this.cp = cp;
 			this.project = project;

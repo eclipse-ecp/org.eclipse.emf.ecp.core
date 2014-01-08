@@ -3,7 +3,6 @@ Bundle-ManifestVersion: 2
 Bundle-Name: ECP Graphiti Integration
 Bundle-SymbolicName: org.eclipse.emf.ecp.graphiti.integration;singleton:=true
 Bundle-Version: 1.1.1.qualifier
-Bundle-Activator: org.eclipse.emf.ecp.graphiti.internal.integration.Activator
 Require-Bundle: org.eclipse.ui;bundle-version="3.1.0",
  org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.graphiti;bundle-version="0.9.1",

@@ -23,11 +23,15 @@ import org.eclipse.jface.viewers.TreeViewer;
 
 /**
  * @author Eike Stepper
+ * @param <INPUT> The type of input (root of the tree)
  */
 public abstract class ECPContentProvider<INPUT> extends TreeContentProvider<INPUT> implements ECPModelContextProvider,
 	INotifyChangedListener {
 	private ViewerRefresh viewerRefresh;
 
+	/**
+	 * Default constructor.
+	 */
 	public ECPContentProvider() {
 		InternalProvider.EMF_ADAPTER_FACTORY.addListener(this);
 	}
@@ -40,9 +44,9 @@ public abstract class ECPContentProvider<INPUT> extends TreeContentProvider<INPU
 
 	@Override
 	protected void fillChildren(Object parent, InternalChildrenList childrenList) {
-		ECPContainer context = getModelContext(parent);
+		final ECPContainer context = getModelContext(parent);
 		if (context != null) {
-			InternalProvider provider = (InternalProvider) context.getProvider();
+			final InternalProvider provider = (InternalProvider) context.getProvider();
 			provider.fillChildren(context, parent, childrenList);
 		}
 	}
@@ -62,7 +66,7 @@ public abstract class ECPContentProvider<INPUT> extends TreeContentProvider<INPU
 
 	/** {@inheritDoc} */
 	public void notifyChanged(Notification notification) {
-		TreeViewer viewer = getViewer();
+		final TreeViewer viewer = getViewer();
 		if (viewer != null && viewer.getControl() != null && !viewer.getControl().isDisposed()) {
 			if (viewerRefresh == null) {
 				viewerRefresh = new ViewerRefresh(viewer);

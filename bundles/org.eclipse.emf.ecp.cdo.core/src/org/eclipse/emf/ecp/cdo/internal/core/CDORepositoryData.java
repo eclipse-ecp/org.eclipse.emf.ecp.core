@@ -71,6 +71,6 @@ public final class CDORepositoryData implements CDOSessionConfigurationFactory {
 		String connectorType = properties.getValue(CDOProvider.PROP_CONNECTOR_TYPE);
 		String connectorDescription = properties.getValue(CDOProvider.PROP_CONNECTOR_DESCRIPTION);
 		String repositoryName = properties.getValue(CDOProvider.PROP_REPOSITORY_NAME);
-		return connectorType + "://" + connectorDescription + "/" + repositoryName;
+		return connectorType + "://" + connectorDescription + "/" + repositoryName; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 }

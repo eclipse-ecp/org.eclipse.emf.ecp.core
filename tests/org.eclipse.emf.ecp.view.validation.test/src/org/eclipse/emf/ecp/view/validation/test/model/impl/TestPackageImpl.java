@@ -11,6 +11,8 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.validation.test.model.impl;
 
+import static org.eclipse.emf.ecp.view.validation.test.model.TestPackage.CONTAINER;
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EGenericType;
@@ -21,6 +23,7 @@ import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecp.view.validation.test.model.Book;
 import org.eclipse.emf.ecp.view.validation.test.model.Computer;
+import org.eclipse.emf.ecp.view.validation.test.model.Content;
 import org.eclipse.emf.ecp.view.validation.test.model.Librarian;
 import org.eclipse.emf.ecp.view.validation.test.model.Library;
 import org.eclipse.emf.ecp.view.validation.test.model.Mainboard;
@@ -95,6 +98,22 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	private EClass powerBlockEClass = null;
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	private EClass containerEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	private EClass contentEClass = null;
+
+	/**
 	 * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
 	 * EPackage.Registry} by the package
 	 * package URI value.
@@ -134,12 +153,14 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * @generated
 	 */
 	public static TestPackage init() {
-		if (isInited)
+		if (isInited) {
 			return (TestPackage) EPackage.Registry.INSTANCE.getEPackage(TestPackage.eNS_URI);
+		}
 
 		// Obtain or create and register package
-		TestPackageImpl theTestPackage = (TestPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof TestPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI) : new TestPackageImpl());
+		final TestPackageImpl theTestPackage = (TestPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof TestPackageImpl ? EPackage.Registry.INSTANCE
+			.get(eNS_URI)
+			: new TestPackageImpl());
 
 		isInited = true;
 
@@ -442,6 +463,56 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	public EClass getContainer() {
+		return containerEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EReference getContainer_Contents() {
+		return (EReference) containerEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EClass getContent() {
+		return contentEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EAttribute getContent_UniqueAttribute() {
+		return (EAttribute) contentEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EAttribute getContent_SecondAttribute() {
+		return (EAttribute) contentEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
 	public TestFactory getTestFactory() {
 		return (TestFactory) getEFactoryInstance();
 	}
@@ -463,8 +534,9 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * @generated
 	 */
 	public void createPackageContents() {
-		if (isCreated)
+		if (isCreated) {
 			return;
+		}
 		isCreated = true;
 
 		// Create classes and their features
@@ -501,6 +573,13 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 
 		powerBlockEClass = createEClass(POWER_BLOCK);
 		createEAttribute(powerBlockEClass, POWER_BLOCK__NAME);
+
+		containerEClass = createEClass(CONTAINER);
+		createEReference(containerEClass, CONTAINER__CONTENTS);
+
+		contentEClass = createEClass(CONTENT);
+		createEAttribute(contentEClass, CONTENT__UNIQUE_ATTRIBUTE);
+		createEAttribute(contentEClass, CONTENT__SECOND_ATTRIBUTE);
 	}
 
 	/**
@@ -520,8 +599,9 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * @generated
 	 */
 	public void initializePackageContents() {
-		if (isInitialized)
+		if (isInitialized) {
 			return;
+		}
 		isInitialized = true;
 
 		// Initialize package
@@ -539,13 +619,13 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		initEClass(libraryEClass, Library.class, "Library", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getLibrary_Name(), ecorePackage.getEString(), "name", null, 0, 1, Library.class, !IS_TRANSIENT,
 			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getLibrary_Writers(), this.getWriter(), this.getWriter_Library(), "writers", null, 1, -1,
-			Library.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getLibrary_Books(), this.getBook(), null, "books", null, 0, -1, Library.class, !IS_TRANSIENT,
+		initEReference(getLibrary_Writers(), getWriter(), getWriter_Library(), "writers", null, 1, -1, Library.class,
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
+		initEReference(getLibrary_Books(), getBook(), null, "books", null, 0, -1, Library.class, !IS_TRANSIENT,
 			!IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
 			IS_ORDERED);
-		initEReference(getLibrary_Librarian(), this.getLibrarian(), null, "librarian", null, 0, 1, Library.class,
+		initEReference(getLibrary_Librarian(), getLibrarian(), null, "librarian", null, 0, 1, Library.class,
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
 
@@ -568,14 +648,14 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getWriter_BirthDate(), ecorePackage.getEDate(), "BirthDate", null, 0, 1, Writer.class,
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getWriter_Books(), this.getBook(), this.getBook_Writers(), "books", null, 0, -1, Writer.class,
+		initEReference(getWriter_Books(), getBook(), getBook_Writers(), "books", null, 0, -1, Writer.class,
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
 		initEAttribute(getWriter_Pseudonym(), ecorePackage.getEBoolean(), "Pseudonym", "false", 0, 1, Writer.class,
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getWriter_Library(), this.getLibrary(), this.getLibrary_Writers(), "library", null, 0, 1,
-			Writer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getWriter_Library(), getLibrary(), getLibrary_Writers(), "library", null, 0, 1, Writer.class,
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
 
 		op = addEOperation(writerEClass, ecorePackage.getEBoolean(), "validate", 0, 1, IS_UNIQUE, IS_ORDERED);
 		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostic", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -591,7 +671,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getBook_Pages(), ecorePackage.getEInt(), "pages", "100", 0, 1, Book.class, !IS_TRANSIENT,
 			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getBook_Writers(), this.getWriter(), this.getWriter_Books(), "writers", null, 0, 1, Book.class,
+		initEReference(getBook_Writers(), getWriter(), getWriter_Books(), "writers", null, 0, 1, Book.class,
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
 
@@ -619,12 +699,12 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(computerEClass, Computer.class, "Computer", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getComputer_Mainboard(), this.getMainboard(), null, "mainboard", null, 0, 1, Computer.class,
+		initEReference(getComputer_Mainboard(), getMainboard(), null, "mainboard", null, 0, 1, Computer.class,
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComputer_Name(), ecorePackage.getEString(), "name", null, 1, 1, Computer.class,
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getComputer_PowerBlock(), this.getPowerBlock(), null, "powerBlock", null, 0, 1, Computer.class,
+		initEReference(getComputer_PowerBlock(), getPowerBlock(), null, "powerBlock", null, 0, 1, Computer.class,
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
 
@@ -637,6 +717,20 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 			IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getPowerBlock_Name(), ecorePackage.getEString(), "name", null, 1, 1, PowerBlock.class,
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(containerEClass, org.eclipse.emf.ecp.view.validation.test.model.Container.class, "Container",
+			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getContainer_Contents(), getContent(), null, "contents", null, 0, -1,
+			org.eclipse.emf.ecp.view.validation.test.model.Container.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+			IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(contentEClass, Content.class, "Content", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getContent_UniqueAttribute(), ecorePackage.getEString(), "uniqueAttribute", null, 0, 1,
+			Content.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
+			IS_ORDERED);
+		initEAttribute(getContent_SecondAttribute(), ecorePackage.getEString(), "secondAttribute", null, 0, 1,
+			Content.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
+			IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

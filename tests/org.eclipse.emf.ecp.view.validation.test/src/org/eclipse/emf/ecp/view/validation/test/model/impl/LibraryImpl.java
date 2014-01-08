@@ -252,7 +252,7 @@ public class LibraryImpl extends EObjectImpl implements Library {
 						TestValidator.DIAGNOSTIC_SOURCE,
 						TestValidator.LIBRARY__VALIDATE,
 						"Name is warning.",
-						new Object[] { this, TestPackage.eINSTANCE.getLibrarian_Name()
+						new Object[] { this, TestPackage.eINSTANCE.getLibrary_Name()
 						}));
 			}
 			return false;

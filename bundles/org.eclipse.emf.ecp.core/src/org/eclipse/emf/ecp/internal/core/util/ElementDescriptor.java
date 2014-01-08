@@ -52,7 +52,7 @@ public abstract class ElementDescriptor<ELEMENT extends ECPElement> extends Elem
 		super(name);
 		this.registry = registry;
 		label = name;
-		description = "";
+		description = ""; //$NON-NLS-1$
 	}
 
 	public final ElementRegistry<ELEMENT, ?> getRegistry() {

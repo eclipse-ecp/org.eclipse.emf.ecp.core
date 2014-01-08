@@ -153,7 +153,7 @@
             name="Migrate">
       </command>
       <command
-            defaultHandler="org.eclipse.emf.ecp.view.editor.handler.GenerateControlsOnViewHandler"
+            defaultHandler="org.eclipse.emf.ecp.view.editor.handler.GenerateControlsHandler"
             id="org.eclipse.emf.ecp.view.editor.controls.generateDefaultOnView"
             name="Generate Controls">
       </command>

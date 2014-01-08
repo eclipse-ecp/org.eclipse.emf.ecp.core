@@ -1,3 +1,15 @@
+/*******************************************************************************
+ * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Eugen Neufeld - initial API and implementation
+ * 
+ *******************************************************************************/
 package org.eclipse.emf.ecp.internal.graphiti.feature;
 
 import org.eclipse.emf.common.util.EList;
@@ -14,6 +26,8 @@ import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 
 public class LoadProjectFeature extends AbstractAddFeature {
 
+	private static final int EOBJECTWIDTH = 100;
+	private static final int EOBJECTHEIGHT = 50;
 	private final ECPProject project;
 	private static final int DEFAULT_OFFSET_X = 20;
 	private static final int DEFAULT_OFFSET_Y = 20;
@@ -38,7 +52,7 @@ public class LoadProjectFeature extends AbstractAddFeature {
 			}
 			final int maxWidth = createEObjectAddContext(createDiagram,
 				(EObject) rootObject, currentXOffset, 0);
-			final int nextXOffset = ContainerSizes.eObjectWidth + DEFAULT_OFFSET_X;
+			final int nextXOffset = EOBJECTWIDTH + DEFAULT_OFFSET_X;
 			if (maxWidth > nextXOffset) {
 				currentXOffset += maxWidth + DEFAULT_OFFSET_X;
 			} else {
@@ -106,16 +120,16 @@ public class LoadProjectFeature extends AbstractAddFeature {
 		addContext.setLocation(currentXOffset, DEFAULT_OFFSET_Y + heightOffset);
 		getFeatureProvider().addIfPossible(addContext);
 		int maxWidth = rootObject.eContents().size()
-			* (DEFAULT_OFFSET_X + ContainerSizes.eObjectWidth);
+			* (DEFAULT_OFFSET_X + EOBJECTWIDTH);
 		if (maxWidth == 0) {
-			maxWidth = ContainerSizes.eObjectWidth;
+			maxWidth = EOBJECTWIDTH;
 		}
 
 		for (final EObject eObejct : rootObject.eContents()) {
 			final int thisMaxWidth = createEObjectAddContext(createDiagram, eObejct,
 				currentXOffset, DEFAULT_OFFSET_Y + heightOffset
-					+ ContainerSizes.eObjectHeight);
-			final int nextXOffset = ContainerSizes.eObjectWidth + DEFAULT_OFFSET_X;
+					+ EOBJECTHEIGHT);
+			final int nextXOffset = EOBJECTWIDTH + DEFAULT_OFFSET_X;
 			if (thisMaxWidth > nextXOffset) {
 				maxWidth = thisMaxWidth;
 				currentXOffset += maxWidth + DEFAULT_OFFSET_X;

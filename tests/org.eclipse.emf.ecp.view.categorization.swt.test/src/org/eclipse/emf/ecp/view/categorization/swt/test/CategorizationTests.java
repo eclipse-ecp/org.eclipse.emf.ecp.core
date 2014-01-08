@@ -36,6 +36,9 @@ import org.junit.runner.RunWith;
 @RunWith(DatabindingClassRunner.class)
 public class CategorizationTests {
 
+	private static final String TESTNAME = "test"; //$NON-NLS-1$
+	private static final String NAME = "Name"; //$NON-NLS-1$
+	private static final String PLAYERNAME = "Player"; //$NON-NLS-1$
 	private Player player;
 	private VView view;
 	private VCategorizationElement element;
@@ -44,7 +47,7 @@ public class CategorizationTests {
 	public void setUp() throws Exception {
 
 		player = BowlingFactory.eINSTANCE.createPlayer();
-		player.setName("Player");
+		player.setName(PLAYERNAME);
 		player.setGender(Gender.MALE);
 
 		view = VViewFactory.eINSTANCE.createView();
@@ -135,7 +138,7 @@ public class CategorizationTests {
 		composite = (Composite) composite.getChildren()[0];
 
 		assertTrue(composite.getChildren().length == 2);
-		assertLabelAndTextControl(composite, "Name");
+		assertLabelAndTextControl(composite, NAME);
 
 	}
 
@@ -169,13 +172,13 @@ public class CategorizationTests {
 		Control content = scrolledComposite.getContent();
 		assertTrue(Composite.class.isInstance(content));
 		content = ((Composite) content).getChildren()[0];
-		assertLabelAndTextControl((Composite) content, "Name");
+		assertLabelAndTextControl((Composite) content, NAME);
 	}
 
 	@Test
 	public void testCategorizationWithoutCategory() throws ECPRendererException {
 		final VCategorization vCategorization = VCategorizationFactory.eINSTANCE.createCategorization();
-		vCategorization.setName("test");
+		vCategorization.setName(TESTNAME);
 		element.getCategorizations().add(vCategorization);
 		final Control render = render();
 
@@ -188,14 +191,14 @@ public class CategorizationTests {
 
 		assertTreeAndTreeItems(composite, vCategorization);
 
-		assertCategorizationSubEditor(composite, "test");
+		assertCategorizationSubEditor(composite, TESTNAME);
 
 	}
 
 	@Test
 	public void testCategorizationWithCategory() throws ECPRendererException {
 		final VCategorization vCategorization = VCategorizationFactory.eINSTANCE.createCategorization();
-		vCategorization.setName("test");
+		vCategorization.setName(TESTNAME);
 		element.getCategorizations().add(vCategorization);
 		final VCategory vCategory1 = VCategorizationFactory.eINSTANCE.createCategory();
 		final VControl controlPlayerName = VViewFactory.eINSTANCE.createControl();
@@ -216,14 +219,14 @@ public class CategorizationTests {
 
 		assertTreeAndTreeItems(composite, vCategorization);
 
-		assertCategorizationSubEditor(composite, "test");
+		assertCategorizationSubEditor(composite, TESTNAME);
 
 	}
 
 	@Test
 	public void testCategorizationWithCategories() throws ECPRendererException {
 		final VCategorization vCategorization = VCategorizationFactory.eINSTANCE.createCategorization();
-		vCategorization.setName("test");
+		vCategorization.setName(TESTNAME);
 		element.getCategorizations().add(vCategorization);
 		final VCategory vCategory1 = VCategorizationFactory.eINSTANCE.createCategory();
 		final VControl controlPlayerName = VViewFactory.eINSTANCE.createControl();
@@ -251,7 +254,7 @@ public class CategorizationTests {
 
 		assertTreeAndTreeItems(composite, vCategorization);
 
-		assertCategorizationSubEditor(composite, "test");
+		assertCategorizationSubEditor(composite, TESTNAME);
 
 	}
 
@@ -260,12 +263,12 @@ public class CategorizationTests {
 		final VCategorization[] categorizations = new VCategorization[5];
 		for (int i = 0; i < 5; i++) {
 			final VCategorization vCategorization = VCategorizationFactory.eINSTANCE.createCategorization();
-			vCategorization.setName("test" + i);
+			vCategorization.setName(TESTNAME + i);
 			element.getCategorizations().add(vCategorization);
 			categorizations[i] = vCategorization;
 			for (int j = 0; j < 5; j++) {
 				final VCategorization vCategorization2 = VCategorizationFactory.eINSTANCE.createCategorization();
-				vCategorization2.setName("test" + i + "_" + j);
+				vCategorization2.setName(TESTNAME + i + "_" + j); //$NON-NLS-1$
 				vCategorization.getCategorizations().add(vCategorization2);
 
 				final VCategory vCategory1 = VCategorizationFactory.eINSTANCE.createCategory();

@@ -12,14 +12,14 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.actions.AddAttributeAction;
 import org.eclipse.emf.ecp.edit.internal.swt.actions.ECPSWTAction;
 import org.eclipse.emf.ecp.edit.spi.util.ECPStaticApplicableTester;
 
 /**
- * This class defines a Control which is used for displaying {@link EStructuralFeature}s which have a multi attribute.
+ * This class defines a Control which is used for displaying {@link org.eclipse.emf.ecore.EStructuralFeature}s which
+ * have a multi attribute.
  * 
  * @author Eugen Neufeld
  * 

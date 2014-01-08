@@ -1,3 +1,4 @@
+// REUSED CLASS
 /**
  * Copyright (c) 2008 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
@@ -16,7 +17,6 @@ import java.util.HashMap;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecp.view.internal.swt.Activator;
-import org.eclipse.emf.edit.provider.IItemFontProvider;
 import org.eclipse.jface.resource.DeviceResourceException;
 import org.eclipse.jface.resource.FontDescriptor;
 import org.eclipse.swt.SWT;
@@ -27,7 +27,7 @@ import org.eclipse.swt.widgets.Display;
 /**
  * A font registry for turning a font description into an actual font object.
  * 
- * @see IItemFontProvider
+ * @see org.eclipse.emf.edit.provider.IItemFontProvider
  */
 public class ExtendedFontRegistry {
 	public static final ExtendedFontRegistry INSTANCE = new ExtendedFontRegistry();

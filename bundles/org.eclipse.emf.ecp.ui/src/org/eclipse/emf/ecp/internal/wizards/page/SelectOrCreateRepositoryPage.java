@@ -41,13 +41,13 @@ public class SelectOrCreateRepositoryPage extends WizardPage {
 		setDescription(Messages.SelectOrCreateRepositoryPage_PageDescription_ExistingOrNewRepository);
 	}
 
-	private boolean createNewRepository = false;
+	private boolean createNewRepository;
 
 	/** {@inheritDoc} */
 	public void createControl(Composite parent) {
-		Composite container = new Composite(parent, SWT.NULL);
+		final Composite container = new Composite(parent, SWT.NULL);
 		container.setLayout(new GridLayout(1, true));
-		Button bCreateNewRepository = new Button(container, SWT.RADIO);
+		final Button bCreateNewRepository = new Button(container, SWT.RADIO);
 		bCreateNewRepository.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 		bCreateNewRepository.setText(Messages.SelectOrCreateRepositoryPage_CreateNewRepository);
 		bCreateNewRepository.addSelectionListener(new SelectionListener() {
@@ -62,7 +62,7 @@ public class SelectOrCreateRepositoryPage extends WizardPage {
 			}
 		});
 
-		Button bSelectRepository = new Button(container, SWT.RADIO);
+		final Button bSelectRepository = new Button(container, SWT.RADIO);
 		bSelectRepository.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 		bSelectRepository.setText(Messages.SelectOrCreateRepositoryPage_SelectExistingRepository);
 		bSelectRepository.addSelectionListener(new SelectionListener() {

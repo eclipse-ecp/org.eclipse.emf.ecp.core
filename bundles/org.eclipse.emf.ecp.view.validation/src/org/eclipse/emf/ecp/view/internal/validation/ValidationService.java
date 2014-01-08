@@ -33,10 +33,11 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecp.common.UniqueSetting;
 import org.eclipse.emf.ecp.view.spi.context.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
@@ -139,10 +140,10 @@ public class ValidationService implements ViewModelService {
 				if (VElement.class.isInstance(renderableParent)
 					&& validationRegistry.containsRenderable((VElement) renderableParent)) {
 					validationRegistry.register(domainModel, renderable);
-					final Map<EObject, Set<VControl>> map = validationRegistry.getDomainToControlMapping(
+					final Map<UniqueSetting, Set<VControl>> map = validationRegistry.getDomainToControlMapping(
 						domainModel,
 						renderable);
-					viewValidationGraph.validate(map.keySet());
+					viewValidationGraph.validateSettings(map.keySet());
 				}
 			}
 		}
@@ -219,6 +220,7 @@ public class ValidationService implements ViewModelService {
 		public void notifyAdd(Notifier notifier) {
 			// maybe null while init
 			if (viewValidationGraph != null) {
+				validationRegistry.updateMappings((EObject) notifier);
 				viewValidationGraph.validate((EObject) notifier);
 			}
 		}

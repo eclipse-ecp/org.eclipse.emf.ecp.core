@@ -70,8 +70,7 @@ public class ExportHandler extends AbstractHandler {
 
 		if (exportModelElements.size() > 0) {
 
-			
-			String filePath = getFilePathByFileDialog(getNameForModelElement(exportModelElements.get(0)));
+			final String filePath = getFilePathByFileDialog(getNameForModelElement(exportModelElements.get(0)));
 
 			if (filePath == null) {
 				return null;
@@ -85,7 +84,9 @@ public class ExportHandler extends AbstractHandler {
 
 		return null;
 	}
+
 	private AdapterFactoryLabelProvider labelProvider;
+
 	/**
 	 * Get the name of a model element.
 	 * 
@@ -93,23 +94,23 @@ public class ExportHandler extends AbstractHandler {
 	 * @return the name for the model element
 	 */
 	private String getNameForModelElement(EObject modelElement) {
-		ComposedAdapterFactory adapterFactory=null;
-		
+		ComposedAdapterFactory adapterFactory = null;
+
 		if (labelProvider == null) {
 			adapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
 				new ReflectiveItemProviderAdapterFactory(),
-				new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });;
+				new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
 			labelProvider = new AdapterFactoryLabelProvider(adapterFactory);
 		}
-		
-		String text = labelProvider.getText(modelElement);
-		if (adapterFactory!=null) {
+
+		final String text = labelProvider.getText(modelElement);
+		if (adapterFactory != null) {
 			adapterFactory.dispose();
 		}
 		labelProvider.dispose();
 		return text;
 	}
-	
+
 	private void runCommand(final List<EObject> exportModelElements, String filePath, Shell shell) {
 		final File file = new File(filePath);
 
@@ -124,7 +125,7 @@ public class ExportHandler extends AbstractHandler {
 
 		try {
 			saveEObjectToResource(exportModelElements, uri);
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			showExceptionDialog(e.getMessage(), e, shell);
 		}
 		progressDialog.getProgressMonitor().done();
@@ -141,7 +142,7 @@ public class ExportHandler extends AbstractHandler {
 	 */
 	private void showExceptionDialog(String message, Exception cause, Shell shell) {
 
-		StringBuilder stringBuilder = new StringBuilder();
+		final StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append(message);
 		String title = "Error";
 		if (cause != null) {
@@ -149,21 +150,21 @@ public class ExportHandler extends AbstractHandler {
 			stringBuilder.append(cause.getMessage());
 			title = cause.getClass().getName();
 		}
-		String string = stringBuilder.toString();
+		final String string = stringBuilder.toString();
 		MessageDialog.openError(shell, title, string);
 		Activator.log("An unexpected error in a ECP plugin occured.", cause);
 	}
-	
-	private List<EObject> getSelfContainedModelElementTree(ExecutionEvent event) {
-		List<EObject> result = new ArrayList<EObject>();
 
-		ISelection selection = HandlerUtil.getActiveMenuSelection(event);
+	private List<EObject> getSelfContainedModelElementTree(ExecutionEvent event) {
+		final List<EObject> result = new ArrayList<EObject>();
+
+		final ISelection selection = HandlerUtil.getActiveMenuSelection(event);
 		IStructuredSelection strucSel = null;
 		EObject copyModelElement = null;
 
 		if (selection != null && selection instanceof IStructuredSelection) {
 			strucSel = (IStructuredSelection) selection;
-			Object firstElement = strucSel.getFirstElement();
+			final Object firstElement = strucSel.getFirstElement();
 			if (firstElement instanceof EObject) {
 				// TODO: ChainSaw - check whether specific clone functionality of ModelUtil is needed here
 				copyModelElement = EcoreUtil.copy((EObject) firstElement);
@@ -183,24 +184,25 @@ public class ExportHandler extends AbstractHandler {
 	}
 
 	private String getFilePathByFileDialog(String modelElementName) {
-		FileDialog dialog = new FileDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), SWT.SAVE);
+		final FileDialog dialog = new FileDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
+			SWT.SAVE);
 		dialog.setFilterNames(FILTER_NAMES);
 		dialog.setFilterExtensions(FILTER_EXTS);
-		String initialPath = PreferenceHelper.getPreference(EXPORT_MODEL_PATH, System.getProperty("user.home"));
+		final String initialPath = PreferenceHelper.getPreference(EXPORT_MODEL_PATH, System.getProperty("user.home"));
 		dialog.setFilterPath(initialPath);
 		dialog.setOverwrite(true);
 
 		try {
 			// String initialFileName = projectSpace.getProjectName() + "@"
 			// + projectSpace.getBaseVersion().getIdentifier() + ".ucp";
-			String initialFileName = "ModelElement_" + modelElementName + "." + FILE_EXTENSION;
+			final String initialFileName = "ModelElement_" + modelElementName + "." + FILE_EXTENSION;
 			dialog.setFileName(initialFileName);
 
-		} catch (NullPointerException e) {
+		} catch (final NullPointerException e) {
 			// do nothing
 		}
 
-		String filePath = dialog.open();
+		final String filePath = dialog.open();
 
 		return filePath;
 	}
@@ -213,11 +215,11 @@ public class ExportHandler extends AbstractHandler {
 	 * @throws IOException if saving to the resource fails
 	 */
 	public void saveEObjectToResource(List<? extends EObject> eObjects, URI resourceURI) throws IOException {
-		ResourceSet resourceSet = new ResourceSetImpl();
-		Resource resource = resourceSet.createResource(resourceURI);
-		EList<EObject> contents = resource.getContents();
+		final ResourceSet resourceSet = new ResourceSetImpl();
+		final Resource resource = resourceSet.createResource(resourceURI);
+		final EList<EObject> contents = resource.getContents();
 
-		for (EObject eObject : eObjects) {
+		for (final EObject eObject : eObjects) {
 			contents.add(eObject);
 		}
 
@@ -233,7 +235,7 @@ public class ExportHandler extends AbstractHandler {
 	 * @throws IOException if saving to the resource fails.
 	 */
 	public void saveEObjectToResource(EObject eObject, URI resourceURI) throws IOException {
-		ArrayList<EObject> list = new ArrayList<EObject>();
+		final ArrayList<EObject> list = new ArrayList<EObject>();
 		list.add(eObject);
 		saveEObjectToResource(list, resourceURI);
 	}

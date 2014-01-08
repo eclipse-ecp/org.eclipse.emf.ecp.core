@@ -43,5 +43,6 @@ Export-Package: org.eclipse.emf.ecp.edit.internal.swt;version="1.1.1";x-friends:
    org.eclipse.emf.ecp.ui.view.editor.controls,
    org.eclipse.emf.ecp.view.groupedgrid.ui.swt,
    org.eclipse.emf.ecp.edit.ecore.swt,
-   org.eclipse.emf.ecp.view.table.ui.swt"
+   org.eclipse.emf.ecp.view.table.ui.swt,
+   org.eclipse.emf.ecp.view.categorization.swt"
 Bundle-Vendor: %Bundle-Vendor

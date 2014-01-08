@@ -24,8 +24,8 @@ import org.eclipse.emf.ecp.internal.controls.Activator;
  */
 public class NumericalHelper {
 
-	private static final String regexInt="^[-+]?[0-9]*$";
-	private static final String regexFloat="^[-+]?[0-9]*\\.?[0-9]*([eE][-+]?[0-9]+)?$";
+	private static final String regexInt="^[-+]?[0-9]*$"; //$NON-NLS-1$
+	private static final String regexFloat="^[-+]?[0-9]*\\.?[0-9]*([eE][-+]?[0-9]+)?$"; //$NON-NLS-1$
 	
 	public static String getValidRegularExpression(Locale locale, Class<?> instanceClass){
 		if (instanceClass.isPrimitive()) {
@@ -61,7 +61,7 @@ public class NumericalHelper {
 		} else if (Float.class.isAssignableFrom(instanceClass)) {
 			return regexFloat;
 		}
-		return ".*";
+		return ".*"; //$NON-NLS-1$
 		
 		
 	}

@@ -32,7 +32,7 @@ public class UpdateHandler extends AbstractWorkspaceHandler {
 	 * Default Constructor.
 	 */
 	public UpdateHandler() {
-		super("Checking in...");
+		super("Checking in..."); //$NON-NLS-1$
 	}
 
 	@SuppressWarnings("deprecation")
@@ -41,13 +41,13 @@ public class UpdateHandler extends AbstractWorkspaceHandler {
 		throws ExecutionException {
 		CDOUtil.setLegacyModeDefault(true);
 		CDOTransaction transaction = workspace.update(new DefaultCDOMerger.PerFeature.ManyValued());
-		transaction.setCommitComment("Updated from remote");
+		transaction.setCommitComment("Updated from remote"); //$NON-NLS-1$
 		try {
 			transaction.commit();
 		} catch (ConcurrentAccessException ex) {
-			throw new ExecutionException("Commit failed!", ex);
+			throw new ExecutionException("Commit failed!", ex); //$NON-NLS-1$
 		} catch (CommitException ex) {
-			throw new ExecutionException("Commit failed!", ex);
+			throw new ExecutionException("Commit failed!", ex); //$NON-NLS-1$
 		}
 		refreshDirtyState(event);
 	}

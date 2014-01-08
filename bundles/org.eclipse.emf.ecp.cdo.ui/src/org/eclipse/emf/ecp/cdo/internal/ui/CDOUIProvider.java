@@ -65,15 +65,15 @@ public class CDOUIProvider extends DefaultUIProvider {
 	@Override
 	public Image getImage(Object element) {
 		if (element instanceof CDOBranchWrapper) {
-			return Activator.getImage("icons/branch.gif");
+			return Activator.getImage("icons/branch.gif"); //$NON-NLS-1$
 		}
 
 		if (element instanceof CDOResource) {
-			return Activator.getImage("icons/resource.gif");
+			return Activator.getImage("icons/resource.gif"); //$NON-NLS-1$
 		}
 
 		if (element instanceof CDOResourceFolder) {
-			return Activator.getImage("icons/folder.gif");
+			return Activator.getImage("icons/folder.gif"); //$NON-NLS-1$
 		}
 
 		return super.getImage(element);
@@ -113,9 +113,9 @@ public class CDOUIProvider extends DefaultUIProvider {
 		Group group1 = new Group(composite, SWT.NONE);
 		group1.setLayout(group1Layout);
 		group1.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
-		group1.setText("Connection");
+		group1.setText("Connection"); //$NON-NLS-1$
 		final ElementWizardComposite connectorWizard = new ElementWizardComposite.WithRadios(group1, SWT.NONE,
-			"org.eclipse.net4j.connectors", "Type:");
+			"org.eclipse.net4j.connectors", "Type:"); //$NON-NLS-1$ //$NON-NLS-2$
 		connectorWizard.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		connectorWizard.getNotifier().addListener(new IListener() {
 			public void notifyEvent(IEvent event) {
@@ -128,11 +128,11 @@ public class CDOUIProvider extends DefaultUIProvider {
 		Group group2 = new Group(composite, SWT.NONE);
 		group2.setLayout(new GridLayout(1, false));
 		group2.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1));
-		group2.setText("Repository");
+		group2.setText("Repository"); //$NON-NLS-1$
 		final Text remoteRepositoryNameText = new Text(group2, SWT.BORDER);
 		remoteRepositoryNameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		remoteRepositoryNameText.addModifyListener(new ModifyListener() {
-			private String oldText = "";
+			private String oldText = ""; //$NON-NLS-1$
 
 			public void modifyText(ModifyEvent e) {
 				if (oldText.equals(repositoryNameText.getText())) {

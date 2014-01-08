@@ -29,7 +29,7 @@ public class CheckinHandler extends AbstractWorkspaceHandler {
 	 * Default constructor.
 	 */
 	public CheckinHandler() {
-		super("Updating...");
+		super("Updating..."); //$NON-NLS-1$
 	}
 
 	@SuppressWarnings("deprecation")
@@ -39,9 +39,9 @@ public class CheckinHandler extends AbstractWorkspaceHandler {
 		// TODO remove
 		CDOUtil.setLegacyModeDefault(true);
 		try {
-			workspace.checkin("Workspace checkin");
+			workspace.checkin("Workspace checkin"); //$NON-NLS-1$
 		} catch (CommitException ex) {
-			throw new ExecutionException("Commit failed!", ex);
+			throw new ExecutionException("Commit failed!", ex); //$NON-NLS-1$
 		}
 		refreshDirtyState(event);
 	}

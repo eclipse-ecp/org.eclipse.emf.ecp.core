@@ -25,7 +25,9 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecp.common.UniqueSetting;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
@@ -44,16 +46,16 @@ public class ValidationRegistry {
 	 * The list is ordered so that if two renderables
 	 * are part of the same hierarchy the child will have a lower index than the parent.
 	 */
-	private final Map<EObject, Set<VControl>> domainObjectToAffectedControls;
+	private final Map<UniqueSetting, Set<VControl>> domainObjectToAffectedControls;
 	private final Set<VElement> processedRenderables = new LinkedHashSet<VElement>();
-	private Map<VElement, Set<EObject>> controlToDomainMapping;
+	private Map<VElement, Set<UniqueSetting>> controlToDomainMapping;
 
 	/**
 	 * Default constructor.
 	 */
 	public ValidationRegistry() {
-		controlToDomainMapping = new LinkedHashMap<VElement, Set<EObject>>();
-		domainObjectToAffectedControls = new LinkedHashMap<EObject, Set<VControl>>();
+		controlToDomainMapping = new LinkedHashMap<VElement, Set<UniqueSetting>>();
+		domainObjectToAffectedControls = new LinkedHashMap<UniqueSetting, Set<VControl>>();
 		final IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
 		if (extensionRegistry == null) {
 			return;
@@ -67,7 +69,7 @@ public class ValidationRegistry {
 	 * @param renderable the view model
 	 */
 	public void register(EObject domainModel, VElement renderable) {
-		final Map<EObject, Set<VControl>> domainToControlMapping = getDomainToControlMapping(domainModel,
+		final Map<UniqueSetting, Set<VControl>> domainToControlMapping = getDomainToControlMapping(domainModel,
 			renderable);
 		fillMap(domainToControlMapping, domainObjectToAffectedControls);
 	}
@@ -88,23 +90,23 @@ public class ValidationRegistry {
 	 * @param renderable the {@link VElement} to check
 	 * @return a Map of EObject to {@link VControl VControls}
 	 */
-	public Map<EObject, Set<VControl>> getDomainToControlMapping(EObject domainModel, VElement renderable) {
+	public Map<UniqueSetting, Set<VControl>> getDomainToControlMapping(EObject domainModel, VElement renderable) {
 		processedRenderables.add(renderable);
 		if (renderable.getDiagnostic() == null) {
 			renderable.setDiagnostic(VViewFactory.eINSTANCE.createDiagnostic());
 		}
-		final Map<EObject, Set<VControl>> result = new LinkedHashMap<EObject, Set<VControl>>();
+		final Map<UniqueSetting, Set<VControl>> result = new LinkedHashMap<UniqueSetting, Set<VControl>>();
 		if (VControl.class.isInstance(renderable)) {
 			final VControl control = (VControl) renderable;
 			final VDomainModelReference domainModelReference = control.getDomainModelReference();
 			final Iterator<Setting> iterator = domainModelReference.getIterator();
 			while (iterator.hasNext()) {
-				final Setting setting = iterator.next();
-				final EObject referencedDomainModel = setting.getEObject();
-				if (!result.containsKey(referencedDomainModel)) {
-					result.put(referencedDomainModel, new LinkedHashSet<VControl>());
+				final UniqueSetting uniqueSetting = UniqueSetting.createSetting(iterator.next());
+				// final EObject referencedDomainModel = setting.getEObject();
+				if (!result.containsKey(uniqueSetting)) {
+					result.put(uniqueSetting, new LinkedHashSet<VControl>());
 				}
-				result.get(referencedDomainModel).add(control);
+				result.get(uniqueSetting).add(control);
 			}
 		} else {
 			for (final EObject eObject : renderable.eContents()) {
@@ -141,19 +143,19 @@ public class ValidationRegistry {
 		return referencedDomainModel;
 	}
 
-	private void fillMap(Map<EObject, Set<VControl>> source, Map<EObject, Set<VControl>> target) {
-		for (final EObject domainSource : source.keySet()) {
+	private void fillMap(Map<UniqueSetting, Set<VControl>> source, Map<UniqueSetting, Set<VControl>> target) {
+		for (final UniqueSetting domainSource : source.keySet()) {
 			final Set<VControl> controlSet = source.get(domainSource);
 			fillMapEntry(target, domainSource, controlSet);
 		}
 	}
 
-	private void fillMapEntry(Map<EObject, Set<VControl>> target, final EObject domainSource,
+	private void fillMapEntry(Map<UniqueSetting, Set<VControl>> target, final UniqueSetting domainSource,
 		Set<VControl> controlSet) {
 		for (final VControl abstractControl : controlSet) {
-			final Set<EObject> set = controlToDomainMapping.get(abstractControl);
+			final Set<UniqueSetting> set = controlToDomainMapping.get(abstractControl);
 			if (set == null) {
-				controlToDomainMapping.put(abstractControl, new LinkedHashSet<EObject>());
+				controlToDomainMapping.put(abstractControl, new LinkedHashSet<UniqueSetting>());
 			}
 			controlToDomainMapping.get(abstractControl).add(domainSource);
 		}
@@ -170,10 +172,10 @@ public class ValidationRegistry {
 	 * @param domainObject the domain object
 	 * @param control the control to be registered for the domain object
 	 */
-	public void addEObjectControlMapping(EObject domainObject, VControl control) {
+	public void addEObjectControlMapping(Setting domainObject, VControl control) {
 		final LinkedHashSet<VControl> controlSet = new LinkedHashSet<VControl>();
 		controlSet.add(control);
-		fillMapEntry(domainObjectToAffectedControls, domainObject, controlSet);
+		fillMapEntry(domainObjectToAffectedControls, UniqueSetting.createSetting(domainObject), controlSet);
 	}
 
 	/**
@@ -183,9 +185,9 @@ public class ValidationRegistry {
 	 *            the {@link VElement} to be removed from the registry
 	 */
 	public void removeRenderable(VElement renderable) {
-		final Set<EObject> eObjects = controlToDomainMapping.get(renderable);
+		final Set<UniqueSetting> eObjects = controlToDomainMapping.get(renderable);
 		if (eObjects != null) {
-			for (final EObject eObject : eObjects) {
+			for (final UniqueSetting eObject : eObjects) {
 				final Set<VControl> set = domainObjectToAffectedControls.get(eObject);
 				if (set != null && set.contains(renderable)) {
 					domainObjectToAffectedControls.get(eObject).remove(renderable);
@@ -219,22 +221,34 @@ public class ValidationRegistry {
 	 * @param model the model
 	 * @return list of all renderables
 	 */
-	public Set<VControl> getRenderablesForEObject(EObject model) {
-		if (!domainObjectToAffectedControls.containsKey(model)) {
-
-			final EObject parent = model.eContainer();
-
-			if (parent != null && domainObjectToAffectedControls.containsKey(parent)) {
-				final Set<VControl> set = domainObjectToAffectedControls.get(parent);
-				for (final VControl vControl : set) {
-					register(model, vControl);
-				}
-				return set;
-			}
-
+	public Set<VControl> getRenderablesForEObject(Setting model) {
+		if (!domainObjectToAffectedControls.containsKey(UniqueSetting.createSetting(model))) {
+			// TODO refresh only with control existing objects
 			return Collections.emptySet();
+			// final EObject parent = model.getEObject().eContainer();
+			// if (parent == null) {
+			// return Collections.emptySet();
+			// }
+			// final Setting parentSetting = ((InternalEObject) parent).eSetting(model
+			// .getEObject().eContainmentFeature());
+			// final UniqueSetting parentUniqueSetting = UniqueSetting.createSetting(parentSetting);
+			// if (!domainObjectToAffectedControls.containsKey(parentUniqueSetting)) {
+			// return Collections.emptySet();
+			// }
+			// final Set<VControl> set = domainObjectToAffectedControls.get(parentUniqueSetting);
+			//
+			// for (final VControl vControl : set) {
+			// final Iterator<Setting> iterator = vControl.getDomainModelReference().getIterator();
+			// while (iterator.hasNext()) {
+			// final Setting controlSetting = iterator.next();
+			// if (UniqueSetting.createSetting(controlSetting).equals(UniqueSetting.createSetting(model))) {
+			// register(model.getEObject(), vControl);
+			// }
+			// }
+			// }
+			// return set;
 		}
-		return domainObjectToAffectedControls.get(model);
+		return domainObjectToAffectedControls.get(UniqueSetting.createSetting(model));
 	}
 
 	/**
@@ -246,6 +260,33 @@ public class ValidationRegistry {
 	 */
 	public boolean containsRenderable(VElement renderable) {
 		return processedRenderables.contains(renderable);
+	}
+
+	/**
+	 * @param newEObject
+	 */
+	public void updateMappings(EObject newEObject) {
+
+		final EObject parent = newEObject.eContainer();
+		if (parent == null) {
+			return;
+		}
+		final Setting parentSetting = ((InternalEObject) parent).eSetting(newEObject.eContainmentFeature());
+		final UniqueSetting parentUniqueSetting = UniqueSetting.createSetting(parentSetting);
+		if (!domainObjectToAffectedControls.containsKey(parentUniqueSetting)) {
+			return;
+		}
+		final Set<VControl> set = domainObjectToAffectedControls.get(parentUniqueSetting);
+
+		for (final VControl vControl : set) {
+			final Iterator<Setting> iterator = vControl.getDomainModelReference().getIterator();
+			while (iterator.hasNext()) {
+				final Setting controlSetting = iterator.next();
+				if (controlSetting.getEObject().equals(newEObject)) {
+					register(newEObject, vControl);
+				}
+			}
+		}
 	}
 
 }

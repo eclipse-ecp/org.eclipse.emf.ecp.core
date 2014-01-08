@@ -1,3 +1,15 @@
+/*******************************************************************************
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Eugen Neufeld - initial API and implementation
+ * 
+ *******************************************************************************/
 package org.eclipse.emf.ecp.ui.e4.editor;
 
 import javax.annotation.PreDestroy;
@@ -26,14 +38,28 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
+/**
+ * Editor displaying one {@link EObject}.
+ * 
+ * @author Jonas
+ * 
+ */
 public class ECPE4Editor {
-
-	public static final java.lang.String INPUT = "ecpEditorInput";
+	/**
+	 * Key to set the input of the editor into the {@link org.eclipse.e4.core.contexts.IEclipseContext}.
+	 */
+	public static final java.lang.String INPUT = "ecpEditorInput"; //$NON-NLS-1$
 	private MPart part;
 	private EObject modelElement;
 	private Adapter adapter;
 	private final ScrolledComposite parent;
 
+	/**
+	 * Default constructor.
+	 * 
+	 * @param composite the parent composite.
+	 * @param shell to retrieve the display from. Used to retrieve the system colors.
+	 */
 	@Inject
 	public ECPE4Editor(Composite composite, Shell shell) {
 		parent = new ScrolledComposite(composite, SWT.V_SCROLL
@@ -60,7 +86,6 @@ public class ECPE4Editor {
 		} catch (final ECPRendererException ex) {
 			ex.printStackTrace();
 		}
-		// composite.layout();
 
 		updateImageAndText();
 		adapter = new AdapterImpl() {
@@ -83,6 +108,9 @@ public class ECPE4Editor {
 		modelElement.eAdapters().add(adapter);
 	}
 
+	/**
+	 * removes listener.
+	 */
 	@PreDestroy
 	void dispose() {
 		modelElement.eAdapters().remove(adapter);
@@ -97,13 +125,16 @@ public class ECPE4Editor {
 		final IItemLabelProvider itemLabelProvider = (IItemLabelProvider) provider.getAdapterFactory().adapt(
 			modelElement, IItemLabelProvider.class);
 
-		Object image = itemLabelProvider.getImage(modelElement);
+		final Object image = itemLabelProvider.getImage(modelElement);
 		if (URI.class.isInstance(image)) {
-			URI uri = (URI) image;
+			final URI uri = (URI) image;
 			part.setIconURI(uri.toString());
-		} 
+		}
 	}
 
+	/**
+	 * Sets the focus to the parent composite.
+	 */
 	@Focus
 	void setFocus() {
 		if (parent != null) {

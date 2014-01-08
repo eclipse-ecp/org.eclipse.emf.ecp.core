@@ -75,7 +75,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 	/**
 	 * This is the name of the EMFStore Provider.
 	 */
-	public static final String NAME = "org.eclipse.emf.ecp.emfstore.provider";
+	public static final String NAME = "org.eclipse.emf.ecp.emfstore.provider"; //$NON-NLS-1$
 
 	/**
 	 * EMFStore Provider Singleton.
@@ -85,26 +85,29 @@ public final class EMFStoreProvider extends DefaultProvider {
 	/**
 	 * Property constant for Repository URL.
 	 */
-	public static final String PROP_REPOSITORY_URL = "repositoryUrl";
+	public static final String PROP_REPOSITORY_URL = "repositoryUrl"; //$NON-NLS-1$
 	/**
 	 * Property constant for Repository Port.
 	 */
-	public static final String PROP_PORT = "port";
+	public static final String PROP_PORT = "port"; //$NON-NLS-1$
 	/**
 	 * Property constant for Repository Certificate.
 	 */
-	public static final String PROP_CERTIFICATE = "certificate";
+	public static final String PROP_CERTIFICATE = "certificate"; //$NON-NLS-1$
 	/**
 	 * Property constant for ProjectSpaceID.
 	 */
-	public static final String PROP_PROJECTSPACEID = "projectSpaceID";
+	public static final String PROP_PROJECTSPACEID = "projectSpaceID"; //$NON-NLS-1$
 	/**
 	 * Property constant for ServerInfoID.
 	 */
-	public static final String PROP_SERVERINFOID = "serverInfoID";
+	public static final String PROP_SERVERINFOID = "serverInfoID"; //$NON-NLS-1$
 
 	private AdapterImpl adapter;
 
+	/**
+	 * Default constructor.
+	 */
 	public EMFStoreProvider() {
 		super(NAME);
 		configureEMFStore();
@@ -185,7 +188,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 		}
 		final String providerClass = getClass().getSimpleName();
 		final String contextClass = context.getClass().getSimpleName();
-		Activator.log(IStatus.INFO, providerClass + " received " + event + " for " + contextClass + " " + context);
+		Activator.log(IStatus.INFO, providerClass + " received " + event + " for " + contextClass + " " + context); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 
 	/**

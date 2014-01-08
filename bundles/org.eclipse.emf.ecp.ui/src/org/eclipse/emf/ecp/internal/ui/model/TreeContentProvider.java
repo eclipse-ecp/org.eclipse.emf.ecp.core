@@ -30,6 +30,7 @@ import org.eclipse.swt.widgets.Display;
 
 /**
  * @author Eike Stepper
+ * @param <INPUT> The type of input (root of the tree)
  */
 public abstract class TreeContentProvider<INPUT> extends StructuredContentProvider<INPUT> implements
 	ITreeContentProvider {

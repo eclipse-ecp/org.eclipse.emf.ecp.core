@@ -13,7 +13,7 @@ package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
 import org.eclipse.osgi.util.NLS;
 
-public class ControlMessages extends NLS {
+public final class ControlMessages extends NLS {
 
 	private static final String BUNDLE_NAME = "org.eclipse.emf.ecp.edit.internal.swt.controls.messages"; //$NON-NLS-1$
 

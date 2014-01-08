@@ -24,10 +24,10 @@ import org.eclipse.emf.emfstore.internal.server.EMFStoreController;
 
 public class EmfStoreLocalServerAndNotRunningTester extends PropertyTester {
 
-	private static final Set<String> allowedLocalUris = new HashSet<String>();
+	private static final Set<String> ALLOWEDLOCALURIS = new HashSet<String>();
 	static {
-		allowedLocalUris.add("localhost");
-		allowedLocalUris.add("127.0.0.1");
+		ALLOWEDLOCALURIS.add("localhost");
+		ALLOWEDLOCALURIS.add("127.0.0.1");
 	}
 
 	public boolean test(Object receiver, String property, Object[] args, Object expectedValue) {
@@ -36,7 +36,7 @@ public class EmfStoreLocalServerAndNotRunningTester extends PropertyTester {
 			EMFStoreProvider emfStoreProvider = (EMFStoreProvider) ECPUtil
 				.getResolvedElement(ECPUtil.getECPProviderRegistry().getProvider(EMFStoreProvider.NAME));
 			final ESServer serverInfo = emfStoreProvider.getServerInfo((InternalRepository) ecpRepository);
-			if (allowedLocalUris.contains(serverInfo.getURL())) {
+			if (ALLOWEDLOCALURIS.contains(serverInfo.getURL())) {
 				if (EMFStoreController.getInstance() == null) {
 					return Boolean.TRUE.equals(expectedValue);
 				}

@@ -73,50 +73,7 @@ public class TemplateIconControl extends AbstractTextControl {
 		final Button selectFileFromPlugin = new Button(main, SWT.PUSH);
 		selectFileFromPlugin.setText("Plugin File");
 
-		selectFileFromPlugin.addSelectionListener(new SelectionAdapter() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				final IconTreeContentProvider iconTreeContentProvider = new IconTreeContentProvider();
-				final ElementTreeSelectionDialog etsd = new ElementTreeSelectionDialog(composite.getShell(),
-					new LabelProvider() {
-
-						/**
-						 * {@inheritDoc}
-						 * 
-						 * @see org.eclipse.jface.viewers.LabelProvider#getText(java.lang.Object)
-						 */
-						@Override
-						public String getText(Object element) {
-							if (Bundle.class.isInstance(element)) {
-								return ((Bundle) element).getSymbolicName();
-							}
-							return super.getText(element);
-						}
-
-					}, iconTreeContentProvider);
-
-				etsd.setInput(Activator.getContext().getBundles());
-				final int result = etsd.open();
-				if (Window.OK != result) {
-					return;
-				}
-				final Object selectedResult = etsd.getFirstResult();
-				if (!String.class.isInstance(selectedResult)) {
-					return;
-				}
-				final String file = (String) selectedResult;
-				if (file.endsWith("png") || file.endsWith("gif") || file.endsWith("jpg")) {
-					getDomainModelReference()
-						.getIterator()
-						.next()
-						.set(
-							"platform:/plugin/" + iconTreeContentProvider.getLastBundle().getSymbolicName() + "/"
-								+ file);
-				}
-			}
-
-		});
+		selectFileFromPlugin.addSelectionListener(new SelectFileFromPluginAdapter(composite));
 	}
 
 	@Override
@@ -132,6 +89,62 @@ public class TemplateIconControl extends AbstractTextControl {
 	@Override
 	protected String getUnsetButtonTooltip() {
 		return "Unset Icon URL";
+	}
+
+	/**
+	 * @author Jonas
+	 * 
+	 */
+	private final class SelectFileFromPluginAdapter extends SelectionAdapter {
+		private final Composite composite;
+
+		/**
+		 * @param composite
+		 */
+		private SelectFileFromPluginAdapter(Composite composite) {
+			this.composite = composite;
+		}
+
+		@Override
+		public void widgetSelected(SelectionEvent e) {
+			final IconTreeContentProvider iconTreeContentProvider = new IconTreeContentProvider();
+			final ElementTreeSelectionDialog etsd = new ElementTreeSelectionDialog(composite.getShell(),
+				new LabelProvider() {
+
+					/**
+					 * {@inheritDoc}
+					 * 
+					 * @see org.eclipse.jface.viewers.LabelProvider#getText(java.lang.Object)
+					 */
+					@Override
+					public String getText(Object element) {
+						if (Bundle.class.isInstance(element)) {
+							return ((Bundle) element).getSymbolicName();
+						}
+						return super.getText(element);
+					}
+
+				}, iconTreeContentProvider);
+
+			etsd.setInput(Activator.getContext().getBundles());
+			final int result = etsd.open();
+			if (Window.OK != result) {
+				return;
+			}
+			final Object selectedResult = etsd.getFirstResult();
+			if (!String.class.isInstance(selectedResult)) {
+				return;
+			}
+			final String file = (String) selectedResult;
+			if (file.endsWith("png") || file.endsWith("gif") || file.endsWith("jpg")) {
+				getDomainModelReference()
+					.getIterator()
+					.next()
+					.set(
+						"platform:/plugin/" + iconTreeContentProvider.getLastBundle().getSymbolicName() + "/"
+							+ file);
+			}
+		}
 	}
 
 	/**

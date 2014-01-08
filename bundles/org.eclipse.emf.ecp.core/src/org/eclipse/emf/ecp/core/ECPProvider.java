@@ -24,7 +24,7 @@ public interface ECPProvider extends ECPElement, IAdaptable {
 	/**
 	 * Type of the ECPElement.
 	 */
-	String TYPE = "Provider";
+	String TYPE = "Provider"; //$NON-NLS-1$
 
 	/**
 	 * Label of the ECPProvider.

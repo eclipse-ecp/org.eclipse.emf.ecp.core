@@ -73,79 +73,79 @@ public class DefaultFilter implements ECPFilterProvider {
 	 * @param packages
 	 */
 	private void addViewModels(Set<String> packages) {
-		packages.add("http://org/eclipse/emf/ecp/view/model");
-		packages.add("http://org/eclipse/emf/ecp/view/custom/model");
-		packages.add("http://org/eclipse/emf/ecp/view/dynamictree/model");
-		packages.add("http://org/eclipse/emf/ecp/view/group/model");
-		packages.add("http://org/eclipse/emf/ecp/view/groupedgrid/model");
-		packages.add("http://org/eclipse/emf/ecp/view/horizontal/model");
-		packages.add("http://org/eclipse/emf/ecp/view/label/model");
-		packages.add("http://org/eclipse/emf/ecp/view/rule/model");
-		packages.add("http://org/eclipse/emf/ecp/view/separator/model");
-		packages.add("http://org/eclipse/emf/ecp/view/table/model");
-		packages.add("http://org/eclipse/emf/ecp/view/vertical/model");
+		packages.add("http://org/eclipse/emf/ecp/view/model"); //$NON-NLS-1$
+		packages.add("http://org/eclipse/emf/ecp/view/custom/model"); //$NON-NLS-1$
+		packages.add("http://org/eclipse/emf/ecp/view/dynamictree/model"); //$NON-NLS-1$
+		packages.add("http://org/eclipse/emf/ecp/view/group/model"); //$NON-NLS-1$
+		packages.add("http://org/eclipse/emf/ecp/view/groupedgrid/model"); //$NON-NLS-1$
+		packages.add("http://org/eclipse/emf/ecp/view/horizontal/model"); //$NON-NLS-1$
+		packages.add("http://org/eclipse/emf/ecp/view/label/model"); //$NON-NLS-1$
+		packages.add("http://org/eclipse/emf/ecp/view/rule/model"); //$NON-NLS-1$
+		packages.add("http://org/eclipse/emf/ecp/view/separator/model"); //$NON-NLS-1$
+		packages.add("http://org/eclipse/emf/ecp/view/table/model"); //$NON-NLS-1$
+		packages.add("http://org/eclipse/emf/ecp/view/vertical/model"); //$NON-NLS-1$
 	}
 
 	private void addQ7Models(Set<String> packages) {
-		packages.add("http://www.eclipse.org/ecl/ast.ecore");
-		packages.add("http://www.eclipse.org/ecl/invoke/commands.ecore");
-		packages.add("http://www.eclipse.org/debug/runtime/commands.ecore");
-		packages.add("http://www.eclipse.org/ecl/data/commands.ecore");
-		packages.add("http://www.eclipse.org/ecl/platform.ui/commands.ecore");
-		packages.add("http:///com/xored/q7/ecl/context.ecore");
-		packages.add("http://xored.com/x5/core.ecore");
-		packages.add("http://www.eclipse.org/ecl/core.ecore");
-		packages.add("http://xored.com/q7/debug");
-		packages.add("http:///com/xored/tesla/core/diagram.ecore");
-		packages.add("http://www.eclipse.org/ecl/tesla/diagram.ecore");
-		packages.add("http:///com/xored/tesla/core/info.ecore");
-		packages.add("http://xored.com/sherlock/jobs/1.0");
-		packages.add("http://xored.com/q7/sherlock/model.ecore");
-		packages.add("http://www.eclipse.org/ecl/tesla.ecore");
-		packages.add("http://xored.com/q7/core/model.ecore");
-		packages.add("http://www.eclipse.org/ecl/data/objects.ecore");
-		packages.add("http://www.eclipse.org/ecl/platform.ui/objects.ecore");
-		packages.add("http://www.eclipse.org/ecl/operations.ecore");
-		packages.add("http://com/xored/q7/parameters.ecore");
-		packages.add("http://www.eclipse.org/ecl/perf.ecore");
-		packages.add("http://xored.com/x5/data/eclipse/platform.ecore");
-		packages.add("com.xored.q7.preferences");
-		packages.add("http:///com/xored/tesla/core/protocol.ecore");
-		packages.add("http:///com/xored/tesla/core/protocol/raw.ecore");
-		packages.add("http://xored.com/sherlock/report/1.0");
-		packages.add("http://xored.com/sherlock/report/1.0");
-		packages.add("http://com/xored/q7/reporting.ecore");
-		packages.add("http://com/xored/q7/scenario.ecore");
-		packages.add("http://xored.com/sherlock/1.0");
-		packages.add("http://xored.com/x5/dynamic/com.xored.q7.x5.startup");
-		packages.add("http://xored.com/x5/data/system.ecore");
-		packages.add("http:///com/xored/tesla/core/ui.ecore");
-		packages.add("http://xored.com/x5/data/eclipse/workspace.ecore");
-		packages.add("http:///com/xored/q7/workspace.ecore");
-		packages.add("http://com/xored/q7/filesystem.ecore");
-		packages.add("http:///com/xored/q7/preferences.ecore");
-		packages.add("http://com/xored/q7/scenario.ecore");
-		packages.add("http://xored.com/x5/data/eclipse/workspace.ecore");
-		packages.add("http://www.eclipse.org/ecl/filesystem.ecore");
-		packages.add("http://www.eclipse.org/ecl/interop.ecore");
-		packages.add("http://www.eclipse.org/ecl/platform/commands.ecore");
-		packages.add("http://www.eclipse.org/ecl/platform/objects.ecore");
-		packages.add("com.xored.q7.scenario");
-		packages.add("com.xored.x5.data.eclipse.workspace");
-		packages.add("http://com/xored/q7/filesystem.ecore");
-		packages.add("http:///com/xored/q7/preferences.ecore");
-		packages.add("http://com/xored/q7/scenario.ecore");
-		packages.add("http://xored.com/x5/data/eclipse/workspace.ecore");
+		packages.add("http://www.eclipse.org/ecl/ast.ecore"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/ecl/invoke/commands.ecore"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/debug/runtime/commands.ecore"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/ecl/data/commands.ecore"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/ecl/platform.ui/commands.ecore"); //$NON-NLS-1$
+		packages.add("http:///com/xored/q7/ecl/context.ecore"); //$NON-NLS-1$
+		packages.add("http://xored.com/x5/core.ecore"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/ecl/core.ecore"); //$NON-NLS-1$
+		packages.add("http://xored.com/q7/debug"); //$NON-NLS-1$
+		packages.add("http:///com/xored/tesla/core/diagram.ecore"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/ecl/tesla/diagram.ecore"); //$NON-NLS-1$
+		packages.add("http:///com/xored/tesla/core/info.ecore"); //$NON-NLS-1$
+		packages.add("http://xored.com/sherlock/jobs/1.0"); //$NON-NLS-1$
+		packages.add("http://xored.com/q7/sherlock/model.ecore"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/ecl/tesla.ecore"); //$NON-NLS-1$
+		packages.add("http://xored.com/q7/core/model.ecore"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/ecl/data/objects.ecore"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/ecl/platform.ui/objects.ecore"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/ecl/operations.ecore"); //$NON-NLS-1$
+		packages.add("http://com/xored/q7/parameters.ecore"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/ecl/perf.ecore"); //$NON-NLS-1$
+		packages.add("http://xored.com/x5/data/eclipse/platform.ecore"); //$NON-NLS-1$
+		packages.add("com.xored.q7.preferences"); //$NON-NLS-1$
+		packages.add("http:///com/xored/tesla/core/protocol.ecore"); //$NON-NLS-1$
+		packages.add("http:///com/xored/tesla/core/protocol/raw.ecore"); //$NON-NLS-1$
+		packages.add("http://xored.com/sherlock/report/1.0"); //$NON-NLS-1$
+		packages.add("http://xored.com/sherlock/report/1.0"); //$NON-NLS-1$
+		packages.add("http://com/xored/q7/reporting.ecore"); //$NON-NLS-1$
+		packages.add("http://com/xored/q7/scenario.ecore"); //$NON-NLS-1$
+		packages.add("http://xored.com/sherlock/1.0"); //$NON-NLS-1$
+		packages.add("http://xored.com/x5/dynamic/com.xored.q7.x5.startup"); //$NON-NLS-1$
+		packages.add("http://xored.com/x5/data/system.ecore"); //$NON-NLS-1$
+		packages.add("http:///com/xored/tesla/core/ui.ecore"); //$NON-NLS-1$
+		packages.add("http://xored.com/x5/data/eclipse/workspace.ecore"); //$NON-NLS-1$
+		packages.add("http:///com/xored/q7/workspace.ecore"); //$NON-NLS-1$
+		packages.add("http://com/xored/q7/filesystem.ecore"); //$NON-NLS-1$
+		packages.add("http:///com/xored/q7/preferences.ecore"); //$NON-NLS-1$
+		packages.add("http://com/xored/q7/scenario.ecore"); //$NON-NLS-1$
+		packages.add("http://xored.com/x5/data/eclipse/workspace.ecore"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/ecl/filesystem.ecore"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/ecl/interop.ecore"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/ecl/platform/commands.ecore"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/ecl/platform/objects.ecore"); //$NON-NLS-1$
+		packages.add("com.xored.q7.scenario"); //$NON-NLS-1$
+		packages.add("com.xored.x5.data.eclipse.workspace"); //$NON-NLS-1$
+		packages.add("http://com/xored/q7/filesystem.ecore"); //$NON-NLS-1$
+		packages.add("http:///com/xored/q7/preferences.ecore"); //$NON-NLS-1$
+		packages.add("http://com/xored/q7/scenario.ecore"); //$NON-NLS-1$
+		packages.add("http://xored.com/x5/data/eclipse/workspace.ecore"); //$NON-NLS-1$
 
 	}
 
 	private void addGraphitiModels(Set<String> packages) {
-		packages.add("http://eclipse.org/graphiti/examples/chess");
-		packages.add("http://eclipse.org/graphiti/mm/algorithms/styles");
-		packages.add("http://eclipse.org/graphiti/mm/pictograms");
-		packages.add("http://eclipse.org/graphiti/mm/algorithms");
-		packages.add("http://eclipse.org/graphiti/mm");
-		packages.add("http:///org/eclipse/graphiti/examples/filesystem");
+		packages.add("http://eclipse.org/graphiti/examples/chess"); //$NON-NLS-1$
+		packages.add("http://eclipse.org/graphiti/mm/algorithms/styles"); //$NON-NLS-1$
+		packages.add("http://eclipse.org/graphiti/mm/pictograms"); //$NON-NLS-1$
+		packages.add("http://eclipse.org/graphiti/mm/algorithms"); //$NON-NLS-1$
+		packages.add("http://eclipse.org/graphiti/mm"); //$NON-NLS-1$
+		packages.add("http:///org/eclipse/graphiti/examples/filesystem"); //$NON-NLS-1$
 	}
 
 	/**

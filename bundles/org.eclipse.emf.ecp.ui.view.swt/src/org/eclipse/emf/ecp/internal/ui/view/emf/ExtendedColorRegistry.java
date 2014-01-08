@@ -1,3 +1,4 @@
+// REUSED CLASS
 /**
  * Copyright (c) 2008 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
@@ -16,7 +17,6 @@ import java.util.HashMap;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecp.view.internal.swt.Activator;
-import org.eclipse.emf.edit.provider.IItemColorProvider;
 import org.eclipse.jface.resource.ColorDescriptor;
 import org.eclipse.jface.resource.DeviceResourceException;
 import org.eclipse.swt.graphics.Color;
@@ -26,7 +26,7 @@ import org.eclipse.swt.widgets.Display;
 /**
  * A color registry for converting a color description into an actual color.
  * 
- * @see IItemColorProvider
+ * @see org.eclipse.emf.edit.provider.IItemColorProvider
  */
 public class ExtendedColorRegistry {
 	public static final ExtendedColorRegistry INSTANCE = new ExtendedColorRegistry();

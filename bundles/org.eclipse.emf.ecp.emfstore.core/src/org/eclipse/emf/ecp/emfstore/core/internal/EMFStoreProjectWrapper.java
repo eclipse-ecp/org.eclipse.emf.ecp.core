@@ -38,7 +38,7 @@ public class EMFStoreProjectWrapper implements ECPCheckoutSource {
 	 * The Constructor fro creating an {@link EMFStoreProjectWrapper}.
 	 * 
 	 * @param repository the repository for this CheckoutSource
-	 * @param checkoutData the container holding relevant information
+	 * @param remoteProject the remote project to be checked out
 	 */
 	public EMFStoreProjectWrapper(InternalRepository repository, ESRemoteProject remoteProject) {
 		this.repository = repository;
@@ -64,7 +64,7 @@ public class EMFStoreProjectWrapper implements ECPCheckoutSource {
 	public void checkout(String projectName, ECPProperties projectProperties) throws ECPProjectWithNameExistsException {
 		try {
 			remoteProject.checkout(projectName, new NullProgressMonitor());
-		} catch (ESException ex) {
+		} catch (final ESException ex) {
 			Activator.log(ex);
 		}
 	}

@@ -158,10 +158,7 @@ public class ControlRootEClassControl extends LinkControl {
 				}
 
 				public Object[] getElements(Object inputElement) {
-					if (Registry.class.isInstance(inputElement)) {
-						return ((Registry) inputElement).values().toArray();
-					}
-					return null;
+					return getChildren(inputElement);
 				}
 
 				public Object[] getChildren(Object parentElement) {
@@ -177,6 +174,9 @@ public class ControlRootEClassControl extends LinkControl {
 					}
 					if (Descriptor.class.isInstance(parentElement)) {
 						return getChildren(((Descriptor) parentElement).getEPackage());
+					}
+					if (Registry.class.isInstance(parentElement)) {
+						return ((Registry) parentElement).values().toArray();
 					}
 					return null;
 				}

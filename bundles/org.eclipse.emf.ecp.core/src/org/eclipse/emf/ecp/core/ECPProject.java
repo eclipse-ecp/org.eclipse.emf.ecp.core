@@ -33,7 +33,7 @@ public interface ECPProject extends ECPContainer, ECPRepositoryAware, IEditingDo
 	/**
 	 * The type of the ECPElement.
 	 */
-	String TYPE = "Project";
+	String TYPE = "Project"; //$NON-NLS-1$
 
 	/**
 	 * Returns the list of the direct content objects; each is of type Object.

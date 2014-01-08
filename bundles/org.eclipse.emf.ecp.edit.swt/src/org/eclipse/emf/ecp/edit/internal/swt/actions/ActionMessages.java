@@ -13,7 +13,7 @@ package org.eclipse.emf.ecp.edit.internal.swt.actions;
 
 import org.eclipse.osgi.util.NLS;
 
-public class ActionMessages extends NLS {
+public final class ActionMessages extends NLS {
 
 	private static final String BUNDLE_NAME = "org.eclipse.emf.ecp.edit.internal.swt.actions.messages"; //$NON-NLS-1$
 

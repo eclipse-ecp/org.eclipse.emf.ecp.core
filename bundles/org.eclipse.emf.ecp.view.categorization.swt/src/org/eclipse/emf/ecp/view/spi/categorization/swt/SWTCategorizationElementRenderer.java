@@ -219,59 +219,12 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 		treeViewer.setContentProvider(contentProvider);
 		treeViewer.setLabelProvider(treeTableLabelProvider);
 
-		treeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
-
-			private Composite childComposite;
-
-			public void selectionChanged(SelectionChangedEvent event) {
-
-				final TreeSelection treeSelection = (TreeSelection) event.getSelection();
-				final Object selection = treeSelection.getFirstElement();
-				addButtons(treeViewer, treeSelection, editors);
-
-				if (selection == null) {
-					return;
-				}
-				if (childComposite != null) {
-					childComposite.dispose();
-					childComposite = null;
-				}
-				childComposite = createComposite(editorComposite);
-
-				childComposite.setBackground(editorComposite.getBackground());
-				editorComposite.setContent(childComposite);
-
-				final VElement node = (VElement) selection;
-				try {
-					final List<RenderingResultRow<Control>> resultRows = SWTRendererFactory.INSTANCE.render(
-						childComposite, node, viewModelContext);
-					GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true)
-						.applyTo(resultRows.get(0).getMainControl());
-					vCategorizationElement.setCurrentSelection((VCategorizableElement) node);
-				} catch (final NoRendererFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (final NoPropertyDescriptorFoundExeption e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-				childComposite.layout();
-				final Point point = childComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-				editorComposite.setMinSize(point);
-				// }
-
-			}
-		});
+		treeViewer.addSelectionChangedListener(new TreeSelectionChangedListener(viewModelContext, editorComposite,
+			vCategorizationElement,
+			treeViewer, editors));
 
 		addTreeEditor(treeViewer, vCategorizationElement, editors);
 
-		// if (adapterFactory instanceof IChangeNotifier)
-		// {
-		// IChangeNotifier changeNotifier = (IChangeNotifier)adapterFactory;
-		// changeNotifier.fireNotifyChanged(new ViewerNotification(notification,
-		// proxy, false, true));
-		// }
 	}
 
 	/**
@@ -402,6 +355,76 @@ public class SWTCategorizationElementRenderer extends AbstractSWTRenderer<VCateg
 			final TreeEditor editor = editors.get(i);
 			action.init(treeViewer, treeSelection, editor);
 			action.execute();
+		}
+	}
+
+	/**
+	 * @author Jonas
+	 * 
+	 */
+	private final class TreeSelectionChangedListener implements ISelectionChangedListener {
+		private final ViewModelContext viewModelContext;
+		private final ScrolledComposite editorComposite;
+		private final VCategorizationElement vCategorizationElement;
+		private final TreeViewer treeViewer;
+		private final List<TreeEditor> editors;
+		private Composite childComposite;
+
+		/**
+		 * @param viewModelContext
+		 * @param editorComposite
+		 * @param vCategorizationElement
+		 * @param treeViewer
+		 * @param editors
+		 */
+		private TreeSelectionChangedListener(ViewModelContext viewModelContext,
+			ScrolledComposite editorComposite, VCategorizationElement vCategorizationElement, TreeViewer treeViewer,
+			List<TreeEditor> editors) {
+			this.viewModelContext = viewModelContext;
+			this.editorComposite = editorComposite;
+			this.vCategorizationElement = vCategorizationElement;
+			this.treeViewer = treeViewer;
+			this.editors = editors;
+		}
+
+		public void selectionChanged(SelectionChangedEvent event) {
+
+			final TreeSelection treeSelection = (TreeSelection) event.getSelection();
+			final Object selection = treeSelection.getFirstElement();
+			addButtons(treeViewer, treeSelection, editors);
+
+			if (selection == null) {
+				return;
+			}
+			if (childComposite != null) {
+				childComposite.dispose();
+				childComposite = null;
+			}
+			childComposite = createComposite(editorComposite);
+
+			childComposite.setBackground(editorComposite.getBackground());
+			editorComposite.setContent(childComposite);
+
+			final VElement node = (VElement) selection;
+			try {
+				final List<RenderingResultRow<Control>> resultRows = SWTRendererFactory.INSTANCE.render(
+					childComposite, node, viewModelContext);
+				GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true)
+					.applyTo(resultRows.get(0).getMainControl());
+				vCategorizationElement.setCurrentSelection((VCategorizableElement) node);
+			} catch (final NoRendererFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (final NoPropertyDescriptorFoundExeption e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			childComposite.layout();
+			final Point point = childComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+			editorComposite.setMinSize(point);
+			// }
+
 		}
 	}
 

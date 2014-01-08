@@ -1,3 +1,4 @@
+// REUSED CLASS
 package org.eclipse.emf.ecp.graphiti;
 
 import org.eclipse.core.commands.operations.OperationHistoryEvent;
@@ -10,7 +11,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
-import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.ui.editor.DefaultUpdateBehavior;
@@ -53,9 +53,9 @@ import org.eclipse.ui.PlatformUI;
  * The default implementation for the {@link DiagramEditor} behavior extension
  * that controls update behavior of the editor and defines the EMF adapters that
  * watch over model object modifications. Clients may subclass to change the
- * behavior; use {@link DiagramEditor#createUpdateBehavior()} to return the
+ * behavior; use {@link org.eclipse.graphiti.ui.editor.DiagramEditor#createUpdateBehavior()} to return the
  * instance that shall be used.<br>
- * Note that there is always a 1:1 relation with a {@link DiagramEditor}.
+ * Note that there is always a 1:1 relation with a {@link org.eclipse.graphiti.ui.editor.DiagramEditor}.
  * 
  * @since 0.9
  */
@@ -67,7 +67,7 @@ public class UpdateBehavior extends DefaultUpdateBehavior {
 	protected final ECPDiagramBehavior diagramBehavior;
 
 	/**
-	 * The editing domain that is used throughout the {@link DiagramBehavior} is
+	 * The editing domain that is used throughout the {@link org.eclipse.graphiti.ui.editor.DiagramBehavior} is
 	 * kept here and only here.
 	 */
 	private TransactionalEditingDomain editingDomain;
@@ -75,17 +75,17 @@ public class UpdateBehavior extends DefaultUpdateBehavior {
 	/**
 	 * Closes editor if model object is deleted.
 	 */
-	private ElementDeleteListener elementDeleteListener = null;
+	private ElementDeleteListener elementDeleteListener;
 
 	/**
 	 * Is toggled by {@link DefaultUpdateBehavior#updateAdapter}.
 	 */
-	private boolean resourceDeleted = false;
+	private boolean resourceDeleted;
 
 	/**
 	 * Is toggled by {@link DefaultUpdateBehavior#updateAdapter}.
 	 */
-	private boolean resourceChanged = false;
+	private boolean resourceChanged;
 
 	/**
 	 * Flag that indicates if the {@link #updateAdapter} shall be active or not.
@@ -167,8 +167,8 @@ public class UpdateBehavior extends DefaultUpdateBehavior {
 	 * Creates a new {@link DefaultUpdateBehavior} instance associated with the
 	 * given {@link DiagramBehavior}.
 	 * 
-	 * @param diagramEditor
-	 *            the part this model editor works on
+	 * @param diagramBehavior
+	 *            the diagram behavior
 	 * @since 0.10
 	 */
 	public UpdateBehavior(ECPDiagramBehavior diagramBehavior) {
@@ -324,7 +324,8 @@ public class UpdateBehavior extends DefaultUpdateBehavior {
 	}
 
 	/**
-	 * This returns the editing domain as required by the {@link IEditingDomainProvider} interface.
+	 * This returns the editing domain as required by the {@link org.eclipse.emf.edit.domain.IEditingDomainProvider}
+	 * interface.
 	 * 
 	 * @return The {@link TransactionalEditingDomain} that is used within this
 	 *         editor

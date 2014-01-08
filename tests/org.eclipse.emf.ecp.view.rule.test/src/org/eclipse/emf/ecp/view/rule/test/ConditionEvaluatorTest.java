@@ -46,7 +46,7 @@ import org.junit.Test;
  * @author Eugen Neufeld
  * 
  */
-public class ConditionEvaluator_Test {
+public class ConditionEvaluatorTest {
 
 	/**
 	 * @throws java.lang.Exception
@@ -64,7 +64,7 @@ public class ConditionEvaluator_Test {
 
 	private static final String CORRECT_PLAYER_NAME = "player";
 	private static final Gender CORRECT_PLAYER_GENDER = Gender.FEMALE;
-	private static Date CORRECT_PLAYER_BIRTH;
+	private static Date correctPlayerBirthDate;
 
 	private static final int CORRECT_PLAYER_VICTORIES = 42;
 	private static final double CORRECT_PLAYER_HEIGHT = 42.42;
@@ -76,7 +76,7 @@ public class ConditionEvaluator_Test {
 
 	static {
 		try {
-			CORRECT_PLAYER_BIRTH = DateFormat.getDateInstance(DateFormat.SHORT, Locale.GERMANY).parse("11.11.2011");
+			correctPlayerBirthDate = DateFormat.getDateInstance(DateFormat.SHORT, Locale.GERMANY).parse("11.11.2011");
 		} catch (final ParseException ex) {
 			ex.printStackTrace();
 		}
@@ -96,7 +96,7 @@ public class ConditionEvaluator_Test {
 		player.setName(CORRECT_PLAYER_NAME);
 		player.setGender(CORRECT_PLAYER_GENDER);
 		player.setNumberOfVictories(CORRECT_PLAYER_VICTORIES);
-		player.setDateOfBirth(CORRECT_PLAYER_BIRTH);
+		player.setDateOfBirth(correctPlayerBirthDate);
 		player.setHeight(CORRECT_PLAYER_HEIGHT);
 		player.setIsProfessional(CORRECT_PLAYER_PROFESSIONAL);
 		player.setWinLossRatio(CORRECT_PLAYER_RATION);
@@ -147,7 +147,7 @@ public class ConditionEvaluator_Test {
 	}
 
 	@Test
-	public void testBooleanCondition_right() {
+	public void testBooleanConditionRight() {
 		final Player player = setupPlayerRight();
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_IsProfessional(),
 			CORRECT_PLAYER_PROFESSIONAL, player);
@@ -156,7 +156,7 @@ public class ConditionEvaluator_Test {
 	}
 
 	@Test
-	public void testBooleanCondition_wrong() {
+	public void testBooleanConditionWrong() {
 		final Player player = setupPlayerRight();
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_IsProfessional(),
 			!CORRECT_PLAYER_PROFESSIONAL, player);
@@ -165,7 +165,7 @@ public class ConditionEvaluator_Test {
 	}
 
 	@Test
-	public void testStringConditionNull_right() {
+	public void testStringConditionNullRight() {
 		final Player player = setupPlayerRight();
 		player.setName(null);
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Name(),
@@ -175,7 +175,7 @@ public class ConditionEvaluator_Test {
 	}
 
 	@Test
-	public void testStringCondition_right() {
+	public void testStringConditionRight() {
 		final Player player = setupPlayerRight();
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Name(),
 			CORRECT_PLAYER_NAME, player);
@@ -184,7 +184,7 @@ public class ConditionEvaluator_Test {
 	}
 
 	@Test
-	public void testStringCondition_wrong() {
+	public void testStringConditionWrong() {
 		final Player player = setupPlayerRight();
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Name(),
 			CORRECT_PLAYER_NAME + "BLA", player);
@@ -193,7 +193,7 @@ public class ConditionEvaluator_Test {
 	}
 
 	@Test
-	public void testIntCondition_right() {
+	public void testIntConditionRight() {
 		final Player player = setupPlayerRight();
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_NumberOfVictories(),
 			CORRECT_PLAYER_VICTORIES, player);
@@ -202,7 +202,7 @@ public class ConditionEvaluator_Test {
 	}
 
 	@Test
-	public void testIntCondition_wrong() {
+	public void testIntConditionWrong() {
 		final Player player = setupPlayerRight();
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_NumberOfVictories(),
 			CORRECT_PLAYER_VICTORIES + 1, player);
@@ -211,7 +211,7 @@ public class ConditionEvaluator_Test {
 	}
 
 	@Test
-	public void testDoubleCondition_right() {
+	public void testDoubleConditionRight() {
 		final Player player = setupPlayerRight();
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Height(),
 			CORRECT_PLAYER_HEIGHT, player);
@@ -220,7 +220,7 @@ public class ConditionEvaluator_Test {
 	}
 
 	@Test
-	public void testDoubleCondition_wrong() {
+	public void testDoubleConditionWrong() {
 		final Player player = setupPlayerRight();
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Height(),
 			CORRECT_PLAYER_HEIGHT + 1, player);
@@ -229,16 +229,16 @@ public class ConditionEvaluator_Test {
 	}
 
 	@Test
-	public void testDateCondition_right() {
+	public void testDateConditionRight() {
 		final Player player = setupPlayerRight();
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_DateOfBirth(),
-			CORRECT_PLAYER_BIRTH, player);
+			correctPlayerBirthDate, player);
 
 		assertTrue(leafCondition.evaluate());
 	}
 
 	@Test
-	public void testDateCondition_wrong() {
+	public void testDateConditionWrong() {
 		final Player player = setupPlayerRight();
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_DateOfBirth(),
 			getDate("12.12.2012"), player);
@@ -247,7 +247,7 @@ public class ConditionEvaluator_Test {
 	}
 
 	@Test
-	public void testDateCondition_same() {
+	public void testDateConditionSame() {
 		final Player player = setupPlayerRight();
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_DateOfBirth(),
 			getDate("11.11.2011"), player);
@@ -256,7 +256,7 @@ public class ConditionEvaluator_Test {
 	}
 
 	@Test
-	public void testEnumCondition_right() {
+	public void testEnumConditionRight() {
 		final Player player = setupPlayerRight();
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Gender(),
 			CORRECT_PLAYER_GENDER, player);
@@ -265,7 +265,7 @@ public class ConditionEvaluator_Test {
 	}
 
 	@Test
-	public void testEnumCondition_wrong() {
+	public void testEnumConditionWrong() {
 		final Player player = setupPlayerRight();
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Gender(),
 			Gender.MALE, player);
@@ -274,7 +274,7 @@ public class ConditionEvaluator_Test {
 	}
 
 	@Test
-	public void testBigDecimalCondition_right() {
+	public void testBigDecimalConditionRight() {
 		final Player player = setupPlayerRight();
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_WinLossRatio(),
 			CORRECT_PLAYER_RATION, player);
@@ -283,7 +283,7 @@ public class ConditionEvaluator_Test {
 	}
 
 	@Test
-	public void testBigDecimalCondition_same() {
+	public void testBigDecimalConditionSame() {
 		final Player player = setupPlayerRight();
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_WinLossRatio(),
 			new BigDecimal(42), player);
@@ -292,7 +292,7 @@ public class ConditionEvaluator_Test {
 	}
 
 	@Test
-	public void testBigDecimalCondition_wrong() {
+	public void testBigDecimalConditionWrong() {
 		final Player player = setupPlayerRight();
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_WinLossRatio(),
 			new BigDecimal(1), player);
@@ -301,7 +301,7 @@ public class ConditionEvaluator_Test {
 	}
 
 	@Test
-	public void testContainmentConditionString_right() {
+	public void testContainmentConditionStringRight() {
 		final Player player = setupPlayerRight();
 		final LeafCondition leafCondition1 = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_EMails(),
 			CORRECT_PLAYER_EMAIL1, player);
@@ -315,7 +315,7 @@ public class ConditionEvaluator_Test {
 	}
 
 	@Test
-	public void testContainmentConditionString_wrong() {
+	public void testContainmentConditionStringWrong() {
 		final Player player = setupPlayerRight();
 		final LeafCondition leafCondition = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_EMails(),
 			"bla@bla.com", player);
@@ -324,7 +324,7 @@ public class ConditionEvaluator_Test {
 	}
 
 	@Test
-	public void testContainmentConditionEObject_right() {
+	public void testContainmentConditionEObjectRight() {
 		final League league = setupLeague();
 		for (int i = 1; i <= league.getPlayers().size(); i++) {
 			final LeafCondition leafCondition1 = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Name(),
@@ -337,7 +337,7 @@ public class ConditionEvaluator_Test {
 	}
 
 	@Test
-	public void testContainmentConditionEObject_wrong() {
+	public void testContainmentConditionEObjectWrong() {
 		final League league = setupLeague();
 		final LeafCondition leafCondition1 = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Name(),
 			CORRECT_PLAYER_NAME, league, Collections.singletonList(BowlingPackage.eINSTANCE.getLeague_Players()));
@@ -347,7 +347,7 @@ public class ConditionEvaluator_Test {
 	}
 
 	@Test
-	public void testContainmentConditionEObject_deep() {
+	public void testContainmentConditionEObjectDeep() {
 		final Tournament tournament = BowlingFactory.eINSTANCE.createTournament();
 		final Matchup m1 = BowlingFactory.eINSTANCE.createMatchup();
 		final Matchup m2 = BowlingFactory.eINSTANCE.createMatchup();

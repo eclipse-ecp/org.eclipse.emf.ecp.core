@@ -11,14 +11,23 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.validation.test.model.util;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.emf.ecp.view.validation.test.model.Book;
 import org.eclipse.emf.ecp.view.validation.test.model.Computer;
+import org.eclipse.emf.ecp.view.validation.test.model.Container;
+import org.eclipse.emf.ecp.view.validation.test.model.Content;
 import org.eclipse.emf.ecp.view.validation.test.model.Librarian;
 import org.eclipse.emf.ecp.view.validation.test.model.Library;
 import org.eclipse.emf.ecp.view.validation.test.model.Mainboard;
@@ -158,6 +167,10 @@ public class TestValidator extends EObjectValidator {
 			return validateMainboard((Mainboard) value, diagnostics, context);
 		case TestPackage.POWER_BLOCK:
 			return validatePowerBlock((PowerBlock) value, diagnostics, context);
+		case TestPackage.CONTAINER:
+			return validateContainer((Container) value, diagnostics, context);
+		case TestPackage.CONTENT:
+			return validateContent((Content) value, diagnostics, context);
 		default:
 			return true;
 		}
@@ -170,25 +183,34 @@ public class TestValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateLibrary(Library library, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		if (!validate_NoCircularContainment(library, diagnostics, context))
+		if (!validate_NoCircularContainment(library, diagnostics, context)) {
 			return false;
+		}
 		boolean result = validate_EveryMultiplicityConforms(library, diagnostics, context);
-		if (result || diagnostics != null)
+		if (result || diagnostics != null) {
 			result &= validate_EveryDataValueConforms(library, diagnostics, context);
-		if (result || diagnostics != null)
+		}
+		if (result || diagnostics != null) {
 			result &= validate_EveryReferenceIsContained(library, diagnostics, context);
-		if (result || diagnostics != null)
+		}
+		if (result || diagnostics != null) {
 			result &= validate_EveryBidirectionalReferenceIsPaired(library, diagnostics, context);
-		if (result || diagnostics != null)
+		}
+		if (result || diagnostics != null) {
 			result &= validate_EveryProxyResolves(library, diagnostics, context);
-		if (result || diagnostics != null)
+		}
+		if (result || diagnostics != null) {
 			result &= validate_UniqueID(library, diagnostics, context);
-		if (result || diagnostics != null)
+		}
+		if (result || diagnostics != null) {
 			result &= validate_EveryKeyUnique(library, diagnostics, context);
-		if (result || diagnostics != null)
+		}
+		if (result || diagnostics != null) {
 			result &= validate_EveryMapEntryUnique(library, diagnostics, context);
-		if (result || diagnostics != null)
+		}
+		if (result || diagnostics != null) {
 			result &= validateLibrary_validate(library, diagnostics, context);
+		}
 		return result;
 	}
 
@@ -210,25 +232,34 @@ public class TestValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateWriter(Writer writer, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		if (!validate_NoCircularContainment(writer, diagnostics, context))
+		if (!validate_NoCircularContainment(writer, diagnostics, context)) {
 			return false;
+		}
 		boolean result = validate_EveryMultiplicityConforms(writer, diagnostics, context);
-		if (result || diagnostics != null)
+		if (result || diagnostics != null) {
 			result &= validate_EveryDataValueConforms(writer, diagnostics, context);
-		if (result || diagnostics != null)
+		}
+		if (result || diagnostics != null) {
 			result &= validate_EveryReferenceIsContained(writer, diagnostics, context);
-		if (result || diagnostics != null)
+		}
+		if (result || diagnostics != null) {
 			result &= validate_EveryBidirectionalReferenceIsPaired(writer, diagnostics, context);
-		if (result || diagnostics != null)
+		}
+		if (result || diagnostics != null) {
 			result &= validate_EveryProxyResolves(writer, diagnostics, context);
-		if (result || diagnostics != null)
+		}
+		if (result || diagnostics != null) {
 			result &= validate_UniqueID(writer, diagnostics, context);
-		if (result || diagnostics != null)
+		}
+		if (result || diagnostics != null) {
 			result &= validate_EveryKeyUnique(writer, diagnostics, context);
-		if (result || diagnostics != null)
+		}
+		if (result || diagnostics != null) {
 			result &= validate_EveryMapEntryUnique(writer, diagnostics, context);
-		if (result || diagnostics != null)
+		}
+		if (result || diagnostics != null) {
 			result &= validateWriter_validate(writer, diagnostics, context);
+		}
 		return result;
 	}
 
@@ -250,25 +281,34 @@ public class TestValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateBook(Book book, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		if (!validate_NoCircularContainment(book, diagnostics, context))
+		if (!validate_NoCircularContainment(book, diagnostics, context)) {
 			return false;
+		}
 		boolean result = validate_EveryMultiplicityConforms(book, diagnostics, context);
-		if (result || diagnostics != null)
+		if (result || diagnostics != null) {
 			result &= validate_EveryDataValueConforms(book, diagnostics, context);
-		if (result || diagnostics != null)
+		}
+		if (result || diagnostics != null) {
 			result &= validate_EveryReferenceIsContained(book, diagnostics, context);
-		if (result || diagnostics != null)
+		}
+		if (result || diagnostics != null) {
 			result &= validate_EveryBidirectionalReferenceIsPaired(book, diagnostics, context);
-		if (result || diagnostics != null)
+		}
+		if (result || diagnostics != null) {
 			result &= validate_EveryProxyResolves(book, diagnostics, context);
-		if (result || diagnostics != null)
+		}
+		if (result || diagnostics != null) {
 			result &= validate_UniqueID(book, diagnostics, context);
-		if (result || diagnostics != null)
+		}
+		if (result || diagnostics != null) {
 			result &= validate_EveryKeyUnique(book, diagnostics, context);
-		if (result || diagnostics != null)
+		}
+		if (result || diagnostics != null) {
 			result &= validate_EveryMapEntryUnique(book, diagnostics, context);
-		if (result || diagnostics != null)
+		}
+		if (result || diagnostics != null) {
 			result &= validateBook_validate(book, diagnostics, context);
+		}
 		return result;
 	}
 
@@ -290,25 +330,34 @@ public class TestValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateLibrarian(Librarian librarian, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		if (!validate_NoCircularContainment(librarian, diagnostics, context))
+		if (!validate_NoCircularContainment(librarian, diagnostics, context)) {
 			return false;
+		}
 		boolean result = validate_EveryMultiplicityConforms(librarian, diagnostics, context);
-		if (result || diagnostics != null)
+		if (result || diagnostics != null) {
 			result &= validate_EveryDataValueConforms(librarian, diagnostics, context);
-		if (result || diagnostics != null)
+		}
+		if (result || diagnostics != null) {
 			result &= validate_EveryReferenceIsContained(librarian, diagnostics, context);
-		if (result || diagnostics != null)
+		}
+		if (result || diagnostics != null) {
 			result &= validate_EveryBidirectionalReferenceIsPaired(librarian, diagnostics, context);
-		if (result || diagnostics != null)
+		}
+		if (result || diagnostics != null) {
 			result &= validate_EveryProxyResolves(librarian, diagnostics, context);
-		if (result || diagnostics != null)
+		}
+		if (result || diagnostics != null) {
 			result &= validate_UniqueID(librarian, diagnostics, context);
-		if (result || diagnostics != null)
+		}
+		if (result || diagnostics != null) {
 			result &= validate_EveryKeyUnique(librarian, diagnostics, context);
-		if (result || diagnostics != null)
+		}
+		if (result || diagnostics != null) {
 			result &= validate_EveryMapEntryUnique(librarian, diagnostics, context);
-		if (result || diagnostics != null)
+		}
+		if (result || diagnostics != null) {
 			result &= validateLibrarian_validate(librarian, diagnostics, context);
+		}
 		return result;
 	}
 
@@ -352,6 +401,87 @@ public class TestValidator extends EObjectValidator {
 	 */
 	public boolean validatePowerBlock(PowerBlock powerBlock, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(powerBlock, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
+	 */
+	public boolean validateContainer(Container container, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(container, diagnostics, context)
+			&& validateContainer_UniqueAttribuite(container, diagnostics, context);
+	}
+
+	/**
+	 * 
+	 * @generated NOT
+	 */
+	public boolean validateContainer_UniqueAttribuite(Container container,
+		DiagnosticChain diagnostics, Map<Object, Object> context) {
+		// TODO implement the constraint
+		// -> specify the condition that violates the constraint
+		// -> verify the diagnostic details, including severity, code, and message
+		// Ensure that you remove @generated or mark it @generated NOT
+		final EList<Content> contents = container.getContents();
+		final Map<String, Set<Content>> uniqueAttToContentMap = new LinkedHashMap<String, Set<Content>>();
+
+		for (final Content content : contents) {
+			final String uniquiAtt = content.getUniqueAttribute();
+			if (!uniqueAttToContentMap.containsKey(uniquiAtt)) {
+				uniqueAttToContentMap.put(uniquiAtt, new LinkedHashSet<Content>());
+			}
+			uniqueAttToContentMap.get(uniquiAtt).add(content);
+		}
+		final List<Content> duplicates = new ArrayList<Content>();
+		for (final String language : uniqueAttToContentMap.keySet()) {
+			if (uniqueAttToContentMap.get(language).size() > 1) {
+				duplicates.addAll(uniqueAttToContentMap.get(language));
+			}
+		}
+		if (!duplicates.isEmpty()) {
+			createUniqueDiagnostic(duplicates, diagnostics, context,
+				"Same unique Attribute not allowed.");
+			return false;
+		}
+		// create ok results
+		for (final Content content : contents) {
+			diagnostics.add(createDiagnostic(Diagnostic.OK, DIAGNOSTIC_SOURCE, 0,
+				"_UI_GenericConstraint_diagnostic",
+				new Object[] { "OK", getObjectLabel(content, context) }, new Object[] { content,
+					TestPackage.eINSTANCE.getContent_UniqueAttribute() }, context));
+		}
+
+		final boolean result = true;
+		return result;
+	}
+
+	/**
+	 * @generated NOT
+	 */
+	private void createUniqueDiagnostic(List<Content> duplicates, DiagnosticChain diagnostics,
+		Map<Object, Object> context, String message) {
+		if (diagnostics != null) {
+			for (final Content duplicate : duplicates) {
+				diagnostics.add(createDiagnostic(Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0,
+					"_UI_GenericConstraint_diagnostic",
+					new Object[] { message, getObjectLabel(duplicate, context) }, new Object[] { duplicate,
+						TestPackage.eINSTANCE.getContent_UniqueAttribute() }, context));
+			}
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
+	 */
+	public boolean validateContent(Content content, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(content, diagnostics, context)
+			&& validate(content.eContainer().eClass().getClassifierID(), content.eContainer(),
+				diagnostics, context);
 	}
 
 	/**

@@ -24,11 +24,16 @@ import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.view.editor.controls.Helper;
 import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 
-public class ControlGenerator {
+public final class ControlGenerator {
+
+	private ControlGenerator() {
+
+	}
 
 	public static void addControls(ECPProject project, VContainer compositeToFill,
 		EClass datasegment, Set<EStructuralFeature> features) {
@@ -42,45 +47,15 @@ public class ControlGenerator {
 	 * Create controls and set them to the view.
 	 * 
 	 * @param rootClass the rootClass for identifying the path
-	 * @param compositeToFill the container to fill
+	 * @param compositeToFill the {@link VElement} to fill , must be of type {@link VView} or {@link VContainer}
 	 * @param datasegment the class to parse
 	 * @param features the list of features to create
 	 */
-	public static void addControls(EClass rootClass, VContainer compositeToFill, EClass datasegment,
+	public static void addControls(EClass rootClass, VElement compositeToFill, EClass datasegment,
 		Set<EStructuralFeature> features) {
-		final Map<EClass, EReference> childParentReferenceMap = new HashMap<EClass, EReference>();
-		Helper.getReferenceMap(rootClass, childParentReferenceMap);
-		final List<EReference> bottomUpPath = Helper.getReferencePath(datasegment,
-			childParentReferenceMap);
-
-		for (final EStructuralFeature feature : features) {
-			final VControl control = VViewFactory.eINSTANCE.createControl();
-			control.setName("Control " + feature.getName());
-			control.setReadonly(false);
-
-			final VFeaturePathDomainModelReference modelReference = VViewFactory.eINSTANCE
-				.createFeaturePathDomainModelReference();
-			modelReference.setDomainModelEFeature(feature);
-			modelReference.getDomainModelEReferencePath().addAll(bottomUpPath);
-			// control.setTargetFeature(feature);
-			// control.getPathToFeature().addAll(bottomUpPath);
-			control.setDomainModelReference(modelReference);
-
-			// add to the composite
-			compositeToFill.getChildren().add(control);
+		if (!VContainer.class.isInstance(compositeToFill) && !VView.class.isInstance(compositeToFill)) {
+			return;
 		}
-	}
-
-	/**
-	 * Create controls and set them to the view.
-	 * 
-	 * @param rootClass the rootClass for identifying the path
-	 * @param compositeToFill the view to fill
-	 * @param datasegment the class to parse
-	 * @param features the list of features to create
-	 */
-	public static void addControls(EClass rootClass, VView compositeToFill, EClass datasegment,
-		Set<EStructuralFeature> features) {
 		final Map<EClass, EReference> childParentReferenceMap = new HashMap<EClass, EReference>();
 		Helper.getReferenceMap(rootClass, childParentReferenceMap);
 		final List<EReference> bottomUpPath = Helper.getReferencePath(datasegment,
@@ -100,7 +75,11 @@ public class ControlGenerator {
 			control.setDomainModelReference(modelReference);
 
 			// add to the composite
-			compositeToFill.getChildren().add(control);
+			if (VContainer.class.isInstance(compositeToFill)) {
+				((VContainer) compositeToFill).getChildren().add(control);
+			} else if (VView.class.isInstance(compositeToFill)) {
+				((VView) compositeToFill).getChildren().add(control);
+			}
 		}
 	}
 

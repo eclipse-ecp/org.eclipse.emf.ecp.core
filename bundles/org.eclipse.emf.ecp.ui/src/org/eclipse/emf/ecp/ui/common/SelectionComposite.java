@@ -16,6 +16,8 @@ import org.eclipse.jface.viewers.StructuredViewer;
 /**
  * @author Eugen Neufeld
  * 
+ * @param <T> The type of {@link StructuredViewer} to be shown in the {@link SelectionComposite}.
+ * 
  */
 public interface SelectionComposite<T extends StructuredViewer> extends CompositeProvider {
 

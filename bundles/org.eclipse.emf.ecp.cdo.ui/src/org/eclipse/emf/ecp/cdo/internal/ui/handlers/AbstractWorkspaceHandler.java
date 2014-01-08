@@ -95,9 +95,9 @@ public abstract class AbstractWorkspaceHandler extends AbstractHandler {
 						}.schedule();
 					}
 				} catch (InvocationTargetException ex) {
-					throw new ExecutionException("Problem while handling " + element, ex);
+					throw new ExecutionException("Problem while handling " + element, ex); //$NON-NLS-1$
 				} catch (InterruptedException ex) {
-					throw new ExecutionException("Problem while handling " + element, ex);
+					throw new ExecutionException("Problem while handling " + element, ex); //$NON-NLS-1$
 				}
 			}
 		}
@@ -126,7 +126,7 @@ public abstract class AbstractWorkspaceHandler extends AbstractHandler {
 		IWorkbenchWindow ww = HandlerUtil.getActiveWorkbenchWindowChecked(event);
 		IEvaluationService service = (IEvaluationService) ww.getService(IEvaluationService.class);
 		if (service != null) {
-			service.requestEvaluation("org.eclipse.emf.cdo.workspace.dirty");
+			service.requestEvaluation("org.eclipse.emf.cdo.workspace.dirty"); //$NON-NLS-1$
 		}
 	}
 }

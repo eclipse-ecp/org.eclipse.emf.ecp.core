@@ -18,6 +18,7 @@ import org.eclipse.swt.widgets.Display;
 
 /**
  * @author Eike Stepper
+ * @param <INPUT> The type of input (root of the tree)
  */
 public abstract class StructuredContentProvider<INPUT> implements IStructuredContentProvider {
 	private Viewer viewer;
@@ -44,7 +45,7 @@ public abstract class StructuredContentProvider<INPUT> implements IStructuredCon
 		}
 
 		@SuppressWarnings("unchecked")
-		INPUT tmp = (INPUT) newInput;
+		final INPUT tmp = (INPUT) newInput;
 		input = tmp;
 
 		if (input != null) {
@@ -55,7 +56,7 @@ public abstract class StructuredContentProvider<INPUT> implements IStructuredCon
 	public void refreshViewer() {
 		final Control control = viewer.getControl();
 		if (!control.isDisposed()) {
-			Display display = control.getDisplay();
+			final Display display = control.getDisplay();
 			if (display.getSyncThread() != Thread.currentThread()) {
 				display.asyncExec(new Runnable() {
 					public void run() {

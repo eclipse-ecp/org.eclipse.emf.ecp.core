@@ -12,7 +12,7 @@ Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.eclipse.emf.ecp.internal.ui;version="1.1.0";x-friends:="org.eclipse.emf.ecp.explorereditorbridge,org.eclipse.emf.ecp.edit.ecore.swt,org.eclipse.emf.ecp.emfstore.ui",
  org.eclipse.emf.ecp.internal.ui.composites;version="1.1.0";x-internal:=true,
  org.eclipse.emf.ecp.internal.ui.dialogs;version="1.1.0";x-friends:="org.eclipse.emf.ecp.explorereditorbridge",
- org.eclipse.emf.ecp.internal.ui.model;version="1.1.0";x-internal:=true,
+ org.eclipse.emf.ecp.internal.ui.model;version="1.1.0";x-friends:="org.eclipse.emf.ecp.ui.e4",
  org.eclipse.emf.ecp.internal.ui.util;version="1.1.0";x-friends:="org.eclipse.emf.ecp.explorereditorbridge,org.eclipse.emf.ecp.ui.e3,org.eclipse.emf.ecp.ui.e4",
  org.eclipse.emf.ecp.internal.wizards;version="1.1.0";
   x-friends:="org.eclipse.emf.ecp.edit.ecore.swt,
@@ -26,9 +26,10 @@ Export-Package: org.eclipse.emf.ecp.internal.ui;version="1.1.0";x-friends:="org.
   x-friends:="org.eclipse.emf.ecp.edit.ecore.swt,
    org.eclipse.emf.ecp.explorereditorbridge,
    org.eclipse.emf.ecp.ui.e3,
+   org.eclipse.emf.ecp.view.table.editor,
    org.eclipse.emf.ecp.view.ui.editor.test,
    org.eclipse.emf.ecp.workspace.ui,
-   org.eclipse.emf.ecp.view.table.editor",
+   org.eclipse.emf.ecp.ui.e4",
  org.eclipse.emf.ecp.ui.common.dnd;version="1.1.0";x-friends:="org.eclipse.emf.ecp.ui.view.editor.controls",
  org.eclipse.emf.ecp.ui.util;version="1.1.0"
 Import-Package: org.eclipse.core.commands;version="0.0.0",

@@ -12,7 +12,6 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.reference;
 
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.actions.ECPSWTAction;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.ControlMessages;
@@ -21,7 +20,8 @@ import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.edit.spi.util.ECPStaticApplicableTester;
 
 /**
- * This class defines a Control which is used for displaying {@link EStructuralFeature}s which have a multi reference.
+ * This class defines a Control which is used for displaying {@link org.eclipse.emf.ecore.EStructuralFeature}s which
+ * have a multi reference.
  * 
  * @author Eugen Neufeld
  * 

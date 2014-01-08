@@ -61,6 +61,10 @@ public class ShareWizard extends Wizard {
 		this.selectedRepository = selectedRepository;
 	}
 
+	/**
+	 * 
+	 * @param useExistingRepository whether to use an existing repository.
+	 */
 	public void setUseExistingRepository(boolean useExistingRepository) {
 		this.useExistingRepository = useExistingRepository;
 	}
@@ -71,10 +75,10 @@ public class ShareWizard extends Wizard {
 	@Override
 	public void addPages() {
 
-		SelectOrCreateRepositoryPage userChoicePage = new SelectOrCreateRepositoryPage("UserChoice"); //$NON-NLS-1$
-		SelectRepositoryPage selectPage = new SelectRepositoryPage("SelectRepository"); //$NON-NLS-1$
+		final SelectOrCreateRepositoryPage userChoicePage = new SelectOrCreateRepositoryPage("UserChoice"); //$NON-NLS-1$
+		final SelectRepositoryPage selectPage = new SelectRepositoryPage("SelectRepository"); //$NON-NLS-1$
 		repositoryComposite = CompositeFactory.getAddRepositoryComposite(provider);
-		AddRepositoryPage addPage = new AddRepositoryPage("AddRepository", repositoryComposite); //$NON-NLS-1$
+		final AddRepositoryPage addPage = new AddRepositoryPage("AddRepository", repositoryComposite); //$NON-NLS-1$
 		addPage(userChoicePage);
 		addPage(selectPage);
 		addPage(addPage);
@@ -102,7 +106,8 @@ public class ShareWizard extends Wizard {
 		if (selectedRepository == null) {
 			selectedRepository = ECPUtil
 				.getECPRepositoryManager()
-				.addRepository(provider,
+				.addRepository(
+					provider,
 					repositoryComposite.getRepositoryName(),
 					repositoryComposite.getRepositoryLabel() == null ? "" : repositoryComposite.getRepositoryLabel(), //$NON-NLS-1$
 					repositoryComposite.getRepositoryDescription() == null ? "" : repositoryComposite.getRepositoryDescription(), //$NON-NLS-1$

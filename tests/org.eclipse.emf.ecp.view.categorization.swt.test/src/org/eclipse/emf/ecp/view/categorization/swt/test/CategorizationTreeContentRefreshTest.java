@@ -51,11 +51,11 @@ import org.junit.Test;
  */
 public class CategorizationTreeContentRefreshTest {
 
-	private static final String EXPECTED_NAME = "test";
+	private static final String EXPECTED_NAME = "test"; //$NON-NLS-1$
 	private static final Double EXPECTED_HEIGHT = 1.0;
 	private static final Boolean EXPECTED_PROF = true;
 
-	private static final String NOT_EXPECTED_NAME = "testX";
+	private static final String NOT_EXPECTED_NAME = "testX"; //$NON-NLS-1$
 	private static final Double NOT_EXPECTED_HEIGHT = 2.0;
 	private static final Boolean NOT_EXPECTED_PROF = false;
 

@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.edit.internal.swt.controls;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Locale;
 
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
@@ -22,11 +23,15 @@ import org.eclipse.emf.ecp.edit.internal.swt.Activator;
  * @author Eugen Neufeld
  * 
  */
-public class NumericalHelper {
+public final class NumericalHelper {
+
+	private NumericalHelper() {
+
+	}
 
 	public static DecimalFormat setupFormat(Locale locale, Class<?> instanceClass) {
 
-		DecimalFormat format = (DecimalFormat) DecimalFormat.getNumberInstance(locale);
+		final DecimalFormat format = (DecimalFormat) NumberFormat.getNumberInstance(locale);
 		format.setParseIntegerOnly(isInteger(instanceClass));
 		format.setParseBigDecimal(instanceClass.equals(BigDecimal.class) || instanceClass.equals(BigInteger.class));
 		format.setGroupingUsed(false);
@@ -63,13 +68,13 @@ public class NumericalHelper {
 					|| Long.class.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
 					return 0;
 				}
-			} catch (IllegalArgumentException ex) {
+			} catch (final IllegalArgumentException ex) {
 				Activator.logException(ex);
-			} catch (SecurityException ex) {
+			} catch (final SecurityException ex) {
 				Activator.logException(ex);
-			} catch (IllegalAccessException ex) {
+			} catch (final IllegalAccessException ex) {
 				Activator.logException(ex);
-			} catch (NoSuchFieldException ex) {
+			} catch (final NoSuchFieldException ex) {
 				Activator.logException(ex);
 			}
 		} else if (BigDecimal.class.isAssignableFrom(instanceClass)) {
@@ -93,13 +98,13 @@ public class NumericalHelper {
 			try {
 				return Double.class.getField("TYPE").get(null).equals(instanceClass) //$NON-NLS-1$
 					|| Float.class.getField("TYPE").get(null).equals(instanceClass); //$NON-NLS-1$
-			} catch (IllegalArgumentException ex) {
+			} catch (final IllegalArgumentException ex) {
 				Activator.logException(ex);
-			} catch (SecurityException ex) {
+			} catch (final SecurityException ex) {
 				Activator.logException(ex);
-			} catch (IllegalAccessException ex) {
+			} catch (final IllegalAccessException ex) {
 				Activator.logException(ex);
-			} catch (NoSuchFieldException ex) {
+			} catch (final NoSuchFieldException ex) {
 				Activator.logException(ex);
 			}
 		} else if (BigDecimal.class.isAssignableFrom(instanceClass)) {
@@ -118,13 +123,13 @@ public class NumericalHelper {
 			try {
 				return Integer.class.getField("TYPE").get(null).equals(instanceClass) //$NON-NLS-1$
 					|| Long.class.getField("TYPE").get(null).equals(instanceClass); //$NON-NLS-1$
-			} catch (IllegalArgumentException ex) {
+			} catch (final IllegalArgumentException ex) {
 				Activator.logException(ex);
-			} catch (SecurityException ex) {
+			} catch (final SecurityException ex) {
 				Activator.logException(ex);
-			} catch (IllegalAccessException ex) {
+			} catch (final IllegalAccessException ex) {
 				Activator.logException(ex);
-			} catch (NoSuchFieldException ex) {
+			} catch (final NoSuchFieldException ex) {
 				Activator.logException(ex);
 			}
 		} else if (BigInteger.class.isAssignableFrom(instanceClass)) {
@@ -154,13 +159,13 @@ public class NumericalHelper {
 				} else if (Float.class.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
 					return number.floatValue();
 				}
-			} catch (IllegalArgumentException ex) {
+			} catch (final IllegalArgumentException ex) {
 				Activator.logException(ex);
-			} catch (SecurityException ex) {
+			} catch (final SecurityException ex) {
 				Activator.logException(ex);
-			} catch (IllegalAccessException ex) {
+			} catch (final IllegalAccessException ex) {
 				Activator.logException(ex);
-			} catch (NoSuchFieldException ex) {
+			} catch (final NoSuchFieldException ex) {
 				Activator.logException(ex);
 			}
 		} else if (BigDecimal.class.isAssignableFrom(instanceClass)) {

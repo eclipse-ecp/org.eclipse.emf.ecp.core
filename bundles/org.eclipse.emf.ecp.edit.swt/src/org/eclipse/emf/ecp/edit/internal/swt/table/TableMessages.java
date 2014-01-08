@@ -13,7 +13,7 @@ package org.eclipse.emf.ecp.edit.internal.swt.table;
 
 import org.eclipse.osgi.util.NLS;
 
-public class TableMessages extends NLS {
+public final class TableMessages extends NLS {
 
 	private static final String BUNDLE_NAME = "org.eclipse.emf.ecp.edit.internal.swt.table.messages"; //$NON-NLS-1$
 

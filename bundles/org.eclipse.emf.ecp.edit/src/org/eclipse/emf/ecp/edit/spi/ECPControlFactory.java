@@ -15,11 +15,10 @@ package org.eclipse.emf.ecp.edit.spi;
 import java.util.Set;
 
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 /**
  * The ControlFactory provides a
- * method ({@link ECPControlFactory#createControl(Class, IItemPropertyDescriptor, ECPControlContext)}) for creating a
+ * method ({@link ECPControlFactory#createControl(Class, VDomainModelReference)}) for creating a
  * suitable
  * control with the known widgets.
  * 

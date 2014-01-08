@@ -35,6 +35,8 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
 import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalFactory;
 import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalLayout;
 import org.eclipse.emf.ecp.view.validation.test.model.Computer;
+import org.eclipse.emf.ecp.view.validation.test.model.Container;
+import org.eclipse.emf.ecp.view.validation.test.model.Content;
 import org.eclipse.emf.ecp.view.validation.test.model.Library;
 import org.eclipse.emf.ecp.view.validation.test.model.Mainboard;
 import org.eclipse.emf.ecp.view.validation.test.model.PowerBlock;
@@ -391,9 +393,10 @@ public class ViewValidationTest extends CommonValidationTest {
 
 		writer.setLastName("hello!");
 
-		assertEquals("Severity of control must be error", Diagnostic.ERROR, firstNameControl.getDiagnostic()
+		assertEquals("Severity of firstname control must be error", Diagnostic.ERROR, firstNameControl.getDiagnostic()
 			.getHighestSeverity());
-		assertEquals("Severity of view must be ok", Diagnostic.OK, lastNameControl.getDiagnostic().getHighestSeverity());
+		assertEquals("Severity of lastname control must be ok", Diagnostic.OK, lastNameControl.getDiagnostic()
+			.getHighestSeverity());
 	}
 
 	@Test
@@ -961,6 +964,292 @@ public class ViewValidationTest extends CommonValidationTest {
 
 		assertEquals("Severity of table must be ok", Diagnostic.OK, control1.getDiagnostic()
 			.getHighestSeverity());
+	}
+
+	@Test
+	public void testValidationTableControlMultipleDiagnosticsInitOk() {
+		final VView view = VViewFactory.eINSTANCE.createView();
+		final Container container = TestFactory.eINSTANCE.createContainer();
+		final Content content1 = TestFactory.eINSTANCE.createContent();
+		content1.setUniqueAttribute("a");
+		container.getContents().add(content1);
+		final Content content2 = TestFactory.eINSTANCE.createContent();
+		content2.setUniqueAttribute("b");
+		container.getContents().add(content2);
+
+		final VTableControl control1 = VTableFactory.eINSTANCE.createTableControl();
+		control1.setDomainModelReference(
+			getVTableDomainModelReference(TestPackage.eINSTANCE.getContainer_Contents()));
+		final VTableColumn tc1 = VTableFactory.eINSTANCE.createTableColumn();
+		tc1.setAttribute(TestPackage.eINSTANCE.getContent_UniqueAttribute());
+		control1.getColumns().add(tc1);
+
+		view.getChildren().add(control1);
+		ViewModelContextFactory.INSTANCE.createViewModelContext(view, container);
+
+		assertEquals("Severity of table must be ok", Diagnostic.OK, control1.getDiagnostic().getHighestSeverity());
+		assertEquals("There must be 1 diagnostics", 1, control1.getDiagnostic().getDiagnostics().size());
+	}
+
+	@Test
+	public void testValidationTableControlMultipleDiagnosticsInitError() {
+		final VView view = VViewFactory.eINSTANCE.createView();
+		final Container container = TestFactory.eINSTANCE.createContainer();
+		final Content content1 = TestFactory.eINSTANCE.createContent();
+		content1.setUniqueAttribute("a");
+		container.getContents().add(content1);
+		final Content content2 = TestFactory.eINSTANCE.createContent();
+		content2.setUniqueAttribute("a");
+		container.getContents().add(content2);
+
+		final VTableControl control1 = VTableFactory.eINSTANCE.createTableControl();
+		control1.setDomainModelReference(
+			getVTableDomainModelReference(TestPackage.eINSTANCE.getContainer_Contents()));
+		final VTableColumn tc1 = VTableFactory.eINSTANCE.createTableColumn();
+		tc1.setAttribute(TestPackage.eINSTANCE.getContent_UniqueAttribute());
+		control1.getColumns().add(tc1);
+
+		view.getChildren().add(control1);
+		ViewModelContextFactory.INSTANCE.createViewModelContext(view, container);
+
+		assertEquals("Severity of table must be error", Diagnostic.ERROR, control1.getDiagnostic().getHighestSeverity());
+		// ok for container, 2x error for contents
+		assertEquals("There must be 3 diagnostics", 3, control1.getDiagnostic().getDiagnostics().size());
+	}
+
+	@Test
+	public void testValidationTableControlMultipleDiagnosticsDynamicFirstOkToError() {
+		final VView view = VViewFactory.eINSTANCE.createView();
+		final Container container = TestFactory.eINSTANCE.createContainer();
+		final Content content1 = TestFactory.eINSTANCE.createContent();
+		content1.setUniqueAttribute("a");
+		container.getContents().add(content1);
+		final Content content2 = TestFactory.eINSTANCE.createContent();
+		content2.setUniqueAttribute("b");
+		container.getContents().add(content2);
+
+		final VTableControl control1 = VTableFactory.eINSTANCE.createTableControl();
+		control1.setDomainModelReference(
+			getVTableDomainModelReference(TestPackage.eINSTANCE.getContainer_Contents()));
+		final VTableColumn tc1 = VTableFactory.eINSTANCE.createTableColumn();
+		tc1.setAttribute(TestPackage.eINSTANCE.getContent_UniqueAttribute());
+		control1.getColumns().add(tc1);
+
+		view.getChildren().add(control1);
+		ViewModelContextFactory.INSTANCE.createViewModelContext(view, container);
+
+		assertEquals("Severity of table must be ok", Diagnostic.OK, control1.getDiagnostic().getHighestSeverity());
+		assertEquals("There must be 1 diagnostics", 1, control1.getDiagnostic().getDiagnostics().size());
+
+		content1.setUniqueAttribute("b");
+
+		assertEquals("Severity of table must be error", Diagnostic.ERROR, control1.getDiagnostic().getHighestSeverity());
+		// ok for container, 2x error for contents
+		assertEquals("There must be 3 diagnostics", 3, control1.getDiagnostic().getDiagnostics().size());
+	}
+
+	@Test
+	public void testValidationTableControlMultipleDiagnosticsDynamicSecondOkToError() {
+		final VView view = VViewFactory.eINSTANCE.createView();
+		final Container container = TestFactory.eINSTANCE.createContainer();
+		final Content content1 = TestFactory.eINSTANCE.createContent();
+		content1.setUniqueAttribute("a");
+		container.getContents().add(content1);
+		final Content content2 = TestFactory.eINSTANCE.createContent();
+		content2.setUniqueAttribute("b");
+		container.getContents().add(content2);
+
+		final VTableControl control1 = VTableFactory.eINSTANCE.createTableControl();
+		control1.setDomainModelReference(
+			getVTableDomainModelReference(TestPackage.eINSTANCE.getContainer_Contents()));
+		final VTableColumn tc1 = VTableFactory.eINSTANCE.createTableColumn();
+		tc1.setAttribute(TestPackage.eINSTANCE.getContent_UniqueAttribute());
+		control1.getColumns().add(tc1);
+
+		view.getChildren().add(control1);
+		ViewModelContextFactory.INSTANCE.createViewModelContext(view, container);
+
+		assertEquals("Severity of table must be ok", Diagnostic.OK, control1.getDiagnostic().getHighestSeverity());
+		assertEquals("There must be 1 diagnostics", 1, control1.getDiagnostic().getDiagnostics().size());
+
+		content2.setUniqueAttribute("a");
+
+		assertEquals("Severity of table must be error", Diagnostic.ERROR, control1.getDiagnostic().getHighestSeverity());
+		// ok for container, 2x error for contents
+		assertEquals("There must be 3 diagnostics", 3, control1.getDiagnostic().getDiagnostics().size());
+	}
+
+	@Test
+	public void testValidationTableControlMultipleDiagnosticsDynamicFirstErrorToOk() {
+		final VView view = VViewFactory.eINSTANCE.createView();
+		final Container container = TestFactory.eINSTANCE.createContainer();
+		final Content content1 = TestFactory.eINSTANCE.createContent();
+		content1.setUniqueAttribute("a");
+		container.getContents().add(content1);
+		final Content content2 = TestFactory.eINSTANCE.createContent();
+		content2.setUniqueAttribute("a");
+		container.getContents().add(content2);
+
+		final VTableControl control1 = VTableFactory.eINSTANCE.createTableControl();
+		control1.setDomainModelReference(
+			getVTableDomainModelReference(TestPackage.eINSTANCE.getContainer_Contents()));
+		final VTableColumn tc1 = VTableFactory.eINSTANCE.createTableColumn();
+		tc1.setAttribute(TestPackage.eINSTANCE.getContent_UniqueAttribute());
+		control1.getColumns().add(tc1);
+
+		view.getChildren().add(control1);
+		ViewModelContextFactory.INSTANCE.createViewModelContext(view, container);
+
+		assertEquals("Severity of table must be error", Diagnostic.ERROR, control1.getDiagnostic().getHighestSeverity());
+		// ok for container, 2x error for contents
+		assertEquals("There must be 3 diagnostics", 3, control1.getDiagnostic().getDiagnostics().size());
+
+		content1.setUniqueAttribute("b");
+
+		assertEquals("Severity of table must be ok", Diagnostic.OK, control1.getDiagnostic().getHighestSeverity());
+		assertEquals("There must be 1 diagnostics", 1, control1.getDiagnostic().getDiagnostics().size());
+	}
+
+	@Test
+	public void testValidationTableControlMultipleDiagnosticsDynamicSecondErrorToOk() {
+		final VView view = VViewFactory.eINSTANCE.createView();
+		final Container container = TestFactory.eINSTANCE.createContainer();
+		final Content content1 = TestFactory.eINSTANCE.createContent();
+		content1.setUniqueAttribute("a");
+		container.getContents().add(content1);
+		final Content content2 = TestFactory.eINSTANCE.createContent();
+		content2.setUniqueAttribute("a");
+		container.getContents().add(content2);
+
+		final VTableControl control1 = VTableFactory.eINSTANCE.createTableControl();
+		control1.setDomainModelReference(
+			getVTableDomainModelReference(TestPackage.eINSTANCE.getContainer_Contents()));
+		final VTableColumn tc1 = VTableFactory.eINSTANCE.createTableColumn();
+		tc1.setAttribute(TestPackage.eINSTANCE.getContent_UniqueAttribute());
+		control1.getColumns().add(tc1);
+
+		view.getChildren().add(control1);
+		ViewModelContextFactory.INSTANCE.createViewModelContext(view, container);
+
+		assertEquals("Severity of table must be error", Diagnostic.ERROR, control1.getDiagnostic().getHighestSeverity());
+		// ok for container, 2x error for contents
+		assertEquals("There must be 3 diagnostics", 3, control1.getDiagnostic().getDiagnostics().size());
+
+		content2.setUniqueAttribute("b");
+
+		assertEquals("Severity of table must be ok", Diagnostic.OK, control1.getDiagnostic().getHighestSeverity());
+		assertEquals("There must be 1 diagnostics", 1, control1.getDiagnostic().getDiagnostics().size());
+	}
+
+	@Test
+	public void testValidationTableControlMultipleDiagnosticsMultipleDuplicatesInitError() {
+		final VView view = VViewFactory.eINSTANCE.createView();
+		final Container container = TestFactory.eINSTANCE.createContainer();
+		final Content content1 = TestFactory.eINSTANCE.createContent();
+		content1.setUniqueAttribute("a");
+		container.getContents().add(content1);
+		final Content content2 = TestFactory.eINSTANCE.createContent();
+		content2.setUniqueAttribute("a");
+		container.getContents().add(content2);
+
+		final Content content3 = TestFactory.eINSTANCE.createContent();
+		content3.setUniqueAttribute("b");
+		container.getContents().add(content3);
+		final Content content4 = TestFactory.eINSTANCE.createContent();
+		content4.setUniqueAttribute("b");
+		container.getContents().add(content4);
+
+		final VTableControl control1 = VTableFactory.eINSTANCE.createTableControl();
+		control1.setDomainModelReference(
+			getVTableDomainModelReference(TestPackage.eINSTANCE.getContainer_Contents()));
+		final VTableColumn tc1 = VTableFactory.eINSTANCE.createTableColumn();
+		tc1.setAttribute(TestPackage.eINSTANCE.getContent_UniqueAttribute());
+		control1.getColumns().add(tc1);
+
+		view.getChildren().add(control1);
+		ViewModelContextFactory.INSTANCE.createViewModelContext(view, container);
+
+		assertEquals("Severity of table must be error", Diagnostic.ERROR, control1.getDiagnostic().getHighestSeverity());
+		// ok for container, 4x error for contents
+		assertEquals("There must be 5 diagnostics", 5, control1.getDiagnostic().getDiagnostics().size());
+	}
+
+	@Test
+	public void testValidationTableControlMultipleDiagnosticsMultipleDuplicatesDynamic4ErrorTo3Error() {
+		final VView view = VViewFactory.eINSTANCE.createView();
+		final Container container = TestFactory.eINSTANCE.createContainer();
+		final Content content1 = TestFactory.eINSTANCE.createContent();
+		content1.setUniqueAttribute("a");
+		container.getContents().add(content1);
+		final Content content2 = TestFactory.eINSTANCE.createContent();
+		content2.setUniqueAttribute("a");
+		container.getContents().add(content2);
+
+		final Content content3 = TestFactory.eINSTANCE.createContent();
+		content3.setUniqueAttribute("b");
+		container.getContents().add(content3);
+		final Content content4 = TestFactory.eINSTANCE.createContent();
+		content4.setUniqueAttribute("b");
+		container.getContents().add(content4);
+
+		final VTableControl control1 = VTableFactory.eINSTANCE.createTableControl();
+		control1.setDomainModelReference(
+			getVTableDomainModelReference(TestPackage.eINSTANCE.getContainer_Contents()));
+		final VTableColumn tc1 = VTableFactory.eINSTANCE.createTableColumn();
+		tc1.setAttribute(TestPackage.eINSTANCE.getContent_UniqueAttribute());
+		control1.getColumns().add(tc1);
+
+		view.getChildren().add(control1);
+		ViewModelContextFactory.INSTANCE.createViewModelContext(view, container);
+
+		assertEquals("Severity of table must be error", Diagnostic.ERROR, control1.getDiagnostic().getHighestSeverity());
+		// ok for container, 4x error for contents
+		assertEquals("There must be 5 diagnostics", 5, control1.getDiagnostic().getDiagnostics().size());
+
+		content3.setUniqueAttribute("a");
+
+		assertEquals("Severity of table must be error", Diagnostic.ERROR, control1.getDiagnostic().getHighestSeverity());
+		// ok for container, 1x ok , 3x error for contents
+		assertEquals("There must be 5 diagnostics", 5, control1.getDiagnostic().getDiagnostics().size());
+	}
+
+	@Test
+	public void testValidationTableControlMultipleDiagnosticsMultipleDuplicatesDynamic4ErrorTo2Error() {
+		final VView view = VViewFactory.eINSTANCE.createView();
+		final Container container = TestFactory.eINSTANCE.createContainer();
+		final Content content1 = TestFactory.eINSTANCE.createContent();
+		content1.setUniqueAttribute("a");
+		container.getContents().add(content1);
+		final Content content2 = TestFactory.eINSTANCE.createContent();
+		content2.setUniqueAttribute("a");
+		container.getContents().add(content2);
+
+		final Content content3 = TestFactory.eINSTANCE.createContent();
+		content3.setUniqueAttribute("b");
+		container.getContents().add(content3);
+		final Content content4 = TestFactory.eINSTANCE.createContent();
+		content4.setUniqueAttribute("b");
+		container.getContents().add(content4);
+
+		final VTableControl control1 = VTableFactory.eINSTANCE.createTableControl();
+		control1.setDomainModelReference(
+			getVTableDomainModelReference(TestPackage.eINSTANCE.getContainer_Contents()));
+		final VTableColumn tc1 = VTableFactory.eINSTANCE.createTableColumn();
+		tc1.setAttribute(TestPackage.eINSTANCE.getContent_UniqueAttribute());
+		control1.getColumns().add(tc1);
+
+		view.getChildren().add(control1);
+		ViewModelContextFactory.INSTANCE.createViewModelContext(view, container);
+
+		assertEquals("Severity of table must be error", Diagnostic.ERROR, control1.getDiagnostic().getHighestSeverity());
+		// ok for container, 4x error for contents
+		assertEquals("There must be 5 diagnostics", 5, control1.getDiagnostic().getDiagnostics().size());
+
+		content3.setUniqueAttribute("c");
+
+		assertEquals("Severity of table must be error", Diagnostic.ERROR, control1.getDiagnostic().getHighestSeverity());
+		// ok for container,2x ok, 2x error for contents
+		assertEquals("There must be 5 diagnostics", 5, control1.getDiagnostic().getDiagnostics().size());
 	}
 
 	@Test

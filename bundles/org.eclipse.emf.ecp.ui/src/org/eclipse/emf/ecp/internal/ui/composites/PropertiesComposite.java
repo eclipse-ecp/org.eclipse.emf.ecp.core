@@ -62,10 +62,10 @@ public class PropertiesComposite extends Composite {
 		tblclmnNewColumn.setWidth(122);
 		tblclmnNewColumn.setText(Messages.PropertiesComposite_TableColumnName_Key);
 
-		TableViewerColumn tableViewerColumn_1 = new TableViewerColumn(tableViewer, SWT.NONE);
-		TableColumn tblclmnNewColumn_1 = tableViewerColumn_1.getColumn();
-		tblclmnNewColumn_1.setWidth(314);
-		tblclmnNewColumn_1.setText(Messages.PropertiesComposite_TableColumnName_Value);
+		TableViewerColumn tableViewerColumn1 = new TableViewerColumn(tableViewer, SWT.NONE);
+		TableColumn tableColumn1 = tableViewerColumn1.getColumn();
+		tableColumn1.setWidth(314);
+		tableColumn1.setText(Messages.PropertiesComposite_TableColumnName_Value);
 
 		tableViewer.setLabelProvider(new PropertiesLabelProvider());
 		tableViewer.setContentProvider(new PropertiesContentProvider());
@@ -74,10 +74,10 @@ public class PropertiesComposite extends Composite {
 
 		if (editable) {
 			Composite buttonBar = new Composite(this, SWT.NONE);
-			GridLayout gl_buttonBar = new GridLayout(3, false);
-			gl_buttonBar.marginWidth = 0;
-			gl_buttonBar.marginHeight = 0;
-			buttonBar.setLayout(gl_buttonBar);
+			GridLayout gridLayoutButtonBar = new GridLayout(3, false);
+			gridLayoutButtonBar.marginWidth = 0;
+			gridLayoutButtonBar.marginHeight = 0;
+			buttonBar.setLayout(gridLayoutButtonBar);
 
 			Button addButton = new Button(buttonBar, SWT.NONE);
 			addButton.setText(Messages.PropertiesComposite_AddProperty);

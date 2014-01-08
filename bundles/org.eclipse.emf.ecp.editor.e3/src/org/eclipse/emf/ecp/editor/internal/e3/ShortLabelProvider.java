@@ -23,6 +23,8 @@ public class ShortLabelProvider extends AdapterFactoryLabelProvider {
 
 	/**
 	 * Default constructor.
+	 * 
+	 * @param adapterFactory the {@link AdapterFactory} to be used.
 	 */
 	public ShortLabelProvider(AdapterFactory adapterFactory) {
 

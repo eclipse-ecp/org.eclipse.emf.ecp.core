@@ -1,3 +1,15 @@
+/*******************************************************************************
+ * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
+ * 
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ * Eugen Neufeld - initial API and implementation
+ * 
+ *******************************************************************************/
 package org.eclipse.emf.ecp.internal.graphiti.feature;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -39,16 +51,15 @@ import org.eclipse.ui.PlatformUI;
 
 public class EObjectPattern extends AbstractPattern {
 	private static final IColorConstant FOREGROUND = new ColorConstant(98, 131,
-			167);
+		167);
 
 	private static final IColorConstant BACKGROUND = new ColorConstant(187,
-			218, 247);
+		218, 247);
 	private static final IColorConstant TEXT_FOREGROUND = IColorConstant.BLACK;
 
 	public EObjectPattern() {
 		super(null);
 	}
-
 
 	@Override
 	public boolean canCreate(ICreateContext context) {
@@ -57,22 +68,22 @@ public class EObjectPattern extends AbstractPattern {
 
 	@Override
 	public Object[] create(ICreateContext context) {
-		Object o = getBusinessObjectForPictogramElement(getDiagram());
+		final Object o = getBusinessObjectForPictogramElement(getDiagram());
 		final ECPProject project = ECPUtil.getECPProjectManager().getProject(o);
-		final EObject createdEObject=ECPHandlerHelper.addModelElement(project, getShell(), false);
+		final EObject createdEObject = ECPHandlerHelper.addModelElement(project, getShell(), false);
 		// Add model element to resource.
 		// We add the model element to the resource of the diagram for
 		// simplicity's sake. Normally, a customer would use its own
 		// model persistence layer for storing the business model separately.
-		EditingDomain editingDomain = project.getEditingDomain();
+		final EditingDomain editingDomain = project.getEditingDomain();
 		editingDomain.getCommandStack().execute(
-				new ChangeCommand(createdEObject) {
+			new ChangeCommand(createdEObject) {
 
-					@Override
-					protected void doExecute() {
-						project.getContents().add(createdEObject);
-					}
-				});
+				@Override
+				protected void doExecute() {
+					project.getContents().add(createdEObject);
+				}
+			});
 
 		// do the add
 		addGraphicalRepresentation(context, createdEObject);
@@ -85,6 +96,7 @@ public class EObjectPattern extends AbstractPattern {
 	public String getCreateName() {
 		return "Node";
 	}
+
 	@Override
 	public String getCreateImageId() {
 		return "addEObject";
@@ -93,18 +105,18 @@ public class EObjectPattern extends AbstractPattern {
 	@Override
 	public boolean isMainBusinessObjectApplicable(Object mainBusinessObject) {
 		return mainBusinessObject instanceof EObject && !EReference.class.isInstance(mainBusinessObject);
-		//		&& !EAttribute.class.isInstance(mainBusinessObject)
+		// && !EAttribute.class.isInstance(mainBusinessObject)
 	}
 
 	@Override
 	protected boolean isPatternControlled(PictogramElement pictogramElement) {
-		Object domainObject = getBusinessObjectForPictogramElement(pictogramElement);
+		final Object domainObject = getBusinessObjectForPictogramElement(pictogramElement);
 		return isMainBusinessObjectApplicable(domainObject);
 	}
 
 	@Override
 	protected boolean isPatternRoot(PictogramElement pictogramElement) {
-		Object domainObject = getBusinessObjectForPictogramElement(pictogramElement);
+		final Object domainObject = getBusinessObjectForPictogramElement(pictogramElement);
 		return isMainBusinessObjectApplicable(domainObject);
 	}
 
@@ -116,32 +128,32 @@ public class EObjectPattern extends AbstractPattern {
 	@Override
 	public PictogramElement add(IAddContext context) {
 
-		EObject addedClass = (EObject) context.getNewObject();
+		final EObject addedClass = (EObject) context.getNewObject();
 
-		ContainerShape container = context.getTargetContainer();
+		final ContainerShape container = context.getTargetContainer();
 
 		// CONTAINER SHAPE WITH ROUNDED RECTANGLE
-		IPeCreateService peCreateService = Graphiti.getPeCreateService();
+		final IPeCreateService peCreateService = Graphiti.getPeCreateService();
 
-		ContainerShape containerShape = peCreateService.createContainerShape(
-				container, true);
+		final ContainerShape containerShape = peCreateService.createContainerShape(
+			container, true);
 
 		// define a default size for the shape
 		final int width = context.getWidth() <= 0 ? 100 : context.getWidth();
 		final int height = context.getHeight() <= 0 ? 50 : context.getHeight();
-		IGaService gaService = Graphiti.getGaService();
+		final IGaService gaService = Graphiti.getGaService();
 		RoundedRectangle roundedRectangle; // need to access it later
 
 		{
 			// create and set graphics algorithm
 			roundedRectangle = gaService.createRoundedRectangle(containerShape,
-					5, 5);
+				5, 5);
 			roundedRectangle.setForeground(manageColor(FOREGROUND));
 			roundedRectangle.setBackground(manageColor(BACKGROUND));
 
 			roundedRectangle.setLineWidth(2);
 			gaService.setLocationAndSize(roundedRectangle, context.getX(),
-					context.getY(), width, height);
+				context.getY(), width, height);
 
 			// create link and wire it
 			link(containerShape, addedClass);
@@ -150,11 +162,11 @@ public class EObjectPattern extends AbstractPattern {
 		// SHAPE WITH LINE
 		{
 			// create shape for line
-			Shape shape = peCreateService.createShape(containerShape, false);
+			final Shape shape = peCreateService.createShape(containerShape, false);
 
 			// create and set graphics algorithm
-			Polyline polyline = gaService.createPolyline(shape, new int[] { 0,
-					20, width, 20 });
+			final Polyline polyline = gaService.createPolyline(shape, new int[] { 0,
+				20, width, 20 });
 			polyline.setForeground(manageColor(FOREGROUND));
 
 			polyline.setLineWidth(2);
@@ -162,19 +174,19 @@ public class EObjectPattern extends AbstractPattern {
 
 		// SHAPE WITH TEXT
 		{
-			ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
+			final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
 				new ReflectiveItemProviderAdapterFactory(),
-				new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });;
-			AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
-					composedAdapterFactory);
+				new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
+			final AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
+				composedAdapterFactory);
 
 			// Single Text
 			// create shape for text
-			Shape shape = peCreateService.createShape(containerShape, false);
+			final Shape shape = peCreateService.createShape(containerShape, false);
 			//
 			// create and set text graphics algorithm
-			Text text = gaService.createText(shape,
-					adapterFactoryItemDelegator.getText(addedClass));
+			final Text text = gaService.createText(shape,
+				adapterFactoryItemDelegator.getText(addedClass));
 			text.setForeground(manageColor(TEXT_FOREGROUND));
 			text.setHorizontalAlignment(Orientation.ALIGNMENT_CENTER);
 			// vertical alignment has as default value "center"
@@ -194,36 +206,38 @@ public class EObjectPattern extends AbstractPattern {
 		return containerShape;
 	}
 
+	@Override
 	public IReason updateNeeded(IUpdateContext context) {
 		// retrieve name from pictogram model
 		String pictogramName = null;
-		PictogramElement pictogramElement = context.getPictogramElement();
+		final PictogramElement pictogramElement = context.getPictogramElement();
 		if (pictogramElement instanceof ContainerShape) {
-			ContainerShape cs = (ContainerShape) pictogramElement;
-			for (Shape shape : cs.getChildren()) {
+			final ContainerShape cs = (ContainerShape) pictogramElement;
+			for (final Shape shape : cs.getChildren()) {
 				if (shape.getGraphicsAlgorithm() instanceof Text) {
-					Text text = (Text) shape.getGraphicsAlgorithm();
+					final Text text = (Text) shape.getGraphicsAlgorithm();
 					pictogramName = text.getValue();
 				}
 			}
 		}
 
-		ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
+		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
 			new ReflectiveItemProviderAdapterFactory(),
-			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });;
-		AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
-				composedAdapterFactory);
+			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
+		final AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
+			composedAdapterFactory);
 
 		// retrieve name from business model
 		String businessName = null;
-		Object bo = getBusinessObjectForPictogramElement(pictogramElement);
+		final Object bo = getBusinessObjectForPictogramElement(pictogramElement);
 		if (bo instanceof EObject) {
 			businessName = adapterFactoryItemDelegator.getText(bo);
 		}
 		composedAdapterFactory.dispose();
 		// update needed, if names are different
-		boolean updateNameNeeded = ((pictogramName == null && businessName != null) || (pictogramName != null && !pictogramName
-				.equals(businessName)));
+		final boolean updateNameNeeded = pictogramName == null && businessName != null || pictogramName != null
+			&& !pictogramName
+				.equals(businessName);
 		if (updateNameNeeded) {
 			return Reason.createTrueReason("Name is out of date");
 		} else {
@@ -235,13 +249,13 @@ public class EObjectPattern extends AbstractPattern {
 	public boolean update(IUpdateContext context) {
 		// retrieve name from business model
 		String businessName = null;
-		PictogramElement pictogramElement = context.getPictogramElement();
-		Object bo = getBusinessObjectForPictogramElement(pictogramElement);
-		ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
+		final PictogramElement pictogramElement = context.getPictogramElement();
+		final Object bo = getBusinessObjectForPictogramElement(pictogramElement);
+		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
 			new ReflectiveItemProviderAdapterFactory(),
-			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });;
-		AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
-				composedAdapterFactory);
+			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
+		final AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
+			composedAdapterFactory);
 		if (bo instanceof EObject) {
 			businessName = adapterFactoryItemDelegator.getText(bo);
 		}
@@ -249,10 +263,10 @@ public class EObjectPattern extends AbstractPattern {
 
 		// Set name in pictogram model
 		if (pictogramElement instanceof ContainerShape) {
-			ContainerShape cs = (ContainerShape) pictogramElement;
-			for (Shape shape : cs.getChildren()) {
+			final ContainerShape cs = (ContainerShape) pictogramElement;
+			for (final Shape shape : cs.getChildren()) {
 				if (shape.getGraphicsAlgorithm() instanceof Text) {
-					Text text = (Text) shape.getGraphicsAlgorithm();
+					final Text text = (Text) shape.getGraphicsAlgorithm();
 					text.setValue(businessName);
 					return true;
 				}
@@ -265,9 +279,9 @@ public class EObjectPattern extends AbstractPattern {
 	@Override
 	public boolean layout(ILayoutContext context) {
 		boolean anythingChanged = false;
-		ContainerShape containerShape = (ContainerShape) context
-				.getPictogramElement();
-		GraphicsAlgorithm containerGa = containerShape.getGraphicsAlgorithm();
+		final ContainerShape containerShape = (ContainerShape) context
+			.getPictogramElement();
+		final GraphicsAlgorithm containerGa = containerShape.getGraphicsAlgorithm();
 
 		// // height
 		// if (containerGa.getHeight() < MIN_HEIGHT) {
@@ -281,18 +295,18 @@ public class EObjectPattern extends AbstractPattern {
 		// anythingChanged = true;
 		// }
 
-		int containerWidth = containerGa.getWidth();
+		final int containerWidth = containerGa.getWidth();
 
-		for (Shape shape : containerShape.getChildren()) {
-			GraphicsAlgorithm graphicsAlgorithm = shape.getGraphicsAlgorithm();
-			IGaService gaService = Graphiti.getGaService();
-			IDimension size = gaService.calculateSize(graphicsAlgorithm);
+		for (final Shape shape : containerShape.getChildren()) {
+			final GraphicsAlgorithm graphicsAlgorithm = shape.getGraphicsAlgorithm();
+			final IGaService gaService = Graphiti.getGaService();
+			final IDimension size = gaService.calculateSize(graphicsAlgorithm);
 			if (containerWidth != size.getWidth()) {
 				if (graphicsAlgorithm instanceof Polyline) {
-					Polyline polyline = (Polyline) graphicsAlgorithm;
-					Point secondPoint = polyline.getPoints().get(1);
-					Point newSecondPoint = gaService.createPoint(
-							containerWidth, secondPoint.getY());
+					final Polyline polyline = (Polyline) graphicsAlgorithm;
+					final Point secondPoint = polyline.getPoints().get(1);
+					final Point newSecondPoint = gaService.createPoint(
+						containerWidth, secondPoint.getY());
 					polyline.getPoints().set(1, newSecondPoint);
 					anythingChanged = true;
 				} else {
@@ -303,7 +317,7 @@ public class EObjectPattern extends AbstractPattern {
 		}
 		return anythingChanged;
 	}
-	
+
 	/**
 	 * Returns the currently active Shell.
 	 * 
