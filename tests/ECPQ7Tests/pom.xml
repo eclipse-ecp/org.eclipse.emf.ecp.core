@@ -1,128 +1,129 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  
-  <groupId>org.eclipse.emf.ecp</groupId> 
-  <artifactId>q7tests</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>q7test</packaging>
- 
-  <pluginRepositories>
-    <pluginRepository>
-      <id>q7-releases</id>
-      <name>Xored Q7 Maven repository</name>
-      <url>http://maven.xored.com/nexus/content/repositories/q7-releases/</url>
-    </pluginRepository>
-	<pluginRepository>
-      <id>q7-snapshots</id>
-      <name>Xored Q7 Maven repository</name>
-      <url>http://maven.xored.com/nexus/content/repositories/q7-snapshots/</url>
-    </pluginRepository>
-  </pluginRepositories> 
-  
-  <properties>
-    <q7-maven-version>1.3.8</q7-maven-version>
-	<q7-runner-version>1.3.8</q7-runner-version>
-	<q7-client-version>1.3.10-SNAPSHOT</q7-client-version>
-    <aut-base-path>https://hudson.eclipse.org/ecp/job/emf-emfclient-integration/lastSuccessfulBuild/artifact/releng/org.eclipse.emf.ecp.products/target/products/</aut-base-path>
-  </properties> 
- 
-  <profiles>
-    <profile>
-      <id>q7runner</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
- 
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>com.xored.q7</groupId>
-            <artifactId>q7-maven-plugin</artifactId>
-            <version>${q7-maven-version}</version>
-            <extensions>true</extensions>
-            <configuration>
-              <q7>
-                <version>${q7-runner-version}</version>
-                <clientId>jfaltermeier</clientId>
-		    	<clientSecret>2a216714ef4e7dac6237a2eb9c30c57a6d26f81c</clientSecret>
-		    	<organization>EMFClientPlatform</organization>
-              </q7>
-		  
-		      <aut>
-		        <explicit>${aut-base-path}/org.eclipse.emf.ecp.3x-[platform].zip</explicit>
+	<modelVersion>4.0.0</modelVersion>
 
-		    	<args>
-                  <arg>-nl</arg>
-                  <arg>en</arg>
-                </args>
-              </aut>
-		  
-		      <testOptions>
-		    	<execTimeout>3600</execTimeout>
-                <testExecTimeout>600</testExecTimeout>
-              </testOptions>
-		  
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-	</profile>
+	<groupId>org.eclipse.emf.ecp</groupId> 
+	<artifactId>q7tests</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>q7test</packaging>
 
-    <profile>
-      <id>q7cloud</id>
-      <activation>
-        <property>
-          <name>useCloud</name>
-          <value>true</value>
-        </property>
-      </activation>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>q7-releases</id>
+			<name>Xored Q7 Maven repository</name>
+			<url>http://maven.xored.com/nexus/content/repositories/q7-releases/</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>q7-snapshots</id>
+			<name>Xored Q7 Maven repository</name>
+			<url>http://maven.xored.com/nexus/content/repositories/q7-snapshots/</url>
+		</pluginRepository>
+	</pluginRepositories> 
 
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>com.xored.q7</groupId>
-            <artifactId>q7-server-maven-plugin</artifactId>
-            <version>${q7-maven-version}</version>
-            <extensions>true</extensions>
-            <configuration>
-			
-              <metadata>
-                <public>true</public>
-                <projectName>EMF Client Platform</projectName>
-              </metadata>
-              
-              <classifiers>
-                <classifier>win32.win32.x86</classifier>
-              </classifiers>
-              
-              <aut>
-              	<uri>${aut-base-path}/org.eclipse.emf.ecp.3x-[classifier].[ext]</uri>
-              </aut>
+	<properties>
+		<q7-maven-version>1.3.8</q7-maven-version>
+		<q7-runner-version>1.3.8</q7-runner-version>
+		<q7-client-version>1.3.10-SNAPSHOT</q7-client-version>
+		<aut-base-path>https://hudson.eclipse.org/ecp/job/emf-emfclient-integration/lastSuccessfulBuild/artifact/releng/org.eclipse.emf.ecp.products/target/products/</aut-base-path>
+	</properties> 
 
-              <testOptions>
-                <execTimeout>3600</execTimeout>
-              </testOptions>
-              
-              <q7client>
-                <version>${q7-client-version}</version>
-				<clientId>jfaltermeier</clientId>
-		    	<clientSecret>2a216714ef4e7dac6237a2eb9c30c57a6d26f81c</clientSecret>
-		    	<organization>EMFClientPlatform</organization>
-              </q7client>
+	<profiles>
+		<profile>
+			<id>q7runner</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
 
-              <q7server>cloud.xored.com</q7server>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.xored.q7</groupId>
+						<artifactId>q7-maven-plugin</artifactId>
+						<version>${q7-maven-version}</version>
+						<extensions>true</extensions>
+						<configuration>
+							<q7>
+								<version>${q7-runner-version}</version>
+								<clientId>jfaltermeier</clientId>
+								<clientSecret>2a216714ef4e7dac6237a2eb9c30c57a6d26f81c</clientSecret>
+								<organization>EMFClientPlatform</organization>
+								<vmArgs>
+									<vmArg>-Dhttp.proxyHost=proxy.eclipse.org</vmArg>
+									<vmArg>-Dhttp.proxyPort=9898</vmArg>
+								</vmArgs>
+							</q7>
 
-              <q7>
-                <vmArgs>
-                  <vmArg>-Dhttp.proxyHost=proxy.eclipse.org</vmArg>
-                  <vmArg>-Dhttp.proxyPort=9898</vmArg>
-                </vmArgs>
-              </q7>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
+							<aut>
+								<explicit>${aut-base-path}/org.eclipse.emf.ecp.3x-[platform].zip</explicit>
+
+								<args>
+									<arg>-nl</arg>
+									<arg>en</arg>
+								</args>
+							</aut>
+
+							<testOptions>
+								<execTimeout>3600</execTimeout>
+								<testExecTimeout>600</testExecTimeout>
+							</testOptions>
+
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<profile>
+			<id>q7cloud</id>
+			<activation>
+				<property>
+					<name>useCloud</name>
+					<value>true</value>
+				</property>
+			</activation>
+
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.xored.q7</groupId>
+						<artifactId>q7-server-maven-plugin</artifactId>
+						<version>${q7-maven-version}</version>
+						<extensions>true</extensions>
+						<configuration>
+
+							<metadata>
+								<public>true</public>
+								<projectName>EMF Client Platform</projectName>
+							</metadata>
+
+							<classifiers>
+								<classifier>win32.win32.x86</classifier>
+							</classifiers>
+
+							<aut>
+								<uri>${aut-base-path}/org.eclipse.emf.ecp.3x-[classifier].[ext]</uri>
+							</aut>
+
+							<testOptions>
+								<execTimeout>3600</execTimeout>
+							</testOptions>
+
+							<q7client>
+								<version>${q7-client-version}</version>
+								<clientId>jfaltermeier</clientId>
+								<clientSecret>2a216714ef4e7dac6237a2eb9c30c57a6d26f81c</clientSecret>
+								<organization>EMFClientPlatform</organization>
+								<vmArgs>
+									<vmArg>-Dhttp.proxyHost=proxy.eclipse.org</vmArg>
+									<vmArg>-Dhttp.proxyPort=9898</vmArg>
+								</vmArgs>
+							</q7client>
+
+							<q7server>cloud.xored.com</q7server>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>
