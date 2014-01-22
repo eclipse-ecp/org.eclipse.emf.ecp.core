@@ -47,10 +47,10 @@
 								<clientId>jfaltermeier</clientId>
 								<clientSecret>2a216714ef4e7dac6237a2eb9c30c57a6d26f81c</clientSecret>
 								<organization>EMFClientPlatform</organization>
-								<vmArgs>
+								<!--<vmArgs>
 									<vmArg>-Dhttp.proxyHost=proxy.eclipse.org</vmArg>
 									<vmArg>-Dhttp.proxyPort=9898</vmArg>
-								</vmArgs>
+								</vmArgs>-->
 							</q7>
 
 							<aut>
@@ -113,10 +113,10 @@
 								<clientId>jfaltermeier</clientId>
 								<clientSecret>2a216714ef4e7dac6237a2eb9c30c57a6d26f81c</clientSecret>
 								<organization>EMFClientPlatform</organization>
-								<vmArgs>
+								<!--<vmArgs>
 									<vmArg>-Dhttp.proxyHost=proxy.eclipse.org</vmArg>
 									<vmArg>-Dhttp.proxyPort=9898</vmArg>
-								</vmArgs>
+								</vmArgs>-->
 							</q7client>
 
 							<q7server>cloud.xored.com</q7server>
