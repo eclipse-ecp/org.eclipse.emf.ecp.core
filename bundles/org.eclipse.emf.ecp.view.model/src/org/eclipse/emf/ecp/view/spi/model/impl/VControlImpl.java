@@ -11,12 +11,17 @@
  */
 package org.eclipse.emf.ecp.view.spi.model.impl;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
+import org.eclipse.emf.ecp.view.spi.model.ModelReferenceHelper;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
@@ -112,16 +117,17 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	public NotificationChain basicSetDomainModelReference(VDomainModelReference newDomainModelReference,
 		NotificationChain msgs)
 	{
-		VDomainModelReference oldDomainModelReference = domainModelReference;
+		final VDomainModelReference oldDomainModelReference = domainModelReference;
 		domainModelReference = newDomainModelReference;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
+			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
 				VViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE, oldDomainModelReference, newDomainModelReference);
-			if (msgs == null)
+			if (msgs == null) {
 				msgs = notification;
-			else
+			} else {
 				msgs.add(notification);
+			}
 		}
 		return msgs;
 	}
@@ -137,19 +143,23 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 		if (newDomainModelReference != domainModelReference)
 		{
 			NotificationChain msgs = null;
-			if (domainModelReference != null)
+			if (domainModelReference != null) {
 				msgs = ((InternalEObject) domainModelReference).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
 					- VViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE, null, msgs);
-			if (newDomainModelReference != null)
+			}
+			if (newDomainModelReference != null) {
 				msgs = ((InternalEObject) newDomainModelReference).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
 					- VViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE, null, msgs);
+			}
 			msgs = basicSetDomainModelReference(newDomainModelReference, msgs);
-			if (msgs != null)
+			if (msgs != null) {
 				msgs.dispatch();
+			}
 		}
-		else if (eNotificationRequired())
+		else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, VViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE,
 				newDomainModelReference, newDomainModelReference));
+		}
 	}
 
 	/**
@@ -188,11 +198,12 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	 */
 	public void setLabelAlignment(LabelAlignment newLabelAlignment)
 	{
-		LabelAlignment oldLabelAlignment = labelAlignment;
+		final LabelAlignment oldLabelAlignment = labelAlignment;
 		labelAlignment = newLabelAlignment == null ? LABEL_ALIGNMENT_EDEFAULT : newLabelAlignment;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, VViewPackage.CONTROL__LABEL_ALIGNMENT,
 				oldLabelAlignment, labelAlignment));
+		}
 	}
 
 	/**
@@ -279,14 +290,34 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy())
+		if (eIsProxy()) {
 			return super.toString();
+		}
 
-		StringBuffer result = new StringBuffer(super.toString());
+		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (labelAlignment: "); //$NON-NLS-1$
 		result.append(labelAlignment);
 		result.append(')');
 		return result.toString();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.spi.model.VControl#setDomainModelReference(org.eclipse.emf.ecore.EStructuralFeature)
+	 */
+	public void setDomainModelReference(EStructuralFeature feature) {
+		setDomainModelReference(ModelReferenceHelper.createDomainModelReference(feature));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.spi.model.VControl#setDomainModelReference(org.eclipse.emf.ecore.EStructuralFeature,
+	 *      java.util.Collection)
+	 */
+	public void setDomainModelReference(EStructuralFeature feature, Collection<EReference> eReferences) {
+		setDomainModelReference(ModelReferenceHelper.createDomainModelReference(feature, eReferences));
 	}
 
 } // ControlImpl

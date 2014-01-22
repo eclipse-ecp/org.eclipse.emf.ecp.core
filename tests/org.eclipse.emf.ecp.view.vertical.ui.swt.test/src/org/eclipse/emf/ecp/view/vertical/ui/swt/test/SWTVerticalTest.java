@@ -71,10 +71,10 @@ public class SWTVerticalTest {
 		final Control render = SWTViewTestHelper.render(handle.getRoot(), domainElement, shell);
 		assertTrue(render instanceof Composite);
 		final Composite composite = (Composite) render;
-		assertEquals(4, composite.getChildren().length);
-		assertEquals(2, SWTViewTestHelper.getNumberofColumns(composite));
-		assertTrue(SWTViewTestHelper.checkIfThereIsATextControl(composite.getChildren()[1]));
-		assertTrue(SWTViewTestHelper.checkIfThereIsATextControl(composite.getChildren()[3]));
+		assertEquals(6, composite.getChildren().length);
+		assertEquals(3, SWTViewTestHelper.getNumberofColumns(composite));
+		assertTrue(SWTViewTestHelper.checkIfThereIsATextControl(composite.getChildren()[2]));
+		assertTrue(SWTViewTestHelper.checkIfThereIsATextControl(composite.getChildren()[5]));
 	}
 
 	@Test
@@ -90,18 +90,18 @@ public class SWTVerticalTest {
 		final Composite firstVertical = (Composite) composite.getChildren()[0];
 		final Composite secondVertical = (Composite) composite.getChildren()[1];
 
-		assertEquals(2, SWTViewTestHelper.getHorizontalSpan(firstVertical));
-		assertEquals(2, SWTViewTestHelper.getHorizontalSpan(secondVertical));
+		assertEquals(3, SWTViewTestHelper.getHorizontalSpan(firstVertical));
+		assertEquals(3, SWTViewTestHelper.getHorizontalSpan(secondVertical));
 
-		assertEquals(4, firstVertical.getChildren().length);
-		assertEquals(4, secondVertical.getChildren().length);
-		assertEquals(2, SWTViewTestHelper.getNumberofColumns(firstVertical));
-		assertEquals(2, SWTViewTestHelper.getNumberofColumns(secondVertical));
+		assertEquals(6, firstVertical.getChildren().length);
+		assertEquals(6, secondVertical.getChildren().length);
+		assertEquals(3, SWTViewTestHelper.getNumberofColumns(firstVertical));
+		assertEquals(3, SWTViewTestHelper.getNumberofColumns(secondVertical));
 
-		assertTrue(SWTViewTestHelper.checkIfThereIsATextControl(firstVertical.getChildren()[1]));
-		assertTrue(SWTViewTestHelper.checkIfThereIsATextControl(secondVertical.getChildren()[1]));
-		assertTrue(SWTViewTestHelper.checkIfThereIsATextControl(firstVertical.getChildren()[3]));
-		assertTrue(SWTViewTestHelper.checkIfThereIsATextControl(secondVertical.getChildren()[3]));
+		assertTrue(SWTViewTestHelper.checkIfThereIsATextControl(firstVertical.getChildren()[2]));
+		assertTrue(SWTViewTestHelper.checkIfThereIsATextControl(secondVertical.getChildren()[2]));
+		assertTrue(SWTViewTestHelper.checkIfThereIsATextControl(firstVertical.getChildren()[5]));
+		assertTrue(SWTViewTestHelper.checkIfThereIsATextControl(secondVertical.getChildren()[5]));
 	}
 
 	private static HierarchyViewModelHandle createVerticalWithTwoVerticalAsChildrenAndControlAsSubChildren() {

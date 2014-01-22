@@ -43,8 +43,10 @@ import org.eclipse.emf.ecp.edit.internal.swt.util.CellEditorFactory;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
+import org.eclipse.emf.ecp.edit.internal.swt.util.SWTRenderingHelper;
 import org.eclipse.emf.ecp.view.internal.validation.ValidationService;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
+import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -83,6 +85,8 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
@@ -131,6 +135,33 @@ public class TableControl extends SWTControl {
 	@Override
 	protected Binding bindValue() {
 		return null;
+	}
+
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPControlSWT#createControls(org.eclipse.swt.widgets.Composite)
+	 */
+	@Override
+	public List<RenderingResultRow<Control>> createControls(final Composite parent) {
+		final IItemPropertyDescriptor itemPropertyDescriptor = getItemPropertyDescriptor(getFirstSetting());
+		if (itemPropertyDescriptor == null) {
+			return null;
+		}
+		parent.addDisposeListener(new DisposeListener() {
+
+			public void widgetDisposed(DisposeEvent e) {
+				dispose();
+			}
+		});
+		final List<RenderingResultRow<Control>> list = Collections.singletonList(SWTRenderingHelper.INSTANCE
+			.getResultRowFactory().createRenderingResultRow(
+				createControl(parent)));
+		// TODO remove asap
+		backwardCompatibleHandleValidation();
+		return list;
+
 	}
 
 	@Override
@@ -534,9 +565,50 @@ public class TableControl extends SWTControl {
 		}
 		final Image image = getValidationIcon(diagnostic.getSeverity());
 		validationLabel.setImage(image);
-		validationLabel.setToolTipText(diagnostic.getMessage());
+		validationLabel.setToolTipText(getTableTooltipMessage(diagnostic));
 		final EObject object = (EObject) diagnostic.getData().get(0);
 		tableViewer.update(object, null);
+	}
+
+	/**
+	 * Returns the message of the validation tool tip shown in the table header.
+	 * 
+	 * @param diagnostic the {@link Diagnostic} to extract the message from
+	 * @return the message
+	 */
+	protected String getTableTooltipMessage(Diagnostic diagnostic) {
+		return diagnostic.getMessage();
+	}
+
+	/**
+	 * Returns the message of the validation tool tip shown in the row.
+	 * 
+	 * @param vDiagnostic the {@link VDiagnostic} to get the message from
+	 * @return the message
+	 */
+	protected String getRowTooltipMessage(VDiagnostic vDiagnostic) {
+		return vDiagnostic.getMessage();
+	}
+
+	/**
+	 * Returns the message of the validation tool tip shown in the cell.
+	 * 
+	 * @param vDiagnostic the {@link VDiagnostic} to get the message from
+	 * @return the message
+	 */
+	protected String getCellTooltipMessage(VDiagnostic vDiagnostic) {
+		if (vDiagnostic == null) {
+			return null;
+		}
+		if (vDiagnostic.getDiagnostics().size() == 0) {
+			return vDiagnostic.getMessage();
+		}
+		final Diagnostic diagnostic = (Diagnostic) vDiagnostic.getDiagnostics().get(0);
+		Diagnostic reason = diagnostic;
+		if (diagnostic.getChildren() != null && diagnostic.getChildren().size() != 0) {
+			reason = diagnostic.getChildren().get(0);
+		}
+		return reason.getMessage();
 	}
 
 	/**
@@ -574,7 +646,7 @@ public class TableControl extends SWTControl {
 
 	/**
 	 * @author Jonas
-	 *
+	 * 
 	 */
 	private final class ValidationStatusCellLabelProvider extends CellLabelProvider {
 		private final List<EStructuralFeature> structuralFeatures;
@@ -621,7 +693,7 @@ public class TableControl extends SWTControl {
 				if (tooltip.length() > 0) {
 					tooltip.append("\n"); //$NON-NLS-1$
 				}
-				tooltip.append(vDiagnostic.getMessage());
+				tooltip.append(getRowTooltipMessage(vDiagnostic));
 			}
 
 			return tooltip.toString();
@@ -735,8 +807,9 @@ public class TableControl extends SWTControl {
 		@Override
 		public String getToolTipText(Object element) {
 			final EObject domainObject = (EObject) element;
-			final VDiagnostic diagnostic = getDiagnosticForFeature(domainObject, feature);
-			return diagnostic.getMessage();
+			final VDiagnostic vDiagnostic = getDiagnosticForFeature(domainObject, feature);
+			return getCellTooltipMessage(vDiagnostic);
+
 		}
 
 		@Override
@@ -1001,11 +1074,11 @@ public class TableControl extends SWTControl {
 		 * cycle.
 		 */
 		class EditingState {
-			IObservableValue target;
+			private final IObservableValue target;
 
-			IObservableValue model;
+			private final IObservableValue model;
 
-			Binding binding;
+			private final Binding binding;
 
 			EditingState(Binding binding, IObservableValue target, IObservableValue model) {
 				this.binding = binding;

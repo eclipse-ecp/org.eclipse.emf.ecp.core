@@ -83,6 +83,12 @@ public class EditorContext implements ECPEditorContext {
 
 	private final EObject modelElement;
 
+	/**
+	 * Default constructor.
+	 * 
+	 * @param modelElement the model element to be displayed in the editor
+	 * @param ecpProject the {@link ECPProject} containing the model element
+	 */
 	public EditorContext(EObject modelElement, ECPProject ecpProject) {
 		this.modelElement = modelElement;
 		this.ecpProject = ecpProject;

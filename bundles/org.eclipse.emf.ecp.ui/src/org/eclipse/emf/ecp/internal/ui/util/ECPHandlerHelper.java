@@ -435,6 +435,12 @@ public final class ECPHandlerHelper {
 		new RepositoryPropertiesDialog(shell, editable, repository).open();
 	}
 
+	/**
+	 * Opens a dialog to save dirty projects.
+	 * 
+	 * @param shell to open the dialog in
+	 * @return if the save was triggered
+	 */
 	public static boolean showDirtyProjectsDialog(Shell shell) {
 		final ECPProjectManager manager = ECPUtil.getECPProjectManager();
 

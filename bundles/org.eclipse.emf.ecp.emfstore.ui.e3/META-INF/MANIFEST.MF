@@ -1,0 +1,37 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ECP EMFStore E3
+Bundle-SymbolicName: org.eclipse.emf.ecp.emfstore.ui.e3;singleton:=true
+Bundle-Version: 1.1.1.qualifier
+Bundle-Vendor: Eclipse Modeling Project
+Require-Bundle: org.eclipse.emf.ecp.core;bundle-version="1.1.1",
+ org.eclipse.emf.ecp.emfstore.core;bundle-version="1.1.1",
+ org.eclipse.emf.ecp.emfstore.ui;bundle-version="1.1.1",
+ org.eclipse.emf.emfstore.client;bundle-version="1.1.0",
+ org.eclipse.emf.emfstore.client.ui;bundle-version="1.1.0",
+ org.eclipse.emf.ecp.ui;bundle-version="1.1.1",
+ org.eclipse.emf.ecp.common;bundle-version="1.1.1",
+ org.eclipse.core.expressions;bundle-version="3.4.500",
+ org.eclipse.rap.rwt.supplemental.filedialog;bundle-version="2.0.0";resolution:=optional,
+ org.eclipse.swt;bundle-version="[3.7.0,4.0.0)";resolution:=optional
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ActivationPolicy: lazy
+Import-Package: org.eclipse.core.commands;version="0.0.0",
+ org.eclipse.jface.action;version="0.0.0",
+ org.eclipse.jface.dialogs;version="0.0.0",
+ org.eclipse.jface.resource;version="0.0.0",
+ org.eclipse.jface.viewers;version="0.0.0",
+ org.eclipse.jface.window;version="0.0.0",
+ org.eclipse.jface.wizard;version="0.0.0",
+ org.eclipse.swt;version="0.0.0",
+ org.eclipse.swt.events;version="0.0.0",
+ org.eclipse.swt.graphics;version="0.0.0",
+ org.eclipse.swt.layout;version="0.0.0",
+ org.eclipse.swt.widgets;version="0.0.0",
+ org.eclipse.ui;ui.workbench=split;version="0.0.0",
+ org.eclipse.ui.dialogs;ui.workbench=split;version="0.0.0",
+ org.eclipse.ui.handlers;version="0.0.0",
+ org.eclipse.ui.plugin;version="0.0.0"
+Export-Package: org.eclipse.emf.ecp.emfstore.internal.ui.decorator;version="1.1.1";x-internal:=true,
+ org.eclipse.emf.ecp.emfstore.internal.ui.handler;version="1.1.1";x-internal:=true;uses:="org.eclipse.core.commands"
+Bundle-Activator: org.eclipse.emf.ecp.emfstore.internal.ui.e3.Activator

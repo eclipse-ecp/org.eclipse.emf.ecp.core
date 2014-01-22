@@ -41,10 +41,21 @@ public class LinkCellEditor extends CellEditor implements ECPCellEditor {
 	private ComposedAdapterFactory composedAdapterFactory;
 	private ECPModelElementChangeListener modelElementChangeListener;
 
+	/**
+	 * Default constructor.
+	 * 
+	 * @param parent the parent
+	 */
 	public LinkCellEditor(Composite parent) {
 		super(parent);
 	}
 
+	/**
+	 * Constructor allowing to specify a SWT style.
+	 * 
+	 * @param parent the parent
+	 * @param style the SWT style
+	 */
 	public LinkCellEditor(Composite parent, int style) {
 		super(parent, style);
 	}

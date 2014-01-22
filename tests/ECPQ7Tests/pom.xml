@@ -112,7 +112,13 @@
               </q7client>
 
               <q7server>cloud.xored.com</q7server>
-                
+
+              <q7>
+                <vmArgs>
+                  <vmArg>-Dhttp.proxyHost=proxy.eclipse.org</vmArg>
+                  <vmArg>-Dhttp.proxyPort=9898</vmArg>
+                </vmArgs>
+              </q7>
             </configuration>
           </plugin>
         </plugins>

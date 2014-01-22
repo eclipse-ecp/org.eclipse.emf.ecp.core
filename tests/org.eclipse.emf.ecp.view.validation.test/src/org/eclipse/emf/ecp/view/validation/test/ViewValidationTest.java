@@ -526,8 +526,8 @@ public class ViewValidationTest extends CommonValidationTest {
 				TestPackage.eINSTANCE.getComputer_Mainboard()));
 		view.getChildren().add(control);
 
-		final Mainboard mainboard = TestFactory.eINSTANCE.createMainboard();
-		computer.setMainboard(mainboard);
+		// final Mainboard mainboard = TestFactory.eINSTANCE.createMainboard();
+		// computer.setMainboard(mainboard);
 
 		assertEquals("Severity of mainboard name must be error", Diagnostic.ERROR, view.getDiagnostic()
 			.getHighestSeverity());
@@ -988,7 +988,7 @@ public class ViewValidationTest extends CommonValidationTest {
 		ViewModelContextFactory.INSTANCE.createViewModelContext(view, container);
 
 		assertEquals("Severity of table must be ok", Diagnostic.OK, control1.getDiagnostic().getHighestSeverity());
-		assertEquals("There must be 1 diagnostics", 1, control1.getDiagnostic().getDiagnostics().size());
+		assertEquals("There must be 0 diagnostics", 0, control1.getDiagnostic().getDiagnostics().size());
 	}
 
 	@Test
@@ -1039,13 +1039,13 @@ public class ViewValidationTest extends CommonValidationTest {
 		ViewModelContextFactory.INSTANCE.createViewModelContext(view, container);
 
 		assertEquals("Severity of table must be ok", Diagnostic.OK, control1.getDiagnostic().getHighestSeverity());
-		assertEquals("There must be 1 diagnostics", 1, control1.getDiagnostic().getDiagnostics().size());
+		assertEquals("There must be 0 diagnostics", 0, control1.getDiagnostic().getDiagnostics().size());
 
 		content1.setUniqueAttribute("b");
 
 		assertEquals("Severity of table must be error", Diagnostic.ERROR, control1.getDiagnostic().getHighestSeverity());
-		// ok for container, 2x error for contents
-		assertEquals("There must be 3 diagnostics", 3, control1.getDiagnostic().getDiagnostics().size());
+		// 2x error for contents
+		assertEquals("There must be 2 diagnostics", 2, control1.getDiagnostic().getDiagnostics().size());
 	}
 
 	@Test
@@ -1070,13 +1070,13 @@ public class ViewValidationTest extends CommonValidationTest {
 		ViewModelContextFactory.INSTANCE.createViewModelContext(view, container);
 
 		assertEquals("Severity of table must be ok", Diagnostic.OK, control1.getDiagnostic().getHighestSeverity());
-		assertEquals("There must be 1 diagnostics", 1, control1.getDiagnostic().getDiagnostics().size());
+		assertEquals("There must be 0 diagnostics", 0, control1.getDiagnostic().getDiagnostics().size());
 
 		content2.setUniqueAttribute("a");
 
 		assertEquals("Severity of table must be error", Diagnostic.ERROR, control1.getDiagnostic().getHighestSeverity());
-		// ok for container, 2x error for contents
-		assertEquals("There must be 3 diagnostics", 3, control1.getDiagnostic().getDiagnostics().size());
+		// 2x error for contents
+		assertEquals("There must be 2 diagnostics", 2, control1.getDiagnostic().getDiagnostics().size());
 	}
 
 	@Test

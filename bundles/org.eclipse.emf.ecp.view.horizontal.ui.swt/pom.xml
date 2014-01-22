@@ -6,9 +6,9 @@
 
   <parent>
     <groupId>org.eclipse.emf.ecp</groupId>
-    <artifactId>ecp-parent</artifactId>
+    <artifactId>ecp-bundles-parent</artifactId>
     <version>1.1.1-SNAPSHOT</version>
-    <relativePath>../../releng/org.eclipse.emf.ecp.releng/</relativePath>
+    <relativePath>../../releng/org.eclipse.emf.ecp.releng.bundles/</relativePath>
   </parent>
 
   <artifactId>org.eclipse.emf.ecp.view.horizontal.ui.swt</artifactId>

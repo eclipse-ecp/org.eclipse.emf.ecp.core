@@ -119,6 +119,12 @@ public abstract class Registry<ELEMENT, OBSERVER extends ECPObserver> extends Li
 		}
 	}
 
+	/**
+	 * Adds or remove elements contained in the registry.
+	 * 
+	 * @param remove a set of elements to be removed
+	 * @param add a set of elements to be added
+	 */
 	public final void changeElements(Set<String> remove, Set<ELEMENT> add) {
 		checkActive();
 		doChangeElements(remove, add);
@@ -140,10 +146,22 @@ public abstract class Registry<ELEMENT, OBSERVER extends ECPObserver> extends Li
 		}
 	}
 
+	/**
+	 * 
+	 * @return Whether elements should be removed from the registry if they are disposed.
+	 */
 	protected boolean isRemoveDisposedElements() {
 		return true;
 	}
 
+	/**
+	 * Executes adding or removing elements contained in the registry.
+	 * As a caller, use changeElements().
+	 * 
+	 * @param remove a set of elements to be removed
+	 * @param add a set of elements to be added
+	 * @return a set of elements, which have been removed
+	 */
 	protected final Set<ELEMENT> doChangeElements(Set<String> remove, Set<ELEMENT> add) {
 		Set<ELEMENT> result = null;
 		final Set<ELEMENT> oldElements = new HashSet<ELEMENT>();
@@ -204,22 +222,31 @@ public abstract class Registry<ELEMENT, OBSERVER extends ECPObserver> extends Li
 		return result;
 	}
 
+	/**
+	 * Adds an {@link ECPObserver} to the {@link org.eclipse.emf.ecp.core.util.observer.ECPObserverBus}.
+	 * 
+	 * @param observer the observer to be added
+	 */
 	public void addObserver(OBSERVER observer) {
 		ECPUtil.getECPObserverBus().register(observer);
 	}
 
+	/**
+	 * Removes an {@link ECPObserver} to the {@link org.eclipse.emf.ecp.core.util.observer.ECPObserverBus}.
+	 * 
+	 * @param observer the observer to be removed
+	 */
 	public void removeObserver(OBSERVER observer) {
 		ECPUtil.getECPObserverBus().unregister(observer);
 	}
 
-	// private void notifyObservers(Collection<ELEMENT> oldArray, Collection<ELEMENT> newArray) throws Exception {
-	// // TODO: remove warning
-	// Class<OBSERVER> observerType = (Class<OBSERVER>) ((ParameterizedType) getClass().getGenericSuperclass())
-	// .getActualTypeArguments()[1];
-	// OBSERVER notify = ECPObserverBusImpl.getInstance().notify(observerType);
-	// notifyObservers(notify, oldArray, newArray);
-	// }
-
+	/**
+	 * Notifies observers that the elements in the registry have changed.
+	 * 
+	 * @param oldArray The old collection of elements
+	 * @param newArray The new collection of elements
+	 * @throws Exception
+	 */
 	protected abstract void notifyObservers(Collection<ELEMENT> oldArray, Collection<ELEMENT> newArray)
 		throws Exception;
 
@@ -227,6 +254,10 @@ public abstract class Registry<ELEMENT, OBSERVER extends ECPObserver> extends Li
 		// Can be overridden in subclasses
 	}
 
+	/**
+	 * @param element the element to retrieve a name for.
+	 * @return the name of an element
+	 */
 	protected abstract String getElementName(ELEMENT element);
 
 	protected static boolean isDisposingElement() {

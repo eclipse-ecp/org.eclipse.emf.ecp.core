@@ -190,12 +190,6 @@ public abstract class AbstractFilteredReferenceCommand<T extends EStructuralFeat
 					}
 				}
 				else {
-
-					// get all propertyDescriptors, get features from descriptors
-					// final List<IItemPropertyDescriptor> propertyDescriptors = adapterFactoryItemDelegator
-					// .getPropertyDescriptors(modelElementContext.getModelElement());
-
-					// TODO workaround for the moment, solution see above
 					result.addAll(eClass.getEAllReferences());
 					result.addAll(eClass.getEAllAttributes());
 				}

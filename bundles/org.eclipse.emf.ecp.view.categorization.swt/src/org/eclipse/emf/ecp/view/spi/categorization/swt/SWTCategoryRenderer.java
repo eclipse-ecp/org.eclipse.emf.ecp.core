@@ -47,7 +47,7 @@ public class SWTCategoryRenderer extends AbstractSWTRenderer<VCategory> {
 		final Composite categoryComposite = new Composite(parent, SWT.NONE);
 		categoryComposite.setBackground(parent.getBackground());
 
-		categoryComposite.setLayout(getLayoutHelper().getColumnLayout(2, false));
+		categoryComposite.setLayout(getLayoutHelper().getColumnLayout(3, false));
 
 		final List<RenderingResultRow<Control>> resultRows = SWTRendererFactory.INSTANCE.render(categoryComposite,
 			vCategory.getComposite(), viewContext);

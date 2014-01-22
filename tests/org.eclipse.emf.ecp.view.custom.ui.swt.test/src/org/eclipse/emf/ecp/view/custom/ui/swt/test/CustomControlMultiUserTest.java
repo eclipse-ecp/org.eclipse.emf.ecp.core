@@ -104,10 +104,10 @@ public class CustomControlMultiUserTest {
 		final Composite comp1 = (Composite) swtView1.getSWTControl();
 		final Composite comp2 = (Composite) swtView2.getSWTControl();
 
-		final String text1 = ((Text) ((Composite) ((Composite) ((Composite) ((Composite) comp1.getChildren()[2])
-			.getChildren()[1]).getChildren()[0]).getChildren()[0]).getChildren()[0]).getText();
-		final String text2 = ((Text) ((Composite) ((Composite) ((Composite) ((Composite) comp2.getChildren()[2])
-			.getChildren()[1]).getChildren()[0]).getChildren()[0]).getChildren()[0]).getText();
+		final String text1 = ((Text) ((Composite) ((Composite) ((Composite) comp1.getChildren()[2])
+			.getChildren()[0]).getChildren()[0]).getChildren()[0]).getText();
+		final String text2 = ((Text) ((Composite) ((Composite) ((Composite) comp2.getChildren()[2])
+			.getChildren()[0]).getChildren()[0]).getChildren()[0]).getText();
 
 		assertNotEquals(text1, text2);
 

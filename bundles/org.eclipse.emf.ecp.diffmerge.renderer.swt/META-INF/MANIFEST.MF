@@ -1,0 +1,21 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: DiffMerge Renderer
+Bundle-SymbolicName: org.eclipse.emf.ecp.diffmerge.renderer.swt;singleton:=true
+Bundle-Version: 1.1.1.qualifier
+Bundle-Vendor: Eclipse Modeling Project
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Require-Bundle: org.eclipse.emf.ecp.view.core.swt;bundle-version="[1.1.1,2.0.0)",
+ org.eclipse.emf.ecp.ui.view.swt;bundle-version="[1.1.1,2.0.0)",
+ org.eclipse.emf.ecp.edit;bundle-version="[1.1.1,2.0.0)",
+ org.eclipse.emf.ecp.edit.swt;bundle-version="[1.1.1,2.0.0)",
+ org.eclipse.emf.ecp.diffmerge.context;bundle-version="[1.1.1,2.0.0)",
+ org.eclipse.emf.ecp.diffmerge.swt;bundle-version="[1.1.1,2.0.0)"
+Import-Package: org.eclipse.jface.layout;version="0.0.0",
+ org.eclipse.swt;version="0.0.0",
+ org.eclipse.swt.events;version="0.0.0",
+ org.eclipse.swt.graphics,
+ org.eclipse.swt.layout;version="0.0.0",
+ org.eclipse.swt.widgets;version="0.0.0"
+Bundle-ActivationPolicy: lazy
+Export-Package: org.eclipse.emf.ecp.diffmerge.internal.renderer.swt;version="1.1.1";x-internal:=true

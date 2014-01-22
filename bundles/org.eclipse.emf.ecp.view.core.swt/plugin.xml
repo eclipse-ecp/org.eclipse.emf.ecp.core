@@ -7,10 +7,18 @@
       <renderer
             element="org.eclipse.emf.ecp.view.spi.model.VView"
             renderer="org.eclipse.emf.ecp.view.spi.core.swt.SWTViewRenderer">
+         <staticTest
+               element="org.eclipse.emf.ecp.view.spi.model.VView"
+               priority="1">
+         </staticTest>
       </renderer>
       <renderer
             element="org.eclipse.emf.ecp.view.spi.model.VControl"
             renderer="org.eclipse.emf.ecp.view.spi.core.swt.SWTControlRenderer">
+         <staticTest
+               element="org.eclipse.emf.ecp.view.spi.model.VControl"
+               priority="1">
+         </staticTest>
       </renderer>
    </extension>
 </plugin>

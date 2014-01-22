@@ -27,21 +27,28 @@ import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Display;
 
+/**
+ * Creates a new {@link ECPProject} on checkout.
+ * 
+ * @author Jonas
+ * 
+ */
 public class CheckoutObserver implements ESCheckoutObserver {
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.emfstore.client.observer.ESCheckoutObserver#checkoutDone(org.eclipse.emf.emfstore.client.
-	 * ESLocalProject)
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.emfstore.client.observer.ESCheckoutObserver#checkoutDone(org.eclipse.emf.emfstore.client.ESLocalProject)
 	 */
 	public void checkoutDone(ESLocalProject project) {
 
 		boolean ecpProjectExists = false;
 		boolean validProjectName = false;
 
-		for (ECPProject ecpProject : ECPUtil.getECPProjectManager().getProjects()) {
-			InternalProject internalProject = (InternalProject) ecpProject;
-			Object localProject = internalProject.getProviderSpecificData();
+		for (final ECPProject ecpProject : ECPUtil.getECPProjectManager().getProjects()) {
+			final InternalProject internalProject = (InternalProject) ecpProject;
+			final Object localProject = internalProject.getProviderSpecificData();
 			if (localProject instanceof ESLocalProject) {
 				if (localProject == project) {
 					ecpProjectExists = true;
@@ -58,8 +65,8 @@ public class CheckoutObserver implements ESCheckoutObserver {
 					ECPUtil.getECPProjectManager().createProject(EMFStoreProvider.INSTANCE.getProvider(), projectName,
 						createECPProperties(project));
 					validProjectName = true;
-				} catch (ECPProjectWithNameExistsException ex) {
-					InputDialog id = new InputDialog(Display.getCurrent().getActiveShell(), "Create project",
+				} catch (final ECPProjectWithNameExistsException ex) {
+					final InputDialog id = new InputDialog(Display.getCurrent().getActiveShell(), "Create project",
 						"Enter name for checked out project:", project.getProjectName() + "@" + createDateString(),
 						new IInputValidator() {
 
@@ -71,7 +78,7 @@ public class CheckoutObserver implements ESCheckoutObserver {
 
 							}
 						});
-					int inputResult = id.open();
+					final int inputResult = id.open();
 					if (Window.OK != inputResult) {
 						// cancel, provide default name
 						projectName = project.getProjectName() + "@" + createDateString();
@@ -84,13 +91,13 @@ public class CheckoutObserver implements ESCheckoutObserver {
 	}
 
 	private ECPProperties createECPProperties(ESLocalProject project) {
-		ECPProperties projectProperties = ECPUtil.createProperties();
+		final ECPProperties projectProperties = ECPUtil.createProperties();
 		projectProperties.addProperty(EMFStoreProvider.PROP_PROJECTSPACEID, project.getLocalProjectId().getId());
 		return projectProperties;
 	}
 
 	private String createDateString() {
-		DateFormat format = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM);
+		final DateFormat format = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM);
 		return format.format(new Date());
 	}
 

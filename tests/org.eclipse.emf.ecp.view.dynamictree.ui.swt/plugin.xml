@@ -4,12 +4,18 @@
    <extension
          point="org.eclipse.emf.ecp.ui.view.swt.renderers">
       <renderer
-            element="org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree"
             renderer="org.eclipse.emf.ecp.view.dynamictree.ui.swt.SWTDynamicContainmentTreeRenderer">
+         <staticTest
+               element="org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree"
+               priority="1">
+         </staticTest>
       </renderer>
       <renderer
-            element="org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem"
             renderer="org.eclipse.emf.ecp.view.dynamictree.ui.swt.SWTDynamicContainmentItemRenderer">
+         <staticTest
+               element="org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem"
+               priority="1">
+         </staticTest>
       </renderer>
    </extension>
 

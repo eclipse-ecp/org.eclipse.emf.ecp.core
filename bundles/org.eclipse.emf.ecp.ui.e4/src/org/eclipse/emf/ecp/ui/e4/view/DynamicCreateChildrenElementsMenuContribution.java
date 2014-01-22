@@ -33,6 +33,7 @@ import org.eclipse.emf.ecp.internal.ui.util.ECPHandlerHelper;
 import org.eclipse.emf.edit.command.CommandActionDelegate;
 import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.edit.provider.ComposedImage;
 import org.eclipse.emf.edit.ui.action.CreateChildAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -119,9 +120,9 @@ public class DynamicCreateChildrenElementsMenuContribution {
 		}
 	}
 
-	class CustomCreateChildAction extends CreateChildAction {
+	private final class CustomCreateChildAction extends CreateChildAction {
 
-		public CustomCreateChildAction(EditingDomain editingDomain,
+		private CustomCreateChildAction(EditingDomain editingDomain,
 			ISelection selection, Object descriptor, CommandParameter cp,
 			ECPProject project) {
 			super(editingDomain, selection, descriptor);
@@ -139,10 +140,15 @@ public class DynamicCreateChildrenElementsMenuContribution {
 			ECPHandlerHelper.openModelElement(cp.getEValue(), project);
 		}
 
-		public String getImageURIString() {
+		private String getImageURIString() {
 			final CommandActionDelegate commandActionDelegate = (CommandActionDelegate) command;
-
-			return commandActionDelegate.getImage().toString();
+			final Object image = commandActionDelegate.getImage();
+			if (ComposedImage.class.isInstance(image)) {
+				final ComposedImage composedImage = (ComposedImage) image;
+				final Object subImage = composedImage.getImages().get(0);
+				return subImage.toString();
+			}
+			return image.toString();
 		}
 
 	}

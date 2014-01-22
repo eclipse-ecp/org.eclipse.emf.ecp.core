@@ -23,6 +23,9 @@ import org.eclipse.swt.widgets.Layout;
  */
 public final class SWTRenderingHelper {
 
+	/**
+	 * Singleton instance.
+	 */
 	public static final SWTRenderingHelper INSTANCE = new SWTRenderingHelper();
 
 	private final LayoutHelper<Layout> defaultLayoutHelper;
@@ -36,6 +39,10 @@ public final class SWTRenderingHelper {
 		defaultRowFactory = new DefaultRenderingResultFactory();
 	}
 
+	/**
+	 * 
+	 * @return A {@link LayoutHelper} based on the current {@link RenderingConfiguration}.
+	 */
 	public LayoutHelper<Layout> getLayoutHelper() {
 		final LayoutHelper<Layout> layoutHelper = RenderingConfiguration.getCurrent().getLayoutHelper(Layout.class);
 		if (layoutHelper != null) {

@@ -11,14 +11,23 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.ui.editor.test;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import org.eclipse.core.databinding.observable.Realm;
+import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.exceptions.ECPProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
+import org.eclipse.emf.ecp.spi.core.InternalProject;
+import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.ui.common.TreeViewerFactory;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
+import org.eclipse.emf.edit.command.ChangeCommand;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
 import org.eclipse.emf.emfstore.bowling.Player;
 import org.eclipse.jface.databinding.swt.SWTObservables;
@@ -116,11 +125,21 @@ public class ModifyNavigatorTest extends SWTBotTestCase {
 					shell.open();
 				}
 			});
+			final InternalProvider internalProvider = (InternalProvider) project[0].getProvider();
+			final Notifier root = internalProvider.getRoot((InternalProject) project[0]);
+			final Collection<Notifier> notifiers = Arrays.asList((Notifier) ((EObject) root).eContainer());
+			final EditingDomain editingDomain = project[0].getEditingDomain();
 			new Thread() {
 				@Override
 				public void run() {
 					for (int i = 0; i < 1000; i++) {
-						project[0].getContents().add(createPlayer("Player " + i));
+						final Player player = createPlayer("Player " + i);
+						editingDomain.getCommandStack().execute(new ChangeCommand(notifiers) {
+							@Override
+							protected void doExecute() {
+								project[0].getContents().add(player);
+							}
+						});
 					}
 					synchronized (monitor) {
 						monitor.notify();

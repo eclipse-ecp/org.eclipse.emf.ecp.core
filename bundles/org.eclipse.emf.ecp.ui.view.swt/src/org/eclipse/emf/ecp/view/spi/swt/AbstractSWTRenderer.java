@@ -19,6 +19,7 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecp.edit.internal.swt.util.DoubleColumnRow;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTRenderingHelper;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SingleColumnRow;
+import org.eclipse.emf.ecp.edit.internal.swt.util.ThreeColumnRow;
 import org.eclipse.emf.ecp.view.spi.context.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener;
@@ -166,18 +167,25 @@ public abstract class AbstractSWTRenderer<R extends VElement> {
 		ViewModelContext viewContext) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption;
 
 	/**
-	 * Using the LayoutHelper this method sets the default layout data for a single or a doublecolumn row.
+	 * Using the LayoutHelper this method sets the default layout data for a single, a doublecolumn or a three column
+	 * row.
 	 * 
 	 * @param resultRows the list or {@link RenderingResultRow RenderingResultRows} to set the layout data to
 	 */
 	protected void setLayoutDataForResultRows(final List<RenderingResultRow<Control>> resultRows) {
 		for (final RenderingResultRow<Control> row : resultRows) {
 			if (SingleColumnRow.class.isInstance(row)) {
-				((SingleColumnRow) row).getControl().setLayoutData(getLayoutHelper().getSpanningLayoutData(2, 1));
+				((SingleColumnRow) row).getControl().setLayoutData(getLayoutHelper().getSpanningLayoutData(3, 1));
 			}
 			else if (DoubleColumnRow.class.isInstance(row)) {
 				((DoubleColumnRow) row).getLeftControl().setLayoutData(getLayoutHelper().getLeftColumnLayoutData());
-				((DoubleColumnRow) row).getRightControl().setLayoutData(getLayoutHelper().getRightColumnLayoutData());
+				((DoubleColumnRow) row).getRightControl().setLayoutData(getLayoutHelper().getRightColumnLayoutData(2));
+			}
+			else if (ThreeColumnRow.class.isInstance(row)) {
+				((ThreeColumnRow) row).getLeftControl().setLayoutData(getLayoutHelper().getLeftColumnLayoutData());
+				((ThreeColumnRow) row).getMiddleControl().setLayoutData(
+					getLayoutHelper().getValidationColumnLayoutData());
+				((ThreeColumnRow) row).getRightControl().setLayoutData(getLayoutHelper().getRightColumnLayoutData(1));
 			}
 		}
 	}

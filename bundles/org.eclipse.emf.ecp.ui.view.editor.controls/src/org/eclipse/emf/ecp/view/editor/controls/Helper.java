@@ -22,9 +22,14 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
 /**
  * Helper class for editor controls.
@@ -104,5 +109,25 @@ public final class Helper {
 		for (final EReference eReference : root.getEAllContainments()) {
 			getDatasegmentSubclasses(eReference.getEReferenceType(), possibleSegments);
 		}
+	}
+
+	/**
+	 * Checks whether a {@link EStructuralFeature} has an {@link IItemPropertyDescriptor}.
+	 * 
+	 * @param featureToCheck the {@link EStructuralFeature} to check
+	 * @return true if a IItemPropertyDescriptor could be found, false otherwise
+	 */
+	public static boolean hasFeaturePropertyDescriptor(EStructuralFeature featureToCheck) {
+
+		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
+			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
+		final AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
+			composedAdapterFactory);
+		final IItemPropertyDescriptor propertyDescriptor =
+			adapterFactoryItemDelegator
+				.getPropertyDescriptor(EcoreUtil.create(featureToCheck.getEContainingClass()), featureToCheck);
+
+		composedAdapterFactory.dispose();
+		return propertyDescriptor != null;
 	}
 }

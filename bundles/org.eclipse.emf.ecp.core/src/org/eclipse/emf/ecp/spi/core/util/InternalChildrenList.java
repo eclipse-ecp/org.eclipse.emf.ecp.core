@@ -84,10 +84,20 @@ public interface InternalChildrenList {
 
 	void addChildWithoutRefresh(Object child);
 
+	/**
+	 * Adds a child to the list.
+	 * 
+	 * @param child the child
+	 */
 	void addChild(Object child);
 
 	<T> void addChildren(T... children);
 
+	/**
+	 * Adds a list of children to the list.
+	 * 
+	 * @param children a collection of new children
+	 */
 	<T> void addChildren(Collection<T> children);
 
 	void setComplete();

@@ -26,7 +26,10 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 /**
+ * Dialog to edit one property.
+ * 
  * @author Eike Stepper
+ * 
  */
 public class PropertyDialog extends TitleAreaDialog {
 	private final boolean keyEditable;
@@ -39,6 +42,14 @@ public class PropertyDialog extends TitleAreaDialog {
 
 	private Text valueText;
 
+	/**
+	 * Constructor to edit an existing property.
+	 * 
+	 * @param parentShell the paren {@link Shell}
+	 * @param keyEditable if the property is editable
+	 * @param key the key of the property
+	 * @param value the current value of the property
+	 */
 	public PropertyDialog(Shell parentShell, boolean keyEditable, String key, String value) {
 		super(parentShell);
 		this.keyEditable = keyEditable;
@@ -46,18 +57,35 @@ public class PropertyDialog extends TitleAreaDialog {
 		this.value = value;
 	}
 
+	/**
+	 * Constructor for a new property.
+	 * 
+	 * @param parentShell the parent {@link Shell}
+	 */
 	public PropertyDialog(Shell parentShell) {
 		this(parentShell, true, null, null);
 	}
 
+	/**
+	 * 
+	 * @return the key of the currently edited property
+	 */
 	public final String getKey() {
 		return key;
 	}
 
+	/**
+	 * 
+	 * @return the value of the currently edited property
+	 */
 	public final String getValue() {
 		return value;
 	}
 
+	/**
+	 * 
+	 * @return whether the property is editable
+	 */
 	public final boolean isKeyEditable() {
 		return keyEditable;
 	}
@@ -66,12 +94,12 @@ public class PropertyDialog extends TitleAreaDialog {
 	protected Control createDialogArea(Composite parent) {
 		setMessage(Messages.PropertyDialog_Message);
 		setTitle(Messages.PropertyDialog_Title);
-		Composite area = (Composite) super.createDialogArea(parent);
-		Composite container = new Composite(area, SWT.NONE);
+		final Composite area = (Composite) super.createDialogArea(parent);
+		final Composite container = new Composite(area, SWT.NONE);
 		container.setLayout(new GridLayout(2, false));
 		container.setLayoutData(new GridData(GridData.FILL_BOTH));
 
-		Label lblKey = new Label(container, SWT.NONE);
+		final Label lblKey = new Label(container, SWT.NONE);
 		lblKey.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblKey.setText(Messages.PropertyDialog_Key);
 
@@ -85,7 +113,7 @@ public class PropertyDialog extends TitleAreaDialog {
 			}
 		});
 
-		Label lblValue = new Label(container, SWT.NONE);
+		final Label lblValue = new Label(container, SWT.NONE);
 		lblValue.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 		lblValue.setText(Messages.PropertyDialog_Value);
 

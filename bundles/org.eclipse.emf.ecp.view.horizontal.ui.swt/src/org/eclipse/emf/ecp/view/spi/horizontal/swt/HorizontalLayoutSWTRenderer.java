@@ -60,7 +60,7 @@ public class HorizontalLayoutSWTRenderer extends AbstractSWTRenderer<VHorizontal
 
 			column.setLayoutData(getLayoutHelper().getSpanningLayoutData(1, 1));
 
-			column.setLayout(getLayoutHelper().getColumnLayout(2, false));
+			column.setLayout(getLayoutHelper().getColumnLayout(3, false));
 
 			List<RenderingResultRow<Control>> resultRows;
 

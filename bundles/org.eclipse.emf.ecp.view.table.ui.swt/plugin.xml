@@ -6,6 +6,10 @@
       <renderer
             element="org.eclipse.emf.ecp.view.spi.table.model.VTableControl"
             renderer="org.eclipse.emf.ecp.view.spi.table.swt.SWTTableControlRenderer">
+         <staticTest
+               element="org.eclipse.emf.ecp.view.spi.table.model.VTableControl"
+               priority="2">
+         </staticTest>
       </renderer>
    </extension>
 

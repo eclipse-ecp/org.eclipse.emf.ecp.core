@@ -13,255 +13,71 @@
 		<tycho-extras-version>0.18.0</tycho-extras-version>
 		<javadoc-version>2.9</javadoc-version>
 		<javadoc-title>EMF Client Platform 1.1.1 API</javadoc-title>
+		<ecp-version>1.1.1-SNAPSHOT</ecp-version>
 		<maven.antrun.plugin.version>1.7</maven.antrun.plugin.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<tycho.scmUrl>scm:git:git://git.eclipse.org/gitroot/emfclient/org.eclipse.emf.ecp.core.git</tycho.scmUrl>
+		<jarsigner-version>1.0.5</jarsigner-version>
 		<!-- Properties to enable jacoco code coverage analysis with sonar -->
 		<sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
 		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
 		<sonar.jacoco.reportPath>../../tests/coverage/jacoco.exec</sonar.jacoco.reportPath>
+		<!--<sonar.exclusions>**/model/**/*.java,**/test/**/*.java</sonar.exclusions>-->
 	</properties>
+
 	<profiles>
 		<profile>
-			<id>release</id>
+			<id>aggregateSites</id>
 			<activation>
 				<property>
-					<name>release</name>
+					<name>aggSite</name>
 				</property>
 			</activation>
-			<properties>
-				<ecp-version>1.1.0.RC4</ecp-version>
-			</properties>
 		</profile>
 		<profile>
-			<id>nightly</id>
+			<id>build-server</id>
 			<activation>
-				<activeByDefault>true</activeByDefault>
+				<property>
+					<name>build-server</name>
+				</property>
 			</activation>
-			<properties>
-				<ecp-version>1.1.1-SNAPSHOT</ecp-version>
-			</properties>
+			<build>
+				<plugins>
+					<!-- Configure build to use the jdk specified in manifest -->
+					<plugin>
+						<groupId>org.eclipse.tycho</groupId>
+						<artifactId>tycho-compiler-plugin</artifactId>
+						<version>${tycho-version}</version>
+						<configuration>
+							<useJDK>BREE</useJDK>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
 		</profile>
 	</profiles>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>eclipse-maven-releases</id>
+			<url>https://repo.eclipse.org/content/repositories/releases/</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+
 	<modules>
 		<module>../../releng/_target</module>
-		<module>../../features/org.eclipse.emf.ecp.feature</module>
-		<module>../../bundles/org.eclipse.emf.ecp.core</module>
-		<module>../../bundles/org.eclipse.emf.ecp.core.emffilter</module>
-		<module>../../bundles/org.eclipse.emf.ecp.common</module>
-		<module>../../bundles/org.eclipse.emf.ecp.edit</module>
-		<module>../../bundles/org.eclipse.emf.ecp.edit.swt</module>
-		<module>../../bundles/org.eclipse.emf.ecp.explorereditorbridge</module>
-		<module>../../bundles/org.eclipse.emf.ecp.ui</module>
-
-		<module>../../features/org.eclipse.emf.ecp.cdo.feature</module>
-		<module>../../bundles/org.eclipse.emf.ecp.cdo.core</module>
-		<module>../../bundles/org.eclipse.emf.ecp.cdo.ui</module>
-
-		<module>../../features/org.eclipse.emf.ecp.emfstore.feature</module>
-		<module>../../bundles/org.eclipse.emf.ecp.emfstore.core</module>
-		<module>../../bundles/org.eclipse.emf.ecp.emfstore.ui</module>
-		<module>../../bundles/org.eclipse.emf.ecp.emfstore.ui.search</module>
-
-		<module>../../bundles/org.eclipse.emf.ecp.doc</module>
-		<module>../../features/org.eclipse.emf.ecp.license.feature</module>
-
 		<module>../../releng/org.eclipse.emf.ecp.products</module>
+		<module>../../releng/org.eclipse.emf.ecp.rap.products</module>
+		<module>../../releng/org.eclipse.emf.ecp.repository</module>
 
-		<module>../../features/org.eclipse.emf.ecp.site.feature</module>
-
-		<module>../../features/org.eclipse.emf.ecp.target.feature</module>
-
-		<module>../../features/org.eclipse.emf.ecp.e3.feature</module>
-		<module>../../bundles/org.eclipse.emf.ecp.ui.e3</module>
-		<module>../../bundles/org.eclipse.emf.ecp.application.e3</module>
-		<module>../../bundles/org.eclipse.emf.ecp.editor.e3</module>
-
-		<module>../../features/org.eclipse.emf.ecp.validation.feature</module>
-		<module>../../bundles/org.eclipse.emf.ecp.validation</module>
-		<module>../../bundles/org.eclipse.emf.ecp.validation.connector</module>
-
-		<module>../../features/org.eclipse.emf.ecp.workspace.feature</module>
-		<module>../../bundles/org.eclipse.emf.ecp.workspace.core</module>
-		<module>../../bundles/org.eclipse.emf.ecp.workspace.ui</module>
-		
-		<module>../../bundles/org.eclipse.emf.ecp.view.model</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.model.edit</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.core.swt</module>
-		<module>../../bundles/org.eclipse.emf.ecp.ui.view</module>
-		<module>../../bundles/org.eclipse.emf.ecp.ui.view.swt</module>
-		
-		<module>../../bundles/org.eclipse.emf.ecp.view.model.provider.xmi</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.model.generator</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.context</module>
-		<module>../../features/org.eclipse.emf.ecp.view.model.feature</module>
-		
-		<!-- Ecore Support -->
-		<module>../../bundles/org.eclipse.emf.ecp.edit.ecore.swt</module>
-		<module>../../features/org.eclipse.emf.ecp.ecore.feature</module>
-		
-		<!-- Editor controls -->
-		<module>../../bundles/org.eclipse.emf.ecp.ui.view.editor.controls</module>
-		<module>../../features/org.eclipse.emf.ecp.view.model.editor.feature</module>
-
-		<module>../../bundles/org.eclipse.emf.ecp.examplemodel.ui</module>
-
-		<module>../../features/org.eclipse.emf.ecp.examplemodel.ui.feature</module>
-
-		<!-- IDE Feature -->
-		<module>../../bundles/org.eclipse.emf.ecp.view.model.editor</module>
-		<module>../../features/org.eclipse.emf.ecp.view.model.ide.feature</module>
-
-	<!-- Categorization Feature -->
-		<module>../../bundles/org.eclipse.emf.ecp.view.categorization.model</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.categorization.model.edit</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.categorization.swt</module>
-		<module>../../features/org.eclipse.emf.ecp.view.categorization.feature</module>
-		
-		<!-- Custom Control Feature -->
-		<module>../../bundles/org.eclipse.emf.ecp.view.custom.model</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.custom.model.edit</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.custom.ui</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.custom.ui.swt</module>
-		<module>../../features/org.eclipse.emf.ecp.view.custom.feature</module>
-		
-		<!-- Separator Feature -->
-		<module>../../bundles/org.eclipse.emf.ecp.view.separator.model</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.separator.model.edit</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.separator.ui.swt</module>
-		<module>../../features/org.eclipse.emf.ecp.view.separator.feature</module>
-		
-		<!-- GroupedGrid Feature -->
-		<module>../../bundles/org.eclipse.emf.ecp.view.groupedgrid.model</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.groupedgrid.model.edit</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.groupedgrid.ui.swt</module>
-		<module>../../features/org.eclipse.emf.ecp.view.groupedgrid.feature</module>
-		
-		<!-- Label Feature -->
-		<module>../../bundles/org.eclipse.emf.ecp.view.label.model</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.label.model.edit</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.label.ui.swt</module>
-		<module>../../features/org.eclipse.emf.ecp.view.label.feature</module>
-		
-		<!-- Group Feature -->
-		<module>../../bundles/org.eclipse.emf.ecp.view.group.model</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.group.model.edit</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.group.ui.swt</module>
-		<module>../../features/org.eclipse.emf.ecp.view.group.feature</module>
-		
-		<!-- Rule Feature -->
-		<module>../../bundles/org.eclipse.emf.ecp.view.rule</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.rule.model</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.rule.model.edit</module>
-		<module>../../features/org.eclipse.emf.ecp.view.rule.feature</module>
-
-		<!-- View Validation Feature -->
-		<module>../../bundles/org.eclipse.emf.ecp.view.validation</module>
-		<module>../../features/org.eclipse.emf.ecp.view.validation.feature</module>
-		
-		<!-- View Unset Feature -->
-		<module>../../bundles/org.eclipse.emf.ecp.view.unset</module>
-		<module>../../features/org.eclipse.emf.ecp.view.unset.feature</module>
-
-		<!-- Vertical Feature -->
-		<module>../../bundles/org.eclipse.emf.ecp.view.vertical.model</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.vertical.model.edit</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.vertical.ui.swt</module>
-		<module>../../features/org.eclipse.emf.ecp.view.vertical.feature</module>
-		
-		<!-- Horizontal Feature -->
-		<module>../../bundles/org.eclipse.emf.ecp.view.horizontal.model</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.horizontal.model.edit</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.horizontal.ui.swt</module>
-		<module>../../features/org.eclipse.emf.ecp.view.horizontal.feature</module>
-
-
-		<!-- Table Feature -->
-		<module>../../bundles/org.eclipse.emf.ecp.view.table.model</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.table.model.edit</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.table.ui.swt</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.table.editor</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.table.columnservice</module>
-		<module>../../features/org.eclipse.emf.ecp.view.table.feature</module>
-		
-		<!-- DynamicTree Feature -->
-		<module>../../tests/org.eclipse.emf.ecp.view.dynamictree.model</module>
-        <module>../../tests/org.eclipse.emf.ecp.view.dynamictree.model.edit</module>
-        <module>../../tests/org.eclipse.emf.ecp.view.dynamictree.ui</module>
-        <module>../../tests/org.eclipse.emf.ecp.view.dynamictree.ui.swt</module>
-        <module>../../tests/org.eclipse.emf.ecp.view.dynamictree.feature</module>
-		
-		
-		<!-- Template Feature -->
-		<module>../../bundles/org.eclipse.emf.ecp.view.template.model</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.template.model.edit</module>
-		<module>../../features/org.eclipse.emf.ecp.view.template.feature</module>
-		<!-- Template Helper Feature -->
-		<module>../../bundles/org.eclipse.emf.ecp.view.template.service</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.template.controls.swt</module>
-		<module>../../features/org.eclipse.emf.ecp.view.template.helper.feature</module>
-		
-		<!-- <module>../../bundles/org.eclipse.emf.ecp.emfstore.localserver</module> -->
-
-		<!-- Graphiti 
-		<module>../../features/org.eclipse.emf.ecp.graphiti.feature</module>
-		<module>../../bundles/org.eclipse.emf.ecp.graphiti.core</module>
-		<module>../../bundles/org.eclipse.emf.ecp.graphiti.integration</module>-->
-
-		<!-- Tests -->
-		<module>../../tests/org.eclipse.emf.ecp.view.test.common</module>
-		<module>../../tests/org.eclipse.emf.ecp.view.test.common.swt</module>
-		
-		<module>../../tests/org.eclipse.emf.ecp.core.test</module>
-		
-		<module>../../tests/org.eclipse.emf.ecp.ui.view.editor.controls.test</module>
-		<module>../../tests/org.eclipse.emf.ecp.ui.view.test</module>
-		<module>../../tests/org.eclipse.emf.ecp.ui.view.swt.test</module>
-		<module>../../tests/org.eclipse.emf.ecp.validation.test</module>
-		
-		<module>../../tests/org.eclipse.emf.ecp.view.categorization.swt.test</module>
-		<module>../../tests/org.eclipse.emf.ecp.view.context.test</module>
-		<module>../../tests/org.eclipse.emf.ecp.view.custom.ui.swt.test</module>
-		<module>../../tests/org.eclipse.emf.ecp.view.group.ui.swt.test</module>
-		<module>../../tests/org.eclipse.emf.ecp.view.horizontal.ui.swt.test</module>
-		<module>../../tests/org.eclipse.emf.ecp.view.model.edit.test</module>
-		<module>../../tests/org.eclipse.emf.ecp.view.model.integrationtest</module>
-		<module>../../tests/org.eclipse.emf.ecp.view.model.provider.xmi.test</module>
-		<module>../../tests/org.eclipse.emf.ecp.view.rule.test</module>
-		<module>../../tests/org.eclipse.emf.ecp.view.rule.ui.swt.test</module>
-		<module>../../tests/org.eclipse.emf.ecp.view.unset.test</module>
-		<module>../../tests/org.eclipse.emf.ecp.view.separator.ui.swt.test</module>
-		
-		<module>../../tests/org.eclipse.emf.ecp.view.table.ui.swt.test</module>
-		<module>../../tests/org.eclipse.emf.ecp.view.validation.test</module>
-		<module>../../tests/org.eclipse.emf.ecp.view.vertical.ui.swt.test</module>
-		
-		<module>../../tests/org.eclipse.emf.ecp.view.ui.editor.test</module>
-		
-		
-		<module>../../tests/org.eclipse.emf.ecp.view.dynamictree.model.test</module>
-		
-		<!-- Modules for View Editor Q7 Tests -->
-		<module>../../tests/org.eclipse.emf.ecp.view.model.editor.testplugin</module>
-		<module>../../features/org.eclipse.emf.ecp.view.model.editor.test.feature</module>
-		
-		
-		<!-- Should run on a seperate integration job -->
-		<!-- Deactivated till monday <module>../../tests/ECPQ7Tests</module> -->
-
-		<!-- SDK Feature -->
-
-		<module>../../features/org.eclipse.emf.ecp.sdk.feature</module>
-		
-		<!-- e4 demo application -->
-		<module>../../bundles/org.eclipse.emf.ecp.application.e4</module>
-		<module>../../bundles/org.eclipse.emf.ecp.ui.e4</module>
-		<module>../../features/org.eclipse.emf.ecp.e4.feature</module>
-		
+		<module>../../releng/org.eclipse.emf.ecp.releng.bundles</module>
+		<module>../../releng/org.eclipse.emf.ecp.releng.features</module>
+		<module>../../releng/org.eclipse.emf.ecp.releng.tests</module>
 	</modules>
-	<!-- <repositories> <repository> <id>emfstore-repository</id> <layout>p2</layout> 
-		<url>http://hudson.eclipse.org/hudson/job/emf-emfstore-integration-tycho/lastSuccessfulBuild/artifact/git/releng/org.eclipse.emf.emfstore.p2repository/target/repository/</url> 
-		</repository> </repositories> -->
+
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<outputDirectory>bin</outputDirectory>
@@ -283,7 +99,7 @@
 					<pomDependencies>consider</pomDependencies>
 					<allowConflictingDependencies>true</allowConflictingDependencies>
 					<environments>
-					
+
 						<environment>
 							<os>win32</os>
 							<ws>win32</ws>
@@ -368,7 +184,7 @@
 				<version>2.11</version>
 				<configuration>
 					<configLocation>http://download.eclipse.org/emfclient/config/esmCheckstyle.xml</configLocation>
-					 
+
 					<suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
 					<suppressionsLocation>http://download.eclipse.org/emfclient/config/suppressions.xml</suppressionsLocation>
 					<failsOnError>false</failsOnError>
@@ -396,7 +212,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
@@ -414,7 +230,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
 		</plugins>
 	</build>
 </project>

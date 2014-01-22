@@ -154,6 +154,19 @@ public class ViewModelGraphNode {
 	}
 
 	/**
+	 * Remove all children.
+	 */
+	public void removeAllChildren() {
+		for (final ViewModelGraphNode childNode : children) {
+			childNode.getParents().remove(this);
+			if (!hasChildren()) {
+				value = initValue;
+			}
+		}
+		children.clear();
+	}
+
+	/**
 	 * Sets the value of this node and propagates it upwards.
 	 * 
 	 * @param value

@@ -23,10 +23,6 @@ import org.eclipse.jface.viewers.Viewer;
  */
 public abstract class ECPDropAdapter extends EditingDomainViewerDropAdapter {
 
-	public ECPDropAdapter() {
-		this(null, null);
-	}
-
 	/**
 	 * Constructor.
 	 * 
@@ -37,10 +33,18 @@ public abstract class ECPDropAdapter extends EditingDomainViewerDropAdapter {
 		super(domain, viewer);
 	}
 
+	/**
+	 * 
+	 * @param editingDomain Th {@link EditingDomain} to be used.
+	 */
 	public void setEditingDomain(EditingDomain editingDomain) {
 		domain = editingDomain;
 	}
 
+	/**
+	 * 
+	 * @param viewer The {@link Viewer}, this drop adapter operates on
+	 */
 	public void setViewer(Viewer viewer) {
 		this.viewer = viewer;
 	}
@@ -52,7 +56,7 @@ public abstract class ECPDropAdapter extends EditingDomainViewerDropAdapter {
 	 * @return the EditingDomain of this Object or null
 	 */
 	protected EditingDomain getProjectDomain(Object object) {
-		ECPProject project = ECPUtil.getECPProjectManager().getProject(object);
+		final ECPProject project = ECPUtil.getECPProjectManager().getProject(object);
 		if (project != null) {
 			return project.getEditingDomain();
 		}

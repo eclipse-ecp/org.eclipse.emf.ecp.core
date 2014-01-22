@@ -24,6 +24,7 @@ import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -99,6 +100,9 @@ public class ValidationRegistry {
 		if (VControl.class.isInstance(renderable)) {
 			final VControl control = (VControl) renderable;
 			final VDomainModelReference domainModelReference = control.getDomainModelReference();
+			if (domainModelReference == null) {
+				return result;
+			}
 			final Iterator<Setting> iterator = domainModelReference.getIterator();
 			while (iterator.hasNext()) {
 				final UniqueSetting uniqueSetting = UniqueSetting.createSetting(iterator.next());
@@ -202,16 +206,31 @@ public class ValidationRegistry {
 	 * Removes the given domain object from the mappings of the registry.
 	 * 
 	 * @param domainObject
-	 *            the domain object to be removed from the registry
+	 *            the {@link EObject} to be removed from the registry
+	 * @return the Set of {@link VControl VControls} which were conntected to the correspoding object
 	 */
-	public void removeDomainObject(EObject domainObject) {
-		final Set<VControl> set = domainObjectToAffectedControls.get(domainObject);
-		if (set != null) {
-			for (final VControl abstractControl : set) {
-				controlToDomainMapping.remove(abstractControl);
+	public Set<VControl> removeDomainObject(EObject domainObject) {
+		final Set<VControl> allRemovedControls = new LinkedHashSet<VControl>();
+		for (final EStructuralFeature feature : domainObject.eClass().getEAllStructuralFeatures()) {
+			final UniqueSetting uniqueSetting = UniqueSetting.createSetting(domainObject,
+				feature);
+			final Set<VControl> set = domainObjectToAffectedControls.remove(uniqueSetting);
+			if (set == null) {
+				continue;
+			}
+			for (final VControl control : set) {
+				if (controlToDomainMapping.get(control).size() == 1) {
+					allRemovedControls.add(control);
+				}
 			}
 		}
-		domainObjectToAffectedControls.remove(domainObject);
+		// final Set<VControl> set = domainObjectToAffectedControls.get(domainObject);
+		// if (allRemovedControls != null) {
+		for (final VControl abstractControl : allRemovedControls) {
+			controlToDomainMapping.remove(abstractControl);
+		}
+		// }
+		return allRemovedControls;
 	}
 
 	/**
@@ -263,7 +282,10 @@ public class ValidationRegistry {
 	}
 
 	/**
-	 * @param newEObject
+	 * Update current Mappings, because a new EObject was added, this updates only for VControls referencing the parent
+	 * of the provided EObject.
+	 * 
+	 * @param newEObject the added EObject
 	 */
 	public void updateMappings(EObject newEObject) {
 
@@ -289,4 +311,18 @@ public class ValidationRegistry {
 		}
 	}
 
+	/**
+	 * Checks whether there is a {@link VElement} for an {@link EObject}.
+	 * 
+	 * @param eObject the {@link EObject} to search the VElement for
+	 * @return true if there is a control, false otherwise
+	 */
+	public boolean containsVElementForEObject(EObject eObject) {
+		for (final EStructuralFeature esf : eObject.eClass().getEAllStructuralFeatures()) {
+			if (domainObjectToAffectedControls.containsKey(UniqueSetting.createSetting(eObject, esf))) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

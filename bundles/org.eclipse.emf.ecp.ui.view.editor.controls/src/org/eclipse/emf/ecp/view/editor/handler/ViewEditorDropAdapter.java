@@ -19,9 +19,6 @@ import org.eclipse.swt.dnd.DropTargetEvent;
 
 public class ViewEditorDropAdapter extends ECPDropAdapter {
 
-	public ViewEditorDropAdapter() {
-	}
-
 	public ViewEditorDropAdapter(EditingDomain domain, Viewer viewer) {
 		super(domain, viewer);
 	}

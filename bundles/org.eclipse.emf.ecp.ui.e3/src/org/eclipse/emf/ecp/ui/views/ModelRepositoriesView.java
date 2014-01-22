@@ -17,7 +17,6 @@ import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.core.util.observer.ECPProvidersChangedObserver;
 import org.eclipse.emf.ecp.ui.common.TreeViewerFactory;
-import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.Composite;
@@ -25,40 +24,44 @@ import org.eclipse.swt.widgets.Composite;
 /**
  * @author Eike Stepper
  */
-public class ModelRepositoriesView extends TreeView implements ECPProvidersChangedObserver //ECPProviderRegistry.Listener
+public class ModelRepositoriesView extends TreeView implements ECPProvidersChangedObserver // ECPProviderRegistry.Listener
 {
-  public static final String ID = "org.eclipse.emf.ecp.ui.ModelRepositoriesView";
+	/**
+	 * The view ID.
+	 */
+	public static final String ID = "org.eclipse.emf.ecp.ui.ModelRepositoriesView"; //$NON-NLS-1$
 
-  private Action addRepositoryAction;
+	/**
+	 * Default constructor.
+	 */
+	public ModelRepositoriesView()
+	{
+		super(ID);
+	}
 
-  public ModelRepositoriesView()
-  {
-    super(ID);
-  }
+	@Override
+	public void dispose()
+	{
+		ECPUtil.getECPObserverBus().unregister(this);
+		super.dispose();
+	}
 
-  @Override
-  public void dispose()
-  {
-	  ECPUtil.getECPObserverBus().unregister(this);
-    super.dispose();
-  }
-  /**{@inheritDoc} */
-  public void providersChanged(Collection<ECPProvider> oldProviders, Collection<ECPProvider> newProviders)
-  {
-  }
-  
+	/** {@inheritDoc} */
+	public void providersChanged(Collection<ECPProvider> oldProviders, Collection<ECPProvider> newProviders)
+	{
+	}
 
-  @Override
-  protected TreeViewer createViewer(Composite parent)
-  {
-	  TreeViewer viewer = TreeViewerFactory.createRepositoryExplorerViewer(parent, createLabelDecorator());
-	  ECPUtil.getECPObserverBus().register(this);
-    return viewer;
-  }
+	@Override
+	protected TreeViewer createViewer(Composite parent)
+	{
+		final TreeViewer viewer = TreeViewerFactory.createRepositoryExplorerViewer(parent, createLabelDecorator());
+		ECPUtil.getECPObserverBus().register(this);
+		return viewer;
+	}
 
-  @Override
-  protected void fillLocalToolBar(IToolBarManager manager)
-  {
-    super.fillLocalToolBar(manager);
-  }
+	@Override
+	protected void fillLocalToolBar(IToolBarManager manager)
+	{
+		super.fillLocalToolBar(manager);
+	}
 }

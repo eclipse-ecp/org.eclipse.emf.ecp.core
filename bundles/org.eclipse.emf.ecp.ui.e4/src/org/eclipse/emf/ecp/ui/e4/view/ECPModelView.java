@@ -13,8 +13,17 @@
 package org.eclipse.emf.ecp.ui.e4.view;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+import javax.inject.Named;
 
+import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.di.Focus;
+import org.eclipse.e4.ui.model.application.ui.basic.MPart;
+import org.eclipse.e4.ui.model.application.ui.menu.MToolBarElement;
+import org.eclipse.e4.ui.model.application.ui.menu.MToolItem;
+import org.eclipse.e4.ui.services.IServiceConstants;
+import org.eclipse.e4.ui.workbench.modeling.EPartService;
+import org.eclipse.e4.ui.workbench.modeling.EPartService.PartState;
 import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 import org.eclipse.e4.ui.workbench.swt.modeling.EMenuService;
 import org.eclipse.emf.ecore.EObject;
@@ -24,12 +33,15 @@ import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.ui.model.ModelContentProvider;
 import org.eclipse.emf.ecp.internal.ui.util.ECPHandlerHelper;
 import org.eclipse.emf.ecp.ui.common.TreeViewerFactory;
+import org.eclipse.emf.ecp.ui.e4.editor.ECPE4Editor;
+import org.eclipse.emf.ecp.ui.e4.util.EPartServiceHelper;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.Composite;
 
@@ -44,9 +56,13 @@ import org.eclipse.swt.widgets.Composite;
  */
 public class ECPModelView {
 
+	public static final String P_LINK_WITH_EDITOR = "linkWithEditor";
 	private static final String POPUPMENU_NAVIGATOR = "org.eclipse.emf.ecp.e4.application.popupmenu.navigator"; //$NON-NLS-1$
 	private TreeViewer modelExplorerTree;
 	private ModelContentProvider contentProvider;
+	private final EPartService partService = EPartServiceHelper.getEPartService();
+
+	private MPart modelViewPart;
 
 	/**
 	 * Creates the model explorer view.
@@ -54,9 +70,21 @@ public class ECPModelView {
 	 * @param composite the parent {@link Composite}
 	 * @param menuService the menu service to register the context menu
 	 * @param selectionService the selection service to publish the selection of the tree viewer.
+	 * @param part the current {@link MPart}
 	 */
 	@PostConstruct
-	public void create(Composite composite, EMenuService menuService, final ESelectionService selectionService) {
+	public void create(Composite composite, EMenuService menuService, final ESelectionService selectionService,
+		MPart part) {
+		modelViewPart = part;
+		if (modelViewPart.getPersistedState().containsKey(P_LINK_WITH_EDITOR)) {
+			for (final MToolBarElement toolbarElement : part.getToolbar().getChildren()) {
+				// TODO better way?
+				if (toolbarElement.getElementId().endsWith("link")) {
+					((MToolItem) toolbarElement).setSelected(Boolean.valueOf(modelViewPart.getPersistedState().get(
+						P_LINK_WITH_EDITOR)));
+				}
+			}
+		}
 		modelExplorerTree = TreeViewerFactory.createModelExplorerViewer(composite, false, null);
 		menuService.registerContextMenu(modelExplorerTree.getTree(),
 			POPUPMENU_NAVIGATOR);
@@ -89,16 +117,55 @@ public class ECPModelView {
 				final ISelection selection = event.getSelection();
 				if (IStructuredSelection.class.isInstance(selection)) {
 					final IStructuredSelection structuredSelection = (IStructuredSelection) selection;
-					if (!structuredSelection.isEmpty()) {
-						if (structuredSelection.toList().size() == 1) {
-							selectionService.setSelection(structuredSelection.getFirstElement());
-						} else {
-							selectionService.setSelection(structuredSelection.toList());
+					if (structuredSelection != null && !structuredSelection.isEmpty()) {
+						if (structuredSelection.size() == 1) {
+							selectionService
+								.setSelection(structuredSelection.getFirstElement());
+							activateCorrectPart(structuredSelection.getFirstElement());
+						}
+						else {
+							selectionService
+								.setSelection(structuredSelection.toList());
 						}
 					}
 				}
 			}
 		});
+	}
+
+	private void activateCorrectPart(Object firstSelection) {
+		if (!Boolean.valueOf(modelViewPart.getPersistedState().get(P_LINK_WITH_EDITOR))) {
+			return;
+		}
+		MPart partToHighlite = null;
+		for (final MPart part : partService.getParts()) {
+			if (part.getContext().get(ECPE4Editor.INPUT) == firstSelection) {
+				partToHighlite = part;
+				break;
+			}
+		}
+		if (partToHighlite == null) {
+			return;
+		}
+		partService.showPart(partToHighlite, PartState.ACTIVATE);
+	}
+
+	@Inject
+	public void setActivePart(@Named(IServiceConstants.ACTIVE_PART) @Optional MPart part) {
+		if (modelExplorerTree == null) {
+			return;
+		}
+		if (part == null) {
+			return;
+		}
+		if (modelViewPart == null || !Boolean.valueOf(modelViewPart.getPersistedState().get(P_LINK_WITH_EDITOR))) {
+			return;
+		}
+		final Object partInput = part.getContext().get(ECPE4Editor.INPUT);
+		if (partInput == null) {
+			return;
+		}
+		modelExplorerTree.setSelection(new StructuredSelection(partInput));
 	}
 
 	/**

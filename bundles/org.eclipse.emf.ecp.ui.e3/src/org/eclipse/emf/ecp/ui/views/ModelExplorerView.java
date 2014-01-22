@@ -53,6 +53,10 @@ import org.eclipse.ui.PartInitException;
  * @author Eugen Neufeld
  */
 public class ModelExplorerView extends TreeView implements ILinkedWithEditorView {
+	private static final String LINK_WITH_EDITOR_SET = "LinkWithEditorSet"; //$NON-NLS-1$
+
+	private static final String LINK_WITH_EDITOR = "LinkWithEditor"; //$NON-NLS-1$
+
 	/**
 	 * @author Jonas
 	 * @author Eugen Neufeld
@@ -73,7 +77,7 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 						project.open();
 					}
 				}
-				else if (firstElement instanceof Object) {
+				else {
 					final ECPContainer context = ECPUtil
 						.getModelContext(contentProvider, structuredSelection.toArray());
 					ECPHandlerHelper.openModelElement(firstElement, (ECPProject) context);
@@ -85,7 +89,7 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 	/**
 	 * The id of this view.
 	 */
-	public static final String ID = "org.eclipse.emf.ecp.ui.ModelExplorerView";
+	public static final String ID = "org.eclipse.emf.ecp.ui.ModelExplorerView"; //$NON-NLS-1$
 
 	private final IPartListener2 linkWithEditorPartListener = new LinkedWithEditorPartListener(this);
 
@@ -140,8 +144,8 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 
 	@Override
 	protected void fillLocalToolBar(IToolBarManager manager) {
-		if (getDialogSettings().getBoolean("LinkWithEditorSet")) {
-			linkingActive = getDialogSettings().getBoolean("LinkWithEditor");
+		if (getDialogSettings().getBoolean(LINK_WITH_EDITOR_SET)) {
+			linkingActive = getDialogSettings().getBoolean(LINK_WITH_EDITOR);
 		}
 		if (linkingActive) {
 			getSite().getPage().addPartListener(linkWithEditorPartListener);
@@ -163,16 +167,16 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 					}
 				}
 
-				getDialogSettings().put("LinkWithEditor", isChecked());
-				getDialogSettings().put("LinkWithEditorSet", true);
+				getDialogSettings().put(LINK_WITH_EDITOR, isChecked());
+				getDialogSettings().put(LINK_WITH_EDITOR_SET, true);
 			}
 
 		};
 
-		linkWithEditorAction.setImageDescriptor(Activator.getImageDescriptor("icons/link_with_editor.gif"));
+		linkWithEditorAction.setImageDescriptor(Activator.getImageDescriptor("icons/link_with_editor.gif")); //$NON-NLS-1$
 		linkWithEditorAction.setToolTipText("Link with editor");
-		linkWithEditorAction.setChecked(getDialogSettings().getBoolean("LinkWithEditorSet") ? getDialogSettings()
-			.getBoolean("LinkWithEditor") : true);
+		linkWithEditorAction.setChecked(getDialogSettings().getBoolean(LINK_WITH_EDITOR_SET) ? getDialogSettings()
+			.getBoolean(LINK_WITH_EDITOR) : true);
 		manager.add(linkWithEditorAction);
 	}
 

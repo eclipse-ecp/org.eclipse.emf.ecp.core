@@ -101,6 +101,7 @@ public class GenerateControlsHandler extends AbstractHandler {
 				logInvalidFeature(feature.getName(), datasegment.getName());
 			}
 		}
+		composedAdapterFactory.dispose();
 		return featuresToAdd;
 	}
 

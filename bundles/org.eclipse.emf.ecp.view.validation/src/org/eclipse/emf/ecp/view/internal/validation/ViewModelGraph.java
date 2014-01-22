@@ -12,7 +12,6 @@
 package org.eclipse.emf.ecp.view.internal.validation;
 
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -182,13 +181,17 @@ public abstract class ViewModelGraph {
 				continue;
 			}
 			// domain nodes are always leaf, no need to take care of their children
-			final Set<ViewModelGraphNode> parents = node.getParents();
-			for (final ViewModelGraphNode parentNode : new LinkedHashSet<ViewModelGraphNode>(
-				parents)) {
-				parentNode.removeChild(node);
-			}
+			removeChildFromParents(node);
 		}
 		domainModelSettings.removeAll(domainObject);
+	}
+
+	private void removeChildFromParents(final ViewModelGraphNode childNode) {
+		final Set<ViewModelGraphNode> parentNodes = new LinkedHashSet<ViewModelGraphNode>(
+			childNode.getParents());
+		for (final ViewModelGraphNode oldParent : parentNodes) {
+			oldParent.removeChild(childNode);
+		}
 	}
 
 	/**
@@ -209,10 +212,11 @@ public abstract class ViewModelGraph {
 				updateParentNodes(parentNode);
 			}
 			// renderable nodes are not leafs
-			final Iterator<ViewModelGraphNode> children = node.getChildren();
-			while (children.hasNext()) {
-				node.removeChild(children.next());
-			}
+			node.removeAllChildren();
+			// final Iterator<ViewModelGraphNode> children = node.getChildren();
+			// while (children.hasNext()) {
+			// node.removeChild(children.next());
+			// }
 		}
 
 		viewModelSettings.removeAll(renderable);
@@ -261,14 +265,6 @@ public abstract class ViewModelGraph {
 		}
 
 		return node;
-	}
-
-	private void removeChildFromParents(final ViewModelGraphNode childNode) {
-		final Set<ViewModelGraphNode> parentNodes = new LinkedHashSet<ViewModelGraphNode>(
-			childNode.getParents());
-		for (final ViewModelGraphNode oldParent : parentNodes) {
-			oldParent.removeChild(childNode);
-		}
 	}
 
 	private boolean domainObjectHasBeenRemoved(EObject domainObject, EStructuralFeature feature) {

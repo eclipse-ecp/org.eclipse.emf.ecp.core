@@ -202,6 +202,9 @@ public final class ControlFactoryImpl implements ECPControlFactory {
 		VDomainModelReference domainModelReference) {
 		int highestPriority = -1;
 		ECPControlDescription bestCandidate = null;
+		if (domainModelReference == null) {
+			return bestCandidate;
+		}
 		for (final ECPControlDescription description : controlDescriptors) {
 
 			if (!controlClass.isAssignableFrom(description.getControlClass())) {

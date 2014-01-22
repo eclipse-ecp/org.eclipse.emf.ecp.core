@@ -6,6 +6,10 @@
       <renderer
             element="org.eclipse.emf.ecp.view.spi.group.model.VGroup"
             renderer="org.eclipse.emf.ecp.view.spi.group.swt.SWTGroupRenderer">
+         <staticTest
+               element="org.eclipse.emf.ecp.view.spi.group.model.VGroup"
+               priority="1">
+         </staticTest>
       </renderer>
    </extension>
 

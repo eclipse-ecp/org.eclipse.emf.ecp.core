@@ -41,7 +41,7 @@ public class SettingsNodeMapping {
 	 * 
 	 * @param comparator
 	 *            the comparator that will be used by the constructed nodes when calling
-	 *            {@link #createNode(EObject, EStructuralFeature, Object, boolean)}
+	 *            {@link #createNode(EObject, EStructuralFeature, VDiagnostic, boolean)}
 	 */
 	public SettingsNodeMapping(Comparator<VDiagnostic> comparator) {
 		settings = new LinkedHashMap<UniqueSetting, ViewModelGraphNode>();

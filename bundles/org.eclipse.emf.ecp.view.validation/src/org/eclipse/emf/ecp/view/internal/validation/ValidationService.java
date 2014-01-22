@@ -220,8 +220,12 @@ public class ValidationService implements ViewModelService {
 		public void notifyAdd(Notifier notifier) {
 			// maybe null while init
 			if (viewValidationGraph != null) {
-				validationRegistry.updateMappings((EObject) notifier);
-				viewValidationGraph.validate((EObject) notifier);
+				final EObject eObject = (EObject) notifier;
+				validationRegistry.updateMappings(eObject);
+				if (!validationRegistry.containsVElementForEObject(eObject)) {
+					validationRegistry.register(eObject, renderable);
+				}
+				viewValidationGraph.validate(eObject);
 			}
 		}
 
@@ -234,8 +238,12 @@ public class ValidationService implements ViewModelService {
 		public void notifyRemove(Notifier notifier) {
 			final EObject eObject = (EObject) notifier;
 			viewValidationGraph.removeDomainObject(eObject);
-			validationRegistry.removeDomainObject(eObject);
+			final Set<VControl> removedControls = validationRegistry.removeDomainObject(eObject);
+			for (final VControl vControl : removedControls) {
+				viewValidationGraph.removeRenderable(vControl);
+			}
 		}
+
 	}
 
 	/**

@@ -182,6 +182,9 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 * Dispose.
 	 */
 	public void dispose() {
+		if (isDisposed) {
+			return;
+		}
 		isDisposing = true;
 		view.eAdapters().remove(viewModelContentAdapter);
 		domainObject.eAdapters().remove(domainModelContentAdapter);

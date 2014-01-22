@@ -26,8 +26,8 @@ import org.eclipse.emf.emfstore.client.exceptions.ESCertificateException;
 import org.eclipse.emf.emfstore.internal.client.model.connectionmanager.KeyStoreManager;
 import org.eclipse.emf.emfstore.internal.client.ui.views.emfstorebrowser.views.CertificateSelectionDialog;
 import org.eclipse.emf.emfstore.server.exceptions.ESException;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -61,13 +61,13 @@ public class EMFStoreUIProvider extends DefaultUIProvider {
 	@SuppressWarnings("unchecked")
 	public <T> T getAdapter(Object adaptable, Class<T> adapterType) {
 		if (ESRemoteProject.class.isInstance(adaptable) && adapterType.equals(ESLocalProject.class)) {
-			ESRemoteProject checkoutData = (ESRemoteProject) adaptable;
+			final ESRemoteProject checkoutData = (ESRemoteProject) adaptable;
 			try {
 				return (T) checkoutData.checkout(checkoutData.getProjectName(), new NullProgressMonitor());
-			} catch (ESException e) {
+			} catch (final ESException e) {
 				Activator.log(e);
 				// BEGIN SUPRESS CATCH EXCEPTION
-			} catch (RuntimeException e) {
+			} catch (final RuntimeException e) {
 				Activator.log(e);
 				// END SUPRESS CATCH EXCEPTION
 			} finally {
@@ -85,20 +85,20 @@ public class EMFStoreUIProvider extends DefaultUIProvider {
 	public Control createAddRepositoryUI(Composite parent, final ECPProperties repositoryProperties,
 		final Text repositoryNameText, Text repositoryLabelText, Text repositoryDescriptionText) {
 
-		GridLayout mainLayout = new GridLayout(3, false);
+		final GridLayout mainLayout = new GridLayout(3, false);
 		mainLayout.marginWidth = 0;
 		mainLayout.marginHeight = 0;
 
-		Composite composite = new Composite(parent, SWT.NONE);
+		final Composite composite = new Composite(parent, SWT.NONE);
 		composite.setLayout(mainLayout);
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
 		// use label width of main composite as minimum label width
-		Label url = new Label(composite, 0);
+		final Label url = new Label(composite, 0);
 		url.setText("Url:");
-		int mcLabelWidth = parent.getParent().getChildren()[0].getSize().x;
+		final int mcLabelWidth = parent.getParent().getChildren()[0].getSize().x;
 		if (mcLabelWidth > url.getSize().x) {
-			GridData gdUrl = new GridData();
+			final GridData gdUrl = new GridData();
 			gdUrl.widthHint = mcLabelWidth;
 			url.setLayoutData(gdUrl);
 		}
@@ -117,7 +117,7 @@ public class EMFStoreUIProvider extends DefaultUIProvider {
 			}
 		});
 
-		Label port = new Label(composite, 0);
+		final Label port = new Label(composite, 0);
 		port.setText("Port:");
 		final Text portText = new Text(composite, SWT.BORDER);
 		portText.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false, 2, 1));
@@ -129,20 +129,20 @@ public class EMFStoreUIProvider extends DefaultUIProvider {
 
 		});
 
-		Label cert = new Label(composite, 0);
+		final Label cert = new Label(composite, 0);
 		cert.setText("Certificate:");
 		final Text certificateText = new Text(composite, SWT.BORDER);
 		certificateText.setEditable(false);
 		certificateText.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false));
 
-		Button bSelectCertificate = new Button(composite, SWT.PUSH);
+		final Button bSelectCertificate = new Button(composite, SWT.PUSH);
 		// TODO change text
 		bSelectCertificate.setText("Select Certificate");
 		bSelectCertificate.addSelectionListener(new SelectionListener() {
 
 			public void widgetSelected(SelectionEvent e) {
 				// open dialog
-				String certificate = selectCertificate();
+				final String certificate = selectCertificate();
 				certificateText.setText(certificate);
 				repositoryProperties.addProperty(EMFStoreProvider.PROP_CERTIFICATE, certificateText.getText());
 
@@ -165,7 +165,7 @@ public class EMFStoreUIProvider extends DefaultUIProvider {
 	 * @return
 	 */
 	private String selectCertificate() {
-		CertificateSelectionDialog csd = new CertificateSelectionDialog(Display.getCurrent().getActiveShell(),
+		final CertificateSelectionDialog csd = new CertificateSelectionDialog(Display.getCurrent().getActiveShell(),
 			new LabelProvider() {
 				@Override
 				public String getText(Object element) {
@@ -180,23 +180,23 @@ public class EMFStoreUIProvider extends DefaultUIProvider {
 		ArrayList<String> certificates;
 		try {
 			certificates = KeyStoreManager.getInstance().getCertificates();
-			csd.setElements(certificates.toArray());
-		} catch (ESCertificateException e1) {
-			csd.setErrorMessage(e1.getMessage());
+			// csd.setElements(certificates.toArray());
+		} catch (final ESCertificateException e1) {
+			// csd.setErrorMessage(e1.getMessage());
 		}
-		csd.setBlockOnOpen(true);
-		csd.setTitle("Certificate Selection Dialog");
-		csd.open();
-		if (csd.getReturnCode() == Window.OK) {
-			return csd.getCertificateAlias();
-		}
+		// csd.setBlockOnOpen(true);
+		// csd.setTitle("Certificate Selection Dialog");
+		// csd.open();
+		// if (csd.getReturnCode() == Window.OK) {
+		// return csd.getCertificateAlias();
+		// }
 		return "";
 	}
 
 	@Override
 	public String getText(Object element) {
 		if (element instanceof EMFStoreProjectWrapper) {
-			EMFStoreProjectWrapper emfStoreProjectWrapper = (EMFStoreProjectWrapper) element;
+			final EMFStoreProjectWrapper emfStoreProjectWrapper = (EMFStoreProjectWrapper) element;
 			return emfStoreProjectWrapper.getDefaultCheckoutName();
 		}
 
@@ -206,7 +206,8 @@ public class EMFStoreUIProvider extends DefaultUIProvider {
 	@Override
 	public Image getImage(Object element) {
 		if (element instanceof EMFStoreProjectWrapper) {
-			return Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID, "icons/projectinfo.png").createImage();
+			return ImageDescriptor.createFromURL(
+				Activator.getInstance().getBundle().getResource("icons/projectinfo.png")).createImage();
 		}
 
 		return super.getImage(element);

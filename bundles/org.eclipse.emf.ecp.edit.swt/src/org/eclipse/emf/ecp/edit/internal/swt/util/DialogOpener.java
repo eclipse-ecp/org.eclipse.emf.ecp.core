@@ -28,6 +28,13 @@ public final class DialogOpener {
 
 	}
 
+	/**
+	 * The provided {@link Dialog} is opened and the result is returned via the provided {@link ECPDialogExecutor}.
+	 * This method searches for a DialogWrapper which will wrap the code in order to allow opening JFace dialogs in RAP.
+	 * 
+	 * @param dialog the JFace Dialog to open
+	 * @param callBack the {@link ECPDialogExecutor} called to handle the result
+	 */
 	public static void openDialog(Dialog dialog, ECPDialogExecutor callBack) {
 		DialogWrapper wrapper = null;
 		final IConfigurationElement[] controls = Platform.getExtensionRegistry().getConfigurationElementsFor(

@@ -52,6 +52,9 @@ public final class ViewModelUtil {
 	private static void checkAndResolve(EObject renderable, EObject domainModelRoot) {
 		if (VControl.class.isInstance(renderable)) {
 			final VControl control = (VControl) renderable;
+			if (control.getDomainModelReference() == null) {
+				return;
+			}
 			final boolean resolve = control.getDomainModelReference().resolve(domainModelRoot);
 			if (!resolve) {
 				Activator.logMessage(IStatus.WARNING, "Not resolved: " + control.getDomainModelReference() //$NON-NLS-1$

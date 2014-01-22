@@ -6,6 +6,10 @@
       <renderer
             element="org.eclipse.emf.ecp.view.spi.label.model.VLabel"
             renderer="org.eclipse.emf.ecp.view.spi.label.swt.SWTLabelRenderer">
+         <staticTest
+               element="org.eclipse.emf.ecp.view.spi.label.model.VLabel"
+               priority="1">
+         </staticTest>
       </renderer>
    </extension>
 

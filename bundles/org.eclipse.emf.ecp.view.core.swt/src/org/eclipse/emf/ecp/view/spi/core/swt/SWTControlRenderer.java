@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.view.spi.core.swt;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
@@ -67,7 +68,7 @@ public class SWTControlRenderer extends AbstractSWTRenderer<VControl> {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * {@inheritDoc}.
 	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderModel(org.eclipse.swt.widgets.Composite,
 	 *      org.eclipse.emf.ecp.view.spi.model.VElement, org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
@@ -87,32 +88,7 @@ public class SWTControlRenderer extends AbstractSWTRenderer<VControl> {
 
 		if (control != null) {
 			control.init(viewContext, vControl);
-			Label label = null;
-			labelRender: if (vControl.getLabelAlignment() == LabelAlignment.LEFT) {
-				final Setting setting = control.getFirstSetting();
-				if (setting == null) {
-					break labelRender;
-				}
-				final IItemPropertyDescriptor itemPropertyDescriptor = control.getItemPropertyDescriptor(setting);
-
-				if (itemPropertyDescriptor == null) {
-					throw new NoPropertyDescriptorFoundExeption(setting.getEObject(), setting.getEStructuralFeature());
-				}
-
-				label = new Label(parent, SWT.NONE);
-				label.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_label"); //$NON-NLS-1$
-				label.setBackground(parent.getBackground());
-				String extra = ""; //$NON-NLS-1$
-				if (setting.getEStructuralFeature().getLowerBound() > 0) {
-					extra = "*"; //$NON-NLS-1$
-				}
-				final String labelText = itemPropertyDescriptor.getDisplayName(setting.getEObject());
-				if (labelText != null && labelText.trim().length() != 0) {
-					label.setText(labelText + extra);
-					label.setToolTipText(itemPropertyDescriptor.getDescription(setting.getEObject()));
-				}
-
-			}
+			final Control label = createLabelControl(parent, vControl, control, viewContext);
 
 			final List<RenderingResultRow<org.eclipse.swt.widgets.Control>> createControls = ((ECPControlSWT) control)
 				.createControls(parent);
@@ -126,10 +102,17 @@ public class SWTControlRenderer extends AbstractSWTRenderer<VControl> {
 			}
 
 			final List<RenderingResultRow<org.eclipse.swt.widgets.Control>> result = new ArrayList<RenderingResultRow<org.eclipse.swt.widgets.Control>>();
-			final Control next = createControls.iterator().next().getControls().iterator().next();
+
 			if (label != null) {
+				final Set<Control> mainControls = createControls.get(0).getControls();
+				final Control[] controls = new Control[mainControls.size() + 1];
+				controls[0] = label;
+				int i = 1;
+				for (final Control mainControl : mainControls) {
+					controls[i++] = mainControl;
+				}
 				result.add(SWTRenderingHelper.INSTANCE.getResultRowFactory()
-					.createRenderingResultRow(label, next));
+					.createRenderingResultRow(controls));
 			}
 			else {
 				result.addAll(createControls);
@@ -176,4 +159,46 @@ public class SWTControlRenderer extends AbstractSWTRenderer<VControl> {
 		return null;
 	}
 
+	/**
+	 * Create the {@link Control} displaying the label of the current {@link VControl}.
+	 * 
+	 * @param parent the {@link Composite} to render onto
+	 * @param vControl the {@link VControl} to create the label for
+	 * @param control the {@link ECPAbstractControl} created for the vControl
+	 * @param viewContext the {@link ViewModelContext} used to create the current control
+	 * @return the created {@link Control} or null
+	 * @throws NoPropertyDescriptorFoundExeption thrown if the {@link org.eclipse.emf.ecore.EStructuralFeature
+	 *             EStructuralFeature} of the {@link VControl} doesn't have a registered {@link IItemPropertyDescriptor}
+	 */
+	protected Control createLabelControl(final Composite parent, final VControl vControl,
+		final ECPAbstractControl control, ViewModelContext viewContext)
+		throws NoPropertyDescriptorFoundExeption {
+		Label label = null;
+		labelRender: if (vControl.getLabelAlignment() == LabelAlignment.LEFT) {
+			final Setting setting = control.getFirstSetting();
+			if (setting == null) {
+				break labelRender;
+			}
+			final IItemPropertyDescriptor itemPropertyDescriptor = control.getItemPropertyDescriptor(setting);
+
+			if (itemPropertyDescriptor == null) {
+				throw new NoPropertyDescriptorFoundExeption(setting.getEObject(), setting.getEStructuralFeature());
+			}
+
+			label = new Label(parent, SWT.NONE);
+			label.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_label"); //$NON-NLS-1$
+			label.setBackground(parent.getBackground());
+			String extra = ""; //$NON-NLS-1$
+			if (setting.getEStructuralFeature().getLowerBound() > 0) {
+				extra = "*"; //$NON-NLS-1$
+			}
+			final String labelText = itemPropertyDescriptor.getDisplayName(setting.getEObject());
+			if (labelText != null && labelText.trim().length() != 0) {
+				label.setText(labelText + extra);
+				label.setToolTipText(itemPropertyDescriptor.getDescription(setting.getEObject()));
+			}
+
+		}
+		return label;
+	}
 }

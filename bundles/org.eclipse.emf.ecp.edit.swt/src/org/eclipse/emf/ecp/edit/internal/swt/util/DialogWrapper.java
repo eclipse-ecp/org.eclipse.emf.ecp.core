@@ -15,10 +15,18 @@ package org.eclipse.emf.ecp.edit.internal.swt.util;
 import org.eclipse.jface.dialogs.Dialog;
 
 /**
+ * Interface to provide a wrapper for opening JFace dialogs.
+ * 
  * @author Eugen Neufeld
  * 
  */
 public interface DialogWrapper {
 
+	/**
+	 * The wrapper opens the provided JFace Dialog and returns the result via the provided callback.
+	 * 
+	 * @param dialog the JFace {@link Dialog}
+	 * @param callBack the {@link ECPDialogExecutor} called
+	 */
 	void openDialog(final Dialog dialog, final ECPDialogExecutor callBack);
 }

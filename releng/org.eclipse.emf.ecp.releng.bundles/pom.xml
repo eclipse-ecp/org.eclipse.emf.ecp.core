@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.eclipse.emf.ecp</groupId>
+		<artifactId>ecp-parent</artifactId>
+		<version>1.1.1-SNAPSHOT</version>
+		<relativePath>../../releng/org.eclipse.emf.ecp.releng/</relativePath>
+	</parent>
+	<groupId>org.eclipse.emf.ecp</groupId>
+	<artifactId>ecp-bundles-parent</artifactId>
+	<version>1.1.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>../../bundles/org.eclipse.emf.ecp.core</module>
+		<module>../../bundles/org.eclipse.emf.ecp.core.emffilter</module>
+		<module>../../bundles/org.eclipse.emf.ecp.common</module>
+		<module>../../bundles/org.eclipse.emf.ecp.edit</module>
+		<module>../../bundles/org.eclipse.emf.ecp.edit.swt</module>
+		<module>../../bundles/org.eclipse.emf.ecp.explorereditorbridge</module>
+		<module>../../bundles/org.eclipse.emf.ecp.ui</module>
+
+		<module>../../bundles/org.eclipse.emf.ecp.cdo.core</module>
+		<module>../../bundles/org.eclipse.emf.ecp.cdo.ui</module>
+
+		<module>../../bundles/org.eclipse.emf.ecp.emfstore.core</module>
+		<module>../../bundles/org.eclipse.emf.ecp.emfstore.ui</module>
+		<module>../../bundles/org.eclipse.emf.ecp.emfstore.ui.e3</module>
+		<module>../../bundles/org.eclipse.emf.ecp.emfstore.ui.search</module>
+
+		<module>../../bundles/org.eclipse.emf.ecp.doc</module>
+
+		<module>../../bundles/org.eclipse.emf.ecp.ui.e3</module>
+		<module>../../bundles/org.eclipse.emf.ecp.application.e3</module>
+		<module>../../bundles/org.eclipse.emf.ecp.editor.e3</module>
+
+		<module>../../bundles/org.eclipse.emf.ecp.validation</module>
+		<module>../../bundles/org.eclipse.emf.ecp.validation.connector</module>
+
+		<module>../../bundles/org.eclipse.emf.ecp.workspace.core</module>
+		<module>../../bundles/org.eclipse.emf.ecp.workspace.ui</module>
+
+		<module>../../bundles/org.eclipse.emf.ecp.view.model</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.model.edit</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.core.swt</module>
+		<module>../../bundles/org.eclipse.emf.ecp.ui.view</module>
+		<module>../../bundles/org.eclipse.emf.ecp.ui.view.swt</module>
+
+		<module>../../bundles/org.eclipse.emf.ecp.view.model.provider.xmi</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.model.generator</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.context</module>
+
+		<!-- Ecore Support -->
+		<module>../../bundles/org.eclipse.emf.ecp.edit.ecore.swt</module>
+
+		<!-- Editor controls -->
+		<module>../../bundles/org.eclipse.emf.ecp.ui.view.editor.controls</module>
+
+		<module>../../bundles/org.eclipse.emf.ecp.examplemodel.ui</module>
+
+		<!-- IDE Feature -->
+		<module>../../bundles/org.eclipse.emf.ecp.view.model.editor</module>
+
+		<!-- Categorization Feature -->
+		<module>../../bundles/org.eclipse.emf.ecp.view.categorization.model</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.categorization.model.edit</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.categorization.swt</module>
+
+		<!-- Custom Control Feature -->
+		<module>../../bundles/org.eclipse.emf.ecp.view.custom.model</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.custom.model.edit</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.custom.ui</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.custom.ui.swt</module>
+
+		<!-- Separator Feature -->
+		<module>../../bundles/org.eclipse.emf.ecp.view.separator.model</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.separator.model.edit</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.separator.ui.swt</module>
+
+		<!-- GroupedGrid Feature -->
+		<module>../../bundles/org.eclipse.emf.ecp.view.groupedgrid.model</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.groupedgrid.model.edit</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.groupedgrid.ui.swt</module>
+
+		<!-- Label Feature -->
+		<module>../../bundles/org.eclipse.emf.ecp.view.label.model</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.label.model.edit</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.label.ui.swt</module>
+
+		<!-- Group Feature -->
+		<module>../../bundles/org.eclipse.emf.ecp.view.group.model</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.group.model.edit</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.group.ui.swt</module>
+
+		<!-- Rule Feature -->
+		<module>../../bundles/org.eclipse.emf.ecp.view.rule</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.rule.model</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.rule.model.edit</module>
+
+		<!-- View Validation Feature -->
+		<module>../../bundles/org.eclipse.emf.ecp.view.validation</module>
+
+		<!-- View Unset Feature -->
+		<module>../../bundles/org.eclipse.emf.ecp.view.unset</module>
+
+		<!-- Vertical Feature -->
+		<module>../../bundles/org.eclipse.emf.ecp.view.vertical.model</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.vertical.model.edit</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.vertical.ui.swt</module>
+
+		<!-- Horizontal Feature -->
+		<module>../../bundles/org.eclipse.emf.ecp.view.horizontal.model</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.horizontal.model.edit</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.horizontal.ui.swt</module>
+
+		<!-- TreeMasterDetail Feature -->
+		<module>../../bundles/org.eclipse.emf.ecp.view.treemasterdetail.model</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.treemasterdetail.model.edit</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.treemasterdetail.ui.swt</module>
+
+		<!-- Table Feature -->
+		<module>../../bundles/org.eclipse.emf.ecp.view.table.model</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.table.model.edit</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.table.ui.swt</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.table.editor</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.table.columnservice</module>
+
+		<!-- Template Feature -->
+		<module>../../bundles/org.eclipse.emf.ecp.view.template.model</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.template.model.edit</module>
+		<!-- Template Helper Feature -->
+		<module>../../bundles/org.eclipse.emf.ecp.view.template.service</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.template.controls.swt</module>
+
+		<!-- IDE -->
+		<module>../../bundles/org.eclipse.emf.ecp.ide.editor.view</module>
+		<module>../../bundles/org.eclipse.emf.ecp.ide.editor.view.control</module>
+		<module>../../bundles/org.eclipse.emf.ecp.ide.editor.viewmodel</module>
+		<module>../../bundles/org.eclipse.emf.ecp.ide.view.service</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.ideconfig.model</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.ideconfig.model.edit</module>
+
+		<!-- RAP -->
+		<module>../../bundles/org.eclipse.emf.ecp.rap.util</module>
+		<module>../../bundles/org.eclipse.emf.ecp.rap</module>
+
+		<!-- e4 demo application -->
+		<module>../../bundles/org.eclipse.emf.ecp.application.e4</module>
+		<module>../../bundles/org.eclipse.emf.ecp.ui.e4</module>
+	</modules>
+
+	<build>
+		<plugins>
+			<!-- 1. -->
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-source</id>
+						<goals>
+							<goal>plugin-source</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	<profiles>
+		<!-- 2. -->
+		<profile>
+			<id>build-server</id>
+			<build>
+				<plugins>
+					<!-- 3.a -->
+					<plugin>
+						<groupId>org.eclipse.tycho.extras</groupId>
+						<artifactId>tycho-pack200a-plugin</artifactId>
+						<version>${tycho-version}</version>
+						<executions>
+							<execution>
+								<id>pack200-normalize</id>
+								<goals>
+									<goal>normalize</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.eclipse.cbi.maven.plugins</groupId>
+						<artifactId>eclipse-jarsigner-plugin</artifactId>
+						<version>${jarsigner-version}</version>
+						<executions>
+							<execution>
+								<id>sign</id>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<!-- 3.b -->
+					<plugin>
+						<groupId>org.eclipse.tycho.extras</groupId>
+						<artifactId>tycho-pack200b-plugin</artifactId>
+						<version>${tycho-version}</version>
+						<executions>
+							<execution>
+								<id>pack200-pack</id>
+								<goals>
+									<goal>pack</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<!-- 4. -->
+					<plugin>
+						<groupId>org.eclipse.tycho</groupId>
+						<artifactId>tycho-p2-plugin</artifactId>
+						<version>${tycho-version}</version>
+						<executions>
+							<execution>
+								<id>attach-p2-metadata</id>
+								<phase>package</phase>
+								<goals>
+									<goal>p2-metadata</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<defaultP2Metadata>false</defaultP2Metadata>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+</project>

@@ -51,7 +51,7 @@ public class VerticalLayoutSWTRenderer extends AbstractSWTRenderer<VVerticalLayo
 		columnComposite.setData(CUSTOM_VARIANT, CONTROL_COLUMN);
 		columnComposite.setBackground(parent.getBackground());
 
-		columnComposite.setLayout(getLayoutHelper().getColumnLayout(2, false));
+		columnComposite.setLayout(getLayoutHelper().getColumnLayout(3, false));
 
 		for (final VContainedElement child : vVerticalLayout.getChildren()) {
 

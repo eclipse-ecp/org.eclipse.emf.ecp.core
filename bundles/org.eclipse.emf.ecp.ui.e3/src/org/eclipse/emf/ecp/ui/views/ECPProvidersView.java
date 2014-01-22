@@ -23,18 +23,24 @@ import org.eclipse.swt.widgets.Composite;
  */
 public class ECPProvidersView extends TreeView
 {
-  public static final String ID = "org.eclipse.emf.ecp.ui.ECPProvidersView";
+	/**
+	 * ID of the view.
+	 */
+	public static final String ID = "org.eclipse.emf.ecp.ui.ECPProvidersView"; //$NON-NLS-1$
 
-  public ECPProvidersView()
-  {
-    super(ID);
-  }
+	/**
+	 * Default constructor.
+	 */
+	public ECPProvidersView()
+	{
+		super(ID);
+	}
 
-  @Override
-  protected TreeViewer createViewer(Composite parent)
-  {
-    TreeViewer viewer = TreeViewerFactory.createTreeViewer(parent, new ProvidersLabelProvider(),
-        new ProvidersContentProvider(), ECPUtil.getECPProviderRegistry(), createLabelDecorator(),true);
-    return viewer;
-  }
+	@Override
+	protected TreeViewer createViewer(Composite parent)
+	{
+		final TreeViewer viewer = TreeViewerFactory.createTreeViewer(parent, new ProvidersLabelProvider(),
+			new ProvidersContentProvider(), ECPUtil.getECPProviderRegistry(), createLabelDecorator(), true);
+		return viewer;
+	}
 }

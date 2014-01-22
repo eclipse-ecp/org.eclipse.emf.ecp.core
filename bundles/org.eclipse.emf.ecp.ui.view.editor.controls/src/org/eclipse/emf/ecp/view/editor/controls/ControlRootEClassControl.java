@@ -94,7 +94,7 @@ public class ControlRootEClassControl extends LinkControl {
 		@Override
 		protected void doExecute() {
 
-			final AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(composedAdapterFactory);
+			final AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(getComposedAdapterFactory());
 			final ElementTreeSelectionDialog dialog = new ElementTreeSelectionDialog(shell, labelProvider,
 				getContentProvider());
 			dialog.setAllowMultiple(false);

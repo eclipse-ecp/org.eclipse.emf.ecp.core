@@ -40,9 +40,16 @@ public abstract class PropertiesStore<ELEMENT extends StorableElement, OBSERVER 
 	ElementRegistry<ELEMENT, OBSERVER> {
 	private File folder;
 
+	/**
+	 * Default constructor.
+	 */
 	public PropertiesStore() {
 	}
 
+	/**
+	 * 
+	 * @return The folder, where this property store stores its properties as a {@link File}
+	 */
 	public final File getFolder() {
 		return folder;
 	}
@@ -113,6 +120,13 @@ public abstract class PropertiesStore<ELEMENT extends StorableElement, OBSERVER 
 		return file.isFile();
 	}
 
+	/**
+	 * Loads an element.
+	 * 
+	 * @param in an {@link ObjectInput} to load the element from
+	 * @return the element
+	 * @throws IOException if the element cannot be loaded correctly
+	 */
 	protected abstract ELEMENT loadElement(ObjectInput in) throws IOException;
 
 	@Override

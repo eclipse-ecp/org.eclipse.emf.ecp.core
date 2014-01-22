@@ -19,6 +19,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecp.edit.internal.swt.util.DoubleColumnRow;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SingleColumnRow;
+import org.eclipse.emf.ecp.edit.internal.swt.util.ThreeColumnRow;
 import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
@@ -56,7 +57,7 @@ public class SWTViewRenderer extends AbstractSWTRenderer<VView> {
 		final Composite columnComposite = new Composite(parent, SWT.NONE);
 		columnComposite.setBackground(parent.getBackground());
 		// Gridlayout does not have an overflow as other Layouts might have.
-		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false).applyTo(columnComposite);
+		GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(columnComposite);
 
 		for (final VContainedElement child : vView.getChildren()) {
 
@@ -86,14 +87,22 @@ public class SWTViewRenderer extends AbstractSWTRenderer<VView> {
 	protected void setLayoutDataForResultRows(final List<RenderingResultRow<Control>> resultRows) {
 		for (final RenderingResultRow<Control> row : resultRows) {
 			if (SingleColumnRow.class.isInstance(row)) {
-				GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).span(2, 1)
+				GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).span(3, 1)
 					.applyTo(((SingleColumnRow) row).getControl());
 			}
 			else if (DoubleColumnRow.class.isInstance(row)) {
 				GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.BEGINNING).grab(false, false)
 					.applyTo(((DoubleColumnRow) row).getLeftControl());
-				GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false)
+				GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false).span(2, 1)
 					.applyTo(((DoubleColumnRow) row).getRightControl());
+			}
+			else if (ThreeColumnRow.class.isInstance(row)) {
+				GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(false, false)
+					.applyTo(((ThreeColumnRow) row).getLeftControl());
+				GridDataFactory.fillDefaults().align(SWT.CENTER, SWT.CENTER).grab(false, false).hint(16, 17)
+					.applyTo(((ThreeColumnRow) row).getMiddleControl());
+				GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false)
+					.applyTo(((ThreeColumnRow) row).getRightControl());
 			}
 		}
 	}

@@ -6,10 +6,18 @@
       <renderer
             element="org.eclipse.emf.ecp.view.spi.groupedgrid.model.VGroupedGrid"
             renderer="org.eclipse.emf.ecp.view.spi.groupedgrid.swt.GroupedGridSWTRenderer">
+         <staticTest
+               element="org.eclipse.emf.ecp.view.spi.groupedgrid.model.VGroupedGrid"
+               priority="1">
+         </staticTest>
       </renderer>
       <renderer
             element="org.eclipse.emf.ecp.view.spi.model.VControl"
             renderer="org.eclipse.emf.ecp.view.spi.groupedgrid.swt.SWTControlRenderer">
+         <staticTest
+               element="org.eclipse.emf.ecp.view.spi.model.VControl"
+               priority="1">
+         </staticTest>
       </renderer>
    </extension>
 

@@ -31,8 +31,10 @@ import org.eclipse.swt.dnd.DropTargetEvent;
  */
 public class ModelExplorerDropAdapter extends ECPDropAdapter {
 
-	/*
-	 * @param viewer
+	/**
+	 * Default constructor.
+	 * 
+	 * @param viewer the viewer, the drop adapter is responsible for
 	 */
 	public ModelExplorerDropAdapter(Viewer viewer) {
 		super(null, viewer);
@@ -56,7 +58,7 @@ public class ModelExplorerDropAdapter extends ECPDropAdapter {
 	 */
 	@Override
 	public void dragOver(DropTargetEvent event) {
-		Object target = extractDropTarget(event.item);
+		final Object target = extractDropTarget(event.item);
 		if (target == null) {
 			return;
 		}
@@ -65,7 +67,7 @@ public class ModelExplorerDropAdapter extends ECPDropAdapter {
 		Object sourceObject = null;
 
 		if (source == null) {
-			ISelection selection = viewer.getSelection();
+			final ISelection selection = viewer.getSelection();
 			if (selection instanceof IStructuredSelection) {
 				sourceObject = ((IStructuredSelection) viewer.getSelection()).getFirstElement();
 			}
@@ -74,8 +76,8 @@ public class ModelExplorerDropAdapter extends ECPDropAdapter {
 			sourceObject = source.iterator().next();
 		}
 
-		EditingDomain sourceProjectDomain = getProjectDomain(sourceObject);
-		EditingDomain targetProjectDomain = getProjectDomain(target);
+		final EditingDomain sourceProjectDomain = getProjectDomain(sourceObject);
+		final EditingDomain targetProjectDomain = getProjectDomain(target);
 		EditingDomain newDomain = null;
 
 		if (target instanceof ECPProject) {
@@ -90,7 +92,7 @@ public class ModelExplorerDropAdapter extends ECPDropAdapter {
 
 		if (target instanceof ECPProject) {
 
-			ECPProject project = (ECPProject) target;
+			final ECPProject project = (ECPProject) target;
 			if (sourceObject instanceof ECPProject) {
 				event.detail = DND.DROP_COPY;
 				event.feedback = DND.FEEDBACK_INSERT_AFTER | DND.FEEDBACK_INSERT_BEFORE | DND.FEEDBACK_SCROLL;
@@ -127,7 +129,7 @@ public class ModelExplorerDropAdapter extends ECPDropAdapter {
 	 */
 	@Override
 	public void drop(final DropTargetEvent event) {
-		Object target = extractDropTarget(event.item);
+		final Object target = extractDropTarget(event.item);
 		source = getDragSource(event);
 		final Object sourceObject = source.iterator().next();
 
@@ -148,7 +150,7 @@ public class ModelExplorerDropAdapter extends ECPDropAdapter {
 				});
 
 			} else if (sourceObject instanceof ECPProject) {
-				ECPProject oldProject = (ECPProject) sourceObject;
+				final ECPProject oldProject = (ECPProject) sourceObject;
 				ECPUtil.getECPProjectManager().createProject(oldProject, oldProject.getName() + "(Copy)");
 			}
 		} else if (event.detail != DND.DROP_NONE) {
@@ -162,7 +164,7 @@ public class ModelExplorerDropAdapter extends ECPDropAdapter {
 	 */
 	@Override
 	public void dropAccept(DropTargetEvent event) {
-		Object target = extractDropTarget(event.item);
+		final Object target = extractDropTarget(event.item);
 		if (target instanceof ECPProject) {
 			event.feedback = DND.FEEDBACK_SELECT | getAutoFeedback();
 		} else {

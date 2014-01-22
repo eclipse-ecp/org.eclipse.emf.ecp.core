@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-   <extension-point id="menuContributionEnablement" name="Menu Contribution Enablement" schema="schema/menuContributionEnablement.exsd"/>
+   
 <extension
          point="org.eclipse.ui.views">
       <category
@@ -45,27 +45,9 @@
             </parameter>
             <visibleWhen
                   checkEnabled="false">
-               <with
-                  variable="activeMenuSelection">
-                  <iterate
-                        ifEmpty="false"
-                        operator="or">
-                     <and>
-                        <instanceof
-                              value="org.eclipse.emf.ecp.core.ECPProject">
-                        </instanceof>
-                        <test
-                              property="org.eclipse.emf.ecp.core.project.closed"
-                              value="true">
-                        </test>
-                        <test
-                              args="org.eclipse.emf.ecp.ui.closable"
-                              property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
-                              value="true">
-                        </test>
-                     </and>
-                  </iterate>
-               </with>
+               <reference
+                     definitionId="org.eclipse.emf.ecp.ui.definition.projectClosed">
+               </reference>
             </visibleWhen>
          </command>
          <command
@@ -78,27 +60,9 @@
             </parameter>
             <visibleWhen
                   checkEnabled="false">
-               <with
-                  variable="activeMenuSelection">
-                  <iterate
-                        ifEmpty="false"
-                        operator="or">
-                     <and>
-                        <instanceof
-                              value="org.eclipse.emf.ecp.core.ECPProject">
-                        </instanceof>
-                        <test
-                              property="org.eclipse.emf.ecp.core.project.open"
-                              value="true">
-                        </test>
-                        <test
-                              args="org.eclipse.emf.ecp.ui.closable"
-                              property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
-                              value="true">
-                        </test>
-                     </and>
-                  </iterate>
-               </with>
+               <reference
+                     definitionId="org.eclipse.emf.ecp.ui.definition.projectOpened">
+               </reference>
             </visibleWhen>
          </command>
          <command
@@ -653,13 +617,6 @@
    </extension>
    <extension
          point="org.eclipse.core.expressions.propertyTesters">
-      <propertyTester
-            class="org.eclipse.emf.ecp.ui.tester.ECPMenuContributionsEnablementTester"
-            id="org.eclipse.emf.ecp.ui.e3.workbench.menu.properties"
-            namespace="org.eclipse.emf.ecp.ui.e3.workbench.menu"
-            properties="enablement"
-            type="java.lang.Object">
-      </propertyTester>
       <propertyTester
             class="org.eclipse.emf.ecp.ui.tester.CanAddRepositoriesTester"
             id="org.eclipse.emf.ecp.ui.repository.tester"

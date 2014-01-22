@@ -50,6 +50,9 @@ public final class ModelReferenceHelper {
 
 	public static VDomainModelReference createDomainModelReference(EStructuralFeature feature,
 		Collection<EReference> eReferences) {
+		if (eReferences == null || eReferences.isEmpty()) {
+			return createDomainModelReference(feature);
+		}
 		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
 			.createFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(feature);

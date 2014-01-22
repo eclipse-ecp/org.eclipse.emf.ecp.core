@@ -92,9 +92,10 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 				dispose();
 			}
 		});
+		createValidationIcon(parent);
 		final List<RenderingResultRow<Control>> list = Collections.singletonList(SWTRenderingHelper.INSTANCE
 			.getResultRowFactory().createRenderingResultRow(
-				createControl(parent)));
+				validationLabel, createControl(parent)));
 		// TODO remove asap
 		backwardCompatibleHandleValidation();
 		return list;
@@ -109,17 +110,7 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 	 */
 	public Composite createControl(final Composite parent) {
 
-		final Composite composite = new Composite(parent, SWT.NONE);
-		composite.setBackground(parent.getBackground());
-		int numColumns = 2;
-		if (isEmbedded()) {
-			numColumns--;
-		}
-		// TODO needed .spacing(10, 0) ?
-		GridLayoutFactory.fillDefaults().numColumns(numColumns).applyTo(composite);
-
-		createValidationIcon(composite);
-		createDataControl(composite);
+		final Composite dataControl = createDataControl(parent);
 
 		setHelpTooltips();
 
@@ -136,7 +127,7 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 			}
 		}
 
-		return composite;
+		return dataControl;
 	}
 
 	private void createValidationIcon(Composite composite) {
@@ -144,16 +135,17 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 			validationLabel = new Label(composite, SWT.NONE);
 			validationLabel.setBackground(composite.getBackground());
 			// set the size of the label to the size of the image
-			GridDataFactory.fillDefaults().hint(16, 17).applyTo(validationLabel);
+			// GridDataFactory.fillDefaults().hint(16, 17).applyTo(validationLabel);
 		}
 	}
 
-	private void createDataControl(Composite composite) {
+	private Composite createDataControl(Composite composite) {
 		final Composite innerComposite = new Composite(composite, SWT.NONE);
 		innerComposite.setBackground(composite.getBackground());
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(innerComposite);
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(innerComposite);
 		createContentControl(innerComposite);
+		return innerComposite;
 	}
 
 	private void setHelpTooltips() {

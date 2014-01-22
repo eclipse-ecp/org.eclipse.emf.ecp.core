@@ -44,6 +44,7 @@ public class ViewProvider implements IViewProvider {
 				.createFeaturePathDomainModelReference();
 			modelReference.setDomainModelEFeature(feature);
 			control.setDomainModelReference(modelReference);
+			control.setReadonly(!feature.isChangeable());
 			view.getChildren().add(control);
 		}
 

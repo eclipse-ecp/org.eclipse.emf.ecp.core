@@ -39,18 +39,37 @@ public final class CompositeFactory {
 	private CompositeFactory() {
 	}
 
+	/**
+	 * 
+	 * @return a {@link AddRepositoryComposite}
+	 */
 	public static AddRepositoryComposite getAddRepositoryComposite() {
 		return new AddRepositoryCompositeImpl(null);
 	}
 
+	/**
+	 * 
+	 * @param provider the provider to add a repository to.
+	 * @return a {@link AddRepositoryComposite}
+	 */
 	public static AddRepositoryComposite getAddRepositoryComposite(ECPProvider provider) {
 		return new AddRepositoryCompositeImpl(provider);
 	}
 
+	/**
+	 * 
+	 * @param checkoutSource the source to check a project out from
+	 * @return an {@link CheckoutProjectComposite} allowing to check out a project
+	 */
 	public static CheckoutProjectComposite getCheckoutProjectComposite(ECPCheckoutSource checkoutSource) {
 		return new CheckoutProjectCompositeImpl(checkoutSource);
 	}
 
+	/**
+	 * 
+	 * @param providers the providers to be considered to create a new project
+	 * @return A {@link CreateProjectComposite} allowing to create a new project
+	 */
 	public static CreateProjectComposite getCreateProjectComposite(List<ECPProvider> providers) {
 		return new CreateProjectCompositeImpl(providers);
 	}

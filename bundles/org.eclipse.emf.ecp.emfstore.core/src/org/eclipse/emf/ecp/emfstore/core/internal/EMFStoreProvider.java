@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -49,6 +50,7 @@ import org.eclipse.emf.emfstore.client.ESRemoteProject;
 import org.eclipse.emf.emfstore.client.ESServer;
 import org.eclipse.emf.emfstore.client.ESWorkspace;
 import org.eclipse.emf.emfstore.client.ESWorkspaceProvider;
+import org.eclipse.emf.emfstore.client.util.RunESCommand;
 import org.eclipse.emf.emfstore.internal.client.model.Configuration;
 import org.eclipse.emf.emfstore.internal.client.model.ESWorkspaceProviderImpl;
 import org.eclipse.emf.emfstore.internal.client.model.ProjectSpace;
@@ -133,7 +135,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 
 	/** {@inheritDoc} */
 	@Override
-	public void fillChildren(ECPContainer context, Object parent, InternalChildrenList childrenList) {
+	public void fillChildren(final ECPContainer context, final Object parent, final InternalChildrenList childrenList) {
 		if (parent instanceof InternalProject) {
 			final ESLocalProject projectSpace = getProjectSpace((InternalProject) parent);
 			if (projectSpace != null) {
@@ -154,7 +156,12 @@ public final class EMFStoreProvider extends DefaultProvider {
 
 			}
 		}
-		super.fillChildren(context, parent, childrenList);
+		RunESCommand.run(new Callable<Void>() {
+			public Void call() throws Exception {
+				EMFStoreProvider.super.fillChildren(context, parent, childrenList);
+				return null;
+			}
+		});
 	}
 
 	@Override

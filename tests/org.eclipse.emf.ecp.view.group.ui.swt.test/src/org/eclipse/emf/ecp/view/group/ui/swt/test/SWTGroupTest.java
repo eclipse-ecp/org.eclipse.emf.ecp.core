@@ -240,8 +240,8 @@ public class SWTGroupTest {
 		assertEquals("org_eclipse_emf_ecp_ui_control_group",
 			renderedControl1.getData("org.eclipse.rap.rwt.customVariant"));
 
-		assertTrue(SWTViewTestHelper.checkIfThereIsATextControl(renderedControl1.getChildren()[1]));
-		assertTrue(SWTViewTestHelper.checkIfThereIsATextControl(renderedControl1.getChildren()[3]));
+		assertTrue(SWTViewTestHelper.checkIfThereIsATextControl(renderedControl1.getChildren()[2]));
+		assertTrue(SWTViewTestHelper.checkIfThereIsATextControl(renderedControl1.getChildren()[5]));
 
 		assertTrue("Rendered Control is not a Group", renderedControl2 instanceof org.eclipse.swt.widgets.Group);
 
@@ -251,8 +251,8 @@ public class SWTGroupTest {
 		assertEquals("org_eclipse_emf_ecp_ui_control_group",
 			renderedControl2.getData("org.eclipse.rap.rwt.customVariant"));
 
-		assertTrue(SWTViewTestHelper.checkIfThereIsATextControl(renderedControl2.getChildren()[1]));
-		assertTrue(SWTViewTestHelper.checkIfThereIsATextControl(renderedControl2.getChildren()[3]));
+		assertTrue(SWTViewTestHelper.checkIfThereIsATextControl(renderedControl2.getChildren()[2]));
+		assertTrue(SWTViewTestHelper.checkIfThereIsATextControl(renderedControl2.getChildren()[5]));
 	}
 
 	@Test

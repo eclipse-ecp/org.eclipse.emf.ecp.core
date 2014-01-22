@@ -59,7 +59,10 @@ public class LinkControl extends SingleControl {
 
 	private Label imageHyperlink;
 
-	protected ComposedAdapterFactory composedAdapterFactory;
+	/**
+	 * The {@link ComposedAdapterFactory} used by the control.
+	 */
+	private ComposedAdapterFactory composedAdapterFactory;
 
 	private ECPModelElementChangeListener modelElementChangeListener;
 
@@ -70,8 +73,10 @@ public class LinkControl extends SingleControl {
 	private Composite mainComposite;
 
 	private Button[] buttons;
-
-	protected AdapterFactoryItemDelegator adapterFactoryItemDelegator;
+	/**
+	 * The {@link AdapterFactoryItemDelegator} used by this control.
+	 */
+	private AdapterFactoryItemDelegator adapterFactoryItemDelegator;
 
 	@Override
 	protected void fillControlComposite(Composite composite) {
@@ -115,10 +120,20 @@ public class LinkControl extends SingleControl {
 		}
 	}
 
+	/**
+	 * 
+	 * @return number of buttons added by the link control.
+	 */
 	protected int getNumButtons() {
 		return 3;
 	}
 
+	/**
+	 * Creates the buttons to delete a reference, add one to an existing and add a new element to be referenced.
+	 * 
+	 * @param composite the {@link Composite} to place the buttons on
+	 * @return An array of buttons
+	 */
 	protected Button[] createButtons(Composite composite) {
 		final Button[] buttons = new Button[3];
 		final Setting setting = getFirstSetting();
@@ -132,10 +147,10 @@ public class LinkControl extends SingleControl {
 	}
 
 	private void createHyperlink() {
-		composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
+		setComposedAdapterFactory(new ComposedAdapterFactory(new AdapterFactory[] {
 			new ReflectiveItemProviderAdapterFactory(),
-			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
-		adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(composedAdapterFactory);
+			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) }));
+		setAdapterFactoryItemDelegator(new AdapterFactoryItemDelegator(getComposedAdapterFactory()));
 		// adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(composedAdapterFactory);
 		// shortLabelProvider = new ShortLabelProvider(composedAdapterFactory);
 
@@ -237,11 +252,11 @@ public class LinkControl extends SingleControl {
 	}
 
 	protected Object getImage(Object value) {
-		return Activator.getImage((URL) adapterFactoryItemDelegator.getImage(value));
+		return Activator.getImage((URL) getAdapterFactoryItemDelegator().getImage(value));
 	}
 
 	protected Object getLinkText(Object value) {
-		final String linkName = adapterFactoryItemDelegator.getText(value);
+		final String linkName = getAdapterFactoryItemDelegator().getText(value);
 		return linkName == null ? "" : linkName; //$NON-NLS-1$
 	}
 
@@ -301,7 +316,7 @@ public class LinkControl extends SingleControl {
 	@Override
 	public void dispose() {
 		// adapterFactoryItemDelegator.dispose();
-		composedAdapterFactory.dispose();
+		getComposedAdapterFactory().dispose();
 		// shortLabelProvider.dispose();
 		if (modelElementChangeListener != null) {
 			modelElementChangeListener.remove();
@@ -336,5 +351,33 @@ public class LinkControl extends SingleControl {
 	protected Control[] getControlsForTooltip() {
 		// return new Control[] { hyperlink, imageHyperlink };
 		return new Control[0];
+	}
+
+	/**
+	 * @return the adapterFactoryItemDelegator
+	 */
+	public AdapterFactoryItemDelegator getAdapterFactoryItemDelegator() {
+		return adapterFactoryItemDelegator;
+	}
+
+	/**
+	 * @param adapterFactoryItemDelegator the adapterFactoryItemDelegator to set
+	 */
+	public void setAdapterFactoryItemDelegator(AdapterFactoryItemDelegator adapterFactoryItemDelegator) {
+		this.adapterFactoryItemDelegator = adapterFactoryItemDelegator;
+	}
+
+	/**
+	 * @return the composedAdapterFactory
+	 */
+	public ComposedAdapterFactory getComposedAdapterFactory() {
+		return composedAdapterFactory;
+	}
+
+	/**
+	 * @param composedAdapterFactory the composedAdapterFactory to set
+	 */
+	public void setComposedAdapterFactory(ComposedAdapterFactory composedAdapterFactory) {
+		this.composedAdapterFactory = composedAdapterFactory;
 	}
 }

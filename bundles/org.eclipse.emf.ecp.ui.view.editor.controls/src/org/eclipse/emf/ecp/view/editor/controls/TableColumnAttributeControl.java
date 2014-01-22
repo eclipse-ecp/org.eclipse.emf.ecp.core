@@ -86,7 +86,7 @@ public class TableColumnAttributeControl extends LinkControl {
 		protected void doExecute() {
 
 			final AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(
-				composedAdapterFactory);
+				getComposedAdapterFactory());
 			final EReference eref = (EReference) ((VFeaturePathDomainModelReference) ((VTableControl) getFirstSetting()
 				.getEObject()
 				.eContainer()).getDomainModelReference()).getDomainModelEFeature();

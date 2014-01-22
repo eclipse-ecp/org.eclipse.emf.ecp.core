@@ -11,14 +11,13 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.internal.ui;
 
-import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 
 /**
  * @author Eugen Neufeld
  * 
  */
-public class ECPViewerFilter extends ViewerFilter {
+public abstract class ECPViewerFilter extends ViewerFilter {
 
 	private String searchTerm;
 
@@ -32,13 +31,12 @@ public class ECPViewerFilter extends ViewerFilter {
 		this.searchTerm = searchTerm;
 	}
 
+	/**
+	 * 
+	 * @return he search term for this name filter.
+	 */
 	protected String getSearchTerm() {
 		return searchTerm;
-	}
-
-	@Override
-	public boolean select(Viewer viewer, Object parentElement, Object element) {
-		return true;
 	}
 
 }

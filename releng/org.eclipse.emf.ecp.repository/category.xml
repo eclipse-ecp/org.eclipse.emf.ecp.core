@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/org.eclipse.emf.ecp.validation.feature_1.1.1.qualifier.jar" id="org.eclipse.emf.ecp.validation.feature" version="1.1.1.qualifier">
+      <category name="org.eclipse.emf.ecp.extra.category"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecp.feature_1.1.1.qualifier.jar" id="org.eclipse.emf.ecp.feature" version="1.1.1.qualifier">
+      <category name="org.eclipse.emf.ecp.category"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecp.cdo.feature_1.1.1.qualifier.jar" id="org.eclipse.emf.ecp.cdo.feature" version="1.1.1.qualifier">
+      <category name="org.eclipse.emf.ecp.provider.category"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecp.emfstore.feature_1.1.1.qualifier.jar" id="org.eclipse.emf.ecp.emfstore.feature" version="1.1.1.qualifier">
+      <category name="org.eclipse.emf.ecp.provider.category"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecp.workspace.feature_1.1.1.qualifier.jar" id="org.eclipse.emf.ecp.workspace.feature" version="1.1.1.qualifier">
+      <category name="org.eclipse.emf.ecp.provider.category"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecp.e3.feature_1.1.1.qualifier.jar" id="org.eclipse.emf.ecp.e3.feature" version="1.1.1.qualifier">
+      <category name="org.eclipse.emf.ecp.3x.category"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecp.sdk.feature_1.1.1.qualifier.jar" id="org.eclipse.emf.ecp.sdk.feature" version="1.1.1.qualifier">
+      <category name="org.eclipse.emf.ecp.sdk.category"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecp.view.custom.feature_1.1.1.qualifier.jar" id="org.eclipse.emf.ecp.view.custom.feature" version="1.1.1.qualifier">
+      <category name="org.eclipse.emf.ecp.view"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecp.viewmodel.feature_1.1.1.qualifier.jar" id="org.eclipse.emf.ecp.viewmodel.feature" version="1.1.1.qualifier">
+      <category name="org.eclipse.emf.ecp.view"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecp.view.separator.feature_1.1.1.qualifier.jar" id="org.eclipse.emf.ecp.view.separator.feature" version="1.1.1.qualifier">
+      <category name="org.eclipse.emf.ecp.view"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecp.view.groupedgrid.feature_1.1.1.qualifier.jar" id="org.eclipse.emf.ecp.view.groupedgrid.feature" version="1.1.1.qualifier">
+      <category name="org.eclipse.emf.ecp.view"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecp.view.label.feature_1.1.1.qualifier.jar" id="org.eclipse.emf.ecp.view.label.feature" version="1.1.1.qualifier">
+      <category name="org.eclipse.emf.ecp.view"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecp.view.rule.feature_1.1.1.qualifier.jar" id="org.eclipse.emf.ecp.view.rule.feature" version="1.1.1.qualifier">
+      <category name="org.eclipse.emf.ecp.view"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecp.view.group.feature_1.1.1.qualifier.jar" id="org.eclipse.emf.ecp.view.group.feature" version="1.1.1.qualifier">
+      <category name="org.eclipse.emf.ecp.view"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecp.view.validation.feature_1.1.1.qualifier.jar" id="org.eclipse.emf.ecp.view.validation.feature" version="1.1.1.qualifier">
+      <category name="org.eclipse.emf.ecp.view"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecp.view.horizontal.feature_1.1.1.qualifier.jar" id="org.eclipse.emf.ecp.view.horizontal.feature" version="1.1.1.qualifier">
+      <category name="org.eclipse.emf.ecp.view"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecp.view.vertical.feature_1.1.1.qualifier.jar" id="org.eclipse.emf.ecp.view.vertical.feature" version="1.1.1.qualifier">
+      <category name="org.eclipse.emf.ecp.view"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecp.view.model.ide.feature_1.1.1.qualifier.jar" id="org.eclipse.emf.ecp.view.model.ide.feature" version="1.1.1.qualifier">
+      <category name="org.eclipse.emf.ecp.view"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecp.view.custom.feature_1.1.1.qualifier.jar" id="org.eclipse.emf.ecp.view.custom.feature" version="1.1.1.qualifier">
+      <category name="org.eclipse.emf.ecp.view"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecp.view.group.feature_1.1.1.qualifier.jar" id="org.eclipse.emf.ecp.view.group.feature" version="1.1.1.qualifier">
+      <category name="org.eclipse.emf.ecp.view"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecp.view.groupedgrid.feature_1.1.1.qualifier.jar" id="org.eclipse.emf.ecp.view.groupedgrid.feature" version="1.1.1.qualifier">
+      <category name="org.eclipse.emf.ecp.view"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecp.view.label.feature_1.1.1.qualifier.jar" id="org.eclipse.emf.ecp.view.label.feature" version="1.1.1.qualifier">
+      <category name="org.eclipse.emf.ecp.view"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecp.view.rule.feature_1.1.1.qualifier.jar" id="org.eclipse.emf.ecp.view.rule.feature" version="1.1.1.qualifier">
+      <category name="org.eclipse.emf.ecp.view"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecp.view.separator.feature_1.1.1.qualifier.jar" id="org.eclipse.emf.ecp.view.separator.feature" version="1.1.1.qualifier">
+      <category name="org.eclipse.emf.ecp.view"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecp.view.table.feature_1.1.1.qualifier.jar" id="org.eclipse.emf.ecp.view.table.feature" version="1.1.1.qualifier">
+      <category name="org.eclipse.emf.ecp.view"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecp.view.template.feature_1.1.1.qualifier.jar" id="org.eclipse.emf.ecp.view.template.feature" version="1.1.1.qualifier">
+      <category name="org.eclipse.emf.ecp.view"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecp.view.categorization.feature_1.1.1.qualifier.jar" id="org.eclipse.emf.ecp.view.categorization.feature" version="1.1.1.qualifier">
+      <category name="org.eclipse.emf.ecp.view"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecp.view.model.editor.feature_1.1.1.qualifier.jar" id="org.eclipse.emf.ecp.view.model.editor.feature" version="1.1.1.qualifier">
+      <category name="org.eclipse.emf.ecp.view.editor"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecp.view.template.helper.feature_1.1.1.qualifier.jar" id="org.eclipse.emf.ecp.view.template.helper.feature" version="1.1.1.qualifier">
+      <category name="org.eclipse.emf.ecp.view.editor"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecp.view.unset.feature_1.1.1.qualifier.jar" id="org.eclipse.emf.ecp.view.unset.feature" version="1.1.1.qualifier">
+      <category name="org.eclipse.emf.ecp.view"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecp.ecore.feature_1.1.1.qualifier.jar" id="org.eclipse.emf.ecp.ecore.feature" version="1.1.1.qualifier">
+      <category name="org.eclipse.emf.ecp.extra.category"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecp.e4.feature_1.1.1.qualifier.jar" id="org.eclipse.emf.ecp.e4.feature" version="1.1.1.qualifier">
+      <category name="org.eclipse.emf.ecp.e4.category"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecp.view.treemasterdetail.feature_1.1.1.qualifier.jar" id="org.eclipse.emf.ecp.view.treemasterdetail.feature" version="1.1.1.qualifier">
+      <category name="org.eclipse.emf.ecp.view"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecp.ide.feature_1.1.1.qualifier.jar" id="org.eclipse.emf.ecp.ide.feature" version="1.1.1.qualifier">
+      <category name="org.eclipse.emf.ecp.ide"/>
+   </feature>
+   <feature url="features/org.eclipse.emf.ecp.rap.util.feature_1.1.1.qualifier.jar" id="org.eclipse.emf.ecp.rap.util.feature" version="1.1.1.qualifier">
+      <category name="org.eclipse.emf.ecp.extra.category"/>
+   </feature>
+   <category-def name="org.eclipse.emf.ecp.category" label="EMF Client Platform"/>
+   <category-def name="org.eclipse.emf.ecp.provider.category" label="EMF Client Platform Providers (at least one is required)"/>
+   <category-def name="org.eclipse.emf.ecp.3x.category" label="Eclipse 3.x UI"/>
+   <category-def name="org.eclipse.emf.ecp.extra.category" label="ECP Extra Feature"/>
+   <category-def name="org.eclipse.emf.ecp.sdk.category" label="SDK"/>
+   <category-def name="org.eclipse.emf.ecp.view" label="View Models"/>
+   <category-def name="org.eclipse.emf.ecp.view.editor" label="View Model Editor"/>
+   <category-def name="org.eclipse.emf.ecp.e4.category" label="ECP E4"/>
+   <category-def name="org.eclipse.emf.ecp.ide" label="IDE Integration"/>
+</site>

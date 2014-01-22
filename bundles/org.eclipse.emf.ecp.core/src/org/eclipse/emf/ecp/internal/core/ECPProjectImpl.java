@@ -59,6 +59,8 @@ import org.eclipse.emf.edit.domain.EditingDomain;
  */
 public final class ECPProjectImpl extends PropertiesElement implements InternalProject, DisposeListener {
 
+	private static final String PACKAGEFILTERS_EXTENSIONPOINT = "org.eclipse.emf.ecp.core.filters"; //$NON-NLS-1$
+
 	private InternalRepository repository;
 
 	private InternalProvider provider;
@@ -99,7 +101,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 		super(name, properties);
 
 		if (repository == null) {
-			throw new IllegalArgumentException("Repository is null");
+			throw new IllegalArgumentException("Repository is null"); //$NON-NLS-1$
 		}
 
 		setRepository((InternalRepository) repository);
@@ -133,7 +135,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 			final String providerName = in.readUTF();
 			provider = (InternalProvider) ECPUtil.getECPProviderRegistry().getProvider(providerName);
 			if (provider == null) {
-				throw new IllegalStateException("Provider not found: " + providerName);
+				throw new IllegalStateException("Provider not found: " + providerName); //$NON-NLS-1$
 			}
 		}
 
@@ -167,12 +169,12 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	private void setupFilteredEPackages() {
 		final List<ECPFilterProvider> filterProviders = new ArrayList<ECPFilterProvider>();
 		final IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(
-			"org.eclipse.emf.ecp.core.filters");
+			PACKAGEFILTERS_EXTENSIONPOINT);
 		for (final IExtension extension : extensionPoint.getExtensions()) {
 			final IConfigurationElement configurationElement = extension.getConfigurationElements()[0];
 			try {
 				final ECPFilterProvider filterProvider = (ECPFilterProvider) configurationElement
-					.createExecutableExtension("class");
+					.createExecutableExtension("class"); //$NON-NLS-1$
 				filterProviders.add(filterProvider);
 			} catch (final CoreException ex) {
 				Activator.log(ex);

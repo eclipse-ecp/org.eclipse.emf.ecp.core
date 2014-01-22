@@ -23,6 +23,7 @@ import org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTValidationHelper;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SingleColumnRow;
+import org.eclipse.emf.ecp.edit.internal.swt.util.ThreeColumnRow;
 import org.eclipse.emf.ecp.edit.spi.ECPAbstractControl;
 import org.eclipse.emf.ecp.view.internal.custom.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.custom.ui.ECPAbstractCustomControl;
@@ -79,12 +80,12 @@ public abstract class ECPAbstractCustomControlSWT extends
 	 * ECPCustomControl}.
 	 * 
 	 * @param parent the {@link Composite} to position the validation label on
+	 * @return the label showing the validation
 	 */
-	protected final void createValidationLabel(Composite parent) {
+	protected final Label createValidationLabel(Composite parent) {
 		validationLabel = new Label(parent, SWT.NONE);
 		validationLabel.setBackground(parent.getBackground());
-		validationLabel.setImage(getImage(VALIDATION_ERROR_IMAGE));
-		validationLabel.setVisible(false);
+		return validationLabel;
 	}
 
 	/**
@@ -174,6 +175,12 @@ public abstract class ECPAbstractCustomControlSWT extends
 			else if (DoubleColumnRow.class.isInstance(row)) {
 				((DoubleColumnRow) row).getLeftControl().setEnabled(isEditable);
 				((DoubleColumnRow) row).getRightControl().setEnabled(isEditable);
+
+			}
+			else if (ThreeColumnRow.class.isInstance(row)) {
+				((ThreeColumnRow) row).getLeftControl().setEnabled(isEditable);
+				((ThreeColumnRow) row).getRightControl().setEnabled(isEditable);
+				((ThreeColumnRow) row).getMiddleControl().setEnabled(isEditable);
 
 			}
 		}

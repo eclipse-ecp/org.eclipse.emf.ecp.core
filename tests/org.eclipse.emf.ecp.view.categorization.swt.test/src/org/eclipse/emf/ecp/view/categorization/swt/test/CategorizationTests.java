@@ -64,8 +64,7 @@ public class CategorizationTests {
 
 	private static boolean checkIfThereIsATextControl(Control control) {
 		Composite controlComposite = (Composite) control;
-		controlComposite = (Composite) controlComposite.getChildren()[1];
-		controlComposite = (Composite) controlComposite.getChildren()[1];
+		controlComposite = (Composite) controlComposite.getChildren()[2];
 		controlComposite = (Composite) controlComposite.getChildren()[0];
 		controlComposite = (Composite) controlComposite.getChildren()[0];
 		final Control textControl = controlComposite.getChildren()[0];
@@ -137,7 +136,7 @@ public class CategorizationTests {
 		assertTrue(composite.getChildren().length == 1);
 		composite = (Composite) composite.getChildren()[0];
 
-		assertTrue(composite.getChildren().length == 2);
+		assertTrue(composite.getChildren().length == 3);
 		assertLabelAndTextControl(composite, NAME);
 
 	}

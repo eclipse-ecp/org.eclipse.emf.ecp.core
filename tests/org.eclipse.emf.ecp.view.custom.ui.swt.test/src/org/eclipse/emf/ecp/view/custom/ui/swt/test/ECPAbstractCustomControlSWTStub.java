@@ -48,6 +48,14 @@ public class ECPAbstractCustomControlSWTStub extends ECPAbstractCustomControlSWT
 	private Composite textControl;
 	private final boolean withControl;
 	private boolean validationReseted;
+	private Label validationLabel;
+
+	/**
+	 * @return the validationLabel
+	 */
+	public Label getValidationLabel() {
+		return validationLabel;
+	}
 
 	public ECPAbstractCustomControlSWTStub() {
 		this(false);
@@ -78,10 +86,10 @@ public class ECPAbstractCustomControlSWTStub extends ECPAbstractCustomControlSWT
 		}
 		final VFeaturePathDomainModelReference controlFeature = (VFeaturePathDomainModelReference) getResolvedDomainModelReference(VCustomPackage.eINSTANCE
 			.getHardcodedDomainModelReference_ControlId());
-
+		validationLabel = createValidationLabel(composite);
 		setTextControl(createControl(controlFeature, composite));
 		result.add(SWTRenderingHelper.INSTANCE.getResultRowFactory()
-			.createRenderingResultRow(label, getTextControl()));
+			.createRenderingResultRow(label, validationLabel, getTextControl()));
 
 		return result;
 	}

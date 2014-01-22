@@ -86,7 +86,7 @@ public class ControlTargetFeatureControl extends LinkControl {
 			getEditingDomain()
 				.getCommandStack()
 				.execute(
-					new FilteredReferenceCommand(getSetting().getEObject(), composedAdapterFactory,
+					new FilteredReferenceCommand(getSetting().getEObject(), getComposedAdapterFactory(),
 						getShell()));
 		}
 	}
@@ -99,7 +99,12 @@ public class ControlTargetFeatureControl extends LinkControl {
 
 					public IStatus validate(Object[] selection) {
 						if (selection.length != 0 && EStructuralFeature.class.isInstance(selection[0])) {
-
+							if (!Helper.hasFeaturePropertyDescriptor((EStructuralFeature) selection[0])) {
+								return new Status(IStatus.ERROR,
+									org.eclipse.emf.ecp.view.editor.controls.Activator.PLUGIN_ID,
+									"The selected " + EStructuralFeature.class.getSimpleName()
+										+ " has no PropertyDescriptor.");
+							}
 							return Status.OK_STATUS;
 						}
 						return new Status(IStatus.ERROR, org.eclipse.emf.ecp.view.editor.controls.Activator.PLUGIN_ID,

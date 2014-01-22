@@ -51,20 +51,32 @@ public final class DefaultLayoutHelper implements LayoutHelper<Layout> {
 	 * @see org.eclipse.emf.ecp.view.spi.renderer.LayoutHelper#getLeftColumnLayoutData()
 	 */
 	public Object getLeftColumnLayoutData() {
-		return GridDataFactory.fillDefaults()
-			.align(SWT.BEGINNING, SWT.CENTER)
+		return GridDataFactory.fillDefaults().grab(false, false)
+			.align(SWT.FILL, SWT.CENTER)
 			.create();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.renderer.LayoutHelper#getRightColumnLayoutData()
+	 * @see org.eclipse.emf.ecp.view.spi.renderer.LayoutHelper#getRightColumnLayoutData(int)
 	 */
-	public Object getRightColumnLayoutData() {
+	public Object getRightColumnLayoutData(int xSpan) {
 		return GridDataFactory.fillDefaults()
 			.align(SWT.FILL, SWT.CENTER)
-			.grab(true, false)
+			.grab(true, false).span(xSpan, 1)
+			.create();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.spi.renderer.LayoutHelper#getValidationColumnLayoutData()
+	 */
+	public Object getValidationColumnLayoutData() {
+		return GridDataFactory.fillDefaults()
+			.align(SWT.CENTER, SWT.CENTER).hint(16, 17)
+			.grab(false, false)
 			.create();
 	}
 

@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: IDE ViewModel Service
+Bundle-SymbolicName: org.eclipse.emf.ecp.ide.view.service
+Bundle-Version: 1.1.1.qualifier
+Bundle-Vendor: Eclipse Modeling Project
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Import-Package: org.osgi.framework;version="1.3.0"
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.emf.ecp.view.model,
+ org.eclipse.core.resources,
+ org.eclipse.core.runtime;bundle-version="3.9.0"
+Export-Package: org.eclipse.emf.ecp.ide.view.internal.service;x-internal:=true,
+ org.eclipse.emf.ecp.ide.view.service;x-internal:=true
+Service-Component: OSGI-INF/ideviewmdoelregistry.xml

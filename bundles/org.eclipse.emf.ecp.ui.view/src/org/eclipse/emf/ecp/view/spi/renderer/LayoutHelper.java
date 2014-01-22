@@ -47,7 +47,15 @@ public interface LayoutHelper<LAYOUT> {
 	/**
 	 * The Layout data to use to set for a right column.
 	 * 
+	 * @param xSpan the horizontal span
 	 * @return the layout data to set
 	 */
-	Object getRightColumnLayoutData();
+	Object getRightColumnLayoutData(int xSpan);
+
+	/**
+	 * The Layout data to use to set for a validation column.
+	 * 
+	 * @return the layout data to set
+	 */
+	Object getValidationColumnLayoutData();
 }

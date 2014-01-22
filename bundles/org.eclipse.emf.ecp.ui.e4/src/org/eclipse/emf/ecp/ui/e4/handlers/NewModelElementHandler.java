@@ -41,7 +41,7 @@ public class NewModelElementHandler {
 		if (ecpProject == null) {
 			return;
 		}
-		ECPHandlerHelper.addModelElement(ecpProject, shell, false);
+		ECPHandlerHelper.addModelElement(ecpProject, shell, true);
 	}
 
 	/**

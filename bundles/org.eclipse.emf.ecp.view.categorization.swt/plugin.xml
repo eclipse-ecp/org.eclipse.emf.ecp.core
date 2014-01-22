@@ -6,14 +6,26 @@
       <renderer
             element="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement"
             renderer="org.eclipse.emf.ecp.view.spi.categorization.swt.SWTCategorizationElementRenderer">
+         <staticTest
+               element="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement"
+               priority="1">
+         </staticTest>
       </renderer>
       <renderer
             element="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorization"
             renderer="org.eclipse.emf.ecp.view.spi.categorization.swt.SWTCategorizationRenderer">
+         <staticTest
+               element="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorization"
+               priority="1">
+         </staticTest>
       </renderer>
       <renderer
             element="org.eclipse.emf.ecp.view.spi.categorization.model.VCategory"
             renderer="org.eclipse.emf.ecp.view.spi.categorization.swt.SWTCategoryRenderer">
+         <staticTest
+               element="org.eclipse.emf.ecp.view.spi.categorization.model.VCategory"
+               priority="1">
+         </staticTest>
       </renderer>
    </extension>
 

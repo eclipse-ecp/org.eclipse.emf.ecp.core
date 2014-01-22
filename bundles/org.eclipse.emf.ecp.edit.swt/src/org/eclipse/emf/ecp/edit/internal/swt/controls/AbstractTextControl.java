@@ -62,6 +62,14 @@ public abstract class AbstractTextControl extends SingleControl {
 
 	}
 
+	/**
+	 * Creates a {@link ToolTip}.
+	 * 
+	 * @param style the SWT style
+	 * @param text the text
+	 * @param message the message
+	 * @return a {@link ToolTip}
+	 */
 	protected ToolTip createToolTip(int style, String text, String message) {
 		final ToolTip toolTip = new ToolTip(this.text.getShell(), style);
 		toolTip.setText(text);

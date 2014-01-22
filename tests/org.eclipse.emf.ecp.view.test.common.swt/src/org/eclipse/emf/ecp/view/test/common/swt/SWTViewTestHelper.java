@@ -80,13 +80,12 @@ public final class SWTViewTestHelper {
 			return false;
 		}
 		Composite controlComposite = (Composite) control;
-		controlComposite = (Composite) controlComposite.getChildren()[1];
+		controlComposite = (Composite) controlComposite.getChildren()[2];
 		return checkIfThereIsATextControl(controlComposite);
 	}
 
 	public static boolean checkIfThereIsATextControl(Control control) {
 		Composite controlComposite = (Composite) control;
-		controlComposite = (Composite) controlComposite.getChildren()[1];
 		controlComposite = (Composite) controlComposite.getChildren()[0];
 		controlComposite = (Composite) controlComposite.getChildren()[0];
 		final Control textControl = controlComposite.getChildren()[0];

@@ -50,7 +50,7 @@ public class ECPSWTViewImpl implements ECPSWTView {
 	 */
 	public void dispose() {
 		viewContext.dispose();
-
+		composite.dispose();
 	}
 
 	/**

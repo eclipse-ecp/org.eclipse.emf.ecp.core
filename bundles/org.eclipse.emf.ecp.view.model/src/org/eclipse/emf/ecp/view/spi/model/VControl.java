@@ -11,6 +11,11 @@
  */
 package org.eclipse.emf.ecp.view.spi.model;
 
+import java.util.Collection;
+
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
+
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Control</b></em>'.
@@ -90,5 +95,23 @@ public interface VControl extends VContainedElement {
 	 * @generated
 	 */
 	void setLabelAlignment(LabelAlignment value);
+
+	/**
+	 * Sets the {@link VDomainModelReference} based on the provided {@link EStructuralFeature}. Thus a
+	 * {@link VFeaturePathDomainModelReference} is created.
+	 * 
+	 * @param feature the {@link EStructuralFeature} to create the {@link VDomainModelReference} for
+	 */
+	void setDomainModelReference(EStructuralFeature feature);
+
+	/**
+	 * Sets the {@link VDomainModelReference} based on the provided {@link EStructuralFeature} and the collection of
+	 * {@link EReference EReferences}. Thus a {@link VFeaturePathDomainModelReference} is created.
+	 * 
+	 * @param feature the {@link EStructuralFeature} to create the {@link VDomainModelReference} for
+	 * @param referencePath the {@link Collection} of {@link EReference EReferences} being the reference path
+	 */
+	void setDomainModelReference(EStructuralFeature feature,
+		Collection<EReference> referencePath);
 
 } // Control

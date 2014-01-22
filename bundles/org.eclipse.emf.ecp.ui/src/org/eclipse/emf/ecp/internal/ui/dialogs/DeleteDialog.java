@@ -31,6 +31,12 @@ import org.eclipse.swt.widgets.Shell;
 public class DeleteDialog extends TitleAreaDialog {
 	private final List<ECPContainer> deletables;
 
+	/**
+	 * Default constructor.
+	 * 
+	 * @param parentShell The parent {@link Shell}
+	 * @param deletables The {@link ECPContainer}s to be deleted
+	 */
 	public DeleteDialog(Shell parentShell, List<ECPContainer> deletables) {
 		super(parentShell);
 		this.deletables = deletables;
@@ -44,19 +50,19 @@ public class DeleteDialog extends TitleAreaDialog {
 
 	@Override
 	protected Control createDialogArea(Composite parent) {
-		int count = deletables.size();
+		final int count = deletables.size();
 
 		setTitle(Messages.DeleteDialog_Title);
 		setTitleImage(Activator.getImage("icons/delete_wiz.png")); //$NON-NLS-1$
 		setMessage(Messages.DeleteDialog_Message_AreYouSure + count + Messages.DeleteDialog_Message_element
 			+ (count == 1 ? "" : Messages.DeleteDialog_Message_element_plural) + "?");
 
-		Composite area = (Composite) super.createDialogArea(parent);
-		Composite container = new Composite(area, SWT.NONE);
+		final Composite area = (Composite) super.createDialogArea(parent);
+		final Composite container = new Composite(area, SWT.NONE);
 		container.setLayout(new GridLayout(1, false));
 		container.setLayoutData(new GridData(GridData.FILL_BOTH));
 
-		Composite composite = new Composite(container, SWT.NONE);
+		final Composite composite = new Composite(container, SWT.NONE);
 		composite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		composite.setLayout(new GridLayout(1, false));
 

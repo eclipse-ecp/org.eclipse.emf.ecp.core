@@ -53,7 +53,7 @@ public class SWTGroupRenderer extends AbstractSWTRenderer<VGroup> {
 			group.setText(vGroup.getName());
 		}
 		group.setBackground(parent.getBackground());
-		group.setLayout(getLayoutHelper().getColumnLayout(2, false));
+		group.setLayout(getLayoutHelper().getColumnLayout(3, false));
 
 		for (final VContainedElement child : vGroup.getChildren()) {
 

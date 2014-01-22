@@ -6,6 +6,10 @@
       <renderer
             element="org.eclipse.emf.ecp.view.spi.separator.model.VSeparator"
             renderer="org.eclipse.emf.ecp.view.spi.separator.swt.SWTSeparatorRenderer">
+         <staticTest
+               element="org.eclipse.emf.ecp.view.spi.separator.model.VSeparator"
+               priority="1">
+         </staticTest>
       </renderer>
    </extension>
 

@@ -26,8 +26,8 @@ import org.eclipse.swt.widgets.Display;
 /**
  * @author Eike Stepper
  */
-public class ECPLabelProvider extends LabelProvider implements ECPModelContextProvider {
-	private final ECPModelContextProvider modelContextProvider;
+public class ECPLabelProvider extends LabelProvider implements ECPModelContextProvider, IECPLabelProvider {
+	private ECPModelContextProvider modelContextProvider;
 
 	public ECPLabelProvider(ECPModelContextProvider modelContextProvider) {
 		this.modelContextProvider = modelContextProvider;
@@ -35,9 +35,9 @@ public class ECPLabelProvider extends LabelProvider implements ECPModelContextPr
 
 	@Override
 	public String getText(Object element) {
-		UIProvider uiProvider = getUIProvider(element);
+		final UIProvider uiProvider = getUIProvider(element);
 		if (uiProvider != null) {
-			String text = uiProvider.getText(element);
+			final String text = uiProvider.getText(element);
 			if (text != null) {
 				return text;
 			}
@@ -56,9 +56,9 @@ public class ECPLabelProvider extends LabelProvider implements ECPModelContextPr
 			return Activator.getImage("icons/error.gif"); //$NON-NLS-1$
 		}
 
-		UIProvider uiProvider = getUIProvider(element);
+		final UIProvider uiProvider = getUIProvider(element);
 		if (uiProvider != null) {
-			Image image = uiProvider.getImage(element);
+			final Image image = uiProvider.getImage(element);
 			if (image != null) {
 				return image;
 			}
@@ -70,7 +70,7 @@ public class ECPLabelProvider extends LabelProvider implements ECPModelContextPr
 	public UIProvider getUIProvider(Object element) {
 		UIProvider uiProvider = UIProviderRegistry.INSTANCE.getUIProvider(element);
 		if (uiProvider == null) {
-			ECPContainer modelContext = getModelContext(element);
+			final ECPContainer modelContext = getModelContext(element);
 			if (modelContext != null) {
 				uiProvider = UIProviderRegistry.INSTANCE.getUIProvider(modelContext);
 			}
@@ -89,7 +89,7 @@ public class ECPLabelProvider extends LabelProvider implements ECPModelContextPr
 	}
 
 	protected final void fireEvent(final LabelProviderChangedEvent event) {
-		Display display = Display.getCurrent();
+		final Display display = Display.getCurrent();
 		if (display == null) {
 			Display.getDefault().asyncExec(new Runnable() {
 				public void run() {
@@ -99,5 +99,23 @@ public class ECPLabelProvider extends LabelProvider implements ECPModelContextPr
 		} else {
 			fireLabelProviderChanged(event);
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.internal.ui.model.IECPLabelProvider#getModelContextProvider()
+	 */
+	public ECPModelContextProvider getModelContextProvider() {
+		return modelContextProvider;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.internal.ui.model.IECPLabelProvider#setModelContextProvider(org.eclipse.emf.ecp.core.util.ECPModelContextProvider)
+	 */
+	public void setModelContextProvider(ECPModelContextProvider modelContextProvider) {
+		this.modelContextProvider = modelContextProvider;
 	}
 }

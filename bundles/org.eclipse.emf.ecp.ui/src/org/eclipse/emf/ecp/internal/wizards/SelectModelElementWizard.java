@@ -35,15 +35,74 @@ import org.eclipse.swt.widgets.Composite;
  */
 public class SelectModelElementWizard extends ECPWizard<SelectionComposite<? extends ColumnViewer>> {
 
+	/**
+	 * @author Jonas
+	 *
+	 */
+	private final class WizardPageExtension extends WizardPage {
+		/**
+		 * @param pageName
+		 */
+		private WizardPageExtension(String pageName) {
+			super(pageName);
+		}
+
+		public void createControl(Composite parent) {
+			final Composite composite = getCompositeProvider().createUI(parent);
+			getCompositeProvider().getViewer().addSelectionChangedListener(new ISelectionChangedListener() {
+
+				public void selectionChanged(SelectionChangedEvent event) {
+					final IStructuredSelection sel = (IStructuredSelection) getCompositeProvider().getViewer()
+						.getSelection();
+
+					if (sel != null && classtoSelect.isAssignableFrom(sel.getFirstElement().getClass())) {
+						setPageComplete(true);
+					} else {
+						setPageComplete(false);
+					}
+				}
+			});
+			getCompositeProvider().getViewer().addDoubleClickListener(new IDoubleClickListener() {
+
+				public void doubleClick(DoubleClickEvent event) {
+					if (isPageComplete() && performFinish()) {
+						((WizardDialog) getContainer()).close();
+					}
+
+				}
+
+			});
+			setPageComplete(false);
+			setControl(composite);
+		}
+	}
+
 	private final String pageName;
 	private final String description;
 	private final String pageTitle;
 	private final Class<?> classtoSelect;
 
+	/**
+	 * Constructor to select an EClass.
+	 * 
+	 * @param windowTitle The window title
+	 * @param pageName the name of the page
+	 * @param pageTitle the title of the page
+	 * @param description the description
+	 */
 	public SelectModelElementWizard(String windowTitle, String pageName, String pageTitle, String description) {
 		this(windowTitle, pageName, pageTitle, description, EClass.class);
 	}
 
+	/**
+	 * Constructor to select an class to be specified.
+	 * 
+	 * @param windowTitle The window title
+	 * @param pageName the name of the page
+	 * @param pageTitle the title of the page
+	 * @param description the description
+	 * @param classtoSelect the class which can be selected
+	 */
 	public SelectModelElementWizard(String windowTitle, String pageName, String pageTitle, String description,
 		Class<?> classtoSelect) {
 		this.classtoSelect = classtoSelect;
@@ -59,37 +118,7 @@ public class SelectModelElementWizard extends ECPWizard<SelectionComposite<? ext
 	@Override
 	public void addPages() {
 		super.addPages();
-		final WizardPage wp = new WizardPage(pageName) {
-
-			public void createControl(Composite parent) {
-				final Composite composite = getCompositeProvider().createUI(parent);
-				getCompositeProvider().getViewer().addSelectionChangedListener(new ISelectionChangedListener() {
-
-					public void selectionChanged(SelectionChangedEvent event) {
-						final IStructuredSelection sel = (IStructuredSelection) getCompositeProvider().getViewer()
-							.getSelection();
-
-						if (sel != null && classtoSelect.isAssignableFrom(sel.getFirstElement().getClass())) {
-							setPageComplete(true);
-						} else {
-							setPageComplete(false);
-						}
-					}
-				});
-				getCompositeProvider().getViewer().addDoubleClickListener(new IDoubleClickListener() {
-
-					public void doubleClick(DoubleClickEvent event) {
-						if (isPageComplete() && performFinish()) {
-							((WizardDialog) getContainer()).close();
-						}
-
-					}
-
-				});
-				setPageComplete(false);
-				setControl(composite);
-			}
-		};
+		final WizardPage wp = new WizardPageExtension(pageName);
 		addPage(wp);
 		wp.setTitle(pageTitle);
 		wp.setDescription(description);

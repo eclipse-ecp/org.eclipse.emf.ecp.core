@@ -322,18 +322,15 @@ public class ECPAbstractCustomControlSWTTest {
 
 		customControl.createControls(testComposite);
 		customControl.handleValidation(validate.getChildren().get(0));
-		final Composite textControl = customControl.getTextControl();
-		final Control control = textControl.getChildren()[0];
-		assertTrue(control instanceof Label);
-		final Label label = (Label) control;
-		assertNotNull(label.getImage());
+
+		assertNotNull(customControl.getValidationLabel().getImage());
 		domainObject.setControlId("not empty");
 		customControl.setValidationReseted(false);
 		customControl.resetValidation();
 		assertTrue(customControl.isValidationReseted());
 		validate = new Diagnostician().validate(domainObject);
 		customControl.handleValidation(validate);
-		assertNull(label.getImage());
+		assertNull(customControl.getValidationLabel().getImage());
 	}
 
 	/**

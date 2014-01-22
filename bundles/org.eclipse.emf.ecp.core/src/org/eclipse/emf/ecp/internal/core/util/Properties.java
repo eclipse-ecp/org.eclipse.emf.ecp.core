@@ -28,25 +28,28 @@ import org.eclipse.emf.ecp.core.util.observer.ECPPropertiesObserver;
  * @author Eike Stepper
  */
 public class Properties extends Registry<Map.Entry<String, String>, ECPPropertiesObserver> implements ECPProperties {
+	/**
+	 * Default constructor.
+	 */
 	public Properties() {
 		activate();
 	}
 
 	public Properties(ObjectInput in) throws IOException {
 		activate();
-		int count = in.readInt();
+		final int count = in.readInt();
 		for (int i = 0; i < count; i++) {
-			String key = in.readUTF();
-			String value = in.readUTF();
+			final String key = in.readUTF();
+			final String value = in.readUTF();
 			addProperty(key, value);
 		}
 
 	}
 
 	public void write(ObjectOutput out) throws IOException {
-		Collection<Entry<String, String>> entries = getElementsToWrite();
+		final Collection<Entry<String, String>> entries = getElementsToWrite();
 		out.writeInt(entries.size());
-		for (Entry<String, String> entry : entries) {
+		for (final Entry<String, String> entry : entries) {
 			out.writeUTF(entry.getKey());
 			out.writeUTF(entry.getValue());
 		}
@@ -54,7 +57,7 @@ public class Properties extends Registry<Map.Entry<String, String>, ECPPropertie
 
 	/** {@inheritDoc} */
 	public void addProperty(String key, String value) {
-		Map.Entry<String, String> property = new Property(key, value);
+		final Map.Entry<String, String> property = new Property(key, value);
 		doChangeElements(null, Collections.singleton(property));
 	}
 
@@ -65,7 +68,7 @@ public class Properties extends Registry<Map.Entry<String, String>, ECPPropertie
 
 	/** {@inheritDoc} */
 	public String getValue(String name) {
-		Entry<String, String> element = getElement(name);
+		final Entry<String, String> element = getElement(name);
 		return element == null ? null : element.getValue();
 	}
 
@@ -86,8 +89,8 @@ public class Properties extends Registry<Map.Entry<String, String>, ECPPropertie
 
 	/** {@inheritDoc} */
 	public ECPProperties copy() {
-		ECPProperties copy = ECPUtil.createProperties();
-		for (Entry<String, String> property : getElements()) {
+		final ECPProperties copy = ECPUtil.createProperties();
+		for (final Entry<String, String> property : getElements()) {
 			copy.addProperty(property.getKey(), property.getValue());
 		}
 
