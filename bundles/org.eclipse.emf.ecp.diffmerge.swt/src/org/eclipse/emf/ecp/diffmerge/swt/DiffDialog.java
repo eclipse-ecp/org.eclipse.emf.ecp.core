@@ -21,7 +21,6 @@ import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SingleColumnRow;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ThreeColumnRow;
 import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
@@ -66,7 +65,7 @@ public class DiffDialog {
 	/**
 	 * Constructor for the diff dialog.
 	 * 
-	 * @param viewModelContext the {@link ViewModelContext}
+	 * @param viewModelContext the {@link org.eclipse.emf.ecp.view.spi.context.ViewModelContext ViewModelContext}
 	 * @param diffAttribute the display name of the attribute
 	 * @param left the left {@link VDomainModelReference}
 	 * @param right the right {@link VDomainModelReference}

@@ -158,6 +158,12 @@ public class ValidationService implements ViewModelService {
 			if (VElement.class.isInstance(notifier)) {
 				validationRegistry.removeRenderable((VElement) notifier);
 				viewValidationGraph.removeRenderable((VElement) notifier);
+				// if (parentNodes == null) {
+				// return;
+				// }
+				// for (final ViewModelGraphNode parentNode : parentNodes) {
+				// viewValidationGraph.updateNodeAndParent(parentNode);
+				// }
 			}
 		}
 	}
@@ -191,7 +197,7 @@ public class ValidationService implements ViewModelService {
 				return; // ignore notifications during initialization
 			}
 			if (ValidationNotification.class.isInstance(notification.getRawNotification())) {
-				viewValidationGraph.validate(getAllEObjects(notification.getNotifier()));
+				viewValidationGraph.validate(notification.getNotifier());
 				return;
 			}
 			final Notification rawNotification = notification.getRawNotification();

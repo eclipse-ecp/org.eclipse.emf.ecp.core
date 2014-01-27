@@ -147,23 +147,27 @@ public class ViewModelGraphNode {
 	 */
 	public void removeChild(ViewModelGraphNode childNode) {
 		children.remove(childNode);
-		childNode.getParents().remove(this);
 		if (!hasChildren()) {
-			value = initValue;
+			setValue(initValue);
 		}
+		childNode.getParents().remove(this);
 	}
 
 	/**
 	 * Remove all children.
 	 */
 	public void removeAllChildren() {
-		for (final ViewModelGraphNode childNode : children) {
-			childNode.getParents().remove(this);
-			if (!hasChildren()) {
-				value = initValue;
-			}
+		final Set<ViewModelGraphNode> childCopy = new LinkedHashSet<ViewModelGraphNode>(children);
+		for (final ViewModelGraphNode childNode : childCopy) {
+			removeChild(childNode);
 		}
-		children.clear();
+		// for (final ViewModelGraphNode childNode : children) {
+		// if (!hasChildren()) {
+		// setValue(initValue);
+		// }
+		// childNode.getParents().remove(this);
+		// }
+		// children.clear();
 	}
 
 	/**

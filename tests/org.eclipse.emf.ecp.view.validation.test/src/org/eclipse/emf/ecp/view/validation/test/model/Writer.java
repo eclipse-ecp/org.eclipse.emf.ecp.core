@@ -22,20 +22,20 @@ import org.eclipse.emf.ecore.EObject;
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Writer</b></em>'.
  * <!-- end-user-doc -->
- *
+ * 
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Writer#getFirstName <em>First Name</em>}</li>
- *   <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Writer#getLastName <em>Last Name</em>}</li>
- *   <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Writer#getEMail <em>EMail</em>}</li>
- *   <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Writer#getBirthDate <em>Birth Date</em>}</li>
- *   <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Writer#getBooks <em>Books</em>}</li>
- *   <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Writer#isPseudonym <em>Pseudonym</em>}</li>
- *   <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Writer#getLibrary <em>Library</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Writer#getFirstName <em>First Name</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Writer#getLastName <em>Last Name</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Writer#getEMail <em>EMail</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Writer#getBirthDate <em>Birth Date</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Writer#getBooks <em>Books</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Writer#isPseudonym <em>Pseudonym</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Writer#getLibrary <em>Library</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @see org.eclipse.emf.ecp.view.validation.test.model.TestPackage#getWriter()
  * @model
  * @generated
@@ -49,6 +49,7 @@ public interface Writer extends EObject {
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the value of the '<em>First Name</em>' attribute.
 	 * @see #setFirstName(String)
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.TestPackage#getWriter_FirstName()
@@ -58,9 +59,11 @@ public interface Writer extends EObject {
 	String getFirstName();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.validation.test.model.Writer#getFirstName <em>First Name</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.validation.test.model.Writer#getFirstName
+	 * <em>First Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @param value the new value of the '<em>First Name</em>' attribute.
 	 * @see #getFirstName()
 	 * @generated
@@ -75,6 +78,7 @@ public interface Writer extends EObject {
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the value of the '<em>Last Name</em>' attribute.
 	 * @see #setLastName(String)
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.TestPackage#getWriter_LastName()
@@ -84,9 +88,11 @@ public interface Writer extends EObject {
 	String getLastName();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.validation.test.model.Writer#getLastName <em>Last Name</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.validation.test.model.Writer#getLastName
+	 * <em>Last Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @param value the new value of the '<em>Last Name</em>' attribute.
 	 * @see #getLastName()
 	 * @generated
@@ -101,6 +107,7 @@ public interface Writer extends EObject {
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the value of the '<em>EMail</em>' attribute.
 	 * @see #setEMail(String)
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.TestPackage#getWriter_EMail()
@@ -110,9 +117,11 @@ public interface Writer extends EObject {
 	String getEMail();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.validation.test.model.Writer#getEMail <em>EMail</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.validation.test.model.Writer#getEMail <em>EMail</em>}'
+	 * attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @param value the new value of the '<em>EMail</em>' attribute.
 	 * @see #getEMail()
 	 * @generated
@@ -127,6 +136,7 @@ public interface Writer extends EObject {
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the value of the '<em>Birth Date</em>' attribute.
 	 * @see #setBirthDate(Date)
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.TestPackage#getWriter_BirthDate()
@@ -136,9 +146,11 @@ public interface Writer extends EObject {
 	Date getBirthDate();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.validation.test.model.Writer#getBirthDate <em>Birth Date</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.validation.test.model.Writer#getBirthDate
+	 * <em>Birth Date</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @param value the new value of the '<em>Birth Date</em>' attribute.
 	 * @see #getBirthDate()
 	 * @generated
@@ -148,13 +160,15 @@ public interface Writer extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Books</b></em>' reference list.
 	 * The list contents are of type {@link org.eclipse.emf.ecp.view.validation.test.model.Book}.
-	 * It is bidirectional and its opposite is '{@link org.eclipse.emf.ecp.view.validation.test.model.Book#getWriters <em>Writers</em>}'.
+	 * It is bidirectional and its opposite is '{@link org.eclipse.emf.ecp.view.validation.test.model.Book#getWriters
+	 * <em>Writers</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Books</em>' reference list isn't clear, there really should be more of a description
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the value of the '<em>Books</em>' reference list.
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.TestPackage#getWriter_Books()
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.Book#getWriters
@@ -172,6 +186,7 @@ public interface Writer extends EObject {
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the value of the '<em>Pseudonym</em>' attribute.
 	 * @see #setPseudonym(boolean)
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.TestPackage#getWriter_Pseudonym()
@@ -181,9 +196,11 @@ public interface Writer extends EObject {
 	boolean isPseudonym();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.validation.test.model.Writer#isPseudonym <em>Pseudonym</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.validation.test.model.Writer#isPseudonym
+	 * <em>Pseudonym</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @param value the new value of the '<em>Pseudonym</em>' attribute.
 	 * @see #isPseudonym()
 	 * @generated
@@ -192,13 +209,15 @@ public interface Writer extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Library</b></em>' container reference.
-	 * It is bidirectional and its opposite is '{@link org.eclipse.emf.ecp.view.validation.test.model.Library#getWriters <em>Writers</em>}'.
+	 * It is bidirectional and its opposite is '
+	 * {@link org.eclipse.emf.ecp.view.validation.test.model.Library#getWriters <em>Writers</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Library</em>' container reference isn't clear, there really should be more of a
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the value of the '<em>Library</em>' container reference.
 	 * @see #setLibrary(Library)
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.TestPackage#getWriter_Library()
@@ -209,9 +228,11 @@ public interface Writer extends EObject {
 	Library getLibrary();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.validation.test.model.Writer#getLibrary <em>Library</em>}' container reference.
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.validation.test.model.Writer#getLibrary <em>Library</em>}'
+	 * container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @param value the new value of the '<em>Library</em>' container reference.
 	 * @see #getLibrary()
 	 * @generated
@@ -221,6 +242,7 @@ public interface Writer extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @model
 	 * @generated
 	 */

@@ -20,16 +20,16 @@ import org.eclipse.emf.ecore.EObject;
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Book</b></em>'.
  * <!-- end-user-doc -->
- *
+ * 
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Book#getTitle <em>Title</em>}</li>
- *   <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Book#getPages <em>Pages</em>}</li>
- *   <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Book#getWriters <em>Writers</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Book#getTitle <em>Title</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Book#getPages <em>Pages</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Book#getWriters <em>Writers</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @see org.eclipse.emf.ecp.view.validation.test.model.TestPackage#getBook()
  * @model
  * @generated
@@ -43,6 +43,7 @@ public interface Book extends EObject {
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the value of the '<em>Title</em>' attribute.
 	 * @see #setTitle(String)
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.TestPackage#getBook_Title()
@@ -52,9 +53,11 @@ public interface Book extends EObject {
 	String getTitle();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.validation.test.model.Book#getTitle <em>Title</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.validation.test.model.Book#getTitle <em>Title</em>}'
+	 * attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @param value the new value of the '<em>Title</em>' attribute.
 	 * @see #getTitle()
 	 * @generated
@@ -70,6 +73,7 @@ public interface Book extends EObject {
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the value of the '<em>Pages</em>' attribute.
 	 * @see #setPages(int)
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.TestPackage#getBook_Pages()
@@ -79,9 +83,11 @@ public interface Book extends EObject {
 	int getPages();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.validation.test.model.Book#getPages <em>Pages</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.validation.test.model.Book#getPages <em>Pages</em>}'
+	 * attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @param value the new value of the '<em>Pages</em>' attribute.
 	 * @see #getPages()
 	 * @generated
@@ -90,13 +96,15 @@ public interface Book extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Writers</b></em>' reference.
-	 * It is bidirectional and its opposite is '{@link org.eclipse.emf.ecp.view.validation.test.model.Writer#getBooks <em>Books</em>}'.
+	 * It is bidirectional and its opposite is '{@link org.eclipse.emf.ecp.view.validation.test.model.Writer#getBooks
+	 * <em>Books</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Writers</em>' reference isn't clear, there really should be more of a description
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the value of the '<em>Writers</em>' reference.
 	 * @see #setWriters(Writer)
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.TestPackage#getBook_Writers()
@@ -107,9 +115,11 @@ public interface Book extends EObject {
 	Writer getWriters();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.validation.test.model.Book#getWriters <em>Writers</em>}' reference.
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.validation.test.model.Book#getWriters <em>Writers</em>}'
+	 * reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @param value the new value of the '<em>Writers</em>' reference.
 	 * @see #getWriters()
 	 * @generated
@@ -119,6 +129,7 @@ public interface Book extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @model
 	 * @generated
 	 */

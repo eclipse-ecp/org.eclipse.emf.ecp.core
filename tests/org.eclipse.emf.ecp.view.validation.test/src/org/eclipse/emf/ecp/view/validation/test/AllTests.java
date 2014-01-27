@@ -21,7 +21,8 @@ import org.junit.runners.Suite.SuiteClasses;
 	ViewValidationTest.class,
 	VDiagnosticHelperTest.class,
 	ValidationProviderTest.class,
-	SubstitutionLabelTest.class
+	SubstitutionLabelTest.class,
+	TableValidationTest.class
 })
 public class AllTests {
 

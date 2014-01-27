@@ -133,6 +133,12 @@ public class Properties extends Registry<Map.Entry<String, String>, ECPPropertie
 
 		private final String value;
 
+		/**
+		 * Default constructor.
+		 * 
+		 * @param key the key of the property
+		 * @param value the value of the property
+		 */
 		public Property(String key, String value) {
 			this.key = key;
 			this.value = value;

@@ -158,8 +158,8 @@ public class TableControl extends SWTControl {
 		final List<RenderingResultRow<Control>> list = Collections.singletonList(SWTRenderingHelper.INSTANCE
 			.getResultRowFactory().createRenderingResultRow(
 				createControl(parent)));
-		// TODO remove asap
-		backwardCompatibleHandleValidation();
+
+		applyValidation(getControl().getDiagnostic());
 		return list;
 
 	}
@@ -491,6 +491,7 @@ public class TableControl extends SWTControl {
 	 * @param clazz the {@link EClass} defining the EObject to create
 	 */
 	protected void addRow(EClass clazz) {
+		addingRowWorkaround = 0;
 		final EObject modelElement = mainSetting.getEObject();
 		final EObject instance = clazz.getEPackage().getEFactoryInstance().create(clazz);
 
@@ -504,6 +505,8 @@ public class TableControl extends SWTControl {
 	private Setting mainSetting;
 
 	private boolean isDisposing;
+
+	private int addingRowWorkaround = -1;
 
 	private void createAddRowButton(final EClass clazz, final Composite buttonComposite) {
 		addButton = new Button(buttonComposite, SWT.None);
@@ -555,20 +558,59 @@ public class TableControl extends SWTControl {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @deprecated
+	 * @see org.eclipse.emf.ecp.edit.spi.ECPAbstractControl#applyValidation(org.eclipse.emf.ecp.view.spi.model.VDiagnostic)
 	 */
-	@Deprecated
 	@Override
-	public void handleValidation(Diagnostic diagnostic) {
-		if (diagnostic.getData().isEmpty()) {
+	protected void applyValidation(VDiagnostic diagnostic) {
+
+		if (validationLabel == null || validationLabel.isDisposed()) {
 			return;
 		}
-		final Image image = getValidationIcon(diagnostic.getSeverity());
-		validationLabel.setImage(image);
-		validationLabel.setToolTipText(getTableTooltipMessage(diagnostic));
-		final EObject object = (EObject) diagnostic.getData().get(0);
-		tableViewer.update(object, null);
+		if (diagnostic != null) {
+			final Image image = getValidationIcon(diagnostic.getHighestSeverity());
+			validationLabel.setImage(image);
+			validationLabel.setToolTipText(diagnostic.getMessage());
+		}
+		if (addingRowWorkaround >= 0 && addingRowWorkaround <= 1) {
+			addingRowWorkaround++;
+			return;
+		}
+		addingRowWorkaround = -1;
+		tableViewer.refresh();
 	}
+
+	// /**
+	// * {@inheritDoc}
+	// *
+	// * @deprecated
+	// */
+	// @Deprecated
+	// @Override
+	// public void resetValidation() {
+	// if (validationLabel == null || validationLabel.isDisposed()) {
+	// return;
+	// }
+	//		validationLabel.setToolTipText(""); //$NON-NLS-1$
+	// validationLabel.setImage(null);
+	// tableViewer.refresh();
+	// }
+	// /**
+	// * {@inheritDoc}
+	// *
+	// * @deprecated
+	// */
+	// @Deprecated
+	// @Override
+	// public void handleValidation(Diagnostic diagnostic) {
+	// if (diagnostic.getData().isEmpty()) {
+	// return;
+	// }
+	// final Image image = getValidationIcon(diagnostic.getSeverity());
+	// validationLabel.setImage(image);
+	// validationLabel.setToolTipText(getTableTooltipMessage(diagnostic));
+	// final EObject object = (EObject) diagnostic.getData().get(0);
+	// tableViewer.update(object, null);
+	// }
 
 	/**
 	 * Returns the message of the validation tool tip shown in the table header.
@@ -609,22 +651,6 @@ public class TableControl extends SWTControl {
 			reason = diagnostic.getChildren().get(0);
 		}
 		return reason.getMessage();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @deprecated
-	 */
-	@Deprecated
-	@Override
-	public void resetValidation() {
-		if (validationLabel == null || validationLabel.isDisposed()) {
-			return;
-		}
-		validationLabel.setToolTipText(""); //$NON-NLS-1$
-		validationLabel.setImage(null);
-
 	}
 
 	/**

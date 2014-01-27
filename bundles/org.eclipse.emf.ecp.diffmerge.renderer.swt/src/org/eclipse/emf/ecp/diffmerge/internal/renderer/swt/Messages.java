@@ -20,7 +20,7 @@ import java.util.ResourceBundle;
  * @author Eugen
  * 
  */
-public class Messages {
+public final class Messages {
 	private static final String BUNDLE_NAME = "org.eclipse.emf.ecp.diffmerge.internal.renderer.swt.messages"; //$NON-NLS-1$
 
 	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);

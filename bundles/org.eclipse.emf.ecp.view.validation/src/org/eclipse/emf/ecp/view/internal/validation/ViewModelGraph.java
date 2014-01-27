@@ -145,25 +145,51 @@ public abstract class ViewModelGraph {
 	 */
 	public void update(VElement renderable, EObject domainObject, EStructuralFeature feature, VDiagnostic value) {
 
-		final Set<ViewModelGraphNode> parentNodes = updateNodes(renderable, domainObject, feature, value);
+		final Set<ViewModelGraphNode> affectedParentNodes = new LinkedHashSet<ViewModelGraphNode>();
 
-		for (final ViewModelGraphNode cachedNode : parentNodes) {
-			updateParentNodes(cachedNode);
+		final ViewModelGraphNode renderableNode = getNodeForRenderable(renderable);
+		final ViewModelGraphNode domainNode = getNodeForDomainObject(domainObject, feature, value);
+
+		affectedParentNodes.add(renderableNode);
+
+		if (domainObjectHasBeenRemoved(domainObject, feature)) {
+			removeChildFromParents(domainNode);
+			return;
 		}
+
+		if (!renderableNode.containsChild(domainNode)) {
+			renderableNode.addChild(domainNode);
+		}
+
+		// we only change a node's value if it contains a domain object
+		domainNode.setValue(value);
 	}
 
-	private Set<EObject> updateParentNodes(ViewModelGraphNode node) {
+	/**
+	 * Updates all Parents of the provided {@link VElement}.
+	 * 
+	 * @param vElement the {@link VElement} which parents should be updated
+	 */
+	public void updateParents(VElement vElement) {
+		if (vElement.eContainer() == null || !VElement.class.isInstance(vElement.eContainer())) {
+			return;
+		}
+		final ViewModelGraphNode renderableNode = getNodeForRenderable((VElement) vElement.eContainer());
+		updateNodeAndParent(renderableNode);
+	}
 
-		final Set<EObject> updated = new LinkedHashSet<EObject>();
-
+	/**
+	 * Updates the provided node as well as all parent nodes.
+	 * 
+	 * @param node the {@link ViewModelGraphNode} to update
+	 */
+	protected void updateNodeAndParent(ViewModelGraphNode node) {
 		final Set<ViewModelGraphNode> nodes = node.getParents();
 		updateRenderable((VElement) node.getSetting().getEObject());
 
 		for (final ViewModelGraphNode cachedNode : nodes) {
-			updated.addAll(updateParentNodes(cachedNode));
+			updateNodeAndParent(cachedNode);
 		}
-
-		return updated;
 	}
 
 	/**
@@ -180,6 +206,7 @@ public abstract class ViewModelGraph {
 			if (node == null) {
 				continue;
 			}
+			node.setValue(getDefaultValue());
 			// domain nodes are always leaf, no need to take care of their children
 			removeChildFromParents(node);
 		}
@@ -203,20 +230,15 @@ public abstract class ViewModelGraph {
 	public void removeRenderable(VElement renderable) {
 		final ViewModelGraphNode node = viewModelSettings.getNode(renderable,
 			SettingsNodeMapping.allFeatures());
-
+		Set<ViewModelGraphNode> parents = null;
 		if (node != null) {
-			final Set<ViewModelGraphNode> parents = node.getParents();
-			for (final ViewModelGraphNode parentNode : new LinkedHashSet<ViewModelGraphNode>(
-				parents)) {
+			parents = new LinkedHashSet<ViewModelGraphNode>(node.getParents());
+			for (final ViewModelGraphNode parentNode : parents) {
 				parentNode.removeChild(node);
-				updateParentNodes(parentNode);
+				updateNodeAndParent(parentNode);
 			}
 			// renderable nodes are not leafs
 			node.removeAllChildren();
-			// final Iterator<ViewModelGraphNode> children = node.getChildren();
-			// while (children.hasNext()) {
-			// node.removeChild(children.next());
-			// }
 		}
 
 		viewModelSettings.removeAll(renderable);
@@ -229,31 +251,6 @@ public abstract class ViewModelGraph {
 	 *            the {@link VElement} being updated
 	 */
 	protected void updateRenderable(VElement renderable) {
-	}
-
-	private Set<ViewModelGraphNode> updateNodes(VElement renderable, EObject domainObject,
-		EStructuralFeature feature, VDiagnostic value) {
-
-		final Set<ViewModelGraphNode> affectedParentNodes = new LinkedHashSet<ViewModelGraphNode>();
-
-		final ViewModelGraphNode renderableNode = getNodeForRenderable(renderable);
-		final ViewModelGraphNode domainNode = getNodeForDomainObject(domainObject, feature, value);
-
-		affectedParentNodes.add(renderableNode);
-
-		if (domainObjectHasBeenRemoved(domainObject, feature)) {
-			removeChildFromParents(domainNode);
-			return affectedParentNodes;
-		}
-
-		if (!renderableNode.containsChild(domainNode)) {
-			renderableNode.addChild(domainNode);
-		}
-
-		// we only change a node's value if it contains a domain object
-		domainNode.setValue(value);
-
-		return affectedParentNodes;
 	}
 
 	private ViewModelGraphNode getNodeForDomainObject(EObject domainObject, EStructuralFeature feature,

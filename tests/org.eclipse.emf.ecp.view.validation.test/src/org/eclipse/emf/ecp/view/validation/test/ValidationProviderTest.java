@@ -155,4 +155,22 @@ public class ValidationProviderTest {
 		assertEquals(Diagnostic.WARNING, control.getDiagnostic().getHighestSeverity());
 		assertEquals((Integer) 2, called.get(0));
 	}
+
+	@Test
+	public void testValidationProviderTriggerSelfValidation() {
+		final List<Integer> called = new ArrayList<Integer>(1);
+		called.add(0);
+		validationService.addValidationProvider(new ValidationProvider() {
+
+			public List<Diagnostic> validate(EObject eObject) {
+				if (Computer.class.isInstance(eObject)) {
+
+					eObject.eNotify(new ValidationNotification(eObject));
+					called.set(0, called.get(0) + 1);
+				}
+				return Collections.emptyList();
+			}
+		});
+		assertEquals((Integer) 1, called.get(0));
+	}
 }

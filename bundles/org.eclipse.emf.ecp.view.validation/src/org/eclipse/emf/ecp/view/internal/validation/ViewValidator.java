@@ -58,6 +58,9 @@ public class ViewValidator extends ViewModelGraph {
 
 	private final Set<ValidationProvider> validationProviders;
 
+	private final Map<VControl, Map<UniqueSetting, VDiagnostic>> currentUpdates = new LinkedHashMap<VControl, Map<UniqueSetting, VDiagnostic>>();
+	private final Set<EObject> validated = new LinkedHashSet<EObject>();
+
 	/**
 	 * Default constructor.
 	 * 
@@ -98,6 +101,50 @@ public class ViewValidator extends ViewModelGraph {
 	}
 
 	/**
+	 * Validates all given eObjects.
+	 * 
+	 * @param eObjects the eObjects to validate
+	 */
+	public void validate(Collection<EObject> eObjects) {
+
+		EObject firstObject = null;
+		for (final EObject eObject : eObjects) {
+			// validate(eObject);
+			if (firstObject == null) {
+				firstObject = eObject;
+			} else {
+				validationQueue.offer(eObject);
+			}
+		}
+		if (firstObject != null) {
+			validate(firstObject);
+		}
+
+	}
+
+	/**
+	 * Validates all given eObjects.
+	 * 
+	 * @param eObjects the eObjects to validate
+	 */
+	// FIXME remove
+	@Deprecated
+	public void validateSettings(Collection<UniqueSetting> eObjects) {
+		EObject firstObject = null;
+		for (final UniqueSetting eObject : eObjects) {
+			// validate(eObject.getEObject());
+			if (firstObject == null) {
+				firstObject = eObject.getEObject();
+			} else {
+				validationQueue.offer(eObject.getEObject());
+			}
+		}
+		if (firstObject != null) {
+			validate(firstObject);
+		}
+	}
+
+	/**
 	 * Validate the given eObject.
 	 * 
 	 * @param eObject the eObject to validate
@@ -107,17 +154,41 @@ public class ViewValidator extends ViewModelGraph {
 			validationQueue.offer(eObject);
 		} else {
 			validationRunning = true;
+			validated.add(eObject);
 			validateAndNotifyControls(eObject);
 
 			EObject toValidate = validationQueue.poll();
 			while (toValidate != null) {
-				validateAndNotifyControls(toValidate);
+				if (!validated.contains(toValidate)) {
+					validated.add(toValidate);
+					validateAndNotifyControls(toValidate);
+				}
 				toValidate = validationQueue.poll();
 			}
-
+			update();
+			validated.clear();
+			currentUpdates.clear();
 			validationRunning = false;
 		}
 
+	}
+
+	private void update() {
+		for (final VControl control : currentUpdates.keySet()) {
+			for (final Map.Entry<UniqueSetting, VDiagnostic> pair : currentUpdates.get(control).entrySet()) {
+				update(control, pair.getKey().getEObject(), pair.getKey().getEStructuralFeature(),
+					VDiagnosticHelper.clean(pair.getValue()));
+			}
+		}
+		for (final VControl control : currentUpdates.keySet()) {
+			updateRenderable(control);
+			updateParents(control);
+			// EObject parent = control.eContainer();
+			// while (parent != null && VElement.class.isInstance(parent)) {
+			// updateRenderable((VElement) parent);
+			// parent = parent.eContainer();
+			// }
+		}
 	}
 
 	/**
@@ -136,7 +207,7 @@ public class ViewValidator extends ViewModelGraph {
 			// TODO: if we ever get performance problems this is likely the place to start
 			// validation registry should be queryable with a control and a feature
 			// -> merge SettingsMapping and the registry
-			final Set<UpdateTriple> updateTriplets = new LinkedHashSet<ViewValidator.UpdateTriple>();
+			// final Set<UpdateTriple> updateTriplets = new LinkedHashSet<ViewValidator.UpdateTriple>();
 			for (final Setting invalidSetting : featureToValidationResult.keySet()) {
 				for (final VControl control : validationRegistry.getRenderablesForEObject(invalidSetting)) {
 					final VDomainModelReference modelReference = control.getDomainModelReference();
@@ -148,17 +219,29 @@ public class ViewValidator extends ViewModelGraph {
 						if (setting.getEObject().equals(invalidSetting.getEObject())
 							&& setting.getEStructuralFeature().equals(invalidSetting.getEStructuralFeature())) {
 							vDiagnostic.getDiagnostics().addAll(featureToValidationResult.get(invalidSetting));
-							updateTriplets.add(new UpdateTriple(control, setting, vDiagnostic));
+
+							addTriple(control,
+								UniqueSetting.createSetting(setting), vDiagnostic);
 						}
 
 					}
 				}
 			}
-			for (final UpdateTriple triple : updateTriplets) {
-				update(triple.control, triple.setting.getEObject(), triple.setting.getEStructuralFeature(),
-					triple.diagnostic);
-			}
+		}
+	}
 
+	private void addTriple(VControl control, UniqueSetting uniqueSetting, VDiagnostic vDiagnostic) {
+		Map<UniqueSetting, VDiagnostic> settingDiagnostic = null;
+		if (currentUpdates.containsKey(control)) {
+			settingDiagnostic = currentUpdates.get(control);
+		} else {
+			settingDiagnostic = new LinkedHashMap<UniqueSetting, VDiagnostic>();
+			currentUpdates.put(control, settingDiagnostic);
+		}
+		if (!settingDiagnostic.containsKey(uniqueSetting)) {
+			settingDiagnostic.put(uniqueSetting, vDiagnostic);
+		} else {
+			settingDiagnostic.get(uniqueSetting).getDiagnostics().addAll(vDiagnostic.getDiagnostics());
 		}
 	}
 
@@ -215,41 +298,16 @@ public class ViewValidator extends ViewModelGraph {
 					while (settings.hasNext()) {
 						final Setting setting = settings.next();
 						if (setting.getEStructuralFeature().getEContainingClass().isInstance(okEObject)) {
-							update(control, okEObject, setting.getEStructuralFeature(), getDefaultValue());
+
+							// update(control, okEObject, setting.getEStructuralFeature(), getDefaultValue());
+							addTriple(control,
+								UniqueSetting.createSetting(setting), getDefaultValue());
 						}
 					}
 
 				}
 			}
 		}
-	}
-
-	/**
-	 * Validates all given eObjects.
-	 * 
-	 * @param eObjects the eObjects to validate
-	 */
-	public void validate(Collection<EObject> eObjects) {
-
-		for (final EObject eObject : eObjects) {
-			validate(eObject);
-		}
-
-	}
-
-	/**
-	 * Validates all given eObjects.
-	 * 
-	 * @param eObjects the eObjects to validate
-	 */
-	// FIXME remove
-	@Deprecated
-	public void validateSettings(Collection<UniqueSetting> eObjects) {
-
-		for (final UniqueSetting eObject : eObjects) {
-			validate(eObject.getEObject());
-		}
-
 	}
 
 	@Override
@@ -308,27 +366,4 @@ public class ViewValidator extends ViewModelGraph {
 		return diagnostics;
 	}
 
-	/**
-	 * Helper Class to map triples.
-	 * 
-	 * @author Eugen Neufeld
-	 * 
-	 */
-	private class UpdateTriple {
-		private final VControl control;
-		private final Setting setting;
-		private final VDiagnostic diagnostic;
-
-		/**
-		 * @param control
-		 * @param setting
-		 * @param diagnostic
-		 */
-		public UpdateTriple(VControl control, Setting setting, VDiagnostic diagnostic) {
-			super();
-			this.control = control;
-			this.setting = setting;
-			this.diagnostic = diagnostic;
-		}
-	}
 }

@@ -144,11 +144,10 @@ public class LibraryImpl extends EObjectImpl implements Library {
 	 * @generated
 	 */
 	public void setName(String newName) {
-		final String oldName = name;
+		String oldName = name;
 		name = newName;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.LIBRARY__NAME, oldName, name));
-		}
 	}
 
 	/**
@@ -195,16 +194,15 @@ public class LibraryImpl extends EObjectImpl implements Library {
 	 * @generated
 	 */
 	public NotificationChain basicSetLibrarian(Librarian newLibrarian, NotificationChain msgs) {
-		final Librarian oldLibrarian = librarian;
+		Librarian oldLibrarian = librarian;
 		librarian = newLibrarian;
 		if (eNotificationRequired()) {
-			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
 				TestPackage.LIBRARY__LIBRARIAN, oldLibrarian, newLibrarian);
-			if (msgs == null) {
+			if (msgs == null)
 				msgs = notification;
-			} else {
+			else
 				msgs.add(notification);
-			}
 		}
 		return msgs;
 	}
@@ -218,23 +216,19 @@ public class LibraryImpl extends EObjectImpl implements Library {
 	public void setLibrarian(Librarian newLibrarian) {
 		if (newLibrarian != librarian) {
 			NotificationChain msgs = null;
-			if (librarian != null) {
+			if (librarian != null)
 				msgs = ((InternalEObject) librarian).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
 					- TestPackage.LIBRARY__LIBRARIAN, null, msgs);
-			}
-			if (newLibrarian != null) {
+			if (newLibrarian != null)
 				msgs = ((InternalEObject) newLibrarian).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
 					- TestPackage.LIBRARY__LIBRARIAN, null, msgs);
-			}
 			msgs = basicSetLibrarian(newLibrarian, msgs);
-			if (msgs != null) {
+			if (msgs != null)
 				msgs.dispatch();
-			}
 		}
-		else if (eNotificationRequired()) {
+		else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.LIBRARY__LIBRARIAN, newLibrarian,
 				newLibrarian));
-		}
 	}
 
 	/**
@@ -398,11 +392,10 @@ public class LibraryImpl extends EObjectImpl implements Library {
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) {
+		if (eIsProxy())
 			return super.toString();
-		}
 
-		final StringBuffer result = new StringBuffer(super.toString());
+		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (name: ");
 		result.append(name);
 		result.append(')');

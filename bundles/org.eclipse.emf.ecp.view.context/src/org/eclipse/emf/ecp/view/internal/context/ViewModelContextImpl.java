@@ -362,9 +362,6 @@ public class ViewModelContextImpl implements ViewModelContext {
 			if (isDisposing) {
 				return;
 			}
-			if (notification.isTouch()) {
-				return;
-			}
 
 			final ModelChangeNotification modelChangeNotification = new ModelChangeNotification(notification);
 			for (final ModelChangeListener modelChangeListener : domainModelChangeListener) {

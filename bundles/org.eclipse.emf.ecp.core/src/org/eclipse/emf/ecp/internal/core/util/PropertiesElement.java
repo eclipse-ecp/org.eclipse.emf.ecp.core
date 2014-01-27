@@ -23,17 +23,31 @@ import org.eclipse.emf.ecp.core.util.observer.ECPPropertiesObserver;
 import org.eclipse.emf.ecp.internal.core.util.PropertiesStore.StorableElement;
 
 /**
+ * An element holding {@link ECPProperties}.
+ * 
  * @author Eike Stepper
  */
 public abstract class PropertiesElement extends Element implements StorableElement, ECPPropertiesAware {
 	private final ECPProperties properties;
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param name the name of the elements
+	 * @param properties the initial properties
+	 */
 	public PropertiesElement(String name, ECPProperties properties) {
 		super(name);
 		this.properties = properties;
 		observeProperties();
 	}
 
+	/**
+	 * Create a {@link PropertiesElement} from an {@link ObjectInput}.
+	 * 
+	 * @param in the {@link ObjectInput}
+	 * @throws IOException if there a problem while reading the input
+	 */
 	public PropertiesElement(ObjectInput in) throws IOException {
 		super(in.readUTF());
 		properties = new Properties(in);
@@ -51,6 +65,12 @@ public abstract class PropertiesElement extends Element implements StorableEleme
 		return properties;
 	}
 
+	/**
+	 * Called if the properties of the element change. Can be implemented by subclasses
+	 * 
+	 * @param oldProperties the old properties
+	 * @param newProperties the new properties
+	 */
 	protected void propertiesChanged(Collection<Entry<String, String>> oldProperties,
 		Collection<Entry<String, String>> newProperties) {
 		// Do nothing

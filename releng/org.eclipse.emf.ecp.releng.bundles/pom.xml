@@ -150,6 +150,11 @@
 		<!-- e4 demo application -->
 		<module>../../bundles/org.eclipse.emf.ecp.application.e4</module>
 		<module>../../bundles/org.eclipse.emf.ecp.ui.e4</module>
+		
+		<!-- diff merge -->
+		<module>../../bundles/org.eclipse.emf.ecp.diffmerge.context</module>
+		<module>../../bundles/org.eclipse.emf.ecp.diffmerge.renderer.swt</module>
+		<module>../../bundles/org.eclipse.emf.ecp.diffmerge.swt</module>
 	</modules>
 
 	<build>

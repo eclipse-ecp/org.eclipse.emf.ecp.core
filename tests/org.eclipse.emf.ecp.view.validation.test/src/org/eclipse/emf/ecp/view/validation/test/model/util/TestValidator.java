@@ -22,8 +22,11 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.ResourceLocator;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EObjectValidator;
+import org.eclipse.emf.ecp.view.internal.validation.ValidationNotification;
 import org.eclipse.emf.ecp.view.validation.test.model.Book;
 import org.eclipse.emf.ecp.view.validation.test.model.Computer;
 import org.eclipse.emf.ecp.view.validation.test.model.Container;
@@ -32,6 +35,12 @@ import org.eclipse.emf.ecp.view.validation.test.model.Librarian;
 import org.eclipse.emf.ecp.view.validation.test.model.Library;
 import org.eclipse.emf.ecp.view.validation.test.model.Mainboard;
 import org.eclipse.emf.ecp.view.validation.test.model.PowerBlock;
+import org.eclipse.emf.ecp.view.validation.test.model.TableContent;
+import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithValidation;
+import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithoutValidation;
+import org.eclipse.emf.ecp.view.validation.test.model.TableWithMultiplicity;
+import org.eclipse.emf.ecp.view.validation.test.model.TableWithUnique;
+import org.eclipse.emf.ecp.view.validation.test.model.TableWithoutMultiplicity;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
 import org.eclipse.emf.ecp.view.validation.test.model.Writer;
 
@@ -171,6 +180,18 @@ public class TestValidator extends EObjectValidator {
 			return validateContainer((Container) value, diagnostics, context);
 		case TestPackage.CONTENT:
 			return validateContent((Content) value, diagnostics, context);
+		case TestPackage.TABLE_WITH_MULTIPLICITY:
+			return validateTableWithMultiplicity((TableWithMultiplicity) value, diagnostics, context);
+		case TestPackage.TABLE_CONTENT:
+			return validateTableContent((TableContent) value, diagnostics, context);
+		case TestPackage.TABLE_CONTENT_WITHOUT_VALIDATION:
+			return validateTableContentWithoutValidation((TableContentWithoutValidation) value, diagnostics, context);
+		case TestPackage.TABLE_CONTENT_WITH_VALIDATION:
+			return validateTableContentWithValidation((TableContentWithValidation) value, diagnostics, context);
+		case TestPackage.TABLE_WITHOUT_MULTIPLICITY:
+			return validateTableWithoutMultiplicity((TableWithoutMultiplicity) value, diagnostics, context);
+		case TestPackage.TABLE_WITH_UNIQUE:
+			return validateTableWithUnique((TableWithUnique) value, diagnostics, context);
 		default:
 			return true;
 		}
@@ -411,14 +432,14 @@ public class TestValidator extends EObjectValidator {
 	 */
 	public boolean validateContainer(Container container, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(container, diagnostics, context)
-			&& validateContainer_UniqueAttribuite(container, diagnostics, context);
+			&& validateContainerUniqueAttribuite(container, diagnostics, context);
 	}
 
 	/**
 	 * 
 	 * @generated NOT
 	 */
-	public boolean validateContainer_UniqueAttribuite(Container container,
+	public boolean validateContainerUniqueAttribuite(Container container,
 		DiagnosticChain diagnostics, Map<Object, Object> context) {
 		// TODO implement the constraint
 		// -> specify the condition that violates the constraint
@@ -442,7 +463,8 @@ public class TestValidator extends EObjectValidator {
 		}
 		if (!duplicates.isEmpty()) {
 			createUniqueDiagnostic(duplicates, diagnostics, context,
-				"Same unique Attribute not allowed.");
+				"Same unique Attribute not allowed.", TestPackage.eINSTANCE.getContent_UniqueAttribute(),
+				Diagnostic.ERROR);
 			return false;
 		}
 		// create ok results
@@ -460,14 +482,14 @@ public class TestValidator extends EObjectValidator {
 	/**
 	 * @generated NOT
 	 */
-	private void createUniqueDiagnostic(List<Content> duplicates, DiagnosticChain diagnostics,
-		Map<Object, Object> context, String message) {
+	private void createUniqueDiagnostic(List<? extends EObject> duplicates, DiagnosticChain diagnostics,
+		Map<Object, Object> context, String message, EStructuralFeature feature, int severity) {
 		if (diagnostics != null) {
-			for (final Content duplicate : duplicates) {
-				diagnostics.add(createDiagnostic(Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0,
+			for (final EObject duplicate : duplicates) {
+				diagnostics.add(createDiagnostic(severity, DIAGNOSTIC_SOURCE, 0,
 					"_UI_GenericConstraint_diagnostic",
 					new Object[] { message, getObjectLabel(duplicate, context) }, new Object[] { duplicate,
-						TestPackage.eINSTANCE.getContent_UniqueAttribute() }, context));
+						feature }, context));
 			}
 		}
 	}
@@ -479,9 +501,130 @@ public class TestValidator extends EObjectValidator {
 	 * @generated NOT
 	 */
 	public boolean validateContent(Content content, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(content, diagnostics, context)
-			&& validate(content.eContainer().eClass().getClassifierID(), content.eContainer(),
-				diagnostics, context);
+		content.eNotify(new ValidationNotification(content.eContainer()));
+		return validate_EveryDefaultConstraint(content, diagnostics, context);
+		// && validate(content.eContainer().eClass().getClassifierID(), content.eContainer(),
+		// diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public boolean validateTableWithMultiplicity(TableWithMultiplicity tableWithMultiplicity,
+		DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(tableWithMultiplicity, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public boolean validateTableContent(TableContent tableContent, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(tableContent, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
+	 */
+	public boolean validateTableContentWithoutValidation(TableContentWithoutValidation tableContentWithoutValidation,
+		DiagnosticChain diagnostics, Map<Object, Object> context) {
+		tableContentWithoutValidation.eNotify(new ValidationNotification(tableContentWithoutValidation.eContainer()));
+		return validate_EveryDefaultConstraint(tableContentWithoutValidation, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
+	 */
+	public boolean validateTableContentWithValidation(TableContentWithValidation tableContentWithValidation,
+		DiagnosticChain diagnostics, Map<Object, Object> context) {
+		tableContentWithValidation.eNotify(new ValidationNotification(tableContentWithValidation.eContainer()));
+		return validate_EveryDefaultConstraint(tableContentWithValidation, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public boolean validateTableWithoutMultiplicity(TableWithoutMultiplicity tableWithoutMultiplicity,
+		DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(tableWithoutMultiplicity, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
+	 */
+	public boolean validateTableWithUnique(TableWithUnique tableWithUnique, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(tableWithUnique, diagnostics, context)
+			& validateUniqueness(tableWithUnique, diagnostics, context);
+	}
+
+	private boolean validateUniqueness(TableWithUnique tableWithUnique, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
+		final EList<TableContent> contents = tableWithUnique.getContent();
+		final Map<String, Set<TableContent>> uniqueAttToContentMap = new LinkedHashMap<String, Set<TableContent>>();
+
+		EStructuralFeature nameFeature = null;
+
+		for (final TableContent content : contents) {
+			String uniquiAtt = null;
+			if (TableContentWithoutValidation.class.isInstance(content)) {
+				uniquiAtt = ((TableContentWithoutValidation) content).getName();
+				nameFeature = TestPackage.eINSTANCE.getTableContentWithoutValidation_Name();
+			}
+			if (TableContentWithValidation.class.isInstance(content)) {
+				uniquiAtt = ((TableContentWithValidation) content).getName();
+				nameFeature = TestPackage.eINSTANCE.getTableContentWithValidation_Name();
+			}
+			if (!uniqueAttToContentMap.containsKey(uniquiAtt)) {
+				uniqueAttToContentMap.put(uniquiAtt, new LinkedHashSet<TableContent>());
+			}
+			uniqueAttToContentMap.get(uniquiAtt).add(content);
+		}
+		final List<TableContent> duplicates = new ArrayList<TableContent>();
+		for (final String language : uniqueAttToContentMap.keySet()) {
+			if (uniqueAttToContentMap.get(language).size() > 1) {
+				duplicates.addAll(uniqueAttToContentMap.get(language));
+			}
+		}
+
+		boolean noDuplicates = true;
+
+		if (!duplicates.isEmpty()) {
+			createUniqueDiagnostic(duplicates, diagnostics, context,
+				"Same unique name not allowed.", nameFeature, Diagnostic.WARNING);
+			noDuplicates = false;
+		}
+		// create ok results
+		for (final TableContent content : contents) {
+			content.eNotify(new ValidationNotification(content));
+			if (duplicates.contains(content)) {
+				continue;
+			}
+			diagnostics.add(createDiagnostic(Diagnostic.OK, DIAGNOSTIC_SOURCE, 0,
+				"_UI_GenericConstraint_diagnostic",
+				new Object[] { "OK", getObjectLabel(content, context) }, new Object[] { content,
+					nameFeature }, context));
+		}
+
+		return noDuplicates;
 	}
 
 	/**

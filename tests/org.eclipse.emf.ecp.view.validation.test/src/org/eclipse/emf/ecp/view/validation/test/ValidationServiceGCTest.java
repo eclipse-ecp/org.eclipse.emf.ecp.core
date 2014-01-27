@@ -26,7 +26,6 @@ import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalLayout;
 import org.eclipse.emf.ecp.view.test.common.GCCollectable;
 import org.eclipse.emf.ecp.view.test.common.Tuple;
 import org.eclipse.emf.ecp.view.validation.test.model.Computer;
-import org.eclipse.emf.ecp.view.validation.test.model.Mainboard;
 import org.eclipse.emf.ecp.view.validation.test.model.TestFactory;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
 import org.eclipse.emf.ecp.view.validation.test.model.Writer;
@@ -34,8 +33,10 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * Tests for checking whether the {@link org.eclipse.emf.ecp.view.internal.validation.ValidationRegistry ValidationRegistry} &
- * the {@link org.eclipse.emf.ecp.view.internal.validation.ValidationService ValidationService} correctly behave if domain
+ * Tests for checking whether the {@link org.eclipse.emf.ecp.view.internal.validation.ValidationRegistry
+ * ValidationRegistry} &
+ * the {@link org.eclipse.emf.ecp.view.internal.validation.ValidationService ValidationService} correctly behave if
+ * domain
  * objects and/or {@link org.eclipse.emf.ecp.view.spi.model.VElement Renderable}s are removed.
  * 
  * @author emueller
@@ -65,8 +66,9 @@ public class ValidationServiceGCTest extends CommonValidationTest {
 			TestPackage.eINSTANCE.getComputer_Mainboard()));
 		column.getChildren().add(control);
 
-		final Mainboard mainboard = TestFactory.eINSTANCE.createMainboard();
-		computer.setMainboard(mainboard);
+		// TODO
+		// final Mainboard mainboard = TestFactory.eINSTANCE.createMainboard();
+		// computer.setMainboard(mainboard);
 
 		assertEquals("Severity of mainboard name must be error", Diagnostic.ERROR, control.getDiagnostic()
 			.getHighestSeverity());
@@ -175,7 +177,8 @@ public class ValidationServiceGCTest extends CommonValidationTest {
 	}
 
 	/**
-	 * Remove the {@link Mainboard}. It shouldn't be referenced anymore
+	 * Remove the {@link org.eclipse.emf.ecp.view.validation.test.model.Mainboard Mainboard}. It shouldn't be referenced
+	 * anymore
 	 * in contrast to the control.
 	 */
 	@Ignore
@@ -196,7 +199,8 @@ public class ValidationServiceGCTest extends CommonValidationTest {
 	}
 
 	/**
-	 * Removes the {@link Mainboard} from the computer and also removes the control
+	 * Removes the {@link org.eclipse.emf.ecp.view.validation.test.model.Mainboard Mainboard} from the computer and also
+	 * removes the control
 	 * from the view model containment tree.
 	 * Neither the mainboard nor the control should be referenced afterwards.
 	 */
@@ -207,10 +211,10 @@ public class ValidationServiceGCTest extends CommonValidationTest {
 
 		final GCCollectable mainboardCollectable = new GCCollectable(
 			t.second().getMainboard());
-		t.second().setMainboard(null);
-
 		final GCCollectable controlCollectable = new GCCollectable(
 			VVerticalLayout.class.cast(t.first().getChildren().get(0)).getChildren().get(0));
+
+		t.second().setMainboard(null);
 
 		VVerticalLayout.class.cast(t.first().getChildren().get(0)).getChildren().clear();
 

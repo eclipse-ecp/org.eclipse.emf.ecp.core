@@ -11,8 +11,14 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.validation;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.common.util.DiagnosticChain;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
+import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 
 /**
  * This class compares to {@link VDiagnostic} elements for equality.
@@ -103,5 +109,30 @@ public final class VDiagnosticHelper {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Analysis a {@link VDiagnostic} and merges all Diagnostic pointing to the same EObject.
+	 * 
+	 * @param value the {@link VDiagnostic} that should be cleaned
+	 * @return a cleaned {@link VDiagnostic}
+	 */
+	public static VDiagnostic clean(VDiagnostic value) {
+		final VDiagnostic result = VViewFactory.eINSTANCE.createDiagnostic();
+		final Map<EObject, Diagnostic> map = new LinkedHashMap<EObject, Diagnostic>();
+		for (final Object object : value.getDiagnostics()) {
+			final Diagnostic diagnostic = (Diagnostic) object;
+			if (diagnostic.getData() == null || diagnostic.getData().size() == 0) {
+				continue;
+			}
+			final EObject eObject = (EObject) diagnostic.getData().get(0);
+			if (map.containsKey(eObject)) {
+				((DiagnosticChain) map.get(eObject)).merge(diagnostic);
+			} else {
+				map.put(eObject, diagnostic);
+			}
+		}
+		result.getDiagnostics().addAll(map.values());
+		return result;
 	}
 }

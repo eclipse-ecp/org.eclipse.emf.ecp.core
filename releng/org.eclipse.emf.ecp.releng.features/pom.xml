@@ -47,6 +47,7 @@
 		<module>../../features/org.eclipse.emf.ecp.rap.util.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.sdk.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.e4.feature</module>
+		<module>../../features/org.eclipse.emf.ecp.diffmerge.feature</module>
 	</modules>
 
 	<!-- Parent used for features. This POM contains all build steps for code signing. -->
