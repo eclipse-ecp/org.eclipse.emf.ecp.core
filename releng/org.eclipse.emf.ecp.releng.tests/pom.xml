@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.eclipse.emf.ecp</groupId>
+	<artifactId>ecp-tests-parent</artifactId>
+	<version>1.1.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<modules>
+		<!-- Bundles/Features -->
+		<module>../../tests/org.eclipse.emf.ecp.view.dynamictree.model</module>
+        <module>../../tests/org.eclipse.emf.ecp.view.dynamictree.model.edit</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.model.editor.testplugin</module>
+		<module>../../features/org.eclipse.emf.ecp.view.model.editor.test.feature</module>
+
+		<!-- Tests -->
+		<module>../../tests/org.eclipse.emf.ecp.view.test.common</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.test.common.swt</module>
+		<module>../../tests/org.eclipse.emf.ecp.core.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.ui.view.editor.controls.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.ui.view.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.ui.view.swt.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.validation.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.context.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.custom.ui.swt.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.group.ui.swt.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.horizontal.ui.swt.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.model.edit.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.model.integrationtest</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.model.provider.xmi.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.rule.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.rule.ui.swt.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.separator.ui.swt.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.table.ui.swt.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.validation.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.vertical.ui.swt.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.ui.editor.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.dynamictree.model.test</module>
+		
+		<module>../../tests/org.eclipse.emf.ecp.view.group.ui.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.horizontal.ui.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.separator.ui.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.table.ui.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.vertical.ui.test</module>
+	</modules>
+</project>
