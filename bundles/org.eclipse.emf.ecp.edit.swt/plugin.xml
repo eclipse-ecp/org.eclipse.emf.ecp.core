@@ -3,6 +3,7 @@
 <plugin>
    <extension-point id="cellEditor" name="%extension-point.cell-editor" schema="schema/cellEditor.exsd"/>
    <extension-point id="dialogWrapper" name="%extension-point.dialog-wrapper" schema="schema/dialogWrapper.exsd"/>
+   <extension-point id="controlListener" name="%extension-point.control-listener" schema="schema/controlListener.exsd"/>
    <extension
          point="org.eclipse.emf.ecp.edit.controls">
       <control

@@ -7,5 +7,12 @@
             class="org.eclipse.emf.ecp.rap.spi.util.RAPWrapper">
       </dialogWrapper>
    </extension>
+   <extension
+         point="org.eclipse.emf.ecp.edit.swt.controlListener">
+      <VerifyListener
+            control="org.eclipse.emf.ecp.edit.internal.swt.controls.NumericalControl"
+            listener="org.eclipse.emf.ecp.rap.util.internal.clientscripting.NumericalListener">
+      </VerifyListener>
+   </extension>
 
 </plugin>

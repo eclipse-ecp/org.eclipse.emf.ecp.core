@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="ECP RCP" sequenceNumber="225">
+<?pde version="3.8"?><target name="ECP RCP" sequenceNumber="228">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.rap.fileupload.feature.feature.group" version="2.0.0.20130302-1418"/>
@@ -29,20 +29,9 @@
 <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20120526062928/repository/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.graphiti.feature.feature.group" version="0.10.0.v20130612-0936"/>
-<unit id="org.eclipse.jdt.feature.group" version="3.9.0.v20130605-2000"/>
-<unit id="org.eclipse.net4j.sdk.feature.group" version="4.2.0.v20130612-0849"/>
-<unit id="org.eclipse.emf.cdo.sdk.feature.group" version="4.2.0.v20130613-1556"/>
-<unit id="org.eclipse.emf.transaction.sdk.feature.group" version="1.7.0.201306111400"/>
-<unit id="org.eclipse.graphiti.export.feature.feature.group" version="0.10.0.v20130612-0936"/>
-<unit id="org.eclipse.emf.sdk.feature.group" version="2.9.0.v20130610-0406"/>
-<unit id="org.eclipse.emf.validation.sdk.feature.group" version="1.7.0.201306111341"/>
-<unit id="org.eclipse.gef.sdk.feature.group" version="3.9.0.201305060205"/>
-<unit id="org.eclipse.emf.rap.sdk.feature.group" version="2.9.0.v20130610-0406"/>
-<unit id="org.eclipse.rap.equinox.target.feature.feature.group" version="2.1.0.20130610-1755"/>
-<unit id="org.eclipse.rap.feature.feature.group" version="2.1.0.20130611-2139"/>
-<unit id="org.eclipse.sdk.ide" version="4.3.1.M20130911-1000"/>
-<repository location="http://download.eclipse.org/releases/kepler"/>
+<unit id="org.eclipse.rap.feature.feature.group" version="2.2.0.20131204-0942"/>
+<unit id="org.eclipse.rap.equinox.target.feature.feature.group" version="2.2.0.20131110-1237"/>
+<repository location="http://download.eclipse.org/rt/rap/2.2"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.emf.emfstore.server.feature.feature.group" version="1.1.0.v20131205-1626"/>
@@ -53,6 +42,20 @@
 <unit id="org.eclipse.emf.emfstore.client.transaction.feature.feature.group" version="1.1.0.v20131205-1626"/>
 <unit id="org.eclipse.emf.emfstore.client.ui.feature.feature.group" version="1.1.0.v20131205-1626"/>
 <repository location="http://download.eclipse.org/emf-store/releases_11/"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.graphiti.feature.feature.group" version="0.10.0.v20130612-0936"/>
+<unit id="org.eclipse.jdt.feature.group" version="3.9.0.v20130605-2000"/>
+<unit id="org.eclipse.net4j.sdk.feature.group" version="4.2.0.v20130612-0849"/>
+<unit id="org.eclipse.emf.cdo.sdk.feature.group" version="4.2.0.v20130613-1556"/>
+<unit id="org.eclipse.emf.transaction.sdk.feature.group" version="1.7.0.201306111400"/>
+<unit id="org.eclipse.graphiti.export.feature.feature.group" version="0.10.0.v20130612-0936"/>
+<unit id="org.eclipse.emf.sdk.feature.group" version="2.9.0.v20130610-0406"/>
+<unit id="org.eclipse.emf.validation.sdk.feature.group" version="1.7.0.201306111341"/>
+<unit id="org.eclipse.gef.sdk.feature.group" version="3.9.0.201305060205"/>
+<unit id="org.eclipse.emf.rap.sdk.feature.group" version="2.9.0.v20130610-0406"/>
+<unit id="org.eclipse.sdk.ide" version="4.3.1.M20130911-1000"/>
+<repository location="http://download.eclipse.org/releases/kepler"/>
 </location>
 </locations>
 </target>

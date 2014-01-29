@@ -29,6 +29,7 @@ import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 
 /**
@@ -75,6 +76,15 @@ public class NumericalControl extends AbstractTextControl {
 	protected void customizeText(Text text) {
 		super.customizeText(text);
 		text.setMessage(getFormatText());
+		addRAPClientScripting(text);
+	}
+
+	// TODO move to abstract text control
+	private void addRAPClientScripting(Text text) {
+		final Listener verifyListener = ControlListenerHelper.INSTANCE.getVerifyListenerForControl(this.getClass());
+		if (verifyListener != null) {
+			text.addListener(SWT.Modify, verifyListener);
+		}
 	}
 
 	/*
@@ -136,7 +146,7 @@ public class NumericalControl extends AbstractTextControl {
 		@Override
 		public Object convertValue(Object value) {
 			if (value == null) {
-				return "";
+				return ""; //$NON-NLS-1$
 			}
 			final DecimalFormat format = NumericalHelper.setupFormat(getLocale(),
 				getInstanceClass());
