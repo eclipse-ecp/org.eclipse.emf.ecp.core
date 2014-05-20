@@ -154,9 +154,9 @@ public class ControlRootEClassControl2SWTRenderer extends SimpleControlSWTContro
 		final Composite composite2 = new Composite(parent2, SWT.NONE);
 		composite2.setBackground(parent2.getBackground());
 		GridLayoutFactory.fillDefaults().numColumns(1).spacing(0, 0).equalWidth(false).applyTo(composite2);
-		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(composite2);
 
 		labelComposite = new Composite(composite2, SWT.NONE);
+		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(labelComposite);
 		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false).applyTo(labelComposite);
 		labelComposite.setBackground(composite2.getBackground());
 
@@ -165,6 +165,9 @@ public class ControlRootEClassControl2SWTRenderer extends SimpleControlSWTContro
 		imageLabel.setBackground(labelComposite.getBackground());
 		label = new Label(labelComposite, SWT.NONE);
 		label.setBackground(labelComposite.getBackground());
+		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(label);
+		GridDataFactory.fillDefaults().grab(false, false).align(SWT.FILL, SWT.BEGINNING).hint(20, 20)
+			.applyTo(imageLabel);
 
 		composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
 			new ReflectiveItemProviderAdapterFactory(),

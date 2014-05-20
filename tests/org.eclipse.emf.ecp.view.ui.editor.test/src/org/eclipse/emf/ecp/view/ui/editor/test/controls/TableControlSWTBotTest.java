@@ -25,12 +25,13 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
-import org.eclipse.emf.ecp.view.spi.table.model.VTableColumn;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
+import org.eclipse.emf.ecp.view.table.ui.swt.test.SWTTableTest;
 import org.eclipse.emf.ecp.view.test.common.GCCollectable;
 import org.eclipse.emf.ecp.view.ui.editor.test.ECPCommonSWTBotTest;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
@@ -261,27 +262,31 @@ public class TableControlSWTBotTest extends ECPCommonSWTBotTest {
 	private void createTableControl(VView view) {
 		final VTableControl control = VTableFactory.eINSTANCE.createTableControl();
 
-		final VFeaturePathDomainModelReference domainRef = VViewFactory.eINSTANCE
-			.createFeaturePathDomainModelReference();
+		final VTableDomainModelReference domainRef = VTableFactory.eINSTANCE
+			.createTableDomainModelReference();
 		domainRef.setDomainModelEFeature(BowlingPackage.eINSTANCE.getLeague_Players());
 		control.setDomainModelReference(domainRef);
 
-		final VTableColumn nameColumn = VTableFactory.eINSTANCE.createTableColumn();
-		nameColumn.setAttribute(BowlingPackage.eINSTANCE.getPlayer_Name());
+		final VDomainModelReference nameColumn = SWTTableTest.createTableColumn(BowlingPackage.eINSTANCE
+			.getPlayer_Name());
 
-		final VTableColumn birthColumn = VTableFactory.eINSTANCE.createTableColumn();
-		birthColumn.setAttribute(BowlingPackage.eINSTANCE.getPlayer_DateOfBirth());
+		final VDomainModelReference birthColumn = SWTTableTest.createTableColumn(BowlingPackage.eINSTANCE
+			.getPlayer_DateOfBirth());
 
-		final VTableColumn professionalColumn = VTableFactory.eINSTANCE.createTableColumn();
-		professionalColumn.setAttribute(BowlingPackage.eINSTANCE.getPlayer_IsProfessional());
+		final VDomainModelReference professionalColumn = SWTTableTest.createTableColumn(BowlingPackage.eINSTANCE
+			.getPlayer_IsProfessional());
 
-		final VTableColumn eMailsColumn = VTableFactory.eINSTANCE.createTableColumn();
-		eMailsColumn.setAttribute(BowlingPackage.eINSTANCE.getPlayer_EMails());
+		final VDomainModelReference eMailsColumn = SWTTableTest.createTableColumn(BowlingPackage.eINSTANCE
+			.getPlayer_EMails());
 
-		control.getColumns().add(nameColumn);
-		control.getColumns().add(birthColumn);
-		control.getColumns().add(professionalColumn);
-		control.getColumns().add(eMailsColumn);
+		VTableDomainModelReference.class.cast(control.getDomainModelReference()).getColumnDomainModelReferences()
+			.add(nameColumn);
+		VTableDomainModelReference.class.cast(control.getDomainModelReference()).getColumnDomainModelReferences()
+			.add(birthColumn);
+		VTableDomainModelReference.class.cast(control.getDomainModelReference()).getColumnDomainModelReferences()
+			.add(professionalColumn);
+		VTableDomainModelReference.class.cast(control.getDomainModelReference()).getColumnDomainModelReferences()
+			.add(eMailsColumn);
 
 		view.getChildren().add(control);
 	}

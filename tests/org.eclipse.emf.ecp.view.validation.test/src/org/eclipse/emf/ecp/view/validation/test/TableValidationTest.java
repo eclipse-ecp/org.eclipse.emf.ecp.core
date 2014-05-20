@@ -18,9 +18,9 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
+import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
-import org.eclipse.emf.ecp.view.spi.table.model.VTableColumn;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
@@ -60,9 +60,12 @@ public class TableValidationTest {
 		domainModelReference.setDomainModelEFeature(tableReference);
 
 		for (final EAttribute attribute : columnAttributes) {
-			final VTableColumn column = VTableFactory.eINSTANCE.createTableColumn();
-			tableControl.getColumns().add(column);
-			column.setAttribute(attribute);
+			final VFeaturePathDomainModelReference column = VViewFactory.eINSTANCE
+				.createFeaturePathDomainModelReference();
+			column.setDomainModelEFeature(attribute);
+
+			VTableDomainModelReference.class.cast(tableControl.getDomainModelReference())
+				.getColumnDomainModelReferences().add(column);
 		}
 		return view;
 	}

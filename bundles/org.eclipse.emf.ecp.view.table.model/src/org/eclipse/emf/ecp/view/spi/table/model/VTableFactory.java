@@ -44,16 +44,6 @@ public interface VTableFactory extends EFactory
 	VTableControl createTableControl();
 
 	/**
-	 * Returns a new object of class '<em>Column</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return a new object of class '<em>Column</em>'.
-	 * @generated
-	 */
-	VTableColumn createTableColumn();
-
-	/**
 	 * Returns a new object of class '<em>Domain Model Reference</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -62,6 +52,16 @@ public interface VTableFactory extends EFactory
 	 * @generated
 	 */
 	VTableDomainModelReference createTableDomainModelReference();
+
+	/**
+	 * Returns a new object of class '<em>Read Only Column Configuration</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return a new object of class '<em>Read Only Column Configuration</em>'.
+	 * @generated
+	 */
+	VReadOnlyColumnConfiguration createReadOnlyColumnConfiguration();
 
 	/**
 	 * Returns the package supported by this factory.

@@ -20,7 +20,8 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.spi.table.model.VTableColumn;
+import org.eclipse.emf.ecp.view.spi.table.model.VReadOnlyColumnConfiguration;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableColumnConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
@@ -98,15 +99,21 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 			}
 
 			@Override
-			public Adapter caseTableColumn(VTableColumn object)
+			public Adapter caseTableColumnConfiguration(VTableColumnConfiguration object)
 			{
-				return createTableColumnAdapter();
+				return createTableColumnConfigurationAdapter();
 			}
 
 			@Override
 			public Adapter caseTableDomainModelReference(VTableDomainModelReference object)
 			{
 				return createTableDomainModelReferenceAdapter();
+			}
+
+			@Override
+			public Adapter caseReadOnlyColumnConfiguration(VReadOnlyColumnConfiguration object)
+			{
+				return createReadOnlyColumnConfigurationAdapter();
 			}
 
 			@Override
@@ -177,18 +184,19 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.table.model.VTableColumn
-	 * <em>Column</em>}'.
+	 * Creates a new adapter for an object of class '
+	 * {@link org.eclipse.emf.ecp.view.spi.table.model.VTableColumnConfiguration <em>Column Configuration</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTableColumn
+	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTableColumnConfiguration
 	 * @generated
 	 */
-	public Adapter createTableColumnAdapter() {
+	public Adapter createTableColumnConfigurationAdapter()
+	{
 		return null;
 	}
 
@@ -205,6 +213,24 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createTableDomainModelReferenceAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '
+	 * {@link org.eclipse.emf.ecp.view.spi.table.model.VReadOnlyColumnConfiguration
+	 * <em>Read Only Column Configuration</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.spi.table.model.VReadOnlyColumnConfiguration
+	 * @generated
+	 */
+	public Adapter createReadOnlyColumnConfigurationAdapter()
 	{
 		return null;
 	}
@@ -255,7 +281,8 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.emf.ecp.view.spi.model.VControl
 	 * @generated
 	 */
-	public Adapter createControlAdapter() {
+	public Adapter createControlAdapter()
+	{
 		return null;
 	}
 

@@ -40,16 +40,6 @@
       </control>
       -->
       <control
-            class="org.eclipse.emf.ecp.view.editor.controls.TableColumnAttributeControl"
-            id="org.eclipse.emf.ecp.view.editor.controls.tableColumnAttribute">
-         <staticTest
-               priority="2"
-               singleValue="true"
-               supportedClassType="org.eclipse.emf.ecore.EAttribute"
-               supportedEObject="org.eclipse.emf.ecp.view.spi.table.model.VTableColumn">
-         </staticTest>
-      </control>
-      <control
             class="org.eclipse.emf.ecp.view.editor.controls.RuleFeaturePathControl"
             id="org.eclipse.emf.ecp.ui.view.editor.controls.referencePath.leafcondition">
          <dynamicTest
@@ -61,6 +51,13 @@
             id="org.eclipse.emf.ecp.view.editor.controls.rootEClass2">
          <dynamicTest
                testClass="org.eclipse.emf.ecp.view.editor.controls.RootEClassControlIDETester">
+         </dynamicTest>
+      </control>
+      <control
+            class="org.eclipse.emf.ecp.view.editor.controls.TableColumnDomainModelReferenceControl"
+            id="org.eclipse.emf.ecp.view.editor.controls.tableColumnDomainModelReference">
+         <dynamicTest
+               testClass="org.eclipse.emf.ecp.view.editor.controls.TableDomainModelReferenceTester">
          </dynamicTest>
       </control>
    </extension>

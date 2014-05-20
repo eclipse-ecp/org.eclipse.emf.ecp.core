@@ -16,7 +16,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.emf.ecp.view.spi.table.model.VTableColumn;
+import org.eclipse.emf.ecp.view.spi.table.model.VReadOnlyColumnConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
@@ -80,10 +80,10 @@ public class VTableFactoryImpl extends EFactoryImpl implements VTableFactory
 		{
 		case VTablePackage.TABLE_CONTROL:
 			return createTableControl();
-		case VTablePackage.TABLE_COLUMN:
-			return createTableColumn();
 		case VTablePackage.TABLE_DOMAIN_MODEL_REFERENCE:
 			return createTableDomainModelReference();
+		case VTablePackage.READ_ONLY_COLUMN_CONFIGURATION:
+			return createReadOnlyColumnConfiguration();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -109,10 +109,10 @@ public class VTableFactoryImpl extends EFactoryImpl implements VTableFactory
 	 * @generated
 	 */
 	@Override
-	public VTableColumn createTableColumn()
+	public VTableDomainModelReference createTableDomainModelReference()
 	{
-		final VTableColumnImpl tableColumn = new VTableColumnImpl();
-		return tableColumn;
+		final VTableDomainModelReferenceImpl tableDomainModelReference = new VTableDomainModelReferenceImpl();
+		return tableDomainModelReference;
 	}
 
 	/**
@@ -122,10 +122,10 @@ public class VTableFactoryImpl extends EFactoryImpl implements VTableFactory
 	 * @generated
 	 */
 	@Override
-	public VTableDomainModelReference createTableDomainModelReference()
+	public VReadOnlyColumnConfiguration createReadOnlyColumnConfiguration()
 	{
-		final VTableDomainModelReferenceImpl tableDomainModelReference = new VTableDomainModelReferenceImpl();
-		return tableDomainModelReference;
+		final VReadOnlyColumnConfigurationImpl readOnlyColumnConfiguration = new VReadOnlyColumnConfigurationImpl();
+		return readOnlyColumnConfiguration;
 	}
 
 	/**

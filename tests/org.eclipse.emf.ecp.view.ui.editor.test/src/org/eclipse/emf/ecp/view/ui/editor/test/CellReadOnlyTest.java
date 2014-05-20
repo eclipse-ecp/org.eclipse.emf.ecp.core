@@ -17,9 +17,9 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecp.view.internal.table.swt.CellReadOnlyTesterHelper;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
-import org.eclipse.emf.ecp.view.spi.table.model.VTableColumn;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.swt.ECPCellReadOnlyTester;
 import org.eclipse.emf.ecp.view.table.ui.swt.test.SWTTableTest;
@@ -81,12 +81,12 @@ public class CellReadOnlyTest extends ECPCommonSWTBotTest {
 
 		final TableControlHandle tableControlHandle = SWTTableTest.createInitializedTableWithoutTableColumns();
 
-		final VTableColumn tableColumn1 = SWTTableTest.createTableColumn();
-		tableColumn1.setAttribute(EcorePackage.eINSTANCE.getENamedElement_Name());
+		final VDomainModelReference tableColumn1 = SWTTableTest.createTableColumn(EcorePackage.eINSTANCE
+			.getENamedElement_Name());
 		tableControlHandle.addFirstTableColumn(tableColumn1);
 
-		final VTableColumn tableColumn2 = SWTTableTest.createTableColumn();
-		tableColumn2.setAttribute(EcorePackage.eINSTANCE.getEClass_Interface());
+		final VDomainModelReference tableColumn2 = SWTTableTest.createTableColumn(EcorePackage.eINSTANCE
+			.getEClass_Interface());
 		tableControlHandle.addSecondTableColumn(tableColumn2);
 
 		final VView vview = VViewFactory.eINSTANCE.createView();

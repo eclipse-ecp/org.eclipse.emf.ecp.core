@@ -25,10 +25,10 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeAddRemoveListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
-import org.eclipse.emf.ecp.view.spi.table.model.VTableColumn;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
@@ -559,9 +559,10 @@ public class ViewModelContextTest {
 		final VTableDomainModelReference domRef = VTableFactory.eINSTANCE.createTableDomainModelReference();
 		domRef.setDomainModelEFeature(BowlingPackage.eINSTANCE.getLeague_Players());
 		control.setDomainModelReference(domRef);
-		final VTableColumn col = VTableFactory.eINSTANCE.createTableColumn();
-		col.setAttribute(BowlingPackage.eINSTANCE.getPlayer_Name());
-		control.getColumns().add(col);
+		final VFeaturePathDomainModelReference col = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
+		col.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Name());
+		VTableDomainModelReference.class.cast(control.getDomainModelReference()).getColumnDomainModelReferences()
+			.add(col);
 		view.getChildren().add(control);
 
 		final League league = BowlingFactory.eINSTANCE.createLeague();
@@ -590,9 +591,10 @@ public class ViewModelContextTest {
 		final VTableDomainModelReference domRef = VTableFactory.eINSTANCE.createTableDomainModelReference();
 		domRef.setDomainModelEFeature(BowlingPackage.eINSTANCE.getLeague_Players());
 		control.setDomainModelReference(domRef);
-		final VTableColumn col = VTableFactory.eINSTANCE.createTableColumn();
-		col.setAttribute(BowlingPackage.eINSTANCE.getPlayer_Name());
-		control.getColumns().add(col);
+		final VFeaturePathDomainModelReference col = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
+		col.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Name());
+		VTableDomainModelReference.class.cast(control.getDomainModelReference()).getColumnDomainModelReferences()
+			.add(col);
 		view.getChildren().add(control);
 
 		final League league = BowlingFactory.eINSTANCE.createLeague();
@@ -619,9 +621,10 @@ public class ViewModelContextTest {
 		final VTableDomainModelReference domRef = VTableFactory.eINSTANCE.createTableDomainModelReference();
 		domRef.setDomainModelEFeature(BowlingPackage.eINSTANCE.getLeague_Players());
 		control.setDomainModelReference(domRef);
-		final VTableColumn col = VTableFactory.eINSTANCE.createTableColumn();
-		col.setAttribute(BowlingPackage.eINSTANCE.getPlayer_Name());
-		control.getColumns().add(col);
+		final VFeaturePathDomainModelReference col = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
+		col.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Name());
+		VTableDomainModelReference.class.cast(control.getDomainModelReference()).getColumnDomainModelReferences()
+			.add(col);
 		view.getChildren().add(control);
 
 		final League league = BowlingFactory.eINSTANCE.createLeague();

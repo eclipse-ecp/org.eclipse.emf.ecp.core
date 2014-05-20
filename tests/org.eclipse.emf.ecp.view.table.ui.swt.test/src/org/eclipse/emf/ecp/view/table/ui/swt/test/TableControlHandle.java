@@ -11,8 +11,9 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.table.ui.swt.test;
 
-import org.eclipse.emf.ecp.view.spi.table.model.VTableColumn;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 
 /**
  * @author Jonas
@@ -25,24 +26,26 @@ public class TableControlHandle {
 	}
 
 	private VTableControl tableControl;
-	private VTableColumn tableColumn1;
-	private VTableColumn tableColumn2;
+	private VDomainModelReference tableColumn1;
+	private VDomainModelReference tableColumn2;
 
 	/**
 	 * @param tableColumn1
 	 */
-	public void addFirstTableColumn(VTableColumn tableColumn1) {
+	public void addFirstTableColumn(VDomainModelReference tableColumn1) {
 		setTableColumn1(tableColumn1);
-		getTableControl().getColumns().add(tableColumn1);
+		VTableDomainModelReference.class.cast(getTableControl().getDomainModelReference())
+			.getColumnDomainModelReferences().add(tableColumn1);
 
 	}
 
 	/**
 	 * @param tableColumn2
 	 */
-	public void addSecondTableColumn(VTableColumn tableColumn2) {
+	public void addSecondTableColumn(VDomainModelReference tableColumn2) {
 		setTableColumn2(tableColumn2);
-		getTableControl().getColumns().add(tableColumn2);
+		VTableDomainModelReference.class.cast(getTableControl().getDomainModelReference())
+			.getColumnDomainModelReferences().add(tableColumn2);
 
 	}
 
@@ -63,28 +66,28 @@ public class TableControlHandle {
 	/**
 	 * @return the tableColumn1
 	 */
-	public VTableColumn getTableColumn1() {
+	public VDomainModelReference getTableColumn1() {
 		return tableColumn1;
 	}
 
 	/**
 	 * @param tableColumn1 the tableColumn1 to set
 	 */
-	public void setTableColumn1(VTableColumn tableColumn1) {
+	public void setTableColumn1(VDomainModelReference tableColumn1) {
 		this.tableColumn1 = tableColumn1;
 	}
 
 	/**
 	 * @return the tableColumn2
 	 */
-	public VTableColumn getTableColumn2() {
+	public VDomainModelReference getTableColumn2() {
 		return tableColumn2;
 	}
 
 	/**
 	 * @param tableColumn2 the tableColumn2 to set
 	 */
-	public void setTableColumn2(VTableColumn tableColumn2) {
+	public void setTableColumn2(VDomainModelReference tableColumn2) {
 		this.tableColumn2 = tableColumn2;
 	}
 

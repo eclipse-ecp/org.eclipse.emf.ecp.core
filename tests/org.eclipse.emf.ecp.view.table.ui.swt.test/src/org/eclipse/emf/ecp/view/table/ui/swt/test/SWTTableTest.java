@@ -23,6 +23,7 @@ import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
@@ -31,6 +32,7 @@ import org.eclipse.emf.ecp.view.internal.swt.SWTRendererFactoryImpl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
@@ -42,8 +44,8 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
-import org.eclipse.emf.ecp.view.spi.table.model.VTableColumn;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
 import org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
@@ -177,7 +179,9 @@ public class SWTTableTest {
 		final Control render = SWTViewTestHelper.render(handle.getTableControl(), domainElement, shell);
 		assertTrue(render instanceof Composite);
 
-		assertEquals(domainElement.eClass().getEAttributes().size(), handle.getTableControl().getColumns().size());
+		assertEquals(domainElement.eClass().getEAttributes().size(),
+			VTableDomainModelReference.class.cast(handle.getTableControl().getDomainModelReference())
+				.getColumnDomainModelReferences().size());
 
 		final Control control = getTable(render);
 		assertTrue(control instanceof Table);
@@ -198,7 +202,8 @@ public class SWTTableTest {
 		}
 		assertTrue(render instanceof Composite);
 
-		assertEquals(0, handle.getTableControl().getColumns().size());
+		assertEquals(0, VTableDomainModelReference.class.cast(handle.getTableControl().getDomainModelReference())
+			.getColumnDomainModelReferences().size());
 
 		final Control control = getTable(render);
 		assertTrue(control instanceof Table);
@@ -303,17 +308,19 @@ public class SWTTableTest {
 
 	private static TableControlHandle createTableWithTwoTableColumns() {
 		final TableControlHandle tableControlHandle = createInitializedTableWithoutTableColumns();
-		final VTableColumn tableColumn1 = createTableColumn();
-		tableColumn1.setAttribute(EcorePackage.eINSTANCE.getEClass_Abstract());
+		final VDomainModelReference tableColumn1 = createTableColumn(EcorePackage.eINSTANCE.getEClass_Abstract());
+
 		tableControlHandle.addFirstTableColumn(tableColumn1);
-		final VTableColumn tableColumn2 = createTableColumn();
-		tableColumn2.setAttribute(EcorePackage.eINSTANCE.getEClass_Abstract());
+		final VDomainModelReference tableColumn2 = createTableColumn(EcorePackage.eINSTANCE.getEClass_Abstract());
 		tableControlHandle.addSecondTableColumn(tableColumn2);
 		return tableControlHandle;
 	}
 
-	public static VTableColumn createTableColumn() {
-		return VTableFactory.eINSTANCE.createTableColumn();
+	public static VDomainModelReference createTableColumn(EStructuralFeature feature) {
+		final VFeaturePathDomainModelReference reference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		reference.setDomainModelEFeature(feature);
+		return reference;
 	}
 
 	public static TableControlHandle createInitializedTableWithoutTableColumns() {
@@ -336,7 +343,7 @@ public class SWTTableTest {
 	 */
 	private static VTableControl createTableControl() {
 		final VTableControl tc = VTableFactory.eINSTANCE.createTableControl();
-		tc.setDomainModelReference(VViewFactory.eINSTANCE.createFeaturePathDomainModelReference());
+		tc.setDomainModelReference(VTableFactory.eINSTANCE.createTableDomainModelReference());
 		return tc;
 	}
 

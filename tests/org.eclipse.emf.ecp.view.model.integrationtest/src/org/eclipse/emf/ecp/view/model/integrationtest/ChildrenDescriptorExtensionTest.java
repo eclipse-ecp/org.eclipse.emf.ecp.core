@@ -65,10 +65,9 @@ public class ChildrenDescriptorExtensionTest {
 	// VDomainModelReference -> VFeaturePathDR, VPredefinedDR, VTableDR
 	private static final int CONTROL_CHILD_COUNT = COMPOSITE_CHILD_COUNT + 3;
 	private static final int TABLECONTROL_CHILD_COUNT = CONTROL_CHILD_COUNT + 1;
-	private static final int TABLECOLUMN_CHILD_COUNT = 0;
 	private static final int SEPARATOR_CHILD_COUNT = RENDERABLE_CHILD_COUNT;
-	private static final int COLUMNCOMPOSITE_CHILD_COUNT = COMPOSITECOLLECTION_CHILD_COUNT;
-	private static final int COLUMN_CHILD_COUNT = COMPOSITECOLLECTION_CHILD_COUNT;
+	// private static final int COLUMNCOMPOSITE_CHILD_COUNT = COMPOSITECOLLECTION_CHILD_COUNT;
+	// private static final int COLUMN_CHILD_COUNT = COMPOSITECOLLECTION_CHILD_COUNT;
 	private static final int GROUP_CHILD_COUNT = COMPOSITECOLLECTION_CHILD_COUNT;
 	private static final int ACTION_CHILD_COUNT = 0;
 	private static final int GROUPEDGRID_CHILD_COUNT = RENDERABLE_CHILD_COUNT + 1;
@@ -196,11 +195,6 @@ public class ChildrenDescriptorExtensionTest {
 		assertEquals(TABLECONTROL_CHILD_COUNT, size);
 	}
 
-	@Test
-	public void testTableColumnChildDescriptors() {
-		final int size = getChildrenSize(VTablePackage.eINSTANCE.getTableColumn());
-		assertEquals(TABLECOLUMN_CHILD_COUNT, size);
-	}
 
 	/**
 	 * Class is abstract, Exception expected

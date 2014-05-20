@@ -24,7 +24,6 @@ import org.eclipse.emf.ecp.diffmerge.spi.context.DefaultMergeUtil;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
-import org.eclipse.emf.ecp.view.spi.table.model.VTableColumn;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
@@ -149,10 +148,10 @@ public class MergeTests {
 	public void testMergeMultiContainmentReference() {
 		final VTableControl controlToCopyFrom = VTableFactory.eINSTANCE.createTableControl();
 		final VTableControl controlToCopyTo = VTableFactory.eINSTANCE.createTableControl();
-		final VTableColumn vcFrom = VTableFactory.eINSTANCE.createTableColumn();
-		final VTableColumn vcTo = VTableFactory.eINSTANCE.createTableColumn();
-		vcFrom.setAttribute(BowlingPackage.eINSTANCE.getMerchandise_Name());
-		vcTo.setAttribute(BowlingPackage.eINSTANCE.getMerchandise_Name());
+		final VFeaturePathDomainModelReference vcFrom = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
+		final VFeaturePathDomainModelReference vcTo = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
+		vcFrom.setDomainModelEFeature(BowlingPackage.eINSTANCE.getMerchandise_Name());
+		vcTo.setDomainModelEFeature(BowlingPackage.eINSTANCE.getMerchandise_Name());
 
 		final Fan fan1 = BowlingFactory.eINSTANCE.createFan();
 		{

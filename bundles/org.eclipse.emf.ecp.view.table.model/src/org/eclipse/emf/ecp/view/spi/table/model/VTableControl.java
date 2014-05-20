@@ -22,10 +22,11 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#getColumns <em>Columns</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#isAddRemoveDisabled <em>Add Remove Disabled</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#isEnableDetailEditingDialog <em>Enable Detail
  * Editing Dialog</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#getColumnConfigurations <em>Column Configurations
+ * </em>}</li>
  * </ul>
  * </p>
  * 
@@ -35,23 +36,6 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
  */
 public interface VTableControl extends VControl
 {
-	/**
-	 * Returns the value of the '<em><b>Columns</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.emf.ecp.view.spi.table.model.VTableColumn}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Columns</em>' containment reference list isn't clear, there really should be more of a
-	 * description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the value of the '<em>Columns</em>' containment reference list.
-	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage#getTableControl_Columns()
-	 * @model containment="true"
-	 * @generated
-	 */
-	EList<VTableColumn> getColumns();
-
 	/**
 	 * Returns the value of the '<em><b>Add Remove Disabled</b></em>' attribute.
 	 * The default value is <code>"false"</code>.
@@ -111,5 +95,22 @@ public interface VTableControl extends VControl
 	 * @generated
 	 */
 	void setEnableDetailEditingDialog(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Column Configurations</b></em>' containment reference list.
+	 * The list contents are of type {@link org.eclipse.emf.ecp.view.spi.table.model.VTableColumnConfiguration}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Column Configurations</em>' containment reference list isn't clear, there really
+	 * should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the value of the '<em>Column Configurations</em>' containment reference list.
+	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage#getTableControl_ColumnConfigurations()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<VTableColumnConfiguration> getColumnConfigurations();
 
 } // VTableControl

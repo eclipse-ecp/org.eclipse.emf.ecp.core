@@ -27,6 +27,7 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.databinding.EMFProperties;
 import org.eclipse.emf.databinding.EObjectObservableMap;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -42,16 +43,18 @@ import org.eclipse.emf.ecp.edit.internal.swt.util.CellEditorFactory;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.view.internal.table.swt.CellReadOnlyTesterHelper;
+import org.eclipse.emf.ecp.view.internal.table.swt.TableConfigurationHelper;
 import org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.provider.ECPTooltipModifierHelper;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
+import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
-import org.eclipse.emf.ecp.view.spi.table.model.VTableColumn;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -158,9 +161,11 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		final TableControlConfiguration tableControlConfiguration = new TableControlConfiguration();
 		tableControlConfiguration.setAddRemoveDisabled(getVElement().isAddRemoveDisabled());
 
-		for (final VTableColumn column : getVElement().getColumns()) {
+		for (final VDomainModelReference column : VTableDomainModelReference.class.cast(
+			getVElement().getDomainModelReference()).getColumnDomainModelReferences()) {
+			final boolean readOnly = TableConfigurationHelper.isReadOnly(getVElement(), column);
 			tableControlConfiguration.getColumns().add(
-				new TableColumnConfiguration(column.isReadOnly(), column.getAttribute()));
+				new TableColumnConfiguration(readOnly, (EAttribute) column.getEStructuralFeatureIterator().next()));
 		}
 
 		final Composite composite = new Composite(parent, SWT.NONE);

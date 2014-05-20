@@ -23,12 +23,7 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
 import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
@@ -40,8 +35,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class TableControlItemProvider
-	extends ControlItemProvider implements IEditingDomainItemProvider, IStructuredItemContentProvider,
-	ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
+	extends ControlItemProvider {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -133,11 +127,12 @@ public class TableControlItemProvider
 	 * @generated
 	 */
 	@Override
-	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object)
+	{
 		if (childrenFeatures == null)
 		{
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(VTablePackage.Literals.TABLE_CONTROL__COLUMNS);
+			childrenFeatures.add(VTablePackage.Literals.TABLE_CONTROL__COLUMN_CONFIGURATIONS);
 		}
 		return childrenFeatures;
 	}
@@ -149,7 +144,8 @@ public class TableControlItemProvider
 	 * @generated
 	 */
 	@Override
-	protected EStructuralFeature getChildFeature(Object object, Object child) {
+	protected EStructuralFeature getChildFeature(Object object, Object child)
+	{
 		// Check the type of the specified child object and return the proper feature to use for
 		// adding (see {@link AddCommand}) it as a child.
 
@@ -201,7 +197,7 @@ public class TableControlItemProvider
 		case VTablePackage.TABLE_CONTROL__ENABLE_DETAIL_EDITING_DIALOG:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
-		case VTablePackage.TABLE_CONTROL__COLUMNS:
+		case VTablePackage.TABLE_CONTROL__COLUMN_CONFIGURATIONS:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;
 		}
@@ -227,8 +223,8 @@ public class TableControlItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-			(VTablePackage.Literals.TABLE_CONTROL__COLUMNS,
-				VTableFactory.eINSTANCE.createTableColumn()));
+			(VTablePackage.Literals.TABLE_CONTROL__COLUMN_CONFIGURATIONS,
+				VTableFactory.eINSTANCE.createReadOnlyColumnConfiguration()));
 	}
 
 }

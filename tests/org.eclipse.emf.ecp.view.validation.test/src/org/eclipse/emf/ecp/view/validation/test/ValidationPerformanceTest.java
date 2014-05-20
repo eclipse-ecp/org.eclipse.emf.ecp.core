@@ -23,10 +23,10 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
-import org.eclipse.emf.ecp.view.spi.table.model.VTableColumn;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
@@ -192,11 +192,16 @@ public class ValidationPerformanceTest {
 				.createTableDomainModelReference();
 			writerReference.setDomainModelEFeature(TestPackage.eINSTANCE.getLibrary_Writers());
 			writersTable.setDomainModelReference(writerReference);
-			writersTable.getColumns().add(createTableColumn(TestPackage.eINSTANCE.getWriter_BirthDate()));
-			writersTable.getColumns().add(createTableColumn(TestPackage.eINSTANCE.getWriter_EMail()));
-			writersTable.getColumns().add(createTableColumn(TestPackage.eINSTANCE.getWriter_FirstName()));
-			writersTable.getColumns().add(createTableColumn(TestPackage.eINSTANCE.getWriter_LastName()));
-			writersTable.getColumns().add(createTableColumn(TestPackage.eINSTANCE.getWriter_Pseudonym()));
+			VTableDomainModelReference.class.cast(writersTable.getDomainModelReference())
+				.getColumnDomainModelReferences().add(createTableColumn(TestPackage.eINSTANCE.getWriter_BirthDate()));
+			VTableDomainModelReference.class.cast(writersTable.getDomainModelReference())
+				.getColumnDomainModelReferences().add(createTableColumn(TestPackage.eINSTANCE.getWriter_EMail()));
+			VTableDomainModelReference.class.cast(writersTable.getDomainModelReference())
+				.getColumnDomainModelReferences().add(createTableColumn(TestPackage.eINSTANCE.getWriter_FirstName()));
+			VTableDomainModelReference.class.cast(writersTable.getDomainModelReference())
+				.getColumnDomainModelReferences().add(createTableColumn(TestPackage.eINSTANCE.getWriter_LastName()));
+			VTableDomainModelReference.class.cast(writersTable.getDomainModelReference())
+				.getColumnDomainModelReferences().add(createTableColumn(TestPackage.eINSTANCE.getWriter_Pseudonym()));
 			view.getChildren().add(writersTable);
 
 			// final VControl writersControl = VViewFactory.eINSTANCE.createControl();
@@ -224,9 +229,9 @@ public class ValidationPerformanceTest {
 		return view;
 	}
 
-	private VTableColumn createTableColumn(EAttribute attribute) {
-		final VTableColumn column = VTableFactory.eINSTANCE.createTableColumn();
-		column.setAttribute(attribute);
+	private VDomainModelReference createTableColumn(EAttribute attribute) {
+		final VFeaturePathDomainModelReference column = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
+		column.setDomainModelEFeature(attribute);
 		return column;
 	}
 

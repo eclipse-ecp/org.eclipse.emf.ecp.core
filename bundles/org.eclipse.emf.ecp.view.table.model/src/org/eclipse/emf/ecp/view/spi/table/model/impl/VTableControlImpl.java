@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecp.view.spi.model.impl.VControlImpl;
-import org.eclipse.emf.ecp.view.spi.table.model.VTableColumn;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableColumnConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
 
@@ -33,11 +33,12 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableControlImpl#getColumns <em>Columns</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableControlImpl#isAddRemoveDisabled <em>Add Remove
  * Disabled</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableControlImpl#isEnableDetailEditingDialog <em>Enable
  * Detail Editing Dialog</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableControlImpl#getColumnConfigurations <em>Column
+ * Configurations</em>}</li>
  * </ul>
  * </p>
  * 
@@ -45,17 +46,6 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
  */
 public class VTableControlImpl extends VControlImpl implements VTableControl
 {
-	/**
-	 * The cached value of the '{@link #getColumns() <em>Columns</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see #getColumns()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<VTableColumn> columns;
-
 	/**
 	 * The default value of the '{@link #isAddRemoveDisabled() <em>Add Remove Disabled</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -102,6 +92,18 @@ public class VTableControlImpl extends VControlImpl implements VTableControl
 	protected boolean enableDetailEditingDialog = ENABLE_DETAIL_EDITING_DIALOG_EDEFAULT;
 
 	/**
+	 * The cached value of the '{@link #getColumnConfigurations() <em>Column Configurations</em>}' containment reference
+	 * list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see #getColumnConfigurations()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<VTableColumnConfiguration> columnConfigurations;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
@@ -131,23 +133,6 @@ public class VTableControlImpl extends VControlImpl implements VTableControl
 	 * @generated
 	 */
 	@Override
-	public EList<VTableColumn> getColumns()
-	{
-		if (columns == null)
-		{
-			columns = new EObjectContainmentEList<VTableColumn>(VTableColumn.class, this,
-				VTablePackage.TABLE_CONTROL__COLUMNS);
-		}
-		return columns;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	@Override
 	public boolean isAddRemoveDisabled()
 	{
 		return addRemoveDisabled;
@@ -162,12 +147,11 @@ public class VTableControlImpl extends VControlImpl implements VTableControl
 	@Override
 	public void setAddRemoveDisabled(boolean newAddRemoveDisabled)
 	{
-		final boolean oldAddRemoveDisabled = addRemoveDisabled;
+		boolean oldAddRemoveDisabled = addRemoveDisabled;
 		addRemoveDisabled = newAddRemoveDisabled;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, VTablePackage.TABLE_CONTROL__ADD_REMOVE_DISABLED,
 				oldAddRemoveDisabled, addRemoveDisabled));
-		}
 	}
 
 	/**
@@ -191,13 +175,29 @@ public class VTableControlImpl extends VControlImpl implements VTableControl
 	@Override
 	public void setEnableDetailEditingDialog(boolean newEnableDetailEditingDialog)
 	{
-		final boolean oldEnableDetailEditingDialog = enableDetailEditingDialog;
+		boolean oldEnableDetailEditingDialog = enableDetailEditingDialog;
 		enableDetailEditingDialog = newEnableDetailEditingDialog;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VTablePackage.TABLE_CONTROL__ENABLE_DETAIL_EDITING_DIALOG, oldEnableDetailEditingDialog,
 				enableDetailEditingDialog));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
+	public EList<VTableColumnConfiguration> getColumnConfigurations()
+	{
+		if (columnConfigurations == null)
+		{
+			columnConfigurations = new EObjectContainmentEList<VTableColumnConfiguration>(
+				VTableColumnConfiguration.class, this, VTablePackage.TABLE_CONTROL__COLUMN_CONFIGURATIONS);
 		}
+		return columnConfigurations;
 	}
 
 	/**
@@ -211,8 +211,8 @@ public class VTableControlImpl extends VControlImpl implements VTableControl
 	{
 		switch (featureID)
 		{
-		case VTablePackage.TABLE_CONTROL__COLUMNS:
-			return ((InternalEList<?>) getColumns()).basicRemove(otherEnd, msgs);
+		case VTablePackage.TABLE_CONTROL__COLUMN_CONFIGURATIONS:
+			return ((InternalEList<?>) getColumnConfigurations()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -228,12 +228,12 @@ public class VTableControlImpl extends VControlImpl implements VTableControl
 	{
 		switch (featureID)
 		{
-		case VTablePackage.TABLE_CONTROL__COLUMNS:
-			return getColumns();
 		case VTablePackage.TABLE_CONTROL__ADD_REMOVE_DISABLED:
 			return isAddRemoveDisabled();
 		case VTablePackage.TABLE_CONTROL__ENABLE_DETAIL_EDITING_DIALOG:
 			return isEnableDetailEditingDialog();
+		case VTablePackage.TABLE_CONTROL__COLUMN_CONFIGURATIONS:
+			return getColumnConfigurations();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -250,15 +250,15 @@ public class VTableControlImpl extends VControlImpl implements VTableControl
 	{
 		switch (featureID)
 		{
-		case VTablePackage.TABLE_CONTROL__COLUMNS:
-			getColumns().clear();
-			getColumns().addAll((Collection<? extends VTableColumn>) newValue);
-			return;
 		case VTablePackage.TABLE_CONTROL__ADD_REMOVE_DISABLED:
 			setAddRemoveDisabled((Boolean) newValue);
 			return;
 		case VTablePackage.TABLE_CONTROL__ENABLE_DETAIL_EDITING_DIALOG:
 			setEnableDetailEditingDialog((Boolean) newValue);
+			return;
+		case VTablePackage.TABLE_CONTROL__COLUMN_CONFIGURATIONS:
+			getColumnConfigurations().clear();
+			getColumnConfigurations().addAll((Collection<? extends VTableColumnConfiguration>) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -275,14 +275,14 @@ public class VTableControlImpl extends VControlImpl implements VTableControl
 	{
 		switch (featureID)
 		{
-		case VTablePackage.TABLE_CONTROL__COLUMNS:
-			getColumns().clear();
-			return;
 		case VTablePackage.TABLE_CONTROL__ADD_REMOVE_DISABLED:
 			setAddRemoveDisabled(ADD_REMOVE_DISABLED_EDEFAULT);
 			return;
 		case VTablePackage.TABLE_CONTROL__ENABLE_DETAIL_EDITING_DIALOG:
 			setEnableDetailEditingDialog(ENABLE_DETAIL_EDITING_DIALOG_EDEFAULT);
+			return;
+		case VTablePackage.TABLE_CONTROL__COLUMN_CONFIGURATIONS:
+			getColumnConfigurations().clear();
 			return;
 		}
 		super.eUnset(featureID);
@@ -299,12 +299,12 @@ public class VTableControlImpl extends VControlImpl implements VTableControl
 	{
 		switch (featureID)
 		{
-		case VTablePackage.TABLE_CONTROL__COLUMNS:
-			return columns != null && !columns.isEmpty();
 		case VTablePackage.TABLE_CONTROL__ADD_REMOVE_DISABLED:
 			return addRemoveDisabled != ADD_REMOVE_DISABLED_EDEFAULT;
 		case VTablePackage.TABLE_CONTROL__ENABLE_DETAIL_EDITING_DIALOG:
 			return enableDetailEditingDialog != ENABLE_DETAIL_EDITING_DIALOG_EDEFAULT;
+		case VTablePackage.TABLE_CONTROL__COLUMN_CONFIGURATIONS:
+			return columnConfigurations != null && !columnConfigurations.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -318,11 +318,10 @@ public class VTableControlImpl extends VControlImpl implements VTableControl
 	@Override
 	public String toString()
 	{
-		if (eIsProxy()) {
+		if (eIsProxy())
 			return super.toString();
-		}
 
-		final StringBuffer result = new StringBuffer(super.toString());
+		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (addRemoveDisabled: "); //$NON-NLS-1$
 		result.append(addRemoveDisabled);
 		result.append(", enableDetailEditingDialog: "); //$NON-NLS-1$

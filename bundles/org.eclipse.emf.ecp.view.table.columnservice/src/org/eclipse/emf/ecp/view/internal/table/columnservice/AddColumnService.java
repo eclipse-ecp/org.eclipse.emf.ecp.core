@@ -24,6 +24,7 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 
 /**
  * This service will iterate over all contents of the {@link org.eclipse.emf.ecp.view.spi.model.VView VView} and will
@@ -61,7 +62,8 @@ public class AddColumnService implements ViewModelService {
 		if (tableControl.getDomainModelReference() == null) {
 			return;
 		}
-		if (tableControl.getColumns() == null || tableControl.getColumns().size() < 1) {
+		if (VTableDomainModelReference.class.cast(tableControl.getDomainModelReference())
+			.getColumnDomainModelReferences().size() < 1) {
 			final Iterator<Setting> settings = tableControl.getDomainModelReference().getIterator();
 			if (!settings.hasNext()) {
 				return;

@@ -19,7 +19,8 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.spi.table.model.VTableColumn;
+import org.eclipse.emf.ecp.view.spi.table.model.VReadOnlyColumnConfiguration;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableColumnConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
@@ -102,9 +103,9 @@ public class TableSwitch<T> extends Switch<T> {
 				result = defaultCase(theEObject);
 			return result;
 		}
-		case VTablePackage.TABLE_COLUMN: {
-			VTableColumn tableColumn = (VTableColumn) theEObject;
-			T result = caseTableColumn(tableColumn);
+		case VTablePackage.TABLE_COLUMN_CONFIGURATION: {
+			VTableColumnConfiguration tableColumnConfiguration = (VTableColumnConfiguration) theEObject;
+			T result = caseTableColumnConfiguration(tableColumnConfiguration);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -116,6 +117,15 @@ public class TableSwitch<T> extends Switch<T> {
 				result = caseFeaturePathDomainModelReference(tableDomainModelReference);
 			if (result == null)
 				result = caseDomainModelReference(tableDomainModelReference);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case VTablePackage.READ_ONLY_COLUMN_CONFIGURATION: {
+			VReadOnlyColumnConfiguration readOnlyColumnConfiguration = (VReadOnlyColumnConfiguration) theEObject;
+			T result = caseReadOnlyColumnConfiguration(readOnlyColumnConfiguration);
+			if (result == null)
+				result = caseTableColumnConfiguration(readOnlyColumnConfiguration);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -143,18 +153,18 @@ public class TableSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Column</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Column Configuration</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * 
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Column</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Column Configuration</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseTableColumn(VTableColumn object)
+	public T caseTableColumnConfiguration(VTableColumnConfiguration object)
 	{
 		return null;
 	}
@@ -172,6 +182,23 @@ public class TableSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseTableDomainModelReference(VTableDomainModelReference object)
+	{
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Read Only Column Configuration</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Read Only Column Configuration</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseReadOnlyColumnConfiguration(VReadOnlyColumnConfiguration object)
 	{
 		return null;
 	}
@@ -222,7 +249,8 @@ public class TableSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseControl(VControl object) {
+	public T caseControl(VControl object)
+	{
 		return null;
 	}
 

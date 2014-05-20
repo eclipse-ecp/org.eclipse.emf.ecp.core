@@ -16,13 +16,16 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
+import org.eclipse.emf.ecp.view.internal.table.swt.TableConfigurationHelper;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
-import org.eclipse.emf.ecp.view.spi.table.model.VTableColumn;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
@@ -149,10 +152,14 @@ public class DetailDialog extends Dialog {
 	private VView getView() {
 		// return ViewProviderHelper.getView(selection);
 		final VView vView = VViewFactory.eINSTANCE.createView();
-		for (final VTableColumn column : tableControl.getColumns()) {
+		for (final VDomainModelReference column : VTableDomainModelReference.class.cast(
+			tableControl.getDomainModelReference()).getColumnDomainModelReferences()) {
 			final VControl vControl = VViewFactory.eINSTANCE.createControl();
-			vControl.setDomainModelReference(column.getAttribute());
-			vControl.setReadonly(column.isReadOnly() || tableControl.isReadonly() || !tableControl.isEnabled());
+			vControl.setDomainModelReference(EcoreUtil.copy(column));
+			boolean controlReadOnly = tableControl.isReadonly() || !tableControl.isEnabled();
+			controlReadOnly = TableConfigurationHelper.isReadOnly(tableControl, column);
+
+			vControl.setReadonly(controlReadOnly);
 
 			vView.getChildren().add(vControl);
 		}

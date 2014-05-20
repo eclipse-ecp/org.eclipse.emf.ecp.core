@@ -37,7 +37,6 @@ import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
-import org.eclipse.emf.ecp.view.spi.table.model.VTableColumn;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
@@ -1326,12 +1325,15 @@ public class UnsetServiceTest {
 		tableDomainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getFan_FanMerchandise());
 		table.setDomainModelReference(tableDomainModelReference);
 
-		final VTableColumn nameCol = VTableFactory.eINSTANCE.createTableColumn();
-		nameCol.setAttribute(BowlingPackage.eINSTANCE.getMerchandise_Name());
-		final VTableColumn priceCol = VTableFactory.eINSTANCE.createTableColumn();
-		priceCol.setAttribute(BowlingPackage.eINSTANCE.getMerchandise_Price());
-		table.getColumns().add(nameCol);
-		table.getColumns().add(priceCol);
+		final VFeaturePathDomainModelReference nameCol = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
+		nameCol.setDomainModelEFeature(BowlingPackage.eINSTANCE.getMerchandise_Name());
+		final VFeaturePathDomainModelReference priceCol = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		priceCol.setDomainModelEFeature(BowlingPackage.eINSTANCE.getMerchandise_Price());
+		VTableDomainModelReference.class.cast(table.getDomainModelReference()).getColumnDomainModelReferences()
+			.add(nameCol);
+		VTableDomainModelReference.class.cast(table.getDomainModelReference()).getColumnDomainModelReferences()
+			.add(priceCol);
 
 		view.getChildren().add(table);
 

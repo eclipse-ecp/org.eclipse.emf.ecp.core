@@ -19,8 +19,6 @@ import org.eclipse.emf.ecp.edit.internal.swt.reference.DeleteReferenceAction;
 import org.eclipse.emf.ecp.edit.internal.swt.reference.LinkControl;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.spi.table.model.VTableColumn;
-import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -32,7 +30,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.dialogs.ListDialog;
 
-public class TableColumnAttributeControl extends LinkControl {
+public class TableColumnDomainModelReferenceControl extends LinkControl {
 
 	@Override
 	protected int getNumButtons() {
@@ -87,9 +85,9 @@ public class TableColumnAttributeControl extends LinkControl {
 
 			final AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(
 				getComposedAdapterFactory());
-			final EReference eref = (EReference) ((VFeaturePathDomainModelReference) ((VTableControl) getFirstSetting()
+			final EReference eref = (EReference) ((VFeaturePathDomainModelReference) getFirstSetting()
 				.getEObject()
-				.eContainer()).getDomainModelReference()).getDomainModelEFeature();
+				.eContainer()).getDomainModelEFeature();
 			final ListDialog ld = new ListDialog(shell);
 			ld.setLabelProvider(labelProvider);
 			ld.setContentProvider(ArrayContentProvider.getInstance());
@@ -101,7 +99,9 @@ public class TableColumnAttributeControl extends LinkControl {
 				if (EAttribute.class.isInstance(selection)) {
 					final EAttribute selectedFeature = (EAttribute) selection;
 
-					((VTableColumn) getFirstSetting().getEObject()).setAttribute(selectedFeature);
+					final VFeaturePathDomainModelReference dmr = (VFeaturePathDomainModelReference) getFirstSetting()
+						.getEObject();
+					dmr.setDomainModelEFeature(selectedFeature);
 				}
 			}
 			labelProvider.dispose();

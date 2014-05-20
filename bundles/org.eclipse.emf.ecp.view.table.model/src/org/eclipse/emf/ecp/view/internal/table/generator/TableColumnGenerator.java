@@ -14,12 +14,14 @@ package org.eclipse.emf.ecp.view.internal.table.generator;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecp.view.spi.table.model.VTableColumn;
+import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
-import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 
 /**
- * Helper class to generate {@link VTableColumn}s for a {@link VTableControl}.
+ * Helper class to generate {@link org.eclipse.emf.ecp.view.spi.table.model.VTableColumnConfiguration
+ * VTableColumnConfiguration}s for a {@link VTableControl}.
  * 
  * @author jfaltermeier
  * 
@@ -50,10 +52,11 @@ public final class TableColumnGenerator {
 	 * @param vTableControl the table control to use
 	 */
 	public static void addColumn(EAttribute attribute, VTableControl vTableControl) {
-		final VTableColumn column = VTableFactory.eINSTANCE.createTableColumn();
-		column.setReadOnly(false);
-		column.setAttribute(attribute);
-		vTableControl.getColumns().add(column);
+		final VFeaturePathDomainModelReference column = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
+		column.setDomainModelEFeature(attribute);
+
+		VTableDomainModelReference.class.cast(vTableControl.getDomainModelReference()).getColumnDomainModelReferences()
+			.add(column);
 	}
 
 }

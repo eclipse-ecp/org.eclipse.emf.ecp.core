@@ -359,7 +359,10 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 
 	private final List<Setting> resolvedSetting = new ArrayList<Setting>();
 
-	private boolean resolve(EObject domainModel, boolean createMissingChildren) {
+	/**
+	 * @since 1.3
+	 */
+	protected boolean resolve(EObject domainModel, boolean createMissingChildren) {
 		final EStructuralFeature domainModelEFeatureValue = getDomainModelEFeature();
 		if (domainModel == null || domainModelEFeatureValue == null) {
 			return false;

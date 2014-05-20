@@ -26,9 +26,9 @@ import org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeContextFactory;
 import org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
-import org.eclipse.emf.ecp.view.spi.table.model.VTableColumn;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
@@ -125,10 +125,13 @@ public class SaveLoadTests {
 		final VView view = VViewFactory.eINSTANCE.createView();
 
 		final VTableControl vControlPlayers = VTableFactory.eINSTANCE.createTableControl();
-		vControlPlayers.setDomainModelReference(BowlingPackage.eINSTANCE.getLeague_Players());
-		final VTableColumn col = VTableFactory.eINSTANCE.createTableColumn();
-		col.setAttribute(BowlingPackage.eINSTANCE.getPlayer_Name());
-		vControlPlayers.getColumns().add(col);
+		final VTableDomainModelReference ref = VTableFactory.eINSTANCE.createTableDomainModelReference();
+		ref.setDomainModelEFeature(BowlingPackage.eINSTANCE.getLeague_Players());
+		vControlPlayers.setDomainModelReference(ref);
+		final VFeaturePathDomainModelReference col = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
+		col.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Name());
+		VTableDomainModelReference.class.cast(vControlPlayers.getDomainModelReference())
+			.getColumnDomainModelReferences().add(col);
 		view.getChildren().add(vControlPlayers);
 
 		final League left = createLeague("a"); //$NON-NLS-1$

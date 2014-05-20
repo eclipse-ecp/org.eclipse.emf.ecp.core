@@ -18,9 +18,9 @@ import org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext;
 import org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalFactory;
 import org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalLayout;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
-import org.eclipse.emf.ecp.view.spi.table.model.VTableColumn;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
@@ -68,9 +68,10 @@ public class DiffTests {
 			.createTableDomainModelReference();
 		tableDomainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getLeague_Players());
 		vControl.setDomainModelReference(tableDomainModelReference);
-		final VTableColumn col = VTableFactory.eINSTANCE.createTableColumn();
-		col.setAttribute(BowlingPackage.eINSTANCE.getPlayer_Name());
-		vControl.getColumns().add(col);
+		final VFeaturePathDomainModelReference col = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
+		col.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Name());
+		VTableDomainModelReference.class.cast(vControl.getDomainModelReference()).getColumnDomainModelReferences()
+			.add(col);
 		view.getChildren().add(vControl);
 
 		final League left = BowlingFactory.eINSTANCE.createLeague();
@@ -120,9 +121,10 @@ public class DiffTests {
 			.createTableDomainModelReference();
 		tableDomainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getLeague_Players());
 		vControl.setDomainModelReference(tableDomainModelReference);
-		final VTableColumn col = VTableFactory.eINSTANCE.createTableColumn();
-		col.setAttribute(BowlingPackage.eINSTANCE.getPlayer_Name());
-		vControl.getColumns().add(col);
+		final VFeaturePathDomainModelReference col = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
+		col.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Name());
+		VTableDomainModelReference.class.cast(vControl.getDomainModelReference()).getColumnDomainModelReferences()
+			.add(col);
 		view.getChildren().add(vControl);
 
 		final League left = BowlingFactory.eINSTANCE.createLeague();
