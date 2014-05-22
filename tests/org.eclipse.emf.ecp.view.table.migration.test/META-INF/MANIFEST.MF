@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Test
+Bundle-SymbolicName: org.eclipse.emf.ecp.view.table.migration.test
+Bundle-Version: 1.0.0.qualifier
+Require-Bundle: org.junit,
+ org.eclipse.emf.edapt.migration;bundle-version="0.3.0",
+ org.eclipse.emf.edapt.history

@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -56,13 +56,13 @@ import org.eclipse.ui.part.FileEditorInput;
 
 /**
  * The IDE ViewModel EditorPart.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 @SuppressWarnings("restriction")
 public class ViewEditorPart extends EditorPart implements
-	ViewModelEditorCallback {
+ViewModelEditorCallback {
 
 	private Resource resource;
 	private BasicCommandStack basicCommandStack;
@@ -110,22 +110,22 @@ public class ViewEditorPart extends EditorPart implements
 
 		basicCommandStack = new BasicCommandStack();
 		basicCommandStack.addCommandStackListener
-			(new CommandStackListener()
+		(new CommandStackListener()
+		{
+			@Override
+			public void commandStackChanged(final EventObject event)
 			{
-				@Override
-				public void commandStackChanged(final EventObject event)
+				parent.getDisplay().asyncExec
+				(new Runnable()
 				{
-					parent.getDisplay().asyncExec
-						(new Runnable()
-						{
-							@Override
-							public void run()
-							{
-								firePropertyChange(IEditorPart.PROP_DIRTY);
-							}
-						});
-				}
-			});
+					@Override
+					public void run()
+					{
+						firePropertyChange(IEditorPart.PROP_DIRTY);
+					}
+				});
+			}
+		});
 
 		partListener = new ViewPartListener();
 		getSite().getPage().addPartListener(partListener);
@@ -138,7 +138,7 @@ public class ViewEditorPart extends EditorPart implements
 			new ComposedAdapterFactory(new AdapterFactory[] {
 				new ReflectiveItemProviderAdapterFactory(),
 				new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) }),
-			basicCommandStack, resourceSet);
+				basicCommandStack, resourceSet);
 		resourceSet.eAdapters().add(
 			new AdapterFactoryEditingDomain.EditingDomainProvider(domain));
 		return resourceSet;
@@ -177,6 +177,12 @@ public class ViewEditorPart extends EditorPart implements
 	@Override
 	public void createPartControl(Composite parent) {
 		this.parent = parent;
+
+		// before we can load the view we need to check if it needs to be migrated.
+
+		// parse view with sax and check ns-uris specified in view element.
+		// check if these models are old
+		// perform migration if needed
 
 		loadView();
 		VView view = getView();
@@ -230,7 +236,7 @@ public class ViewEditorPart extends EditorPart implements
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.ide.view.service.ViewModelEditorCallback#reloadViewModel()
 	 */
 	@Override
@@ -275,7 +281,7 @@ public class ViewEditorPart extends EditorPart implements
 	}
 
 	/**
-	 * 
+	 *
 	 * */
 	private class ViewPartListener implements IPartListener2 {
 		@Override
@@ -294,7 +300,7 @@ public class ViewEditorPart extends EditorPart implements
 								null,
 								"The ECore or Genmodel of your ViewModel just changed. This change is not reflected in this View Model Editor.", //$NON-NLS-1$
 								MessageDialog.WARNING,
-								new String[] { "Ok" }, //$NON-NLS-1$ 
+								new String[] { "Ok" }, //$NON-NLS-1$
 								0);
 							dialog.open();
 							ecoreOutOfSync = false;
@@ -335,7 +341,7 @@ public class ViewEditorPart extends EditorPart implements
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.ide.view.service.ViewModelEditorCallback#signalEcoreOutOfSync()
 	 */
 	@Override
