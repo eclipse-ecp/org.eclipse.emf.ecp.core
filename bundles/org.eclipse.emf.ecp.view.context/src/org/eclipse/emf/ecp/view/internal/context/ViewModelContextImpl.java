@@ -39,6 +39,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecp.common.UniqueSetting;
+import org.eclipse.emf.ecp.view.model.common.internal.reporting.ViewModelServiceNotAvailableError;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
@@ -58,8 +59,6 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
  * @author Eugen Neufeld
  */
 public class ViewModelContextImpl implements ViewModelContext {
-
-	private static final String NO_VIEW_SERVICE_OF_TYPE_FOUND = "No view service of type '%1$s' found."; //$NON-NLS-1$
 
 	private static final String MODEL_CHANGE_LISTENER_MUST_NOT_BE_NULL = "ModelChangeAddRemoveListener must not be null."; //$NON-NLS-1$
 
@@ -484,8 +483,11 @@ public class ViewModelContextImpl implements ViewModelContext {
 				return (T) service;
 			}
 		}
-		Activator.log(new IllegalArgumentException(String.format(NO_VIEW_SERVICE_OF_TYPE_FOUND,
-			serviceType.getCanonicalName())));
+
+		Activator.getInstance()
+			.getReportService()
+			.report(new ViewModelServiceNotAvailableError<T>(serviceType));
+
 		return null;
 	}
 

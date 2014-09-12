@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- *
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
@@ -14,12 +14,15 @@ package org.eclipse.emf.ecp.view.spi.custom.swt;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTValidationHelper;
 import org.eclipse.emf.ecp.internal.edit.EditMessages;
+import org.eclipse.emf.ecp.view.internal.custom.swt.Activator;
+import org.eclipse.emf.ecp.view.model.common.spi.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.reporting.CustomControlInitFailedError;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
@@ -30,7 +33,7 @@ import org.osgi.framework.Bundle;
 
 /**
  * The renderer for custom control view models.
- *
+ * 
  * @author Eugen Neufeld
  * @since 1.3
  */
@@ -41,7 +44,7 @@ public class CustomControlSWTRenderer extends AbstractSWTRenderer<VCustomControl
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#preInit()
 	 */
 	@Override
@@ -50,7 +53,10 @@ public class CustomControlSWTRenderer extends AbstractSWTRenderer<VCustomControl
 		final VCustomControl customControl = getVElement();
 		swtCustomControl = loadCustomControl(customControl);
 		if (swtCustomControl == null) {
-			// TODO
+			final ReportService reportService = Activator.getDefault().getReportService();
+			reportService.report(new CustomControlInitFailedError(
+				customControl.getBundleName(), customControl.getClassName()));
+			// TODO: RS
 			throw new IllegalStateException(String.format("The  %1$s/%2$s cannot be loaded!", //$NON-NLS-1$
 				customControl.getBundleName(), customControl.getClassName()));
 		}
@@ -59,7 +65,7 @@ public class CustomControlSWTRenderer extends AbstractSWTRenderer<VCustomControl
 
 	/**
 	 * Loads and returns the {@link ECPAbstractCustomControlSWT} that is referenced by the {@link VCustomControl}.
-	 *
+	 * 
 	 * @param customControl the custom control view model
 	 * @return the swt renderer
 	 * @since 1.4
@@ -105,7 +111,7 @@ public class CustomControlSWTRenderer extends AbstractSWTRenderer<VCustomControl
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#dispose()
 	 */
 	@Override
@@ -116,7 +122,7 @@ public class CustomControlSWTRenderer extends AbstractSWTRenderer<VCustomControl
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(SWTGridDescription)
 	 */
 	@Override
@@ -129,15 +135,15 @@ public class CustomControlSWTRenderer extends AbstractSWTRenderer<VCustomControl
 	}
 
 	/**
-	 *
+	 * 
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell,
 	 *      org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
 	protected Control renderControl(SWTGridCell cell, Composite parent) throws NoRendererFoundException,
-	NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption {
 		return swtCustomControl.renderControl(cell, parent);
 	}
 

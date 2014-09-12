@@ -14,7 +14,11 @@ package org.eclipse.emf.ecp.view.internal.context;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.ecp.view.model.common.internal.reporting.ReportServiceImpl;
+import org.eclipse.emf.ecp.view.model.common.spi.reporting.ReportEntity;
+import org.eclipse.emf.ecp.view.model.common.spi.reporting.ReportService;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
 /**
  * The Class Activator.
@@ -28,6 +32,8 @@ public class Activator extends Plugin {
 
 	/** The instance. */
 	private static Activator instance;
+
+	private ServiceReference<ReportService> reportServiceReference;
 
 	/**
 	 * Default constructor.
@@ -44,6 +50,7 @@ public class Activator extends Plugin {
 	@Override
 	public void start(BundleContext bundleContext) throws Exception {
 		super.start(bundleContext);
+		bundleContext.registerService(ReportService.class, new ReportServiceImpl(), null);
 		instance = this;
 	}
 
@@ -75,6 +82,33 @@ public class Activator extends Plugin {
 	 */
 	public static void log(Throwable t) {
 		getInstance().getLog().log(new Status(IStatus.ERROR, PLUGIN_ID, t.getMessage(), t));
+	}
+
+	/**
+	 * Logs a {@link ReportEntity}.
+	 * 
+	 * @param report
+	 *            the {@link ReportEntity} to be logged
+	 */
+	public static void log(ReportEntity report) {
+		getInstance().getLog().log(
+			new Status(IStatus.ERROR, // TODO RS: always ERROR?
+				PLUGIN_ID,
+				report.getMessage(),
+				report.getException()));
+	}
+
+	/**
+	 * Returns the {@link ReportService}.
+	 * 
+	 * @return the {@link ReportService}
+	 */
+	public ReportService getReportService() {
+		if (reportServiceReference == null) {
+			reportServiceReference = instance.getBundle().getBundleContext()
+				.getServiceReference(ReportService.class);
+		}
+		return instance.getBundle().getBundleContext().getService(reportServiceReference);
 	}
 
 }

@@ -23,6 +23,8 @@ import org.eclipse.core.runtime.InvalidRegistryObjectException;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecp.view.model.common.ECPRendererTester;
 import org.eclipse.emf.ecp.view.model.common.ECPStaticRendererTester;
+import org.eclipse.emf.ecp.view.model.common.spi.reporting.ReportEntity;
+import org.eclipse.emf.ecp.view.model.common.spi.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractAdditionalSWTRenderer;
@@ -30,13 +32,17 @@ import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.ECPAdditionalRendererTester;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.UnknownVElementSWTRenderer;
+import org.eclipse.emf.ecp.view.spi.swt.reporting.AmbiguousRendererPriorityError;
+import org.eclipse.emf.ecp.view.spi.swt.reporting.ECPRendererDescriptionInitFailedError;
+import org.eclipse.emf.ecp.view.spi.swt.reporting.NoRendererFoundError;
+import org.eclipse.emf.ecp.view.spi.swt.reporting.RendererInitFailedError;
 import org.osgi.framework.Bundle;
 
 /**
  * @author Eugen
  * 
  */
-public final class SWTRendererFactoryImpl implements SWTRendererFactory {
+public class SWTRendererFactoryImpl implements SWTRendererFactory {
 
 	private static final String TEST_DYNAMIC = "dynamicTest";//$NON-NLS-1$
 	private static final String TEST_STATIC = "staticTest";//$NON-NLS-1$
@@ -49,9 +55,22 @@ public final class SWTRendererFactoryImpl implements SWTRendererFactory {
 	// private final Map<Class<? extends VElement>, AbstractSWTRenderer<VElement>> rendererMapping = new
 	// LinkedHashMap<Class<? extends VElement>, AbstractSWTRenderer<VElement>>();
 
-	private final Set<ECPRendererDescription> rendererDescriptors = new LinkedHashSet<ECPRendererDescription>();
-	private final Set<ECPAdditionalRendererDescription> additionalRendererDescriptors = new LinkedHashSet<ECPAdditionalRendererDescription>();
-	private boolean debugMode = false;
+	/**
+	 * A description of all available renderers.
+	 */
+	private final Set<ECPRendererDescription> rendererDescriptors =
+		new LinkedHashSet<ECPRendererDescription>();
+
+	/**
+	 * A description of all additionally available renderers.
+	 */
+	private final Set<ECPAdditionalRendererDescription> additionalRendererDescriptors =
+		new LinkedHashSet<ECPAdditionalRendererDescription>();
+
+	/**
+	 * Whether EMF Forms is running in debug mode.
+	 */
+	private boolean debugMode;
 
 	/**
 	 * Default constructor for the renderer factory.
@@ -66,6 +85,24 @@ public final class SWTRendererFactoryImpl implements SWTRendererFactory {
 		}
 		readRenderer();
 		readAdditionalRenderer();
+	}
+
+	/**
+	 * Returns a set of descriptions of all additionally available renderers.
+	 * 
+	 * @return a set of descriptions of all additionally available renderers.
+	 */
+	protected Set<ECPAdditionalRendererDescription> getAdditionalRendererDescriptors() {
+		return additionalRendererDescriptors;
+	}
+
+	/**
+	 * Returns a set of descriptions of all available renderers.
+	 * 
+	 * @return a set of descriptions of all available renderers.
+	 */
+	protected Set<ECPRendererDescription> getRendererDescriptors() {
+		return rendererDescriptors;
 	}
 
 	private void readRenderer() {
@@ -101,11 +138,11 @@ public final class SWTRendererFactoryImpl implements SWTRendererFactory {
 
 					rendererDescriptors.add(new ECPRendererDescription(renderer, tester));
 				} catch (final CoreException ex) {
-					ex.printStackTrace();
-				} catch (final ClassNotFoundException e) {
-					e.printStackTrace();
-				} catch (final InvalidRegistryObjectException e) {
-					e.printStackTrace();
+					report(new ECPRendererDescriptionInitFailedError<CoreException>(ex));
+				} catch (final ClassNotFoundException ex) {
+					report(new ECPRendererDescriptionInitFailedError<ClassNotFoundException>(ex));
+				} catch (final InvalidRegistryObjectException ex) {
+					report(new ECPRendererDescriptionInitFailedError<InvalidRegistryObjectException>(ex));
 				}
 			}
 		}
@@ -133,14 +170,18 @@ public final class SWTRendererFactoryImpl implements SWTRendererFactory {
 
 					additionalRendererDescriptors.add(new ECPAdditionalRendererDescription(renderer, tester));
 				} catch (final CoreException ex) {
-					ex.printStackTrace();
+					report(new ECPRendererDescriptionInitFailedError<CoreException>(ex));
 				} catch (final ClassNotFoundException e) {
-					e.printStackTrace();
+					report(new ECPRendererDescriptionInitFailedError<ClassNotFoundException>(e));
 				} catch (final InvalidRegistryObjectException e) {
-					e.printStackTrace();
+					report(new ECPRendererDescriptionInitFailedError<InvalidRegistryObjectException>(e));
 				}
 			}
 		}
+	}
+
+	private void report(ReportEntity reportEntity) {
+		Activator.getDefault().getReportService().report(reportEntity);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -183,8 +224,11 @@ public final class SWTRendererFactoryImpl implements SWTRendererFactory {
 	 */
 	@Override
 	public AbstractSWTRenderer<VElement> getRenderer(VElement vElement, ViewModelContext viewContext) {
+
 		int highestPriority = -1;
 		AbstractSWTRenderer<VElement> bestCandidate = null;
+		final ReportService reportService = Activator.getDefault().getReportService();
+
 		for (final ECPRendererDescription description : rendererDescriptors) {
 
 			int currentPriority = -1;
@@ -197,30 +241,42 @@ public final class SWTRendererFactoryImpl implements SWTRendererFactory {
 
 			}
 
+			if (currentPriority == highestPriority && highestPriority != -1) {
+				reportService.report(
+					new AmbiguousRendererPriorityError(
+						currentPriority,
+						description.getRenderer().getClass().getCanonicalName(),
+						bestCandidate.getClass().getCanonicalName()));
+			}
+
 			if (currentPriority > highestPriority) {
 				highestPriority = currentPriority;
 				try {
 					bestCandidate = description.getRenderer().newInstance();
 				} catch (final InstantiationException ex) {
-					Activator.log(ex);
-					return null;
+					reportService.report(new RendererInitFailedError<InstantiationException>(ex));
 				} catch (final IllegalAccessException ex) {
-					Activator.log(ex);
-					return null;
+					reportService.report(new RendererInitFailedError<IllegalAccessException>(ex));
 				}
 			}
 		}
 
-		if (bestCandidate == null && showUnknownRenderer(viewContext)) {
-			bestCandidate = new UnknownVElementSWTRenderer();
+		if (bestCandidate == null) {
+			reportService.report(new NoRendererFoundError(vElement));
+			if (showUnknownRenderer(viewContext)) {
+				bestCandidate = new UnknownVElementSWTRenderer();
+			} else {
+				bestCandidate = new EmptyVElementSWTRenderer();
+			}
 		}
+
 		bestCandidate.init(vElement, viewContext);
+
 		return bestCandidate;
 	}
 
 	private boolean showUnknownRenderer(ViewModelContext viewModelContext) {
-
-		return debugMode || viewModelContext.hasService(DebugViewModelService.class);
+		return debugMode;
 	}
 
 	/**
@@ -233,7 +289,11 @@ public final class SWTRendererFactoryImpl implements SWTRendererFactory {
 	@Override
 	public Collection<AbstractAdditionalSWTRenderer<VElement>> getAdditionalRenderer(VElement vElement,
 		ViewModelContext viewModelContext) {
-		final Set<AbstractAdditionalSWTRenderer<VElement>> renderers = new LinkedHashSet<AbstractAdditionalSWTRenderer<VElement>>();
+
+		final ReportService reportService = Activator.getDefault().getReportService();
+		final Set<AbstractAdditionalSWTRenderer<VElement>> renderers =
+			new LinkedHashSet<AbstractAdditionalSWTRenderer<VElement>>();
+
 		for (final ECPAdditionalRendererDescription description : additionalRendererDescriptors) {
 			final ECPAdditionalRendererTester tester = description.getTester();
 			if (tester.isApplicable(vElement, viewModelContext)) {
@@ -244,10 +304,10 @@ public final class SWTRendererFactoryImpl implements SWTRendererFactory {
 					renderers.add(renderer);
 					continue;
 				} catch (final InstantiationException ex) {
-					Activator.log(ex);
+					reportService.report(new RendererInitFailedError<InstantiationException>(ex));
 					continue;
 				} catch (final IllegalAccessException ex) {
-					Activator.log(ex);
+					reportService.report(new RendererInitFailedError<IllegalAccessException>(ex));
 					continue;
 				}
 			}

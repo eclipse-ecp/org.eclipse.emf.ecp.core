@@ -17,15 +17,20 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
+import org.eclipse.emf.ecp.view.model.common.spi.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
+import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
+import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.reporting.InvalidGridDescriptionError;
+import org.eclipse.emf.ecp.view.spi.swt.reporting.NoRenderingPossibleError;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
@@ -35,6 +40,15 @@ import org.eclipse.swt.widgets.Composite;
  * 
  */
 public class ECPSWTViewRendererImpl implements ECPSWTViewRenderer {
+
+	private final SWTRendererFactory factory;
+
+	/**
+	 * Constructor.
+	 */
+	public ECPSWTViewRendererImpl() {
+		factory = createFactory();
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -68,24 +82,36 @@ public class ECPSWTViewRendererImpl implements ECPSWTViewRenderer {
 	 */
 	@Override
 	public ECPSWTView render(Composite parent, ViewModelContext viewModelContext) throws ECPRendererException {
-		final SWTRendererFactory factory = new SWTRendererFactoryImpl();
 		final AbstractSWTRenderer<VElement> renderer = factory.getRenderer(
 			viewModelContext.getViewModel(),
 			viewModelContext);
+
+		final ReportService reportService = Activator.getDefault().getReportService();
+
 		final SWTGridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE
 			.createEmptyGridDescription());
 		if (gridDescription.getGrid().size() != 1) {
+			reportService.report(
+				new InvalidGridDescriptionError("Invalid number of cells, expected exactly one cell!")); //$NON-NLS-1$
+			// TODO: RS
 			// do sth. if wrong number of controls
 			throw new IllegalStateException("Invalid number of cells, expected exactly one cell!"); //$NON-NLS-1$
 		}
+
 		// a view returns always a composite and always only one row with one control
-		final Composite composite = (Composite) renderer.render(gridDescription.getGrid().get(0), parent);
-		renderer.finalizeRendering(parent);
+		ECPSWTView swtView = null;
+		try {
+			final Composite composite = (Composite) renderer.render(gridDescription.getGrid().get(0), parent);
+			renderer.finalizeRendering(parent);
+			final GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
+			composite.setLayoutData(gridData);
+			swtView = new ECPSWTViewImpl(composite, viewModelContext);
+		} catch (final NoRendererFoundException e) {
+			reportService.report(new NoRenderingPossibleError<NoRendererFoundException>(e));
+		} catch (final NoPropertyDescriptorFoundExeption e) {
+			reportService.report(new NoRenderingPossibleError<NoPropertyDescriptorFoundExeption>(e));
+		}
 
-		final GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
-		composite.setLayoutData(gridData);
-
-		final ECPSWTView swtView = new ECPSWTViewImpl(composite, viewModelContext);
 		return swtView;
 	}
 
@@ -102,4 +128,13 @@ public class ECPSWTViewRendererImpl implements ECPSWTViewRenderer {
 		return render(parent, domainObject, view);
 	}
 
+	/**
+	 * Returns the {@link SWTRendererFactory} used to obtain any SWT renderer.
+	 * Clients may override.
+	 * 
+	 * @return the {@link SWTRendererFactory}
+	 */
+	protected SWTRendererFactory createFactory() {
+		return new SWTRendererFactoryImpl();
+	}
 }

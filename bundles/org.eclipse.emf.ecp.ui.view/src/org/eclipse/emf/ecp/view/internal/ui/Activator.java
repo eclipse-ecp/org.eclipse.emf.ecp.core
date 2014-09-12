@@ -16,6 +16,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
+import org.eclipse.emf.ecp.view.model.common.spi.reporting.ReportService;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
@@ -29,6 +30,9 @@ public class Activator extends Plugin {
 
 	// The shared instance
 	private static Activator plugin;
+
+	private ServiceReference<ECPControlFactory> controlFactoryReference;
+	private ServiceReference<ReportService> reportServiceReference;
 
 	/**
 	 * The constructor.
@@ -78,8 +82,6 @@ public class Activator extends Plugin {
 				.getMessage(), e));
 	}
 
-	private ServiceReference<ECPControlFactory> controlFactoryReference;
-
 	/**
 	 * Returns the {@link ECPControlFactory}.
 	 * 
@@ -91,6 +93,19 @@ public class Activator extends Plugin {
 				.getServiceReference(ECPControlFactory.class);
 		}
 		return plugin.getBundle().getBundleContext().getService(controlFactoryReference);
+	}
+
+	/**
+	 * Returns the {@link ReportService}.
+	 * 
+	 * @return the {@link ReportService}
+	 */
+	public ReportService getReportService() {
+		if (reportServiceReference == null) {
+			reportServiceReference = plugin.getBundle().getBundleContext()
+				.getServiceReference(ReportService.class);
+		}
+		return plugin.getBundle().getBundleContext().getService(reportServiceReference);
 	}
 
 	/**
