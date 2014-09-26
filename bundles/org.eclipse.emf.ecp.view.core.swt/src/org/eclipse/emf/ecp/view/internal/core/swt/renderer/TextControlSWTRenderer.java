@@ -30,6 +30,7 @@ import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.template.style.alignment.model.AlignmentType;
 import org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentStyleProperty;
+import org.eclipse.emf.ecp.view.template.style.textControlEnablement.model.VTTextControlEnablementStyleProperty;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
@@ -179,8 +180,9 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 
 	@Override
 	protected void setControlEnabled(SWTGridCell gridCell, Control control, boolean enabled) {
-		if (getVElement().getLabelAlignment() == LabelAlignment.NONE && gridCell.getColumn() == 1
-			|| getVElement().getLabelAlignment() == LabelAlignment.LEFT && gridCell.getColumn() == 2) {
+		if (isDisableRenderedAsEditable()
+			&& (getVElement().getLabelAlignment() == LabelAlignment.NONE && gridCell.getColumn() == 1
+			|| getVElement().getLabelAlignment() == LabelAlignment.LEFT && gridCell.getColumn() == 2)) {
 			final EStructuralFeature feature = getVElement().getDomainModelReference().getEStructuralFeatureIterator()
 				.next();
 			Control controlToUnset = control;
@@ -194,6 +196,21 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 		} else {
 			super.setControlEnabled(gridCell, control, enabled);
 		}
+	}
+
+	private boolean isDisableRenderedAsEditable() {
+		final VTViewTemplateProvider vtViewTemplateProvider = Activator.getDefault().getVTViewTemplateProvider();
+		if (vtViewTemplateProvider == null) {
+			return false;
+		}
+		final Set<VTStyleProperty> styleProperties = vtViewTemplateProvider
+			.getStyleProperties(getVElement(), getViewModelContext());
+		for (final VTStyleProperty styleProperty : styleProperties) {
+			if (VTTextControlEnablementStyleProperty.class.isInstance(styleProperty)) {
+				return VTTextControlEnablementStyleProperty.class.cast(styleProperty).isRenderDisableAsEditable();
+			}
+		}
+		return false;
 	}
 
 	/**

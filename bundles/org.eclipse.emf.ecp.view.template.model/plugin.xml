@@ -81,4 +81,12 @@
             genModel="model/mandatoryStyle.genmodel"/>
    </extension>
 
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated textControlEnablementStyle -->
+      <package
+            uri="http://www.eclipse.org/emf/ecp/view/template/style/textcontrol/enablement/model"
+            class="org.eclipse.emf.ecp.view.template.style.textControlEnablement.model.VTTextControlEnablementPackage"
+            genModel="model/textControlEnablementStyle.genmodel"/>
+   </extension>
+
 </plugin>
