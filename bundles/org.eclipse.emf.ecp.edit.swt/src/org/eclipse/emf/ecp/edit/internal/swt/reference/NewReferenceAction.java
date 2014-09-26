@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.reference;
 
@@ -16,7 +16,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
@@ -32,7 +31,7 @@ import org.eclipse.swt.graphics.ImageData;
 
 /**
  * An Action for adding reference links to a model element. It is mainly used in the {@link ReferenceMultiControl}
- * 
+ *
  * @author shterev
  * @author Eugen Neufeld
  */
@@ -42,7 +41,7 @@ public class NewReferenceAction extends ECPSWTAction {
 
 	/**
 	 * The constructor for a new reference action.
-	 * 
+	 *
 	 * @param editingDomain the {@link EditingDomain} to use
 	 * @param itemPropertyDescriptor teh {@link IItemPropertyDescriptor} to use
 	 * @param setting the {@link Setting} to use
@@ -101,7 +100,7 @@ public class NewReferenceAction extends ECPSWTAction {
 
 	/**
 	 * Default constructor.
-	 * 
+	 *
 	 * @param modelElement
 	 *            the source model element
 	 * @param eReference
@@ -151,12 +150,8 @@ public class NewReferenceAction extends ECPSWTAction {
 	public void run() {
 		// checks if we try to create a container for ourself, this is not allowed
 		final EReference eReference = (EReference) getSetting().getEStructuralFeature();
-		final EObject eObject = referenceService.getNewElementFor(eReference);
-		if (eObject == null) {
-			return;
-		}
-		referenceService.addModelElement(eObject, eReference);
-		referenceService.openInNewContext(eObject);
+		referenceService.addNewModelElements(getSetting().getEObject(),
+			eReference);
 	}
 
 }

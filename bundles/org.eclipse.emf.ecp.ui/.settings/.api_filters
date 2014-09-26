@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.ecp.ui" version="2">
+    <resource path="META-INF/MANIFEST.MF">
+        <filter comment="SPI break only" id="923795461">
+            <message_arguments>
+                <message_argument value="1.4.0"/>
+                <message_argument value="1.4.0"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI break only" id="924844039">
+            <message_arguments>
+                <message_argument value="1.4.0"/>
+                <message_argument value="1.4.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/spi/ui/ECPReferenceServiceImpl.java" type="org.eclipse.emf.ecp.spi.ui.ECPReferenceServiceImpl">
+        <filter comment="SPI break only" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.spi.ui.ECPReferenceServiceImpl"/>
+                <message_argument value="addModelElement(EObject, EReference)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI break only" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.spi.ui.ECPReferenceServiceImpl"/>
+                <message_argument value="getExistingElementFor(EReference)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI break only" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.spi.ui.ECPReferenceServiceImpl"/>
+                <message_argument value="getNewElementFor(EReference)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI break only" id="1141899266">
+            <message_arguments>
+                <message_argument value="1.5"/>
+                <message_argument value="1.4"/>
+                <message_argument value="addExistingModelElements(EObject, EReference)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI break only" id="1141899266">
+            <message_arguments>
+                <message_argument value="1.5"/>
+                <message_argument value="1.4"/>
+                <message_argument value="addNewModelElements(EObject, EReference)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

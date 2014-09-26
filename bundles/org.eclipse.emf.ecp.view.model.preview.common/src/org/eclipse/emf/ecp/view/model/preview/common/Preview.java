@@ -27,7 +27,9 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
+import org.eclipse.emf.ecp.ui.view.swt.DefaultReferenceService;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
@@ -141,7 +143,7 @@ public class Preview {
 				resource.getContents().add(dummyData);
 			}
 
-			final PreviewReferenceService previewRefServ = new PreviewReferenceService();
+			final ReferenceService previewRefServ = new DefaultReferenceService();
 			final ViewModelContext viewModelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(view,
 				dummyData, previewRefServ);
 			composite = createComposite(parent);

@@ -25,14 +25,11 @@ import org.eclipse.emf.ecp.internal.ui.composites.CheckoutProjectCompositeImpl;
 import org.eclipse.emf.ecp.internal.ui.composites.CreateProjectCompositeImpl;
 import org.eclipse.emf.ecp.internal.ui.composites.ECPProjectSelectionModelClassCompositeImpl;
 import org.eclipse.emf.ecp.spi.common.ui.CheckedModelClassComposite;
-import org.eclipse.emf.ecp.spi.common.ui.CompositeProvider;
 import org.eclipse.emf.ecp.spi.common.ui.composites.CheckedEStructuralFeatureComposite;
 import org.eclipse.emf.ecp.spi.common.ui.composites.CheckedEStructuralFeatureCompositeImpl;
 import org.eclipse.emf.ecp.spi.common.ui.composites.CheckedSelectModelClassCompositeImpl;
 import org.eclipse.emf.ecp.spi.common.ui.composites.SelectModelClassCompositeImpl;
-import org.eclipse.emf.ecp.spi.common.ui.composites.SelectModelElementCompositeImpl;
 import org.eclipse.emf.ecp.spi.common.ui.composites.SelectionComposite;
-import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 
 /**
@@ -93,12 +90,9 @@ public final class ECPCompositeFactory {
 		return new ECPProjectSelectionModelClassCompositeImpl(project);
 	}
 
-	public static SelectionComposite<TableViewer> getTableSelectionComposite(Object rootObject) {
-		return new SelectModelElementCompositeImpl(rootObject);
-	}
-
 	/**
-	 * Creates a {@link CompositeProvider} for a composite displaying a table with checkboxes.
+	 * Creates a {@link org.eclipse.emf.ecp.spi.common.ui.CompositeProvider CompositeProvider} for a composite
+	 * displaying a table with checkboxes.
 	 * 
 	 * @param rootObject the viewer input
 	 * @return the composite provider

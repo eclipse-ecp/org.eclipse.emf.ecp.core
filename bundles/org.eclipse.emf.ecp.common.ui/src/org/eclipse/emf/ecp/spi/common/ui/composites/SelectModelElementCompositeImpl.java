@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -24,17 +24,18 @@ import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
 /**
  * This class provides a composite which displays available EObejcts to the user. The user can
  * filter the items by typing in filter text.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public class SelectModelElementCompositeImpl extends AbstractFilteredSelectionComposite<TableViewer> implements
-	SelectionComposite<TableViewer> {
+SelectionComposite<TableViewer> {
 
 	private final ECPViewerFilter filter;
 
@@ -44,13 +45,17 @@ public class SelectModelElementCompositeImpl extends AbstractFilteredSelectionCo
 
 	private final AdapterFactoryLabelProvider adapterFactoryLabelProvider;
 
+	private final boolean multiSelection;
+
 	/**
 	 * Default Constructor for the SelectModelElementCompositeImpl.
-	 * 
+	 *
 	 * @param input the input for the selection
+	 * @param multiSelection
 	 */
-	public SelectModelElementCompositeImpl(Object input) {
+	public SelectModelElementCompositeImpl(Object input, boolean multiSelection) {
 		super();
+		this.multiSelection = multiSelection;
 		composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
 			new ReflectiveItemProviderAdapterFactory(),
 			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
@@ -61,7 +66,7 @@ public class SelectModelElementCompositeImpl extends AbstractFilteredSelectionCo
 
 	/**
 	 * Returns the label provider.
-	 * 
+	 *
 	 * @return the label provider
 	 */
 	protected ILabelProvider getLabelProvider() {
@@ -70,7 +75,7 @@ public class SelectModelElementCompositeImpl extends AbstractFilteredSelectionCo
 
 	/**
 	 * Returns the viewer input.
-	 * 
+	 *
 	 * @return the input
 	 */
 	protected Object getInput() {
@@ -86,7 +91,13 @@ public class SelectModelElementCompositeImpl extends AbstractFilteredSelectionCo
 	/** {@inheritDoc} **/
 	@Override
 	protected TableViewer createViewer(Composite composite) {
-		final TableViewer lv = new TableViewer(composite);
+		TableViewer lv;
+		if (multiSelection) {
+			lv = new TableViewer(composite);
+		}
+		else {
+			lv = new TableViewer(composite, SWT.SINGLE);
+		}
 		lv.setLabelProvider(getLabelProvider());
 		lv.setContentProvider(ArrayContentProvider.getInstance());
 		lv.setInput(getInput());
@@ -102,9 +113,9 @@ public class SelectModelElementCompositeImpl extends AbstractFilteredSelectionCo
 
 	/**
 	 * Private Implementation of a {@link ECPViewerFilter} for ModelElements.
-	 * 
+	 *
 	 * @author Eugen Neufeld
-	 * 
+	 *
 	 */
 	private final class ModelElementViewerFilter extends ECPViewerFilter {
 
@@ -151,7 +162,7 @@ public class SelectModelElementCompositeImpl extends AbstractFilteredSelectionCo
 				case ' ':
 					s.append("\\s");
 					break;
-				// escape special regexp-characters
+					// escape special regexp-characters
 				case '(':
 				case ')':
 				case '[':

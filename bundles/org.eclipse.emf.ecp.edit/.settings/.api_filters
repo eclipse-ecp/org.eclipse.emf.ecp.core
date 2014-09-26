@@ -7,6 +7,12 @@
                 <message_argument value="1.1.1"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI break only" id="923795461">
+            <message_arguments>
+                <message_argument value="1.4.0"/>
+                <message_argument value="1.4.0"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.edit.spi.ECPControl">
         <filter comment="This class is SPI" id="305324134">
@@ -74,6 +80,52 @@
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.edit.spi.ECPControlFactory"/>
                 <message_argument value="createControl(IItemPropertyDescriptor, ECPControlContext, String)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/edit/spi/ReferenceService.java" type="org.eclipse.emf.ecp.edit.spi.ReferenceService">
+        <filter comment="SPI break only" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.edit.spi.ReferenceService"/>
+                <message_argument value="addExistingModelElements(EObject, EReference)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI break only" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.edit.spi.ReferenceService"/>
+                <message_argument value="addNewModelElements(EObject, EReference)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI break only" id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.edit.spi.ReferenceService"/>
+                <message_argument value="addModelElement(EObject, EReference)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI break only" id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.edit.spi.ReferenceService"/>
+                <message_argument value="getExistingElementFor(EReference)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI break only" id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.edit.spi.ReferenceService"/>
+                <message_argument value="getNewElementFor(EReference)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI break only" id="1209008130">
+            <message_arguments>
+                <message_argument value="1.5"/>
+                <message_argument value="1.4"/>
+                <message_argument value="addExistingModelElements(EObject, EReference)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI break only" id="1209008130">
+            <message_arguments>
+                <message_argument value="1.5"/>
+                <message_argument value="1.4"/>
+                <message_argument value="addNewModelElements(EObject, EReference)"/>
             </message_arguments>
         </filter>
     </resource>

@@ -13,6 +13,32 @@
                 <message_argument value="1.2.1"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI break only" id="923795461">
+            <message_arguments>
+                <message_argument value="1.4.0"/>
+                <message_argument value="1.4.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/ui/view/swt/DefaultReferenceService.java" type="org.eclipse.emf.ecp.ui.view.swt.DefaultReferenceService">
+        <filter comment="SPI break only" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.ui.view.swt.DefaultReferenceService"/>
+                <message_argument value="addModelElement(EObject, EReference)"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.ui.view.swt.DefaultReferenceService"/>
+                <message_argument value="getExistingElementFor(EReference)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI break only" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.ui.view.swt.DefaultReferenceService"/>
+                <message_argument value="getNewElementFor(EReference)"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/ecp/ui/view/swt/ECPSWTViewRenderer.java" type="org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer">
         <filter comment="SPI change" id="405901410">

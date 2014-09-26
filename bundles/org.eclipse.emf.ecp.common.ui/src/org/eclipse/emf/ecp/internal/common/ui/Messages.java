@@ -24,6 +24,14 @@ public class Messages extends NLS {
 	public static String CheckedModelElementHelper_SelectAllLabel;
 	public static String AbstractModelElementHelper_FilterLabel;
 	public static String AbstractModelElementHelper_FilterText;
+
+	public static String NewModelElementWizard_WizardTitle_AddModelElement;
+	public static String NewModelElementWizard_PageTitle_AddModelElement;
+	public static String NewModelElementWizard_PageDescription_AddModelElement;
+
+	public static String ModelelementSelectionDialog_DialogMessage_SearchPattern;
+	public static String ModelelementSelectionDialog_DialogTitle;
+
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  ******************************************************************************/
@@ -36,12 +36,12 @@ import org.eclipse.swt.widgets.Composite;
 /**
  * This class provides a list with {@link org.eclipse.emf.ecore.EStructuralFeature EStructuralFeature}s that can be
  * selected with a checkbox.
- * 
+ *
  * @author jfaltermeier
- * 
+ *
  */
 public class CheckedEStructuralFeatureCompositeImpl extends SelectModelElementCompositeImpl implements
-	CheckedEStructuralFeatureComposite {
+CheckedEStructuralFeatureComposite {
 
 	private final Object[] input;
 	private FilteredViewerContentProvider provider;
@@ -49,18 +49,18 @@ public class CheckedEStructuralFeatureCompositeImpl extends SelectModelElementCo
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param input the input for the viewer
 	 */
 	public CheckedEStructuralFeatureCompositeImpl(Object input) {
-		super(input);
+		super(input, true);
 		this.input = (Object[]) input;
 		objectToCheckedMap = new LinkedHashMap<Object, Boolean>();
 	}
 
 	/**
 	 * {@inheritDoc}.
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.spi.common.ui.composites.AbstractFilteredSelectionComposite#createUI(org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
@@ -98,9 +98,9 @@ public class CheckedEStructuralFeatureCompositeImpl extends SelectModelElementCo
 	}
 
 	/**
-	 * 
+	 *
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.spi.common.ui.composites.SelectModelElementCompositeImpl#createViewer(org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
@@ -117,7 +117,7 @@ public class CheckedEStructuralFeatureCompositeImpl extends SelectModelElementCo
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.spi.common.ui.composites.AbstractFilteredSelectionComposite#getViewer()
 	 */
 	@Override
@@ -127,7 +127,7 @@ public class CheckedEStructuralFeatureCompositeImpl extends SelectModelElementCo
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.spi.common.ui.composites.AbstractFilteredSelectionComposite#getSelection()
 	 */
 	@Override
@@ -144,9 +144,9 @@ public class CheckedEStructuralFeatureCompositeImpl extends SelectModelElementCo
 
 	/**
 	 * {@link IStructuredContentProvider} that also handles the checked state of a viewer with a filter.
-	 * 
+	 *
 	 * @author jfaltermeier
-	 * 
+	 *
 	 */
 	private class FilteredViewerContentProvider implements IStructuredContentProvider, ICheckStateProvider {
 
@@ -161,7 +161,7 @@ public class CheckedEStructuralFeatureCompositeImpl extends SelectModelElementCo
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.jface.viewers.ICheckStateProvider#isChecked(java.lang.Object)
 		 */
 		@Override
@@ -178,7 +178,7 @@ public class CheckedEStructuralFeatureCompositeImpl extends SelectModelElementCo
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.jface.viewers.ICheckStateProvider#isGrayed(java.lang.Object)
 		 */
 		@Override
@@ -195,7 +195,7 @@ public class CheckedEStructuralFeatureCompositeImpl extends SelectModelElementCo
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.jface.viewers.IContentProvider#dispose()
 		 */
 		@Override
@@ -205,7 +205,7 @@ public class CheckedEStructuralFeatureCompositeImpl extends SelectModelElementCo
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.jface.viewers.IContentProvider#inputChanged(org.eclipse.jface.viewers.Viewer,
 		 *      java.lang.Object, java.lang.Object)
 		 */
@@ -216,7 +216,7 @@ public class CheckedEStructuralFeatureCompositeImpl extends SelectModelElementCo
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.jface.viewers.IStructuredContentProvider#getElements(java.lang.Object)
 		 */
 		@Override

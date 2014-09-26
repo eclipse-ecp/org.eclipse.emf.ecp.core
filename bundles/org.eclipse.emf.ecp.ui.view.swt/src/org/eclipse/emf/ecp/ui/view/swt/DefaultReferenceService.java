@@ -26,11 +26,10 @@ import org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.internal.edit.ECPControlHelper;
 import org.eclipse.emf.ecp.spi.common.ui.CompositeFactory;
-import org.eclipse.emf.ecp.spi.common.ui.SelectModelElementWizard;
+import org.eclipse.emf.ecp.spi.common.ui.SelectModelElementWizardFactory;
 import org.eclipse.emf.ecp.spi.common.ui.composites.SelectionComposite;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.view.internal.swt.Activator;
-import org.eclipse.emf.ecp.view.internal.swt.Messages;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
@@ -39,22 +38,21 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jface.window.Window;
-import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 
 /**
  * @author Eugen
+ * @noreference This class is not intended to be referenced by clients.
+ * @noextend This class is not intended to be subclassed by clients.
  * @since 1.4
  * 
  */
+@SuppressWarnings("restriction")
 public class DefaultReferenceService implements ReferenceService {
 
-	private EObject rootDomainModel;
 	private EditingDomain editingDomain;
 
 	/**
@@ -64,8 +62,7 @@ public class DefaultReferenceService implements ReferenceService {
 	 */
 	@Override
 	public void instantiate(ViewModelContext context) {
-		rootDomainModel = context.getDomainModel();
-		editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(rootDomainModel);
+		editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(context.getDomainModel());
 	}
 
 	/**
@@ -90,11 +87,23 @@ public class DefaultReferenceService implements ReferenceService {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see org.eclipse.emf.ecp.edit.spi.ReferenceService#addModelElement(org.eclipse.emf.ecore.EObject,
-	 *      org.eclipse.emf.ecore.EReference)
+	 * @since 1.5
 	 */
+
 	@Override
-	public void addModelElement(EObject eObject, EReference eReference) {
+	public void addNewModelElements(EObject eObject, EReference eReference) {
+		final Collection<EClass> classes = EMFUtils.getSubClasses(eReference.getEReferenceType());
+
+		final SelectionComposite<TreeViewer> helper = CompositeFactory.getSelectModelClassComposite(
+			new HashSet<EPackage>(),
+			new HashSet<EPackage>(), classes);
+
+		final EObject newMEInstance = SelectModelElementWizardFactory.openCreateNewModelElementDialog(helper);
+
+		if (newMEInstance == null) {
+			return;
+		}
+
 		if (eReference.isContainer()) {
 			// TODO language
 			MessageDialog.openError(Display.getDefault().getActiveShell(), "Error",//$NON-NLS-1$
@@ -102,88 +111,9 @@ public class DefaultReferenceService implements ReferenceService {
 			return;
 		}
 
-		ECPControlHelper.addModelElementInReference(rootDomainModel, eObject, eReference,
+		ECPControlHelper.addModelElementInReference(eObject, newMEInstance, eReference,
 			editingDomain);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.edit.spi.ReferenceService#getNewElementFor(org.eclipse.emf.ecore.EReference)
-	 */
-	@Override
-	public EObject getNewElementFor(EReference eReference) {
-		final Collection<EClass> classes = EMFUtils.getSubClasses(eReference.getEReferenceType());
-
-		final SelectModelElementWizard wizard = new SelectModelElementWizard("New Reference Element",
-			Messages.NewModelElementWizard_WizardTitle_AddModelElement,
-			Messages.NewModelElementWizard_PageTitle_AddModelElement,
-			Messages.NewModelElementWizard_PageDescription_AddModelElement);
-
-		final SelectionComposite<TreeViewer> helper = CompositeFactory.getSelectModelClassComposite(
-			new HashSet<EPackage>(),
-			new HashSet<EPackage>(), classes);
-		wizard.setCompositeProvider(helper);
-
-		final WizardDialog wd = new WizardDialog(Display.getDefault().getActiveShell(), wizard);
-		// wizard.setWindowTitle("New Reference Element");
-		EObject newMEInstance = null;
-		final int result = wd.open();
-
-		if (result == Window.OK) {
-			final Object[] selection = helper.getSelection();
-			if (selection == null || selection.length == 0) {
-				return null;
-			}
-			final EClass eClasse = (EClass) selection[0];
-			// 1.create ME
-			final EPackage ePackage = eClasse.getEPackage();
-			newMEInstance = ePackage.getEFactoryInstance().create(eClasse);
-		}
-		if (newMEInstance == null) {
-			return null;
-
-		}
-		return newMEInstance;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.edit.spi.ReferenceService#getExistingElementFor(org.eclipse.emf.ecore.EReference)
-	 */
-	@Override
-	public EObject getExistingElementFor(EReference eReference) {
-		final Iterator<EObject> allElements =
-			ItemPropertyDescriptor.getReachableObjectsOfType(rootDomainModel, eReference.getEType())
-				.iterator();
-
-		final Set<EObject> elements = new LinkedHashSet<EObject>();
-		while (allElements.hasNext()) {
-			elements.add(allElements.next());
-		}
-
-		final SelectModelElementWizard wizard = new SelectModelElementWizard("Select Elements",
-			Messages.NewModelElementWizard_WizardTitle_AddModelElement,
-			Messages.ModelelementSelectionDialog_DialogTitle,
-			Messages.ModelelementSelectionDialog_DialogMessage_SearchPattern, EObject.class);
-
-		final SelectionComposite<TableViewer> tableSelectionComposite = CompositeFactory
-			.getTableSelectionComposite(elements.toArray());
-		wizard.setCompositeProvider(tableSelectionComposite);
-
-		final WizardDialog wd = new WizardDialog(Display.getDefault().getActiveShell(), wizard);
-		EObject eObject = null;
-		final int result = wd.open();
-		if (result == Window.OK) {
-			final Object[] selection = tableSelectionComposite.getSelection();
-			if (selection == null || selection.length == 0) {
-				return null;
-			}
-			eObject = (EObject) selection[0];
-
-		}
-		return eObject;
+		openInNewContext(newMEInstance);
 	}
 
 	/**
@@ -221,5 +151,33 @@ public class DefaultReferenceService implements ReferenceService {
 
 			}
 		}.execute();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.edit.spi.ReferenceService#addExistingModelElements(org.eclipse.emf.ecore.EObject,
+	 *      org.eclipse.emf.ecore.EReference)
+	 * @since 1.5
+	 */
+	@Override
+	public void addExistingModelElements(EObject eObject, EReference eReference) {
+		final Iterator<EObject> allElements =
+			ItemPropertyDescriptor.getReachableObjectsOfType(eObject, eReference.getEType())
+				.iterator();
+
+		final Set<EObject> elements = new LinkedHashSet<EObject>();
+		while (allElements.hasNext()) {
+			elements.add(allElements.next());
+		}
+
+		ECPControlHelper.removeExistingReferences(eObject, eReference, elements);
+
+		final Set<EObject> addedElements = SelectModelElementWizardFactory
+			.openModelElementSelectionDialog(elements, eReference.isMany());
+
+		ECPControlHelper.addModelElementsInReference(eObject, addedElements, eReference,
+			editingDomain);
+
 	}
 }
