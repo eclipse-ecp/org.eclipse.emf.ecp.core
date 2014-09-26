@@ -133,7 +133,7 @@ public class ECPSWTViewRendererTest {
 
 		assertEquals(2, textFields.size());
 		for (final Text text : textFields) {
-			assertTrue(!text.getEditable());
+			assertTrue(!text.getEnabled());
 		}
 
 	}
