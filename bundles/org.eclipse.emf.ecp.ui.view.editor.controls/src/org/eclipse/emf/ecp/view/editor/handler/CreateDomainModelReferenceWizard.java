@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.spi.common.ui.SelectModelElementWizard;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
+import org.eclipse.emf.ecp.ui.view.swt.DefaultReferenceService;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
@@ -33,7 +34,6 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
-import org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.internal.DummyReferenceService;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
@@ -261,7 +261,7 @@ public class CreateDomainModelReferenceWizard extends SelectModelElementWizard {
 			getvControl().getDomainModelReference().eAdapters().add(adapter);
 			final VView view = ViewProviderHelper.getView(dmr, null);
 			final ViewModelContext viewContext = ViewModelContextFactory.INSTANCE
-				.createViewModelContext(view, dmr, new DummyReferenceService());
+				.createViewModelContext(view, dmr, new DefaultReferenceService());
 			try {
 				ECPSWTViewRenderer.INSTANCE.render(composite, viewContext);
 				composite.layout();

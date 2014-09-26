@@ -70,7 +70,7 @@ public class AddEClassifierReferenceAction extends AddReferenceAction {
 		if (selectedClassifier == null) {
 			return;
 		}
-		referenceService.addModelElement(selectedClassifier, (EReference) getSetting().getEStructuralFeature());
+		referenceService.addNewModelElements(selectedClassifier, (EReference) getSetting().getEStructuralFeature());
 	}
 
 	private EClassifier getExistingEClassifiers() {
@@ -82,7 +82,7 @@ public class AddEClassifierReferenceAction extends AddReferenceAction {
 			Messages.ModelelementSelectionDialog_DialogMessage_SearchPattern, EObject.class);
 
 		final SelectionComposite<TableViewer> tableSelectionComposite = CompositeFactory
-			.getTableSelectionComposite(elements.toArray());
+			.getTableSelectionComposite(elements.toArray(), false);
 		wizard.setCompositeProvider(tableSelectionComposite);
 
 		final WizardDialog wd = new WizardDialog(Display.getDefault().getActiveShell(), wizard);
