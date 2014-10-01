@@ -95,7 +95,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 */
 	@Override
 	protected Control renderControl(SWTGridCell cell, Composite parent) throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+	NoPropertyDescriptorFoundExeption {
 		if (cell.getRow() != 0 || cell.getColumn() != 0 || cell.getRenderer() != this) {
 			throw new IllegalArgumentException("Wrong parameter passed!"); //$NON-NLS-1$
 		}
@@ -117,8 +117,8 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 
 		final Composite controlComposite = new Composite(composite, SWT.NONE);
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL)
-			.hint(1, 300)
-			.applyTo(controlComposite);
+		.hint(1, 300)
+		.applyTo(controlComposite);
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(controlComposite);
 		createContent(controlComposite, mainSetting);
 
@@ -150,7 +150,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		final Composite titleComposite = new Composite(composite, SWT.NONE);
 		titleComposite.setBackgroundMode(SWT.INHERIT_FORCE);
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING)
-			.applyTo(titleComposite);
+		.applyTo(titleComposite);
 		GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(titleComposite);
 
 		final Label filler = new Label(titleComposite, SWT.NONE);
@@ -164,7 +164,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		final Composite buttonComposite = new Composite(titleComposite, SWT.NONE);
 		GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(true).applyTo(buttonComposite);
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.END, SWT.FILL)
-			.applyTo(buttonComposite);
+		.applyTo(buttonComposite);
 
 		final Button btnAddExisting = new Button(buttonComposite, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(btnAddExisting);
@@ -222,6 +222,12 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 			}
 
 		});
+		if (getVElement().isReadonly()) {
+			btnAddExisting.setEnabled(false);
+			btnAddNew.setEnabled(false);
+			btnDelete.setEnabled(false);
+		}
+
 	}
 
 	private void createContent(Composite composite, Setting mainSetting) {
