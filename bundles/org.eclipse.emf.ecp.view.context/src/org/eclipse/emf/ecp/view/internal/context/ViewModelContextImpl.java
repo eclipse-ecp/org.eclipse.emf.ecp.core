@@ -120,6 +120,9 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	private Resource resource;
 
+	private final Map<EObject, ViewModelContext> childContexts = new LinkedHashMap<EObject, ViewModelContext>();
+	private final Map<ViewModelContext, VElement> childContextUsers = new LinkedHashMap<ViewModelContext, VElement>();
+
 	/**
 	 * Instantiates a new view model context impl.
 	 *
@@ -333,8 +336,23 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecp.common.UniqueSetting)
 	 */
 	@Override
-	public Set<VControl> getControlsFor(UniqueSetting setting) {
-		return settingToControlMap.get(setting);
+	public Set<VElement> getControlsFor(UniqueSetting setting) {
+		final Set<VElement> elements = new LinkedHashSet<VElement>();
+		final Set<VControl> currentControls = settingToControlMap.get(setting);
+		if (currentControls != null) {
+			elements.addAll(currentControls);
+		}
+		for (final ViewModelContext childContext : childContextUsers.keySet()) {
+			final Set<VElement> childControls = childContext.getControlsFor(setting);
+			if (childControls != null) {
+				elements.add(childContextUsers.get(childContext));
+			}
+		}
+		// TODO change expactation
+		if (elements.isEmpty()) {
+			return null;
+		}
+		return elements;
 	}
 
 	/**
@@ -489,8 +507,8 @@ public class ViewModelContextImpl implements ViewModelContext {
 		}
 
 		Activator.getInstance()
-			.getReportService()
-			.report(new ViewModelServiceNotAvailableReport(serviceType));
+		.getReportService()
+		.report(new ViewModelServiceNotAvailableReport(serviceType));
 
 		return null;
 	}
@@ -688,5 +706,33 @@ public class ViewModelContextImpl implements ViewModelContext {
 	@Override
 	public void putContextValue(String key, Object value) {
 		keyObjectMap.put(key, value);
+	}
+
+	@Override
+	public void addChildContext(VElement vElement, EObject eObject, ViewModelContext childContext) {
+		if (ViewModelContextImpl.class.isInstance(childContext)) {
+			ViewModelContextImpl.class.cast(childContext).addContextUser(this);
+		}
+		childContexts.put(eObject, childContext);
+		childContextUsers.put(childContext, vElement);
+	}
+
+	@Override
+	public ViewModelContext getChildContext(EObject eObject) {
+		return childContexts.get(eObject);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#removeChildContext(org.eclipse.emf.ecore.EObject)
+	 */
+	@Override
+	public void removeChildContext(EObject eObject) {
+		final ViewModelContext removedContext = childContexts.remove(eObject);
+		if (removedContext != null) {
+			childContextUsers.remove(removedContext);
+			removedContext.dispose();
+		}
 	}
 }

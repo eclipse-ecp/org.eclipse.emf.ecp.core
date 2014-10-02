@@ -689,16 +689,16 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * @param clazz the {@link EClass} defining the EObject to create
 	 * @param mainSetting the containment reference setting
 	 */
-	protected void addRow(EClass clazz, Setting mainSetting) {
+	protected EObject addRow(EClass clazz, Setting mainSetting) {
 		final EObject modelElement = mainSetting.getEObject();
 		final EObject instance = clazz.getEPackage().getEFactoryInstance().create(clazz);
 		final EditingDomain editingDomain = getEditingDomain(mainSetting);
 		if (editingDomain == null) {
-			return;
+			return null;
 		}
 		editingDomain.getCommandStack().execute(
 			AddCommand.create(editingDomain, modelElement, mainSetting.getEStructuralFeature(), instance));
-
+		return instance;
 	}
 
 	@Override
@@ -1023,7 +1023,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		/**
 		 * Default implementation always returns <code>null</code> as this will be
 		 * handled by the Binding.
-		 *
+		 * 
 		 * @see org.eclipse.jface.viewers.EditingSupport#getValue(java.lang.Object)
 		 */
 		@Override

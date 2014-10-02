@@ -1512,7 +1512,7 @@ public class UnsetServiceTest {
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecp.view.spi.context.UniqueSetting)
 		 */
 		@Override
-		public Set<VControl> getControlsFor(UniqueSetting setting) {
+		public Set<VElement> getControlsFor(UniqueSetting setting) {
 			// TODO Auto-generated method stub
 			return null;
 		}
@@ -1536,6 +1536,40 @@ public class UnsetServiceTest {
 		 */
 		@Override
 		public void putContextValue(String key, Object value) {
+			// TODO Auto-generated method stub
+
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#addChildContext(org.eclipse.emf.ecp.view.spi.model.VElement,
+		 *      org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
+		 */
+		@Override
+		public void addChildContext(VElement vElement, EObject eObject, ViewModelContext childContext) {
+			// TODO Auto-generated method stub
+
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getChildContext(org.eclipse.emf.ecore.EObject)
+		 */
+		@Override
+		public ViewModelContext getChildContext(EObject eObject) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#removeChildContext(org.eclipse.emf.ecore.EObject)
+		 */
+		@Override
+		public void removeChildContext(EObject eObject) {
 			// TODO Auto-generated method stub
 
 		}

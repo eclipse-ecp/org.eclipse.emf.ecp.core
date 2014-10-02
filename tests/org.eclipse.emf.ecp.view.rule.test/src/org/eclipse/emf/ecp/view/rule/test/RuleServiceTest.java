@@ -160,7 +160,6 @@ public class RuleServiceTest extends CommonRuleTest {
 		 */
 		@Override
 		public Set<VControl> getControlsFor(Setting setting) {
-			// TODO Auto-generated method stub
 			return null;
 		}
 
@@ -170,8 +169,7 @@ public class RuleServiceTest extends CommonRuleTest {
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecp.common.UniqueSetting)
 		 */
 		@Override
-		public Set<VControl> getControlsFor(UniqueSetting setting) {
-			// TODO Auto-generated method stub
+		public Set<VElement> getControlsFor(UniqueSetting setting) {
 			return null;
 		}
 
@@ -182,7 +180,6 @@ public class RuleServiceTest extends CommonRuleTest {
 		 */
 		@Override
 		public Object getContextValue(String key) {
-			// TODO Auto-generated method stub
 			return null;
 		}
 
@@ -194,6 +191,38 @@ public class RuleServiceTest extends CommonRuleTest {
 		 */
 		@Override
 		public void putContextValue(String key, Object value) {
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#addChildContext(org.eclipse.emf.ecp.view.spi.model.VElement,
+		 *      org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
+		 */
+		@Override
+		public void addChildContext(VElement vElement, EObject eObject, ViewModelContext childContext) {
+			// TODO Auto-generated method stub
+
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getChildContext(org.eclipse.emf.ecore.EObject)
+		 */
+		@Override
+		public ViewModelContext getChildContext(EObject eObject) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#removeChildContext(org.eclipse.emf.ecore.EObject)
+		 */
+		@Override
+		public void removeChildContext(EObject eObject) {
 			// TODO Auto-generated method stub
 
 		}
