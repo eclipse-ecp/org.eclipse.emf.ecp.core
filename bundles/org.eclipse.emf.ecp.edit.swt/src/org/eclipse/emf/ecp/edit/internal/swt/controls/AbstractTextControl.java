@@ -12,11 +12,17 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
+import java.util.Set;
+
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
+import org.eclipse.emf.ecp.edit.internal.swt.Activator;
+import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
+import org.eclipse.emf.ecp.view.template.style.textControlEnablement.model.VTTextControlEnablementStyleProperty;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
@@ -125,7 +131,25 @@ public abstract class AbstractTextControl extends SingleControl {
 	 */
 	@Override
 	public void setEditable(boolean isEditable) {
-		text.setEditable(isEditable);
+		if (isDisableRenderedAsEditable()) {
+			text.setEditable(isEditable);
+		}
+		text.setEnabled(isEditable);
+	}
+
+	private boolean isDisableRenderedAsEditable() {
+		final VTViewTemplateProvider vtViewTemplateProvider = Activator.getDefault().getVTViewTemplateProvider();
+		if (vtViewTemplateProvider == null) {
+			return false;
+		}
+		final Set<VTStyleProperty> styleProperties = vtViewTemplateProvider
+			.getStyleProperties(getControl(), getViewModelContext());
+		for (final VTStyleProperty styleProperty : styleProperties) {
+			if (VTTextControlEnablementStyleProperty.class.isInstance(styleProperty)) {
+				return VTTextControlEnablementStyleProperty.class.cast(styleProperty).isRenderDisableAsEditable();
+			}
+		}
+		return false;
 	}
 
 	@Override
