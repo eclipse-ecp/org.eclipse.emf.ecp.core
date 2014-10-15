@@ -177,6 +177,7 @@ public class ValidationServiceImpl implements ValidationService {
 
 				//$FALL-THROUGH$
 			case Notification.REMOVE_MANY:
+				// TODO JF since we now have an indexed dmr, this should clean diagnostics, too, doesn't it?
 				validate(getAllEObjects(notification.getNotifier()));
 				break;
 			case Notification.REMOVING_ADAPTER:
@@ -244,11 +245,11 @@ public class ValidationServiceImpl implements ValidationService {
 	}
 
 	private void cleanControlDiagnostics(EObject parent, EReference parentReference, EObject removedEObject) {
-		final Set<VControl> controls = context.getControlsFor(UniqueSetting.createSetting(parent, parentReference));
+		final Set<VElement> controls = context.getControlsFor(UniqueSetting.createSetting(parent, parentReference));
 		if (controls == null) {
 			return;
 		}
-		for (final VControl vControl : controls) {
+		for (final VElement vControl : controls) {
 			if (vControl == null) {
 				continue;
 			}
@@ -366,30 +367,33 @@ public class ValidationServiceImpl implements ValidationService {
 			validateAndCollectSettings(toValidate);
 		}
 		update();
+		notifyListeners();
 		currentUpdates.clear();
 		validated.clear();
-		notifyListeners();
 		validationRunning = false;
 	}
 
-	private void notifyListeners() {
+	/**
+	 * Notifies all listeners.
+	 */
+	public void notifyListeners() {
 		if (validationListener.size() > 0) {
 			final Set<Diagnostic> result = getDiagnosticResult();
 			for (final ViewValidationListener l : validationListener) {
 				l.onNewValidation(result);
 			}
-
 		}
 	}
 
 	private void update() {
-		final Map<VControl, VDiagnostic> controlDiagnosticMap = new LinkedHashMap<VControl, VDiagnostic>();
+		final Map<VElement, VDiagnostic> controlDiagnosticMap = new LinkedHashMap<VElement, VDiagnostic>();
 		for (final UniqueSetting uniqueSetting : currentUpdates.keySet()) {
-			final Set<VControl> controls = context.getControlsFor(uniqueSetting);
+			final Set<VElement> controls = context.getControlsFor(uniqueSetting);
 			if (controls == null) {
 				continue;
 			}
-			for (final VControl control : controls) {
+
+			for (final VElement control : controls) {
 				if (!controlDiagnosticMap.containsKey(control)) {
 					controlDiagnosticMap.put(control, VViewFactory.eINSTANCE.createDiagnostic());
 				}
@@ -425,8 +429,8 @@ public class ValidationServiceImpl implements ValidationService {
 		updateAndPropagate(controlDiagnosticMap);
 	}
 
-	private void updateAndPropagate(Map<VControl, VDiagnostic> controlDiagnosticMap) {
-		for (final VControl control : controlDiagnosticMap.keySet()) {
+	private void updateAndPropagate(Map<VElement, VDiagnostic> controlDiagnosticMap) {
+		for (final VElement control : controlDiagnosticMap.keySet()) {
 
 			// control.setDiagnostic(VDiagnosticHelper.clean2(controlDiagnosticMap.get(control)));
 			control.setDiagnostic(controlDiagnosticMap.get(control));
@@ -463,7 +467,6 @@ public class ValidationServiceImpl implements ValidationService {
 
 	private void validateAndCollectSettings(EObject eObject) {
 		final Diagnostic diagnostic = getDiagnosticForEObject(eObject);
-		// unset everything for the new EObject
 		for (final EStructuralFeature feature : eObject.eClass().getEAllStructuralFeatures()) {
 			final UniqueSetting uniqueSetting = UniqueSetting.createSetting(eObject, feature);
 			if (!currentUpdates.containsKey(uniqueSetting)) {
@@ -597,6 +600,7 @@ public class ValidationServiceImpl implements ValidationService {
 	 */
 	@Override
 	public void deregisterValidationListener(ViewValidationListener listener) {
+		// FIXME: doesn't look like deregistering is going on
 		validationListener.add(listener);
 		listener.onNewValidation(getDiagnosticResult());
 	}

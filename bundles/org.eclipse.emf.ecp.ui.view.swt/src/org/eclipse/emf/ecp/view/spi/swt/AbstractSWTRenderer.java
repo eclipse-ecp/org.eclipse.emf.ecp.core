@@ -237,7 +237,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	 * @param parent the parent used during render
 	 * @since 1.3
 	 */
-	public final void finalizeRendering(Composite parent) {
+	public void finalizeRendering(Composite parent) {
 		if (renderingFinished) {
 			return;
 		}

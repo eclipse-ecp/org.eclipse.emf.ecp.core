@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- *
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  * Johannes Faltermeier
- *
+ * 
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.table.ui.swt.test;
 
@@ -108,7 +108,7 @@ public class SWTTableTest {
 
 	@Test
 	public void testUninitializedTableWithoutColumns() throws NoRendererFoundException,
-	NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption {
 		// setup model
 		final TableControlHandle handle = createUninitializedTableWithoutColumns();
 		//
@@ -119,7 +119,7 @@ public class SWTTableTest {
 
 	@Test
 	public void testInitializedTableWithoutColumnsAndEmptyReference() throws NoRendererFoundException,
-	NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption {
 		// setup model
 		final EClass createEClass = EcoreFactory.eINSTANCE.createEClass();
 		createEClass.eUnset(EcorePackage.eINSTANCE.getEClass_ESuperTypes());
@@ -137,7 +137,7 @@ public class SWTTableTest {
 	@Ignore
 	@Test
 	public void testInitializedTableWithoutColumnsSingleReference() throws NoRendererFoundException,
-	NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption {
 		// setup model
 		final VView view = VViewFactory.eINSTANCE.createView();
 		view.setRootEClass(VViewPackage.eINSTANCE.getView());
@@ -160,7 +160,7 @@ public class SWTTableTest {
 	@Ignore
 	@Test
 	public void testInitializedTableWithoutColumnsEmptySingleReference() throws NoRendererFoundException,
-	NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption {
 		// setup model
 		final VView view = VViewFactory.eINSTANCE.createView();
 		domainElement = view;
@@ -188,7 +188,7 @@ public class SWTTableTest {
 
 		assertEquals(domainElement.eClass().getEAttributes().size(),
 			VTableDomainModelReference.class.cast(handle.getTableControl().getDomainModelReference())
-			.getColumnDomainModelReferences().size());
+				.getColumnDomainModelReferences().size());
 
 		final Control control = getTable(render);
 		assertTrue(control instanceof Table);
@@ -198,7 +198,7 @@ public class SWTTableTest {
 
 	@Test
 	public void testTableWithoutColumnsWithoutViewServices() throws NoRendererFoundException,
-	NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption {
 		final TableControlHandle handle = createInitializedTableWithoutTableColumns();
 		final AbstractSWTRenderer<VElement> tableRenderer = rendererFactory.getRenderer(handle.getTableControl(),
 			new ViewModelContextWithoutServices(handle.getTableControl()));
@@ -234,7 +234,7 @@ public class SWTTableTest {
 
 	@Test
 	public void testTableWithTwoColumnsWithoutViewServices() throws NoRendererFoundException,
-	NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption {
 		// setup model
 		final TableControlHandle handle = createTableWithTwoTableColumns();
 		final AbstractSWTRenderer<VElement> tableRenderer = rendererFactory.getRenderer(handle.getTableControl(),
@@ -436,9 +436,9 @@ public class SWTTableTest {
 
 	/**
 	 * Stub implementation without getting services from ex. point.
-	 *
+	 * 
 	 * @author jfaltermeier
-	 *
+	 * 
 	 */
 	private class ViewModelContextWithoutServices implements ViewModelContext {
 
@@ -451,7 +451,7 @@ public class SWTTableTest {
 
 		/**
 		 * {@inheritDoc}
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getViewModel()
 		 */
 		@Override
@@ -461,7 +461,7 @@ public class SWTTableTest {
 
 		/**
 		 * {@inheritDoc}
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getDomainModel()
 		 */
 		@Override
@@ -470,9 +470,9 @@ public class SWTTableTest {
 		}
 
 		/**
-		 *
+		 * 
 		 * {@inheritDoc}
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#registerViewChangeListener(org.eclipse.emf.ecp.view.spi.model.ModelChangeListener)
 		 */
 		@Override
@@ -481,9 +481,9 @@ public class SWTTableTest {
 		}
 
 		/**
-		 *
+		 * 
 		 * {@inheritDoc}
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#unregisterViewChangeListener(org.eclipse.emf.ecp.view.spi.model.ModelChangeListener)
 		 */
 		@Override
@@ -492,9 +492,9 @@ public class SWTTableTest {
 		}
 
 		/**
-		 *
+		 * 
 		 * {@inheritDoc}
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#registerDomainChangeListener(org.eclipse.emf.ecp.view.spi.model.ModelChangeListener)
 		 */
 		@Override
@@ -503,9 +503,9 @@ public class SWTTableTest {
 		}
 
 		/**
-		 *
+		 * 
 		 * {@inheritDoc}
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#unregisterDomainChangeListener(org.eclipse.emf.ecp.view.spi.model.ModelChangeListener)
 		 */
 		@Override
@@ -515,7 +515,7 @@ public class SWTTableTest {
 
 		/**
 		 * {@inheritDoc}
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#dispose()
 		 */
 		@Override
@@ -525,7 +525,7 @@ public class SWTTableTest {
 
 		/**
 		 * {@inheritDoc}
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#hasService(java.lang.Class)
 		 */
 		@Override
@@ -535,7 +535,7 @@ public class SWTTableTest {
 
 		/**
 		 * {@inheritDoc}
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getService(java.lang.Class)
 		 */
 		@Override
@@ -545,7 +545,7 @@ public class SWTTableTest {
 
 		/**
 		 * {@inheritDoc}
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecore.EStructuralFeature.Setting)
 		 */
 		@Override
@@ -555,17 +555,17 @@ public class SWTTableTest {
 
 		/**
 		 * {@inheritDoc}
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecp.common.UniqueSetting)
 		 */
 		@Override
-		public Set<VControl> getControlsFor(UniqueSetting setting) {
+		public Set<VElement> getControlsFor(UniqueSetting setting) {
 			return null;
 		}
 
 		/**
 		 * {@inheritDoc}
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getContextValue(java.lang.String)
 		 */
 		@Override
@@ -575,12 +575,43 @@ public class SWTTableTest {
 
 		/**
 		 * {@inheritDoc}
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#putContextValue(java.lang.String,
 		 *      java.lang.Object)
 		 */
 		@Override
 		public void putContextValue(String key, Object value) {
+
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#addChildContext(org.eclipse.emf.ecp.view.spi.model.VElement,
+		 *      org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
+		 */
+		@Override
+		public void addChildContext(VElement vElement, EObject eObject, ViewModelContext childContext) {
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getChildContext(org.eclipse.emf.ecore.EObject)
+		 */
+		@Override
+		public ViewModelContext getChildContext(EObject eObject) {
+			return null;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#removeChildContext(org.eclipse.emf.ecore.EObject)
+		 */
+		@Override
+		public void removeChildContext(EObject eObject) {
+			// TODO Auto-generated method stub
 
 		}
 	}
@@ -596,7 +627,7 @@ public class SWTTableTest {
 
 		/**
 		 * {@inheritDoc}
-		 *
+		 * 
 		 * @see java.io.PrintStream#print(java.lang.String)
 		 */
 		@Override

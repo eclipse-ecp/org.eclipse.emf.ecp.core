@@ -12,7 +12,14 @@
 package org.eclipse.emf.ecp.view.spi.table.swt;
 
 import java.util.Collections;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
+import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
@@ -21,6 +28,9 @@ import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.internal.table.swt.Activator;
+import org.eclipse.emf.ecp.view.internal.validation.ValidationService;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -68,7 +78,7 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 		/* table composite */
 		final Composite tableComposite = new Composite(border, SWT.NONE);
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.FILL).hint(1, getTableHeightHint())
-		.applyTo(tableComposite);
+			.applyTo(tableComposite);
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(border);
 
 		/* scrolled composite */
@@ -157,18 +167,22 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 		try {
 			disposeDetail();
 			final EObject object = (EObject) selection.getFirstElement();
-			final VView detailView = getView();
+			ViewModelContext childContext = getViewModelContext().getChildContext(object);
+			if (childContext == null) {
+				final VView detailView = getView();
 
-			if (detailView == null) {
-				if (isDebug()) {
-					final Label label = new Label(detailPanel, SWT.NONE);
-					label.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_RED));
-					label.setText("No Detail View found."); //$NON-NLS-1$
+				if (detailView == null) {
+					if (isDebug()) {
+						final Label label = new Label(detailPanel, SWT.NONE);
+						label.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_RED));
+						label.setText("No Detail View found."); //$NON-NLS-1$
+					}
+				} else {
+					childContext = ViewModelContextFactory.INSTANCE.createViewModelContext(detailView, object);
+					getViewModelContext().addChildContext(getVElement(), object, childContext);
 				}
-			} else {
-				ecpView = ECPSWTViewRenderer.INSTANCE.render(detailPanel,
-					object, detailView);
 			}
+			ecpView = ECPSWTViewRenderer.INSTANCE.render(detailPanel, childContext);
 			border.layout(true, true);
 			final Point point = detailPanel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 			scrolledComposite.setMinHeight(point.y);
@@ -203,4 +217,71 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer#postInit()
+	 */
+	@Override
+	protected void postInit() {
+		super.postInit();
+		final Iterator<Setting> iterator = getVElement().getDomainModelReference().getIterator();
+		int counter = -1;
+		while (iterator.hasNext()) {
+			counter++;
+			final Setting setting = iterator.next();
+			if (counter == 0) {
+				continue;
+			}
+			final VView detailView = getView();
+			final ViewModelContext childContext = ViewModelContextFactory.INSTANCE.createViewModelContext(detailView,
+				setting.getEObject());
+			getViewModelContext().addChildContext(getVElement(), setting.getEObject(), childContext);
+		}
+	}
+
+	@Override
+	public void finalizeRendering(Composite parent) {
+		super.finalizeRendering(parent);
+		revalidate();
+	}
+
+	private void revalidate() {
+		final Iterator<Setting> iterator = getVElement().getDomainModelReference().getIterator();
+		final Set<EObject> toValidate = new LinkedHashSet<EObject>();
+		while (iterator.hasNext()) {
+			toValidate.add(iterator.next().getEObject());
+		}
+		getViewModelContext().getService(ValidationService.class).validate(toValidate);
+	}
+
+	@Override
+	protected EObject addRow(EClass clazz, Setting mainSetting) {
+		final EObject addEObject = super.addRow(clazz, mainSetting);
+		ViewModelContext childContext = getViewModelContext().getChildContext(addEObject);
+		if (childContext == null) {
+			final VView detailView = getView();
+			childContext = ViewModelContextFactory.INSTANCE.createViewModelContext(detailView,
+				addEObject);
+			getViewModelContext().addChildContext(getVElement(), addEObject, childContext);
+		}
+		revalidate();
+		return addEObject;
+	}
+
+	@Override
+	protected void deleteRows(List<EObject> deletionList, Setting mainSetting) {
+		super.deleteRows(deletionList, mainSetting);
+		final Set<Diagnostic> toDelete = new LinkedHashSet<Diagnostic>();
+		for (final EObject eObject : deletionList) {
+			getViewModelContext().removeChildContext(eObject);
+			toDelete.addAll(getVElement().getDiagnostic().getDiagnostics(eObject));
+			final TreeIterator<EObject> eAllContents = eObject.eAllContents();
+			while (eAllContents.hasNext()) {
+				toDelete.addAll(getVElement().getDiagnostic().getDiagnostics(eAllContents.next()));
+			}
+		}
+		getVElement().getDiagnostic().getDiagnostics().removeAll(toDelete);
+		revalidate();
+	}
 }
