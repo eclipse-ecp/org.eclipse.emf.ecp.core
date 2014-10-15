@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- *
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  ******************************************************************************/
@@ -90,7 +90,7 @@ public class ResolverViewServiceTest {
 
 		/**
 		 * {@inheritDoc}
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#registerDomainChangeListener(org.eclipse.emf.ecp.view.spi.model.ModelChangeListener)
 		 */
 		@Override
@@ -99,7 +99,7 @@ public class ResolverViewServiceTest {
 
 		/**
 		 * {@inheritDoc}
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#unregisterDomainChangeListener(org.eclipse.emf.ecp.view.spi.model.ModelChangeListener)
 		 */
 		@Override
@@ -108,7 +108,7 @@ public class ResolverViewServiceTest {
 
 		/**
 		 * {@inheritDoc}
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getViewModel()
 		 */
 		@Override
@@ -118,7 +118,7 @@ public class ResolverViewServiceTest {
 
 		/**
 		 * {@inheritDoc}
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getDomainModel()
 		 */
 		@Override
@@ -128,7 +128,7 @@ public class ResolverViewServiceTest {
 
 		/**
 		 * {@inheritDoc}
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#registerViewChangeListener(org.eclipse.emf.ecp.view.spi.model.ModelChangeListener)
 		 */
 		@Override
@@ -137,7 +137,7 @@ public class ResolverViewServiceTest {
 
 		/**
 		 * {@inheritDoc}
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#unregisterViewChangeListener(org.eclipse.emf.ecp.view.spi.model.ModelChangeListener)
 		 */
 		@Override
@@ -146,7 +146,7 @@ public class ResolverViewServiceTest {
 
 		/**
 		 * {@inheritDoc}
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#dispose()
 		 */
 		@Override
@@ -155,7 +155,7 @@ public class ResolverViewServiceTest {
 
 		/**
 		 * {@inheritDoc}
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#hasService(java.lang.Class)
 		 */
 		@Override
@@ -165,7 +165,7 @@ public class ResolverViewServiceTest {
 
 		/**
 		 * {@inheritDoc}
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getService(java.lang.Class)
 		 */
 		@Override
@@ -175,7 +175,7 @@ public class ResolverViewServiceTest {
 
 		/**
 		 * {@inheritDoc}
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecore.EStructuralFeature.Setting)
 		 */
 		@Override
@@ -185,18 +185,18 @@ public class ResolverViewServiceTest {
 
 		/**
 		 * {@inheritDoc}
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecp.common.UniqueSetting)
 		 */
 		@SuppressWarnings("restriction")
 		@Override
-		public Set<VControl> getControlsFor(org.eclipse.emf.ecp.common.UniqueSetting setting) {
+		public Set<VElement> getControlsFor(org.eclipse.emf.ecp.common.UniqueSetting setting) {
 			return null;
 		}
 
 		/**
 		 * {@inheritDoc}
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getContextValue(java.lang.String)
 		 */
 		@Override
@@ -206,13 +206,47 @@ public class ResolverViewServiceTest {
 
 		/**
 		 * {@inheritDoc}
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#putContextValue(java.lang.String,
 		 *      java.lang.Object)
 		 */
 		@Override
 		public void putContextValue(String key, Object value) {
 			context.put(key, value);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#addChildContext(org.eclipse.emf.ecp.view.spi.model.VElement,
+		 *      org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
+		 */
+		@Override
+		public void addChildContext(VElement vElement, EObject eObject, ViewModelContext childContext) {
+			// TODO Auto-generated method stub
+
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getChildContext(org.eclipse.emf.ecore.EObject)
+		 */
+		@Override
+		public ViewModelContext getChildContext(EObject eObject) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#removeChildContext(org.eclipse.emf.ecore.EObject)
+		 */
+		@Override
+		public void removeChildContext(EObject eObject) {
+			// TODO Auto-generated method stub
+
 		}
 
 	}
