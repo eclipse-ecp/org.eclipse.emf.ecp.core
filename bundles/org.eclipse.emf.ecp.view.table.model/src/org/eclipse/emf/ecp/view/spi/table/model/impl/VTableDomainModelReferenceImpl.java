@@ -478,6 +478,7 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	public void notifyChange(ModelChangeNotification notification) {
 		if (getDomainModelEFeature() != null) {
 			super.notifyChange(notification);
+			return;
 		}
 
 		if (notification.getRawNotification().isTouch()) {
