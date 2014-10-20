@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- *
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
@@ -19,7 +19,7 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Control</b></em>'.
  * <!-- end-user-doc -->
- *
+ * 
  * <p>
  * The following features are supported:
  * <ul>
@@ -32,7 +32,7 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
  * Editing Dialog</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage#getTableControl()
  * @model
  * @generated
@@ -48,7 +48,7 @@ public interface VTableControl extends VControl
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the value of the '<em>Add Remove Disabled</em>' attribute.
 	 * @see #setAddRemoveDisabled(boolean)
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage#getTableControl_AddRemoveDisabled()
@@ -62,7 +62,7 @@ public interface VTableControl extends VControl
 	 * <em>Add Remove Disabled</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param value the new value of the '<em>Add Remove Disabled</em>' attribute.
 	 * @see #isAddRemoveDisabled()
 	 * @generated
@@ -78,7 +78,7 @@ public interface VTableControl extends VControl
 	 * should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the value of the '<em>Column Configurations</em>' containment reference list.
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage#getTableControl_ColumnConfigurations()
 	 * @model containment="true"
@@ -96,7 +96,7 @@ public interface VTableControl extends VControl
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the value of the '<em>Detail Editing</em>' attribute.
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.DetailEditing
 	 * @see #setDetailEditing(DetailEditing)
@@ -111,7 +111,7 @@ public interface VTableControl extends VControl
 	 * <em>Detail Editing</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param value the new value of the '<em>Detail Editing</em>' attribute.
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.DetailEditing
 	 * @see #getDetailEditing()
@@ -127,7 +127,7 @@ public interface VTableControl extends VControl
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the value of the '<em>Detail View</em>' containment reference.
 	 * @see #setDetailView(VView)
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage#getTableControl_DetailView()
@@ -141,7 +141,7 @@ public interface VTableControl extends VControl
 	 * <em>Detail View</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param value the new value of the '<em>Detail View</em>' containment reference.
 	 * @see #getDetailView()
 	 * @generated
@@ -156,10 +156,9 @@ public interface VTableControl extends VControl
 	 * If the meaning of the '<em>Enable Detail Editing Dialog</em>' attribute isn't clear, there really should be more
 	 * of a description here...
 	 * </p>
-	 *
+	 * 
 	 * @deprecated
 	 *             <!-- end-user-doc -->
-	 *
 	 * @return the value of the '<em>Enable Detail Editing Dialog</em>' attribute.
 	 * @see #setEnableDetailEditingDialog(boolean)
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage#getTableControl_EnableDetailEditingDialog()
@@ -176,7 +175,6 @@ public interface VTableControl extends VControl
 	 * 
 	 * @deprecated
 	 *             <!-- end-user-doc -->
-	 *
 	 * @param value the new value of the '<em>Enable Detail Editing Dialog</em>' attribute.
 	 * @see #isEnableDetailEditingDialog()
 	 * @generated

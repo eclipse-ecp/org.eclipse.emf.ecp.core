@@ -408,7 +408,10 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 
 	protected List<EReference> leftReferences;
 	protected EObject lastResolvedEObject;
-	private EObject rootEObject;
+	/**
+	 * @since 1.5
+	 */
+	protected EObject rootEObject;
 
 	/**
 	 * {@inheritDoc}
@@ -572,8 +575,9 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 
 	/**
 	 * @param notification
+	 * @since 1.5
 	 */
-	private void cleanDiagnostic(boolean baseFeatureChanged, ModelChangeNotification notification) {
+	protected void cleanDiagnostic(boolean baseFeatureChanged, ModelChangeNotification notification) {
 		if (!(eContainer() instanceof VControl)) {
 			return;
 		}

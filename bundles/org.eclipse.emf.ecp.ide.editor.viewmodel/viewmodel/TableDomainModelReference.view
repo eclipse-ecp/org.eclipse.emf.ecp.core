@@ -3,7 +3,7 @@
   <rootEClass href="http://org/eclipse/emf/ecp/view/table/model#//TableDomainModelReference"/>
   <children xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control domainModelEFeature">
     <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
-      <domainModelEFeature xsi:type="ecore:EReference" href="http://org/eclipse/emf/ecp/view/model#//FeaturePathDomainModelReference/domainModelEFeature"/>
+      <domainModelEFeature xsi:type="ecore:EReference" href="http://org/eclipse/emf/ecp/view/table/model#//TableDomainModelReference/domainModelReference"/>
     </domainModelReference>
   </children>
 </org.eclipse.emf.ecp.view.model:View>

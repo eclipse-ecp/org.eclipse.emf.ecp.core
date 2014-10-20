@@ -27,6 +27,7 @@
     <genClasses image="false" ecoreClass="table.ecore#//TableColumnConfiguration"/>
     <genClasses ecoreClass="table.ecore#//TableDomainModelReference">
       <genFeatures children="true" createChild="true" ecoreFeature="ecore:EReference table.ecore#//TableDomainModelReference/columnDomainModelReferences"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference table.ecore#//TableDomainModelReference/domainModelReference"/>
     </genClasses>
     <genClasses ecoreClass="table.ecore#//ReadOnlyColumnConfiguration">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference table.ecore#//ReadOnlyColumnConfiguration/columnDomainReferences"/>

@@ -19,6 +19,7 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.stack.model.VStackPackage;
+import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
 
 /**
  * @author Alexandra Buzila
@@ -60,6 +61,10 @@ public class DomainModelReferenceControlSWTRendererTester implements ECPRenderer
 			return 3;
 		}
 		if (VStackPackage.eINSTANCE.getStackLayout_DomainModelReference() == setting.getEStructuralFeature()) {
+			return 3;
+		}
+		if (VTablePackage.eINSTANCE.getTableDomainModelReference_DomainModelReference() == setting
+			.getEStructuralFeature()) {
 			return 3;
 		}
 		return NOT_APPLICABLE;

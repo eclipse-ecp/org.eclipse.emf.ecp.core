@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- *
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
@@ -32,7 +32,7 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
  * <em>Column Domain References</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class VReadOnlyColumnConfigurationImpl extends EObjectImpl implements VReadOnlyColumnConfiguration
@@ -41,7 +41,7 @@ public class VReadOnlyColumnConfigurationImpl extends EObjectImpl implements VRe
 	 * The cached value of the '{@link #getColumnDomainReferences() <em>Column Domain References</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getColumnDomainReferences()
 	 * @generated
 	 * @ordered
@@ -51,7 +51,7 @@ public class VReadOnlyColumnConfigurationImpl extends EObjectImpl implements VRe
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected VReadOnlyColumnConfigurationImpl()
@@ -62,7 +62,7 @@ public class VReadOnlyColumnConfigurationImpl extends EObjectImpl implements VRe
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -74,7 +74,7 @@ public class VReadOnlyColumnConfigurationImpl extends EObjectImpl implements VRe
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -91,7 +91,7 @@ public class VReadOnlyColumnConfigurationImpl extends EObjectImpl implements VRe
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -108,7 +108,7 @@ public class VReadOnlyColumnConfigurationImpl extends EObjectImpl implements VRe
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -128,7 +128,7 @@ public class VReadOnlyColumnConfigurationImpl extends EObjectImpl implements VRe
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -146,7 +146,7 @@ public class VReadOnlyColumnConfigurationImpl extends EObjectImpl implements VRe
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
