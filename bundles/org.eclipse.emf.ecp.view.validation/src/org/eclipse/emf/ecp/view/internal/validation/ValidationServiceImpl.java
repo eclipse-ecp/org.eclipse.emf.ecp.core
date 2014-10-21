@@ -186,7 +186,14 @@ public class ValidationServiceImpl implements ValidationService {
 				validate(notification.getNotifier());
 				if (EReference.class.isInstance(notification.getStructuralFeature())) {
 					if (notification.getRawNotification().getNewValue() != null) {
-						validate((EObject) notification.getRawNotification().getNewValue());
+						final Object newValue = notification.getRawNotification().getNewValue();
+						/*
+						 * unset on a list has a boolean as a new value. therefore we need to check if new value is an
+						 * EObject
+						 */
+						if (EObject.class.isInstance(newValue)) {
+							validate((EObject) newValue);
+						}
 					}
 				}
 			}
