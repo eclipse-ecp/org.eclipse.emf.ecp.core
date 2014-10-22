@@ -533,7 +533,10 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		context.put(DETAIL_KEY, true);
 		context.put(ROOT_KEY, true);
 		final Object manipulateSelection = manipulateSelection(getViewModelContext().getDomainModel());
-		final VView view = ViewProviderHelper.getView((EObject) manipulateSelection, context);
+		VView view = getVElement().getDetailView();
+		if (view == null || view.getChildren().isEmpty()) {
+			view = ViewProviderHelper.getView((EObject) manipulateSelection, context);
+		}
 		final ViewModelContext viewContext = ViewModelContextFactory.INSTANCE
 			.createViewModelContext(view, (EObject) manipulateSelection);
 		manipulateViewContext(viewContext);
