@@ -75,7 +75,7 @@ public class ValidationServiceImpl implements ValidationService {
 			if (VViewPackage.eINSTANCE.getElement_Enabled() == notification.getRawNotification()
 				.getFeature()
 				|| VViewPackage.eINSTANCE.getElement_Visible() == notification.getRawNotification()
-				.getFeature()) {
+					.getFeature()) {
 				if (VViewPackage.eINSTANCE.getControl().isInstance(notification.getNotifier())) {
 					final VControl control = (VControl) notification.getNotifier();
 					// final EObject controlDomainModel = validationRegistry.resolveDomainModel(domainModel,
@@ -154,8 +154,8 @@ public class ValidationServiceImpl implements ValidationService {
 				validate(notification.getNotifier());
 				// in case of not containment references
 				if (EReference.class.isInstance(notification.getStructuralFeature())
-					// && !EReference.class.cast(notification.getStructuralFeature()).isContainment()
-					) {
+				// && !EReference.class.cast(notification.getStructuralFeature()).isContainment()
+				) {
 					validate((EObject) notification.getRawNotification().getNewValue());
 				}
 				break;
@@ -163,8 +163,8 @@ public class ValidationServiceImpl implements ValidationService {
 				validate(notification.getNotifier());
 				// in case of not containment references
 				if (EReference.class.isInstance(notification.getStructuralFeature())
-					// && !EReference.class.cast(notification.getStructuralFeature()).isContainment()
-					) {
+				// && !EReference.class.cast(notification.getStructuralFeature()).isContainment()
+				) {
 					validate((Collection<EObject>) notification.getRawNotification().getNewValue());
 				}
 				break;
@@ -404,11 +404,11 @@ public class ValidationServiceImpl implements ValidationService {
 				if (!controlDiagnosticMap.containsKey(control)) {
 					controlDiagnosticMap.put(control, VViewFactory.eINSTANCE.createDiagnostic());
 				}
-				if (!control.isEnabled() || !control.isVisible() || control.isReadonly()) {
-					continue;
-				}
+				// if (!control.isEnabled() || !control.isVisible() || control.isReadonly()) {
+				// continue;
+				// }
 				controlDiagnosticMap.get(control).getDiagnostics()
-				.addAll(currentUpdates.get(uniqueSetting).getDiagnostics());
+					.addAll(currentUpdates.get(uniqueSetting).getDiagnostics());
 
 				// add all diagnostics of control which are not in the currentUpdates
 				if (control.getDiagnostic() == null) {

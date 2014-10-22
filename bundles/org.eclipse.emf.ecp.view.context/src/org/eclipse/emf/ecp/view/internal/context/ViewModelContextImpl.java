@@ -340,12 +340,25 @@ public class ViewModelContextImpl implements ViewModelContext {
 		final Set<VElement> elements = new LinkedHashSet<VElement>();
 		final Set<VControl> currentControls = settingToControlMap.get(setting);
 		if (currentControls != null) {
-			elements.addAll(currentControls);
+			for (final VElement control : currentControls) {
+				if (!control.isEnabled() || !control.isVisible() || control.isReadonly()) {
+					continue;
+				}
+				elements.add(control);
+			}
 		}
 		for (final ViewModelContext childContext : childContextUsers.keySet()) {
 			final Set<VElement> childControls = childContext.getControlsFor(setting);
-			if (childControls != null) {
+			boolean validControls = false;
+			if (childControls == null) {
+				continue;
+			}
+			for (final VElement element : childControls) {
+				validControls |= element.isVisible() && !element.isReadonly() && element.isEnabled();
+			}
+			if (validControls) {
 				elements.add(childContextUsers.get(childContext));
+				elements.addAll(childControls);
 			}
 		}
 		// TODO change expactation
@@ -507,8 +520,8 @@ public class ViewModelContextImpl implements ViewModelContext {
 		}
 
 		Activator.getInstance()
-		.getReportService()
-		.report(new ViewModelServiceNotAvailableReport(serviceType));
+			.getReportService()
+			.report(new ViewModelServiceNotAvailableReport(serviceType));
 
 		return null;
 	}
