@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- *
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
@@ -58,15 +58,15 @@ import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 /**
  * Validation service that, once instantiated, synchronizes the validation result of a model element with its
  * Renderable.
- *
+ * 
  * @author Eugen Neufeld
- *
+ * 
  */
 public class ValidationServiceImpl implements ValidationService {
 
 	/**
 	 * The {@link ValidationDomainModelChangeListener} for the view model.
-	 *
+	 * 
 	 */
 	private class ViewModelChangeListener implements ModelChangeAddRemoveListener {
 
@@ -78,6 +78,11 @@ public class ValidationServiceImpl implements ValidationService {
 					.getFeature()) {
 				if (VViewPackage.eINSTANCE.getControl().isInstance(notification.getNotifier())) {
 					final VControl control = (VControl) notification.getNotifier();
+
+					if (VViewPackage.eINSTANCE.getElement_Enabled() == notification.getRawNotification().getFeature()) {
+						control.setDiagnostic(null);
+					}
+
 					// final EObject controlDomainModel = validationRegistry.resolveDomainModel(domainModel,
 					// control.getDomainModelReference().());
 					// REFACTORING test
@@ -136,7 +141,7 @@ public class ValidationServiceImpl implements ValidationService {
 
 	/**
 	 * The {@link ValidationDomainModelChangeListener} for the domain model.
-	 *
+	 * 
 	 */
 	private class ValidationDomainModelChangeListener implements ModelChangeAddRemoveListener {
 
@@ -222,7 +227,7 @@ public class ValidationServiceImpl implements ValidationService {
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#instantiate(org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	@Override
@@ -296,7 +301,7 @@ public class ValidationServiceImpl implements ValidationService {
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#dispose()
 	 */
 	@Override
@@ -307,7 +312,7 @@ public class ValidationServiceImpl implements ValidationService {
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#getPriority()
 	 */
 	@Override
@@ -317,7 +322,7 @@ public class ValidationServiceImpl implements ValidationService {
 
 	/**
 	 * Returns a collection of all direct and indirect child-EObjects including the parent.
-	 *
+	 * 
 	 * @param eObject the parent
 	 * @return all eobjects
 	 */
@@ -333,7 +338,7 @@ public class ValidationServiceImpl implements ValidationService {
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.internal.validation.ValidationService#validate(java.util.Collection)
 	 */
 	@Override
@@ -352,7 +357,7 @@ public class ValidationServiceImpl implements ValidationService {
 
 	/**
 	 * Validate the given eObject.
-	 *
+	 * 
 	 * @param eObject the eObject to validate
 	 */
 	public void validate(EObject eObject) {
@@ -508,7 +513,7 @@ public class ValidationServiceImpl implements ValidationService {
 
 	/**
 	 * Computes the {@link Diagnostic} for the given eObject.
-	 *
+	 * 
 	 * @param object the eObject to validate
 	 * @return the diagnostic
 	 */
@@ -552,9 +557,9 @@ public class ValidationServiceImpl implements ValidationService {
 	}
 
 	/**
-	 *
+	 * 
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.internal.validation.ValidationService#addValidationProvider(org.eclipse.emf.ecp.view.internal.validation.ValidationProvider)
 	 */
 	@Override
@@ -564,9 +569,9 @@ public class ValidationServiceImpl implements ValidationService {
 	}
 
 	/**
-	 *
+	 * 
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.internal.validation.ValidationService#removeValidationProvider(org.eclipse.emf.ecp.view.internal.validation.ValidationProvider)
 	 */
 	@Override
@@ -579,7 +584,7 @@ public class ValidationServiceImpl implements ValidationService {
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.internal.validation.ValidationService#registerValidationListener(org.eclipse.emf.ecp.view.internal.validation.ViewValidationListener)
 	 */
 	@Override
@@ -602,7 +607,7 @@ public class ValidationServiceImpl implements ValidationService {
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.internal.validation.ValidationService#deregisterValidationListener(org.eclipse.emf.ecp.view.internal.validation.ViewValidationListener)
 	 */
 	@Override

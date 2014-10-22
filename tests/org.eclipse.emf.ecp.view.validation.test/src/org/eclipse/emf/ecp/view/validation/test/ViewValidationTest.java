@@ -1,17 +1,18 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- *
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.validation.test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -147,8 +148,7 @@ public class ViewValidationTest extends CommonValidationTest {
 		control.setDomainModelReference(
 			getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getComputer_Name()));
 		ViewModelContextFactory.INSTANCE.createViewModelContext(control, computer);
-
-		assertEquals("Severity must be ok", Diagnostic.OK, control.getDiagnostic().getHighestSeverity());
+		assertNull(control.getDiagnostic());
 	}
 
 	@Test
@@ -160,8 +160,7 @@ public class ViewValidationTest extends CommonValidationTest {
 		control.setDomainModelReference(
 			getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getComputer_Name()));
 		ViewModelContextFactory.INSTANCE.createViewModelContext(control, computer);
-
-		assertEquals("Severity must be ok", Diagnostic.OK, control.getDiagnostic().getHighestSeverity());
+		assertNull(control.getDiagnostic());
 	}
 
 	@Test
@@ -172,9 +171,10 @@ public class ViewValidationTest extends CommonValidationTest {
 		control.setDomainModelReference(
 			getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getComputer_Name()));
 		ViewModelContextFactory.INSTANCE.createViewModelContext(control, computer);
+		assertEquals("Severity must be Error", Diagnostic.ERROR, control.getDiagnostic().getHighestSeverity());
 		control.setEnabled(false);
+		assertNull(control.getDiagnostic());
 
-		assertEquals("Severity must be ok", Diagnostic.OK, control.getDiagnostic().getHighestSeverity());
 	}
 
 	@Test
@@ -1497,7 +1497,7 @@ public class ViewValidationTest extends CommonValidationTest {
 		final Writer writer = TestFactory.eINSTANCE.createWriter();
 		final VControl control = VViewFactory.eINSTANCE.createControl();
 		control
-		.setDomainModelReference(
+			.setDomainModelReference(
 			getVFeaturePathDomainModelReference(TestPackage.eINSTANCE.getWriter_FirstName()));
 
 		final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(control, writer);
