@@ -144,5 +144,43 @@
       </changes>
     </changes>
   </releases>
+  <releases date="2014-10-23T15:19:11.006+0200" label="150">
+    <changes xsi:type="history:MigrationChange" migration="org.eclipse.emf.ecp.view.table.edapt._140to150.AddedDMRToTableDMRMigration">
+      <changes xsi:type="history:OperationChange">
+        <changes xsi:type="history:Create" target="table.ecore#//TableDomainModelReference"
+            referenceName="eStructuralFeatures" element="table.ecore#//TableDomainModelReference/domainModelReference">
+          <changes xsi:type="history:Set" element="table.ecore#//TableDomainModelReference/domainModelReference"
+              featureName="name" dataValue="domainModelReference"/>
+          <changes xsi:type="history:Set" element="table.ecore#//TableDomainModelReference/domainModelReference"
+              featureName="containment" dataValue="true" oldDataValue="false"/>
+          <changes xsi:type="history:Set" element="table.ecore#//TableDomainModelReference/domainModelReference"
+              featureName="eType" referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"/>
+        </changes>
+        <operation name="newReference">
+          <parameters name="eClass">
+            <referenceValue element="table.ecore#//TableDomainModelReference"/>
+          </parameters>
+          <parameters name="name">
+            <dataValue>domainModelReference</dataValue>
+          </parameters>
+          <parameters name="type">
+            <referenceValue element="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"/>
+          </parameters>
+          <parameters name="lowerBound">
+            <dataValue>0</dataValue>
+          </parameters>
+          <parameters name="upperBound">
+            <dataValue>1</dataValue>
+          </parameters>
+          <parameters name="containment">
+            <dataValue>true</dataValue>
+          </parameters>
+          <parameters name="opposite"/>
+        </operation>
+      </changes>
+    </changes>
+    <changes xsi:type="history:Set" element="table.ecore#/" featureName="nsURI" dataValue="http://org/eclipse/emf/ecp/view/table/model/150"
+        oldDataValue="http://org/eclipse/emf/ecp/view/table/model"/>
+  </releases>
   <releases/>
 </history:History>

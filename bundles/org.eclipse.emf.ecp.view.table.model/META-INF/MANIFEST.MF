@@ -7,7 +7,9 @@ Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Export-Package: org.eclipse.emf.ecp.view.internal.table.generator;version="1.5.0";x-friends:="org.eclipse.emf.ecp.view.table.columnservice,  org.eclipse.emf.ecp.view.table.editor",
+Export-Package: org.eclipse.emf.ecp.view.internal.table.generator;version="1.5.0";
+  x-friends:="org.eclipse.emf.ecp.view.table.columnservice,
+   org.eclipse.emf.ecp.view.table.editor",
  org.eclipse.emf.ecp.view.spi.table.model;version="1.5.0",
  org.eclipse.emf.ecp.view.spi.table.model.impl;version="1.5.0",
  org.eclipse.emf.ecp.view.spi.table.model.util;version="1.5.0"

@@ -9,16 +9,19 @@
  * Contributors:
  * jfaltermeier - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.edapt.test;
+package org.eclipse.emf.ecp.view.edapt.test._140to150;
 
-import org.eclipse.emf.ecp.view.edapt.test._140to150.All140to150Tests;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
+/**
+ * @author jfaltermeier
+ *
+ */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-	All140to150Tests.class
+	TableTest.class
 })
-public class AllTests {
+public class All140to150Tests {
 
 }

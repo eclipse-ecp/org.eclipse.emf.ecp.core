@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="table" nsURI="http://org/eclipse/emf/ecp/view/table/model" nsPrefix="org.eclipse.emf.ecp.view.table.model">
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="table" nsURI="http://org/eclipse/emf/ecp/view/table/model/150"
+    nsPrefix="org.eclipse.emf.ecp.view.table.model">
   <eClassifiers xsi:type="ecore:EClass" name="TableControl" eSuperTypes="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//Control">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="addRemoveDisabled" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" defaultValueLiteral="false"/>

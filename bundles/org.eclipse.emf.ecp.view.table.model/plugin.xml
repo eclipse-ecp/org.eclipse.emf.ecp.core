@@ -18,7 +18,7 @@
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated table -->
       <package
-            uri="http://org/eclipse/emf/ecp/view/table/model"
+            uri="http://org/eclipse/emf/ecp/view/table/model/150"
             class="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"
             genModel="model/table.genmodel"/>
    </extension>

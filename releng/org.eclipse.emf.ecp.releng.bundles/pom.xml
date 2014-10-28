@@ -157,6 +157,7 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.editor</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.columnservice</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.migrate</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.table.edapt</module>
 		
 		<!--  Stack Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.stack.model</module>
@@ -242,6 +243,7 @@
 		<!-- Migration -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.migrator</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.edapt</module>
+		
 		
 	</modules>
 

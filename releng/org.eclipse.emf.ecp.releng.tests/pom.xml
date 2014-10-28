@@ -65,6 +65,9 @@
 		<!-- Index DMR -->
 		<module>../../tests/org.eclipse.emf.ecp.view.indexdmr.model.test</module>
 		
+		<!-- Migration -->
+		<module>../../tests/org.eclipse.emf.ecp.view.edapt.test</module>
+		
 	</modules>
 	
 	<build>

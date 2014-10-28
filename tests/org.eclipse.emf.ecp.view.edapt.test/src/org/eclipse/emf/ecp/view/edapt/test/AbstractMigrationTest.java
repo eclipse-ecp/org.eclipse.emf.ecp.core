@@ -66,7 +66,6 @@ public abstract class AbstractMigrationTest {
 		assertEquals(0, dmr.getDomainModelEReferencePath().size());
 	}
 
-	@Test
 	// BEGIN SUPRESS CATCH EXCEPTION
 	protected abstract void performTest() throws Exception;// END SUPRESS CATCH EXCEPTION
 

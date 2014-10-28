@@ -73,7 +73,7 @@ public class DefaultFilter implements ECPFilterProvider {
 		packages.add("http://org/eclipse/emf/ecp/view/label/model"); //$NON-NLS-1$
 		packages.add("http://org/eclipse/emf/ecp/view/rule/model"); //$NON-NLS-1$
 		packages.add("http://org/eclipse/emf/ecp/view/separator/model"); //$NON-NLS-1$
-		packages.add("http://org/eclipse/emf/ecp/view/table/model"); //$NON-NLS-1$
+		packages.add("http://org/eclipse/emf/ecp/view/table/model/150"); //$NON-NLS-1$
 		packages.add("http://org/eclipse/emf/ecp/view/vertical/model"); //$NON-NLS-1$
 
 		packages.add("http://org/eclipse/emf/ecp/view/categorization/model"); //$NON-NLS-1$

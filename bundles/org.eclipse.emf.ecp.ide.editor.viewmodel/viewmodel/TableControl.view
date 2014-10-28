@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ASCII"?>
 <org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model" xmlns:org.eclipse.emf.ecp.view.rule.model="http://org/eclipse/emf/ecp/view/rule/model">
-  <rootEClass href="http://org/eclipse/emf/ecp/view/table/model#//TableControl"/>
+  <rootEClass href="http://org/eclipse/emf/ecp/view/table/model/150#//TableControl"/>
   <children xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control name">
     <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
       <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/emf/ecp/view/model#//Element/name"/>
@@ -23,30 +23,30 @@
   </children>
   <children xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control addRemoveDisabled">
     <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
-      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/emf/ecp/view/table/model#//TableControl/addRemoveDisabled"/>
+      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/emf/ecp/view/table/model/150#//TableControl/addRemoveDisabled"/>
     </domainModelReference>
   </children>
   <children xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control columns">
     <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
-      <domainModelEFeature xsi:type="ecore:EReference" href="http://org/eclipse/emf/ecp/view/table/model#//TableDomainModelReference/columnDomainModelReferences"/>
+      <domainModelEFeature xsi:type="ecore:EReference" href="http://org/eclipse/emf/ecp/view/table/model/150#//TableDomainModelReference/columnDomainModelReferences"/>
       <domainModelEReferencePath href="http://org/eclipse/emf/ecp/view/model#//Control/domainModelReference"/>
     </domainModelReference>
   </children>
   <children xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control detailEditing">
     <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
-      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/emf/ecp/view/table/model#//TableControl/detailEditing"/>
+      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/emf/ecp/view/table/model/150#//TableControl/detailEditing"/>
     </domainModelReference>
   </children>
   <children xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control detailView">
     <attachments xsi:type="org.eclipse.emf.ecp.view.rule.model:ShowRule" hide="true">
       <condition xsi:type="org.eclipse.emf.ecp.view.rule.model:LeafCondition" expectedValue="ACED00057400044E6F6E65">
         <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
-          <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/emf/ecp/view/table/model#//TableControl/detailEditing"/>
+          <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/emf/ecp/view/table/model/150#//TableControl/detailEditing"/>
         </domainModelReference>
       </condition>
     </attachments>
     <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
-      <domainModelEFeature xsi:type="ecore:EReference" href="http://org/eclipse/emf/ecp/view/table/model#//TableControl/detailView"/>
+      <domainModelEFeature xsi:type="ecore:EReference" href="http://org/eclipse/emf/ecp/view/table/model/150#//TableControl/detailView"/>
     </domainModelReference>
   </children>
 </org.eclipse.emf.ecp.view.model:View>

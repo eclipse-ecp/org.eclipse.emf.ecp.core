@@ -52,7 +52,7 @@ public interface VTablePackage extends EPackage
 	 * 
 	 * @generated
 	 */
-	String eNS_URI = "http://org/eclipse/emf/ecp/view/table/model"; //$NON-NLS-1$
+	String eNS_URI = "http://org/eclipse/emf/ecp/view/table/model/150"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace name.
