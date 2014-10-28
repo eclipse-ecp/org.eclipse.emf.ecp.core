@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:history="http://www.eclipse.org/emf/edapt/history/0.3">
+  <releases date="2014-09-12T13:17:42.569+0200" label="140">
+    <changes xsi:type="history:CompositeChange">
+      <changes xsi:type="history:Create" element="stack.ecore#/">
+        <changes xsi:type="history:Set" element="stack.ecore#/" featureName="name"
+            dataValue="stack"/>
+        <changes xsi:type="history:Set" element="stack.ecore#/" featureName="nsURI"
+            dataValue="http://org/eclipse/emf/ecp/view/stack/model"/>
+        <changes xsi:type="history:Set" element="stack.ecore#/" featureName="nsPrefix"
+            dataValue="org.eclipse.emf.ecp.view.stack.model"/>
+      </changes>
+      <changes xsi:type="history:Create" target="stack.ecore#/" referenceName="eClassifiers"
+          element="stack.ecore#//StackLayout">
+        <changes xsi:type="history:Set" element="stack.ecore#//StackLayout" featureName="name"
+            dataValue="StackLayout"/>
+        <changes xsi:type="history:Add" element="stack.ecore#//StackLayout" featureName="eSuperTypes"
+            referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//ContainedElement"/>
+      </changes>
+      <changes xsi:type="history:Create" target="stack.ecore#//StackLayout" referenceName="eStructuralFeatures"
+          element="stack.ecore#//StackLayout/domainModelReference">
+        <changes xsi:type="history:Set" element="stack.ecore#//StackLayout/domainModelReference"
+            featureName="name" dataValue="domainModelReference"/>
+        <changes xsi:type="history:Set" element="stack.ecore#//StackLayout/domainModelReference"
+            featureName="containment" dataValue="true" oldDataValue="false"/>
+        <changes xsi:type="history:Set" element="stack.ecore#//StackLayout/domainModelReference"
+            featureName="eType" referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"/>
+      </changes>
+      <changes xsi:type="history:Create" target="stack.ecore#/" referenceName="eClassifiers"
+          element="stack.ecore#//StackItem">
+        <changes xsi:type="history:Set" element="stack.ecore#//StackItem" featureName="name"
+            dataValue="StackItem"/>
+        <changes xsi:type="history:Add" element="stack.ecore#//StackItem" featureName="eSuperTypes"
+            referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//Container"/>
+      </changes>
+      <changes xsi:type="history:Create" target="stack.ecore#//StackLayout" referenceName="eStructuralFeatures"
+          element="stack.ecore#//StackLayout/stackItems">
+        <changes xsi:type="history:Set" element="stack.ecore#//StackLayout/stackItems"
+            featureName="name" dataValue="stackItems"/>
+        <changes xsi:type="history:Set" element="stack.ecore#//StackLayout/stackItems"
+            featureName="upperBound" dataValue="-1" oldDataValue="1"/>
+        <changes xsi:type="history:Set" element="stack.ecore#//StackLayout/stackItems"
+            featureName="containment" dataValue="true" oldDataValue="false"/>
+        <changes xsi:type="history:Set" element="stack.ecore#//StackLayout/stackItems"
+            featureName="eType" referenceValue="stack.ecore#//StackItem"/>
+      </changes>
+      <changes xsi:type="history:Create" target="stack.ecore#//StackLayout" referenceName="eStructuralFeatures"
+          element="stack.ecore#//StackLayout/topElement">
+        <changes xsi:type="history:Set" element="stack.ecore#//StackLayout/topElement"
+            featureName="name" dataValue="topElement"/>
+        <changes xsi:type="history:Set" element="stack.ecore#//StackLayout/topElement"
+            featureName="transient" dataValue="true" oldDataValue="false"/>
+        <changes xsi:type="history:Set" element="stack.ecore#//StackLayout/topElement"
+            featureName="eType" referenceValue="stack.ecore#//StackItem"/>
+      </changes>
+      <changes xsi:type="history:Create" target="stack.ecore#//StackItem" referenceName="eStructuralFeatures"
+          element="stack.ecore#//StackItem/value">
+        <changes xsi:type="history:Set" element="stack.ecore#//StackItem/value" featureName="name"
+            dataValue="value"/>
+        <changes xsi:type="history:Set" element="stack.ecore#//StackItem/value" featureName="eType"
+            referenceValue="../../org.eclipse.emf.ecore/model/Ecore.ecore#//EJavaObject"/>
+      </changes>
+    </changes>
+  </releases>
+  <releases/>
+</history:History>

@@ -28,5 +28,11 @@
             class="org.eclipse.emf.ecp.view.internal.viewproxy.resolver.ProxyResolverViewService">
       </viewService>
    </extension>
+   <extension
+         point="org.eclipse.emf.edapt.migrators">
+      <migrator
+            path="model/viewproxy.history">
+      </migrator>
+   </extension>
 
 </plugin>

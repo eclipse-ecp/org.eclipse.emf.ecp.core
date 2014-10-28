@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:history="http://www.eclipse.org/emf/edapt/history/0.3">
+  <releases date="2014-08-28T11:25:46.424+0200" label="140">
+    <changes xsi:type="history:CompositeChange">
+      <changes xsi:type="history:Create" element="categorization.ecore#/">
+        <changes xsi:type="history:Set" element="categorization.ecore#/" featureName="name"
+            dataValue="categorization"/>
+        <changes xsi:type="history:Set" element="categorization.ecore#/" featureName="nsURI"
+            dataValue="http://org/eclipse/emf/ecp/view/categorization/model"/>
+        <changes xsi:type="history:Set" element="categorization.ecore#/" featureName="nsPrefix"
+            dataValue="org.eclipse.emf.ecp.view.categorization.model"/>
+      </changes>
+      <changes xsi:type="history:Create" target="categorization.ecore#/" referenceName="eClassifiers"
+          element="categorization.ecore#//Action">
+        <changes xsi:type="history:Set" element="categorization.ecore#//Action" featureName="name"
+            dataValue="Action"/>
+      </changes>
+      <changes xsi:type="history:Create" target="categorization.ecore#//Action" referenceName="eStructuralFeatures"
+          element="categorization.ecore#//Action/bundle">
+        <changes xsi:type="history:Set" element="categorization.ecore#//Action/bundle"
+            featureName="name" dataValue="bundle"/>
+        <changes xsi:type="history:Set" element="categorization.ecore#//Action/bundle"
+            featureName="lowerBound" dataValue="1" oldDataValue="0"/>
+        <changes xsi:type="history:Set" element="categorization.ecore#//Action/bundle"
+            featureName="eType" referenceValue="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </changes>
+      <changes xsi:type="history:Create" target="categorization.ecore#//Action" referenceName="eStructuralFeatures"
+          element="categorization.ecore#//Action/className">
+        <changes xsi:type="history:Set" element="categorization.ecore#//Action/className"
+            featureName="name" dataValue="className"/>
+        <changes xsi:type="history:Set" element="categorization.ecore#//Action/className"
+            featureName="lowerBound" dataValue="1" oldDataValue="0"/>
+        <changes xsi:type="history:Set" element="categorization.ecore#//Action/className"
+            featureName="eType" referenceValue="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </changes>
+      <changes xsi:type="history:Create" target="categorization.ecore#/" referenceName="eClassifiers"
+          element="categorization.ecore#//CategorizationElement">
+        <changes xsi:type="history:Set" element="categorization.ecore#//CategorizationElement"
+            featureName="name" dataValue="CategorizationElement"/>
+        <changes xsi:type="history:Add" element="categorization.ecore#//CategorizationElement"
+            featureName="eSuperTypes" referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//ContainedElement"/>
+      </changes>
+      <changes xsi:type="history:Create" target="categorization.ecore#//CategorizationElement"
+          referenceName="eStructuralFeatures" element="categorization.ecore#//CategorizationElement/mainCategoryDepth">
+        <changes xsi:type="history:Set" element="categorization.ecore#//CategorizationElement/mainCategoryDepth"
+            featureName="name" dataValue="mainCategoryDepth"/>
+        <changes xsi:type="history:Set" element="categorization.ecore#//CategorizationElement/mainCategoryDepth"
+            featureName="defaultValueLiteral" dataValue="0"/>
+        <changes xsi:type="history:Set" element="categorization.ecore#//CategorizationElement/mainCategoryDepth"
+            featureName="eType" referenceValue="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </changes>
+      <changes xsi:type="history:Create" target="categorization.ecore#/" referenceName="eClassifiers"
+          element="categorization.ecore#//CategorizableElement">
+        <changes xsi:type="history:Set" element="categorization.ecore#//CategorizableElement"
+            featureName="name" dataValue="CategorizableElement"/>
+        <changes xsi:type="history:Set" element="categorization.ecore#//CategorizableElement"
+            featureName="abstract" dataValue="true" oldDataValue="false"/>
+        <changes xsi:type="history:Add" element="categorization.ecore#//CategorizableElement"
+            featureName="eSuperTypes" referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//Element"/>
+      </changes>
+      <changes xsi:type="history:Create" target="categorization.ecore#/" referenceName="eClassifiers"
+          element="categorization.ecore#//AbstractCategorization">
+        <changes xsi:type="history:Set" element="categorization.ecore#//AbstractCategorization"
+            featureName="name" dataValue="AbstractCategorization"/>
+        <changes xsi:type="history:Set" element="categorization.ecore#//AbstractCategorization"
+            featureName="abstract" dataValue="true" oldDataValue="false"/>
+        <changes xsi:type="history:Add" element="categorization.ecore#//AbstractCategorization"
+            featureName="eSuperTypes" referenceValue="categorization.ecore#//CategorizableElement"/>
+      </changes>
+      <changes xsi:type="history:Create" target="categorization.ecore#//AbstractCategorization"
+          referenceName="eStructuralFeatures" element="categorization.ecore#//AbstractCategorization/actions">
+        <changes xsi:type="history:Set" element="categorization.ecore#//AbstractCategorization/actions"
+            featureName="name" dataValue="actions"/>
+        <changes xsi:type="history:Set" element="categorization.ecore#//AbstractCategorization/actions"
+            featureName="upperBound" dataValue="-1" oldDataValue="1"/>
+        <changes xsi:type="history:Set" element="categorization.ecore#//AbstractCategorization/actions"
+            featureName="containment" dataValue="true" oldDataValue="false"/>
+        <changes xsi:type="history:Set" element="categorization.ecore#//AbstractCategorization/actions"
+            featureName="eType" referenceValue="categorization.ecore#//Action"/>
+      </changes>
+      <changes xsi:type="history:Create" target="categorization.ecore#/" referenceName="eClassifiers"
+          element="categorization.ecore#//Categorization">
+        <changes xsi:type="history:Set" element="categorization.ecore#//Categorization"
+            featureName="name" dataValue="Categorization"/>
+        <changes xsi:type="history:Add" element="categorization.ecore#//Categorization"
+            featureName="eSuperTypes" referenceValue="categorization.ecore#//AbstractCategorization"/>
+      </changes>
+      <changes xsi:type="history:Create" target="categorization.ecore#//Categorization"
+          referenceName="eStructuralFeatures" element="categorization.ecore#//Categorization/categorizations">
+        <changes xsi:type="history:Set" element="categorization.ecore#//Categorization/categorizations"
+            featureName="name" dataValue="categorizations"/>
+        <changes xsi:type="history:Set" element="categorization.ecore#//Categorization/categorizations"
+            featureName="upperBound" dataValue="-1" oldDataValue="1"/>
+        <changes xsi:type="history:Set" element="categorization.ecore#//Categorization/categorizations"
+            featureName="containment" dataValue="true" oldDataValue="false"/>
+        <changes xsi:type="history:Set" element="categorization.ecore#//Categorization/categorizations"
+            featureName="eType" referenceValue="categorization.ecore#//AbstractCategorization"/>
+      </changes>
+      <changes xsi:type="history:Create" target="categorization.ecore#/" referenceName="eClassifiers"
+          element="categorization.ecore#//Category">
+        <changes xsi:type="history:Set" element="categorization.ecore#//Category"
+            featureName="name" dataValue="Category"/>
+        <changes xsi:type="history:Add" element="categorization.ecore#//Category"
+            featureName="eSuperTypes" referenceValue="categorization.ecore#//AbstractCategorization"/>
+      </changes>
+      <changes xsi:type="history:Create" target="categorization.ecore#//Category"
+          referenceName="eStructuralFeatures" element="categorization.ecore#//Category/composite">
+        <changes xsi:type="history:Set" element="categorization.ecore#//Category/composite"
+            featureName="name" dataValue="composite"/>
+        <changes xsi:type="history:Set" element="categorization.ecore#//Category/composite"
+            featureName="containment" dataValue="true" oldDataValue="false"/>
+        <changes xsi:type="history:Set" element="categorization.ecore#//Category/composite"
+            featureName="eType" referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//ContainedElement"/>
+      </changes>
+      <changes xsi:type="history:Create" target="categorization.ecore#//CategorizationElement"
+          referenceName="eStructuralFeatures" element="categorization.ecore#//CategorizationElement/categorizations">
+        <changes xsi:type="history:Set" element="categorization.ecore#//CategorizationElement/categorizations"
+            featureName="name" dataValue="categorizations"/>
+        <changes xsi:type="history:Set" element="categorization.ecore#//CategorizationElement/categorizations"
+            featureName="upperBound" dataValue="-1" oldDataValue="1"/>
+        <changes xsi:type="history:Set" element="categorization.ecore#//CategorizationElement/categorizations"
+            featureName="containment" dataValue="true" oldDataValue="false"/>
+        <changes xsi:type="history:Set" element="categorization.ecore#//CategorizationElement/categorizations"
+            featureName="eType" referenceValue="categorization.ecore#//AbstractCategorization"/>
+      </changes>
+      <changes xsi:type="history:Create" target="categorization.ecore#//CategorizationElement"
+          referenceName="eStructuralFeatures" element="categorization.ecore#//CategorizationElement/currentSelection">
+        <changes xsi:type="history:Set" element="categorization.ecore#//CategorizationElement/currentSelection"
+            featureName="name" dataValue="currentSelection"/>
+        <changes xsi:type="history:Set" element="categorization.ecore#//CategorizationElement/currentSelection"
+            featureName="transient" dataValue="true" oldDataValue="false"/>
+        <changes xsi:type="history:Set" element="categorization.ecore#//CategorizationElement/currentSelection"
+            featureName="eType" referenceValue="categorization.ecore#//CategorizableElement"/>
+      </changes>
+      <changes xsi:type="history:Create" target="categorization.ecore#//CategorizableElement"
+          referenceName="eStructuralFeatures" element="categorization.ecore#//CategorizableElement/labelObject">
+        <changes xsi:type="history:Set" element="categorization.ecore#//CategorizableElement/labelObject"
+            featureName="name" dataValue="labelObject"/>
+        <changes xsi:type="history:Set" element="categorization.ecore#//CategorizableElement/labelObject"
+            featureName="changeable" dataValue="false" oldDataValue="true"/>
+        <changes xsi:type="history:Set" element="categorization.ecore#//CategorizableElement/labelObject"
+            featureName="volatile" dataValue="true" oldDataValue="false"/>
+        <changes xsi:type="history:Set" element="categorization.ecore#//CategorizableElement/labelObject"
+            featureName="transient" dataValue="true" oldDataValue="false"/>
+        <changes xsi:type="history:Set" element="categorization.ecore#//CategorizableElement/labelObject"
+            featureName="derived" dataValue="true" oldDataValue="false"/>
+        <changes xsi:type="history:Set" element="categorization.ecore#//CategorizableElement/labelObject"
+            featureName="resolveProxies" dataValue="false" oldDataValue="true"/>
+        <changes xsi:type="history:Set" element="categorization.ecore#//CategorizableElement/labelObject"
+            featureName="eType" referenceValue="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject"/>
+      </changes>
+    </changes>
+  </releases>
+  <releases/>
+</history:History>

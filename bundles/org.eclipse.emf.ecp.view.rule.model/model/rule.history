@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:history="http://www.eclipse.org/emf/edapt/history/0.3">
+  <releases date="2014-08-28T11:34:24.390+0200" label="140">
+    <changes xsi:type="history:CompositeChange">
+      <changes xsi:type="history:Create" element="rule.ecore#/">
+        <changes xsi:type="history:Set" element="rule.ecore#/" featureName="name"
+            dataValue="rule"/>
+        <changes xsi:type="history:Set" element="rule.ecore#/" featureName="nsURI"
+            dataValue="http://org/eclipse/emf/ecp/view/rule/model"/>
+        <changes xsi:type="history:Set" element="rule.ecore#/" featureName="nsPrefix"
+            dataValue="org.eclipse.emf.ecp.view.rule.model"/>
+      </changes>
+      <changes xsi:type="history:Create" target="rule.ecore#/" referenceName="eClassifiers"
+          element="rule.ecore#//Condition">
+        <changes xsi:type="history:Set" element="rule.ecore#//Condition" featureName="name"
+            dataValue="Condition"/>
+        <changes xsi:type="history:Set" element="rule.ecore#//Condition" featureName="abstract"
+            dataValue="true" oldDataValue="false"/>
+      </changes>
+      <changes xsi:type="history:Create" target="rule.ecore#/" referenceName="eClassifiers"
+          element="rule.ecore#//LeafCondition">
+        <changes xsi:type="history:Set" element="rule.ecore#//LeafCondition" featureName="name"
+            dataValue="LeafCondition"/>
+        <changes xsi:type="history:Add" element="rule.ecore#//LeafCondition" featureName="eSuperTypes"
+            referenceValue="rule.ecore#//Condition"/>
+      </changes>
+      <changes xsi:type="history:Create" target="rule.ecore#//LeafCondition" referenceName="eStructuralFeatures"
+          element="rule.ecore#//LeafCondition/expectedValue">
+        <changes xsi:type="history:Set" element="rule.ecore#//LeafCondition/expectedValue"
+            featureName="name" dataValue="expectedValue"/>
+        <changes xsi:type="history:Set" element="rule.ecore#//LeafCondition/expectedValue"
+            featureName="lowerBound" dataValue="1" oldDataValue="0"/>
+        <changes xsi:type="history:Set" element="rule.ecore#//LeafCondition/expectedValue"
+            featureName="eType" referenceValue="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EJavaObject"/>
+      </changes>
+      <changes xsi:type="history:Create" target="rule.ecore#//LeafCondition" referenceName="eStructuralFeatures"
+          element="rule.ecore#//LeafCondition/domainModelReference">
+        <changes xsi:type="history:Set" element="rule.ecore#//LeafCondition/domainModelReference"
+            featureName="name" dataValue="domainModelReference"/>
+        <changes xsi:type="history:Set" element="rule.ecore#//LeafCondition/domainModelReference"
+            featureName="lowerBound" dataValue="1" oldDataValue="0"/>
+        <changes xsi:type="history:Set" element="rule.ecore#//LeafCondition/domainModelReference"
+            featureName="containment" dataValue="true" oldDataValue="false"/>
+        <changes xsi:type="history:Set" element="rule.ecore#//LeafCondition/domainModelReference"
+            featureName="eType" referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"/>
+      </changes>
+      <changes xsi:type="history:Create" target="rule.ecore#/" referenceName="eClassifiers"
+          element="rule.ecore#//OrCondition">
+        <changes xsi:type="history:Set" element="rule.ecore#//OrCondition" featureName="name"
+            dataValue="OrCondition"/>
+        <changes xsi:type="history:Add" element="rule.ecore#//OrCondition" featureName="eSuperTypes"
+            referenceValue="rule.ecore#//Condition"/>
+      </changes>
+      <changes xsi:type="history:Create" target="rule.ecore#//OrCondition" referenceName="eStructuralFeatures"
+          element="rule.ecore#//OrCondition/conditions">
+        <changes xsi:type="history:Set" element="rule.ecore#//OrCondition/conditions"
+            featureName="name" dataValue="conditions"/>
+        <changes xsi:type="history:Set" element="rule.ecore#//OrCondition/conditions"
+            featureName="lowerBound" dataValue="2" oldDataValue="0"/>
+        <changes xsi:type="history:Set" element="rule.ecore#//OrCondition/conditions"
+            featureName="upperBound" dataValue="-1" oldDataValue="1"/>
+        <changes xsi:type="history:Set" element="rule.ecore#//OrCondition/conditions"
+            featureName="containment" dataValue="true" oldDataValue="false"/>
+        <changes xsi:type="history:Set" element="rule.ecore#//OrCondition/conditions"
+            featureName="eType" referenceValue="rule.ecore#//Condition"/>
+      </changes>
+      <changes xsi:type="history:Create" target="rule.ecore#/" referenceName="eClassifiers"
+          element="rule.ecore#//AndCondition">
+        <changes xsi:type="history:Set" element="rule.ecore#//AndCondition" featureName="name"
+            dataValue="AndCondition"/>
+        <changes xsi:type="history:Add" element="rule.ecore#//AndCondition" featureName="eSuperTypes"
+            referenceValue="rule.ecore#//Condition"/>
+      </changes>
+      <changes xsi:type="history:Create" target="rule.ecore#//AndCondition" referenceName="eStructuralFeatures"
+          element="rule.ecore#//AndCondition/conditions">
+        <changes xsi:type="history:Set" element="rule.ecore#//AndCondition/conditions"
+            featureName="name" dataValue="conditions"/>
+        <changes xsi:type="history:Set" element="rule.ecore#//AndCondition/conditions"
+            featureName="lowerBound" dataValue="2" oldDataValue="0"/>
+        <changes xsi:type="history:Set" element="rule.ecore#//AndCondition/conditions"
+            featureName="upperBound" dataValue="-1" oldDataValue="1"/>
+        <changes xsi:type="history:Set" element="rule.ecore#//AndCondition/conditions"
+            featureName="containment" dataValue="true" oldDataValue="false"/>
+        <changes xsi:type="history:Set" element="rule.ecore#//AndCondition/conditions"
+            featureName="eType" referenceValue="rule.ecore#//Condition"/>
+      </changes>
+      <changes xsi:type="history:Create" target="rule.ecore#/" referenceName="eClassifiers"
+          element="rule.ecore#//Rule">
+        <changes xsi:type="history:Set" element="rule.ecore#//Rule" featureName="name"
+            dataValue="Rule"/>
+        <changes xsi:type="history:Set" element="rule.ecore#//Rule" featureName="abstract"
+            dataValue="true" oldDataValue="false"/>
+        <changes xsi:type="history:Add" element="rule.ecore#//Rule" featureName="eSuperTypes"
+            referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//Attachment"/>
+      </changes>
+      <changes xsi:type="history:Create" target="rule.ecore#//Rule" referenceName="eStructuralFeatures"
+          element="rule.ecore#//Rule/condition">
+        <changes xsi:type="history:Set" element="rule.ecore#//Rule/condition" featureName="name"
+            dataValue="condition"/>
+        <changes xsi:type="history:Set" element="rule.ecore#//Rule/condition" featureName="lowerBound"
+            dataValue="1" oldDataValue="0"/>
+        <changes xsi:type="history:Set" element="rule.ecore#//Rule/condition" featureName="containment"
+            dataValue="true" oldDataValue="false"/>
+        <changes xsi:type="history:Set" element="rule.ecore#//Rule/condition" featureName="eType"
+            referenceValue="rule.ecore#//Condition"/>
+      </changes>
+      <changes xsi:type="history:Create" target="rule.ecore#/" referenceName="eClassifiers"
+          element="rule.ecore#//ShowRule">
+        <changes xsi:type="history:Set" element="rule.ecore#//ShowRule" featureName="name"
+            dataValue="ShowRule"/>
+        <changes xsi:type="history:Add" element="rule.ecore#//ShowRule" featureName="eSuperTypes"
+            referenceValue="rule.ecore#//Rule"/>
+      </changes>
+      <changes xsi:type="history:Create" target="rule.ecore#//ShowRule" referenceName="eStructuralFeatures"
+          element="rule.ecore#//ShowRule/hide">
+        <changes xsi:type="history:Set" element="rule.ecore#//ShowRule/hide" featureName="name"
+            dataValue="hide"/>
+        <changes xsi:type="history:Set" element="rule.ecore#//ShowRule/hide" featureName="eType"
+            referenceValue="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
+      </changes>
+      <changes xsi:type="history:Create" target="rule.ecore#/" referenceName="eClassifiers"
+          element="rule.ecore#//EnableRule">
+        <changes xsi:type="history:Set" element="rule.ecore#//EnableRule" featureName="name"
+            dataValue="EnableRule"/>
+        <changes xsi:type="history:Add" element="rule.ecore#//EnableRule" featureName="eSuperTypes"
+            referenceValue="rule.ecore#//Rule"/>
+      </changes>
+      <changes xsi:type="history:Create" target="rule.ecore#//EnableRule" referenceName="eStructuralFeatures"
+          element="rule.ecore#//EnableRule/disable">
+        <changes xsi:type="history:Set" element="rule.ecore#//EnableRule/disable"
+            featureName="name" dataValue="disable"/>
+        <changes xsi:type="history:Set" element="rule.ecore#//EnableRule/disable"
+            featureName="eType" referenceValue="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
+      </changes>
+    </changes>
+  </releases>
+  <releases/>
+</history:History>

@@ -24,5 +24,11 @@
             class="org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalPackage"
             genModel="model/horizontal.genmodel"/>
    </extension>
+   <extension
+         point="org.eclipse.emf.edapt.migrators">
+      <migrator
+            path="model/horizontal.history">
+      </migrator>
+   </extension>
 
 </plugin>

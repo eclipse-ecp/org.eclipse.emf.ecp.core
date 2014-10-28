@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:history="http://www.eclipse.org/emf/edapt/history/0.3">
+  <releases date="2014-10-16T12:25:38.516+0200" label="140">
+    <changes xsi:type="history:CompositeChange">
+      <changes xsi:type="history:Create" element="diffmerge.ecore#/">
+        <changes xsi:type="history:Set" element="diffmerge.ecore#/" featureName="name"
+            dataValue="diffmerge"/>
+        <changes xsi:type="history:Set" element="diffmerge.ecore#/" featureName="nsURI"
+            dataValue="http://org/eclipse/emf/ecp/view/diffmerge/model"/>
+        <changes xsi:type="history:Set" element="diffmerge.ecore#/" featureName="nsPrefix"
+            dataValue="org.eclipse.emf.ecp.view.diffmerge.model"/>
+      </changes>
+      <changes xsi:type="history:Create" target="diffmerge.ecore#/" referenceName="eClassifiers"
+          element="diffmerge.ecore#//DiffAttachment">
+        <changes xsi:type="history:Set" element="diffmerge.ecore#//DiffAttachment"
+            featureName="name" dataValue="DiffAttachment"/>
+        <changes xsi:type="history:Add" element="diffmerge.ecore#//DiffAttachment"
+            featureName="eSuperTypes" referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//Attachment"/>
+      </changes>
+      <changes xsi:type="history:Create" target="diffmerge.ecore#//DiffAttachment"
+          referenceName="eStructuralFeatures" element="diffmerge.ecore#//DiffAttachment/totalNumberOfDiffs">
+        <changes xsi:type="history:Set" element="diffmerge.ecore#//DiffAttachment/totalNumberOfDiffs"
+            featureName="name" dataValue="totalNumberOfDiffs"/>
+        <changes xsi:type="history:Set" element="diffmerge.ecore#//DiffAttachment/totalNumberOfDiffs"
+            featureName="lowerBound" dataValue="1" oldDataValue="0"/>
+        <changes xsi:type="history:Set" element="diffmerge.ecore#//DiffAttachment/totalNumberOfDiffs"
+            featureName="defaultValueLiteral" dataValue="0"/>
+        <changes xsi:type="history:Set" element="diffmerge.ecore#//DiffAttachment/totalNumberOfDiffs"
+            featureName="eType" referenceValue="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </changes>
+      <changes xsi:type="history:Create" target="diffmerge.ecore#//DiffAttachment"
+          referenceName="eStructuralFeatures" element="diffmerge.ecore#//DiffAttachment/mergedDiffs">
+        <changes xsi:type="history:Set" element="diffmerge.ecore#//DiffAttachment/mergedDiffs"
+            featureName="name" dataValue="mergedDiffs"/>
+        <changes xsi:type="history:Set" element="diffmerge.ecore#//DiffAttachment/mergedDiffs"
+            featureName="defaultValueLiteral" dataValue="0"/>
+        <changes xsi:type="history:Set" element="diffmerge.ecore#//DiffAttachment/mergedDiffs"
+            featureName="eType" referenceValue="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </changes>
+    </changes>
+  </releases>
+  <releases/>
+</history:History>

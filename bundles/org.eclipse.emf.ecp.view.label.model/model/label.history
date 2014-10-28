@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:history="http://www.eclipse.org/emf/edapt/history/0.3">
+  <releases date="2014-10-16T15:52:55.506+0200" label="140">
+    <changes xsi:type="history:CompositeChange">
+      <changes xsi:type="history:Create" element="label.ecore#/">
+        <changes xsi:type="history:Set" element="label.ecore#/" featureName="name"
+            dataValue="label"/>
+        <changes xsi:type="history:Set" element="label.ecore#/" featureName="nsURI"
+            dataValue="http://org/eclipse/emf/ecp/view/label/model"/>
+        <changes xsi:type="history:Set" element="label.ecore#/" featureName="nsPrefix"
+            dataValue="org.eclipse.emf.ecp.view.label.model"/>
+      </changes>
+      <changes xsi:type="history:Create" target="label.ecore#/" referenceName="eClassifiers"
+          element="label.ecore#//Label">
+        <changes xsi:type="history:Set" element="label.ecore#//Label" featureName="name"
+            dataValue="Label"/>
+        <changes xsi:type="history:Add" element="label.ecore#//Label" featureName="eSuperTypes"
+            referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//ContainedElement"/>
+      </changes>
+      <changes xsi:type="history:Create" target="label.ecore#//Label" referenceName="eStructuralFeatures"
+          element="label.ecore#//Label/domainModelReference">
+        <changes xsi:type="history:Set" element="label.ecore#//Label/domainModelReference"
+            featureName="name" dataValue="domainModelReference"/>
+        <changes xsi:type="history:Set" element="label.ecore#//Label/domainModelReference"
+            featureName="containment" dataValue="true" oldDataValue="false"/>
+        <changes xsi:type="history:Set" element="label.ecore#//Label/domainModelReference"
+            featureName="eType" referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"/>
+      </changes>
+      <changes xsi:type="history:Create" target="label.ecore#/" referenceName="eClassifiers"
+          element="label.ecore#//VLabelStyle">
+        <changes xsi:type="history:Set" element="label.ecore#//VLabelStyle" featureName="name"
+            dataValue="VLabelStyle"/>
+      </changes>
+      <changes xsi:type="history:Create" target="label.ecore#//Label" referenceName="eStructuralFeatures"
+          element="label.ecore#//Label/style">
+        <changes xsi:type="history:Set" element="label.ecore#//Label/style" featureName="name"
+            dataValue="style"/>
+        <changes xsi:type="history:Set" element="label.ecore#//Label/style" featureName="eType"
+            referenceValue="label.ecore#//VLabelStyle"/>
+      </changes>
+      <changes xsi:type="history:Create" target="label.ecore#//VLabelStyle" referenceName="eLiterals"
+          element="label.ecore#//VLabelStyle/H0">
+        <changes xsi:type="history:Set" element="label.ecore#//VLabelStyle/H0" featureName="name"
+            dataValue="H0"/>
+        <changes xsi:type="history:Set" element="label.ecore#//VLabelStyle/H0" featureName="literal"
+            dataValue="H0"/>
+      </changes>
+      <changes xsi:type="history:Create" target="label.ecore#//VLabelStyle" referenceName="eLiterals"
+          element="label.ecore#//VLabelStyle/H1">
+        <changes xsi:type="history:Set" element="label.ecore#//VLabelStyle/H1" featureName="name"
+            dataValue="H1"/>
+        <changes xsi:type="history:Set" element="label.ecore#//VLabelStyle/H1" featureName="value"
+            dataValue="1" oldDataValue="0"/>
+        <changes xsi:type="history:Set" element="label.ecore#//VLabelStyle/H1" featureName="literal"
+            dataValue="H1"/>
+      </changes>
+      <changes xsi:type="history:Create" target="label.ecore#//VLabelStyle" referenceName="eLiterals"
+          element="label.ecore#//VLabelStyle/H2">
+        <changes xsi:type="history:Set" element="label.ecore#//VLabelStyle/H2" featureName="name"
+            dataValue="H2"/>
+        <changes xsi:type="history:Set" element="label.ecore#//VLabelStyle/H2" featureName="value"
+            dataValue="2" oldDataValue="0"/>
+        <changes xsi:type="history:Set" element="label.ecore#//VLabelStyle/H2" featureName="literal"
+            dataValue="H2"/>
+      </changes>
+      <changes xsi:type="history:Create" target="label.ecore#//VLabelStyle" referenceName="eLiterals"
+          element="label.ecore#//VLabelStyle/H3">
+        <changes xsi:type="history:Set" element="label.ecore#//VLabelStyle/H3" featureName="name"
+            dataValue="H3"/>
+        <changes xsi:type="history:Set" element="label.ecore#//VLabelStyle/H3" featureName="value"
+            dataValue="3" oldDataValue="0"/>
+        <changes xsi:type="history:Set" element="label.ecore#//VLabelStyle/H3" featureName="literal"
+            dataValue="H3"/>
+      </changes>
+      <changes xsi:type="history:Create" target="label.ecore#//VLabelStyle" referenceName="eLiterals"
+          element="label.ecore#//VLabelStyle/H4">
+        <changes xsi:type="history:Set" element="label.ecore#//VLabelStyle/H4" featureName="name"
+            dataValue="H4"/>
+        <changes xsi:type="history:Set" element="label.ecore#//VLabelStyle/H4" featureName="value"
+            dataValue="4" oldDataValue="0"/>
+        <changes xsi:type="history:Set" element="label.ecore#//VLabelStyle/H4" featureName="literal"
+            dataValue="H4"/>
+      </changes>
+      <changes xsi:type="history:Create" target="label.ecore#//VLabelStyle" referenceName="eLiterals"
+          element="label.ecore#//VLabelStyle/H5">
+        <changes xsi:type="history:Set" element="label.ecore#//VLabelStyle/H5" featureName="name"
+            dataValue="H5"/>
+        <changes xsi:type="history:Set" element="label.ecore#//VLabelStyle/H5" featureName="value"
+            dataValue="5" oldDataValue="0"/>
+        <changes xsi:type="history:Set" element="label.ecore#//VLabelStyle/H5" featureName="literal"
+            dataValue="H5"/>
+      </changes>
+      <changes xsi:type="history:Create" target="label.ecore#//VLabelStyle" referenceName="eLiterals"
+          element="label.ecore#//VLabelStyle/H6">
+        <changes xsi:type="history:Set" element="label.ecore#//VLabelStyle/H6" featureName="name"
+            dataValue="H6"/>
+        <changes xsi:type="history:Set" element="label.ecore#//VLabelStyle/H6" featureName="value"
+            dataValue="6" oldDataValue="0"/>
+        <changes xsi:type="history:Set" element="label.ecore#//VLabelStyle/H6" featureName="literal"
+            dataValue="H6"/>
+      </changes>
+      <changes xsi:type="history:Create" target="label.ecore#//VLabelStyle" referenceName="eLiterals"
+          element="label.ecore#//VLabelStyle/H7">
+        <changes xsi:type="history:Set" element="label.ecore#//VLabelStyle/H7" featureName="name"
+            dataValue="H7"/>
+        <changes xsi:type="history:Set" element="label.ecore#//VLabelStyle/H7" featureName="value"
+            dataValue="7" oldDataValue="0"/>
+        <changes xsi:type="history:Set" element="label.ecore#//VLabelStyle/H7" featureName="literal"
+            dataValue="H7"/>
+      </changes>
+      <changes xsi:type="history:Create" target="label.ecore#//VLabelStyle" referenceName="eLiterals"
+          element="label.ecore#//VLabelStyle/H8">
+        <changes xsi:type="history:Set" element="label.ecore#//VLabelStyle/H8" featureName="name"
+            dataValue="H8"/>
+        <changes xsi:type="history:Set" element="label.ecore#//VLabelStyle/H8" featureName="value"
+            dataValue="8" oldDataValue="0"/>
+        <changes xsi:type="history:Set" element="label.ecore#//VLabelStyle/H8" featureName="literal"
+            dataValue="H8"/>
+      </changes>
+      <changes xsi:type="history:Create" target="label.ecore#//VLabelStyle" referenceName="eLiterals"
+          element="label.ecore#//VLabelStyle/H9">
+        <changes xsi:type="history:Set" element="label.ecore#//VLabelStyle/H9" featureName="name"
+            dataValue="H9"/>
+        <changes xsi:type="history:Set" element="label.ecore#//VLabelStyle/H9" featureName="value"
+            dataValue="9" oldDataValue="0"/>
+        <changes xsi:type="history:Set" element="label.ecore#//VLabelStyle/H9" featureName="literal"
+            dataValue="H9"/>
+      </changes>
+      <changes xsi:type="history:Create" target="label.ecore#//VLabelStyle" referenceName="eLiterals"
+          element="label.ecore#//VLabelStyle/Separator">
+        <changes xsi:type="history:Set" element="label.ecore#//VLabelStyle/Separator"
+            featureName="name" dataValue="Separator"/>
+        <changes xsi:type="history:Set" element="label.ecore#//VLabelStyle/Separator"
+            featureName="value" dataValue="10" oldDataValue="0"/>
+        <changes xsi:type="history:Set" element="label.ecore#//VLabelStyle/Separator"
+            featureName="literal" dataValue="Separator"/>
+      </changes>
+    </changes>
+  </releases>
+  <releases/>
+</history:History>

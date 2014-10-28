@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:history="http://www.eclipse.org/emf/edapt/history/0.3">
+  <releases date="2014-10-16T12:07:00.580+0200" label="150">
+    <changes xsi:type="history:CompositeChange">
+      <changes xsi:type="history:Create" element="indexdmr.ecore#/">
+        <changes xsi:type="history:Set" element="indexdmr.ecore#/" featureName="name"
+            dataValue="indexdmr"/>
+        <changes xsi:type="history:Set" element="indexdmr.ecore#/" featureName="nsURI"
+            dataValue="http://www.eclipse.org/emf/ecp/view/indexdmr/model"/>
+        <changes xsi:type="history:Set" element="indexdmr.ecore#/" featureName="nsPrefix"
+            dataValue="org.eclipse.emf.ecp.view.indexdmr.model"/>
+      </changes>
+      <changes xsi:type="history:Create" target="indexdmr.ecore#/" referenceName="eClassifiers"
+          element="indexdmr.ecore#//IndexDomainModelReference">
+        <changes xsi:type="history:Set" element="indexdmr.ecore#//IndexDomainModelReference"
+            featureName="name" dataValue="IndexDomainModelReference"/>
+        <changes xsi:type="history:Add" element="indexdmr.ecore#//IndexDomainModelReference"
+            featureName="eSuperTypes" referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//FeaturePathDomainModelReference"/>
+      </changes>
+      <changes xsi:type="history:Create" target="indexdmr.ecore#//IndexDomainModelReference"
+          referenceName="eStructuralFeatures" element="indexdmr.ecore#//IndexDomainModelReference/targetDMR">
+        <changes xsi:type="history:Set" element="indexdmr.ecore#//IndexDomainModelReference/targetDMR"
+            featureName="name" dataValue="targetDMR"/>
+        <changes xsi:type="history:Set" element="indexdmr.ecore#//IndexDomainModelReference/targetDMR"
+            featureName="containment" dataValue="true" oldDataValue="false"/>
+        <changes xsi:type="history:Set" element="indexdmr.ecore#//IndexDomainModelReference/targetDMR"
+            featureName="eType" referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"/>
+      </changes>
+      <changes xsi:type="history:Create" target="indexdmr.ecore#//IndexDomainModelReference"
+          referenceName="eStructuralFeatures" element="indexdmr.ecore#//IndexDomainModelReference/index">
+        <changes xsi:type="history:Set" element="indexdmr.ecore#//IndexDomainModelReference/index"
+            featureName="name" dataValue="index"/>
+        <changes xsi:type="history:Set" element="indexdmr.ecore#//IndexDomainModelReference/index"
+            featureName="eType" referenceValue="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </changes>
+    </changes>
+  </releases>
+  <releases/>
+</history:History>

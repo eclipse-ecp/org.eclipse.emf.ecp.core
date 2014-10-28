@@ -22,5 +22,11 @@
             class="org.eclipse.emf.ecp.view.spi.section.model.VSectionPackage"
             genModel="model/section.genmodel"/>
    </extension>
+   <extension
+         point="org.eclipse.emf.edapt.migrators">
+      <migrator
+            path="model/section.history">
+      </migrator>
+   </extension>
 
 </plugin>

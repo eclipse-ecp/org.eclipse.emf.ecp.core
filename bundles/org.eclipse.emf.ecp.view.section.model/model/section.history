@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:history="http://www.eclipse.org/emf/edapt/history/0.3">
+  <releases date="2014-09-12T13:15:16.813+0200" label="140">
+    <changes xsi:type="history:CompositeChange">
+      <changes xsi:type="history:Create" element="section.ecore#/">
+        <changes xsi:type="history:Set" element="section.ecore#/" featureName="name"
+            dataValue="section"/>
+        <changes xsi:type="history:Set" element="section.ecore#/" featureName="nsURI"
+            dataValue="http://org/eclipse/emf/ecp/view/section/model"/>
+        <changes xsi:type="history:Set" element="section.ecore#/" featureName="nsPrefix"
+            dataValue="org.eclipse.emf.ecp.view.section.model"/>
+      </changes>
+      <changes xsi:type="history:Create" target="section.ecore#/" referenceName="eClassifiers"
+          element="section.ecore#//SectionedArea">
+        <changes xsi:type="history:Set" element="section.ecore#//SectionedArea" featureName="name"
+            dataValue="SectionedArea"/>
+        <changes xsi:type="history:Add" element="section.ecore#//SectionedArea" featureName="eSuperTypes"
+            referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//ContainedElement"/>
+      </changes>
+      <changes xsi:type="history:Create" target="section.ecore#/" referenceName="eClassifiers"
+          element="section.ecore#//Section">
+        <changes xsi:type="history:Set" element="section.ecore#//Section" featureName="name"
+            dataValue="Section"/>
+        <changes xsi:type="history:Add" element="section.ecore#//Section" featureName="eSuperTypes"
+            referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//Container"/>
+      </changes>
+      <changes xsi:type="history:Create" target="section.ecore#//SectionedArea" referenceName="eStructuralFeatures"
+          element="section.ecore#//SectionedArea/root">
+        <changes xsi:type="history:Set" element="section.ecore#//SectionedArea/root"
+            featureName="name" dataValue="root"/>
+        <changes xsi:type="history:Set" element="section.ecore#//SectionedArea/root"
+            featureName="lowerBound" dataValue="1" oldDataValue="0"/>
+        <changes xsi:type="history:Set" element="section.ecore#//SectionedArea/root"
+            featureName="containment" dataValue="true" oldDataValue="false"/>
+        <changes xsi:type="history:Set" element="section.ecore#//SectionedArea/root"
+            featureName="eType" referenceValue="section.ecore#//Section"/>
+      </changes>
+      <changes xsi:type="history:Create" target="section.ecore#//Section" referenceName="eStructuralFeatures"
+          element="section.ecore#//Section/childItems">
+        <changes xsi:type="history:Set" element="section.ecore#//Section/childItems"
+            featureName="name" dataValue="childItems"/>
+        <changes xsi:type="history:Set" element="section.ecore#//Section/childItems"
+            featureName="upperBound" dataValue="-1" oldDataValue="1"/>
+        <changes xsi:type="history:Set" element="section.ecore#//Section/childItems"
+            featureName="containment" dataValue="true" oldDataValue="false"/>
+        <changes xsi:type="history:Set" element="section.ecore#//Section/childItems"
+            featureName="eType" referenceValue="section.ecore#//Section"/>
+      </changes>
+      <changes xsi:type="history:Create" target="section.ecore#//Section" referenceName="eStructuralFeatures"
+          element="section.ecore#//Section/collapsed">
+        <changes xsi:type="history:Set" element="section.ecore#//Section/collapsed"
+            featureName="name" dataValue="collapsed"/>
+        <changes xsi:type="history:Set" element="section.ecore#//Section/collapsed"
+            featureName="defaultValueLiteral" dataValue="false"/>
+        <changes xsi:type="history:Set" element="section.ecore#//Section/collapsed"
+            featureName="eType" referenceValue="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      </changes>
+    </changes>
+  </releases>
+  <releases/>
+</history:History>

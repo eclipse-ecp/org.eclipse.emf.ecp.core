@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension-point id="customMigrations" name="Custom Migrations" schema="schema/customMigrations.exsd"/>
+   <extension
+         point="org.eclipse.emf.ecp.view.migrator.migrators">
+      <migrator
+            class="org.eclipse.emf.ecp.view.edapt.EdaptViewModelMigrator"
+            priority="5">
+      </migrator>
+   </extension>
+   <extension
+         point="org.eclipse.emf.edapt.factories">
+      <factory
+            class="org.eclipse.emf.ecp.view.edapt.DynamicEcoreFactory"
+            nsURI="http://www.eclipse.org/emf/2002/Ecore">
+      </factory>
+   </extension>
+
+</plugin>

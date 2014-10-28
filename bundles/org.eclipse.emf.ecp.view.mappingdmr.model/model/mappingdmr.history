@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:history="http://www.eclipse.org/emf/edapt/history/0.3">
+  <releases date="2014-09-12T12:35:23.120+0200" label="140">
+    <changes xsi:type="history:CompositeChange">
+      <changes xsi:type="history:Create" element="mappingdmr.ecore#/">
+        <changes xsi:type="history:Set" element="mappingdmr.ecore#/" featureName="name"
+            dataValue="mappingdmr"/>
+        <changes xsi:type="history:Set" element="mappingdmr.ecore#/" featureName="nsURI"
+            dataValue="http://www.eclipse.org/emf/ecp/view/mappingdmr/model"/>
+        <changes xsi:type="history:Set" element="mappingdmr.ecore#/" featureName="nsPrefix"
+            dataValue="org.eclipse.emf.ecp.view.mappingdmr.model"/>
+      </changes>
+      <changes xsi:type="history:Create" target="mappingdmr.ecore#/" referenceName="eClassifiers"
+          element="mappingdmr.ecore#//MappingDomainModelReference">
+        <changes xsi:type="history:Set" element="mappingdmr.ecore#//MappingDomainModelReference"
+            featureName="name" dataValue="MappingDomainModelReference"/>
+        <changes xsi:type="history:Add" element="mappingdmr.ecore#//MappingDomainModelReference"
+            featureName="eSuperTypes" referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//FeaturePathDomainModelReference"/>
+      </changes>
+      <changes xsi:type="history:Create" target="mappingdmr.ecore#//MappingDomainModelReference"
+          referenceName="eStructuralFeatures" element="mappingdmr.ecore#//MappingDomainModelReference/mappedClass">
+        <changes xsi:type="history:Set" element="mappingdmr.ecore#//MappingDomainModelReference/mappedClass"
+            featureName="name" dataValue="mappedClass"/>
+        <changes xsi:type="history:Set" element="mappingdmr.ecore#//MappingDomainModelReference/mappedClass"
+            featureName="eType" referenceValue="../../org.eclipse.emf.ecore/model/Ecore.ecore#//EClass"/>
+      </changes>
+      <changes xsi:type="history:Create" target="mappingdmr.ecore#//MappingDomainModelReference"
+          referenceName="eStructuralFeatures" element="mappingdmr.ecore#//MappingDomainModelReference/domainModelReference">
+        <changes xsi:type="history:Set" element="mappingdmr.ecore#//MappingDomainModelReference/domainModelReference"
+            featureName="name" dataValue="domainModelReference"/>
+        <changes xsi:type="history:Set" element="mappingdmr.ecore#//MappingDomainModelReference/domainModelReference"
+            featureName="lowerBound" dataValue="1" oldDataValue="0"/>
+        <changes xsi:type="history:Set" element="mappingdmr.ecore#//MappingDomainModelReference/domainModelReference"
+            featureName="containment" dataValue="true" oldDataValue="false"/>
+        <changes xsi:type="history:Set" element="mappingdmr.ecore#//MappingDomainModelReference/domainModelReference"
+            featureName="eType" referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"/>
+      </changes>
+    </changes>
+  </releases>
+  <releases/>
+</history:History>

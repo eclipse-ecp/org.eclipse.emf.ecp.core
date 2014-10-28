@@ -239,6 +239,10 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.indexdmr.tooling</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.indexdmr.databinding</module>
 		
+		<!-- Migration -->
+		<module>../../bundles/org.eclipse.emf.ecp.view.migrator</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.edapt</module>
+		
 	</modules>
 
 	<build>

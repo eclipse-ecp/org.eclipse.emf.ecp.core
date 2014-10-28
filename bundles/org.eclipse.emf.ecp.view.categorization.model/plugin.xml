@@ -22,5 +22,11 @@
             class="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage"
             genModel="model/categorization.genmodel"/>
    </extension>
+   <extension
+         point="org.eclipse.emf.edapt.migrators">
+      <migrator
+            path="model/categorization.history">
+      </migrator>
+   </extension>
 
 </plugin>
