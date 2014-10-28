@@ -645,6 +645,16 @@ public class EdaptViewModelMigrator implements ViewModelMigrator {
 				}
 				return result;
 			}
+
+			/**
+			 * {@inheritDoc}
+			 *
+			 * @see java.util.Iterator#remove()
+			 */
+			@Override
+			public void remove() {
+				throw new UnsupportedOperationException();
+			}
 		}
 
 		/**
