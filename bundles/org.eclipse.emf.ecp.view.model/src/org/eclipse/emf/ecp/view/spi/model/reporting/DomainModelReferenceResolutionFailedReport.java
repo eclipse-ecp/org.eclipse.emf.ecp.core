@@ -12,9 +12,8 @@
 package org.eclipse.emf.ecp.view.spi.model.reporting;
 
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VResolvable;
 
 /**
  * Indicates that a {@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference VDomainModelReference} could not be
@@ -31,27 +30,13 @@ public class DomainModelReferenceResolutionFailedReport extends AbstractReport {
 	 *
 	 * @param domainModelReference
 	 *            the domain model reference that could not be resolved
-	 * @param element
-	 *            the element that should be resolved
-	 */
-	public DomainModelReferenceResolutionFailedReport(
-		VDomainModelReference domainModelReference, EObject element) {
-		super("Not resolved: " + domainModelReference //$NON-NLS-1$
-			+ " on label " + element, IStatus.WARNING); //$NON-NLS-1$
-	}
-
-	/**
-	 * Constructor.
-	 *
-	 * @param domainModelReference
-	 *            the domain model reference that could not be resolved
 	 * @param control
 	 *            the control holding the domain model reference
 	 */
 	public DomainModelReferenceResolutionFailedReport(
-		VDomainModelReference domainModelReference, VControl control) {
+		VDomainModelReference domainModelReference, VResolvable control) {
 		super("Not resolved: " + domainModelReference //$NON-NLS-1$
-			+ " on control " + control, IStatus.WARNING); //$NON-NLS-1$
+			+ " on resolveable " + control, IStatus.WARNING); //$NON-NLS-1$
 	}
 
 }

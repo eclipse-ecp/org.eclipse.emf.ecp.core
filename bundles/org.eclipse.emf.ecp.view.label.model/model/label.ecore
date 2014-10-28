@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="label" nsURI="http://org/eclipse/emf/ecp/view/label/model" nsPrefix="org.eclipse.emf.ecp.view.label.model">
-  <eClassifiers xsi:type="ecore:EClass" name="Label" eSuperTypes="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//ContainedElement">
+  <eClassifiers xsi:type="ecore:EClass" name="Label" eSuperTypes="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//ContainedElement ../../org.eclipse.emf.ecp.view.model/model/view.ecore#//Resolvable">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="#//VLabelStyle"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="domainModelReference" eType="ecore:EClass ../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"
         containment="true"/>

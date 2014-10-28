@@ -46,7 +46,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ContainedContainer" abstract="true"
       eSuperTypes="#//ContainedElement #//Container"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Control" eSuperTypes="#//ContainedElement">
+  <eClassifiers xsi:type="ecore:EClass" name="Control" eSuperTypes="#//ContainedElement #//Resolvable">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="labelAlignment" lowerBound="1"
         eType="#//LabelAlignment" defaultValueLiteral="Left"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="domainModelReference" lowerBound="1"
@@ -58,4 +58,8 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="DomainModelReferenceChangeListener"
       instanceClassName="org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Resolvable" abstract="true" interface="true">
+    <eOperations name="getDomainModelReferencesToResolve" ordered="false" upperBound="-1"
+        eType="#//DomainModelReference"/>
+  </eClassifiers>
 </ecore:EPackage>

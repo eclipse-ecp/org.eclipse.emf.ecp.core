@@ -138,5 +138,8 @@
       </changes>
     </changes>
   </releases>
-  <releases/>
+  <releases>
+    <changes xsi:type="history:Add" element="label.ecore#//Label" featureName="eSuperTypes"
+        referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//Resolvable"/>
+  </releases>
 </history:History>

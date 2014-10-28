@@ -283,5 +283,41 @@
       </changes>
     </changes>
   </releases>
-  <releases/>
+  <releases>
+    <changes xsi:type="history:OperationChange">
+      <changes xsi:type="history:Create" target="view.ecore#/" referenceName="eClassifiers"
+          element="view.ecore#//Resolvable">
+        <changes xsi:type="history:Set" element="view.ecore#//Resolvable" featureName="name"
+            dataValue="Resolvable"/>
+        <changes xsi:type="history:Set" element="view.ecore#//Resolvable" featureName="abstract"
+            dataValue="true" oldDataValue="false"/>
+      </changes>
+      <operation name="newClass">
+        <parameters name="ePackage">
+          <referenceValue element="view.ecore#/"/>
+        </parameters>
+        <parameters name="name">
+          <dataValue>Resolvable</dataValue>
+        </parameters>
+        <parameters name="superClasses"/>
+        <parameters name="abstr">
+          <dataValue>true</dataValue>
+        </parameters>
+      </operation>
+    </changes>
+    <changes xsi:type="history:Create" target="view.ecore#//Resolvable" referenceName="eOperations"
+        element="view.ecore#//Resolvable/getDomainModelReferencesToResolve"/>
+    <changes xsi:type="history:Set" element="view.ecore#//Resolvable/getDomainModelReferencesToResolve"
+        featureName="eType" referenceValue="view.ecore#//DomainModelReference"/>
+    <changes xsi:type="history:Set" element="view.ecore#//Resolvable/getDomainModelReferencesToResolve"
+        featureName="upperBound" dataValue="-1" oldDataValue="1"/>
+    <changes xsi:type="history:Set" element="view.ecore#//Resolvable/getDomainModelReferencesToResolve"
+        featureName="name" dataValue="getDomainModelReferencesToResolve"/>
+    <changes xsi:type="history:Set" element="view.ecore#//Resolvable" featureName="interface"
+        dataValue="true" oldDataValue="false"/>
+    <changes xsi:type="history:Set" element="view.ecore#//Resolvable/getDomainModelReferencesToResolve"
+        featureName="ordered" dataValue="false" oldDataValue="true"/>
+    <changes xsi:type="history:Add" element="view.ecore#//Control" featureName="eSuperTypes"
+        referenceValue="view.ecore#//Resolvable"/>
+  </releases>
 </history:History>

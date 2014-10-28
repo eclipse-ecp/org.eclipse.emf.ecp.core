@@ -18,6 +18,7 @@ import org.eclipse.emf.ecp.view.spi.label.model.VLabel;
 import org.eclipse.emf.ecp.view.spi.label.model.VLabelPackage;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VResolvable;
 
 /**
  * <!-- begin-user-doc -->
@@ -95,6 +96,9 @@ public class LabelSwitch<T> extends Switch<T>
 				result = caseContainedElement(label);
 			}
 			if (result == null) {
+				result = caseResolvable(label);
+			}
+			if (result == null) {
 				result = caseElement(label);
 			}
 			if (result == null) {
@@ -154,6 +158,23 @@ public class LabelSwitch<T> extends Switch<T>
 	 * @generated
 	 */
 	public T caseContainedElement(VContainedElement object)
+	{
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Resolvable</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 *
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Resolvable</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseResolvable(VResolvable object)
 	{
 		return null;
 	}

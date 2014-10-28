@@ -19,6 +19,7 @@ import org.eclipse.emf.ecp.view.spi.label.model.VLabel;
 import org.eclipse.emf.ecp.view.spi.label.model.VLabelPackage;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VResolvable;
 
 /**
  * <!-- begin-user-doc -->
@@ -108,6 +109,12 @@ public class LabelAdapterFactory extends AdapterFactoryImpl
 			}
 
 			@Override
+			public Adapter caseResolvable(VResolvable object)
+			{
+				return createResolvableAdapter();
+			}
+
+			@Override
 			public Adapter defaultCase(EObject object)
 			{
 				return createEObjectAdapter();
@@ -176,6 +183,23 @@ public class LabelAdapterFactory extends AdapterFactoryImpl
 	 * @generated
 	 */
 	public Adapter createContainedElementAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VResolvable
+	 * <em>Resolvable</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VResolvable
+	 * @generated
+	 */
+	public Adapter createResolvableAdapter()
 	{
 		return null;
 	}

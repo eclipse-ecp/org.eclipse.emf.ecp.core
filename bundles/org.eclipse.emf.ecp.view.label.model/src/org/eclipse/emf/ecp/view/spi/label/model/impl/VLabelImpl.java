@@ -13,6 +13,8 @@ package org.eclipse.emf.ecp.view.spi.label.model.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -68,7 +70,6 @@ public class VLabelImpl extends VContainedElementImpl implements VLabel
 	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
-	 *
 	 * @see #getDomainModelReference()
 	 * @generated
 	 * @ordered
@@ -131,7 +132,6 @@ public class VLabelImpl extends VContainedElementImpl implements VLabel
 	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
@@ -145,7 +145,6 @@ public class VLabelImpl extends VContainedElementImpl implements VLabel
 	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	public NotificationChain basicSetDomainModelReference(VDomainModelReference newDomainModelReference,
@@ -171,7 +170,6 @@ public class VLabelImpl extends VContainedElementImpl implements VLabel
 	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
@@ -201,6 +199,23 @@ public class VLabelImpl extends VContainedElementImpl implements VLabel
 
 	/**
 	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.5
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated NOT
+	 * @return the {@link VDomainModelReference references} to resolve
+	 */
+	@Override
+	public EList<VDomainModelReference> getDomainModelReferencesToResolve()
+	{
+		final EList<VDomainModelReference> result = new BasicEList<VDomainModelReference>();
+		result.add(getDomainModelReference());
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->.
 	 * <!-- end-user-doc -->
 	 *
 	 * @generated

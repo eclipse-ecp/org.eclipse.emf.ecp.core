@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.view.spi.label.model;
 
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VResolvable;
 
 /**
  * <!-- begin-user-doc -->
@@ -31,7 +32,7 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
  * @model
  * @generated
  */
-public interface VLabel extends VContainedElement
+public interface VLabel extends VContainedElement, VResolvable
 {
 	/**
 	 * Returns the value of the '<em><b>Style</b></em>' attribute.
@@ -75,13 +76,11 @@ public interface VLabel extends VContainedElement
 	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the value of the '<em>Domain Model Reference</em>' containment reference.
 	 * @see #setDomainModelReference(VDomainModelReference)
 	 * @see org.eclipse.emf.ecp.view.spi.label.model.VLabelPackage#getLabel_DomainModelReference()
 	 * @model containment="true"
 	 * @generated
-	 *
 	 */
 	VDomainModelReference getDomainModelReference();
 
@@ -92,7 +91,6 @@ public interface VLabel extends VContainedElement
 	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
-	 *
 	 * @param value the new value of the '<em>Domain Model Reference</em>' containment reference.
 	 * @see #getDomainModelReference()
 	 * @generated

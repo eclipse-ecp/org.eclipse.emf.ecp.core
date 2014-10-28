@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
@@ -15,6 +15,8 @@ import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -29,25 +31,26 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Control</b></em>'.
- * <!-- end-user-doc -->
- * <p>
- * The following features are implemented:
- * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VControlImpl#getLabelAlignment <em>Label Alignment</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VControlImpl#getDomainModelReference <em>Domain Model Reference
- * </em>}</li>
- * </ul>
- * </p>
- * 
- * @generated
+ *
  * @since 1.2
+ *        <!-- end-user-doc -->
+ *        <p>
+ *        The following features are implemented:
+ *        <ul>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VControlImpl#getLabelAlignment <em>Label Alignment</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VControlImpl#getDomainModelReference <em>Domain Model
+ *        Reference </em>}</li>
+ *        </ul>
+ *        </p>
+ *
+ * @generated
  */
 public class VControlImpl extends VContainedElementImpl implements VControl {
 	/**
 	 * The default value of the '{@link #getLabelAlignment() <em>Label Alignment</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getLabelAlignment()
 	 * @generated
 	 * @ordered
@@ -58,7 +61,7 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	 * The cached value of the '{@link #getLabelAlignment() <em>Label Alignment</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getLabelAlignment()
 	 * @generated
 	 * @ordered
@@ -70,7 +73,7 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	 * reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getDomainModelReference()
 	 * @generated
 	 * @ordered
@@ -80,7 +83,7 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected VControlImpl() {
@@ -90,7 +93,7 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -101,7 +104,7 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -113,7 +116,7 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public NotificationChain basicSetDomainModelReference(VDomainModelReference newDomainModelReference,
@@ -137,7 +140,7 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -167,8 +170,25 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 
 	/**
 	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.5
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated NOT
+	 * @return the {@link VDomainModelReference references} to resolve
+	 */
+	@Override
+	public EList<VDomainModelReference> getDomainModelReferencesToResolve()
+	{
+		final EList<VDomainModelReference> result = new BasicEList<VDomainModelReference>();
+		result.add(getDomainModelReference());
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -185,7 +205,7 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -197,7 +217,7 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -214,7 +234,7 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -232,7 +252,7 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -252,7 +272,7 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -272,7 +292,7 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -290,7 +310,7 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -308,7 +328,7 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.model.VControl#setDomainModelReference(org.eclipse.emf.ecore.EStructuralFeature)
 	 */
 	@Override
@@ -318,7 +338,7 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.model.VControl#setDomainModelReference(org.eclipse.emf.ecore.EStructuralFeature,
 	 *      java.util.Collection)
 	 */
