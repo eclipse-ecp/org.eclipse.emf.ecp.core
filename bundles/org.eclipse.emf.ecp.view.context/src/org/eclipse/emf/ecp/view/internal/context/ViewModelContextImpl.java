@@ -40,7 +40,10 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecp.common.UniqueSetting;
 import org.eclipse.emf.ecp.view.context.internal.reporting.ViewModelServiceNotAvailableReport;
+import org.eclipse.emf.ecp.view.spi.context.GlobalViewModelService;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContextDisposeListener;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeAddRemoveListener;
@@ -49,6 +52,7 @@ import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -120,8 +124,12 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	private Resource resource;
 
-	private final Map<EObject, ViewModelContext> childContexts = new LinkedHashMap<EObject, ViewModelContext>();
+	private final Map<EObject, Set<ViewModelContext>> childContexts = new LinkedHashMap<EObject, Set<ViewModelContext>>();
 	private final Map<ViewModelContext, VElement> childContextUsers = new LinkedHashMap<ViewModelContext, VElement>();
+
+	private ViewModelContext parentContext;
+
+	private final Set<ViewModelContextDisposeListener> disposeListeners = new LinkedHashSet<ViewModelContextDisposeListener>();
 
 	/**
 	 * Instantiates a new view model context impl.
@@ -133,6 +141,20 @@ public class ViewModelContextImpl implements ViewModelContext {
 		this.view = view;
 		this.domainObject = domainObject;
 
+		instantiate();
+	}
+
+	/**
+	 * Instantiates a new view model context impl.
+	 *
+	 * @param view the view
+	 * @param domainObject the domain object
+	 */
+	public ViewModelContextImpl(VElement view, EObject domainObject, ViewModelContext parent,
+		VElement parentVElement) {
+		this.view = view;
+		this.domainObject = domainObject;
+		parentContext = parent;
 		instantiate();
 	}
 
@@ -154,6 +176,25 @@ public class ViewModelContextImpl implements ViewModelContext {
 	}
 
 	/**
+	 * Instantiates a new view model context impl.
+	 *
+	 * @param view the view
+	 * @param domainObject the domain object
+	 * @param modelServices an array of services to use in the {@link ViewModelContext}
+	 */
+	public ViewModelContextImpl(VElement view, EObject domainObject, ViewModelContext parent,
+		VElement parentVElement,
+		ViewModelService... modelServices) {
+		this.view = view;
+		this.domainObject = domainObject;
+		parentContext = parent;
+		for (final ViewModelService vms : modelServices) {
+			viewServices.add(vms);
+		}
+		instantiate();
+	}
+
+	/**
 	 * Instantiate.
 	 */
 	private void instantiate() {
@@ -166,14 +207,18 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 		view.eAdapters().add(viewModelContentAdapter);
 
-		domainModelContentAdapter = new DomainModelContentAdapter();
-		domainObject.eAdapters().add(domainModelContentAdapter);
+		if (parentContext == null) {
+			domainModelContentAdapter = new DomainModelContentAdapter();
+			domainObject.eAdapters().add(domainModelContentAdapter);
+		}
 
 		createSettingToControlMapping();
 		readAbstractViewServices();
 
 		for (final ViewModelService viewService : viewServices) {
-			viewService.instantiate(this);
+			if (!GlobalViewModelService.class.isInstance(viewService) || parentContext == null) {
+				viewService.instantiate(this);
+			}
 		}
 	}
 
@@ -381,8 +426,12 @@ public class ViewModelContextImpl implements ViewModelContext {
 			.getConfigurationElementsFor("org.eclipse.emf.ecp.view.context.viewServices"); //$NON-NLS-1$
 		for (final IConfigurationElement e : controls) {
 			try {
+
 				final ViewModelService viewService = (ViewModelService) e.createExecutableExtension("class"); //$NON-NLS-1$
-				viewServices.add(viewService);
+				if (!GlobalViewModelService.class.isInstance(viewService) || parentContext == null) {
+					viewServices.add(viewService);
+				}
+
 			} catch (final CoreException e1) {
 				Activator.log(e1);
 			}
@@ -450,6 +499,10 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 		isDisposing = false;
 		isDisposed = true;
+
+		for (final ViewModelContextDisposeListener listener : disposeListeners) {
+			listener.contextDisposed(this);
+		}
 	}
 
 	@Override
@@ -479,7 +532,11 @@ public class ViewModelContextImpl implements ViewModelContext {
 		if (modelChangeListener == null) {
 			throw new IllegalArgumentException(MODEL_CHANGE_LISTENER_MUST_NOT_BE_NULL);
 		}
-		domainModelChangeListener.add(modelChangeListener);
+		if (parentContext == null) {
+			domainModelChangeListener.add(modelChangeListener);
+		} else {
+			parentContext.registerDomainChangeListener(modelChangeListener);
+		}
 	}
 
 	@Override
@@ -487,7 +544,11 @@ public class ViewModelContextImpl implements ViewModelContext {
 		// if (isDisposed) {
 		// throw new IllegalStateException("The ViewModelContext was already disposed.");
 		// }
-		domainModelChangeListener.remove(modelChangeListener);
+		if (parentContext == null) {
+			domainModelChangeListener.remove(modelChangeListener);
+		} else {
+			parentContext.unregisterDomainChangeListener(modelChangeListener);
+		}
 	}
 
 	/**
@@ -501,6 +562,9 @@ public class ViewModelContextImpl implements ViewModelContext {
 			if (serviceType.isInstance(service)) {
 				return true;
 			}
+		}
+		if (parentContext != null) {
+			return parentContext.hasService(serviceType);
 		}
 		return false;
 	}
@@ -518,6 +582,9 @@ public class ViewModelContextImpl implements ViewModelContext {
 				return (T) service;
 			}
 		}
+		if (parentContext != null) {
+			return parentContext.getService(serviceType);
+		}
 
 		Activator.getInstance()
 			.getReportService()
@@ -534,7 +601,6 @@ public class ViewModelContextImpl implements ViewModelContext {
 		@Override
 		public void notifyChanged(Notification notification) {
 			super.notifyChanged(notification);
-
 			// do not notify while being disposed
 			if (isDisposing) {
 				return;
@@ -542,6 +608,11 @@ public class ViewModelContextImpl implements ViewModelContext {
 			if (isDisposed) {
 				return;
 			}
+			// // delegate to parent context
+			// if (parentContext != null) {
+			// parentContext.viewModelContentAdapter.notifyChanged(notification);
+			// return;
+			// }
 			if (notification.isTouch()) {
 				return;
 			}
@@ -683,6 +754,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 *
 	 * @param user the user of the context
 	 */
+	@Override
 	public void addContextUser(Object user) {
 		users.add(user);
 	}
@@ -692,10 +764,12 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 *
 	 * @param user the user of the context
 	 */
+	@Override
 	public void removeContextUser(Object user) {
 		users.remove(user);
 		// Every renderer is registered here, as it needs to know when the view model changes (rules, validations, etc).
 		// If no listener is left, we can dispose the context
+		// if (users.isEmpty() || users.size() == 1 && parentContext != null && users.contains(parentContext)) {
 		if (users.isEmpty()) {
 			dispose();
 		}
@@ -708,6 +782,9 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 */
 	@Override
 	public Object getContextValue(String key) {
+		if (parentContext != null) {
+			return parentContext.getContextValue(key);
+		}
 		return keyObjectMap.get(key);
 	}
 
@@ -718,34 +795,65 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 */
 	@Override
 	public void putContextValue(String key, Object value) {
+		if (parentContext != null) {
+			parentContext.putContextValue(key, value);
+			return;
+		}
 		keyObjectMap.put(key, value);
 	}
 
-	@Override
-	public void addChildContext(VElement vElement, EObject eObject, ViewModelContext childContext) {
-		if (ViewModelContextImpl.class.isInstance(childContext)) {
-			ViewModelContextImpl.class.cast(childContext).addContextUser(this);
+	private void addChildContext(VElement vElement, EObject eObject, ViewModelContext childContext) {
+
+		childContext.addContextUser(this);
+
+		if (!childContexts.containsKey(eObject)) {
+			childContexts.put(eObject, new LinkedHashSet<ViewModelContext>());
 		}
-		childContexts.put(eObject, childContext);
+		childContexts.get(eObject).add(childContext);
 		childContextUsers.put(childContext, vElement);
 	}
 
+	private void removeChildContext(EObject eObject) {
+		final Set<ViewModelContext> removedContexts = childContexts.remove(eObject);
+		if (removedContexts != null) {
+			for (final ViewModelContext removedContext : removedContexts) {
+				childContextUsers.remove(removedContext);
+			}
+		}
+	}
+
 	@Override
-	public ViewModelContext getChildContext(EObject eObject) {
-		return childContexts.get(eObject);
+	public ViewModelContext getChildContext(final EObject eObject, VElement parent, VView vView,
+		ViewModelService... viewModelServices) {
+		final Set<ViewModelContext> contexts = childContexts.get(eObject);
+		if (contexts != null) {
+			for (final ViewModelContext context : contexts) {
+				if (childContextUsers.get(context).equals(parent)) {
+					return context;
+				}
+			}
+		}
+
+		final ViewModelContext childContext = ViewModelContextFactory.INSTANCE.createViewModelContext(vView,
+			eObject, this, parent, viewModelServices);
+		childContext.registerDisposeListener(new ViewModelContextDisposeListener() {
+
+			@Override
+			public void contextDisposed(ViewModelContext viewModelContext) {
+				removeChildContext(eObject);
+			}
+		});
+		addChildContext(parent, eObject, childContext);
+		return childContext;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#removeChildContext(org.eclipse.emf.ecore.EObject)
+	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#registerDisposeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContextDisposeListener)
 	 */
 	@Override
-	public void removeChildContext(EObject eObject) {
-		final ViewModelContext removedContext = childContexts.remove(eObject);
-		if (removedContext != null) {
-			childContextUsers.remove(removedContext);
-			removedContext.dispose();
-		}
+	public void registerDisposeListener(ViewModelContextDisposeListener listener) {
+		disposeListeners.add(listener);
 	}
 }

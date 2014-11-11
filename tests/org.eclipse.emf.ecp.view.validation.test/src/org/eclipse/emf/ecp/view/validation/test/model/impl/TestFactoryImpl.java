@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.emf.ecp.view.validation.test.model.*;
 import org.eclipse.emf.ecp.view.validation.test.model.Book;
 import org.eclipse.emf.ecp.view.validation.test.model.Computer;
 import org.eclipse.emf.ecp.view.validation.test.model.Content;
@@ -36,7 +37,6 @@ import org.eclipse.emf.ecp.view.validation.test.model.Writer;
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Factory</b>.
  * <!-- end-user-doc -->
- * 
  * @generated
  */
 public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
@@ -44,16 +44,16 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public static TestFactory init() {
 		try {
-			TestFactory theTestFactory = (TestFactory) EPackage.Registry.INSTANCE.getEFactory(TestPackage.eNS_URI);
+			TestFactory theTestFactory = (TestFactory)EPackage.Registry.INSTANCE.getEFactory(TestPackage.eNS_URI);
 			if (theTestFactory != null) {
 				return theTestFactory;
 			}
-		} catch (Exception exception) {
+		}
+		catch (Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new TestFactoryImpl();
@@ -63,7 +63,6 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	 * Creates an instance of the factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public TestFactoryImpl() {
@@ -73,49 +72,36 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-		case TestPackage.LIBRARY:
-			return createLibrary();
-		case TestPackage.WRITER:
-			return createWriter();
-		case TestPackage.BOOK:
-			return createBook();
-		case TestPackage.LIBRARIAN:
-			return createLibrarian();
-		case TestPackage.COMPUTER:
-			return createComputer();
-		case TestPackage.MAINBOARD:
-			return createMainboard();
-		case TestPackage.POWER_BLOCK:
-			return createPowerBlock();
-		case TestPackage.CONTAINER:
-			return createContainer();
-		case TestPackage.CONTENT:
-			return createContent();
-		case TestPackage.TABLE_WITH_MULTIPLICITY:
-			return createTableWithMultiplicity();
-		case TestPackage.TABLE_CONTENT_WITHOUT_VALIDATION:
-			return createTableContentWithoutValidation();
-		case TestPackage.TABLE_CONTENT_WITH_VALIDATION:
-			return createTableContentWithValidation();
-		case TestPackage.TABLE_WITHOUT_MULTIPLICITY:
-			return createTableWithoutMultiplicity();
-		case TestPackage.TABLE_WITH_UNIQUE:
-			return createTableWithUnique();
-		default:
-			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+			case TestPackage.LIBRARY: return createLibrary();
+			case TestPackage.WRITER: return createWriter();
+			case TestPackage.BOOK: return createBook();
+			case TestPackage.LIBRARIAN: return createLibrarian();
+			case TestPackage.COMPUTER: return createComputer();
+			case TestPackage.MAINBOARD: return createMainboard();
+			case TestPackage.POWER_BLOCK: return createPowerBlock();
+			case TestPackage.CONTAINER: return createContainer();
+			case TestPackage.CONTENT: return createContent();
+			case TestPackage.TABLE_WITH_MULTIPLICITY: return createTableWithMultiplicity();
+			case TestPackage.TABLE_CONTENT_WITHOUT_VALIDATION: return createTableContentWithoutValidation();
+			case TestPackage.TABLE_CONTENT_WITH_VALIDATION: return createTableContentWithValidation();
+			case TestPackage.TABLE_WITHOUT_MULTIPLICITY: return createTableWithoutMultiplicity();
+			case TestPackage.TABLE_WITH_UNIQUE: return createTableWithUnique();
+			case TestPackage.TABLE_CONTENT_WITH_INNER_CHILD2: return createTableContentWithInnerChild2();
+			case TestPackage.TABLE_CONTENT_WITH_INNER_CHILD: return createTableContentWithInnerChild();
+			case TestPackage.TABLE_WITHOUT_MULTIPLICITY_CONCRETE: return createTableWithoutMultiplicityConcrete();
+			default:
+				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public Library createLibrary() {
@@ -126,7 +112,6 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public Writer createWriter() {
@@ -137,7 +122,6 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public Book createBook() {
@@ -148,7 +132,6 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public Librarian createLibrarian() {
@@ -159,7 +142,6 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public Computer createComputer() {
@@ -170,7 +152,6 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public Mainboard createMainboard() {
@@ -181,7 +162,6 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public PowerBlock createPowerBlock() {
@@ -192,7 +172,6 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public org.eclipse.emf.ecp.view.validation.test.model.Container createContainer() {
@@ -203,7 +182,6 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public Content createContent() {
@@ -214,7 +192,6 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public TableWithMultiplicity createTableWithMultiplicity() {
@@ -225,7 +202,6 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public TableContentWithoutValidation createTableContentWithoutValidation() {
@@ -236,7 +212,6 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public TableContentWithValidation createTableContentWithValidation() {
@@ -247,7 +222,6 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public TableWithoutMultiplicity createTableWithoutMultiplicity() {
@@ -258,7 +232,6 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public TableWithUnique createTableWithUnique() {
@@ -269,17 +242,45 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
-	public TestPackage getTestPackage() {
-		return (TestPackage) getEPackage();
+	public TableContentWithInnerChild2 createTableContentWithInnerChild2() {
+		TableContentWithInnerChild2Impl tableContentWithInnerChild2 = new TableContentWithInnerChild2Impl();
+		return tableContentWithInnerChild2;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 * @generated
+	 */
+	public TableContentWithInnerChild createTableContentWithInnerChild() {
+		TableContentWithInnerChildImpl tableContentWithInnerChild = new TableContentWithInnerChildImpl();
+		return tableContentWithInnerChild;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TableWithoutMultiplicityConcrete createTableWithoutMultiplicityConcrete() {
+		TableWithoutMultiplicityConcreteImpl tableWithoutMultiplicityConcrete = new TableWithoutMultiplicityConcreteImpl();
+		return tableWithoutMultiplicityConcrete;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TestPackage getTestPackage() {
+		return (TestPackage)getEPackage();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @deprecated
 	 * @generated
 	 */

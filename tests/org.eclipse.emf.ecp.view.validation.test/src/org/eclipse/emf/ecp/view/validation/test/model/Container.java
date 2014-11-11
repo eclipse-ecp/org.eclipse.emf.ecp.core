@@ -18,14 +18,14 @@ import org.eclipse.emf.ecore.EObject;
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Container</b></em>'.
  * <!-- end-user-doc -->
- * 
+ *
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Container#getContents <em>Contents</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Container#getContents <em>Contents</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.ecp.view.validation.test.model.TestPackage#getContainer()
  * @model
  * @generated
@@ -40,7 +40,6 @@ public interface Container extends EObject {
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
 	 * @return the value of the '<em>Contents</em>' containment reference list.
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.TestPackage#getContainer_Contents()
 	 * @model containment="true"

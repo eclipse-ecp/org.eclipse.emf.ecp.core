@@ -24,13 +24,11 @@ import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.TableContentWithoutValidationImpl#getName <em>Name
- * </em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.TableContentWithoutValidationImpl#getWeight <em>Weight
- * </em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.TableContentWithoutValidationImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.TableContentWithoutValidationImpl#getWeight <em>Weight</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class TableContentWithoutValidationImpl extends TableContentImpl implements TableContentWithoutValidation {
@@ -38,7 +36,6 @@ public class TableContentWithoutValidationImpl extends TableContentImpl implemen
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getName()
 	 * @generated
 	 * @ordered
@@ -49,7 +46,6 @@ public class TableContentWithoutValidationImpl extends TableContentImpl implemen
 	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getName()
 	 * @generated
 	 * @ordered
@@ -60,7 +56,6 @@ public class TableContentWithoutValidationImpl extends TableContentImpl implemen
 	 * The default value of the '{@link #getWeight() <em>Weight</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getWeight()
 	 * @generated
 	 * @ordered
@@ -71,7 +66,6 @@ public class TableContentWithoutValidationImpl extends TableContentImpl implemen
 	 * The cached value of the '{@link #getWeight() <em>Weight</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getWeight()
 	 * @generated
 	 * @ordered
@@ -81,7 +75,6 @@ public class TableContentWithoutValidationImpl extends TableContentImpl implemen
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	protected TableContentWithoutValidationImpl() {
@@ -91,7 +84,6 @@ public class TableContentWithoutValidationImpl extends TableContentImpl implemen
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -102,7 +94,6 @@ public class TableContentWithoutValidationImpl extends TableContentImpl implemen
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public String getName() {
@@ -112,22 +103,18 @@ public class TableContentWithoutValidationImpl extends TableContentImpl implemen
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public void setName(String newName) {
-		final String oldName = name;
+		String oldName = name;
 		name = newName;
-		if (eNotificationRequired()) {
-			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.TABLE_CONTENT_WITHOUT_VALIDATION__NAME,
-				oldName, name));
-		}
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.TABLE_CONTENT_WITHOUT_VALIDATION__NAME, oldName, name));
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public int getWeight() {
@@ -137,31 +124,27 @@ public class TableContentWithoutValidationImpl extends TableContentImpl implemen
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public void setWeight(int newWeight) {
-		final int oldWeight = weight;
+		int oldWeight = weight;
 		weight = newWeight;
-		if (eNotificationRequired()) {
-			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.TABLE_CONTENT_WITHOUT_VALIDATION__WEIGHT,
-				oldWeight, weight));
-		}
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.TABLE_CONTENT_WITHOUT_VALIDATION__WEIGHT, oldWeight, weight));
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case TestPackage.TABLE_CONTENT_WITHOUT_VALIDATION__NAME:
-			return getName();
-		case TestPackage.TABLE_CONTENT_WITHOUT_VALIDATION__WEIGHT:
-			return getWeight();
+			case TestPackage.TABLE_CONTENT_WITHOUT_VALIDATION__NAME:
+				return getName();
+			case TestPackage.TABLE_CONTENT_WITHOUT_VALIDATION__WEIGHT:
+				return getWeight();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -169,18 +152,17 @@ public class TableContentWithoutValidationImpl extends TableContentImpl implemen
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case TestPackage.TABLE_CONTENT_WITHOUT_VALIDATION__NAME:
-			setName((String) newValue);
-			return;
-		case TestPackage.TABLE_CONTENT_WITHOUT_VALIDATION__WEIGHT:
-			setWeight((Integer) newValue);
-			return;
+			case TestPackage.TABLE_CONTENT_WITHOUT_VALIDATION__NAME:
+				setName((String)newValue);
+				return;
+			case TestPackage.TABLE_CONTENT_WITHOUT_VALIDATION__WEIGHT:
+				setWeight((Integer)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -188,18 +170,17 @@ public class TableContentWithoutValidationImpl extends TableContentImpl implemen
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case TestPackage.TABLE_CONTENT_WITHOUT_VALIDATION__NAME:
-			setName(NAME_EDEFAULT);
-			return;
-		case TestPackage.TABLE_CONTENT_WITHOUT_VALIDATION__WEIGHT:
-			setWeight(WEIGHT_EDEFAULT);
-			return;
+			case TestPackage.TABLE_CONTENT_WITHOUT_VALIDATION__NAME:
+				setName(NAME_EDEFAULT);
+				return;
+			case TestPackage.TABLE_CONTENT_WITHOUT_VALIDATION__WEIGHT:
+				setWeight(WEIGHT_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -207,16 +188,15 @@ public class TableContentWithoutValidationImpl extends TableContentImpl implemen
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case TestPackage.TABLE_CONTENT_WITHOUT_VALIDATION__NAME:
-			return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-		case TestPackage.TABLE_CONTENT_WITHOUT_VALIDATION__WEIGHT:
-			return weight != WEIGHT_EDEFAULT;
+			case TestPackage.TABLE_CONTENT_WITHOUT_VALIDATION__NAME:
+				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+			case TestPackage.TABLE_CONTENT_WITHOUT_VALIDATION__WEIGHT:
+				return weight != WEIGHT_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -224,16 +204,13 @@ public class TableContentWithoutValidationImpl extends TableContentImpl implemen
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) {
-			return super.toString();
-		}
+		if (eIsProxy()) return super.toString();
 
-		final StringBuffer result = new StringBuffer(super.toString());
+		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (name: ");
 		result.append(name);
 		result.append(", weight: ");

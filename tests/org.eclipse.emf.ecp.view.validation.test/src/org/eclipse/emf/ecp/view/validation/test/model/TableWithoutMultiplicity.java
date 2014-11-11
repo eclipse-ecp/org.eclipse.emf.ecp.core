@@ -18,14 +18,14 @@ import org.eclipse.emf.ecore.EObject;
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Table Without Multiplicity</b></em>'.
  * <!-- end-user-doc -->
- * 
+ *
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.TableWithoutMultiplicity#getContent <em>Content</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.validation.test.model.TableWithoutMultiplicity#getContent <em>Content</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.ecp.view.validation.test.model.TestPackage#getTableWithoutMultiplicity()
  * @model
  * @generated
@@ -40,7 +40,6 @@ public interface TableWithoutMultiplicity extends EObject {
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
 	 * @return the value of the '<em>Content</em>' containment reference list.
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.TestPackage#getTableWithoutMultiplicity_Content()
 	 * @model containment="true"

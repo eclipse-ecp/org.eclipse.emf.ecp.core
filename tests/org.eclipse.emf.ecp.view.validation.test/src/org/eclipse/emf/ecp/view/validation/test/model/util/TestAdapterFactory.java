@@ -15,6 +15,7 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.view.validation.test.model.*;
 import org.eclipse.emf.ecp.view.validation.test.model.Book;
 import org.eclipse.emf.ecp.view.validation.test.model.Computer;
 import org.eclipse.emf.ecp.view.validation.test.model.Container;
@@ -37,7 +38,6 @@ import org.eclipse.emf.ecp.view.validation.test.model.Writer;
  * The <b>Adapter Factory</b> for the model.
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
- * 
  * @see org.eclipse.emf.ecp.view.validation.test.model.TestPackage
  * @generated
  */
@@ -46,7 +46,6 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	 * The cached model package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	protected static TestPackage modelPackage;
@@ -55,7 +54,6 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	 * Creates an instance of the adapter factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public TestAdapterFactory() {
@@ -70,7 +68,6 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	 * This implementation returns <code>true</code> if the object is either the model's package or is an instance
 	 * object of the model.
 	 * <!-- end-user-doc -->
-	 * 
 	 * @return whether this factory is applicable for the type of the object.
 	 * @generated
 	 */
@@ -80,7 +77,7 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 			return true;
 		}
 		if (object instanceof EObject) {
-			return ((EObject) object).eClass().getEPackage() == modelPackage;
+			return ((EObject)object).eClass().getEPackage() == modelPackage;
 		}
 		return false;
 	}
@@ -89,7 +86,6 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	 * The switch that delegates to the <code>createXXX</code> methods.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	protected TestSwitch<Adapter> modelSwitch =
@@ -98,77 +94,74 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 			public Adapter caseLibrary(Library object) {
 				return createLibraryAdapter();
 			}
-
 			@Override
 			public Adapter caseWriter(Writer object) {
 				return createWriterAdapter();
 			}
-
 			@Override
 			public Adapter caseBook(Book object) {
 				return createBookAdapter();
 			}
-
 			@Override
 			public Adapter caseLibrarian(Librarian object) {
 				return createLibrarianAdapter();
 			}
-
 			@Override
 			public Adapter caseComputer(Computer object) {
 				return createComputerAdapter();
 			}
-
 			@Override
 			public Adapter caseMainboard(Mainboard object) {
 				return createMainboardAdapter();
 			}
-
 			@Override
 			public Adapter casePowerBlock(PowerBlock object) {
 				return createPowerBlockAdapter();
 			}
-
 			@Override
 			public Adapter caseContainer(Container object) {
 				return createContainerAdapter();
 			}
-
 			@Override
 			public Adapter caseContent(Content object) {
 				return createContentAdapter();
 			}
-
 			@Override
 			public Adapter caseTableWithMultiplicity(TableWithMultiplicity object) {
 				return createTableWithMultiplicityAdapter();
 			}
-
 			@Override
 			public Adapter caseTableContent(TableContent object) {
 				return createTableContentAdapter();
 			}
-
 			@Override
 			public Adapter caseTableContentWithoutValidation(TableContentWithoutValidation object) {
 				return createTableContentWithoutValidationAdapter();
 			}
-
 			@Override
 			public Adapter caseTableContentWithValidation(TableContentWithValidation object) {
 				return createTableContentWithValidationAdapter();
 			}
-
 			@Override
 			public Adapter caseTableWithoutMultiplicity(TableWithoutMultiplicity object) {
 				return createTableWithoutMultiplicityAdapter();
 			}
-
 			@Override
 			public Adapter caseTableWithUnique(TableWithUnique object) {
 				return createTableWithUniqueAdapter();
 			}
-
+			@Override
+			public Adapter caseTableContentWithInnerChild2(TableContentWithInnerChild2 object) {
+				return createTableContentWithInnerChild2Adapter();
+			}
+			@Override
+			public Adapter caseTableContentWithInnerChild(TableContentWithInnerChild object) {
+				return createTableContentWithInnerChildAdapter();
+			}
+			@Override
+			public Adapter caseTableWithoutMultiplicityConcrete(TableWithoutMultiplicityConcrete object) {
+				return createTableWithoutMultiplicityConcreteAdapter();
+			}
 			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
@@ -179,24 +172,21 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	 * Creates an adapter for the <code>target</code>.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @param target the object to adapt.
 	 * @return the adapter for the <code>target</code>.
 	 * @generated
 	 */
 	@Override
 	public Adapter createAdapter(Notifier target) {
-		return modelSwitch.doSwitch((EObject) target);
+		return modelSwitch.doSwitch((EObject)target);
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.validation.test.model.Library
-	 * <em>Library</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.validation.test.model.Library <em>Library</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 * 
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.Library
 	 * @generated
@@ -206,13 +196,11 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.validation.test.model.Writer
-	 * <em>Writer</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.validation.test.model.Writer <em>Writer</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 * 
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.Writer
 	 * @generated
@@ -222,13 +210,11 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.validation.test.model.Book
-	 * <em>Book</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.validation.test.model.Book <em>Book</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 * 
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.Book
 	 * @generated
@@ -238,13 +224,11 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.validation.test.model.Librarian
-	 * <em>Librarian</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.validation.test.model.Librarian <em>Librarian</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 * 
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.Librarian
 	 * @generated
@@ -254,13 +238,11 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.validation.test.model.Computer
-	 * <em>Computer</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.validation.test.model.Computer <em>Computer</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 * 
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.Computer
 	 * @generated
@@ -270,13 +252,11 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.validation.test.model.Mainboard
-	 * <em>Mainboard</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.validation.test.model.Mainboard <em>Mainboard</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 * 
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.Mainboard
 	 * @generated
@@ -286,13 +266,11 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.validation.test.model.PowerBlock
-	 * <em>Power Block</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.validation.test.model.PowerBlock <em>Power Block</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 * 
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.PowerBlock
 	 * @generated
@@ -302,13 +280,11 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.validation.test.model.Container
-	 * <em>Container</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.validation.test.model.Container <em>Container</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 * 
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.Container
 	 * @generated
@@ -318,13 +294,11 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.validation.test.model.Content
-	 * <em>Content</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.validation.test.model.Content <em>Content</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 * 
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.Content
 	 * @generated
@@ -334,13 +308,11 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.validation.test.model.TableWithMultiplicity <em>Table With Multiplicity</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.validation.test.model.TableWithMultiplicity <em>Table With Multiplicity</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 * 
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.TableWithMultiplicity
 	 * @generated
@@ -350,13 +322,11 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.validation.test.model.TableContent
-	 * <em>Table Content</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.validation.test.model.TableContent <em>Table Content</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 * 
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.TableContent
 	 * @generated
@@ -366,14 +336,11 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.validation.test.model.TableContentWithoutValidation
-	 * <em>Table Content Without Validation</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.validation.test.model.TableContentWithoutValidation <em>Table Content Without Validation</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 * 
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.TableContentWithoutValidation
 	 * @generated
@@ -383,14 +350,11 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.validation.test.model.TableContentWithValidation
-	 * <em>Table Content With Validation</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.validation.test.model.TableContentWithValidation <em>Table Content With Validation</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 * 
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.TableContentWithValidation
 	 * @generated
@@ -400,14 +364,11 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.validation.test.model.TableWithoutMultiplicity
-	 * <em>Table Without Multiplicity</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.validation.test.model.TableWithoutMultiplicity <em>Table Without Multiplicity</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 * 
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.TableWithoutMultiplicity
 	 * @generated
@@ -417,13 +378,11 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.validation.test.model.TableWithUnique <em>Table With Unique</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.validation.test.model.TableWithUnique <em>Table With Unique</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 * 
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.TableWithUnique
 	 * @generated
@@ -433,11 +392,52 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild2 <em>Table Content With Inner Child2</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild2
+	 * @generated
+	 */
+	public Adapter createTableContentWithInnerChild2Adapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild <em>Table Content With Inner Child</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild
+	 * @generated
+	 */
+	public Adapter createTableContentWithInnerChildAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.validation.test.model.TableWithoutMultiplicityConcrete <em>Table Without Multiplicity Concrete</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.TableWithoutMultiplicityConcrete
+	 * @generated
+	 */
+	public Adapter createTableWithoutMultiplicityConcreteAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for the default case.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null.
 	 * <!-- end-user-doc -->
-	 * 
 	 * @return the new adapter.
 	 * @generated
 	 */

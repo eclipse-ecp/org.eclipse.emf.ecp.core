@@ -17,15 +17,15 @@ import org.eclipse.emf.ecore.EObject;
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Content</b></em>'.
  * <!-- end-user-doc -->
- * 
+ *
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Content#getUniqueAttribute <em>Unique Attribute</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Content#getSecondAttribute <em>Second Attribute</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Content#getUniqueAttribute <em>Unique Attribute</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Content#getSecondAttribute <em>Second Attribute</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.ecp.view.validation.test.model.TestPackage#getContent()
  * @model
  * @generated
@@ -39,7 +39,6 @@ public interface Content extends EObject {
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
 	 * @return the value of the '<em>Unique Attribute</em>' attribute.
 	 * @see #setUniqueAttribute(String)
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.TestPackage#getContent_UniqueAttribute()
@@ -49,11 +48,9 @@ public interface Content extends EObject {
 	String getUniqueAttribute();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.validation.test.model.Content#getUniqueAttribute
-	 * <em>Unique Attribute</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.validation.test.model.Content#getUniqueAttribute <em>Unique Attribute</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @param value the new value of the '<em>Unique Attribute</em>' attribute.
 	 * @see #getUniqueAttribute()
 	 * @generated
@@ -68,7 +65,6 @@ public interface Content extends EObject {
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
 	 * @return the value of the '<em>Second Attribute</em>' attribute.
 	 * @see #setSecondAttribute(String)
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.TestPackage#getContent_SecondAttribute()
@@ -78,11 +74,9 @@ public interface Content extends EObject {
 	String getSecondAttribute();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.validation.test.model.Content#getSecondAttribute
-	 * <em>Second Attribute</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.validation.test.model.Content#getSecondAttribute <em>Second Attribute</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @param value the new value of the '<em>Second Attribute</em>' attribute.
 	 * @see #getSecondAttribute()
 	 * @generated

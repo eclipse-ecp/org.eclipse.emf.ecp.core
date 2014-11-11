@@ -21,15 +21,19 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emf.ecp.view.spi.table.model.DetailEditing;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
 import org.eclipse.emf.ecp.view.validation.test.model.Library;
+import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild;
+import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild2;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithValidation;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithoutValidation;
 import org.eclipse.emf.ecp.view.validation.test.model.TableWithMultiplicity;
 import org.eclipse.emf.ecp.view.validation.test.model.TableWithUnique;
 import org.eclipse.emf.ecp.view.validation.test.model.TableWithoutMultiplicity;
+import org.eclipse.emf.ecp.view.validation.test.model.TableWithoutMultiplicityConcrete;
 import org.eclipse.emf.ecp.view.validation.test.model.TestFactory;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
 import org.eclipse.emf.ecp.view.validation.test.model.Writer;
@@ -565,5 +569,88 @@ public class TableValidationTest {
 		writer1.setFirstName("test");
 
 		assertEquals(1, table.getDiagnostic().getDiagnostics().size());
+	}
+
+	@Test
+	public void testTableValidationWithIndirectChildren() {
+		final VView view = VViewFactory.eINSTANCE.createView();
+		view.setRootEClass(TestPackage.eINSTANCE.getTableWithoutMultiplicity());
+		final VTableControl tableControl = VTableFactory.eINSTANCE.createTableControl();
+		view.getChildren().add(tableControl);
+		final VTableDomainModelReference domainModelReference = VTableFactory.eINSTANCE
+			.createTableDomainModelReference();
+		tableControl.setDomainModelReference(domainModelReference);
+		final VFeaturePathDomainModelReference tableDMR = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		tableDMR.setDomainModelEFeature(TestPackage.eINSTANCE.getTableWithoutMultiplicity_Content());
+		domainModelReference.setDomainModelReference(tableDMR);
+		final VFeaturePathDomainModelReference column = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
+
+		domainModelReference.getColumnDomainModelReferences().add(column);
+		column.getDomainModelEReferencePath().add(TestPackage.eINSTANCE.getTableContentWithInnerChild_InnerChild());
+		column.getDomainModelEReferencePath().add(TestPackage.eINSTANCE.getTableContentWithInnerChild2_InnerChild());
+		column.setDomainModelEFeature(TestPackage.eINSTANCE.getTableContentWithValidation_Name());
+
+		final TableWithoutMultiplicity tableWithoutMultiplicity = TestFactory.eINSTANCE
+			.createTableWithoutMultiplicity();
+		final TableContentWithInnerChild child = TestFactory.eINSTANCE.createTableContentWithInnerChild();
+		tableWithoutMultiplicity.getContent().add(child);
+		final TableContentWithInnerChild2 innerChild = TestFactory.eINSTANCE.createTableContentWithInnerChild2();
+		child.setInnerChild(innerChild);
+		final TableContentWithValidation innerInnerChild = TestFactory.eINSTANCE.createTableContentWithValidation();
+		innerChild.setInnerChild(innerInnerChild);
+
+		ViewModelContextFactory.INSTANCE.createViewModelContext(view, tableWithoutMultiplicity);
+
+		assertEquals(1, tableControl.getDiagnostic().getDiagnostics().size());
+		assertEquals(Diagnostic.ERROR, tableControl.getDiagnostic().getHighestSeverity());
+		innerInnerChild.setName("a");
+		assertEquals(0, tableControl.getDiagnostic().getDiagnostics().size());
+		assertEquals(Diagnostic.OK, tableControl.getDiagnostic().getHighestSeverity());
+	}
+
+	@Test
+	public void testTableWithDetailValidationOnDetail() {
+		final VView view = VViewFactory.eINSTANCE.createView();
+		view.setRootEClass(TestPackage.eINSTANCE.getTableWithoutMultiplicityConcrete());
+		final VTableControl tableControl = VTableFactory.eINSTANCE.createTableControl();
+		tableControl.setDetailEditing(DetailEditing.WITH_PANEL);
+		view.getChildren().add(tableControl);
+		final VTableDomainModelReference domainModelReference = VTableFactory.eINSTANCE
+			.createTableDomainModelReference();
+		tableControl.setDomainModelReference(domainModelReference);
+		final VFeaturePathDomainModelReference tableDMR = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		tableDMR.setDomainModelEFeature(TestPackage.eINSTANCE.getTableWithoutMultiplicityConcrete_Content());
+		domainModelReference.setDomainModelReference(tableDMR);
+		final VFeaturePathDomainModelReference column = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
+
+		domainModelReference.getColumnDomainModelReferences().add(column);
+		column.setDomainModelEFeature(TestPackage.eINSTANCE.getTableContentWithInnerChild_Stuff());
+
+		final TableWithoutMultiplicityConcrete tableWithoutMultiplicity = TestFactory.eINSTANCE
+			.createTableWithoutMultiplicityConcrete();
+		final TableContentWithInnerChild child = TestFactory.eINSTANCE.createTableContentWithInnerChild();
+		tableWithoutMultiplicity.getContent().add(child);
+		final TableContentWithInnerChild2 innerChild = TestFactory.eINSTANCE.createTableContentWithInnerChild2();
+		child.setInnerChild(innerChild);
+		final TableContentWithValidation innerInnerChild = TestFactory.eINSTANCE.createTableContentWithValidation();
+		innerChild.setInnerChild(innerInnerChild);
+
+		ViewModelContextFactory.INSTANCE.createViewModelContext(view, tableWithoutMultiplicity);
+
+		// TODO the table must be rendered in order to show diagnostic, bug?
+
+		assertEquals(1, tableControl.getDiagnostic().getDiagnostics().size());
+		assertEquals(Diagnostic.ERROR, tableControl.getDiagnostic().getHighestSeverity());
+
+		// assertEquals(1, control.getDiagnostic().getDiagnostics().size());
+		// assertEquals(Diagnostic.ERROR, control.getDiagnostic().getHighestSeverity());
+
+		innerInnerChild.setName("a");
+		assertEquals(0, tableControl.getDiagnostic().getDiagnostics().size());
+		assertEquals(Diagnostic.OK, tableControl.getDiagnostic().getHighestSeverity());
+		// assertEquals(0, control.getDiagnostic().getDiagnostics().size());
+		// assertEquals(Diagnostic.OK, control.getDiagnostic().getHighestSeverity());
 	}
 }

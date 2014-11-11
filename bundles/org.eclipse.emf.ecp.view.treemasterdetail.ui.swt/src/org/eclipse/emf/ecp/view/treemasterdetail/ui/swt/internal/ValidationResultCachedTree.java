@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- *
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  * jfaltermeier - initial API and implementation
  ******************************************************************************/
@@ -20,16 +20,15 @@ import org.eclipse.emf.ecp.common.cachetree.IExcludedObjectsCallback;
 
 /**
  * {@link AbstractCachedTree} for propagating severities in the tree master detail.
- *
+ * 
  * @author jfaltermeier
- *
+ * 
  */
-@SuppressWarnings("restriction")
 public class ValidationResultCachedTree extends AbstractCachedTree<Integer> {
 
 	/**
 	 * Constructor.
-	 *
+	 * 
 	 * @param callback callback to exclude objects
 	 */
 	public ValidationResultCachedTree(IExcludedObjectsCallback callback) {
@@ -38,7 +37,7 @@ public class ValidationResultCachedTree extends AbstractCachedTree<Integer> {
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.common.cachetree.AbstractCachedTree#getDefaultValue()
 	 */
 	@Override
@@ -48,7 +47,7 @@ public class ValidationResultCachedTree extends AbstractCachedTree<Integer> {
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.common.cachetree.AbstractCachedTree#createdCachedTreeNode(java.lang.Object)
 	 */
 	@Override
@@ -58,9 +57,9 @@ public class ValidationResultCachedTree extends AbstractCachedTree<Integer> {
 
 	/**
 	 * Implementation of the tree node caching a severity.
-	 *
+	 * 
 	 * @author jfaltermeier
-	 *
+	 * 
 	 */
 	private class ValidationResultCachedTreeNode extends CachedTreeNode<Integer> {
 
@@ -73,7 +72,7 @@ public class ValidationResultCachedTree extends AbstractCachedTree<Integer> {
 
 		/**
 		 * {@inheritDoc}
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.common.cachetree.CachedTreeNode#update()
 		 */
 		@Override
@@ -91,7 +90,7 @@ public class ValidationResultCachedTree extends AbstractCachedTree<Integer> {
 
 		/**
 		 * {@inheritDoc}
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.common.cachetree.CachedTreeNode#getDisplayValue()
 		 */
 		@Override

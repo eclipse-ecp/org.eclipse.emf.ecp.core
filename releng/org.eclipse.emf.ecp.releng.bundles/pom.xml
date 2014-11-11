@@ -239,6 +239,9 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.indexdmr.tooling</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.indexdmr.databinding</module>
 		
+		<!-- Initial Validation -->
+		<module>../../bundles/org.eclipse.emf.ecp.view.table.validation</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.treemasterdetail.validation</module>
 	</modules>
 
 	<build>

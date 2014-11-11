@@ -31,10 +31,10 @@ import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.TableWithUniqueImpl#getContent <em>Content</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.TableWithUniqueImpl#getContent <em>Content</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class TableWithUniqueImpl extends EObjectImpl implements TableWithUnique {
@@ -42,7 +42,6 @@ public class TableWithUniqueImpl extends EObjectImpl implements TableWithUnique 
 	 * The cached value of the '{@link #getContent() <em>Content</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getContent()
 	 * @generated
 	 * @ordered
@@ -52,7 +51,6 @@ public class TableWithUniqueImpl extends EObjectImpl implements TableWithUnique 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	protected TableWithUniqueImpl() {
@@ -62,7 +60,6 @@ public class TableWithUniqueImpl extends EObjectImpl implements TableWithUnique 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -73,13 +70,11 @@ public class TableWithUniqueImpl extends EObjectImpl implements TableWithUnique 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public EList<TableContent> getContent() {
 		if (content == null) {
-			content = new EObjectContainmentEList<TableContent>(TableContent.class, this,
-				TestPackage.TABLE_WITH_UNIQUE__CONTENT);
+			content = new EObjectContainmentEList<TableContent>(TableContent.class, this, TestPackage.TABLE_WITH_UNIQUE__CONTENT);
 		}
 		return content;
 	}
@@ -87,14 +82,13 @@ public class TableWithUniqueImpl extends EObjectImpl implements TableWithUnique 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-		case TestPackage.TABLE_WITH_UNIQUE__CONTENT:
-			return ((InternalEList<?>) getContent()).basicRemove(otherEnd, msgs);
+			case TestPackage.TABLE_WITH_UNIQUE__CONTENT:
+				return ((InternalEList<?>)getContent()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -102,14 +96,13 @@ public class TableWithUniqueImpl extends EObjectImpl implements TableWithUnique 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case TestPackage.TABLE_WITH_UNIQUE__CONTENT:
-			return getContent();
+			case TestPackage.TABLE_WITH_UNIQUE__CONTENT:
+				return getContent();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -117,17 +110,16 @@ public class TableWithUniqueImpl extends EObjectImpl implements TableWithUnique 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case TestPackage.TABLE_WITH_UNIQUE__CONTENT:
-			getContent().clear();
-			getContent().addAll((Collection<? extends TableContent>) newValue);
-			return;
+			case TestPackage.TABLE_WITH_UNIQUE__CONTENT:
+				getContent().clear();
+				getContent().addAll((Collection<? extends TableContent>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -135,15 +127,14 @@ public class TableWithUniqueImpl extends EObjectImpl implements TableWithUnique 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case TestPackage.TABLE_WITH_UNIQUE__CONTENT:
-			getContent().clear();
-			return;
+			case TestPackage.TABLE_WITH_UNIQUE__CONTENT:
+				getContent().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -151,14 +142,13 @@ public class TableWithUniqueImpl extends EObjectImpl implements TableWithUnique 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case TestPackage.TABLE_WITH_UNIQUE__CONTENT:
-			return content != null && !content.isEmpty();
+			case TestPackage.TABLE_WITH_UNIQUE__CONTENT:
+				return content != null && !content.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

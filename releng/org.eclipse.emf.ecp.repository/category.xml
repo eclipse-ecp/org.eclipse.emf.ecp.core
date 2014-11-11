@@ -147,6 +147,9 @@
    <feature url="features/org.eclipse.emf.ecp.view.indexdmr.feature_1.5.0.qualifier.jar" id="org.eclipse.emf.ecp.view.indexdmr.feature" version="1.5.0.qualifier">
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
+   <feature url="features/org.eclipse.emf.ecp.view.validation.initial.feature_1.5.0.qualifier.jar" id="org.eclipse.emf.ecp.view.validation.initial.feature" version="1.5.0.qualifier">
+      <category name="org.eclipse.emf.ecp.emfforms"/>
+   </feature>
    <bundle id="org.eclipse.emf.ecp.view.group.swt.collapsible.pgroup" version="1.5.0.qualifier">
       <category name="org.eclipse.emf.ecp.view"/>
    </bundle>

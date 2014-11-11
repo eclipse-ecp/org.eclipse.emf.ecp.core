@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ASCII"?>
+<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model">
+  <rootEClass href="htp://www.eclipse.org/emf/ecp/view/validation/test/model#//TableContentWithInnerChild"/>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control innerChild">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
+      <domainModelEFeature xsi:type="ecore:EReference" href="htp://www.eclipse.org/emf/ecp/view/validation/test/model#//TableContentWithValidation/name"/>
+      <domainModelEReferencePath href="htp://www.eclipse.org/emf/ecp/view/validation/test/model#//TableContentWithInnerChild/innerChild"/>
+      <domainModelEReferencePath href="htp://www.eclipse.org/emf/ecp/view/validation/test/model#//TableContentWithInnerChild2/innerChild"/>
+    </domainModelReference>
+  </children>
+</org.eclipse.emf.ecp.view.model:View>

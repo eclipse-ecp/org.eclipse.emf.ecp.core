@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- *
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  ******************************************************************************/
@@ -30,7 +30,6 @@ import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.internal.table.swt.Activator;
 import org.eclipse.emf.ecp.view.internal.validation.ValidationService;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -43,15 +42,13 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Label;
 
 /**
  * Render for a {@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl VTableControl} with a detail editing
  * panel.
- *
+ * 
  * @author jfaltermeier
- *
+ * 
  */
 public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 
@@ -63,7 +60,7 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer#createControlComposite(org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
@@ -103,7 +100,7 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 
 	/**
 	 * Returns the prefereed height for the detail panel. This will be passed to the layoutdata.
-	 *
+	 * 
 	 * @return the height in px
 	 */
 	protected int getDetailPanelHeightHint() {
@@ -112,7 +109,7 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 
 	/**
 	 * Creates the detail panel.
-	 *
+	 * 
 	 * @param composite the parent
 	 * @return the detail panel
 	 */
@@ -124,7 +121,7 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 
 	/**
 	 * Returns a fresh copy of the {@link VView} used for detail editing.
-	 *
+	 * 
 	 * @return the view
 	 */
 	protected VView getView() {
@@ -143,7 +140,7 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer#viewerSelectionChanged(org.eclipse.jface.viewers.SelectionChangedEvent)
 	 */
 	@Override
@@ -160,29 +157,34 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 
 	/**
 	 * Handle a single selection.
-	 *
+	 * 
 	 * @param selection the selection
 	 */
 	protected void handleSingleSelection(IStructuredSelection selection) {
 		try {
 			disposeDetail();
-			final EObject object = (EObject) selection.getFirstElement();
-			ViewModelContext childContext = getViewModelContext().getChildContext(object);
-			if (childContext == null) {
-				final VView detailView = getView();
+			final Composite compositeToRenderOn = new Composite(detailPanel, SWT.NONE);
+			GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(false).applyTo(compositeToRenderOn);
+			GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(compositeToRenderOn);
 
-				if (detailView == null) {
-					if (isDebug()) {
-						final Label label = new Label(detailPanel, SWT.NONE);
-						label.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_RED));
-						label.setText("No Detail View found."); //$NON-NLS-1$
-					}
-				} else {
-					childContext = ViewModelContextFactory.INSTANCE.createViewModelContext(detailView, object);
-					getViewModelContext().addChildContext(getVElement(), object, childContext);
-				}
-			}
-			ecpView = ECPSWTViewRenderer.INSTANCE.render(detailPanel, childContext);
+			final EObject object = (EObject) selection.getFirstElement();
+			final VView detailView = getView();
+			final ViewModelContext childContext = getViewModelContext().getChildContext(object, getVElement(),
+				detailView);
+			// if (childContext == null) {
+			//
+			// if (detailView == null) {
+			// if (isDebug()) {
+			// final Label label = new Label(compositeToRenderOn, SWT.NONE);
+			// label.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_RED));
+			//						label.setText("No Detail View found."); //$NON-NLS-1$
+			// }
+			// } else {
+			// childContext = ViewModelContextFactory.INSTANCE.createViewModelContext(detailView, object,
+			// getViewModelContext(), getVElement());
+			// }
+			// }
+			ecpView = ECPSWTViewRenderer.INSTANCE.render(compositeToRenderOn, childContext);
 			border.layout(true, true);
 			final Point point = detailPanel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 			scrolledComposite.setMinHeight(point.y);
@@ -193,7 +195,7 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 
 	/**
 	 * Handle multi selection.
-	 *
+	 * 
 	 * @param selection the selection
 	 */
 	protected void handleMultiSelection(IStructuredSelection selection) {
@@ -219,38 +221,29 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer#postInit()
 	 */
 	@Override
 	protected void postInit() {
 		super.postInit();
-		final Iterator<Setting> iterator = getVElement().getDomainModelReference().getIterator();
-		int counter = -1;
-		while (iterator.hasNext()) {
-			counter++;
-			final Setting setting = iterator.next();
-			if (counter == 0) {
-				continue;
-			}
-			final VView detailView = getView();
-			final ViewModelContext childContext = ViewModelContextFactory.INSTANCE.createViewModelContext(detailView,
-				setting.getEObject());
-			getViewModelContext().addChildContext(getVElement(), setting.getEObject(), childContext);
-		}
+		revalidate();
 	}
 
 	@Override
 	public void finalizeRendering(Composite parent) {
 		super.finalizeRendering(parent);
-		revalidate();
 	}
 
 	private void revalidate() {
 		final Iterator<Setting> iterator = getVElement().getDomainModelReference().getIterator();
 		final Set<EObject> toValidate = new LinkedHashSet<EObject>();
 		while (iterator.hasNext()) {
-			toValidate.add(iterator.next().getEObject());
+			final EObject eObject = iterator.next().getEObject();
+			if (toValidate.contains(eObject)) {
+				continue;
+			}
+			toValidate.add(eObject);
 		}
 		getViewModelContext().getService(ValidationService.class).validate(toValidate);
 	}
@@ -258,13 +251,11 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 	@Override
 	protected EObject addRow(EClass clazz, Setting mainSetting) {
 		final EObject addEObject = super.addRow(clazz, mainSetting);
-		ViewModelContext childContext = getViewModelContext().getChildContext(addEObject);
-		if (childContext == null) {
-			final VView detailView = getView();
-			childContext = ViewModelContextFactory.INSTANCE.createViewModelContext(detailView,
-				addEObject);
-			getViewModelContext().addChildContext(getVElement(), addEObject, childContext);
-		}
+
+		final VView detailView = getView();
+		// ViewModelContextFactory.INSTANCE.createViewModelContext(,
+		// , getViewModelContext(), );
+		getViewModelContext().getChildContext(addEObject, getVElement(), detailView);
 		revalidate();
 		return addEObject;
 	}
@@ -274,7 +265,7 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 		super.deleteRows(deletionList, mainSetting);
 		final Set<Diagnostic> toDelete = new LinkedHashSet<Diagnostic>();
 		for (final EObject eObject : deletionList) {
-			getViewModelContext().removeChildContext(eObject);
+			// getViewModelContext().removeChildContext(eObject);
 			toDelete.addAll(getVElement().getDiagnostic().getDiagnostics(eObject));
 			final TreeIterator<EObject> eAllContents = eObject.eAllContents();
 			while (eAllContents.hasNext()) {

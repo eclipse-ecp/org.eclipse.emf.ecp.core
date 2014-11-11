@@ -17,8 +17,8 @@ import org.eclipse.emf.ecore.EObject;
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Table Content</b></em>'.
  * <!-- end-user-doc -->
- * 
- * 
+ *
+ *
  * @see org.eclipse.emf.ecp.view.validation.test.model.TestPackage#getTableContent()
  * @model abstract="true"
  * @generated

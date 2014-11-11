@@ -31,10 +31,10 @@ import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.ContainerImpl#getContents <em>Contents</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.ContainerImpl#getContents <em>Contents</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class ContainerImpl extends EObjectImpl implements Container {
@@ -42,7 +42,6 @@ public class ContainerImpl extends EObjectImpl implements Container {
 	 * The cached value of the '{@link #getContents() <em>Contents</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getContents()
 	 * @generated
 	 * @ordered
@@ -52,7 +51,6 @@ public class ContainerImpl extends EObjectImpl implements Container {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	protected ContainerImpl() {
@@ -62,7 +60,6 @@ public class ContainerImpl extends EObjectImpl implements Container {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -73,7 +70,6 @@ public class ContainerImpl extends EObjectImpl implements Container {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public EList<Content> getContents() {
@@ -86,14 +82,13 @@ public class ContainerImpl extends EObjectImpl implements Container {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-		case TestPackage.CONTAINER__CONTENTS:
-			return ((InternalEList<?>) getContents()).basicRemove(otherEnd, msgs);
+			case TestPackage.CONTAINER__CONTENTS:
+				return ((InternalEList<?>)getContents()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -101,14 +96,13 @@ public class ContainerImpl extends EObjectImpl implements Container {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case TestPackage.CONTAINER__CONTENTS:
-			return getContents();
+			case TestPackage.CONTAINER__CONTENTS:
+				return getContents();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -116,17 +110,16 @@ public class ContainerImpl extends EObjectImpl implements Container {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case TestPackage.CONTAINER__CONTENTS:
-			getContents().clear();
-			getContents().addAll((Collection<? extends Content>) newValue);
-			return;
+			case TestPackage.CONTAINER__CONTENTS:
+				getContents().clear();
+				getContents().addAll((Collection<? extends Content>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -134,15 +127,14 @@ public class ContainerImpl extends EObjectImpl implements Container {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case TestPackage.CONTAINER__CONTENTS:
-			getContents().clear();
-			return;
+			case TestPackage.CONTAINER__CONTENTS:
+				getContents().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -150,14 +142,13 @@ public class ContainerImpl extends EObjectImpl implements Container {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case TestPackage.CONTAINER__CONTENTS:
-			return contents != null && !contents.isEmpty();
+			case TestPackage.CONTAINER__CONTENTS:
+				return contents != null && !contents.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

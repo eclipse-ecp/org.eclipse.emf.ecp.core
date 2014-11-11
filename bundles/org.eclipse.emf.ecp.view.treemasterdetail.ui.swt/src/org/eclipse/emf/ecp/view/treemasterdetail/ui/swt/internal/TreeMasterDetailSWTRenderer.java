@@ -47,8 +47,8 @@ import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.internal.validation.ValidationService;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.context.reporting.StatusReport;
+import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
@@ -117,6 +117,7 @@ import org.osgi.framework.FrameworkUtil;
  * @author Eugen Neufeld
  *
  */
+@SuppressWarnings("restriction")
 public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMasterDetail> {
 
 	/**
@@ -257,30 +258,6 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 	}
 
 	/**
-	 * @author Anas Chakfeh
-	 *
-	 */
-	private class RootObject {
-
-		private final EObject modelElement;
-
-		/**
-		 * @param modelElement
-		 */
-		public RootObject(EObject modelElement) {
-			this.modelElement = modelElement;
-		}
-
-		/**
-		 * @return the root object
-		 */
-		public EObject getRoot() {
-			return modelElement;
-		}
-
-	}
-
-	/**
 	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#preInit()
@@ -388,19 +365,19 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		return form;
 	}
 
-	private Set<Object> getAllChildren(Object parent, AdapterFactoryContentProvider adapterFactoryContentProvider) {
-		final Set<Object> allChildren = new LinkedHashSet<Object>();
-		final Object[] children = adapterFactoryContentProvider.getChildren(parent);
-		for (final Object object : children) {
-			final Object manipulatedSelection = manipulateSelection(object);
-			if (!EObject.class.isInstance(manipulatedSelection)) {
-				continue;
-			}
-			allChildren.add(manipulatedSelection);
-			allChildren.addAll(getAllChildren(object, adapterFactoryContentProvider));
-		}
-		return allChildren;
-	}
+	// private Set<Object> getAllChildren(Object parent, AdapterFactoryContentProvider adapterFactoryContentProvider) {
+	// final Set<Object> allChildren = new LinkedHashSet<Object>();
+	// final Object[] children = adapterFactoryContentProvider.getChildren(parent);
+	// for (final Object object : children) {
+	// final Object manipulatedSelection = manipulateSelection(object);
+	// if (!EObject.class.isInstance(manipulatedSelection)) {
+	// continue;
+	// }
+	// allChildren.add(manipulatedSelection);
+	// allChildren.addAll(getAllChildren(object, adapterFactoryContentProvider));
+	// }
+	// return allChildren;
+	// }
 
 	/**
 	 * Creates the tree viewer for the master.
@@ -427,8 +404,8 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		final AdapterFactoryLabelProvider labelProvider = new TreeMasterDetailLabelProvider(adapterFactory);
 
 		/* validation start */
-		registerRootChildContext();
-		registerChildrenChildContext(adapterFactoryContentProvider);
+		// registerRootChildContext();
+		// registerChildrenChildContext(adapterFactoryContentProvider);
 		registerDomainChangeListener(adapterFactory);
 		/* validation end */
 
@@ -479,10 +456,20 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		return treeViewer;
 	}
 
+	/**
+	 * Return true if a context menu should be shown in the tree.
+	 *
+	 * @return true if a context menu should be shown, false otherwise
+	 */
 	protected boolean hasContextMenu() {
 		return true;
 	}
 
+	/**
+	 * Return true if the tree should support DnD.
+	 *
+	 * @return true if DnD should be supported , false otherwise
+	 */
 	protected boolean hasDnDSupport() {
 		return true;
 	}
@@ -507,12 +494,11 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 					final Map<String, Object> context = new LinkedHashMap<String, Object>();
 					context.put(DETAIL_KEY, true);
 					final VView view = ViewProviderHelper.getView((EObject) manipulateSelection, context);
-					final ViewModelContext viewContext = ViewModelContextFactory.INSTANCE
-						.createViewModelContext(view, (EObject) manipulateSelection);
+					final ViewModelContext viewContext = getViewModelContext()
+						.getChildContext((EObject) manipulateSelection, getVElement(), view);
 					manipulateViewContext(viewContext);
 					viewContext.getService(ValidationService.class).registerValidationListener(
 						new TreeValidationListener((EObject) manipulateSelection));
-					getViewModelContext().addChildContext(getVElement(), (EObject) manipulateSelection, viewContext);
 				}
 				if (viewerNotification.getEventType() == Notification.REMOVE) {
 					final Object oldValue = viewerNotification.getOldValue();
@@ -522,41 +508,41 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		});
 	}
 
-	/**
-	 * @param adapterFactoryContentProvider
-	 */
-	private void registerChildrenChildContext(final AdapterFactoryContentProvider adapterFactoryContentProvider) {
-		final Set<Object> children = getAllChildren(getViewModelContext().getDomainModel(),
-			adapterFactoryContentProvider);
-		for (final Object object : children) {
-			final Map<String, Object> context = new LinkedHashMap<String, Object>();
-			context.put(DETAIL_KEY, true);
-			final VView view = ViewProviderHelper.getView((EObject) object, context);
-			final ViewModelContext viewContext = ViewModelContextFactory.INSTANCE
-				.createViewModelContext(view, (EObject) object);
-			manipulateViewContext(viewContext);
-			viewContext.getService(ValidationService.class).registerValidationListener(
-				new TreeValidationListener((EObject) object));
-			getViewModelContext().addChildContext(getVElement(), (EObject) object, viewContext);
-		}
-	}
-
-	private void registerRootChildContext() {
-		final Map<String, Object> context = new LinkedHashMap<String, Object>();
-		context.put(DETAIL_KEY, true);
-		context.put(ROOT_KEY, true);
-		final Object manipulateSelection = manipulateSelection(getViewModelContext().getDomainModel());
-		VView view = getVElement().getDetailView();
-		if (view == null || view.getChildren().isEmpty()) {
-			view = ViewProviderHelper.getView((EObject) manipulateSelection, context);
-		}
-		final ViewModelContext viewContext = ViewModelContextFactory.INSTANCE
-			.createViewModelContext(view, (EObject) manipulateSelection);
-		manipulateViewContext(viewContext);
-		viewContext.getService(ValidationService.class).registerValidationListener(
-			new TreeValidationListener((EObject) manipulateSelection));
-		getViewModelContext().addChildContext(getVElement(), (EObject) manipulateSelection, viewContext);
-	}
+	// /**
+	// * @param adapterFactoryContentProvider
+	// */
+	// private void registerChildrenChildContext(final AdapterFactoryContentProvider adapterFactoryContentProvider) {
+	// final Set<Object> children = getAllChildren(getViewModelContext().getDomainModel(),
+	// adapterFactoryContentProvider);
+	// for (final Object object : children) {
+	// final Map<String, Object> context = new LinkedHashMap<String, Object>();
+	// context.put(DETAIL_KEY, true);
+	// final VView view = ViewProviderHelper.getView((EObject) object, context);
+	// final ViewModelContext viewContext = ViewModelContextFactory.INSTANCE
+	// .createViewModelContext(view, (EObject) object, (ViewModelContextImpl) getViewModelContext(),
+	// getVElement());
+	// manipulateViewContext(viewContext);
+	// viewContext.getService(ValidationService.class).registerValidationListener(
+	// new TreeValidationListener((EObject) object));
+	// }
+	// }
+	//
+	// private void registerRootChildContext() {
+	// final Map<String, Object> context = new LinkedHashMap<String, Object>();
+	// context.put(DETAIL_KEY, true);
+	// context.put(ROOT_KEY, true);
+	// final Object manipulateSelection = manipulateSelection(getViewModelContext().getDomainModel());
+	// VView view = getVElement().getDetailView();
+	// if (view == null || view.getChildren().isEmpty()) {
+	// view = ViewProviderHelper.getView((EObject) manipulateSelection, context);
+	// }
+	// final ViewModelContext viewContext = ViewModelContextFactory.INSTANCE
+	// .createViewModelContext(view, (EObject) manipulateSelection, (ViewModelContextImpl) getViewModelContext(),
+	// getVElement());
+	// manipulateViewContext(viewContext);
+	// viewContext.getService(ValidationService.class).registerValidationListener(
+	// new TreeValidationListener((EObject) manipulateSelection));
+	// }
 
 	/**
 	 * Returns the label provider.
@@ -955,38 +941,44 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 					}
 					childComposite = createComposite();
 
-					final Object root = manipulateSelection(((RootObject) ((TreeViewer) event.getSource()).getInput())
-						.getRoot());
+					final Object root = manipulateSelection(((RootObject) ((TreeViewer)
+						event.getSource()).getInput())
+							.getRoot());
 					final Map<String, Object> context = new LinkedHashMap<String, Object>();
 					context.put(DETAIL_KEY, true);
 
 					/* root selected */
 					if (selected.equals(root)) {
 						context.put(ROOT_KEY, true);
-						ViewModelContext childContext = getViewModelContext().getChildContext((EObject) selected);
-						if (childContext == null) {
-							VView vView = getVElement().getDetailView();
-							if (vView.getChildren().isEmpty()) {
-								vView = ViewProviderHelper.getView((EObject) selected, context);
-							}
-							childContext = ViewModelContextFactory.INSTANCE
-								.createViewModelContext(vView, (EObject) selected, referenceService);
-							manipulateViewContext(childContext);
-							getViewModelContext().addChildContext(getVElement(), (EObject) selected, childContext);
+						VView vView = getVElement().getDetailView();
+						if (vView.getChildren().isEmpty()) {
+							vView = ViewProviderHelper.getView((EObject) selected, context);
 						}
+
+						final ViewModelContext childContext = getViewModelContext()
+							.getChildContext((EObject) selected, getVElement(), vView);
+						// if (childContext == null) {
+						//
+						// childContext = ViewModelContextFactory.INSTANCE
+						// .createViewModelContext(vView, (EObject) selected,
+						// getViewModelContext(), getVElement(), referenceService);
+						manipulateViewContext(childContext);
+						// }
 						ECPSWTViewRenderer.INSTANCE.render(childComposite, childContext);
 
 					}
 					/* child selected */
 					else {
-						ViewModelContext childContext = getViewModelContext().getChildContext((EObject) selected);
-						if (childContext == null) {
-							final VView view = ViewProviderHelper.getView((EObject) selected, context);
-							childContext = ViewModelContextFactory.INSTANCE
-								.createViewModelContext(view,
-									(EObject) selected, referenceService);
-							manipulateViewContext(childContext);
-						}
+						final VView view = ViewProviderHelper.getView((EObject) selected, context);
+						final ViewModelContext childContext = getViewModelContext().getChildContext((EObject) selected,
+							getVElement(), view);
+						// if (childContext == null) {
+						//
+						// childContext = ViewModelContextFactory.INSTANCE
+						// .createViewModelContext(view,
+						// (EObject) selected, referenceService);
+						manipulateViewContext(childContext);
+						// }
 						ECPSWTViewRenderer.INSTANCE.render(childComposite, childContext);
 					}
 
@@ -1035,7 +1027,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 	 * @return the object that should be used as a selection
 	 */
 	protected Object manipulateSelection(Object treeSelected) {
-		return treeSelected;
+		return TreeMasterDetailSelectionManipulatorHelper.manipulateSelection(treeSelected);
 	}
 
 	/**
@@ -1073,8 +1065,18 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		}
 
 		protected Image getValidationOverlay(Image image, final EObject object) {
-			final Integer severity = validationResultCacheTree.getCachedValue(object);
-			final ImageDescriptor overlay = SWTValidationHelper.INSTANCE.getValidationOverlayDescriptor(severity);
+			// final Integer severity = validationResultCacheTree.getCachedValue(object);
+			final VDiagnostic vDiagnostic = getVElement().getDiagnostic();
+			int highestSeverity = Diagnostic.OK;
+			if (vDiagnostic != null) {
+				for (final Diagnostic diagnostic : vDiagnostic.getDiagnostics(object)) {
+					if (diagnostic.getSeverity() > highestSeverity) {
+						highestSeverity = diagnostic.getSeverity();
+					}
+				}
+			}
+			final ImageDescriptor overlay = SWTValidationHelper.INSTANCE
+				.getValidationOverlayDescriptor(highestSeverity);
 			if (overlay == null) {
 				return image;
 			}
@@ -1097,4 +1099,35 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		}
 		getViewModelContext().getService(ValidationService.class).validate(toValidate);
 	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#applyValidation()
+	 */
+	@Override
+	protected void applyValidation() {
+		super.applyValidation();
+
+		// // int highestSeverity = Diagnostic.OK;
+		// final VDiagnostic vDiagnostic = getVElement().getDiagnostic();
+		// if (vDiagnostic == null||vDiagnostic.getDiagnostics().isEmpty()) {
+		// validationResultCacheTree.clear();
+		// }
+		// Map<EObject, Integer> domainObjectSeverities=new LinkedHashMap<EObject, Integer>();
+		// for (final Object diagnosticObject : vDiagnostic.getDiagnostics()) {
+		// final Diagnostic diagnostic = Diagnostic.class.cast(diagnosticObject);
+		// EObject diagnosticEObject=(EObject) diagnostic.getData().get(0);
+		// // if (diagnostic.getSeverity() > highestSeverity) {
+		// // highestSeverity = diagnostic.getSeverity();
+		// // }
+		// }
+		// for(EObject domainObject:domainObjectSeverities.keySet())
+		// validationResultCacheTree.update(domainObject, domainObjectSeverities.get(domainObject));
+		if (treeViewer == null) {
+			return;
+		}
+		treeViewer.refresh();
+	}
+
 }

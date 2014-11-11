@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- *
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  * Edagr Mueller - initial API and implementation
  * Eugen Neufeld - Refactoring
@@ -16,7 +16,6 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.eclipse.emf.ecp.view.internal.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.internal.swt.SWTRendererFactoryImpl;
 import org.eclipse.emf.ecp.view.model.common.AbstractRenderer;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
@@ -38,21 +37,21 @@ import org.eclipse.swt.widgets.Control;
 /**
  * Common base class for all SWT specific renderer classes. {@link #init(VElement, ViewModelContext)} is called by the
  * framework when providing the renderer. You don't need to call this.
- *
+ * 
  * A renderer using other renderers to render its contents must call this methods in this order:
- *
+ * 
  * <pre>
  *  {@link #getGridDescription(SWTGridDescription)}
  *  for each SWTGridCell
  *  	{@link #render(SWTGridCell, Composite)}
  * {@link #finalizeRendering(Composite)}
  * </pre>
- *
+ * 
  * If you don't call {@link #finalizeRendering(Composite)} after the rendering, the automatic disposing of the renderer
  * will not work, as well as the initial validation check.
- *
+ * 
  * @author Eugen Neufeld
- *
+ * 
  * @param <VELEMENT> the actual type of the {@link VElement} to be drawn
  * @since 1.2
  */
@@ -76,7 +75,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 
 	/**
 	 * Constructor for testing purpose.
-	 *
+	 * 
 	 * @param factory the factory to use
 	 * @since 1.3
 	 */
@@ -86,7 +85,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 
 	/**
 	 * Returns the GridDescription for this Renderer.
-	 *
+	 * 
 	 * @param gridDescription the current {@link GridDescription}
 	 * @return the number of controls per row
 	 * @since 1.3
@@ -94,9 +93,9 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	public abstract SWTGridDescription getGridDescription(SWTGridDescription gridDescription);
 
 	/**
-	 *
+	 * 
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.model.common.AbstractRenderer#init(org.eclipse.emf.ecp.view.spi.model.VElement,
 	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 * @since 1.3
@@ -136,15 +135,14 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 			};
 			getViewModelContext().registerViewChangeListener(listener);
 		}
-		if (ViewModelContextImpl.class.isInstance(getViewModelContext())) {
-			ViewModelContextImpl.class.cast(getViewModelContext()).addContextUser(this);
-		}
+		getViewModelContext().addContextUser(this);
+
 		postInit();
 	}
 
 	/**
 	 * Returns a copy of the {@link GridCell} to {@link Control} map.
-	 *
+	 * 
 	 * @return a copy of the controls map
 	 * @since 1.3
 	 */
@@ -157,7 +155,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 
 	/**
 	 * Use this method to initialize objects which are needed already before rendering.
-	 *
+	 * 
 	 * @since 1.3
 	 */
 	protected void preInit() {
@@ -166,7 +164,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 
 	/**
 	 * Use this method to initialize objects which are needed during rendering.
-	 *
+	 * 
 	 * @since 1.3
 	 */
 	protected void postInit() {
@@ -176,7 +174,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	/**
 	 * Disposes all resources used by the renderer.
 	 * Don't forget to call super.dispose if overwriting this method.
-	 *
+	 * 
 	 * @since 1.3
 	 */
 	@Override
@@ -186,15 +184,14 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 		}
 		listener = null;
 		controls = null;
-		if (ViewModelContextImpl.class.isInstance(getViewModelContext())) {
-			ViewModelContextImpl.class.cast(getViewModelContext()).removeContextUser(this);
-		}
+		getViewModelContext().removeContextUser(this);
+
 		super.dispose();
 	}
 
 	/**
 	 * Renders the passed {@link VElement}.
-	 *
+	 * 
 	 * @param cell the {@link SWTGridCell} of the control to render
 	 * @param parent the {@link Composite} to render on
 	 * @return the rendered {@link Control}
@@ -233,7 +230,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 
 	/**
 	 * Called by the framework to initialize listener.
-	 *
+	 * 
 	 * @param parent the parent used during render
 	 * @since 1.3
 	 */
@@ -259,7 +256,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 
 	/**
 	 * Renders the passed {@link VElement}.
-	 *
+	 * 
 	 * @param cell the {@link GridCell} of the control to render
 	 * @param parent the {@link Composite} to render on
 	 * @return the rendered {@link Control}
@@ -272,9 +269,9 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 
 	/**
 	 * Marks a controls as readonly.
-	 *
+	 * 
 	 * @since 1.3
-	 *
+	 * 
 	 */
 	protected void applyReadOnly() {
 		for (final SWTGridCell gridCell : controls.keySet()) {
@@ -284,9 +281,9 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 
 	/**
 	 * Allows implementers to set a control to enabled.
-	 *
+	 * 
 	 * @since 1.3
-	 *
+	 * 
 	 */
 	protected void applyEnable() {
 		for (final SWTGridCell gridCell : controls.keySet()) {
@@ -296,7 +293,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 
 	/**
 	 * Wraps the call to enable/disable a control.
-	 *
+	 * 
 	 * @param gridCell the {@link SWTGridCell} to enable/disable
 	 * @param control the {@link Control} to enable/disable
 	 * @param enabled true if control should be enabled, false otherwise
@@ -308,9 +305,9 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 
 	/**
 	 * Allows implementers to check and set the visibility on the whole result row.
-	 *
+	 * 
 	 * @since 1.3
-	 *
+	 * 
 	 */
 	protected void applyVisible() {
 		final boolean visible = getVElement().isVisible();
@@ -330,7 +327,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	/**
 	 * Allows implementers to display the validation state of the control.
 	 * The default implementation does nothing.
-	 *
+	 * 
 	 * @since 1.3
 	 */
 	protected void applyValidation() {
@@ -339,7 +336,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 
 	/**
 	 * Sets the LayoutData for the specified control.
-	 *
+	 * 
 	 * @param gridCell the {@link GridCell} used to render the control
 	 * @param gridDescription the {@link GridDescription} of the parent which rendered the control
 	 * @param currentRowGridDescription the {@link GridDescription} of the current row
@@ -360,7 +357,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 
 	/**
 	 * The {@link SWTRendererFactory} to use.
-	 *
+	 * 
 	 * @return the {@link SWTRendererFactory}
 	 * @since 1.3
 	 */

@@ -29,12 +29,12 @@ import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.ComputerImpl#getMainboard <em>Mainboard</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.ComputerImpl#getName <em>Name</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.ComputerImpl#getPowerBlock <em>Power Block</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.ComputerImpl#getMainboard <em>Mainboard</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.ComputerImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.ComputerImpl#getPowerBlock <em>Power Block</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class ComputerImpl extends EObjectImpl implements Computer {
@@ -42,7 +42,6 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 	 * The cached value of the '{@link #getMainboard() <em>Mainboard</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getMainboard()
 	 * @generated
 	 * @ordered
@@ -53,7 +52,6 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getName()
 	 * @generated
 	 * @ordered
@@ -64,7 +62,6 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getName()
 	 * @generated
 	 * @ordered
@@ -75,7 +72,6 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 	 * The cached value of the '{@link #getPowerBlock() <em>Power Block</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getPowerBlock()
 	 * @generated
 	 * @ordered
@@ -85,7 +81,6 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	protected ComputerImpl() {
@@ -95,7 +90,6 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -106,7 +100,6 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public Mainboard getMainboard() {
@@ -116,19 +109,14 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public NotificationChain basicSetMainboard(Mainboard newMainboard, NotificationChain msgs) {
 		Mainboard oldMainboard = mainboard;
 		mainboard = newMainboard;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
-				TestPackage.COMPUTER__MAINBOARD, oldMainboard, newMainboard);
-			if (msgs == null)
-				msgs = notification;
-			else
-				msgs.add(notification);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TestPackage.COMPUTER__MAINBOARD, oldMainboard, newMainboard);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
 	}
@@ -136,31 +124,25 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public void setMainboard(Mainboard newMainboard) {
 		if (newMainboard != mainboard) {
 			NotificationChain msgs = null;
 			if (mainboard != null)
-				msgs = ((InternalEObject) mainboard).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
-					- TestPackage.COMPUTER__MAINBOARD, null, msgs);
+				msgs = ((InternalEObject)mainboard).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - TestPackage.COMPUTER__MAINBOARD, null, msgs);
 			if (newMainboard != null)
-				msgs = ((InternalEObject) newMainboard).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
-					- TestPackage.COMPUTER__MAINBOARD, null, msgs);
+				msgs = ((InternalEObject)newMainboard).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - TestPackage.COMPUTER__MAINBOARD, null, msgs);
 			msgs = basicSetMainboard(newMainboard, msgs);
-			if (msgs != null)
-				msgs.dispatch();
+			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.COMPUTER__MAINBOARD, newMainboard,
-				newMainboard));
+			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.COMPUTER__MAINBOARD, newMainboard, newMainboard));
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public String getName() {
@@ -170,7 +152,6 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public void setName(String newName) {
@@ -183,7 +164,6 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public PowerBlock getPowerBlock() {
@@ -193,19 +173,14 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public NotificationChain basicSetPowerBlock(PowerBlock newPowerBlock, NotificationChain msgs) {
 		PowerBlock oldPowerBlock = powerBlock;
 		powerBlock = newPowerBlock;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
-				TestPackage.COMPUTER__POWER_BLOCK, oldPowerBlock, newPowerBlock);
-			if (msgs == null)
-				msgs = notification;
-			else
-				msgs.add(notification);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TestPackage.COMPUTER__POWER_BLOCK, oldPowerBlock, newPowerBlock);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
 	}
@@ -213,40 +188,34 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public void setPowerBlock(PowerBlock newPowerBlock) {
 		if (newPowerBlock != powerBlock) {
 			NotificationChain msgs = null;
 			if (powerBlock != null)
-				msgs = ((InternalEObject) powerBlock).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
-					- TestPackage.COMPUTER__POWER_BLOCK, null, msgs);
+				msgs = ((InternalEObject)powerBlock).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - TestPackage.COMPUTER__POWER_BLOCK, null, msgs);
 			if (newPowerBlock != null)
-				msgs = ((InternalEObject) newPowerBlock).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
-					- TestPackage.COMPUTER__POWER_BLOCK, null, msgs);
+				msgs = ((InternalEObject)newPowerBlock).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - TestPackage.COMPUTER__POWER_BLOCK, null, msgs);
 			msgs = basicSetPowerBlock(newPowerBlock, msgs);
-			if (msgs != null)
-				msgs.dispatch();
+			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.COMPUTER__POWER_BLOCK, newPowerBlock,
-				newPowerBlock));
+			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.COMPUTER__POWER_BLOCK, newPowerBlock, newPowerBlock));
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-		case TestPackage.COMPUTER__MAINBOARD:
-			return basicSetMainboard(null, msgs);
-		case TestPackage.COMPUTER__POWER_BLOCK:
-			return basicSetPowerBlock(null, msgs);
+			case TestPackage.COMPUTER__MAINBOARD:
+				return basicSetMainboard(null, msgs);
+			case TestPackage.COMPUTER__POWER_BLOCK:
+				return basicSetPowerBlock(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -254,18 +223,17 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case TestPackage.COMPUTER__MAINBOARD:
-			return getMainboard();
-		case TestPackage.COMPUTER__NAME:
-			return getName();
-		case TestPackage.COMPUTER__POWER_BLOCK:
-			return getPowerBlock();
+			case TestPackage.COMPUTER__MAINBOARD:
+				return getMainboard();
+			case TestPackage.COMPUTER__NAME:
+				return getName();
+			case TestPackage.COMPUTER__POWER_BLOCK:
+				return getPowerBlock();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -273,21 +241,20 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case TestPackage.COMPUTER__MAINBOARD:
-			setMainboard((Mainboard) newValue);
-			return;
-		case TestPackage.COMPUTER__NAME:
-			setName((String) newValue);
-			return;
-		case TestPackage.COMPUTER__POWER_BLOCK:
-			setPowerBlock((PowerBlock) newValue);
-			return;
+			case TestPackage.COMPUTER__MAINBOARD:
+				setMainboard((Mainboard)newValue);
+				return;
+			case TestPackage.COMPUTER__NAME:
+				setName((String)newValue);
+				return;
+			case TestPackage.COMPUTER__POWER_BLOCK:
+				setPowerBlock((PowerBlock)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -295,21 +262,20 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case TestPackage.COMPUTER__MAINBOARD:
-			setMainboard((Mainboard) null);
-			return;
-		case TestPackage.COMPUTER__NAME:
-			setName(NAME_EDEFAULT);
-			return;
-		case TestPackage.COMPUTER__POWER_BLOCK:
-			setPowerBlock((PowerBlock) null);
-			return;
+			case TestPackage.COMPUTER__MAINBOARD:
+				setMainboard((Mainboard)null);
+				return;
+			case TestPackage.COMPUTER__NAME:
+				setName(NAME_EDEFAULT);
+				return;
+			case TestPackage.COMPUTER__POWER_BLOCK:
+				setPowerBlock((PowerBlock)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -317,18 +283,17 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case TestPackage.COMPUTER__MAINBOARD:
-			return mainboard != null;
-		case TestPackage.COMPUTER__NAME:
-			return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-		case TestPackage.COMPUTER__POWER_BLOCK:
-			return powerBlock != null;
+			case TestPackage.COMPUTER__MAINBOARD:
+				return mainboard != null;
+			case TestPackage.COMPUTER__NAME:
+				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+			case TestPackage.COMPUTER__POWER_BLOCK:
+				return powerBlock != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -336,13 +301,11 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy())
-			return super.toString();
+		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (name: ");

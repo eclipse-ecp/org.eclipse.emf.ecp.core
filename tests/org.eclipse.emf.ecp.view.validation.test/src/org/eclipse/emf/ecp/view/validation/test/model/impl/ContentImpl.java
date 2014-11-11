@@ -25,13 +25,11 @@ import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.ContentImpl#getUniqueAttribute <em>Unique Attribute
- * </em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.ContentImpl#getSecondAttribute <em>Second Attribute
- * </em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.ContentImpl#getUniqueAttribute <em>Unique Attribute</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.ContentImpl#getSecondAttribute <em>Second Attribute</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class ContentImpl extends EObjectImpl implements Content {
@@ -39,7 +37,6 @@ public class ContentImpl extends EObjectImpl implements Content {
 	 * The default value of the '{@link #getUniqueAttribute() <em>Unique Attribute</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getUniqueAttribute()
 	 * @generated
 	 * @ordered
@@ -50,7 +47,6 @@ public class ContentImpl extends EObjectImpl implements Content {
 	 * The cached value of the '{@link #getUniqueAttribute() <em>Unique Attribute</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getUniqueAttribute()
 	 * @generated
 	 * @ordered
@@ -61,7 +57,6 @@ public class ContentImpl extends EObjectImpl implements Content {
 	 * The default value of the '{@link #getSecondAttribute() <em>Second Attribute</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getSecondAttribute()
 	 * @generated
 	 * @ordered
@@ -72,7 +67,6 @@ public class ContentImpl extends EObjectImpl implements Content {
 	 * The cached value of the '{@link #getSecondAttribute() <em>Second Attribute</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getSecondAttribute()
 	 * @generated
 	 * @ordered
@@ -82,7 +76,6 @@ public class ContentImpl extends EObjectImpl implements Content {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	protected ContentImpl() {
@@ -92,7 +85,6 @@ public class ContentImpl extends EObjectImpl implements Content {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -103,7 +95,6 @@ public class ContentImpl extends EObjectImpl implements Content {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public String getUniqueAttribute() {
@@ -113,21 +104,18 @@ public class ContentImpl extends EObjectImpl implements Content {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public void setUniqueAttribute(String newUniqueAttribute) {
 		String oldUniqueAttribute = uniqueAttribute;
 		uniqueAttribute = newUniqueAttribute;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.CONTENT__UNIQUE_ATTRIBUTE,
-				oldUniqueAttribute, uniqueAttribute));
+			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.CONTENT__UNIQUE_ATTRIBUTE, oldUniqueAttribute, uniqueAttribute));
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public String getSecondAttribute() {
@@ -137,30 +125,27 @@ public class ContentImpl extends EObjectImpl implements Content {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public void setSecondAttribute(String newSecondAttribute) {
 		String oldSecondAttribute = secondAttribute;
 		secondAttribute = newSecondAttribute;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.CONTENT__SECOND_ATTRIBUTE,
-				oldSecondAttribute, secondAttribute));
+			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.CONTENT__SECOND_ATTRIBUTE, oldSecondAttribute, secondAttribute));
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case TestPackage.CONTENT__UNIQUE_ATTRIBUTE:
-			return getUniqueAttribute();
-		case TestPackage.CONTENT__SECOND_ATTRIBUTE:
-			return getSecondAttribute();
+			case TestPackage.CONTENT__UNIQUE_ATTRIBUTE:
+				return getUniqueAttribute();
+			case TestPackage.CONTENT__SECOND_ATTRIBUTE:
+				return getSecondAttribute();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -168,18 +153,17 @@ public class ContentImpl extends EObjectImpl implements Content {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case TestPackage.CONTENT__UNIQUE_ATTRIBUTE:
-			setUniqueAttribute((String) newValue);
-			return;
-		case TestPackage.CONTENT__SECOND_ATTRIBUTE:
-			setSecondAttribute((String) newValue);
-			return;
+			case TestPackage.CONTENT__UNIQUE_ATTRIBUTE:
+				setUniqueAttribute((String)newValue);
+				return;
+			case TestPackage.CONTENT__SECOND_ATTRIBUTE:
+				setSecondAttribute((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -187,18 +171,17 @@ public class ContentImpl extends EObjectImpl implements Content {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case TestPackage.CONTENT__UNIQUE_ATTRIBUTE:
-			setUniqueAttribute(UNIQUE_ATTRIBUTE_EDEFAULT);
-			return;
-		case TestPackage.CONTENT__SECOND_ATTRIBUTE:
-			setSecondAttribute(SECOND_ATTRIBUTE_EDEFAULT);
-			return;
+			case TestPackage.CONTENT__UNIQUE_ATTRIBUTE:
+				setUniqueAttribute(UNIQUE_ATTRIBUTE_EDEFAULT);
+				return;
+			case TestPackage.CONTENT__SECOND_ATTRIBUTE:
+				setSecondAttribute(SECOND_ATTRIBUTE_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -206,18 +189,15 @@ public class ContentImpl extends EObjectImpl implements Content {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case TestPackage.CONTENT__UNIQUE_ATTRIBUTE:
-			return UNIQUE_ATTRIBUTE_EDEFAULT == null ? uniqueAttribute != null : !UNIQUE_ATTRIBUTE_EDEFAULT
-				.equals(uniqueAttribute);
-		case TestPackage.CONTENT__SECOND_ATTRIBUTE:
-			return SECOND_ATTRIBUTE_EDEFAULT == null ? secondAttribute != null : !SECOND_ATTRIBUTE_EDEFAULT
-				.equals(secondAttribute);
+			case TestPackage.CONTENT__UNIQUE_ATTRIBUTE:
+				return UNIQUE_ATTRIBUTE_EDEFAULT == null ? uniqueAttribute != null : !UNIQUE_ATTRIBUTE_EDEFAULT.equals(uniqueAttribute);
+			case TestPackage.CONTENT__SECOND_ATTRIBUTE:
+				return SECOND_ATTRIBUTE_EDEFAULT == null ? secondAttribute != null : !SECOND_ATTRIBUTE_EDEFAULT.equals(secondAttribute);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -225,13 +205,11 @@ public class ContentImpl extends EObjectImpl implements Content {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy())
-			return super.toString();
+		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (uniqueAttribute: ");

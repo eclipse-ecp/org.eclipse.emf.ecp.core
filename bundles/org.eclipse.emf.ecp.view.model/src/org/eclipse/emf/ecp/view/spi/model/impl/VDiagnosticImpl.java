@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 
@@ -44,6 +45,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * @generated
  * @since 1.2
  */
+// TODO performance
 public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 {
 	/**
@@ -310,7 +312,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 	private List<Diagnostic> getDiagnostics(Diagnostic diagnostic, EObject eObject) {
 		final List<Diagnostic> result = new ArrayList<Diagnostic>();
 		if (diagnostic.getData() != null && diagnostic.getData().size() != 0
-			&& eObject.equals(diagnostic.getData().get(0))) {
+			&& EcoreUtil.isAncestor(eObject, (EObject) diagnostic.getData().get(0))) {
 			result.add(diagnostic);
 		}
 		// for (final Diagnostic childDiagnostic : diagnostic.getChildren()) {

@@ -33,7 +33,9 @@ import org.eclipse.emf.ecp.common.UniqueSetting;
 import org.eclipse.emf.ecp.view.internal.rule.RuleService;
 import org.eclipse.emf.ecp.view.internal.rule.RuleServiceHelperImpl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContextDisposeListener;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.VAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -196,22 +198,13 @@ public class RuleServiceTest extends CommonRuleTest {
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#addChildContext(org.eclipse.emf.ecp.view.spi.model.VElement,
-		 *      org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getChildContext(org.eclipse.emf.ecore.EObject,
+		 *      org.eclipse.emf.ecp.view.spi.model.VElement, org.eclipse.emf.ecp.view.spi.model.VView,
+		 *      org.eclipse.emf.ecp.view.spi.context.ViewModelService[])
 		 */
 		@Override
-		public void addChildContext(VElement vElement, EObject eObject, ViewModelContext childContext) {
-			// TODO Auto-generated method stub
-
-		}
-
-		/**
-		 * {@inheritDoc}
-		 * 
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getChildContext(org.eclipse.emf.ecore.EObject)
-		 */
-		@Override
-		public ViewModelContext getChildContext(EObject eObject) {
+		public ViewModelContext getChildContext(EObject eObject, VElement parent, VView vView,
+			ViewModelService... viewModelServices) {
 			// TODO Auto-generated method stub
 			return null;
 		}
@@ -219,13 +212,36 @@ public class RuleServiceTest extends CommonRuleTest {
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#removeChildContext(org.eclipse.emf.ecore.EObject)
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#registerDisposeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContextDisposeListener)
 		 */
 		@Override
-		public void removeChildContext(EObject eObject) {
+		public void registerDisposeListener(ViewModelContextDisposeListener listener) {
 			// TODO Auto-generated method stub
 
 		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#addContextUser(java.lang.Object)
+		 */
+		@Override
+		public void addContextUser(Object user) {
+			// TODO Auto-generated method stub
+
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#removeContextUser(java.lang.Object)
+		 */
+		@Override
+		public void removeContextUser(Object user) {
+			// TODO Auto-generated method stub
+
+		}
+
 	}
 
 	/** The player. */

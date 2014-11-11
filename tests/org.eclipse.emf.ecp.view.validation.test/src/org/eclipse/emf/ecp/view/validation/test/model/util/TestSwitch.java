@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.view.validation.test.model.util;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
+import org.eclipse.emf.ecp.view.validation.test.model.*;
 import org.eclipse.emf.ecp.view.validation.test.model.Book;
 import org.eclipse.emf.ecp.view.validation.test.model.Computer;
 import org.eclipse.emf.ecp.view.validation.test.model.Container;
@@ -41,7 +42,6 @@ import org.eclipse.emf.ecp.view.validation.test.model.Writer;
  * until a non-null result is returned,
  * which is the result of the switch.
  * <!-- end-user-doc -->
- * 
  * @see org.eclipse.emf.ecp.view.validation.test.model.TestPackage
  * @generated
  */
@@ -50,7 +50,6 @@ public class TestSwitch<T> extends Switch<T> {
 	 * The cached model package
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	protected static TestPackage modelPackage;
@@ -59,7 +58,6 @@ public class TestSwitch<T> extends Switch<T> {
 	 * Creates an instance of the switch.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public TestSwitch() {
@@ -72,7 +70,6 @@ public class TestSwitch<T> extends Switch<T> {
 	 * Checks whether this is a switch for the given package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @parameter ePackage the package in question.
 	 * @return whether this is a switch for the given package.
 	 * @generated
@@ -83,128 +80,128 @@ public class TestSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that
-	 * result.
+	 * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @return the first non-null result returned by a <code>caseXXX</code> call.
 	 * @generated
 	 */
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
-		case TestPackage.LIBRARY: {
-			Library library = (Library) theEObject;
-			T result = caseLibrary(library);
-			if (result == null)
-				result = defaultCase(theEObject);
-			return result;
-		}
-		case TestPackage.WRITER: {
-			Writer writer = (Writer) theEObject;
-			T result = caseWriter(writer);
-			if (result == null)
-				result = defaultCase(theEObject);
-			return result;
-		}
-		case TestPackage.BOOK: {
-			Book book = (Book) theEObject;
-			T result = caseBook(book);
-			if (result == null)
-				result = defaultCase(theEObject);
-			return result;
-		}
-		case TestPackage.LIBRARIAN: {
-			Librarian librarian = (Librarian) theEObject;
-			T result = caseLibrarian(librarian);
-			if (result == null)
-				result = defaultCase(theEObject);
-			return result;
-		}
-		case TestPackage.COMPUTER: {
-			Computer computer = (Computer) theEObject;
-			T result = caseComputer(computer);
-			if (result == null)
-				result = defaultCase(theEObject);
-			return result;
-		}
-		case TestPackage.MAINBOARD: {
-			Mainboard mainboard = (Mainboard) theEObject;
-			T result = caseMainboard(mainboard);
-			if (result == null)
-				result = defaultCase(theEObject);
-			return result;
-		}
-		case TestPackage.POWER_BLOCK: {
-			PowerBlock powerBlock = (PowerBlock) theEObject;
-			T result = casePowerBlock(powerBlock);
-			if (result == null)
-				result = defaultCase(theEObject);
-			return result;
-		}
-		case TestPackage.CONTAINER: {
-			Container container = (Container) theEObject;
-			T result = caseContainer(container);
-			if (result == null)
-				result = defaultCase(theEObject);
-			return result;
-		}
-		case TestPackage.CONTENT: {
-			Content content = (Content) theEObject;
-			T result = caseContent(content);
-			if (result == null)
-				result = defaultCase(theEObject);
-			return result;
-		}
-		case TestPackage.TABLE_WITH_MULTIPLICITY: {
-			TableWithMultiplicity tableWithMultiplicity = (TableWithMultiplicity) theEObject;
-			T result = caseTableWithMultiplicity(tableWithMultiplicity);
-			if (result == null)
-				result = defaultCase(theEObject);
-			return result;
-		}
-		case TestPackage.TABLE_CONTENT: {
-			TableContent tableContent = (TableContent) theEObject;
-			T result = caseTableContent(tableContent);
-			if (result == null)
-				result = defaultCase(theEObject);
-			return result;
-		}
-		case TestPackage.TABLE_CONTENT_WITHOUT_VALIDATION: {
-			TableContentWithoutValidation tableContentWithoutValidation = (TableContentWithoutValidation) theEObject;
-			T result = caseTableContentWithoutValidation(tableContentWithoutValidation);
-			if (result == null)
-				result = caseTableContent(tableContentWithoutValidation);
-			if (result == null)
-				result = defaultCase(theEObject);
-			return result;
-		}
-		case TestPackage.TABLE_CONTENT_WITH_VALIDATION: {
-			TableContentWithValidation tableContentWithValidation = (TableContentWithValidation) theEObject;
-			T result = caseTableContentWithValidation(tableContentWithValidation);
-			if (result == null)
-				result = caseTableContent(tableContentWithValidation);
-			if (result == null)
-				result = defaultCase(theEObject);
-			return result;
-		}
-		case TestPackage.TABLE_WITHOUT_MULTIPLICITY: {
-			TableWithoutMultiplicity tableWithoutMultiplicity = (TableWithoutMultiplicity) theEObject;
-			T result = caseTableWithoutMultiplicity(tableWithoutMultiplicity);
-			if (result == null)
-				result = defaultCase(theEObject);
-			return result;
-		}
-		case TestPackage.TABLE_WITH_UNIQUE: {
-			TableWithUnique tableWithUnique = (TableWithUnique) theEObject;
-			T result = caseTableWithUnique(tableWithUnique);
-			if (result == null)
-				result = defaultCase(theEObject);
-			return result;
-		}
-		default:
-			return defaultCase(theEObject);
+			case TestPackage.LIBRARY: {
+				Library library = (Library)theEObject;
+				T result = caseLibrary(library);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case TestPackage.WRITER: {
+				Writer writer = (Writer)theEObject;
+				T result = caseWriter(writer);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case TestPackage.BOOK: {
+				Book book = (Book)theEObject;
+				T result = caseBook(book);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case TestPackage.LIBRARIAN: {
+				Librarian librarian = (Librarian)theEObject;
+				T result = caseLibrarian(librarian);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case TestPackage.COMPUTER: {
+				Computer computer = (Computer)theEObject;
+				T result = caseComputer(computer);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case TestPackage.MAINBOARD: {
+				Mainboard mainboard = (Mainboard)theEObject;
+				T result = caseMainboard(mainboard);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case TestPackage.POWER_BLOCK: {
+				PowerBlock powerBlock = (PowerBlock)theEObject;
+				T result = casePowerBlock(powerBlock);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case TestPackage.CONTAINER: {
+				Container container = (Container)theEObject;
+				T result = caseContainer(container);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case TestPackage.CONTENT: {
+				Content content = (Content)theEObject;
+				T result = caseContent(content);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case TestPackage.TABLE_WITH_MULTIPLICITY: {
+				TableWithMultiplicity tableWithMultiplicity = (TableWithMultiplicity)theEObject;
+				T result = caseTableWithMultiplicity(tableWithMultiplicity);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case TestPackage.TABLE_CONTENT: {
+				TableContent tableContent = (TableContent)theEObject;
+				T result = caseTableContent(tableContent);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case TestPackage.TABLE_CONTENT_WITHOUT_VALIDATION: {
+				TableContentWithoutValidation tableContentWithoutValidation = (TableContentWithoutValidation)theEObject;
+				T result = caseTableContentWithoutValidation(tableContentWithoutValidation);
+				if (result == null) result = caseTableContent(tableContentWithoutValidation);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case TestPackage.TABLE_CONTENT_WITH_VALIDATION: {
+				TableContentWithValidation tableContentWithValidation = (TableContentWithValidation)theEObject;
+				T result = caseTableContentWithValidation(tableContentWithValidation);
+				if (result == null) result = caseTableContent(tableContentWithValidation);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case TestPackage.TABLE_WITHOUT_MULTIPLICITY: {
+				TableWithoutMultiplicity tableWithoutMultiplicity = (TableWithoutMultiplicity)theEObject;
+				T result = caseTableWithoutMultiplicity(tableWithoutMultiplicity);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case TestPackage.TABLE_WITH_UNIQUE: {
+				TableWithUnique tableWithUnique = (TableWithUnique)theEObject;
+				T result = caseTableWithUnique(tableWithUnique);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case TestPackage.TABLE_CONTENT_WITH_INNER_CHILD2: {
+				TableContentWithInnerChild2 tableContentWithInnerChild2 = (TableContentWithInnerChild2)theEObject;
+				T result = caseTableContentWithInnerChild2(tableContentWithInnerChild2);
+				if (result == null) result = caseTableContent(tableContentWithInnerChild2);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case TestPackage.TABLE_CONTENT_WITH_INNER_CHILD: {
+				TableContentWithInnerChild tableContentWithInnerChild = (TableContentWithInnerChild)theEObject;
+				T result = caseTableContentWithInnerChild(tableContentWithInnerChild);
+				if (result == null) result = caseTableContent(tableContentWithInnerChild);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case TestPackage.TABLE_WITHOUT_MULTIPLICITY_CONCRETE: {
+				TableWithoutMultiplicityConcrete tableWithoutMultiplicityConcrete = (TableWithoutMultiplicityConcrete)theEObject;
+				T result = caseTableWithoutMultiplicityConcrete(tableWithoutMultiplicityConcrete);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			default: return defaultCase(theEObject);
 		}
 	}
 
@@ -214,7 +211,6 @@ public class TestSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Library</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -230,7 +226,6 @@ public class TestSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Writer</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -246,7 +241,6 @@ public class TestSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Book</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -262,7 +256,6 @@ public class TestSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Librarian</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -278,7 +271,6 @@ public class TestSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Computer</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -294,7 +286,6 @@ public class TestSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Mainboard</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -310,7 +301,6 @@ public class TestSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Power Block</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -326,7 +316,6 @@ public class TestSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Container</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -342,7 +331,6 @@ public class TestSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Content</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -358,7 +346,6 @@ public class TestSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Table With Multiplicity</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -374,7 +361,6 @@ public class TestSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Table Content</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -390,7 +376,6 @@ public class TestSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Table Content Without Validation</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -406,7 +391,6 @@ public class TestSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Table Content With Validation</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -422,7 +406,6 @@ public class TestSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Table Without Multiplicity</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -438,7 +421,6 @@ public class TestSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Table With Unique</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -449,12 +431,56 @@ public class TestSwitch<T> extends Switch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Table Content With Inner Child2</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Table Content With Inner Child2</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseTableContentWithInnerChild2(TableContentWithInnerChild2 object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Table Content With Inner Child</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Table Content With Inner Child</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseTableContentWithInnerChild(TableContentWithInnerChild object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Table Without Multiplicity Concrete</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Table Without Multiplicity Concrete</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseTableWithoutMultiplicityConcrete(TableWithoutMultiplicityConcrete object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch, but this is the last case anyway.
 	 * <!-- end-user-doc -->
-	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>EObject</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject)

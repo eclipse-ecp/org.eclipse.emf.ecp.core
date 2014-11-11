@@ -22,6 +22,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.emf.ecp.view.validation.test.model.Book;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
 import org.eclipse.emf.ecp.view.validation.test.model.Writer;
@@ -34,12 +36,12 @@ import org.eclipse.emf.ecp.view.validation.test.model.util.TestValidator;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.BookImpl#getTitle <em>Title</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.BookImpl#getPages <em>Pages</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.BookImpl#getWriters <em>Writers</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.BookImpl#getTitle <em>Title</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.BookImpl#getPages <em>Pages</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.BookImpl#getWriters <em>Writers</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class BookImpl extends EObjectImpl implements Book {
@@ -47,7 +49,6 @@ public class BookImpl extends EObjectImpl implements Book {
 	 * The default value of the '{@link #getTitle() <em>Title</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getTitle()
 	 * @generated
 	 * @ordered
@@ -58,7 +59,6 @@ public class BookImpl extends EObjectImpl implements Book {
 	 * The cached value of the '{@link #getTitle() <em>Title</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getTitle()
 	 * @generated
 	 * @ordered
@@ -69,7 +69,6 @@ public class BookImpl extends EObjectImpl implements Book {
 	 * The default value of the '{@link #getPages() <em>Pages</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getPages()
 	 * @generated
 	 * @ordered
@@ -80,7 +79,6 @@ public class BookImpl extends EObjectImpl implements Book {
 	 * The cached value of the '{@link #getPages() <em>Pages</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getPages()
 	 * @generated
 	 * @ordered
@@ -91,7 +89,6 @@ public class BookImpl extends EObjectImpl implements Book {
 	 * The cached value of the '{@link #getWriters() <em>Writers</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getWriters()
 	 * @generated
 	 * @ordered
@@ -101,7 +98,6 @@ public class BookImpl extends EObjectImpl implements Book {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	protected BookImpl() {
@@ -111,7 +107,6 @@ public class BookImpl extends EObjectImpl implements Book {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -122,7 +117,6 @@ public class BookImpl extends EObjectImpl implements Book {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public String getTitle() {
@@ -132,7 +126,6 @@ public class BookImpl extends EObjectImpl implements Book {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public void setTitle(String newTitle) {
@@ -145,7 +138,6 @@ public class BookImpl extends EObjectImpl implements Book {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public int getPages() {
@@ -155,7 +147,6 @@ public class BookImpl extends EObjectImpl implements Book {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public void setPages(int newPages) {
@@ -168,17 +159,15 @@ public class BookImpl extends EObjectImpl implements Book {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public Writer getWriters() {
 		if (writers != null && writers.eIsProxy()) {
-			InternalEObject oldWriters = (InternalEObject) writers;
-			writers = (Writer) eResolveProxy(oldWriters);
+			InternalEObject oldWriters = (InternalEObject)writers;
+			writers = (Writer)eResolveProxy(oldWriters);
 			if (writers != oldWriters) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, TestPackage.BOOK__WRITERS, oldWriters,
-						writers));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, TestPackage.BOOK__WRITERS, oldWriters, writers));
 			}
 		}
 		return writers;
@@ -187,7 +176,6 @@ public class BookImpl extends EObjectImpl implements Book {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public Writer basicGetWriters() {
@@ -197,19 +185,14 @@ public class BookImpl extends EObjectImpl implements Book {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public NotificationChain basicSetWriters(Writer newWriters, NotificationChain msgs) {
 		Writer oldWriters = writers;
 		writers = newWriters;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TestPackage.BOOK__WRITERS,
-				oldWriters, newWriters);
-			if (msgs == null)
-				msgs = notification;
-			else
-				msgs.add(notification);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TestPackage.BOOK__WRITERS, oldWriters, newWriters);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
 	}
@@ -217,19 +200,17 @@ public class BookImpl extends EObjectImpl implements Book {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public void setWriters(Writer newWriters) {
 		if (newWriters != writers) {
 			NotificationChain msgs = null;
 			if (writers != null)
-				msgs = ((InternalEObject) writers).eInverseRemove(this, TestPackage.WRITER__BOOKS, Writer.class, msgs);
+				msgs = ((InternalEObject)writers).eInverseRemove(this, TestPackage.WRITER__BOOKS, Writer.class, msgs);
 			if (newWriters != null)
-				msgs = ((InternalEObject) newWriters).eInverseAdd(this, TestPackage.WRITER__BOOKS, Writer.class, msgs);
+				msgs = ((InternalEObject)newWriters).eInverseAdd(this, TestPackage.WRITER__BOOKS, Writer.class, msgs);
 			msgs = basicSetWriters(newWriters, msgs);
-			if (msgs != null)
-				msgs.dispatch();
+			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.BOOK__WRITERS, newWriters, newWriters));
@@ -324,16 +305,15 @@ public class BookImpl extends EObjectImpl implements Book {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-		case TestPackage.BOOK__WRITERS:
-			if (writers != null)
-				msgs = ((InternalEObject) writers).eInverseRemove(this, TestPackage.WRITER__BOOKS, Writer.class, msgs);
-			return basicSetWriters((Writer) otherEnd, msgs);
+			case TestPackage.BOOK__WRITERS:
+				if (writers != null)
+					msgs = ((InternalEObject)writers).eInverseRemove(this, TestPackage.WRITER__BOOKS, Writer.class, msgs);
+				return basicSetWriters((Writer)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -341,14 +321,13 @@ public class BookImpl extends EObjectImpl implements Book {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-		case TestPackage.BOOK__WRITERS:
-			return basicSetWriters(null, msgs);
+			case TestPackage.BOOK__WRITERS:
+				return basicSetWriters(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -356,20 +335,18 @@ public class BookImpl extends EObjectImpl implements Book {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case TestPackage.BOOK__TITLE:
-			return getTitle();
-		case TestPackage.BOOK__PAGES:
-			return getPages();
-		case TestPackage.BOOK__WRITERS:
-			if (resolve)
-				return getWriters();
-			return basicGetWriters();
+			case TestPackage.BOOK__TITLE:
+				return getTitle();
+			case TestPackage.BOOK__PAGES:
+				return getPages();
+			case TestPackage.BOOK__WRITERS:
+				if (resolve) return getWriters();
+				return basicGetWriters();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -377,21 +354,20 @@ public class BookImpl extends EObjectImpl implements Book {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case TestPackage.BOOK__TITLE:
-			setTitle((String) newValue);
-			return;
-		case TestPackage.BOOK__PAGES:
-			setPages((Integer) newValue);
-			return;
-		case TestPackage.BOOK__WRITERS:
-			setWriters((Writer) newValue);
-			return;
+			case TestPackage.BOOK__TITLE:
+				setTitle((String)newValue);
+				return;
+			case TestPackage.BOOK__PAGES:
+				setPages((Integer)newValue);
+				return;
+			case TestPackage.BOOK__WRITERS:
+				setWriters((Writer)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -399,21 +375,20 @@ public class BookImpl extends EObjectImpl implements Book {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case TestPackage.BOOK__TITLE:
-			setTitle(TITLE_EDEFAULT);
-			return;
-		case TestPackage.BOOK__PAGES:
-			setPages(PAGES_EDEFAULT);
-			return;
-		case TestPackage.BOOK__WRITERS:
-			setWriters((Writer) null);
-			return;
+			case TestPackage.BOOK__TITLE:
+				setTitle(TITLE_EDEFAULT);
+				return;
+			case TestPackage.BOOK__PAGES:
+				setPages(PAGES_EDEFAULT);
+				return;
+			case TestPackage.BOOK__WRITERS:
+				setWriters((Writer)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -421,18 +396,17 @@ public class BookImpl extends EObjectImpl implements Book {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case TestPackage.BOOK__TITLE:
-			return TITLE_EDEFAULT == null ? title != null : !TITLE_EDEFAULT.equals(title);
-		case TestPackage.BOOK__PAGES:
-			return pages != PAGES_EDEFAULT;
-		case TestPackage.BOOK__WRITERS:
-			return writers != null;
+			case TestPackage.BOOK__TITLE:
+				return TITLE_EDEFAULT == null ? title != null : !TITLE_EDEFAULT.equals(title);
+			case TestPackage.BOOK__PAGES:
+				return pages != PAGES_EDEFAULT;
+			case TestPackage.BOOK__WRITERS:
+				return writers != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -440,13 +414,11 @@ public class BookImpl extends EObjectImpl implements Book {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy())
-			return super.toString();
+		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (title: ");
