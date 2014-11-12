@@ -901,12 +901,14 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			// final Setting setting = InternalEObject.class.cast(domainObject).eSetting(feature);
 			final StringBuffer tooltip = new StringBuffer();
 			final VDiagnostic vDiagnostic = vTableControl.getDiagnostic();
-			final List<Diagnostic> diagnostics = vDiagnostic.getDiagnostic(domainObject, feature);
-			for (final Diagnostic diagnostic : diagnostics) {
-				if (tooltip.length() > 0) {
-					tooltip.append("\n"); //$NON-NLS-1$
+			if (vDiagnostic != null) {
+				final List<Diagnostic> diagnostics = vDiagnostic.getDiagnostic(domainObject, feature);
+				for (final Diagnostic diagnostic : diagnostics) {
+					if (tooltip.length() > 0) {
+						tooltip.append("\n"); //$NON-NLS-1$
+					}
+					tooltip.append(diagnostic.getMessage());
 				}
-				tooltip.append(diagnostic.getMessage());
 			}
 			if (tooltip.length() != 0) {
 				return ECPTooltipModifierHelper.modifyString(tooltip.toString(), setting);

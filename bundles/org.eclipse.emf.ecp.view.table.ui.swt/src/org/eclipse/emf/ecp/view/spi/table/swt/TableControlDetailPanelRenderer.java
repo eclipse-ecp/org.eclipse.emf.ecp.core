@@ -245,7 +245,10 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 			}
 			toValidate.add(eObject);
 		}
-		getViewModelContext().getService(ValidationService.class).validate(toValidate);
+		final ValidationService validationService = getViewModelContext().getService(ValidationService.class);
+		if (validationService != null) {
+			validationService.validate(toValidate);
+		}
 	}
 
 	@Override

@@ -497,13 +497,27 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 					final ViewModelContext viewContext = getViewModelContext()
 						.getChildContext((EObject) manipulateSelection, getVElement(), view);
 					manipulateViewContext(viewContext);
-					viewContext.getService(ValidationService.class).registerValidationListener(
-						new TreeValidationListener((EObject) manipulateSelection));
+					final ValidationService validationService = viewContext.getService(ValidationService.class);
+					// Full revalidate
+					if (validationService != null)
+					{
+						validationService.validate(getAllEObjects((EObject) newValue));
+					}
 				}
 				if (viewerNotification.getEventType() == Notification.REMOVE) {
 					final Object oldValue = viewerNotification.getOldValue();
 					validationResultCacheTree.remove((EObject) oldValue);
 				}
+			}
+
+			private Collection<EObject> getAllEObjects(EObject eObject) {
+				final List<EObject> result = new ArrayList<EObject>();
+				result.add(eObject);
+				final TreeIterator<EObject> iterator = EcoreUtil.getAllContents(eObject, false);
+				while (iterator.hasNext()) {
+					result.add(iterator.next());
+				}
+				return result;
 			}
 		});
 	}
