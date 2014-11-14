@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- *
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -43,7 +43,6 @@ import org.eclipse.emf.ecp.view.context.internal.reporting.ViewModelServiceNotAv
 import org.eclipse.emf.ecp.view.spi.context.GlobalViewModelService;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextDisposeListener;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeAddRemoveListener;
@@ -59,7 +58,7 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 
 /**
  * The Class ViewModelContextImpl.
- *
+ * 
  * @author Eugen Neufeld
  */
 public class ViewModelContextImpl implements ViewModelContext {
@@ -133,7 +132,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	/**
 	 * Instantiates a new view model context impl.
-	 *
+	 * 
 	 * @param view the view
 	 * @param domainObject the domain object
 	 */
@@ -146,7 +145,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	/**
 	 * Instantiates a new view model context impl.
-	 *
+	 * 
 	 * @param view the view
 	 * @param domainObject the domain object
 	 */
@@ -160,7 +159,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	/**
 	 * Instantiates a new view model context impl.
-	 *
+	 * 
 	 * @param view the view
 	 * @param domainObject the domain object
 	 * @param modelServices an array of services to use in the {@link ViewModelContext}
@@ -177,7 +176,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	/**
 	 * Instantiates a new view model context impl.
-	 *
+	 * 
 	 * @param view the view
 	 * @param domainObject the domain object
 	 * @param modelServices an array of services to use in the {@link ViewModelContext}
@@ -367,7 +366,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecore.EStructuralFeature.Setting)
 	 */
 	@Override
@@ -377,7 +376,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecp.common.UniqueSetting)
 	 */
 	@Override
@@ -440,7 +439,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getViewModel()
 	 */
 	@Override
@@ -453,7 +452,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getDomainModel()
 	 */
 	@Override
@@ -553,7 +552,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#hasService(java.lang.Class)
 	 */
 	@Override
@@ -571,7 +570,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getService(java.lang.Class)
 	 */
 	@Override
@@ -751,7 +750,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	/**
 	 * Inner method for registering context users (not {@link ViewModelService}).
-	 *
+	 * 
 	 * @param user the user of the context
 	 */
 	@Override
@@ -761,7 +760,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	/**
 	 * Inner method for unregistering the context user.
-	 *
+	 * 
 	 * @param user the user of the context
 	 */
 	@Override
@@ -777,7 +776,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getContextValue(java.lang.String)
 	 */
 	@Override
@@ -790,7 +789,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#putContextValue(java.lang.String, java.lang.Object)
 	 */
 	@Override
@@ -828,14 +827,14 @@ public class ViewModelContextImpl implements ViewModelContext {
 		final Set<ViewModelContext> contexts = childContexts.get(eObject);
 		if (contexts != null) {
 			for (final ViewModelContext context : contexts) {
+				// TODO change to use bidirectional map
 				if (childContextUsers.get(context).equals(parent)) {
 					return context;
 				}
 			}
 		}
-
-		final ViewModelContext childContext = ViewModelContextFactory.INSTANCE.createViewModelContext(vView,
-			eObject, this, parent, viewModelServices);
+		// no context found -> create a new one
+		final ViewModelContext childContext = new ViewModelContextImpl(vView, eObject, this, parent, viewModelServices);
 		childContext.registerDisposeListener(new ViewModelContextDisposeListener() {
 
 			@Override
@@ -849,7 +848,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#registerDisposeListener(org.eclipse.emf.ecp.view.spi.context.ViewModelContextDisposeListener)
 	 */
 	@Override

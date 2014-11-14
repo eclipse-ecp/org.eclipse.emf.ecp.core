@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipse.emf.ecp.view.validation.initial.feature"
-      label="Initial Validation Feature"
+      label="Initialize Deep Validation Feature"
       version="1.5.0.qualifier">
 
    <description url="http://www.example.com/description">

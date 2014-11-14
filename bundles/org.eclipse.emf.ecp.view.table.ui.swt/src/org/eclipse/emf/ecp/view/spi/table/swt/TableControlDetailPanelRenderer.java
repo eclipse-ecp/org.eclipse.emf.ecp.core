@@ -256,8 +256,6 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 		final EObject addEObject = super.addRow(clazz, mainSetting);
 
 		final VView detailView = getView();
-		// ViewModelContextFactory.INSTANCE.createViewModelContext(,
-		// , getViewModelContext(), );
 		getViewModelContext().getChildContext(addEObject, getVElement(), detailView);
 		revalidate();
 		return addEObject;

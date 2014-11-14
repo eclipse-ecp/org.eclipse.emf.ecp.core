@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -13,9 +13,8 @@ package org.eclipse.emf.ecp.view.table.internal.validation;
 
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -30,6 +29,7 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 
 public class TableValidationInitiator implements ViewModelService {
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void instantiate(ViewModelContext context) {
 		final EObject viewRoot = context.getViewModel();
@@ -41,24 +41,13 @@ public class TableValidationInitiator implements ViewModelService {
 				if (tableControl.getDetailEditing() == DetailEditing.WITH_PANEL) {
 					final Iterator<Setting> iterator = tableControl
 						.getDomainModelReference().getIterator();
-					int counter = -1;
-					final Set<EObject> registredEObjects = new LinkedHashSet<EObject>();
-					while (iterator.hasNext()) {
-						counter++;
-						final Setting setting = iterator.next();
-						if (counter == 0) {
-							continue;
-						}
-						final EObject settingEObject = setting.getEObject();
-						if (registredEObjects.contains(settingEObject)) {
-							continue;
-						}
-						registredEObjects.add(settingEObject);
-
+					final Setting tableSetting = iterator.next();
+					final EList<EObject> tableContents = (EList<EObject>) tableSetting.get(true);
+					for (final EObject tableEObject : tableContents) {
 						final VView detailView = getView(tableControl);
-						context.getChildContext(settingEObject, tableControl, detailView);
-
+						context.getChildContext(tableEObject, tableControl, detailView);
 					}
+
 				}
 			}
 		}
