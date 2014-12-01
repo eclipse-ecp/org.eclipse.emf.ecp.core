@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.emf.ecp.test.university.CourseCatalog#getCourses <em>Courses</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.test.university.CourseCatalog#getCourses <em>Courses</em>}</li>
  * </ul>
  * </p>
  *
@@ -41,6 +41,7 @@ public interface CourseCatalog extends EObject
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the value of the '<em>Courses</em>' containment reference list.
 	 * @see org.eclipse.emf.ecp.test.university.UniversityPackage#getCourseCatalog_Courses()
 	 * @model containment="true"

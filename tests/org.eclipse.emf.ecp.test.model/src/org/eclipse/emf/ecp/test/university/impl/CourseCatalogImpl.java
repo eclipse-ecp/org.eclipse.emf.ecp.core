@@ -12,6 +12,7 @@
 package org.eclipse.emf.ecp.test.university.impl;
 
 import java.util.Collection;
+
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -30,7 +31,7 @@ import org.eclipse.emf.ecp.test.university.UniversityPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.ecp.test.university.impl.CourseCatalogImpl#getCourses <em>Courses</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.test.university.impl.CourseCatalogImpl#getCourses <em>Courses</em>}</li>
  * </ul>
  * </p>
  *
@@ -42,6 +43,7 @@ public class CourseCatalogImpl extends MinimalEObjectImpl.Container implements C
 	 * The cached value of the '{@link #getCourses() <em>Courses</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getCourses()
 	 * @generated
 	 * @ordered
@@ -51,6 +53,7 @@ public class CourseCatalogImpl extends MinimalEObjectImpl.Container implements C
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected CourseCatalogImpl()
@@ -61,6 +64,7 @@ public class CourseCatalogImpl extends MinimalEObjectImpl.Container implements C
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -72,6 +76,7 @@ public class CourseCatalogImpl extends MinimalEObjectImpl.Container implements C
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public EList<Course> getCourses()
@@ -86,6 +91,7 @@ public class CourseCatalogImpl extends MinimalEObjectImpl.Container implements C
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -102,6 +108,7 @@ public class CourseCatalogImpl extends MinimalEObjectImpl.Container implements C
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -118,6 +125,7 @@ public class CourseCatalogImpl extends MinimalEObjectImpl.Container implements C
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -137,6 +145,7 @@ public class CourseCatalogImpl extends MinimalEObjectImpl.Container implements C
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -154,6 +163,7 @@ public class CourseCatalogImpl extends MinimalEObjectImpl.Container implements C
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override

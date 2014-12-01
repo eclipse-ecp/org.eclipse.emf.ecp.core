@@ -17,8 +17,12 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
+import org.eclipse.emf.ecp.test.university.Assistant;
 import org.eclipse.emf.ecp.test.university.Course;
 import org.eclipse.emf.ecp.test.university.CourseCatalog;
+import org.eclipse.emf.ecp.test.university.Person;
+import org.eclipse.emf.ecp.test.university.Professor;
+import org.eclipse.emf.ecp.test.university.Staff;
 import org.eclipse.emf.ecp.test.university.UniversityFactory;
 import org.eclipse.emf.ecp.test.university.UniversityPackage;
 import org.eclipse.emf.ecp.test.university.util.UniversityValidator;
@@ -27,6 +31,7 @@ import org.eclipse.emf.ecp.test.university.util.UniversityValidator;
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Package</b>.
  * <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class UniversityPackageImpl extends EPackageImpl implements UniversityPackage
@@ -34,6 +39,7 @@ public class UniversityPackageImpl extends EPackageImpl implements UniversityPac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	private EClass courseCatalogEClass = null;
@@ -41,9 +47,42 @@ public class UniversityPackageImpl extends EPackageImpl implements UniversityPac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	private EClass courseEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	private EClass staffEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	private EClass professorEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	private EClass assistantEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	private EClass personEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
@@ -67,6 +106,7 @@ public class UniversityPackageImpl extends EPackageImpl implements UniversityPac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	private static boolean isInited = false;
@@ -74,10 +114,11 @@ public class UniversityPackageImpl extends EPackageImpl implements UniversityPac
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
 	 * 
-	 * <p>This method is used to initialize {@link UniversityPackage#eINSTANCE} when that field is accessed.
-	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
-	 * <!-- begin-user-doc
+	 * <p>
+	 * This method is used to initialize {@link UniversityPackage#eINSTANCE} when that field is accessed. Clients should
+	 * not invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc
 	 * --> <!-- end-user-doc -->
+	 * 
 	 * @see #eNS_URI
 	 * @see #createPackageContents()
 	 * @see #initializePackageContents()
@@ -90,7 +131,8 @@ public class UniversityPackageImpl extends EPackageImpl implements UniversityPac
 
 		// Obtain or create and register package
 		UniversityPackageImpl theUniversityPackage = (UniversityPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof UniversityPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI) : new UniversityPackageImpl());
+			.get(eNS_URI)
+			: new UniversityPackageImpl());
 
 		isInited = true;
 
@@ -122,6 +164,7 @@ public class UniversityPackageImpl extends EPackageImpl implements UniversityPac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public EClass getCourseCatalog()
@@ -132,6 +175,7 @@ public class UniversityPackageImpl extends EPackageImpl implements UniversityPac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public EReference getCourseCatalog_Courses()
@@ -142,6 +186,7 @@ public class UniversityPackageImpl extends EPackageImpl implements UniversityPac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public EClass getCourse()
@@ -152,6 +197,7 @@ public class UniversityPackageImpl extends EPackageImpl implements UniversityPac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public EAttribute getCourse_Id()
@@ -162,6 +208,7 @@ public class UniversityPackageImpl extends EPackageImpl implements UniversityPac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public EAttribute getCourse_Name()
@@ -172,6 +219,7 @@ public class UniversityPackageImpl extends EPackageImpl implements UniversityPac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public EAttribute getCourse_Etcs()
@@ -182,6 +230,84 @@ public class UniversityPackageImpl extends EPackageImpl implements UniversityPac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EClass getStaff()
+	{
+		return staffEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EReference getStaff_Professors()
+	{
+		return (EReference) staffEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EReference getStaff_Assistants()
+	{
+		return (EReference) staffEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EAttribute getStaff_Staff()
+	{
+		return (EAttribute) staffEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EClass getProfessor()
+	{
+		return professorEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EClass getAssistant()
+	{
+		return assistantEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EClass getPerson()
+	{
+		return personEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public UniversityFactory getUniversityFactory()
@@ -192,15 +318,17 @@ public class UniversityPackageImpl extends EPackageImpl implements UniversityPac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	private boolean isCreated = false;
 
 	/**
-	 * Creates the meta-model objects for the package.  This method is
+	 * Creates the meta-model objects for the package. This method is
 	 * guarded to have no affect on any invocation but its first.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void createPackageContents()
@@ -217,20 +345,33 @@ public class UniversityPackageImpl extends EPackageImpl implements UniversityPac
 		createEAttribute(courseEClass, COURSE__ID);
 		createEAttribute(courseEClass, COURSE__NAME);
 		createEAttribute(courseEClass, COURSE__ETCS);
+
+		staffEClass = createEClass(STAFF);
+		createEReference(staffEClass, STAFF__PROFESSORS);
+		createEReference(staffEClass, STAFF__ASSISTANTS);
+		createEAttribute(staffEClass, STAFF__STAFF);
+
+		professorEClass = createEClass(PROFESSOR);
+
+		assistantEClass = createEClass(ASSISTANT);
+
+		personEClass = createEClass(PERSON);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	private boolean isInitialized = false;
 
 	/**
-	 * Complete the initialization of the package and its meta-model.  This
+	 * Complete the initialization of the package and its meta-model. This
 	 * method is guarded to have no affect on any invocation but its first.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void initializePackageContents()
@@ -249,6 +390,8 @@ public class UniversityPackageImpl extends EPackageImpl implements UniversityPac
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
+		professorEClass.getESuperTypes().add(this.getPerson());
+		assistantEClass.getESuperTypes().add(this.getPerson());
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(courseCatalogEClass, CourseCatalog.class,
@@ -273,27 +416,81 @@ public class UniversityPackageImpl extends EPackageImpl implements UniversityPac
 			ecorePackage.getEInt(),
 			"etcs", null, 1, 1, Course.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
+		initEClass(staffEClass, Staff.class, "Staff", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(
+			getStaff_Professors(),
+			this.getProfessor(),
+			null,
+			"professors", null, 0, -1, Staff.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+			getStaff_Assistants(),
+			this.getAssistant(),
+			null,
+			"assistants", null, 0, -1, Staff.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(
+			getStaff_Staff(),
+			ecorePackage.getEFeatureMapEntry(),
+			"staff", null, 0, -1, Staff.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(professorEClass, Professor.class,
+			"Professor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		initEClass(assistantEClass, Assistant.class,
+			"Assistant", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		initEClass(personEClass, Person.class, "Person", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
 		// Create resource
 		createResource(eNS_URI);
 
 		// Create annotations
 		// http://www.eclipse.org/emf/2002/Ecore
 		createEcoreAnnotations();
+		// http:///org/eclipse/emf/ecore/util/ExtendedMetaData
+		createExtendedMetaDataAnnotations();
 	}
 
 	/**
 	 * Initializes the annotations for <b>http://www.eclipse.org/emf/2002/Ecore</b>.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected void createEcoreAnnotations()
 	{
-		String source = "http://www.eclipse.org/emf/2002/Ecore"; //$NON-NLS-1$		
+		String source = "http://www.eclipse.org/emf/2002/Ecore"; //$NON-NLS-1$	
 		addAnnotation(courseEClass,
 			source,
 			new String[]
-			{	 "constraints", "UniqueItemById NameNotEmpty" //$NON-NLS-1$ //$NON-NLS-2$
+			{ "constraints", "UniqueItemById NameNotEmpty" //$NON-NLS-1$ //$NON-NLS-2$
+			});
+	}
+
+	/**
+	 * Initializes the annotations for <b>http:///org/eclipse/emf/ecore/util/ExtendedMetaData</b>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	protected void createExtendedMetaDataAnnotations()
+	{
+		String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData"; //$NON-NLS-1$	
+		addAnnotation(getStaff_Professors(),
+			source,
+			new String[]
+			{ "group", "#staff" //$NON-NLS-1$ //$NON-NLS-2$
+			});
+		addAnnotation(getStaff_Assistants(),
+			source,
+			new String[]
+			{ "group", "#staff" //$NON-NLS-1$ //$NON-NLS-2$
+			});
+		addAnnotation(getStaff_Staff(),
+			source,
+			new String[]
+			{ "kind", "group" //$NON-NLS-1$ //$NON-NLS-2$
 			});
 	}
 

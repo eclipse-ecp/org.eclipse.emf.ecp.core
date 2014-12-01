@@ -18,25 +18,31 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.test.university.Staff;
 import org.eclipse.emf.ecp.test.university.UniversityPackage;
-import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
+import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.ecp.test.university.CourseCatalog} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.ecp.test.university.Staff} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * 
  * @generated
  */
-public class CourseCatalogItemProvider extends ItemProviderAdapter implements
-	IEditingDomainItemProvider, ITreeItemContentProvider, IItemLabelProvider,
-	IItemPropertySource {
+public class StaffItemProvider
+	extends ItemProviderAdapter
+	implements
+	IEditingDomainItemProvider,
+	ITreeItemContentProvider,
+	IItemLabelProvider,
+	IItemPropertySource
+{
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -44,7 +50,8 @@ public class CourseCatalogItemProvider extends ItemProviderAdapter implements
 	 * 
 	 * @generated
 	 */
-	public CourseCatalogItemProvider(AdapterFactory adapterFactory) {
+	public StaffItemProvider(AdapterFactory adapterFactory)
+	{
 		super(adapterFactory);
 	}
 
@@ -56,39 +63,14 @@ public class CourseCatalogItemProvider extends ItemProviderAdapter implements
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object)
+	{
 		if (itemPropertyDescriptors == null)
 		{
 			super.getPropertyDescriptors(object);
 
-			addCoursesPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
-	}
-
-	/**
-	 * This adds a property descriptor for the Courses feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	protected void addCoursesPropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_CourseCatalog_courses_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_CourseCatalog_courses_feature", "_UI_CourseCatalog_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				UniversityPackage.Literals.COURSE_CATALOG__COURSES,
-				true,
-				false,
-				true,
-				null,
-				null,
-				null));
 	}
 
 	/**
@@ -106,7 +88,7 @@ public class CourseCatalogItemProvider extends ItemProviderAdapter implements
 		if (childrenFeatures == null)
 		{
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(UniversityPackage.Literals.COURSE_CATALOG__COURSES);
+			childrenFeatures.add(UniversityPackage.Literals.STAFF__STAFF);
 		}
 		return childrenFeatures;
 	}
@@ -127,15 +109,16 @@ public class CourseCatalogItemProvider extends ItemProviderAdapter implements
 	}
 
 	/**
-	 * This returns CourseCatalog.gif.
+	 * This returns Staff.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 */
 	@Override
-	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/CourseCatalog")); //$NON-NLS-1$
+	public Object getImage(Object object)
+	{
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Staff")); //$NON-NLS-1$
 	}
 
 	/**
@@ -146,8 +129,9 @@ public class CourseCatalogItemProvider extends ItemProviderAdapter implements
 	 * @generated
 	 */
 	@Override
-	public String getText(Object object) {
-		return getString("_UI_CourseCatalog_type"); //$NON-NLS-1$
+	public String getText(Object object)
+	{
+		return getString("_UI_Staff_type"); //$NON-NLS-1$
 	}
 
 	/**
@@ -159,8 +143,16 @@ public class CourseCatalogItemProvider extends ItemProviderAdapter implements
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(Notification notification) {
+	public void notifyChanged(Notification notification)
+	{
 		updateChildren(notification);
+
+		switch (notification.getFeatureID(Staff.class))
+		{
+		case UniversityPackage.STAFF__STAFF:
+			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
+			return;
+		}
 		super.notifyChanged(notification);
 	}
 
@@ -173,8 +165,8 @@ public class CourseCatalogItemProvider extends ItemProviderAdapter implements
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(
-		Collection<Object> newChildDescriptors, Object object) {
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
+	{
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 	}
 
@@ -186,7 +178,8 @@ public class CourseCatalogItemProvider extends ItemProviderAdapter implements
 	 * @generated
 	 */
 	@Override
-	public ResourceLocator getResourceLocator() {
+	public ResourceLocator getResourceLocator()
+	{
 		return UniversityEditPlugin.INSTANCE;
 	}
 

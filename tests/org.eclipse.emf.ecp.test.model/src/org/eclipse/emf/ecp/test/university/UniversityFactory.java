@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EFactory;
  * The <b>Factory</b> for the model.
  * It provides a create method for each non-abstract class of the model.
  * <!-- end-user-doc -->
+ * 
  * @see org.eclipse.emf.ecp.test.university.UniversityPackage
  * @generated
  */
@@ -27,6 +28,7 @@ public interface UniversityFactory extends EFactory
 	 * The singleton instance of the factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	UniversityFactory eINSTANCE = org.eclipse.emf.ecp.test.university.impl.UniversityFactoryImpl.init();
@@ -35,6 +37,7 @@ public interface UniversityFactory extends EFactory
 	 * Returns a new object of class '<em>Course Catalog</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return a new object of class '<em>Course Catalog</em>'.
 	 * @generated
 	 */
@@ -44,15 +47,47 @@ public interface UniversityFactory extends EFactory
 	 * Returns a new object of class '<em>Course</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return a new object of class '<em>Course</em>'.
 	 * @generated
 	 */
 	Course createCourse();
 
 	/**
+	 * Returns a new object of class '<em>Staff</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return a new object of class '<em>Staff</em>'.
+	 * @generated
+	 */
+	Staff createStaff();
+
+	/**
+	 * Returns a new object of class '<em>Professor</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return a new object of class '<em>Professor</em>'.
+	 * @generated
+	 */
+	Professor createProfessor();
+
+	/**
+	 * Returns a new object of class '<em>Assistant</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return a new object of class '<em>Assistant</em>'.
+	 * @generated
+	 */
+	Assistant createAssistant();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the package supported by this factory.
 	 * @generated
 	 */

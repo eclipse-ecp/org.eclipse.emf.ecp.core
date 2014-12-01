@@ -16,8 +16,11 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.emf.ecp.test.university.Assistant;
 import org.eclipse.emf.ecp.test.university.Course;
 import org.eclipse.emf.ecp.test.university.CourseCatalog;
+import org.eclipse.emf.ecp.test.university.Professor;
+import org.eclipse.emf.ecp.test.university.Staff;
 import org.eclipse.emf.ecp.test.university.UniversityFactory;
 import org.eclipse.emf.ecp.test.university.UniversityPackage;
 
@@ -25,6 +28,7 @@ import org.eclipse.emf.ecp.test.university.UniversityPackage;
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Factory</b>.
  * <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class UniversityFactoryImpl extends EFactoryImpl implements UniversityFactory
@@ -33,6 +37,7 @@ public class UniversityFactoryImpl extends EFactoryImpl implements UniversityFac
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public static UniversityFactory init()
@@ -56,6 +61,7 @@ public class UniversityFactoryImpl extends EFactoryImpl implements UniversityFac
 	 * Creates an instance of the factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public UniversityFactoryImpl()
@@ -66,6 +72,7 @@ public class UniversityFactoryImpl extends EFactoryImpl implements UniversityFac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -77,6 +84,12 @@ public class UniversityFactoryImpl extends EFactoryImpl implements UniversityFac
 			return createCourseCatalog();
 		case UniversityPackage.COURSE:
 			return createCourse();
+		case UniversityPackage.STAFF:
+			return createStaff();
+		case UniversityPackage.PROFESSOR:
+			return createProfessor();
+		case UniversityPackage.ASSISTANT:
+			return createAssistant();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -85,6 +98,7 @@ public class UniversityFactoryImpl extends EFactoryImpl implements UniversityFac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public CourseCatalog createCourseCatalog()
@@ -96,6 +110,7 @@ public class UniversityFactoryImpl extends EFactoryImpl implements UniversityFac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public Course createCourse()
@@ -107,6 +122,43 @@ public class UniversityFactoryImpl extends EFactoryImpl implements UniversityFac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public Staff createStaff()
+	{
+		StaffImpl staff = new StaffImpl();
+		return staff;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public Professor createProfessor()
+	{
+		ProfessorImpl professor = new ProfessorImpl();
+		return professor;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public Assistant createAssistant()
+	{
+		AssistantImpl assistant = new AssistantImpl();
+		return assistant;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public UniversityPackage getUniversityPackage()
@@ -117,6 +169,7 @@ public class UniversityFactoryImpl extends EFactoryImpl implements UniversityFac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @deprecated
 	 * @generated
 	 */

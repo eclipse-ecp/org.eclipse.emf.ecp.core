@@ -24,8 +24,12 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.EObjectValidator;
+import org.eclipse.emf.ecp.test.university.Assistant;
 import org.eclipse.emf.ecp.test.university.Course;
 import org.eclipse.emf.ecp.test.university.CourseCatalog;
+import org.eclipse.emf.ecp.test.university.Person;
+import org.eclipse.emf.ecp.test.university.Professor;
+import org.eclipse.emf.ecp.test.university.Staff;
 import org.eclipse.emf.ecp.test.university.UniversityPackage;
 import org.eclipse.emf.ecp.view.internal.validation.ValidationNotification;
 
@@ -120,6 +124,14 @@ public class UniversityValidator extends EObjectValidator
 			return validateCourseCatalog((CourseCatalog) value, diagnostics, context);
 		case UniversityPackage.COURSE:
 			return validateCourse((Course) value, diagnostics, context);
+		case UniversityPackage.STAFF:
+			return validateStaff((Staff) value, diagnostics, context);
+		case UniversityPackage.PROFESSOR:
+			return validateProfessor((Professor) value, diagnostics, context);
+		case UniversityPackage.ASSISTANT:
+			return validateAssistant((Assistant) value, diagnostics, context);
+		case UniversityPackage.PERSON:
+			return validatePerson((Person) value, diagnostics, context);
 		default:
 			return true;
 		}
@@ -145,37 +157,27 @@ public class UniversityValidator extends EObjectValidator
 	 */
 	public boolean validateCourse(Course course, DiagnosticChain diagnostics, Map<Object, Object> context)
 	{
-		if (!validate_NoCircularContainment(course, diagnostics, context)) {
+		if (!validate_NoCircularContainment(course, diagnostics, context))
 			return false;
-		}
 		boolean result = validate_EveryMultiplicityConforms(course, diagnostics, context);
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_EveryDataValueConforms(course, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_EveryReferenceIsContained(course, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_EveryBidirectionalReferenceIsPaired(course, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_EveryProxyResolves(course, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_UniqueID(course, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_EveryKeyUnique(course, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_EveryMapEntryUnique(course, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validateCourse_UniqueItemById(course, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validateCourse_NameNotEmpty(course, diagnostics, context);
-		}
 		return result;
 	}
 
@@ -281,6 +283,50 @@ public class UniversityValidator extends EObjectValidator
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public boolean validateStaff(Staff staff, DiagnosticChain diagnostics, Map<Object, Object> context)
+	{
+		return validate_EveryDefaultConstraint(staff, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public boolean validateProfessor(Professor professor, DiagnosticChain diagnostics, Map<Object, Object> context)
+	{
+		return validate_EveryDefaultConstraint(professor, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public boolean validateAssistant(Assistant assistant, DiagnosticChain diagnostics, Map<Object, Object> context)
+	{
+		return validate_EveryDefaultConstraint(assistant, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public boolean validatePerson(Person person, DiagnosticChain diagnostics, Map<Object, Object> context)
+	{
+		return validate_EveryDefaultConstraint(person, diagnostics, context);
 	}
 
 	/**

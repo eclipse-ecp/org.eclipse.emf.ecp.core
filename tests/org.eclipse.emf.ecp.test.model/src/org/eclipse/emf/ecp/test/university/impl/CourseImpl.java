@@ -25,9 +25,9 @@ import org.eclipse.emf.ecp.test.university.UniversityPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.ecp.test.university.impl.CourseImpl#getId <em>Id</em>}</li>
- *   <li>{@link org.eclipse.emf.ecp.test.university.impl.CourseImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.emf.ecp.test.university.impl.CourseImpl#getEtcs <em>Etcs</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.test.university.impl.CourseImpl#getId <em>Id</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.test.university.impl.CourseImpl#getName <em>Name</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.test.university.impl.CourseImpl#getEtcs <em>Etcs</em>}</li>
  * </ul>
  * </p>
  *
@@ -39,6 +39,7 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getId()
 	 * @generated
 	 * @ordered
@@ -49,6 +50,7 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getId()
 	 * @generated
 	 * @ordered
@@ -59,6 +61,7 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getName()
 	 * @generated
 	 * @ordered
@@ -69,6 +72,7 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getName()
 	 * @generated
 	 * @ordered
@@ -79,6 +83,7 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	 * The default value of the '{@link #getEtcs() <em>Etcs</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getEtcs()
 	 * @generated
 	 * @ordered
@@ -89,6 +94,7 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	 * The cached value of the '{@link #getEtcs() <em>Etcs</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getEtcs()
 	 * @generated
 	 * @ordered
@@ -98,6 +104,7 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected CourseImpl()
@@ -108,6 +115,7 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -119,6 +127,7 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public String getId()
@@ -129,6 +138,7 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void setId(String newId)
@@ -142,6 +152,7 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public String getName()
@@ -152,6 +163,7 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void setName(String newName)
@@ -165,6 +177,7 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public int getEtcs()
@@ -175,6 +188,7 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void setEtcs(int newEtcs)
@@ -188,6 +202,7 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -208,6 +223,7 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -231,6 +247,7 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -254,6 +271,7 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -274,6 +292,7 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override

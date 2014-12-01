@@ -15,6 +15,15 @@
     <genClasses ecoreClass="university.ecore#//Course">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute university.ecore#//Course/id"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute university.ecore#//Course/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute university.ecore#//Course/etcs"/>
     </genClasses>
+    <genClasses ecoreClass="university.ecore#//Staff">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference university.ecore#//Staff/professors"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference university.ecore#//Staff/assistants"/>
+      <genFeatures property="None" children="true" createChild="false" ecoreFeature="ecore:EAttribute university.ecore#//Staff/staff"/>
+    </genClasses>
+    <genClasses ecoreClass="university.ecore#//Professor"/>
+    <genClasses ecoreClass="university.ecore#//Assistant"/>
+    <genClasses image="false" ecoreClass="university.ecore#//Person"/>
   </genPackages>
 </genmodel:GenModel>

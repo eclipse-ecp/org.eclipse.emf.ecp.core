@@ -21,9 +21,9 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.emf.ecp.test.university.Course#getId <em>Id</em>}</li>
- *   <li>{@link org.eclipse.emf.ecp.test.university.Course#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.emf.ecp.test.university.Course#getEtcs <em>Etcs</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.test.university.Course#getId <em>Id</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.test.university.Course#getName <em>Name</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.test.university.Course#getEtcs <em>Etcs</em>}</li>
  * </ul>
  * </p>
  *
@@ -40,6 +40,7 @@ public interface Course extends EObject
 	 * If the meaning of the '<em>Id</em>' attribute isn't clear, there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the value of the '<em>Id</em>' attribute.
 	 * @see #setId(String)
 	 * @see org.eclipse.emf.ecp.test.university.UniversityPackage#getCourse_Id()
@@ -52,6 +53,7 @@ public interface Course extends EObject
 	 * Sets the value of the '{@link org.eclipse.emf.ecp.test.university.Course#getId <em>Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @param value the new value of the '<em>Id</em>' attribute.
 	 * @see #getId()
 	 * @generated
@@ -65,6 +67,7 @@ public interface Course extends EObject
 	 * If the meaning of the '<em>Name</em>' attribute isn't clear, there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
 	 * @see org.eclipse.emf.ecp.test.university.UniversityPackage#getCourse_Name()
@@ -77,6 +80,7 @@ public interface Course extends EObject
 	 * Sets the value of the '{@link org.eclipse.emf.ecp.test.university.Course#getName <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @param value the new value of the '<em>Name</em>' attribute.
 	 * @see #getName()
 	 * @generated
@@ -87,10 +91,10 @@ public interface Course extends EObject
 	 * Returns the value of the '<em><b>Etcs</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Etcs</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Etcs</em>' attribute isn't clear, there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the value of the '<em>Etcs</em>' attribute.
 	 * @see #setEtcs(int)
 	 * @see org.eclipse.emf.ecp.test.university.UniversityPackage#getCourse_Etcs()
@@ -103,6 +107,7 @@ public interface Course extends EObject
 	 * Sets the value of the '{@link org.eclipse.emf.ecp.test.university.Course#getEtcs <em>Etcs</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @param value the new value of the '<em>Etcs</em>' attribute.
 	 * @see #getEtcs()
 	 * @generated
