@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- *
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  * EclipseSource Munich GmbH - initial API and implementation
  ******************************************************************************/
@@ -37,7 +37,7 @@ import org.eclipse.emf.ecp.view.spi.rule.model.RulePackage;
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Leaf Condition</b></em>'.
- *
+ * 
  * @since 1.2
  *        <!-- end-user-doc -->
  *        <p>
@@ -51,7 +51,7 @@ import org.eclipse.emf.ecp.view.spi.rule.model.RulePackage;
  *        Value Domain Model Reference</em>}</li>
  *        </ul>
  *        </p>
- *
+ * 
  * @generated
  */
 public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
@@ -59,7 +59,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 * The default value of the '{@link #getExpectedValue() <em>Expected Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getExpectedValue()
 	 * @generated
 	 * @ordered
@@ -70,7 +70,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 * The cached value of the '{@link #getExpectedValue() <em>Expected Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getExpectedValue()
 	 * @generated
 	 * @ordered
@@ -82,7 +82,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 * reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getDomainModelReference()
 	 * @generated
 	 * @ordered
@@ -93,7 +93,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 * The cached value of the '{@link #getValueDomainModelReference() <em>Value Domain Model Reference</em>}'
 	 * containment reference.
 	 * <!-- begin-user-doc -->
-	 *
+	 * 
 	 * @since 1.5
 	 *        <!-- end-user-doc -->
 	 * @see #getValueDomainModelReference()
@@ -105,7 +105,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected LeafConditionImpl() {
@@ -115,7 +115,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -126,7 +126,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -137,7 +137,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -153,7 +153,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -165,7 +165,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public NotificationChain basicSetDomainModelReference(VDomainModelReference newDomainModelReference,
@@ -189,7 +189,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -219,7 +219,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 *
+	 * 
 	 * @since 1.5
 	 *        <!-- end-user-doc -->
 	 * @generated
@@ -232,7 +232,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 *
+	 * 
 	 * @since 1.5
 	 *        <!-- end-user-doc -->
 	 * @generated
@@ -258,7 +258,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 *
+	 * 
 	 * @since 1.5
 	 *        <!-- end-user-doc -->
 	 * @generated
@@ -292,7 +292,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -311,7 +311,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -331,7 +331,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -354,7 +354,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -377,7 +377,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -398,7 +398,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -416,7 +416,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.Condition#evaluate()
 	 */
 	@Override
@@ -468,7 +468,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.Condition#evaluateChangedValues(java.util.Map)
 	 */
 	@SuppressWarnings("unchecked")
@@ -486,6 +486,9 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 					newEObjects.add((EObject) possibleNewValues.get(setting));
 				}
 				for (final EObject domain : newEObjects) {
+					if (getValueDomainModelReference() == null) {
+						continue;
+					}
 					final VDomainModelReference dmr = EcoreUtil.copy(getValueDomainModelReference());
 					final boolean init = dmr.init(domain);
 					if (!init) {
