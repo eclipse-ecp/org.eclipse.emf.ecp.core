@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  * Edgar Mueller - additional test cases
@@ -18,18 +18,27 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.common.UniqueSetting;
+import org.eclipse.emf.ecp.test.university.Assistant;
+import org.eclipse.emf.ecp.test.university.Person;
+import org.eclipse.emf.ecp.test.university.Professor;
+import org.eclipse.emf.ecp.test.university.Staff;
+import org.eclipse.emf.ecp.test.university.UniversityFactory;
+import org.eclipse.emf.ecp.test.university.UniversityPackage;
+import org.eclipse.emf.ecp.test.university.impl.StaffImpl;
 import org.eclipse.emf.ecp.view.internal.rule.RuleService;
 import org.eclipse.emf.ecp.view.internal.rule.RuleServiceHelperImpl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
@@ -63,37 +72,37 @@ import org.junit.Test;
 
 /**
  * Things to be tested.
- * 
+ *
  * tests on control with rule:
  * init wrong value , right value
  * lifecycle wrong -> right; right -> wrong; wrong -> wrong; right -> right
  * types: show, enable, hide, disable
  * (2+4)*4
- * 
+ *
  * propagation tests:
  * - test propagation from parent to child (no rule) [combinations same as rule on control]
  * - test propagation from parent to child (rule != parent.rule) [combinations same as rule on control]
- * 
- * 
+ *
+ *
  * domain wrong
  * parent (s: disabled r:enable)
  * child1 (s:visible r:hidden) child2 (s:enabled r:disable)
- * 
+ *
  * init
  * parent (s: disabled r:enable)
  * child1 (s:visible r:hidden) child2 (s:disabled r:disable)
- * 
+ *
  * parent(s:enabled)
  * child (s:hidden) child2(s:disabled)
- * 
- * 
+ *
+ *
  * dispose
- * 
+ *
  * getInvolvedObjects
  * objects if no change -> none, empty list
  * objects if change -> only container of rule
  * no side effects
- * 
+ *
  * @author Eugen Neufeld
  * @author emueller
  */
@@ -101,7 +110,7 @@ public class RuleServiceTest extends CommonRuleTest {
 
 	/**
 	 * @author Jonas
-	 * 
+	 *
 	 */
 	private class ViewModelContextStub implements ViewModelContext {
 
@@ -157,7 +166,7 @@ public class RuleServiceTest extends CommonRuleTest {
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecore.EStructuralFeature.Setting)
 		 */
 		@Override
@@ -167,7 +176,7 @@ public class RuleServiceTest extends CommonRuleTest {
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecp.common.UniqueSetting)
 		 */
 		@Override
@@ -177,7 +186,7 @@ public class RuleServiceTest extends CommonRuleTest {
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getContextValue(java.lang.String)
 		 */
 		@Override
@@ -187,7 +196,7 @@ public class RuleServiceTest extends CommonRuleTest {
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#putContextValue(java.lang.String,
 		 *      java.lang.Object)
 		 */
@@ -266,7 +275,7 @@ public class RuleServiceTest extends CommonRuleTest {
 
 	/**
 	 * Sets the up.
-	 * 
+	 *
 	 * @throws Exception the exception
 	 */
 	@Before
@@ -298,7 +307,7 @@ public class RuleServiceTest extends CommonRuleTest {
 
 	/**
 	 * Tear down.
-	 * 
+	 *
 	 * @throws Exception the exception
 	 */
 	@After
@@ -314,7 +323,7 @@ public class RuleServiceTest extends CommonRuleTest {
 
 	/**
 	 * Instantiate rule service.
-	 * 
+	 *
 	 * @return the rule service
 	 */
 	private RuleService instantiateRuleService(final EObject domainModel) {
@@ -340,21 +349,28 @@ public class RuleServiceTest extends CommonRuleTest {
 		league.setName("League");
 	}
 
-	// TODO: move to CommonRuleTest
-	private LeafCondition setupLeafCondition(EStructuralFeature domainFeature, Object expectedValue,
-		EObject resolveObject, List<EReference> eReferences) {
+	private LeafCondition setupLeafConditionWithValueDMR(Object expectedValue, EReference domainRef,
+		List<EReference> domainPath, EAttribute valueAtt, List<EReference> valuePath) {
 		final LeafCondition leafCondition = RuleFactory.eINSTANCE.createLeafCondition();
-		final VFeaturePathDomainModelReference modelReference = VViewFactory.eINSTANCE
-			.createFeaturePathDomainModelReference();
-		modelReference.setDomainModelEFeature(domainFeature);
-		leafCondition.setDomainModelReference(modelReference);
 		leafCondition.setExpectedValue(expectedValue);
-		modelReference.getDomainModelEReferencePath().addAll(eReferences);
-		final boolean result = modelReference.init(resolveObject);
-		if (!result) {
-			throw new IllegalStateException("the ModelReference was not resolved.");
-		}
+
+		final VFeaturePathDomainModelReference modelDMR = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		modelDMR.getDomainModelEReferencePath().addAll(domainPath);
+		modelDMR.setDomainModelEFeature(domainRef);
+		leafCondition.setDomainModelReference(modelDMR);
+
+		final VFeaturePathDomainModelReference valueDMR = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		valueDMR.getDomainModelEReferencePath().addAll(valuePath);
+		valueDMR.setDomainModelEFeature(valueAtt);
+		leafCondition.setValueDomainModelReference(valueDMR);
+
 		return leafCondition;
+	}
+
+	private Setting getLeaguePlayersSetting() {
+		return ((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Players());
 	}
 
 	@Test
@@ -699,10 +715,12 @@ public class RuleServiceTest extends CommonRuleTest {
 		addLeagueShowRuleWithAndCondition(
 			column,
 			true,
-			createLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Name(), "foo",
-				BowlingPackage.eINSTANCE.getLeague_Players()),
-			createLeafCondition(BowlingPackage.eINSTANCE.getPlayer_NumberOfVictories(), 3,
-				BowlingPackage.eINSTANCE.getLeague_Players()));
+			setupLeafConditionWithValueDMR("foo",
+				BowlingPackage.eINSTANCE.getLeague_Players(), Collections.<EReference> emptyList(),
+				BowlingPackage.eINSTANCE.getPlayer_Name(), Collections.<EReference> emptyList()),
+				setupLeafConditionWithValueDMR(3,
+					BowlingPackage.eINSTANCE.getLeague_Players(), Collections.<EReference> emptyList(),
+					BowlingPackage.eINSTANCE.getPlayer_NumberOfVictories(), Collections.<EReference> emptyList()));
 		instantiateRuleService(league);
 		player.setName("foo");
 		player.setNumberOfVictories(3);
@@ -1121,7 +1139,7 @@ public class RuleServiceTest extends CommonRuleTest {
 
 	/**
 	 * Test propagation show rule child rule right to wrong.
-	 * 
+	 *
 	 * Control should not be visible since its parent will be hidden.
 	 */
 	@Test
@@ -1554,8 +1572,9 @@ public class RuleServiceTest extends CommonRuleTest {
 	@Test
 	public void testContainmentConditionWithShowRule() {
 		final ShowRule showRule = addShowRule(controlPName, false);
-		final LeafCondition leafCondition1 = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_EMails(),
-			"asdf@asdf.com", league, Arrays.asList(BowlingPackage.eINSTANCE.getLeague_Players()));
+		final LeafCondition leafCondition1 = setupLeafConditionWithValueDMR("asdf@asdf.com",
+			BowlingPackage.eINSTANCE.getLeague_Players(), Collections.<EReference> emptyList(),
+			BowlingPackage.eINSTANCE.getPlayer_EMails(), Collections.<EReference> emptyList());
 		showRule.setCondition(leafCondition1);
 		instantiateRuleService();
 
@@ -1569,8 +1588,9 @@ public class RuleServiceTest extends CommonRuleTest {
 	@Test
 	public void testGetInvolvedEObjetsContainedMultiAttributeNoMatch() {
 		final ShowRule showRule = addShowRule(controlPName, false);
-		final LeafCondition leafCondition1 = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_EMails(),
-			"asdf@asdf.com", league, Arrays.asList(BowlingPackage.eINSTANCE.getLeague_Players()));
+		final LeafCondition leafCondition1 = setupLeafConditionWithValueDMR("asdf@asdf.com",
+			BowlingPackage.eINSTANCE.getLeague_Players(), Collections.<EReference> emptyList(),
+			BowlingPackage.eINSTANCE.getPlayer_EMails(), Collections.<EReference> emptyList());
 		showRule.setCondition(leafCondition1);
 		instantiateRuleService();
 
@@ -1579,18 +1599,14 @@ public class RuleServiceTest extends CommonRuleTest {
 		newPlayer.getEMails().add("asdf@asdf.com");
 
 		final RuleServiceHelper helper = context.getService(RuleServiceHelper.class);
-		final Map<Setting, Object> expectedValues = new LinkedHashMap<EStructuralFeature.Setting, Object>();
 
-		final List<String> emails = new ArrayList<String>();
-		expectedValues.put(
-			((BasicEObjectImpl) player).eSetting(BowlingPackage.eINSTANCE.getPlayer_EMails()),
-			emails);
-		expectedValues.put(
-			((BasicEObjectImpl) newPlayer).eSetting(BowlingPackage.eINSTANCE.getPlayer_EMails()),
-			newPlayer.getEMails());
+		final List<Player> newValue = new ArrayList<Player>();
+		newValue.add(EcoreUtil.copy(player));
+		newValue.get(0).getEMails().clear();
+		newValue.add(newPlayer);
 
-		final Set<VControl> involvedEObjects = helper.getInvolvedEObjects(expectedValues,
-			BowlingPackage.eINSTANCE.getPlayer_EMails(), VControl.class);
+		final Set<VControl> involvedEObjects = helper.getInvolvedEObjects(
+			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Players()), newValue, VControl.class);
 
 		assertEquals(0, involvedEObjects.size());
 	}
@@ -1598,8 +1614,9 @@ public class RuleServiceTest extends CommonRuleTest {
 	@Test
 	public void testGetInvolvedEObjetsContainedMultiAttributeEmptySet() {
 		final ShowRule showRule = addShowRule(controlPName, false);
-		final LeafCondition leafCondition1 = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_EMails(),
-			"asdf@asdf.com", league, Arrays.asList(BowlingPackage.eINSTANCE.getLeague_Players()));
+		final LeafCondition leafCondition1 = setupLeafConditionWithValueDMR("asdf@asdf.com",
+			BowlingPackage.eINSTANCE.getLeague_Players(), Collections.<EReference> emptyList(),
+			BowlingPackage.eINSTANCE.getPlayer_EMails(), Collections.<EReference> emptyList());
 		showRule.setCondition(leafCondition1);
 		instantiateRuleService();
 
@@ -1608,10 +1625,9 @@ public class RuleServiceTest extends CommonRuleTest {
 		newPlayer.getEMails().add("asdf@asdf.com");
 
 		final RuleServiceHelper helper = context.getService(RuleServiceHelper.class);
-		final Map<Setting, Object> expectedValues = new LinkedHashMap<EStructuralFeature.Setting, Object>();
 
-		final Set<VControl> involvedEObjects = helper.getInvolvedEObjects(expectedValues,
-			BowlingPackage.eINSTANCE.getPlayer_EMails(), VControl.class);
+		final Set<VControl> involvedEObjects = helper.getInvolvedEObjects(getLeaguePlayersSetting(),
+			new ArrayList<Player>(), VControl.class);
 
 		assertEquals(0, involvedEObjects.size());
 	}
@@ -1619,24 +1635,22 @@ public class RuleServiceTest extends CommonRuleTest {
 	@Test
 	public void testGetInvolvedEObjetsContainedMultiAttributeNoMatchViaUpdatePlayer() {
 		final ShowRule showRule = addShowRule(controlPName, false);
-		final LeafCondition leafCondition1 = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_EMails(),
-			"asdf@asdf.com", league, Arrays.asList(BowlingPackage.eINSTANCE.getLeague_Players()));
+		final LeafCondition leafCondition1 = setupLeafConditionWithValueDMR("asdf@asdf.com",
+			BowlingPackage.eINSTANCE.getLeague_Players(), Collections.<EReference> emptyList(),
+			BowlingPackage.eINSTANCE.getPlayer_EMails(), Collections.<EReference> emptyList());
 		showRule.setCondition(leafCondition1);
 		instantiateRuleService();
 
 		player.getEMails().add("foo@bar.com");
 
 		final RuleServiceHelper helper = context.getService(RuleServiceHelper.class);
-		final Map<Setting, Object> expectedValues = new LinkedHashMap<EStructuralFeature.Setting, Object>();
 
-		final List<String> emails = new ArrayList<String>();
-		emails.add("asdf@asdf.com");
-		expectedValues.put(
-			((BasicEObjectImpl) player).eSetting(BowlingPackage.eINSTANCE.getPlayer_EMails()),
-			emails);
+		final List<Player> newValues = new ArrayList<Player>();
+		newValues.add(EcoreUtil.copy(player));
+		newValues.get(0).getEMails().add("asdf@asdf.com");
 
-		final Set<VControl> involvedEObjects = helper.getInvolvedEObjects(expectedValues,
-			BowlingPackage.eINSTANCE.getPlayer_EMails(), VControl.class);
+		final Set<VControl> involvedEObjects = helper.getInvolvedEObjects(getLeaguePlayersSetting(), newValues,
+			VControl.class);
 
 		assertEquals(0, involvedEObjects.size());
 	}
@@ -1644,8 +1658,9 @@ public class RuleServiceTest extends CommonRuleTest {
 	@Test
 	public void testGetInvolvedEObjetsContainedMultiAttributeMatch() {
 		final ShowRule showRule = addShowRule(controlPName, true);
-		final LeafCondition leafCondition1 = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_EMails(),
-			"asdf@asdf.com", league, Arrays.asList(BowlingPackage.eINSTANCE.getLeague_Players()));
+		final LeafCondition leafCondition1 = setupLeafConditionWithValueDMR("asdf@asdf.com",
+			BowlingPackage.eINSTANCE.getLeague_Players(), Collections.<EReference> emptyList(),
+			BowlingPackage.eINSTANCE.getPlayer_EMails(), Collections.<EReference> emptyList());
 		showRule.setCondition(leafCondition1);
 		instantiateRuleService();
 
@@ -1663,8 +1678,13 @@ public class RuleServiceTest extends CommonRuleTest {
 			((BasicEObjectImpl) newPlayer).eSetting(BowlingPackage.eINSTANCE.getPlayer_EMails()),
 			newPlayer.getEMails());
 
-		final Set<VControl> involvedEObjects = helper.getInvolvedEObjects(expectedValues,
-			BowlingPackage.eINSTANCE.getPlayer_EMails(), VControl.class);
+		final List<Player> newValue = new ArrayList<Player>();
+		newValue.add(player);
+		newValue.add(newPlayer);
+
+		final Set<VControl> involvedEObjects = helper.getInvolvedEObjects(
+			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Players()),
+			newValue, VControl.class);
 
 		assertEquals(1, involvedEObjects.size());
 	}
@@ -1672,22 +1692,22 @@ public class RuleServiceTest extends CommonRuleTest {
 	@Test
 	public void testGetInvolvedEObjetsContainedMultiAttributeMatchViaNewEmptyListValue() {
 		final ShowRule showRule = addShowRule(controlPName, false);
-		final LeafCondition leafCondition1 = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_EMails(),
-			"asdf@asdf.com", league, Arrays.asList(BowlingPackage.eINSTANCE.getLeague_Players()));
+		final LeafCondition leafCondition1 = setupLeafConditionWithValueDMR("asdf@asdf.com",
+			BowlingPackage.eINSTANCE.getLeague_Players(), Collections.<EReference> emptyList(),
+			BowlingPackage.eINSTANCE.getPlayer_EMails(), Collections.<EReference> emptyList());
 		showRule.setCondition(leafCondition1);
 		instantiateRuleService();
 
 		player.getEMails().add("asdf@asdf.com");
 
 		final RuleServiceHelper helper = context.getService(RuleServiceHelper.class);
-		final Map<Setting, Object> expectedValues = new LinkedHashMap<EStructuralFeature.Setting, Object>();
 
-		expectedValues.put(
-			((BasicEObjectImpl) player).eSetting(BowlingPackage.eINSTANCE.getPlayer_EMails()),
-			new ArrayList<String>());
+		final List<Player> newValue = new ArrayList<Player>();
+		newValue.add(EcoreUtil.copy(player));
+		newValue.get(0).getEMails().clear();
 
-		final Set<VControl> involvedEObjects = helper.getInvolvedEObjects(expectedValues,
-			BowlingPackage.eINSTANCE.getPlayer_EMails(), VControl.class);
+		final Set<VControl> involvedEObjects = helper.getInvolvedEObjects(getLeaguePlayersSetting(), newValue,
+			VControl.class);
 
 		assertEquals(1, involvedEObjects.size());
 	}
@@ -1695,8 +1715,9 @@ public class RuleServiceTest extends CommonRuleTest {
 	@Test
 	public void testContainmentConditionWithShowRuleWithClearedMultiref() {
 		final ShowRule showRule = addShowRule(controlPName, false);
-		final LeafCondition leafCondition1 = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Name(),
-			"doe", league, Arrays.asList(BowlingPackage.eINSTANCE.getLeague_Players()));
+		final LeafCondition leafCondition1 = setupLeafConditionWithValueDMR("doe",
+			BowlingPackage.eINSTANCE.getLeague_Players(), Collections.<EReference> emptyList(),
+			BowlingPackage.eINSTANCE.getPlayer_Name(), Collections.<EReference> emptyList());
 		showRule.setCondition(leafCondition1);
 		player.setName("doe");
 		instantiateRuleService();
@@ -1708,8 +1729,9 @@ public class RuleServiceTest extends CommonRuleTest {
 	@Test
 	public void testContainmentConditionWithShowRuleFulFillCondition() {
 		final ShowRule showRule = addShowRule(controlPName, false);
-		final LeafCondition leafCondition1 = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Name(),
-			"doe", league, Arrays.asList(BowlingPackage.eINSTANCE.getLeague_Players()));
+		final LeafCondition leafCondition1 = setupLeafConditionWithValueDMR("doe",
+			BowlingPackage.eINSTANCE.getLeague_Players(), Collections.<EReference> emptyList(),
+			BowlingPackage.eINSTANCE.getPlayer_Name(), Collections.<EReference> emptyList());
 		showRule.setCondition(leafCondition1);
 		instantiateRuleService();
 		assertFalse(controlPName.isVisible());
@@ -1721,8 +1743,9 @@ public class RuleServiceTest extends CommonRuleTest {
 	public void testContainmentConditionInitEmptyList() {
 		league = BowlingFactory.eINSTANCE.createLeague();
 		final ShowRule showRule = addShowRule(controlPName, false);
-		final LeafCondition leafCondition1 = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Name(),
-			"doe", league, Arrays.asList(BowlingPackage.eINSTANCE.getLeague_Players()));
+		final LeafCondition leafCondition1 = setupLeafConditionWithValueDMR("doe",
+			BowlingPackage.eINSTANCE.getLeague_Players(), Collections.<EReference> emptyList(),
+			BowlingPackage.eINSTANCE.getPlayer_Name(), Collections.<EReference> emptyList());
 		showRule.setCondition(leafCondition1);
 		instantiateRuleService();
 		assertFalse(controlPName.isVisible());
@@ -1732,8 +1755,9 @@ public class RuleServiceTest extends CommonRuleTest {
 	public void testContainmentConditionAddToEmptyList() {
 		league = BowlingFactory.eINSTANCE.createLeague();
 		final ShowRule showRule = addShowRule(controlPName, false);
-		final LeafCondition leafCondition1 = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Name(),
-			"doe", league, Arrays.asList(BowlingPackage.eINSTANCE.getLeague_Players()));
+		final LeafCondition leafCondition1 = setupLeafConditionWithValueDMR("doe",
+			BowlingPackage.eINSTANCE.getLeague_Players(), Collections.<EReference> emptyList(),
+			BowlingPackage.eINSTANCE.getPlayer_Name(), Collections.<EReference> emptyList());
 		showRule.setCondition(leafCondition1);
 		instantiateRuleService();
 		assertFalse(controlPName.isVisible());
@@ -2287,7 +2311,7 @@ public class RuleServiceTest extends CommonRuleTest {
 
 		final Map<VElement, Boolean> involvedEObjects = ruleService.getDisabledRenderables(
 			createSettingsMapping(((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()), "League"),
-			BowlingPackage.eINSTANCE.getLeague_Name());
+			UniqueSetting.createSetting(league, BowlingPackage.eINSTANCE.getLeague_Name()));
 		assertTrue(involvedEObjects.isEmpty());
 	}
 
@@ -2304,7 +2328,7 @@ public class RuleServiceTest extends CommonRuleTest {
 
 		ruleService.getDisabledRenderables(
 			createSettingsMapping(((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()), "League"),
-			BowlingPackage.eINSTANCE.getLeague_Name());
+			UniqueSetting.createSetting(league, BowlingPackage.eINSTANCE.getLeague_Name()));
 		assertTrue(controlPName.isEnabled());
 	}
 
@@ -2327,10 +2351,10 @@ public class RuleServiceTest extends CommonRuleTest {
 
 		final Map<VElement, Boolean> disabledRenderables = ruleService.getDisabledRenderables(
 			createSettingsMapping(((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-				"League_Wrong"), BowlingPackage.eINSTANCE.getLeague_Name());
+				"League_Wrong"), UniqueSetting.createSetting(league, BowlingPackage.eINSTANCE.getLeague_Name()));
 		final Map<VElement, Boolean> hiddenRenderables = ruleService.getHiddenRenderables(
 			createSettingsMapping(((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-				"League_Wrong"), BowlingPackage.eINSTANCE.getLeague_Name());
+				"League_Wrong"), UniqueSetting.createSetting(league, BowlingPackage.eINSTANCE.getLeague_Name()));
 
 		assertEquals(3, hiddenRenderables.size());
 		assertTrue(hiddenRenderables.containsKey(parentColumn));
@@ -2353,10 +2377,10 @@ public class RuleServiceTest extends CommonRuleTest {
 
 		final Map<VElement, Boolean> disabledRenderables = ruleService.getDisabledRenderables(
 			createSettingsMapping(((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-				"League"), BowlingPackage.eINSTANCE.getLeague_Name());
+				"League"), UniqueSetting.createSetting(league, BowlingPackage.eINSTANCE.getLeague_Name()));
 		final Map<VElement, Boolean> hiddenRenderables = ruleService.getHiddenRenderables(
 			createSettingsMapping(((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-				"League"), BowlingPackage.eINSTANCE.getLeague_Name());
+				"League"), UniqueSetting.createSetting(league, BowlingPackage.eINSTANCE.getLeague_Name()));
 
 		assertEquals(0, disabledRenderables.size());
 		assertEquals(0, hiddenRenderables.size());
@@ -2377,7 +2401,7 @@ public class RuleServiceTest extends CommonRuleTest {
 
 		final Set<VControl> involvedEControls = helper.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-			"League", BowlingPackage.eINSTANCE.getLeague_Name(), VControl.class);
+			"League", VControl.class);
 		assertEquals(0, involvedEControls.size());
 	}
 
@@ -2396,7 +2420,7 @@ public class RuleServiceTest extends CommonRuleTest {
 
 		final Set<VControl> involvedEControls = helper.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-			"League2", BowlingPackage.eINSTANCE.getLeague_Name(), VControl.class);
+			"League2", VControl.class);
 		assertEquals(0, involvedEControls.size());
 	}
 
@@ -2415,7 +2439,7 @@ public class RuleServiceTest extends CommonRuleTest {
 
 		final Set<VVerticalLayout> involvedEControls = helper.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-			"League2", BowlingPackage.eINSTANCE.getLeague_Name(), VVerticalLayout.class);
+			"League2", VVerticalLayout.class);
 		assertEquals(0, involvedEControls.size());
 	}
 
@@ -2432,7 +2456,7 @@ public class RuleServiceTest extends CommonRuleTest {
 
 		final Set<VControl> involvedEControls = helper.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-			"League", BowlingPackage.eINSTANCE.getLeague_Name(), VControl.class);
+			"League", VControl.class);
 		assertEquals(0, involvedEControls.size());
 	}
 
@@ -2450,7 +2474,7 @@ public class RuleServiceTest extends CommonRuleTest {
 
 		final Set<VControl> involvedEControls = helper.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-			"League2", BowlingPackage.eINSTANCE.getLeague_Name(), VControl.class);
+			"League2", VControl.class);
 		assertEquals(0, involvedEControls.size());
 	}
 
@@ -2469,7 +2493,7 @@ public class RuleServiceTest extends CommonRuleTest {
 
 		final Set<VControl> hiddenOrDisabledControls = helper.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-			"League", BowlingPackage.eINSTANCE.getLeague_Name(), VControl.class);
+			"League", VControl.class);
 
 		assertEquals(1, hiddenOrDisabledControls.size());
 	}
@@ -2493,7 +2517,7 @@ public class RuleServiceTest extends CommonRuleTest {
 
 		final Set<VControl> involvedEControls = helper.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-			"League", BowlingPackage.eINSTANCE.getLeague_Name(), VControl.class);
+			"League", VControl.class);
 		assertEquals(1, involvedEControls.size());
 	}
 
@@ -2511,7 +2535,7 @@ public class RuleServiceTest extends CommonRuleTest {
 
 		final Set<VVerticalLayout> involvedColumns = helper.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-			"League2", BowlingPackage.eINSTANCE.getLeague_Name(), VVerticalLayout.class);
+			"League2", VVerticalLayout.class);
 		assertEquals(1, involvedColumns.size());
 	}
 
@@ -2529,7 +2553,7 @@ public class RuleServiceTest extends CommonRuleTest {
 
 		final Set<VVerticalLayout> involvedColumns = helper.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-			"League", BowlingPackage.eINSTANCE.getLeague_Name(), VVerticalLayout.class);
+			"League", VVerticalLayout.class);
 		assertEquals(0, involvedColumns.size());
 	}
 
@@ -2547,7 +2571,7 @@ public class RuleServiceTest extends CommonRuleTest {
 
 		final Set<VControl> involvedControls = helper.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-			"League2", BowlingPackage.eINSTANCE.getLeague_Name(), VControl.class);
+			"League2", VControl.class);
 		assertEquals(1, involvedControls.size());
 		assertTrue(involvedControls.contains(controlPName));
 	}
@@ -2565,7 +2589,7 @@ public class RuleServiceTest extends CommonRuleTest {
 
 		final Set<VControl> involvedControls = helper.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-			"League2", BowlingPackage.eINSTANCE.getLeague_Name(), VControl.class);
+			"League2", VControl.class);
 		assertEquals(1, involvedControls.size());
 		assertTrue(involvedControls.contains(controlPName));
 	}
@@ -2585,8 +2609,57 @@ public class RuleServiceTest extends CommonRuleTest {
 
 		final Set<VControl> involvedControls = helper.getInvolvedEObjects(
 			((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-			"League2", BowlingPackage.eINSTANCE.getLeague_Name(), VControl.class);
+			"League2", VControl.class);
 		assertEquals(1, involvedControls.size());
 		assertTrue(involvedControls.contains(controlPName));
+	}
+
+	@Test
+	public void testGetInvolvedWithUnrelatedChangeInMultiReference() {
+		// domain
+		final Staff staff = UniversityFactory.eINSTANCE.createStaff();
+		final Assistant assistant = UniversityFactory.eINSTANCE.createAssistant();
+		assistant.setName("Josef");
+		final Professor professor = UniversityFactory.eINSTANCE.createProfessor();
+		staff.getAssistants().add(assistant);
+		staff.getProfessors().add(professor);
+
+		// view
+		view = VViewFactory.eINSTANCE.createView();
+		final VControl wholeStaff = VViewFactory.eINSTANCE.createControl();
+		wholeStaff.setDomainModelReference(UniversityPackage.eINSTANCE.getStaff_Staff());
+		view.getChildren().add(wholeStaff);
+
+		// rules
+		final LeafCondition condition = setupLeafConditionWithValueDMR("Josef",
+			UniversityPackage.eINSTANCE.getStaff_Assistants(), Collections.<EReference> emptyList(),
+			UniversityPackage.eINSTANCE.getPerson_Name(), Collections.<EReference> emptyList());
+		final ShowRule rule = RuleFactory.eINSTANCE.createShowRule();
+		rule.setHide(false);
+		rule.setCondition(condition);
+		wholeStaff.getAttachments().add(rule);
+
+		// init
+		instantiateRuleService(staff);
+		assertTrue(wholeStaff.isVisible());
+
+		// act
+		final RuleServiceHelper helper = context.getService(RuleServiceHelper.class);
+
+		final List<Person> newValue = new ArrayList<Person>();
+		newValue.add(EcoreUtil.copy(professor));
+		newValue.get(0).setName("Hans");
+
+		final Setting setting = ((StaffImpl) staff).eSetting(UniversityPackage.eINSTANCE.getStaff_Professors());
+
+		final Set<VControl> involvedControls = helper.getInvolvedEObjects(setting, newValue, VControl.class);
+
+		// assert
+		assertTrue(wholeStaff.isVisible());
+		assertTrue(involvedControls.isEmpty());
+
+		professor.setName("Hans");
+		assertTrue(wholeStaff.isVisible());
+
 	}
 }

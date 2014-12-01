@@ -38,9 +38,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
 public class StaffItemProvider
 	extends ItemProviderAdapter
 	implements
-	IEditingDomainItemProvider,
-	ITreeItemContentProvider,
-	IItemLabelProvider,
+	IEditingDomainItemProvider, ITreeItemContentProvider, IItemLabelProvider,
 	IItemPropertySource
 {
 	/**

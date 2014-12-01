@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -23,6 +23,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -44,7 +45,7 @@ import org.junit.Test;
 
 /**
  * @author Eugen Neufeld
- * 
+ *
  */
 public class ConditionEvaluatorTest {
 
@@ -143,6 +144,27 @@ public class ConditionEvaluatorTest {
 		if (!result) {
 			throw new IllegalStateException("the ModelReference was not resolved.");
 		}
+		return leafCondition;
+	}
+
+	private LeafCondition setupLeafConditionWithValueDMR(EObject domain, Object expectedValue, EReference domainRef,
+		List<EReference> domainPath, EAttribute valueAtt, List<EReference> valuePath) {
+		final LeafCondition leafCondition = RuleFactory.eINSTANCE.createLeafCondition();
+		leafCondition.setExpectedValue(expectedValue);
+
+		final VFeaturePathDomainModelReference modelDMR = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		modelDMR.getDomainModelEReferencePath().addAll(domainPath);
+		modelDMR.setDomainModelEFeature(domainRef);
+		leafCondition.setDomainModelReference(modelDMR);
+		modelDMR.init(domain);
+
+		final VFeaturePathDomainModelReference valueDMR = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		valueDMR.getDomainModelEReferencePath().addAll(valuePath);
+		valueDMR.setDomainModelEFeature(valueAtt);
+		leafCondition.setValueDomainModelReference(valueDMR);
+
 		return leafCondition;
 	}
 
@@ -327,9 +349,9 @@ public class ConditionEvaluatorTest {
 	public void testContainmentConditionEObjectRight() {
 		final League league = setupLeague();
 		for (int i = 1; i <= league.getPlayers().size(); i++) {
-			final LeafCondition leafCondition1 = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Name(),
-				CORRECT_PLAYER_NAME + i++, league,
-				Collections.singletonList(BowlingPackage.eINSTANCE.getLeague_Players()));
+			final LeafCondition leafCondition1 = setupLeafConditionWithValueDMR(league, CORRECT_PLAYER_NAME + i++,
+				BowlingPackage.eINSTANCE.getLeague_Players(), Collections.<EReference> emptyList(),
+				BowlingPackage.eINSTANCE.getPlayer_Name(), Collections.<EReference> emptyList());
 
 			assertTrue(leafCondition1.evaluate());
 		}
@@ -339,8 +361,9 @@ public class ConditionEvaluatorTest {
 	@Test
 	public void testContainmentConditionEObjectWrong() {
 		final League league = setupLeague();
-		final LeafCondition leafCondition1 = setupLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Name(),
-			CORRECT_PLAYER_NAME, league, Collections.singletonList(BowlingPackage.eINSTANCE.getLeague_Players()));
+		final LeafCondition leafCondition1 = setupLeafConditionWithValueDMR(league, CORRECT_PLAYER_NAME,
+			BowlingPackage.eINSTANCE.getLeague_Players(), Collections.<EReference> emptyList(),
+			BowlingPackage.eINSTANCE.getPlayer_Name(), Collections.<EReference> emptyList());
 
 		assertFalse(leafCondition1.evaluate());
 
@@ -375,12 +398,10 @@ public class ConditionEvaluatorTest {
 		m2.getGames().add(g3);
 		m2.getGames().add(g4);
 
-		final LeafCondition leafCondition1 = setupLeafCondition(
-			BowlingPackage.eINSTANCE.getGame_Frames(),
-			21,
-			tournament,
-			Arrays.asList(BowlingPackage.eINSTANCE.getTournament_Matchups(),
-				BowlingPackage.eINSTANCE.getMatchup_Games()));
+		final LeafCondition leafCondition1 = setupLeafConditionWithValueDMR(tournament, 21,
+			BowlingPackage.eINSTANCE.getMatchup_Games(),
+			Arrays.asList(BowlingPackage.eINSTANCE.getTournament_Matchups()),
+			BowlingPackage.eINSTANCE.getGame_Frames(), Collections.<EReference> emptyList());
 
 		assertTrue(leafCondition1.evaluate());
 

@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich GmbH - initial API and implementation
  ******************************************************************************/
@@ -27,19 +27,20 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * <li>each enum,</li>
  * <li>and each data type</li>
  * </ul>
- * <!-- end-user-doc -->
- * 
+ *
+ * @since 1.2
+ * @noimplement This interface is not intended to be implemented by clients.
+ *              <!-- end-user-doc -->
  * @see org.eclipse.emf.ecp.view.spi.rule.model.RuleFactory
  * @model kind="package"
  * @generated
- * @since 1.2
  */
 public interface RulePackage extends EPackage {
 	/**
 	 * The package name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNAME = "rule"; //$NON-NLS-1$
@@ -48,7 +49,7 @@ public interface RulePackage extends EPackage {
 	 * The package namespace URI.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNS_URI = "http://org/eclipse/emf/ecp/view/rule/model"; //$NON-NLS-1$
@@ -57,7 +58,7 @@ public interface RulePackage extends EPackage {
 	 * The package namespace name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNS_PREFIX = "org.eclipse.emf.ecp.view.rule.model"; //$NON-NLS-1$
@@ -66,7 +67,7 @@ public interface RulePackage extends EPackage {
 	 * The singleton instance of the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	RulePackage eINSTANCE = org.eclipse.emf.ecp.view.spi.rule.model.impl.RulePackageImpl.init();
@@ -76,7 +77,7 @@ public interface RulePackage extends EPackage {
 	 * ' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.ConditionImpl
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.RulePackageImpl#getCondition()
 	 * @generated
@@ -87,7 +88,7 @@ public interface RulePackage extends EPackage {
 	 * The number of structural features of the '<em>Condition</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -98,7 +99,7 @@ public interface RulePackage extends EPackage {
 	 * <em>Leaf Condition</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.LeafConditionImpl
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.RulePackageImpl#getLeafCondition()
 	 * @generated
@@ -109,7 +110,7 @@ public interface RulePackage extends EPackage {
 	 * The feature id for the '<em><b>Expected Value</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -119,28 +120,39 @@ public interface RulePackage extends EPackage {
 	 * The feature id for the '<em><b>Domain Model Reference</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
 	int LEAF_CONDITION__DOMAIN_MODEL_REFERENCE = CONDITION_FEATURE_COUNT + 1;
 
 	/**
-	 * The number of structural features of the '<em>Leaf Condition</em>' class.
+	 * The feature id for the '<em><b>Value Domain Model Reference</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
+	 *
+	 * @since 1.5
+	 *        <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int LEAF_CONDITION_FEATURE_COUNT = CONDITION_FEATURE_COUNT + 2;
+	int LEAF_CONDITION__VALUE_DOMAIN_MODEL_REFERENCE = CONDITION_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of structural features of the '<em>Leaf Condition</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int LEAF_CONDITION_FEATURE_COUNT = CONDITION_FEATURE_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.OrConditionImpl
 	 * <em>Or Condition</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.OrConditionImpl
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.RulePackageImpl#getOrCondition()
 	 * @generated
@@ -151,7 +163,7 @@ public interface RulePackage extends EPackage {
 	 * The feature id for the '<em><b>Conditions</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -161,7 +173,7 @@ public interface RulePackage extends EPackage {
 	 * The number of structural features of the '<em>Or Condition</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -172,7 +184,7 @@ public interface RulePackage extends EPackage {
 	 * <em>And Condition</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.AndConditionImpl
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.RulePackageImpl#getAndCondition()
 	 * @generated
@@ -183,7 +195,7 @@ public interface RulePackage extends EPackage {
 	 * The feature id for the '<em><b>Conditions</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -193,7 +205,7 @@ public interface RulePackage extends EPackage {
 	 * The number of structural features of the '<em>And Condition</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -203,7 +215,7 @@ public interface RulePackage extends EPackage {
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.RuleImpl <em>Rule</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.RuleImpl
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.RulePackageImpl#getRule()
 	 * @generated
@@ -214,7 +226,7 @@ public interface RulePackage extends EPackage {
 	 * The feature id for the '<em><b>Condition</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -224,7 +236,7 @@ public interface RulePackage extends EPackage {
 	 * The number of structural features of the '<em>Rule</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -235,7 +247,7 @@ public interface RulePackage extends EPackage {
 	 * class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.ShowRuleImpl
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.RulePackageImpl#getShowRule()
 	 * @generated
@@ -246,7 +258,7 @@ public interface RulePackage extends EPackage {
 	 * The feature id for the '<em><b>Condition</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -256,7 +268,7 @@ public interface RulePackage extends EPackage {
 	 * The feature id for the '<em><b>Hide</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -266,7 +278,7 @@ public interface RulePackage extends EPackage {
 	 * The number of structural features of the '<em>Show Rule</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -277,7 +289,7 @@ public interface RulePackage extends EPackage {
 	 * <em>Enable Rule</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.EnableRuleImpl
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.RulePackageImpl#getEnableRule()
 	 * @generated
@@ -288,7 +300,7 @@ public interface RulePackage extends EPackage {
 	 * The feature id for the '<em><b>Condition</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -298,7 +310,7 @@ public interface RulePackage extends EPackage {
 	 * The feature id for the '<em><b>Disable</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -308,7 +320,7 @@ public interface RulePackage extends EPackage {
 	 * The number of structural features of the '<em>Enable Rule</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -318,7 +330,7 @@ public interface RulePackage extends EPackage {
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.rule.model.Condition <em>Condition</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for class '<em>Condition</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.Condition
 	 * @generated
@@ -330,7 +342,7 @@ public interface RulePackage extends EPackage {
 	 * <em>Leaf Condition</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for class '<em>Leaf Condition</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition
 	 * @generated
@@ -342,7 +354,7 @@ public interface RulePackage extends EPackage {
 	 * {@link org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition#getExpectedValue <em>Expected Value</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the attribute '<em>Expected Value</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition#getExpectedValue()
 	 * @see #getLeafCondition()
@@ -356,7 +368,7 @@ public interface RulePackage extends EPackage {
 	 * <em>Domain Model Reference</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the containment reference '<em>Domain Model Reference</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition#getDomainModelReference()
 	 * @see #getLeafCondition()
@@ -365,11 +377,26 @@ public interface RulePackage extends EPackage {
 	EReference getLeafCondition_DomainModelReference();
 
 	/**
+	 * Returns the meta object for the containment reference '
+	 * {@link org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition#getValueDomainModelReference
+	 * <em>Value Domain Model Reference</em>}'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.5
+	 *        <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Value Domain Model Reference</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition#getValueDomainModelReference()
+	 * @see #getLeafCondition()
+	 * @generated
+	 */
+	EReference getLeafCondition_ValueDomainModelReference();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.rule.model.OrCondition
 	 * <em>Or Condition</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for class '<em>Or Condition</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.OrCondition
 	 * @generated
@@ -381,7 +408,7 @@ public interface RulePackage extends EPackage {
 	 * {@link org.eclipse.emf.ecp.view.spi.rule.model.OrCondition#getConditions <em>Conditions</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the containment reference list '<em>Conditions</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.OrCondition#getConditions()
 	 * @see #getOrCondition()
@@ -394,7 +421,7 @@ public interface RulePackage extends EPackage {
 	 * <em>And Condition</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for class '<em>And Condition</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.AndCondition
 	 * @generated
@@ -406,7 +433,7 @@ public interface RulePackage extends EPackage {
 	 * {@link org.eclipse.emf.ecp.view.spi.rule.model.AndCondition#getConditions <em>Conditions</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the containment reference list '<em>Conditions</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.AndCondition#getConditions()
 	 * @see #getAndCondition()
@@ -418,7 +445,7 @@ public interface RulePackage extends EPackage {
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.rule.model.Rule <em>Rule</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for class '<em>Rule</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.Rule
 	 * @generated
@@ -430,7 +457,7 @@ public interface RulePackage extends EPackage {
 	 * {@link org.eclipse.emf.ecp.view.spi.rule.model.Rule#getCondition <em>Condition</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the containment reference '<em>Condition</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.Rule#getCondition()
 	 * @see #getRule()
@@ -442,7 +469,7 @@ public interface RulePackage extends EPackage {
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.rule.model.ShowRule <em>Show Rule</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for class '<em>Show Rule</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.ShowRule
 	 * @generated
@@ -454,7 +481,7 @@ public interface RulePackage extends EPackage {
 	 * <em>Hide</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the attribute '<em>Hide</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.ShowRule#isHide()
 	 * @see #getShowRule()
@@ -467,7 +494,7 @@ public interface RulePackage extends EPackage {
 	 * <em>Enable Rule</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for class '<em>Enable Rule</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.EnableRule
 	 * @generated
@@ -479,7 +506,7 @@ public interface RulePackage extends EPackage {
 	 * <em>Disable</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the attribute '<em>Disable</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.EnableRule#isDisable()
 	 * @see #getEnableRule()
@@ -491,7 +518,7 @@ public interface RulePackage extends EPackage {
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the factory that creates the instances of the model.
 	 * @generated
 	 */
@@ -507,7 +534,7 @@ public interface RulePackage extends EPackage {
 	 * <li>and each data type</li>
 	 * </ul>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	interface Literals {
@@ -516,7 +543,7 @@ public interface RulePackage extends EPackage {
 		 * <em>Condition</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.ConditionImpl
 		 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.RulePackageImpl#getCondition()
 		 * @generated
@@ -528,7 +555,7 @@ public interface RulePackage extends EPackage {
 		 * <em>Leaf Condition</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.LeafConditionImpl
 		 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.RulePackageImpl#getLeafCondition()
 		 * @generated
@@ -539,7 +566,7 @@ public interface RulePackage extends EPackage {
 		 * The meta object literal for the '<em><b>Expected Value</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EAttribute LEAF_CONDITION__EXPECTED_VALUE = eINSTANCE.getLeafCondition_ExpectedValue();
@@ -548,17 +575,28 @@ public interface RulePackage extends EPackage {
 		 * The meta object literal for the '<em><b>Domain Model Reference</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EReference LEAF_CONDITION__DOMAIN_MODEL_REFERENCE = eINSTANCE.getLeafCondition_DomainModelReference();
+
+		/**
+		 * The meta object literal for the '<em><b>Value Domain Model Reference</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 *
+		 * @since 1.5
+		 *        <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference LEAF_CONDITION__VALUE_DOMAIN_MODEL_REFERENCE = eINSTANCE
+			.getLeafCondition_ValueDomainModelReference();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.OrConditionImpl
 		 * <em>Or Condition</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.OrConditionImpl
 		 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.RulePackageImpl#getOrCondition()
 		 * @generated
@@ -569,7 +607,7 @@ public interface RulePackage extends EPackage {
 		 * The meta object literal for the '<em><b>Conditions</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EReference OR_CONDITION__CONDITIONS = eINSTANCE.getOrCondition_Conditions();
@@ -579,7 +617,7 @@ public interface RulePackage extends EPackage {
 		 * <em>And Condition</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.AndConditionImpl
 		 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.RulePackageImpl#getAndCondition()
 		 * @generated
@@ -590,7 +628,7 @@ public interface RulePackage extends EPackage {
 		 * The meta object literal for the '<em><b>Conditions</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EReference AND_CONDITION__CONDITIONS = eINSTANCE.getAndCondition_Conditions();
@@ -600,7 +638,7 @@ public interface RulePackage extends EPackage {
 		 * class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.RuleImpl
 		 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.RulePackageImpl#getRule()
 		 * @generated
@@ -611,7 +649,7 @@ public interface RulePackage extends EPackage {
 		 * The meta object literal for the '<em><b>Condition</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EReference RULE__CONDITION = eINSTANCE.getRule_Condition();
@@ -621,7 +659,7 @@ public interface RulePackage extends EPackage {
 		 * <em>Show Rule</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.ShowRuleImpl
 		 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.RulePackageImpl#getShowRule()
 		 * @generated
@@ -632,7 +670,7 @@ public interface RulePackage extends EPackage {
 		 * The meta object literal for the '<em><b>Hide</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EAttribute SHOW_RULE__HIDE = eINSTANCE.getShowRule_Hide();
@@ -642,7 +680,7 @@ public interface RulePackage extends EPackage {
 		 * <em>Enable Rule</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.EnableRuleImpl
 		 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.RulePackageImpl#getEnableRule()
 		 * @generated
@@ -653,7 +691,7 @@ public interface RulePackage extends EPackage {
 		 * The meta object literal for the '<em><b>Disable</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EAttribute ENABLE_RULE__DISABLE = eINSTANCE.getEnableRule_Disable();

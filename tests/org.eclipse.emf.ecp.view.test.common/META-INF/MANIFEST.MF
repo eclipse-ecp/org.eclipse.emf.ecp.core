@@ -5,6 +5,5 @@ Bundle-SymbolicName: org.eclipse.emf.ecp.view.test.common
 Bundle-Version: 1.5.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Export-Package: org.eclipse.emf.ecp.view.test.common;version="1.5.0";x
- -friends:="org.eclipse.emf.ecp.view.ui.editor.test"
+Export-Package: org.eclipse.emf.ecp.view.test.common;version="1.5.0";x-friends:="org.eclipse.emf.ecp.view.ui.editor.test,org.eclipse.emf.ecp.view.rule.test"
 Require-Bundle: org.eclipse.emf.ecore;bundle-version="2.9.0"

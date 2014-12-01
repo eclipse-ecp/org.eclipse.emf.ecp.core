@@ -8,6 +8,7 @@
  *
  * Contributors:
  * Edgar Mueller - initial API and implementation
+ * Johannes Faltermeier - registry setting based instead of feature based
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.rule;
 
@@ -22,16 +23,17 @@ import java.util.Set;
 
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.TreeIterator;
-import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecp.common.UniqueSetting;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeAddRemoveListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
+import org.eclipse.emf.ecp.view.spi.model.SettingPath;
 import org.eclipse.emf.ecp.view.spi.model.VAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
@@ -48,6 +50,7 @@ import org.eclipse.emf.ecp.view.spi.rule.model.ShowRule;
  * the state of a rule with its {@link VElement}.
  *
  * @author emueller
+ * @author jfaltermeier
  */
 public class RuleService implements ViewModelService {
 
@@ -57,15 +60,13 @@ public class RuleService implements ViewModelService {
 	private ModelChangeAddRemoveListener domainChangeListener;
 	private ModelChangeAddRemoveListener viewChangeListener;
 
-	private final RuleRegistry<EnableRule> enableRuleRegistry;
-	private final RuleRegistry<ShowRule> showRuleRegistry;
+	private RuleRegistry<EnableRule> enableRuleRegistry;
+	private RuleRegistry<ShowRule> showRuleRegistry;
 
 	/**
 	 * Instantiates the rule service.
 	 */
 	public RuleService() {
-		enableRuleRegistry = new RuleRegistry<EnableRule>();
-		showRuleRegistry = new RuleRegistry<ShowRule>();
 	}
 
 	/**
@@ -76,139 +77,35 @@ public class RuleService implements ViewModelService {
 	@Override
 	public void instantiate(final ViewModelContext context) {
 		this.context = context;
+		enableRuleRegistry = new RuleRegistry<EnableRule>(context);
+		showRuleRegistry = new RuleRegistry<ShowRule>(context);
 		final VElement view = context.getViewModel();
 		domainChangeListener = new ModelChangeAddRemoveListener() {
 
 			@Override
 			public void notifyChange(ModelChangeNotification notification) {
-				if (isAttributeNotification(notification)) {
-					final EAttribute attribute = (EAttribute) notification.getStructuralFeature();
-					evalShow(attribute);
-					evalEnable(attribute);
-				} else if (isMultiRefNotification(notification)) {
-					final EReference reference = (EReference) notification.getStructuralFeature();
-					final EClass eReferenceType = reference.getEReferenceType();
-					for (final EAttribute attribute : eReferenceType.getEAllAttributes()) {
-						evalShow(attribute);
-						evalEnable(attribute);
-					}
+				if (notification.getStructuralFeature() == null) {
+					return;
 				}
+				// add && reference && !containment
+				final Setting setting = ((InternalEObject) notification.getNotifier()).eSetting(notification
+					.getStructuralFeature());
+				evalShow(UniqueSetting.createSetting(setting));
+				evalEnable(UniqueSetting.createSetting(setting));
 			}
 
 			@Override
 			public void notifyAdd(Notifier notifier) {
+				// no op
 			}
 
 			@Override
 			public void notifyRemove(Notifier notifier) {
+				// no op
 			}
 		};
 		context.registerDomainChangeListener(domainChangeListener);
-		viewChangeListener = new ModelChangeAddRemoveListener() {
-			@Override
-			public void notifyChange(ModelChangeNotification notification) {
-				if (VFeaturePathDomainModelReference.class.isInstance(notification.getNotifier())
-					&& VViewPackage.eINSTANCE.getFeaturePathDomainModelReference_DomainModelEFeature() == notification
-					.getStructuralFeature()) {
-					final VDomainModelReference domainModelReference = VDomainModelReference.class.cast(notification
-						.getNotifier());
-					final EObject eContainer = domainModelReference.eContainer();
-					if (!Condition.class.isInstance(eContainer)) {
-						return;
-					}
-					final Condition condition = Condition.class.cast(eContainer);
-					final EStructuralFeature removedESF = (EStructuralFeature) notification.getRawNotification()
-						.getOldValue();
-					resetToEnabled(enableRuleRegistry.removeEFeature(removedESF, condition));
-					resetToVisible(showRuleRegistry.removeEFeature(removedESF, condition));
-
-				}
-			}
-
-			@Override
-			public void notifyAdd(Notifier notifier) {
-				if (VElement.class.isInstance(notifier)) {
-					register(enableRuleRegistry, EnableRule.class, context.getDomainModel(),
-						VElement.class.cast(notifier));
-					register(showRuleRegistry, ShowRule.class, context.getDomainModel(), VElement.class.cast(notifier));
-
-					final Rule rule = getRule(VElement.class.cast(notifier));
-					if (rule == null) {
-						return;
-					}
-					if (LeafCondition.class.isInstance(rule.getCondition())) {
-						evalNewRules(LeafCondition.class.cast(rule.getCondition()));
-					}
-					else {
-						final TreeIterator<EObject> eAllContents = rule.getCondition().eAllContents();
-						while (eAllContents.hasNext()) {
-							final EObject eObject = eAllContents.next();
-							if (LeafCondition.class.isInstance(eObject)) {
-								evalNewRules(LeafCondition.class.cast(eObject));
-							}
-						}
-					}
-
-				}
-				else if (EnableRule.class.isInstance(notifier)) {
-					final Set<EStructuralFeature> register = register(enableRuleRegistry, EnableRule.class,
-						context.getDomainModel(),
-						EnableRule.class.cast(notifier).eContainer());
-
-					for (final EStructuralFeature esf : register) {
-						evalEnable(esf);
-					}
-
-				}
-				else if (ShowRule.class.isInstance(notifier)) {
-					final Set<EStructuralFeature> register = register(showRuleRegistry, ShowRule.class,
-						context.getDomainModel(), ShowRule.class.cast(notifier)
-						.eContainer());
-
-					for (final EStructuralFeature esf : register) {
-						evalShow(esf);
-					}
-
-				}
-			}
-
-			private void evalNewRules(LeafCondition leafCondition) {
-				leafCondition.getDomainModelReference().init(context.getDomainModel());
-				final Iterator<EStructuralFeature> eStructuralFeatureIterator = leafCondition.getDomainModelReference()
-					.getEStructuralFeatureIterator();
-				while (eStructuralFeatureIterator.hasNext()) {
-					final EStructuralFeature feature = eStructuralFeatureIterator.next();
-					evalEnable(feature);
-					evalShow(feature);
-				}
-			}
-
-			@Override
-			public void notifyRemove(Notifier notifier) {
-
-				if (VElement.class.isInstance(notifier)) {
-					final VElement renderable = VElement.class.cast(notifier);
-					showRuleRegistry.removeRenderable(renderable);
-					enableRuleRegistry.removeRenderable(renderable);
-				} else if (Condition.class.isInstance(notifier)) {
-					final Condition condition = Condition.class.cast(notifier);
-					resetToVisible(showRuleRegistry.removeCondition(condition));
-
-					resetToEnabled(enableRuleRegistry
-						.removeCondition(condition));
-
-				} else if (ShowRule.class.isInstance(notifier)) {
-					final ShowRule showRule = ShowRule.class.cast(notifier);
-					resetToVisible(showRuleRegistry.removeRule(showRule));
-
-				} else if (EnableRule.class.isInstance(notifier)) {
-					final EnableRule enableRule = EnableRule.class.cast(notifier);
-					final VElement removeRule = enableRuleRegistry.removeRule(enableRule);
-					resetToEnabled(removeRule);
-
-				}
-			}
-		};
+		viewChangeListener = new RuleServiceViewChangeListener(context);
 		context.registerViewChangeListener(viewChangeListener);
 
 		if (view == null) {
@@ -221,13 +118,13 @@ public class RuleService implements ViewModelService {
 			throw new IllegalStateException(DOMAIN_MODEL_NULL_EXCEPTION);
 		}
 
-		final Set<EStructuralFeature> enableFeatures = init(enableRuleRegistry, EnableRule.class, view, domainModel);
-		final Set<EStructuralFeature> showFeatures = init(showRuleRegistry, ShowRule.class, view, domainModel);
-		for (final EStructuralFeature esf : enableFeatures) {
-			evalEnable(esf);
+		final Set<UniqueSetting> enableSettings = init(enableRuleRegistry, EnableRule.class, view, domainModel);
+		final Set<UniqueSetting> showSettings = init(showRuleRegistry, ShowRule.class, view, domainModel);
+		for (final UniqueSetting setting : enableSettings) {
+			evalEnable(setting);
 		}
-		for (final EStructuralFeature esf : showFeatures) {
-			evalShow(esf);
+		for (final UniqueSetting setting : showSettings) {
+			evalShow(setting);
 		}
 	}
 
@@ -325,12 +222,12 @@ public class RuleService implements ViewModelService {
 	}
 
 	private static <T extends Rule> Map<VElement, Boolean> evalAffectedRenderables(RuleRegistry<T> registry,
-		Class<T> ruleType, EStructuralFeature attribute, boolean isDryRun, Map<Setting, Object> possibleValues) {
+		Class<T> ruleType, UniqueSetting setting, boolean isDryRun, Map<Setting, Object> possibleValues) {
 
 		final Map<VElement, Boolean> map = new LinkedHashMap<VElement, Boolean>();
 
 		for (final Map.Entry<T, VElement> ruleAndRenderable : registry.getAffectedRenderables(
-			attribute).entrySet()) {
+			setting).entrySet()) {
 
 			final Rule rule = ruleAndRenderable.getKey();
 
@@ -411,21 +308,33 @@ public class RuleService implements ViewModelService {
 				// EMF API
 				@SuppressWarnings("unchecked")
 				final List<Object> objects = (List<Object>) actualValue;
-				hasChanged &= !objects.contains(newValue);
+				@SuppressWarnings("unchecked")
+				final List<Object> newValues = (List<Object>) newValue;
+				if (objects.size() == newValues.size()) {
+					boolean sameEntries = true;
+					for (final Object newValueListEntry : newValues) {
+						if (!objects.contains(newValueListEntry)) {
+							sameEntries = false;
+						}
+					}
+					hasChanged &= !sameEntries;
+				} else {
+					hasChanged = true;
+				}
 			}
 		}
 		return hasChanged;
 	}
 
 	private static <T extends Rule> Map<VElement, Boolean> evalAffectedRenderables(RuleRegistry<T> registry,
-		Class<T> ruleType, EStructuralFeature attribute, Map<Setting, Object> possibleValues) {
-		return evalAffectedRenderables(registry, ruleType, attribute, true, possibleValues);
+		Class<T> ruleType, UniqueSetting setting, Map<Setting, Object> possibleValues) {
+		return evalAffectedRenderables(registry, ruleType, setting, true, possibleValues);
 	}
 
 	private static <T extends Rule> Map<VElement, Boolean> evalAffectedRenderables(RuleRegistry<T> registry,
-		Class<T> ruleType, EStructuralFeature attribute) {
+		Class<T> ruleType, UniqueSetting setting) {
 		final Map<Setting, Object> changedValues = Collections.emptyMap();
-		return evalAffectedRenderables(registry, ruleType, attribute, false, changedValues);
+		return evalAffectedRenderables(registry, ruleType, setting, false, changedValues);
 	}
 
 	private static boolean isDisableRule(Rule rule) {
@@ -450,10 +359,10 @@ public class RuleService implements ViewModelService {
 		return rule instanceof ShowRule;
 	}
 
-	private <T extends Rule> void evalShow(EStructuralFeature attribute) {
+	private <T extends Rule> void evalShow(UniqueSetting setting) {
 
 		final Map<VElement, Boolean> visibleMap = evalAffectedRenderables(showRuleRegistry, ShowRule.class,
-			attribute);
+			setting);
 		for (final Map.Entry<VElement, Boolean> e : visibleMap.entrySet()) {
 			final Boolean isVisible = e.getValue();
 			final VElement renderable = e.getKey();
@@ -461,31 +370,31 @@ public class RuleService implements ViewModelService {
 		}
 	}
 
-	private <T extends Rule> void evalEnable(EStructuralFeature attribute) {
+	private <T extends Rule> void evalEnable(UniqueSetting setting) {
 
 		final Map<VElement, Boolean> enabledMap = evalAffectedRenderables(enableRuleRegistry, EnableRule.class,
-			attribute);
+			setting);
 
 		for (final Map.Entry<VElement, Boolean> e : enabledMap.entrySet()) {
 			e.getKey().setEnabled(e.getValue());
 		}
 	}
 
-	private <T extends Rule> Set<EStructuralFeature> init(RuleRegistry<T> registry, Class<T> ruleType,
+	private <T extends Rule> Set<UniqueSetting> init(RuleRegistry<T> registry, Class<T> ruleType,
 		EObject viewModel,
 		EObject domainObject) {
 		final TreeIterator<EObject> iterator = viewModel.eAllContents();
-		final Set<EStructuralFeature> relevantFeatures = new LinkedHashSet<EStructuralFeature>();
-		relevantFeatures.addAll(register(registry, ruleType, domainObject, viewModel));
+		final Set<UniqueSetting> relevantSettings = new LinkedHashSet<UniqueSetting>();
+		relevantSettings.addAll(register(registry, ruleType, domainObject, viewModel));
 
 		while (iterator.hasNext()) {
 			final EObject content = iterator.next();
-			relevantFeatures.addAll(register(registry, ruleType, domainObject, content));
+			relevantSettings.addAll(register(registry, ruleType, domainObject, content));
 		}
-		return relevantFeatures;
+		return relevantSettings;
 	}
 
-	private <T extends Rule> Set<EStructuralFeature> register(RuleRegistry<T> registry, Class<T> ruleType,
+	private <T extends Rule> Set<UniqueSetting> register(RuleRegistry<T> registry, Class<T> ruleType,
 		EObject domainObject,
 		final EObject viewModel) {
 		if (hasRule(ruleType, viewModel)) {
@@ -503,14 +412,14 @@ public class RuleService implements ViewModelService {
 	 *
 	 * @param possibleValues
 	 *            a mapping of settings to their would-be new value
-	 * @param changedAttribute the changed attribute
+	 * @param setting the changed setting
 	 * @return the hidden {@link VElement}s and their new state if {@code possibleValues} would be set
 	 */
 	public Map<VElement, Boolean> getDisabledRenderables(Map<Setting, Object> possibleValues,
-		EAttribute changedAttribute) {
+		UniqueSetting setting) {
 
 		return evalAffectedRenderables(enableRuleRegistry,
-			EnableRule.class, changedAttribute, possibleValues);
+			EnableRule.class, setting, possibleValues);
 	}
 
 	/**
@@ -519,13 +428,13 @@ public class RuleService implements ViewModelService {
 	 *
 	 * @param possibleValues
 	 *            a mapping of settings to their would-be new value
-	 * @param changedAttribute the attribute that was changed
+	 * @param setting the setting that was changed
 	 * @return the hidden {@link VElement}s and their new state if {@code possibleValues} would be set
 	 */
-	public Map<VElement, Boolean> getHiddenRenderables(Map<Setting, Object> possibleValues, EAttribute changedAttribute) {
+	public Map<VElement, Boolean> getHiddenRenderables(Map<Setting, Object> possibleValues, UniqueSetting setting) {
 
 		return evalAffectedRenderables(showRuleRegistry,
-			ShowRule.class, changedAttribute, possibleValues);
+			ShowRule.class, setting, possibleValues);
 	}
 
 	/**
@@ -542,23 +451,6 @@ public class RuleService implements ViewModelService {
 		return EnableRule.class.isInstance(rule);
 	}
 
-	private static boolean isAttributeNotification(ModelChangeNotification notification) {
-		if (notification.getStructuralFeature() instanceof EAttribute) {
-			return true;
-		}
-
-		return false;
-	}
-
-	private boolean isMultiRefNotification(ModelChangeNotification notification) {
-		if (EReference.class.isInstance(notification.getStructuralFeature())) {
-			final EReference reference = (EReference) notification.getStructuralFeature();
-			return reference.getUpperBound() < 0 || reference.getUpperBound() > 1;
-		}
-
-		return false;
-	}
-
 	/**
 	 * {@inheritDoc}
 	 *
@@ -567,5 +459,161 @@ public class RuleService implements ViewModelService {
 	@Override
 	public int getPriority() {
 		return 1;
+	}
+
+	/**
+	 * Lister of the rule service reacting to view model changes.
+	 */
+	private final class RuleServiceViewChangeListener implements ModelChangeAddRemoveListener {
+		private final ViewModelContext context;
+
+		/**
+		 * @param context
+		 */
+		private RuleServiceViewChangeListener(ViewModelContext context) {
+			this.context = context;
+		}
+
+		@Override
+		public void notifyChange(ModelChangeNotification notification) {
+			if (VFeaturePathDomainModelReference.class.isInstance(notification.getNotifier())) {
+				if (notification.getStructuralFeature() == VViewPackage.eINSTANCE
+					.getDomainModelReference_ChangeListener()) {
+					return;
+				}
+				final VDomainModelReference domainModelReference = VDomainModelReference.class.cast(notification
+					.getNotifier());
+				final EObject eContainer = domainModelReference.eContainer();
+				if (!LeafCondition.class.isInstance(eContainer)) {
+					return;
+				}
+				final Condition condition = Condition.class.cast(eContainer);
+				enableRuleRegistry.removeCondition(condition);
+				showRuleRegistry.removeCondition(condition);
+				EObject parent = condition.eContainer();
+				while (parent != null && !Rule.class.isInstance(parent)) {
+					parent = parent.eContainer();
+				}
+				if (parent == null) {
+					return;
+				}
+				if (!Rule.class.isInstance(parent)) {
+					return;
+				}
+				final Rule rule = Rule.class.cast(parent);
+				final VElement renderable = VElement.class.isInstance(rule.eContainer()) ?
+					VElement.class.cast(rule.eContainer()) : null;
+
+				if (renderable == null) {
+					return;
+				}
+				reevaluateRule(condition, rule, renderable);
+			}
+		}
+
+		private void reevaluateRule(final Condition condition, final Rule rule, final VElement renderable) {
+			if (isEnableRule(rule)) {
+				if (enableRuleRegistry.register(renderable, (EnableRule) rule, condition,
+					context.getDomainModel()).isEmpty()) {
+					renderable.setEnabled(true);
+				} else {
+					resetToEnabled(renderable);
+				}
+			}
+			if (isShowRule(rule)) {
+				if (showRuleRegistry.register(renderable, (ShowRule) rule, condition, context.getDomainModel())
+					.isEmpty()) {
+					renderable.setVisible(true);
+				} else {
+					resetToVisible(renderable);
+				}
+			}
+		}
+
+		@Override
+		public void notifyAdd(Notifier notifier) {
+			if (VElement.class.isInstance(notifier)) {
+				register(enableRuleRegistry, EnableRule.class, context.getDomainModel(),
+					VElement.class.cast(notifier));
+				register(showRuleRegistry, ShowRule.class, context.getDomainModel(), VElement.class.cast(notifier));
+
+				final Rule rule = getRule(VElement.class.cast(notifier));
+				if (rule == null) {
+					return;
+				}
+				if (LeafCondition.class.isInstance(rule.getCondition())) {
+					evalNewRules(LeafCondition.class.cast(rule.getCondition()));
+				}
+				else {
+					final TreeIterator<EObject> eAllContents = rule.getCondition().eAllContents();
+					while (eAllContents.hasNext()) {
+						final EObject eObject = eAllContents.next();
+						if (LeafCondition.class.isInstance(eObject)) {
+							evalNewRules(LeafCondition.class.cast(eObject));
+						}
+					}
+				}
+
+			}
+			else if (EnableRule.class.isInstance(notifier)) {
+				final Set<UniqueSetting> register = register(enableRuleRegistry, EnableRule.class,
+					context.getDomainModel(),
+					EnableRule.class.cast(notifier).eContainer());
+
+				for (final UniqueSetting setting : register) {
+					evalEnable(setting);
+				}
+
+			}
+			else if (ShowRule.class.isInstance(notifier)) {
+				final Set<UniqueSetting> register = register(showRuleRegistry, ShowRule.class,
+					context.getDomainModel(), ShowRule.class.cast(notifier)
+						.eContainer());
+
+				for (final UniqueSetting setting : register) {
+					evalShow(setting);
+				}
+
+			}
+		}
+
+		private void evalNewRules(LeafCondition leafCondition) {
+			final Iterator<SettingPath> fullPathIterator = leafCondition.getDomainModelReference()
+				.getFullPathIterator();
+			while (fullPathIterator.hasNext()) {
+				final SettingPath settingPath = fullPathIterator.next();
+				final Iterator<Setting> settings = settingPath.getPath();
+				while (settings.hasNext()) {
+					final Setting setting = settings.next();
+					evalEnable(UniqueSetting.createSetting(setting));
+					evalShow(UniqueSetting.createSetting(setting));
+				}
+			}
+		}
+
+		@Override
+		public void notifyRemove(Notifier notifier) {
+			if (VElement.class.isInstance(notifier)) {
+				final VElement renderable = VElement.class.cast(notifier);
+				showRuleRegistry.removeRenderable(renderable);
+				enableRuleRegistry.removeRenderable(renderable);
+			} else if (Condition.class.isInstance(notifier)) {
+				final Condition condition = Condition.class.cast(notifier);
+				resetToVisible(showRuleRegistry.removeCondition(condition));
+
+				resetToEnabled(enableRuleRegistry
+					.removeCondition(condition));
+
+			} else if (ShowRule.class.isInstance(notifier)) {
+				final ShowRule showRule = ShowRule.class.cast(notifier);
+				resetToVisible(showRuleRegistry.removeRule(showRule));
+
+			} else if (EnableRule.class.isInstance(notifier)) {
+				final EnableRule enableRule = EnableRule.class.cast(notifier);
+				final VElement removeRule = enableRuleRegistry.removeRule(enableRule);
+				resetToEnabled(removeRule);
+
+			}
+		}
 	}
 }

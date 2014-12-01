@@ -310,6 +310,17 @@ public class UniversityPackageImpl extends EPackageImpl implements UniversityPac
 	 * 
 	 * @generated
 	 */
+	public EAttribute getPerson_Name()
+	{
+		return (EAttribute) personEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
 	public UniversityFactory getUniversityFactory()
 	{
 		return (UniversityFactory) getEFactoryInstance();
@@ -356,6 +367,7 @@ public class UniversityPackageImpl extends EPackageImpl implements UniversityPac
 		assistantEClass = createEClass(ASSISTANT);
 
 		personEClass = createEClass(PERSON);
+		createEAttribute(personEClass, PERSON__NAME);
 	}
 
 	/**
@@ -439,6 +451,10 @@ public class UniversityPackageImpl extends EPackageImpl implements UniversityPac
 			"Assistant", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		initEClass(personEClass, Person.class, "Person", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(
+			getPerson_Name(),
+			ecorePackage.getEString(),
+			"name", null, 0, 1, Person.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		// Create resource
 		createResource(eNS_URI);

@@ -247,6 +247,16 @@ public interface UniversityPackage extends EPackage
 	int PERSON = 5;
 
 	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int PERSON__NAME = 0;
+
+	/**
 	 * The number of structural features of the '<em>Person</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -254,7 +264,7 @@ public interface UniversityPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int PERSON_FEATURE_COUNT = 0;
+	int PERSON_FEATURE_COUNT = 1;
 
 	/**
 	 * The number of operations of the '<em>Person</em>' class.
@@ -277,6 +287,16 @@ public interface UniversityPackage extends EPackage
 	 * @generated
 	 */
 	int PROFESSOR = 3;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int PROFESSOR__NAME = PERSON__NAME;
 
 	/**
 	 * The number of structural features of the '<em>Professor</em>' class.
@@ -309,6 +329,16 @@ public interface UniversityPackage extends EPackage
 	 * @generated
 	 */
 	int ASSISTANT = 4;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int ASSISTANT__NAME = PERSON__NAME;
 
 	/**
 	 * The number of structural features of the '<em>Assistant</em>' class.
@@ -488,6 +518,19 @@ public interface UniversityPackage extends EPackage
 	EClass getPerson();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.test.university.Person#getName
+	 * <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.eclipse.emf.ecp.test.university.Person#getName()
+	 * @see #getPerson()
+	 * @generated
+	 */
+	EAttribute getPerson_Name();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -646,6 +689,15 @@ public interface UniversityPackage extends EPackage
 		 * @generated
 		 */
 		EClass PERSON = eINSTANCE.getPerson();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EAttribute PERSON__NAME = eINSTANCE.getPerson_Name();
 
 	}
 

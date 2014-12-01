@@ -11,7 +11,6 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.context;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -76,8 +75,8 @@ public class ViewModelContextImpl implements ViewModelContext {
 	/** The view model change listener. Needs to be thread safe. */
 	private final List<ModelChangeListener> viewModelChangeListener = new CopyOnWriteArrayList<ModelChangeListener>();
 
-	/** The domain model change listener. */
-	private final List<ModelChangeListener> domainModelChangeListener = new ArrayList<ModelChangeListener>();
+	/** The domain model change listener. Needs to be thread safe. */
+	private final List<ModelChangeListener> domainModelChangeListener = new CopyOnWriteArrayList<ModelChangeListener>();
 
 	/** The domain model content adapter. */
 	private EContentAdapter domainModelContentAdapter;

@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich GmbH - initial API and implementation
  ******************************************************************************/
@@ -31,16 +31,16 @@ import org.eclipse.emf.ecp.view.spi.rule.model.ShowRule;
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Package</b>.
- * <!-- end-user-doc -->
- * 
- * @generated
+ *
  * @since 1.2
+ *        <!-- end-user-doc -->
+ * @generated
  */
 public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass conditionEClass = null;
@@ -48,7 +48,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass leafConditionEClass = null;
@@ -56,7 +56,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass orConditionEClass = null;
@@ -64,7 +64,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass andConditionEClass = null;
@@ -72,7 +72,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass ruleEClass = null;
@@ -80,7 +80,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass showRuleEClass = null;
@@ -88,7 +88,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass enableRuleEClass = null;
@@ -101,7 +101,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	 * Note: the correct way to create the package is via the static factory method {@link #init init()}, which also
 	 * performs initialization of the package, or returns the registered package, if one already exists. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.RulePackage#eNS_URI
 	 * @see #init()
@@ -114,19 +114,19 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private static boolean isInited = false;
 
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-	 * 
+	 *
 	 * <p>
 	 * This method is used to initialize {@link RulePackage#eINSTANCE} when that field is accessed. Clients should not
 	 * invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #eNS_URI
 	 * @see #createPackageContents()
 	 * @see #initializePackageContents()
@@ -164,7 +164,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -175,7 +175,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -186,7 +186,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -197,7 +197,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -208,8 +208,21 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 
 	/**
 	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.5
+	 *        <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EReference getLeafCondition_ValueDomainModelReference()
+	{
+		return (EReference) leafConditionEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -220,7 +233,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -231,7 +244,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -242,7 +255,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -253,7 +266,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -264,7 +277,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -275,7 +288,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -286,7 +299,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -297,7 +310,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -308,7 +321,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -319,7 +332,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -330,7 +343,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private boolean isCreated = false;
@@ -340,7 +353,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	 * guarded to have no affect on any invocation but its first.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public void createPackageContents() {
@@ -355,6 +368,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 		leafConditionEClass = createEClass(LEAF_CONDITION);
 		createEAttribute(leafConditionEClass, LEAF_CONDITION__EXPECTED_VALUE);
 		createEReference(leafConditionEClass, LEAF_CONDITION__DOMAIN_MODEL_REFERENCE);
+		createEReference(leafConditionEClass, LEAF_CONDITION__VALUE_DOMAIN_MODEL_REFERENCE);
 
 		orConditionEClass = createEClass(OR_CONDITION);
 		createEReference(orConditionEClass, OR_CONDITION__CONDITIONS);
@@ -375,7 +389,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private boolean isInitialized = false;
@@ -385,7 +399,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	 * method is guarded to have no affect on any invocation but its first.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public void initializePackageContents() {
@@ -431,6 +445,11 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 			theViewPackage.getDomainModelReference(),
 			null,
 			"domainModelReference", null, 1, 1, LeafCondition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+			getLeafCondition_ValueDomainModelReference(),
+			theViewPackage.getDomainModelReference(),
+			null,
+			"valueDomainModelReference", null, 0, 1, LeafCondition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(orConditionEClass, OrCondition.class,
 			"OrCondition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$

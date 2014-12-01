@@ -61,7 +61,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * @generated
  */
 public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
-	VFeaturePathDomainModelReference
+VFeaturePathDomainModelReference
 {
 	/**
 	 * The cached value of the '{@link #getChangeListener() <em>Change Listener</em>}' attribute list.
@@ -403,6 +403,9 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 		lastResolvedEObject = currentResolvedEObject;
 		leftReferences = currentLeftReferences;
 		// resolvedSetting.add(InternalEObject.class.cast(lastResolvedEObject).eSetting(getDomainModelEFeature()));
+		if (!leftReferences.isEmpty()) {
+			return false;
+		}
 		return true;
 	}
 
@@ -567,7 +570,9 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 			cleanDiagnostic(getDomainModelEFeature().equals(notification.getStructuralFeature()), notification);
 
 			resolve(rootEObject, false);
-			for (final DomainModelReferenceChangeListener listener : getChangeListener()) {
+			final List<DomainModelReferenceChangeListener> copyOfChangeListeners = new ArrayList<DomainModelReferenceChangeListener>(
+				getChangeListener());
+			for (final DomainModelReferenceChangeListener listener : copyOfChangeListeners) {
 				listener.notifyChange();
 			}
 		}
