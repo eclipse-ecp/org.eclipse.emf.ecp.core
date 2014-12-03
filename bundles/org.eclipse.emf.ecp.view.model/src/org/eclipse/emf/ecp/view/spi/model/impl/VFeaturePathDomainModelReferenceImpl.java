@@ -369,6 +369,9 @@ VFeaturePathDomainModelReference
 		EObject currentResolvedEObject = domainModel;
 		final ArrayList<EReference> currentLeftReferences = new ArrayList<EReference>(getDomainModelEReferencePath());
 		for (final EReference eReference : getDomainModelEReferencePath()) {
+			if (!currentResolvedEObject.eClass().getEAllReferences().contains(eReference)) {
+				return false;
+			}
 			resolvedSetting.add(InternalEObject.class.cast(currentResolvedEObject).eSetting(eReference));
 			if (eReference.isMany()) {
 				break;
