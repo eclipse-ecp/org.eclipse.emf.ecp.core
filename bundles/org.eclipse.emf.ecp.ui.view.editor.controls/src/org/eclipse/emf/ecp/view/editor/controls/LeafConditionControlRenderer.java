@@ -89,8 +89,10 @@ public class LeafConditionControlRenderer extends ExpectedValueControlRenderer {
 			wizardDialog.open();
 		}
 
-		structuralFeature = ((VFeaturePathDomainModelReference) condition.getValueDomainModelReference())
-			.getDomainModelEFeature();
+		if (condition.getValueDomainModelReference() != null) {
+			structuralFeature = ((VFeaturePathDomainModelReference) condition.getValueDomainModelReference())
+				.getDomainModelEFeature();
+		}
 
 		if (EReference.class.isInstance(structuralFeature)) {
 			// TODO show all references
