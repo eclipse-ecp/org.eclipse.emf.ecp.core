@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.view.table.ui.swt.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -21,10 +22,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Set;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.EcoreFactory;
@@ -54,6 +58,7 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
 import org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer;
 import org.eclipse.emf.ecp.view.test.common.swt.DatabindingClassRunner;
+import org.eclipse.emf.ecp.view.test.common.swt.SWTTestUtil;
 import org.eclipse.emf.ecp.view.test.common.swt.SWTViewTestHelper;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
@@ -62,6 +67,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableItem;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -348,6 +354,88 @@ public class SWTTableTest {
 		// no selection
 		tableViewer.setSelection(new StructuredSelection());
 		assertEquals(0, parentForECPView.getChildren().length);
+	}
+
+	@Test
+	public void testTableSorting() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		// domain
+		((EClass) domainElement).getESuperTypes().clear();
+		final EClass class1 = createEClass("a", "b");
+		final EClass class2 = createEClass("b", "c");
+		final EClass class3 = createEClass("c", "a");
+		((EClass) domainElement).getESuperTypes().add(class1);
+		((EClass) domainElement).getESuperTypes().add(class2);
+		((EClass) domainElement).getESuperTypes().add(class3);
+
+		// table control
+		final VTableControl tableControl = createTableControl();
+		final VTableDomainModelReference tableDMR = (VTableDomainModelReference) tableControl.getDomainModelReference();
+		tableDMR.setDomainModelEFeature(EcorePackage.eINSTANCE.getEClass_ESuperTypes());
+		tableDMR.getColumnDomainModelReferences().add(createDMR(EcorePackage.eINSTANCE.getENamedElement_Name()));
+		tableDMR.getColumnDomainModelReferences().add(
+			createDMR(EcorePackage.eINSTANCE.getEClassifier_InstanceClassName()));
+
+		// render
+		final AbstractSWTRenderer<VElement> tableRenderer = rendererFactory.getRenderer(tableControl,
+			new ViewModelContextWithoutServices(tableControl));
+		final Control control = tableRenderer.render(new SWTGridCell(0, 0, tableRenderer), shell);
+		if (control == null) {
+			fail("No control was rendered");
+		}
+		final Table table = SWTTestUtil.findControl(control, 0, Table.class);
+		assertTableItemOrder(table, class1, class2, class3);
+
+		// column 0 is validation column
+
+		// select column 1
+		// up
+		SWTTestUtil.selectWidget(table.getColumns()[1]);
+		SWTTestUtil.waitForUIThread();
+		assertTableItemOrder(table, class1, class2, class3);
+		// down
+		SWTTestUtil.selectWidget(table.getColumns()[1]);
+		SWTTestUtil.waitForUIThread();
+		assertTableItemOrder(table, class3, class2, class1);
+		// none
+		SWTTestUtil.selectWidget(table.getColumns()[1]);
+		SWTTestUtil.waitForUIThread();
+		assertTableItemOrder(table, class1, class2, class3);
+
+		// select column 2
+		// up
+		SWTTestUtil.selectWidget(table.getColumns()[2]);
+		SWTTestUtil.waitForUIThread();
+		assertTableItemOrder(table, class3, class1, class2);
+		// down
+		SWTTestUtil.selectWidget(table.getColumns()[2]);
+		SWTTestUtil.waitForUIThread();
+		assertTableItemOrder(table, class2, class1, class3);
+		// none
+		SWTTestUtil.selectWidget(table.getColumns()[2]);
+		SWTTestUtil.waitForUIThread();
+		assertTableItemOrder(table, class1, class2, class3);
+	}
+
+	private static void assertTableItemOrder(Table table, Object... objects) {
+		assertEquals(objects.length, table.getItemCount());
+		final TableItem[] items = table.getItems();
+		for (int i = 0; i < items.length; i++) {
+			assertSame(objects[i], items[i].getData());
+		}
+	}
+
+	private static EClass createEClass(String name, String instanceClassName) {
+		final EClass clazz = EcoreFactory.eINSTANCE.createEClass();
+		clazz.setName(name);
+		clazz.setInstanceClassName(instanceClassName);
+		return clazz;
+	}
+
+	private static VFeaturePathDomainModelReference createDMR(EAttribute attribute, EReference... refs) {
+		final VFeaturePathDomainModelReference dmr = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
+		dmr.setDomainModelEFeature(attribute);
+		dmr.getDomainModelEReferencePath().addAll(Arrays.asList(refs));
+		return dmr;
 	}
 
 	private VView createDetailView() {
