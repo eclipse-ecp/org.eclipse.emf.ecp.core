@@ -12,14 +12,12 @@
 package org.eclipse.emf.ecp.view.spi.table.swt;
 
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.TreeIterator;
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
@@ -28,7 +26,6 @@ import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.internal.table.swt.Activator;
-import org.eclipse.emf.ecp.view.internal.validation.ValidationService;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
@@ -219,48 +216,6 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer#postInit()
-	 */
-	@Override
-	protected void postInit() {
-		super.postInit();
-		revalidate();
-	}
-
-	@Override
-	public void finalizeRendering(Composite parent) {
-		super.finalizeRendering(parent);
-	}
-
-	private void revalidate() {
-		final Iterator<Setting> iterator = getVElement().getDomainModelReference().getIterator();
-		final Set<EObject> toValidate = new LinkedHashSet<EObject>();
-		while (iterator.hasNext()) {
-			final EObject eObject = iterator.next().getEObject();
-			if (toValidate.contains(eObject)) {
-				continue;
-			}
-			toValidate.add(eObject);
-		}
-		final ValidationService validationService = getViewModelContext().getService(ValidationService.class);
-		if (validationService != null) {
-			validationService.validate(toValidate);
-		}
-	}
-
-	@Override
-	protected EObject addRow(EClass clazz, Setting mainSetting) {
-		final EObject addEObject = super.addRow(clazz, mainSetting);
-
-		final VView detailView = getView();
-		getViewModelContext().getChildContext(addEObject, getVElement(), detailView);
-		revalidate();
-		return addEObject;
-	}
-
 	@Override
 	protected void deleteRows(List<EObject> deletionList, Setting mainSetting) {
 		super.deleteRows(deletionList, mainSetting);
@@ -274,6 +229,5 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 			}
 		}
 		getVElement().getDiagnostic().getDiagnostics().removeAll(toDelete);
-		revalidate();
 	}
 }

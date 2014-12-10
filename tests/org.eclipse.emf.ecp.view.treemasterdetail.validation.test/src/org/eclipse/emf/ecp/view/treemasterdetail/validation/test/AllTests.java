@@ -9,16 +9,20 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.spi.context;
+package org.eclipse.emf.ecp.view.treemasterdetail.validation.test;
+
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 
 /**
- * A ViewModelService which is instantiated only in the root context.
+ * Test Suite for TreeMasterDetail validation Tests.
  * 
  * @author Eugen Neufeld
- * @since 1.5
  * 
  */
-public interface GlobalViewModelService extends ViewModelService {
+@RunWith(Suite.class)
+@SuiteClasses({ TreeMasterDetailValidation_ITest.class })
+public class AllTests {
 
-	void childViewModelContextAdded(ViewModelContext childContext);
 }

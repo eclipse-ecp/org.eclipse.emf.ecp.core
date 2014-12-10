@@ -20,8 +20,10 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
+import org.eclipse.emf.ecp.view.spi.context.GlobalViewModelService;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.ecp.view.treemasterdetail.model.VTreeMasterDetail;
@@ -30,9 +32,77 @@ import org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.internal.TreeMasterDetai
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 
+/**
+ * The TreeMasterDatailValidationInitiator searches for {@link VTreeMasterDetail} VElements and registers the necessary
+ * ViewModelContexts.
+ * 
+ * @author Eugen Neufeld
+ * 
+ */
 @SuppressWarnings("restriction")
 public class TreeMasterDetailValidationInitiator implements
-	ViewModelService {
+	GlobalViewModelService {
+	/**
+	 * A Mapping for TreeMasterDetails.
+	 * 
+	 * @author Eugen Neufeld
+	 * 
+	 */
+	private static class TreeContextMapping {
+		private VTreeMasterDetail control;
+		private ViewModelContext context;
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see java.lang.Object#hashCode()
+		 */
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + (context == null ? 0 : context.hashCode());
+			result = prime * result + (control == null ? 0 : control.hashCode());
+			return result;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see java.lang.Object#equals(java.lang.Object)
+		 */
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj) {
+				return true;
+			}
+			if (obj == null) {
+				return false;
+			}
+			if (getClass() != obj.getClass()) {
+				return false;
+			}
+			final TreeContextMapping other = (TreeContextMapping) obj;
+			if (context == null) {
+				if (other.context != null) {
+					return false;
+				}
+			} else if (!context.equals(other.context)) {
+				return false;
+			}
+			if (control == null) {
+				if (other.control != null) {
+					return false;
+				}
+			} else if (!control.equals(other.control)) {
+				return false;
+			}
+			return true;
+		}
+
+	}
+
+	private final Map<TreeContextMapping, Set<Object>> mapping = new LinkedHashMap<TreeContextMapping, Set<Object>>();
 	/**
 	 * The detail key passed to the view model context.
 	 */
@@ -47,6 +117,9 @@ public class TreeMasterDetailValidationInitiator implements
 
 	private AdapterFactoryContentProvider adapterFactoryContentProvider;
 
+	/**
+	 * Constructor of the Initiator.
+	 */
 	public TreeMasterDetailValidationInitiator() {
 		adapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
 			new CustomReflectiveItemProviderAdapterFactory(),
@@ -64,7 +137,40 @@ public class TreeMasterDetailValidationInitiator implements
 
 	@Override
 	public void instantiate(ViewModelContext context) {
+		context.registerDomainChangeListener(new ModelChangeListener() {
 
+			@Override
+			public void notifyChange(ModelChangeNotification notification) {
+				if (notification.getRawNotification().isTouch() || mapping.isEmpty()) {
+					return;
+				}
+				for (final TreeContextMapping treeContextEntry : mapping.keySet()) {
+					if (!mapping.get(treeContextEntry).contains(notification.getNotifier())) {
+						return;
+					}
+					final Set<Object> children = getAllChildren(manipulateSelection(notification.getNotifier()),
+						adapterFactoryContentProvider);
+					if (mapping.get(treeContextEntry).containsAll(children)) {
+						return;
+					}
+					children.removeAll(mapping.get(treeContextEntry));
+					for (final Object child : children) {
+						final EObject addedObject = (EObject) manipulateSelection(child);
+						mapping.get(treeContextEntry).add(addedObject);
+						final Map<String, Object> context = new LinkedHashMap<String, Object>();
+						context.put(DETAIL_KEY, true);
+						context.put(ROOT_KEY, true);
+						treeContextEntry.context.getChildContext(addedObject,
+							treeContextEntry.control, ViewProviderHelper.getView(addedObject, context));
+					}
+				}
+			}
+		});
+		checkForTreeMasterDetail(context);
+
+	}
+
+	private void checkForTreeMasterDetail(ViewModelContext context) {
 		final EObject viewRoot = context.getViewModel();
 		final TreeIterator<EObject> eAllContents = viewRoot.eAllContents();
 		while (eAllContents.hasNext()) {
@@ -75,19 +181,28 @@ public class TreeMasterDetailValidationInitiator implements
 				registerChildrenChildContext(treeMasterDetail, context, adapterFactoryContentProvider);
 			}
 		}
-
 	}
 
 	private void registerChildrenChildContext(VTreeMasterDetail treeMasterDetail, ViewModelContext viewModelContext,
 		final AdapterFactoryContentProvider adapterFactoryContentProvider) {
 		final Set<Object> children = getAllChildren(viewModelContext.getDomainModel(),
 			adapterFactoryContentProvider);
+
 		for (final Object object : children) {
 			final Map<String, Object> context = new LinkedHashMap<String, Object>();
 			context.put(DETAIL_KEY, true);
-			final VView view = ViewProviderHelper.getView((EObject) object, context);
+			final EObject manipulateSelection = (EObject) manipulateSelection(object);
+			final TreeContextMapping entry = new TreeContextMapping();
+			entry.context = viewModelContext;
+			entry.control = treeMasterDetail;
+			if (!mapping.containsKey(entry)) {
+				mapping.put(entry, new LinkedHashSet<Object>());
+			}
+			mapping.get(entry).add(manipulateSelection);
 
-			viewModelContext.getChildContext((EObject) object, treeMasterDetail, view);
+			final VView view = ViewProviderHelper.getView(manipulateSelection, context);
+
+			viewModelContext.getChildContext(manipulateSelection, treeMasterDetail, view);
 		}
 	}
 
@@ -96,6 +211,14 @@ public class TreeMasterDetailValidationInitiator implements
 		context.put(DETAIL_KEY, true);
 		context.put(ROOT_KEY, true);
 		final Object manipulateSelection = manipulateSelection(viewModelContext.getDomainModel());
+		final TreeContextMapping entry = new TreeContextMapping();
+		entry.context = viewModelContext;
+		entry.control = treeMasterDetail;
+		if (!mapping.containsKey(entry)) {
+			mapping.put(entry, new LinkedHashSet<Object>());
+		}
+		mapping.get(entry).add(manipulateSelection);
+
 		VView view = treeMasterDetail.getDetailView();
 		if (view == null || view.getChildren().isEmpty()) {
 			view = ViewProviderHelper.getView((EObject) manipulateSelection, context);
@@ -129,7 +252,17 @@ public class TreeMasterDetailValidationInitiator implements
 
 	@Override
 	public int getPriority() {
-		return 3;
+		return 2;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.spi.context.GlobalViewModelService#childViewModelContextAdded(org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
+	 */
+	@Override
+	public void childViewModelContextAdded(ViewModelContext childContext) {
+		checkForTreeMasterDetail(childContext);
 	}
 
 }

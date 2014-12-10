@@ -37,7 +37,6 @@ import org.eclipse.emf.ecp.view.validation.test.model.TableWithoutMultiplicityCo
 import org.eclipse.emf.ecp.view.validation.test.model.TestFactory;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
 import org.eclipse.emf.ecp.view.validation.test.model.Writer;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -611,7 +610,6 @@ public class TableValidationTest {
 	}
 
 	@Test
-	@Ignore
 	public void testTableWithDetailValidationOnDetail() {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		view.setRootEClass(TestPackage.eINSTANCE.getTableWithoutMultiplicityConcrete());

@@ -58,6 +58,7 @@
 		<module>../../tests/org.eclipse.emf.ecp.ide.view.service.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.core.swt.tests</module>	
 		<module>../../tests/org.eclipse.emf.ecp.view.viewproxy.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.treemasterdetail.validation.test</module>
 		
 		<!-- Key Attribute DMR -->
 		<module>../../tests/org.eclipse.emf.ecp.view.keyattributedmr.model.test</module>	

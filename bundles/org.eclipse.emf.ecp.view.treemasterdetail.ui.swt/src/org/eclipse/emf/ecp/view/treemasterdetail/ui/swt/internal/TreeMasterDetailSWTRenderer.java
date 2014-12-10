@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- *
+ * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  * Anas Chakfeh - initial API and implementation
  * Eugen Neufeld - Refactoring
@@ -17,10 +17,8 @@ package org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.internal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -29,22 +27,17 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.notify.AdapterFactory;
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.Diagnostic;
-import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.common.ChildrenDescriptorCollector;
-import org.eclipse.emf.ecp.common.cachetree.IExcludedObjectsCallback;
 import org.eclipse.emf.ecp.edit.internal.swt.util.OverlayImageDescriptor;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTValidationHelper;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.DefaultReferenceService;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
-import org.eclipse.emf.ecp.view.internal.validation.ValidationService;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.reporting.StatusReport;
@@ -64,8 +57,6 @@ import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.provider.INotifyChangedListener;
-import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.eclipse.emf.edit.ui.action.ecp.CreateChildAction;
 import org.eclipse.emf.edit.ui.dnd.EditingDomainViewerDropAdapter;
 import org.eclipse.emf.edit.ui.dnd.LocalTransfer;
@@ -112,12 +103,11 @@ import org.osgi.framework.FrameworkUtil;
 
 /**
  * SWT Renderer for a {@link VTreeMasterDetail} element.
- *
+ * 
  * @author Anas Chakfeh
  * @author Eugen Neufeld
- *
+ * 
  */
-@SuppressWarnings("restriction")
 public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMasterDetail> {
 
 	/**
@@ -139,7 +129,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 	private TreeViewer treeViewer;
 	/**
 	 * Static string.
-	 *
+	 * 
 	 */
 	public static final String GLOBAL_ADDITIONS = "global_additions"; //$NON-NLS-1$
 
@@ -149,42 +139,9 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 	private Composite rightPanelContainerComposite;
 
-	private ValidationResultCachedTree validationResultCacheTree;
-
 	/**
 	 * @author jfaltermeier
-	 *
-	 */
-	private final class TreeValidationListener implements
-		org.eclipse.emf.ecp.view.internal.validation.ViewValidationListener {
-
-		private final EObject domainObject;
-
-		public TreeValidationListener(EObject domainObject) {
-			this.domainObject = domainObject;
-		}
-
-		@Override
-		public void onNewValidation(Set<Diagnostic> validationResults) {
-			int highestSeverity = Diagnostic.OK;
-			for (final Diagnostic diagnostic : validationResults) {
-				if (diagnostic.getSeverity() > highestSeverity) {
-					highestSeverity = diagnostic.getSeverity();
-				}
-			}
-
-			validationResultCacheTree.update(domainObject, highestSeverity);
-
-			if (treeViewer == null) {
-				return;
-			}
-			treeViewer.refresh();
-		}
-	}
-
-	/**
-	 * @author jfaltermeier
-	 *
+	 * 
 	 */
 	private final class MasterTreeContextMenuListener implements IMenuListener {
 		private final EditingDomain editingDomain;
@@ -259,23 +216,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 	/**
 	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#preInit()
-	 */
-	@Override
-	protected void preInit() {
-		super.preInit();
-		validationResultCacheTree = new ValidationResultCachedTree(new IExcludedObjectsCallback() {
-			@Override
-			public boolean isExcluded(Object object) {
-				return false;
-			}
-		});
-	}
-
-	/**
-	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#dispose()
 	 */
 	@Override
@@ -286,7 +227,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(SWTGridDescription)
 	 */
 	@Override
@@ -299,7 +240,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell,
 	 *      org.eclipse.swt.widgets.Composite)
 	 */
@@ -328,7 +269,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 	/**
 	 * Creates the sashform for the master detail colums.
-	 *
+	 * 
 	 * @param parent the parent
 	 * @return the sash
 	 */
@@ -351,7 +292,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 	/**
 	 * Create the parent of the master detail form.
-	 *
+	 * 
 	 * @param parent the parent
 	 * @return the composite
 	 */
@@ -365,23 +306,9 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		return form;
 	}
 
-	// private Set<Object> getAllChildren(Object parent, AdapterFactoryContentProvider adapterFactoryContentProvider) {
-	// final Set<Object> allChildren = new LinkedHashSet<Object>();
-	// final Object[] children = adapterFactoryContentProvider.getChildren(parent);
-	// for (final Object object : children) {
-	// final Object manipulatedSelection = manipulateSelection(object);
-	// if (!EObject.class.isInstance(manipulatedSelection)) {
-	// continue;
-	// }
-	// allChildren.add(manipulatedSelection);
-	// allChildren.addAll(getAllChildren(object, adapterFactoryContentProvider));
-	// }
-	// return allChildren;
-	// }
-
 	/**
 	 * Creates the tree viewer for the master.
-	 *
+	 * 
 	 * @param masterPanel the parent
 	 * @return the tree viewer
 	 */
@@ -402,12 +329,6 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 			}
 		};
 		final AdapterFactoryLabelProvider labelProvider = new TreeMasterDetailLabelProvider(adapterFactory);
-
-		/* validation start */
-		// registerRootChildContext();
-		// registerChildrenChildContext(adapterFactoryContentProvider);
-		registerDomainChangeListener(adapterFactory);
-		/* validation end */
 
 		treeViewer = new TreeViewer(masterPanel);
 
@@ -458,7 +379,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 	/**
 	 * Return true if a context menu should be shown in the tree.
-	 *
+	 * 
 	 * @return true if a context menu should be shown, false otherwise
 	 */
 	protected boolean hasContextMenu() {
@@ -467,7 +388,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 	/**
 	 * Return true if the tree should support DnD.
-	 *
+	 * 
 	 * @return true if DnD should be supported , false otherwise
 	 */
 	protected boolean hasDnDSupport() {
@@ -475,92 +396,8 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 	}
 
 	/**
-	 * @param adapterFactory
-	 */
-	private void registerDomainChangeListener(final ComposedAdapterFactory adapterFactory) {
-		adapterFactory.addListener(new INotifyChangedListener() {
-			@Override
-			public void notifyChanged(Notification notification) {
-				if (!ViewerNotification.class.isInstance(notification)) {
-					return;
-				}
-				final ViewerNotification viewerNotification = ViewerNotification.class.cast(notification);
-				if (!viewerNotification.isContentRefresh()) {
-					return;
-				}
-				if (viewerNotification.getEventType() == Notification.ADD) {
-					final Object newValue = viewerNotification.getNewValue();
-					final Object manipulateSelection = manipulateSelection(newValue);
-					final Map<String, Object> context = new LinkedHashMap<String, Object>();
-					context.put(DETAIL_KEY, true);
-					final VView view = ViewProviderHelper.getView((EObject) manipulateSelection, context);
-					final ViewModelContext viewContext = getViewModelContext()
-						.getChildContext((EObject) manipulateSelection, getVElement(), view);
-					manipulateViewContext(viewContext);
-					final ValidationService validationService = viewContext.getService(ValidationService.class);
-					// Full revalidate
-					if (validationService != null)
-					{
-						validationService.validate(getAllEObjects((EObject) newValue));
-					}
-				}
-				if (viewerNotification.getEventType() == Notification.REMOVE) {
-					final Object oldValue = viewerNotification.getOldValue();
-					validationResultCacheTree.remove((EObject) oldValue);
-				}
-			}
-
-			private Collection<EObject> getAllEObjects(EObject eObject) {
-				final List<EObject> result = new ArrayList<EObject>();
-				result.add(eObject);
-				final TreeIterator<EObject> iterator = EcoreUtil.getAllContents(eObject, false);
-				while (iterator.hasNext()) {
-					result.add(iterator.next());
-				}
-				return result;
-			}
-		});
-	}
-
-	// /**
-	// * @param adapterFactoryContentProvider
-	// */
-	// private void registerChildrenChildContext(final AdapterFactoryContentProvider adapterFactoryContentProvider) {
-	// final Set<Object> children = getAllChildren(getViewModelContext().getDomainModel(),
-	// adapterFactoryContentProvider);
-	// for (final Object object : children) {
-	// final Map<String, Object> context = new LinkedHashMap<String, Object>();
-	// context.put(DETAIL_KEY, true);
-	// final VView view = ViewProviderHelper.getView((EObject) object, context);
-	// final ViewModelContext viewContext = ViewModelContextFactory.INSTANCE
-	// .createViewModelContext(view, (EObject) object, (ViewModelContextImpl) getViewModelContext(),
-	// getVElement());
-	// manipulateViewContext(viewContext);
-	// viewContext.getService(ValidationService.class).registerValidationListener(
-	// new TreeValidationListener((EObject) object));
-	// }
-	// }
-	//
-	// private void registerRootChildContext() {
-	// final Map<String, Object> context = new LinkedHashMap<String, Object>();
-	// context.put(DETAIL_KEY, true);
-	// context.put(ROOT_KEY, true);
-	// final Object manipulateSelection = manipulateSelection(getViewModelContext().getDomainModel());
-	// VView view = getVElement().getDetailView();
-	// if (view == null || view.getChildren().isEmpty()) {
-	// view = ViewProviderHelper.getView((EObject) manipulateSelection, context);
-	// }
-	// final ViewModelContext viewContext = ViewModelContextFactory.INSTANCE
-	// .createViewModelContext(view, (EObject) manipulateSelection, (ViewModelContextImpl) getViewModelContext(),
-	// getVElement());
-	// manipulateViewContext(viewContext);
-	// viewContext.getService(ValidationService.class).registerValidationListener(
-	// new TreeValidationListener((EObject) manipulateSelection));
-	// }
-
-	/**
 	 * Returns the label provider.
-	 *
+	 * 
 	 * @param adapterFactoryLabelProvider the adaper factory label provider
 	 * @return the label provider to use for the tree
 	 */
@@ -570,7 +407,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 	/**
 	 * Creates the composite for the master panel.
-	 *
+	 * 
 	 * @param sash the parent
 	 * @return the composite
 	 */
@@ -585,7 +422,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 	/**
 	 * Adds the header to a parent composite.
-	 *
+	 * 
 	 * @param parent the parent
 	 */
 	protected void createHeader(Composite parent) {
@@ -671,7 +508,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 	/**
 	 * Creates the composite holding the details.
-	 *
+	 * 
 	 * @param parent the parent
 	 * @return the right panel/detail composite
 	 */
@@ -804,7 +641,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 	/**
 	 * Returns a list of all {@link MasterDetailAction MasterDetailActions} which shall be displayed in the context menu
 	 * of the master treeviewer.
-	 *
+	 * 
 	 * @return the actions
 	 */
 	protected List<MasterDetailAction> readMasterDetailActions() {
@@ -914,7 +751,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 	/**
 	 * Allows to manipulate the view context for the selected element that is about to be rendered.
-	 *
+	 * 
 	 * @param viewContext the view context.
 	 */
 	protected void manipulateViewContext(ViewModelContext viewContext) {
@@ -922,10 +759,10 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 	}
 
 	/**
-	 *
+	 * 
 	 * @author Anas Chakfeh
 	 *         This class is responsible for handling selection changed events which happen on the tree
-	 *
+	 * 
 	 */
 	private class TreeMasterViewSelectionListener implements ISelectionChangedListener {
 
@@ -971,13 +808,9 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 						final ViewModelContext childContext = getViewModelContext()
 							.getChildContext((EObject) selected, getVElement(), vView);
-						// if (childContext == null) {
-						//
-						// childContext = ViewModelContextFactory.INSTANCE
-						// .createViewModelContext(vView, (EObject) selected,
-						// getViewModelContext(), getVElement(), referenceService);
+
 						manipulateViewContext(childContext);
-						// }
+
 						ECPSWTViewRenderer.INSTANCE.render(childComposite, childContext);
 
 					}
@@ -986,13 +819,8 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 						final VView view = ViewProviderHelper.getView((EObject) selected, context);
 						final ViewModelContext childContext = getViewModelContext().getChildContext((EObject) selected,
 							getVElement(), view);
-						// if (childContext == null) {
-						//
-						// childContext = ViewModelContextFactory.INSTANCE
-						// .createViewModelContext(view,
-						// (EObject) selected, referenceService);
+
 						manipulateViewContext(childContext);
-						// }
 						ECPSWTViewRenderer.INSTANCE.render(childComposite, childContext);
 					}
 
@@ -1027,7 +855,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 	/**
 	 * Returns the composite for the detail.
-	 *
+	 * 
 	 * @return the composite
 	 */
 	protected Composite getDetailContainer() {
@@ -1036,7 +864,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 	/**
 	 * Allows to manipulate the selection by returning a specific child.
-	 *
+	 * 
 	 * @param treeSelected the selected element in the tree
 	 * @return the object that should be used as a selection
 	 */
@@ -1062,9 +890,9 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 	/**
 	 * The label provider used for the detail tree.
-	 *
+	 * 
 	 * @author jfaltermeier
-	 *
+	 * 
 	 */
 	private class TreeMasterDetailLabelProvider extends AdapterFactoryLabelProvider {
 
@@ -1102,42 +930,15 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 	}
 
-	@Override
-	public void finalizeRendering(Composite parent) {
-		super.finalizeRendering(parent);
-		final Set<EObject> toValidate = new LinkedHashSet<EObject>();
-		toValidate.add(getViewModelContext().getDomainModel());
-		final TreeIterator<EObject> iterator = EcoreUtil.getAllContents(getViewModelContext().getDomainModel(), true);
-		while (iterator.hasNext()) {
-			toValidate.add(iterator.next());
-		}
-		getViewModelContext().getService(ValidationService.class).validate(toValidate);
-	}
-
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#applyValidation()
 	 */
 	@Override
 	protected void applyValidation() {
 		super.applyValidation();
 
-		// // int highestSeverity = Diagnostic.OK;
-		// final VDiagnostic vDiagnostic = getVElement().getDiagnostic();
-		// if (vDiagnostic == null||vDiagnostic.getDiagnostics().isEmpty()) {
-		// validationResultCacheTree.clear();
-		// }
-		// Map<EObject, Integer> domainObjectSeverities=new LinkedHashMap<EObject, Integer>();
-		// for (final Object diagnosticObject : vDiagnostic.getDiagnostics()) {
-		// final Diagnostic diagnostic = Diagnostic.class.cast(diagnosticObject);
-		// EObject diagnosticEObject=(EObject) diagnostic.getData().get(0);
-		// // if (diagnostic.getSeverity() > highestSeverity) {
-		// // highestSeverity = diagnostic.getSeverity();
-		// // }
-		// }
-		// for(EObject domainObject:domainObjectSeverities.keySet())
-		// validationResultCacheTree.update(domainObject, domainObjectSeverities.get(domainObject));
 		if (treeViewer == null) {
 			return;
 		}

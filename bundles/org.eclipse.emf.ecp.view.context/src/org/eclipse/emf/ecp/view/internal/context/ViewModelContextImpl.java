@@ -802,13 +802,20 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	private void addChildContext(VElement vElement, EObject eObject, ViewModelContext childContext) {
 
-		childContext.addContextUser(this);
+		// childContext.addContextUser(this);
 
 		if (!childContexts.containsKey(eObject)) {
 			childContexts.put(eObject, new LinkedHashSet<ViewModelContext>());
 		}
 		childContexts.get(eObject).add(childContext);
 		childContextUsers.put(childContext, vElement);
+
+		// notify all global View model services
+		for (final ViewModelService viewModelService : viewServices) {
+			if (GlobalViewModelService.class.isInstance(viewModelService)) {
+				GlobalViewModelService.class.cast(viewModelService).childViewModelContextAdded(childContext);
+			}
+		}
 	}
 
 	private void removeChildContext(EObject eObject) {

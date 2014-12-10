@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<fragment>
+   <extension
+         point="org.eclipse.emf.ecore.generated_package">
+      <package
+            class="org.eclipse.emf.ecp.view.treemasterdetail.validation.test.TestTMD.TestTMDPackage"
+            genModel="model/TestTMD.genmodel"
+            uri="TestTMD">
+      </package>
+   </extension>
+
+</fragment>
