@@ -30,6 +30,7 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ObservableMapCellLabelProvider;
+import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
@@ -152,6 +153,9 @@ public class TablePOJO {
 	void createTable(Composite parent) {
 		final TableViewer tableViewer = new TableViewer(parent, SWT.MULTI | SWT.V_SCROLL | SWT.FULL_SELECTION
 			| SWT.BORDER);
+		tableViewer.getTable().setHeaderVisible(true);
+		tableViewer.getTable().setLinesVisible(true);
+
 		final ObservableListContentProvider cp = new ObservableListContentProvider();
 		tableViewer.setContentProvider(cp);
 		final IObservableList list = databindingService.getObservableList(tableControl.getDomainModelReference());
@@ -169,9 +173,9 @@ public class TablePOJO {
 			column.setLabelProvider(new ObservableMapCellLabelProvider(
 				valueProperty.observeDetail(cp.getKnownElements())));
 
-			// final EditingSupport editingSupport = new InlineEditingSupport(tableViewer,
-			// databinding.getDataBindingContext(), valueProperty);
-			// column.setEditingSupport(editingSupport);
+			final EditingSupport editingSupport = new InlineEditingSupport(tableViewer,
+				databindingService.getDataBindingContext(), valueProperty);
+			column.setEditingSupport(editingSupport);
 		}
 		tableViewer.setInput(list);
 	}

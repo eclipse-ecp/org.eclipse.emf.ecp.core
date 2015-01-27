@@ -11,6 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.table.swt;
 
+import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.ecore.EReference;
@@ -21,5 +22,7 @@ public interface DatabindingService {
 	IObservableList getObservableList(VDomainModelReference domainModelReference);
 
 	IValueProperty getValueProperty(EReference cast, VDomainModelReference dmr);
+
+	DataBindingContext getDataBindingContext();
 
 }

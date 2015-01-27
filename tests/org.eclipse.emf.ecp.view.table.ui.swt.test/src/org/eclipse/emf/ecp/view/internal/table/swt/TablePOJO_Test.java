@@ -12,6 +12,7 @@
 package org.eclipse.emf.ecp.view.internal.table.swt;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
@@ -28,6 +29,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.lang.reflect.Field;
 import java.util.Arrays;
 
 import org.eclipse.core.databinding.DataBindingContext;
@@ -55,14 +57,18 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
+
 import org.eclipse.jface.internal.databinding.swt.ControlTooltipTextProperty;
 import org.eclipse.jface.internal.databinding.swt.SWTObservableValueDecorator;
 import org.eclipse.swt.SWT;
+import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.jface.viewers.ViewerColumn;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.junit.After;
 import org.junit.Before;
@@ -366,6 +372,7 @@ public class TablePOJO_Test {
 		columnDMRs.add(columnDMR);
 
 		final DatabindingService databindingService = mock(DatabindingService.class);
+		when(databindingService.getDataBindingContext()).thenReturn(mock(DataBindingContext.class));
 		final Object item1 = mock(Object.class);
 		final Object item2 = mock(Object.class);
 		final IObservableList observableList = Observables.staticObservableList(Arrays.asList(item1, item2),
@@ -396,43 +403,61 @@ public class TablePOJO_Test {
 	}
 
 	@Test
-	public void testCreateTableWithMultipleColumn() {
+	public void testCreateTableWithMultipleColumns() {
 		final VTableControl tableControl = mock(VTableControl.class);
 		final VTableDomainModelReference tableDMR = mock(VTableDomainModelReference.class);
 		when(tableControl.getDomainModelReference()).thenReturn(tableDMR);
 		final EList<VDomainModelReference> columnDMRs = new BasicEList<VDomainModelReference>();
 		when(tableDMR.getColumnDomainModelReferences()).thenReturn(columnDMRs);
-		final VDomainModelReference columnDMR = mock(VDomainModelReference.class);
-		columnDMRs.add(columnDMR);
+		final VDomainModelReference columnDMR1 = mock(VDomainModelReference.class);
+		columnDMRs.add(columnDMR1);
+		final VDomainModelReference columnDMR2 = mock(VDomainModelReference.class);
+		columnDMRs.add(columnDMR2);
 
 		final DatabindingService databindingService = mock(DatabindingService.class);
+		when(databindingService.getDataBindingContext()).thenReturn(mock(DataBindingContext.class));
 		final Object item1 = mock(Object.class);
 		final Object item2 = mock(Object.class);
 		final IObservableList observableList = Observables.staticObservableList(Arrays.asList(item1, item2),
 			mock(EReference.class));
 		when(databindingService.getObservableList(tableDMR)).thenReturn(observableList);
-		final IValueProperty columnValueProperty = mock(IValueProperty.class);
-		when(databindingService.getValueProperty(any(EReference.class), same(columnDMR))).thenReturn(
-			columnValueProperty);
-		final IObservableMap observableMap = mock(IObservableMap.class);
-		when(columnValueProperty.observeDetail(any(IObservableSet.class))).thenReturn(observableMap);
+		final IValueProperty columnValueProperty1 = mock(IValueProperty.class);
+		when(databindingService.getValueProperty(any(EReference.class), same(columnDMR1))).thenReturn(
+			columnValueProperty1);
 
-		when(observableMap.get(eq(item1))).thenReturn("MyValue1");
-		when(observableMap.get(eq(item2))).thenReturn("MyValue2");
+		final IObservableMap observableMap1 = mock(IObservableMap.class);
+		when(columnValueProperty1.observeDetail(any(IObservableSet.class))).thenReturn(observableMap1);
+
+		when(observableMap1.get(eq(item1))).thenReturn("MyItem1Value1");
+		when(observableMap1.get(eq(item2))).thenReturn("MyItem2Value1");
+
+		final IValueProperty columnValueProperty2 = mock(IValueProperty.class);
+		when(databindingService.getValueProperty(any(EReference.class), same(columnDMR2))).thenReturn(
+			columnValueProperty2);
+
+		final IObservableMap observableMap2 = mock(IObservableMap.class);
+		when(columnValueProperty2.observeDetail(any(IObservableSet.class))).thenReturn(observableMap2);
+
+		when(observableMap2.get(eq(item1))).thenReturn("MyItem1Value2");
+		when(observableMap2.get(eq(item2))).thenReturn("MyItem2Value2");
 
 		final TablePOJO tablePojo = TablePojoBuilder.init().withDatabindingService(databindingService)
 			.withTableControl(tableControl).build();
 
 		tablePojo.createTable(parent);
 		final Table table = Table.class.cast(parent.getChildren()[0]);
-		assertEquals(1, table.getColumnCount());
+		assertEquals(2, table.getColumnCount());
 		assertEquals(2, table.getItemCount());
 		final TableItem tableItem1 = table.getItem(0);
-		final String value1 = tableItem1.getText(0);
+		final String item1Value1 = tableItem1.getText(0);
+		final String item1Value2 = tableItem1.getText(1);
 		final TableItem tableItem2 = table.getItem(1);
-		final String value2 = tableItem2.getText(0);
-		assertEquals("MyValue1", value1);
-		assertEquals("MyValue2", value2);
+		final String item2Value1 = tableItem2.getText(0);
+		final String item2Value2 = tableItem2.getText(1);
+		assertEquals("MyItem1Value1", item1Value1);
+		assertEquals("MyItem2Value1", item2Value1);
+		assertEquals("MyItem1Value2", item1Value2);
+		assertEquals("MyItem2Value2", item2Value2);
 	}
 
 	@Test
@@ -464,5 +489,150 @@ public class TablePOJO_Test {
 		final Composite controlComposite = (Composite) composite.getChildren()[1];
 		assertEquals(1, controlComposite.getChildren().length);
 		assertTrue(Table.class.isInstance(controlComposite.getChildren()[0]));
+	}
+
+	@Test
+	public void testCreateTableAssertInlindeEditing() throws IllegalArgumentException, IllegalAccessException,
+		NoSuchFieldException, SecurityException {
+		final VTableControl tableControl = mock(VTableControl.class);
+		final VTableDomainModelReference tableDMR = mock(VTableDomainModelReference.class);
+		when(tableControl.getDomainModelReference()).thenReturn(tableDMR);
+		final EList<VDomainModelReference> columnDMRs = new BasicEList<VDomainModelReference>();
+		when(tableDMR.getColumnDomainModelReferences()).thenReturn(columnDMRs);
+		final VDomainModelReference columnDMR = mock(VDomainModelReference.class);
+		columnDMRs.add(columnDMR);
+
+		final DatabindingService databindingService = mock(DatabindingService.class);
+		when(databindingService.getDataBindingContext()).thenReturn(mock(DataBindingContext.class));
+		final Object item = mock(Object.class);
+		final IObservableList observableList = Observables.staticObservableList(Arrays.asList(item),
+			mock(EReference.class));
+		when(databindingService.getObservableList(tableDMR)).thenReturn(observableList);
+		final IValueProperty columnValueProperty = mock(IValueProperty.class);
+		when(databindingService.getValueProperty(any(EReference.class), same(columnDMR))).thenReturn(
+			columnValueProperty);
+		final IObservableMap observableMap = mock(IObservableMap.class);
+		when(columnValueProperty.observeDetail(any(IObservableSet.class))).thenReturn(observableMap);
+
+		when(observableMap.get(eq(item))).thenReturn("MyValue");
+
+		final TablePOJO tablePojo = TablePojoBuilder.init().withDatabindingService(databindingService)
+			.withTableControl(tableControl).build();
+
+		tablePojo.createTable(parent);
+		final Table table = Table.class.cast(parent.getChildren()[0]);
+		final TableColumn tableColumn = table.getColumn(0);
+		final TableViewerColumn viewerColumn = (TableViewerColumn) tableColumn
+			.getData("org.eclipse.jface.columnViewer");
+		final Field field = ViewerColumn.class.getDeclaredField("editingSupport");
+		field.setAccessible(true);
+		final Object object = field.get(viewerColumn);
+		assertTrue(InlineEditingSupport.class.isInstance(object));
+	}
+
+	@Test
+	public void testCreateTableAssertHeaderVisible() {
+		final VTableControl tableControl = mock(VTableControl.class);
+		final VTableDomainModelReference tableDMR = mock(VTableDomainModelReference.class);
+		when(tableControl.getDomainModelReference()).thenReturn(tableDMR);
+		final EList<VDomainModelReference> columnDMRs = new BasicEList<VDomainModelReference>();
+		when(tableDMR.getColumnDomainModelReferences()).thenReturn(columnDMRs);
+		final DatabindingService databindingService = mock(DatabindingService.class);
+		final IObservableList observableList = Observables.emptyObservableList();
+		when(databindingService.getObservableList(tableDMR)).thenReturn(observableList);
+
+		final TablePOJO tablePojo = TablePojoBuilder.init().withDatabindingService(databindingService)
+			.withTableControl(tableControl).build();
+		tablePojo.createTable(parent);
+		assertEquals(1, parent.getChildren().length);
+		assertTrue(Table.class.isInstance(parent.getChildren()[0]));
+		final Table table = Table.class.cast(parent.getChildren()[0]);
+		assertTrue(table.getHeaderVisible());
+	}
+
+	@Test
+	public void testCreateTableAssertLinesVisible() {
+		final VTableControl tableControl = mock(VTableControl.class);
+		final VTableDomainModelReference tableDMR = mock(VTableDomainModelReference.class);
+		when(tableControl.getDomainModelReference()).thenReturn(tableDMR);
+		final EList<VDomainModelReference> columnDMRs = new BasicEList<VDomainModelReference>();
+		when(tableDMR.getColumnDomainModelReferences()).thenReturn(columnDMRs);
+		final DatabindingService databindingService = mock(DatabindingService.class);
+		final IObservableList observableList = Observables.emptyObservableList();
+		when(databindingService.getObservableList(tableDMR)).thenReturn(observableList);
+
+		final TablePOJO tablePojo = TablePojoBuilder.init().withDatabindingService(databindingService)
+			.withTableControl(tableControl).build();
+		tablePojo.createTable(parent);
+		assertEquals(1, parent.getChildren().length);
+		assertTrue(Table.class.isInstance(parent.getChildren()[0]));
+		final Table table = Table.class.cast(parent.getChildren()[0]);
+		assertTrue(table.getLinesVisible());
+	}
+
+	@Test
+	public void testCreateTableAssertColumnResizable() {
+		final VTableControl tableControl = mock(VTableControl.class);
+		final VTableDomainModelReference tableDMR = mock(VTableDomainModelReference.class);
+		when(tableControl.getDomainModelReference()).thenReturn(tableDMR);
+		final EList<VDomainModelReference> columnDMRs = new BasicEList<VDomainModelReference>();
+		when(tableDMR.getColumnDomainModelReferences()).thenReturn(columnDMRs);
+		final VDomainModelReference columnDMR = mock(VDomainModelReference.class);
+		columnDMRs.add(columnDMR);
+
+		final DatabindingService databindingService = mock(DatabindingService.class);
+		when(databindingService.getDataBindingContext()).thenReturn(mock(DataBindingContext.class));
+		final Object item = mock(Object.class);
+		final IObservableList observableList = Observables.staticObservableList(Arrays.asList(item),
+			mock(EReference.class));
+		when(databindingService.getObservableList(tableDMR)).thenReturn(observableList);
+		final IValueProperty columnValueProperty = mock(IValueProperty.class);
+		when(databindingService.getValueProperty(any(EReference.class), same(columnDMR))).thenReturn(
+			columnValueProperty);
+		final IObservableMap observableMap = mock(IObservableMap.class);
+		when(columnValueProperty.observeDetail(any(IObservableSet.class))).thenReturn(observableMap);
+
+		when(observableMap.get(eq(item))).thenReturn("MyValue");
+
+		final TablePOJO tablePojo = TablePojoBuilder.init().withDatabindingService(databindingService)
+			.withTableControl(tableControl).build();
+
+		tablePojo.createTable(parent);
+		final Table table = Table.class.cast(parent.getChildren()[0]);
+		final TableColumn tableColumn = table.getColumn(0);
+		assertTrue(tableColumn.getResizable());
+	}
+
+	@Test
+	public void testCreateTableAssertColumnNotMoveable() {
+		final VTableControl tableControl = mock(VTableControl.class);
+		final VTableDomainModelReference tableDMR = mock(VTableDomainModelReference.class);
+		when(tableControl.getDomainModelReference()).thenReturn(tableDMR);
+		final EList<VDomainModelReference> columnDMRs = new BasicEList<VDomainModelReference>();
+		when(tableDMR.getColumnDomainModelReferences()).thenReturn(columnDMRs);
+		final VDomainModelReference columnDMR = mock(VDomainModelReference.class);
+		columnDMRs.add(columnDMR);
+
+		final DatabindingService databindingService = mock(DatabindingService.class);
+		when(databindingService.getDataBindingContext()).thenReturn(mock(DataBindingContext.class));
+		final Object item = mock(Object.class);
+		final IObservableList observableList = Observables.staticObservableList(Arrays.asList(item),
+			mock(EReference.class));
+		when(databindingService.getObservableList(tableDMR)).thenReturn(observableList);
+		final IValueProperty columnValueProperty = mock(IValueProperty.class);
+		when(databindingService.getValueProperty(any(EReference.class), same(columnDMR))).thenReturn(
+			columnValueProperty);
+		final IObservableMap observableMap = mock(IObservableMap.class);
+		when(columnValueProperty.observeDetail(any(IObservableSet.class))).thenReturn(observableMap);
+
+		when(observableMap.get(eq(item))).thenReturn("MyValue");
+
+		final TablePOJO tablePojo = TablePojoBuilder.init().withDatabindingService(databindingService)
+			.withTableControl(tableControl).build();
+
+		tablePojo.createTable(parent);
+		final Table table = Table.class.cast(parent.getChildren()[0]);
+		final TableColumn tableColumn = table.getColumn(0);
+		assertFalse(tableColumn.getMoveable());
 	}
 }
