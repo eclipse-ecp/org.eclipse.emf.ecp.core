@@ -159,14 +159,15 @@ public class TablePOJO {
 		final ObservableListContentProvider cp = new ObservableListContentProvider();
 		tableViewer.setContentProvider(cp);
 		final IObservableList list = databindingService.getObservableList(tableControl.getDomainModelReference());
+		final EReference eReference = EReference.class.cast(list.getElementType());
 		final VTableDomainModelReference tableDMR = (VTableDomainModelReference) tableControl.getDomainModelReference();
 		for (final VDomainModelReference dmr : tableDMR.getColumnDomainModelReferences()) {
-			final IValueProperty valueProperty = databindingService.getValueProperty(
-				EReference.class.cast(list.getElementType()), dmr);
+
+			final IValueProperty valueProperty = databindingService.getValueProperty(eReference, dmr);
 
 			final TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
-			// column.getColumn().setText(labelService.getLabelText(tableControl));
-			// column.getColumn().setToolTipText(labelService.getDescriptionText(dmr));
+			column.getColumn().setText(labelService.getLabelText(eReference.getEReferenceType(), dmr));
+			column.getColumn().setToolTipText(labelService.getDescriptionText(eReference.getEReferenceType(), dmr));
 			column.getColumn().setResizable(true);
 			column.getColumn().setMoveable(false);
 

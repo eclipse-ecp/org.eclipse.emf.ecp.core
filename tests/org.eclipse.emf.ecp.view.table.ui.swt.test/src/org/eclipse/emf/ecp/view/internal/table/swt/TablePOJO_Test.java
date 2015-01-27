@@ -47,6 +47,7 @@ import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.databinding.EObjectObservableValue;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.view.internal.table.swt.TablePOJO.ValidationLabelTooltipModelToTargetStrategy;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
@@ -57,12 +58,11 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
-
 import org.eclipse.jface.internal.databinding.swt.ControlTooltipTextProperty;
 import org.eclipse.jface.internal.databinding.swt.SWTObservableValueDecorator;
-import org.eclipse.swt.SWT;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.ViewerColumn;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
@@ -387,8 +387,12 @@ public class TablePOJO_Test {
 		when(observableMap.get(eq(item1))).thenReturn("MyValue1");
 		when(observableMap.get(eq(item2))).thenReturn("MyValue2");
 
+		final LabelService labelService = mock(LabelService.class);
+		when(labelService.getLabelText(any(EClass.class), same(columnDMR))).thenReturn("column");
+		when(labelService.getDescriptionText(any(EClass.class), same(columnDMR))).thenReturn("tooltip");
+
 		final TablePOJO tablePojo = TablePojoBuilder.init().withDatabindingService(databindingService)
-			.withTableControl(tableControl).build();
+			.withTableControl(tableControl).withLabelService(labelService).build();
 
 		tablePojo.createTable(parent);
 		final Table table = Table.class.cast(parent.getChildren()[0]);
@@ -441,8 +445,14 @@ public class TablePOJO_Test {
 		when(observableMap2.get(eq(item1))).thenReturn("MyItem1Value2");
 		when(observableMap2.get(eq(item2))).thenReturn("MyItem2Value2");
 
+		final LabelService labelService = mock(LabelService.class);
+		when(labelService.getLabelText(any(EClass.class), same(columnDMR1))).thenReturn("column1");
+		when(labelService.getDescriptionText(any(EClass.class), same(columnDMR1))).thenReturn("tooltip1");
+		when(labelService.getLabelText(any(EClass.class), same(columnDMR2))).thenReturn("column2");
+		when(labelService.getDescriptionText(any(EClass.class), same(columnDMR2))).thenReturn("tooltip2");
+
 		final TablePOJO tablePojo = TablePojoBuilder.init().withDatabindingService(databindingService)
-			.withTableControl(tableControl).build();
+			.withTableControl(tableControl).withLabelService(labelService).build();
 
 		tablePojo.createTable(parent);
 		final Table table = Table.class.cast(parent.getChildren()[0]);
@@ -464,12 +474,22 @@ public class TablePOJO_Test {
 	public void testRenderIntegration() {
 		// TODO is it possible to mock the velement?
 		final VTableControl tableControl = VTableFactory.eINSTANCE.createTableControl();
-		tableControl.setDomainModelReference(VTableFactory.eINSTANCE.createTableDomainModelReference());
+		final VTableDomainModelReference tableDomainModelReference = VTableFactory.eINSTANCE
+			.createTableDomainModelReference();
+		tableControl.setDomainModelReference(tableDomainModelReference);
 
 		final LabelService labelService = mock(LabelService.class);
 		when(labelService.getLabelText(any(VTableControl.class))).thenReturn("");
+		when(labelService.getLabelText(any(EClass.class), any(VDomainModelReference.class))).thenReturn("column");
+		when(labelService.getDescriptionText(any(EClass.class), any(VDomainModelReference.class)))
+			.thenReturn("tooltip");
+
+		final DatabindingService databindingService = mock(DatabindingService.class);
+		when(databindingService.getObservableList(tableDomainModelReference)).thenReturn(
+			Observables.emptyObservableList(mock(EReference.class)));
+
 		final TablePOJO tablePojo = TablePojoBuilder.init().withLabelService(labelService)
-			.withTableControl(tableControl).build();
+			.withTableControl(tableControl).withDatabindingService(databindingService).build();
 		final Composite composite = tablePojo.render(parent);
 		assertEquals(2, composite.getChildren().length);
 		// title
@@ -511,13 +531,14 @@ public class TablePOJO_Test {
 		final IValueProperty columnValueProperty = mock(IValueProperty.class);
 		when(databindingService.getValueProperty(any(EReference.class), same(columnDMR))).thenReturn(
 			columnValueProperty);
-		final IObservableMap observableMap = mock(IObservableMap.class);
-		when(columnValueProperty.observeDetail(any(IObservableSet.class))).thenReturn(observableMap);
+		when(columnValueProperty.observeDetail(any(IObservableSet.class))).thenReturn(mock(IObservableMap.class));
 
-		when(observableMap.get(eq(item))).thenReturn("MyValue");
+		final LabelService labelService = mock(LabelService.class);
+		when(labelService.getLabelText(any(EClass.class), same(columnDMR))).thenReturn("column");
+		when(labelService.getDescriptionText(any(EClass.class), same(columnDMR))).thenReturn("tooltip");
 
 		final TablePOJO tablePojo = TablePojoBuilder.init().withDatabindingService(databindingService)
-			.withTableControl(tableControl).build();
+			.withTableControl(tableControl).withLabelService(labelService).build();
 
 		tablePojo.createTable(parent);
 		final Table table = Table.class.cast(parent.getChildren()[0]);
@@ -589,13 +610,14 @@ public class TablePOJO_Test {
 		final IValueProperty columnValueProperty = mock(IValueProperty.class);
 		when(databindingService.getValueProperty(any(EReference.class), same(columnDMR))).thenReturn(
 			columnValueProperty);
-		final IObservableMap observableMap = mock(IObservableMap.class);
-		when(columnValueProperty.observeDetail(any(IObservableSet.class))).thenReturn(observableMap);
+		when(columnValueProperty.observeDetail(any(IObservableSet.class))).thenReturn(mock(IObservableMap.class));
 
-		when(observableMap.get(eq(item))).thenReturn("MyValue");
+		final LabelService labelService = mock(LabelService.class);
+		when(labelService.getLabelText(any(EClass.class), same(columnDMR))).thenReturn("column");
+		when(labelService.getDescriptionText(any(EClass.class), same(columnDMR))).thenReturn("tooltip");
 
 		final TablePOJO tablePojo = TablePojoBuilder.init().withDatabindingService(databindingService)
-			.withTableControl(tableControl).build();
+			.withTableControl(tableControl).withLabelService(labelService).build();
 
 		tablePojo.createTable(parent);
 		final Table table = Table.class.cast(parent.getChildren()[0]);
@@ -622,17 +644,86 @@ public class TablePOJO_Test {
 		final IValueProperty columnValueProperty = mock(IValueProperty.class);
 		when(databindingService.getValueProperty(any(EReference.class), same(columnDMR))).thenReturn(
 			columnValueProperty);
-		final IObservableMap observableMap = mock(IObservableMap.class);
-		when(columnValueProperty.observeDetail(any(IObservableSet.class))).thenReturn(observableMap);
+		when(columnValueProperty.observeDetail(any(IObservableSet.class))).thenReturn(mock(IObservableMap.class));
 
-		when(observableMap.get(eq(item))).thenReturn("MyValue");
+		final LabelService labelService = mock(LabelService.class);
+		when(labelService.getLabelText(any(EClass.class), same(columnDMR))).thenReturn("column");
+		when(labelService.getDescriptionText(any(EClass.class), same(columnDMR))).thenReturn("tooltip");
 
 		final TablePOJO tablePojo = TablePojoBuilder.init().withDatabindingService(databindingService)
-			.withTableControl(tableControl).build();
+			.withTableControl(tableControl).withLabelService(labelService).build();
 
 		tablePojo.createTable(parent);
 		final Table table = Table.class.cast(parent.getChildren()[0]);
 		final TableColumn tableColumn = table.getColumn(0);
 		assertFalse(tableColumn.getMoveable());
+	}
+
+	@Test
+	public void testCreateTableAssertColumnText() {
+		final VTableControl tableControl = mock(VTableControl.class);
+		final VTableDomainModelReference tableDMR = mock(VTableDomainModelReference.class);
+		when(tableControl.getDomainModelReference()).thenReturn(tableDMR);
+		final EList<VDomainModelReference> columnDMRs = new BasicEList<VDomainModelReference>();
+		when(tableDMR.getColumnDomainModelReferences()).thenReturn(columnDMRs);
+		final VDomainModelReference columnDMR = mock(VDomainModelReference.class);
+		columnDMRs.add(columnDMR);
+
+		final DatabindingService databindingService = mock(DatabindingService.class);
+		when(databindingService.getDataBindingContext()).thenReturn(mock(DataBindingContext.class));
+		final Object item = mock(Object.class);
+		final IObservableList observableList = Observables.staticObservableList(Arrays.asList(item),
+			mock(EReference.class));
+		when(databindingService.getObservableList(tableDMR)).thenReturn(observableList);
+		final IValueProperty columnValueProperty = mock(IValueProperty.class);
+		when(databindingService.getValueProperty(any(EReference.class), same(columnDMR))).thenReturn(
+			columnValueProperty);
+		when(columnValueProperty.observeDetail(any(IObservableSet.class))).thenReturn(mock(IObservableMap.class));
+
+		final LabelService labelService = mock(LabelService.class);
+		when(labelService.getLabelText(any(EClass.class), same(columnDMR))).thenReturn("column");
+		when(labelService.getDescriptionText(any(EClass.class), same(columnDMR))).thenReturn("tooltip");
+
+		final TablePOJO tablePojo = TablePojoBuilder.init().withDatabindingService(databindingService)
+			.withTableControl(tableControl).withLabelService(labelService).build();
+
+		tablePojo.createTable(parent);
+		final Table table = Table.class.cast(parent.getChildren()[0]);
+		final TableColumn tableColumn = table.getColumn(0);
+		assertEquals("column", tableColumn.getText());
+	}
+
+	@Test
+	public void testCreateTableAssertColumnToolTipText() {
+		final VTableControl tableControl = mock(VTableControl.class);
+		final VTableDomainModelReference tableDMR = mock(VTableDomainModelReference.class);
+		when(tableControl.getDomainModelReference()).thenReturn(tableDMR);
+		final EList<VDomainModelReference> columnDMRs = new BasicEList<VDomainModelReference>();
+		when(tableDMR.getColumnDomainModelReferences()).thenReturn(columnDMRs);
+		final VDomainModelReference columnDMR = mock(VDomainModelReference.class);
+		columnDMRs.add(columnDMR);
+
+		final DatabindingService databindingService = mock(DatabindingService.class);
+		when(databindingService.getDataBindingContext()).thenReturn(mock(DataBindingContext.class));
+		final Object item = mock(Object.class);
+		final IObservableList observableList = Observables.staticObservableList(Arrays.asList(item),
+			mock(EReference.class));
+		when(databindingService.getObservableList(tableDMR)).thenReturn(observableList);
+		final IValueProperty columnValueProperty = mock(IValueProperty.class);
+		when(databindingService.getValueProperty(any(EReference.class), same(columnDMR))).thenReturn(
+			columnValueProperty);
+		when(columnValueProperty.observeDetail(any(IObservableSet.class))).thenReturn(mock(IObservableMap.class));
+
+		final LabelService labelService = mock(LabelService.class);
+		when(labelService.getLabelText(any(EClass.class), same(columnDMR))).thenReturn("column");
+		when(labelService.getDescriptionText(any(EClass.class), same(columnDMR))).thenReturn("tooltip");
+
+		final TablePOJO tablePojo = TablePojoBuilder.init().withDatabindingService(databindingService)
+			.withTableControl(tableControl).withLabelService(labelService).build();
+
+		tablePojo.createTable(parent);
+		final Table table = Table.class.cast(parent.getChildren()[0]);
+		final TableColumn tableColumn = table.getColumn(0);
+		assertEquals("tooltip", tableColumn.getToolTipText());
 	}
 }

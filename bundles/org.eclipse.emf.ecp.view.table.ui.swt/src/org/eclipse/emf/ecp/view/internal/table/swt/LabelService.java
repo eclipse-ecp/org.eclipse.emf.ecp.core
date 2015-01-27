@@ -11,6 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.table.swt;
 
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 
 public interface LabelService {
@@ -23,5 +25,19 @@ public interface LabelService {
 	 * @return may not be null
 	 */
 	String getLabelText(VTableControl tableControl);
+
+	/**
+	 * @param eReferenceType
+	 * @param dmr
+	 * @return
+	 */
+	String getLabelText(EClass eReferenceType, VDomainModelReference dmr);
+
+	/**
+	 * @param eReferenceType
+	 * @param dmr
+	 * @return
+	 */
+	String getDescriptionText(EClass eReferenceType, VDomainModelReference dmr);
 
 }
