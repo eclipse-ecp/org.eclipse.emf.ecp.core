@@ -18,7 +18,9 @@ import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.databinding.EMFObservables;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecp.edit.internal.swt.controls.ControlMessages;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
@@ -34,6 +36,7 @@ import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
@@ -44,29 +47,36 @@ import org.eclipse.swt.widgets.Label;
  */
 public class TablePOJO {
 
+	private static final String ICON_ADD = "icons/add.png"; //$NON-NLS-1$
+
 	final LabelService labelService;
 	final VTableControl tableControl;
 	final TooltipModifier tooltipModifier;
 	final DatabindingService databindingService;
+	final TemplateService templateService;
 
 	public TablePOJO(VTableControl tableControl, LabelService labelService, TooltipModifier tooltipModifier,
-		DatabindingService databindingService) {
+		DatabindingService databindingService, TemplateService templateService) {
 		if (tableControl == null) {
-			throw new IllegalArgumentException("TableControl may not be null");
+			throw new IllegalArgumentException("TableControl may not be null"); //$NON-NLS-1$
 		}
 		this.tableControl = tableControl;
 		if (labelService == null) {
-			throw new IllegalArgumentException("LabelTextService may not be null");
+			throw new IllegalArgumentException("LabelTextService may not be null"); //$NON-NLS-1$
 		}
 		this.labelService = labelService;
 		if (tooltipModifier == null) {
-			throw new IllegalArgumentException("TooltipModifier may not be null");
+			throw new IllegalArgumentException("TooltipModifier may not be null"); //$NON-NLS-1$
 		}
 		this.tooltipModifier = tooltipModifier;
 		if (databindingService == null) {
-			throw new IllegalArgumentException("DatabindingService must not be null!");
+			throw new IllegalArgumentException("DatabindingService must not be null!"); //$NON-NLS-1$
 		}
 		this.databindingService = databindingService;
+		if (templateService == null) {
+			throw new IllegalArgumentException("TemplateService may not be null"); //$NON-NLS-1$
+		}
+		this.templateService = templateService;
 	}
 
 	public SWTGridDescription getGridDescription(AbstractSWTRenderer<VTableControl> renderer) {
@@ -100,22 +110,28 @@ public class TablePOJO {
 
 	void createValidationLabel(Composite composite) {
 		final Label validation = new Label(composite, SWT.NONE);
+
+		// tooltip binding
 		final IObservableValue diagnosticObserve = createValidationTooltipModelObs();
 		final IObservableValue tooltipObservable = createValidationTooltipTargetObs(validation);
 		final EMFDataBindingContext bindingContext = new EMFDataBindingContext();
 		bindValue(bindingContext, tooltipObservable, diagnosticObserve, null,
 			new ValidationLabelTooltipModelToTargetStrategy(tooltipModifier));
+
+		// TODO icon binding
 	}
 
+	// TODO move to micro service / helper class? asserts from tests can be moved
 	IObservableValue createValidationTooltipModelObs() {
 		return EMFObservables.observeValue(tableControl, VViewPackage.eINSTANCE.getElement_Diagnostic());
 	}
 
+	// TODO move to micro service / helper class? asserts from tests can be moved
 	IObservableValue createValidationTooltipTargetObs(Label validation) {
 		return SWTObservables.observeTooltipText(validation);
 	}
 
-	// TODO move to micro service? currently untested here
+	// TODO move to micro service / helper class? untested here
 	void bindValue(DataBindingContext bindingContext, IObservableValue targetObservableValue,
 		IObservableValue modelObservableValue, UpdateValueStrategy targetToModel, UpdateValueStrategy modelToTarget) {
 		bindingContext.bindValue(targetObservableValue, modelObservableValue, targetToModel, modelToTarget);
@@ -130,6 +146,26 @@ public class TablePOJO {
 
 	void createAddButton(Composite buttonComposite) {
 		final Button addButton = new Button(buttonComposite, SWT.PUSH);
+
+		// add image
+		final Image image = templateService.getAddIcon();
+		addButton.setImage(image);
+
+		// add tooltip
+		final IObservableList observableList = databindingService.getObservableList(tableControl
+			.getDomainModelReference());
+		final EReference multiReference = EReference.class.cast(observableList.getElementType());
+		final EClass eClass = multiReference.getEReferenceType();
+		final String instanceName = eClass.getInstanceClass() == null ? "" : eClass.getInstanceClass().getSimpleName(); //$NON-NLS-1$
+		addButton.setToolTipText(String.format(ControlMessages.TableControl_AddInstanceOf, instanceName));
+
+		// check enablement //TODO this check also needed after add
+		// if (multiReference.getUpperBound() != -1
+		// && observableList.size() >= multiReference.getUpperBound()) {
+		// addButton.setEnabled(false);
+		// }
+
+		// add listener
 	}
 
 	void createRemoveButton(Composite buttonComposite) {
@@ -158,6 +194,7 @@ public class TablePOJO {
 
 		final ObservableListContentProvider cp = new ObservableListContentProvider();
 		tableViewer.setContentProvider(cp);
+		// TODO dmr null check where/who?
 		final IObservableList list = databindingService.getObservableList(tableControl.getDomainModelReference());
 		final EReference eReference = EReference.class.cast(list.getElementType());
 		final VTableDomainModelReference tableDMR = (VTableDomainModelReference) tableControl.getDomainModelReference();
@@ -181,6 +218,7 @@ public class TablePOJO {
 		tableViewer.setInput(list);
 	}
 
+	// TODO move to micro service / helper class? untested here
 	final static class ValidationLabelTooltipModelToTargetStrategy extends UpdateValueStrategy {
 
 		private final TooltipModifier tooltipModifier;

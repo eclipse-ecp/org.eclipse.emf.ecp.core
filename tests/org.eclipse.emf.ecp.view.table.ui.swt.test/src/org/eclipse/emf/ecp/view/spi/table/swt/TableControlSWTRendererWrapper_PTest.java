@@ -21,6 +21,7 @@ import static org.mockito.Mockito.when;
 import org.eclipse.emf.ecp.view.internal.table.swt.DatabindingService;
 import org.eclipse.emf.ecp.view.internal.table.swt.LabelService;
 import org.eclipse.emf.ecp.view.internal.table.swt.TablePOJO;
+import org.eclipse.emf.ecp.view.internal.table.swt.TemplateService;
 import org.eclipse.emf.ecp.view.internal.table.swt.TooltipModifier;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
@@ -61,7 +62,9 @@ public class TableControlSWTRendererWrapper_PTest {
 		final TooltipModifier tooltipModifier = mock(TooltipModifier.class);
 		when(tooltipModifier.modify(any(String.class))).thenReturn("");
 		final DatabindingService databindingService = mock(DatabindingService.class);
-		tablePOJOSpy = spy(new TablePOJO(vTableControl, labelService, tooltipModifier, databindingService));
+		final TemplateService templateService = mock(TemplateService.class);
+		tablePOJOSpy = spy(new TablePOJO(vTableControl, labelService, tooltipModifier, databindingService,
+			templateService));
 		rendererWrapper = new TableControlSWTRendererWrapper(tablePOJOSpy);
 		final VTableDomainModelReference tableDomainModelReference = VTableFactory.eINSTANCE
 			.createTableDomainModelReference();

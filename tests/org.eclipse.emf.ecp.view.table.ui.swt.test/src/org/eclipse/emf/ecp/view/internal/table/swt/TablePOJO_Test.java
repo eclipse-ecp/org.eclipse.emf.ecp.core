@@ -63,6 +63,7 @@ import org.eclipse.jface.internal.databinding.swt.SWTObservableValueDecorator;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.ViewerColumn;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
@@ -114,31 +115,44 @@ public class TablePOJO_Test {
 		final LabelService labelService = mock(LabelService.class);
 		final TooltipModifier tooltipModifier = mock(TooltipModifier.class);
 		final DatabindingService databindingService = mock(DatabindingService.class);
-		final TablePOJO tablePojo = new TablePOJO(tableControl, labelService, tooltipModifier, databindingService);
+		final TemplateService templateService = mock(TemplateService.class);
+		final TablePOJO tablePojo = new TablePOJO(tableControl, labelService, tooltipModifier, databindingService,
+			templateService);
 		assertSame(tableControl, tablePojo.tableControl);
 		assertSame(labelService, tablePojo.labelService);
 		assertSame(databindingService, tablePojo.databindingService);
 		assertSame(tooltipModifier, tablePojo.tooltipModifier);
+		assertSame(templateService, tablePojo.templateService);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstructorLabelServiceNull() {
-		new TablePOJO(mock(VTableControl.class), null, mock(TooltipModifier.class), mock(DatabindingService.class));
+		new TablePOJO(mock(VTableControl.class), null, mock(TooltipModifier.class), mock(DatabindingService.class),
+			mock(TemplateService.class));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstructorTableControlNull() {
-		new TablePOJO(null, mock(LabelService.class), mock(TooltipModifier.class), mock(DatabindingService.class));
+		new TablePOJO(null, mock(LabelService.class), mock(TooltipModifier.class), mock(DatabindingService.class),
+			mock(TemplateService.class));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstructorDatabindingServiceNull() {
-		new TablePOJO(mock(VTableControl.class), mock(LabelService.class), mock(TooltipModifier.class), null);
+		new TablePOJO(mock(VTableControl.class), mock(LabelService.class), mock(TooltipModifier.class), null,
+			mock(TemplateService.class));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstructorTooltipModifierNull() {
-		new TablePOJO(mock(VTableControl.class), mock(LabelService.class), null, mock(DatabindingService.class));
+		new TablePOJO(mock(VTableControl.class), mock(LabelService.class), null, mock(DatabindingService.class),
+			mock(TemplateService.class));
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testConstructorTemplateServiceNull() {
+		new TablePOJO(mock(VTableControl.class), mock(LabelService.class), mock(TooltipModifier.class),
+			mock(DatabindingService.class), null);
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -300,11 +314,32 @@ public class TablePOJO_Test {
 
 	@Test
 	public void testCreateAddButton() {
-		final TablePOJO tablePojo = TablePojoBuilder.init().build();
+		// setup services
+		final TemplateService templateService = mock(TemplateService.class);
+		final Image image = new Image(parent.getDisplay(), 16, 16);
+		when(templateService.getAddIcon()).thenReturn(image);
+		final DatabindingService databindingService = mock(DatabindingService.class);
+		final IObservableList observableList = mock(IObservableList.class);
+		when(databindingService.getObservableList(any(VDomainModelReference.class))).thenReturn(observableList);
+		final EReference reference = mock(EReference.class);
+		when(observableList.getElementType()).thenReturn(reference);
+		final EClass eClass = mock(EClass.class);
+		when(reference.getEReferenceType()).thenReturn(eClass);
+
+		// setup
+		final TablePOJO tablePojo = TablePojoBuilder.init().withTemplateService(templateService)
+			.withDatabindingService(databindingService).build();
+
+		// act
 		tablePojo.createAddButton(parent);
 		assertEquals(1, parent.getChildren().length);
 		assertTrue(Button.class.isInstance(parent.getChildren()[0]));
 		final Button button = Button.class.cast(parent.getChildren()[0]);
+
+		// assert image
+		assertSame(image, button.getImage());
+
+		// assert tooltip
 	}
 
 	@Test
@@ -485,8 +520,10 @@ public class TablePOJO_Test {
 			.thenReturn("tooltip");
 
 		final DatabindingService databindingService = mock(DatabindingService.class);
+		final EReference reference = mock(EReference.class);
 		when(databindingService.getObservableList(tableDomainModelReference)).thenReturn(
-			Observables.emptyObservableList(mock(EReference.class)));
+			Observables.emptyObservableList(reference));
+		when(reference.getEReferenceType()).thenReturn(mock(EClass.class));
 
 		final TablePOJO tablePojo = TablePojoBuilder.init().withLabelService(labelService)
 			.withTableControl(tableControl).withDatabindingService(databindingService).build();
