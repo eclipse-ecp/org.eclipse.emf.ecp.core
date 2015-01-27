@@ -12,34 +12,46 @@
 package org.eclipse.emf.ecp.view.internal.table.swt;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.isNull;
+import static org.mockito.Matchers.notNull;
 import static org.mockito.Matchers.same;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.Observables;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.core.databinding.observable.set.IObservableSet;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.databinding.EMFDataBindingContext;
+import org.eclipse.emf.databinding.EObjectObservableValue;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecp.view.internal.table.swt.TablePOJO.ValidationLabelTooltipModelToTargetStrategy;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
+import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
@@ -62,6 +74,8 @@ import org.mockito.stubbing.Answer;
 @SuppressWarnings("restriction")
 @RunWith(DatabindingClassRunner.class)
 public class TablePOJO_Test {
+
+	private static final String TOOLTIP = "TOOLTIP";
 
 	private static final String TABLE_LABEL = "TABLE_LABEL";
 
@@ -88,26 +102,33 @@ public class TablePOJO_Test {
 	public void testConstructor() {
 		final VTableControl tableControl = mock(VTableControl.class);
 		final LabelService labelService = mock(LabelService.class);
+		final TooltipModifier tooltipModifier = mock(TooltipModifier.class);
 		final DatabindingService databindingService = mock(DatabindingService.class);
-		final TablePOJO tablePojo = new TablePOJO(tableControl, labelService, databindingService);
+		final TablePOJO tablePojo = new TablePOJO(tableControl, labelService, tooltipModifier, databindingService);
 		assertSame(tableControl, tablePojo.tableControl);
 		assertSame(labelService, tablePojo.labelService);
 		assertSame(databindingService, tablePojo.databindingService);
+		assertSame(tooltipModifier, tablePojo.tooltipModifier);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstructorLabelServiceNull() {
-		new TablePOJO(mock(VTableControl.class), null, mock(DatabindingService.class));
+		new TablePOJO(mock(VTableControl.class), null, mock(TooltipModifier.class), mock(DatabindingService.class));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstructorTableControlNull() {
-		new TablePOJO(null, mock(LabelService.class), mock(DatabindingService.class));
+		new TablePOJO(null, mock(LabelService.class), mock(TooltipModifier.class), mock(DatabindingService.class));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstructorDatabindingServiceNull() {
-		new TablePOJO(mock(VTableControl.class), mock(LabelService.class), null);
+		new TablePOJO(mock(VTableControl.class), mock(LabelService.class), mock(TooltipModifier.class), null);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testConstructorTooltipModifierNull() {
+		new TablePOJO(mock(VTableControl.class), mock(LabelService.class), null, mock(DatabindingService.class));
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -176,15 +197,68 @@ public class TablePOJO_Test {
 		assertTrue(Label.class.isInstance(parent.getChildren()[0]));
 		final Label label = Label.class.cast(parent.getChildren()[0]);
 		assertEquals(label.getText(), TABLE_LABEL);
+		// TODO tooltip missing
 	}
 
 	@Test
 	public void testCreateValidationLabel() {
+		// setup
 		final TablePOJO tablePojo = TablePojoBuilder.init().build();
-		tablePojo.createValidationLabel(parent);
+		final TablePOJO pojoSpy = spy(tablePojo);
+
+		// setup mock method behaviour
+		final IObservableValue modelObs = mock(IObservableValue.class);
+		final IObservableValue targetObs = mock(IObservableValue.class);
+		doAnswer(new Answer<IObservableValue>() {
+			@Override
+			public IObservableValue answer(InvocationOnMock invocation) throws Throwable {
+				return modelObs;
+			}
+		}).when(pojoSpy).createValidationTooltipModelObs();
+		doAnswer(new Answer<IObservableValue>() {
+			@Override
+			public IObservableValue answer(InvocationOnMock invocation) throws Throwable {
+				return targetObs;
+			}
+		}).when(pojoSpy).createValidationTooltipTargetObs(any(Label.class));
+		doAnswer(EMPTY_ANSWER).when(pojoSpy).bindValue(any(DataBindingContext.class), any(IObservableValue.class),
+			any(IObservableValue.class), any(UpdateValueStrategy.class), any(UpdateValueStrategy.class));
+
+		// act
+		pojoSpy.createValidationLabel(parent);
+
+		// assert
 		assertEquals(1, parent.getChildren().length);
 		assertTrue(Label.class.isInstance(parent.getChildren()[0]));
 		final Label label = Label.class.cast(parent.getChildren()[0]);
+
+		verify(pojoSpy, times(1)).createValidationTooltipModelObs();
+		verify(pojoSpy, times(1)).createValidationTooltipTargetObs(label);
+		verify(pojoSpy, times(1)).bindValue(notNull(EMFDataBindingContext.class), same(targetObs),
+			same(modelObs), isNull(UpdateValueStrategy.class), any(ValidationLabelTooltipModelToTargetStrategy.class));
+	}
+
+	@Test
+	public void testCreateValidationTooltipModelObs() {
+		final VTableControl tableControl = mock(VTableControl.class);
+		final TablePOJO tablePOJO = TablePojoBuilder.init().withTableControl(tableControl).build();
+		final IObservableValue observableValue = tablePOJO.createValidationTooltipModelObs();
+		assertNotNull(observableValue);
+		assertTrue(EObjectObservableValue.class.isInstance(observableValue));
+		final EObjectObservableValue eObjectObservableValue = EObjectObservableValue.class.cast(observableValue);
+		assertSame(VViewPackage.eINSTANCE.getElement_Diagnostic(), eObjectObservableValue.getValueType());
+		assertSame(tableControl, eObjectObservableValue.getObserved());
+	}
+
+	@Test
+	public void testCreateValidationTooltipTargetObs() {
+		final TablePOJO tablePOJO = TablePojoBuilder.init().build();
+		final Label label = mock(Label.class);
+		final IObservableValue observableValue = tablePOJO.createValidationTooltipTargetObs(label);
+		assertNotNull(observableValue);
+		assertTrue(ISWTObservableValue.class.isInstance(observableValue));
+		final ISWTObservableValue swtObservableValue = ISWTObservableValue.class.cast(observableValue);
+		assertSame(label, swtObservableValue.getWidget());
 	}
 
 	@Test
@@ -353,7 +427,9 @@ public class TablePOJO_Test {
 
 	@Test
 	public void testRenderIntegration() {
-		final TablePOJO tablePojo = TablePojoBuilder.init().build();
+		final LabelService labelService = mock(LabelService.class);
+		when(labelService.getLabelText(any(VTableControl.class))).thenReturn("");
+		final TablePOJO tablePojo = TablePojoBuilder.init().withLabelService(labelService).build();
 		final Composite composite = tablePojo.render(parent);
 		assertEquals(2, composite.getChildren().length);
 		// title

@@ -21,14 +21,14 @@ import static org.mockito.Mockito.when;
 import org.eclipse.emf.ecp.view.internal.table.swt.DatabindingService;
 import org.eclipse.emf.ecp.view.internal.table.swt.LabelService;
 import org.eclipse.emf.ecp.view.internal.table.swt.TablePOJO;
+import org.eclipse.emf.ecp.view.internal.table.swt.TooltipModifier;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
 import org.eclipse.swt.widgets.Composite;
@@ -58,12 +58,14 @@ public class TableControlSWTRendererWrapper_PTest {
 		vTableControl = VTableFactory.eINSTANCE.createTableControl();
 		final LabelService labelService = mock(LabelService.class);
 		when(labelService.getLabelText(any(VTableControl.class))).thenReturn("");
+		final TooltipModifier tooltipModifier = mock(TooltipModifier.class);
+		when(tooltipModifier.modify(any(String.class))).thenReturn("");
 		final DatabindingService databindingService = mock(DatabindingService.class);
-		tablePOJOSpy = spy(new TablePOJO(vTableControl, labelService, databindingService));
+		tablePOJOSpy = spy(new TablePOJO(vTableControl, labelService, tooltipModifier, databindingService));
 		rendererWrapper = new TableControlSWTRendererWrapper(tablePOJOSpy);
-		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
-			.createFeaturePathDomainModelReference();
-		vTableControl.setDomainModelReference(domainModelReference);
+		final VTableDomainModelReference tableDomainModelReference = VTableFactory.eINSTANCE
+			.createTableDomainModelReference();
+		vTableControl.setDomainModelReference(tableDomainModelReference);
 		viewModelContext = mock(ViewModelContext.class);
 	}
 

@@ -36,7 +36,7 @@ public class TableControlSWTRendererWrapper extends AbstractControlSWTRenderer<V
 	 * Default constructor.
 	 */
 	public TableControlSWTRendererWrapper() {
-		this(new TablePOJO(null, null, null));
+		this(new TablePOJO(null, null, null, null));
 	}
 
 	/**

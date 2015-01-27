@@ -23,12 +23,15 @@ public class TablePojoBuilder {
 
 	private VTableControl tableControl;
 	private LabelService labelService;
+
+	private TooltipModifier tooltipModifier;
 	private DatabindingService databindingService;
 
 	private TablePojoBuilder() {
 		tableControl = mock(VTableControl.class);
 		labelService = mock(LabelService.class);
 		databindingService = mock(DatabindingService.class);
+		tooltipModifier = mock(TooltipModifier.class);
 	}
 
 	public static TablePojoBuilder init() {
@@ -50,8 +53,13 @@ public class TablePojoBuilder {
 		return this;
 	}
 
+	public TablePojoBuilder withTooltipModifier(TooltipModifier tooltipModifier) {
+		this.tooltipModifier = tooltipModifier;
+		return this;
+	}
+
 	public TablePOJO build() {
-		return new TablePOJO(tableControl, labelService, databindingService);
+		return new TablePOJO(tableControl, labelService, tooltipModifier, databindingService);
 	}
 
 }

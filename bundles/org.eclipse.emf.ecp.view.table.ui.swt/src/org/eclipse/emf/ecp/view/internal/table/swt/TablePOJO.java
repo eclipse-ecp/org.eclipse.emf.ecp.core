@@ -11,15 +11,23 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.table.swt;
 
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.list.IObservableList;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.emf.databinding.EMFDataBindingContext;
+import org.eclipse.emf.databinding.EMFObservables;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
+import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ObservableMapCellLabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
@@ -37,9 +45,11 @@ public class TablePOJO {
 
 	final LabelService labelService;
 	final VTableControl tableControl;
+	final TooltipModifier tooltipModifier;
 	final DatabindingService databindingService;
 
-	public TablePOJO(VTableControl tableControl, LabelService labelService, DatabindingService databindingService) {
+	public TablePOJO(VTableControl tableControl, LabelService labelService, TooltipModifier tooltipModifier,
+		DatabindingService databindingService) {
 		if (tableControl == null) {
 			throw new IllegalArgumentException("TableControl may not be null");
 		}
@@ -48,6 +58,10 @@ public class TablePOJO {
 			throw new IllegalArgumentException("LabelTextService may not be null");
 		}
 		this.labelService = labelService;
+		if (tooltipModifier == null) {
+			throw new IllegalArgumentException("TooltipModifier may not be null");
+		}
+		this.tooltipModifier = tooltipModifier;
 		if (databindingService == null) {
 			throw new IllegalArgumentException("DatabindingService must not be null!");
 		}
@@ -85,6 +99,25 @@ public class TablePOJO {
 
 	void createValidationLabel(Composite composite) {
 		final Label validation = new Label(composite, SWT.NONE);
+		final IObservableValue diagnosticObserve = createValidationTooltipModelObs();
+		final IObservableValue tooltipObservable = createValidationTooltipTargetObs(validation);
+		final EMFDataBindingContext bindingContext = new EMFDataBindingContext();
+		bindValue(bindingContext, tooltipObservable, diagnosticObserve, null,
+			new ValidationLabelTooltipModelToTargetStrategy(tooltipModifier));
+	}
+
+	IObservableValue createValidationTooltipModelObs() {
+		return EMFObservables.observeValue(tableControl, VViewPackage.eINSTANCE.getElement_Diagnostic());
+	}
+
+	IObservableValue createValidationTooltipTargetObs(Label validation) {
+		return SWTObservables.observeTooltipText(validation);
+	}
+
+	// TODO move to micro service? currently untested here
+	void bindValue(DataBindingContext bindingContext, IObservableValue targetObservableValue,
+		IObservableValue modelObservableValue, UpdateValueStrategy targetToModel, UpdateValueStrategy modelToTarget) {
+		bindingContext.bindValue(targetObservableValue, modelObservableValue, targetToModel, modelToTarget);
 	}
 
 	void createButtons(Composite parent) {
@@ -141,6 +174,28 @@ public class TablePOJO {
 			// column.setEditingSupport(editingSupport);
 		}
 		tableViewer.setInput(list);
+	}
+
+	final static class ValidationLabelTooltipModelToTargetStrategy extends UpdateValueStrategy {
+
+		private final TooltipModifier tooltipModifier;
+
+		public ValidationLabelTooltipModelToTargetStrategy(TooltipModifier tooltipModifier) {
+			this.tooltipModifier = tooltipModifier;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @see org.eclipse.core.databinding.UpdateValueStrategy#convert(java.lang.Object)
+		 */
+		@Override
+		public Object convert(Object value) {
+			value = super.convert(value);
+			final VDiagnostic diagnostic = (VDiagnostic) value;
+			final String message = diagnostic.getMessage();
+			return tooltipModifier.modify(message);
+		}
 	}
 
 }
