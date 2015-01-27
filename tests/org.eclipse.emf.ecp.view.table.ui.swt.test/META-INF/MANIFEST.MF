@@ -19,7 +19,8 @@ Require-Bundle: org.eclipse.emf.ecp.view.test.common.swt;bundle-version="[1.4.0,
  org.eclipse.equinox.registry;bundle-version="[3.5.400,4.0.0)",
  org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
  org.eclipse.jface;bundle-version="[3.10.0,4.0.0)",
- org.mockito.mockito-all;bundle-version="[1.9.5,2.0.0)"
+ org.mockito.mockito-all;bundle-version="[1.9.5,2.0.0)",
+ org.eclipse.jface.databinding;bundle-version="[1.6.200,2.0.0)"
 Export-Package: org.eclipse.emf.ecp.view.internal.table.swt;version="1.5.0";x-internal:=true,
  org.eclipse.emf.ecp.view.spi.table.swt;version="1.5.0";x-internal:=true,
  org.eclipse.emf.ecp.view.table.ui.swt.test;version="1.5.0";x-friends:="org.eclipse.emf.ecp.view.ui.editor.test"

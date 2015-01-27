@@ -32,12 +32,15 @@ import java.util.Arrays;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
+import org.eclipse.core.databinding.observable.IObservable;
 import org.eclipse.core.databinding.observable.Observables;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.core.databinding.observable.set.IObservableSet;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.databinding.property.IProperty;
 import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.core.internal.databinding.property.value.SimplePropertyObservableValue;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
@@ -50,8 +53,11 @@ import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
-import org.eclipse.jface.databinding.swt.ISWTObservableValue;
+import org.eclipse.jface.internal.databinding.swt.ControlTooltipTextProperty;
+import org.eclipse.jface.internal.databinding.swt.SWTObservableValueDecorator;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
@@ -74,8 +80,6 @@ import org.mockito.stubbing.Answer;
 @SuppressWarnings("restriction")
 @RunWith(DatabindingClassRunner.class)
 public class TablePOJO_Test {
-
-	private static final String TOOLTIP = "TOOLTIP";
 
 	private static final String TABLE_LABEL = "TABLE_LABEL";
 
@@ -253,12 +257,18 @@ public class TablePOJO_Test {
 	@Test
 	public void testCreateValidationTooltipTargetObs() {
 		final TablePOJO tablePOJO = TablePojoBuilder.init().build();
-		final Label label = mock(Label.class);
+		final Label label = new Label(parent, SWT.NONE);
 		final IObservableValue observableValue = tablePOJO.createValidationTooltipTargetObs(label);
 		assertNotNull(observableValue);
-		assertTrue(ISWTObservableValue.class.isInstance(observableValue));
-		final ISWTObservableValue swtObservableValue = ISWTObservableValue.class.cast(observableValue);
+		assertTrue(SWTObservableValueDecorator.class.isInstance(observableValue));
+		final SWTObservableValueDecorator swtObservableValue = SWTObservableValueDecorator.class.cast(observableValue);
 		assertSame(label, swtObservableValue.getWidget());
+		final IObservable decorated = swtObservableValue.getDecorated();
+		assertTrue(SimplePropertyObservableValue.class.isInstance(decorated));
+		final SimplePropertyObservableValue simplePropertyObservableValue = SimplePropertyObservableValue.class
+			.cast(decorated);
+		final IProperty property = simplePropertyObservableValue.getProperty();
+		assertTrue(ControlTooltipTextProperty.class.isInstance(property));
 	}
 
 	@Test
@@ -427,9 +437,14 @@ public class TablePOJO_Test {
 
 	@Test
 	public void testRenderIntegration() {
+		// TODO is it possible to mock the velement?
+		final VTableControl tableControl = VTableFactory.eINSTANCE.createTableControl();
+		tableControl.setDomainModelReference(VTableFactory.eINSTANCE.createTableDomainModelReference());
+
 		final LabelService labelService = mock(LabelService.class);
 		when(labelService.getLabelText(any(VTableControl.class))).thenReturn("");
-		final TablePOJO tablePojo = TablePojoBuilder.init().withLabelService(labelService).build();
+		final TablePOJO tablePojo = TablePojoBuilder.init().withLabelService(labelService)
+			.withTableControl(tableControl).build();
 		final Composite composite = tablePojo.render(parent);
 		assertEquals(2, composite.getChildren().length);
 		// title
