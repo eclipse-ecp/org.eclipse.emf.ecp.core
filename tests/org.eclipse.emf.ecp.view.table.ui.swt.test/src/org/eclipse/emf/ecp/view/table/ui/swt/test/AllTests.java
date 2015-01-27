@@ -11,12 +11,13 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.table.ui.swt.test;
 
+import org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRendererWrapper_PTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ SWTTable_PTest.class })
+@SuiteClasses({ SWTTable_PTest.class, TableControlSWTRendererWrapper_PTest.class })
 public class AllTests {
 
 }

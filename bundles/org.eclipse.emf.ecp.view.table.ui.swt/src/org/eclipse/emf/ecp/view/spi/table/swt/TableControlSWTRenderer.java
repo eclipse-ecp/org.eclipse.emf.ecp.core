@@ -371,7 +371,6 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		tableViewer.getTable().setData(FIXED_COLUMNS, new Integer(1));
 		ColumnViewerToolTipSupport.enableFor(tableViewer);
 
-		final ObservableListContentProvider cp = new ObservableListContentProvider();
 		InternalEObject tempInstance = null;
 		if (!clazz.isAbstract() && !clazz.isInterface()) {
 			tempInstance = getInstanceOf(clazz);
@@ -387,6 +386,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		if (!getVElement().isReadonly()) {
 			createFixedValidationStatusColumn(tableViewer);
 		}
+		final ObservableListContentProvider cp = new ObservableListContentProvider();
 		final VTableDomainModelReference tableDomainModelReference = VTableDomainModelReference.class.cast(
 			getVElement().getDomainModelReference());
 		for (final VDomainModelReference dmr : tableDomainModelReference.getColumnDomainModelReferences()) {

@@ -13,17 +13,18 @@ package org.eclipse.emf.ecp.view.ui.editor.test;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecp.view.internal.table.swt.CellReadOnlyTesterHelper;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
 import org.eclipse.emf.ecp.view.spi.table.swt.ECPCellReadOnlyTester;
-import org.eclipse.emf.ecp.view.table.ui.swt.test.SWTTable_PTest;
-import org.eclipse.emf.ecp.view.table.ui.swt.test.TableControlHandle;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTable;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotText;
@@ -82,13 +83,13 @@ public class CellReadOnly_PTest extends ECPCommonSWTBotTest {
 		};
 		CellReadOnlyTesterHelper.getInstance().registerCellReadOnlyTester(tester);
 
-		final TableControlHandle tableControlHandle = SWTTable_PTest.createInitializedTableWithoutTableColumns();
+		final TableControlHandle tableControlHandle = createInitializedTableWithoutTableColumns();
 
-		final VDomainModelReference tableColumn1 = SWTTable_PTest.createTableColumn(EcorePackage.eINSTANCE
+		final VDomainModelReference tableColumn1 = createTableColumn(EcorePackage.eINSTANCE
 			.getENamedElement_Name());
 		tableControlHandle.addFirstTableColumn(tableColumn1);
 
-		final VDomainModelReference tableColumn2 = SWTTable_PTest.createTableColumn(EcorePackage.eINSTANCE
+		final VDomainModelReference tableColumn2 = createTableColumn(EcorePackage.eINSTANCE
 			.getEClass_Interface());
 		tableControlHandle.addSecondTableColumn(tableColumn2);
 
@@ -145,5 +146,33 @@ public class CellReadOnly_PTest extends ECPCommonSWTBotTest {
 				assertTrue(superType2.isInterface());
 			}
 		});
+	}
+
+	public static VDomainModelReference createTableColumn(EStructuralFeature feature) {
+		final VFeaturePathDomainModelReference reference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		reference.setDomainModelEFeature(feature);
+		return reference;
+	}
+
+	public static TableControlHandle createInitializedTableWithoutTableColumns() {
+		final TableControlHandle tableControlHandle = createUninitializedTableWithoutColumns();
+		final VFeaturePathDomainModelReference domainModelReference = VTableFactory.eINSTANCE
+			.createTableDomainModelReference();
+		domainModelReference.setDomainModelEFeature(EcorePackage.eINSTANCE.getEClass_ESuperTypes());
+		tableControlHandle.getTableControl().setDomainModelReference(domainModelReference);
+
+		return tableControlHandle;
+	}
+
+	public static TableControlHandle createUninitializedTableWithoutColumns() {
+		final VTableControl tableControl = createTableControl();
+		return new TableControlHandle(tableControl);
+	}
+
+	private static VTableControl createTableControl() {
+		final VTableControl tc = VTableFactory.eINSTANCE.createTableControl();
+		tc.setDomainModelReference(VTableFactory.eINSTANCE.createTableDomainModelReference());
+		return tc;
 	}
 }
