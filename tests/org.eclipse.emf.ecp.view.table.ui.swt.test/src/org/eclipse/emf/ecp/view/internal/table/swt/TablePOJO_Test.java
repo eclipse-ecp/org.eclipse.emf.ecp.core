@@ -16,6 +16,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.isNull;
@@ -49,6 +50,8 @@ import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.databinding.EObjectObservableValue;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecp.edit.internal.swt.controls.ControlMessages;
+import org.eclipse.emf.ecp.view.internal.table.swt.TablePOJO.AddButtonSelectionAdapter;
 import org.eclipse.emf.ecp.view.internal.table.swt.TablePOJO.ValidationLabelTooltipModelToTargetStrategy;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
@@ -67,10 +70,12 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.widgets.TypedListener;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -87,6 +92,8 @@ import org.mockito.stubbing.Answer;
 @SuppressWarnings("restriction")
 @RunWith(DatabindingClassRunner.class)
 public class TablePOJO_Test {
+
+	private static final String ECLASS_NAME = "EClassName";
 
 	private static final String TABLE_LABEL = "TABLE_LABEL";
 
@@ -238,7 +245,7 @@ public class TablePOJO_Test {
 			public IObservableValue answer(InvocationOnMock invocation) throws Throwable {
 				return modelObs;
 			}
-		}).when(pojoSpy).createValidationTooltipModelObs();
+		}).when(pojoSpy).createValidationModelObs();
 		doAnswer(new Answer<IObservableValue>() {
 			@Override
 			public IObservableValue answer(InvocationOnMock invocation) throws Throwable {
@@ -256,17 +263,17 @@ public class TablePOJO_Test {
 		assertTrue(Label.class.isInstance(parent.getChildren()[0]));
 		final Label label = Label.class.cast(parent.getChildren()[0]);
 
-		verify(pojoSpy, times(1)).createValidationTooltipModelObs();
+		verify(pojoSpy, times(1)).createValidationModelObs();
 		verify(pojoSpy, times(1)).createValidationTooltipTargetObs(label);
 		verify(pojoSpy, times(1)).bindValue(notNull(EMFDataBindingContext.class), same(targetObs),
 			same(modelObs), isNull(UpdateValueStrategy.class), any(ValidationLabelTooltipModelToTargetStrategy.class));
 	}
 
 	@Test
-	public void testCreateValidationTooltipModelObs() {
+	public void testCreateValidationModelObs() {
 		final VTableControl tableControl = mock(VTableControl.class);
 		final TablePOJO tablePOJO = TablePojoBuilder.init().withTableControl(tableControl).build();
-		final IObservableValue observableValue = tablePOJO.createValidationTooltipModelObs();
+		final IObservableValue observableValue = tablePOJO.createValidationModelObs();
 		assertNotNull(observableValue);
 		assertTrue(EObjectObservableValue.class.isInstance(observableValue));
 		final EObjectObservableValue eObjectObservableValue = EObjectObservableValue.class.cast(observableValue);
@@ -289,6 +296,13 @@ public class TablePOJO_Test {
 			.cast(decorated);
 		final IProperty property = simplePropertyObservableValue.getProperty();
 		assertTrue(ControlTooltipTextProperty.class.isInstance(property));
+	}
+
+	@Test
+	public void testCreateValidationImageTargetObs() {
+		final TablePOJO tablePOJO = TablePojoBuilder.init().build();
+		tablePOJO.createValidationImageTargetObs(null);
+		fail("Not implemented yet");
 	}
 
 	@Test
@@ -325,6 +339,8 @@ public class TablePOJO_Test {
 		when(observableList.getElementType()).thenReturn(reference);
 		final EClass eClass = mock(EClass.class);
 		when(reference.getEReferenceType()).thenReturn(eClass);
+		when(eClass.getName()).thenReturn(ECLASS_NAME);
+		when(reference.getUpperBound()).thenReturn(2);
 
 		// setup
 		final TablePOJO tablePojo = TablePojoBuilder.init().withTemplateService(templateService)
@@ -332,6 +348,8 @@ public class TablePOJO_Test {
 
 		// act
 		tablePojo.createAddButton(parent);
+
+		// assert button created
 		assertEquals(1, parent.getChildren().length);
 		assertTrue(Button.class.isInstance(parent.getChildren()[0]));
 		final Button button = Button.class.cast(parent.getChildren()[0]);
@@ -340,6 +358,47 @@ public class TablePOJO_Test {
 		assertSame(image, button.getImage());
 
 		// assert tooltip
+		final String expectedTooltip = String.format(ControlMessages.TableControl_AddInstanceOf, ECLASS_NAME);
+		assertEquals(expectedTooltip, button.getToolTipText());
+
+		// assertSelection adapter
+		final Listener[] selectionListeners = button.getListeners(SWT.Selection);
+		final Listener[] defaultSelectionListeners = button.getListeners(SWT.DefaultSelection);
+		assertEquals(1, selectionListeners.length);
+		assertEquals(1, defaultSelectionListeners.length);
+		final TypedListener typedListener = TypedListener.class.cast(selectionListeners[0]);
+		assertTrue(AddButtonSelectionAdapter.class.isInstance(typedListener.getEventListener()));
+		assertTrue(selectionListeners[0] == defaultSelectionListeners[0]);
+		assertSame(button, AddButtonSelectionAdapter.class.cast(typedListener.getEventListener()).addButton);
+		assertSame(tablePojo, AddButtonSelectionAdapter.class.cast(typedListener.getEventListener()).tablePOJO);
+
+		// assert enabled
+		assertTrue(button.getEnabled());
+	}
+
+	@Test
+	public void testCreateAddButtonDisabledOnInit() {
+		final TemplateService templateService = mock(TemplateService.class);
+		final Image image = new Image(parent.getDisplay(), 16, 16);
+		when(templateService.getAddIcon()).thenReturn(image);
+		final DatabindingService databindingService = mock(DatabindingService.class);
+		final IObservableList observableList = mock(IObservableList.class);
+		when(databindingService.getObservableList(any(VDomainModelReference.class))).thenReturn(observableList);
+		final EReference reference = mock(EReference.class);
+		when(observableList.getElementType()).thenReturn(reference);
+		final EClass eClass = mock(EClass.class);
+		when(reference.getEReferenceType()).thenReturn(eClass);
+		when(eClass.getName()).thenReturn(ECLASS_NAME);
+		final TablePOJO tablePojo = TablePojoBuilder.init().withTemplateService(templateService)
+			.withDatabindingService(databindingService).build();
+		tablePojo.createAddButton(parent);
+		final Button button = Button.class.cast(parent.getChildren()[0]);
+		assertFalse(button.getEnabled());
+	}
+
+	@Test
+	public void testAddRow() {
+		fail("Not yet implemented");
 	}
 
 	@Test
@@ -349,6 +408,12 @@ public class TablePOJO_Test {
 		assertEquals(1, parent.getChildren().length);
 		assertTrue(Button.class.isInstance(parent.getChildren()[0]));
 		final Button button = Button.class.cast(parent.getChildren()[0]);
+		fail("Not implemented yet");
+	}
+
+	@Test
+	public void testCreateRemoveButtonDisabledOnInit() {
+		fail("Not implemented yet");
 	}
 
 	@Test
@@ -507,7 +572,7 @@ public class TablePOJO_Test {
 
 	@Test
 	public void testRenderIntegration() {
-		// TODO is it possible to mock the velement?
+		// TODO is there a nice way to use mockito here?
 		final VTableControl tableControl = VTableFactory.eINSTANCE.createTableControl();
 		final VTableDomainModelReference tableDomainModelReference = VTableFactory.eINSTANCE
 			.createTableDomainModelReference();

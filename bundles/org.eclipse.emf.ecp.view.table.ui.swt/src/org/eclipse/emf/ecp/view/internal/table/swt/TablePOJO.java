@@ -36,6 +36,8 @@ import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -46,8 +48,6 @@ import org.eclipse.swt.widgets.Label;
  * @author Johannes
  */
 public class TablePOJO {
-
-	private static final String ICON_ADD = "icons/add.png"; //$NON-NLS-1$
 
 	final LabelService labelService;
 	final VTableControl tableControl;
@@ -111,18 +111,25 @@ public class TablePOJO {
 	void createValidationLabel(Composite composite) {
 		final Label validation = new Label(composite, SWT.NONE);
 
-		// tooltip binding
-		final IObservableValue diagnosticObserve = createValidationTooltipModelObs();
-		final IObservableValue tooltipObservable = createValidationTooltipTargetObs(validation);
+		final IObservableValue diagnosticObserve = createValidationModelObs();
 		final EMFDataBindingContext bindingContext = new EMFDataBindingContext();
+
+		// tooltip binding
+		final IObservableValue tooltipObservable = createValidationTooltipTargetObs(validation);
 		bindValue(bindingContext, tooltipObservable, diagnosticObserve, null,
 			new ValidationLabelTooltipModelToTargetStrategy(tooltipModifier));
 
 		// TODO icon binding
+		// createValidationImageTargetObs(validation);
+
+	}
+
+	IObservableValue createValidationImageTargetObs(Label validation) {
+		return null;
 	}
 
 	// TODO move to micro service / helper class? asserts from tests can be moved
-	IObservableValue createValidationTooltipModelObs() {
+	IObservableValue createValidationModelObs() {
 		return EMFObservables.observeValue(tableControl, VViewPackage.eINSTANCE.getElement_Diagnostic());
 	}
 
@@ -156,16 +163,18 @@ public class TablePOJO {
 			.getDomainModelReference());
 		final EReference multiReference = EReference.class.cast(observableList.getElementType());
 		final EClass eClass = multiReference.getEReferenceType();
-		final String instanceName = eClass.getInstanceClass() == null ? "" : eClass.getInstanceClass().getSimpleName(); //$NON-NLS-1$
-		addButton.setToolTipText(String.format(ControlMessages.TableControl_AddInstanceOf, instanceName));
+		addButton.setToolTipText(String.format(ControlMessages.TableControl_AddInstanceOf, eClass.getName()));
 
-		// check enablement //TODO this check also needed after add
-		// if (multiReference.getUpperBound() != -1
-		// && observableList.size() >= multiReference.getUpperBound()) {
-		// addButton.setEnabled(false);
-		// }
+		if (multiReference.getUpperBound() != -1 && observableList.size() >= multiReference.getUpperBound()) {
+			addButton.setEnabled(false);
+		}
 
-		// add listener
+		// add behaviour
+		addButton.addSelectionListener(new AddButtonSelectionAdapter(this, addButton));
+	}
+
+	protected void addRow() {
+
 	}
 
 	void createRemoveButton(Composite buttonComposite) {
@@ -216,6 +225,27 @@ public class TablePOJO {
 			column.setEditingSupport(editingSupport);
 		}
 		tableViewer.setInput(list);
+	}
+
+	final static class AddButtonSelectionAdapter extends SelectionAdapter {
+
+		TablePOJO tablePOJO;
+		Button addButton;
+
+		public AddButtonSelectionAdapter(TablePOJO tablePOJO, Button addButton) {
+			this.tablePOJO = tablePOJO;
+			this.addButton = addButton;
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+		 */
+		@Override
+		public void widgetSelected(SelectionEvent e) {
+			tablePOJO.addRow();
+			// TODO
+		}
 	}
 
 	// TODO move to micro service / helper class? untested here
