@@ -29,6 +29,8 @@ import org.eclipse.emf.ecp.view.internal.table.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
+import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -49,6 +51,16 @@ import org.eclipse.swt.widgets.Label;
  *
  */
 public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
+
+	/**
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param factory the {@link SWTRendererFactory}
+	 */
+	public TableControlDetailPanelRenderer(VTableControl vElement, ViewModelContext viewContext,
+		SWTRendererFactory factory) {
+		super(vElement, viewContext, factory);
+	}
 
 	private ECPSWTView ecpView;
 	private VView view;

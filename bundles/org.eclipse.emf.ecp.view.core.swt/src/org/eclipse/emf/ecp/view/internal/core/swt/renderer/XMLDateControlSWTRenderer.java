@@ -34,6 +34,7 @@ import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.renderer.TextControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.edit.command.SetCommand;
@@ -61,6 +62,16 @@ import org.eclipse.swt.widgets.Text;
  */
 @SuppressWarnings("restriction")
 public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
+
+	/**
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param factory the {@link SWTRendererFactory}
+	 */
+	public XMLDateControlSWTRenderer(VControl vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
+		super(vElement, viewContext, factory);
+		// TODO Auto-generated constructor stub
+	}
 
 	private static final DateFormat CHECK_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH); //$NON-NLS-1$
 	private static final Pattern CHECK_PATTERN = Pattern.compile("^\\d{4}-\\d{2}-\\d{2}$"); //$NON-NLS-1$
@@ -233,22 +244,6 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 	}
 
 	private Shell dialog;
-
-	/**
-	 * Default constructor.
-	 */
-	public XMLDateControlSWTRenderer() {
-		super();
-	}
-
-	/**
-	 * Test constructor.
-	 *
-	 * @param factory the renderer factory
-	 */
-	/* package */XMLDateControlSWTRenderer(SWTRendererFactory factory) {
-		super(factory);
-	}
 
 	@Override
 	protected Control createSWTControl(Composite parent, Setting setting) {

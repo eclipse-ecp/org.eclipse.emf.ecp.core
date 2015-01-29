@@ -11,10 +11,12 @@
  */
 package org.eclipse.emf.ecp.view.group.swt.internal.collapsable;
 
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.group.model.VGroup;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
+import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ExpandEvent;
@@ -34,6 +36,15 @@ import org.eclipse.swt.widgets.ExpandItem;
  *
  */
 public class CollapsableGroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
+
+	/**
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param factory the {@link SWTRendererFactory}
+	 */
+	public CollapsableGroupSWTRenderer(VGroup vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
+		super(vElement, viewContext, factory);
+	}
 
 	private static final int MARGIN = 5;
 

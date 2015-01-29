@@ -20,7 +20,10 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.common.spi.EMFUtils;
 import org.eclipse.emf.ecp.view.internal.editor.controls.EditableEReferenceLabelControlSWTRenderer;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
+import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.template.internal.tooling.Messages;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -41,6 +44,15 @@ import org.eclipse.ui.dialogs.ISelectionStatusValidator;
  */
 @SuppressWarnings("restriction")
 public class ViewModelSelectControlSWTRenderer extends EditableEReferenceLabelControlSWTRenderer {
+
+	/**
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param factory the {@link SWTRendererFactory}
+	 */
+	public ViewModelSelectControlSWTRenderer(VControl vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
+		super(vElement, viewContext, factory);
+	}
 
 	private static final String PLUGIN_ID = "org.eclipse.emf.ecp.view.template.tooling"; //$NON-NLS-1$
 

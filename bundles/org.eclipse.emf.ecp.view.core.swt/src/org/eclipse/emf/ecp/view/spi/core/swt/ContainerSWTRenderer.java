@@ -21,6 +21,7 @@ import java.util.Set;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -55,23 +56,16 @@ import org.eclipse.swt.widgets.Layout;
  *
  */
 public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends AbstractSWTRenderer<VELEMENT> {
+	/**
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param factory the {@link SWTRendererFactory}
+	 */
+	public ContainerSWTRenderer(VELEMENT vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
+		super(vElement, viewContext, factory);
+	}
+
 	private SWTGridDescription rendererGridDescription;
-
-	/**
-	 * Default constructor.
-	 */
-	public ContainerSWTRenderer() {
-		super();
-	}
-
-	/**
-	 * Test constructor.
-	 *
-	 * @param factory the {@link SWTRendererFactory} to use.
-	 */
-	protected ContainerSWTRenderer(SWTRendererFactory factory) {
-		super(factory);
-	}
 
 	/**
 	 * {@inheritDoc}

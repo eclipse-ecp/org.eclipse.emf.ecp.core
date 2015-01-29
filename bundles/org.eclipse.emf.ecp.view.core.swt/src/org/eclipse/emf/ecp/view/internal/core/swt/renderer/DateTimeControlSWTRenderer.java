@@ -26,6 +26,7 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.jface.databinding.swt.SWTObservables;
@@ -55,6 +56,16 @@ import org.eclipse.swt.widgets.Shell;
  */
 public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 
+	/**
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param factory the {@link SWTRendererFactory}
+	 */
+	public DateTimeControlSWTRenderer(VControl vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
+		super(vElement, viewContext, factory);
+		// TODO Auto-generated constructor stub
+	}
+
 	private Label unsetLabel;
 
 	private StackLayout stackLayout;
@@ -68,22 +79,6 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 	private Setting setting;
 
 	private ModelChangeListener domainModelChangeListener;
-
-	/**
-	 * Default constructor.
-	 */
-	public DateTimeControlSWTRenderer() {
-		super();
-	}
-
-	/**
-	 * Test constructor.
-	 *
-	 * @param factory the {@link SWTRendererFactory} to use.
-	 */
-	DateTimeControlSWTRenderer(SWTRendererFactory factory) {
-		super(factory);
-	}
 
 	@Override
 	protected Binding[] createBindings(Control control, final Setting setting) {

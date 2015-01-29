@@ -16,7 +16,6 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.eclipse.emf.ecp.view.internal.swt.SWTRendererFactoryImpl;
 import org.eclipse.emf.ecp.view.model.common.AbstractRenderer;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
@@ -35,8 +34,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
 /**
- * Common base class for all SWT specific renderer classes. {@link #init(VElement, ViewModelContext)} is called by the
- * framework when providing the renderer. You don't need to call this.
+ * Common base class for all SWT specific renderer classes.
  *
  * A renderer using other renderers to render its contents must call this methods in this order:
  *
@@ -63,23 +61,20 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	protected static final String CUSTOM_VARIANT = "org.eclipse.rap.rwt.customVariant"; //$NON-NLS-1$
 	private ModelChangeListener listener;
 	private Map<SWTGridCell, Control> controls;
-	private SWTRendererFactory rendererFactory;
+	private final SWTRendererFactory rendererFactory;
 	private boolean renderingFinished;
 
 	/**
-	 * Default constructor.
-	 */
-	public AbstractSWTRenderer() {
-		this(new SWTRendererFactoryImpl());
-	}
-
-	/**
-	 * Constructor for testing purpose.
+	 * Default Constructor.
 	 *
+	 * @param vElement the view element to be rendered
+	 * @param viewContext The view model context
 	 * @param factory the factory to use
 	 * @since 1.3
 	 */
-	protected AbstractSWTRenderer(SWTRendererFactory factory) {
+	public AbstractSWTRenderer(final VELEMENT vElement, final ViewModelContext viewContext,
+		SWTRendererFactory factory) {
+		super(vElement, viewContext);
 		this.rendererFactory = factory;
 	}
 
@@ -93,16 +88,11 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	public abstract SWTGridDescription getGridDescription(SWTGridDescription gridDescription);
 
 	/**
+	 * Initializes the {@link AbstractSWTRenderer}.
 	 *
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.model.common.AbstractRenderer#init(org.eclipse.emf.ecp.view.spi.model.VElement,
-	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 * @since 1.3
 	 */
-	@Override
-	public final void init(final VELEMENT vElement, final ViewModelContext viewContext) {
-		super.init(vElement, viewContext);
+	public final void init() {
 		preInit();
 		controls = new LinkedHashMap<SWTGridCell, Control>();
 		if (getViewModelContext() != null) {
@@ -123,7 +113,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 						applyVisible();
 					}
 					if (notification.getStructuralFeature() == VViewPackage.eINSTANCE.getElement_Enabled()
-						&& !vElement.isReadonly()) {
+						&& !getVElement().isReadonly()) {
 						applyEnable();
 					}
 					if (notification.getStructuralFeature() == VViewPackage.eINSTANCE

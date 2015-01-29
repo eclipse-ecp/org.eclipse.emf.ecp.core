@@ -17,6 +17,7 @@ import java.util.Collection;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VContainedContainer;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
@@ -41,20 +42,14 @@ import org.eclipse.swt.widgets.Text;
  * The Class ViewSWTRenderer.
  */
 public class ViewSWTRenderer extends ContainerSWTRenderer<VView> {
-	/**
-	 * Default constructor.
-	 */
-	public ViewSWTRenderer() {
-		super();
-	}
 
 	/**
-	 * Test constructor.
-	 *
-	 * @param factory the {@link SWTRendererFactory} to use.
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param factory the {@link SWTRendererFactory}
 	 */
-	ViewSWTRenderer(SWTRendererFactory factory) {
-		super(factory);
+	public ViewSWTRenderer(VView vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
+		super(vElement, viewContext, factory);
 	}
 
 	@Override

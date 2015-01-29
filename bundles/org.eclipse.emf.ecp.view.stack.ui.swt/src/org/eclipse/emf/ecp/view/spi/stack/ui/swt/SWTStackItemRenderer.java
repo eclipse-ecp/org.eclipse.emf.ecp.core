@@ -13,9 +13,11 @@ package org.eclipse.emf.ecp.view.spi.stack.ui.swt;
 
 import java.util.Collection;
 
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.stack.model.VStackItem;
+import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 
 /**
  * The SWT {@link VStackItem} renderer.
@@ -24,6 +26,16 @@ import org.eclipse.emf.ecp.view.spi.stack.model.VStackItem;
  *
  */
 public class SWTStackItemRenderer extends ContainerSWTRenderer<VStackItem> {
+
+	/**
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param factory the {@link SWTRendererFactory}
+	 */
+	public SWTStackItemRenderer(VStackItem vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
+		super(vElement, viewContext, factory);
+		// TODO Auto-generated constructor stub
+	}
 
 	private static final String LAYOUT_STACK_ITEM = "org_eclipse_emf_ecp_ui_layout_stackitem"; //$NON-NLS-1$
 

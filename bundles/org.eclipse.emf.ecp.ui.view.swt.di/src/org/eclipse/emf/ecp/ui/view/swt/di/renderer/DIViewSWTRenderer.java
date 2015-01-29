@@ -16,8 +16,11 @@ import org.eclipse.emf.ecp.ui.view.swt.di.util.SWTContextUtil;
 import org.eclipse.emf.ecp.view.internal.core.swt.renderer.ViewSWTRenderer;
 import org.eclipse.emf.ecp.view.model.common.di.renderer.DIRendererUtil;
 import org.eclipse.emf.ecp.view.model.common.di.renderer.POJORendererFactory;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
+import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -28,6 +31,15 @@ import org.eclipse.swt.widgets.Control;
  */
 @SuppressWarnings("restriction")
 public class DIViewSWTRenderer extends ViewSWTRenderer {
+
+	/**
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param factory the {@link SWTRendererFactory}
+	 */
+	public DIViewSWTRenderer(VView vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
+		super(vElement, viewContext, factory);
+	}
 
 	private Object pojo;
 

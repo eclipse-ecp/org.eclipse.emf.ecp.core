@@ -15,9 +15,11 @@ package org.eclipse.emf.ecp.view.group.swt.internal.collapsible.pgroup;
 
 import java.util.Collection;
 
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.group.model.VGroup;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
+import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.nebula.widgets.pgroup.PGroup;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ExpandEvent;
@@ -31,6 +33,15 @@ import org.eclipse.swt.widgets.Composite;
  *
  */
 public class PGroupRenderer extends ContainerSWTRenderer<VGroup> {
+
+	/**
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param factory the {@link SWTRendererFactory}
+	 */
+	public PGroupRenderer(VGroup vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
+		super(vElement, viewContext, factory);
+	}
 
 	@Override
 	protected Collection<VContainedElement> getChildren() {

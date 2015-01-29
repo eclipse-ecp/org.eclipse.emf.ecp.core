@@ -12,7 +12,10 @@
 package org.eclipse.emf.ecp.view.spi.section.swt;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.section.model.VSection;
 import org.eclipse.emf.ecp.view.spi.section.model.VSectionedArea;
+import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -28,6 +31,15 @@ import org.eclipse.swt.widgets.Label;
  *
  */
 public class SectionLeafSWTRenderer extends AbstractSectionSWTRenderer {
+
+	/**
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param factory the {@link SWTRendererFactory}
+	 */
+	public SectionLeafSWTRenderer(VSection vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
+		super(vElement, viewContext, factory);
+	}
 
 	private SWTGridDescription rendererGridDescription;
 

@@ -11,23 +11,37 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.context.test.mockup;
 
+import static org.mockito.Mockito.mock;
+
 import org.eclipse.emf.ecp.view.internal.core.swt.renderer.ViewSWTRenderer;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 
 public final class MockViewSWTRenderer {
 
-	private MockViewSWTRenderer() {
+	private static ViewModelContext viewModelContext = mock(ViewModelContext.class);
+	private static VView vElement = mock(VView.class);
+	private static SWTRendererFactory rendererFactory = mock(SWTRendererFactory.class);
+
+	public MockViewSWTRenderer(VView vElement, ViewModelContext viewModelContext, SWTRendererFactory rendererFactory) {
+
 	}
 
 	public static ViewSWTRenderer withInvalidGridDescription() {
-		return new ViewSWTRendererWithInvalidGridDescription();
+		return new ViewSWTRendererWithInvalidGridDescription(vElement, viewModelContext, rendererFactory);
 	}
 
 	public static ViewSWTRenderer withoutPropertyDescriptor() {
-		return new ViewSWTRendererWithNoPropertyDescriptorFoundException();
+		return new ViewSWTRendererWithNoPropertyDescriptorFoundException(vElement, viewModelContext, rendererFactory);
 	}
 
 	public static ViewSWTRenderer withoutRenderer() {
-		return new ViewSWTRendererWithNoRendererFoundException();
+		return new ViewSWTRendererWithNoRendererFoundException(vElement, viewModelContext, rendererFactory);
+	}
+
+	public static ViewSWTRenderer newRenderer() {
+		return new ViewSWTRenderer(vElement, viewModelContext, rendererFactory);
 	}
 
 }

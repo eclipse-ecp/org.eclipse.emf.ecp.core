@@ -19,6 +19,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecp.view.internal.stack.ui.swt.Activator;
 import org.eclipse.emf.ecp.view.internal.stack.ui.swt.messages.Messages;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
@@ -28,6 +29,7 @@ import org.eclipse.emf.ecp.view.spi.stack.model.VStackItem;
 import org.eclipse.emf.ecp.view.spi.stack.model.VStackLayout;
 import org.eclipse.emf.ecp.view.spi.stack.model.VStackPackage;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
+import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
@@ -44,6 +46,15 @@ import org.eclipse.swt.widgets.Control;
  *
  */
 public class SWTStackLayoutRenderer extends AbstractSWTRenderer<VStackLayout> {
+
+	/**
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param factory the {@link SWTRendererFactory}
+	 */
+	public SWTStackLayoutRenderer(VStackLayout vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
+		super(vElement, viewContext, factory);
+	}
 
 	private static final String CONTROL_STACK_COMPOSITE = "org_eclipse_emf_ecp_ui_layout_stack"; //$NON-NLS-1$
 

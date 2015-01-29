@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.view.spi.core.swt;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.internal.core.swt.renderer.RendererMessages;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.provider.ECPTooltipModifierHelper;
@@ -43,23 +44,16 @@ import org.eclipse.swt.widgets.Label;
  *
  */
 public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRenderer<VControl> {
+	/**
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param factory the {@link SWTRendererFactory}
+	 */
+	public SimpleControlSWTRenderer(VControl vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
+		super(vElement, viewContext, factory);
+	}
+
 	private SWTGridDescription rendererGridDescription;
-
-	/**
-	 * Default constructor.
-	 */
-	public SimpleControlSWTRenderer() {
-		super();
-	}
-
-	/**
-	 * Test constructor.
-	 *
-	 * @param factory the {@link SWTRendererFactory} to use.
-	 */
-	SimpleControlSWTRenderer(SWTRendererFactory factory) {
-		super(factory);
-	}
 
 	/**
 	 * {@inheritDoc}

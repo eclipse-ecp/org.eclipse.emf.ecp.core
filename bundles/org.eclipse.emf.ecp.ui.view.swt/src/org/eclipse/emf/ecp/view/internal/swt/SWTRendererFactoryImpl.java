@@ -11,6 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.swt;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -240,12 +241,11 @@ public class SWTRendererFactoryImpl implements SWTRendererFactory {
 
 			if (currentPriority > highestPriority) {
 				highestPriority = currentPriority;
-				try {
-					bestCandidate = description.getRenderer().newInstance();
-				} catch (final InstantiationException ex) {
-					reportService.report(new RendererInitFailedReport(ex));
-				} catch (final IllegalAccessException ex) {
-					reportService.report(new RendererInitFailedReport(ex));
+				final AbstractSWTRenderer<VElement> renderer = createRenderer(vElement, viewContext, reportService,
+					description.getRenderer());
+				if (renderer != null) {
+					bestCandidate = renderer;
+
 				}
 			}
 		}
@@ -253,15 +253,40 @@ public class SWTRendererFactoryImpl implements SWTRendererFactory {
 		if (bestCandidate == null) {
 			reportService.report(new NoRendererFoundReport(vElement));
 			if (ViewModelUtil.isDebugMode()) {
-				bestCandidate = new UnknownVElementSWTRenderer();
+				bestCandidate = new UnknownVElementSWTRenderer(vElement, viewContext, this);
 			} else {
-				bestCandidate = new EmptyVElementSWTRenderer();
+				bestCandidate = new EmptyVElementSWTRenderer(vElement, viewContext, this);
 			}
 		}
 
-		bestCandidate.init(vElement, viewContext);
+		bestCandidate.init();
 
 		return bestCandidate;
+	}
+
+	private AbstractSWTRenderer<VElement> createRenderer(VElement vElement, ViewModelContext viewContext,
+		final ReportService reportService,
+		final Class<? extends AbstractSWTRenderer<VElement>> rendererClass) {
+		try {
+			return rendererClass
+				.getConstructor(vElement.getClass().getInterfaces()[0], ViewModelContext.class,
+					SWTRendererFactory.class)
+				.newInstance(vElement, viewContext, this);
+		} catch (final InstantiationException ex) {
+			reportService.report(new RendererInitFailedReport(ex));
+		} catch (final IllegalAccessException ex) {
+			reportService.report(new RendererInitFailedReport(ex));
+		} catch (final IllegalArgumentException ex) {
+			reportService.report(new RendererInitFailedReport(ex));
+		} catch (final InvocationTargetException ex) {
+			reportService.report(new RendererInitFailedReport(ex));
+		} catch (final NoSuchMethodException ex) {
+			reportService.report(new RendererInitFailedReport(ex));
+		} catch (final SecurityException ex) {
+			reportService.report(new RendererInitFailedReport(ex));
+		}
+		// TODO: Throw Exception
+		return null;
 	}
 
 	/**
@@ -282,19 +307,13 @@ public class SWTRendererFactoryImpl implements SWTRendererFactory {
 		for (final ECPAdditionalRendererDescription description : additionalRendererDescriptors) {
 			final ECPAdditionalRendererTester tester = description.getTester();
 			if (tester.isApplicable(vElement, viewModelContext)) {
-				try {
-					final AbstractAdditionalSWTRenderer<VElement> renderer = description.getRenderer()
-						.newInstance();
-					renderer.init(vElement, viewModelContext);
-					renderers.add(renderer);
-					continue;
-				} catch (final InstantiationException ex) {
-					reportService.report(new RendererInitFailedReport(ex));
-					continue;
-				} catch (final IllegalAccessException ex) {
-					reportService.report(new RendererInitFailedReport(ex));
+				final AbstractSWTRenderer<VElement> renderer = createRenderer(vElement, viewModelContext,
+					reportService, description.getRenderer());
+				if (renderer == null) {
 					continue;
 				}
+				renderer.init();
+				renderers.add((AbstractAdditionalSWTRenderer<VElement>) renderer);
 			}
 		}
 		return renderers;

@@ -15,8 +15,10 @@ import java.util.Collection;
 import java.util.Collections;
 
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
+import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 
 /**
  * SWT renderer for {@link DynamicContainmentTree}s.
@@ -24,6 +26,16 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
  * @author emueller
  */
 public class SWTDynamicContainmentTreeRenderer extends ContainerSWTRenderer<DynamicContainmentTree> {
+
+	/**
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param factory the {@link SWTRendererFactory}
+	 */
+	public SWTDynamicContainmentTreeRenderer(DynamicContainmentTree vElement, ViewModelContext viewContext,
+		SWTRendererFactory factory) {
+		super(vElement, viewContext, factory);
+	}
 
 	/**
 	 * {@inheritDoc}

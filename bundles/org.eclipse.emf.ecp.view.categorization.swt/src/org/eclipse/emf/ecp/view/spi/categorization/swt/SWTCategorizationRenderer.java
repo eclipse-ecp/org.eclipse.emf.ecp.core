@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.view.spi.categorization.swt;
 
 import org.eclipse.emf.ecp.view.internal.categorization.swt.Messages;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorization;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
@@ -35,23 +36,23 @@ import org.eclipse.swt.widgets.Label;
  *
  */
 public class SWTCategorizationRenderer extends AbstractSWTRenderer<VCategorization> {
+	/**
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param factory the {@link SWTRendererFactory}
+	 */
+	public SWTCategorizationRenderer(VCategorization vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
+		super(vElement, viewContext, factory);
+		// TODO Auto-generated constructor stub
+	}
+
 	private SWTGridDescription rendererGridDescription;
 
 	/**
-	 * Default constructor.
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param factory the {@link SWTRendererFactory}
 	 */
-	public SWTCategorizationRenderer() {
-		super();
-	}
-
-	/**
-	 * Test constructor.
-	 *
-	 * @param factory the {@link SWTRendererFactory} to use.
-	 */
-	SWTCategorizationRenderer(SWTRendererFactory factory) {
-		super(factory);
-	}
 
 	/**
 	 * {@inheritDoc}

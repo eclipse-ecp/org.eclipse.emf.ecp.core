@@ -11,6 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.swt;
 
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 
 /**
@@ -21,5 +22,14 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  * @since 1.3
  */
 public abstract class AbstractAdditionalSWTRenderer<VELEMENT extends VElement> extends AbstractSWTRenderer<VELEMENT> {
+
+	/**
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param factory the {@link SWTRendererFactory}
+	 */
+	public AbstractAdditionalSWTRenderer(VELEMENT vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
+		super(vElement, viewContext, factory);
+	}
 
 }

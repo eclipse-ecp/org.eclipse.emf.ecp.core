@@ -18,7 +18,9 @@ import org.eclipse.core.databinding.Binding;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlJFaceViewerSWTRenderer;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.jface.databinding.swt.SWTObservables;
@@ -36,20 +38,14 @@ import org.eclipse.swt.widgets.Composite;
  *
  */
 public class EnumComboViewerSWTRenderer extends SimpleControlJFaceViewerSWTRenderer {
-	/**
-	 * Default constructor.
-	 */
-	public EnumComboViewerSWTRenderer() {
-		super();
-	}
 
 	/**
-	 * Test constructor.
-	 *
-	 * @param factory the {@link SWTRendererFactory} to use.
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param factory the {@link SWTRendererFactory}
 	 */
-	EnumComboViewerSWTRenderer(SWTRendererFactory factory) {
-		super(factory);
+	public EnumComboViewerSWTRenderer(VControl vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
+		super(vElement, viewContext, factory);
 	}
 
 	@Override

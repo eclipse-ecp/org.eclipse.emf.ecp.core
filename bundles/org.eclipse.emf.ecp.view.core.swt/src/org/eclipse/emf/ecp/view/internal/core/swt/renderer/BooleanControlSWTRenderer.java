@@ -13,7 +13,9 @@ package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
@@ -26,20 +28,15 @@ import org.eclipse.swt.widgets.Control;
  *
  */
 public class BooleanControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
-	/**
-	 * Default constructor.
-	 */
-	public BooleanControlSWTRenderer() {
-		super();
-	}
 
 	/**
-	 * Test constructor.
-	 *
-	 * @param factory the {@link SWTRendererFactory} to use.
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param factory the {@link SWTRendererFactory}
 	 */
-	BooleanControlSWTRenderer(SWTRendererFactory factory) {
-		super(factory);
+	public BooleanControlSWTRenderer(VControl vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
+		super(vElement, viewContext, factory);
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override

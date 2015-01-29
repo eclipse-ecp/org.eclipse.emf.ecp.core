@@ -54,8 +54,6 @@ public class CategorizationRenderer_PTest {
 	public void testCategorizationElementTreeRenderer() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		final SWTRendererFactory factory = mock(SWTRendererFactory.class);
-		final SWTCategorizationElementRenderer categorizatrionElementRenderer = new SWTCategorizationElementRenderer(
-			factory);
 
 		final SWTGridCell gridCell = mock(SWTGridCell.class);
 		final Shell shell = new Shell();
@@ -67,7 +65,9 @@ public class CategorizationRenderer_PTest {
 		when(iterator.hasNext()).thenReturn(false);
 		when(categorizationElement.eAllContents()).thenReturn(iterator);
 		final ViewModelContext vmc = mock(ViewModelContext.class);
-		categorizatrionElementRenderer.init(categorizationElement, vmc);
+		final SWTCategorizationElementRenderer categorizatrionElementRenderer = new SWTCategorizationElementRenderer(
+			categorizationElement, vmc, factory);
+		categorizatrionElementRenderer.init();
 		final Control render = categorizatrionElementRenderer.render(gridCell, shell);
 		assertTrue(Composite.class.isInstance(render));
 		assertEquals(2, Composite.class.cast(render).getChildren().length);
@@ -79,8 +79,6 @@ public class CategorizationRenderer_PTest {
 	public void testCategorizationElementTabRenderer() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		final SWTRendererFactory factory = mock(SWTRendererFactory.class);
-		final CategorizationElementTabbedSWTRenderer categorizatrionElementRenderer = new CategorizationElementTabbedSWTRenderer(
-			factory);
 
 		final SWTGridCell gridCell = mock(SWTGridCell.class);
 		final Shell shell = new Shell();
@@ -88,7 +86,9 @@ public class CategorizationRenderer_PTest {
 		final EList<VAbstractCategorization> categorizations = new BasicEList<VAbstractCategorization>();
 		when(categorizationElement.getCategorizations()).thenReturn(categorizations);
 		final ViewModelContext vmc = mock(ViewModelContext.class);
-		categorizatrionElementRenderer.init(categorizationElement, vmc);
+		final CategorizationElementTabbedSWTRenderer categorizatrionElementRenderer = new CategorizationElementTabbedSWTRenderer(
+			categorizationElement, vmc, factory);
+		categorizatrionElementRenderer.init();
 		final Control render = categorizatrionElementRenderer.render(gridCell, shell);
 		assertTrue(CTabFolder.class.isInstance(render));
 	}
@@ -97,8 +97,6 @@ public class CategorizationRenderer_PTest {
 	public void testCompositeCategoryTreeRenderer() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		final SWTRendererFactory factory = mock(SWTRendererFactory.class);
-		final CompositeCategoryJFaceTreeRenderer categorizatrionElementRenderer = new CompositeCategoryJFaceTreeRenderer(
-			factory);
 
 		final SWTGridCell gridCell = mock(SWTGridCell.class);
 		final Shell shell = new Shell();
@@ -116,7 +114,10 @@ public class CategorizationRenderer_PTest {
 		when(categorization.eContainer()).thenReturn(categorizationElement);
 
 		final ViewModelContext vmc = mock(ViewModelContext.class);
-		categorizatrionElementRenderer.init(categorization, vmc);
+		final CompositeCategoryJFaceTreeRenderer categorizatrionElementRenderer = new CompositeCategoryJFaceTreeRenderer(
+			categorization, vmc,
+			factory);
+		categorizatrionElementRenderer.init();
 		final Control render = categorizatrionElementRenderer.render(gridCell, shell);
 		assertTrue(Composite.class.isInstance(render));
 		assertEquals(2, Composite.class.cast(render).getChildren().length);
@@ -128,8 +129,6 @@ public class CategorizationRenderer_PTest {
 	public void testCompositeCategoryElementTabRenderer() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		final SWTRendererFactory factory = mock(SWTRendererFactory.class);
-		final CompositeCategorySWTTabRenderer categorizatrionElementRenderer = new CompositeCategorySWTTabRenderer(
-			factory);
 
 		final SWTGridCell gridCell = mock(SWTGridCell.class);
 		final Shell shell = new Shell();
@@ -140,7 +139,9 @@ public class CategorizationRenderer_PTest {
 		when(categorization.getCategorizations()).thenReturn(new BasicEList<VAbstractCategorization>());
 		when(categorizationElement.getCategorizations()).thenReturn(categorizations);
 		final ViewModelContext vmc = mock(ViewModelContext.class);
-		categorizatrionElementRenderer.init(categorization, vmc);
+		final CompositeCategorySWTTabRenderer categorizatrionElementRenderer = new CompositeCategorySWTTabRenderer(
+			categorization, vmc, factory);
+		categorizatrionElementRenderer.init();
 		final Control render = categorizatrionElementRenderer.render(gridCell, shell);
 		assertTrue(CTabFolder.class.isInstance(render));
 	}

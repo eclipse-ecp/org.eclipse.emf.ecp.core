@@ -45,11 +45,11 @@ public class ViewRenderer_PTest {
 	public void setUp() {
 		factory = mock(SWTRendererFactory.class);
 
-		viewRenderer = new ViewSWTRenderer(factory);
 		view = Mockito.mock(VView.class);
 
 		context = Mockito.mock(ViewModelContext.class);
 		shell = new Shell();
+		viewRenderer = new ViewSWTRenderer(view, context, factory);
 
 	}
 
@@ -61,7 +61,6 @@ public class ViewRenderer_PTest {
 	@Test
 	public void testGridDescription() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
-		viewRenderer.init(view, context);
 		final SWTGridDescription gridDescription = viewRenderer.getGridDescription(GridDescriptionFactory.INSTANCE
 			.createEmptyGridDescription());
 		assertEquals(1, gridDescription.getColumns());
@@ -73,7 +72,6 @@ public class ViewRenderer_PTest {
 		NoPropertyDescriptorFoundExeption {
 		when(view.getChildren())
 			.thenReturn(new BasicEList<VContainedElement>());
-		viewRenderer.init(view, context);
 		final Control render = viewRenderer.render(new SWTGridCell(0, 0, viewRenderer), shell);
 		assertTrue(Composite.class.isInstance(render));
 		assertEquals(0, Composite.class.cast(render).getChildren().length);
@@ -95,7 +93,6 @@ public class ViewRenderer_PTest {
 		when(factory.getRenderer(control1, context)).thenReturn(mockRenderer1);
 		when(factory.getRenderer(control2, context)).thenReturn(mockRenderer2);
 
-		viewRenderer.init(view, context);
 		final Control render = viewRenderer.render(new SWTGridCell(0, 0, viewRenderer), shell);
 		assertTrue(Composite.class.isInstance(render));
 		assertEquals(2, Composite.class.cast(render).getChildren().length);
@@ -128,7 +125,6 @@ public class ViewRenderer_PTest {
 		when(factory.getRenderer(control2, context)).thenReturn(mockRenderer2);
 		when(factory.getRenderer(control3, context)).thenReturn(mockRenderer3);
 
-		viewRenderer.init(view, context);
 		final Control render = viewRenderer.render(new SWTGridCell(0, 0, viewRenderer), shell);
 		assertTrue(Composite.class.isInstance(render));
 		assertEquals(6, Composite.class.cast(render).getChildren().length);
@@ -170,7 +166,6 @@ public class ViewRenderer_PTest {
 			}
 
 		});
-		mockRenderer.init(control1, context);
 		return mockRenderer;
 	}
 

@@ -14,6 +14,8 @@ package org.eclipse.emf.ecp.view.spi.core.swt;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
@@ -27,20 +29,15 @@ import org.eclipse.swt.widgets.Control;
  *
  */
 public abstract class SimpleControlSWTControlSWTRenderer extends SimpleControlSWTRenderer {
-	/**
-	 * Default constructor.
-	 */
-	public SimpleControlSWTControlSWTRenderer() {
-		super();
-	}
 
 	/**
-	 * Test constructor.
-	 *
-	 * @param factory the {@link SWTRendererFactory} to use.
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param factory the {@link SWTRendererFactory}
 	 */
-	protected SimpleControlSWTControlSWTRenderer(SWTRendererFactory factory) {
-		super(factory);
+	public SimpleControlSWTControlSWTRenderer(VControl vElement, ViewModelContext viewContext,
+		SWTRendererFactory factory) {
+		super(vElement, viewContext, factory);
 	}
 
 	/**

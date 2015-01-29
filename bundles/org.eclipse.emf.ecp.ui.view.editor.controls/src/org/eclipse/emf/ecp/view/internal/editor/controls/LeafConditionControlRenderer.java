@@ -14,9 +14,6 @@ package org.eclipse.emf.ecp.view.internal.editor.controls;
 import java.util.Collection;
 import java.util.HashSet;
 
-import java.util.Collection;
-import java.util.HashSet;
-
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -27,11 +24,14 @@ import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.spi.common.ui.CompositeFactory;
 import org.eclipse.emf.ecp.spi.common.ui.composites.SelectionComposite;
 import org.eclipse.emf.ecp.view.internal.editor.handler.CreateDomainModelReferenceWizard;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.RulePackage;
 import org.eclipse.emf.ecp.view.spi.rule.model.impl.LeafConditionImpl;
+import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -48,6 +48,15 @@ import org.eclipse.swt.widgets.Label;
 public class LeafConditionControlRenderer extends ExpectedValueControlRenderer {
 
 	/**
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param factory the {@link SWTRendererFactory}
+	 */
+	public LeafConditionControlRenderer(VControl vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
+		super(vElement, viewContext, factory);
+	}
+
+	/**
 	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.emf.ecp.view.internal.editor.controls.ExpectedValueControlRenderer#onSelectButton()
@@ -60,7 +69,7 @@ public class LeafConditionControlRenderer extends ExpectedValueControlRenderer {
 		if (condition.getDomainModelReference() == null) {
 			MessageDialog.openError(control.getShell(), "No Feature Path Domain Model Reference found", //$NON-NLS-1$
 				"A Feature Path Domain Model Reference needs to be added to the condition first. " //$NON-NLS-1$
-				);
+			);
 			return;
 		}
 
@@ -70,7 +79,7 @@ public class LeafConditionControlRenderer extends ExpectedValueControlRenderer {
 		if (structuralFeature == null) {
 			MessageDialog.openError(control.getShell(), "No value selected", //$NON-NLS-1$
 				"Please set a value to the Domain Model Reference first. " //$NON-NLS-1$
-				);
+			);
 			return;
 		}
 

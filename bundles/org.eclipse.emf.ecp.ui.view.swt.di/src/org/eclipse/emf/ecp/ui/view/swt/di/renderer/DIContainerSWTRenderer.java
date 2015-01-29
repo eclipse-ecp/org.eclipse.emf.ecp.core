@@ -15,8 +15,10 @@ import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.emf.ecp.ui.view.swt.di.util.SWTContextUtil;
 import org.eclipse.emf.ecp.view.model.common.di.renderer.DIRendererUtil;
 import org.eclipse.emf.ecp.view.model.common.di.renderer.POJORendererFactory;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.swt.widgets.Composite;
 
 /**
@@ -27,6 +29,16 @@ import org.eclipse.swt.widgets.Composite;
  */
 @SuppressWarnings("restriction")
 public class DIContainerSWTRenderer extends ContainerSWTRenderer<VElement> {
+
+	/**
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param factory the {@link SWTRendererFactory}
+	 */
+	public DIContainerSWTRenderer(VElement vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
+		super(vElement, viewContext, factory);
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * Named string for the children of a container.

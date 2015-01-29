@@ -23,18 +23,22 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  */
 public abstract class AbstractRenderer<VELEMENT extends VElement> {
 
-	private VELEMENT vElement;
-	private ViewModelContext viewModelContext;
+	private final VELEMENT vElement;
+	private final ViewModelContext viewModelContext;
+	private boolean disposed;
 
 	/**
-	 * Initialize the control. This can only be called once.
+	 * Default constructor.
 	 *
 	 * @param vElement the {@link VElement} to be rendered
 	 * @param viewContext the {@link ViewModelContext} to use
 	 */
-	public void init(final VELEMENT vElement, final ViewModelContext viewContext) {
-		if (this.vElement != null) {
-			return;
+	public AbstractRenderer(final VELEMENT vElement, final ViewModelContext viewContext) {
+		if (vElement == null) {
+			throw new IllegalArgumentException("vElement must not be null"); //$NON-NLS-1$
+		}
+		if (viewContext == null) {
+			throw new IllegalArgumentException("vContext must not be null"); //$NON-NLS-1$
 		}
 		this.vElement = vElement;
 		this.viewModelContext = viewContext;
@@ -46,6 +50,7 @@ public abstract class AbstractRenderer<VELEMENT extends VElement> {
 	 * @return the {@link ViewModelContext}
 	 */
 	public final ViewModelContext getViewModelContext() {
+		checkRenderer();
 		return viewModelContext;
 	}
 
@@ -55,6 +60,7 @@ public abstract class AbstractRenderer<VELEMENT extends VElement> {
 	 * @return the {@link VElement}
 	 */
 	public final VELEMENT getVElement() {
+		checkRenderer();
 		return vElement;
 	}
 
@@ -63,7 +69,17 @@ public abstract class AbstractRenderer<VELEMENT extends VElement> {
 	 * Don't forget to call super.dispose if overwriting this method.
 	 */
 	protected void dispose() {
-		vElement = null;
-		viewModelContext = null;
+		disposed = true;
 	}
+
+	/**
+	 * Checks whether the renderer is disposed and if so throws an {@link IllegalStateException}.
+	 */
+	protected void checkRenderer() {
+		if (disposed) {
+			throw new IllegalStateException("Renderer is disposed"); //$NON-NLS-1$
+		}
+
+	}
+
 }

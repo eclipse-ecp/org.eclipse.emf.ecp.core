@@ -102,7 +102,6 @@ public class SWTTable_PTest {
 
 		final EClass eClass = EcoreFactory.eINSTANCE.createEClass();
 		eClass.getESuperTypes().add(EcorePackage.eINSTANCE.getEClass());
-		new TableControlSWTRenderer();
 		domainElement = eClass;
 	}
 

@@ -12,8 +12,11 @@
 package org.eclipse.emf.ecp.view.context.test.mockup;
 
 import org.eclipse.emf.ecp.view.internal.core.swt.renderer.ViewSWTRenderer;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
+import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.swt.widgets.Composite;
@@ -21,8 +24,14 @@ import org.eclipse.swt.widgets.Control;
 
 public class ViewSWTRendererWithNoPropertyDescriptorFoundException extends ViewSWTRenderer {
 
-	public ViewSWTRendererWithNoPropertyDescriptorFoundException() {
-
+	/**
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param factory the {@link SWTRendererFactory}
+	 */
+	public ViewSWTRendererWithNoPropertyDescriptorFoundException(VView vElement, ViewModelContext viewContext,
+		SWTRendererFactory factory) {
+		super(vElement, viewContext, factory);
 	}
 
 	@Override

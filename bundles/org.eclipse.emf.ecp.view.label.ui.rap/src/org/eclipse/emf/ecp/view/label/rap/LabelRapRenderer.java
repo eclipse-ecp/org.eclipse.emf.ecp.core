@@ -11,7 +11,10 @@
  */
 package org.eclipse.emf.ecp.view.label.rap;
 
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.label.model.VLabel;
 import org.eclipse.emf.ecp.view.spi.label.swt.LabelSWTRenderer;
+import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.swt.widgets.Label;
 
 /**
@@ -19,6 +22,15 @@ import org.eclipse.swt.widgets.Label;
  *
  */
 public class LabelRapRenderer extends LabelSWTRenderer {
+
+	/**
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param factory the {@link SWTRendererFactory}
+	 */
+	public LabelRapRenderer(VLabel vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
+		super(vElement, viewContext, factory);
+	}
 
 	/*
 	 * (non-Javadoc)

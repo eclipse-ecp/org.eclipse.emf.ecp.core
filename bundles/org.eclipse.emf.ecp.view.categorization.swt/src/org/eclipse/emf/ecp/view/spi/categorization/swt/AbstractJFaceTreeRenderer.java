@@ -78,23 +78,16 @@ import org.eclipse.swt.widgets.TreeItem;
  */
 public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> extends AbstractSWTRenderer<VELEMENT> {
 
+	/**
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param factory the {@link SWTRendererFactory}
+	 */
+	public AbstractJFaceTreeRenderer(VELEMENT vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
+		super(vElement, viewContext, factory);
+	}
+
 	private SWTGridDescription gridDescription;
-
-	/**
-	 * Default constructor.
-	 */
-	public AbstractJFaceTreeRenderer() {
-		super();
-	}
-
-	/**
-	 * Test constructor.
-	 *
-	 * @param factory the {@link SWTRendererFactory} to use.
-	 */
-	AbstractJFaceTreeRenderer(SWTRendererFactory factory) {
-		super(factory);
-	}
 
 	@Override
 	public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {

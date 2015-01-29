@@ -16,6 +16,7 @@ package org.eclipse.emf.ecp.view.spi.categorization.swt;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VAbstractCategorization;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 
 /**
@@ -26,19 +27,14 @@ import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 public class SWTCategorizationElementRenderer extends AbstractJFaceTreeRenderer<VCategorizationElement> {
 
 	/**
-	 * Default constructor.
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param factory the {@link SWTRendererFactory}
 	 */
-	public SWTCategorizationElementRenderer() {
-		super();
-	}
-
-	/**
-	 * Test constructor.
-	 *
-	 * @param factory the {@link SWTRendererFactory} to use.
-	 */
-	SWTCategorizationElementRenderer(SWTRendererFactory factory) {
-		super(factory);
+	public SWTCategorizationElementRenderer(VCategorizationElement vElement, ViewModelContext viewContext,
+		SWTRendererFactory factory) {
+		super(vElement, viewContext, factory);
+		// TODO Auto-generated constructor stub
 	}
 
 	/**

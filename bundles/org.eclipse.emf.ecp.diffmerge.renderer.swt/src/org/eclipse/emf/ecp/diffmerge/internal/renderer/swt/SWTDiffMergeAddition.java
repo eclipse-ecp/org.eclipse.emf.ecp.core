@@ -20,11 +20,13 @@ import org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext;
 import org.eclipse.emf.ecp.diffmerge.swt.DiffDialogHelper;
 import org.eclipse.emf.ecp.spi.diffmerge.model.VDiffAttachment;
 import org.eclipse.emf.ecp.spi.diffmerge.model.VDiffmergePackage;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractAdditionalSWTRenderer;
+import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
@@ -47,6 +49,15 @@ import org.eclipse.swt.widgets.Control;
  *
  */
 public class SWTDiffMergeAddition extends AbstractAdditionalSWTRenderer<VControl> {
+
+	/**
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param factory the {@link SWTRendererFactory}
+	 */
+	public SWTDiffMergeAddition(VControl vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
+		super(vElement, viewContext, factory);
+	}
 
 	/**
 	 * {@inheritDoc}

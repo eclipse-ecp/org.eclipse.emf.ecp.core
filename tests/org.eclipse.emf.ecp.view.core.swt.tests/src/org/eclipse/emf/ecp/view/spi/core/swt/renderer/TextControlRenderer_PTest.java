@@ -28,7 +28,8 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 	@Before
 	public void before() {
 		final SWTRendererFactory factory = mock(SWTRendererFactory.class);
-		setup(new TextControlSWTRenderer(factory));
+		setup();
+		renderer = new TextControlSWTRenderer(vControl, context, factory);
 	}
 
 	@After

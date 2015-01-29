@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.spi.swt.util.SWTValidationHelper;
 import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -58,28 +59,21 @@ import org.eclipse.swt.widgets.Label;
  */
 public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> extends AbstractSWTRenderer<VCONTROL> {
 
+	/**
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param factory the {@link SWTRendererFactory}
+	 */
+	public AbstractControlSWTRenderer(VCONTROL vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
+		super(vElement, viewContext, factory);
+	}
+
 	private AdapterFactoryItemDelegator adapterFactoryItemDelegator;
 	private ComposedAdapterFactory composedAdapterFactory;
 	private DataBindingContext dataBindingContext;
 	private IObservableValue modelValue;
 	private final WritableValue value = new WritableValue();
 	private DomainModelReferenceChangeListener domainModelReferenceChangeListener;
-
-	/**
-	 * Default constructor.
-	 */
-	public AbstractControlSWTRenderer() {
-		super();
-	}
-
-	/**
-	 * Test constructor.
-	 *
-	 * @param factory the {@link SWTRendererFactory} to use.
-	 */
-	AbstractControlSWTRenderer(SWTRendererFactory factory) {
-		super(factory);
-	}
 
 	@Override
 	protected void postInit() {

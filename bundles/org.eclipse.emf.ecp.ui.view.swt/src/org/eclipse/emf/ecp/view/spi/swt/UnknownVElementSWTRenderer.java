@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.view.spi.swt;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
@@ -41,8 +42,8 @@ public final class UnknownVElementSWTRenderer extends AbstractSWTRenderer<VEleme
 	/**
 	 * Default constructor.
 	 */
-	public UnknownVElementSWTRenderer() {
-		super();
+	public UnknownVElementSWTRenderer(VElement vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
+		super(vElement, viewContext, factory);
 		gridDescription = GridDescriptionFactory.INSTANCE.createEmptyGridDescription();
 		final SWTGridCell gc = new SWTGridCell(0, 0, this);
 		gc.setHorizontalFill(true);

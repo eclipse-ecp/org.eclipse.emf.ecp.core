@@ -28,7 +28,8 @@ public class BooleanControlRenderer_PTest extends AbstractControl_PTest {
 	@Before
 	public void before() {
 		final SWTRendererFactory factory = mock(SWTRendererFactory.class);
-		setup(new BooleanControlSWTRenderer(factory));
+		setup();
+		renderer = new BooleanControlSWTRenderer(vControl, context, factory);
 	}
 
 	@After

@@ -16,8 +16,10 @@ import java.util.Collection;
 import java.util.Collections;
 
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategory;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
+import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 
 /**
  * Renderer for {@link VCategory VCategories}.
@@ -26,6 +28,15 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
  *
  */
 public class SWTCategoryRenderer extends ContainerSWTRenderer<VCategory> {
+
+	/**
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param factory the {@link SWTRendererFactory}
+	 */
+	public SWTCategoryRenderer(VCategory vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
+		super(vElement, viewContext, factory);
+	}
 
 	/**
 	 * {@inheritDoc}

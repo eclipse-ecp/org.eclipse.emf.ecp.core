@@ -92,22 +92,21 @@ public abstract class AbstractControl_PTest {
 		});
 		final BasicEList<DomainModelReferenceChangeListener> changeListener = new BasicEList<DomainModelReferenceChangeListener>();
 		when(domainModelReference.getChangeListener()).thenReturn(changeListener);
-		Mockito.when(control.getDomainModelReference()).thenReturn(
+		Mockito.when(vControl.getDomainModelReference()).thenReturn(
 			domainModelReference);
 	}
 
 	protected void setMockLabelAlignment(LabelAlignment labelAlignment) {
-		Mockito.when(control.getLabelAlignment()).thenReturn(labelAlignment);
+		Mockito.when(vControl.getLabelAlignment()).thenReturn(labelAlignment);
 	}
 
-	private ViewModelContext context;
-	private VControl control;
+	protected ViewModelContext context;
+	protected VControl vControl;
 	private Shell shell;
 
-	protected void setup(AbstractControlSWTRenderer<VControl> renderer) {
-
-		this.renderer = renderer;
-		control = Mockito.mock(VControl.class);
+	protected void setup() {
+		vControl = Mockito.mock(VControl.class);
+		mockControl();
 		context = Mockito.mock(ViewModelContext.class);
 		shell = new Shell();
 	}
@@ -119,8 +118,6 @@ public abstract class AbstractControl_PTest {
 	@Test
 	public void testGridDescriptionLabelAlignmentNone() {
 		setMockLabelAlignment(LabelAlignment.NONE);
-		mockControl();
-		renderer.init(control, context);
 		final SWTGridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE
 			.createEmptyGridDescription());
 		assertEquals(2, gridDescription.getColumns());
@@ -130,8 +127,6 @@ public abstract class AbstractControl_PTest {
 	@Test
 	public void testGridDescriptionLabelAlignmentLeft() {
 		setMockLabelAlignment(LabelAlignment.LEFT);
-		mockControl();
-		renderer.init(control, context);
 		final SWTGridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE
 			.createEmptyGridDescription());
 		assertEquals(3, gridDescription.getColumns());
@@ -154,8 +149,6 @@ public abstract class AbstractControl_PTest {
 
 	private void renderValidationIcon(SWTGridCell gridCell)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		mockControl();
-		renderer.init(control, context);
 		final Control render = renderer.render(gridCell, shell);
 		assertTrue(Label.class.isInstance(render));
 		assertEquals("", Label.class.cast(render).getText());
@@ -164,8 +157,6 @@ public abstract class AbstractControl_PTest {
 	protected void renderLabel(String text) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		setMockLabelAlignment(LabelAlignment.LEFT);
-		mockControl();
-		renderer.init(control, context);
 		final Control render = renderer.render(new SWTGridCell(0, 0, renderer), shell);
 		assertTrue(Label.class.isInstance(render));
 		assertEquals(text, Label.class.cast(render).getText());
@@ -173,8 +164,6 @@ public abstract class AbstractControl_PTest {
 
 	protected Control renderControl(SWTGridCell gridCell)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		mockControl();
-		renderer.init(control, context);
 		final Control render = renderer.render(gridCell, shell);
 		return render;
 	}

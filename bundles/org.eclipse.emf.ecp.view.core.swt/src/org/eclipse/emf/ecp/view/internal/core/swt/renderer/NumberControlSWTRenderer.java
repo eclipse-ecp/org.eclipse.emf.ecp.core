@@ -28,6 +28,7 @@ import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.renderer.TextControlSWTRenderer;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
@@ -44,20 +45,14 @@ import org.eclipse.swt.widgets.Text;
  *
  */
 public class NumberControlSWTRenderer extends TextControlSWTRenderer {
-	/**
-	 * Default constructor.
-	 */
-	public NumberControlSWTRenderer() {
-		super();
-	}
 
 	/**
-	 * Test constructor.
-	 *
-	 * @param factory the {@link SWTRendererFactory} to use.
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param factory the {@link SWTRendererFactory}
 	 */
-	NumberControlSWTRenderer(SWTRendererFactory factory) {
-		super(factory);
+	public NumberControlSWTRenderer(VControl vElement, ViewModelContext viewContext, SWTRendererFactory factory) {
+		super(vElement, viewContext, factory);
 	}
 
 	@Override

@@ -29,7 +29,8 @@ public class XMLDateControlRenderer_PTest extends AbstractControl_PTest {
 	@Before
 	public void before() {
 		final SWTRendererFactory factory = mock(SWTRendererFactory.class);
-		setup(new XMLDateControlSWTRenderer(factory));
+		setup();
+		new XMLDateControlSWTRenderer(vControl, context, factory);
 	}
 
 	@After

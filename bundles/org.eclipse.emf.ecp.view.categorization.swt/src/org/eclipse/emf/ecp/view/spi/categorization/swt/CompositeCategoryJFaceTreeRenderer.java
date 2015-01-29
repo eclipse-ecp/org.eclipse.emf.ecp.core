@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VAbstractCategorization;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorization;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 
 /**
@@ -26,23 +27,17 @@ import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
  */
 public class CompositeCategoryJFaceTreeRenderer extends AbstractJFaceTreeRenderer<VCategorization> {
 
+	/**
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param factory the {@link SWTRendererFactory}
+	 */
+	public CompositeCategoryJFaceTreeRenderer(VCategorization vElement, ViewModelContext viewContext,
+		SWTRendererFactory factory) {
+		super(vElement, viewContext, factory);
+	}
+
 	private VCategorizationElement categorizationElement;
-
-	/**
-	 * Default constructor.
-	 */
-	public CompositeCategoryJFaceTreeRenderer() {
-		super();
-	}
-
-	/**
-	 * Test constructor.
-	 *
-	 * @param factory the {@link SWTRendererFactory} to use.
-	 */
-	CompositeCategoryJFaceTreeRenderer(SWTRendererFactory factory) {
-		super(factory);
-	}
 
 	/**
 	 * {@inheritDoc}
