@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
@@ -198,38 +199,41 @@ public class EdaptViewModelMigrator implements ViewModelMigrator {
 		/* using the dependency tree, combine changes from all registered histories based on the release label. */
 		final Map<String, List<Change>> sourceReleaseNameToChangesMap = new LinkedHashMap<String, List<Change>>();
 		final Map<String, List<Change>> targetReleaseNameToChangesMap = new LinkedHashMap<String, List<Change>>();
-		final Iterator<String> viewModelPackageIterator = viewModelPackageTree.getIerator();
+		final Iterator<Set<String>> viewModelPackageIterator = viewModelPackageTree.getIerator();
 		while (viewModelPackageIterator.hasNext()) {
-			final String latestURI = viewModelPackageIterator.next();
-			if (!latestToCurrentNSURIMap.keySet().contains(latestURI)) {
-				continue;
-			}
-			final String nsUri = latestToCurrentNSURIMap.get(latestURI);
-			final org.eclipse.emf.edapt.migration.execution.Migrator migrator = nsURIToMigratorMap
-				.get(nsUri);
-
-			final Release nsRelease = getReleaseFromMigrator(nsUri, migrator);
-
-			// add changes to source release
-			final int sourceIndex = nsRelease.getNumber();
-			for (int i = 0; i <= sourceIndex; i++) {
-				final Release currentRelease = migrator.getRelease(i);
-				if (!sourceReleaseNameToChangesMap.containsKey(currentRelease.getLabel())) {
-					sourceReleaseNameToChangesMap.put(currentRelease.getLabel(), new ArrayList<Change>());
+			final Set<String> latestURIs = viewModelPackageIterator.next();
+			for (final String latestURI : latestURIs) {
+				if (!latestToCurrentNSURIMap.keySet().contains(latestURI)) {
+					continue;
 				}
-				sourceReleaseNameToChangesMap.get(currentRelease.getLabel()).addAll(currentRelease.getChanges());
+				final String nsUri = latestToCurrentNSURIMap.get(latestURI);
+				final org.eclipse.emf.edapt.migration.execution.Migrator migrator = nsURIToMigratorMap
+					.get(nsUri);
 
-			}
+				final Release nsRelease = getReleaseFromMigrator(nsUri, migrator);
 
-			// add changes to target release
-			final int targetIndex = migrator.getLatestRelease().getNumber();
-			if (targetIndex > sourceIndex) {
-				for (int i = sourceIndex + 1; i <= targetIndex; i++) {
+				// add changes to source release
+				final int sourceIndex = nsRelease.getNumber();
+				for (int i = 0; i <= sourceIndex; i++) {
 					final Release currentRelease = migrator.getRelease(i);
-					if (!targetReleaseNameToChangesMap.containsKey(currentRelease.getLabel())) {
-						targetReleaseNameToChangesMap.put(currentRelease.getLabel(), new ArrayList<Change>());
+					if (!sourceReleaseNameToChangesMap.containsKey(currentRelease.getLabel())) {
+						sourceReleaseNameToChangesMap.put(currentRelease.getLabel(), new ArrayList<Change>());
 					}
-					targetReleaseNameToChangesMap.get(currentRelease.getLabel()).addAll(currentRelease.getChanges());
+					sourceReleaseNameToChangesMap.get(currentRelease.getLabel()).addAll(currentRelease.getChanges());
+
+				}
+
+				// add changes to target release
+				final int targetIndex = migrator.getLatestRelease().getNumber();
+				if (targetIndex > sourceIndex) {
+					for (int i = sourceIndex + 1; i <= targetIndex; i++) {
+						final Release currentRelease = migrator.getRelease(i);
+						if (!targetReleaseNameToChangesMap.containsKey(currentRelease.getLabel())) {
+							targetReleaseNameToChangesMap.put(currentRelease.getLabel(), new ArrayList<Change>());
+						}
+						targetReleaseNameToChangesMap.get(currentRelease.getLabel())
+							.addAll(currentRelease.getChanges());
+					}
 				}
 			}
 		}
@@ -326,17 +330,19 @@ public class EdaptViewModelMigrator implements ViewModelMigrator {
 		packageTree.addPackage(rootPackageNsUri);
 
 		final List<EPackage> rootPackages = new ArrayList<EPackage>();
-		final Iterator<String> packageIterator = packageTree.getIerator();
+		final Iterator<Set<String>> packageIterator = packageTree.getIerator();
 
 		while (packageIterator.hasNext()) {
-			final String nsURI = packageIterator.next();
-			/* there is no history available from the extensionpoint */
-			if (MigratorRegistry.getInstance().getMigrator(nsURI) == null) {
-				final EPackage ePackage = Registry.INSTANCE.getEPackage(nsURI);
-				rootPackages.add(ePackage);
-				nsURIsWithGeneratedHistory.add(nsURI);
-			} else {
-				nsURIsWithHistory.add(nsURI);
+			final Set<String> nsURIs = packageIterator.next();
+			for (final String nsURI : nsURIs) {
+				/* there is no history available from the extensionpoint */
+				if (MigratorRegistry.getInstance().getMigrator(nsURI) == null) {
+					final EPackage ePackage = Registry.INSTANCE.getEPackage(nsURI);
+					rootPackages.add(ePackage);
+					nsURIsWithGeneratedHistory.add(nsURI);
+				} else {
+					nsURIsWithHistory.add(nsURI);
+				}
 			}
 		}
 
@@ -584,7 +590,7 @@ public class EdaptViewModelMigrator implements ViewModelMigrator {
 			return node;
 		}
 
-		public Iterator<String> getIerator() {
+		public Iterator<Set<String>> getIerator() {
 			return new PackageDependencyIterator(roots);
 		}
 
@@ -594,11 +600,11 @@ public class EdaptViewModelMigrator implements ViewModelMigrator {
 		 * @author jfaltermeier
 		 *
 		 */
-		private static class PackageDependencyIterator implements Iterator<String> {
+		private static class PackageDependencyIterator implements Iterator<Set<String>> {
 
 			private final Set<PackageTreeNode> nodesToVisit;
 			private final Set<PackageTreeNode> visitedNodes;
-			private PackageTreeNode next;
+			private Set<PackageTreeNode> next;
 
 			public PackageDependencyIterator(Set<PackageTreeNode> roots) {
 				visitedNodes = new LinkedHashSet<EdaptViewModelMigrator.PackageDependencyTree.PackageTreeNode>();
@@ -609,19 +615,23 @@ public class EdaptViewModelMigrator implements ViewModelMigrator {
 
 			@Override
 			public boolean hasNext() {
-				return next != null;
+				return !next.isEmpty();
 			}
 
 			@Override
-			public String next() {
-				visitedNodes.add(next);
-				final String nsuri = next.getNSURI();
+			public Set<String> next() {
+				visitedNodes.addAll(next);
+				final Set<String> nsuri = new LinkedHashSet<String>();
+				for (final PackageTreeNode nextNode : next) {
+					nsuri.add(nextNode.getNSURI());
+				}
 				next = findNext();
 				return nsuri;
 			}
 
-			private PackageTreeNode findNext() {
-				PackageTreeNode result = null;
+			private Set<PackageTreeNode> findNext() {
+				/* we are looking for a node with no parents */
+				final Set<PackageTreeNode> result = new LinkedHashSet<EdaptViewModelMigrator.PackageDependencyTree.PackageTreeNode>();
 				for (final PackageTreeNode node : nodesToVisit) {
 					boolean hasUnvisitedParent = false;
 					for (final PackageTreeNode parent : node.getParents()) {
@@ -636,12 +646,96 @@ public class EdaptViewModelMigrator implements ViewModelMigrator {
 								nodesToVisit.add(child);
 							}
 						}
-						result = node;
+						result.add(node);
 						break;
 					}
 				}
-				if (result != null) {
-					nodesToVisit.remove(result);
+				if (result.isEmpty() && !nodesToVisit.isEmpty()) {
+					// circle detected
+					result.addAll(getCircleSet());
+				}
+				for (final PackageTreeNode packageTreeNode : result) {
+					nodesToVisit.remove(packageTreeNode);
+				}
+				return result;
+			}
+
+			private Collection<? extends PackageTreeNode> getCircleSet() {
+				/* 1. circle detection: put all nodes which contain to the same circle in a set */
+				final Map<PackageTreeNode, Set<PackageTreeNode>> nodeToCircleMap = new LinkedHashMap<EdaptViewModelMigrator.PackageDependencyTree.PackageTreeNode, Set<PackageTreeNode>>();
+				final Set<Set<PackageTreeNode>> allCircles = new LinkedHashSet<Set<PackageTreeNode>>();
+				for (final PackageTreeNode nodeToAllocate : nodesToVisit) {
+					// get existing circle set from map or create new set
+					final Set<PackageTreeNode> circle = nodeToCircleMap.containsKey(nodeToAllocate) ?
+						nodeToCircleMap.get(nodeToAllocate)
+						: new LinkedHashSet<EdaptViewModelMigrator.PackageDependencyTree.PackageTreeNode>();
+
+					// if new set, fill map
+					if (!nodeToCircleMap.containsKey(nodeToAllocate)) {
+						circle.add(nodeToAllocate);
+						nodeToCircleMap.put(nodeToAllocate, circle);
+						allCircles.add(circle);
+					}
+
+					// nodes contain to same set if outgoing edge leads back to self
+					final Set<PackageTreeNode> outgoingEdges = nodeToAllocate.getChildren();
+					for (final PackageTreeNode outgoingEdge : outgoingEdges) {
+						final boolean hasPathToOtherNode = hasPathToOtherNode(outgoingEdge, nodeToAllocate,
+							new LinkedHashSet<EdaptViewModelMigrator.PackageDependencyTree.PackageTreeNode>());
+						if (hasPathToOtherNode) {
+							circle.add(outgoingEdge);
+							nodeToCircleMap.put(outgoingEdge, circle);
+						}
+					}
+				}
+
+				/* 2. find root circle */
+				return findRootCircle(allCircles);
+			}
+
+			private Collection<? extends PackageTreeNode> findRootCircle(final Set<Set<PackageTreeNode>> allCircles) {
+				for (final Set<PackageTreeNode> circle : allCircles) {
+					// root circle is the set where all unvisited parents are from the same set
+					boolean isRoot = true;
+					for (final PackageTreeNode node : circle) {
+						for (final PackageTreeNode mustBeInCircle : node.getParents()) {
+							if (visitedNodes.contains(mustBeInCircle)) {
+								// the parent was already returned by the iterator, so we can skip it
+								continue;
+							}
+							if (!circle.contains(mustBeInCircle)) {
+								isRoot = false;
+								break;
+							}
+						}
+						if (!isRoot) {
+							break;
+						}
+					}
+					if (isRoot) {
+						return circle;
+					}
+				}
+
+				// this state is unexpected. if this is reached we could have returned a valid set of nsuri beforehand
+				// (either no circle at all, or the circle detection went wrong)
+				throw new IllegalStateException("No root circle found"); //$NON-NLS-1$
+			}
+
+			private boolean hasPathToOtherNode(PackageTreeNode start, PackageTreeNode target,
+				Set<PackageTreeNode> visitedNodes) {
+				visitedNodes.add(start);
+				final Set<PackageTreeNode> outgoingNodes = start.getChildren();
+				if (outgoingNodes.contains(target)) {
+					return true;
+				}
+				boolean result = false;
+				for (final PackageTreeNode outgoingNode : outgoingNodes) {
+					if (visitedNodes.contains(outgoingNode)) {
+						// we already visited/are visiting all children of this node -> skip
+						continue;
+					}
+					result |= hasPathToOtherNode(outgoingNode, target, visitedNodes);
 				}
 				return result;
 			}
