@@ -6,8 +6,8 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.edapt.util.test.model.d.D;
-import org.eclipse.emf.ecp.view.edapt.util.test.model.d.DPackage;
+import org.eclipse.emf.ecp.view.edapt.util.test.model.d.EdaptTestD;
+import org.eclipse.emf.ecp.view.edapt.util.test.model.d.EdaptTestDPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -15,7 +15,7 @@ import org.eclipse.emf.ecp.view.edapt.util.test.model.d.DPackage;
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.view.edapt.util.test.model.d.DPackage
+ * @see org.eclipse.emf.ecp.view.edapt.util.test.model.d.EdaptTestDPackage
  * @generated
  */
 public class DAdapterFactory extends AdapterFactoryImpl {
@@ -26,7 +26,7 @@ public class DAdapterFactory extends AdapterFactoryImpl {
 	 * 
 	 * @generated
 	 */
-	protected static DPackage modelPackage;
+	protected static EdaptTestDPackage modelPackage;
 
 	/**
 	 * Creates an instance of the adapter factory.
@@ -37,7 +37,7 @@ public class DAdapterFactory extends AdapterFactoryImpl {
 	 */
 	public DAdapterFactory() {
 		if (modelPackage == null) {
-			modelPackage = DPackage.eINSTANCE;
+			modelPackage = EdaptTestDPackage.eINSTANCE;
 		}
 	}
 
@@ -72,7 +72,7 @@ public class DAdapterFactory extends AdapterFactoryImpl {
 	protected DSwitch<Adapter> modelSwitch =
 		new DSwitch<Adapter>() {
 			@Override
-			public Adapter caseD(D object) {
+			public Adapter caseD(EdaptTestD object) {
 				return createDAdapter();
 			}
 
@@ -97,7 +97,7 @@ public class DAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.edapt.util.test.model.d.D
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.edapt.util.test.model.d.EdaptTestD
 	 * <em>D</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -105,7 +105,7 @@ public class DAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.edapt.util.test.model.d.D
+	 * @see org.eclipse.emf.ecp.view.edapt.util.test.model.d.EdaptTestD
 	 * @generated
 	 */
 	public Adapter createDAdapter() {

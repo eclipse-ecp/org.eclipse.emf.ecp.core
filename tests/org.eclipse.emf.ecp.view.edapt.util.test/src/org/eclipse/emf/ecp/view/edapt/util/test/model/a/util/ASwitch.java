@@ -5,8 +5,8 @@ package org.eclipse.emf.ecp.view.edapt.util.test.model.a.util;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
-import org.eclipse.emf.ecp.view.edapt.util.test.model.a.A;
-import org.eclipse.emf.ecp.view.edapt.util.test.model.a.APackage;
+import org.eclipse.emf.ecp.view.edapt.util.test.model.a.EdaptTestA;
+import org.eclipse.emf.ecp.view.edapt.util.test.model.a.EdaptTestAPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -19,7 +19,7 @@ import org.eclipse.emf.ecp.view.edapt.util.test.model.a.APackage;
  * which is the result of the switch.
  * <!-- end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.view.edapt.util.test.model.a.APackage
+ * @see org.eclipse.emf.ecp.view.edapt.util.test.model.a.EdaptTestAPackage
  * @generated
  */
 public class ASwitch<T> extends Switch<T> {
@@ -30,7 +30,7 @@ public class ASwitch<T> extends Switch<T> {
 	 * 
 	 * @generated
 	 */
-	protected static APackage modelPackage;
+	protected static EdaptTestAPackage modelPackage;
 
 	/**
 	 * Creates an instance of the switch.
@@ -41,7 +41,7 @@ public class ASwitch<T> extends Switch<T> {
 	 */
 	public ASwitch() {
 		if (modelPackage == null) {
-			modelPackage = APackage.eINSTANCE;
+			modelPackage = EdaptTestAPackage.eINSTANCE;
 		}
 	}
 
@@ -71,8 +71,8 @@ public class ASwitch<T> extends Switch<T> {
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
-		case APackage.A: {
-			final A a = (A) theEObject;
+		case EdaptTestAPackage.A: {
+			final EdaptTestA a = (EdaptTestA) theEObject;
 			T result = caseA(a);
 			if (result == null) {
 				result = defaultCase(theEObject);
@@ -96,7 +96,7 @@ public class ASwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseA(A object) {
+	public T caseA(EdaptTestA object) {
 		return null;
 	}
 

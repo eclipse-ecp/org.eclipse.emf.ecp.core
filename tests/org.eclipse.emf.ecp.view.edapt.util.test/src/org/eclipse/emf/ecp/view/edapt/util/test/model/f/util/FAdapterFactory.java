@@ -6,8 +6,8 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.edapt.util.test.model.f.F;
-import org.eclipse.emf.ecp.view.edapt.util.test.model.f.FPackage;
+import org.eclipse.emf.ecp.view.edapt.util.test.model.f.EdaptTestF;
+import org.eclipse.emf.ecp.view.edapt.util.test.model.f.EdaptTestFPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -15,7 +15,7 @@ import org.eclipse.emf.ecp.view.edapt.util.test.model.f.FPackage;
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.view.edapt.util.test.model.f.FPackage
+ * @see org.eclipse.emf.ecp.view.edapt.util.test.model.f.EdaptTestFPackage
  * @generated
  */
 public class FAdapterFactory extends AdapterFactoryImpl {
@@ -26,7 +26,7 @@ public class FAdapterFactory extends AdapterFactoryImpl {
 	 * 
 	 * @generated
 	 */
-	protected static FPackage modelPackage;
+	protected static EdaptTestFPackage modelPackage;
 
 	/**
 	 * Creates an instance of the adapter factory.
@@ -37,7 +37,7 @@ public class FAdapterFactory extends AdapterFactoryImpl {
 	 */
 	public FAdapterFactory() {
 		if (modelPackage == null) {
-			modelPackage = FPackage.eINSTANCE;
+			modelPackage = EdaptTestFPackage.eINSTANCE;
 		}
 	}
 
@@ -72,7 +72,7 @@ public class FAdapterFactory extends AdapterFactoryImpl {
 	protected FSwitch<Adapter> modelSwitch =
 		new FSwitch<Adapter>() {
 			@Override
-			public Adapter caseF(F object) {
+			public Adapter caseF(EdaptTestF object) {
 				return createFAdapter();
 			}
 
@@ -97,7 +97,7 @@ public class FAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.edapt.util.test.model.f.F
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.edapt.util.test.model.f.EdaptTestF
 	 * <em>F</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -105,7 +105,7 @@ public class FAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.edapt.util.test.model.f.F
+	 * @see org.eclipse.emf.ecp.view.edapt.util.test.model.f.EdaptTestF
 	 * @generated
 	 */
 	public Adapter createFAdapter() {

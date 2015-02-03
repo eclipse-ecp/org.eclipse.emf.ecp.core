@@ -12,22 +12,28 @@
 package org.eclipse.emf.ecp.view.edapt;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
-import java.util.Iterator;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.emf.ecp.view.edapt.util.test.model.a.APackage;
-import org.eclipse.emf.ecp.view.edapt.util.test.model.b.BPackage;
-import org.eclipse.emf.ecp.view.edapt.util.test.model.c.CPackage;
-import org.eclipse.emf.ecp.view.edapt.util.test.model.d.DPackage;
-import org.eclipse.emf.ecp.view.edapt.util.test.model.e.EEPackage;
-import org.eclipse.emf.ecp.view.edapt.util.test.model.f.FPackage;
+import org.eclipse.emf.ecp.view.edapt.PackageDependencyTree.PackageTreeNode;
+import org.eclipse.emf.ecp.view.edapt.util.test.model.a.EdaptTestAPackage;
+import org.eclipse.emf.ecp.view.edapt.util.test.model.b.EdaptTestBPackage;
+import org.eclipse.emf.ecp.view.edapt.util.test.model.c.EdaptTestCPackage;
+import org.eclipse.emf.ecp.view.edapt.util.test.model.d.EdaptTestDPackage;
+import org.eclipse.emf.ecp.view.edapt.util.test.model.e.EdaptTestEPackage;
+import org.eclipse.emf.ecp.view.edapt.util.test.model.f.EdaptTestFPackage;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
+ *
+ * Tests for {@link PackageDependencyTree}.
+ *
  * @author jfaltermeier
  *
  */
@@ -35,43 +41,121 @@ public class PackageDependencyTree_Test {
 
 	@BeforeClass
 	public static void beforeClass() {
-		// non osgi -> register epackages
-		APackage.eINSTANCE.eClass();
-		BPackage.eINSTANCE.eClass();
-		CPackage.eINSTANCE.eClass();
-		DPackage.eINSTANCE.eClass();
-		EEPackage.eINSTANCE.eClass();
-		FPackage.eINSTANCE.eClass();
+		// non osgi -> register epackages by hand
+		EdaptTestAPackage.eINSTANCE.eClass();
+		EdaptTestBPackage.eINSTANCE.eClass();
+		EdaptTestCPackage.eINSTANCE.eClass();
+		EdaptTestDPackage.eINSTANCE.eClass();
+		EdaptTestEPackage.eINSTANCE.eClass();
+		EdaptTestFPackage.eINSTANCE.eClass();
 	}
 
 	@Test
-	public void testIteratorWithCircles() {
-		final PackageDependencyTree packageDependencyTree = new PackageDependencyTree();
-		packageDependencyTree.addPackage(FPackage.eNS_URI);
-		final Iterator<Set<String>> iterator = packageDependencyTree.getIerator();
+	public void testRegisterNodesDependenciesRegistered() {
+		final PackageDependencyTree dependencyTree = new PackageDependencyTree();
 
-		// A
-		assertTrue(iterator.hasNext());
-		final Set<String> aSet = iterator.next();
-		assertEquals(1, aSet.size());
-		assertTrue(aSet.contains(APackage.eNS_URI));
+		// add A
+		dependencyTree.addPackage(EdaptTestAPackage.eNS_URI);
+		final Map<String, PackageTreeNode> aMap = dependencyTree.getNsURIToNodeMap();
+		assertEquals(1, aMap.size());
+		assertTrue(aMap.containsKey(EdaptTestAPackage.eNS_URI));
 
-		// B C D
-		assertTrue(iterator.hasNext());
-		final Set<String> bcdSet = iterator.next();
-		assertEquals(3, bcdSet.size());
-		assertTrue(bcdSet.contains(BPackage.eNS_URI));
-		assertTrue(bcdSet.contains(CPackage.eNS_URI));
-		assertTrue(bcdSet.contains(DPackage.eNS_URI));
+		// add B
+		dependencyTree.addPackage(EdaptTestBPackage.eNS_URI);
+		final Map<String, PackageTreeNode> abcdMap = dependencyTree.getNsURIToNodeMap();
+		assertEquals(4, abcdMap.size());
+		assertTrue(abcdMap.containsKey(EdaptTestAPackage.eNS_URI));
+		assertTrue(abcdMap.containsKey(EdaptTestBPackage.eNS_URI));
+		assertTrue(abcdMap.containsKey(EdaptTestCPackage.eNS_URI));
+		assertTrue(abcdMap.containsKey(EdaptTestDPackage.eNS_URI));
 
-		// E F
-		assertTrue(iterator.hasNext());
-		final Set<String> efSet = iterator.next();
-		assertEquals(2, efSet.size());
-		assertTrue(efSet.contains(EEPackage.eNS_URI));
-		assertTrue(efSet.contains(FPackage.eNS_URI));
-		assertFalse(iterator.hasNext());
+		// add E
+		dependencyTree.addPackage(EdaptTestEPackage.eNS_URI);
+		final Map<String, PackageTreeNode> abcdefMap = dependencyTree.getNsURIToNodeMap();
+		assertEquals(6, abcdefMap.size());
+		assertTrue(abcdefMap.containsKey(EdaptTestAPackage.eNS_URI));
+		assertTrue(abcdefMap.containsKey(EdaptTestBPackage.eNS_URI));
+		assertTrue(abcdefMap.containsKey(EdaptTestCPackage.eNS_URI));
+		assertTrue(abcdefMap.containsKey(EdaptTestDPackage.eNS_URI));
+		assertTrue(abcdefMap.containsKey(EdaptTestEPackage.eNS_URI));
+		assertTrue(abcdefMap.containsKey(EdaptTestFPackage.eNS_URI));
+	}
 
+	@Test
+	public void testRegisterNodesDependenciesRegisteredBottom() {
+		final PackageDependencyTree dependencyTree = new PackageDependencyTree();
+
+		// add F
+		dependencyTree.addPackage(EdaptTestFPackage.eNS_URI);
+		final Map<String, PackageTreeNode> abcdefMap = dependencyTree.getNsURIToNodeMap();
+		assertEquals(6, abcdefMap.size());
+		assertTrue(abcdefMap.containsKey(EdaptTestAPackage.eNS_URI));
+		assertTrue(abcdefMap.containsKey(EdaptTestBPackage.eNS_URI));
+		assertTrue(abcdefMap.containsKey(EdaptTestCPackage.eNS_URI));
+		assertTrue(abcdefMap.containsKey(EdaptTestDPackage.eNS_URI));
+		assertTrue(abcdefMap.containsKey(EdaptTestEPackage.eNS_URI));
+		assertTrue(abcdefMap.containsKey(EdaptTestFPackage.eNS_URI));
+	}
+
+	@Test
+	public void testRegisterNodesCheckNodes() {
+		final PackageDependencyTree dependencyTree = new PackageDependencyTree();
+
+		// add F
+		dependencyTree.addPackage(EdaptTestFPackage.eNS_URI);
+		final Map<String, PackageTreeNode> map = dependencyTree.getNsURIToNodeMap();
+
+		final PackageTreeNode aNode = map.get(EdaptTestAPackage.eNS_URI);
+		assertEquals(0, aNode.getParents().size());
+		assertEquals(1, aNode.getChildren().size());
+		assertEquals(EdaptTestBPackage.eNS_URI, aNode.getChildren().iterator().next().getNSURI());
+
+		final PackageTreeNode bNode = map.get(EdaptTestBPackage.eNS_URI);
+		assertEquals(2, bNode.getParents().size());
+		assertNodes(bNode.getParents(), EdaptTestAPackage.eNS_URI, EdaptTestCPackage.eNS_URI);
+		assertEquals(1, bNode.getChildren().size());
+		assertEquals(EdaptTestDPackage.eNS_URI, bNode.getChildren().iterator().next().getNSURI());
+
+		final PackageTreeNode cNode = map.get(EdaptTestCPackage.eNS_URI);
+		assertEquals(1, cNode.getParents().size());
+		assertEquals(EdaptTestDPackage.eNS_URI, cNode.getParents().iterator().next().getNSURI());
+		assertEquals(1, cNode.getChildren().size());
+		assertEquals(EdaptTestBPackage.eNS_URI, cNode.getChildren().iterator().next().getNSURI());
+
+		final PackageTreeNode dNode = map.get(EdaptTestDPackage.eNS_URI);
+		assertEquals(1, dNode.getParents().size());
+		assertEquals(EdaptTestBPackage.eNS_URI, dNode.getParents().iterator().next().getNSURI());
+		assertEquals(2, dNode.getChildren().size());
+		assertNodes(dNode.getChildren(), EdaptTestCPackage.eNS_URI, EdaptTestEPackage.eNS_URI);
+
+		final PackageTreeNode eNode = map.get(EdaptTestEPackage.eNS_URI);
+		assertEquals(2, eNode.getParents().size());
+		assertNodes(eNode.getParents(), EdaptTestDPackage.eNS_URI, EdaptTestFPackage.eNS_URI);
+		assertEquals(1, eNode.getChildren().size());
+		assertEquals(EdaptTestFPackage.eNS_URI, eNode.getChildren().iterator().next().getNSURI());
+
+		final PackageTreeNode fNode = map.get(EdaptTestFPackage.eNS_URI);
+		assertEquals(1, fNode.getParents().size());
+		assertEquals(EdaptTestEPackage.eNS_URI, fNode.getParents().iterator().next().getNSURI());
+		assertEquals(1, fNode.getChildren().size());
+		assertEquals(EdaptTestEPackage.eNS_URI, fNode.getChildren().iterator().next().getNSURI());
+
+	}
+
+	private static void assertNodes(Set<PackageTreeNode> actual, String... expected) {
+		final Set<String> expectedNsURIs = new LinkedHashSet<String>(Arrays.asList(expected));
+		for (final PackageTreeNode node : actual) {
+			expectedNsURIs.remove(node.getNSURI());
+		}
+		if (expectedNsURIs.isEmpty()) {
+			return;
+		}
+		final StringBuilder stringBuilder = new StringBuilder(
+			"The following expected nsURIs were not in the actual set: ");
+		for (final String uri : expectedNsURIs) {
+			stringBuilder.append(uri + " ");
+		}
+		fail(stringBuilder.toString());
 	}
 
 }

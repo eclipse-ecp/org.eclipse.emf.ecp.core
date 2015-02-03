@@ -78,6 +78,7 @@
 		
 		<!-- Migration -->
 		<module>../../tests/org.eclipse.emf.ecp.view.edapt.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.edapt.util.test</module>
 		
 	</modules>
 	

@@ -6,8 +6,8 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.edapt.util.test.model.b.B;
-import org.eclipse.emf.ecp.view.edapt.util.test.model.b.BPackage;
+import org.eclipse.emf.ecp.view.edapt.util.test.model.b.EdaptTestB;
+import org.eclipse.emf.ecp.view.edapt.util.test.model.b.EdaptTestBPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -15,7 +15,7 @@ import org.eclipse.emf.ecp.view.edapt.util.test.model.b.BPackage;
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
  * 
- * @see org.eclipse.emf.ecp.view.edapt.util.test.model.b.BPackage
+ * @see org.eclipse.emf.ecp.view.edapt.util.test.model.b.EdaptTestBPackage
  * @generated
  */
 public class BAdapterFactory extends AdapterFactoryImpl {
@@ -26,7 +26,7 @@ public class BAdapterFactory extends AdapterFactoryImpl {
 	 * 
 	 * @generated
 	 */
-	protected static BPackage modelPackage;
+	protected static EdaptTestBPackage modelPackage;
 
 	/**
 	 * Creates an instance of the adapter factory.
@@ -37,7 +37,7 @@ public class BAdapterFactory extends AdapterFactoryImpl {
 	 */
 	public BAdapterFactory() {
 		if (modelPackage == null) {
-			modelPackage = BPackage.eINSTANCE;
+			modelPackage = EdaptTestBPackage.eINSTANCE;
 		}
 	}
 
@@ -72,7 +72,7 @@ public class BAdapterFactory extends AdapterFactoryImpl {
 	protected BSwitch<Adapter> modelSwitch =
 		new BSwitch<Adapter>() {
 			@Override
-			public Adapter caseB(B object) {
+			public Adapter caseB(EdaptTestB object) {
 				return createBAdapter();
 			}
 
@@ -97,7 +97,7 @@ public class BAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.edapt.util.test.model.b.B
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.edapt.util.test.model.b.EdaptTestB
 	 * <em>B</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -105,7 +105,7 @@ public class BAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.edapt.util.test.model.b.B
+	 * @see org.eclipse.emf.ecp.view.edapt.util.test.model.b.EdaptTestB
 	 * @generated
 	 */
 	public Adapter createBAdapter() {
