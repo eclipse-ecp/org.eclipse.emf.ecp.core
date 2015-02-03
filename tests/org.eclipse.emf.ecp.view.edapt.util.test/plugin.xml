@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated circle -->
+      <package
+            uri="http://example.org/f"
+            class="org.eclipse.emf.ecp.view.edapt.util.test.model.f.FPackage"
+            genModel="model/circle.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated circle -->
+      <package
+            uri="http://example.org/e"
+            class="org.eclipse.emf.ecp.view.edapt.util.test.model.e.EEPackage"
+            genModel="model/circle.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated circle -->
+      <package
+            uri="http://example.org/d"
+            class="org.eclipse.emf.ecp.view.edapt.util.test.model.d.DPackage"
+            genModel="model/circle.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated circle -->
+      <package
+            uri="http://example.org/b"
+            class="org.eclipse.emf.ecp.view.edapt.util.test.model.b.BPackage"
+            genModel="model/circle.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated circle -->
+      <package
+            uri="http://example.org/a"
+            class="org.eclipse.emf.ecp.view.edapt.util.test.model.a.APackage"
+            genModel="model/circle.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated circle -->
+      <package
+            uri="http://example.org/c"
+            class="org.eclipse.emf.ecp.view.edapt.util.test.model.c.CPackage"
+            genModel="model/circle.genmodel"/>
+   </extension>
+
+</plugin>
