@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.view.spi.treemasterdetail.ui.swt;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.jface.viewers.TreeViewer;
 
 /**
  * @author Alexandra Buzila
@@ -21,6 +22,7 @@ import org.eclipse.emf.ecore.EObject;
  */
 public abstract class MasterDetailAction extends AbstractHandler {
 	private String label, imagePath;
+	private TreeViewer treeviewer;
 
 	/**
 	 * @param eObject the {@link EObject} on which to test if the action can be executed
@@ -59,5 +61,23 @@ public abstract class MasterDetailAction extends AbstractHandler {
 	 */
 	void setImagePath(String imagePath) {
 		this.imagePath = imagePath;
+	}
+
+	/**
+	 * Sets the treeviewer of the tree master detail renderer.
+	 * 
+	 * @param treeviewer the tree
+	 */
+	void setTreeViewer(TreeViewer treeviewer) {
+		this.treeviewer = treeviewer;
+	}
+
+	/**
+	 * Returns the treeviewer renderered by the tree master detail renderer.
+	 * 
+	 * @return the tree
+	 */
+	protected TreeViewer getTreeViewer() {
+		return treeviewer;
 	}
 }

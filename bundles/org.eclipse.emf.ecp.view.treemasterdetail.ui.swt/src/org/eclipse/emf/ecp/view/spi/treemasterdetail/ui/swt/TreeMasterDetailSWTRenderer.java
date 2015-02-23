@@ -681,6 +681,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 				final MasterDetailAction command = (MasterDetailAction) e.createExecutableExtension("command"); //$NON-NLS-1$
 				command.setLabel(label);
 				command.setImagePath(imagePath);
+				command.setTreeViewer(treeViewer);
 
 				commands.add(command);
 
