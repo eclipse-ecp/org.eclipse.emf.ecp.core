@@ -398,6 +398,11 @@ public class ViewEditorPart extends EditorPart implements
 
 			@Override
 			public void run() {
+				if (parent == null || parent.isDisposed()) {
+					final IWorkbenchPage page = instance.getSite().getPage();
+					page.closeEditor(instance, true);
+					return;
+				}
 				if (render != null) {
 					render.dispose();
 					render.getSWTControl().dispose();
