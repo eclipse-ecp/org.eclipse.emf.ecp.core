@@ -7,6 +7,12 @@
                 <message_argument value="1.2.1"/>
             </message_arguments>
         </filter>
+        <filter comment="There was no change that would require us to update the minor version.." id="929038356">
+            <message_arguments>
+                <message_argument value="1.5.1"/>
+                <message_argument value="org.eclipse.emf.ecp.view.model"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.custom.model.HardcodedTester">
         <filter comment="This is SPI" id="305422471">

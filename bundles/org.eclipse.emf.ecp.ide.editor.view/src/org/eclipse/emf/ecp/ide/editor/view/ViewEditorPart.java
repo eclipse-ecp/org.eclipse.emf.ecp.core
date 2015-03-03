@@ -271,11 +271,11 @@ public class ViewEditorPart extends EditorPart implements
 						Messages.ViewEditorPart_MigrationErrorText1 +
 							Messages.ViewEditorPart_MigrationErrorText2);
 					Activator
-					.getDefault()
-					.getLog()
-					.log(
-						new Status(IStatus.ERROR, Activator.PLUGIN_ID, Messages.ViewEditorPart_MigrationErrorTitle,
-							e));
+						.getDefault()
+						.getLog()
+						.log(
+							new Status(IStatus.ERROR, Activator.PLUGIN_ID, Messages.ViewEditorPart_MigrationErrorTitle,
+								e));
 				} catch (final InterruptedException e) {
 					MessageDialog.openError(
 						Display.getDefault().getActiveShell(), Messages.ViewEditorPart_MigrationErrorTitle,
@@ -393,6 +393,16 @@ public class ViewEditorPart extends EditorPart implements
 
 	private void showView() {
 		final VView view = getView();
+
+		if (XMLResource.class.isInstance(view.eResource())
+			&& !XMLResource.class.cast(view.eResource()).getEObjectToExtensionMap().isEmpty()) {
+			// we are showing a view which wasn't fully loaded
+			MessageDialog
+				.openWarning(
+					parent.getShell(),
+					Messages.ViewEditorPart_LoadedPartyTitle,
+					Messages.ViewEditorPart_LoadedPartyDescription);
+		}
 
 		try {
 			render = ECPSWTViewRenderer.INSTANCE.render(parent, view);

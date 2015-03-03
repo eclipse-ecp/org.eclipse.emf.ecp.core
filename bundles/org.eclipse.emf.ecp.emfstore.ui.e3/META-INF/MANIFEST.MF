@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ECP EMFStore E3
 Bundle-SymbolicName: org.eclipse.emf.ecp.emfstore.ui.e3;singleton:=true
-Bundle-Version: 1.5.0.qualifier
+Bundle-Version: 1.5.1.qualifier
 Bundle-Vendor: Eclipse Modeling Project
 Require-Bundle: org.eclipse.emf.ecp.core;bundle-version="[1.5.0,2.0.0)",
  org.eclipse.emf.ecp.emfstore.core;bundle-version="[1.5.0,2.0.0)",
@@ -31,8 +31,8 @@ Import-Package: org.eclipse.core.commands;version="0.0.0",
  org.eclipse.ui.handlers;version="0.0.0",
  org.eclipse.ui.plugin;version="0.0.0"
 Export-Package: org.eclipse.emf.ecp.emfstore.internal.ui.decorator;ver
- sion="1.5.0";x-internal:=true,org.eclipse.emf.ecp.emfstore.internal.u
- i.e3;version="1.5.0";x-internal:=true,org.eclipse.emf.ecp.emfstore.in
- ternal.ui.handler;version="1.5.0";x-internal:=true;uses:="org.eclipse
+ sion="1.5.1";x-internal:=true,org.eclipse.emf.ecp.emfstore.internal.u
+ i.e3;version="1.5.1";x-internal:=true,org.eclipse.emf.ecp.emfstore.in
+ ternal.ui.handler;version="1.5.1";x-internal:=true;uses:="org.eclipse
  .core.commands"
 Bundle-Activator: org.eclipse.emf.ecp.emfstore.internal.ui.e3.Activator

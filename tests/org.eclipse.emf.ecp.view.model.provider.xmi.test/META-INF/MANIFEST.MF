@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ECP XMI Provider Test
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.model.provider.xmi.test;singleton:=true
-Bundle-Version: 1.5.0.qualifier
+Bundle-Version: 1.5.1.qualifier
 Fragment-Host: org.eclipse.emf.ecp.view.model.provider.xmi;bundle-version="1.4.0"
 Bundle-ClassPath: .
 Require-Bundle: org.eclipse.core.runtime;bundle-version="3.8.0",
@@ -12,4 +12,4 @@ Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Vendor: Eclipse Modeling Project
 Export-Package: org.eclipse.emf.ecp.view.model.provider.xmi.test;versi
- on="1.5.0";x-internal:=true
+ on="1.5.1";x-internal:=true

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: E4 Util Fx
 Bundle-SymbolicName: org.eclipse.emf.ecp.util.e4.fx
-Bundle-Version: 1.5.0.qualifier
+Bundle-Version: 1.5.1.qualifier
 Bundle-Vendor: Eclipse Modeling Project
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
@@ -10,4 +10,4 @@ Require-Bundle: org.eclipse.e4.ui.workbench,
  org.eclipse.e4.ui.model.workbench,
  org.eclipse.e4.core.contexts,
  org.eclipse.emf.emfstore.client
-Export-Package: org.eclipse.emf.ecp.util.e4.fx;version="1.5.0"
+Export-Package: org.eclipse.emf.ecp.util.e4.fx;version="1.5.1"

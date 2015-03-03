@@ -2,15 +2,15 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.mappingdmr.model;singleton:=true
-Bundle-Version: 1.5.0.qualifier
+Bundle-Version: 1.5.1.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.eclipse.emf.ecp.view.spi.mappingdmr.model;version=
- "1.5.0",org.eclipse.emf.ecp.view.spi.mappingdmr.model.impl;version="1
- .5.0";x-internal:=true,org.eclipse.emf.ecp.view.spi.mappingdmr.model.
- util;version="1.5.0";x-friends:="org.eclipse.emf.ecp.view.mappingdmr.
+ "1.5.1",org.eclipse.emf.ecp.view.spi.mappingdmr.model.impl;version="1
+ .5.1";x-internal:=true,org.eclipse.emf.ecp.view.spi.mappingdmr.model.
+ util;version="1.5.1";x-friends:="org.eclipse.emf.ecp.view.mappingdmr.
  model.edit"
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
  org.eclipse.emf.ecore;bundle-version="[2.9.0,3.0.0)";visibility:=reexport,

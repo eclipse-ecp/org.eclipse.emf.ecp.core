@@ -2,13 +2,15 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: EMF Forms TreeMasterDetail Validation Test
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.treemasterdetail.validation.test;singleton:=true
-Bundle-Version: 1.5.0.qualifier
+Bundle-Version: 1.5.1.qualifier
 Fragment-Host: org.eclipse.emf.ecp.view.treemasterdetail.ui.swt;bundle-version="[1.5.0,2.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: Eclipse Modeling Project
 Bundle-Localization: plugin
 Require-Bundle: org.junit;bundle-version="[4.11.0,5.0.0)"
-Export-Package: org.eclipse.emf.ecp.view.treemasterdetail.validation.test;version="1.5.0";x-internal:=true,
- org.eclipse.emf.ecp.view.treemasterdetail.validation.test.TestTMD;version="1.5.0";x-internal:=true,
- org.eclipse.emf.ecp.view.treemasterdetail.validation.test.TestTMD.impl;version="1.5.0";x-internal:=true,
- org.eclipse.emf.ecp.view.treemasterdetail.validation.test.TestTMD.util;version="1.5.0";x-internal:=true
+Export-Package: org.eclipse.emf.ecp.view.treemasterdetail.validation.t
+ est;version="1.5.1";x-internal:=true,org.eclipse.emf.ecp.view.treemas
+ terdetail.validation.test.TestTMD;version="1.5.1";x-internal:=true,or
+ g.eclipse.emf.ecp.view.treemasterdetail.validation.test.TestTMD.impl;
+ version="1.5.1";x-internal:=true,org.eclipse.emf.ecp.view.treemasterd
+ etail.validation.test.TestTMD.util;version="1.5.1";x-internal:=true

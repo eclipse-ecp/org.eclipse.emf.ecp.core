@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: EMFForms SWT Util
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.util.swt
-Bundle-Version: 1.5.0.qualifier
+Bundle-Version: 1.5.1.qualifier
 Bundle-Vendor: Eclipse Modeling Project
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.eclipse.jface.resource;version="0.0.0",
@@ -11,5 +11,5 @@ Import-Package: org.eclipse.jface.resource;version="0.0.0",
 Service-Component: OSGI-INF/rcpImageRegistry.xml
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.emf.ecp.view.internal.util.swt;version="1.
- 5.0";x-internal:=true,org.eclipse.emf.ecp.view.spi.util.swt;version="
- 1.5.0"
+ 5.1";x-internal:=true,org.eclipse.emf.ecp.view.spi.util.swt;version="
+ 1.5.1"

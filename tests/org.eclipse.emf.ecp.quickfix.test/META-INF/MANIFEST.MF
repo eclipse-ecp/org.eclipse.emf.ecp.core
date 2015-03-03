@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Model Quick Fix Test
 Bundle-SymbolicName: org.eclipse.emf.ecp.quickfix.test
-Bundle-Version: 1.5.0.qualifier
+Bundle-Version: 1.5.1.qualifier
 Bundle-Vendor: Eclipse Modeling Project
 Fragment-Host: org.eclipse.emf.ecp.quickfix;bundle-version="1.5.0"
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
@@ -11,4 +11,4 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Import-Package: org.junit;version="[4.0.0,5.0.0)"
-Export-Package: org.eclipse.emf.ecp.ui.quickfix.test;version="1.5.0";x-internal:=true
+Export-Package: org.eclipse.emf.ecp.ui.quickfix.test;version="1.5.1";x-internal:=true
