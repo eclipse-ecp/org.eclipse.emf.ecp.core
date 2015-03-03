@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.emf.ecp.view.sdk.fx.feature"
       label="EMF Forms FX SDK Feature"
-      version="1.5.0.qualifier"
+      version="1.5.1.qualifier"
       provider-name="Eclipse Modeling Project">
 
    <description url="http://www.example.com/description">

@@ -19,6 +19,12 @@
                 <message_argument value="1.4.0"/>
             </message_arguments>
         </filter>
+        <filter comment="There was no change that would require us to update the minor version.." id="929038356">
+            <message_arguments>
+                <message_argument value="1.5.1"/>
+                <message_argument value="org.eclipse.emf.ecp.view.model.common"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/ecp/ui/view/swt/DefaultReferenceService.java" type="org.eclipse.emf.ecp.ui.view.swt.DefaultReferenceService">
         <filter comment="SPI break only" id="338792546">

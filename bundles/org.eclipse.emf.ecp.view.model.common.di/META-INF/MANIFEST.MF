@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Common View Model Classes for Dependency Injection
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.model.common.di;singleton:=true
-Bundle-Version: 1.5.0.qualifier
+Bundle-Version: 1.5.1.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: Eclipse Modeling Project
 Require-Bundle: org.eclipse.emf.ecp.view.model.common;bundle-version="[1.3.0,2.0.0)",
@@ -12,9 +12,9 @@ Require-Bundle: org.eclipse.emf.ecp.view.model.common;bundle-version="[1.3.0,2.0
  org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
  org.eclipse.e4.core.di;bundle-version="[1.4.0,2.0.0)"
 Export-Package: org.eclipse.emf.ecp.view.model.common.di.messages;vers
- ion="1.5.0";x-internal:=true,org.eclipse.emf.ecp.view.model.common.di
- .renderer;version="1.5.0";x-internal:=true,org.eclipse.emf.ecp.view.m
- odel.common.di.service;version="1.5.0";x-internal:=true,org.eclipse.e
- mf.ecp.view.model.common.di.service.impl;version="1.5.0";x-internal:=
- true,org.eclipse.emf.ecp.view.model.common.di.util;version="1.5.0";x-
+ ion="1.5.1";x-internal:=true,org.eclipse.emf.ecp.view.model.common.di
+ .renderer;version="1.5.1";x-internal:=true,org.eclipse.emf.ecp.view.m
+ odel.common.di.service;version="1.5.1";x-internal:=true,org.eclipse.e
+ mf.ecp.view.model.common.di.service.impl;version="1.5.1";x-internal:=
+ true,org.eclipse.emf.ecp.view.model.common.di.util;version="1.5.1";x-
  internal:=true

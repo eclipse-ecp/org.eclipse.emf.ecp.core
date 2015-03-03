@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.emf.ecp.view.label.model" version="2">
+    <resource path="META-INF/MANIFEST.MF">
+        <filter comment="There was no change that would require us to update the minor version.." id="929038356">
+            <message_arguments>
+                <message_argument value="1.5.1"/>
+                <message_argument value="org.eclipse.emf.ecp.view.model"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/ecp/view/spi/label/model/VLabel.java" type="org.eclipse.emf.ecp.view.spi.label.model.VLabel">
         <filter id="403804204">
             <message_arguments>

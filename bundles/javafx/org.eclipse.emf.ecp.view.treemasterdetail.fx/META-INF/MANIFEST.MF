@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: TreeMasterDetail FX
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.treemasterdetail.fx;singleton:=true
-Bundle-Version: 1.5.0.qualifier
+Bundle-Version: 1.5.1.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.view.treemasterdetail.fx.Activator
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: javafx.beans.property;version="2.2.0",
@@ -21,4 +21,4 @@ Require-Bundle: org.eclipse.emf.ecp.view.treemasterdetail.model;bundle-version="
  org.eclipse.emf.edit;bundle-version="2.9.0",
  org.eclipse.emf.ecp.util.fx;bundle-version="[1.3.0,2.0.0]",
  org.eclipse.emf.ecp.view.model.common;bundle-version="[1.3.0,2.0.0)"
-Export-Package: org.eclipse.emf.ecp.view.treemasterdetail.fx;version="1.5.0"
+Export-Package: org.eclipse.emf.ecp.view.treemasterdetail.fx;version="1.5.1"

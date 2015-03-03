@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.emf.ecp.graphiti.feature"
       label="ECP Graphiti Feature"
-      version="1.5.0.qualifier"
+      version="1.5.1.qualifier"
       provider-name="Eclipse Modeling Project"
       license-feature="org.eclipse.emf.ecp.license.feature"
       license-feature-version="1.2.1.qualifier">
