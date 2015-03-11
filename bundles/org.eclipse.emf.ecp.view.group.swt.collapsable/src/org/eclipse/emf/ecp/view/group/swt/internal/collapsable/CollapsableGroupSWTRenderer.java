@@ -46,7 +46,7 @@ public class CollapsableGroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 	@Override
 	protected Control renderControl(SWTGridCell gridCell, final Composite parent) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
-		final ExpandBar bar = new ExpandBar(parent, SWT.V_SCROLL);
+		final ExpandBar bar = new ExpandBar(parent, SWT.NONE);
 		bar.setBackground(parent.getBackground());
 
 		// First item
@@ -74,6 +74,7 @@ public class CollapsableGroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 				updateLayoutData(layoutData, item0.getHeaderHeight() + 2 * MARGIN);
 				parent.layout(true, true);
 				getVElement().setCollapsed(true);
+				postCollapsed();
 			}
 
 			@Override
@@ -84,6 +85,7 @@ public class CollapsableGroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 					+ 2 * MARGIN);
 				parent.layout(true, true);
 				getVElement().setCollapsed(false);
+				postExpanded();
 			}
 
 			// XXX relayout upon expand/collapse will only work properly when the grid data is adjusted
@@ -98,6 +100,20 @@ public class CollapsableGroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 		});
 		item0.setExpanded(!getVElement().isCollapsed());
 		return bar;
+	}
+
+	/**
+	 * This method gets called after the group has been expanded. Default implementation does nothing.
+	 */
+	protected void postExpanded() {
+		// no op
+	}
+
+	/**
+	 * This method gets called after the group has been collapsed. Default implementation does nothing.
+	 */
+	protected void postCollapsed() {
+		// no op
 	}
 
 	private int computeHeight(Composite composite) {
