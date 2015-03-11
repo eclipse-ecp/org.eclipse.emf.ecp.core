@@ -15,6 +15,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.Stack;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.notify.Notification;
@@ -550,24 +551,32 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	 * @param <T> the type to iterate over
 	 */
 	private abstract class ExistingIteratorIterator<T> implements Iterator<T> {
-		private Iterator<T> currentSubIterator;
-		private final Iterator<VDomainModelReference> referencesIterator = getDomainModelReferences().iterator();
+
+		private final Stack<Iterator<T>> subIterators = new Stack<Iterator<T>>();
+
+		public ExistingIteratorIterator() {
+			for (int i = getDomainModelReferences().size() - 1; i >= 0; i--) {
+				final VDomainModelReference vDomainModelReference = getDomainModelReferences().get(i);
+				final Iterator<T> subIterator = getSubIterator(vDomainModelReference);
+				if (subIterator.hasNext()) {
+					subIterators.push(subIterator);
+				}
+			}
+
+		}
 
 		@Override
 		public boolean hasNext() {
-			return referencesIterator.hasNext() || currentSubIterator != null && currentSubIterator.hasNext();
+			return !subIterators.isEmpty() && subIterators.peek().hasNext();
 		}
 
 		@Override
 		public T next() {
-			if (currentSubIterator == null) {
-				currentSubIterator = getSubIterator(referencesIterator.next());
+			final T next = subIterators.peek().next();
+			if (!subIterators.peek().hasNext()) {
+				subIterators.pop();
 			}
-			final T result = currentSubIterator.next();
-			if (!currentSubIterator.hasNext()) {
-				currentSubIterator = null;
-			}
-			return result;
+			return next;
 		}
 
 		@Override
