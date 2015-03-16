@@ -55,18 +55,37 @@ public final class LocalizationServiceHelper {
 		return result.getLanguage();
 	}
 
-	private String getString(Bundle bundle, String key) {
-		return getString(bundle, getLocale(), key);
-	}
-
 	private String getString(Bundle bundle, String localeLanguage, String key) {
 		final ServiceReference<BundleLocalization> serviceReference = bundleContext
 			.getServiceReference(BundleLocalization.class);
 		final BundleLocalization bundleLocalization = bundleContext.getService(serviceReference);
 		final ResourceBundle resourceBundle = bundleLocalization.getLocalization(bundle, localeLanguage);
+		if (resourceBundle == null) {
+			// TODO log -> move report service in common
+			return key;
+		}
+		if (!resourceBundle.containsKey(key)) {
+			// TODO log -> move report service in common
+			return key;
+		}
 		final String result = resourceBundle.getString(key);
 		bundleContext.ungetService(serviceReference);
 		return result;
+	}
+
+	private String innerGetString(Bundle bundle, String key) {
+		return getString(bundle, getLocale(), key);
+	}
+
+	/**
+	 * Return the String for the provided key.
+	 *
+	 * @param bundle The bundle which provides the translated strings
+	 * @param key The key of the string
+	 * @return The translated key
+	 */
+	public static String getString(Bundle bundle, String key) {
+		return getInstance().innerGetString(bundle, key);
 	}
 
 	/**
@@ -77,6 +96,6 @@ public final class LocalizationServiceHelper {
 	 * @return The translated key
 	 */
 	public static String getString(Class<?> clazz, String key) {
-		return getInstance().getString(FrameworkUtil.getBundle(clazz), key);
+		return getString(FrameworkUtil.getBundle(clazz), key);
 	}
 }

@@ -18,6 +18,7 @@ import java.util.Map;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -28,9 +29,11 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecp.internal.view.model.provider.xmi.Activator;
+import org.eclipse.emf.ecp.view.spi.model.LocalizationAdapter;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil;
+import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 
 /**
  * Manages the view models provided by the file extension point.
@@ -65,11 +68,8 @@ public final class ViewModelFileExtensionsManager {
 		return instance;
 	}
 
-	/**
-	 *
-	 */
 	private void init() {
-		final Map<URI, Map<String, String>> extensionURIS = getExtensionURIS();
+		final Map<URI, ExtensionDescription> extensionURIS = getExtensionURIS();
 		for (final URI uri : extensionURIS.keySet()) {
 			final Resource resource = loadResource(uri);
 			final EObject eObject = resource.getContents().get(0);
@@ -78,14 +78,24 @@ public final class ViewModelFileExtensionsManager {
 				continue;
 			}
 			final VView view = (VView) eObject;
+
 			if (view.getRootEClass() == null) {
 				// TODO:log
 				continue;
 			}
+			final ExtensionDescription extensionDescription = extensionURIS.get(uri);
+			view.eAdapters().add(new LocalizationAdapter() {
+
+				@Override
+				public String localize(String key) {
+					return LocalizationServiceHelper.getString(Platform.getBundle(extensionDescription.getBundleId()),
+						key);
+				}
+			});
 			if (!map.containsKey(view.getRootEClass())) {
 				map.put(view.getRootEClass(), new LinkedHashMap<VView, Map<String, String>>());
 			}
-			map.get(view.getRootEClass()).put(view, extensionURIS.get(uri));
+			map.get(view.getRootEClass()).put(view, extensionDescription.getKeyValuPairs());
 		}
 
 	}
@@ -131,12 +141,13 @@ public final class ViewModelFileExtensionsManager {
 	 *
 	 * @return a list of uris of all xmi files registered
 	 */
-	public static Map<URI, Map<String, String>> getExtensionURIS() {
-		final Map<URI, Map<String, String>> ret = new LinkedHashMap<URI, Map<String, String>>();
+	public static Map<URI, ExtensionDescription> getExtensionURIS() {
+		final Map<URI, ExtensionDescription> ret = new LinkedHashMap<URI, ExtensionDescription>();
 		final IConfigurationElement[] files = Platform.getExtensionRegistry().getConfigurationElementsFor(
 			FILE_EXTENSION);
 		final URIConverter converter = new ResourceSetImpl().getURIConverter();
 		for (final IConfigurationElement file : files) {
+			final String bundleId = file.getContributor().getName();
 			final String filePath = file.getAttribute(FILEPATH_ATTRIBUTE);
 
 			final IConfigurationElement[] children = file.getChildren(FILTER_ELEMENT);
@@ -152,11 +163,11 @@ public final class ViewModelFileExtensionsManager {
 			final String path = bundleName + '/' + filePath;
 			uri = URI.createPlatformPluginURI(path, false);
 			if (converter.exists(uri, null)) {
-				ret.put(uri, keyValuePairs);
+				ret.put(uri, new ExtensionDescription(keyValuePairs, bundleId));
 			} else {
 				uri = URI.createPlatformResourceURI(filePath, false);
 				if (converter.exists(uri, null)) {
-					ret.put(uri, keyValuePairs);
+					ret.put(uri, new ExtensionDescription(keyValuePairs, bundleId));
 				}
 			}
 
@@ -211,7 +222,45 @@ public final class ViewModelFileExtensionsManager {
 			}
 		}
 
-		return EcoreUtil.copy(bestFitting);
+		final Adapter adapter = bestFitting.eAdapters().get(0);
+		final VView copiedView = EcoreUtil.copy(bestFitting);
+		copiedView.eAdapters().add(adapter);
+		return copiedView;
+	}
+
+	/**
+	 *
+	 * Inner class to hold the relevant data of the extension point.
+	 *
+	 * @author Eugen Neufeld
+	 *
+	 */
+	static final class ExtensionDescription {
+		private final Map<String, String> keyValuPairs;
+		private final String bundleId;
+
+		private ExtensionDescription(Map<String, String> keyValuPairs, String bundleId) {
+			this.keyValuPairs = keyValuPairs;
+			this.bundleId = bundleId;
+		}
+
+		/**
+		 * Return the KeyValuePairs defined in the extension point.
+		 *
+		 * @return The KeyValuePair Map
+		 */
+		Map<String, String> getKeyValuPairs() {
+			return keyValuPairs;
+		}
+
+		/**
+		 * The Bundle Id of the bundle contributing the extension point.
+		 *
+		 * @return The BundleId
+		 */
+		String getBundleId() {
+			return bundleId;
+		}
 	}
 
 }

@@ -12,6 +12,7 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.model.provider.xmi.test;
 
+import org.eclipse.emf.ecp.view.model.provider.xmi.ViewModelFileExtensionsManager_PTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;

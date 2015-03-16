@@ -9,7 +9,7 @@
  * Contributors:
  * Jonas - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.model.provider.xmi.test;
+package org.eclipse.emf.ecp.view.model.provider.xmi;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -21,7 +21,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecp.view.model.provider.xmi.ViewModelFileExtensionsManager;
+import org.eclipse.emf.ecp.view.model.provider.xmi.ViewModelFileExtensionsManager.ExtensionDescription;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
@@ -50,7 +50,7 @@ public class ViewModelFileExtensionsManager_PTest {
 
 	@Test
 	public void testGetExtensionURIs() {
-		final Map<URI, Map<String, String>> extensionURIS = ViewModelFileExtensionsManager.getExtensionURIS();
+		final Map<URI, ExtensionDescription> extensionURIS = ViewModelFileExtensionsManager.getExtensionURIS();
 		assertEquals(1, extensionURIS.size());
 		final URI uri = extensionURIS.keySet().iterator().next();
 		assertEquals(FILE_URI, uri);

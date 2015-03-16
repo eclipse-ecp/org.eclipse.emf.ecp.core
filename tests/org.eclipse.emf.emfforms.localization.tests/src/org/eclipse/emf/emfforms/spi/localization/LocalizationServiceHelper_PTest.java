@@ -48,6 +48,18 @@ public class LocalizationServiceHelper_PTest {
 	 * .
 	 */
 	@Test
+	public void testGetUndefinedStringWithoutLocaleProvider() {
+		final String myKey = "MyKey"; //$NON-NLS-1$
+		final String string = LocalizationServiceHelper.getString(getClass(), myKey);
+		assertEquals(myKey, string);
+	}
+
+	/**
+	 * Test method for
+	 * {@link org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper#getString(java.lang.Class, java.lang.String)}
+	 * .
+	 */
+	@Test
 	public void testGetStringWithLocaleProvider() {
 		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
 		final Locale locale = new Locale("test"); //$NON-NLS-1$

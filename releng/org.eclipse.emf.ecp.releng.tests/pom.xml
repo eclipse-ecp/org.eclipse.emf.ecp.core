@@ -82,6 +82,7 @@
 		
 		<!-- Localization Bundle -->
 		<module>../../tests/org.eclipse.emf.emfforms.localization.tests</module>
+		<module>../../tests/org.eclipse.emfforms.view.model.localization.tests</module>
 	</modules>
 	
 	<build>

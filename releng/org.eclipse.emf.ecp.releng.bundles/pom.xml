@@ -254,6 +254,7 @@
 		
 		<!-- Localization Services -->
 		<module>../../bundles/org.eclipse.emf.emfforms.localization</module>
+		<module>../../bundles/org.eclipse.emfforms.view.model.localization</module>
 		
 	</modules>
 
