@@ -252,6 +252,8 @@
 		<module>../../bundles/org.eclipse.emf.ecp.changebroker</module>
 		<module>../../bundles/org.eclipse.emf.ecp.changebroker.emfstore</module>
 		
+		<!-- Localization Services -->
+		<module>../../bundles/org.eclipse.emf.emfforms.localization</module>
 		
 	</modules>
 

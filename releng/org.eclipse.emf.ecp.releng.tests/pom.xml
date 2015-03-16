@@ -80,6 +80,8 @@
 		<module>../../tests/org.eclipse.emf.ecp.view.edapt.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.edapt.util.test</module>
 		
+		<!-- Localization Bundle -->
+		<module>../../tests/org.eclipse.emf.emfforms.localization.tests</module>
 	</modules>
 	
 	<build>

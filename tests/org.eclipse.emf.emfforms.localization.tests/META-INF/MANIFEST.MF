@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: EMF Forms Localization Tests
+Bundle-SymbolicName: org.eclipse.emf.emfforms.localization.tests
+Bundle-Version: 1.5.0.qualifier
+Fragment-Host: org.eclipse.emf.emfforms.localization;bundle-version="[1.5.0,2.0.0)"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: org.junit;bundle-version="4.11.0",
+ org.mockito.mockito-all;bundle-version="1.9.5"
+Export-Package: org.eclipse.emf.emfforms.internal.localization.tests;version="1.5.0";x-internal:=true,
+ org.eclipse.emf.emfforms.spi.localization;version="1.5.0"
