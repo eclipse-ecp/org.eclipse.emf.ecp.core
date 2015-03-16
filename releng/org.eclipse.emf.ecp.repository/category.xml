@@ -1,147 +1,147 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature id="org.eclipse.emf.ecp.feature.source" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.feature.source" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.category"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.cdo.feature.source" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.cdo.feature.source" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.category"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.emfstore.feature.source" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.emfstore.feature.source" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.category"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.workspace.feature.source" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.workspace.feature.source" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.category"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.e3.feature.source" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.e3.feature.source" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.category"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.sdk.feature" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.sdk.feature" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.sdk"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.view.custom.feature.source" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.view.custom.feature.source" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.view"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.viewmodel.feature.source" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.viewmodel.feature.source" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.view"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.view.label.feature.source" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.view.label.feature.source" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.view"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.view.rule.feature.source" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.view.rule.feature.source" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.view"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.view.group.feature.source" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.view.group.feature.source" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.view"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.view.validation.feature.source" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.view.validation.feature.source" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.view.horizontal.feature.source" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.view.horizontal.feature.source" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.view"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.view.vertical.feature.source" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.view.vertical.feature.source" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.view"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.view.custom.feature.source" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.view.custom.feature.source" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.view"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.view.group.feature.source" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.view.group.feature.source" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.view"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.view.label.feature.source" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.view.label.feature.source" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.view"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.view.rule.feature.source" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.view.rule.feature.source" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.view"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.view.table.feature.source" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.view.table.feature.source" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.view"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.view.template.feature.source" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.view.template.feature.source" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.view.categorization.feature.source" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.view.categorization.feature.source" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.view"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.view.model.editor.feature.source" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.view.model.editor.feature.source" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.view.template.helper.feature.source" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.view.template.helper.feature.source" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.view.unset.feature.source" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.view.unset.feature.source" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.ecore.feature.source" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.ecore.feature.source" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.view.treemasterdetail.feature.source" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.view.treemasterdetail.feature.source" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.view"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.feature.source" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.feature.source" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.category"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.emfforms.runtime.feature" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.emfforms.runtime.feature" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.emfforms.sdk.feature" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.emfforms.sdk.feature" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.sdk"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.demo.e3.feature.source" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.demo.e3.feature.source" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.category"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.view.model.controls.feature.source" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.view.model.controls.feature.source" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.diffmerge.feature.source" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.diffmerge.feature.source" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.category"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.validation.view.feature.source" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.validation.view.feature.source" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.category"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.emfforms.idetooling.feature.source" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.emfforms.idetooling.feature.source" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.makeithappen.feature.source" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.makeithappen.feature.source" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.view.mappingdmr.feature.source" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.view.mappingdmr.feature.source" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.view.stack.feature.source" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.view.stack.feature.source" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.view"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.view.di.feature.source" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.view.di.feature.source" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.view.compoundcontrol.feature.source" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.view.compoundcontrol.feature.source" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.view"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.view.validation.bean.feature.source" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.view.validation.bean.feature.source" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.view.section.feature.source" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.view.section.feature.source" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.view.viewproxy.feature.source" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.view.viewproxy.feature.source" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.view"/>
    </feature>
-   <feature url="features/org.eclipse.emf.ecp.view.keyattributedmr.feature_1.5.1.qualifier.jar" id="org.eclipse.emf.ecp.view.keyattributedmr.feature.source" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.view.keyattributedmr.feature.source" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
-   <feature url="features/org.eclipse.emf.ecp.view.indexdmr.feature_1.5.1.qualifier.jar" id="org.eclipse.emf.ecp.view.indexdmr.feature.source" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.view.indexdmr.feature.source" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
-   <feature url="features/org.eclipse.emf.ecp.view.validation.initial.feature_1.5.1.qualifier.jar" id="org.eclipse.emf.ecp.view.validation.initial.feature.source" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.view.validation.initial.feature.source" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
-   <feature url="features/org.eclipse.emf.ecp.view.edapt.feature_1.5.1.qualifier.jar" id="org.eclipse.emf.ecp.view.edapt.feature.source" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.view.edapt.feature.source" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
-   <feature id="org.eclipse.emf.ecp.view.table.celleditor.rcp.feature.source" version="1.5.1.qualifier">
+   <feature id="org.eclipse.emf.ecp.view.table.celleditor.rcp.feature.source" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
-   <bundle id="org.eclipse.emf.ecp.view.group.swt.collapsible.pgroup" version="1.5.1.qualifier">
+   <bundle id="org.eclipse.emf.ecp.view.group.swt.collapsible.pgroup" version="1.6.0.qualifier">
       <category name="org.eclipse.emf.ecp.view"/>
    </bundle>
    <category-def name="org.eclipse.emf.ecp.sdk" label="All SDKs  (install one of these)">
