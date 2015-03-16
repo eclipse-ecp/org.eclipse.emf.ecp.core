@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Projects
 Bundle-SymbolicName: org.eclipse.emf.emfstore.fx.projects;singleton:=true
-Bundle-Version: 1.5.1.qualifier
+Bundle-Version: 1.6.0.qualifier
 Bundle-Activator: org.eclipse.emf.emfstore.fx.internal.projects.Activator
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: javafx.beans.property;version="2.2.0",
@@ -27,4 +27,4 @@ Require-Bundle: org.eclipse.emf.emfstore.client;bundle-version="[1.3.0,2.0.0]",
  org.eclipse.emf.ecp.util.fx;bundle-version="[1.3.0,2.0.0]",
  org.eclipse.e4.ui.workbench,
  org.eclipse.emf.ecp.util.e4.fx;bundle-version="[1.3.0,2.0.0]"
-Export-Package: org.eclipse.emf.emfstore.fx.internal.projects;version="1.5.1";x-internal:="true"
+Export-Package: org.eclipse.emf.emfstore.fx.internal.projects;version="1.6.0";x-internal:="true"

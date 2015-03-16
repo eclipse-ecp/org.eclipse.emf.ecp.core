@@ -2,19 +2,19 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.core.swt.tests;singleton:=true
-Bundle-Version: 1.5.1.qualifier
+Bundle-Version: 1.6.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Fragment-Host: org.eclipse.emf.ecp.view.core.swt;bundle-version="1.4.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.eclipse.emf.ecp.view.core.swt.test.model;version="
- 1.5.1";x-internal:=true,org.eclipse.emf.ecp.view.core.swt.test.model.
- impl;version="1.5.1";x-internal:=true,org.eclipse.emf.ecp.view.core.s
- wt.test.model.util;version="1.5.1";x-internal:=true,org.eclipse.emf.e
- cp.view.core.swt.tests;version="1.5.1";x-internal:=true,org.eclipse.e
- mf.ecp.view.internal.core.swt.renderer;version="1.5.1";x-internal:=tr
- ue,org.eclipse.emf.ecp.view.spi.core.swt.renderer;version="1.5.1"
+ 1.6.0";x-internal:=true,org.eclipse.emf.ecp.view.core.swt.test.model.
+ impl;version="1.6.0";x-internal:=true,org.eclipse.emf.ecp.view.core.s
+ wt.test.model.util;version="1.6.0";x-internal:=true,org.eclipse.emf.e
+ cp.view.core.swt.tests;version="1.6.0";x-internal:=true,org.eclipse.e
+ mf.ecp.view.internal.core.swt.renderer;version="1.6.0";x-internal:=tr
+ ue,org.eclipse.emf.ecp.view.spi.core.swt.renderer;version="1.6.0"
 Require-Bundle: org.junit;bundle-version="[4.11.0,5.0.0)",
  org.eclipse.emf.ecp.view.test.common.swt;bundle-version="[1.5.0,2.0.0)",
  org.eclipse.emf.ecp.ui.view.swt;bundle-version="[1.5.0,2.0.0)",

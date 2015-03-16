@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="ECP e4 FX Demo" uid="org.eclipse.emf.ecp.application.e4.fx.product" id="org.eclipse.emf.ecp.application.e4.fx.product" application="org.eclipse.fx.ui.workbench.fx.application" version="1.3.0" useFeatures="true" includeLaunchers="false">
+<product name="ECP e4 FX Demo" uid="org.eclipse.emf.ecp.application.e4.fx.product" id="org.eclipse.emf.ecp.application.e4.fx.product" application="org.eclipse.fx.ui.workbench.fx.application" version="1.5.1" useFeatures="true" includeLaunchers="false">
 
    <configIni use="default">
    </configIni>
 
    <launcherArgs>
-      <programArgs>-nosplash</programArgs>
-      <vmArgs>-Dosgi.framework.extensions=org.eclipse.fx.osgi</vmArgs>
+      <programArgs>-nosplash
+      </programArgs>
+      <vmArgs>-Dosgi.framework.extensions=org.eclipse.fx.osgi
+      </vmArgs>
    </launcherArgs>
 
    <windowImages/>
@@ -17,8 +19,8 @@
    </plugins>
 
    <features>
-      <feature id="org.eclipse.emf.ecp.application.e4.fx.feature" version="1.5.0.qualifier"/>
-      <feature id="org.eclipse.emf.ecp.view.sdk.fx.feature" version="1.5.0.qualifier"/>
+      <feature id="org.eclipse.emf.ecp.application.e4.fx.feature" version="1.6.0.qualifier"/>
+      <feature id="org.eclipse.emf.ecp.view.sdk.fx.feature" version="1.6.0.qualifier"/>
    </features>
 
    <configurations>

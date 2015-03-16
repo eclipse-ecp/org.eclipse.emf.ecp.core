@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.stack.ui.swt;singleton:=true
-Bundle-Version: 1.5.1.qualifier
+Bundle-Version: 1.6.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Localization: plugin
 Bundle-Vendor: %providerName
@@ -15,6 +15,7 @@ Require-Bundle: org.eclipse.emf.ecp.view.stack.model;bundle-version="[1.5.0,2.0.
 Import-Package: org.eclipse.swt;version="0.0.0",
  org.eclipse.swt.custom;version="0.0.0",
  org.eclipse.swt.widgets;version="0.0.0"
-Export-Package: org.eclipse.emf.ecp.view.internal.stack.ui.swt;version="1.5.1";x-internal:=true,
- org.eclipse.emf.ecp.view.spi.stack.ui.swt;version="1.5.1"
+Export-Package: org.eclipse.emf.ecp.view.internal.stack.ui.swt;version
+ ="1.6.0";x-internal:=true,org.eclipse.emf.ecp.view.spi.stack.ui.swt;v
+ ersion="1.6.0"
 Bundle-Activator: org.eclipse.emf.ecp.view.internal.stack.ui.swt.Activator

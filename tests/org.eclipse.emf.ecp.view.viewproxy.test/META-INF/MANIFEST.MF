@@ -2,11 +2,11 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ViewProxy Tests
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.viewproxy.tests;singleton:=true
-Bundle-Version: 1.5.1.qualifier
+Bundle-Version: 1.6.0.qualifier
 Fragment-Host: org.eclipse.emf.ecp.view.viewproxy.model;bundle-version="[1.5.0,2.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: org.junit;bundle-version="[4.11.0,5.0.0)",
  org.eclipse.emf.emfstore.examplemodel;bundle-version="[1.2.0,2.0.0)"
 Export-Package: org.eclipse.emf.ecp.view.internal.viewproxy.resolver;v
- ersion="1.5.1",org.eclipse.emf.ecp.view.viewproxy.tests;version="1.5.
- 1";x-internal:=true
+ ersion="1.6.0",org.eclipse.emf.ecp.view.viewproxy.tests;version="1.6.
+ 0";x-internal:=true

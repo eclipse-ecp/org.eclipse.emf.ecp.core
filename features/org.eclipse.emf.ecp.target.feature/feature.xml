@@ -2,10 +2,10 @@
 <feature
       id="org.eclipse.emf.ecp.target.feature"
       label="ECP Target Feature"
-      version="1.5.1.qualifier"
+      version="1.6.0.qualifier"
       provider-name="Eclipse Modeling Project"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.5.1.qualifier">
+      license-feature-version="1.6.0.qualifier">
 
    <description>
       The target platform feature for the EMF Client Platform, for developer use only.

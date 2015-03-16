@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: EMF Forms BeanValidation
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.validation.bean;singleton:=true
-Bundle-Version: 1.5.1.qualifier
+Bundle-Version: 1.6.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
@@ -13,6 +13,6 @@ Import-Package: javax.validation,
  javax.validation.bootstrap,
  org.apache.commons.logging
 Export-Package: org.eclipse.emf.ecp.view.internal.validation.bean;vers
- ion="1.5.1";x-internal:=true,org.eclipse.emf.ecp.view.validation.bean
- ;version="1.5.1"
+ ion="1.6.0";x-internal:=true,org.eclipse.emf.ecp.view.validation.bean
+ ;version="1.6.0"
 Bundle-Activator: org.eclipse.emf.ecp.view.internal.validation.bean.Activator
