@@ -16,7 +16,6 @@ import java.util.Collection;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.group.model.VGroup;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
@@ -37,6 +36,7 @@ import org.eclipse.swt.widgets.Group;
 public class GroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 	private static final String CONTROL_GROUP = "org_eclipse_emf_ecp_ui_control_group"; //$NON-NLS-1$
 	private final EMFDataBindingContext dbc;
+
 	/**
 	 * Default constructor.
 	 */
@@ -52,6 +52,7 @@ public class GroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 	 */
 	protected GroupSWTRenderer(SWTRendererFactory factory) {
 		super(factory);
+		dbc = new EMFDataBindingContext();
 	}
 
 	/**
