@@ -553,7 +553,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		final TableViewerColumn column = TableViewerColumnBuilder.create()
 			.setMoveable(false)
 			.setText(columnName)
-			.setWidth(columnWidth)
+			.setData("width", columnWidth) //$NON-NLS-1$
 			.build(tableViewer);
 
 		if (imagePath != null && !imagePath.isEmpty()) {
