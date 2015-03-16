@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
-import org.eclipse.emf.ecp.edit.internal.swt.reference.ActionMessages;
+import org.eclipse.emf.ecp.edit.internal.swt.reference.ReferenceMessageKeys;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.edit.spi.swt.actions.ECPSWTAction;
 import org.eclipse.emf.edit.command.RemoveCommand;
@@ -28,6 +28,7 @@ import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 
@@ -54,7 +55,8 @@ public class DeleteReferenceAction extends ECPSWTAction {
 		// TODO remove PlatformUI
 
 		setImageDescriptor(Activator.getImageDescriptor("icons/delete.png")); //$NON-NLS-1$
-		setToolTipText(ActionMessages.DeleteReferenceAction_DeleteReference);
+		setToolTipText(LocalizationServiceHelper.getString(DeleteReferenceAction.class,
+			ReferenceMessageKeys.DeleteReferenceAction_DeleteReference));
 	}
 
 	@Override
@@ -99,14 +101,25 @@ public class DeleteReferenceAction extends ECPSWTAction {
 		final AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(adapterFactory);
 		// AdapterFactoryLabelProvider adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(adapterFactory);
 		final String modelElementName = adapterFactoryItemDelegator.getText(toBeDeleted);
-		question = ActionMessages.DeleteReferenceAction_DeleteModelQuestion + modelElementName
-			+ ActionMessages.DeleteReferenceAction_Questionmark;
+		question = LocalizationServiceHelper.getString(DeleteReferenceAction.class,
+			ReferenceMessageKeys.DeleteReferenceAction_DeleteModelQuestion)
+			+ modelElementName
+			+ LocalizationServiceHelper.getString(DeleteReferenceAction.class,
+				ReferenceMessageKeys.DeleteReferenceAction_Questionmark);
 		// } else {
 		// question = "Do you really want to delete these " + toBeDeleted.size() + " model elements?";
 		// }
-		final MessageDialog dialog = new MessageDialog(null, ActionMessages.DeleteReferenceAction_Confirmation, null,
-			question, MessageDialog.QUESTION, new String[] { ActionMessages.DeleteReferenceAction_Yes,
-				ActionMessages.DeleteReferenceAction_No }, 0);
+		final MessageDialog dialog = new MessageDialog(
+			null,
+			LocalizationServiceHelper.getString(DeleteReferenceAction.class,
+				ReferenceMessageKeys.DeleteReferenceAction_Confirmation),
+			null,
+			question,
+			MessageDialog.QUESTION,
+			new String[] {
+				LocalizationServiceHelper.getString(DeleteReferenceAction.class, ReferenceMessageKeys.DeleteReferenceAction_Yes),
+				LocalizationServiceHelper.getString(DeleteReferenceAction.class, ReferenceMessageKeys.DeleteReferenceAction_No) },
+			0);
 
 		boolean confirm = false;
 		if (dialog.open() == Window.OK) {

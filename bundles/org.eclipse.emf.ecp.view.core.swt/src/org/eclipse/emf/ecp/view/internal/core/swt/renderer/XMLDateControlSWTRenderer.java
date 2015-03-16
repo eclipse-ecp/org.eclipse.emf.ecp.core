@@ -26,17 +26,18 @@ import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecp.edit.internal.swt.controls.ControlMessages;
 import org.eclipse.emf.ecp.edit.internal.swt.util.DateUtil;
 import org.eclipse.emf.ecp.edit.spi.ViewLocaleService;
 import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
+import org.eclipse.emf.ecp.view.internal.core.swt.MessageKeys;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.renderer.TextControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.edit.command.SetCommand;
+import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -230,8 +231,9 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 			final Object result = modelValue.getValue();
 
 			final MessageDialog messageDialog = new MessageDialog(text.getShell(),
-				ControlMessages.XmlDateControlText_InvalidNumber, null,
-				ControlMessages.XmlDateControlText_NumberInvalidValueWillBeUnset, MessageDialog.ERROR,
+				LocalizationServiceHelper.getString(getClass(), MessageKeys.XmlDateControlText_InvalidNumber), null,
+				LocalizationServiceHelper.getString(getClass(),
+					MessageKeys.XmlDateControlText_NumberInvalidValueWillBeUnset), MessageDialog.ERROR,
 				new String[] { JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
 
 			new ECPDialogExecutor(messageDialog) {
@@ -366,7 +368,8 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 	 */
 	@Override
 	protected String getUnsetText() {
-		return RendererMessages.XmlDateControlText_NoDateSetClickToSetDate;
+		return LocalizationServiceHelper
+			.getString(getClass(), MessageKeys.XmlDateControlText_NoDateSetClickToSetDate);
 	}
 
 	/**

@@ -26,6 +26,7 @@ import org.eclipse.emf.ecp.edit.spi.ViewLocaleService;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor;
 import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.CellEditorProperties;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
@@ -103,7 +104,8 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 	@Override
 	public String getFormatedString(Object value) {
 		if (value == null) {
-			setErrorMessage(TableMessages.NumberCellEditor_ValueIsNull);
+			setErrorMessage(LocalizationServiceHelper.getString(getClass(),
+				TableMessageKeys.NumberCellEditor_ValueIsNull));
 			return ""; //$NON-NLS-1$
 		}
 
@@ -223,8 +225,10 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 				final Object result = null;
 
 				final MessageDialog messageDialog = new MessageDialog(getText().getShell(),
-					TableMessages.NumberCellEditor_InvalidNumber, null,
-					TableMessages.NumberCellEditor_NumberYouEnteredIsInvalid, MessageDialog.ERROR,
+					LocalizationServiceHelper.getString(getClass(), TableMessageKeys.NumberCellEditor_InvalidNumber),
+					null,
+					LocalizationServiceHelper.getString(getClass(),
+						TableMessageKeys.NumberCellEditor_NumberYouEnteredIsInvalid), MessageDialog.ERROR,
 					new String[] { JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
 
 				new ECPDialogExecutor(messageDialog) {
@@ -294,7 +298,7 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getImage(java.lang.Object)
 	 */
 	@Override

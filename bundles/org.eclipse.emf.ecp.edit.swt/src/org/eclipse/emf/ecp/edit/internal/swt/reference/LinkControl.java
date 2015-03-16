@@ -20,7 +20,6 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.SWTImageHelper;
-import org.eclipse.emf.ecp.edit.internal.swt.controls.ControlMessages;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.SingleControl;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.edit.spi.swt.reference.AddReferenceAction;
@@ -30,6 +29,7 @@ import org.eclipse.emf.ecp.edit.spi.util.ECPModelElementChangeListener;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -100,7 +100,7 @@ public class LinkControl extends SingleControl {
 		mainComposite.setLayout(stackLayout);
 
 		unsetLabel = new Label(mainComposite, SWT.NONE);
-		unsetLabel.setText(ControlMessages.LinkControl_NotSet);
+		unsetLabel.setText(LocalizationServiceHelper.getString(getClass(), ReferenceMessageKeys.LinkControl_NotSet));
 		unsetLabel.setBackground(mainComposite.getBackground());
 		unsetLabel.setForeground(getSystemColor(SWT.COLOR_DARK_GRAY));
 		unsetLabel.setAlignment(SWT.CENTER);
@@ -330,7 +330,8 @@ public class LinkControl extends SingleControl {
 	 */
 	@Override
 	protected String getUnsetLabelText() {
-		return ControlMessages.LinkControl_NoLinkSetClickToSetLink;
+		return LocalizationServiceHelper
+			.getString(getClass(), ReferenceMessageKeys.LinkControl_NoLinkSetClickToSetLink);
 	}
 
 	/*
@@ -339,7 +340,7 @@ public class LinkControl extends SingleControl {
 	 */
 	@Override
 	protected String getUnsetButtonTooltip() {
-		return ControlMessages.LinkControl_UnsetLink;
+		return LocalizationServiceHelper.getString(getClass(), ReferenceMessageKeys.LinkControl_UnsetLink);
 	}
 
 	/*

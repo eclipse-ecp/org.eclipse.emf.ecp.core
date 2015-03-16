@@ -28,6 +28,7 @@ import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.util.DateUtil;
 import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.edit.command.SetCommand;
+import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -67,12 +68,14 @@ public class XmlDateControlText extends AbstractTextControl {
 
 	@Override
 	protected String getUnsetLabelText() {
-		return ControlMessages.XmlDateControlText_NoDateSetClickToSetDate;
+		return LocalizationServiceHelper.getString(getClass(),
+			DepricatedControlMessageKeys.XmlDateControlText_NoDateSetClickToSetDate);
 	}
 
 	@Override
 	protected String getUnsetButtonTooltip() {
-		return ControlMessages.XmlDateControlText_UnsetDate;
+		return LocalizationServiceHelper.getString(getClass(),
+			DepricatedControlMessageKeys.XmlDateControlText_UnsetDate);
 	}
 
 	@Override
@@ -238,8 +241,11 @@ public class XmlDateControlText extends AbstractTextControl {
 			final Object result = getModelValue().getValue();
 
 			final MessageDialog messageDialog = new MessageDialog(getText().getShell(),
-				ControlMessages.XmlDateControlText_InvalidNumber, null,
-				ControlMessages.XmlDateControlText_NumberInvalidValueWillBeUnset, MessageDialog.ERROR,
+				LocalizationServiceHelper.getString(getClass(),
+					DepricatedControlMessageKeys.XmlDateControlText_InvalidNumber), null,
+				LocalizationServiceHelper.getString(getClass(),
+					DepricatedControlMessageKeys.XmlDateControlText_NumberInvalidValueWillBeUnset),
+				MessageDialog.ERROR,
 				new String[] { JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
 
 			new ECPDialogExecutor(messageDialog) {

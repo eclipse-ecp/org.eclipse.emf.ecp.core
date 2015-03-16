@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.view.spi.core.swt;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
-import org.eclipse.emf.ecp.view.internal.core.swt.renderer.RendererMessages;
+import org.eclipse.emf.ecp.view.internal.core.swt.MessageKeys;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport;
@@ -29,6 +29,7 @@ import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
@@ -133,7 +134,6 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 		final Button unsetButton = new Button(composite, SWT.PUSH);
 		GridDataFactory.fillDefaults().align(SWT.CENTER, SWT.CENTER).grab(false, false).applyTo(unsetButton);
 		unsetButton.addSelectionListener(new SelectionAdapter() {
-
 			/**
 			 * {@inheritDoc}
 			 *
@@ -146,13 +146,15 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 				Object value = null;
 				if (!setting.isSet()) {
 					sl.topControl = baseControl;
-					unsetButton.setText(RendererMessages.SimpleControlSWTRenderer_Unset);
+					unsetButton.setText(LocalizationServiceHelper
+						.getString(getClass(), MessageKeys.SimpleControlSWTRenderer_Unset));
 					value = setting
 						.getEStructuralFeature().getDefaultValue();
 				}
 				else {
 					sl.topControl = createUnsetLabel;
-					unsetButton.setText(RendererMessages.SimpleControlSWTRenderer_Set);
+					unsetButton.setText(LocalizationServiceHelper
+						.getString(getClass(), MessageKeys.SimpleControlSWTRenderer_Set));
 					value = SetCommand.UNSET_VALUE;
 				}
 				final EditingDomain editingDomain = getEditingDomain(setting);
@@ -164,11 +166,13 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 
 		if (getVElement().getDomainModelReference().getIterator().next().isSet()) {
 			sl.topControl = baseControl;
-			unsetButton.setText(RendererMessages.SimpleControlSWTRenderer_Unset);
+			unsetButton.setText(LocalizationServiceHelper
+				.getString(getClass(), MessageKeys.SimpleControlSWTRenderer_Unset));
 		}
 		else {
 			sl.topControl = createUnsetLabel;
-			unsetButton.setText(RendererMessages.SimpleControlSWTRenderer_Set);
+			unsetButton.setText(LocalizationServiceHelper
+				.getString(getClass(), MessageKeys.SimpleControlSWTRenderer_Set));
 		}
 
 		return composite;

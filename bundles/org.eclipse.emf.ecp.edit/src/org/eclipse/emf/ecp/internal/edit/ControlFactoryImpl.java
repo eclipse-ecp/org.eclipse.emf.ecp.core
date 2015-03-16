@@ -26,6 +26,7 @@ import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
 import org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester;
 import org.eclipse.emf.ecp.edit.spi.util.ECPStaticApplicableTester;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 import org.osgi.framework.Bundle;
 
 /**
@@ -122,9 +123,12 @@ public final class ControlFactoryImpl implements ECPControlFactory {
 	private static <T> Class<T> loadClass(String bundleName, String clazz) throws ClassNotFoundException {
 		final Bundle bundle = Platform.getBundle(bundleName);
 		if (bundle == null) {
-			throw new ClassNotFoundException(clazz + EditMessages.CONTROLFACTROY_CANNOT_BE_LOADED
+			throw new ClassNotFoundException(clazz
+				+ LocalizationServiceHelper.getString(ControlFactoryImpl.class,
+					MessageKeys.CONTROLFACTROY_CANNOT_BE_LOADED)
 				+ bundleName
-				+ EditMessages.CONTROLFACTORY_CANNOT_BE_RESOLVED);
+				+ LocalizationServiceHelper.getString(ControlFactoryImpl.class,
+					MessageKeys.CONTROLFACTORY_CANNOT_BE_RESOLVED));
 		}
 		return (Class<T>) bundle.loadClass(clazz);
 

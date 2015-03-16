@@ -20,6 +20,7 @@ import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
@@ -76,7 +77,8 @@ public final class DiffDialogHelper {
 		}
 		shell
 			.setText(String.format(
-				Messages.DiffDialog_title, featureLabel, index + 1, diffModelContext.getTotalNumberOfDiffs()));
+				LocalizationServiceHelper.getString(DiffDialogHelper.class, MessageKeys.DiffDialog_title),
+				featureLabel, index + 1, diffModelContext.getTotalNumberOfDiffs()));
 		shell.setLayout(new FillLayout());
 		final Rectangle clientArea = shell.getDisplay().getBounds();
 		shell.setSize(clientArea.width / 2, 500);

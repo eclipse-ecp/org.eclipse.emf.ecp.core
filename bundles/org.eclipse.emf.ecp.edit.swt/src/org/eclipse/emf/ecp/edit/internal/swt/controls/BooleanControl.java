@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
@@ -65,7 +66,8 @@ public class BooleanControl extends SingleControl {
 	 */
 	@Override
 	protected String getUnsetLabelText() {
-		return ControlMessages.BooleanControl_NoBooleanSetClickToSetBoolean;
+		return LocalizationServiceHelper.getString(getClass(),
+			DepricatedControlMessageKeys.BooleanControl_NoBooleanSetClickToSetBoolean);
 	}
 
 	/*
@@ -74,7 +76,8 @@ public class BooleanControl extends SingleControl {
 	 */
 	@Override
 	protected String getUnsetButtonTooltip() {
-		return ControlMessages.BooleanControl_UnsetBoolean;
+		return LocalizationServiceHelper
+			.getString(getClass(), DepricatedControlMessageKeys.BooleanControl_UnsetBoolean);
 	}
 
 	/*

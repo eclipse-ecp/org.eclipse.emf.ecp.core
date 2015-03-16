@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlJFaceViewerSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
+import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.viewers.ViewersObservables;
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -97,7 +98,8 @@ public class EnumComboViewerSWTRenderer extends SimpleControlJFaceViewerSWTRende
 	 */
 	@Override
 	protected String getUnsetText() {
-		return RendererMessages.EEnumControl_NoValueSetClickToSetValue;
+		return LocalizationServiceHelper
+			.getString(getClass(), MessageKeys.EEnumControl_NoValueSetClickToSetValue);
 	}
 
 }

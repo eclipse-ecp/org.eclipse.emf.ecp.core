@@ -21,15 +21,16 @@ import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecp.edit.internal.swt.controls.ControlMessages;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.NumericalHelper;
 import org.eclipse.emf.ecp.edit.spi.ViewLocaleService;
 import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
+import org.eclipse.emf.ecp.view.internal.core.swt.MessageKeys;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.renderer.TextControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.edit.command.SetCommand;
+import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.JFaceResources;
@@ -77,9 +78,9 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 	@Override
 	protected String getTextMessage(Setting setting) {
 		if (NumericalHelper.isInteger(getInstanceClass(setting.getEStructuralFeature()))) {
-			return ControlMessages.NumericalControl_FormatNumerical;
+			return LocalizationServiceHelper.getString(getClass(), MessageKeys.NumericalControl_FormatNumerical);
 		} else if (NumericalHelper.isDouble(getInstanceClass(setting.getEStructuralFeature()))) {
-			return ControlMessages.NumericalControl_FormatNumericalDecimal;
+			return LocalizationServiceHelper.getString(getClass(), MessageKeys.NumericalControl_FormatNumericalDecimal);
 		}
 
 		return ""; //$NON-NLS-1$
@@ -252,8 +253,9 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 			final Object result = modelValue.getValue();
 
 			final MessageDialog messageDialog = new MessageDialog(text.getShell(),
-				ControlMessages.NumericalControl_InvalidNumber, null,
-				ControlMessages.NumericalControl_InvalidNumberWillBeUnset, MessageDialog.ERROR,
+				LocalizationServiceHelper.getString(getClass(), MessageKeys.NumericalControl_InvalidNumber), null,
+				LocalizationServiceHelper.getString(getClass(), MessageKeys.NumericalControl_InvalidNumberWillBeUnset),
+				MessageDialog.ERROR,
 				new String[] { JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
 
 			new ECPDialogExecutor(messageDialog) {
@@ -292,7 +294,7 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 	 */
 	@Override
 	protected String getUnsetText() {
-		return ControlMessages.NumericalControl_NoNumberClickToSetNumber;
+		return LocalizationServiceHelper.getString(getClass(), MessageKeys.NumericalControl_NoNumberClickToSetNumber);
 	}
 
 }

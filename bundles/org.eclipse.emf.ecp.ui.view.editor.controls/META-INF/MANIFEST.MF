@@ -22,7 +22,8 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="3.7.0",
  org.eclipse.emf.ecore.edit;bundle-version="[2.7.0,3.0.0)",
  org.eclipse.emf.ecp.view.label.model;bundle-version="[1.5.0,2.0.0)",
  org.eclipse.emf.ecp.common.ui;bundle-version="[1.5.0,2.0.0)",
- org.eclipse.emf.ecp.view.custom.model;bundle-version="[1.5.0,2.0.0)"
+ org.eclipse.emf.ecp.view.custom.model;bundle-version="[1.5.0,2.0.0)",
+ org.eclipse.emf.emfforms.localization;bundle-version="[1.5.0,2.0.0)"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.eclipse.jface.databinding.swt;version="0.0.0",
@@ -32,10 +33,7 @@ Import-Package: org.eclipse.jface.databinding.swt;version="0.0.0",
  org.eclipse.swt.graphics;version="0.0.0",
  org.eclipse.swt.layout;version="0.0.0",
  org.eclipse.swt.widgets;version="0.0.0"
-Export-Package: org.eclipse.emf.ecp.view.internal.editor.controls;vers
- ion="1.5.1";x-internal:=true,org.eclipse.emf.ecp.view.internal.editor
- .handler;version="1.5.1";x-friends:="org.eclipse.emf.ecp.view.model.p
- roject.installer,org.eclipse.emf.ecp.view.model.editor,org.eclipse.em
- f.ecp.view.treemasterdetail.ui.swt",org.eclipse.emf.ecp.view.spi.edit
- or.controls;version="1.5.1"
+Export-Package: org.eclipse.emf.ecp.view.internal.editor.controls;version="1.5.1";x-internal:=true,
+ org.eclipse.emf.ecp.view.internal.editor.handler;version="1.5.1";x-friends:="org.eclipse.emf.ecp.view.model.project.installer,org.eclipse.emf.ecp.view.model.editor,org.eclipse.emf.ecp.view.treemasterdetail.ui.swt",
+ org.eclipse.emf.ecp.view.spi.editor.controls;version="1.5.1"
 Bundle-Vendor: Eclipse Modeling Project

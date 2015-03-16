@@ -20,7 +20,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
-import org.eclipse.emf.ecp.edit.internal.swt.reference.ActionMessages;
+import org.eclipse.emf.ecp.edit.internal.swt.reference.ReferenceMessageKeys;
 import org.eclipse.emf.ecp.edit.internal.swt.util.OverlayImageDescriptor;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.edit.spi.swt.actions.ECPSWTAction;
@@ -28,6 +28,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedImage;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.ImageData;
 
@@ -98,7 +99,7 @@ public class AddReferenceAction extends ECPSWTAction {
 		} else if (attribute.endsWith("s")) {//$NON-NLS-1$
 			attribute = attribute.substring(0, attribute.length() - 1);
 		}
-		setToolTipText(ActionMessages.AddReferenceAction_Link + attribute);
+		setToolTipText(LocalizationServiceHelper.getString(getClass(), ReferenceMessageKeys.AddReferenceAction_Link) + attribute);
 	}
 
 	/**

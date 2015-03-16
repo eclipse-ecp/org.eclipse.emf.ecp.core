@@ -12,7 +12,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.categorization.swt;
 
-import org.eclipse.emf.ecp.view.internal.categorization.swt.Messages;
+import org.eclipse.emf.ecp.view.internal.categorization.swt.MessageKeys;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorization;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
@@ -22,6 +22,7 @@ import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
+import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -98,7 +99,7 @@ public class SWTCategorizationRenderer extends AbstractSWTRenderer<VCategorizati
 		whatToDoLbl.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_categorization_message"); //$NON-NLS-1$
 		final String headingText = getVElement().getName();
 		headingLbl.setText(headingText == null ? "" : headingText); //$NON-NLS-1$
-		whatToDoLbl.setText(Messages.Categorization_Selection);
+		whatToDoLbl.setText(LocalizationServiceHelper.getString(getClass(), MessageKeys.Categorization_Selection));
 		return categoryComposite;
 	}
 

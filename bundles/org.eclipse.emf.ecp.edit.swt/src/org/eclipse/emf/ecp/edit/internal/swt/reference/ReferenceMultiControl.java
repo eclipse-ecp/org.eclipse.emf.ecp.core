@@ -13,13 +13,13 @@
 package org.eclipse.emf.ecp.edit.internal.swt.reference;
 
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecp.edit.internal.swt.controls.ControlMessages;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.MultiControl;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.edit.spi.swt.actions.ECPSWTAction;
 import org.eclipse.emf.ecp.edit.spi.swt.reference.AddReferenceAction;
 import org.eclipse.emf.ecp.edit.spi.swt.reference.NewReferenceAction;
 import org.eclipse.emf.ecp.edit.spi.util.ECPStaticApplicableTester;
+import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 
 /**
  * This class defines a Control which is used for displaying {@link org.eclipse.emf.ecore.EStructuralFeature}s which
@@ -53,7 +53,8 @@ public class ReferenceMultiControl extends MultiControl {
 	 */
 	@Override
 	protected String getUnsetLabelText() {
-		return ControlMessages.ReferenceMultiControl_NotSetClickToSet;
+		return LocalizationServiceHelper.getString(getClass(),
+			ReferenceMessageKeys.ReferenceMultiControl_NotSetClickToSet);
 	}
 
 	/*
@@ -62,6 +63,6 @@ public class ReferenceMultiControl extends MultiControl {
 	 */
 	@Override
 	protected String getUnsetButtonTooltip() {
-		return ControlMessages.ReferenceMultiControl_Unset;
+		return LocalizationServiceHelper.getString(getClass(), ReferenceMessageKeys.ReferenceMultiControl_Unset);
 	}
 }

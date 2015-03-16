@@ -52,6 +52,7 @@ import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ObservableMapCellLabelProvider;
@@ -256,9 +257,12 @@ public class TableControl extends SWTControl {
 
 	private void createFixedValidationStatusColumn(TableViewer tableViewer,
 		final List<EStructuralFeature> structuralFeatures) {
-		final TableViewerColumn column = TableViewerColumnBuilder.create()
+		final TableViewerColumn column = TableViewerColumnBuilder
+			.create()
 			.setMoveable(false)
-			.setText(ControlMessages.TableControl_ValidationStatusColumn)
+			.setText(
+				LocalizationServiceHelper.getString(getClass(),
+					DepricatedControlMessageKeys.TableControl_ValidationStatusColumn))
 			.setWidth(80)
 			.build(tableViewer);
 
@@ -402,7 +406,8 @@ public class TableControl extends SWTControl {
 		removeButton = new Button(buttonComposite, SWT.None);
 		final Image image = Activator.getImage("icons/delete.png"); //$NON-NLS-1$
 		removeButton.setImage(image);
-		removeButton.setToolTipText(ControlMessages.TableControl_RemoveSelected
+		removeButton.setToolTipText(LocalizationServiceHelper.getString(getClass(),
+			DepricatedControlMessageKeys.TableControl_RemoveSelected)
 			+ clazz.getInstanceClass().getSimpleName());
 		removeButton.addSelectionListener(new SelectionAdapter() {
 			/*
@@ -441,9 +446,12 @@ public class TableControl extends SWTControl {
 	 * @param deletionList the list of selected EObjects to delete
 	 */
 	protected void deleteRowUserConfirmDialog(final List<EObject> deletionList) {
-		final MessageDialog dialog = new MessageDialog(tableViewer.getTable().getShell(),
-			ControlMessages.TableControl_Delete, null,
-			ControlMessages.TableControl_DeleteAreYouSure, MessageDialog.CONFIRM, new String[] {
+		final MessageDialog dialog = new MessageDialog(
+			tableViewer.getTable().getShell(),
+			LocalizationServiceHelper.getString(getClass(), DepricatedControlMessageKeys.TableControl_Delete),
+			null,
+			LocalizationServiceHelper.getString(getClass(), DepricatedControlMessageKeys.TableControl_DeleteAreYouSure),
+			MessageDialog.CONFIRM, new String[] {
 				JFaceResources.getString(IDialogLabelKeys.YES_LABEL_KEY),
 				JFaceResources.getString(IDialogLabelKeys.NO_LABEL_KEY) }, 0);
 
@@ -507,7 +515,8 @@ public class TableControl extends SWTControl {
 		addButton = new Button(buttonComposite, SWT.None);
 		final Image image = Activator.getImage(ICON_ADD);
 		addButton.setImage(image);
-		addButton.setToolTipText(ControlMessages.TableControl_AddInstanceOf + clazz.getInstanceClass().getSimpleName());
+		addButton.setToolTipText(LocalizationServiceHelper.getString(getClass(),
+			DepricatedControlMessageKeys.TableControl_AddInstanceOf) + clazz.getInstanceClass().getSimpleName());
 		addButton.addSelectionListener(new SelectionAdapter() {
 
 			/*
@@ -959,7 +968,8 @@ public class TableControl extends SWTControl {
 	 */
 	@Override
 	protected String getUnsetLabelText() {
-		return ControlMessages.TableControl_NotSetClickToSet;
+		return LocalizationServiceHelper.getString(getClass(),
+			DepricatedControlMessageKeys.TableControl_NotSetClickToSet);
 	}
 
 	/*
@@ -968,7 +978,7 @@ public class TableControl extends SWTControl {
 	 */
 	@Override
 	protected String getUnsetButtonTooltip() {
-		return ControlMessages.TableControl_Unset;
+		return LocalizationServiceHelper.getString(getClass(), DepricatedControlMessageKeys.TableControl_Unset);
 	}
 
 	/*

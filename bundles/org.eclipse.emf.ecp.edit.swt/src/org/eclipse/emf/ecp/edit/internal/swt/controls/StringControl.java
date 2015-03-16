@@ -12,6 +12,7 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
+import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Text;
@@ -64,7 +65,8 @@ public class StringControl extends AbstractTextControl {
 	 */
 	@Override
 	protected String getUnsetLabelText() {
-		return ControlMessages.StringControl_NoTextSetClickToSetText;
+		return LocalizationServiceHelper.getString(getClass(),
+			DepricatedControlMessageKeys.StringControl_NoTextSetClickToSetText);
 	}
 
 	/*
@@ -73,7 +75,7 @@ public class StringControl extends AbstractTextControl {
 	 */
 	@Override
 	protected String getUnsetButtonTooltip() {
-		return ControlMessages.StringControl_UnsetText;
+		return LocalizationServiceHelper.getString(getClass(), DepricatedControlMessageKeys.StringControl_UnsetText);
 	}
 
 	@Override

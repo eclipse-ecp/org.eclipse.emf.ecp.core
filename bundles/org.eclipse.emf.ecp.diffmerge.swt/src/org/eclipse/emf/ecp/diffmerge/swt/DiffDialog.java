@@ -36,6 +36,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
@@ -144,7 +145,8 @@ public class DiffDialog {
 				.applyTo(diffConfirmedComposite);
 			diffConfirmedComposite.setLayout(new FillLayout(SWT.HORIZONTAL));
 			final Button buttonDiffConfirmed = new Button(diffConfirmedComposite, SWT.CHECK);
-			buttonDiffConfirmed.setText(Messages.DiffDialog_DiffConfirmed);
+			buttonDiffConfirmed.setText(LocalizationServiceHelper.getString(getClass(),
+				MessageKeys.DiffDialog_DiffConfirmed));
 			buttonDiffConfirmed.setSelection(diffConfirmed);
 			buttonDiffConfirmed.addSelectionListener(new SelectionAdapter() {
 
@@ -172,7 +174,7 @@ public class DiffDialog {
 				.applyTo(nextPreviousComposite);
 
 			final Button previous = new Button(nextPreviousComposite, SWT.PUSH);
-			previous.setText(Messages.DiffDialog_Previous);
+			previous.setText(LocalizationServiceHelper.getString(getClass(), MessageKeys.DiffDialog_Previous));
 			previous.setImage(Activator.getImage("icons/arrow_left.png")); //$NON-NLS-1$
 			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(false, false).applyTo(previous);
 			previous.addSelectionListener(new SelectionAdapter() {
@@ -191,7 +193,7 @@ public class DiffDialog {
 
 			});
 			final Button next = new Button(nextPreviousComposite, SWT.PUSH);
-			next.setText(Messages.DiffDialog_Next);
+			next.setText(LocalizationServiceHelper.getString(getClass(), MessageKeys.DiffDialog_Next));
 			next.setImage(Activator.getImage("icons/arrow_right.png")); //$NON-NLS-1$
 			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(false, false).applyTo(next);
 			next.addSelectionListener(new SelectionAdapter() {
@@ -220,7 +222,7 @@ public class DiffDialog {
 
 		{
 			final Button bConfirm = new Button(buttonRowComposite, SWT.PUSH);
-			bConfirm.setText(Messages.DiffDialog_Confirm);
+			bConfirm.setText(LocalizationServiceHelper.getString(getClass(), MessageKeys.DiffDialog_Confirm));
 			bConfirm.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_compare_dialog_merge_confirm"); //$NON-NLS-1$
 			GridDataFactory.fillDefaults().align(SWT.END, SWT.BEGINNING).grab(true, false).applyTo(bConfirm);
 			bConfirm.addSelectionListener(new SelectionAdapter() {
@@ -251,7 +253,7 @@ public class DiffDialog {
 	private Control createTarget(final Composite parent) {
 		final Group targetGroup = new Group(parent, SWT.NONE);
 		targetGroup.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_compare_dialog_target"); //$NON-NLS-1$
-		targetGroup.setText(Messages.DiffDialog_targetObject);
+		targetGroup.setText(LocalizationServiceHelper.getString(getClass(), MessageKeys.DiffDialog_targetObject));
 		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false).applyTo(targetGroup);
 
 		// final Label mainObject = new Label(targetGroup, SWT.NONE);
@@ -283,19 +285,20 @@ public class DiffDialog {
 	 */
 	private Control createDiff(final Composite parent) {
 		final Group group = new Group(parent, SWT.NONE);
-		group.setText(Messages.DiffDialog_DifferenceGroup);
+		group.setText(LocalizationServiceHelper.getString(getClass(), MessageKeys.DiffDialog_DifferenceGroup));
 		group.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_compare_dialog_diff"); //$NON-NLS-1$
 		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false).applyTo(group);
 
 		final Label leftObject = new Label(group, SWT.NONE);
-		leftObject.setText(Messages.DiffDialog_leftObject + ":"); //$NON-NLS-1$
+		leftObject.setText(LocalizationServiceHelper.getString(getClass(), MessageKeys.DiffDialog_leftObject + ":")); //$NON-NLS-1$
 		leftObject.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_compare_dialog_diff_left"); //$NON-NLS-1$
 		GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.FILL).grab(false, false).span(2, 1).applyTo(leftObject);
 
 		createControl(group, EcoreUtil.copy(left), EcoreUtil.copy(viewModelContext.getLeftModel()), true);
 
 		final Button bReplaceWithLeft = new Button(group, SWT.PUSH);
-		bReplaceWithLeft.setText(Messages.DiffDialog_replaceWithLeft);
+		bReplaceWithLeft.setText(LocalizationServiceHelper
+			.getString(getClass(), MessageKeys.DiffDialog_replaceWithLeft));
 		bReplaceWithLeft.setImage(Activator.getImage("icons/arrow_down.png")); //$NON-NLS-1$
 		bReplaceWithLeft.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_compare_dialog_diff_leftReplace"); //$NON-NLS-1$
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(false, false).applyTo(bReplaceWithLeft);
@@ -315,7 +318,7 @@ public class DiffDialog {
 		});
 
 		final Label rightObject = new Label(group, SWT.NONE);
-		rightObject.setText(Messages.DiffDialog_rightObject + ":"); //$NON-NLS-1$
+		rightObject.setText(LocalizationServiceHelper.getString(getClass(), MessageKeys.DiffDialog_rightObject + ":")); //$NON-NLS-1$
 		rightObject.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_compare_dialog_diff_right"); //$NON-NLS-1$
 		GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.FILL).grab(false, false).span(2, 1)
 			.applyTo(rightObject);
@@ -323,7 +326,8 @@ public class DiffDialog {
 		createControl(group, EcoreUtil.copy(right), EcoreUtil.copy(viewModelContext.getRightModel()), true);
 
 		final Button bReplaceWithRight = new Button(group, SWT.PUSH);
-		bReplaceWithRight.setText(Messages.DiffDialog_replaceWithRight);
+		bReplaceWithRight.setText(LocalizationServiceHelper.getString(getClass(),
+			MessageKeys.DiffDialog_replaceWithRight));
 		bReplaceWithRight.setImage(Activator.getImage("icons/arrow_down.png")); //$NON-NLS-1$
 		bReplaceWithLeft.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_compare_dialog_diff_rightReplace"); //$NON-NLS-1$
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(false, false).applyTo(bReplaceWithRight);

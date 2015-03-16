@@ -30,7 +30,6 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.eclipse.emf.ecp.internal.edit.EditMessages;
 import org.eclipse.emf.ecp.view.spi.custom.model.ECPHardcodedReferences;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage;
@@ -38,6 +37,7 @@ import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.SettingPath;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 import org.osgi.framework.Bundle;
 
 /**
@@ -490,9 +490,8 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	private static ECPHardcodedReferences loadObject(String bundleName, String clazz) {
 		final Bundle bundle = Platform.getBundle(bundleName);
 		if (bundle == null) {
-			new ClassNotFoundException(clazz + EditMessages.CONTROLFACTROY_CANNOT_BE_LOADED
-				+ bundleName
-				+ EditMessages.CONTROLFACTORY_CANNOT_BE_RESOLVED);
+			new ClassNotFoundException(String.format(LocalizationServiceHelper.getString(
+				VCustomDomainModelReferenceImpl.class, "BundleNotFound_ExceptionMessage"), clazz, bundleName)); //$NON-NLS-1$
 			return null;
 		}
 		try {

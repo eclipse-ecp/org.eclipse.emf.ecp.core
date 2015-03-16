@@ -39,7 +39,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecp.edit.internal.swt.controls.ControlMessages;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.ECPFocusCellDrawHighlighter;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.TableViewerColumnBuilder;
 import org.eclipse.emf.ecp.edit.internal.swt.util.CellEditorFactory;
@@ -47,6 +46,7 @@ import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor;
 import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.view.internal.table.swt.Activator;
 import org.eclipse.emf.ecp.view.internal.table.swt.CellReadOnlyTesterHelper;
+import org.eclipse.emf.ecp.view.internal.table.swt.MessageKeys;
 import org.eclipse.emf.ecp.view.internal.table.swt.TableConfigurationHelper;
 import org.eclipse.emf.ecp.view.model.common.spi.databinding.DatabindingProviderService;
 import org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer;
@@ -68,6 +68,7 @@ import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ObservableMapCellLabelProvider;
@@ -589,7 +590,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		final VTTableValidationStyleProperty tableValidationProp = VTTableValidationFactory.eINSTANCE
 			.createTableValidationStyleProperty();
 		tableValidationProp.setColumnWidth(80);
-		tableValidationProp.setColumnName(ControlMessages.TableControl_ValidationStatusColumn);
+		tableValidationProp.setColumnName(LocalizationServiceHelper.getString(getClass(),
+			MessageKeys.TableControl_ValidationStatusColumn));
 		tableValidationProp.setImagePath(null);
 		return tableValidationProp;
 	}
@@ -609,7 +611,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		removeButton.setImage(image);
 		removeButton.setEnabled(false);
 		final String instanceName = clazz.getInstanceClass() == null ? "" : clazz.getInstanceClass().getSimpleName(); //$NON-NLS-1$
-		removeButton.setToolTipText(String.format(ControlMessages.TableControl_RemoveSelected
+		removeButton.setToolTipText(String.format(
+			LocalizationServiceHelper.getString(getClass(), MessageKeys.TableControl_RemoveSelected)
 			, instanceName));
 
 		final List<?> containments = (List<?>) mainSetting.get(true);
@@ -624,7 +627,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		final Image image = Activator.getImage(ICON_ADD);
 		addButton.setImage(image);
 		final String instanceName = clazz.getInstanceClass() == null ? "" : clazz.getInstanceClass().getSimpleName(); //$NON-NLS-1$
-		addButton.setToolTipText(String.format(ControlMessages.TableControl_AddInstanceOf, instanceName));
+		addButton.setToolTipText(String.format(
+			LocalizationServiceHelper.getString(getClass(), MessageKeys.TableControl_AddInstanceOf), instanceName));
 
 		final List<?> containments = (List<?>) mainSetting.get(true);
 		if (mainSetting.getEStructuralFeature().getUpperBound() != -1
@@ -645,8 +649,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	protected void deleteRowUserConfirmDialog(final List<EObject> deletionList, final Setting mainSetting,
 		final Button addButton, final Button removeButton) {
 		final MessageDialog dialog = new MessageDialog(addButton.getShell(),
-			ControlMessages.TableControl_Delete, null,
-			ControlMessages.TableControl_DeleteAreYouSure, MessageDialog.CONFIRM, new String[] {
+			LocalizationServiceHelper.getString(getClass(), MessageKeys.TableControl_Delete), null,
+			LocalizationServiceHelper.getString(getClass(), MessageKeys.TableControl_DeleteAreYouSure),
+			MessageDialog.CONFIRM, new String[] {
 				JFaceResources.getString(IDialogLabelKeys.YES_LABEL_KEY),
 				JFaceResources.getString(IDialogLabelKeys.NO_LABEL_KEY) }, 0);
 

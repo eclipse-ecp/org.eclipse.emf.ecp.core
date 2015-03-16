@@ -13,13 +13,13 @@ package org.eclipse.emf.ecp.view.spi.custom.swt;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecp.edit.spi.swt.util.SWTValidationHelper;
-import org.eclipse.emf.ecp.internal.edit.EditMessages;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
+import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
@@ -34,7 +34,6 @@ import org.osgi.framework.Bundle;
  * @author Eugen Neufeld
  * @since 1.3
  */
-@SuppressWarnings("restriction")
 public class CustomControlSWTRenderer extends AbstractSWTRenderer<VCustomControl> {
 
 	private ECPAbstractCustomControlSWT swtCustomControl;
@@ -82,9 +81,10 @@ public class CustomControlSWTRenderer extends AbstractSWTRenderer<VCustomControl
 	private static ECPAbstractCustomControlSWT loadObject(String bundleName, String clazz) {
 		final Bundle bundle = Platform.getBundle(bundleName);
 		if (bundle == null) {
-			new ClassNotFoundException(clazz + EditMessages.CONTROLFACTROY_CANNOT_BE_LOADED
-				+ bundleName
-				+ EditMessages.CONTROLFACTORY_CANNOT_BE_RESOLVED);
+			// why do we create a class not found exception without doing anything with it
+			new ClassNotFoundException(
+				String.format(LocalizationServiceHelper.getString(CustomControlSWTRenderer.class,
+					"BundleNotFound_ExceptionMessage"), clazz, bundleName)); //$NON-NLS-1$
 			return null;
 		}
 		try {

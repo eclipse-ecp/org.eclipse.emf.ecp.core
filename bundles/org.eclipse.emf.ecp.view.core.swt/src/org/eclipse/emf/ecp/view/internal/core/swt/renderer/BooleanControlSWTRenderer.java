@@ -13,8 +13,10 @@ package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecp.view.internal.core.swt.MessageKeys;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
+import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
@@ -65,7 +67,8 @@ public class BooleanControlSWTRenderer extends SimpleControlSWTControlSWTRendere
 	 */
 	@Override
 	protected String getUnsetText() {
-		return RendererMessages.BooleanControl_NoBooleanSetClickToSetBoolean;
+		return LocalizationServiceHelper
+			.getString(getClass(), MessageKeys.BooleanControl_NoBooleanSetClickToSetBoolean);
 	}
 
 }

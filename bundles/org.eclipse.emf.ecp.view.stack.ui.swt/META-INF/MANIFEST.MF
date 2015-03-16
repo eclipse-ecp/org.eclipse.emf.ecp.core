@@ -10,12 +10,11 @@ Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.emf.ecp.view.stack.model;bundle-version="[1.5.0,2.0.0)",
  org.eclipse.emf.ecp.ui.view.swt;bundle-version="[1.5.0,2.0.0)",
  org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
- org.eclipse.emf.ecp.view.core.swt;bundle-version="[1.5.0,2.0.0)"
+ org.eclipse.emf.ecp.view.core.swt;bundle-version="[1.5.0,2.0.0)",
+ org.eclipse.emf.emfforms.localization;bundle-version="[1.5.0,2.0.0)"
 Import-Package: org.eclipse.swt;version="0.0.0",
  org.eclipse.swt.custom;version="0.0.0",
  org.eclipse.swt.widgets;version="0.0.0"
-Export-Package: org.eclipse.emf.ecp.view.internal.stack.ui.swt;version
- ="1.5.1";x-internal:=true,org.eclipse.emf.ecp.view.internal.stack.ui.
- swt.messages;version="1.5.1";x-internal:=true,org.eclipse.emf.ecp.vie
- w.spi.stack.ui.swt;version="1.5.1"
+Export-Package: org.eclipse.emf.ecp.view.internal.stack.ui.swt;version="1.5.1";x-internal:=true,
+ org.eclipse.emf.ecp.view.spi.stack.ui.swt;version="1.5.1"
 Bundle-Activator: org.eclipse.emf.ecp.view.internal.stack.ui.swt.Activator

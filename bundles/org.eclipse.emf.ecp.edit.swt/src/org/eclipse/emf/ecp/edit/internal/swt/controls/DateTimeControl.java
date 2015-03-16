@@ -15,6 +15,7 @@ package org.eclipse.emf.ecp.edit.internal.swt.controls;
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.observable.value.DateAndTimeObservableValue;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -95,7 +96,8 @@ public class DateTimeControl extends SingleControl {
 	 */
 	@Override
 	protected String getUnsetLabelText() {
-		return ControlMessages.DateTimeControl_NoDateSetClickToSetDate;
+		return LocalizationServiceHelper.getString(getClass(),
+			DepricatedControlMessageKeys.DateTimeControl_NoDateSetClickToSetDate);
 	}
 
 	/*
@@ -104,7 +106,7 @@ public class DateTimeControl extends SingleControl {
 	 */
 	@Override
 	protected String getUnsetButtonTooltip() {
-		return ControlMessages.DateTimeControl_UnsetDate;
+		return LocalizationServiceHelper.getString(getClass(), DepricatedControlMessageKeys.DateTimeControl_UnsetDate);
 	}
 
 	/*

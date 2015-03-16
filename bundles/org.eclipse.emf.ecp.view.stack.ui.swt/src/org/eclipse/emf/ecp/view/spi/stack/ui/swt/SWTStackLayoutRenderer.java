@@ -18,7 +18,7 @@ import java.util.Map.Entry;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecp.view.internal.stack.ui.swt.Activator;
-import org.eclipse.emf.ecp.view.internal.stack.ui.swt.messages.Messages;
+import org.eclipse.emf.ecp.view.internal.stack.ui.swt.MessageKeys;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
@@ -32,6 +32,7 @@ import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
+import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -97,7 +98,8 @@ public class SWTStackLayoutRenderer extends AbstractSWTRenderer<VStackLayout> {
 					.getLog()
 					.log(
 						new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format(
-							Messages.SWTStackLayoutRenderer_NoRendererForItemCompositeFound, item.eClass()
+							LocalizationServiceHelper.getString(getClass(),
+								MessageKeys.SWTStackLayoutRenderer_NoRendererForItemCompositeFound), item.eClass()
 								.getName())));
 				continue;
 			}
