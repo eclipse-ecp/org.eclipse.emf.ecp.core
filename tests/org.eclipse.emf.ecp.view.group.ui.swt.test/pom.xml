@@ -39,6 +39,11 @@
 							</requirement>
 							<requirement>
 								<type>p2-installable-unit</type>
+								<id>org.eclipse.emf.ecp.view.swt.layout</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+							<requirement>
+								<type>p2-installable-unit</type>
 								<id>org.eclipse.equinox.ds</id>
 								<versionRange>0.0.0</versionRange>
 							</requirement>
