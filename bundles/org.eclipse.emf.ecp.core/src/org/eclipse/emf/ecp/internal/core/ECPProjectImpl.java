@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2011-2015 Eike Stepper (Berlin, Germany) and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -348,6 +348,8 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	@Override
 	public void delete() {
 		ECPUtil.getECPObserverBus().notify(ECPProjectPreDeleteObserver.class).projectDelete(this);
+		// FIXME https://bugs.eclipse.org/bugs/show_bug.cgi?id=462399
+		cleanup();
 		getProvider().handleLifecycle(this, LifecycleEvent.REMOVE);
 		ECPProjectManagerImpl.INSTANCE.changeElements(Collections.singleton(getName()), null);
 	}

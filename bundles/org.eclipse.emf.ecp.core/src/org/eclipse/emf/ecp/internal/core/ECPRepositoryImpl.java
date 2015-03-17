@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -240,7 +240,8 @@ public final class ECPRepositoryImpl extends PropertiesElement implements Intern
 		if (!canDelete()) {
 			throw new UnsupportedOperationException();
 		}
-
+		// FIXME https://bugs.eclipse.org/bugs/show_bug.cgi?id=462399
+		cleanup();
 		try {
 			provider.handleLifecycle(this, LifecycleEvent.REMOVE);
 		} catch (final Exception ex) {
