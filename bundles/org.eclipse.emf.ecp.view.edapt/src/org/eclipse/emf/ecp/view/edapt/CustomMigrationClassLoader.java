@@ -19,7 +19,6 @@ import org.osgi.framework.Bundle;
  * @author jfaltermeier
  *
  */
-@SuppressWarnings("restriction")
 public class CustomMigrationClassLoader implements IClassLoader {
 
 	@SuppressWarnings("unchecked")
