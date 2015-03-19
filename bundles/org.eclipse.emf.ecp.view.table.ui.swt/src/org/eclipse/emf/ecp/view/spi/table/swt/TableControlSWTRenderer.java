@@ -213,7 +213,10 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			labelText = propDescriptor.getDisplayName(null);
 		}
 		label.setText(labelText);
-		final String labelTooltipText = propDescriptor.getDescription(null);
+		String labelTooltipText = ""; //$NON-NLS-1$
+		if (propDescriptor != null) {
+			labelTooltipText = propDescriptor.getDescription(null);
+		}
 		label.setToolTipText(labelTooltipText);
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false).applyTo(label);
 
