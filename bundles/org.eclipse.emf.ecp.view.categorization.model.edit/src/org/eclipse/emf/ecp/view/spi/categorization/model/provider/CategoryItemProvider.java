@@ -21,14 +21,11 @@ import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationFactory;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategory;
 import org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalFactory;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VElementUtil;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalFactory;
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
@@ -40,12 +37,6 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  */
 public class CategoryItemProvider
 	extends AbstractCategorizationItemProvider
-	implements
-	IEditingDomainItemProvider,
-	IStructuredItemContentProvider,
-	ITreeItemContentProvider,
-	IItemLabelProvider,
-	IItemPropertySource
 {
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -135,7 +126,10 @@ public class CategoryItemProvider
 	@Override
 	public String getText(Object object)
 	{
-		final String label = ((VCategory) object).getName();
+		String label = ((VCategory) object).getLabel();
+		if (label == null) {
+			label = VElementUtil.getCleanName(VElement.class.cast(object));
+		}
 		return label == null || label.length() == 0 ?
 			getString("_UI_Category_type") : label; //$NON-NLS-1$
 	}

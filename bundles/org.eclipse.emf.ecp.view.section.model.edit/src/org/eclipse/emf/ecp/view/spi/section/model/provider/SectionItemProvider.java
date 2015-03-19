@@ -17,6 +17,8 @@ import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VElementUtil;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.model.provider.ContainerItemProvider;
 import org.eclipse.emf.ecp.view.spi.section.model.VSection;
@@ -133,11 +135,14 @@ public class SectionItemProvider extends ContainerItemProvider {
 	 * <!-- begin-user-doc
 	 * --> <!-- end-user-doc -->
 	 *
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String getText(Object object) {
-		final String label = ((VSection) object).getName();
+		String label = ((VSection) object).getName();
+		if (label == null) {
+			label = VElementUtil.getCleanName(VElement.class.cast(object));
+		}
 		return label == null || label.length() == 0 ?
 			getString("_UI_Section_type") : //$NON-NLS-1$
 			getString("_UI_Section_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$

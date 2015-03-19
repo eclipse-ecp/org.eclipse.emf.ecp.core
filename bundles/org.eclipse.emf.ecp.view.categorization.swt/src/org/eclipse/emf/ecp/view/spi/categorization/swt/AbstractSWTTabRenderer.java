@@ -76,7 +76,7 @@ public abstract class AbstractSWTTabRenderer<VELEMENT extends VElement> extends 
 			final CTabItem item = new CTabItem(folder, SWT.NULL);
 
 			final IObservableValue modelValue = EMFEditObservables.observeValue(
-				AdapterFactoryEditingDomain.getEditingDomainFor(getVElement()), getVElement(),
+				AdapterFactoryEditingDomain.getEditingDomainFor(categorization), categorization,
 				VViewPackage.eINSTANCE.getElement_Label());
 			final IObservableValue targetValue = SWTObservables.observeText(item);
 			dataBindingContext.bindValue(targetValue, modelValue);

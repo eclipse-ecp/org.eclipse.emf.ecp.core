@@ -147,7 +147,7 @@ public class Preview {
 			final VView copy = EcoreUtil.copy(view);
 			clearViewDiagnostics(copy);
 			final ViewModelContext viewModelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(
-				copy, dummyData, previewRefServ);
+				copy, dummyData, previewRefServ, new PreviewLocalizationViewModelService());
 			composite = createComposite(parent);
 			render = ECPSWTViewRenderer.INSTANCE.render(composite, viewModelContext);
 			composite.layout();

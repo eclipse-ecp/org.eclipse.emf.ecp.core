@@ -82,7 +82,13 @@ public class LocalizationViewModelService implements ViewModelService {
 		}
 	}
 
-	private void localize(LocalizationAdapter localizationAdapter, final VElement vElement) {
+	/**
+	 * The actual method localizing a {@link VElement}.
+	 * 
+	 * @param localizationAdapter The LocalizationAdapter to use for localization
+	 * @param vElement The {@link VElement} to localize
+	 */
+	protected void localize(LocalizationAdapter localizationAdapter, final VElement vElement) {
 		if (vElement.getName() == null) {
 			vElement.setLabel(""); //$NON-NLS-1$
 		} else if (vElement.getName().startsWith("%") && localizationAdapter != null) { //$NON-NLS-1$
