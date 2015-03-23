@@ -21,7 +21,6 @@ import org.eclipse.emf.ecore.EFactory;
  *
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage
  * @generated
- * @since 1.2
  */
 public interface VViewFactory extends EFactory {
 	/**
@@ -44,6 +43,16 @@ public interface VViewFactory extends EFactory {
 	VDiagnostic createDiagnostic();
 
 	/**
+	 * Returns a new object of class '<em>Domain Model Reference</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return a new object of class '<em>Domain Model Reference</em>'.
+	 * @generated
+	 */
+	VDomainModelReference createDomainModelReference();
+
+	/**
 	 * Returns a new object of class '<em>View</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -64,14 +73,14 @@ public interface VViewFactory extends EFactory {
 	VControl createControl();
 
 	/**
-	 * Returns a new object of class '<em>Feature Path Domain Model Reference</em>'.
+	 * Returns a new object of class '<em>DMR Segment</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
-	 * @return a new object of class '<em>Feature Path Domain Model Reference</em>'.
+	 * @return a new object of class '<em>DMR Segment</em>'.
 	 * @generated
 	 */
-	VFeaturePathDomainModelReference createFeaturePathDomainModelReference();
+	VDMRSegment createDMRSegment();
 
 	/**
 	 * Returns the package supported by this factory.

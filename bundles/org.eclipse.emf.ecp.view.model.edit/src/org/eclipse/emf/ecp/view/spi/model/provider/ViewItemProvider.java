@@ -31,9 +31,8 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.spi.model.VView} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
- *
+ * 
  * @generated
- * @since 1.2
  */
 public class ViewItemProvider
 	extends ElementItemProvider {
@@ -41,7 +40,7 @@ public class ViewItemProvider
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public ViewItemProvider(AdapterFactory adapterFactory) {
@@ -52,7 +51,7 @@ public class ViewItemProvider
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -71,7 +70,7 @@ public class ViewItemProvider
 	 * This adds a property descriptor for the Root EClass feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected void addRootEClassPropertyDescriptor(Object object) {
@@ -121,7 +120,7 @@ public class ViewItemProvider
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -137,7 +136,7 @@ public class ViewItemProvider
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -152,7 +151,7 @@ public class ViewItemProvider
 	 * This returns View.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -183,7 +182,7 @@ public class ViewItemProvider
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -207,7 +206,7 @@ public class ViewItemProvider
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override

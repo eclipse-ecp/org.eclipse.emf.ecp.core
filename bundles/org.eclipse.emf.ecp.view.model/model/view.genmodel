@@ -8,7 +8,7 @@
     nonNLSMarkers="true" codeFormatting="true" commentFormatting="true" testSuiteClass="org.eclipse.emf.ecp.view.model.tests.ViewAllTests"
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
     editPluginID="org.eclipse.emf.ecp.view.model.edit" editorPluginID="org.eclipse.emf.ecp.view.model.editor"
-    language="" usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore"
+    language=""
     interfaceNamePattern="V{0}" classNamePattern="V{0}Impl" importOrganizing="true">
   <foreignModel>view.ecore</foreignModel>
   <genPackages prefix="View" basePackage="org.eclipse.emf.ecp.view.spi" disposableProviderFactory="true"

@@ -33,7 +33,6 @@ import org.eclipse.emf.ecore.EClass;
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getView()
  * @model
  * @generated
- * @since 1.2
  */
 public interface VView extends VElement {
 	/**
@@ -83,8 +82,7 @@ public interface VView extends VElement {
 	EList<VContainedElement> getChildren();
 
 	/**
-	 * Returns the value of the '<em><b>Ecore Path</b></em>' attribute. If the value is null, then the containing
-	 * EPackage of the rootEClass must be registered by default in the EPackage registry.
+	 * Returns the value of the '<em><b>Ecore Path</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Ecore Path</em>' attribute isn't clear, there really should be more of a description
@@ -97,7 +95,6 @@ public interface VView extends VElement {
 	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getView_EcorePath()
 	 * @model required="true"
 	 * @generated
-	 * @since 1.3
 	 */
 	String getEcorePath();
 
@@ -110,7 +107,6 @@ public interface VView extends VElement {
 	 * @param value the new value of the '<em>Ecore Path</em>' attribute.
 	 * @see #getEcorePath()
 	 * @generated
-	 * @since 1.3
 	 */
 	void setEcorePath(String value);
 

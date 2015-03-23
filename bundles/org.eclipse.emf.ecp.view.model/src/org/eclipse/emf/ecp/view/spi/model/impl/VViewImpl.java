@@ -42,7 +42,6 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * </p>
  *
  * @generated
- * @since 1.2
  */
 public class VViewImpl extends VElementImpl implements VView {
 	/**
@@ -75,7 +74,6 @@ public class VViewImpl extends VElementImpl implements VView {
 	 * @see #getEcorePath()
 	 * @generated
 	 * @ordered
-	 * @since 1.3
 	 */
 	protected static final String ECORE_PATH_EDEFAULT = null;
 
@@ -87,7 +85,6 @@ public class VViewImpl extends VElementImpl implements VView {
 	 * @see #getEcorePath()
 	 * @generated
 	 * @ordered
-	 * @since 1.3
 	 */
 	protected String ecorePath = ECORE_PATH_EDEFAULT;
 
@@ -182,7 +179,6 @@ public class VViewImpl extends VElementImpl implements VView {
 	 * <!-- end-user-doc -->
 	 *
 	 * @generated
-	 * @since 1.3
 	 */
 	@Override
 	public String getEcorePath()
@@ -195,7 +191,6 @@ public class VViewImpl extends VElementImpl implements VView {
 	 * <!-- end-user-doc -->
 	 *
 	 * @generated
-	 * @since 1.3
 	 */
 	@Override
 	public void setEcorePath(String newEcorePath)

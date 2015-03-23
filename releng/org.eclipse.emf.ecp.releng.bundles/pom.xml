@@ -252,6 +252,7 @@
 		
 		<!-- Core Services -->
 		<module>../../bundles/org.eclipse.emfforms.core.services.databinding</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.databinding.segment</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.databinding.featurepath</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.databinding.index</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.databinding.mapping</module>

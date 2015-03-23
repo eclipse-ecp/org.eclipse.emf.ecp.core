@@ -28,7 +28,6 @@ import org.eclipse.emf.common.util.EList;
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getContainer()
  * @model abstract="true"
  * @generated
- * @since 1.2
  */
 public interface VContainer extends VElement
 {

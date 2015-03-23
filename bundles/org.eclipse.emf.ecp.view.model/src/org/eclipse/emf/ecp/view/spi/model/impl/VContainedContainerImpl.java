@@ -36,7 +36,6 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * </p>
  *
  * @generated
- * @since 1.4
  */
 public abstract class VContainedContainerImpl extends VContainedElementImpl implements VContainedContainer {
 	/**

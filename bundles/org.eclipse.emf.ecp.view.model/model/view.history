@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:history="http://www.eclipse.org/emf/edapt/history/0.3">
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:history="http://www.eclipse.org/emf/edapt/history/0.3">
   <releases date="2014-10-16T15:50:12.192+0200" label="140">
     <changes xsi:type="history:CompositeChange">
       <changes xsi:type="history:Create" element="view.ecore#/">
@@ -25,7 +25,7 @@
         <changes xsi:type="history:Set" element="view.ecore#//Diagnostic/diagnostics"
             featureName="transient" dataValue="true" oldDataValue="false"/>
         <changes xsi:type="history:Set" element="view.ecore#//Diagnostic/diagnostics"
-            featureName="eType" referenceValue="../../org.eclipse.emf.ecore/model/Ecore.ecore#//EJavaObject"/>
+            featureName="eType" referenceValue="http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
       </changes>
       <changes xsi:type="history:Create" target="view.ecore#/" referenceName="eClassifiers"
           element="view.ecore#//Attachment">
@@ -44,29 +44,29 @@
             featureName="interface" dataValue="true" oldDataValue="false"/>
       </changes>
       <changes xsi:type="history:Create" target="view.ecore#/" referenceName="eClassifiers"
-          element="view.ecore#//FeaturePathDomainModelReference">
-        <changes xsi:type="history:Set" element="view.ecore#//FeaturePathDomainModelReference"
+          element="#//@releases.1/@changes.2/@element">
+        <changes xsi:type="history:Set" element="#//@releases.1/@changes.2/@element"
             featureName="name" dataValue="FeaturePathDomainModelReference"/>
-        <changes xsi:type="history:Add" element="view.ecore#//FeaturePathDomainModelReference"
+        <changes xsi:type="history:Add" element="#//@releases.1/@changes.2/@element"
             featureName="eSuperTypes" referenceValue="view.ecore#//DomainModelReference"/>
       </changes>
-      <changes xsi:type="history:Create" target="view.ecore#//FeaturePathDomainModelReference"
-          referenceName="eStructuralFeatures" element="view.ecore#//FeaturePathDomainModelReference/domainModelEFeature">
-        <changes xsi:type="history:Set" element="view.ecore#//FeaturePathDomainModelReference/domainModelEFeature"
+      <changes xsi:type="history:Create" target="#//@releases.1/@changes.2/@element"
+          referenceName="eStructuralFeatures" element="#//@releases.1/@changes.2/@element/domainModelEFeature">
+        <changes xsi:type="history:Set" element="#//@releases.1/@changes.2/@element/domainModelEFeature"
             featureName="name" dataValue="domainModelEFeature"/>
-        <changes xsi:type="history:Set" element="view.ecore#//FeaturePathDomainModelReference/domainModelEFeature"
+        <changes xsi:type="history:Set" element="#//@releases.1/@changes.2/@element/domainModelEFeature"
             featureName="lowerBound" dataValue="1" oldDataValue="0"/>
-        <changes xsi:type="history:Set" element="view.ecore#//FeaturePathDomainModelReference/domainModelEFeature"
-            featureName="eType" referenceValue="../../org.eclipse.emf.ecore/model/Ecore.ecore#//EStructuralFeature"/>
+        <changes xsi:type="history:Set" element="#//@releases.1/@changes.2/@element/domainModelEFeature"
+            featureName="eType" referenceValue="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature"/>
       </changes>
-      <changes xsi:type="history:Create" target="view.ecore#//FeaturePathDomainModelReference"
-          referenceName="eStructuralFeatures" element="view.ecore#//FeaturePathDomainModelReference/domainModelEReferencePath">
-        <changes xsi:type="history:Set" element="view.ecore#//FeaturePathDomainModelReference/domainModelEReferencePath"
+      <changes xsi:type="history:Create" target="#//@releases.1/@changes.2/@element"
+          referenceName="eStructuralFeatures" element="#//@releases.1/@changes.2/@element/domainModelEReferencePath">
+        <changes xsi:type="history:Set" element="#//@releases.1/@changes.2/@element/domainModelEReferencePath"
             featureName="name" dataValue="domainModelEReferencePath"/>
-        <changes xsi:type="history:Set" element="view.ecore#//FeaturePathDomainModelReference/domainModelEReferencePath"
+        <changes xsi:type="history:Set" element="#//@releases.1/@changes.2/@element/domainModelEReferencePath"
             featureName="upperBound" dataValue="-1" oldDataValue="1"/>
-        <changes xsi:type="history:Set" element="view.ecore#//FeaturePathDomainModelReference/domainModelEReferencePath"
-            featureName="eType" referenceValue="../../org.eclipse.emf.ecore/model/Ecore.ecore#//EReference"/>
+        <changes xsi:type="history:Set" element="#//@releases.1/@changes.2/@element/domainModelEReferencePath"
+            featureName="eType" referenceValue="http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
       </changes>
       <changes xsi:type="history:Create" target="view.ecore#/" referenceName="eClassifiers"
           element="view.ecore#//Element">
@@ -80,7 +80,7 @@
         <changes xsi:type="history:Set" element="view.ecore#//Element/name" featureName="name"
             dataValue="name"/>
         <changes xsi:type="history:Set" element="view.ecore#//Element/name" featureName="eType"
-            referenceValue="../../org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+            referenceValue="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       </changes>
       <changes xsi:type="history:Create" target="view.ecore#//Element" referenceName="eStructuralFeatures"
           element="view.ecore#//Element/visible">
@@ -111,7 +111,7 @@
         <changes xsi:type="history:Set" element="view.ecore#//Element/readonly" featureName="defaultValueLiteral"
             dataValue="false"/>
         <changes xsi:type="history:Set" element="view.ecore#//Element/readonly" featureName="eType"
-            referenceValue="../../org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
+            referenceValue="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
       </changes>
       <changes xsi:type="history:Create" target="view.ecore#//Element" referenceName="eStructuralFeatures"
           element="view.ecore#//Element/diagnostic">
@@ -149,7 +149,7 @@
         <changes xsi:type="history:Set" element="view.ecore#//View/rootEClass" featureName="lowerBound"
             dataValue="1" oldDataValue="0"/>
         <changes xsi:type="history:Set" element="view.ecore#//View/rootEClass" featureName="eType"
-            referenceValue="../../org.eclipse.emf.ecore/model/Ecore.ecore#//EClass"/>
+            referenceValue="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
       </changes>
       <changes xsi:type="history:Create" target="view.ecore#//View" referenceName="eStructuralFeatures"
           element="view.ecore#//View/ecorePath">
@@ -158,7 +158,7 @@
         <changes xsi:type="history:Set" element="view.ecore#//View/ecorePath" featureName="lowerBound"
             dataValue="1" oldDataValue="0"/>
         <changes xsi:type="history:Set" element="view.ecore#//View/ecorePath" featureName="eType"
-            referenceValue="../../org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+            referenceValue="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       </changes>
       <changes xsi:type="history:Create" target="view.ecore#/" referenceName="eClassifiers"
           element="view.ecore#//ContainedElement">
@@ -271,33 +271,151 @@
             featureName="instanceTypeName" dataValue="org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener"/>
       </changes>
       <changes xsi:type="history:Create" target="view.ecore#//DomainModelReference"
-          referenceName="eStructuralFeatures" element="view.ecore#//DomainModelReference/changeListener">
-        <changes xsi:type="history:Set" element="view.ecore#//DomainModelReference/changeListener"
+          referenceName="eStructuralFeatures" element="#//@releases.1/@changes.3/@changes.0/@element">
+        <changes xsi:type="history:Set" element="#//@releases.1/@changes.3/@changes.0/@element"
             featureName="name" dataValue="changeListener"/>
-        <changes xsi:type="history:Set" element="view.ecore#//DomainModelReference/changeListener"
+        <changes xsi:type="history:Set" element="#//@releases.1/@changes.3/@changes.0/@element"
             featureName="upperBound" dataValue="-1" oldDataValue="1"/>
-        <changes xsi:type="history:Set" element="view.ecore#//DomainModelReference/changeListener"
+        <changes xsi:type="history:Set" element="#//@releases.1/@changes.3/@changes.0/@element"
             featureName="transient" dataValue="true" oldDataValue="false"/>
-        <changes xsi:type="history:Set" element="view.ecore#//DomainModelReference/changeListener"
+        <changes xsi:type="history:Set" element="#//@releases.1/@changes.3/@changes.0/@element"
             featureName="eType" referenceValue="view.ecore#//DomainModelReferenceChangeListener"/>
       </changes>
     </changes>
     <changes xsi:type="history:CompositeChange">
-      <changes xsi:type="history:Set" element="view.ecore#//FeaturePathDomainModelReference/domainModelEReferencePath"
+      <changes xsi:type="history:Set" element="#//@releases.1/@changes.2/@element/domainModelEReferencePath"
           featureName="unique" dataValue="false" oldDataValue="true"/>
     </changes>
     <changes xsi:type="history:CompositeChange">
-      <changes xsi:type="history:Create" target="view.ecore#//FeaturePathDomainModelReference"
-          referenceName="eAnnotations" element="view.ecore#//FeaturePathDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%"/>
-      <changes xsi:type="history:Set" element="view.ecore#//FeaturePathDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%"
+      <changes xsi:type="history:Create" target="#//@releases.1/@changes.2/@element"
+          referenceName="eAnnotations" element="#//@releases.1/@changes.2/@element/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%"/>
+      <changes xsi:type="history:Set" element="#//@releases.1/@changes.2/@element/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%"
           featureName="source" dataValue="http://www.eclipse.org/emf/2002/Ecore"/>
-      <changes xsi:type="history:Create" target="view.ecore#//FeaturePathDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%"
-          referenceName="details" element="view.ecore#//FeaturePathDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%/@details.0"/>
-      <changes xsi:type="history:Set" element="view.ecore#//FeaturePathDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%/@details.0"
+      <changes xsi:type="history:Create" target="#//@releases.1/@changes.2/@element/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%"
+          referenceName="details" element="#//@releases.1/@changes.2/@element/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%/@details.0"/>
+      <changes xsi:type="history:Set" element="#//@releases.1/@changes.2/@element/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%/@details.0"
           featureName="key" dataValue="constraints"/>
-      <changes xsi:type="history:Set" element="view.ecore#//FeaturePathDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%/@details.0"
+      <changes xsi:type="history:Set" element="#//@releases.1/@changes.2/@element/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%/@details.0"
           featureName="value" dataValue="resolveable"/>
     </changes>
+  </releases>
+  <releases date="2015-03-23T12:43:45.591+0100" label="model/200">
+    <changes xsi:type="history:OperationChange">
+      <changes xsi:type="history:Create" target="view.ecore#/" referenceName="eClassifiers"
+          element="view.ecore#//DMRSegment">
+        <changes xsi:type="history:Set" element="view.ecore#//DMRSegment" featureName="name"
+            dataValue="DMRSegment"/>
+      </changes>
+      <operation name="newClass">
+        <parameters name="ePackage">
+          <referenceValue element="view.ecore#/"/>
+        </parameters>
+        <parameters name="name">
+          <dataValue>DMRSegment</dataValue>
+        </parameters>
+        <parameters name="superClasses"/>
+        <parameters name="abstr">
+          <dataValue>false</dataValue>
+        </parameters>
+      </operation>
+    </changes>
+    <changes xsi:type="history:OperationChange">
+      <changes xsi:type="history:Create" target="view.ecore#//DMRSegment" referenceName="eStructuralFeatures"
+          element="view.ecore#//DMRSegment/propertyName">
+        <changes xsi:type="history:Set" element="view.ecore#//DMRSegment/propertyName"
+            featureName="name" dataValue="propertyName"/>
+        <changes xsi:type="history:Set" element="view.ecore#//DMRSegment/propertyName"
+            featureName="lowerBound" dataValue="1" oldDataValue="0"/>
+        <changes xsi:type="history:Set" element="view.ecore#//DMRSegment/propertyName"
+            featureName="eType" referenceValue="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </changes>
+      <operation name="newAttribute">
+        <parameters name="eClass">
+          <referenceValue element="view.ecore#//DMRSegment"/>
+        </parameters>
+        <parameters name="name">
+          <dataValue>propertyName</dataValue>
+        </parameters>
+        <parameters name="type">
+          <referenceValue element="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </parameters>
+        <parameters name="lowerBound">
+          <dataValue>1</dataValue>
+        </parameters>
+        <parameters name="upperBound">
+          <dataValue>1</dataValue>
+        </parameters>
+        <parameters name="defaultValue">
+          <dataValue xsi:nil="true"/>
+        </parameters>
+      </operation>
+    </changes>
+    <changes xsi:type="history:Delete" target="view.ecore#/" referenceName="eClassifiers">
+      <element xsi:type="ecore:EClass" name="FeaturePathDomainModelReference" eSuperTypes="view.ecore#//DomainModelReference">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+          <details key="constraints" value="resolveable"/>
+        </eAnnotations>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="domainModelEFeature"
+            lowerBound="1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature"/>
+        <eStructuralFeatures xsi:type="ecore:EReference" name="domainModelEReferencePath"
+            unique="false" upperBound="-1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
+      </element>
+    </changes>
+    <changes xsi:type="history:OperationChange">
+      <changes xsi:type="history:Delete" target="view.ecore#//DomainModelReference"
+          referenceName="eStructuralFeatures">
+        <element xsi:type="ecore:EAttribute" name="changeListener" upperBound="-1"
+            eType="ecore:EDataType view.ecore#//DomainModelReferenceChangeListener"
+            transient="true"/>
+      </changes>
+      <operation name="deleteFeature2">
+        <parameters name="feature">
+          <referenceValue element="#//@releases.1/@changes.3/@changes.0/@element"/>
+        </parameters>
+      </operation>
+    </changes>
+    <changes xsi:type="history:Set" element="view.ecore#//DomainModelReference" featureName="interface"
+        dataValue="false" oldDataValue="true"/>
+    <changes xsi:type="history:Set" element="view.ecore#//DomainModelReference" featureName="abstract"
+        dataValue="false" oldDataValue="true"/>
+    <changes xsi:type="history:OperationChange">
+      <changes xsi:type="history:Create" target="view.ecore#//DomainModelReference"
+          referenceName="eStructuralFeatures" element="view.ecore#//DomainModelReference/segments">
+        <changes xsi:type="history:Set" element="view.ecore#//DomainModelReference/segments"
+            featureName="name" dataValue="segments"/>
+        <changes xsi:type="history:Set" element="view.ecore#//DomainModelReference/segments"
+            featureName="lowerBound" dataValue="1" oldDataValue="0"/>
+        <changes xsi:type="history:Set" element="view.ecore#//DomainModelReference/segments"
+            featureName="upperBound" dataValue="-1" oldDataValue="1"/>
+        <changes xsi:type="history:Set" element="view.ecore#//DomainModelReference/segments"
+            featureName="containment" dataValue="true" oldDataValue="false"/>
+        <changes xsi:type="history:Set" element="view.ecore#//DomainModelReference/segments"
+            featureName="eType" referenceValue="view.ecore#//DMRSegment"/>
+      </changes>
+      <operation name="newReference">
+        <parameters name="eClass">
+          <referenceValue element="view.ecore#//DomainModelReference"/>
+        </parameters>
+        <parameters name="name">
+          <dataValue>segments</dataValue>
+        </parameters>
+        <parameters name="type">
+          <referenceValue element="view.ecore#//DMRSegment"/>
+        </parameters>
+        <parameters name="lowerBound">
+          <dataValue>1</dataValue>
+        </parameters>
+        <parameters name="upperBound">
+          <dataValue>-1</dataValue>
+        </parameters>
+        <parameters name="containment">
+          <dataValue>true</dataValue>
+        </parameters>
+        <parameters name="opposite"/>
+      </operation>
+    </changes>
+    <changes xsi:type="history:Set" element="view.ecore#/" featureName="nsURI" dataValue="http://org/eclipse/emf/ecp/view/model/200"
+        oldDataValue="http://org/eclipse/emf/ecp/view/model"/>
   </releases>
   <releases/>
 </history:History>

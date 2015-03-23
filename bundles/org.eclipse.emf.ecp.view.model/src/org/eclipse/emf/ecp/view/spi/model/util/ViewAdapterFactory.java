@@ -20,10 +20,10 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedContainer;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VDMRSegment;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 
@@ -34,7 +34,6 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  *
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage
  * @generated
- * @since 1.2
  */
 public class ViewAdapterFactory extends AdapterFactoryImpl {
 	/**
@@ -108,12 +107,6 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 		}
 
 		@Override
-		public Adapter caseFeaturePathDomainModelReference(VFeaturePathDomainModelReference object)
-		{
-			return createFeaturePathDomainModelReferenceAdapter();
-		}
-
-		@Override
 		public Adapter caseElement(VElement object)
 		{
 			return createElementAdapter();
@@ -147,6 +140,12 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 		public Adapter caseControl(VControl object)
 		{
 			return createControlAdapter();
+		}
+
+		@Override
+		public Adapter caseDMRSegment(VDMRSegment object)
+		{
+			return createDMRSegmentAdapter();
 		}
 
 		@Override
@@ -253,6 +252,23 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VDMRSegment
+	 * <em>DMR Segment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VDMRSegment
+	 * @generated
+	 */
+	public Adapter createDMRSegmentAdapter()
+	{
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VContainer
 	 * <em>Container</em>}'.
 	 * <!-- begin-user-doc -->
@@ -280,7 +296,6 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VContainedContainer
 	 * @generated
-	 * @since 1.4
 	 */
 	public Adapter createContainedContainerAdapter()
 	{
@@ -300,24 +315,6 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createDomainModelReferenceAdapter()
-	{
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference
-	 * <em>Feature Path Domain Model Reference</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 *
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference
-	 * @generated
-	 */
-	public Adapter createFeaturePathDomainModelReferenceAdapter()
 	{
 		return null;
 	}

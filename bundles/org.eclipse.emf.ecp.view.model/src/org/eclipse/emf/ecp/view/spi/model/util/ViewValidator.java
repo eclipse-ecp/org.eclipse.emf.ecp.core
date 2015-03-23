@@ -17,10 +17,8 @@ import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.ResourceLocator;
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
@@ -33,7 +31,6 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 
@@ -134,9 +131,6 @@ public class ViewValidator extends EObjectValidator
 			return validateAttachment((VAttachment) value, diagnostics, context);
 		case VViewPackage.DOMAIN_MODEL_REFERENCE:
 			return validateDomainModelReference((VDomainModelReference) value, diagnostics, context);
-		case VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE:
-			return validateFeaturePathDomainModelReference((VFeaturePathDomainModelReference) value, diagnostics,
-				context);
 		case VViewPackage.ELEMENT:
 			return validateElement((VElement) value, diagnostics, context);
 		case VViewPackage.VIEW:
@@ -192,155 +186,6 @@ public class ViewValidator extends EObjectValidator
 	{
 		return validate_EveryDefaultConstraint(domainModelReference, diagnostics, context);
 	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	public boolean validateFeaturePathDomainModelReference(
-		VFeaturePathDomainModelReference featurePathDomainModelReference, DiagnosticChain diagnostics,
-		Map<Object, Object> context)
-	{
-		if (!validate_NoCircularContainment(featurePathDomainModelReference, diagnostics, context)) {
-			return false;
-		}
-		boolean result = validate_EveryMultiplicityConforms(featurePathDomainModelReference, diagnostics, context);
-		if (result || diagnostics != null) {
-			result &= validate_EveryDataValueConforms(featurePathDomainModelReference, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
-			result &= validate_EveryReferenceIsContained(featurePathDomainModelReference, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
-			result &= validate_EveryBidirectionalReferenceIsPaired(featurePathDomainModelReference, diagnostics,
-				context);
-		}
-		if (result || diagnostics != null) {
-			result &= validate_EveryProxyResolves(featurePathDomainModelReference, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
-			result &= validate_UniqueID(featurePathDomainModelReference, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
-			result &= validate_EveryKeyUnique(featurePathDomainModelReference, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
-			result &= validate_EveryMapEntryUnique(featurePathDomainModelReference, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
-			result &= validateFeaturePathDomainModelReference_resolveable(featurePathDomainModelReference, diagnostics,
-				context);
-		}
-		return result;
-	}
-
-	/**
-	 * Validates the resolveable constraint of '<em>Feature Path Domain Model Reference</em>'.
-	 * <!-- begin-user-doc -->
-	 *
-	 * @param featurePathDomainModelReference the dmr to check
-	 * @param diagnostics the chain
-	 * @param context the validation context
-	 * @return the result
-	 *         <!-- end-user-doc -->
-	 *
-	 * @generated NOT
-	 */
-	// BEGIN COMPLEX CODE
-	public boolean validateFeaturePathDomainModelReference_resolveable(
-		VFeaturePathDomainModelReference featurePathDomainModelReference, DiagnosticChain diagnostics,
-		Map<Object, Object> context) {
-
-		if (VDomainModelReference.class.isInstance(featurePathDomainModelReference.eContainer())
-			&& featurePathDomainModelReference.eContainmentFeature().isMany()) {
-			final VDomainModelReference parent = VDomainModelReference.class.cast(featurePathDomainModelReference
-				.eContainer());
-			final EStructuralFeature feature = parent.getEStructuralFeatureIterator().next();
-			if (!EReference.class.isInstance(feature)) {
-				return true;
-			}
-			context.put(ECLASS_KEY, EReference.class.cast(feature).getEReferenceType());
-		}
-
-		if (featurePathDomainModelReference.getDomainModelEFeature() == null) {
-			if (featurePathDomainModelReference.eContainer() != null) {
-				diagnostics
-					.add(createDiagnostic(Diagnostic.ERROR, 0, "No EFeature set.", //$NON-NLS-1$
-						featurePathDomainModelReference.eContainer(),
-						featurePathDomainModelReference.eContainingFeature()));
-			}
-			return false;
-		}
-
-		// identify root eclass
-		final VView parentView = getParentView(featurePathDomainModelReference);
-		EClass rootEClass = null;
-		if (context.containsKey(ECLASS_KEY)) {
-			rootEClass = (EClass) context.get(ECLASS_KEY);
-		} else if (parentView != null) {
-			rootEClass = parentView.getRootEClass();
-			if (rootEClass == null) {
-				if (diagnostics != null) {
-					diagnostics.add(createDiagnostic(Diagnostic.WARNING, 0,
-						"Parent view has no root EClass set. The reference may be unresolveable.", //$NON-NLS-1$
-						featurePathDomainModelReference.eContainer(),
-						featurePathDomainModelReference.eContainingFeature()));
-				}
-			}
-		}
-		if (rootEClass == null) {
-			if (featurePathDomainModelReference.getDomainModelEReferencePath().isEmpty()) {
-				rootEClass = (EClass) featurePathDomainModelReference.getDomainModelEFeature().eContainer();
-			} else {
-				rootEClass = (EClass) featurePathDomainModelReference.getDomainModelEReferencePath().get(0)
-					.eContainer();
-			}
-		}
-
-		// test if path resolveable
-		EClass current = rootEClass;
-		for (final EReference reference : featurePathDomainModelReference.getDomainModelEReferencePath()) {
-			if (!current.getEAllReferences().contains(reference)) {
-				if (diagnostics != null) {
-					final String message = "Domain model reference is unresolveable. Failed on reference: " //$NON-NLS-1$
-						+ reference.getName();
-					if (featurePathDomainModelReference.eContainer() != null) {
-						diagnostics.add(createDiagnostic(Diagnostic.ERROR, 0, message
-							, featurePathDomainModelReference.eContainer(),
-							featurePathDomainModelReference.eContainingFeature()));
-					}
-					diagnostics.add(createDiagnostic(Diagnostic.ERROR, 0, message, featurePathDomainModelReference,
-						VViewPackage.eINSTANCE.getFeaturePathDomainModelReference_DomainModelEReferencePath()));
-				}
-				return false;
-			}
-			current = reference.getEReferenceType();
-		}
-
-		// test if efeature resolveable
-		if (!current.getEAllStructuralFeatures().contains(
-			featurePathDomainModelReference.getDomainModelEFeature())) {
-			if (diagnostics != null) {
-				final String message = "Domain model reference is unresolveable. Failed on domain model feature: " //$NON-NLS-1$
-					+ featurePathDomainModelReference.getDomainModelEFeature().getName();
-				if (featurePathDomainModelReference.eContainer() != null) {
-					diagnostics
-						.add(createDiagnostic(Diagnostic.ERROR, 0, message,
-							featurePathDomainModelReference.eContainer(),
-							featurePathDomainModelReference.eContainingFeature()));
-				}
-				diagnostics.add(createDiagnostic(Diagnostic.ERROR, 0, message, featurePathDomainModelReference,
-					VViewPackage.eINSTANCE.getFeaturePathDomainModelReference_DomainModelEFeature()));
-			}
-			return false;
-		}
-
-		return true;
-	}
-
-	// END COMPLEX CODE
 
 	private Diagnostic createDiagnostic(int severity, int code, String message, EObject object,
 		EStructuralFeature feature) {

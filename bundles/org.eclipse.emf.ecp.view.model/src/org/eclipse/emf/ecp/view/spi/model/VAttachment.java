@@ -22,7 +22,6 @@ import org.eclipse.emf.ecore.EObject;
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getAttachment()
  * @model abstract="true"
  * @generated
- * @since 1.2
  */
 public interface VAttachment extends EObject
 {

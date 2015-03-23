@@ -35,14 +35,17 @@ public final class ModelReferenceHelper {
 	 * @return the created {@link VDomainModelReference}
 	 */
 	public static VDomainModelReference createDomainModelReference(EStructuralFeature feature) {
-		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
-			.createFeaturePathDomainModelReference();
-		domainModelReference.setDomainModelEFeature(feature);
+		final VDomainModelReference domainModelReference = VViewFactory.eINSTANCE
+			.createDomainModelReference();
+		final VDMRSegment segment = VViewFactory.eINSTANCE.createDMRSegment();
+		segment.setPropertyName(feature.getName());
+		domainModelReference.getSegments().add(segment);
 		return domainModelReference;
 	}
 
 	/**
-	 * Create a simple {@link VDomainModelReference} based on a {@link EStructuralFeature}.
+	 * Create a simple {@link VDomainModelReference} based on a {@link EStructuralFeature} and a collection of
+	 * {@link EReference EReferences}.
 	 *
 	 * @param feature the feature to use for the {@link VDomainModelReference}
 	 * @param eReferences the collection of {@link EReference EReferences} to use for the {@link VDomainModelReference}
@@ -54,10 +57,16 @@ public final class ModelReferenceHelper {
 		if (eReferences == null || eReferences.isEmpty()) {
 			return createDomainModelReference(feature);
 		}
-		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
-			.createFeaturePathDomainModelReference();
-		domainModelReference.setDomainModelEFeature(feature);
-		domainModelReference.getDomainModelEReferencePath().addAll(eReferences);
+		final VDomainModelReference domainModelReference = VViewFactory.eINSTANCE
+			.createDomainModelReference();
+		for (final EReference reference : eReferences) {
+			final VDMRSegment segment = VViewFactory.eINSTANCE.createDMRSegment();
+			segment.setPropertyName(reference.getName());
+			domainModelReference.getSegments().add(segment);
+		}
+		final VDMRSegment featureSegment = VViewFactory.eINSTANCE.createDMRSegment();
+		featureSegment.setPropertyName(feature.getName());
+		domainModelReference.getSegments().add(featureSegment);
 		return domainModelReference;
 	}
 }

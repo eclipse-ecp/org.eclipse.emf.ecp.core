@@ -19,10 +19,10 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedContainer;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VDMRSegment;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 
@@ -36,7 +36,6 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  *
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage
  * @generated
- * @since 1.2
  */
 public class ViewSwitch<T> extends Switch<T> {
 	/**
@@ -111,17 +110,6 @@ public class ViewSwitch<T> extends Switch<T> {
 			}
 			return result;
 		}
-		case VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE: {
-			final VFeaturePathDomainModelReference featurePathDomainModelReference = (VFeaturePathDomainModelReference) theEObject;
-			T result = caseFeaturePathDomainModelReference(featurePathDomainModelReference);
-			if (result == null) {
-				result = caseDomainModelReference(featurePathDomainModelReference);
-			}
-			if (result == null) {
-				result = defaultCase(theEObject);
-			}
-			return result;
-		}
 		case VViewPackage.ELEMENT: {
 			final VElement element = (VElement) theEObject;
 			T result = caseElement(element);
@@ -189,6 +177,14 @@ public class ViewSwitch<T> extends Switch<T> {
 			if (result == null) {
 				result = caseElement(control);
 			}
+			if (result == null) {
+				result = defaultCase(theEObject);
+			}
+			return result;
+		}
+		case VViewPackage.DMR_SEGMENT: {
+			final VDMRSegment dmrSegment = (VDMRSegment) theEObject;
+			T result = caseDMRSegment(dmrSegment);
 			if (result == null) {
 				result = defaultCase(theEObject);
 			}
@@ -294,7 +290,6 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * @return the result of interpreting the object as an instance of '<em>Contained Container</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
-	 * @since 1.4
 	 */
 	public T caseContainedContainer(VContainedContainer object)
 	{
@@ -318,6 +313,23 @@ public class ViewSwitch<T> extends Switch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>DMR Segment</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 *
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>DMR Segment</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseDMRSegment(VDMRSegment object)
+	{
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Domain Model Reference</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -330,23 +342,6 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseDomainModelReference(VDomainModelReference object)
-	{
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Feature Path Domain Model Reference</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 *
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Feature Path Domain Model Reference</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseFeaturePathDomainModelReference(VFeaturePathDomainModelReference object)
 	{
 		return null;
 	}

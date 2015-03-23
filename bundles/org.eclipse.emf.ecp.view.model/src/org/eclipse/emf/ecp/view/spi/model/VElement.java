@@ -17,21 +17,22 @@ import org.eclipse.emf.ecore.EObject;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Renderable</b></em>'.
- * @since 1.2
- * <!-- end-user-doc -->
  *
- * <p>
- * The following features are supported:
- * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#getName <em>Name</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#getLabel <em>Label</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#isVisible <em>Visible</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#isEnabled <em>Enabled</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#isReadonly <em>Readonly</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#getDiagnostic <em>Diagnostic</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#getAttachments <em>Attachments</em>}</li>
- * </ul>
- * </p>
+ * @since 1.2
+ *        <!-- end-user-doc -->
+ *
+ *        <p>
+ *        The following features are supported:
+ *        <ul>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#getName <em>Name</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#getLabel <em>Label</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#isVisible <em>Visible</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#isEnabled <em>Enabled</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#isReadonly <em>Readonly</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#getDiagnostic <em>Diagnostic</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#getAttachments <em>Attachments</em>}</li>
+ *        </ul>
+ *        </p>
  *
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getElement()
  * @model abstract="true"

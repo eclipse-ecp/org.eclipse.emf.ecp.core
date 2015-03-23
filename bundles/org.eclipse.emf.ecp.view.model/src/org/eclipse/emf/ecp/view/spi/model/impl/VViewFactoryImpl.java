@@ -20,8 +20,9 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VDMRSegment;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
-import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
@@ -31,7 +32,6 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * end-user-doc -->
  *
  * @generated
- * @since 1.2
  */
 public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	/**
@@ -79,12 +79,14 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 		{
 		case VViewPackage.DIAGNOSTIC:
 			return createDiagnostic();
-		case VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE:
-			return createFeaturePathDomainModelReference();
+		case VViewPackage.DOMAIN_MODEL_REFERENCE:
+			return createDomainModelReference();
 		case VViewPackage.VIEW:
 			return createView();
 		case VViewPackage.CONTROL:
 			return createControl();
+		case VViewPackage.DMR_SEGMENT:
+			return createDMRSegment();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -144,6 +146,19 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	}
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public VDomainModelReference createDomainModelReference()
+	{
+		final VDomainModelReferenceImpl domainModelReference = new VDomainModelReferenceImpl();
+		return domainModelReference;
+	}
+
+	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 *
 	 * @generated
@@ -163,6 +178,19 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	public VControl createControl() {
 		final VControlImpl control = new VControlImpl();
 		return control;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public VDMRSegment createDMRSegment()
+	{
+		final VDMRSegmentImpl dmrSegment = new VDMRSegmentImpl();
+		return dmrSegment;
 	}
 
 	/**
@@ -216,19 +244,6 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	public String convertDomainModelReferenceChangeListenerToString(EDataType eDataType, Object instanceValue)
 	{
 		return super.convertToString(eDataType, instanceValue);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	@Override
-	public VFeaturePathDomainModelReference createFeaturePathDomainModelReference()
-	{
-		final VFeaturePathDomainModelReferenceImpl featurePathDomainModelReference = new VFeaturePathDomainModelReferenceImpl();
-		return featurePathDomainModelReference;
 	}
 
 	/**

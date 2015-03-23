@@ -23,9 +23,8 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
  * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.spi.model.VContainedElement} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
- *
+ * 
  * @generated
- * @since 1.2
  */
 public class ContainedElementItemProvider
 	extends ElementItemProvider {
@@ -33,7 +32,7 @@ public class ContainedElementItemProvider
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public ContainedElementItemProvider(AdapterFactory adapterFactory)
@@ -45,7 +44,7 @@ public class ContainedElementItemProvider
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -63,13 +62,13 @@ public class ContainedElementItemProvider
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public String getText(Object object)
 	{
-		final String label = ((VContainedElement) object).getName();
+		String label = ((VContainedElement) object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_ContainedElement_type") : //$NON-NLS-1$
 			getString("_UI_ContainedElement_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
@@ -80,7 +79,7 @@ public class ContainedElementItemProvider
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -95,7 +94,7 @@ public class ContainedElementItemProvider
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override

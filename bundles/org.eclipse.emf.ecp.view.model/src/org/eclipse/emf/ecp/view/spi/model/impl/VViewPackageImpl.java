@@ -19,8 +19,6 @@ import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EValidator;
-import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
@@ -29,14 +27,13 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedContainer;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VDMRSegment;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
-import org.eclipse.emf.ecp.view.spi.model.util.ViewValidator;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Package</b>.
@@ -91,6 +88,14 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 *
 	 * @generated
 	 */
+	private EClass dmrSegmentEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
 	private EClass containerEClass = null;
 
 	/**
@@ -124,14 +129,6 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * @generated
 	 */
 	private EClass domainModelReferenceEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	private EClass featurePathDomainModelReferenceEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -191,26 +188,11 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 		isInited = true;
 
-		// Initialize simple dependencies
-		EcorePackage.eINSTANCE.eClass();
-
 		// Create package meta-data objects
 		theViewPackage.createPackageContents();
 
 		// Initialize created meta-data
 		theViewPackage.initializePackageContents();
-
-		// Register package validator
-		EValidator.Registry.INSTANCE.put
-			(theViewPackage,
-				new EValidator.Descriptor()
-				{
-					@Override
-					public EValidator getEValidator()
-					{
-						return ViewValidator.INSTANCE;
-					}
-				});
 
 		// Mark meta-data to indicate it can't be changed
 		theViewPackage.freeze();
@@ -425,6 +407,30 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * @generated
 	 */
 	@Override
+	public EClass getDMRSegment()
+	{
+		return dmrSegmentEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EAttribute getDMRSegment_PropertyName()
+	{
+		return (EAttribute) dmrSegmentEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
 	public EClass getContainer()
 	{
 		return containerEClass;
@@ -507,51 +513,14 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 *
-	 * @since 1.3
-	 *        <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EAttribute getDomainModelReference_ChangeListener()
-	{
-		return (EAttribute) domainModelReferenceEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
 	@Override
-	public EClass getFeaturePathDomainModelReference()
+	public EReference getDomainModelReference_Segments()
 	{
-		return featurePathDomainModelReferenceEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	@Override
-	public EReference getFeaturePathDomainModelReference_DomainModelEFeature()
-	{
-		return (EReference) featurePathDomainModelReferenceEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	@Override
-	public EReference getFeaturePathDomainModelReference_DomainModelEReferencePath()
-	{
-		return (EReference) featurePathDomainModelReferenceEClass.getEStructuralFeatures().get(1);
+		return (EReference) domainModelReferenceEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -605,13 +574,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 		attachmentEClass = createEClass(ATTACHMENT);
 
 		domainModelReferenceEClass = createEClass(DOMAIN_MODEL_REFERENCE);
-		createEAttribute(domainModelReferenceEClass, DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER);
-
-		featurePathDomainModelReferenceEClass = createEClass(FEATURE_PATH_DOMAIN_MODEL_REFERENCE);
-		createEReference(featurePathDomainModelReferenceEClass,
-			FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE);
-		createEReference(featurePathDomainModelReferenceEClass,
-			FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH);
+		createEReference(domainModelReferenceEClass, DOMAIN_MODEL_REFERENCE__SEGMENTS);
 
 		elementEClass = createEClass(ELEMENT);
 		createEAttribute(elementEClass, ELEMENT__NAME);
@@ -637,6 +600,9 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 		controlEClass = createEClass(CONTROL);
 		createEAttribute(controlEClass, CONTROL__LABEL_ALIGNMENT);
 		createEReference(controlEClass, CONTROL__DOMAIN_MODEL_REFERENCE);
+
+		dmrSegmentEClass = createEClass(DMR_SEGMENT);
+		createEAttribute(dmrSegmentEClass, DMR_SEGMENT__PROPERTY_NAME);
 
 		// Create enums
 		labelAlignmentEEnum = createEEnum(LABEL_ALIGNMENT);
@@ -670,16 +636,11 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 		setNsPrefix(eNS_PREFIX);
 		setNsURI(eNS_URI);
 
-		// Obtain other dependent packages
-		final EcorePackage theEcorePackage = (EcorePackage) EPackage.Registry.INSTANCE
-			.getEPackage(EcorePackage.eNS_URI);
-
 		// Create type parameters
 
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		featurePathDomainModelReferenceEClass.getESuperTypes().add(getDomainModelReference());
 		viewEClass.getESuperTypes().add(getElement());
 		containedElementEClass.getESuperTypes().add(getElement());
 		containerEClass.getESuperTypes().add(getElement());
@@ -692,36 +653,24 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 			"Diagnostic", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(
 			getDiagnostic_Diagnostics(),
-			theEcorePackage.getEJavaObject(),
+			ecorePackage.getEJavaObject(),
 			"diagnostics", null, 0, -1, VDiagnostic.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(attachmentEClass, VAttachment.class,
 			"Attachment", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		initEClass(domainModelReferenceEClass, VDomainModelReference.class,
-			"DomainModelReference", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(
-			getDomainModelReference_ChangeListener(),
-			getDomainModelReferenceChangeListener(),
-			"changeListener", null, 0, -1, VDomainModelReference.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-
-		initEClass(featurePathDomainModelReferenceEClass, VFeaturePathDomainModelReference.class,
-			"FeaturePathDomainModelReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+			"DomainModelReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(
-			getFeaturePathDomainModelReference_DomainModelEFeature(),
-			theEcorePackage.getEStructuralFeature(),
+			getDomainModelReference_Segments(),
+			getDMRSegment(),
 			null,
-			"domainModelEFeature", null, 1, 1, VFeaturePathDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-			getFeaturePathDomainModelReference_DomainModelEReferencePath(),
-			theEcorePackage.getEReference(),
-			null,
-			"domainModelEReferencePath", null, 0, -1, VFeaturePathDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"segments", null, 1, -1, VDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(elementEClass, VElement.class, "Element", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(
 			getElement_Name(),
-			theEcorePackage.getEString(),
+			ecorePackage.getEString(),
 			"name", null, 0, 1, VElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(
 			getElement_Label(),
@@ -737,7 +686,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 			"enabled", "true", 0, 1, VElement.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEAttribute(
 			getElement_Readonly(),
-			theEcorePackage.getEBoolean(),
+			ecorePackage.getEBoolean(),
 			"readonly", "false", 0, 1, VElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 		initEReference(
 			getElement_Diagnostic(),
@@ -753,7 +702,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 		initEClass(viewEClass, VView.class, "View", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(
 			getView_RootEClass(),
-			theEcorePackage.getEClass(),
+			ecorePackage.getEClass(),
 			null,
 			"rootEClass", null, 1, 1, VView.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(
@@ -763,7 +712,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 			"children", null, 0, -1, VView.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(
 			getView_EcorePath(),
-			theEcorePackage.getEString(),
+			ecorePackage.getEString(),
 			"ecorePath", null, 1, 1, VView.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(containedElementEClass, VContainedElement.class,
@@ -791,6 +740,13 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 			null,
 			"domainModelReference", null, 1, 1, VControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
+		initEClass(dmrSegmentEClass, VDMRSegment.class,
+			"DMRSegment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(
+			getDMRSegment_PropertyName(),
+			ecorePackage.getEString(),
+			"propertyName", null, 1, 1, VDMRSegment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
 		// Initialize enums and add enum literals
 		initEEnum(labelAlignmentEEnum, LabelAlignment.class, "LabelAlignment"); //$NON-NLS-1$
 		addEEnumLiteral(labelAlignmentEEnum, LabelAlignment.LEFT);
@@ -802,28 +758,6 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 		// Create resource
 		createResource(eNS_URI);
-
-		// Create annotations
-		// http://www.eclipse.org/emf/2002/Ecore
-		createEcoreAnnotations();
-	}
-
-	/**
-	 * Initializes the annotations for <b>http://www.eclipse.org/emf/2002/Ecore</b>.
-	 * <!-- begin-user-doc -->
-	 *
-	 * @since 1.5
-	 *        <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void createEcoreAnnotations()
-	{
-		final String source = "http://www.eclipse.org/emf/2002/Ecore"; //$NON-NLS-1$
-		addAnnotation(featurePathDomainModelReferenceEClass,
-			source,
-			new String[]
-			{ "constraints", "resolveable" //$NON-NLS-1$ //$NON-NLS-2$
-			});
 	}
 
 } // ViewPackageImpl

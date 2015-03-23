@@ -27,9 +27,8 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.spi.model.VContainer} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
- *
+ * 
  * @generated
- * @since 1.2
  */
 public class ContainerItemProvider extends ElementItemProvider
 {
@@ -37,7 +36,7 @@ public class ContainerItemProvider extends ElementItemProvider
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public ContainerItemProvider(AdapterFactory adapterFactory)
@@ -49,7 +48,7 @@ public class ContainerItemProvider extends ElementItemProvider
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -69,7 +68,7 @@ public class ContainerItemProvider extends ElementItemProvider
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -86,7 +85,7 @@ public class ContainerItemProvider extends ElementItemProvider
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -102,13 +101,13 @@ public class ContainerItemProvider extends ElementItemProvider
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public String getText(Object object)
 	{
-		final String label = ((VContainer) object).getName();
+		String label = ((VContainer) object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_Container_type") : //$NON-NLS-1$
 			getString("_UI_Container_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
@@ -119,7 +118,7 @@ public class ContainerItemProvider extends ElementItemProvider
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -141,7 +140,7 @@ public class ContainerItemProvider extends ElementItemProvider
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override

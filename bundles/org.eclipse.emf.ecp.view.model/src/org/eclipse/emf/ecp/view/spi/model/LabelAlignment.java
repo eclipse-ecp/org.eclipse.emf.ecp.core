@@ -26,7 +26,6 @@ import org.eclipse.emf.common.util.Enumerator;
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getLabelAlignment()
  * @model
  * @generated
- * @since 1.2
  */
 public enum LabelAlignment implements Enumerator
 {
