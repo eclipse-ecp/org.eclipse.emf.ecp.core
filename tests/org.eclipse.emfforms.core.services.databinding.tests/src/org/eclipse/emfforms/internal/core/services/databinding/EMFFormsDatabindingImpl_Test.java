@@ -12,23 +12,29 @@
 package org.eclipse.emfforms.internal.core.services.databinding;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.list.IListProperty;
-import org.eclipse.core.databinding.property.list.SimpleListProperty;
 import org.eclipse.core.databinding.property.value.IValueProperty;
-import org.eclipse.core.databinding.property.value.SimpleValueProperty;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecp.test.common.DefaultRealm;
+import org.eclipse.emf.ecp.view.spi.model.VDMRSegment;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
-import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestFactory;
+import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage;
+import org.eclipse.emfforms.spi.core.services.databinding.DMRSegmentConverter;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -41,6 +47,7 @@ import org.junit.Test;
 public class EMFFormsDatabindingImpl_Test {
 
 	private EMFFormsDatabindingImpl databindingService;
+	private DefaultRealm realm;
 
 	/**
 	 * Set up that is executed before every test.
@@ -48,6 +55,12 @@ public class EMFFormsDatabindingImpl_Test {
 	@Before
 	public void setUp() {
 		databindingService = new EMFFormsDatabindingImpl();
+		realm = new DefaultRealm();
+	}
+
+	@After
+	public void tearDown() {
+		realm.dispose();
 	}
 
 	/**
@@ -59,23 +72,26 @@ public class EMFFormsDatabindingImpl_Test {
 	 */
 	@Test
 	public void testGetObservableValue() throws DatabindingFailedException {
-		final Realm realm = mock(Realm.class);
-		databindingService = spy(new EMFFormsDatabindingImpl(realm));
-		final VDomainModelReference reference = mock(VDomainModelReference.class);
-		final EObject eObject = mock(EObject.class);
-		final DomainModelReferenceConverter converter1 = mock(DomainModelReferenceConverter.class);
+		databindingService = spy(new EMFFormsDatabindingImpl());
+		final VDMRSegment segment = VViewFactory.eINSTANCE.createDMRSegment();
+		segment.setPropertyName("b"); //$NON-NLS-1$
+		final VDomainModelReference reference = VViewFactory.eINSTANCE.createDomainModelReference();
+		reference.getSegments().add(segment);
+		final EObject eObject = TestFactory.eINSTANCE.createA();
+		final EClass eClass = eObject.eClass();
+		final DMRSegmentConverter converter = mock(DMRSegmentConverter.class);
 		final IValueProperty expectedResultProperty = mock(IValueProperty.class);
 		final IObservableValue expectedObservableValue = mock(IObservableValue.class);
 
-		when(converter1.isApplicable(reference)).thenReturn(0d);
-		when(converter1.convertToValueProperty(reference)).thenReturn(expectedResultProperty);
-		when(expectedResultProperty.observe(realm, eObject)).thenReturn(expectedObservableValue);
+		when(converter.isApplicable(segment)).thenReturn(1d);
+		when(converter.convertToValueProperty(segment, eClass)).thenReturn(expectedResultProperty);
+		when(expectedResultProperty.observe(eObject)).thenReturn(expectedObservableValue);
 
-		databindingService.addDomainModelReferenceConverter(converter1);
+		databindingService.addDMRSegmentConverter(converter);
 		final IObservableValue resultObservableValue = databindingService.getObservableValue(reference, eObject);
 
-		verify(databindingService).getValueProperty(reference);
-		verify(expectedResultProperty).observe(realm, eObject);
+		verify(databindingService).getValueProperty(reference, eClass);
+		verify(expectedResultProperty).observe(eObject);
 		assertEquals(expectedObservableValue, resultObservableValue);
 	}
 
@@ -124,19 +140,58 @@ public class EMFFormsDatabindingImpl_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EClass)}
+	 * .
+	 *
+	 * @throws DatabindingFailedException if the databinding failed
+	 */
+	public void testGetValueProperty() throws DatabindingFailedException {
+		final VDMRSegment segment1 = VViewFactory.eINSTANCE.createDMRSegment();
+		segment1.setPropertyName("b"); //$NON-NLS-1$
+		final VDMRSegment segment2 = VViewFactory.eINSTANCE.createDMRSegment();
+		segment1.setPropertyName("c"); //$NON-NLS-1$
+		final EClass rootEClass = TestPackage.eINSTANCE.getA();
+		final VDomainModelReference reference = VViewFactory.eINSTANCE.createDomainModelReference();
+		reference.getSegments().add(segment1);
+		reference.getSegments().add(segment2);
+
+		final IValueProperty valueProperty1 = mock(IValueProperty.class);
+		final IValueProperty valueProperty2 = mock(IValueProperty.class);
+		final IValueProperty expectedResultProperty = mock(IValueProperty.class);
+
+		when(valueProperty1.value(valueProperty2)).thenReturn(expectedResultProperty);
+
+		final DMRSegmentConverter converter = mock(DMRSegmentConverter.class);
+		when(converter.isApplicable(any(VDMRSegment.class))).thenReturn(1d);
+		when(converter.convertToValueProperty(segment1, rootEClass)).thenReturn(valueProperty1);
+		when(converter.convertToValueProperty(segment2, TestPackage.eINSTANCE.getC())).thenReturn(valueProperty2);
+
+		databindingService.addDMRSegmentConverter(converter);
+
+		final IValueProperty result = databindingService.getValueProperty(reference, rootEClass);
+		assertEquals(expectedResultProperty, result);
+	}
+
+	/**
+	 * Test method for
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EClass)}
 	 * .
 	 *
 	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test(expected = DatabindingFailedException.class)
 	public void testGetValuePropertyNoApplicableConverter() throws DatabindingFailedException {
-		databindingService.getValueProperty(mock(VDomainModelReference.class));
+		final VDMRSegment segment = VViewFactory.eINSTANCE.createDMRSegment();
+		final EClass eClass = EcoreFactory.eINSTANCE.createEClass();
+		final VDomainModelReference reference = VViewFactory.eINSTANCE.createDomainModelReference();
+		reference.getSegments().add(segment);
+
+		databindingService.getValueProperty(reference, eClass);
 	}
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EClass)}
 	 * .
 	 * Tests whether the correct converter is used when one is applicable and one is not.
 	 *
@@ -144,25 +199,29 @@ public class EMFFormsDatabindingImpl_Test {
 	 */
 	@Test
 	public void testGetValuePropertyOneApplicable() throws DatabindingFailedException {
-		final VDomainModelReference reference = mock(VDomainModelReference.class);
-		final DomainModelReferenceConverter converter1 = mock(DomainModelReferenceConverter.class);
-		final DomainModelReferenceConverter converter2 = mock(DomainModelReferenceConverter.class);
+		final VDMRSegment segment = VViewFactory.eINSTANCE.createDMRSegment();
+		final EClass eClass = EcoreFactory.eINSTANCE.createEClass();
+		final VDomainModelReference reference = VViewFactory.eINSTANCE.createDomainModelReference();
+		reference.getSegments().add(segment);
+
+		final DMRSegmentConverter converter1 = mock(DMRSegmentConverter.class);
+		final DMRSegmentConverter converter2 = mock(DMRSegmentConverter.class);
 		final IValueProperty expectedResultProperty = mock(IValueProperty.class);
 
-		when(converter1.isApplicable(reference)).thenReturn(0d);
-		when(converter1.convertToValueProperty(reference)).thenReturn(expectedResultProperty);
-		when(converter2.isApplicable(reference)).thenReturn(DomainModelReferenceConverter.NOT_APPLICABLE);
-		when(converter2.convertToValueProperty(reference)).thenReturn(mock(IValueProperty.class));
+		when(converter1.isApplicable(segment)).thenReturn(0d);
+		when(converter1.convertToValueProperty(segment, eClass)).thenReturn(expectedResultProperty);
+		when(converter2.isApplicable(segment)).thenReturn(DomainModelReferenceConverter.NOT_APPLICABLE);
+		when(converter2.convertToValueProperty(segment, eClass)).thenReturn(mock(IValueProperty.class));
 
-		databindingService.addDomainModelReferenceConverter(converter1);
-		databindingService.addDomainModelReferenceConverter(converter2);
-		final IValueProperty valueProperty = databindingService.getValueProperty(reference);
+		databindingService.addDMRSegmentConverter(converter1);
+		databindingService.addDMRSegmentConverter(converter2);
+		final IValueProperty valueProperty = databindingService.getValueProperty(reference, eClass);
 		assertEquals(expectedResultProperty, valueProperty);
 	}
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EClass)}
 	 * .
 	 * Tests whether the correct converter is used when there are two applicable ones with different priorities.
 	 * Also tests whether the correct result is returned.
@@ -171,53 +230,62 @@ public class EMFFormsDatabindingImpl_Test {
 	 */
 	@Test
 	public void testGetValuePropertyTwoApplicable() throws DatabindingFailedException {
-		final VDomainModelReference reference = mock(VFeaturePathDomainModelReference.class);
-		final DomainModelReferenceConverter converter1 = mock(DomainModelReferenceConverter.class);
-		final DomainModelReferenceConverter converter2 = mock(DomainModelReferenceConverter.class);
+		final VDMRSegment segment = VViewFactory.eINSTANCE.createDMRSegment();
+		final EClass eClass = EcoreFactory.eINSTANCE.createEClass();
+		final VDomainModelReference reference = VViewFactory.eINSTANCE.createDomainModelReference();
+		reference.getSegments().add(segment);
+
+		final DMRSegmentConverter converter1 = mock(DMRSegmentConverter.class);
+		final DMRSegmentConverter converter2 = mock(DMRSegmentConverter.class);
 		final IValueProperty expectedResultProperty = mock(IValueProperty.class);
 
-		when(converter1.isApplicable(reference)).thenReturn(5d);
-		when(converter1.convertToValueProperty(reference)).thenReturn(expectedResultProperty);
-		when(converter2.isApplicable(reference)).thenReturn(1d);
-		when(converter2.convertToValueProperty(reference)).thenReturn(mock(SimpleValueProperty.class));
+		when(converter1.isApplicable(segment)).thenReturn(10d);
+		when(converter1.convertToValueProperty(segment, eClass)).thenReturn(expectedResultProperty);
+		when(converter2.isApplicable(segment)).thenReturn(0d);
+		when(converter2.convertToValueProperty(segment, eClass)).thenReturn(mock(IValueProperty.class));
 
-		databindingService.addDomainModelReferenceConverter(converter1);
-		databindingService.addDomainModelReferenceConverter(converter2);
-		final IValueProperty valueProperty = databindingService.getValueProperty(reference);
+		databindingService.addDMRSegmentConverter(converter1);
+		databindingService.addDMRSegmentConverter(converter2);
+		final IValueProperty valueProperty = databindingService.getValueProperty(reference, eClass);
 		assertEquals(expectedResultProperty, valueProperty);
 	}
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EClass)}
 	 * .
-	 * Tests whether the {@link EMFFormsDatabindingImpl} considers all {@link DomainModelReferenceConverter}s, that are
+	 * Tests whether the {@link EMFFormsDatabindingImpl} considers all {@link DMRSegmentConverter}s, that are
 	 * registered to it, for its conversions.
 	 *
 	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test
 	public void testGetValuePropertyAllConsidered() throws DatabindingFailedException {
-		final VDomainModelReference reference = mock(VDomainModelReference.class);
+		final VDMRSegment segment = VViewFactory.eINSTANCE.createDMRSegment();
+		final EClass eClass = EcoreFactory.eINSTANCE.createEClass();
+		final VDomainModelReference reference = VViewFactory.eINSTANCE.createDomainModelReference();
+		reference.getSegments().add(segment);
 
-		final DomainModelReferenceConverter converter1 = mock(DomainModelReferenceConverter.class);
-		final DomainModelReferenceConverter converter2 = mock(DomainModelReferenceConverter.class);
-		final DomainModelReferenceConverter converter3 = mock(DomainModelReferenceConverter.class);
+		final DMRSegmentConverter converter1 = mock(DMRSegmentConverter.class);
+		final DMRSegmentConverter converter2 = mock(DMRSegmentConverter.class);
 
-		databindingService.addDomainModelReferenceConverter(converter1);
-		databindingService.addDomainModelReferenceConverter(converter2);
-		databindingService.addDomainModelReferenceConverter(converter3);
+		when(converter1.isApplicable(segment)).thenReturn(10d);
+		when(converter1.convertToValueProperty(segment, eClass)).thenReturn(mock(IValueProperty.class));
+		when(converter2.isApplicable(segment)).thenReturn(0d);
+		when(converter2.convertToValueProperty(segment, eClass)).thenReturn(mock(IValueProperty.class));
 
-		databindingService.getValueProperty(reference);
+		databindingService.addDMRSegmentConverter(converter1);
+		databindingService.addDMRSegmentConverter(converter2);
 
-		verify(converter1).isApplicable(reference);
-		verify(converter2).isApplicable(reference);
-		verify(converter3).isApplicable(reference);
+		databindingService.getValueProperty(reference, eClass);
+
+		verify(converter1).isApplicable(segment);
+		verify(converter2).isApplicable(segment);
 	}
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EClass)}
 	 * .
 	 * <p>
 	 * Tests whether the method returns the correct result for a <strong>null</strong> argument.
@@ -225,8 +293,22 @@ public class EMFFormsDatabindingImpl_Test {
 	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test(expected = IllegalArgumentException.class)
-	public void testGetValuePropertyNull() throws DatabindingFailedException {
-		databindingService.getValueProperty(null);
+	public void testGetValuePropertyNullReference() throws DatabindingFailedException {
+		databindingService.getValueProperty(null, mock(EClass.class));
+	}
+
+	/**
+	 * Test method for
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EClass)}
+	 * .
+	 * <p>
+	 * Tests whether the method returns the correct result for a <strong>null</strong> argument.
+	 *
+	 * @throws DatabindingFailedException if the databinding failed
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testGetValuePropertyNullEClass() throws DatabindingFailedException {
+		databindingService.getValueProperty(mock(VDomainModelReference.class), null);
 	}
 
 	/**
@@ -238,23 +320,26 @@ public class EMFFormsDatabindingImpl_Test {
 	 */
 	@Test
 	public void testGetObservableList() throws DatabindingFailedException {
-		final Realm realm = mock(Realm.class);
-		databindingService = spy(new EMFFormsDatabindingImpl(realm));
-		final VDomainModelReference reference = mock(VDomainModelReference.class);
-		final EObject eObject = mock(EObject.class);
-		final DomainModelReferenceConverter converter1 = mock(DomainModelReferenceConverter.class);
+		databindingService = spy(new EMFFormsDatabindingImpl());
+		final VDMRSegment segment = VViewFactory.eINSTANCE.createDMRSegment();
+		segment.setPropertyName("cList"); //$NON-NLS-1$
+		final VDomainModelReference reference = VViewFactory.eINSTANCE.createDomainModelReference();
+		reference.getSegments().add(segment);
+		final EObject eObject = TestFactory.eINSTANCE.createB();
+		final EClass eClass = eObject.eClass();
+		final DMRSegmentConverter converter = mock(DMRSegmentConverter.class);
 		final IListProperty expectedResultProperty = mock(IListProperty.class);
 		final IObservableList expectedObservableList = mock(IObservableList.class);
 
-		when(converter1.isApplicable(reference)).thenReturn(0d);
-		when(converter1.convertToListProperty(reference)).thenReturn(expectedResultProperty);
-		when(expectedResultProperty.observe(realm, eObject)).thenReturn(expectedObservableList);
+		when(converter.isApplicable(segment)).thenReturn(1d);
+		when(converter.convertToListProperty(segment, eClass)).thenReturn(expectedResultProperty);
+		when(expectedResultProperty.observe(eObject)).thenReturn(expectedObservableList);
 
-		databindingService.addDomainModelReferenceConverter(converter1);
+		databindingService.addDMRSegmentConverter(converter);
 		final IObservableList resultObservableList = databindingService.getObservableList(reference, eObject);
 
-		verify(databindingService).getListProperty(reference);
-		verify(expectedResultProperty).observe(realm, eObject);
+		verify(databindingService).getListProperty(reference, eClass);
+		verify(expectedResultProperty).observe(eObject);
 		assertEquals(expectedObservableList, resultObservableList);
 	}
 
@@ -303,19 +388,59 @@ public class EMFFormsDatabindingImpl_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EClass)}
+	 * .
+	 *
+	 * @throws DatabindingFailedException if the databinding failed
+	 */
+	@Test(expected = DatabindingFailedException.class)
+	public void testGetListProperty() throws DatabindingFailedException {
+		final VDMRSegment segment1 = VViewFactory.eINSTANCE.createDMRSegment();
+		segment1.setPropertyName("b"); //$NON-NLS-1$
+		final VDMRSegment segment2 = VViewFactory.eINSTANCE.createDMRSegment();
+		segment1.setPropertyName("cList"); //$NON-NLS-1$
+		final EClass rootEClass = TestPackage.eINSTANCE.getA();
+		final VDomainModelReference reference = VViewFactory.eINSTANCE.createDomainModelReference();
+		reference.getSegments().add(segment1);
+		reference.getSegments().add(segment2);
+
+		final IValueProperty valueProperty1 = mock(IValueProperty.class);
+		final IListProperty listProperty2 = mock(IListProperty.class);
+		final IListProperty expectedResultProperty = mock(IListProperty.class);
+
+		when(valueProperty1.list(listProperty2)).thenReturn(expectedResultProperty);
+
+		final DMRSegmentConverter converter = mock(DMRSegmentConverter.class);
+		when(converter.isApplicable(any(VDMRSegment.class))).thenReturn(1d);
+		when(converter.convertToValueProperty(segment1, rootEClass)).thenReturn(valueProperty1);
+		when(converter.convertToListProperty(segment2, TestPackage.eINSTANCE.getC())).thenReturn(listProperty2);
+
+		databindingService.addDMRSegmentConverter(converter);
+
+		final IListProperty result = databindingService.getListProperty(reference, rootEClass);
+		assertEquals(expectedResultProperty, result);
+	}
+
+	/**
+	 * Test method for
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EClass)}
 	 * .
 	 *
 	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test(expected = DatabindingFailedException.class)
 	public void testGetListPropertyNoApplicableConverter() throws DatabindingFailedException {
-		databindingService.getListProperty(mock(VDomainModelReference.class));
+		final VDMRSegment segment = VViewFactory.eINSTANCE.createDMRSegment();
+		final EClass eClass = EcoreFactory.eINSTANCE.createEClass();
+		final VDomainModelReference reference = VViewFactory.eINSTANCE.createDomainModelReference();
+		reference.getSegments().add(segment);
+
+		databindingService.getListProperty(reference, eClass);
 	}
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EClass)}
 	 * .
 	 * Tests whether the correct converter is used when one is applicable and one is not.
 	 *
@@ -323,25 +448,29 @@ public class EMFFormsDatabindingImpl_Test {
 	 */
 	@Test
 	public void testGetListPropertyOneApplicable() throws DatabindingFailedException {
-		final VDomainModelReference reference = mock(VDomainModelReference.class);
-		final DomainModelReferenceConverter converter1 = mock(DomainModelReferenceConverter.class);
-		final DomainModelReferenceConverter converter2 = mock(DomainModelReferenceConverter.class);
+		final VDMRSegment segment = VViewFactory.eINSTANCE.createDMRSegment();
+		final EClass eClass = EcoreFactory.eINSTANCE.createEClass();
+		final VDomainModelReference reference = VViewFactory.eINSTANCE.createDomainModelReference();
+		reference.getSegments().add(segment);
+
+		final DMRSegmentConverter converter1 = mock(DMRSegmentConverter.class);
+		final DMRSegmentConverter converter2 = mock(DMRSegmentConverter.class);
 		final IListProperty expectedResultProperty = mock(IListProperty.class);
 
-		when(converter1.isApplicable(reference)).thenReturn(0d);
-		when(converter1.convertToListProperty(reference)).thenReturn(expectedResultProperty);
-		when(converter2.isApplicable(reference)).thenReturn(DomainModelReferenceConverter.NOT_APPLICABLE);
-		when(converter2.convertToListProperty(reference)).thenReturn(mock(IListProperty.class));
+		when(converter1.isApplicable(segment)).thenReturn(0d);
+		when(converter1.convertToListProperty(segment, eClass)).thenReturn(expectedResultProperty);
+		when(converter2.isApplicable(segment)).thenReturn(DomainModelReferenceConverter.NOT_APPLICABLE);
+		when(converter2.convertToListProperty(segment, eClass)).thenReturn(mock(IListProperty.class));
 
-		databindingService.addDomainModelReferenceConverter(converter1);
-		databindingService.addDomainModelReferenceConverter(converter2);
-		final IListProperty listProperty = databindingService.getListProperty(reference);
+		databindingService.addDMRSegmentConverter(converter1);
+		databindingService.addDMRSegmentConverter(converter2);
+		final IListProperty listProperty = databindingService.getListProperty(reference, eClass);
 		assertEquals(expectedResultProperty, listProperty);
 	}
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EClass)}
 	 * .
 	 * Tests whether the correct converter is used when there are two applicable ones with different priorities.
 	 * Also tests whether the correct result is returned.
@@ -350,53 +479,62 @@ public class EMFFormsDatabindingImpl_Test {
 	 */
 	@Test
 	public void testGetListPropertyTwoApplicable() throws DatabindingFailedException {
-		final VDomainModelReference reference = mock(VFeaturePathDomainModelReference.class);
-		final DomainModelReferenceConverter converter1 = mock(DomainModelReferenceConverter.class);
-		final DomainModelReferenceConverter converter2 = mock(DomainModelReferenceConverter.class);
+		final VDMRSegment segment = VViewFactory.eINSTANCE.createDMRSegment();
+		final EClass eClass = EcoreFactory.eINSTANCE.createEClass();
+		final VDomainModelReference reference = VViewFactory.eINSTANCE.createDomainModelReference();
+		reference.getSegments().add(segment);
+
+		final DMRSegmentConverter converter1 = mock(DMRSegmentConverter.class);
+		final DMRSegmentConverter converter2 = mock(DMRSegmentConverter.class);
 		final IListProperty expectedResultProperty = mock(IListProperty.class);
 
-		when(converter1.isApplicable(reference)).thenReturn(5d);
-		when(converter1.convertToListProperty(reference)).thenReturn(expectedResultProperty);
-		when(converter2.isApplicable(reference)).thenReturn(1d);
-		when(converter2.convertToListProperty(reference)).thenReturn(mock(SimpleListProperty.class));
+		when(converter1.isApplicable(segment)).thenReturn(10d);
+		when(converter1.convertToListProperty(segment, eClass)).thenReturn(expectedResultProperty);
+		when(converter2.isApplicable(segment)).thenReturn(0d);
+		when(converter2.convertToListProperty(segment, eClass)).thenReturn(mock(IListProperty.class));
 
-		databindingService.addDomainModelReferenceConverter(converter1);
-		databindingService.addDomainModelReferenceConverter(converter2);
-		final IListProperty listProperty = databindingService.getListProperty(reference);
+		databindingService.addDMRSegmentConverter(converter1);
+		databindingService.addDMRSegmentConverter(converter2);
+		final IListProperty listProperty = databindingService.getListProperty(reference, eClass);
 		assertEquals(expectedResultProperty, listProperty);
 	}
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EClass)}
 	 * .
-	 * Tests whether the {@link EMFFormsDatabindingImpl} considers all {@link DomainModelReferenceConverter}s, that are
+	 * Tests whether the {@link EMFFormsDatabindingImpl} considers all {@link DMRSegmentConverter}s, that are
 	 * registered to it, for its conversions.
 	 *
 	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test
 	public void testGetListPropertyAllConsidered() throws DatabindingFailedException {
-		final VDomainModelReference reference = mock(VDomainModelReference.class);
+		final VDMRSegment segment = VViewFactory.eINSTANCE.createDMRSegment();
+		final EClass eClass = EcoreFactory.eINSTANCE.createEClass();
+		final VDomainModelReference reference = VViewFactory.eINSTANCE.createDomainModelReference();
+		reference.getSegments().add(segment);
 
-		final DomainModelReferenceConverter converter1 = mock(DomainModelReferenceConverter.class);
-		final DomainModelReferenceConverter converter2 = mock(DomainModelReferenceConverter.class);
-		final DomainModelReferenceConverter converter3 = mock(DomainModelReferenceConverter.class);
+		final DMRSegmentConverter converter1 = mock(DMRSegmentConverter.class);
+		final DMRSegmentConverter converter2 = mock(DMRSegmentConverter.class);
 
-		databindingService.addDomainModelReferenceConverter(converter1);
-		databindingService.addDomainModelReferenceConverter(converter2);
-		databindingService.addDomainModelReferenceConverter(converter3);
+		when(converter1.isApplicable(segment)).thenReturn(10d);
+		when(converter1.convertToListProperty(segment, eClass)).thenReturn(mock(IListProperty.class));
+		when(converter2.isApplicable(segment)).thenReturn(0d);
+		when(converter2.convertToListProperty(segment, eClass)).thenReturn(mock(IListProperty.class));
 
-		databindingService.getListProperty(reference);
+		databindingService.addDMRSegmentConverter(converter1);
+		databindingService.addDMRSegmentConverter(converter2);
 
-		verify(converter1).isApplicable(reference);
-		verify(converter2).isApplicable(reference);
-		verify(converter3).isApplicable(reference);
+		databindingService.getListProperty(reference, eClass);
+
+		verify(converter1).isApplicable(segment);
+		verify(converter2).isApplicable(segment);
 	}
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EClass)}
 	 * .
 	 * <p>
 	 * Tests whether the method returns the correct result for a <strong>null</strong> argument.
@@ -404,26 +542,43 @@ public class EMFFormsDatabindingImpl_Test {
 	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test(expected = IllegalArgumentException.class)
-	public void testGetListPropertyNull() throws DatabindingFailedException {
-		databindingService.getListProperty(null);
+	public void testGetListPropertyNullReference() throws DatabindingFailedException {
+		databindingService.getListProperty(null, mock(EClass.class));
 	}
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#removeDomainModelReferenceConverter(org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EClass)}
+	 * .
+	 * <p>
+	 * Tests whether the method returns the correct result for a <strong>null</strong> argument.
+	 *
+	 * @throws DatabindingFailedException if the databinding failed
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testGetListPropertyNullEClass() throws DatabindingFailedException {
+		databindingService.getListProperty(mock(VDomainModelReference.class), null);
+	}
+
+	/**
+	 * Test method for
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#removeDMRSegmentConverter(org.eclipse.emfforms.spi.core.services.databinding.DMRSegmentConverter)}
 	 * .
 	 *
 	 * @throws DatabindingFailedException if the databinding failed
 	 */
 	@Test(expected = DatabindingFailedException.class)
 	public void testRemoveDomainModelReferenceConverter() throws DatabindingFailedException {
-		final VDomainModelReference reference = mock(VFeaturePathDomainModelReference.class);
-		final DomainModelReferenceConverter converter1 = mock(DomainModelReferenceConverter.class);
+		final VDMRSegment segment = VViewFactory.eINSTANCE.createDMRSegment();
+		final EClass eClass = EcoreFactory.eINSTANCE.createEClass();
+		final VDomainModelReference reference = VViewFactory.eINSTANCE.createDomainModelReference();
+		reference.getSegments().add(segment);
+		final DMRSegmentConverter converter1 = mock(DMRSegmentConverter.class);
 
-		when(converter1.isApplicable(reference)).thenReturn(5d);
+		when(converter1.isApplicable(segment)).thenReturn(5d);
 
-		databindingService.addDomainModelReferenceConverter(converter1);
-		databindingService.removeDomainModelReferenceConverter(converter1);
-		databindingService.getValueProperty(reference);
+		databindingService.addDMRSegmentConverter(converter1);
+		databindingService.removeDMRSegmentConverter(converter1);
+		databindingService.getValueProperty(reference, eClass);
 	}
 }

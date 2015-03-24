@@ -16,9 +16,13 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecp.view.spi.model.VDMRSegment;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emfforms.spi.core.services.databinding.DMRSegmentConverter;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
-import org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.junit.After;
 import org.junit.Before;
@@ -66,27 +70,35 @@ public class EMFFormsDatabindingImpl_ITest {
 
 	@Test
 	public void testServiceUsageValue() throws DatabindingFailedException {
-		final DomainModelReferenceConverter converter = mock(DomainModelReferenceConverter.class);
-		final VFeaturePathDomainModelReference reference = mock(VFeaturePathDomainModelReference.class);
-		when(converter.isApplicable(reference)).thenReturn(0d);
-		final ServiceRegistration<DomainModelReferenceConverter> converterService = bundleContext.registerService(
-			DomainModelReferenceConverter.class, converter, null);
-		service.getValueProperty(reference);
-		verify(converter).isApplicable(reference);
-		verify(converter).convertToValueProperty(reference);
+		final DMRSegmentConverter converter = mock(DMRSegmentConverter.class);
+		final VDMRSegment segment = VViewFactory.eINSTANCE.createDMRSegment();
+		final EClass eClass = EcoreFactory.eINSTANCE.createEClass();
+		final VDomainModelReference reference = VViewFactory.eINSTANCE.createDomainModelReference();
+		reference.getSegments().add(segment);
+
+		when(converter.isApplicable(segment)).thenReturn(0d);
+		final ServiceRegistration<DMRSegmentConverter> converterService = bundleContext.registerService(
+			DMRSegmentConverter.class, converter, null);
+		service.getValueProperty(reference, eClass);
+		verify(converter).isApplicable(segment);
+		verify(converter).convertToValueProperty(segment, eClass);
 		converterService.unregister();
 	}
 
 	@Test
 	public void testServiceUsageList() throws DatabindingFailedException {
-		final DomainModelReferenceConverter converter = mock(DomainModelReferenceConverter.class);
-		final VFeaturePathDomainModelReference reference = mock(VFeaturePathDomainModelReference.class);
-		when(converter.isApplicable(reference)).thenReturn(0d);
-		final ServiceRegistration<DomainModelReferenceConverter> converterService = bundleContext.registerService(
-			DomainModelReferenceConverter.class, converter, null);
-		service.getListProperty(reference);
-		verify(converter).isApplicable(reference);
-		verify(converter).convertToListProperty(reference);
+		final DMRSegmentConverter converter = mock(DMRSegmentConverter.class);
+		final VDMRSegment segment = VViewFactory.eINSTANCE.createDMRSegment();
+		final EClass eClass = EcoreFactory.eINSTANCE.createEClass();
+		final VDomainModelReference reference = VViewFactory.eINSTANCE.createDomainModelReference();
+		reference.getSegments().add(segment);
+
+		when(converter.isApplicable(segment)).thenReturn(0d);
+		final ServiceRegistration<DMRSegmentConverter> converterService = bundleContext.registerService(
+			DMRSegmentConverter.class, converter, null);
+		service.getListProperty(reference, eClass);
+		verify(converter).isApplicable(segment);
+		verify(converter).convertToListProperty(segment, eClass);
 		converterService.unregister();
 	}
 }

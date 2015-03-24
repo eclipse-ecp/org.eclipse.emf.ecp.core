@@ -15,6 +15,7 @@ import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.list.IListProperty;
 import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 
@@ -56,17 +57,21 @@ public interface EMFFormsDatabinding {
 	 * Returns an {@link IValueProperty} described by the given {@link VDomainModelReference}.
 	 *
 	 * @param domainModelReference The domain model reference pointing to the desired value
+	 * @param rootEClass The root {@link EClass} of the domain model reference
 	 * @return The resulting {@link IValueProperty}, does not return <code>null</code>.
 	 * @throws DatabindingFailedException if the databinding could not be executed successfully.
 	 */
-	IValueProperty getValueProperty(VDomainModelReference domainModelReference) throws DatabindingFailedException;
+	IValueProperty getValueProperty(VDomainModelReference domainModelReference, EClass rootEClass)
+		throws DatabindingFailedException;
 
 	/**
 	 * Returns an {@link IListProperty} described by the given {@link VDomainModelReference}.
 	 *
 	 * @param domainModelReference The domain model reference pointing to the desired list
+	 * @param rootEClass The root {@link EClass} of the domain model reference
 	 * @return The resulting {@link IListProperty}, does not return <code>null</code>.
 	 * @throws DatabindingFailedException if the databinding could not be executed successfully.
 	 */
-	IListProperty getListProperty(VDomainModelReference domainModelReference) throws DatabindingFailedException;
+	IListProperty getListProperty(VDomainModelReference domainModelReference, EClass rootEClass)
+		throws DatabindingFailedException;
 }
