@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+ Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ 
+ All rights reserved. This program and the accompanying materials
+ are made available under the terms of the Eclipse Public License v1.0
+ which accompanies this distribution, and is available at
+ http://www.eclipse.org/legal/epl-v10.html
+ 
+ Contributors:
+ Lucas Koehler - initial API and implementation
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
+      <!-- @generated indexsegment -->
+      <factory
+            uri="http://org/eclipse/emfforms/view/indexsegment/model/200"
+            class="org.eclipse.emfforms.spi.view.indexsegment.model.provider.IndexsegmentItemProviderAdapterFactory"
+            supportedTypes=
+              "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
+               org.eclipse.emf.edit.provider.IStructuredItemContentProvider
+               org.eclipse.emf.edit.provider.ITreeItemContentProvider
+               org.eclipse.emf.edit.provider.IItemLabelProvider
+               org.eclipse.emf.edit.provider.IItemPropertySource"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.edit.childCreationExtenders">
+      <!-- @generated indexsegment -->
+      <extender
+            uri="http://org/eclipse/emf/ecp/view/model/200"
+            class="org.eclipse.emfforms.spi.view.indexsegment.model.provider.IndexsegmentItemProviderAdapterFactory$ViewChildCreationExtender"/>
+   </extension>
+
+</plugin>

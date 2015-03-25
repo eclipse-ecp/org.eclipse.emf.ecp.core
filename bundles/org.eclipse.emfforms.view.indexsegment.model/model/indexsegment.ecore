@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="indexsegment" nsURI="http://org/eclipse/emfforms/view/indexsegment/model/200"
+    nsPrefix="org.eclipse.emfforms.view.indexsegment.model">
+  <eClassifiers xsi:type="ecore:EClass" name="DMRIndexSegment" eSuperTypes="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DMRSegment">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="index" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+</ecore:EPackage>

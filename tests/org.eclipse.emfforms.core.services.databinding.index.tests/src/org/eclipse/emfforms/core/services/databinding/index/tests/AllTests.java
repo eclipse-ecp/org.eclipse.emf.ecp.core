@@ -11,8 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emfforms.core.services.databinding.index.tests;
 
+import org.eclipse.emfforms.internal.core.services.databinding.index.DMRIndexSegmentConverter_Test;
 import org.eclipse.emfforms.internal.core.services.databinding.index.EMFIndexedValueProperty_Test;
-import org.eclipse.emfforms.internal.core.services.databinding.index.IndexDomainModelReferenceConverter_Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
@@ -24,7 +24,7 @@ import org.junit.runners.Suite.SuiteClasses;
  *
  */
 @RunWith(Suite.class)
-@SuiteClasses({ IndexDomainModelReferenceConverter_Test.class, EMFIndexedValueProperty_Test.class })
+@SuiteClasses({ DMRIndexSegmentConverter_Test.class, EMFIndexedValueProperty_Test.class })
 public class AllTests {
 
 }

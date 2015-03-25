@@ -11,19 +11,19 @@
  ******************************************************************************/
 package org.eclipse.emfforms.core.services.databinding.index.tests;
 
-import org.eclipse.emfforms.internal.core.services.databinding.index.IndexDomainModelReferenceConverter_ITest;
+import org.eclipse.emfforms.internal.core.services.databinding.index.DMRIndexSegmentConverter_ITest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 /**
  * All integration tests for core.services.databinding.index.
- * 
+ *
  * @author Lucas Koehler
  *
  */
 @RunWith(Suite.class)
-@SuiteClasses({ IndexDomainModelReferenceConverter_ITest.class })
+@SuiteClasses({ DMRIndexSegmentConverter_ITest.class })
 public class AllIntegrationTests {
 
 }

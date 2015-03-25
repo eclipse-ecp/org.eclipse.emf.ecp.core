@@ -266,6 +266,9 @@
 		<module>../../bundles/org.eclipse.emf.emfforms.localization</module>
 		<module>../../bundles/org.eclipse.emfforms.view.model.localization</module>
 		
+		<!-- Segments -->
+		<module>../../bundles/org.eclipse.emfforms.view.indexsegment.model</module>
+		<module>../../bundles/org.eclipse.emfforms.view.indexsegment.model.edit</module>
 	</modules>
 
 	<build>

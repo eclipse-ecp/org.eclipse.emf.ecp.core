@@ -14,9 +14,10 @@ package org.eclipse.emfforms.internal.core.services.databinding.index;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 
 /**
- * An {@link IllegalListTypeException} is thrown by an {@link IndexDomainModelReferenceConverter} when the domain model
- * e feature of a {@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference
- * VIndexDomainModelReference} referencing a list is not of the type {@link org.eclipse.emf.ecore.EReference EReference}
+ * TODO: adjust comment
+ * An {@link IllegalListTypeException} is thrown by an {@link DMRIndexSegmentConverter} when the
+ * property of a {@link org.eclipse.emfforms.spi.view.indexsegment.model.VDMRIndexSegment VDMRIndexSegment} does not
+ * reference a list.
  * .
  *
  * @author Lucas Koehler
