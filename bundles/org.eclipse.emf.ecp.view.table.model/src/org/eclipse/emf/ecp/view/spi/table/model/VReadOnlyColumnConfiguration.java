@@ -42,7 +42,7 @@ public interface VReadOnlyColumnConfiguration extends VTableColumnConfiguration
 	 * of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the value of the '<em>Column Domain References</em>' reference list.
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage#getReadOnlyColumnConfiguration_ColumnDomainReferences()
 	 * @model

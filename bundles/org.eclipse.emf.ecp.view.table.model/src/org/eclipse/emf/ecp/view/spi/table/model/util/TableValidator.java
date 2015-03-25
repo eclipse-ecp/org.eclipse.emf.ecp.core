@@ -35,6 +35,7 @@ import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.emf.ecp.view.internal.table.model.Activator;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewValidator;
 import org.eclipse.emf.ecp.view.spi.table.model.DetailEditing;
@@ -53,7 +54,6 @@ import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
  *
  * @since 1.5
  *        <!-- end-user-doc -->
- *
  * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage
  * @generated
  */
@@ -100,14 +100,6 @@ public class TableValidator extends EObjectValidator
 	protected static final int DIAGNOSTIC_CODE_COUNT = GENERATED_DIAGNOSTIC_CODE_COUNT;
 
 	/**
-	 * The cached base package validator.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	protected ViewValidator viewValidator;
-	/**
 	 * The test EMFFormsDatabinding service.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -120,7 +112,9 @@ public class TableValidator extends EObjectValidator
 	 * Creates an instance of the switch.
 	 * <!-- begin-user-doc -->
 	 * This is a constructor for test cases.
-	 * <!-- end-user-doc -->
+	 *
+	 * @param emfFormsDatabinding The databinding service
+	 *            <!-- end-user-doc -->
 	 *
 	 * @generated NOT
 	 */
@@ -139,7 +133,6 @@ public class TableValidator extends EObjectValidator
 	public TableValidator()
 	{
 		super();
-		viewValidator = ViewValidator.INSTANCE;
 	}
 
 	/**
@@ -253,7 +246,7 @@ public class TableValidator extends EObjectValidator
 	 * @see org.eclipse.emf.ecore.util.EObjectValidator#validate_EveryMultiplicityConforms(org.eclipse.emf.ecore.EObject,
 	 *      org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
 	 *
-	 * @generated NOT
+	 * @generated
 	 *
 	 */
 	// BEGIN COMPLEX CODE
@@ -265,13 +258,6 @@ public class TableValidator extends EObjectValidator
 		final EClass eClass = eObject.eClass();
 		for (int i = 0, size = eClass.getFeatureCount(); i < size; ++i)
 		{
-			// begin custom
-			if (VTableDomainModelReference.class.isInstance(eObject)
-				&& eClass.getEStructuralFeature(i) == VViewPackage.eINSTANCE
-					.getFeaturePathDomainModelReference_DomainModelEFeature()) {
-				continue;
-			}
-			// end custom
 			result &= validate_MultiplicityConforms(eObject, eClass.getEStructuralFeature(i), diagnostics, context);
 			if (!result && diagnostics == null)
 			{
@@ -295,17 +281,12 @@ public class TableValidator extends EObjectValidator
 		DiagnosticChain diagnostics, Map<Object, Object> context) {
 
 		// validate path to table
-		VDomainModelReference pathToMultiRef = tableDomainModelReference.getDomainModelReference();
 		final EValidator validator;
-		if (pathToMultiRef != null) {
-			validator = EValidator.Registry.INSTANCE.getEValidator(pathToMultiRef.eClass().getEPackage());
-		} else {
-			pathToMultiRef = tableDomainModelReference;
-			validator = viewValidator;
-		}
-		if (!validator.validate(pathToMultiRef, diagnostics, context)) {
-			if (pathToMultiRef != tableDomainModelReference && tableDomainModelReference.eContainer() != null
-				&& diagnostics != null) {
+
+		validator = EValidator.Registry.INSTANCE.getEValidator(tableDomainModelReference.eClass().getEPackage());
+
+		if (!validator.validate(tableDomainModelReference, diagnostics, context)) {
+			if (tableDomainModelReference.eContainer() != null && diagnostics != null) {
 				diagnostics.add(createDiagnostic(Diagnostic.ERROR, 0, "Error on path to multi reference", //$NON-NLS-1$
 					tableDomainModelReference.eContainer(),
 					tableDomainModelReference.eContainingFeature()));
@@ -313,11 +294,20 @@ public class TableValidator extends EObjectValidator
 			return false;
 		}
 
+		EObject currentContainer = tableDomainModelReference.eContainer();
+		while (currentContainer.eContainer() != null) {
+			currentContainer = currentContainer.eContainer();
+		}
+		if (!VView.class.isInstance(currentContainer)) {
+			return true;
+		}
+		final EClass rootEClass = ((VView) currentContainer).getRootEClass();
+
 		// test if table ends a multi reference
 		IValueProperty valueProperty;
 		try {
 			valueProperty = getEMFFormsDatabinding()
-				.getValueProperty(pathToMultiRef);
+				.getValueProperty(tableDomainModelReference, rootEClass);
 		} catch (final DatabindingFailedException ex) {
 			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 			return true;
@@ -330,13 +320,9 @@ public class TableValidator extends EObjectValidator
 					diagnostics.add(createDiagnostic(Diagnostic.ERROR, 0, message,
 						tableDomainModelReference.eContainer(), tableDomainModelReference.eContainingFeature()));
 				}
-				if (pathToMultiRef == tableDomainModelReference) {
-					diagnostics.add(createDiagnostic(Diagnostic.ERROR, 0, message, pathToMultiRef,
-						VViewPackage.eINSTANCE.getFeaturePathDomainModelReference_DomainModelEFeature()));
-				} else {
-					diagnostics.add(createDiagnostic(Diagnostic.ERROR, 0, message, tableDomainModelReference,
-						VTablePackage.eINSTANCE.getTableDomainModelReference_DomainModelReference()));
-				}
+				diagnostics.add(createDiagnostic(Diagnostic.ERROR, 0, message, tableDomainModelReference,
+					VViewPackage.eINSTANCE.getDomainModelReference_Segments()));
+
 			}
 			return false;
 		}

@@ -44,8 +44,9 @@ public class AddColumnService implements ViewModelService {
 	@Override
 	public void instantiate(ViewModelContext context) {
 		final VElement viewModel = context.getViewModel();
+		final EClass domainModelEClass = context.getDomainModel().eClass();
 		if (viewModel instanceof VTableControl) {
-			addColumnsIfNeeded((VTableControl) viewModel);
+			addColumnsIfNeeded((VTableControl) viewModel, domainModelEClass);
 			return;
 		}
 		final TreeIterator<EObject> contents = viewModel.eAllContents();
@@ -53,12 +54,12 @@ public class AddColumnService implements ViewModelService {
 			final EObject current = contents.next();
 			if (current instanceof VTableControl) {
 				final VTableControl tableControl = (VTableControl) current;
-				addColumnsIfNeeded(tableControl);
+				addColumnsIfNeeded(tableControl, domainModelEClass);
 			}
 		}
 	}
 
-	private void addColumnsIfNeeded(VTableControl tableControl) {
+	private void addColumnsIfNeeded(VTableControl tableControl, EClass domainModelEClass) {
 		if (tableControl.getDomainModelReference() == null) {
 			return;
 		}
@@ -71,13 +72,9 @@ public class AddColumnService implements ViewModelService {
 				.getDomainModelReference();
 			final IValueProperty valueProperty;
 			try {
-				if (tableDMR.getDomainModelReference() != null) {
-					valueProperty = Activator.getDefault().getEMFFormsDatabinding()
-						.getValueProperty(tableDMR.getDomainModelReference());
-				} else {
-					valueProperty = Activator.getDefault().getEMFFormsDatabinding()
-						.getValueProperty(tableDMR);
-				}
+				valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+					.getValueProperty(tableDMR, domainModelEClass);
+
 			} catch (final DatabindingFailedException ex) {
 				Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 				return;

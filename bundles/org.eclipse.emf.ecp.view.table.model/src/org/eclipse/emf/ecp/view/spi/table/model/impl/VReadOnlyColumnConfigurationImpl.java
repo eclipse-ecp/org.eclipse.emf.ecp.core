@@ -41,7 +41,7 @@ public class VReadOnlyColumnConfigurationImpl extends EObjectImpl implements VRe
 	 * The cached value of the '{@link #getColumnDomainReferences() <em>Column Domain References</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getColumnDomainReferences()
 	 * @generated
 	 * @ordered
@@ -51,7 +51,7 @@ public class VReadOnlyColumnConfigurationImpl extends EObjectImpl implements VRe
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected VReadOnlyColumnConfigurationImpl()
@@ -62,7 +62,7 @@ public class VReadOnlyColumnConfigurationImpl extends EObjectImpl implements VRe
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -74,7 +74,7 @@ public class VReadOnlyColumnConfigurationImpl extends EObjectImpl implements VRe
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -91,7 +91,7 @@ public class VReadOnlyColumnConfigurationImpl extends EObjectImpl implements VRe
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -108,7 +108,7 @@ public class VReadOnlyColumnConfigurationImpl extends EObjectImpl implements VRe
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -128,7 +128,7 @@ public class VReadOnlyColumnConfigurationImpl extends EObjectImpl implements VRe
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -146,7 +146,7 @@ public class VReadOnlyColumnConfigurationImpl extends EObjectImpl implements VRe
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override

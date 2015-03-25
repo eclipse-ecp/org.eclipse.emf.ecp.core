@@ -19,7 +19,6 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VReadOnlyColumnConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableColumnConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
@@ -138,12 +137,6 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 			public Adapter caseDomainModelReference(VDomainModelReference object)
 			{
 				return createDomainModelReferenceAdapter();
-			}
-
-			@Override
-			public Adapter caseFeaturePathDomainModelReference(VFeaturePathDomainModelReference object)
-			{
-				return createFeaturePathDomainModelReferenceAdapter();
 			}
 
 			@Override
@@ -299,24 +292,6 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createDomainModelReferenceAdapter()
-	{
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference
-	 * <em>Feature Path Domain Model Reference</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 *
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference
-	 * @generated
-	 */
-	public Adapter createFeaturePathDomainModelReferenceAdapter()
 	{
 		return null;
 	}

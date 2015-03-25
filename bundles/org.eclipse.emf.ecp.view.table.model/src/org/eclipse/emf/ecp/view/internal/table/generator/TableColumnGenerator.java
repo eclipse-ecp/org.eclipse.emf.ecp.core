@@ -14,7 +14,8 @@ package org.eclipse.emf.ecp.view.internal.table.generator;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VDMRSegment;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
@@ -52,8 +53,10 @@ public final class TableColumnGenerator {
 	 * @param vTableControl the table control to use
 	 */
 	public static void addColumn(EAttribute attribute, VTableControl vTableControl) {
-		final VFeaturePathDomainModelReference column = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
-		column.setDomainModelEFeature(attribute);
+		final VDomainModelReference column = VViewFactory.eINSTANCE.createDomainModelReference();
+		final VDMRSegment segment = VViewFactory.eINSTANCE.createDMRSegment();
+		segment.setPropertyName(attribute.getName());
+		column.getSegments().add(segment);
 
 		VTableDomainModelReference.class.cast(vTableControl.getDomainModelReference()).getColumnDomainModelReferences()
 			.add(column);

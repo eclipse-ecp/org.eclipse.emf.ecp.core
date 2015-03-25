@@ -29,7 +29,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- *
+ * 
  * @see org.eclipse.emf.ecp.view.spi.table.model.VTableFactory
  * @model kind="package"
  * @generated
@@ -40,7 +40,7 @@ public interface VTablePackage extends EPackage
 	 * The package name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	String eNAME = "table"; //$NON-NLS-1$
@@ -49,7 +49,7 @@ public interface VTablePackage extends EPackage
 	 * The package namespace URI.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	String eNS_URI = "http://org/eclipse/emf/ecp/view/table/model/150"; //$NON-NLS-1$
@@ -58,7 +58,7 @@ public interface VTablePackage extends EPackage
 	 * The package namespace name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	String eNS_PREFIX = "org.eclipse.emf.ecp.view.table.model"; //$NON-NLS-1$
@@ -67,7 +67,7 @@ public interface VTablePackage extends EPackage
 	 * The singleton instance of the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	VTablePackage eINSTANCE = org.eclipse.emf.ecp.view.spi.table.model.impl.VTablePackageImpl.init();
@@ -77,7 +77,7 @@ public interface VTablePackage extends EPackage
 	 * <em>Control</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.impl.VTableControlImpl
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.impl.VTablePackageImpl#getTableControl()
 	 * @generated
@@ -88,17 +88,27 @@ public interface VTablePackage extends EPackage
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
 	int TABLE_CONTROL__NAME = VViewPackage.CONTROL__NAME;
 
 	/**
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int TABLE_CONTROL__LABEL = VViewPackage.CONTROL__LABEL;
+
+	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -108,7 +118,7 @@ public interface VTablePackage extends EPackage
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -118,7 +128,7 @@ public interface VTablePackage extends EPackage
 	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -128,7 +138,7 @@ public interface VTablePackage extends EPackage
 	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -138,7 +148,7 @@ public interface VTablePackage extends EPackage
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -148,7 +158,7 @@ public interface VTablePackage extends EPackage
 	 * The feature id for the '<em><b>Label Alignment</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -158,7 +168,7 @@ public interface VTablePackage extends EPackage
 	 * The feature id for the '<em><b>Domain Model Reference</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -168,7 +178,7 @@ public interface VTablePackage extends EPackage
 	 * The feature id for the '<em><b>Add Remove Disabled</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -178,7 +188,7 @@ public interface VTablePackage extends EPackage
 	 * The feature id for the '<em><b>Column Configurations</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -188,7 +198,7 @@ public interface VTablePackage extends EPackage
 	 * The feature id for the '<em><b>Detail Editing</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -198,7 +208,7 @@ public interface VTablePackage extends EPackage
 	 * The feature id for the '<em><b>Detail View</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -208,7 +218,7 @@ public interface VTablePackage extends EPackage
 	 * The feature id for the '<em><b>Enable Detail Editing Dialog</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -218,7 +228,7 @@ public interface VTablePackage extends EPackage
 	 * The number of structural features of the '<em>Control</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -229,7 +239,7 @@ public interface VTablePackage extends EPackage
 	 * <em>Column Configuration</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTableColumnConfiguration
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.impl.VTablePackageImpl#getTableColumnConfiguration()
 	 * @generated
@@ -240,7 +250,7 @@ public interface VTablePackage extends EPackage
 	 * The number of structural features of the '<em>Column Configuration</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -251,7 +261,7 @@ public interface VTablePackage extends EPackage
 	 * <em>Domain Model Reference</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.impl.VTableDomainModelReferenceImpl
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.impl.VTablePackageImpl#getTableDomainModelReference()
 	 * @generated
@@ -259,56 +269,24 @@ public interface VTablePackage extends EPackage
 	int TABLE_DOMAIN_MODEL_REFERENCE = 2;
 
 	/**
-	 * The feature id for the '<em><b>Change Listener</b></em>' attribute list.
+	 * The feature id for the '<em><b>Segments</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
-	int TABLE_DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER;
-
-	/**
-	 * The feature id for the '<em><b>Domain Model EFeature</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 * @ordered
-	 */
-	int TABLE_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE;
-
-	/**
-	 * The feature id for the '<em><b>Domain Model EReference Path</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 * @ordered
-	 */
-	int TABLE_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH;
+	int TABLE_DOMAIN_MODEL_REFERENCE__SEGMENTS = VViewPackage.DOMAIN_MODEL_REFERENCE__SEGMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Column Domain Model References</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
-	int TABLE_DOMAIN_MODEL_REFERENCE__COLUMN_DOMAIN_MODEL_REFERENCES = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Domain Model Reference</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 *
-	 * @since 1.5
-	 *        <!-- end-user-doc -->
-	 *
-	 * @generated
-	 * @ordered
-	 */
-	int TABLE_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 1;
+	int TABLE_DOMAIN_MODEL_REFERENCE__COLUMN_DOMAIN_MODEL_REFERENCES = VViewPackage.DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Domain Model Reference</em>' class.
@@ -316,11 +294,10 @@ public interface VTablePackage extends EPackage
 	 *
 	 * @since 1.5
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
-	int TABLE_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 2;
+	int TABLE_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT = VViewPackage.DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '
@@ -328,7 +305,7 @@ public interface VTablePackage extends EPackage
 	 * <em>Read Only Column Configuration</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.impl.VReadOnlyColumnConfigurationImpl
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.impl.VTablePackageImpl#getReadOnlyColumnConfiguration()
 	 * @generated
@@ -339,7 +316,7 @@ public interface VTablePackage extends EPackage
 	 * The feature id for the '<em><b>Column Domain References</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -349,7 +326,7 @@ public interface VTablePackage extends EPackage
 	 * The number of structural features of the '<em>Read Only Column Configuration</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -360,7 +337,7 @@ public interface VTablePackage extends EPackage
 	 * <em>Detail Editing</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.DetailEditing
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.impl.VTablePackageImpl#getDetailEditing()
 	 * @generated
@@ -372,7 +349,7 @@ public interface VTablePackage extends EPackage
 	 * <em>Control</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the meta object for class '<em>Control</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTableControl
 	 * @generated
@@ -384,7 +361,7 @@ public interface VTablePackage extends EPackage
 	 * {@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#isAddRemoveDisabled <em>Add Remove Disabled</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the meta object for the attribute '<em>Add Remove Disabled</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTableControl#isAddRemoveDisabled()
 	 * @see #getTableControl()
@@ -398,7 +375,7 @@ public interface VTablePackage extends EPackage
 	 * <em>Column Configurations</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the meta object for the containment reference list '<em>Column Configurations</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTableControl#getColumnConfigurations()
 	 * @see #getTableControl()
@@ -411,7 +388,7 @@ public interface VTablePackage extends EPackage
 	 * {@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#getDetailEditing <em>Detail Editing</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the meta object for the attribute '<em>Detail Editing</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTableControl#getDetailEditing()
 	 * @see #getTableControl()
@@ -424,7 +401,7 @@ public interface VTablePackage extends EPackage
 	 * {@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#getDetailView <em>Detail View</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the meta object for the containment reference '<em>Detail View</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTableControl#getDetailView()
 	 * @see #getTableControl()
@@ -438,7 +415,7 @@ public interface VTablePackage extends EPackage
 	 * <em>Enable Detail Editing Dialog</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the meta object for the attribute '<em>Enable Detail Editing Dialog</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTableControl#isEnableDetailEditingDialog()
 	 * @see #getTableControl()
@@ -451,7 +428,7 @@ public interface VTablePackage extends EPackage
 	 * <em>Column Configuration</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the meta object for class '<em>Column Configuration</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTableColumnConfiguration
 	 * @generated
@@ -463,7 +440,7 @@ public interface VTablePackage extends EPackage
 	 * <em>Domain Model Reference</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the meta object for class '<em>Domain Model Reference</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference
 	 * @generated
@@ -476,7 +453,7 @@ public interface VTablePackage extends EPackage
 	 * <em>Column Domain Model References</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the meta object for the containment reference list '<em>Column Domain Model References</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference#getColumnDomainModelReferences()
 	 * @see #getTableDomainModelReference()
@@ -485,27 +462,11 @@ public interface VTablePackage extends EPackage
 	EReference getTableDomainModelReference_ColumnDomainModelReferences();
 
 	/**
-	 * Returns the meta object for the containment reference '
-	 * {@link org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference#getDomainModelReference
-	 * <em>Domain Model Reference</em>}'.
-	 * <!-- begin-user-doc -->
-	 *
-	 * @since 1.5
-	 *        <!-- end-user-doc -->
-	 *
-	 * @return the meta object for the containment reference '<em>Domain Model Reference</em>'.
-	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference#getDomainModelReference()
-	 * @see #getTableDomainModelReference()
-	 * @generated
-	 */
-	EReference getTableDomainModelReference_DomainModelReference();
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.table.model.VReadOnlyColumnConfiguration
 	 * <em>Read Only Column Configuration</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the meta object for class '<em>Read Only Column Configuration</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.VReadOnlyColumnConfiguration
 	 * @generated
@@ -518,7 +479,7 @@ public interface VTablePackage extends EPackage
 	 * <em>Column Domain References</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the meta object for the reference list '<em>Column Domain References</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.VReadOnlyColumnConfiguration#getColumnDomainReferences()
 	 * @see #getReadOnlyColumnConfiguration()
@@ -531,7 +492,7 @@ public interface VTablePackage extends EPackage
 	 * <em>Detail Editing</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the meta object for enum '<em>Detail Editing</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.DetailEditing
 	 * @generated
@@ -542,7 +503,7 @@ public interface VTablePackage extends EPackage
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the factory that creates the instances of the model.
 	 * @generated
 	 */
@@ -558,7 +519,7 @@ public interface VTablePackage extends EPackage
 	 * <li>and each data type</li>
 	 * </ul>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	interface Literals
@@ -568,7 +529,7 @@ public interface VTablePackage extends EPackage
 		 * <em>Control</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.table.model.impl.VTableControlImpl
 		 * @see org.eclipse.emf.ecp.view.spi.table.model.impl.VTablePackageImpl#getTableControl()
 		 * @generated
@@ -579,7 +540,7 @@ public interface VTablePackage extends EPackage
 		 * The meta object literal for the '<em><b>Add Remove Disabled</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
+		 * 
 		 * @generated
 		 */
 		EAttribute TABLE_CONTROL__ADD_REMOVE_DISABLED = eINSTANCE.getTableControl_AddRemoveDisabled();
@@ -588,7 +549,7 @@ public interface VTablePackage extends EPackage
 		 * The meta object literal for the '<em><b>Column Configurations</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
+		 * 
 		 * @generated
 		 */
 		EReference TABLE_CONTROL__COLUMN_CONFIGURATIONS = eINSTANCE.getTableControl_ColumnConfigurations();
@@ -597,7 +558,7 @@ public interface VTablePackage extends EPackage
 		 * The meta object literal for the '<em><b>Detail Editing</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
+		 * 
 		 * @generated
 		 */
 		EAttribute TABLE_CONTROL__DETAIL_EDITING = eINSTANCE.getTableControl_DetailEditing();
@@ -606,7 +567,7 @@ public interface VTablePackage extends EPackage
 		 * The meta object literal for the '<em><b>Detail View</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
+		 * 
 		 * @generated
 		 */
 		EReference TABLE_CONTROL__DETAIL_VIEW = eINSTANCE.getTableControl_DetailView();
@@ -615,7 +576,7 @@ public interface VTablePackage extends EPackage
 		 * The meta object literal for the '<em><b>Enable Detail Editing Dialog</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
+		 * 
 		 * @generated
 		 */
 		EAttribute TABLE_CONTROL__ENABLE_DETAIL_EDITING_DIALOG = eINSTANCE.getTableControl_EnableDetailEditingDialog();
@@ -625,7 +586,7 @@ public interface VTablePackage extends EPackage
 		 * <em>Column Configuration</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.table.model.VTableColumnConfiguration
 		 * @see org.eclipse.emf.ecp.view.spi.table.model.impl.VTablePackageImpl#getTableColumnConfiguration()
 		 * @generated
@@ -638,7 +599,7 @@ public interface VTablePackage extends EPackage
 		 * <em>Domain Model Reference</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.table.model.impl.VTableDomainModelReferenceImpl
 		 * @see org.eclipse.emf.ecp.view.spi.table.model.impl.VTablePackageImpl#getTableDomainModelReference()
 		 * @generated
@@ -650,23 +611,11 @@ public interface VTablePackage extends EPackage
 		 * feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
+		 * 
 		 * @generated
 		 */
 		EReference TABLE_DOMAIN_MODEL_REFERENCE__COLUMN_DOMAIN_MODEL_REFERENCES = eINSTANCE
 			.getTableDomainModelReference_ColumnDomainModelReferences();
-
-		/**
-		 * The meta object literal for the '<em><b>Domain Model Reference</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * 
-		 * @since 1.5
-		 *        <!-- end-user-doc -->
-		 *
-		 * @generated
-		 */
-		EReference TABLE_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE = eINSTANCE
-			.getTableDomainModelReference_DomainModelReference();
 
 		/**
 		 * The meta object literal for the '
@@ -674,7 +623,7 @@ public interface VTablePackage extends EPackage
 		 * <em>Read Only Column Configuration</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.table.model.impl.VReadOnlyColumnConfigurationImpl
 		 * @see org.eclipse.emf.ecp.view.spi.table.model.impl.VTablePackageImpl#getReadOnlyColumnConfiguration()
 		 * @generated
@@ -685,7 +634,7 @@ public interface VTablePackage extends EPackage
 		 * The meta object literal for the '<em><b>Column Domain References</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
+		 * 
 		 * @generated
 		 */
 		EReference READ_ONLY_COLUMN_CONFIGURATION__COLUMN_DOMAIN_REFERENCES = eINSTANCE
@@ -696,7 +645,7 @@ public interface VTablePackage extends EPackage
 		 * <em>Detail Editing</em>}' enum.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
+		 * 
 		 * @see org.eclipse.emf.ecp.view.spi.table.model.DetailEditing
 		 * @see org.eclipse.emf.ecp.view.spi.table.model.impl.VTablePackageImpl#getDetailEditing()
 		 * @generated

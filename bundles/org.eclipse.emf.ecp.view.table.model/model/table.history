@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:history="http://www.eclipse.org/emf/edapt/history/0.3">
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:history="http://www.eclipse.org/emf/edapt/history/0.3">
   <releases date="2014-10-16T15:51:48.763+0200" label="140">
     <changes xsi:type="history:CompositeChange">
       <changes xsi:type="history:Create" element="table.ecore#/">
@@ -145,12 +145,12 @@
     </changes>
     <changes xsi:type="history:OperationChange">
       <changes xsi:type="history:Create" target="table.ecore#//TableDomainModelReference"
-          referenceName="eStructuralFeatures" element="table.ecore#//TableDomainModelReference/domainModelReference">
-        <changes xsi:type="history:Set" element="table.ecore#//TableDomainModelReference/domainModelReference"
+          referenceName="eStructuralFeatures" element="#//@releases.2/@changes.2/@changes.0/@element">
+        <changes xsi:type="history:Set" element="#//@releases.2/@changes.2/@changes.0/@element"
             featureName="name" dataValue="domainModelReference"/>
-        <changes xsi:type="history:Set" element="table.ecore#//TableDomainModelReference/domainModelReference"
+        <changes xsi:type="history:Set" element="#//@releases.2/@changes.2/@changes.0/@element"
             featureName="containment" dataValue="true" oldDataValue="false"/>
-        <changes xsi:type="history:Set" element="table.ecore#//TableDomainModelReference/domainModelReference"
+        <changes xsi:type="history:Set" element="#//@releases.2/@changes.2/@changes.0/@element"
             featureName="eType" referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"/>
       </changes>
       <operation name="newReference">
@@ -193,5 +193,32 @@
     <changes xsi:type="history:Set" element="table.ecore#/" featureName="nsURI" dataValue="http://org/eclipse/emf/ecp/view/table/model/150"
         oldDataValue="http://org/eclipse/emf/ecp/view/table/model"/>
   </releases>
-  <releases/>
+  <releases>
+    <changes xsi:type="history:OperationChange">
+      <changes xsi:type="history:Remove" element="table.ecore#//TableDomainModelReference"
+          featureName="eSuperTypes" referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//FeaturePathDomainModelReference"/>
+      <operation name="removeSuperType">
+        <parameters name="eClass">
+          <referenceValue element="table.ecore#//TableDomainModelReference"/>
+        </parameters>
+        <parameters name="superType">
+          <referenceValue element="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//FeaturePathDomainModelReference"/>
+        </parameters>
+      </operation>
+    </changes>
+    <changes xsi:type="history:Add" element="table.ecore#//TableDomainModelReference"
+        featureName="eSuperTypes" referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"/>
+    <changes xsi:type="history:OperationChange">
+      <changes xsi:type="history:Delete" target="table.ecore#//TableDomainModelReference"
+          referenceName="eStructuralFeatures">
+        <element xsi:type="ecore:EReference" name="domainModelReference" eType="ecore:EClass ../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"
+            containment="true"/>
+      </changes>
+      <operation name="deleteFeature2">
+        <parameters name="feature">
+          <referenceValue element="#//@releases.2/@changes.2/@changes.0/@element"/>
+        </parameters>
+      </operation>
+    </changes>
+  </releases>
 </history:History>

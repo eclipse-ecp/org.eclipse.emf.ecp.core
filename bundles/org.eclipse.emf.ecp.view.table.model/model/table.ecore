@@ -16,14 +16,12 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TableColumnConfiguration" abstract="true"
       interface="true"/>
-  <eClassifiers xsi:type="ecore:EClass" name="TableDomainModelReference" eSuperTypes="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//FeaturePathDomainModelReference">
+  <eClassifiers xsi:type="ecore:EClass" name="TableDomainModelReference" eSuperTypes="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference">
     <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
       <details key="constraints" value="resolveable"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="columnDomainModelReferences"
         upperBound="-1" eType="ecore:EClass ../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="domainModelReference" eType="ecore:EClass ../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ReadOnlyColumnConfiguration" eSuperTypes="#//TableColumnConfiguration">

@@ -156,8 +156,8 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 			if (detailView == null) {
 				IValueProperty valueProperty;
 				try {
-					valueProperty = getEMFFormsDatabinding()
-						.getValueProperty(getVElement().getDomainModelReference());
+					valueProperty = getEMFFormsDatabinding().getValueProperty(getVElement().getDomainModelReference(),
+						getViewModelContext().getDomainModel().eClass());
 				} catch (final DatabindingFailedException ex) {
 					getReportService().report(new DatabindingFailedReport(ex));
 					return null; // possible because the only caller is null safe.

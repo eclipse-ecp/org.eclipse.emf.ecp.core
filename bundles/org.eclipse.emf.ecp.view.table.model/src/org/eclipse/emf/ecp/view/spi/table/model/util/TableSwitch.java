@@ -18,7 +18,6 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VReadOnlyColumnConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableColumnConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
@@ -118,9 +117,6 @@ public class TableSwitch<T> extends Switch<T> {
 		case VTablePackage.TABLE_DOMAIN_MODEL_REFERENCE: {
 			final VTableDomainModelReference tableDomainModelReference = (VTableDomainModelReference) theEObject;
 			T result = caseTableDomainModelReference(tableDomainModelReference);
-			if (result == null) {
-				result = caseFeaturePathDomainModelReference(tableDomainModelReference);
-			}
 			if (result == null) {
 				result = caseDomainModelReference(tableDomainModelReference);
 			}
@@ -277,23 +273,6 @@ public class TableSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseDomainModelReference(VDomainModelReference object)
-	{
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Feature Path Domain Model Reference</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 *
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Feature Path Domain Model Reference</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseFeaturePathDomainModelReference(VFeaturePathDomainModelReference object)
 	{
 		return null;
 	}

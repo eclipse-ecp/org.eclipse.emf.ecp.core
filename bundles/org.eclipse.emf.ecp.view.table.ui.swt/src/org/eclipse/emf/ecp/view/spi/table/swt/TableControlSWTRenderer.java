@@ -183,8 +183,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		NoPropertyDescriptorFoundExeption {
 		final VTableDomainModelReference tableDomainModelReference = (VTableDomainModelReference) getVElement()
 			.getDomainModelReference();
-		final VDomainModelReference dmrToCheck = tableDomainModelReference.getDomainModelReference() == null ? tableDomainModelReference
-			: tableDomainModelReference.getDomainModelReference();
+		final VDomainModelReference dmrToCheck = tableDomainModelReference;
 		IObservableValue observableValue;
 		try {
 			observableValue = getEMFFormsDatabinding()
@@ -408,6 +407,13 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		}
 		final VTableDomainModelReference tableDomainModelReference = VTableDomainModelReference.class.cast(
 			getVElement().getDomainModelReference());
+
+		final IObservableList list = getEMFFormsDatabinding()
+			.getObservableList(tableDomainModelReference, getViewModelContext().getDomainModel());
+		tableViewer.setInput(list);
+
+		final EClass columnRootEClass = ((EReference) list.getElementType()).getEReferenceType();
+
 		for (final VDomainModelReference dmr : tableDomainModelReference.getColumnDomainModelReferences()) {
 			if (dmr == null) {
 				continue;
@@ -415,7 +421,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 			IValueProperty valueProperty;
 			try {
-				valueProperty = getEMFFormsDatabinding().getValueProperty(dmr);
+				valueProperty = getEMFFormsDatabinding().getValueProperty(dmr, columnRootEClass);
 			} catch (final DatabindingFailedException ex) {
 				getReportService().report(new RenderingFailedReport(ex));
 				continue;
@@ -457,11 +463,6 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			columnNumber++;
 		}
 		tableViewer.setContentProvider(cp);
-
-		final IObservableList list = getEMFFormsDatabinding()
-			.getObservableList(tableDomainModelReference.getDomainModelReference() == null ? tableDomainModelReference
-				: tableDomainModelReference.getDomainModelReference(), getViewModelContext().getDomainModel());
-		tableViewer.setInput(list);
 
 		// IMPORTANT:
 		// - the minimumWidth and (non)resizable settings of the ColumnWeightData are not supported properly
@@ -736,13 +737,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 					.getDomainModelReference();
 				IObservableValue observableValue;
 				try {
-					if (tableDMR.getDomainModelReference() != null) {
-						observableValue = getEMFFormsDatabinding().getObservableValue(
-							tableDMR.getDomainModelReference(), getViewModelContext().getDomainModel());
-					} else {
-						observableValue = getEMFFormsDatabinding().getObservableValue(tableDMR,
-							getViewModelContext().getDomainModel());
-					}
+					observableValue = getEMFFormsDatabinding().getObservableValue(tableDMR,
+						getViewModelContext().getDomainModel());
 				} catch (final DatabindingFailedException ex) {
 					getReportService().report(new DatabindingFailedReport(ex));
 					return;
