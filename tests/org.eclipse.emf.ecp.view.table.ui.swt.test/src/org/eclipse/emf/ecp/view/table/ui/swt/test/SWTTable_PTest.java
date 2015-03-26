@@ -22,13 +22,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.Set;
 
-import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.EcoreFactory;
@@ -39,9 +36,9 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContextDisposeListener;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VDMRSegment;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
@@ -158,9 +155,10 @@ public class SWTTable_PTest {
 		view.setRootEClass(VViewPackage.eINSTANCE.getView());
 		domainElement = view;
 		final TableControlHandle handle = createInitializedTableWithoutTableColumns();
-		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
-			.createFeaturePathDomainModelReference();
-		domainModelReference.setDomainModelEFeature(VViewPackage.eINSTANCE.getView_RootEClass());
+		final VDMRSegment featureSegment = VViewFactory.eINSTANCE.createDMRSegment();
+		featureSegment.setPropertyName(VViewPackage.eINSTANCE.getView_RootEClass().getName());
+		final VDomainModelReference domainModelReference = VViewFactory.eINSTANCE.createDomainModelReference();
+		domainModelReference.getSegments().add(featureSegment);
 		handle.getTableControl().setDomainModelReference(domainModelReference);
 
 		try {
@@ -180,9 +178,10 @@ public class SWTTable_PTest {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		domainElement = view;
 		final TableControlHandle handle = createInitializedTableWithoutTableColumns();
-		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
-			.createFeaturePathDomainModelReference();
-		domainModelReference.setDomainModelEFeature(VViewPackage.eINSTANCE.getView_RootEClass());
+		final VDMRSegment featureSegment = VViewFactory.eINSTANCE.createDMRSegment();
+		featureSegment.setPropertyName(VViewPackage.eINSTANCE.getView_RootEClass().getName());
+		final VDomainModelReference domainModelReference = VViewFactory.eINSTANCE.createDomainModelReference();
+		domainModelReference.getSegments().add(featureSegment);
 		handle.getTableControl().setDomainModelReference(domainModelReference);
 
 		try {
@@ -391,7 +390,10 @@ public class SWTTable_PTest {
 		// table control
 		final VTableControl tableControl = createTableControl();
 		final VTableDomainModelReference tableDMR = (VTableDomainModelReference) tableControl.getDomainModelReference();
-		tableDMR.setDomainModelEFeature(EcorePackage.eINSTANCE.getEClass_ESuperTypes());
+		final VDMRSegment featureSegment = VViewFactory.eINSTANCE.createDMRSegment();
+		featureSegment.setPropertyName(EcorePackage.eINSTANCE.getEClass_ESuperTypes().getName());
+		tableDMR.getSegments().add(featureSegment);
+
 		tableDMR.getColumnDomainModelReferences().add(createDMR(EcorePackage.eINSTANCE.getENamedElement_Name()));
 		tableDMR.getColumnDomainModelReferences().add(
 			createDMR(EcorePackage.eINSTANCE.getEClassifier_InstanceClassName()));
@@ -452,24 +454,22 @@ public class SWTTable_PTest {
 		return clazz;
 	}
 
-	private static VFeaturePathDomainModelReference createDMR(EAttribute attribute, EReference... refs) {
-		final VFeaturePathDomainModelReference dmr = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
-		dmr.setDomainModelEFeature(attribute);
-		dmr.getDomainModelEReferencePath().addAll(Arrays.asList(refs));
-		return dmr;
+	private static VDomainModelReference createDMR(EStructuralFeature structuralFeature) {
+		final VDomainModelReference domainModelReference = VViewFactory.eINSTANCE.createDomainModelReference();
+		final VDMRSegment featureSegment = VViewFactory.eINSTANCE.createDMRSegment();
+		featureSegment.setPropertyName(structuralFeature.getName());
+		domainModelReference.getSegments().add(featureSegment);
+		return domainModelReference;
 	}
 
 	private VView createDetailView() {
 		final VView detailView = VViewFactory.eINSTANCE.createView();
 		final VControl name = VViewFactory.eINSTANCE.createControl();
-		final VFeaturePathDomainModelReference nameRef = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
-		nameRef.setDomainModelEFeature(EcorePackage.eINSTANCE.getENamedElement_Name());
+		final VDomainModelReference nameRef = createDMR(EcorePackage.eINSTANCE.getENamedElement_Name());
 		name.setDomainModelReference(nameRef);
 		detailView.getChildren().add(name);
 		final VControl abstr = VViewFactory.eINSTANCE.createControl();
-		final VFeaturePathDomainModelReference abstractRef = VViewFactory.eINSTANCE
-			.createFeaturePathDomainModelReference();
-		abstractRef.setDomainModelEFeature(EcorePackage.eINSTANCE.getEClass_Abstract());
+		final VDomainModelReference abstractRef = createDMR(EcorePackage.eINSTANCE.getEClass_Abstract());
 		abstr.setDomainModelReference(abstractRef);
 		detailView.getChildren().add(abstr);
 		return detailView;
@@ -496,17 +496,15 @@ public class SWTTable_PTest {
 	}
 
 	public static VDomainModelReference createTableColumn(EStructuralFeature feature) {
-		final VFeaturePathDomainModelReference reference = VViewFactory.eINSTANCE
-			.createFeaturePathDomainModelReference();
-		reference.setDomainModelEFeature(feature);
-		return reference;
+		return createDMR(feature);
 	}
 
 	public static TableControlHandle createInitializedTableWithoutTableColumns() {
 		final TableControlHandle tableControlHandle = createUninitializedTableWithoutColumns();
-		final VFeaturePathDomainModelReference domainModelReference = VTableFactory.eINSTANCE
-			.createTableDomainModelReference();
-		domainModelReference.setDomainModelEFeature(EcorePackage.eINSTANCE.getEClass_ESuperTypes());
+		final VDomainModelReference domainModelReference = VTableFactory.eINSTANCE.createTableDomainModelReference();
+		final VDMRSegment featureSegment = VViewFactory.eINSTANCE.createDMRSegment();
+		featureSegment.setPropertyName(EcorePackage.eINSTANCE.getEClass_ESuperTypes().getName());
+		domainModelReference.getSegments().add(featureSegment);
 		tableControlHandle.getTableControl().setDomainModelReference(domainModelReference);
 
 		return tableControlHandle;

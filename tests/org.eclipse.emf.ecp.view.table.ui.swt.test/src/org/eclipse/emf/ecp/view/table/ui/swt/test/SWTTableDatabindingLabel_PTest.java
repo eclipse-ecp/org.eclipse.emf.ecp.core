@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.view.table.ui.swt.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.same;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -32,8 +33,8 @@ import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecp.view.internal.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.model.VDMRSegment;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
-import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
@@ -92,10 +93,12 @@ public class SWTTableDatabindingLabel_PTest {
 		databindingService = mock(EMFFormsDatabinding.class);
 		labelProvider = mock(EMFFormsLabelProvider.class);
 
-		when(labelProvider.getDescription(any(VDomainModelReference.class))).thenReturn(DESCRIPTION_COLUMNS);
+		when(labelProvider.getDescription(any(VDomainModelReference.class), any(EClass.class))).thenReturn(
+			DESCRIPTION_COLUMNS);
 		when(labelProvider.getDescription(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			DESCRIPTION);
-		when(labelProvider.getDisplayName(any(VDomainModelReference.class))).thenReturn(DISPLAYNAME_COLUMNS);
+		when(labelProvider.getDisplayName(any(VDomainModelReference.class), any(EClass.class))).thenReturn(
+			DISPLAYNAME_COLUMNS);
 		when(labelProvider.getDisplayName(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			DISPLAYNAME);
 
@@ -126,11 +129,14 @@ public class SWTTableDatabindingLabel_PTest {
 	private VTableDomainModelReference createTableDomainModelReference(EStructuralFeature eStructuralFeature) {
 		final VTableDomainModelReference tableDomainModelReference = VTableFactory.eINSTANCE
 			.createTableDomainModelReference();
-		tableDomainModelReference.setDomainModelEFeature(eStructuralFeature);
+		final VDMRSegment featureSegment = VViewFactory.eINSTANCE.createDMRSegment();
+		featureSegment.setPropertyName(eStructuralFeature.getName());
+		tableDomainModelReference.getSegments().add(featureSegment);
 
-		final VFeaturePathDomainModelReference columnReference1 = VViewFactory.eINSTANCE
-			.createFeaturePathDomainModelReference();
-		columnReference1.setDomainModelEFeature(EcorePackage.eINSTANCE.getEClass_Abstract());
+		final VDomainModelReference columnReference1 = VViewFactory.eINSTANCE.createDomainModelReference();
+		final VDMRSegment column1FeatureSegment = VViewFactory.eINSTANCE.createDMRSegment();
+		column1FeatureSegment.setPropertyName(EcorePackage.eINSTANCE.getEClass_Abstract().getName());
+		columnReference1.getSegments().add(column1FeatureSegment);
 
 		tableDomainModelReference.getColumnDomainModelReferences().add(columnReference1);
 
@@ -143,7 +149,7 @@ public class SWTTableDatabindingLabel_PTest {
 		final IValueProperty columnValueProperty = new EMFValueProperty(EcorePackage.eINSTANCE.getEClass_Abstract());
 		final VDomainModelReference columnDMR = ((VTableDomainModelReference) vTableControl.getDomainModelReference())
 			.getColumnDomainModelReferences().get(0);
-		when(databindingService.getValueProperty(columnDMR)).thenReturn(columnValueProperty);
+		when(databindingService.getValueProperty(same(columnDMR), any(EClass.class))).thenReturn(columnValueProperty);
 
 		final Control renderedControl = renderer.render(new SWTGridCell(0, 0, renderer), shell);
 		final Composite composite = (Composite) renderedControl;
@@ -273,7 +279,7 @@ public class SWTTableDatabindingLabel_PTest {
 		final IValueProperty columnValueProperty = new EMFValueProperty(EcorePackage.eINSTANCE.getEClass_Abstract());
 		final VDomainModelReference columnDMR = ((VTableDomainModelReference) vTableControl.getDomainModelReference())
 			.getColumnDomainModelReferences().get(0);
-		when(databindingService.getValueProperty(columnDMR)).thenReturn(columnValueProperty);
+		when(databindingService.getValueProperty(same(columnDMR), any(EClass.class))).thenReturn(columnValueProperty);
 
 		when(databindingService.getObservableList(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			mockedObservableList);
