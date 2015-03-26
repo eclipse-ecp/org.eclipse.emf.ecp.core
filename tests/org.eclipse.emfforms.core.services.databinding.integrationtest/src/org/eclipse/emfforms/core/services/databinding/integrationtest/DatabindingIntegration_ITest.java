@@ -12,17 +12,12 @@
 package org.eclipse.emfforms.core.services.databinding.integrationtest;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.util.LinkedList;
 
 import org.eclipse.core.databinding.property.list.IListProperty;
 import org.eclipse.core.databinding.property.value.IValueProperty;
-import org.eclipse.emf.databinding.IEMFListProperty;
-import org.eclipse.emf.databinding.IEMFValueProperty;
-import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecp.view.spi.model.VDMRSegment;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
@@ -66,64 +61,65 @@ public class DatabindingIntegration_ITest {
 
 	@Test
 	public void testIntegrationValue() throws DatabindingFailedException {
-		final VFeaturePathDomainModelReference pathReference = VViewFactory.eINSTANCE
-			.createFeaturePathDomainModelReference();
-		// create reference path to the attribute
-		final LinkedList<EReference> referencePath = new LinkedList<EReference>();
-		referencePath.add(TestPackage.eINSTANCE.getA_B());
-		referencePath.add(TestPackage.eINSTANCE.getB_C());
-		referencePath.add(TestPackage.eINSTANCE.getC_D());
+		final VDomainModelReference domainModelReference = VViewFactory.eINSTANCE.createDomainModelReference();
 
-		final EStructuralFeature feature = TestPackage.eINSTANCE.getD_X();
+		// create segment path to the attribute
+		final VDMRSegment segment1 = VViewFactory.eINSTANCE.createDMRSegment();
+		segment1.setPropertyName("b"); //$NON-NLS-1$
+		final VDMRSegment segment2 = VViewFactory.eINSTANCE.createDMRSegment();
+		segment2.setPropertyName("c"); //$NON-NLS-1$
+		final VDMRSegment segment3 = VViewFactory.eINSTANCE.createDMRSegment();
+		segment3.setPropertyName("d"); //$NON-NLS-1$
+		final VDMRSegment segment4 = VViewFactory.eINSTANCE.createDMRSegment();
+		segment4.setPropertyName("x"); //$NON-NLS-1$
 
-		pathReference.getDomainModelEReferencePath().addAll(referencePath);
-		pathReference.setDomainModelEFeature(feature);
+		domainModelReference.getSegments().add(segment1);
+		domainModelReference.getSegments().add(segment2);
+		domainModelReference.getSegments().add(segment3);
+		domainModelReference.getSegments().add(segment4);
 
-		final IValueProperty valueProperty = databindingService.getValueProperty(pathReference);
+		final EClass rootEClass = TestPackage.eINSTANCE.getA();
 
-		// The converter should return an IEMFValueProperty
-		assertTrue(valueProperty instanceof IEMFValueProperty);
-
-		final IEMFValueProperty emfProperty = (IEMFValueProperty) valueProperty;
+		final IValueProperty valueProperty = databindingService.getValueProperty(domainModelReference, rootEClass);
 
 		// Check EStructuralFeature of the property.
-		assertEquals(feature, emfProperty.getStructuralFeature());
+		assertEquals(TestPackage.eINSTANCE.getD_X(), valueProperty.getValueType());
 
 		// Check correct path.
 		final String expected = "A.b<B> => B.c<C> => C.d<D> => D.x<EString>"; //$NON-NLS-1$
-		assertEquals(expected, emfProperty.toString());
+		assertEquals(expected, valueProperty.toString());
 
 	}
 
 	@Test
 	public void testIntegrationList() throws DatabindingFailedException {
-		// TODO
-		final VFeaturePathDomainModelReference pathReference = VViewFactory.eINSTANCE
-			.createFeaturePathDomainModelReference();
-		// create reference path to the attribute
-		final LinkedList<EReference> referencePath = new LinkedList<EReference>();
-		referencePath.add(TestPackage.eINSTANCE.getA_B());
-		referencePath.add(TestPackage.eINSTANCE.getB_C());
-		referencePath.add(TestPackage.eINSTANCE.getC_D());
+		final VDomainModelReference domainModelReference = VViewFactory.eINSTANCE.createDomainModelReference();
 
-		final EStructuralFeature feature = TestPackage.eINSTANCE.getD_YList();
+		// create segment path to the attribute
+		final VDMRSegment segment1 = VViewFactory.eINSTANCE.createDMRSegment();
+		segment1.setPropertyName("b"); //$NON-NLS-1$
+		final VDMRSegment segment2 = VViewFactory.eINSTANCE.createDMRSegment();
+		segment2.setPropertyName("c"); //$NON-NLS-1$
+		final VDMRSegment segment3 = VViewFactory.eINSTANCE.createDMRSegment();
+		segment3.setPropertyName("d"); //$NON-NLS-1$
+		final VDMRSegment segment4 = VViewFactory.eINSTANCE.createDMRSegment();
+		segment4.setPropertyName("yList"); //$NON-NLS-1$
 
-		pathReference.getDomainModelEReferencePath().addAll(referencePath);
-		pathReference.setDomainModelEFeature(feature);
+		domainModelReference.getSegments().add(segment1);
+		domainModelReference.getSegments().add(segment2);
+		domainModelReference.getSegments().add(segment3);
+		domainModelReference.getSegments().add(segment4);
 
-		final IListProperty listProperty = databindingService.getListProperty(pathReference);
+		final EClass rootEClass = TestPackage.eINSTANCE.getA();
 
-		// The converter should return an IEMFListProperty
-		assertTrue(listProperty instanceof IEMFListProperty);
-
-		final IEMFListProperty emfListProperty = (IEMFListProperty) listProperty;
+		final IListProperty listProperty = databindingService.getListProperty(domainModelReference, rootEClass);
 
 		// Check EStructuralFeature of the property.
-		assertEquals(feature, emfListProperty.getStructuralFeature());
+		assertEquals(TestPackage.eINSTANCE.getD_YList(), listProperty.getElementType());
 
 		// Check correct path.
 		final String expected = "A.b<B> => B.c<C> => C.d<D> => D.yList[]<EInt>"; //$NON-NLS-1$
-		assertEquals(expected, emfListProperty.toString());
+		assertEquals(expected, listProperty.toString());
 
 	}
 }
