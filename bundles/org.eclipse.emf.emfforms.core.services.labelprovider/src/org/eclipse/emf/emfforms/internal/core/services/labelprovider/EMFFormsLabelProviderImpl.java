@@ -77,15 +77,17 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider#getDisplayName(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)
+	 * @see org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider#getDisplayName(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference,
+	 *      org.eclipse.emf.ecore.EClass)
 	 */
 	@Override
-	public String getDisplayName(VDomainModelReference domainModelReference) {
+	public String getDisplayName(VDomainModelReference domainModelReference, EClass rootEClass) {
 		Assert.create(domainModelReference).notNull();
+		Assert.create(rootEClass).notNull();
 
 		IValueProperty valueProperty;
 		try {
-			valueProperty = emfFormsDatabinding.getValueProperty(domainModelReference);
+			valueProperty = emfFormsDatabinding.getValueProperty(domainModelReference, rootEClass);
 		} catch (final DatabindingFailedException ex) {
 			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 			return ex.getMessage();
@@ -153,15 +155,17 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider#getDescription(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)
+	 * @see org.eclipse.emf.emfforms.spi.core.services.labelprovider.EMFFormsLabelProvider#getDescription(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference,
+	 *      org.eclipse.emf.ecore.EClass)
 	 */
 	@Override
-	public String getDescription(VDomainModelReference domainModelReference) {
+	public String getDescription(VDomainModelReference domainModelReference, EClass rootEClass) {
 		Assert.create(domainModelReference).notNull();
+		Assert.create(rootEClass).notNull();
 
 		IValueProperty valueProperty;
 		try {
-			valueProperty = emfFormsDatabinding.getValueProperty(domainModelReference);
+			valueProperty = emfFormsDatabinding.getValueProperty(domainModelReference, rootEClass);
 		} catch (final DatabindingFailedException ex) {
 			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 			return ex.getMessage();

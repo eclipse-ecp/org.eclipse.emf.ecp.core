@@ -11,6 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.emfforms.spi.core.services.labelprovider;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 
@@ -29,9 +30,10 @@ public interface EMFFormsLabelProvider {
 	 * Returns the display name of the referenced domain object.
 	 *
 	 * @param domainModelReference The {@link VDomainModelReference} referencing the domain object
+	 * @param rootEClass The root EClass of the given domain model reference
 	 * @return The display name
 	 */
-	String getDisplayName(VDomainModelReference domainModelReference);
+	String getDisplayName(VDomainModelReference domainModelReference, EClass rootEClass);
 
 	/**
 	 * Returns the display name of the referenced domain object resolved for the given root {@link EObject}.
@@ -46,9 +48,10 @@ public interface EMFFormsLabelProvider {
 	 * Returns the description of the referenced domain object.
 	 *
 	 * @param domainModelReference The {@link VDomainModelReference} referencing the model object
+	 * @param rootEClass The root EClass of the given domain model reference
 	 * @return The description
 	 */
-	String getDescription(VDomainModelReference domainModelReference);
+	String getDescription(VDomainModelReference domainModelReference, EClass rootEClass);
 
 	/**
 	 * Returns the description of the referenced domain object resolved for the given root {@link EObject}.

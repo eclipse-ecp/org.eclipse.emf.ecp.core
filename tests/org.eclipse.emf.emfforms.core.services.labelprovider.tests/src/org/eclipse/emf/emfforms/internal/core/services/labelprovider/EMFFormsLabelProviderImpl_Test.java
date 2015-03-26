@@ -20,6 +20,7 @@ import static org.mockito.Mockito.when;
 import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.databinding.EObjectObservableValue;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.test.common.DefaultRealm;
@@ -85,38 +86,49 @@ public class EMFFormsLabelProviderImpl_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emf.emfforms.internal.core.services.labelprovider.EMFFormsLabelProviderImpl#getDisplayName(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emf.emfforms.internal.core.services.labelprovider.EMFFormsLabelProviderImpl#getDisplayName(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EClass)}
 	 * .
 	 *
 	 * @throws DatabindingFailedException should not happen, just needs to be thrown because the databinding service
 	 *             defines the throw in its interface.
 	 */
 	@Test
-	public void testGetDisplayNameOneParam() throws DatabindingFailedException {
+	public void testGetDisplayNameEClass() throws DatabindingFailedException {
 		final String expectedResult = "expected"; //$NON-NLS-1$
 		final EStructuralFeature structuralFeature = mock(EStructuralFeature.class);
 		final VDomainModelReference domainModelReference = mock(VDomainModelReference.class);
+		final EClass rootEClass = mock(EClass.class);
 
 		when(structuralFeature.getEContainingClass()).thenReturn(TestPackage.eINSTANCE.getD());
 		when(itemPropertyDescriptor.getDisplayName(any(Object.class))).thenReturn(expectedResult);
 		when(valueProperty.getValueType()).thenReturn(structuralFeature);
-		when(databindingService.getValueProperty(domainModelReference)).thenReturn(valueProperty);
+		when(databindingService.getValueProperty(domainModelReference, rootEClass)).thenReturn(valueProperty);
 
-		final String result = labelProvider.getDisplayName(domainModelReference);
+		final String result = labelProvider.getDisplayName(domainModelReference, rootEClass);
 
-		verify(databindingService).getValueProperty(domainModelReference);
+		verify(databindingService).getValueProperty(domainModelReference, rootEClass);
 		verify(itemPropertyDescriptor).getDisplayName(any(D.class));
 		assertEquals(expectedResult, result);
 	}
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emf.emfforms.internal.core.services.labelprovider.EMFFormsLabelProviderImpl#getDisplayName(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emf.emfforms.internal.core.services.labelprovider.EMFFormsLabelProviderImpl#getDisplayName(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EClass)}
 	 * .
 	 */
 	@Test(expected = IllegalArgumentException.class)
-	public void testGetDisplayNameOneParamNull() {
-		labelProvider.getDisplayName(null);
+	public void testGetDisplayNameEClassDMRNull() {
+		labelProvider.getDisplayName(null, mock(EClass.class));
+	}
+
+	/**
+	 * Test method for
+	 * {@link org.eclipse.emf.emfforms.internal.core.services.labelprovider.EMFFormsLabelProviderImpl#getDisplayName(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EClass)}
+	 * .
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testGetDisplayNameEClassEClassNull() {
+		labelProvider.getDisplayName(mock(VDomainModelReference.class), null);
 	}
 
 	/**
@@ -128,7 +140,7 @@ public class EMFFormsLabelProviderImpl_Test {
 	 *             defines the throw in its interface.
 	 */
 	@Test
-	public void testGetDisplayNameTwoParams() throws DatabindingFailedException {
+	public void testGetDisplayNameEObject() throws DatabindingFailedException {
 		final String expectedResult = "expected"; //$NON-NLS-1$
 		final EObject eObject = mock(EObject.class);
 		final EObject value = mock(EObject.class);
@@ -152,7 +164,7 @@ public class EMFFormsLabelProviderImpl_Test {
 	 * .
 	 */
 	@Test(expected = IllegalArgumentException.class)
-	public void testGetDisplayNameTwoParamsReferenceNull() {
+	public void testGetDisplayNameEObjectReferenceNull() {
 		labelProvider.getDisplayName(null, mock(EObject.class));
 	}
 
@@ -162,7 +174,7 @@ public class EMFFormsLabelProviderImpl_Test {
 	 * .
 	 */
 	@Test(expected = IllegalArgumentException.class)
-	public void testGetDisplayNameTwoParamsObjectNull() {
+	public void testGetDisplayNameEObjectObjectNull() {
 		labelProvider.getDisplayName(mock(VDomainModelReference.class), null);
 	}
 
@@ -172,44 +184,55 @@ public class EMFFormsLabelProviderImpl_Test {
 	 * .
 	 */
 	@Test(expected = IllegalArgumentException.class)
-	public void testGetDisplayNameTwoParamsBothNull() {
+	public void testGetDisplayNameEObjectBothNull() {
 		labelProvider.getDisplayName(null, null);
 	}
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emf.emfforms.internal.core.services.labelprovider.EMFFormsLabelProviderImpl#getDescription(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emf.emfforms.internal.core.services.labelprovider.EMFFormsLabelProviderImpl#getDescription(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EClass)}
 	 * .
 	 *
 	 * @throws DatabindingFailedException should not happen, just needs to be thrown because the databinding service
 	 *             defines the throw in its interface.
 	 */
 	@Test
-	public void testGetDescriptionOneParam() throws DatabindingFailedException {
+	public void testGetDescriptionEClass() throws DatabindingFailedException {
 		final String expectedResult = "expected"; //$NON-NLS-1$
 		final EStructuralFeature structuralFeature = mock(EStructuralFeature.class);
 		final VDomainModelReference domainModelReference = mock(VDomainModelReference.class);
+		final EClass rootEClass = mock(EClass.class);
 
 		when(structuralFeature.getEContainingClass()).thenReturn(TestPackage.eINSTANCE.getD());
 		when(itemPropertyDescriptor.getDescription(any(Object.class))).thenReturn(expectedResult);
 		when(valueProperty.getValueType()).thenReturn(structuralFeature);
-		when(databindingService.getValueProperty(domainModelReference)).thenReturn(valueProperty);
+		when(databindingService.getValueProperty(domainModelReference, rootEClass)).thenReturn(valueProperty);
 
-		final String result = labelProvider.getDescription(domainModelReference);
+		final String result = labelProvider.getDescription(domainModelReference, rootEClass);
 
-		verify(databindingService).getValueProperty(domainModelReference);
+		verify(databindingService).getValueProperty(domainModelReference, rootEClass);
 		verify(itemPropertyDescriptor).getDescription(any(D.class));
 		assertEquals(expectedResult, result);
 	}
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emf.emfforms.internal.core.services.labelprovider.EMFFormsLabelProviderImpl#getDescription(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
+	 * {@link org.eclipse.emf.emfforms.internal.core.services.labelprovider.EMFFormsLabelProviderImpl#getDescription(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EClass)}
 	 * .
 	 */
 	@Test(expected = IllegalArgumentException.class)
-	public void testGetDescriptionOneParamNull() {
-		labelProvider.getDescription(null);
+	public void testGetDescriptionEClassDMRNull() {
+		labelProvider.getDescription(null, mock(EClass.class));
+	}
+
+	/**
+	 * Test method for
+	 * {@link org.eclipse.emf.emfforms.internal.core.services.labelprovider.EMFFormsLabelProviderImpl#getDescription(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EClass)}
+	 * .
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testGetDescriptionEClassEClassNull() {
+		labelProvider.getDescription(mock(VDomainModelReference.class), null);
 	}
 
 	/**
@@ -221,7 +244,7 @@ public class EMFFormsLabelProviderImpl_Test {
 	 *             defines the throw in its interface.
 	 */
 	@Test
-	public void testGetDescriptionTwoParams() throws DatabindingFailedException {
+	public void testGetDescriptionEObject() throws DatabindingFailedException {
 		final String expectedResult = "expected"; //$NON-NLS-1$
 		final EObject eObject = mock(EObject.class);
 		final EObject value = mock(EObject.class);
@@ -245,7 +268,7 @@ public class EMFFormsLabelProviderImpl_Test {
 	 * .
 	 */
 	@Test(expected = IllegalArgumentException.class)
-	public void testGetDescriptionTwoParamsReferenceNull() {
+	public void testGetDescriptionEObjectReferenceNull() {
 		labelProvider.getDescription(null, mock(EObject.class));
 	}
 
@@ -255,7 +278,7 @@ public class EMFFormsLabelProviderImpl_Test {
 	 * .
 	 */
 	@Test(expected = IllegalArgumentException.class)
-	public void testGetDescriptionTwoParamsObjectNull() {
+	public void testGetDescriptionEObjectObjectNull() {
 		labelProvider.getDescription(mock(VDomainModelReference.class), null);
 	}
 
@@ -265,7 +288,7 @@ public class EMFFormsLabelProviderImpl_Test {
 	 * .
 	 */
 	@Test(expected = IllegalArgumentException.class)
-	public void testGetDescriptionTwoParamsBothNull() {
+	public void testGetDescriptionEObjectBothNull() {
 		labelProvider.getDescription(null, null);
 	}
 }

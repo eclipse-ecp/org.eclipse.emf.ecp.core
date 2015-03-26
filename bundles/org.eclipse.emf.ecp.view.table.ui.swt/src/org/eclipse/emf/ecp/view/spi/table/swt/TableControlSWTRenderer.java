@@ -429,8 +429,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			final EStructuralFeature eStructuralFeature = (EStructuralFeature) valueProperty.getValueType();
 
 			final EMFFormsLabelProvider labelService = getEMFFormsLabelProvider();
-			final String text = labelService.getDisplayName(dmr);
-			final String tooltipText = labelService.getDescription(dmr);
+			final String text = labelService.getDisplayName(dmr, columnRootEClass);
+			final String tooltipText = labelService.getDescription(dmr, columnRootEClass);
 
 			final CellEditor cellEditor = createCellEditor(tempInstance, eStructuralFeature, tableViewer.getTable());
 			final TableViewerColumn column = TableViewerColumnBuilder
