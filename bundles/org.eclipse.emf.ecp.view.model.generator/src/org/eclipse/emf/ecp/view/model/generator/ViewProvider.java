@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * Edgar - initial API and implementation
+ * Lucas Koehler - adjusted for DMR Segments
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.model.generator;
 
@@ -21,7 +22,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
-import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VDMRSegment;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.provider.IViewProvider;
@@ -47,9 +49,10 @@ public class ViewProvider implements IViewProvider {
 		for (final EStructuralFeature feature : getValidFeatures(eObject)) {
 
 			final VControl control = VViewFactory.eINSTANCE.createControl();
-			final VFeaturePathDomainModelReference modelReference = VViewFactory.eINSTANCE
-				.createFeaturePathDomainModelReference();
-			modelReference.setDomainModelEFeature(feature);
+			final VDomainModelReference modelReference = VViewFactory.eINSTANCE.createDomainModelReference();
+			final VDMRSegment segment = VViewFactory.eINSTANCE.createDMRSegment();
+			segment.setPropertyName(feature.getName());
+			modelReference.getSegments().add(segment);
 			control.setDomainModelReference(modelReference);
 			control.setReadonly(!feature.isChangeable());
 			view.getChildren().add(control);
