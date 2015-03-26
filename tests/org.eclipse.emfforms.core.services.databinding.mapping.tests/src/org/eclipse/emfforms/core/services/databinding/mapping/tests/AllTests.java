@@ -11,8 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emfforms.core.services.databinding.mapping.tests;
 
+import org.eclipse.emfforms.internal.core.services.databinding.mapping.DMRMappingSegmentConverter_Test;
 import org.eclipse.emfforms.internal.core.services.databinding.mapping.EMFMappingValueProperty_Test;
-import org.eclipse.emfforms.internal.core.services.databinding.mapping.MappingDomainModelReferenceConverter_Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
@@ -24,7 +24,7 @@ import org.junit.runners.Suite.SuiteClasses;
  *
  */
 @RunWith(Suite.class)
-@SuiteClasses({ EMFMappingValueProperty_Test.class, MappingDomainModelReferenceConverter_Test.class })
+@SuiteClasses({ EMFMappingValueProperty_Test.class, DMRMappingSegmentConverter_Test.class })
 public class AllTests {
 
 }

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.eclipse.emfforms.core.services.databinding.mapping">
+   <implementation class="org.eclipse.emfforms.internal.core.services.databinding.mapping.DMRMappingSegmentConverter"/>
+   <service>
+      <provide interface="org.eclipse.emfforms.spi.core.services.databinding.DMRSegmentConverter"/>
+   </service>
+</scr:component>

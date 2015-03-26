@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.&#xD;&#xA;&#xD;&#xA;All rights reserved. This program and the accompanying materials&#xD;&#xA;are made available under the terms of the Eclipse Public License v1.0&#xD;&#xA;which accompanies this distribution, and is available at&#xD;&#xA;http://www.eclipse.org/legal/epl-v10.html&#xD;&#xA;&#xD;&#xA;Contributors:&#xD;&#xA;Lucas Koehler - initial API and implementation"
+    modelDirectory="/org.eclipse.emfforms.view.mappingsegment.model/src" modelPluginID="org.eclipse.emfforms.view.mappingsegment.model"
+    modelName="Mappingsegment" editPluginClass="org.eclipse.emfforms.spi.view.mappingsegment.model.provider.MappingsegmentEditPlugin"
+    editorPluginClass="org.eclipse.emfforms.spi.view.mappingsegment.model.presentation.MappingsegmentEditorPlugin"
+    nonNLSMarkers="true" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    codeFormatting="true" commentFormatting="true" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="6.0" copyrightFields="false" usedGenPackages="../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model"
+    interfaceNamePattern="V{0}" classNamePattern="V{0}Impl" importOrganizing="true">
+  <foreignModel>mappingsegment.ecore</foreignModel>
+  <genPackages prefix="Mappingsegment" basePackage="org.eclipse.emfforms.spi.view"
+      disposableProviderFactory="true" interfacePackageSuffix="model" metaDataPackageSuffix="model"
+      classPackageSuffix="model.impl" utilityPackageSuffix="model.util" providerPackageSuffix="model.provider"
+      presentationPackageSuffix="model.presentation" extensibleProviderFactory="true"
+      childCreationExtenders="true" ecorePackage="mappingsegment.ecore#/">
+    <genClasses ecoreClass="mappingsegment.ecore#//DMRMappingSegment">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference mappingsegment.ecore#//DMRMappingSegment/mappedClass"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

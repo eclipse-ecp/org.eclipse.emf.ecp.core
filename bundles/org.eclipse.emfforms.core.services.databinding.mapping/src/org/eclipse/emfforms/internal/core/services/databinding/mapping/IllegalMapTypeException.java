@@ -15,8 +15,8 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedExcep
 
 /**
  * A checked {@link Exception} that is thrown when a
- * {@link org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReference VMappingDomainModelReference}
- * should be converted to a property and the referenced map's values are no {@link org.eclipse.emf.ecore.EObject
+ * {@link org.eclipse.emfforms.spi.view.mappingsegment.model.VDMRMappingSegment VDMRMappingSegment} should be converted
+ * to a property and the referenced map's values are no {@link org.eclipse.emf.ecore.EObject
  * EObjects}.
  *
  * @author Lucas Koehler

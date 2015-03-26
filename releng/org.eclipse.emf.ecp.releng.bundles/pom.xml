@@ -269,6 +269,8 @@
 		<!-- Segments -->
 		<module>../../bundles/org.eclipse.emfforms.view.indexsegment.model</module>
 		<module>../../bundles/org.eclipse.emfforms.view.indexsegment.model.edit</module>
+		<module>../../bundles/org.eclipse.emfforms.view.mappingsegment.model</module>
+		<module>../../bundles/org.eclipse.emfforms.view.mappingsegment.model.edit</module>
 	</modules>
 
 	<build>
