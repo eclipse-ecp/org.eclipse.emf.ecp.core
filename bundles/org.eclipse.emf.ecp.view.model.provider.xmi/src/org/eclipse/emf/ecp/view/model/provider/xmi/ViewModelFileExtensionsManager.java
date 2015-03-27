@@ -72,6 +72,9 @@ public final class ViewModelFileExtensionsManager {
 		final Map<URI, ExtensionDescription> extensionURIS = getExtensionURIS();
 		for (final URI uri : extensionURIS.keySet()) {
 			final Resource resource = loadResource(uri);
+			if (resource.getContents().isEmpty()) {
+				continue;
+			}
 			final EObject eObject = resource.getContents().get(0);
 			if (!(eObject instanceof VView)) {
 				// TODO:log

@@ -26,7 +26,7 @@ import org.eclipse.emf.ecp.edit.spi.swt.reference.DeleteReferenceAction;
 import org.eclipse.emf.ecp.view.spi.editor.controls.AbstractFilteredReferenceAction;
 import org.eclipse.emf.ecp.view.spi.editor.controls.AbstractFilteredReferenceCommand;
 import org.eclipse.emf.ecp.view.spi.editor.controls.Helper;
-import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -52,24 +52,24 @@ public class ControlTargetFeatureControl extends LinkControl {
 	@Override
 	protected Object getLinkText(Object value) {
 
-		final VFeaturePathDomainModelReference modelReference =
-			(VFeaturePathDomainModelReference) getFirstSetting().getEObject();
+		final VDomainModelReference modelReference =
+			(VDomainModelReference) getFirstSetting().getEObject();
 
-		String className = ""; //$NON-NLS-1$
+		final String className = "FIXME"; //$NON-NLS-1$
 		final String attributeName = " -> " + getAdapterFactoryItemDelegator().getText(value); //$NON-NLS-1$
-		String referencePath = ""; //$NON-NLS-1$
+		final String referencePath = ""; //$NON-NLS-1$
 
-		for (final EReference ref : modelReference.getDomainModelEReferencePath()) {
-			if (className.isEmpty()) {
-				className = ref.getEContainingClass().getName();
-			}
-			referencePath = referencePath + " -> " + getAdapterFactoryItemDelegator().getText(ref); //$NON-NLS-1$
-		}
-		if (className.isEmpty() && modelReference.getDomainModelEFeature() != null
-			&& modelReference.getDomainModelEFeature().getEContainingClass() != null) {
-
-			className = modelReference.getDomainModelEFeature().getEContainingClass().getName();
-		}
+		// for (final EReference ref : modelReference.getDomainModelEReferencePath()) {
+		// if (className.isEmpty()) {
+		// className = ref.getEContainingClass().getName();
+		// }
+		//			referencePath = referencePath + " -> " + getAdapterFactoryItemDelegator().getText(ref); //$NON-NLS-1$
+		// }
+		// if (className.isEmpty() && modelReference.getDomainModelEFeature() != null
+		// && modelReference.getDomainModelEFeature().getEContainingClass() != null) {
+		//
+		// className = modelReference.getDomainModelEFeature().getEContainingClass().getName();
+		// }
 
 		final String linkText = className + referencePath + attributeName;
 		return linkText;
@@ -85,10 +85,10 @@ public class ControlTargetFeatureControl extends LinkControl {
 			@Override
 			public void run() {
 				super.run();
-				final VFeaturePathDomainModelReference modelReference =
-					(VFeaturePathDomainModelReference) setting.getEObject();
-				modelReference.getDomainModelEReferencePath().clear();
-				modelReference.setDomainModelEFeature(null);
+				// final VFeaturePathDomainModelReference modelReference =
+				// (VFeaturePathDomainModelReference) setting.getEObject();
+				// modelReference.getDomainModelEReferencePath().clear();
+				// modelReference.setDomainModelEFeature(null);
 			}
 
 		}, composite);
@@ -168,11 +168,12 @@ public class ControlTargetFeatureControl extends LinkControl {
 
 		@Override
 		protected void setSelectedValues(EStructuralFeature selectedFeature, List<EReference> bottomUpPath) {
-			final VFeaturePathDomainModelReference modelReference = (VFeaturePathDomainModelReference) getFirstSetting()
-				.getEObject();
-			modelReference.setDomainModelEFeature(selectedFeature);
-			modelReference.getDomainModelEReferencePath().clear();
-			modelReference.getDomainModelEReferencePath().addAll(bottomUpPath);
+			// final VFeaturePathDomainModelReference modelReference = (VFeaturePathDomainModelReference)
+			// getFirstSetting()
+			// .getEObject();
+			// modelReference.setDomainModelEFeature(selectedFeature);
+			// modelReference.getDomainModelEReferencePath().clear();
+			// modelReference.getDomainModelEReferencePath().addAll(bottomUpPath);
 		}
 
 	}

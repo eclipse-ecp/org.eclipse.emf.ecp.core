@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -34,7 +34,9 @@ public class FeaturePathDMRReferenceTester implements
 
 	@Override
 	public int isApplicable(VElement vElement, ViewModelContext viewModelContext) {
-
+		if (viewModelContext == null) {
+			return NOT_APPLICABLE;
+		}
 		if (!VControl.class.isInstance(vElement)) {
 			return NOT_APPLICABLE;
 		}
@@ -43,7 +45,7 @@ public class FeaturePathDMRReferenceTester implements
 		IValueProperty valueProperty;
 		try {
 			valueProperty = Activator.getDefault().getEMFFormsDatabinding()
-				.getValueProperty(control.getDomainModelReference());
+				.getValueProperty(control.getDomainModelReference(), viewModelContext.getDomainModel().eClass());
 		} catch (final DatabindingFailedException ex) {
 			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 			return NOT_APPLICABLE;
