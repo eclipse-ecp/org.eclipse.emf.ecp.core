@@ -135,17 +135,19 @@ public class TextControlSWTRendererService implements EMFFormsRendererService<VC
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService#isApplicable(org.eclipse.emf.ecp.view.spi.model.VElement)
+	 * @see org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService#isApplicable(org.eclipse.emf.ecp.view.spi.model.VElement,
+	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	@Override
-	public double isApplicable(VElement vElement) {
+	public double isApplicable(VElement vElement, ViewModelContext viewModelContext) {
 		if (!VControl.class.isInstance(vElement)) {
 			return NOT_APPLICABLE;
 		}
 		final VControl control = (VControl) vElement;
 		IValueProperty valueProperty;
 		try {
-			valueProperty = databindingService.getValueProperty(control.getDomainModelReference());
+			valueProperty = databindingService.getValueProperty(control.getDomainModelReference(), viewModelContext
+				.getDomainModel().eClass());
 		} catch (final DatabindingFailedException ex) {
 			reportService.report(new DatabindingFailedReport(ex));
 			return NOT_APPLICABLE;

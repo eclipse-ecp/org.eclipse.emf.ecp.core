@@ -85,7 +85,7 @@ public class EnumComboViewerSWTRenderer extends SimpleControlJFaceViewerSWTRende
 	@Override
 	protected Viewer createJFaceViewer(Composite parent) throws DatabindingFailedException {
 		final IValueProperty valueProperty = getEMFFormsDatabinding()
-			.getValueProperty(getVElement().getDomainModelReference());
+			.getValueProperty(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel().eClass());
 		final EStructuralFeature structuralFeature = (EStructuralFeature) valueProperty.getValueType();
 		final ComboViewer combo = new ComboViewer(parent);
 		combo.setContentProvider(new ArrayContentProvider());

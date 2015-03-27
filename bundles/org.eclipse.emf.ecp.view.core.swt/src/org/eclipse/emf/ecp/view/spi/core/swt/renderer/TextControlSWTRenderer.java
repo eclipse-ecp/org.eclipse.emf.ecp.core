@@ -223,7 +223,8 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 		IValueProperty valueProperty;
 		try {
 			valueProperty = getEMFFormsDatabinding()
-				.getValueProperty(getVElement().getDomainModelReference());
+				.getValueProperty(getVElement().getDomainModelReference(),
+					getViewModelContext().getDomainModel().eClass());
 		} catch (final DatabindingFailedException ex) {
 			getReportService().report(new RenderingFailedReport(ex));
 			return false;

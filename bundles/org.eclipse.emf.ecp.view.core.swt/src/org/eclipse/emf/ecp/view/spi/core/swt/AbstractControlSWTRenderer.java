@@ -139,15 +139,15 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 				});
 			}
 		};
-		getVElement().getDomainModelReference().getChangeListener().add(domainModelReferenceChangeListener);
+		// getVElement().getDomainModelReference().getChangeListener().add(domainModelReferenceChangeListener);
 		applyEnable();
 	}
 
 	@Override
 	protected void dispose() {
-		if (getVElement().getDomainModelReference() != null) {
-			getVElement().getDomainModelReference().getChangeListener().remove(domainModelReferenceChangeListener);
-		}
+		// if (getVElement().getDomainModelReference() != null) {
+		// getVElement().getDomainModelReference().getChangeListener().remove(domainModelReferenceChangeListener);
+		// }
 
 		domainModelReferenceChangeListener = null;
 
@@ -280,7 +280,8 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 			final VDomainModelReference domainModelReference = getVElement().getDomainModelReference();
 			IValueProperty valueProperty;
 			try {
-				valueProperty = getEMFFormsDatabinding().getValueProperty(domainModelReference);
+				valueProperty = getEMFFormsDatabinding().getValueProperty(domainModelReference,
+					getViewModelContext().getDomainModel().eClass());
 			} catch (final DatabindingFailedException ex) {
 				getReportService().report(new RenderingFailedReport(ex));
 				break labelRender;

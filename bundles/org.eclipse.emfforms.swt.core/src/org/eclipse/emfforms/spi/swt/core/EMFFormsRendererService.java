@@ -25,8 +25,8 @@ import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 public interface EMFFormsRendererService<VELEMENT extends VElement> {
 
 	/**
-	 * Constant for {@link #isApplicable(VElement)} to indicate, that the EMFFormsRendererService cannot provide a
-	 * fitting renderer for the provided VElement.
+	 * Constant for {@link #isApplicable(VElement, ViewModelContext)} to indicate, that the EMFFormsRendererService
+	 * cannot provide a fitting renderer for the provided VElement.
 	 */
 	double NOT_APPLICABLE = Double.NaN;
 
@@ -35,9 +35,10 @@ public interface EMFFormsRendererService<VELEMENT extends VElement> {
 	 * {@link #getRendererInstance(VElement, ViewModelContext)}.
 	 *
 	 * @param vElement The {@link VElement} to check
+	 * @param viewModelContext The {@link ViewModelContext} to use for the renderer service
 	 * @return {@link #NOT_APPLICABLE} if the renderer doesn't fit, a positive value otherwise
 	 */
-	double isApplicable(VElement vElement);
+	double isApplicable(VElement vElement, ViewModelContext viewModelContext);
 
 	/**
 	 * Returns a renderer.

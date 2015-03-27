@@ -89,8 +89,8 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 	@Override
 	protected String getTextMessage() {
 		try {
-			final IValueProperty valueProperty = getEMFFormsDatabinding()
-				.getValueProperty(getVElement().getDomainModelReference());
+			final IValueProperty valueProperty = getEMFFormsDatabinding().getValueProperty(
+				getVElement().getDomainModelReference(), getViewModelContext().getDomainModel().eClass());
 			final EStructuralFeature structuralFeature = (EStructuralFeature) valueProperty.getValueType();
 			if (NumericalHelper.isInteger(getInstanceClass(structuralFeature))) {
 				return LocalizationServiceHelper.getString(getClass(), MessageKeys.NumericalControl_FormatNumerical);
@@ -147,7 +147,7 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 		@Override
 		public Object convertValue(Object value) {
 			if (value == null) {
-				return "";
+				return ""; //$NON-NLS-1$
 			}
 			final DecimalFormat format = NumericalHelper.setupFormat(getLocale(viewModelContext),
 				instanceClass);

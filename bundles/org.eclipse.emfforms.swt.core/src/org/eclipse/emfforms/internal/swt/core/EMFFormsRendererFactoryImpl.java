@@ -87,7 +87,7 @@ public class EMFFormsRendererFactoryImpl implements EMFFormsRendererFactory {
 		double highestPriority = -1;
 		EMFFormsRendererService<VElement> bestService = null;
 		for (final EMFFormsRendererService<VElement> rendererService : rendererServices) {
-			final double priority = rendererService.isApplicable(vElement);
+			final double priority = rendererService.isApplicable(vElement, viewModelContext);
 			if (priority > highestPriority) {
 				highestPriority = priority;
 				bestService = rendererService;

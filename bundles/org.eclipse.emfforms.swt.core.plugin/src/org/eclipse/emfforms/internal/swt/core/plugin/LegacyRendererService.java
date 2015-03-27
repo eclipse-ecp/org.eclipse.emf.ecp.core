@@ -51,10 +51,11 @@ public class LegacyRendererService implements EMFFormsRendererService<VElement> 
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService#isApplicable(org.eclipse.emf.ecp.view.spi.model.VElement)
+	 * @see org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService#isApplicable(org.eclipse.emf.ecp.view.spi.model.VElement,
+	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	@Override
-	public double isApplicable(VElement vElement) {
+	public double isApplicable(VElement vElement, ViewModelContext viewModelContext) {
 		int currentPriority = -1;
 		for (final ECPRendererTester tester : testerSet) {
 			// FIXME is null a problem?
