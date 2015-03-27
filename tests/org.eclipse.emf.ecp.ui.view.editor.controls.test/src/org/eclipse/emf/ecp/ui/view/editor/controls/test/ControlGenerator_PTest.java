@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -21,7 +21,7 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import org.eclipse.emf.common.util.EList;
+import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
@@ -34,19 +34,31 @@ import org.eclipse.emf.ecp.view.spi.group.model.VGroup;
 import org.eclipse.emf.ecp.view.spi.group.model.VGroupFactory;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VDMRSegment;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
+import org.eclipse.emfforms.internal.core.services.databinding.segment.DMRSegmentConverterImpl;
+import org.eclipse.emfforms.spi.core.services.databinding.DMRSegmentConverter;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
+@SuppressWarnings("restriction")
 public class ControlGenerator_PTest {
 
 	private EClass rootEClass;
 	private VElement elementToFill;
 	private Set<EStructuralFeature> features;
+	private static DMRSegmentConverter segmentConverter;
+
+	@BeforeClass
+	public static void beforeClass() {
+		segmentConverter = new DMRSegmentConverterImpl();
+	}
 
 	@Before
 	public void before() {
@@ -68,7 +80,7 @@ public class ControlGenerator_PTest {
 	}
 
 	@Test
-	public void testAddControlsWithView() {
+	public void testAddControlsWithView() throws DatabindingFailedException {
 		// setup
 		final VView view = (VView) elementToFill;
 		// act
@@ -83,7 +95,7 @@ public class ControlGenerator_PTest {
 	}
 
 	@Test
-	public void testAddControlsWithContainer() {
+	public void testAddControlsWithContainer() throws DatabindingFailedException {
 		// setup
 		elementToFill = VGroupFactory.eINSTANCE.createGroup();
 		final VGroup group = (VGroup) elementToFill;
@@ -99,7 +111,7 @@ public class ControlGenerator_PTest {
 	}
 
 	@Test
-	public void testAddControlsWithBottomUpPath() {
+	public void testAddControlsWithBottomUpPath() throws DatabindingFailedException {
 		// setup
 		final VView view = (VView) elementToFill;
 		features.add(BowlingPackage.eINSTANCE.getMerchandise_Name());
@@ -115,7 +127,7 @@ public class ControlGenerator_PTest {
 	}
 
 	@Test
-	public void testGenerateAllControls() throws IOException {
+	public void testGenerateAllControls() throws IOException, DatabindingFailedException {
 		// setup
 		VView view = (VView) elementToFill;
 		view.setRootEClass(rootEClass);
@@ -143,23 +155,26 @@ public class ControlGenerator_PTest {
 		file.delete();
 	}
 
-	private static void assertControl(VContainedElement element, EClass eClass, EStructuralFeature feature) {
+	private static void assertControl(VContainedElement element, EClass eClass, EStructuralFeature feature)
+		throws DatabindingFailedException {
 		assertNotNull(element);
 		assertTrue(element instanceof VControl);
 		final VControl control = (VControl) element;
 		assertNotNull(control.getDomainModelReference());
-		assertTrue(control.getDomainModelReference() instanceof VFeaturePathDomainModelReference);
-		final VFeaturePathDomainModelReference reference = (VFeaturePathDomainModelReference) control
-			.getDomainModelReference();
-		assertEquals(feature, reference.getDomainModelEFeature());
+		final VDomainModelReference reference = control.getDomainModelReference();
+		assertNotNull(reference.getSegments());
 
+		EStructuralFeature structuralFeature = null;
 		EClass currentEClass = eClass;
-		final EList<EReference> domainModelEReferencePath = reference.getDomainModelEReferencePath();
-		for (final EReference pathRef : domainModelEReferencePath) {
-			assertTrue(currentEClass.getEReferences().contains(pathRef));
-			currentEClass = pathRef.getEReferenceType();
+		for (final VDMRSegment segment : reference.getSegments()) {
+			final IValueProperty property = segmentConverter.convertToValueProperty(segment,
+				currentEClass);
+			structuralFeature = (EStructuralFeature) property.getValueType();
+			assertNotNull(structuralFeature);
+			if (structuralFeature instanceof EReference) {
+				currentEClass = EReference.class.cast(structuralFeature).getEReferenceType();
+			}
 		}
-		assertTrue(currentEClass.getEStructuralFeatures().contains(feature));
+		assertEquals(feature, structuralFeature);
 	}
-
 }

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -34,8 +34,9 @@ import org.eclipse.emf.ecp.view.internal.editor.controls.Activator;
 import org.eclipse.emf.ecp.view.spi.editor.controls.Helper;
 import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VDMRSegment;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 
@@ -81,14 +82,20 @@ public final class ControlGenerator {
 			control.setName("Control " + feature.getName()); //$NON-NLS-1$
 			control.setReadonly(false);
 
-			final VFeaturePathDomainModelReference modelReference = VViewFactory.eINSTANCE
-				.createFeaturePathDomainModelReference();
-			modelReference.setDomainModelEFeature(feature);
+			final VDomainModelReference modelReference = VViewFactory.eINSTANCE
+				.createDomainModelReference();
 
 			final java.util.List<EReference> bottomUpPath = Helper.getReferencePath(rootClass,
 				feature.getEContainingClass(),
 				childParentReferenceMap);
-			modelReference.getDomainModelEReferencePath().addAll(bottomUpPath);
+			for (final EReference reference : bottomUpPath) {
+				final VDMRSegment segment = VViewFactory.eINSTANCE.createDMRSegment();
+				segment.setPropertyName(reference.getName());
+				modelReference.getSegments().add(segment);
+			}
+			final VDMRSegment dmrSegment = VViewFactory.eINSTANCE.createDMRSegment();
+			dmrSegment.setPropertyName(feature.getName());
+			modelReference.getSegments().add(dmrSegment);
 
 			control.setDomainModelReference(modelReference);
 
