@@ -47,7 +47,7 @@ public class SWTDiffMergeAdditionTester implements ECPAdditionalRendererTester {
 		IValueProperty valueProperty;
 		try {
 			valueProperty = Activator.getInstance().getEMFFormsDatabinding()
-				.getValueProperty(control.getDomainModelReference());
+				.getValueProperty(control.getDomainModelReference(), viewModelContext.getDomainModel().eClass());
 		} catch (final DatabindingFailedException ex) {
 			Activator.getInstance().getReportService().report(new DatabindingFailedReport(ex));
 			return false;

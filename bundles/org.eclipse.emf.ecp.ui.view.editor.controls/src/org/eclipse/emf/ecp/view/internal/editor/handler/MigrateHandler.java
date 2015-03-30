@@ -27,7 +27,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.internal.editor.controls.Activator;
 import org.eclipse.emf.ecp.view.spi.editor.controls.Helper;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
-import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.edit.command.AddCommand;
@@ -74,7 +73,7 @@ public class MigrateHandler extends AbstractHandler {
 			IValueProperty valueProperty;
 			try {
 				valueProperty = Activator.getDefault().getEMFFormsDatabinding()
-					.getValueProperty(control.getDomainModelReference());
+					.getValueProperty(control.getDomainModelReference(), rootClass);
 			} catch (final DatabindingFailedException ex) {
 				Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 				continue;

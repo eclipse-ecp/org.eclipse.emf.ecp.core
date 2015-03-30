@@ -46,7 +46,7 @@ public class DomainModelReferenceControlSWTRendererTester implements ECPRenderer
 		IValueProperty valueProperty;
 		try {
 			valueProperty = Activator.getDefault().getEMFFormsDatabinding()
-				.getValueProperty(control.getDomainModelReference());
+				.getValueProperty(control.getDomainModelReference(), viewModelContext.getDomainModel().eClass());
 		} catch (final DatabindingFailedException ex) {
 			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 			return NOT_APPLICABLE;

@@ -41,10 +41,10 @@ public class SingleReferenceRendererTester implements ECPRendererTester {
 			return NOT_APPLICABLE;
 		}
 		final VControl control = (VControl) vElement;
-		IValueProperty valueProperty;
+		final IValueProperty valueProperty;
 		try {
 			valueProperty = Activator.getDefault().getEMFFormsDatabinding()
-				.getValueProperty(control.getDomainModelReference());
+				.getValueProperty(control.getDomainModelReference(), viewModelContext.getDomainModel().eClass());
 		} catch (final DatabindingFailedException ex) {
 			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 			return NOT_APPLICABLE;
