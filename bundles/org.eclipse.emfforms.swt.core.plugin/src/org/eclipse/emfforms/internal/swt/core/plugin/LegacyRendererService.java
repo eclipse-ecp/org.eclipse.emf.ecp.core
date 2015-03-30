@@ -58,8 +58,7 @@ public class LegacyRendererService implements EMFFormsRendererService<VElement> 
 	public double isApplicable(VElement vElement, ViewModelContext viewModelContext) {
 		int currentPriority = -1;
 		for (final ECPRendererTester tester : testerSet) {
-			// FIXME is null a problem?
-			final int testerPriority = tester.isApplicable(vElement, null);
+			final int testerPriority = tester.isApplicable(vElement, viewModelContext);
 			if (testerPriority > currentPriority) {
 				currentPriority = testerPriority;
 			}

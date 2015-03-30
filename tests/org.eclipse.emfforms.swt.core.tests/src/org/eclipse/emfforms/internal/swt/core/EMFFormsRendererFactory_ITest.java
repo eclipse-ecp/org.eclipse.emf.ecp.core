@@ -86,12 +86,13 @@ public class EMFFormsRendererFactory_ITest {
 	public void testAddRendererService() throws EMFFormsNoRendererException {
 		final VElement vElement = mock(VElement.class);
 		final ViewModelContext viewModelContext = mock(ViewModelContext.class);
-		final AbstractSWTRenderer<VElement> mockedRenderer = new MockedAbstractSWTRenderer(vElement, viewModelContext, mock(ReportService.class));
+		final AbstractSWTRenderer<VElement> mockedRenderer = new MockedAbstractSWTRenderer(vElement, viewModelContext,
+			mock(ReportService.class));
 		final EMFFormsRendererService<VElement> rendererService = mock(EMFFormsRendererService.class);
 		Mockito.when(rendererService.getRendererInstance(vElement, viewModelContext)).thenReturn(mockedRenderer);
 		bundleContext.registerService(EMFFormsRendererService.class, rendererService, null);
 		rendererFactory.getRendererInstance(vElement, viewModelContext);
-		Mockito.verify(rendererService, Mockito.times(1)).isApplicable(vElement);
+		Mockito.verify(rendererService, Mockito.times(1)).isApplicable(vElement, viewModelContext);
 	}
 
 	/**
@@ -119,7 +120,8 @@ public class EMFFormsRendererFactory_ITest {
 	public void testAddAdditionalRendererService() {
 		final VElement vElement = mock(VElement.class);
 		final ViewModelContext viewModelContext = mock(ViewModelContext.class);
-		final AbstractAdditionalSWTRenderer<VElement> additionalSWTRenderer = new MockedAbstractAdditionalSWTRenderer(vElement, viewModelContext, mock(ReportService.class));
+		final AbstractAdditionalSWTRenderer<VElement> additionalSWTRenderer = new MockedAbstractAdditionalSWTRenderer(
+			vElement, viewModelContext, mock(ReportService.class));
 		final EMFFormsAdditionalRendererService<VElement> rendererService = mock(EMFFormsAdditionalRendererService.class);
 		Mockito.when(rendererService.getRendererInstance(vElement, viewModelContext)).thenReturn(additionalSWTRenderer);
 		Mockito.when(rendererService.isApplicable(Matchers.any(VElement.class))).thenReturn(true);

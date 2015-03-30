@@ -35,14 +35,14 @@ public interface EMFFormsRendererService<VELEMENT extends VElement> {
 	 * {@link #getRendererInstance(VElement, ViewModelContext)}.
 	 *
 	 * @param vElement The {@link VElement} to check
-	 * @param viewModelContext The {@link ViewModelContext} to use for the renderer service
+	 * @param viewModelContext The {@link ViewModelContext} that the {@link VElement} should be rendered for.
 	 * @return {@link #NOT_APPLICABLE} if the renderer doesn't fit, a positive value otherwise
 	 */
 	double isApplicable(VElement vElement, ViewModelContext viewModelContext);
 
 	/**
 	 * Returns a renderer.
-	 * 
+	 *
 	 * @param vElement The {@link VElement} to create the renderer instance for
 	 * @param viewModelContext The {@link ViewModelContext} to use for the renderer instance
 	 * @return The AbstractSWTRenderer

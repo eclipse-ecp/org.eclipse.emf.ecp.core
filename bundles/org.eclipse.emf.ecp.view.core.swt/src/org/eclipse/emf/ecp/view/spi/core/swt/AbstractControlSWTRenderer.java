@@ -14,22 +14,25 @@ package org.eclipse.emf.ecp.view.spi.core.swt;
 import java.util.Set;
 
 import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.observable.ChangeEvent;
+import org.eclipse.core.databinding.observable.IChangeListener;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.spi.swt.util.SWTValidationHelper;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
+import org.eclipse.emf.ecp.view.spi.swt.reporting.RendererInitFailedReport;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
@@ -115,7 +118,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	private ComposedAdapterFactory composedAdapterFactory;
 	private DataBindingContext dataBindingContext;
 	private IObservableValue modelValue;
-	private DomainModelReferenceChangeListener domainModelReferenceChangeListener;
+	private IChangeListener modelValueChangeListener;
 
 	// TODO is this needed?
 	@Override
@@ -126,10 +129,10 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
 		adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
 			composedAdapterFactory);
-		domainModelReferenceChangeListener = new DomainModelReferenceChangeListener() {
+		modelValueChangeListener = new IChangeListener() {
 
 			@Override
-			public void notifyChange() {
+			public void handleChange(ChangeEvent event) {
 				Display.getDefault().asyncExec(new Runnable() {
 
 					@Override
@@ -139,17 +142,22 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 				});
 			}
 		};
-		// getVElement().getDomainModelReference().getChangeListener().add(domainModelReferenceChangeListener);
+
+		try {
+			getModelValue().addChangeListener(modelValueChangeListener);
+		} catch (final DatabindingFailedException ex) {
+			getReportService().report(new RendererInitFailedReport(ex));
+		}
 		applyEnable();
 	}
 
 	@Override
 	protected void dispose() {
-		// if (getVElement().getDomainModelReference() != null) {
-		// getVElement().getDomainModelReference().getChangeListener().remove(domainModelReferenceChangeListener);
-		// }
+		if (modelValue != null) {
+			modelValue.removeChangeListener(modelValueChangeListener);
+		}
 
-		domainModelReferenceChangeListener = null;
+		modelValueChangeListener = null;
 
 		if (composedAdapterFactory != null) {
 			composedAdapterFactory.dispose();
@@ -278,10 +286,10 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 		Label label = null;
 		labelRender: if (getVElement().getLabelAlignment() == LabelAlignment.LEFT) {
 			final VDomainModelReference domainModelReference = getVElement().getDomainModelReference();
-			IValueProperty valueProperty;
+			final EClass rootEClass = getViewModelContext().getDomainModel().eClass();
+			final IValueProperty valueProperty;
 			try {
-				valueProperty = getEMFFormsDatabinding().getValueProperty(domainModelReference,
-					getViewModelContext().getDomainModel().eClass());
+				valueProperty = getEMFFormsDatabinding().getValueProperty(domainModelReference, rootEClass);
 			} catch (final DatabindingFailedException ex) {
 				getReportService().report(new RenderingFailedReport(ex));
 				break labelRender;

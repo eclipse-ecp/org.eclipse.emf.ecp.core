@@ -98,7 +98,7 @@ public class StackItemSWTRendererService implements EMFFormsRendererService<VSta
 	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	@Override
-	public double isApplicable(VElement vElement, ViewModelContext context) {
+	public double isApplicable(VElement vElement, ViewModelContext viewModelContext) {
 		if (!VStackItem.class.isInstance(vElement)) {
 			return NOT_APPLICABLE;
 		}

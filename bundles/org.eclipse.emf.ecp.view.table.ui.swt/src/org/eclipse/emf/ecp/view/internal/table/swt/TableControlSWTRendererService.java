@@ -135,7 +135,7 @@ public class TableControlSWTRendererService implements EMFFormsRendererService<V
 	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	@Override
-	public double isApplicable(VElement vElement, ViewModelContext context) {
+	public double isApplicable(VElement vElement, ViewModelContext viewModelContext) {
 		if (!VTableControl.class.isInstance(vElement)) {
 			return NOT_APPLICABLE;
 		}
