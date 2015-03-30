@@ -77,6 +77,7 @@ import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ILabelProvider;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -823,9 +824,11 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 						if (vView.getChildren().isEmpty()) {
 							vView = ViewProviderHelper.getView((EObject) selected, context);
 						}
-
+						final ReferenceService referenceService = getViewModelContext().getService(
+							ReferenceService.class);
 						final ViewModelContext childContext = getViewModelContext()
-							.getChildContext((EObject) selected, getVElement(), vView);
+							.getChildContext((EObject) selected, getVElement(), vView,
+								new TreeMasterDetailReferenceService(referenceService));
 
 						manipulateViewContext(childContext);
 
@@ -835,8 +838,10 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 					/* child selected */
 					else {
 						final VView view = ViewProviderHelper.getView((EObject) selected, context);
+						final ReferenceService referenceService = getViewModelContext().getService(
+							ReferenceService.class);
 						final ViewModelContext childContext = getViewModelContext().getChildContext((EObject) selected,
-							getVElement(), view);
+							getVElement(), view, new TreeMasterDetailReferenceService(referenceService));
 
 						manipulateViewContext(childContext);
 						ECPSWTViewRenderer.INSTANCE.render(childComposite, childContext);
@@ -970,7 +975,94 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 				treeViewer.refresh();
 			}
 		});
+	}
 
+	private class TreeMasterDetailReferenceService implements ReferenceService {
+
+		private final ReferenceService delegate;
+
+		public TreeMasterDetailReferenceService(ReferenceService delegate) {
+			this.delegate = delegate;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#instantiate(org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
+		 */
+		@Override
+		public void instantiate(ViewModelContext context) {
+			// no op
+		}
+
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#dispose()
+		 */
+		@Override
+		public void dispose() {
+			// no op
+		}
+
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#getPriority()
+		 */
+		@Override
+		public int getPriority() {
+			if (delegate == null) {
+				return 0;
+			}
+			return delegate.getPriority() - 1;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @see org.eclipse.emf.ecp.edit.spi.ReferenceService#addNewModelElements(org.eclipse.emf.ecore.EObject,
+		 *      org.eclipse.emf.ecore.EReference)
+		 */
+		@Override
+		public void addNewModelElements(EObject eObject, EReference eReference) {
+			if (delegate == null) {
+				return;
+			}
+			delegate.addNewModelElements(eObject, eReference);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @see org.eclipse.emf.ecp.edit.spi.ReferenceService#addExistingModelElements(org.eclipse.emf.ecore.EObject,
+		 *      org.eclipse.emf.ecore.EReference)
+		 */
+		@Override
+		public void addExistingModelElements(EObject eObject, EReference eReference) {
+			if (delegate == null) {
+				return;
+			}
+			delegate.addExistingModelElements(eObject, eReference);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @see org.eclipse.emf.ecp.edit.spi.ReferenceService#openInNewContext(org.eclipse.emf.ecore.EObject)
+		 */
+		@Override
+		public void openInNewContext(EObject eObject) {
+			treeViewer.setSelection(new StructuredSelection(eObject), true);
+			final ISelection selection = treeViewer.getSelection();
+			if (!selection.isEmpty()) {
+				return;
+			}
+			if (delegate == null) {
+				return;
+			}
+			delegate.openInNewContext(eObject);
+		}
 	}
 
 }
