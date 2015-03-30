@@ -481,13 +481,13 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 */
 	protected void viewerSelectionChanged(SelectionChangedEvent event) {
 		if (event.getSelection().isEmpty()) {
-			if (removeButton != null) {
-				removeButton.setEnabled(false);
+			if (getRemoveButton() != null) {
+				getRemoveButton().setEnabled(false);
 			}
 		}
 		else {
-			if (removeButton != null) {
-				removeButton.setEnabled(true);
+			if (getRemoveButton() != null) {
+				getRemoveButton().setEnabled(true);
 			}
 		}
 	}
@@ -757,17 +757,37 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	}
 
 	/**
+	 * Returns the add button created by the framework.
+	 *
+	 * @return the addButton
+	 * @since 1.6
+	 */
+	protected Button getAddButton() {
+		return addButton;
+	}
+
+	/**
+	 * Returns the remove button created by the framework.
+	 *
+	 * @return the removeButton
+	 * @since 1.6
+	 */
+	protected Button getRemoveButton() {
+		return removeButton;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#applyEnable()
 	 */
 	@Override
 	protected void applyEnable() {
-		if (addButton != null) {
-			addButton.setVisible(getVElement().isEnabled() && !getVElement().isReadonly());
+		if (getAddButton() != null) {
+			getAddButton().setVisible(getVElement().isEnabled() && !getVElement().isReadonly());
 		}
-		if (removeButton != null) {
-			removeButton.setVisible(getVElement().isEnabled() && !getVElement().isReadonly());
+		if (getRemoveButton() != null) {
+			getRemoveButton().setVisible(getVElement().isEnabled() && !getVElement().isReadonly());
 		}
 	}
 
@@ -778,11 +798,11 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 */
 	@Override
 	protected void applyReadOnly() {
-		if (addButton != null) {
-			addButton.setVisible(getVElement().isEnabled() && !getVElement().isReadonly());
+		if (getAddButton() != null) {
+			getAddButton().setVisible(getVElement().isEnabled() && !getVElement().isReadonly());
 		}
-		if (removeButton != null) {
-			removeButton.setVisible(getVElement().isEnabled() && !getVElement().isReadonly());
+		if (getRemoveButton() != null) {
+			getRemoveButton().setVisible(getVElement().isEnabled() && !getVElement().isReadonly());
 		}
 	}
 
