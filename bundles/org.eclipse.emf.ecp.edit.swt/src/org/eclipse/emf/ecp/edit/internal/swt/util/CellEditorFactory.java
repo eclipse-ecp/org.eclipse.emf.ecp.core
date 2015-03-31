@@ -80,6 +80,7 @@ public final class CellEditorFactory {
 
 	}
 
+	// TODO: use DomainModelReference instead of strucutralFeature and EObject
 	public CellEditor getCellEditor(EStructuralFeature eStructuralFeature, EObject eObject, Table table,
 		ViewModelContext viewModelContext) {
 		int bestPriority = -1;

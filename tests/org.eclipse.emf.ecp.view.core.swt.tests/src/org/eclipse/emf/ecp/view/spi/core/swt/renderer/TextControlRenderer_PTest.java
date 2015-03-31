@@ -59,7 +59,7 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 		setup();
 		renderer = new TextControlSWTRenderer(vControl, context, reportService, databindingService, labelProvider,
 			templateProvider, editSupport);
-		renderer.init();
+		// Don't init renderer here: Databinding service has to be properly mocked before it can be inited
 	}
 
 	@After
@@ -82,6 +82,7 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 		when(mockedObservableValue.getValueType()).thenReturn(mockedEStructuralFeature);
 		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			mockedObservableValue);
+		renderer.init();
 		final Control render = renderControl(new SWTGridCell(0, 1, renderer));
 		assertControl(render);
 	}
@@ -102,6 +103,7 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 		when(mockedObservableValue.getValueType()).thenReturn(mockedEStructuralFeature);
 		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			mockedObservableValue);
+		renderer.init();
 		final Control render = renderControl(new SWTGridCell(0, 2, renderer));
 
 		assertControl(render);
@@ -195,6 +197,7 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			mockedObservable, new ObservingWritableValue(mockedObservable));
 
+		renderer.init();
 		final Control renderControl = renderControl(new SWTGridCell(0, 2, renderer));
 		final Text text = (Text) renderControl;
 		return text;
@@ -227,6 +230,7 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			mockedObservableValue);
 
+		renderer.init();
 		final Control renderControl = renderControl(new SWTGridCell(0, 2, renderer));
 		assertTrue(Text.class.isInstance(renderControl));
 

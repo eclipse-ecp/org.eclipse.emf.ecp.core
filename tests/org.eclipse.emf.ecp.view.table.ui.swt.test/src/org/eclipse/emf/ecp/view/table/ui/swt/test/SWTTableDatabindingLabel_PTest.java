@@ -253,8 +253,11 @@ public class SWTTableDatabindingLabel_PTest {
 	private void assertDatabinding(final WritableList mockedObservableList, final Table table) {
 		assertEquals(mockedObservableList.size(), table.getItemCount());
 		for (int i = 0; i < mockedObservableList.size(); i++) {
-			assertEquals(Boolean.toString(((EClass) mockedObservableList.get(i)).isAbstract()), table.getItem(i)
-				.getText(1));
+			assertEquals(
+				"Assert fails for list item with index " + i + ": "
+					+ mockedObservableList.get(i) + ": ",
+				Boolean.toString(((EClass) mockedObservableList.get(i)).isAbstract()), table.getItem(i)
+					.getText(1));
 		}
 	}
 
@@ -265,8 +268,10 @@ public class SWTTableDatabindingLabel_PTest {
 		final List<EClass> initialList = new LinkedList<EClass>();
 		final EClass class1 = EcoreFactory.eINSTANCE.createEClass();
 		class1.setAbstract(false);
+		class1.setName("EClass1");
 		final EClass class2 = EcoreFactory.eINSTANCE.createEClass();
 		class2.setAbstract(true);
+		class2.setName("EClass2");
 		initialList.add(class1);
 		initialList.add(class2);
 		return initialList;
@@ -285,6 +290,7 @@ public class SWTTableDatabindingLabel_PTest {
 			mockedObservableList);
 
 		final Control renderedControl = renderer.render(new SWTGridCell(0, 0, renderer), shell);
+
 		assertTrue(Composite.class.isInstance(renderedControl));
 		final Control tableControl = getTable(renderedControl);
 		assertTrue(Table.class.isInstance(tableControl));

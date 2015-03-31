@@ -71,7 +71,6 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest {
 		setup();
 		renderer = new DateTimeControlSWTRenderer(vControl, context, reportService, databindingService, labelProvider,
 			templateProvider);
-		renderer.init();
 	}
 
 	@After
@@ -88,9 +87,10 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest {
 		final EObject mockedEObject = mock(EObject.class);
 		when(mockedEObject.eIsSet(any(EStructuralFeature.class))).thenReturn(true);
 		when(mockedObservableValue.getObserved()).thenReturn(mockedEObject);
-
 		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			mockedObservableValue);
+
+		renderer.init();
 		final Control render = renderControl(new SWTGridCell(0, 1, renderer));
 		assertControl(render);
 	}
@@ -106,6 +106,8 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest {
 		when(mockedObservableValue.getObserved()).thenReturn(mockedEObject);
 		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			mockedObservableValue);
+
+		renderer.init();
 		final Control render = renderControl(new SWTGridCell(0, 2, renderer));
 
 		assertControl(render);
@@ -259,6 +261,7 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest {
 		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			mockedObservable);
 
+		renderer.init();
 		final Control renderControl = renderControl(new SWTGridCell(0, 2, renderer));
 
 		final Composite composite = (Composite) renderControl;

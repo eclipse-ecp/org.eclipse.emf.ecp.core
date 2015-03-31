@@ -57,7 +57,6 @@ public class BooleanControlRenderer_PTest extends AbstractControl_PTest {
 		setup();
 		renderer = new BooleanControlSWTRenderer(vControl, context, reportService, databindingService, labelProvider,
 			templateProvider);
-		renderer.init();
 	}
 
 	@After
@@ -73,6 +72,7 @@ public class BooleanControlRenderer_PTest extends AbstractControl_PTest {
 		when(mockedObservableValue.getRealm()).thenReturn(realm);
 		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			mockedObservableValue);
+		renderer.init();
 		final Control render = renderControl(new SWTGridCell(0, 1, renderer));
 		assertControl(render);
 	}
@@ -85,6 +85,7 @@ public class BooleanControlRenderer_PTest extends AbstractControl_PTest {
 		when(mockedObservableValue.getRealm()).thenReturn(realm);
 		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			mockedObservableValue);
+		renderer.init();
 		final Control render = renderControl(new SWTGridCell(0, 2, renderer));
 
 		assertControl(render);
@@ -159,6 +160,7 @@ public class BooleanControlRenderer_PTest extends AbstractControl_PTest {
 		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			mockedObservable);
 
+		renderer.init();
 		final Control renderControl = renderControl(new SWTGridCell(0, 2, renderer));
 		final Button button = (Button) renderControl;
 		return button;
@@ -169,9 +171,11 @@ public class BooleanControlRenderer_PTest extends AbstractControl_PTest {
 	 *
 	 * @throws NoRendererFoundException
 	 * @throws NoPropertyDescriptorFoundExeption
+	 * @throws DatabindingFailedException
 	 */
 	@Test
-	public void testLabelServiceUsage() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+	public void testLabelServiceUsage() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
+		DatabindingFailedException {
 		labelServiceUsage();
 	}
 }

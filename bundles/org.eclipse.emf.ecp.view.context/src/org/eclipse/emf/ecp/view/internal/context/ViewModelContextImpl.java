@@ -12,7 +12,6 @@
 package org.eclipse.emf.ecp.view.internal.context;
 
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -22,6 +21,8 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.eclipse.core.databinding.observable.IObserving;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
@@ -32,6 +33,7 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -54,6 +56,8 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 
 /**
  * The Class ViewModelContextImpl.
@@ -263,8 +267,9 @@ public class ViewModelContextImpl implements ViewModelContext {
 			};
 			controlChangeListener.put(vControl, changeListener);
 
-			vControl.getDomainModelReference().getChangeListener().add(changeListener);
-			registerDomainChangeListener(vControl.getDomainModelReference());
+			// TODO: change listener
+			// vControl.getDomainModelReference().getChangeListener().add(changeListener);
+			// registerDomainChangeListener(vControl.getDomainModelReference());
 		}
 	}
 
@@ -274,36 +279,36 @@ public class ViewModelContextImpl implements ViewModelContext {
 			settingToControlMap.get(setting).remove(vControl);
 		}
 
-		final Iterator<Setting> iterator = vControl.getDomainModelReference().getIterator();
-		while (iterator.hasNext()) {
-			final Setting setting = iterator.next();
-			if (setting == null) {
-				continue;
-			}
-			final UniqueSetting uniqueSetting = UniqueSetting.createSetting(setting);
-			if (!settingToControlMap.containsKey(uniqueSetting)) {
-				settingToControlMap.put(uniqueSetting, new LinkedHashSet<VControl>());
-			}
-			settingToControlMap.get(uniqueSetting).add(vControl);
-		}
-
-		// IObservableValue observableValue;
-		// try {
-		// observableValue = Activator.getInstance().getEMFFormsDatabinding()
-		// .getObservableValue(vControl.getDomainModelReference(), getDomainModel());
-		// } catch (final DatabindingFailedException ex) {
-		// Activator.getInstance().getReportService().report(new DatabindingFailedReport(ex));
-		// return;
+		// final Iterator<Setting> iterator = vControl.getDomainModelReference().getIterator();
+		// while (iterator.hasNext()) {
+		// final Setting setting = iterator.next();
+		// if (setting == null) {
+		// continue;
 		// }
-		// final IObserving observing = (IObserving) observableValue;
-		// final EObject eObject = (EObject) observing.getObserved();
-		// final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
-		// observableValue.dispose();
-		// final UniqueSetting uniqueSetting = UniqueSetting.createSetting(eObject, structuralFeature);
+		// final UniqueSetting uniqueSetting = UniqueSetting.createSetting(setting);
 		// if (!settingToControlMap.containsKey(uniqueSetting)) {
 		// settingToControlMap.put(uniqueSetting, new LinkedHashSet<VControl>());
 		// }
 		// settingToControlMap.get(uniqueSetting).add(vControl);
+		// }
+
+		IObservableValue observableValue;
+		try {
+			observableValue = Activator.getInstance().getEMFFormsDatabinding()
+				.getObservableValue(vControl.getDomainModelReference(), getDomainModel());
+		} catch (final DatabindingFailedException ex) {
+			Activator.getInstance().getReportService().report(new DatabindingFailedReport(ex));
+			return;
+		}
+		final IObserving observing = (IObserving) observableValue;
+		final EObject eObject = (EObject) observing.getObserved();
+		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+		observableValue.dispose();
+		final UniqueSetting uniqueSetting = UniqueSetting.createSetting(eObject, structuralFeature);
+		if (!settingToControlMap.containsKey(uniqueSetting)) {
+			settingToControlMap.put(uniqueSetting, new LinkedHashSet<VControl>());
+		}
+		settingToControlMap.get(uniqueSetting).add(vControl);
 	}
 
 	private void vControlRemoved(VControl vControl) {
@@ -311,41 +316,42 @@ public class ViewModelContextImpl implements ViewModelContext {
 			return;
 		}
 
-		final Iterator<Setting> iterator = vControl.getDomainModelReference().getIterator();
-		while (iterator.hasNext()) {
-			final Setting next = iterator.next();
-			final UniqueSetting uniqueSetting = UniqueSetting.createSetting(next);
-			if (settingToControlMap.containsKey(uniqueSetting)) {
-				settingToControlMap.get(uniqueSetting).remove(vControl);
-				if (settingToControlMap.get(uniqueSetting).size() == 0) {
-					settingToControlMap.remove(uniqueSetting);
-				}
-			}
-		}
-
-		// IObservableValue observableValue;
-		// try {
-		// observableValue = Activator.getInstance().getEMFFormsDatabinding()
-		// .getObservableValue(vControl.getDomainModelReference(), getDomainModel());
-		// } catch (final DatabindingFailedException ex) {
-		// Activator.getInstance().getReportService().report(new DatabindingFailedReport(ex));
-		// return;
-		// }
-		// final IObserving observing = (IObserving) observableValue;
-		// final EObject eObject = (EObject) observing.getObserved();
-		// final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
-		// observableValue.dispose();
-		// final UniqueSetting uniqueSetting = UniqueSetting.createSetting(eObject, structuralFeature);
+		// final Iterator<Setting> iterator = vControl.getDomainModelReference().getIterator();
+		// while (iterator.hasNext()) {
+		// final Setting next = iterator.next();
+		// final UniqueSetting uniqueSetting = UniqueSetting.createSetting(next);
 		// if (settingToControlMap.containsKey(uniqueSetting)) {
 		// settingToControlMap.get(uniqueSetting).remove(vControl);
 		// if (settingToControlMap.get(uniqueSetting).size() == 0) {
 		// settingToControlMap.remove(uniqueSetting);
 		// }
 		// }
+		// }
 
-		vControl.getDomainModelReference().getChangeListener().remove(controlChangeListener.get(vControl));
-		controlChangeListener.remove(vControl);
-		unregisterDomainChangeListener(vControl.getDomainModelReference());
+		IObservableValue observableValue;
+		try {
+			observableValue = Activator.getInstance().getEMFFormsDatabinding()
+				.getObservableValue(vControl.getDomainModelReference(), getDomainModel());
+		} catch (final DatabindingFailedException ex) {
+			Activator.getInstance().getReportService().report(new DatabindingFailedReport(ex));
+			return;
+		}
+		final IObserving observing = (IObserving) observableValue;
+		final EObject eObject = (EObject) observing.getObserved();
+		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+		observableValue.dispose();
+		final UniqueSetting uniqueSetting = UniqueSetting.createSetting(eObject, structuralFeature);
+		if (settingToControlMap.containsKey(uniqueSetting)) {
+			settingToControlMap.get(uniqueSetting).remove(vControl);
+			if (settingToControlMap.get(uniqueSetting).size() == 0) {
+				settingToControlMap.remove(uniqueSetting);
+			}
+		}
+
+		// TODO: change listener
+		// vControl.getDomainModelReference().getChangeListener().remove(controlChangeListener.get(vControl));
+		// controlChangeListener.remove(vControl);
+		// unregisterDomainChangeListener(vControl.getDomainModelReference());
 	}
 
 	private void vControlAdded(VControl vControl) {
@@ -353,36 +359,36 @@ public class ViewModelContextImpl implements ViewModelContext {
 			return;
 		}
 
-		// IObservableValue observableValue;
-		// try {
-		// observableValue = Activator.getInstance().getEMFFormsDatabinding()
-		// .getObservableValue(vControl.getDomainModelReference(), getDomainModel());
-		// } catch (final DatabindingFailedException ex) {
-		// Activator.getInstance().getReportService().report(new DatabindingFailedReport(ex));
-		// return;
+		IObservableValue observableValue;
+		try {
+			observableValue = Activator.getInstance().getEMFFormsDatabinding()
+				.getObservableValue(vControl.getDomainModelReference(), getDomainModel());
+		} catch (final DatabindingFailedException ex) {
+			Activator.getInstance().getReportService().report(new DatabindingFailedReport(ex));
+			return;
+		}
+		final IObserving observing = (IObserving) observableValue;
+		final EObject eObject = (EObject) observing.getObserved();
+		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+		observableValue.dispose();
+		final UniqueSetting uniqueSetting = UniqueSetting.createSetting(eObject, structuralFeature);
+		if (!settingToControlMap.containsKey(uniqueSetting)) {
+			settingToControlMap.put(uniqueSetting, new LinkedHashSet<VControl>());
+		}
+		settingToControlMap.get(uniqueSetting).add(vControl);
+
+		// final Iterator<Setting> iterator = vControl.getDomainModelReference().getIterator();
+		// while (iterator.hasNext()) {
+		// final Setting next = iterator.next();
+		// if (next == null) {
+		// continue;
 		// }
-		// final IObserving observing = (IObserving) observableValue;
-		// final EObject eObject = (EObject) observing.getObserved();
-		// final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
-		// observableValue.dispose();
-		// final UniqueSetting uniqueSetting = UniqueSetting.createSetting(eObject, structuralFeature);
+		// final UniqueSetting uniqueSetting = UniqueSetting.createSetting(next);
 		// if (!settingToControlMap.containsKey(uniqueSetting)) {
 		// settingToControlMap.put(uniqueSetting, new LinkedHashSet<VControl>());
 		// }
 		// settingToControlMap.get(uniqueSetting).add(vControl);
-
-		final Iterator<Setting> iterator = vControl.getDomainModelReference().getIterator();
-		while (iterator.hasNext()) {
-			final Setting next = iterator.next();
-			if (next == null) {
-				continue;
-			}
-			final UniqueSetting uniqueSetting = UniqueSetting.createSetting(next);
-			if (!settingToControlMap.containsKey(uniqueSetting)) {
-				settingToControlMap.put(uniqueSetting, new LinkedHashSet<VControl>());
-			}
-			settingToControlMap.get(uniqueSetting).add(vControl);
-		}
+		// }
 	}
 
 	// private void eObjectRemoved(EObject eObject) {
@@ -546,10 +552,11 @@ public class ViewModelContextImpl implements ViewModelContext {
 		settingToControlMap.clear();
 
 		for (final VControl vControl : controlChangeListener.keySet()) {
-			if (vControl.getDomainModelReference() != null) {
-				vControl.getDomainModelReference().getChangeListener().remove(controlChangeListener.get(vControl));
-			}
-			unregisterDomainChangeListener(vControl.getDomainModelReference());
+			// TODO: change listener
+			// if (vControl.getDomainModelReference() != null) {
+			// vControl.getDomainModelReference().getChangeListener().remove(controlChangeListener.get(vControl));
+			// }
+			// unregisterDomainChangeListener(vControl.getDomainModelReference());
 		}
 		controlChangeListener.clear();
 

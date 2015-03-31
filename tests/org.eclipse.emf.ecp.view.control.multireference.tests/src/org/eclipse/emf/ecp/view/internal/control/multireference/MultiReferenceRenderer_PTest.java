@@ -24,12 +24,10 @@ import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.list.WritableList;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
@@ -118,15 +116,12 @@ public class MultiReferenceRenderer_PTest {
 		when(setting.getEObject()).thenReturn(eObject);
 		when(setting.getEStructuralFeature()).thenReturn(eStructuralFeature);
 
-		final BasicEList<DomainModelReferenceChangeListener> changeListener = new BasicEList<DomainModelReferenceChangeListener>();
-		when(domainModelReference.getChangeListener()).thenReturn(changeListener);
-
 		final ImageRegistryService imageRegistryService = mock(ImageRegistryService.class);
 		final VTViewTemplateProvider templateProvider = mock(VTViewTemplateProvider.class);
 
 		renderer = new MultiReferenceSWTRenderer(vControl, viewContext, reportService, databindingService,
 			labelProvider, templateProvider, imageRegistryService);
-		renderer.init();
+		// Do not init renderer hear because the databinding service needs to be properly mocked before.
 	}
 
 	/**
@@ -242,6 +237,8 @@ public class MultiReferenceRenderer_PTest {
 		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			observableValue);
 		when(observableValue.getObserved()).thenReturn(mock(EObject.class));
+		renderer.init();
+
 		final Composite composite = (Composite) renderer.render(new SWTGridCell(0, 0, renderer), shell);
 		final Composite controlComposite = (Composite) composite.getChildren()[1];
 		final Table table = (Table) controlComposite.getChildren()[0];
@@ -264,6 +261,7 @@ public class MultiReferenceRenderer_PTest {
 		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			observableValue);
 		when(observableValue.getObserved()).thenReturn(mock(EObject.class));
+		renderer.init();
 
 		final Composite composite = (Composite) renderer.render(new SWTGridCell(0, 0, renderer), shell);
 		final Composite controlComposite = (Composite) composite.getChildren()[1];

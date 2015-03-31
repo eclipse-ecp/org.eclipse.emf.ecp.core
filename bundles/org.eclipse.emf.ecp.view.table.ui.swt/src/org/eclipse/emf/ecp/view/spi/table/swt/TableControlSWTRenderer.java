@@ -390,6 +390,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		ColumnViewerToolTipSupport.enableFor(tableViewer);
 
 		final ObservableListContentProvider cp = new ObservableListContentProvider();
+		tableViewer.setContentProvider(cp);
 		InternalEObject tempInstance = null;
 		if (!clazz.isAbstract() && !clazz.isInterface()) {
 			tempInstance = getInstanceOf(clazz);
@@ -408,12 +409,6 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		final VTableDomainModelReference tableDomainModelReference = VTableDomainModelReference.class.cast(
 			getVElement().getDomainModelReference());
 
-		final IObservableList list = getEMFFormsDatabinding()
-			.getObservableList(tableDomainModelReference, getViewModelContext().getDomainModel());
-		tableViewer.setInput(list);
-
-		final EClass columnRootEClass = ((EReference) list.getElementType()).getEReferenceType();
-
 		for (final VDomainModelReference dmr : tableDomainModelReference.getColumnDomainModelReferences()) {
 			if (dmr == null) {
 				continue;
@@ -421,7 +416,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 			IValueProperty valueProperty;
 			try {
-				valueProperty = getEMFFormsDatabinding().getValueProperty(dmr, columnRootEClass);
+				valueProperty = getEMFFormsDatabinding().getValueProperty(dmr, clazz);
 			} catch (final DatabindingFailedException ex) {
 				getReportService().report(new RenderingFailedReport(ex));
 				continue;
@@ -429,8 +424,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			final EStructuralFeature eStructuralFeature = (EStructuralFeature) valueProperty.getValueType();
 
 			final EMFFormsLabelProvider labelService = getEMFFormsLabelProvider();
-			final String text = labelService.getDisplayName(dmr, columnRootEClass);
-			final String tooltipText = labelService.getDescription(dmr, columnRootEClass);
+			final String text = labelService.getDisplayName(dmr, clazz);
+			final String tooltipText = labelService.getDescription(dmr, clazz);
 
 			final CellEditor cellEditor = createCellEditor(tempInstance, eStructuralFeature, tableViewer.getTable());
 			final TableViewerColumn column = TableViewerColumnBuilder
@@ -462,7 +457,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			}
 			columnNumber++;
 		}
-		tableViewer.setContentProvider(cp);
+		final IObservableList list = getEMFFormsDatabinding()
+			.getObservableList(tableDomainModelReference, getViewModelContext().getDomainModel());
+		tableViewer.setInput(list);
 
 		// IMPORTANT:
 		// - the minimumWidth and (non)resizable settings of the ColumnWeightData are not supported properly

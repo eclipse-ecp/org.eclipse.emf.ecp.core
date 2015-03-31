@@ -17,6 +17,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import org.eclipse.core.databinding.property.Properties;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.core.swt.test.model.SimpleTestObject;
 import org.eclipse.emf.ecp.view.core.swt.test.model.TestEnum;
@@ -66,7 +67,6 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest {
 		setup();
 		renderer = new EnumComboViewerSWTRenderer(vControl, context, reportService, databindingService, labelProvider,
 			templateProvider, editSupport);
-		renderer.init();
 	}
 
 	@After
@@ -159,9 +159,10 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest {
 		mockDatabindingIsUnsettable();
 		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			mockedObservable);
-		when(databindingService.getValueProperty(any(VDomainModelReference.class))).thenReturn(
+		when(databindingService.getValueProperty(any(VDomainModelReference.class), any(EClass.class))).thenReturn(
 			Properties.selfValue(mockedObservable.getValueType()));
 
+		renderer.init();
 		final Control renderControl = renderControl(new SWTGridCell(0, 2, renderer));
 
 		final Combo combo = (Combo) renderControl;
