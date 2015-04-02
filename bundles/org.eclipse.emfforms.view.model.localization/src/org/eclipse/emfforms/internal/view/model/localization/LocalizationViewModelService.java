@@ -92,7 +92,7 @@ public class LocalizationViewModelService implements ViewModelService {
 		if (vElement.getName() == null) {
 			vElement.setLabel(""); //$NON-NLS-1$
 		} else if (vElement.getName().startsWith("%") && localizationAdapter != null) { //$NON-NLS-1$
-			vElement.setLabel(localizationAdapter.localize(vElement.getName()));
+			vElement.setLabel(localizationAdapter.localize(vElement.getName().substring(1)));
 		} else {
 			vElement.setLabel(vElement.getName());
 		}
