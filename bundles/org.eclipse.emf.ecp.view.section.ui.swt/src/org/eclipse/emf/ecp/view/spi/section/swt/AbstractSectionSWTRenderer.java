@@ -206,4 +206,10 @@ public abstract class AbstractSectionSWTRenderer extends
 			getControls().get(gridCell).setVisible(visible);
 		}
 	}
+
+	/**
+	 * Called by the {@link org.eclipse.emf.ecp.view.spi.section.model.VSectionedArea} when all children have been
+	 * renderered. Initialises the collapse state based on {@link VSection#isCollapsed()}.
+	 */
+	protected abstract void initCollapseState();
 }

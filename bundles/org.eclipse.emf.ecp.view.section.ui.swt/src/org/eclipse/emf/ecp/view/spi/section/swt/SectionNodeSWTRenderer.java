@@ -63,12 +63,7 @@ public class SectionNodeSWTRenderer extends AbstractSectionSWTRenderer {
 				}
 				if (notification.getStructuralFeature() == VSectionPackage.eINSTANCE
 					.getSection_Collapsed()) {
-					for (final AbstractSectionSWTRenderer childRenderer : childRenderers) {
-						childRenderer.adjustLayoutData(!getVElement()
-							.isCollapsed());
-					}
-					getControls().values().iterator().next().getParent()
-						.layout(false);
+					handleCollapseState();
 				}
 			}
 		};
@@ -193,6 +188,27 @@ public class SectionNodeSWTRenderer extends AbstractSectionSWTRenderer {
 	protected void dispose() {
 		getViewModelContext().unregisterViewChangeListener(listener);
 		super.dispose();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.section.swt.AbstractSectionSWTRenderer#initCollapseState()
+	 */
+	@Override
+	protected void initCollapseState() {
+		handleCollapseState();
+	}
+
+	private void handleCollapseState() {
+		for (final AbstractSectionSWTRenderer childRenderer : childRenderers) {
+			childRenderer.adjustLayoutData(!getVElement()
+				.isCollapsed());
+		}
+		getControls().values().iterator().next().getParent()
+			.layout(false);
+		expandableComposite.setExpanded(!getVElement()
+			.isCollapsed());
 	}
 
 }

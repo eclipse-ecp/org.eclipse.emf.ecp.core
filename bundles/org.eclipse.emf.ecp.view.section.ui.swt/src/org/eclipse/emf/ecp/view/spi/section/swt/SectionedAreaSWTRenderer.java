@@ -46,6 +46,8 @@ public class SectionedAreaSWTRenderer extends
 
 	private SWTGridDescription gridDescription;
 
+	private AbstractSectionSWTRenderer rootRenderer;
+
 	@Override
 	public SWTGridDescription getGridDescription(
 		SWTGridDescription gridDescription) {
@@ -70,14 +72,14 @@ public class SectionedAreaSWTRenderer extends
 		SWTGridDescription rowGridDescription = null;
 		SWTGridDescription controlGridDescription = null;
 		final VSection child = getVElement().getRoot();
-		final AbstractSWTRenderer<VElement> renderer = getSWTRendererFactory()
-			.getRenderer(child, getViewModelContext());
-		if (renderer == null) {
+		rootRenderer = AbstractSectionSWTRenderer.class.cast(getSWTRendererFactory()
+			.getRenderer(child, getViewModelContext()));
+		if (rootRenderer == null) {
 			return columnComposite;
 		}
 		final Collection<AbstractAdditionalSWTRenderer<VElement>> additionalRenderers = getSWTRendererFactory()
 			.getAdditionalRenderer(child, getViewModelContext());
-		SWTGridDescription gridDescription = renderer
+		SWTGridDescription gridDescription = rootRenderer
 			.getGridDescription(GridDescriptionFactory.INSTANCE
 				.createEmptyGridDescription());
 		controlGridDescription = gridDescription;
@@ -88,8 +90,8 @@ public class SectionedAreaSWTRenderer extends
 		}
 		rowGridDescription = gridDescription;
 		maximalGridDescription = gridDescription;
-		final Set<AbstractSWTRenderer<VElement>> allRenderer = new LinkedHashSet<AbstractSWTRenderer<VElement>>();
-		allRenderer.add(renderer);
+		final Set<AbstractSWTRenderer<?>> allRenderer = new LinkedHashSet<AbstractSWTRenderer<?>>();
+		allRenderer.add(rootRenderer);
 		allRenderer.addAll(additionalRenderers);
 
 		if (maximalGridDescription == null) {
@@ -157,6 +159,18 @@ public class SectionedAreaSWTRenderer extends
 			GridData.class.cast(layoutData).widthHint = 500;
 		}
 		control.setLayoutData(layoutData);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#finalizeRendering(org.eclipse.swt.widgets.Composite)
+	 */
+	@Override
+	public void finalizeRendering(Composite parent) {
+		/* after all children have been rendered, we can init the visibility state */
+		rootRenderer.initCollapseState();
+		super.finalizeRendering(parent);
 	}
 
 }
