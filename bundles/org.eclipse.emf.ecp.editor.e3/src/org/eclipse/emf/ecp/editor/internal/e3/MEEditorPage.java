@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.editor.e3.ECPEditorContext;
+import org.eclipse.emf.ecp.spi.ui.ECPDeleteServiceImpl;
 import org.eclipse.emf.ecp.spi.ui.ECPReferenceServiceImpl;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
@@ -126,7 +127,7 @@ public class MEEditorPage extends FormPage {
 		final EObject domainObject = modelElementContext.getDomainObject();
 		final VView view = ViewProviderHelper.getView(domainObject, null);
 		final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(view, domainObject,
-			new ECPReferenceServiceImpl());
+			new ECPReferenceServiceImpl(), new ECPDeleteServiceImpl());
 		try {
 			ecpView = ECPSWTViewRenderer.INSTANCE.render(body, vmc);
 		} catch (final ECPRendererException ex) {
@@ -183,23 +184,23 @@ public class MEEditorPage extends FormPage {
 
 		form.getToolBarManager().add(new Action("", Activator.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE)) { //$NON-NLS-1$
 
-				@Override
-				public void run() {
-					final EditingDomain editingDomain = AdapterFactoryEditingDomain
-						.getEditingDomainFor(modelElementContext
-							.getDomainObject());
-					new ECPCommand(modelElementContext.getDomainObject(), editingDomain) {
+			@Override
+			public void run() {
+				final EditingDomain editingDomain = AdapterFactoryEditingDomain
+					.getEditingDomainFor(modelElementContext
+						.getDomainObject());
+				new ECPCommand(modelElementContext.getDomainObject(), editingDomain) {
 
-						@Override
-						protected void doRun() {
-							EcoreUtil.delete(modelElementContext.getDomainObject(), true);
-						}
+					@Override
+					protected void doRun() {
+						EcoreUtil.delete(modelElementContext.getDomainObject(), true);
+					}
 
-					}.run(true);
+				}.run(true);
 
-					MEEditorPage.this.getEditor().close(true);
-				}
-			});
+				MEEditorPage.this.getEditor().close(true);
+			}
+		});
 		menuService.populateContributionManager((ContributionManager) form.getToolBarManager(),
 			TOOLBAR_ORG_ECLIPSE_EMF_ECP_EDITOR_INTERNAL_E3_ME_EDITOR_PAGE);
 		form.getToolBarManager().update(true);

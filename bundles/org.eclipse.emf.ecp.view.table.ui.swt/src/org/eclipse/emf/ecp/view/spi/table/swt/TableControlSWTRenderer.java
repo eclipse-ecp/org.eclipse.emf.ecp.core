@@ -42,6 +42,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.ECPFocusCellDrawHighlighter;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.TableViewerColumnBuilder;
 import org.eclipse.emf.ecp.edit.internal.swt.util.CellEditorFactory;
+import org.eclipse.emf.ecp.edit.spi.DeleteService;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor;
 import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.view.internal.table.swt.Activator;
@@ -65,7 +66,6 @@ import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableValidationFactory;
 import org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableValidationStyleProperty;
 import org.eclipse.emf.edit.command.AddCommand;
-import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.emfforms.spi.localization.LocalizationServiceHelper;
@@ -484,8 +484,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			if (getRemoveButton() != null) {
 				getRemoveButton().setEnabled(false);
 			}
-		}
-		else {
+		} else {
 			if (getRemoveButton() != null) {
 				getRemoveButton().setEnabled(true);
 			}
@@ -617,8 +616,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		removeButton.setEnabled(false);
 		final String instanceName = clazz.getInstanceClass() == null ? "" : clazz.getInstanceClass().getSimpleName(); //$NON-NLS-1$
 		removeButton.setToolTipText(String.format(
-			LocalizationServiceHelper.getString(getClass(), MessageKeys.TableControl_RemoveSelected)
-			, instanceName));
+			LocalizationServiceHelper.getString(getClass(), MessageKeys.TableControl_RemoveSelected), instanceName));
 
 		final List<?> containments = (List<?>) mainSetting.get(true);
 		if (containments.size() <= mainSetting.getEStructuralFeature().getLowerBound()) {
@@ -658,7 +656,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			LocalizationServiceHelper.getString(getClass(), MessageKeys.TableControl_DeleteAreYouSure),
 			MessageDialog.CONFIRM, new String[] {
 				JFaceResources.getString(IDialogLabelKeys.YES_LABEL_KEY),
-				JFaceResources.getString(IDialogLabelKeys.NO_LABEL_KEY) }, 0);
+				JFaceResources.getString(IDialogLabelKeys.NO_LABEL_KEY) },
+			0);
 
 		new ECPDialogExecutor(dialog) {
 
@@ -689,10 +688,24 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * @param mainSetting the containment reference setting
 	 */
 	protected void deleteRows(List<EObject> deletionList, Setting mainSetting) {
-		final EObject modelElement = mainSetting.getEObject();
+		final DeleteService deleteService = getViewModelContext().getService(DeleteService.class);
+		if (deleteService == null) {
+			/*
+			 * #getService(Class<?>) will report to the reportservice if it could not be found
+			 * -> simply return here
+			 */
+			return;
+		}
 		final EditingDomain editingDomain = getEditingDomain(mainSetting);
-		editingDomain.getCommandStack().execute(
-			RemoveCommand.create(editingDomain, modelElement, mainSetting.getEStructuralFeature(), deletionList));
+
+		/* assured by #isApplicable */
+		final EReference reference = EReference.class.cast(mainSetting.getEStructuralFeature());
+		final List<Object> toDelete = new ArrayList<Object>(deletionList);
+		if (reference.isContainment()) {
+			deleteService.deleteElements(editingDomain, toDelete);
+		} else {
+			deleteService.removeElements(editingDomain, mainSetting.getEStructuralFeature(), reference, toDelete);
+		}
 	}
 
 	/**
@@ -711,7 +724,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				.log(
 					new Status(
 						IStatus.WARNING,
-						"org.eclipse.emf.ecp.view.table.ui.swt", "The class " + clazz.getName() + " is abstract or an interface.")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+						"org.eclipse.emf.ecp.view.table.ui.swt", //$NON-NLS-1$
+						"The class " + clazz.getName() + " is abstract or an interface.")); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 		final EObject modelElement = mainSetting.getEObject();
 		final EObject instance = clazz.getEPackage().getEFactoryInstance().create(clazz);
@@ -1055,8 +1069,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				return false;
 			}
 			editable &= getItemPropertyDescriptor(setting).canSetProperty(null);
-			editable &= !CellReadOnlyTesterHelper.getInstance().isReadOnly(getVElement(), setting
-				);
+			editable &= !CellReadOnlyTesterHelper.getInstance().isReadOnly(getVElement(), setting);
 
 			if (ECPCellEditor.class.isInstance(cellEditor)) {
 				ECPCellEditor.class.cast(cellEditor).setEditable(editable);

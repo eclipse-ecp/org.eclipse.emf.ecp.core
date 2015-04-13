@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.TableViewerColumnBuilder;
+import org.eclipse.emf.ecp.edit.spi.DeleteService;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer;
@@ -31,7 +32,6 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
-import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -361,13 +361,27 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 * @param tableViewer the {@link TableViewer}
 	 * @param mainSetting the {@link Setting} to delete from
 	 */
-	protected void handleDelete(TableViewer tableViewer, Setting mainSetting) {
-		final List<?> deletionList = IStructuredSelection.class.cast(tableViewer.getSelection()).toList();
+	protected void handleDelete(TableViewer tableViewer, Setting setting) {
+		final DeleteService deleteService = getViewModelContext().getService(DeleteService.class);
+		if (deleteService == null) {
+			/*
+			 * #getService(Class<?>) will report to the reportservice if it could not be found
+			 * -> simply return here
+			 */
+			return;
+		}
+		@SuppressWarnings("unchecked")
+		final List<Object> deletionList = IStructuredSelection.class.cast(tableViewer.getSelection()).toList();
+		final EditingDomain editingDomain = getEditingDomain(setting);
 
-		final EObject modelElement = mainSetting.getEObject();
-		final EditingDomain editingDomain = getEditingDomain(mainSetting);
-		editingDomain.getCommandStack().execute(
-			RemoveCommand.create(editingDomain, modelElement, mainSetting.getEStructuralFeature(), deletionList));
+		/* assured by #isApplicable */
+		final EReference reference = EReference.class.cast(setting.getEStructuralFeature());
+
+		if (reference.isContainment()) {
+			deleteService.deleteElements(editingDomain, deletionList);
+		} else {
+			deleteService.removeElements(editingDomain, setting.getEObject(), reference, deletionList);
+		}
 	}
 
 	/**

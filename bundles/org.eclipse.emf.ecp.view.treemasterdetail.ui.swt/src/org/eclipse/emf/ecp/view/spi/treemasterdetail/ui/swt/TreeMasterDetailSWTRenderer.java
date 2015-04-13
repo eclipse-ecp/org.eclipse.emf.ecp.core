@@ -33,6 +33,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
 import org.eclipse.emf.ecp.common.spi.ChildrenDescriptorCollector;
 import org.eclipse.emf.ecp.edit.internal.swt.util.OverlayImageDescriptor;
+import org.eclipse.emf.ecp.edit.spi.DeleteService;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.edit.spi.swt.util.SWTValidationHelper;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
@@ -57,7 +58,6 @@ import org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.internal.RootObject;
 import org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.internal.TreeMasterDetailSelectionManipulatorHelper;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.CommandParameter;
-import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -752,10 +752,16 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 			@Override
 			public void run() {
 				super.run();
-				for (final Object obj : selection.toList())
-				{
-					editingDomain.getCommandStack().execute(
-						RemoveCommand.create(editingDomain, obj));
+				final DeleteService deleteService = getViewModelContext().getService(DeleteService.class);
+				if (deleteService == null) {
+					/*
+					 * #getService(Class<?>) will report to the reportservice if it could not be found
+					 * -> simply return here
+					 */
+					return;
+				}
+				for (final Object obj : selection.toList()) {
+					deleteService.deleteElement(editingDomain, obj);
 				}
 				treeViewer.setSelection(new StructuredSelection(getViewModelContext().getDomainModel()));
 			}
@@ -792,8 +798,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 			// TODO refactor
 			if (getViewModelContext().hasService(ReferenceService.class)) {
 				referenceService = getViewModelContext().getService(ReferenceService.class);
-			}
-			else {
+			} else {
 				referenceService = new DefaultReferenceService();
 			}
 		}
@@ -811,9 +816,8 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 					}
 					childComposite = createComposite();
 
-					final Object root = manipulateSelection(((RootObject) ((TreeViewer)
-						event.getSource()).getInput())
-							.getRoot());
+					final Object root = manipulateSelection(((RootObject) ((TreeViewer) event.getSource()).getInput())
+						.getRoot());
 					final Map<String, Object> context = new LinkedHashMap<String, Object>();
 					context.put(DETAIL_KEY, true);
 
