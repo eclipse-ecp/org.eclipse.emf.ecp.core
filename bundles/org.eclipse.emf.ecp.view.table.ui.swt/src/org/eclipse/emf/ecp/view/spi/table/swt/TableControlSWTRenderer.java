@@ -619,7 +619,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			LocalizationServiceHelper.getString(getClass(), MessageKeys.TableControl_RemoveSelected), instanceName));
 
 		final List<?> containments = (List<?>) mainSetting.get(true);
-		if (containments.size() <= mainSetting.getEStructuralFeature().getLowerBound()) {
+
+		if (containments == null || containments.size() <= mainSetting.getEStructuralFeature().getLowerBound()) {
 			removeButton.setEnabled(false);
 		}
 		return removeButton;
@@ -634,7 +635,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			LocalizationServiceHelper.getString(getClass(), MessageKeys.TableControl_AddInstanceOf), instanceName));
 
 		final List<?> containments = (List<?>) mainSetting.get(true);
-		if (mainSetting.getEStructuralFeature().getUpperBound() != -1
+		if (containments == null || mainSetting.getEStructuralFeature().getUpperBound() != -1
 			&& containments.size() >= mainSetting.getEStructuralFeature().getUpperBound()) {
 			addButton.setEnabled(false);
 		}
@@ -760,7 +761,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				validationIcon.setToolTipText(ECPTooltipModifierHelper.modifyString(getVElement().getDiagnostic()
 					.getMessage(), null));
 				final Collection<?> collection = (Collection<?>) mainSetting.get(true);
-				if (!collection.isEmpty()) {
+				if (collection != null && !collection.isEmpty()) {
 					for (final Object object : collection) {
 						tableViewer.update(object, null);
 					}
