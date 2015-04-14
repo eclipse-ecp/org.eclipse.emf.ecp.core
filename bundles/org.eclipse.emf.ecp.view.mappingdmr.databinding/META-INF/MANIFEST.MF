@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Databinding Connection
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.mappingdmr.databinding
-Bundle-Version: 1.5.1.qualifier
+Bundle-Version: 1.5.2.qualifier
 Bundle-Vendor: Eclipse Modeling Project
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
@@ -14,4 +14,4 @@ Require-Bundle: org.eclipse.emf.ecp.view.model.common;bundle-version="[1.5.0,2.0
 Import-Package: org.osgi.framework;version="[1.3.0,2.0.0)"
 Service-Component: OSGI-INF/mappingDatabindingProvider.xml
 Export-Package: org.eclipse.emf.ecp.view.mappingdmr.databinding;versio
- n="1.5.1";x-internal:=true
+ n="1.5.2";x-internal:=true

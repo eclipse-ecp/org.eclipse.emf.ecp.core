@@ -12,12 +12,12 @@
 <feature
       id="org.eclipse.emf.ecp.workspace.feature"
       label="ECP File Integration (Experimental)"
-      version="1.5.1.qualifier"
+      version="1.5.2.qualifier"
       provider-name="Eclipse Modeling Project"
       plugin="org.eclipse.emf.ecp.workspace.core"
       image="eclipse_update_120.jpg"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.5.1.qualifier">
+      license-feature-version="1.5.2.qualifier">
 
    <description>
       Integration for file and Eclipse workspace persistence.

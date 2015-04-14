@@ -2,11 +2,11 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ECP Validation View to Editor Bridge
 Bundle-SymbolicName: org.eclipse.emf.ecp.validationvieweditorbridge;singleton:=true
-Bundle-Version: 1.5.1.qualifier
+Bundle-Version: 1.5.2.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: Eclipse Modeling Project
 Import-Package: org.eclipse.jface.viewers;version="0.0.0"
 Export-Package: org.eclipse.emf.ecp.internal.validationvieweditorbridg
- e;version="1.5.1";x-internal:=true
+ e;version="1.5.2";x-internal:=true
 Require-Bundle: org.eclipse.emf.ecp.ui;bundle-version="[1.5.0,2.0.0)",
  org.eclipse.emf.ecp.ui.validation;bundle-version="[1.5.0,2.0.0)"

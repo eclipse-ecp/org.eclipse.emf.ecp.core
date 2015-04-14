@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: View Model Dynamic Tree SWT UI
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.dynamictree.ui.swt;singleton:=true
-Bundle-Version: 1.5.1.qualifier
+Bundle-Version: 1.5.2.qualifier
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
  org.eclipse.emf.ecp.view.dynamictree.model;bundle-version="[1.5.0,2.0.0)",
  org.eclipse.emf.ecp.ui.view.swt;bundle-version="[1.5.0,2.0.0)",
@@ -15,5 +15,5 @@ Import-Package: org.eclipse.jface.layout;version="0.0.0",
  org.eclipse.swt;version="0.0.0",
  org.eclipse.swt.widgets;version="0.0.0"
 Export-Package: org.eclipse.emf.ecp.view.dynamictree.ui.swt;version="1
- .5.1";x-internal:=true
+ .5.2";x-internal:=true
 Bundle-Vendor: Eclipse Modeling Project

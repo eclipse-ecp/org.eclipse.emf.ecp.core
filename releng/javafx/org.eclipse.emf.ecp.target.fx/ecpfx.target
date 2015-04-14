@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="ecpfx" sequenceNumber="28">
+<?pde version="3.8"?><target name="ecpfx" sequenceNumber="29">
 <locations>
 <location includeAllPlatforms="true" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.fx.target.feature.feature.group" version="0.0.0"/>
@@ -19,7 +19,7 @@
 <unit id="org.eclipse.emf.emfstore.client.ui.feature.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.emf.emfstore.common.feature.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.emf.emfstore.client.feature.feature.group" version="0.0.0"/>
-<repository location="http://download.eclipse.org/emf-store/releases_14"/>
+<repository location="http://download.eclipse.org/emfstore/releases_14"/>
 </location>
 </locations>
 </target>

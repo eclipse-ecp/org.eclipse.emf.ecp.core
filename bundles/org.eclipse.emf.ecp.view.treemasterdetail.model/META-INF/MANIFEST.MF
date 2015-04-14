@@ -2,17 +2,17 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.treemasterdetail.model;singleton:=true
-Bundle-Version: 1.5.1.qualifier
+Bundle-Version: 1.5.2.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.eclipse.emf.ecp.view.treemasterdetail.model;versio
- n="1.5.1";x-friends:="org.eclipse.emf.ecp.view.treemasterdetail.model
+ n="1.5.2";x-friends:="org.eclipse.emf.ecp.view.treemasterdetail.model
  .edit,org.eclipse.emf.ecp.view.treemasterdetail.ui.swt",org.eclipse.e
- mf.ecp.view.treemasterdetail.model.impl;version="1.5.1";x-internal:=t
+ mf.ecp.view.treemasterdetail.model.impl;version="1.5.2";x-internal:=t
  rue,org.eclipse.emf.ecp.view.treemasterdetail.model.util;version="1.5
- .1";x-friends:="org.eclipse.emf.ecp.view.treemasterdetail.model.edit"
+ .2";x-friends:="org.eclipse.emf.ecp.view.treemasterdetail.model.edit"
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
  org.eclipse.emf.ecore;visibility:=reexport;bundle-version="[2.7.0,3.0.0)",
  org.eclipse.emf.ecp.view.model;visibility:=reexport;bundle-version="[1.5.0,2.0.0)"

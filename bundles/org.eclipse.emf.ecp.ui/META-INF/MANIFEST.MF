@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ECP UI
 Bundle-SymbolicName: org.eclipse.emf.ecp.ui;singleton:=true
-Bundle-Version: 1.5.1.qualifier
+Bundle-Version: 1.5.2.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.internal.ui.Activator
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.emf.ecp.core;bundle-version="[1.5.0,2.0.0)";visibility:=reexport,
@@ -13,33 +13,33 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.emf.ecp.common.ui;bundle-version="1.4.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Export-Package: org.eclipse.emf.ecp.internal.ui;version="1.5.1";x-frie
+Export-Package: org.eclipse.emf.ecp.internal.ui;version="1.5.2";x-frie
  nds:="org.eclipse.emf.ecp.explorereditorbridge,org.eclipse.emf.ecp.ed
  it.ecore.swt,org.eclipse.emf.ecp.emfstore.ui",org.eclipse.emf.ecp.int
- ernal.ui.composites;version="1.5.1";x-internal:=true,org.eclipse.emf.
- ecp.internal.ui.dialogs;version="1.5.1";x-friends:="org.eclipse.emf.e
+ ernal.ui.composites;version="1.5.2";x-internal:=true,org.eclipse.emf.
+ ecp.internal.ui.dialogs;version="1.5.2";x-friends:="org.eclipse.emf.e
  cp.explorereditorbridge",org.eclipse.emf.ecp.internal.ui.model;versio
- n="1.5.1";x-friends:="org.eclipse.emf.ecp.ui.e4,org.eclipse.emf.ecp.u
+ n="1.5.2";x-friends:="org.eclipse.emf.ecp.ui.e4,org.eclipse.emf.ecp.u
  i.e3,org.eclipse.emf.ecp.ui.transaction",org.eclipse.emf.ecp.internal
- .ui.tester;version="1.5.1",org.eclipse.emf.ecp.internal.ui.util;versi
- on="1.5.1"; x-friends:="org.eclipse.emf.ecp.explorereditorbridge,  or
+ .ui.tester;version="1.5.2",org.eclipse.emf.ecp.internal.ui.util;versi
+ on="1.5.2"; x-friends:="org.eclipse.emf.ecp.explorereditorbridge,  or
  g.eclipse.emf.ecp.ui.e3,  org.eclipse.emf.ecp.ui.e4,  org.eclipse.emf
  .ecp.emfstore.ui.e3,  org.eclipse.emf.ecp.validationvieweditorbridge,
    org.eclipse.emf.ecp.emfstore.ui",org.eclipse.emf.ecp.internal.wizar
- ds;version="1.5.1"; x-friends:="org.eclipse.emf.ecp.edit.ecore.swt,  
+ ds;version="1.5.2"; x-friends:="org.eclipse.emf.ecp.edit.ecore.swt,  
  org.eclipse.emf.ecp.explorereditorbridge,  org.eclipse.emf.ecp.worksp
  ace.ui,  org.eclipse.emf.ecp.view.table.editor,  org.eclipse.emf.ecp.
- emfstore.ui",org.eclipse.emf.ecp.internal.wizards.page;version="1.5.1
+ emfstore.ui",org.eclipse.emf.ecp.internal.wizards.page;version="1.5.2
  ";x-friends:="org.eclipse.emf.ecp.explorereditorbridge",org.eclipse.e
- mf.ecp.spi.ui;version="1.5.1",org.eclipse.emf.ecp.spi.ui.util;version
- ="1.5.1",org.eclipse.emf.ecp.ui;version="1.5.1",org.eclipse.emf.ecp.u
- i.common;version="1.5.1"; x-friends:="org.eclipse.emf.ecp.edit.ecore.
+ mf.ecp.spi.ui;version="1.5.2",org.eclipse.emf.ecp.spi.ui.util;version
+ ="1.5.2",org.eclipse.emf.ecp.ui;version="1.5.2",org.eclipse.emf.ecp.u
+ i.common;version="1.5.2"; x-friends:="org.eclipse.emf.ecp.edit.ecore.
  swt,  org.eclipse.emf.ecp.explorereditorbridge,  org.eclipse.emf.ecp.
  ui.e3,  org.eclipse.emf.ecp.view.table.editor,  org.eclipse.emf.ecp.v
  iew.ui.editor.test,  org.eclipse.emf.ecp.workspace.ui,  org.eclipse.e
- mf.ecp.ui.e4",org.eclipse.emf.ecp.ui.common.dnd;version="1.5.1";x-fri
+ mf.ecp.ui.e4",org.eclipse.emf.ecp.ui.common.dnd;version="1.5.2";x-fri
  ends:="org.eclipse.emf.ecp.ui.view.editor.controls",org.eclipse.emf.e
- cp.ui.util;version="1.5.1"
+ cp.ui.util;version="1.5.2"
 Import-Package: org.eclipse.core.commands;version="0.0.0",
  org.eclipse.emf.edit.ui.action;version="0.0.0",
  org.eclipse.emf.edit.ui.dnd;version="0.0.0",

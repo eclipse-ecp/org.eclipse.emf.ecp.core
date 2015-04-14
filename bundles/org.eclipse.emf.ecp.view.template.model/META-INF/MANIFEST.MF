@@ -2,48 +2,48 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.template.model;singleton:=true
-Bundle-Version: 1.5.1.qualifier
+Bundle-Version: 1.5.2.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Export-Package: org.eclipse.emf.ecp.view.template.model;version="1.5.1
- ",org.eclipse.emf.ecp.view.template.model.impl;version="1.5.1";x-inte
+Export-Package: org.eclipse.emf.ecp.view.template.model;version="1.5.2
+ ",org.eclipse.emf.ecp.view.template.model.impl;version="1.5.2";x-inte
  rnal:=true,org.eclipse.emf.ecp.view.template.model.util;version="1.5.
- 1";x-friends:="org.eclipse.emf.ecp.view.template.model.edit",org.ecli
+ 2";x-friends:="org.eclipse.emf.ecp.view.template.model.edit",org.ecli
  pse.emf.ecp.view.template.selector.domainmodelreference.model;version
- ="1.5.1",org.eclipse.emf.ecp.view.template.selector.domainmodelrefere
- nce.model.impl;version="1.5.1";x-internal:=true,org.eclipse.emf.ecp.v
- iew.template.selector.domainmodelreference.model.util;version="1.5.1"
+ ="1.5.2",org.eclipse.emf.ecp.view.template.selector.domainmodelrefere
+ nce.model.impl;version="1.5.2";x-internal:=true,org.eclipse.emf.ecp.v
+ iew.template.selector.domainmodelreference.model.util;version="1.5.2"
  ;x-friends:="org.eclipse.emf.ecp.view.template.model.edit",org.eclips
  e.emf.ecp.view.template.selector.viewModelElement.model;version="1.5.
- 1",org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.
- impl;version="1.5.1",org.eclipse.emf.ecp.view.template.selector.viewM
- odelElement.model.util;version="1.5.1",org.eclipse.emf.ecp.view.templ
- ate.style.alignment.model;version="1.5.1",org.eclipse.emf.ecp.view.te
- mplate.style.alignment.model.impl;version="1.5.1";x-internal:=true,or
+ 2",org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.
+ impl;version="1.5.2",org.eclipse.emf.ecp.view.template.selector.viewM
+ odelElement.model.util;version="1.5.2",org.eclipse.emf.ecp.view.templ
+ ate.style.alignment.model;version="1.5.2",org.eclipse.emf.ecp.view.te
+ mplate.style.alignment.model.impl;version="1.5.2";x-internal:=true,or
  g.eclipse.emf.ecp.view.template.style.alignment.model.util;version="1
- .5.1";x-friends:="org.eclipse.emf.ecp.view.template.model.edit",org.e
+ .5.2";x-friends:="org.eclipse.emf.ecp.view.template.model.edit",org.e
  clipse.emf.ecp.view.template.style.fontProperties.model;version="1.5.
- 1",org.eclipse.emf.ecp.view.template.style.fontProperties.model.impl;
- version="1.5.1",org.eclipse.emf.ecp.view.template.style.fontPropertie
- s.model.util;version="1.5.1",org.eclipse.emf.ecp.view.template.style.
- mandatory.model;version="1.5.1",org.eclipse.emf.ecp.view.template.sty
- le.mandatory.model.impl;version="1.5.1";x-internal:=true,org.eclipse.
- emf.ecp.view.template.style.mandatory.model.util;version="1.5.1";x-fr
+ 2",org.eclipse.emf.ecp.view.template.style.fontProperties.model.impl;
+ version="1.5.2",org.eclipse.emf.ecp.view.template.style.fontPropertie
+ s.model.util;version="1.5.2",org.eclipse.emf.ecp.view.template.style.
+ mandatory.model;version="1.5.2",org.eclipse.emf.ecp.view.template.sty
+ le.mandatory.model.impl;version="1.5.2";x-internal:=true,org.eclipse.
+ emf.ecp.view.template.style.mandatory.model.util;version="1.5.2";x-fr
  iends:="org.eclipse.emf.ecp.view.template.model.edit",org.eclipse.emf
- .ecp.view.template.style.tableValidation.model;version="1.5.1",org.ec
+ .ecp.view.template.style.tableValidation.model;version="1.5.2",org.ec
  lipse.emf.ecp.view.template.style.tableValidation.model.impl;version=
- "1.5.1",org.eclipse.emf.ecp.view.template.style.tableValidation.model
- .util;version="1.5.1",org.eclipse.emf.ecp.view.template.style.textCon
- trolEnablement.model;version="1.5.1",org.eclipse.emf.ecp.view.templat
- e.style.textControlEnablement.model.impl;version="1.5.1";x-internal:=
+ "1.5.2",org.eclipse.emf.ecp.view.template.style.tableValidation.model
+ .util;version="1.5.2",org.eclipse.emf.ecp.view.template.style.textCon
+ trolEnablement.model;version="1.5.2",org.eclipse.emf.ecp.view.templat
+ e.style.textControlEnablement.model.impl;version="1.5.2";x-internal:=
  true,org.eclipse.emf.ecp.view.template.style.textControlEnablement.mo
- del.util;version="1.5.1";x-friends:="org.eclipse.emf.ecp.view.templat
+ del.util;version="1.5.2";x-friends:="org.eclipse.emf.ecp.view.templat
  e.model.edit",org.eclipse.emf.ecp.view.template.style.validation.mode
- l;version="1.5.1",org.eclipse.emf.ecp.view.template.style.validation.
- model.impl;version="1.5.1";x-internal:=true,org.eclipse.emf.ecp.view.
- template.style.validation.model.util;version="1.5.1";x-friends:="org.
+ l;version="1.5.2",org.eclipse.emf.ecp.view.template.style.validation.
+ model.impl;version="1.5.2";x-internal:=true,org.eclipse.emf.ecp.view.
+ template.style.validation.model.util;version="1.5.2";x-friends:="org.
  eclipse.emf.ecp.view.template.model.edit"
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
  org.eclipse.emf.ecore;bundle-version="[2.7.0,3.0.0)";visibility:=reexport,

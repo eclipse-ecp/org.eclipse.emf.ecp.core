@@ -4,13 +4,13 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.eclipse.emf.ecp.fx</groupId>
 	<artifactId>ecp-fx-bundles-parent</artifactId>
-	<version>1.5.1-SNAPSHOT</version>
+	<version>1.5.2-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<parent>
 		<groupId>org.eclipse.emf.ecp.fx</groupId>
 		<artifactId>ecp-fx-parent</artifactId>
-		<version>1.5.1-SNAPSHOT</version>
+		<version>1.5.2-SNAPSHOT</version>
 		<relativePath>../org.eclipse.emf.ecp.fx.releng/</relativePath>
 	</parent>
 	

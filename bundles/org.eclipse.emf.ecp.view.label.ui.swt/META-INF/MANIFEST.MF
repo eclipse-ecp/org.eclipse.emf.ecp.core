@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: View Model Label UI SWT
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.label.ui.swt;singleton:=true
-Bundle-Version: 1.5.1.qualifier
+Bundle-Version: 1.5.2.qualifier
 Bundle-Vendor: Eclipse Modeling Project
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.emf.ecp.view.label.model;bundle-version="[1.5.0,2.0.0)",
@@ -11,7 +11,7 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.emf.ecp.view.template.model;bundle-version="[1.5.0,2.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
-Export-Package: org.eclipse.emf.ecp.view.spi.label.swt;version="1.5.1"
+Export-Package: org.eclipse.emf.ecp.view.spi.label.swt;version="1.5.2"
 Import-Package: org.eclipse.jface.databinding.swt;version="0.0.0",
  org.eclipse.jface.layout;version="0.0.0",
  org.eclipse.swt;version="0.0.0",

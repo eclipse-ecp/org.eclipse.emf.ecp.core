@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Integrationtest
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.model.integrationtest
-Bundle-Version: 1.5.1.qualifier
+Bundle-Version: 1.5.2.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: org.junit;bundle-version="[4.0.0,5.0.0)",
  org.eclipse.emf.ecp.view.model;bundle-version="[1.5.0,2.0.0)",
@@ -16,5 +16,5 @@ Require-Bundle: org.junit;bundle-version="[4.0.0,5.0.0)",
  org.eclipse.emf.ecp.view.categorization.model;bundle-version="[1.5.0,2.0.0)",
  org.eclipse.emf.ecp.common
 Export-Package: org.eclipse.emf.ecp.view.model.integrationtest;version
- ="1.5.1";x-internal:=true
+ ="1.5.2";x-internal:=true
 

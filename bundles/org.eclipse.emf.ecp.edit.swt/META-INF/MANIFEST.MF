@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.eclipse.emf.ecp.edit.swt;singleton:=true
-Bundle-Version: 1.5.1.qualifier
+Bundle-Version: 1.5.2.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.edit.internal.swt.Activator
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
  org.eclipse.emf.ecp.edit;bundle-version="[1.5.0,2.0.0)";visibility:=reexport,
@@ -31,25 +31,25 @@ Import-Package: org.eclipse.core.commands;version="0.0.0",
  org.eclipse.swt.layout;version="0.0.0",
  org.eclipse.swt.widgets;version="0.0.0"
 Bundle-Vendor: %Bundle-Vendor
-Export-Package: org.eclipse.emf.ecp.edit.internal.swt;version="1.5.1";
+Export-Package: org.eclipse.emf.ecp.edit.internal.swt;version="1.5.2";
   x-friends:="org.eclipse.emf.ecp.ui.view.editor.controls,  org.eclips
  e.emf.ecp.view.treemasterdetail.ui.swt",org.eclipse.emf.ecp.edit.inte
- rnal.swt.actions;version="1.5.1"; x-friends:="org.eclipse.emf.ecp.ui.
+ rnal.swt.actions;version="1.5.2"; x-friends:="org.eclipse.emf.ecp.ui.
  view.editor.controls,org.eclipse.emf.ecp.edit.ecore.swt",org.eclipse.
- emf.ecp.edit.internal.swt.controls;version="1.5.1"; x-friends:="org.e
+ emf.ecp.edit.internal.swt.controls;version="1.5.2"; x-friends:="org.e
  clipse.emf.ecp.ui.view.swt,org.eclipse.emf.ecp.ui.view.editor.control
  s,org.eclipse.emf.ecp.view.table.ui.swt",org.eclipse.emf.ecp.edit.int
- ernal.swt.reference;version="1.5.1"; x-friends:="org.eclipse.emf.ecp.
+ ernal.swt.reference;version="1.5.2"; x-friends:="org.eclipse.emf.ecp.
  edit.ecore.swt,org.eclipse.emf.ecp.ui.view.editor.controls",org.eclip
- se.emf.ecp.edit.internal.swt.table;version="1.5.1"; x-friends:="org.e
+ se.emf.ecp.edit.internal.swt.table;version="1.5.2"; x-friends:="org.e
  clipse.emf.ecp.view.table.ui.swt",org.eclipse.emf.ecp.edit.internal.s
- wt.util;version="1.5.1"; x-friends:="org.eclipse.emf.ecp.editor,  org
+ wt.util;version="1.5.2"; x-friends:="org.eclipse.emf.ecp.editor,  org
  .eclipse.emf.ecp.explorereditorbridge,  org.eclipse.emf.ecp.ui.view.s
  wt,  org.eclipse.emf.ecp.ui.view.editor.controls,  org.eclipse.emf.ec
  p.view.groupedgrid.ui.swt,  org.eclipse.emf.ecp.edit.ecore.swt,  org.
  eclipse.emf.ecp.view.table.ui.swt,  org.eclipse.emf.ecp.view.categori
  zation.swt,  org.eclipse.emf.ecp.view.treemasterdetail.ui.swt",org.ec
- lipse.emf.ecp.edit.spi.swt.actions;version="1.5.1",org.eclipse.emf.ec
- p.edit.spi.swt.reference;version="1.5.1",org.eclipse.emf.ecp.edit.spi
- .swt.table;version="1.5.1",org.eclipse.emf.ecp.edit.spi.swt.util;vers
- ion="1.5.1"
+ lipse.emf.ecp.edit.spi.swt.actions;version="1.5.2",org.eclipse.emf.ec
+ p.edit.spi.swt.reference;version="1.5.2",org.eclipse.emf.ecp.edit.spi
+ .swt.table;version="1.5.2",org.eclipse.emf.ecp.edit.spi.swt.util;vers
+ ion="1.5.2"

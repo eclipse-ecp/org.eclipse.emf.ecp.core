@@ -25,6 +25,7 @@ public interface NotificationReceiver {
 	 * Called whenever there is a new {@link Notification} meant for the receiver.
 	 *
 	 * @param notification the notification
+	 * @since 1.5
 	 */
 	void notify(Notification notification);
 

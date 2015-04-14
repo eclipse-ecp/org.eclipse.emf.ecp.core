@@ -2,11 +2,11 @@
 <feature
       id="org.eclipse.emf.ecp.makeithappen.feature"
       label="EMF Forms MakeItHappen Example (Target Feature)"
-      version="1.5.1.qualifier"
+      version="1.5.2.qualifier"
       provider-name="%providerName"
       plugin="org.eclipse.emf.ecp.makeithappen.model"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.5.1.qualifier">
+      license-feature-version="1.5.2.qualifier">
 
    <description>
       %description

@@ -2,17 +2,17 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.ecp.ui.view.editor.controls.test;singleton:=true
-Bundle-Version: 1.5.1.qualifier
+Bundle-Version: 1.5.2.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Fragment-Host: org.eclipse.emf.ecp.ui.view.editor.controls;bundle-version="[1.5.0,2.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.eclipse.emf.ecp.ui.view.editor.controls.test;versi
- on="1.5.1",org.eclipse.emf.ecp.ui.view.editor.test.model.test;version
- ="1.5.1";x-internal:=true,org.eclipse.emf.ecp.ui.view.editor.test.mod
- el.test.impl;version="1.5.1";x-internal:=true,org.eclipse.emf.ecp.ui.
- view.editor.test.model.test.util;version="1.5.1";x-internal:=true
+ on="1.5.2",org.eclipse.emf.ecp.ui.view.editor.test.model.test;version
+ ="1.5.2";x-internal:=true,org.eclipse.emf.ecp.ui.view.editor.test.mod
+ el.test.impl;version="1.5.2";x-internal:=true,org.eclipse.emf.ecp.ui.
+ view.editor.test.model.test.util;version="1.5.2";x-internal:=true
 Require-Bundle: org.junit;bundle-version="[4.0.0,5.0.0)",
  org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
  org.eclipse.emf.ecore;bundle-version="[2.7.0,3.0.0)";visibility:=reexport,
