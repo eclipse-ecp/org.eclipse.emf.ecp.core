@@ -22,37 +22,6 @@
 				<configuration>
 		          	<useUIHarness>true</useUIHarness>
 		          	<useUIThread>true</useUIThread>
-					<dependencies>
-						<dependency>
-							<type>eclipse-feature</type>
-							<artifactId>org.eclipse.emf.ecp.target.feature</artifactId>
-							<version>0.0.0</version>
-						</dependency>
-						<dependency>
-							<type>eclipse-feature</type>
-							<artifactId>org.eclipse.emf.ecp.feature</artifactId>
-							<version>0.0.0</version>
-						</dependency>
-						<dependency>
-							<type>eclipse-feature</type>
-							<artifactId>org.eclipse.emf.ecp.view.template.feature</artifactId>
-							<version>0.0.0</version>
-						</dependency>
-						<dependency>
-							<type>eclipse-feature</type>
-							<artifactId>org.eclipse.emf.ecp.viewmodel.feature</artifactId>
-							<version>0.0.0</version>
-						</dependency>
-						<dependency>
-							<type>eclipse-feature</type>
-							<artifactId>org.eclipse.emf.ecp.emfforms.runtime.feature</artifactId>
-							<version>0.0.0</version>
-						</dependency>
-						<dependency>
-							<type>p2-installable-unit</type>
-							<artifactId>org.eclipse.equinox.ds</artifactId>
-						</dependency>
-					</dependencies>
 				</configuration>
 			</plugin>
 		</plugins>

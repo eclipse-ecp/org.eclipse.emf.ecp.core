@@ -16,6 +16,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecp.view.internal.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
@@ -92,6 +93,7 @@ public class LocalizationViewModelService_Test {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		final VControl control = VViewFactory.eINSTANCE.createControl();
 		view.getChildren().add(control);
+		view.eAdapters().add(new AdapterImpl());
 
 		final ViewModelContext viewModelContext = mock(ViewModelContext.class);
 		when(viewModelContext.getViewModel()).thenReturn(view);

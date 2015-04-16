@@ -22,6 +22,12 @@ import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
+import org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport;
+import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * LocalizationViewModelService which will localize the view model.
@@ -30,6 +36,30 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  *
  */
 public class LocalizationViewModelService implements ViewModelService {
+
+	private BundleContext bundleContext;
+	private VElement view;
+	private ReportService reportService;
+	private ServiceReference<ReportService> reportServiceReference;
+
+	/**
+	 * Default constructor.
+	 */
+	public LocalizationViewModelService() {
+		super();
+		final Bundle bundle = FrameworkUtil.getBundle(getClass());
+		if (bundle == null) {
+			return;
+		}
+		bundleContext = bundle.getBundleContext();
+		if (bundleContext == null) {
+			return;
+		}
+
+		reportServiceReference = bundleContext.getServiceReference(ReportService.class);
+		reportService = bundleContext.getService(reportServiceReference);
+
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -84,15 +114,21 @@ public class LocalizationViewModelService implements ViewModelService {
 
 	/**
 	 * The actual method localizing a {@link VElement}.
-	 * 
+	 *
 	 * @param localizationAdapter The LocalizationAdapter to use for localization
 	 * @param vElement The {@link VElement} to localize
 	 */
 	protected void localize(LocalizationAdapter localizationAdapter, final VElement vElement) {
 		if (vElement.getName() == null) {
 			vElement.setLabel(""); //$NON-NLS-1$
-		} else if (vElement.getName().startsWith("%") && localizationAdapter != null) { //$NON-NLS-1$
-			vElement.setLabel(localizationAdapter.localize(vElement.getName().substring(1)));
+		} else if (vElement.getName().startsWith("%")) { //$NON-NLS-1$
+			if (localizationAdapter != null) {
+				vElement.setLabel(localizationAdapter.localize(vElement.getName().substring(1)));
+			} else {
+				reportService.report(new AbstractReport(
+					"No LocalizationAdapter found for the current view:" + view.toString())); //$NON-NLS-1$
+				vElement.setLabel(vElement.getName());
+			}
 		} else {
 			vElement.setLabel(vElement.getName());
 		}
@@ -105,7 +141,9 @@ public class LocalizationViewModelService implements ViewModelService {
 	 */
 	@Override
 	public void dispose() {
-		// intentionally left empty
+		if (bundleContext != null && reportServiceReference != null) {
+			bundleContext.ungetService(reportServiceReference);
+		}
 	}
 
 	/**
