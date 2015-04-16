@@ -19,6 +19,7 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
+import org.osgi.service.log.LogService;
 
 /**
  * Helper class for retrieving translated strings.
@@ -37,10 +38,18 @@ public final class LocalizationServiceHelper {
 	}
 
 	private final BundleContext bundleContext;
+	private ServiceReference<LogService> logServiceReference;
+	private LogService logService;
 
 	private LocalizationServiceHelper() {
 		bundleContext = FrameworkUtil.getBundle(LocalizationServiceHelper.class)
 			.getBundleContext();
+
+		logServiceReference = bundleContext.getServiceReference(LogService.class);
+		if (logServiceReference == null) {
+			return;
+		}
+		logService = bundleContext.getService(logServiceReference);
 	}
 
 	private String getLocale() {
@@ -61,11 +70,21 @@ public final class LocalizationServiceHelper {
 		final BundleLocalization bundleLocalization = bundleContext.getService(serviceReference);
 		final ResourceBundle resourceBundle = bundleLocalization.getLocalization(bundle, localeLanguage);
 		if (resourceBundle == null) {
-			// TODO log -> move report service in common
+			logService
+				.log(
+					LogService.LOG_WARNING,
+					String
+						.format(
+							"No ResourceBundle found for Language '%1$s' in Bundle %2$s with Version %3$s.", localeLanguage, bundle.getSymbolicName(), bundle.getVersion().toString())); //$NON-NLS-1$
 			return key;
 		}
 		if (!resourceBundle.containsKey(key)) {
-			// TODO log -> move report service in common
+			logService
+				.log(
+					LogService.LOG_WARNING,
+					String
+						.format(
+							"The ResourceBundle for Language '%1$s' in Bundle %2$s with Version %3$s doesn't contain the key '%4$s'.", localeLanguage, bundle.getSymbolicName(), bundle.getVersion().toString(), key)); //$NON-NLS-1$
 			return key;
 		}
 		final String result = resourceBundle.getString(key);
