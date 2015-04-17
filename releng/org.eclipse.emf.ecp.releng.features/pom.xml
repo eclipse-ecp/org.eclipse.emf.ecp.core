@@ -42,6 +42,7 @@
 		<module>../../features/org.eclipse.emf.ecp.view.horizontal.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.treemasterdetail.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.table.feature</module>
+		<module>../../features/org.eclipse.emf.ecp.view.table.editor.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.template.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.mappingdmr.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.template.helper.feature</module>
