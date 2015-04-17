@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.emf.ecp.view.table.editor.feature"
+      label="EMF Forms Table Model Tooling Support"
+      version="1.5.2.qualifier"
+      provider-name="%providerName"
+      plugin="org.eclipse.emf.ecp.view.table.editor"
+      license-feature="org.eclipse.emf.ecp.license.feature"
+      license-feature-version="1.5.2.qualifier">
+
+   <description>
+      %description
+   </description>
+
+   <copyright url="%copyrightURL">
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <plugin
+         id="org.eclipse.emf.ecp.view.table.editor"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>
