@@ -20,6 +20,7 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.template.model.VTTemplatePackage;
+import org.eclipse.emf.ecp.view.template.style.background.model.VTBackgroundPackage;
 import org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontPropertiesPackage;
 import org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationPackage;
 
@@ -87,6 +88,10 @@ public class TemplateColorHexControlTester implements ECPRendererTester {
 			return 5;
 		}
 		if (VTTemplatePackage.eINSTANCE.getControlValidationTemplate_CancelColorHEX().equals(feature)) {
+			return 5;
+		}
+		// background
+		if (VTBackgroundPackage.eINSTANCE.getBackgroundStyleProperty_Color().equals(feature)) {
 			return 5;
 		}
 

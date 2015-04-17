@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.emf.ecp.view.template.model" version="2">
     <resource path="META-INF/MANIFEST.MF">
+        <filter id="924844039">
+            <message_arguments>
+                <message_argument value="1.5.2"/>
+                <message_argument value="1.5.1"/>
+            </message_arguments>
+        </filter>
         <filter comment="There was no change that would require us to update the minor version.." id="929038356">
             <message_arguments>
                 <message_argument value="1.5.1"/>
