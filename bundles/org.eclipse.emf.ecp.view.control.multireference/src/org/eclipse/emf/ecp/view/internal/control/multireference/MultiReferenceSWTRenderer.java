@@ -11,10 +11,12 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.control.multireference;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.databinding.observable.list.IObservableList;
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EObject;
@@ -23,6 +25,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.TableViewerColumnBuilder;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
+import org.eclipse.emf.ecp.internal.edit.DeleteService;
+import org.eclipse.emf.ecp.internal.edit.EMFDeleteServiceImpl;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -358,12 +362,39 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 * @param mainSetting the {@link Setting} to delete from
 	 */
 	protected void handleDelete(TableViewer tableViewer, Setting mainSetting) {
-		final List<?> deletionList = IStructuredSelection.class.cast(tableViewer.getSelection()).toList();
 
-		final EObject modelElement = mainSetting.getEObject();
+		@SuppressWarnings("unchecked")
+		final List<Object> deletionList = IStructuredSelection.class.cast(tableViewer.getSelection()).toList();
 		final EditingDomain editingDomain = getEditingDomain(mainSetting);
-		editingDomain.getCommandStack().execute(
-			RemoveCommand.create(editingDomain, modelElement, mainSetting.getEStructuralFeature(), deletionList));
+
+		/* assured by #isApplicable */
+		final EReference reference = EReference.class.cast(mainSetting.getEStructuralFeature());
+
+		if (reference.isContainment()) {
+			DeleteService deleteService = getViewModelContext().getService(DeleteService.class);
+			if (deleteService == null) {
+				/*
+				 * #getService(Class<?>) will report to the reportservice if it could not be found
+				 * Use Default
+				 */
+				deleteService = new EMFDeleteServiceImpl();
+			}
+			deleteService.deleteElements(deletionList);
+		} else {
+			removeElements(editingDomain, mainSetting.getEObject(), reference, deletionList);
+		}
+	}
+
+	private void removeElements(EditingDomain editingDomain, Object source, EStructuralFeature feature,
+		Collection<Object> toRemove) {
+		final Command removeCommand = RemoveCommand.create(editingDomain, source, feature, toRemove);
+		if (removeCommand.canExecute()) {
+			if (editingDomain.getCommandStack() == null) {
+				removeCommand.execute();
+			} else {
+				editingDomain.getCommandStack().execute(removeCommand);
+			}
+		}
 	}
 
 	/**

@@ -57,7 +57,6 @@ import org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.internal.RootObject;
 import org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.internal.TreeMasterDetailSelectionManipulatorHelper;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.CommandParameter;
-import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -747,13 +746,21 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		final IStructuredSelection selection) {
 
 		final Action deleteAction = new Action() {
+			@SuppressWarnings("restriction")
 			@Override
 			public void run() {
 				super.run();
-				for (final Object obj : selection.toList())
-				{
-					editingDomain.getCommandStack().execute(
-						RemoveCommand.create(editingDomain, obj));
+				org.eclipse.emf.ecp.internal.edit.DeleteService deleteService = getViewModelContext()
+					.getService(org.eclipse.emf.ecp.internal.edit.DeleteService.class);
+				if (deleteService == null) {
+					/*
+					 * #getService(Class<?>) will report to the reportservice if it could not be found
+					 * Use Default
+					 */
+					deleteService = new org.eclipse.emf.ecp.internal.edit.EMFDeleteServiceImpl();
+				}
+				for (final Object obj : selection.toList()) {
+					deleteService.deleteElement(obj);
 				}
 				treeViewer.setSelection(new StructuredSelection(getViewModelContext().getDomainModel()));
 			}
@@ -790,8 +797,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 			// TODO refactor
 			if (getViewModelContext().hasService(ReferenceService.class)) {
 				referenceService = getViewModelContext().getService(ReferenceService.class);
-			}
-			else {
+			} else {
 				referenceService = new DefaultReferenceService();
 			}
 		}
@@ -809,9 +815,8 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 					}
 					childComposite = createComposite();
 
-					final Object root = manipulateSelection(((RootObject) ((TreeViewer)
-						event.getSource()).getInput())
-							.getRoot());
+					final Object root = manipulateSelection(((RootObject) ((TreeViewer) event.getSource()).getInput())
+						.getRoot());
 					final Map<String, Object> context = new LinkedHashMap<String, Object>();
 					context.put(DETAIL_KEY, true);
 

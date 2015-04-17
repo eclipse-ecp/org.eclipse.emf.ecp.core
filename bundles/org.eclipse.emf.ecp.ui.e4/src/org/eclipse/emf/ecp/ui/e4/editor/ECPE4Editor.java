@@ -95,8 +95,9 @@ public class ECPE4Editor {
 		try {
 			// render = ECPSWTViewRenderer.INSTANCE.render(parent, modelElement);
 			final VView view = ViewProviderHelper.getView(modelElement, null);
+			@SuppressWarnings("restriction")
 			final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(view, modelElement,
-				new ECPReferenceServiceImpl());
+				new ECPReferenceServiceImpl(), new org.eclipse.emf.ecp.internal.ui.ECPDeleteServiceImpl());
 
 			render = ECPSWTViewRenderer.INSTANCE.render(parent, vmc);
 

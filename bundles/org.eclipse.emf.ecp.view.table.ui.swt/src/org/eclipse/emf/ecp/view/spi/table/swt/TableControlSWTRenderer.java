@@ -29,6 +29,7 @@ import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.databinding.EObjectObservableMap;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
@@ -740,11 +741,40 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * @param deletionList the list of {@link EObject EObjects} to delete
 	 * @param mainSetting the containment reference setting
 	 */
-	protected void deleteRows(List<EObject> deletionList, Setting mainSetting) {
-		final EObject modelElement = mainSetting.getEObject();
+	@SuppressWarnings("restriction")
+	protected void deleteRows(List<EObject> deletionList, final Setting mainSetting) {
+
 		final EditingDomain editingDomain = getEditingDomain(mainSetting);
-		editingDomain.getCommandStack().execute(
-			RemoveCommand.create(editingDomain, modelElement, mainSetting.getEStructuralFeature(), deletionList));
+
+		/* assured by #isApplicable */
+		final EReference reference = EReference.class.cast(mainSetting.getEStructuralFeature());
+		final List<Object> toDelete = new ArrayList<Object>(deletionList);
+		if (reference.isContainment()) {
+			org.eclipse.emf.ecp.internal.edit.DeleteService deleteService = getViewModelContext()
+				.getService(org.eclipse.emf.ecp.internal.edit.DeleteService.class);
+			if (deleteService == null) {
+				/*
+				 * #getService(Class<?>) will report to the reportservice if it could not be found
+				 * Use Default
+				 */
+				deleteService = new org.eclipse.emf.ecp.internal.edit.EMFDeleteServiceImpl();
+			}
+			deleteService.deleteElements(toDelete);
+		} else {
+			removeElements(editingDomain, mainSetting.getEObject(), reference, toDelete);
+		}
+	}
+
+	private void removeElements(EditingDomain editingDomain, Object source, EStructuralFeature feature,
+		Collection<Object> toRemove) {
+		final Command removeCommand = RemoveCommand.create(editingDomain, source, feature, toRemove);
+		if (removeCommand.canExecute()) {
+			if (editingDomain.getCommandStack() == null) {
+				removeCommand.execute();
+			} else {
+				editingDomain.getCommandStack().execute(removeCommand);
+			}
+		}
 	}
 
 	/**
