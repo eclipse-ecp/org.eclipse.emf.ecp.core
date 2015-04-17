@@ -29,6 +29,7 @@ import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
@@ -72,6 +73,7 @@ public abstract class AbstractSWTTabRenderer<VELEMENT extends VElement> extends 
 		final EList<VAbstractCategorization> categorizations = getCategorizations();
 		for (final VAbstractCategorization categorization : categorizations) {
 			final CTabItem item = new CTabItem(folder, SWT.NULL);
+			final ScrolledComposite scrolledComposite = new ScrolledComposite(folder, SWT.V_SCROLL | SWT.H_SCROLL);
 
 			final IItemLabelProvider itemLabelProvider = (IItemLabelProvider) composedAdapterFactory.adapt(
 				categorization, IItemLabelProvider.class);
@@ -89,10 +91,15 @@ public abstract class AbstractSWTTabRenderer<VELEMENT extends VElement> extends 
 			final SWTGridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE
 				.createEmptyGridDescription());
 			for (final SWTGridCell gridCell : gridDescription.getGrid()) {
-				final Control render = renderer.render(gridCell, folder);
+				final Control render = renderer.render(gridCell, scrolledComposite);
 				GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true)
 					.applyTo(render);
-				item.setControl(render);
+				scrolledComposite.setExpandHorizontal(true);
+				scrolledComposite.setExpandVertical(true);
+				scrolledComposite.setContent(render);
+				scrolledComposite.setMinSize(render.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+
+				item.setControl(scrolledComposite);
 			}
 
 		}
