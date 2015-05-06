@@ -1043,6 +1043,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				cell.getControl().setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_edit_cellEditor_string"); //$NON-NLS-1$
 			}
 
+			cell.setForeground(getTableViewer().getTable().getForeground());
 			cell.setBackground(getBackground(element));
 		}
 
