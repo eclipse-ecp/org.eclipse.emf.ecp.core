@@ -54,6 +54,5 @@
 <unit id="org.eclipse.emf.emfstore.server.feature.feature.group" version="1.4.1.v20150218-0800"/>
 <repository location="http://download.eclipse.org/emfstore/releases_14"/>
 </location>
-</location>
 </locations>
 </target>
