@@ -11,7 +11,10 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.mappingdmr.tooling;
 
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.core.databinding.observable.IObserving;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.model.common.ECPRendererTester;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReference;
@@ -19,6 +22,8 @@ import org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingdmrPackage;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 
 /**
  * A Tester for the FeaturePathControl which is added as a child of a {@link VMappingDomainModelReference}.
@@ -37,18 +42,25 @@ public class FeaturePathDMRSubMappedEClassReferenceTester implements
 		}
 
 		final VControl control = (VControl) vElement;
-		final Setting setting = control.getDomainModelReference().getIterator()
-			.next();
-		if (VMappingDomainModelReference.class.isInstance(setting.getEObject()
-			.eContainer())
+		IObservableValue observableValue;
+		try {
+			observableValue = Activator.getDefault().getEMFFormsDatabinding()
+				.getObservableValue(control.getDomainModelReference(), viewModelContext.getDomainModel());
+		} catch (final DatabindingFailedException ex) {
+			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+			return NOT_APPLICABLE;
+		}
+		final EStructuralFeature feature = (EStructuralFeature) observableValue.getValueType();
+		final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
+		observableValue.dispose();
+
+		if (VMappingDomainModelReference.class.isInstance(eObject.eContainer())
 			&& VViewPackage.eINSTANCE
-				.getFeaturePathDomainModelReference_DomainModelEFeature() == setting
-				.getEStructuralFeature()) {
+				.getFeaturePathDomainModelReference_DomainModelEFeature() == feature) {
 			return 6;
 		}
-		if (VMappingDomainModelReference.class.isInstance(setting.getEObject())
-			&& VMappingdmrPackage.eINSTANCE.getMappingDomainModelReference_DomainModelReference() == setting
-				.getEStructuralFeature()) {
+		if (VMappingDomainModelReference.class.isInstance(eObject)
+			&& VMappingdmrPackage.eINSTANCE.getMappingDomainModelReference_DomainModelReference() == feature) {
 			return 6;
 		}
 

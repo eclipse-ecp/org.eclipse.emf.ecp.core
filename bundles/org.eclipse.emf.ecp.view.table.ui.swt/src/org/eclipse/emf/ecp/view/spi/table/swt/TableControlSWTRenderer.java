@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -14,60 +14,78 @@ package org.eclipse.emf.ecp.view.spi.table.swt;
 
 import java.io.File;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import javax.inject.Inject;
+
 import org.eclipse.core.databinding.Binding;
+import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.map.IObservableMap;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.util.Diagnostic;
-import org.eclipse.emf.databinding.EObjectObservableMap;
-import org.eclipse.emf.databinding.edit.EMFEditObservables;
+import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecp.edit.internal.swt.controls.ControlMessages;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.ECPFocusCellDrawHighlighter;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.TableViewerColumnBuilder;
 import org.eclipse.emf.ecp.edit.internal.swt.util.CellEditorFactory;
+import org.eclipse.emf.ecp.edit.spi.DeleteService;
+import org.eclipse.emf.ecp.edit.spi.EMFDeleteServiceImpl;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor;
 import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
-import org.eclipse.emf.ecp.view.internal.table.swt.Activator;
 import org.eclipse.emf.ecp.view.internal.table.swt.CellReadOnlyTesterHelper;
+import org.eclipse.emf.ecp.view.internal.table.swt.MessageKeys;
 import org.eclipse.emf.ecp.view.internal.table.swt.TableConfigurationHelper;
-import org.eclipse.emf.ecp.view.model.common.spi.databinding.DatabindingProviderService;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.DiagnosticMessageExtractor;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.reporting.StatusReport;
 import org.eclipse.emf.ecp.view.spi.provider.ECPTooltipModifierHelper;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
+import org.eclipse.emf.ecp.view.template.style.background.model.VTBackgroundFactory;
+import org.eclipse.emf.ecp.view.template.style.background.model.VTBackgroundStyleProperty;
+import org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontPropertiesFactory;
+import org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontPropertiesStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableValidationFactory;
 import org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableValidationStyleProperty;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
+import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
+import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
+import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ObservableMapCellLabelProvider;
@@ -80,6 +98,7 @@ import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.CellLabelProvider;
+import org.eclipse.jface.viewers.ColumnPixelData;
 import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.jface.viewers.ColumnViewerEditor;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
@@ -113,8 +132,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
-import org.osgi.framework.InvalidSyntaxException;
-import org.osgi.framework.ServiceReference;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * SWT Renderer for Table Control.
@@ -129,31 +147,48 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	private static final String ICON_ADD = "icons/add.png"; //$NON-NLS-1$
 	private static final String ICON_DELETE = "icons/delete.png"; //$NON-NLS-1$
 
+	private static final String RESIZABLE = "resizable"; //$NON-NLS-1$
+	private static final String WEIGHT = "weight"; //$NON-NLS-1$
+	private static final String MIN_WIDTH = "min_width"; //$NON-NLS-1$
+	private static final String WIDTH = "width"; //$NON-NLS-1$
+
 	private TableViewer tableViewer;
 
 	private Label validationIcon;
 	private Button addButton;
 	private Button removeButton;
-
-	private boolean debugMode;
+	private final ImageRegistryService imageRegistryService;
+	private final EMFDataBindingContext viewModelDBC;
+	private final EMFFormsEditSupport emfFormsEditSupport;
 
 	/**
 	 * Default constructor.
+	 *
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
+	 * @param emfFormsLabelProvider The {@link EMFFormsLabelProvider}
+	 * @param reportService The {@link ReportService}
+	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
+	 * @param imageRegistryService The {@link ImageRegistryService}
+	 * @param emfFormsEditSupport The {@link EMFFormsEditSupport}
+	 * @since 1.6
 	 */
-	public TableControlSWTRenderer() {
-		final String[] commandLineArgs = Platform.getCommandLineArgs();
-		for (int i = 0; i < commandLineArgs.length; i++) {
-			final String arg = commandLineArgs[i];
-			if ("-debugEMFForms".equalsIgnoreCase(arg)) { //$NON-NLS-1$
-				debugMode = true;
-			}
-		}
+	@Inject
+	public TableControlSWTRenderer(VTableControl vElement, ViewModelContext viewContext, ReportService reportService,
+		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
+		VTViewTemplateProvider vtViewTemplateProvider, ImageRegistryService imageRegistryService,
+		EMFFormsEditSupport emfFormsEditSupport) {
+		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
+		this.imageRegistryService = imageRegistryService;
+		this.emfFormsEditSupport = emfFormsEditSupport;
+		viewModelDBC = new EMFDataBindingContext();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(SWTGridDescription)
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#getGridDescription(SWTGridDescription)
 	 */
 	@Override
 	public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
@@ -164,32 +199,32 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	}
 
 	/**
-	 * Returns whether debug is active or inactive.
-	 *
-	 * @return <code>true</code> if debug mode is enabled, <code>false</code> otherwise
-	 * @since 1.5
-	 */
-	protected boolean isDebug() {
-		return debugMode;
-	}
-
-	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(int, org.eclipse.swt.widgets.Composite,
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#renderControl(int, org.eclipse.swt.widgets.Composite,
 	 *      org.eclipse.emf.ecp.view.spi.model.VElement, org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	@Override
 	protected Control renderControl(SWTGridCell gridCell, final Composite parent) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
-		final Iterator<Setting> settings = getVElement().getDomainModelReference().getIterator();
-		if (!settings.hasNext()) {
+		final VTableDomainModelReference tableDomainModelReference = (VTableDomainModelReference) getVElement()
+			.getDomainModelReference();
+		final VDomainModelReference dmrToCheck = tableDomainModelReference.getDomainModelReference() == null
+			? tableDomainModelReference
+			: tableDomainModelReference.getDomainModelReference();
+		IObservableValue observableValue;
+		try {
+			observableValue = getEMFFormsDatabinding()
+				.getObservableValue(dmrToCheck, getViewModelContext().getDomainModel());
+		} catch (final DatabindingFailedException ex) {
+			getReportService().report(new RenderingFailedReport(ex));
 			return null;
 		}
+		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+		final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
+		observableValue.dispose();
 
-		final Setting mainSetting = settings.next();
-
-		final EClass clazz = ((EReference) mainSetting.getEStructuralFeature()).getEReferenceType();
+		final EClass clazz = ((EReference) structuralFeature).getEReferenceType();
 
 		final Composite composite = new Composite(parent, SWT.NONE);
 		composite.setLayout(new GridLayout(1, false));
@@ -206,12 +241,23 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 		final Label label = new Label(titleComposite, SWT.NONE);
 		label.setBackground(parent.getBackground());
-		final IItemPropertyDescriptor propDescriptor = getItemPropertyDescriptor(mainSetting);
-		String labelText = ""; //$NON-NLS-1$
-		if (propDescriptor != null) {
-			labelText = propDescriptor.getDisplayName(null);
+
+		final EMFFormsLabelProvider labelService = getEMFFormsLabelProvider();
+		try {
+			final IObservableValue labelText = labelService.getDisplayName(dmrToCheck,
+				getViewModelContext().getDomainModel());
+
+			viewModelDBC.bindValue(SWTObservables.observeText(label), labelText);
+
+			final IObservableValue labelTooltipText = labelService.getDescription(dmrToCheck, getViewModelContext()
+				.getDomainModel());
+			viewModelDBC.bindValue(SWTObservables.observeTooltipText(label), labelTooltipText);
+		} catch (final NoLabelFoundException e) {
+			// FIXME Expectation?
+			getReportService().report(new RenderingFailedReport(e));
+			label.setText(e.getMessage());
+			label.setToolTipText(e.toString());
 		}
-		label.setText(labelText);
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false).applyTo(label);
 
 		// VALIDATION
@@ -229,15 +275,22 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		int numButtons = addButtonsToButtonBar(buttonComposite);
 		if (!getVElement().isAddRemoveDisabled()) {
 			// addButtons
-			addButton = createAddRowButton(clazz, buttonComposite, mainSetting);
-			removeButton = createRemoveRowButton(clazz, buttonComposite, mainSetting);
+			addButton = createAddRowButton(clazz, buttonComposite, eObject, structuralFeature);
+			removeButton = createRemoveRowButton(clazz, buttonComposite, eObject, structuralFeature);
 			numButtons = numButtons + 2;
 		}
 
 		GridLayoutFactory.fillDefaults().numColumns(numButtons).equalWidth(false).applyTo(buttonComposite);
 		final Composite controlComposite = createControlComposite(composite);
-		setTableViewer(createTableViewer(controlComposite, clazz,
-			mainSetting));
+		try {
+			setTableViewer(createTableViewer(controlComposite, clazz));
+		} catch (final DatabindingFailedException ex) {
+			getReportService().report(new RenderingFailedReport(ex));
+			final Label errorLabel = new Label(parent, SWT.NONE);
+			errorLabel.setText(ex.getMessage());
+			return errorLabel;
+
+		}
 
 		if (addButton != null && removeButton != null) {
 			final Button finalAddButton = addButton;
@@ -250,14 +303,14 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				 */
 				@Override
 				public void widgetSelected(SelectionEvent e) {
-					addRow(clazz, mainSetting);
+					addRow(clazz, eObject, structuralFeature);
 
-					final List<?> containments = (List<?>) mainSetting.get(true);
-					if (mainSetting.getEStructuralFeature().getUpperBound() != -1
-						&& containments.size() >= mainSetting.getEStructuralFeature().getUpperBound()) {
+					final List<?> containments = (List<?>) eObject.eGet(structuralFeature, true);
+					if (structuralFeature.getUpperBound() != -1
+						&& containments.size() >= structuralFeature.getUpperBound()) {
 						finalAddButton.setEnabled(false);
 					}
-					if (containments.size() > mainSetting.getEStructuralFeature().getLowerBound()) {
+					if (containments.size() > structuralFeature.getLowerBound()) {
 						finalRemoveButton.setEnabled(true);
 					}
 				}
@@ -282,7 +335,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 						deletionList.add((EObject) iterator.next());
 					}
 
-					deleteRowUserConfirmDialog(deletionList, mainSetting, finalAddButton, finalRemoveButton);
+					deleteRowUserConfirmDialog(deletionList, eObject, structuralFeature, finalAddButton,
+						finalRemoveButton);
 
 				}
 			});
@@ -345,14 +399,25 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		this.tableViewer = tableViewer;
 	}
 
-	private TableViewer createTableViewer(Composite composite, EClass clazz,
-		Setting mainSetting) {
+	private TableViewer createTableViewer(Composite composite, EClass clazz) throws DatabindingFailedException {
 
 		final TableViewer tableViewer = new TableViewer(composite, SWT.MULTI | SWT.V_SCROLL | SWT.FULL_SELECTION
 			| SWT.BORDER);
 		tableViewer.getTable().setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_table"); //$NON-NLS-1$
 		tableViewer.getTable().setHeaderVisible(true);
 		tableViewer.getTable().setLinesVisible(true);
+
+		/* Set background color */
+		final VTBackgroundStyleProperty backgroundStyleProperty = getBackgroundStyleProperty();
+		if (backgroundStyleProperty.getColor() != null) {
+			tableViewer.getTable().setBackground(getSWTColor(backgroundStyleProperty.getColor()));
+		}
+
+		/* Set foreground color */
+		final VTFontPropertiesStyleProperty fontPropertiesStyleProperty = getFontPropertiesStyleProperty();
+		if (fontPropertiesStyleProperty.getColorHEX() != null) {
+			tableViewer.getTable().setForeground(getSWTColor(fontPropertiesStyleProperty.getColorHEX()));
+		}
 
 		final TableViewerFocusCellManager focusCellManager = new TableViewerFocusCellManager(tableViewer,
 			new ECPFocusCellDrawHighlighter(tableViewer));
@@ -395,35 +460,49 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			if (dmr == null) {
 				continue;
 			}
-			final Iterator<EStructuralFeature> eStructuralFeatureIterator = dmr.getEStructuralFeatureIterator();
-			if (eStructuralFeatureIterator == null || !eStructuralFeatureIterator.hasNext()) {
+
+			IValueProperty valueProperty;
+			try {
+				valueProperty = getEMFFormsDatabinding().getValueProperty(dmr, getViewModelContext().getDomainModel());
+			} catch (final DatabindingFailedException ex) {
+				getReportService().report(new RenderingFailedReport(ex));
 				continue;
 			}
-			final EStructuralFeature eStructuralFeature = eStructuralFeatureIterator.next();
-			String text = eStructuralFeature.getName();
-			String tooltipText = eStructuralFeature.getName();
-			final IItemPropertyDescriptor itemPropertyDescriptor = getItemPropertyDescriptor(getCellSetting(dmr,
-				tempInstance));
-			if (itemPropertyDescriptor != null) {
-				text = itemPropertyDescriptor.getDisplayName(null);
-				tooltipText = itemPropertyDescriptor.getDescription(null);
-			}
+			final EStructuralFeature eStructuralFeature = (EStructuralFeature) valueProperty.getValueType();
+
+			final EMFFormsLabelProvider labelService = getEMFFormsLabelProvider();
 
 			final CellEditor cellEditor = createCellEditor(tempInstance, eStructuralFeature, tableViewer.getTable());
-			final TableViewerColumn column = TableViewerColumnBuilder
-				.create()
-				.setText(text)
-				.setToolTipText(tooltipText)
-				.setResizable(true)
-				.setMoveable(false)
-				.setStyle(SWT.NONE)
-				.setData("width", //$NON-NLS-1$
-					ECPCellEditor.class.isInstance(cellEditor) ? ECPCellEditor.class.cast(cellEditor)
-						.getColumnWidthWeight() : 100)
-				.build(tableViewer);
 
-			column.setLabelProvider(new ECPCellLabelProvider(eStructuralFeature, cellEditor, getObservableMap(dmr,
-				eStructuralFeature, cp), getVElement(), dmr));
+			final TableViewerColumnBuilder columnBuilder = TableViewerColumnBuilder
+				.create()
+				.setData(RESIZABLE, true)
+				.setMoveable(false)
+				.setStyle(SWT.NONE);
+			if (ECPCellEditor.class.isInstance(cellEditor)) {
+				columnBuilder.setData(WEIGHT, ECPCellEditor.class.cast(cellEditor).getColumnWidthWeight());
+				columnBuilder.setData(MIN_WIDTH, ECPCellEditor.class.cast(cellEditor).getMinWidth());
+			} else {
+				columnBuilder.setData(WEIGHT, 100);
+				columnBuilder.setData(MIN_WIDTH, 0);
+			}
+
+			final TableViewerColumn column = columnBuilder.build(tableViewer);
+
+			try {
+				final IObservableValue text = labelService.getDisplayName(dmr);
+				viewModelDBC.bindValue(SWTObservables.observeText(column.getColumn()), text);
+				final IObservableValue tooltipText = labelService.getDescription(dmr);
+				viewModelDBC.bindValue(SWTObservables.observeTooltipText(column.getColumn()), tooltipText);
+			} catch (final NoLabelFoundException ex) {
+				getReportService().report(new RenderingFailedReport(ex));
+				// FIXME Expectation?
+				column.getColumn().setText(ex.getMessage());
+				column.getColumn().setToolTipText(ex.toString());
+			}
+			final IObservableMap observableMap = valueProperty.observeDetail(cp.getKnownElements());
+			column.setLabelProvider(new ECPCellLabelProvider(eStructuralFeature, cellEditor, observableMap,
+				getVElement(), dmr, tableViewer.getTable()));
 			column.getColumn().addSelectionListener(
 				getSelectionAdapter(tableViewer, comparator, column.getColumn(), columnNumber));
 
@@ -433,14 +512,16 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 					// eStructuralFeature,
 					// itemPropertyDescriptor
 					// null,
-					getVElement(), dmr);
+					getVElement(), dmr, valueProperty, tempInstance);
 				column.setEditingSupport(observableSupport);
 			}
 			columnNumber++;
 		}
 		tableViewer.setContentProvider(cp);
-		final IObservableList list = EMFEditObservables.observeList(getEditingDomain(mainSetting),
-			mainSetting.getEObject(), mainSetting.getEStructuralFeature());
+
+		final IObservableList list = getEMFFormsDatabinding()
+			.getObservableList(tableDomainModelReference.getDomainModelReference() == null ? tableDomainModelReference
+				: tableDomainModelReference.getDomainModelReference(), getViewModelContext().getDomainModel());
 		tableViewer.setInput(list);
 
 		// IMPORTANT:
@@ -450,9 +531,19 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		final TableColumnLayout layout = new TableColumnLayout();
 		composite.setLayout(layout);
 		for (int i = 0; i < tableViewer.getTable().getColumns().length; i++) {
-			final Integer storedValue = (Integer) tableViewer.getTable().getColumns()[i].getData("width"); //$NON-NLS-1$
-			layout.setColumnData(tableViewer.getTable().getColumns()[i], new ColumnWeightData(storedValue == null ? 50
-				: storedValue));
+			final TableColumn tableColumn = tableViewer.getTable().getColumns()[i];
+
+			final boolean storedIsResizable = (Boolean) tableColumn.getData(RESIZABLE);
+
+			final Integer storedWidth = (Integer) tableColumn.getData(WIDTH);
+			if (storedWidth != null) {
+				layout.setColumnData(tableColumn, new ColumnPixelData(storedWidth, storedIsResizable));
+				continue;
+			}
+
+			final Integer storedWeight = (Integer) tableColumn.getData(WEIGHT);
+			final Integer storedMinWidth = (Integer) tableColumn.getData(MIN_WIDTH);
+			layout.setColumnData(tableColumn, new ColumnWeightData(storedWeight, storedMinWidth, storedIsResizable));
 		}
 
 		tableViewer.addSelectionChangedListener(new ISelectionChangedListener() {
@@ -475,57 +566,14 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 */
 	protected void viewerSelectionChanged(SelectionChangedEvent event) {
 		if (event.getSelection().isEmpty()) {
-			if (removeButton != null) {
-				removeButton.setEnabled(false);
+			if (getRemoveButton() != null) {
+				getRemoveButton().setEnabled(false);
+			}
+		} else {
+			if (getRemoveButton() != null) {
+				getRemoveButton().setEnabled(true);
 			}
 		}
-		else {
-			if (removeButton != null) {
-				removeButton.setEnabled(true);
-			}
-		}
-	}
-
-	private IObservableMap getObservableMap(VDomainModelReference dmr, EStructuralFeature eStructuralFeature,
-		ObservableListContentProvider cp) {
-		if (eStructuralFeature
-			.isMany()) {
-			return new EObjectObservableMap(cp.getKnownElements(), eStructuralFeature);
-		}
-
-		return getValueProperty(dmr).observeDetail(
-			cp.getKnownElements());
-	}
-
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private IValueProperty getValueProperty(VDomainModelReference dmr) {
-		ServiceReference<DatabindingProviderService> databindingProviderServiceReference = null;
-
-		try {
-			final Collection<ServiceReference<DatabindingProviderService>> serviceReferences = Activator.getInstance()
-				.getBundle()
-				.getBundleContext()
-				.getServiceReferences(DatabindingProviderService.class,
-					String.format("(domainModelReference=%s)", dmr.getClass().getName())); //$NON-NLS-1$
-			final Iterator<ServiceReference<DatabindingProviderService>> iterator = serviceReferences.iterator();
-			if (iterator.hasNext()) {
-				databindingProviderServiceReference = iterator.next();
-			}
-			if (databindingProviderServiceReference == null) {
-				throw new IllegalStateException("No DatabindingProviderService available."); //$NON-NLS-1$
-			}
-		} catch (final InvalidSyntaxException e) {
-			throw new IllegalStateException(e);
-		}
-
-		final DatabindingProviderService<VDomainModelReference> databindingProviderService = Activator.getInstance()
-			.getBundle().getBundleContext().getService(databindingProviderServiceReference);
-		final IValueProperty result = databindingProviderService.getProperty(dmr, IValueProperty.class);
-		Activator.getInstance()
-			.getBundle()
-			.getBundleContext().ungetService(databindingProviderServiceReference);
-
-		return result;
 	}
 
 	private SelectionAdapter getSelectionAdapter(final TableViewer tableViewer,
@@ -552,13 +600,14 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		final TableViewerColumn column = TableViewerColumnBuilder.create()
 			.setMoveable(false)
 			.setText(columnName)
-			.setWidth(columnWidth)
+			.setData(WIDTH, columnWidth)
+			.setData(RESIZABLE, true)
 			.build(tableViewer);
 
 		if (imagePath != null && !imagePath.isEmpty()) {
 			Image image = null;
 			try {
-				image = Activator.getImage(new File(imagePath).toURI().toURL());
+				image = getImage(new File(imagePath).toURI().toURL());
 			} catch (final MalformedURLException ex) {
 				ex.printStackTrace();
 			}
@@ -569,19 +618,34 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		column.setLabelProvider(new ValidationStatusCellLabelProvider(getVElement()));
 	}
 
-	private VTTableValidationStyleProperty getTableValidationStyleProperty() {
-		VTTableValidationStyleProperty tableValidationStyleProperties;
-		final Set<VTStyleProperty> styleProperties = Activator.getInstance().getVTViewTemplateProvider()
-			.getStyleProperties(getVElement(), getViewModelContext());
-		for (final VTStyleProperty styleProperty : styleProperties) {
-			if (VTTableValidationStyleProperty.class.isInstance(styleProperty)) {
-				tableValidationStyleProperties = VTTableValidationStyleProperty.class
-					.cast(styleProperty);
-				return tableValidationStyleProperties;
-			}
-		}
+	/**
+	 * Retrieve images from the {@link ImageRegistryService} using an {@link URL}.
+	 *
+	 * @param url The {@link URL} pointing to the image
+	 * @return The retrieved Image
+	 * @since 1.6
+	 */
+	protected Image getImage(URL url) {
+		return imageRegistryService.getImage(url);
+	}
 
-		tableValidationStyleProperties = getDefaultTableValidationStyleProperty();
+	/**
+	 * Retrieve images from the {@link ImageRegistryService} using a bundle relative path.
+	 *
+	 * @param path The bundle relative path pointing to the image
+	 * @return The retrieved Image
+	 * @since 1.6
+	 */
+	protected Image getImage(String path) {
+		return imageRegistryService.getImage(FrameworkUtil.getBundle(getClass()), path);
+	}
+
+	private VTTableValidationStyleProperty getTableValidationStyleProperty() {
+		VTTableValidationStyleProperty tableValidationStyleProperties = getStyleProperty(
+			VTTableValidationStyleProperty.class);
+		if (tableValidationStyleProperties == null) {
+			tableValidationStyleProperties = getDefaultTableValidationStyleProperty();
+		}
 		return tableValidationStyleProperties;
 	}
 
@@ -589,9 +653,64 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		final VTTableValidationStyleProperty tableValidationProp = VTTableValidationFactory.eINSTANCE
 			.createTableValidationStyleProperty();
 		tableValidationProp.setColumnWidth(80);
-		tableValidationProp.setColumnName(ControlMessages.TableControl_ValidationStatusColumn);
+		tableValidationProp.setColumnName(LocalizationServiceHelper.getString(getClass(),
+			MessageKeys.TableControl_ValidationStatusColumn));
 		tableValidationProp.setImagePath(null);
 		return tableValidationProp;
+	}
+
+	private VTBackgroundStyleProperty getBackgroundStyleProperty() {
+		VTBackgroundStyleProperty styleProperty = getStyleProperty(VTBackgroundStyleProperty.class);
+		if (styleProperty == null) {
+			styleProperty = getDefaultBackgroundStyleProperty();
+		}
+		return styleProperty;
+	}
+
+	private VTBackgroundStyleProperty getDefaultBackgroundStyleProperty() {
+		return VTBackgroundFactory.eINSTANCE.createBackgroundStyleProperty();
+	}
+
+	private VTFontPropertiesStyleProperty getFontPropertiesStyleProperty() {
+		VTFontPropertiesStyleProperty styleProperty = getStyleProperty(VTFontPropertiesStyleProperty.class);
+		if (styleProperty == null) {
+			styleProperty = getDefaultFontPropertiesStyleProperty();
+		}
+		return styleProperty;
+	}
+
+	private VTFontPropertiesStyleProperty getDefaultFontPropertiesStyleProperty() {
+		final VTFontPropertiesStyleProperty property = VTFontPropertiesFactory.eINSTANCE
+			.createFontPropertiesStyleProperty();
+		property.setColorHEX("000000"); //$NON-NLS-1$
+		return property;
+	}
+
+	/**
+	 * Returns a {@link VTStyleProperty} of the given class or <code>null</code> if none was found.
+	 *
+	 * @param stylePropertyClass the style property class
+	 * @return the property or <code>null</code>
+	 */
+	private <SP extends VTStyleProperty> SP getStyleProperty(Class<SP> stylePropertyClass) {
+		final Set<VTStyleProperty> styleProperties = getVTViewTemplateProvider()
+			.getStyleProperties(getVElement(), getViewModelContext());
+		for (final VTStyleProperty styleProperty : styleProperties) {
+			if (stylePropertyClass.isInstance(styleProperty)) {
+				return stylePropertyClass.cast(styleProperty);
+			}
+		}
+		return null;
+	}
+
+	private Color getSWTColor(String colorHex) {
+		final String redString = colorHex.substring(0, 2);
+		final String greenString = colorHex.substring(2, 4);
+		final String blueString = colorHex.substring(4, 6);
+		final int red = Integer.parseInt(redString, 16);
+		final int green = Integer.parseInt(greenString, 16);
+		final int blue = Integer.parseInt(blueString, 16);
+		return new Color(Display.getDefault(), red, green, blue);
 	}
 
 	private CellEditor createCellEditor(final EObject tempInstance, final EStructuralFeature feature, Table table) {
@@ -603,32 +722,34 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		return InternalEObject.class.cast(clazz.getEPackage().getEFactoryInstance().create(clazz));
 	}
 
-	private Button createRemoveRowButton(EClass clazz, final Composite buttonComposite, Setting mainSetting) {
+	private Button createRemoveRowButton(EClass clazz, final Composite buttonComposite, final EObject eObject,
+		final EStructuralFeature structuralFeature) {
 		removeButton = new Button(buttonComposite, SWT.None);
-		final Image image = Activator.getImage(ICON_DELETE);
+		final Image image = getImage(ICON_DELETE);
 		removeButton.setImage(image);
 		removeButton.setEnabled(false);
 		final String instanceName = clazz.getInstanceClass() == null ? "" : clazz.getInstanceClass().getSimpleName(); //$NON-NLS-1$
-		removeButton.setToolTipText(String.format(ControlMessages.TableControl_RemoveSelected
-			, instanceName));
+		removeButton.setToolTipText(String.format(
+			LocalizationServiceHelper.getString(getClass(), MessageKeys.TableControl_RemoveSelected), instanceName));
 
-		final List<?> containments = (List<?>) mainSetting.get(true);
-		if (containments.size() <= mainSetting.getEStructuralFeature().getLowerBound()) {
+		final List<?> containments = (List<?>) eObject.eGet(structuralFeature, true);
+		if (containments.size() <= structuralFeature.getLowerBound()) {
 			removeButton.setEnabled(false);
 		}
 		return removeButton;
 	}
 
-	private Button createAddRowButton(final EClass clazz, final Composite buttonComposite, final Setting mainSetting) {
+	private Button createAddRowButton(final EClass clazz, final Composite buttonComposite, final EObject eObject,
+		final EStructuralFeature structuralFeature) {
 		addButton = new Button(buttonComposite, SWT.None);
-		final Image image = Activator.getImage(ICON_ADD);
+		final Image image = getImage(ICON_ADD);
 		addButton.setImage(image);
 		final String instanceName = clazz.getInstanceClass() == null ? "" : clazz.getInstanceClass().getSimpleName(); //$NON-NLS-1$
-		addButton.setToolTipText(String.format(ControlMessages.TableControl_AddInstanceOf, instanceName));
+		addButton.setToolTipText(String.format(
+			LocalizationServiceHelper.getString(getClass(), MessageKeys.TableControl_AddInstanceOf), instanceName));
 
-		final List<?> containments = (List<?>) mainSetting.get(true);
-		if (mainSetting.getEStructuralFeature().getUpperBound() != -1
-			&& containments.size() >= mainSetting.getEStructuralFeature().getUpperBound()) {
+		final List<?> containments = (List<?>) eObject.eGet(structuralFeature, true);
+		if (structuralFeature.getUpperBound() != -1 && containments.size() >= structuralFeature.getUpperBound()) {
 			addButton.setEnabled(false);
 		}
 		return addButton;
@@ -638,17 +759,21 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * This method shows a user confirmation dialog when the user attempts to delete a row in the table.
 	 *
 	 * @param deletionList the list of selected EObjects to delete
-	 * @param mainSetting the containment reference setting
+	 * @param eObject The containment reference {@link EObject}
+	 * @param structuralFeature The containment reference {@link EStructuralFeature}
 	 * @param addButton the add button
 	 * @param removeButton the remove button
+	 * @since 1.6
 	 */
-	protected void deleteRowUserConfirmDialog(final List<EObject> deletionList, final Setting mainSetting,
-		final Button addButton, final Button removeButton) {
+	protected void deleteRowUserConfirmDialog(final List<EObject> deletionList, final EObject eObject,
+		final EStructuralFeature structuralFeature, final Button addButton, final Button removeButton) {
 		final MessageDialog dialog = new MessageDialog(addButton.getShell(),
-			ControlMessages.TableControl_Delete, null,
-			ControlMessages.TableControl_DeleteAreYouSure, MessageDialog.CONFIRM, new String[] {
+			LocalizationServiceHelper.getString(getClass(), MessageKeys.TableControl_Delete), null,
+			LocalizationServiceHelper.getString(getClass(), MessageKeys.TableControl_DeleteAreYouSure),
+			MessageDialog.CONFIRM, new String[] {
 				JFaceResources.getString(IDialogLabelKeys.YES_LABEL_KEY),
-				JFaceResources.getString(IDialogLabelKeys.NO_LABEL_KEY) }, 0);
+				JFaceResources.getString(IDialogLabelKeys.NO_LABEL_KEY) },
+			0);
 
 		new ECPDialogExecutor(dialog) {
 
@@ -658,13 +783,13 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 					return;
 				}
 
-				deleteRows(deletionList, mainSetting);
+				deleteRows(deletionList, eObject, structuralFeature);
 
-				final List<?> containments = (List<?>) mainSetting.get(true);
-				if (containments.size() < mainSetting.getEStructuralFeature().getUpperBound()) {
+				final List<?> containments = (List<?>) eObject.eGet(structuralFeature, true);
+				if (containments.size() < structuralFeature.getUpperBound()) {
 					addButton.setEnabled(true);
 				}
-				if (containments.size() <= mainSetting.getEStructuralFeature().getLowerBound()) {
+				if (containments.size() <= structuralFeature.getLowerBound()) {
 					removeButton.setEnabled(false);
 				}
 			}
@@ -676,13 +801,43 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * elements.
 	 *
 	 * @param deletionList the list of {@link EObject EObjects} to delete
-	 * @param mainSetting the containment reference setting
+	 * @param eObject The containment reference {@link EObject}
+	 * @param structuralFeature The containment reference {@link EStructuralFeature}
+	 * @since 1.6
 	 */
-	protected void deleteRows(List<EObject> deletionList, Setting mainSetting) {
-		final EObject modelElement = mainSetting.getEObject();
-		final EditingDomain editingDomain = getEditingDomain(mainSetting);
-		editingDomain.getCommandStack().execute(
-			RemoveCommand.create(editingDomain, modelElement, mainSetting.getEStructuralFeature(), deletionList));
+	protected void deleteRows(List<EObject> deletionList, final EObject eObject,
+		final EStructuralFeature structuralFeature) {
+
+		final EditingDomain editingDomain = getEditingDomain(eObject);
+
+		/* assured by #isApplicable */
+		final EReference reference = EReference.class.cast(structuralFeature);
+		final List<Object> toDelete = new ArrayList<Object>(deletionList);
+		if (reference.isContainment()) {
+			DeleteService deleteService = getViewModelContext().getService(DeleteService.class);
+			if (deleteService == null) {
+				/*
+				 * #getService(Class<?>) will report to the reportservice if it could not be found
+				 * Use Default
+				 */
+				deleteService = new EMFDeleteServiceImpl();
+			}
+			deleteService.deleteElements(toDelete);
+		} else {
+			removeElements(editingDomain, eObject, reference, toDelete);
+		}
+	}
+
+	private void removeElements(EditingDomain editingDomain, Object source, EStructuralFeature feature,
+		Collection<Object> toRemove) {
+		final Command removeCommand = RemoveCommand.create(editingDomain, source, feature, toRemove);
+		if (removeCommand.canExecute()) {
+			if (editingDomain.getCommandStack() == null) {
+				removeCommand.execute();
+			} else {
+				editingDomain.getCommandStack().execute(removeCommand);
+			}
+		}
 	}
 
 	/**
@@ -691,25 +846,22 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * You can override this method but you have to call super nonetheless.
 	 *
 	 * @param clazz the {@link EClass} defining the EObject to create
-	 * @param mainSetting the containment reference setting
+	 * @param eObject The containment reference {@link EObject}
+	 * @param structuralFeature The containment reference {@link EStructuralFeature}
+	 * @since 1.6
 	 */
-	protected void addRow(EClass clazz, Setting mainSetting) {
+	protected void addRow(EClass clazz, EObject eObject, EStructuralFeature structuralFeature) {
 		if (clazz.isAbstract() || clazz.isInterface()) {
-			Activator
-				.getInstance()
-				.getLog()
-				.log(
-					new Status(
-						IStatus.WARNING,
-						"org.eclipse.emf.ecp.view.table.ui.swt", "The class " + clazz.getName() + " is abstract or an interface.")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			getReportService().report(new StatusReport(
+				new Status(IStatus.WARNING, "org.eclipse.emf.ecp.view.table.ui.swt", //$NON-NLS-1$
+					String.format("The class %1$s is abstract or an interface.", clazz.getName())))); //$NON-NLS-1$
 		}
-		final EObject modelElement = mainSetting.getEObject();
 		final EObject instance = clazz.getEPackage().getEFactoryInstance().create(clazz);
-		final EditingDomain editingDomain = getEditingDomain(mainSetting);
+		final EditingDomain editingDomain = getEditingDomain(eObject);
 		if (editingDomain == null) {
 		}
 		editingDomain.getCommandStack().execute(
-			AddCommand.create(editingDomain, modelElement, mainSetting.getEStructuralFeature(), instance));
+			AddCommand.create(editingDomain, eObject, structuralFeature, instance));
 	}
 
 	@Override
@@ -730,12 +882,31 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				if (getVElement().getDiagnostic() == null) {
 					return;
 				}
-				final Setting mainSetting = getVElement().getDomainModelReference().getIterator().next();
+
+				final VTableDomainModelReference tableDMR = (VTableDomainModelReference) getVElement()
+					.getDomainModelReference();
+				IObservableValue observableValue;
+				try {
+					if (tableDMR.getDomainModelReference() != null) {
+						observableValue = getEMFFormsDatabinding().getObservableValue(
+							tableDMR.getDomainModelReference(), getViewModelContext().getDomainModel());
+					} else {
+						observableValue = getEMFFormsDatabinding().getObservableValue(tableDMR,
+							getViewModelContext().getDomainModel());
+					}
+				} catch (final DatabindingFailedException ex) {
+					getReportService().report(new DatabindingFailedReport(ex));
+					return;
+				}
+				final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+				final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
+				observableValue.dispose();
+
 				validationIcon.setImage(getValidationIcon(getVElement().getDiagnostic().getHighestSeverity()));
 
 				validationIcon.setToolTipText(ECPTooltipModifierHelper.modifyString(getVElement().getDiagnostic()
 					.getMessage(), null));
-				final Collection<?> collection = (Collection<?>) mainSetting.get(true);
+				final Collection<?> collection = (Collection<?>) eObject.eGet(structuralFeature, true);
 				if (!collection.isEmpty()) {
 					for (final Object object : collection) {
 						tableViewer.update(object, null);
@@ -747,43 +918,64 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	}
 
 	/**
+	 * Returns the add button created by the framework.
+	 *
+	 * @return the addButton
+	 * @since 1.6
+	 */
+	protected Button getAddButton() {
+		return addButton;
+	}
+
+	/**
+	 * Returns the remove button created by the framework.
+	 *
+	 * @return the removeButton
+	 * @since 1.6
+	 */
+	protected Button getRemoveButton() {
+		return removeButton;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#applyEnable()
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#applyEnable()
 	 */
 	@Override
 	protected void applyEnable() {
-		if (addButton != null) {
-			addButton.setVisible(getVElement().isEnabled() && !getVElement().isReadonly());
+		if (getAddButton() != null) {
+			getAddButton().setVisible(getVElement().isEnabled() && !getVElement().isReadonly());
 		}
-		if (removeButton != null) {
-			removeButton.setVisible(getVElement().isEnabled() && !getVElement().isReadonly());
+		if (getRemoveButton() != null) {
+			getRemoveButton().setVisible(getVElement().isEnabled() && !getVElement().isReadonly());
 		}
 	}
 
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#applyReadOnly()
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#applyReadOnly()
 	 */
 	@Override
 	protected void applyReadOnly() {
-		if (addButton != null) {
-			addButton.setVisible(getVElement().isEnabled() && !getVElement().isReadonly());
+		if (getAddButton() != null) {
+			getAddButton().setVisible(getVElement().isEnabled() && !getVElement().isReadonly());
 		}
-		if (removeButton != null) {
-			removeButton.setVisible(getVElement().isEnabled() && !getVElement().isReadonly());
+		if (getRemoveButton() != null) {
+			getRemoveButton().setVisible(getVElement().isEnabled() && !getVElement().isReadonly());
 		}
 	}
 
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#dispose()
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#dispose()
 	 */
 	@Override
 	protected void dispose() {
 		rendererGridDescription = null;
+		viewModelDBC.dispose();
 		super.dispose();
 	}
 
@@ -838,18 +1030,31 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			final EObject object1 = (EObject) e1;
 			final EObject object2 = (EObject) e2;
 
-			Object value1 = null;
-			Object value2 = null;
+			Object value1;
+			Object value2;
 
 			final VDomainModelReference dmr = ((VTableDomainModelReference) getVElement().getDomainModelReference())
 				.getColumnDomainModelReferences().get(propertyIndex);
-			boolean init = dmr.init(object1);
-			if (init && dmr.getIterator().hasNext()) {
-				value1 = dmr.getIterator().next().get(true);
+			final EMFFormsDatabinding emfFormsDatabinding = getEMFFormsDatabinding();
+
+			try {
+				final IObservableValue observableValue1 = emfFormsDatabinding.getObservableValue(dmr, object1);
+				final EStructuralFeature structuralFeature1 = (EStructuralFeature) observableValue1.getValueType();
+				final EObject observed1 = (EObject) ((IObserving) observableValue1).getObserved();
+				value1 = observed1.eGet(structuralFeature1, true);
+				observableValue1.dispose();
+			} catch (final DatabindingFailedException ex) {
+				value1 = null;
 			}
-			init = dmr.init(object2);
-			if (init && dmr.getIterator().hasNext()) {
-				value2 = dmr.getIterator().next().get(true);
+
+			try {
+				final IObservableValue observableValue2 = emfFormsDatabinding.getObservableValue(dmr, object2);
+				final EStructuralFeature structuralFeature2 = (EStructuralFeature) observableValue2.getValueType();
+				final EObject observed2 = (EObject) ((IObserving) observableValue2).getObserved();
+				value2 = observed2.eGet(structuralFeature2, true);
+				observableValue2.dispose();
+			} catch (final DatabindingFailedException ex) {
+				value2 = null;
 			}
 
 			if (value1 == null) {
@@ -880,6 +1085,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		private final CellEditor cellEditor;
 		private final VTableControl vTableControl;
 		private final VDomainModelReference dmr;
+		private final Table table;
 
 		/**
 		 * Constructor.
@@ -892,14 +1098,17 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		 *            an {@link IObservableMap} instance that is passed to the {@link ObservableMapCellLabelProvider}
 		 * @param vTableControl the {@link VTableControl}
 		 * @param dmr the {@link VDomainModelReference} for this cell
+		 * @param table the swt table
+		 * @since 1.6
 		 */
 		public ECPCellLabelProvider(EStructuralFeature feature, CellEditor cellEditor, IObservableMap attributeMap,
-			VTableControl vTableControl, VDomainModelReference dmr) {
+			VTableControl vTableControl, VDomainModelReference dmr, Table table) {
 			super(attributeMap);
 			this.vTableControl = vTableControl;
 			this.feature = feature;
 			this.cellEditor = cellEditor;
 			this.dmr = dmr;
+			this.table = table;
 		}
 
 		/**
@@ -910,15 +1119,18 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		@Override
 		public String getToolTipText(Object element) {
 			final EObject domainObject = (EObject) element;
-			final VDomainModelReference copy = EcoreUtil.copy(dmr);
-			copy.init(domainObject);
-			final Iterator<Setting> iterator = copy.getIterator();
-			Setting setting;
-			if (iterator.hasNext()) {
-				setting = iterator.next();
-			} else {
+			IObservableValue observableValue;
+			try {
+				observableValue = getEMFFormsDatabinding()
+					.getObservableValue(dmr, domainObject);
+			} catch (final DatabindingFailedException ex) {
+				getReportService().report(new DatabindingFailedReport(ex));
 				return null;
 			}
+			final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+			final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
+			final Setting setting = ((InternalEObject) eObject).eSetting(structuralFeature);
+			observableValue.dispose();
 
 			final VDiagnostic vDiagnostic = vTableControl.getDiagnostic();
 			if (vDiagnostic != null) {
@@ -928,7 +1140,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 					return ECPTooltipModifierHelper.modifyString(message, setting);
 				}
 			}
-			final Object value = setting.get(true);
+			final Object value = eObject.eGet(structuralFeature, true);
 			if (value == null) {
 				return null;
 			}
@@ -950,6 +1162,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				cell.getControl().setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_edit_cellEditor_string"); //$NON-NLS-1$
 			}
 
+			cell.setForeground(getForeground(element));
 			cell.setBackground(getBackground(element));
 		}
 
@@ -960,7 +1173,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		 */
 		@Override
 		public Color getForeground(Object element) {
-			return null;
+			return table.getForeground();
 		}
 
 		/**
@@ -992,17 +1205,24 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 		private final VTableControl tableControl;
 
+		private final IValueProperty valueProperty;
+
 		private final VDomainModelReference domainModelReference;
+
+		private final EObject dmrRootEObject;
 
 		/**
 		 * @param viewer
 		 */
 		public ECPTableEditingSupport(ColumnViewer viewer, CellEditor cellEditor,
-			VTableControl tableControl, VDomainModelReference domainModelReference) {
+			VTableControl tableControl, VDomainModelReference domainModelReference, IValueProperty valueProperty,
+			EObject dmrRootEObject) {
 			super(viewer);
 			this.cellEditor = cellEditor;
 			this.tableControl = tableControl;
+			this.valueProperty = valueProperty;
 			this.domainModelReference = domainModelReference;
+			this.dmrRootEObject = dmrRootEObject;
 		}
 
 		private EditingState editingState;
@@ -1020,13 +1240,13 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			boolean editable = tableControl.isEnabled()
 				&& !tableControl.isReadonly();
 
-			final Setting setting = getCellSetting(domainModelReference, element);
-			if (setting == null) {
-				return false;
-			}
-			editable &= getItemPropertyDescriptor(setting).canSetProperty(null);
-			editable &= !CellReadOnlyTesterHelper.getInstance().isReadOnly(getVElement(), setting
-				);
+			final IObservableValue observableValue = valueProperty.observe(element);
+			final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
+			final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+			final Setting setting = ((InternalEObject) eObject).eSetting(structuralFeature);
+
+			editable &= emfFormsEditSupport.canSetProperty(domainModelReference, (EObject) element);
+			editable &= !CellReadOnlyTesterHelper.getInstance().isReadOnly(getVElement(), setting);
 
 			if (ECPCellEditor.class.isInstance(cellEditor)) {
 				ECPCellEditor.class.cast(cellEditor).setEditable(editable);
@@ -1070,8 +1290,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			final IObservableValue target = doCreateCellEditorObservable(cellEditor);
 			Assert.isNotNull(target, "doCreateCellEditorObservable(...) did not return an observable"); //$NON-NLS-1$
 
-			final IObservableValue model = doCreateElementObservable(cell.getElement(), cell);
-			Assert.isNotNull(model, "doCreateElementObservable(...) did not return an observable"); //$NON-NLS-1$
+			final IObservableValue model = valueProperty.observe(cell.getElement());
+			Assert.isNotNull(model, "The databinding service did not return an observable"); //$NON-NLS-1$
 
 			final Binding binding = createBinding(target, model);
 
@@ -1090,14 +1310,10 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		protected Binding createBinding(IObservableValue target, IObservableValue model) {
 			if (ECPCellEditor.class.isInstance(cellEditor)) {
 				return getDataBindingContext().bindValue(target, model,
-					((ECPCellEditor) cellEditor).getTargetToModelStrategy(),
-					((ECPCellEditor) cellEditor).getModelToTargetStrategy());
+					((ECPCellEditor) cellEditor).getTargetToModelStrategy(getDataBindingContext()),
+					((ECPCellEditor) cellEditor).getModelToTargetStrategy(getDataBindingContext()));
 			}
 			return getDataBindingContext().bindValue(target, model);
-		}
-
-		protected IObservableValue doCreateElementObservable(Object element, ViewerCell cell) {
-			return getValueProperty(domainModelReference).observe(element);
 		}
 
 		protected IObservableValue doCreateCellEditorObservable(CellEditor cellEditor) {
@@ -1122,7 +1338,13 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 			@Override
 			public void afterEditorActivated(ColumnViewerEditorActivationEvent event) {
-				// do nothing
+				// set colors for cell editor
+				final Control control = cellEditor.getControl();
+				if (control == null || control.isDisposed()) {
+					return;
+				}
+				control.setBackground(getViewer().getControl().getBackground());
+				control.setForeground(getViewer().getControl().getForeground());
 			}
 
 			@Override
@@ -1207,16 +1429,5 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			final String message = DiagnosticMessageExtractor.getMessage(vDiagnostic.getDiagnostics((EObject) element));
 			return ECPTooltipModifierHelper.modifyString(message, null);
 		}
-	}
-
-	private Setting getCellSetting(VDomainModelReference domainModelReference, Object element) {
-		final InternalEObject eObject = InternalEObject.class.cast(element);
-		final VDomainModelReference copy = EcoreUtil.copy(domainModelReference);
-		copy.init(eObject);
-		final Iterator<Setting> iterator = copy.getIterator();
-		if (iterator.hasNext()) {
-			return iterator.next();
-		}
-		return null;
 	}
 }

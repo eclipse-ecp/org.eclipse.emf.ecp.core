@@ -11,13 +11,15 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.categorization.swt.test;
 
+import org.eclipse.emf.ecp.view.spi.categorization.swt.CategorizationRenderer_PTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ Categorization_PTest.class, CategorizationTreeRefresh_PTest.class,
-	CategorizationTreeContentRefresh_PTest.class })
+@SuiteClasses({ Categorization_PTest.class, CategorizationCorrectTester_PTest.class,
+	CategorizationTreeContentRefresh_PTest.class, CategorizationTreeRefresh_PTest.class,
+	CategorizationRenderer_PTest.class })
 public class AllTests {
 
 }

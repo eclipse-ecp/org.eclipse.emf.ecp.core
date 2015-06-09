@@ -7,10 +7,10 @@
                 <message_argument value="1.1.1"/>
             </message_arguments>
         </filter>
-        <filter comment="There was no change that would require us to update the minor version.." id="929038356">
+        <filter comment="SPI Changes for 1.6" id="923795461">
             <message_arguments>
-                <message_argument value="1.5.1"/>
-                <message_argument value="org.eclipse.emf.ecp.edit"/>
+                <message_argument value="1.6.0"/>
+                <message_argument value="1.5.0"/>
             </message_arguments>
         </filter>
     </resource>
@@ -35,6 +35,68 @@
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.edit.spi.ECPEditorContext"/>
                 <message_argument value="org.eclipse.emf.ecp.edit.swt_1.1.1"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/edit/spi/swt/reference/DeleteReferenceAction.java" type="org.eclipse.emf.ecp.edit.spi.swt.reference.DeleteReferenceAction">
+        <filter comment="SPI Changes for 1.6" id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.edit.spi.swt.reference.DeleteReferenceAction"/>
+                <message_argument value="DeleteReferenceAction(EditingDomain, EStructuralFeature.Setting, IItemPropertyDescriptor, ReferenceService)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/edit/spi/swt/reference/NewReferenceAction.java" type="org.eclipse.emf.ecp.edit.spi.swt.reference.NewReferenceAction">
+        <filter comment="SPI Changes for 1.6" id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.edit.spi.swt.reference.NewReferenceAction"/>
+                <message_argument value="NewReferenceAction(EditingDomain, EStructuralFeature.Setting, IItemPropertyDescriptor, ReferenceService)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/edit/spi/swt/table/ECPCellEditor.java" type="org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor">
+        <filter comment="SPI change" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor"/>
+                <message_argument value="getMinWidth()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Changes for 1.6" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor"/>
+                <message_argument value="getModelToTargetStrategy(DataBindingContext)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Changes for 1.6" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor"/>
+                <message_argument value="getTargetToModelStrategy(DataBindingContext)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Changes for 1.6" id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor"/>
+                <message_argument value="getModelToTargetStrategy()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Changes for 1.6" id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor"/>
+                <message_argument value="getTargetToModelStrategy()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/edit/spi/swt/table/StringCellEditor.java" type="org.eclipse.emf.ecp.edit.spi.swt.table.StringCellEditor">
+        <filter comment="SPI Changes for 1.6" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.edit.spi.swt.table.StringCellEditor"/>
+                <message_argument value="getModelToTargetStrategy()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Changes for 1.6" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.edit.spi.swt.table.StringCellEditor"/>
+                <message_argument value="getTargetToModelStrategy()"/>
             </message_arguments>
         </filter>
     </resource>

@@ -21,16 +21,17 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
-import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.InvalidGridDescriptionReport;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
+import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
@@ -41,13 +42,13 @@ import org.eclipse.swt.widgets.Composite;
  */
 public class ECPSWTViewRendererImpl implements ECPSWTViewRenderer {
 
-	private final SWTRendererFactory factory;
+	private final EMFFormsRendererFactory factory;
 
 	/**
 	 * Constructor.
 	 */
 	public ECPSWTViewRendererImpl() {
-		factory = createFactory();
+		factory = Activator.getDefault().getEMFFormsRendererFactory();
 	}
 
 	/**
@@ -82,9 +83,14 @@ public class ECPSWTViewRendererImpl implements ECPSWTViewRenderer {
 	 */
 	@Override
 	public ECPSWTView render(Composite parent, ViewModelContext viewModelContext) throws ECPRendererException {
-		final AbstractSWTRenderer<VElement> renderer = factory.getRenderer(
-			viewModelContext.getViewModel(),
-			viewModelContext);
+		AbstractSWTRenderer<VElement> renderer;
+		try {
+			renderer = factory.getRendererInstance(
+				viewModelContext.getViewModel(),
+				viewModelContext);
+		} catch (final EMFFormsNoRendererException ex) {
+			throw new ECPRendererException(ex.getMessage());
+		}
 
 		final ReportService reportService = Activator.getDefault().getReportService();
 
@@ -128,13 +134,13 @@ public class ECPSWTViewRendererImpl implements ECPSWTViewRenderer {
 		return render(parent, domainObject, view);
 	}
 
-	/**
-	 * Returns the {@link SWTRendererFactory} used to obtain any SWT renderer.
-	 * Clients may override.
-	 *
-	 * @return the {@link SWTRendererFactory}
-	 */
-	protected SWTRendererFactory createFactory() {
-		return new SWTRendererFactoryImpl();
-	}
+	// /**
+	// * Returns the {@link SWTRendererFactory} used to obtain any SWT renderer.
+	// * Clients may override.
+	// *
+	// * @return the {@link SWTRendererFactory}
+	// */
+	// protected SWTRendererFactory createFactory() {
+	// return new SWTRendererFactoryImpl();
+	// }
 }

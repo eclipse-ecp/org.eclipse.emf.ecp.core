@@ -16,6 +16,8 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VElementUtil;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.model.provider.ContainedContainerItemProvider;
 import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalFactory;
@@ -83,12 +85,15 @@ public class VerticalLayoutItemProvider
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String getText(Object object)
 	{
-		final String label = ((VVerticalLayout) object).getName();
+		String label = ((VVerticalLayout) object).getName();
+		if (label == null) {
+			label = VElementUtil.getCleanName(VElement.class.cast(object));
+		}
 		return label == null || label.length() == 0 ?
 			getString("_UI_VerticalLayout_type") : //$NON-NLS-1$
 			getString("_UI_VerticalLayout_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$

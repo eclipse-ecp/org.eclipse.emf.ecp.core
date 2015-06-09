@@ -12,7 +12,7 @@
 package org.eclipse.emf.ecp.view.spi.context;
 
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
 
 /**
  * Indicates that {@link org.eclipse.emf.ecp.view.spi.context.ViewModelService ViewModelService} is not available.
@@ -49,7 +49,7 @@ public class ViewModelServiceNotAvailableReport extends AbstractReport {
 	 *
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport#getMessage()
+	 * @see org.eclipse.emfforms.spi.common.report.AbstractReport#getMessage()
 	 */
 	@Override
 	public String getMessage() {
@@ -61,7 +61,7 @@ public class ViewModelServiceNotAvailableReport extends AbstractReport {
 	 *
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport#getSeverity()
+	 * @see org.eclipse.emfforms.spi.common.report.AbstractReport#getSeverity()
 	 */
 	@Override
 	public int getSeverity() {

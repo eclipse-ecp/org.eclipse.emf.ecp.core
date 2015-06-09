@@ -17,6 +17,7 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecp.test.common.DefaultRealm;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
@@ -37,6 +38,8 @@ import org.eclipse.emf.ecp.view.validation.test.model.TableWithoutMultiplicityCo
 import org.eclipse.emf.ecp.view.validation.test.model.TestFactory;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
 import org.eclipse.emf.ecp.view.validation.test.model.Writer;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -51,6 +54,18 @@ import org.junit.Test;
  *
  */
 public class TableValidation_PTest {
+
+	private DefaultRealm defaultRealm;
+
+	@Before
+	public void setup() {
+		defaultRealm = new DefaultRealm();
+	}
+
+	@After
+	public void tearDown() {
+		defaultRealm.dispose();
+	}
 
 	private VView createViewWithTableControl(EClass rootClass, EReference tableReference,
 		EAttribute... columnAttributes) {

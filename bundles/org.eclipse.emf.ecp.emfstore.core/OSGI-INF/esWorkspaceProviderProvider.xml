@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" immediate="false" name="org.eclipse.emf.ecp.emfstore.core.internal.esWorkspaceProviderProvider">
+   <implementation class="org.eclipse.emf.ecp.emfstore.core.internal.ESWorkspaceProviderProviderImpl"/>
+   <service>
+      <provide interface="org.eclipse.emf.ecp.emfstore.core.internal.ESWorkspaceProviderProvider"/>
+   </service>
+</scr:component>

@@ -51,16 +51,10 @@ import org.eclipse.net4j.util.AdapterUtil;
  * @author Eugen Neufeld
  */
 public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject, ECPObserver> implements
-	ECPProjectManager, ECPRepositoriesChangedObserver {
+ECPProjectManager, ECPRepositoriesChangedObserver {
 
 	private static final String PROJECT_FOLDERNAME = "projects"; //$NON-NLS-1$
-	/**
-	 * The Singleton to access the implementation of the Default ECPProjectManager.
-	 *
-	 * @deprecated use {@link ECPUtil} instead
-	 */
-	@Deprecated
-	public static ECPProjectManagerImpl INSTANCE;
+
 	/**
 	 * This variable defines whether the projects where already initialized. Default value is false.
 	 */
@@ -70,12 +64,26 @@ public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject
 	 * Should not be called directly, use service instead.
 	 */
 	public ECPProjectManagerImpl() {
-		if (INSTANCE != null) {
-			throw new IllegalStateException("Manager must not be initialized twice"); //$NON-NLS-1$
-		}
-		INSTANCE = this;
+		initializeFolder(null);
+	}
+
+	/**
+	 * @param sessionId Will be appended to the folder name so that there are different folders for each session
+	 */
+
+	public ECPProjectManagerImpl(String sessionId) {
+		initializeFolder(sessionId);
+	}
+
+	private void initializeFolder(String sessionId) {
+
 		final File stateLocation = Activator.getInstance().getStateLocation().toFile();
 		setFolder(new File(stateLocation, PROJECT_FOLDERNAME));
+		String finalFolderName = PROJECT_FOLDERNAME;
+		if (sessionId != null) {
+			finalFolderName += "-" + sessionId;
+		}
+		setFolder(new File(stateLocation, finalFolderName));
 	}
 
 	/** {@inheritDoc} */

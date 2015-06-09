@@ -17,6 +17,7 @@ import java.lang.reflect.Method;
 import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.rap.rwt.RWT;
+import org.eclipse.rap.rwt.internal.application.ApplicationContextImpl;
 import org.eclipse.rap.rwt.service.UISession;
 import org.eclipse.swt.widgets.Display;
 
@@ -58,6 +59,8 @@ public final class RealmSetter {
 	 */
 	public static void initialize() {
 		final UISession uiSession = RWT.getUISession();
+		ApplicationContextImpl.class.cast(RWT.getApplicationContext()).getPhaseListenerManager()
+			.addPhaseListener(new DataBindingPhaseListener());
 		if (uiSession.getAttribute("realm") == null) { //$NON-NLS-1$
 			final Realm realm = SWTObservables.getRealm(Display.getCurrent());
 			RealmSetter.setRealm(realm);

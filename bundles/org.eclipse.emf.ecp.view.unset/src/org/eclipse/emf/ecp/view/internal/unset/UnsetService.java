@@ -11,27 +11,29 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.unset;
 
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.core.databinding.observable.IObserving;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeAddRemoveListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
-import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 
 /**
  * Unset service that, once instantiated, synchronizes the visible state of a
@@ -148,14 +150,22 @@ public class UnsetService implements ViewModelService {
 	}
 
 	private void addControlToMap(VControl control) {
-		final Setting lastSetting = getSetting(control);
-		if (lastSetting == null) {
+		if (control.getDomainModelReference() == null) {
+			Activator.getDefault().getReportService().report(
+				new AbstractReport(String.format("The provided control [%1$s] has no defined DMR.", control), 1)); //$NON-NLS-1$
 			return;
 		}
-		final EObject eObject = lastSetting.getEObject();
-		final EStructuralFeature eStructuralFeature = lastSetting
-			.getEStructuralFeature();
-
+		IObservableValue observableValue;
+		try {
+			observableValue = Activator.getDefault().getEMFFormsDatabinding()
+				.getObservableValue(control.getDomainModelReference(), context.getDomainModel());
+		} catch (final DatabindingFailedException ex) {
+			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+			return;
+		}
+		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+		final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
+		observableValue.dispose();
 		if (!objectToFeatureMap.containsKey(eObject)) {
 			objectToFeatureMap
 				.put(eObject, new LinkedHashSet<FeatureWrapper>());
@@ -163,13 +173,13 @@ public class UnsetService implements ViewModelService {
 		final Set<FeatureWrapper> features = objectToFeatureMap.get(eObject);
 		FeatureWrapper wrapper = null;
 		for (final FeatureWrapper w : features) {
-			if (w.isWrapperFor(eStructuralFeature)) {
+			if (w.isWrapperFor(structuralFeature)) {
 				wrapper = w;
 				break;
 			}
 		}
 		if (wrapper == null) {
-			wrapper = new FeatureWrapper(eStructuralFeature);
+			wrapper = new FeatureWrapper(structuralFeature);
 			features.add(wrapper);
 		}
 
@@ -180,13 +190,17 @@ public class UnsetService implements ViewModelService {
 	}
 
 	private void removeControlFromMapAndUnsetIfNeeded(VControl control) {
-		final Setting lastSetting = getSetting(control);
-		if (lastSetting == null) {
+		IObservableValue observableValue;
+		try {
+			observableValue = Activator.getDefault().getEMFFormsDatabinding()
+				.getObservableValue(control.getDomainModelReference(), context.getDomainModel());
+		} catch (final DatabindingFailedException ex) {
+			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 			return;
 		}
-		final EObject eObject = lastSetting.getEObject();
-		final EStructuralFeature eStructuralFeature = lastSetting
-			.getEStructuralFeature();
+		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+		final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
+		observableValue.dispose();
 		final Set<FeatureWrapper> wrappers = objectToFeatureMap
 			.get(eObject);
 		FeatureWrapper wrapper = null;
@@ -194,7 +208,7 @@ public class UnsetService implements ViewModelService {
 			return;
 		}
 		for (final FeatureWrapper w : wrappers) {
-			if (w.isWrapperFor(eStructuralFeature)) {
+			if (w.isWrapperFor(structuralFeature)) {
 				wrapper = w;
 			}
 		}
@@ -203,7 +217,7 @@ public class UnsetService implements ViewModelService {
 			.get(wrapper);
 		visibleControls.remove(control);
 		if (visibleControls.isEmpty()) {
-			eObject.eUnset(eStructuralFeature);
+			eObject.eUnset(structuralFeature);
 		}
 	}
 
@@ -258,23 +272,6 @@ public class UnsetService implements ViewModelService {
 				removeControlFromMapAndUnsetIfNeeded((VControl) object);
 			}
 		}
-	}
-
-	private Setting getSetting(VControl control) {
-		final VDomainModelReference domainModelReference = control
-			.getDomainModelReference();
-		if (domainModelReference == null) {
-			return null;
-		}
-		final Iterator<Setting> settings = domainModelReference.getIterator();
-		Setting firstSetting = null;
-		while (settings.hasNext()) {
-			final Setting setting = settings.next();
-			if (firstSetting == null) {
-				firstSetting = setting;
-			}
-		}
-		return firstSetting;
 	}
 
 	/**

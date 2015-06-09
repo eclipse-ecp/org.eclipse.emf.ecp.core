@@ -25,6 +25,7 @@ import org.eclipse.emf.emfstore.internal.common.model.ModelElementId;
 import org.eclipse.emf.emfstore.internal.common.model.Project;
 import org.eclipse.emf.emfstore.internal.server.model.versioning.operations.AbstractOperation;
 import org.eclipse.emf.emfstore.internal.server.model.versioning.operations.CreateDeleteOperation;
+import org.eclipse.emf.emfstore.server.ESCloseableIterable;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IDecoratorManager;
 import org.eclipse.ui.PlatformUI;
@@ -60,7 +61,9 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 	}
 
 	private void initCachedTree(ProjectSpace ps) {
-		for (final AbstractOperation operation : ps.getOperations()) {
+		@SuppressWarnings("restriction")
+		final ESCloseableIterable<AbstractOperation> operationIterator = ps.getLocalChangePackage().operations();
+		for (final AbstractOperation operation : operationIterator.iterable()) {
 			operations++;
 			for (final ModelElementId modelElementId : operation.getAllInvolvedModelElements()) {
 				final EObject element = ps.getProject().getModelElement(modelElementId);
@@ -70,6 +73,7 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 			}
 			removeDeletedElementsFromCachedTree(ps, operation);
 		}
+		operationIterator.close();
 	}
 
 	/** {@inheritDoc} */

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -52,6 +52,7 @@ import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ObservableMapCellLabelProvider;
@@ -103,11 +104,14 @@ import org.eclipse.swt.widgets.TableColumn;
  * @author emueller
  */
 // this class is not serialized
+@Deprecated
 public class TableControl extends SWTControl {
 
 	private static final String FIXED_COLUMNS = "org.eclipse.rap.rwt.fixedColumns"; //$NON-NLS-1$
 
 	private static final String ICON_ADD = "icons/add.png"; //$NON-NLS-1$
+	private static final String ICONS_UNSET_REFERENCE = "icons/unset_reference.png"; //$NON-NLS-1$
+	private static final String ICONS_UNSET_FEATURE = "icons/unset_feature.png"; //$NON-NLS-1$
 
 	private TableViewer tableViewer;
 	private ComposedAdapterFactory composedAdapterFactory;
@@ -209,7 +213,7 @@ public class TableControl extends SWTControl {
 			if (!isEmbedded() && getTableReference().isUnsettable()) {
 				unsetButton = new Button(buttonComposite, SWT.PUSH);
 				unsetButton.setToolTipText(getUnsetButtonTooltip());
-				unsetButton.setImage(Activator.getImage("icons/delete.png")); //$NON-NLS-1$
+				unsetButton.setImage(Activator.getImage(ICONS_UNSET_FEATURE));
 				numButtons++;
 			}
 			GridLayoutFactory.fillDefaults().numColumns(numButtons).equalWidth(true).applyTo(buttonComposite);
@@ -256,9 +260,12 @@ public class TableControl extends SWTControl {
 
 	private void createFixedValidationStatusColumn(TableViewer tableViewer,
 		final List<EStructuralFeature> structuralFeatures) {
-		final TableViewerColumn column = TableViewerColumnBuilder.create()
+		final TableViewerColumn column = TableViewerColumnBuilder
+			.create()
 			.setMoveable(false)
-			.setText(ControlMessages.TableControl_ValidationStatusColumn)
+			.setText(
+				LocalizationServiceHelper.getString(getClass(),
+					DepricatedControlMessageKeys.TableControl_ValidationStatusColumn))
 			.setWidth(80)
 			.build(tableViewer);
 
@@ -313,9 +320,9 @@ public class TableControl extends SWTControl {
 						.getColumnWidthWeight() : 100)
 				.build(tableViewer);
 
-			column.setLabelProvider(new ECPCellLabelProvider(feature, cellEditor, feature.isMany() ?
-				new EObjectObservableMap(cp.getKnownElements(), feature) :
-				EMFProperties.value(feature).observeDetail(cp.getKnownElements())));
+			column.setLabelProvider(new ECPCellLabelProvider(feature, cellEditor,
+				feature.isMany() ? new EObjectObservableMap(cp.getKnownElements(), feature)
+					: EMFProperties.value(feature).observeDetail(cp.getKnownElements())));
 			column.getColumn().addSelectionListener(getSelectionAdapter(comparator, column.getColumn(), columnNumber));
 
 			if (!isReadOnlyFeature(readOnlyConfig, feature)) {
@@ -348,7 +355,8 @@ public class TableControl extends SWTControl {
 			tempInstance, tableViewer.getTable(), getViewModelContext());
 	}
 
-	private static boolean isReadOnlyFeature(Map<EStructuralFeature, Boolean> readOnlyConfig, EStructuralFeature feature) {
+	private static boolean isReadOnlyFeature(Map<EStructuralFeature, Boolean> readOnlyConfig,
+		EStructuralFeature feature) {
 		if (readOnlyConfig != null) {
 			final Boolean isReadOnly = readOnlyConfig.get(feature);
 			if (isReadOnly != null) {
@@ -400,9 +408,10 @@ public class TableControl extends SWTControl {
 
 	private void createRemoveRowButton(EClass clazz, final Composite buttonComposite) {
 		removeButton = new Button(buttonComposite, SWT.None);
-		final Image image = Activator.getImage("icons/delete.png"); //$NON-NLS-1$
+		final Image image = Activator.getImage(ICONS_UNSET_REFERENCE);
 		removeButton.setImage(image);
-		removeButton.setToolTipText(ControlMessages.TableControl_RemoveSelected
+		removeButton.setToolTipText(LocalizationServiceHelper.getString(getClass(),
+			DepricatedControlMessageKeys.TableControl_RemoveSelected)
 			+ clazz.getInstanceClass().getSimpleName());
 		removeButton.addSelectionListener(new SelectionAdapter() {
 			/*
@@ -441,11 +450,15 @@ public class TableControl extends SWTControl {
 	 * @param deletionList the list of selected EObjects to delete
 	 */
 	protected void deleteRowUserConfirmDialog(final List<EObject> deletionList) {
-		final MessageDialog dialog = new MessageDialog(tableViewer.getTable().getShell(),
-			ControlMessages.TableControl_Delete, null,
-			ControlMessages.TableControl_DeleteAreYouSure, MessageDialog.CONFIRM, new String[] {
+		final MessageDialog dialog = new MessageDialog(
+			tableViewer.getTable().getShell(),
+			LocalizationServiceHelper.getString(getClass(), DepricatedControlMessageKeys.TableControl_Delete),
+			null,
+			LocalizationServiceHelper.getString(getClass(), DepricatedControlMessageKeys.TableControl_DeleteAreYouSure),
+			MessageDialog.CONFIRM, new String[] {
 				JFaceResources.getString(IDialogLabelKeys.YES_LABEL_KEY),
-				JFaceResources.getString(IDialogLabelKeys.NO_LABEL_KEY) }, 0);
+				JFaceResources.getString(IDialogLabelKeys.NO_LABEL_KEY) },
+			0);
 
 		new ECPDialogExecutor(dialog) {
 
@@ -507,7 +520,8 @@ public class TableControl extends SWTControl {
 		addButton = new Button(buttonComposite, SWT.None);
 		final Image image = Activator.getImage(ICON_ADD);
 		addButton.setImage(image);
-		addButton.setToolTipText(ControlMessages.TableControl_AddInstanceOf + clazz.getInstanceClass().getSimpleName());
+		addButton.setToolTipText(LocalizationServiceHelper.getString(getClass(),
+			DepricatedControlMessageKeys.TableControl_AddInstanceOf) + clazz.getInstanceClass().getSimpleName());
 		addButton.addSelectionListener(new SelectionAdapter() {
 
 			/*
@@ -582,7 +596,7 @@ public class TableControl extends SWTControl {
 	// if (validationLabel == null || validationLabel.isDisposed()) {
 	// return;
 	// }
-	//		validationLabel.setToolTipText(""); //$NON-NLS-1$
+	// validationLabel.setToolTipText(""); //$NON-NLS-1$
 	// validationLabel.setImage(null);
 	// tableViewer.refresh();
 	// }
@@ -714,7 +728,7 @@ public class TableControl extends SWTControl {
 			// if (diagnostic.getData().get(0).equals(element)
 			// && structuralFeatures.contains(diagnostic.getData().get(1))) {
 			// if (tooltip.length() > 0) {
-			//						tooltip.append("\n"); //$NON-NLS-1$
+			// tooltip.append("\n"); //$NON-NLS-1$
 			// }
 			// tooltip.append(diagnostic.getMessage());
 			// }
@@ -864,7 +878,7 @@ public class TableControl extends SWTControl {
 			// for (final Diagnostic diagnostic2 : diagnostic.getChildren()) {
 			// if (diagnostic2.getSeverity() != Diagnostic.OK) {
 			// if (tooltip.length() > 0) {
-			//									tooltip.append("\n"); //$NON-NLS-1$
+			// tooltip.append("\n"); //$NON-NLS-1$
 			// }
 			// tooltip.append(diagnostic2.getMessage());
 			// childrenUsefull = true;
@@ -872,13 +886,13 @@ public class TableControl extends SWTControl {
 			// }
 			// if (!childrenUsefull) {
 			// if (tooltip.length() > 0) {
-			//								tooltip.append("\n"); //$NON-NLS-1$
+			// tooltip.append("\n"); //$NON-NLS-1$
 			// }
 			// tooltip.append(diagnostic.getMessage());
 			// }
 			// } else {
 			// if (tooltip.length() > 0) {
-			//							tooltip.append("\n"); //$NON-NLS-1$
+			// tooltip.append("\n"); //$NON-NLS-1$
 			// }
 			// tooltip.append(diagnostic.getMessage());
 			// }
@@ -959,7 +973,8 @@ public class TableControl extends SWTControl {
 	 */
 	@Override
 	protected String getUnsetLabelText() {
-		return ControlMessages.TableControl_NotSetClickToSet;
+		return LocalizationServiceHelper.getString(getClass(),
+			DepricatedControlMessageKeys.TableControl_NotSetClickToSet);
 	}
 
 	/*
@@ -968,7 +983,7 @@ public class TableControl extends SWTControl {
 	 */
 	@Override
 	protected String getUnsetButtonTooltip() {
-		return ControlMessages.TableControl_Unset;
+		return LocalizationServiceHelper.getString(getClass(), DepricatedControlMessageKeys.TableControl_Unset);
 	}
 
 	/*
@@ -1086,8 +1101,8 @@ public class TableControl extends SWTControl {
 		protected Binding createBinding(IObservableValue target, IObservableValue model) {
 			if (ECPCellEditor.class.isInstance(cellEditor)) {
 				return getDataBindingContext().bindValue(target, model,
-					((ECPCellEditor) cellEditor).getTargetToModelStrategy(),
-					((ECPCellEditor) cellEditor).getModelToTargetStrategy());
+					((ECPCellEditor) cellEditor).getTargetToModelStrategy(getDataBindingContext()),
+					((ECPCellEditor) cellEditor).getModelToTargetStrategy(getDataBindingContext()));
 			}
 			return getDataBindingContext().bindValue(target, model);
 		}

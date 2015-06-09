@@ -17,8 +17,9 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecp.internal.common.ui.Messages;
+import org.eclipse.emf.ecp.internal.common.ui.MessageKeys;
 import org.eclipse.emf.ecp.spi.common.ui.composites.SelectionComposite;
+import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.window.Window;
@@ -44,10 +45,14 @@ public abstract class SelectModelElementWizardFactory {
 			.getTableSelectionComposite(elements.toArray(), isMany);
 
 		final SelectModelElementWizard wizard = new SelectModelElementWizard(
-			Messages.SelectModelElementWizardFactory_ModelelementSelectionDialog_WindowTitle,
-			Messages.NewModelElementWizard_WizardTitle_AddModelElement,
-			Messages.ModelelementSelectionDialog_DialogTitle,
-			Messages.ModelelementSelectionDialog_DialogMessage_SearchPattern, EObject.class);
+			LocalizationServiceHelper.getString(SelectModelElementWizardFactory.class,
+				MessageKeys.SelectModelElementWizardFactory_ModelelementSelectionDialog_WindowTitle),
+			LocalizationServiceHelper.getString(SelectModelElementWizardFactory.class,
+				MessageKeys.NewModelElementWizard_WizardTitle_AddModelElement),
+			LocalizationServiceHelper.getString(SelectModelElementWizardFactory.class,
+				MessageKeys.ModelelementSelectionDialog_DialogTitle),
+			LocalizationServiceHelper.getString(SelectModelElementWizardFactory.class,
+				MessageKeys.ModelelementSelectionDialog_DialogMessage_SearchPattern), EObject.class);
 
 		final HashSet<EObject> selectedElements = new HashSet<EObject>();
 		wizard.setCompositeProvider(tableSelectionComposite);
@@ -76,9 +81,13 @@ public abstract class SelectModelElementWizardFactory {
 	 */
 	public static EObject openCreateNewModelElementDialog(final SelectionComposite<TreeViewer> selectionComposite) {
 		final SelectModelElementWizard wizard = new SelectModelElementWizard("New Reference Element", //$NON-NLS-1$
-			Messages.NewModelElementWizard_WizardTitle_AddModelElement,
-			Messages.NewModelElementWizard_PageTitle_AddModelElement,
-			Messages.NewModelElementWizard_PageDescription_AddModelElement);
+			LocalizationServiceHelper.getString(SelectModelElementWizardFactory.class,
+				MessageKeys.NewModelElementWizard_WizardTitle_AddModelElement),
+			LocalizationServiceHelper
+				.getString(SelectModelElementWizardFactory.class,
+					MessageKeys.NewModelElementWizard_PageTitle_AddModelElement),
+			LocalizationServiceHelper.getString(SelectModelElementWizardFactory.class,
+				MessageKeys.NewModelElementWizard_PageDescription_AddModelElement));
 
 		wizard.setCompositeProvider(selectionComposite);
 

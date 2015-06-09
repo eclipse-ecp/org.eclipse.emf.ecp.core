@@ -12,8 +12,8 @@
 package org.eclipse.emf.ecp.view.internal.rule.reporting;
 
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport;
 import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
 
 /**
  * Indicates that a {@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference VDomainModelReference} of a

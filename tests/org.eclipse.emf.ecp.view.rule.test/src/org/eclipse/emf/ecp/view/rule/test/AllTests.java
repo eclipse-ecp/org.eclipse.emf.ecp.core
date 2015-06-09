@@ -17,11 +17,11 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({
-	RuleServiceGC_Test.class,
+	RuleServiceGC_PTest.class,
 	RuleService_PTest.class,
 	ConditionEvaluator_Test.class,
-	DynamicRuleService_Test.class,
-	RuleRegistry_Test.class
+	DynamicRuleService_PTest.class,
+	RuleRegistry_PTest.class
 })
 public class AllTests {
 

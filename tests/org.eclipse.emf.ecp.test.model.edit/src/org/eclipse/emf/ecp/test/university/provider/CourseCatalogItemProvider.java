@@ -24,6 +24,7 @@ import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
+import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 
@@ -35,7 +36,7 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
  * @generated
  */
 public class CourseCatalogItemProvider extends ItemProviderAdapter implements
-	IEditingDomainItemProvider, ITreeItemContentProvider, IItemLabelProvider,
+	IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider,
 	IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -57,8 +58,7 @@ public class CourseCatalogItemProvider extends ItemProviderAdapter implements
 	 */
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (itemPropertyDescriptors == null)
-		{
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addCoursesPropertyDescriptor(object);
@@ -75,13 +75,11 @@ public class CourseCatalogItemProvider extends ItemProviderAdapter implements
 	 */
 	protected void addCoursesPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_CourseCatalog_courses_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_CourseCatalog_courses_feature", "_UI_CourseCatalog_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				getString("_UI_PropertyDescriptor_description", "_UI_CourseCatalog_courses_feature", //$NON-NLS-1$//$NON-NLS-2$
+					"_UI_CourseCatalog_type"), //$NON-NLS-1$
 				UniversityPackage.Literals.COURSE_CATALOG__COURSES,
 				true,
 				false,
@@ -101,10 +99,8 @@ public class CourseCatalogItemProvider extends ItemProviderAdapter implements
 	 * @generated
 	 */
 	@Override
-	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object)
-	{
-		if (childrenFeatures == null)
-		{
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
+		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(UniversityPackage.Literals.COURSE_CATALOG__COURSES);
 		}
@@ -118,8 +114,7 @@ public class CourseCatalogItemProvider extends ItemProviderAdapter implements
 	 * @generated
 	 */
 	@Override
-	protected EStructuralFeature getChildFeature(Object object, Object child)
-	{
+	protected EStructuralFeature getChildFeature(Object object, Object child) {
 		// Check the type of the specified child object and return the proper feature to use for
 		// adding (see {@link AddCommand}) it as a child.
 

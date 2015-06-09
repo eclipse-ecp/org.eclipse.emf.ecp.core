@@ -33,6 +33,8 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
 import org.eclipse.emf.ecp.common.spi.ChildrenDescriptorCollector;
 import org.eclipse.emf.ecp.edit.internal.swt.util.OverlayImageDescriptor;
+import org.eclipse.emf.ecp.edit.spi.DeleteService;
+import org.eclipse.emf.ecp.edit.spi.EMFDeleteServiceImpl;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.edit.spi.swt.util.SWTValidationHelper;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
@@ -48,16 +50,11 @@ import org.eclipse.emf.ecp.view.spi.model.reporting.StatusReport;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.ecp.view.treemasterdetail.model.VTreeMasterDetail;
 import org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.internal.RootObject;
 import org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.internal.TreeMasterDetailSelectionManipulatorHelper;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.CommandParameter;
-import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -67,6 +64,11 @@ import org.eclipse.emf.edit.ui.dnd.LocalTransfer;
 import org.eclipse.emf.edit.ui.dnd.ViewerDragAdapter;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
+import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -77,6 +79,7 @@ import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ILabelProvider;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -115,6 +118,19 @@ import org.osgi.framework.FrameworkUtil;
  *
  */
 public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMasterDetail> {
+
+	/**
+	 * Default Constructor.
+	 *
+	 * @param vElement the view element to be rendered
+	 * @param viewContext The view model context
+	 * @param reportService the ReportService to use
+	 * @since 1.6
+	 */
+	public TreeMasterDetailSWTRenderer(final VTreeMasterDetail vElement, final ViewModelContext viewContext,
+		ReportService reportService) {
+		super(vElement, viewContext, reportService);
+	}
 
 	/**
 	 * The detail key passed to the view model context.
@@ -222,7 +238,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#dispose()
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#dispose()
 	 */
 	@Override
 	protected void dispose() {
@@ -233,7 +249,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(SWTGridDescription)
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#getGridDescription(SWTGridDescription)
 	 */
 	@Override
 	public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
@@ -246,7 +262,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell,
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#renderControl(org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell,
 	 *      org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
@@ -681,6 +697,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 				final MasterDetailAction command = (MasterDetailAction) e.createExecutableExtension("command"); //$NON-NLS-1$
 				command.setLabel(label);
 				command.setImagePath(imagePath);
+				command.setTreeViewer(treeViewer);
 
 				commands.add(command);
 
@@ -750,10 +767,16 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 			@Override
 			public void run() {
 				super.run();
-				for (final Object obj : selection.toList())
-				{
-					editingDomain.getCommandStack().execute(
-						RemoveCommand.create(editingDomain, obj));
+				DeleteService deleteService = getViewModelContext().getService(DeleteService.class);
+				if (deleteService == null) {
+					/*
+					 * #getService(Class<?>) will report to the reportservice if it could not be found
+					 * Use Default
+					 */
+					deleteService = new EMFDeleteServiceImpl();
+				}
+				for (final Object obj : selection.toList()) {
+					deleteService.deleteElement(obj);
 				}
 				treeViewer.setSelection(new StructuredSelection(getViewModelContext().getDomainModel()));
 			}
@@ -790,8 +813,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 			// TODO refactor
 			if (getViewModelContext().hasService(ReferenceService.class)) {
 				referenceService = getViewModelContext().getService(ReferenceService.class);
-			}
-			else {
+			} else {
 				referenceService = new DefaultReferenceService();
 			}
 		}
@@ -809,9 +831,8 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 					}
 					childComposite = createComposite();
 
-					final Object root = manipulateSelection(((RootObject) ((TreeViewer)
-						event.getSource()).getInput())
-							.getRoot());
+					final Object root = manipulateSelection(((RootObject) ((TreeViewer) event.getSource()).getInput())
+						.getRoot());
 					final Map<String, Object> context = new LinkedHashMap<String, Object>();
 					context.put(DETAIL_KEY, true);
 
@@ -822,9 +843,11 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 						if (vView.getChildren().isEmpty()) {
 							vView = ViewProviderHelper.getView((EObject) selected, context);
 						}
-
+						final ReferenceService referenceService = getViewModelContext().getService(
+							ReferenceService.class);
 						final ViewModelContext childContext = getViewModelContext()
-							.getChildContext((EObject) selected, getVElement(), vView);
+							.getChildContext((EObject) selected, getVElement(), vView,
+								new TreeMasterDetailReferenceService(referenceService));
 
 						manipulateViewContext(childContext);
 
@@ -834,8 +857,10 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 					/* child selected */
 					else {
 						final VView view = ViewProviderHelper.getView((EObject) selected, context);
+						final ReferenceService referenceService = getViewModelContext().getService(
+							ReferenceService.class);
 						final ViewModelContext childContext = getViewModelContext().getChildContext((EObject) selected,
-							getVElement(), view);
+							getVElement(), view, new TreeMasterDetailReferenceService(referenceService));
 
 						manipulateViewContext(childContext);
 						ECPSWTViewRenderer.INSTANCE.render(childComposite, childContext);
@@ -950,7 +975,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#applyValidation()
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#applyValidation()
 	 */
 	@Override
 	protected void applyValidation() {
@@ -969,7 +994,94 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 				treeViewer.refresh();
 			}
 		});
+	}
 
+	private class TreeMasterDetailReferenceService implements ReferenceService {
+
+		private final ReferenceService delegate;
+
+		public TreeMasterDetailReferenceService(ReferenceService delegate) {
+			this.delegate = delegate;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#instantiate(org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
+		 */
+		@Override
+		public void instantiate(ViewModelContext context) {
+			// no op
+		}
+
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#dispose()
+		 */
+		@Override
+		public void dispose() {
+			// no op
+		}
+
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#getPriority()
+		 */
+		@Override
+		public int getPriority() {
+			if (delegate == null) {
+				return 0;
+			}
+			return delegate.getPriority() - 1;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @see org.eclipse.emf.ecp.edit.spi.ReferenceService#addNewModelElements(org.eclipse.emf.ecore.EObject,
+		 *      org.eclipse.emf.ecore.EReference)
+		 */
+		@Override
+		public void addNewModelElements(EObject eObject, EReference eReference) {
+			if (delegate == null) {
+				return;
+			}
+			delegate.addNewModelElements(eObject, eReference);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @see org.eclipse.emf.ecp.edit.spi.ReferenceService#addExistingModelElements(org.eclipse.emf.ecore.EObject,
+		 *      org.eclipse.emf.ecore.EReference)
+		 */
+		@Override
+		public void addExistingModelElements(EObject eObject, EReference eReference) {
+			if (delegate == null) {
+				return;
+			}
+			delegate.addExistingModelElements(eObject, eReference);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @see org.eclipse.emf.ecp.edit.spi.ReferenceService#openInNewContext(org.eclipse.emf.ecore.EObject)
+		 */
+		@Override
+		public void openInNewContext(EObject eObject) {
+			treeViewer.setSelection(new StructuredSelection(eObject), true);
+			final ISelection selection = treeViewer.getSelection();
+			if (!selection.isEmpty()) {
+				return;
+			}
+			if (delegate == null) {
+				return;
+			}
+			delegate.openInNewContext(eObject);
+		}
 	}
 
 }

@@ -17,24 +17,27 @@ import org.eclipse.emf.ecore.EObject;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Renderable</b></em>'.
- * <!-- end-user-doc -->
  *
- * <p>
- * The following features are supported:
- * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#getName <em>Name</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#isVisible <em>Visible</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#isEnabled <em>Enabled</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#isReadonly <em>Readonly</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#getDiagnostic <em>Diagnostic</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#getAttachments <em>Attachments</em>}</li>
- * </ul>
- * </p>
+ * @since 1.2
+ * @noimplement This interface is not intended to be implemented by clients.
+ *              <!-- end-user-doc -->
+ *
+ *              <p>
+ *              The following features are supported:
+ *              <ul>
+ *              <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#getName <em>Name</em>}</li>
+ *              <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#getLabel <em>Label</em>}</li>
+ *              <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#isVisible <em>Visible</em>}</li>
+ *              <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#isEnabled <em>Enabled</em>}</li>
+ *              <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#isReadonly <em>Readonly</em>}</li>
+ *              <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#getDiagnostic <em>Diagnostic</em>}</li>
+ *              <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#getAttachments <em>Attachments</em>}</li>
+ *              </ul>
+ *              </p>
  *
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getElement()
  * @model abstract="true"
  * @generated
- * @since 1.2
  */
 public interface VElement extends EObject {
 
@@ -64,6 +67,38 @@ public interface VElement extends EObject {
 	 * @generated
 	 */
 	void setName(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Label</em>' attribute isn't clear, there really should be more of a description
+	 * here...
+	 * </p>
+	 *
+	 * @since 1.6
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the value of the '<em>Label</em>' attribute.
+	 * @see #setLabel(String)
+	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getElement_Label()
+	 * @model transient="true"
+	 * @generated
+	 */
+	String getLabel();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.spi.model.VElement#getLabel <em>Label</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.6
+	 *        <!-- end-user-doc -->
+	 *
+	 * @param value the new value of the '<em>Label</em>' attribute.
+	 * @see #getLabel()
+	 * @generated
+	 */
+	void setLabel(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Visible</b></em>' attribute.

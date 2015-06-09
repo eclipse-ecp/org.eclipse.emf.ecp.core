@@ -14,13 +14,24 @@ package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import org.eclipse.core.databinding.Binding;
+import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EEnumLiteral;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.view.internal.core.swt.MessageKeys;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlJFaceViewerSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
+import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.viewers.ViewersObservables;
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -36,53 +47,62 @@ import org.eclipse.swt.widgets.Composite;
  *
  */
 public class EnumComboViewerSWTRenderer extends SimpleControlJFaceViewerSWTRenderer {
-	/**
-	 * Default constructor.
-	 */
-	public EnumComboViewerSWTRenderer() {
-		super();
-	}
+
+	private final EMFFormsEditSupport emfFormsEditSupport;
 
 	/**
-	 * Test constructor.
+	 * Default constructor.
 	 *
-	 * @param factory the {@link SWTRendererFactory} to use.
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param reportService The {@link ReportService}
+	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
+	 * @param emfFormsLabelProvider The {@link EMFFormsLabelProvider}
+	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
+	 * @param emfFormsEditSupport The {@link EMFFormsEditSupport}
 	 */
-	EnumComboViewerSWTRenderer(SWTRendererFactory factory) {
-		super(factory);
+	@Inject
+	public EnumComboViewerSWTRenderer(VControl vElement, ViewModelContext viewContext,
+		ReportService reportService,
+		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
+		VTViewTemplateProvider vtViewTemplateProvider, EMFFormsEditSupport emfFormsEditSupport) {
+		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
+		this.emfFormsEditSupport = emfFormsEditSupport;
 	}
 
 	@Override
-	protected Binding[] createBindings(Viewer viewer, Setting setting) {
+	protected Binding[] createBindings(Viewer viewer) throws DatabindingFailedException {
 		final Binding binding = getDataBindingContext().bindValue(ViewersObservables.observeSingleSelection(viewer),
-			getModelValue(setting));
+			getModelValue());
 		final Binding tooltipBinding = getDataBindingContext().bindValue(
 			SWTObservables.observeTooltipText(viewer.getControl()),
-			getModelValue(setting));
+			getModelValue());
 		return new Binding[] { binding, tooltipBinding };
 	}
 
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlJFaceViewerSWTRenderer#createJFaceViewer(org.eclipse.swt.widgets.Composite,
-	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlJFaceViewerSWTRenderer#createJFaceViewer(org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
-	protected Viewer createJFaceViewer(Composite parent, Setting setting) {
+	protected Viewer createJFaceViewer(Composite parent) throws DatabindingFailedException {
+		final IValueProperty valueProperty = getEMFFormsDatabinding()
+			.getValueProperty(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
+		final EStructuralFeature structuralFeature = (EStructuralFeature) valueProperty.getValueType();
 		final ComboViewer combo = new ComboViewer(parent);
-		final IItemLabelProvider labelProvider = getItemPropertyDescriptor(setting).getLabelProvider(null);
 		combo.setContentProvider(new ArrayContentProvider());
 		combo.setLabelProvider(new LabelProvider() {
 
 			@Override
 			public String getText(Object element) {
-				return labelProvider.getText(element);
+				return getEMFFormsEditSupport()
+					.getText(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel(), element);
 			}
 
 		});
 		final List<Object> inputValues = new ArrayList<Object>();
-		for (final EEnumLiteral literal : EEnum.class.cast(setting.getEStructuralFeature().getEType()).getELiterals()) {
+		for (final EEnumLiteral literal : EEnum.class.cast(structuralFeature.getEType()).getELiterals()) {
 			inputValues.add(literal.getInstance());
 		}
 		combo.setInput(inputValues);
@@ -97,7 +117,12 @@ public class EnumComboViewerSWTRenderer extends SimpleControlJFaceViewerSWTRende
 	 */
 	@Override
 	protected String getUnsetText() {
-		return RendererMessages.EEnumControl_NoValueSetClickToSetValue;
+		return LocalizationServiceHelper
+			.getString(getClass(), MessageKeys.EEnumControl_NoValueSetClickToSetValue);
+	}
+
+	private EMFFormsEditSupport getEMFFormsEditSupport() {
+		return emfFormsEditSupport;
 	}
 
 }

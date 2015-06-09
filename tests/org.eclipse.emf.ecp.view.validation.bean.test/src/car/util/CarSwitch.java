@@ -2,12 +2,14 @@
  */
 package car.util;
 
-import car.*;
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.util.Switch;
+
+import car.Car;
+import car.CarPackage;
+import car.Driver;
+import car.Person;
 
 /**
  * <!-- begin-user-doc --> The <b>Switch</b> for the model's inheritance

@@ -6,12 +6,12 @@
 	<parent>
 		<groupId>org.eclipse.emf.ecp</groupId>
 		<artifactId>ecp-tests-parent</artifactId>
-		<version>1.5.1-SNAPSHOT</version>
+		<version>1.6.0-SNAPSHOT</version>
 		<relativePath>../../releng/org.eclipse.emf.ecp.releng.tests/</relativePath>
 	</parent>
 	<groupId>org.eclipse.emf.ecp</groupId>
 	<artifactId>org.eclipse.emf.ecp.integrationtest</artifactId>
-	<version>1.5.1-SNAPSHOT</version>
+	<version>1.6.0-SNAPSHOT</version>
 	<packaging>eclipse-test-plugin</packaging>
 
 	<build>
@@ -22,25 +22,24 @@
 				<artifactId>tycho-surefire-plugin</artifactId>
 				<version>${tycho-version}</version>
 				<configuration>
-		          	<useUIHarness>false</useUIHarness>
-		          	<useUIThread>false</useUIThread>
-					<dependencies>
-						<dependency>
-							<type>eclipse-feature</type>
-							<artifactId>org.eclipse.emf.ecp.target.feature</artifactId>
-							<version>0.0.0</version>
-						</dependency>
-						<dependency>
-							<type>eclipse-feature</type>
-							<artifactId>org.eclipse.emf.ecp.sdk.feature</artifactId>
-							<version>0.0.0</version>
-						</dependency>
-						<dependency>
-							<type>eclipse-feature</type>
-							<artifactId>org.eclipse.emf.ecp.emfstore.feature</artifactId>
-							<version>0.0.0</version>
-						</dependency>
-					</dependencies>
+					<useUIHarness>false</useUIHarness>
+					<useUIThread>false</useUIThread>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>target-platform-configuration</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<dependency-resolution>
+						<extraRequirements>
+							<requirement>
+								<type>eclipse-feature</type>
+								<id>org.eclipse.emf.ecp.feature</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+						</extraRequirements>
+					</dependency-resolution>
 				</configuration>
 			</plugin>
 		</plugins>

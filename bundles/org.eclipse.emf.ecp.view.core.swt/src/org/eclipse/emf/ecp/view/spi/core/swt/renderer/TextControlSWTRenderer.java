@@ -13,28 +13,43 @@ package org.eclipse.emf.ecp.view.spi.core.swt.renderer;
 
 import java.util.Set;
 
+import javax.inject.Inject;
+
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
+import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
-import org.eclipse.emf.ecp.view.internal.core.swt.renderer.RendererMessages;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecp.view.internal.core.swt.MessageKeys;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.provider.ECPTooltipModifierHelper;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
+import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.template.style.alignment.model.AlignmentType;
 import org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.textControlEnablement.model.VTTextControlEnablementStyleProperty;
 import org.eclipse.emf.edit.command.SetCommand;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
+import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
+import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
@@ -47,52 +62,79 @@ import org.eclipse.swt.widgets.Text;
  *
  */
 public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
-	/**
-	 * Default constructor.
-	 */
-	public TextControlSWTRenderer() {
-		super();
-	}
+
+	private final EMFFormsEditSupport emfFormsEditSupport;
 
 	/**
-	 * Test constructor.
+	 * Default constructor.
 	 *
-	 * @param factory the {@link SWTRendererFactory} to use.
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param reportService The {@link ReportService}
+	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
+	 * @param emfFormsLabelProvider The {@link EMFFormsLabelProvider}
+	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
+	 * @param emfFormsEditSupport The {@link EMFFormsEditSupport}
+	 * @since 1.6
 	 */
-	protected TextControlSWTRenderer(SWTRendererFactory factory) {
-		super(factory);
+	@Inject
+	public TextControlSWTRenderer(VControl vElement, ViewModelContext viewContext,
+		ReportService reportService,
+		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
+		VTViewTemplateProvider vtViewTemplateProvider, EMFFormsEditSupport emfFormsEditSupport) {
+		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
+		this.emfFormsEditSupport = emfFormsEditSupport;
 	}
 
 	@Override
-	protected Binding[] createBindings(Control control, Setting setting) {
+	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
+		final EStructuralFeature structuralFeature = (EStructuralFeature) getModelValue().getValueType();
 		final TargetToModelUpdateStrategy targetToModelUpdateStrategy = new TargetToModelUpdateStrategy(
-			setting.getEStructuralFeature().isUnsettable());
+			structuralFeature.isUnsettable());
 		final ModelToTargetUpdateStrategy modelToTargetUpdateStrategy = new ModelToTargetUpdateStrategy(false);
-		final Binding binding = bindValue(control, getModelValue(setting), getDataBindingContext(),
+		final Binding binding = bindValue(control, getModelValue(), getDataBindingContext(),
 			targetToModelUpdateStrategy,
 			modelToTargetUpdateStrategy);
-		final Binding tooltipBinding = createTooltipBinding(control, getModelValue(setting), getDataBindingContext(),
+		final Binding tooltipBinding = createTooltipBinding(control, getModelValue(), getDataBindingContext(),
 			targetToModelUpdateStrategy,
 			new ModelToTargetUpdateStrategy(true));
 		return new Binding[] { binding, tooltipBinding };
 	}
 
 	@Override
-	protected Control createSWTControl(Composite parent, Setting setting) {
+	protected Control createSWTControl(Composite parent) {
 		final Text text = new Text(parent, getTextWidgetStyle());
 		text.setData(CUSTOM_VARIANT, getTextVariantID());
-		text.setMessage(getTextMessage(setting));
+		text.setMessage(getTextMessage());
+		text.addFocusListener(new FocusListener() {
+			@Override
+			public void focusLost(FocusEvent e) {
+			}
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				text.selectAll();
+			}
+		});
 		return text;
 	}
 
 	/**
 	 * Returns the text which should be set as the message text on the Text field.
 	 *
-	 * @param setting the setting being shown in the text field
 	 * @return the string to show as the message
+	 * @since 1.6
 	 */
-	protected String getTextMessage(Setting setting) {
-		return getItemPropertyDescriptor(setting).getDisplayName(null);
+	protected String getTextMessage() {
+		try {
+			return (String) getEMFFormsLabelProvider()
+				.getDisplayName(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel())
+				.getValue();
+		} catch (final NoLabelFoundException ex) {
+			// FIXME Expectations?
+			getReportService().report(new RenderingFailedReport(ex));
+		}
+		return ""; //$NON-NLS-1$
 	}
 
 	/**
@@ -135,19 +177,23 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	 */
 	protected int getTextWidgetStyle() {
 		int textStyle = SWT.SINGLE | SWT.BORDER;
-		if (getItemPropertyDescriptor(getVElement().getDomainModelReference().getIterator().next()).isMultiLine(null)) {
+		final EMFFormsEditSupport editSupport = getEMFFormsEditSupport();
+		if (editSupport.isMultiLine(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel())) {
 			textStyle = SWT.MULTI | SWT.WRAP | SWT.V_SCROLL | SWT.H_SCROLL | SWT.BORDER;
 		}
 		textStyle |= getAlignment();
 		return textStyle;
 	}
 
+	private EMFFormsEditSupport getEMFFormsEditSupport() {
+		return emfFormsEditSupport;
+	}
+
 	private int getAlignment() {
-		final VTViewTemplateProvider vtViewTemplateProvider = Activator.getDefault().getVTViewTemplateProvider();
-		if (vtViewTemplateProvider == null) {
+		if (getVTViewTemplateProvider() == null) {
 			return getDefaultAlignment();
 		}
-		final Set<VTStyleProperty> styleProperties = vtViewTemplateProvider
+		final Set<VTStyleProperty> styleProperties = getVTViewTemplateProvider()
 			.getStyleProperties(getVElement(), getViewModelContext());
 		for (final VTStyleProperty styleProperty : styleProperties) {
 			if (VTAlignmentStyleProperty.class.isInstance(styleProperty)) {
@@ -185,10 +231,8 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 		if (isDisableRenderedAsEditable()
 			&& (getVElement().getLabelAlignment() == LabelAlignment.NONE && gridCell.getColumn() == 1
 			|| getVElement().getLabelAlignment() == LabelAlignment.LEFT && gridCell.getColumn() == 2)) {
-			final EStructuralFeature feature = getVElement().getDomainModelReference().getEStructuralFeatureIterator()
-				.next();
 			Control controlToUnset = control;
-			if (feature.isUnsettable()) {
+			if (isControlUnsettable()) {
 				// if (!setting.isSet()) {
 				// return;
 				// }
@@ -200,8 +244,22 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 		}
 	}
 
+	private boolean isControlUnsettable() {
+		IValueProperty valueProperty;
+		try {
+			valueProperty = getEMFFormsDatabinding()
+				.getValueProperty(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
+		} catch (final DatabindingFailedException ex) {
+			getReportService().report(new RenderingFailedReport(ex));
+			return false;
+		}
+		final EStructuralFeature feature = (EStructuralFeature) valueProperty;
+		final boolean unsettable = feature.isUnsettable();
+		return unsettable;
+	}
+
 	private boolean isDisableRenderedAsEditable() {
-		final VTViewTemplateProvider vtViewTemplateProvider = Activator.getDefault().getVTViewTemplateProvider();
+		final VTViewTemplateProvider vtViewTemplateProvider = getVTViewTemplateProvider();
 		if (vtViewTemplateProvider == null) {
 			return false;
 		}
@@ -279,8 +337,17 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 		public Object convert(Object value) {
 			final Object converted = convertValue(value);
 			if (tooltip && String.class.isInstance(converted)) {
-				return ECPTooltipModifierHelper.modifyString(String.class.cast(converted), getVElement()
-					.getDomainModelReference().getIterator().next());
+				IObservableValue observableValue;
+				try {
+					observableValue = getModelValue();
+				} catch (final DatabindingFailedException ex) {
+					getReportService().report(new DatabindingFailedReport(ex));
+					return converted;
+				}
+				final InternalEObject internalEObject = (InternalEObject) ((IObserving) observableValue).getObserved();
+				final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+				return ECPTooltipModifierHelper.modifyString(String.class.cast(converted),
+					internalEObject.eSetting(structuralFeature));
 			}
 			return converted;
 		}
@@ -335,7 +402,8 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	 */
 	@Override
 	protected String getUnsetText() {
-		return RendererMessages.StringControl_NoTextSetClickToSetText;
+		return LocalizationServiceHelper
+			.getString(getClass(), MessageKeys.StringControl_NoTextSetClickToSetText);
 	}
 
 }

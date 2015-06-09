@@ -17,9 +17,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.internal.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emfforms.spi.swt.core.layout.LayoutProvider;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Layout;
 import org.osgi.framework.Bundle;
@@ -50,9 +55,11 @@ public final class LayoutProviderHelper {
 	}
 
 	private static void readLayoutProviders() {
-		final IConfigurationElement[] controls = Platform.getExtensionRegistry()
-			.getConfigurationElementsFor(
-				EXTENSION_POINT_ID);
+		final IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
+		if (extensionRegistry == null) {
+			return;
+		}
+		final IConfigurationElement[] controls = extensionRegistry.getConfigurationElementsFor(EXTENSION_POINT_ID);
 		for (final IConfigurationElement e : controls) {
 			try {
 				final String clazz = e.getAttribute(CLASS);
@@ -118,16 +125,17 @@ public final class LayoutProviderHelper {
 	 * @param currentRowGridDescription the {@link GridDescription} of the current row
 	 * @param fullGridDescription the {@link GridDescription} of the whole container
 	 * @param vElement the {@link VElement} which is currently rendered
+	 * @param domainModel The domain model object whose feature is currently rendered
 	 * @param control the rendered {@link Control}
 	 * @return the Object being the layout data to set
+	 * @since 1.6
 	 */
 	public static Object getLayoutData(SWTGridCell gridCell, SWTGridDescription controlGridDescription,
 		SWTGridDescription currentRowGridDescription, SWTGridDescription fullGridDescription, VElement vElement,
-		Control control) {
+		EObject domainModel, Control control) {
 		checkProviderLength();
 		return getLayoutProvider().get(0).getLayoutData(gridCell, controlGridDescription, currentRowGridDescription,
-			fullGridDescription,
-			vElement, control);
+			fullGridDescription, vElement, domainModel, control);
 	}
 
 	private static void checkProviderLength() {
@@ -153,5 +161,15 @@ public final class LayoutProviderHelper {
 	public static Object getSpanningLayoutData(int spanX, int spanY) {
 		checkProviderLength();
 		return getLayoutProvider().get(0).getSpanningLayoutData(spanX, spanY);
+	}
+
+	/**
+	 * Allows to add a {@link LayoutProvider} directly.
+	 *
+	 * @param layoutProvider The {@link LayoutProvider}
+	 * @since 1.6
+	 */
+	public static void addLayoutProvider(LayoutProvider layoutProvider) {
+		layoutProviders.add(layoutProvider);
 	}
 }

@@ -18,9 +18,9 @@ import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
+import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
@@ -93,7 +93,7 @@ public class DICustomControlSWT extends ECPAbstractCustomControlSWT {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#renderControl(org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell,
+	 * @see org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#renderControl(org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell,
 	 *      org.eclipse.swt.widgets.Composite)
 	 */
 	@SuppressWarnings("restriction")

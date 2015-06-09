@@ -115,14 +115,16 @@ public interface VIndexdmrPackage extends EPackage
 	int INDEX_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH;
 
 	/**
-	 * The feature id for the '<em><b>Target DMR</b></em>' containment reference.
+	 * The feature id for the '<em><b>Prefix DMR</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 *
+	 * @since 1.6
+	 *        <!-- end-user-doc -->
 	 *
 	 * @generated
 	 * @ordered
 	 */
-	int INDEX_DOMAIN_MODEL_REFERENCE__TARGET_DMR = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 0;
+	int INDEX_DOMAIN_MODEL_REFERENCE__PREFIX_DMR = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Index</b></em>' attribute.
@@ -135,6 +137,16 @@ public interface VIndexdmrPackage extends EPackage
 	int INDEX_DOMAIN_MODEL_REFERENCE__INDEX = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Target DMR</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int INDEX_DOMAIN_MODEL_REFERENCE__TARGET_DMR = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 2;
+
+	/**
 	 * The number of structural features of the '<em>Index Domain Model Reference</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -142,7 +154,7 @@ public interface VIndexdmrPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int INDEX_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 2;
+	int INDEX_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 3;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference
@@ -155,6 +167,21 @@ public interface VIndexdmrPackage extends EPackage
 	 * @generated
 	 */
 	EClass getIndexDomainModelReference();
+
+	/**
+	 * Returns the meta object for the containment reference '
+	 * {@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference#getPrefixDMR <em>Prefix DMR</em>}'.
+	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 1.6
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the containment reference '<em>Prefix DMR</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference#getPrefixDMR()
+	 * @see #getIndexDomainModelReference()
+	 * @generated
+	 */
+	EReference getIndexDomainModelReference_PrefixDMR();
 
 	/**
 	 * Returns the meta object for the containment reference '
@@ -219,6 +246,17 @@ public interface VIndexdmrPackage extends EPackage
 		 * @generated
 		 */
 		EClass INDEX_DOMAIN_MODEL_REFERENCE = eINSTANCE.getIndexDomainModelReference();
+
+		/**
+		 * The meta object literal for the '<em><b>Prefix DMR</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * 
+		 * @since 1.6
+		 *        <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EReference INDEX_DOMAIN_MODEL_REFERENCE__PREFIX_DMR = eINSTANCE.getIndexDomainModelReference_PrefixDMR();
 
 		/**
 		 * The meta object literal for the '<em><b>Target DMR</b></em>' containment reference feature.

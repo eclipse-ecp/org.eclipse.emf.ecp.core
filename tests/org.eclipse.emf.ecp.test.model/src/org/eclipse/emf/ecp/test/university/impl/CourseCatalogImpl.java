@@ -30,15 +30,14 @@ import org.eclipse.emf.ecp.test.university.UniversityPackage;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.test.university.impl.CourseCatalogImpl#getCourses <em>Courses</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
-public class CourseCatalogImpl extends MinimalEObjectImpl.Container implements CourseCatalog
-{
+public class CourseCatalogImpl extends MinimalEObjectImpl.Container implements CourseCatalog {
 	/**
 	 * The cached value of the '{@link #getCourses() <em>Courses</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
@@ -56,8 +55,7 @@ public class CourseCatalogImpl extends MinimalEObjectImpl.Container implements C
 	 *
 	 * @generated
 	 */
-	protected CourseCatalogImpl()
-	{
+	protected CourseCatalogImpl() {
 		super();
 	}
 
@@ -68,8 +66,7 @@ public class CourseCatalogImpl extends MinimalEObjectImpl.Container implements C
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return UniversityPackage.Literals.COURSE_CATALOG;
 	}
 
@@ -79,11 +76,10 @@ public class CourseCatalogImpl extends MinimalEObjectImpl.Container implements C
 	 *
 	 * @generated
 	 */
-	public EList<Course> getCourses()
-	{
-		if (courses == null)
-		{
-			courses = new EObjectContainmentEList<Course>(Course.class, this, UniversityPackage.COURSE_CATALOG__COURSES);
+	public EList<Course> getCourses() {
+		if (courses == null) {
+			courses = new EObjectContainmentEList<Course>(Course.class, this,
+				UniversityPackage.COURSE_CATALOG__COURSES);
 		}
 		return courses;
 	}
@@ -95,10 +91,8 @@ public class CourseCatalogImpl extends MinimalEObjectImpl.Container implements C
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-	{
-		switch (featureID)
-		{
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
 		case UniversityPackage.COURSE_CATALOG__COURSES:
 			return ((InternalEList<?>) getCourses()).basicRemove(otherEnd, msgs);
 		}
@@ -112,10 +106,8 @@ public class CourseCatalogImpl extends MinimalEObjectImpl.Container implements C
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
-		switch (featureID)
-		{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 		case UniversityPackage.COURSE_CATALOG__COURSES:
 			return getCourses();
 		}
@@ -130,10 +122,8 @@ public class CourseCatalogImpl extends MinimalEObjectImpl.Container implements C
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
-		switch (featureID)
-		{
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 		case UniversityPackage.COURSE_CATALOG__COURSES:
 			getCourses().clear();
 			getCourses().addAll((Collection<? extends Course>) newValue);
@@ -149,10 +139,8 @@ public class CourseCatalogImpl extends MinimalEObjectImpl.Container implements C
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
-		switch (featureID)
-		{
+	public void eUnset(int featureID) {
+		switch (featureID) {
 		case UniversityPackage.COURSE_CATALOG__COURSES:
 			getCourses().clear();
 			return;
@@ -167,10 +155,8 @@ public class CourseCatalogImpl extends MinimalEObjectImpl.Container implements C
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
-		switch (featureID)
-		{
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 		case UniversityPackage.COURSE_CATALOG__COURSES:
 			return courses != null && !courses.isEmpty();
 		}

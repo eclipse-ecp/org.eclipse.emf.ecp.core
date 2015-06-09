@@ -15,6 +15,8 @@ import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import org.eclipse.core.databinding.observable.IObserving;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -26,10 +28,14 @@ import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.common.spi.EMFUtils;
 import org.eclipse.emf.ecp.view.internal.editor.controls.EditableEReferenceLabelControlSWTRenderer;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
@@ -47,6 +53,15 @@ import org.eclipse.ui.dialogs.ISelectionStatusValidator;
 @SuppressWarnings("restriction")
 public class MappedEClassControlSWTRenderer extends
 	EditableEReferenceLabelControlSWTRenderer {
+
+	/**
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param reportService the {@link ReportService}
+	 */
+	public MappedEClassControlSWTRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService) {
+		super(vElement, viewContext, reportService);
+	}
 
 	/**
 	 * @author Eugen
@@ -118,8 +133,17 @@ public class MappedEClassControlSWTRenderer extends
 
 	@Override
 	protected void linkValue(Shell shell) {
-		final VMappingDomainModelReference dmr = (VMappingDomainModelReference) getVElement()
-			.getDomainModelReference().getIterator().next().getEObject();
+		IObservableValue observableValue;
+		try {
+			observableValue = Activator.getDefault().getEMFFormsDatabinding()
+				.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
+		} catch (final DatabindingFailedException ex) {
+			showLinkValueFailedMessageDialog(shell, ex);
+			return;
+		}
+		final VMappingDomainModelReference dmr = (VMappingDomainModelReference) ((IObserving) observableValue)
+			.getObserved();
+		observableValue.dispose();
 		final ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
 			new ReflectiveItemProviderAdapterFactory(),
 			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });

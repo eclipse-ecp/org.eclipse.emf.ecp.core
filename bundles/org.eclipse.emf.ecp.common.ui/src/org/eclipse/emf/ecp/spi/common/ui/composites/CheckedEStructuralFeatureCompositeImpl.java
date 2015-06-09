@@ -18,7 +18,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.emf.ecp.internal.common.ui.Messages;
+import org.eclipse.emf.ecp.internal.common.ui.MessageKeys;
+import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
@@ -71,7 +72,8 @@ public class CheckedEStructuralFeatureCompositeImpl extends SelectModelElementCo
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.TOP).grab(true, false).span(2, 1).applyTo(buttons);
 
 		final Button buttonAll = new Button(buttons, SWT.PUSH);
-		buttonAll.setText(Messages.CheckedModelElementHelper_SelectAllLabel);
+		buttonAll.setText(LocalizationServiceHelper.getString(getClass(),
+			MessageKeys.CheckedModelElementHelper_SelectAllLabel));
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.TOP).grab(true, false).applyTo(buttonAll);
 		buttonAll.addSelectionListener(new SelectionAdapter() {
 
@@ -83,7 +85,8 @@ public class CheckedEStructuralFeatureCompositeImpl extends SelectModelElementCo
 		});
 
 		final Button buttonNone = new Button(buttons, SWT.PUSH);
-		buttonNone.setText(Messages.CheckedModelElementHelper_DeselectAllLabel);
+		buttonNone.setText(LocalizationServiceHelper.getString(getClass(),
+			MessageKeys.CheckedModelElementHelper_DeselectAllLabel));
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.TOP).grab(true, false).applyTo(buttonNone);
 		buttonNone.addSelectionListener(new SelectionAdapter() {
 

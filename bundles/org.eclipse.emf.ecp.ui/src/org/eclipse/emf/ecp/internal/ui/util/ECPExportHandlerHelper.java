@@ -14,7 +14,6 @@ package org.eclipse.emf.ecp.internal.ui.util;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -32,6 +31,9 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.swt.widgets.Shell;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * A utility class which provides support for exporting model elements.
@@ -59,8 +61,6 @@ public final class ECPExportHandlerHelper {
 	public static final String[] FILTER_EXTS = { "*." + FILE_EXTENSION }; //$NON-NLS-1$
 
 	private static final String EXPORT_MODEL_PATH = "org.eclipse.emf.emfstore.client.ui.exportModelPath"; //$NON-NLS-1$
-
-	private static final String FILE_DIALOG_HELPER_CLASS = "org.eclipse.emf.ecp.internal.ui.util.ECPFileDialogHelperImpl"; //$NON-NLS-1$
 
 	/**
 	 * Export a list of model elements.
@@ -142,27 +142,13 @@ public final class ECPExportHandlerHelper {
 	}
 
 	private static String getFilePathByFileDialog(Shell shell, String modelElementName) {
-		try {
-			final Class<ECPFileDialogHelper> clazz = HandlerHelperUtil.loadClass(Activator.PLUGIN_ID,
-				FILE_DIALOG_HELPER_CLASS);
-			final ECPFileDialogHelper fileDialogHelper = clazz.getConstructor().newInstance();
-			return fileDialogHelper.getPathForExport(shell, modelElementName);
-		} catch (final ClassNotFoundException ex) {
-			Activator.log(ex);
-		} catch (final InstantiationException ex) {
-			Activator.log(ex);
-		} catch (final IllegalAccessException ex) {
-			Activator.log(ex);
-		} catch (final IllegalArgumentException ex) {
-			Activator.log(ex);
-		} catch (final InvocationTargetException ex) {
-			Activator.log(ex);
-		} catch (final NoSuchMethodException ex) {
-			Activator.log(ex);
-		} catch (final SecurityException ex) {
-			Activator.log(ex);
-		}
-		return null;
+		final BundleContext bundleContext = FrameworkUtil.getBundle(ECPExportHandlerHelper.class).getBundleContext();
+		final ServiceReference<ECPFileDialogHelper> serviceReference = bundleContext
+			.getServiceReference(ECPFileDialogHelper.class);
+		final ECPFileDialogHelper fileDialogHelper = bundleContext.getService(serviceReference);
+		final String result = fileDialogHelper.getPathForExport(shell, modelElementName);
+		bundleContext.ungetService(serviceReference);
+		return result;
 	}
 
 	/**

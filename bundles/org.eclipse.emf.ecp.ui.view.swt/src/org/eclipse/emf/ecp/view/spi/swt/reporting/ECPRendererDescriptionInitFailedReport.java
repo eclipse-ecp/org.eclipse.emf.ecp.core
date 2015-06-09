@@ -13,7 +13,7 @@ package org.eclipse.emf.ecp.view.spi.swt.reporting;
 
 import java.text.MessageFormat;
 
-import org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
 
 /**
  * Indicates that an {@link org.eclipse.emf.ecp.view.internal.swt.ECPRendererDescription ECPRendererDescription} could

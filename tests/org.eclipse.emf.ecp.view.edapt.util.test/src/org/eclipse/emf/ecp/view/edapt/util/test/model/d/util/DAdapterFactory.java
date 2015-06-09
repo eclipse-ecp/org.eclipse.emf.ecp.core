@@ -1,4 +1,12 @@
 /**
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
  */
 package org.eclipse.emf.ecp.view.edapt.util.test.model.d.util;
 
@@ -69,18 +77,17 @@ public class DAdapterFactory extends AdapterFactoryImpl {
 	 * 
 	 * @generated
 	 */
-	protected DSwitch<Adapter> modelSwitch =
-		new DSwitch<Adapter>() {
-			@Override
-			public Adapter caseD(EdaptTestD object) {
-				return createDAdapter();
-			}
+	protected DSwitch<Adapter> modelSwitch = new DSwitch<Adapter>() {
+		@Override
+		public Adapter caseD(EdaptTestD object) {
+			return createDAdapter();
+		}
 
-			@Override
-			public Adapter defaultCase(EObject object) {
-				return createEObjectAdapter();
-			}
-		};
+		@Override
+		public Adapter defaultCase(EObject object) {
+			return createEObjectAdapter();
+		}
+	};
 
 	/**
 	 * Creates an adapter for the <code>target</code>.

@@ -14,20 +14,32 @@ package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 import java.util.Calendar;
 import java.util.Locale;
 
+import javax.inject.Inject;
+
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.UpdateValueStrategy;
+import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.DateAndTimeObservableValue;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.spi.ViewLocaleService;
-import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
+import org.eclipse.emf.ecp.view.internal.core.swt.MessageKeys;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.edit.command.SetCommand;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -46,6 +58,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * A control which can handle {@link java.util.Date Date}.
@@ -54,6 +67,33 @@ import org.eclipse.swt.widgets.Shell;
  *
  */
 public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
+
+	private final EMFFormsLocalizationService localizationService;
+
+	private final ImageRegistryService imageRegistryService;
+
+	/**
+	 * Default constructor.
+	 *
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param reportService The {@link ReportService}
+	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
+	 * @param emfFormsLabelProvider The {@link EMFFormsLabelProvider}
+	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
+	 * @param localizationService The {@link EMFFormsLocalizationService}
+	 * @param imageRegistryService The {@link ImageRegistryService}
+	 */
+	@Inject
+	public DateTimeControlSWTRenderer(VControl vElement, ViewModelContext viewContext,
+		ReportService reportService,
+		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
+		VTViewTemplateProvider vtViewTemplateProvider, EMFFormsLocalizationService localizationService,
+		ImageRegistryService imageRegistryService) {
+		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
+		this.localizationService = localizationService;
+		this.imageRegistryService = imageRegistryService;
+	}
 
 	private Label unsetLabel;
 
@@ -65,29 +105,12 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 
 	private Shell dialog;
 
-	private Setting setting;
+	// private Setting setting;
 
 	private ModelChangeListener domainModelChangeListener;
 
-	/**
-	 * Default constructor.
-	 */
-	public DateTimeControlSWTRenderer() {
-		super();
-	}
-
-	/**
-	 * Test constructor.
-	 *
-	 * @param factory the {@link SWTRendererFactory} to use.
-	 */
-	DateTimeControlSWTRenderer(SWTRendererFactory factory) {
-		super(factory);
-	}
-
 	@Override
-	protected Binding[] createBindings(Control control, final Setting setting) {
-		this.setting = setting;
+	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
 
 		final DateTime date = (DateTime) ((Composite) ((Composite) ((Composite) control).getChildren()[0])
 			.getChildren()[0]).getChildren()[0];
@@ -101,9 +124,9 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 		final IObservableValue dateObserver = SWTObservables.observeSelection(date);
 		final IObservableValue timeObserver = SWTObservables.observeSelection(time);
 		final IObservableValue target = new DateAndTimeObservableValue(dateObserver, timeObserver);
-		final Binding binding = getDataBindingContext().bindValue(target, getModelValue(setting));
+		final Binding binding = getDataBindingContext().bindValue(target, getModelValue());
 
-		setBtn.addSelectionListener(new SetBtnSelectionAdapterExtension(setBtn, getModelValue(setting),
+		setBtn.addSelectionListener(new SetBtnSelectionAdapterExtension(setBtn, getModelValue(),
 			getViewModelContext()));
 
 		unsetBtn.addSelectionListener(new UnsetBtnSelectionAdapterExtension());
@@ -112,9 +135,15 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 
 			@Override
 			public void notifyChange(ModelChangeNotification notification) {
-				if (setting.getEStructuralFeature().equals(notification.getStructuralFeature())) {
+				EStructuralFeature structuralFeature;
+				try {
+					structuralFeature = (EStructuralFeature) getModelValue().getValueType();
+				} catch (final DatabindingFailedException ex) {
+					getReportService().report(new DatabindingFailedReport(ex));
+					return;
+				}
+				if (structuralFeature.equals(notification.getStructuralFeature())) {
 					updateChangeListener(notification.getRawNotification().getNewValue());
-
 				}
 			}
 		};
@@ -137,7 +166,7 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 	}
 
 	@Override
-	protected Control createSWTControl(Composite parent, Setting setting) {
+	protected Control createSWTControl(Composite parent) throws DatabindingFailedException {
 		composite = new Composite(parent, SWT.NONE);
 		composite.setBackground(parent.getBackground());
 		GridLayoutFactory.fillDefaults().numColumns(2).spacing(2, 0).equalWidth(false)
@@ -175,17 +204,23 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 
 		final Button bUnset = new Button(dateTimeComposite, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(false, false).align(SWT.CENTER, SWT.CENTER).applyTo(bUnset);
-		bUnset.setImage(Activator.getImage("icons/delete.png")); //$NON-NLS-1$
+		bUnset
+			.setImage(imageRegistryService.getImage(FrameworkUtil.getBundle(getClass()), "icons/unset_feature.png")); //$NON-NLS-1$
 		bUnset.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_dateTime_buttonUnset"); //$NON-NLS-1$
-		bUnset.setToolTipText(RendererMessages.DateTimeControlSWTRenderer_CleanDate);
+		bUnset.setToolTipText(getLocalizedString(MessageKeys.DateTimeControlSWTRenderer_CleanDate));
 
 		final Button bDate = new Button(composite, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(false, false).align(SWT.CENTER, SWT.CENTER).applyTo(bDate);
-		bDate.setImage(Activator.getImage("icons/date.png")); //$NON-NLS-1$
+		bDate.setImage(imageRegistryService.getImage(FrameworkUtil.getBundle(getClass()), "icons/date.png")); //$NON-NLS-1$
 		bDate.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_dateTime_buttonSet"); //$NON-NLS-1$
-		bDate.setToolTipText(RendererMessages.DateTimeControlSWTRenderer_SelectData);
+		bDate.setToolTipText(getLocalizedString(MessageKeys.DateTimeControlSWTRenderer_SelectData));
 
-		if (setting.isSet()) {
+		final IObservableValue observableValue = getEMFFormsDatabinding()
+			.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
+		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+		final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
+		observableValue.dispose();
+		if (eObject.eIsSet(structuralFeature)) {
 			stackLayout.topControl = dateTimeComposite;
 		} else {
 			stackLayout.topControl = unsetLabel;
@@ -212,7 +247,11 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 	 */
 	@Override
 	protected String getUnsetText() {
-		return RendererMessages.DateTimeControl_NoDateSetClickToSetDate;
+		return getLocalizedString(MessageKeys.DateTimeControl_NoDateSetClickToSetDate);
+	}
+
+	private String getLocalizedString(String key) {
+		return localizationService.getString(getClass(), key);
 	}
 
 	/**
@@ -296,10 +335,18 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 
 		@Override
 		public void widgetSelected(SelectionEvent e) {
-			final Command removeCommand = SetCommand.create(getEditingDomain(setting), setting.getEObject(),
-				setting.getEStructuralFeature(), null);
-			getEditingDomain(setting).getCommandStack().execute(removeCommand);
-			updateChangeListener(getModelValue(setting).getValue());
+			try {
+				final EStructuralFeature structuralFeature = (EStructuralFeature) getModelValue().getValueType();
+				final EObject eObject = (EObject) ((IObserving) getModelValue()).getObserved();
+				final Command removeCommand = SetCommand.create(getEditingDomain(eObject), eObject, structuralFeature,
+					null);
+				getEditingDomain(eObject).getCommandStack().execute(removeCommand);
+				updateChangeListener(getModelValue().getValue());
+			} catch (final DatabindingFailedException ex) {
+				getReportService().report(new DatabindingFailedReport(ex));
+				// Do nothing. This should not happen because if getModelValue() fails, the control will never be
+				// rendered and consequently this code will never be executed.
+			}
 		}
 
 	}

@@ -11,11 +11,15 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.diffmerge.internal.renderer.swt;
 
+import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.swt.ECPAdditionalRendererTester;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 
 /**
  * The tester for {@link SWTDiffMergeAddition}.
@@ -39,10 +43,20 @@ public class SWTDiffMergeAdditionTester implements ECPAdditionalRendererTester {
 		if (!VControl.class.isInstance(vElement)) {
 			return false;
 		}
-		if (!((VControl) vElement).getDomainModelReference().getEStructuralFeatureIterator().next().isChangeable()) {
+		final VControl control = (VControl) vElement;
+		IValueProperty valueProperty;
+		try {
+			valueProperty = Activator.getInstance().getEMFFormsDatabinding()
+				.getValueProperty(control.getDomainModelReference(), viewModelContext.getDomainModel());
+		} catch (final DatabindingFailedException ex) {
+			Activator.getInstance().getReportService().report(new DatabindingFailedReport(ex));
 			return false;
 		}
-		if (!((DiffMergeModelContext) viewModelContext).hasDiff((VControl) vElement)) {
+		final EStructuralFeature feature = (EStructuralFeature) valueProperty.getValueType();
+		if (!feature.isChangeable()) {
+			return false;
+		}
+		if (!((DiffMergeModelContext) viewModelContext).hasDiff(control)) {
 			return false;
 		}
 		return true;

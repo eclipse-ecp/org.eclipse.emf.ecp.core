@@ -11,18 +11,20 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.stack.ui.swt;
 
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.core.databinding.observable.IObserving;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
@@ -32,6 +34,8 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.stack.model.VStackItem;
 import org.eclipse.emf.ecp.view.spi.stack.model.VStackLayout;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 
 /**
  * {@link ViewModelService} evaluating changes on the {@link VDomainModelReference} of the {@link VStackLayout} based on
@@ -99,17 +103,23 @@ public class StackItemViewService implements ViewModelService {
 	}
 
 	private Setting addToRegistry(VStackLayout stack, VDomainModelReference dmr) {
-		Setting firstSetting = null;
-		final Iterator<Setting> settings = dmr.getIterator();
-		if (settings.hasNext()) {
-			firstSetting = settings.next();
-		}
-		if (firstSetting == null) {
+		IObservableValue observableValue;
+		try {
+			observableValue = Activator.getDefault().getEMFFormsDatabinding().getObservableValue(dmr, domain);
+		} catch (final DatabindingFailedException ex) {
+			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 			// TODO JF how to handle?
 			return null;
 		}
-		addToRegistry(firstSetting.getEObject(), firstSetting.getEStructuralFeature(), stack);
-		return firstSetting;
+		final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
+		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+		observableValue.dispose();
+		if (!eObject.eClass().getEAllStructuralFeatures().contains(structuralFeature)) {
+			return null;
+		}
+
+		addToRegistry(eObject, structuralFeature, stack);
+		return ((InternalEObject) eObject).eSetting(structuralFeature);
 	}
 
 	private void addToRegistry(EObject object, final EStructuralFeature domainModelEFeature, final VStackLayout stack) {
@@ -154,7 +164,7 @@ public class StackItemViewService implements ViewModelService {
 					}
 				} else {
 					if (EcorePackage.eINSTANCE.getEEnum().isInstance(domainModelEFeature.getEType())) {
-						if (item.getValue().equals(Enumerator.class.cast(currentValue).getLiteral())) {
+						if (Enumerator.class.cast(currentValue).getLiteral().equals(item.getValue())) {
 							stack.setTopElement(item);
 							topElementSet = true;
 							break;

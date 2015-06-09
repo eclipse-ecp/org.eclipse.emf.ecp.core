@@ -14,12 +14,15 @@ package org.eclipse.emf.ecp.view.spi.swt;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
+import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -40,9 +43,14 @@ public final class UnknownVElementSWTRenderer extends AbstractSWTRenderer<VEleme
 
 	/**
 	 * Default constructor.
+	 *
+	 * @since 1.6
+	 * @param vElement The {@link VElement}
+	 * @param viewContext The {@link ViewModelContext}
+	 * @param reportService The {@link ReportService}
 	 */
-	public UnknownVElementSWTRenderer() {
-		super();
+	public UnknownVElementSWTRenderer(VElement vElement, ViewModelContext viewContext, ReportService reportService) {
+		super(vElement, viewContext, reportService);
 		gridDescription = GridDescriptionFactory.INSTANCE.createEmptyGridDescription();
 		final SWTGridCell gc = new SWTGridCell(0, 0, this);
 		gc.setHorizontalFill(true);
@@ -57,7 +65,7 @@ public final class UnknownVElementSWTRenderer extends AbstractSWTRenderer<VEleme
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription)
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#getGridDescription(org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription)
 	 */
 	@Override
 	public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
@@ -67,7 +75,7 @@ public final class UnknownVElementSWTRenderer extends AbstractSWTRenderer<VEleme
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell,
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#renderControl(org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell,
 	 *      org.eclipse.swt.widgets.Composite)
 	 */
 	@Override

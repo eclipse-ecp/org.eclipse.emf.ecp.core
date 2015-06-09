@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.actions.AddAttributeAction;
 import org.eclipse.emf.ecp.edit.spi.swt.actions.ECPSWTAction;
 import org.eclipse.emf.ecp.edit.spi.util.ECPStaticApplicableTester;
+import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 
 /**
  * This class defines a Control which is used for displaying {@link org.eclipse.emf.ecore.EStructuralFeature}s which
@@ -46,7 +47,8 @@ public class AttributeMultiControl extends MultiControl {
 	 */
 	@Override
 	protected String getUnsetLabelText() {
-		return ControlMessages.AttributeMultiControl_NotSetClickToSet;
+		return LocalizationServiceHelper.getString(getClass(),
+			DepricatedControlMessageKeys.AttributeMultiControl_NotSetClickToSet);
 	}
 
 	/*
@@ -55,7 +57,8 @@ public class AttributeMultiControl extends MultiControl {
 	 */
 	@Override
 	protected String getUnsetButtonTooltip() {
-		return ControlMessages.AttributeMultiControl_Unset;
+		return LocalizationServiceHelper
+			.getString(getClass(), DepricatedControlMessageKeys.AttributeMultiControl_Unset);
 	}
 
 }

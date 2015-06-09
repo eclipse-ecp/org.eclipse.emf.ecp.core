@@ -15,7 +15,6 @@ import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.emf.ecp.view.model.common.di.util.ContextUtil;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.swt.widgets.Composite;
 
 /**
@@ -38,13 +37,11 @@ public final class SWTContextUtil {
 	 * @param eclipseContext the eclipse context to add the element to
 	 * @param element the {@link VElement}
 	 * @param viewModelContext the {@link ViewModelContext}
-	 * @param factory the {@link SWTRendererFactory}
 	 * @param parent the {@link Composite} to draw onto
 	 */
 	public static void setAbstractSWTRendererObjects(IEclipseContext eclipseContext, VElement element,
-		ViewModelContext viewModelContext, SWTRendererFactory factory, Composite parent) {
+		ViewModelContext viewModelContext, Composite parent) {
 		ContextUtil.setAbstractRendererObjects(eclipseContext, element, viewModelContext);
-		eclipseContext.set(SWTRendererFactory.class, factory);
 		eclipseContext.set(Composite.class, parent);
 	}
 

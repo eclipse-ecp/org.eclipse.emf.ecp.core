@@ -20,6 +20,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.ECPRepositoryManager;
+import org.eclipse.emf.ecp.core.util.observer.ECPObserverBus;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
@@ -47,24 +48,11 @@ public final class Activator extends Plugin {
 	@Override
 	public void start(BundleContext bundleContext) throws Exception {
 		instance = this;
-		// Initialize all manager
-		// getECPProviderRegistry();
-		// getECPRepositoryManager();
-		// getECPProjectManager();
 		super.start(bundleContext);
 	}
 
 	@Override
 	public void stop(BundleContext bundleContext) throws Exception {
-		if (ECPProjectManagerImpl.INSTANCE != null) {
-			ECPProjectManagerImpl.INSTANCE.deactivate();
-		}
-		if (ECPRepositoryManagerImpl.INSTANCE != null) {
-			ECPRepositoryManagerImpl.INSTANCE.deactivate();
-		}
-		if (ECPProviderRegistryImpl.INSTANCE != null) {
-			ECPProviderRegistryImpl.INSTANCE.deactivate();
-		}
 
 		instance = null;
 		super.stop(bundleContext);
@@ -129,51 +117,76 @@ public final class Activator extends Plugin {
 		return new Status(IStatus.ERROR, PLUGIN_ID, msg, t);
 	}
 
-	private static ECPProjectManager ecpProjectManager;
-
 	/**
 	 * Helper method to get the {@link ECPProjectManager}.
 	 *
 	 * @return the {@link ECPProjectManager}
 	 */
-	public static ECPProjectManager getECPProjectManager() {
-		if (ecpProjectManager == null) {
-			final ServiceReference<ECPProjectManager> serviceRef = instance.getBundle().getBundleContext()
-				.getServiceReference(ECPProjectManager.class);
-			ecpProjectManager = instance.getBundle().getBundleContext().getService(serviceRef);
-		}
+	public static synchronized ECPProjectManager getECPProjectManager() {
+		ECPProjectManager ecpProjectManager = null;
+		final ServiceReference<ECPProjectManager> serviceRef = instance.getBundle().getBundleContext()
+			.getServiceReference(ECPProjectManager.class);
+		ecpProjectManager = instance.getBundle().getBundleContext().getService(serviceRef);
+		// because we are using a service factory for the RAP implementation we must unget
+		// the service so that the service factory is called again on each call. otherwise
+		// the service factor will keep returning the same cached instance as the reference
+		// count of the service will remain greater than zero
+		instance.getBundle().getBundleContext().ungetService(serviceRef);
 		return ecpProjectManager;
 	}
-
-	private static ECPRepositoryManager ecpRepositoryManager;
 
 	/**
 	 * Helper method to get the {@link ECPRepositoryManager}.
 	 *
 	 * @return the {@link ECPRepositoryManager}
 	 */
-	public static ECPRepositoryManager getECPRepositoryManager() {
-		if (ecpRepositoryManager == null) {
-			final ServiceReference<ECPRepositoryManager> serviceRef = instance.getBundle().getBundleContext()
-				.getServiceReference(ECPRepositoryManager.class);
-			ecpRepositoryManager = instance.getBundle().getBundleContext().getService(serviceRef);
-		}
+	public static synchronized ECPRepositoryManager getECPRepositoryManager() {
+		ECPRepositoryManager ecpRepositoryManager = null;
+		final ServiceReference<ECPRepositoryManager> serviceRef = instance.getBundle().getBundleContext()
+			.getServiceReference(ECPRepositoryManager.class);
+		ecpRepositoryManager = instance.getBundle().getBundleContext().getService(serviceRef);
+		// because we are using a service factory for the RAP implementation we must unget
+		// the service so that the service factory is called again on each call. otherwise
+		// the service factor will keep returning the same cached instance as the reference
+		// count of the service will remian greater that zero
+		instance.getBundle().getBundleContext().ungetService(serviceRef);
 		return ecpRepositoryManager;
 	}
-
-	private static ECPProviderRegistry ecpProviderRegistry;
 
 	/**
 	 * Helper method to get the {@link ECPProviderRegistry}.
 	 *
 	 * @return the {@link ECPProviderRegistry}
 	 */
-	public static ECPProviderRegistry getECPProviderRegistry() {
-		if (ecpProviderRegistry == null) {
-			final ServiceReference<ECPProviderRegistry> serviceRef = instance.getBundle().getBundleContext()
-				.getServiceReference(ECPProviderRegistry.class);
-			ecpProviderRegistry = instance.getBundle().getBundleContext().getService(serviceRef);
-		}
+	public static synchronized ECPProviderRegistry getECPProviderRegistry() {
+		ECPProviderRegistry ecpProviderRegistry = null;
+		final ServiceReference<ECPProviderRegistry> serviceRef = instance.getBundle().getBundleContext()
+			.getServiceReference(ECPProviderRegistry.class);
+		ecpProviderRegistry = instance.getBundle().getBundleContext().getService(serviceRef);
+		// because we are using a service factory for the RAP implementation we must unget
+		// the service so that the service factory is called again on each call. otherwise
+		// the service factor will keep returning the same cached instance as the reference
+		// count of the service will remain greater than zero
+		instance.getBundle().getBundleContext().ungetService(serviceRef);
 		return ecpProviderRegistry;
 	}
+
+	/**
+	 * Helper method to get the {@link ECPObserverBus}.
+	 *
+	 * @return the {@link ECPObserverBus}
+	 */
+	public static synchronized ECPObserverBus getECPObserverBus() {
+		ECPObserverBus ecpObserverBus = null;
+		final ServiceReference<ECPObserverBus> serviceRef = instance.getBundle().getBundleContext()
+			.getServiceReference(ECPObserverBus.class);
+		ecpObserverBus = instance.getBundle().getBundleContext().getService(serviceRef);
+		// because we are using a service factory for the RAP implementation we must unget
+		// the service so that the service factory is called again on each call. otherwise
+		// the service factor will keep returning the same cached instance as the reference
+		// count of the service will remain greater than zero
+		instance.getBundle().getBundleContext().ungetService(serviceRef);
+		return ecpObserverBus;
+	}
+
 }

@@ -30,6 +30,7 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTViewTestHelper;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
@@ -93,7 +94,7 @@ public class SWTHorizontal_PTest {
 
 	@Test
 	public void testHorizontalWithoutChildren() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
 		// setup model
 		final HierarchyViewModelHandle handle = createHorizontalWithoutChildren();
 		final Control render = SWTViewTestHelper.render(handle.getRoot(), domainElement, shell);
@@ -104,7 +105,7 @@ public class SWTHorizontal_PTest {
 
 	@Test
 	public void testHorizontalWithTwoControlsAsChildren() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
 		// setup model
 		final HierarchyViewModelHandle handle = createHorizontalWithTwoControlsAsChildren();
 		final Control render = SWTViewTestHelper.render(handle.getRoot(), domainElement, shell);
@@ -118,7 +119,7 @@ public class SWTHorizontal_PTest {
 
 	@Test
 	public void testHorizontalWithTwoHorizontalAsChildrenAndControlAsSubChildren() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
 		// setup model
 		final HierarchyViewModelHandle handle =
 			createHorizontalWithTwoHorizontalAsChildrenAndControlAsSubChildren();

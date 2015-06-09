@@ -33,7 +33,6 @@ import org.eclipse.emf.ecp.core.util.observer.ECPObserverBus;
 import org.eclipse.emf.ecp.internal.core.Activator;
 import org.eclipse.emf.ecp.internal.core.util.ElementDescriptor;
 import org.eclipse.emf.ecp.internal.core.util.Properties;
-import org.eclipse.emf.ecp.internal.core.util.observer.ECPObserverBusImpl;
 import org.eclipse.emf.ecp.spi.core.util.ECPDisposable;
 
 /**
@@ -141,9 +140,17 @@ public final class ECPUtil {
 
 		// avoid ConcurrentModificationException while iterating over the registry's key set
 		final List<String> keySet = new ArrayList<String>(Registry.INSTANCE.keySet());
-		for (final String nsURI : keySet)
-		{
-			final EPackage ePackage = Registry.INSTANCE.getEPackage(nsURI);
+		for (final String nsURI : keySet) {
+			EPackage ePackage;
+			try {
+				ePackage = Registry.INSTANCE.getEPackage(nsURI);
+			}
+			// BEGIN SUPRESS CATCH EXCEPTION
+			catch (final Exception ex) {// END SUPRESS CATCH EXCEPTION
+				/* If there is a wrongly configured EPackage the call to getEPackage might throw a runtime exception */
+				/* Catch here, so we can still loop through the whole registry */
+				continue;
+			}
 			for (final EClassifier eClassifier : ePackage.getEClassifiers()) {
 				if (eClassifier instanceof EClass) {
 					final EClass eClass = (EClass) eClassifier;
@@ -166,26 +173,16 @@ public final class ECPUtil {
 	}
 
 	/**
-	 * Instance of the ECPProjectManager.
-	 */
-	private static ECPProjectManager ecpProjectManagerInstance;
-
-	/**
 	 * Helper method to get the instance of the {@link ECPProjectManager}.
 	 *
 	 * @return the {@link ECPProjectManager}
 	 */
 	public static ECPProjectManager getECPProjectManager() {
-		if (ecpProjectManagerInstance == null) {
-			ecpProjectManagerInstance = Activator.getECPProjectManager();
-		}
+
+		final ECPProjectManager ecpProjectManagerInstance = Activator.getECPProjectManager();
+
 		return ecpProjectManagerInstance;
 	}
-
-	/**
-	 * The {@link ECPRepositoryManager} instance.
-	 */
-	private static ECPRepositoryManager ecpRepositoryManagerInstance;
 
 	/**
 	 * Helper method to get the instance of the {@link ECPRepositoryManager}.
@@ -193,16 +190,11 @@ public final class ECPUtil {
 	 * @return the {@link ECPRepositoryManager}
 	 */
 	public static ECPRepositoryManager getECPRepositoryManager() {
-		if (ecpRepositoryManagerInstance == null) {
-			ecpRepositoryManagerInstance = Activator.getECPRepositoryManager();
-		}
-		return ecpRepositoryManagerInstance;
-	}
 
-	/**
-	 * Instance of the ECPProviderRegistry.
-	 */
-	private static ECPProviderRegistry ecpProviderRegistryInstance;
+		final ECPRepositoryManager epm = Activator.getECPRepositoryManager();
+
+		return epm;
+	}
 
 	/**
 	 * Helper method to get the instance of the {@link ECPProviderRegistry}.
@@ -210,9 +202,9 @@ public final class ECPUtil {
 	 * @return the {@link ECPProviderRegistry}
 	 */
 	public static ECPProviderRegistry getECPProviderRegistry() {
-		if (ecpProviderRegistryInstance == null) {
-			ecpProviderRegistryInstance = Activator.getECPProviderRegistry();
-		}
+
+		final ECPProviderRegistry ecpProviderRegistryInstance = Activator.getECPProviderRegistry();
+
 		return ecpProviderRegistryInstance;
 	}
 
@@ -222,6 +214,7 @@ public final class ECPUtil {
 	 * @return the {@link ECPObserverBus}
 	 */
 	public static ECPObserverBus getECPObserverBus() {
-		return ECPObserverBusImpl.getInstance();
+		return Activator.getECPObserverBus();
 	}
+
 }

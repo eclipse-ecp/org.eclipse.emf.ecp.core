@@ -28,6 +28,7 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTViewTestHelper;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
@@ -105,7 +106,8 @@ public class SWTGroup_PTest {
 	}
 
 	@Test
-	public void testOneGroupinView() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+	public void testOneGroupinView() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
+		EMFFormsNoRendererException {
 
 		// setup model
 		final VView view = createViewWithOneGroup();
@@ -132,7 +134,8 @@ public class SWTGroup_PTest {
 	}
 
 	@Test
-	public void testTwoGroupsinView() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+	public void testTwoGroupsinView() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
+		EMFFormsNoRendererException {
 
 		// setup model
 		final VView view = createViewWithTwoGroups();
@@ -173,7 +176,8 @@ public class SWTGroup_PTest {
 	}
 
 	@Test
-	public void testTwoGroupsHierachicalinView() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+	public void testTwoGroupsHierachicalinView() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
+		EMFFormsNoRendererException {
 
 		final VView view = createViewWithTwoHierachicalGroups();
 		final org.eclipse.emf.ecp.view.spi.group.model.VGroup group = (org.eclipse.emf.ecp.view.spi.group.model.VGroup) view
@@ -212,7 +216,8 @@ public class SWTGroup_PTest {
 	}
 
 	@Test
-	public void testTwoGroupsWithTwoControlsInView() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+	public void testTwoGroupsWithTwoControlsInView() throws NoRendererFoundException,
+		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
 		final VView view = createViewWithTwoGroupsWithTwoControls();
 		final org.eclipse.emf.ecp.view.spi.group.model.VGroup group1 = (org.eclipse.emf.ecp.view.spi.group.model.VGroup) view
 			.getChildren()
@@ -256,7 +261,8 @@ public class SWTGroup_PTest {
 	}
 
 	@Test
-	public void testEmptyGroup() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+	public void testEmptyGroup() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
+		EMFFormsNoRendererException {
 
 		// setup model
 		final VView view = createViewWithOneGroup();

@@ -6,8 +6,8 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _5ow-QDNtEeSiS7b7ptZeHw
-Runtime-Version: 1.5.2.201408180747
-Save-Time: 9/30/14 1:23 PM
+Runtime-Version: 1.5.5.201503020312
+Save-Time: 4/2/15 12:50 PM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -26,11 +26,17 @@ with [get-editor "UserGroup.view"] {
     }
     get-button "Create and link new Domain Model Reference" | click
 }
-with [get-window "New Reference Element"] {
-    get-button "Link Domain Model EFeature" | click
-    with [get-window "Select a EStructuralFeature"] {
-        get-tree | select "users : User"
-        get-button OK | click
+with [get-window "Configure TableDomainModelReference"] {
+    get-button "Create and link new Domain Model Reference" | click
+    with [get-window "New Reference Element"] {
+        get-tree | select "model/FeaturePathDomainModelReference"
+        get-button "Next >" | click
+        get-button "Link Domain Model EFeature" | click
+        with [get-window "Select a EStructuralFeature"] {
+            get-tree | select "users : User"
+            get-button OK | click
+        }
+        get-button Finish | click
     }
     get-button Finish | click
 }
@@ -76,7 +82,7 @@ with [get-view "EMF Forms Preview"] {
 with [get-view "EMF Forms Preview"] {
     get-label "Last Name*" | get-property caption | equals "Last Name*" | verify-true
     get-editbox -after [get-label "Last Name*"] | get-property backgroundColor | equals "#FF0000" | verify-true
-    get-control Any -after [get-label Users] -index 12 | get-property "getChildren().length" | equals 3 | verify-true
+    get-control Any -after [get-label Users] -index 13 | get-property "getChildren().length" | equals 3 | verify-true
 }
 with [get-editor "UserGroup.view"] {
     get-tree | select "View/TableControl"
@@ -100,6 +106,6 @@ with [get-view "EMF Forms Preview"] {
         apply-cell-edit -deactivate
     }
 }
-get-view "EMF Forms Preview" | get-control Any -after [get-label Users] -index 12 | get-property "getChildren().length" 
+get-view "EMF Forms Preview" | get-control Any -after [get-label Users] -index 13 | get-property "getChildren().length" 
     | equals 31 | verify-true
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

@@ -12,6 +12,7 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.spi.swt.table;
 
+import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -60,7 +61,7 @@ public interface ECPCellEditor {
 
 	/**
 	 * This returns the Image which will be shown in the table when no cell editor is open.
-	 * 
+	 *
 	 * @param value the Object to get the Image for
 	 * @return the image
 	 */
@@ -78,16 +79,20 @@ public interface ECPCellEditor {
 	/**
 	 * This {@link UpdateValueStrategy} will be used as the target to model strategy during data binding.
 	 *
-	 * @return the stratefy
+	 * @param databindingContext The {@link DataBindingContext} used by this strategy
+	 * @return the strategy
+	 * @since 1.6
 	 */
-	UpdateValueStrategy getTargetToModelStrategy();
+	UpdateValueStrategy getTargetToModelStrategy(DataBindingContext databindingContext);
 
 	/**
 	 * This {@link UpdateValueStrategy} will be used as the model to target strategy during data binding.
 	 *
-	 * @return the stratefy
+	 * @param databindingContext The {@link DataBindingContext} used by this strategy
+	 * @return the strategy
+	 * @since 1.6
 	 */
-	UpdateValueStrategy getModelToTargetStrategy();
+	UpdateValueStrategy getModelToTargetStrategy(DataBindingContext databindingContext);
 
 	/**
 	 * Sets editable state of the cell editor.
@@ -95,4 +100,12 @@ public interface ECPCellEditor {
 	 * @param editable <code>true</code> if editable, <code>false</code> otherwise
 	 */
 	void setEditable(boolean editable);
+
+	/**
+	 * Returns the minimum width of the cell editor.
+	 *
+	 * @return the minimum width
+	 * @since 1.6
+	 */
+	int getMinWidth();
 }

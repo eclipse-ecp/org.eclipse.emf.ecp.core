@@ -6,12 +6,12 @@
 	<parent>
 		<groupId>org.eclipse.emf.ecp</groupId>
 		<artifactId>ecp-parent</artifactId>
-		<version>1.5.1-SNAPSHOT</version>
+		<version>1.6.0-SNAPSHOT</version>
 		<relativePath>../../releng/org.eclipse.emf.ecp.releng/</relativePath>
 	</parent>
 	<groupId>org.eclipse.emf.ecp</groupId>
 	<artifactId>ecp-bundles-parent</artifactId>
-	<version>1.5.1-SNAPSHOT</version>
+	<version>1.6.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<modules>
@@ -30,6 +30,10 @@
 		<module>../../bundles/org.eclipse.emf.ecp.explorereditorbridge</module>
 		<module>../../bundles/org.eclipse.emf.ecp.ui</module>
 		<module>../../bundles/org.eclipse.emf.ecp.ui.rcp</module>
+		
+		<module>../../bundles/org.eclipse.emf.ecp.core.rap</module>
+		<module>../../bundles/org.eclipse.emf.ecp.core.rap.sessionprovider.rwt</module>
+		<module>../../bundles/org.eclipse.emf.ecp.emfstore.core.rap</module>
 
 		<module>../../bundles/org.eclipse.emf.ecp.cdo.core</module>
 		<module>../../bundles/org.eclipse.emf.ecp.cdo.ui</module>
@@ -154,7 +158,6 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.model</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.model.edit</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.ui.swt</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.table.editor</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.columnservice</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.edapt</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.celleditor.rcp</module>
@@ -170,7 +173,6 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.template.model.edit</module>
 		<!-- Template Helper Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.template.service</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.template.controls.swt</module>
 
 		<!-- IDE -->
 		<module>../../bundles/org.eclipse.emf.ecp.ide.editor.view</module>
@@ -204,7 +206,6 @@
 
 		<!-- mapping dmr -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.mappingdmr.tooling</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.mappingdmr.databinding</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.mappingdmr.model</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.mappingdmr.model.edit</module>
 		
@@ -238,7 +239,6 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.indexdmr.model</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.indexdmr.model.edit</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.indexdmr.tooling</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.indexdmr.databinding</module>
 		
 		<!-- Migration -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.migrator</module>
@@ -252,7 +252,30 @@
 		<module>../../bundles/org.eclipse.emf.ecp.changebroker</module>
 		<module>../../bundles/org.eclipse.emf.ecp.changebroker.emfstore</module>
 		
+		<!-- Core Services -->
+		<module>../../bundles/org.eclipse.emfforms.common</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.databinding.featurepath</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.databinding.index</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.databinding.mapping</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.emfspecificservice</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.editsupport</module>
+		<module>../../bundles/org.eclipse.emfforms.swt.core</module>
+		<module>../../bundles/org.eclipse.emfforms.swt.core.di</module>
+		<module>../../bundles/org.eclipse.emfforms.swt.core.di.extension</module>
+		<module>../../bundles/org.eclipse.emfforms.swt.core.plugin</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.emf</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.locale.default</module>
 		
+		<!-- Localization Services -->
+		<module>../../bundles/org.eclipse.emfforms.localization</module>
+		<module>../../bundles/org.eclipse.emfforms.view.model.localization</module>
+		
+		<module>../../bundles/org.eclipse.emfforms.swt.control.text.autocomplete</module>
+		
+		<!-- Annotation attachement -->
+		<module>../../bundles/org.eclipse.emfforms.view.annotation.model</module>
+		<module>../../bundles/org.eclipse.emfforms.view.annotation.model.edit</module>
 	</modules>
 
 	<build>
@@ -304,6 +327,9 @@
 								</goals>
 							</execution>
 						</executions>
+						<configuration>
+							<excludeInnerJars>true</excludeInnerJars>
+						</configuration>
 					</plugin>
 					<!-- 3.b -->
 					<plugin>

@@ -22,70 +22,70 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/ecp/view/spi/swt/AbstractSWTRenderer.java" type="org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer">
+    <resource path="src/org/eclipse/emf/ecp/view/spi/swt/AbstractSWTRenderer.java" type="org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer">
         <filter comment="This is SPI" id="336695337">
             <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer"/>
+                <message_argument value="org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer"/>
                 <message_argument value="getGridDescription(GridDescription)"/>
             </message_arguments>
         </filter>
         <filter comment="SPI change (1.3)" id="336695337">
             <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer"/>
+                <message_argument value="org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer"/>
                 <message_argument value="getGridDescription(SWTGridDescription)"/>
             </message_arguments>
         </filter>
         <filter comment="This is SPI" id="336695337">
             <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer"/>
+                <message_argument value="org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer"/>
                 <message_argument value="renderControl(GridCell, Composite)"/>
             </message_arguments>
         </filter>
         <filter comment="SPI change (1.3)" id="336695337">
             <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer"/>
+                <message_argument value="org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer"/>
                 <message_argument value="renderControl(SWTGridCell, Composite)"/>
             </message_arguments>
         </filter>
         <filter comment="This is SPI" id="338792546">
             <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer"/>
+                <message_argument value="org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer"/>
                 <message_argument value="applyEnable(VElement, List&lt;RenderingResultRow&lt;Control&gt;&gt;)"/>
             </message_arguments>
         </filter>
         <filter comment="This is SPI" id="338792546">
             <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer"/>
+                <message_argument value="org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer"/>
                 <message_argument value="applyVisible(VElement, List&lt;RenderingResultRow&lt;Control&gt;&gt;)"/>
             </message_arguments>
         </filter>
         <filter comment="This is SPI" id="338792546">
             <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer"/>
+                <message_argument value="org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer"/>
                 <message_argument value="createResult(Control[])"/>
             </message_arguments>
         </filter>
         <filter comment="This is SPI" id="338792546">
             <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer"/>
+                <message_argument value="org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer"/>
                 <message_argument value="getLayoutHelper()"/>
             </message_arguments>
         </filter>
         <filter comment="This is SPI" id="338792546">
             <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer"/>
+                <message_argument value="org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer"/>
                 <message_argument value="render(Composite, R, ViewModelContext)"/>
             </message_arguments>
         </filter>
         <filter comment="This is SPI" id="338792546">
             <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer"/>
+                <message_argument value="org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer"/>
                 <message_argument value="renderModel(Composite, R, ViewModelContext)"/>
             </message_arguments>
         </filter>
         <filter comment="This is SPI" id="338792546">
             <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer"/>
+                <message_argument value="org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer"/>
                 <message_argument value="setLayoutDataForResultRows(List&lt;RenderingResultRow&lt;Control&gt;&gt;)"/>
             </message_arguments>
         </filter>

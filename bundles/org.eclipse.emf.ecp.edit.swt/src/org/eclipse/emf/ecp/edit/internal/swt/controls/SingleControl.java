@@ -26,6 +26,7 @@ import org.eclipse.swt.widgets.Control;
  * @author Eugen Neufeld
  *
  */
+@Deprecated
 public abstract class SingleControl extends SWTControl {
 
 	//	private static final String VALIDATION_ERROR_ICON = "icons/validation_error.png";//$NON-NLS-1$

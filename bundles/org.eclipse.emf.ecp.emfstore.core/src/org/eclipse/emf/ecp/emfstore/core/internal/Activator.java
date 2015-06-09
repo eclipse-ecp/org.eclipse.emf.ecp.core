@@ -16,7 +16,9 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.emfstore.internal.client.model.ESWorkspaceProviderImpl;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
 /**
  * The activator class controls the plug-in life cycle.
@@ -96,5 +98,24 @@ public class Activator extends Plugin {
 		}
 
 		return new Status(IStatus.ERROR, PLUGIN_ID, msg, t);
+	}
+
+	/**
+	 * Helper method to obtain the relevant ESWorkspaceProvider.
+	 *
+	 * @return the {@link ESWorkspaceProviderImpl}
+	 */
+	public static ESWorkspaceProviderImpl getESWorkspaceProviderInstance() {
+		// TODO Auto-generated method stub
+		ESWorkspaceProviderProvider esWorkspaceProviderProvider = null;
+		final ServiceReference<ESWorkspaceProviderProvider> serviceRef = plugin.getBundle().getBundleContext()
+			.getServiceReference(ESWorkspaceProviderProvider.class);
+		esWorkspaceProviderProvider = plugin.getBundle().getBundleContext().getService(serviceRef);
+		// because we are using a service factory for the RAP implementation we must unget
+		// the service so that the service factory is called again on each call. otherwise
+		// the service factor will keep returning the same cached instance as the reference
+		// count of the service will remain greater than zero
+		plugin.getBundle().getBundleContext().ungetService(serviceRef);
+		return esWorkspaceProviderProvider.getESWorkspaceProviderInstance();
 	}
 }

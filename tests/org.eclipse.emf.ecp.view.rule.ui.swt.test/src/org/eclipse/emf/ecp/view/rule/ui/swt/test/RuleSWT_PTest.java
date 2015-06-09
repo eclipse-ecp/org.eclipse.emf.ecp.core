@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Jonas - initial API and implementation
  ******************************************************************************/
@@ -31,6 +31,7 @@ import org.eclipse.emf.emfstore.bowling.BowlingFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.emf.emfstore.bowling.Fan;
 import org.eclipse.emf.emfstore.bowling.Merchandise;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 import org.junit.Before;
@@ -39,7 +40,7 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Jonas
- * 
+ *
  */
 @RunWith(DatabindingClassRunner.class)
 public class RuleSWT_PTest {
@@ -67,28 +68,32 @@ public class RuleSWT_PTest {
 	}
 
 	@Test
-	public void testEnableRuleWithFalse() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+	public void testEnableRuleWithFalse() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
+		EMFFormsNoRendererException {
 		addEnableRule();
 		render();
 		assertTrue(isControlEnabled());
 	}
 
 	@Test
-	public void testDisableRuleWithFalse() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+	public void testDisableRuleWithFalse() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
+		EMFFormsNoRendererException {
 		addDisableRule();
 		render();
 		assertTrue(isControlEnabled());
 	}
 
 	@Test
-	public void testVisibleRuleWithFalse() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+	public void testVisibleRuleWithFalse() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
+		EMFFormsNoRendererException {
 		addVisibleRule();
 		render();
 		assertTrue(isControlVisible());
 	}
 
 	@Test
-	public void testInVisibleRuleWithFalse() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+	public void testInVisibleRuleWithFalse() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
+		EMFFormsNoRendererException {
 		addInVisibleRule();
 		render();
 		assertTrue(isControlVisible());
@@ -96,7 +101,7 @@ public class RuleSWT_PTest {
 
 	@Test
 	public void testDisableRuleAndTrueLeafCondition() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
 		// setup model
 		final RuleHandle ruleHandle = addDisableRule();
 		RuleTestHelper.addTrueLeafCondition(ruleHandle.getRule());
@@ -106,7 +111,7 @@ public class RuleSWT_PTest {
 
 	@Test
 	public void testDisableRuleAndFalseLeafCondition() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
 		// setup model
 		final RuleHandle ruleHandle = addDisableRule();
 		RuleTestHelper.addFalseLeafCondition(ruleHandle.getRule());
@@ -116,7 +121,7 @@ public class RuleSWT_PTest {
 
 	@Test
 	public void testEnableRuleAndFalseLeafCondition() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
 		// setup model
 		final RuleHandle ruleHandle = addEnableRule();
 		RuleTestHelper.addFalseLeafCondition(ruleHandle.getRule());
@@ -126,7 +131,7 @@ public class RuleSWT_PTest {
 
 	@Test
 	public void testEnabledRuleAndTrueLeafCondition() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
 		// setup model
 		final RuleHandle ruleHandle = addEnableRule();
 		RuleTestHelper.addTrueLeafCondition(ruleHandle.getRule());
@@ -136,7 +141,7 @@ public class RuleSWT_PTest {
 
 	@Test
 	public void testInvisibleRuleAndFalseLeafCondition() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
 		// setup model
 		final RuleHandle ruleHandle = addInVisibleRule();
 		RuleTestHelper.addFalseLeafCondition(ruleHandle.getRule());
@@ -146,7 +151,7 @@ public class RuleSWT_PTest {
 
 	@Test
 	public void testInvisibleRuleAndTrueLeafCondition() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
 		// setup model
 		final RuleHandle ruleHandle = addInVisibleRule();
 		RuleTestHelper.addTrueLeafCondition(ruleHandle.getRule());
@@ -156,7 +161,7 @@ public class RuleSWT_PTest {
 
 	@Test
 	public void testVisibleRuleAndTrueLeafCondition() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
 		// setup model
 		final RuleHandle ruleHandle = addVisibleRule();
 		RuleTestHelper.addTrueLeafCondition(ruleHandle.getRule());
@@ -166,7 +171,7 @@ public class RuleSWT_PTest {
 
 	@Test
 	public void testVisibleRuleAndFalseLeafCondition() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
 		// setup model
 		final RuleHandle ruleHandle = addVisibleRule();
 		RuleTestHelper.addFalseLeafCondition(ruleHandle.getRule());
@@ -176,7 +181,7 @@ public class RuleSWT_PTest {
 
 	/**
 	 * @return
-	 * 
+	 *
 	 */
 	private RuleHandle addInVisibleRule() {
 		final RuleHandle invisibleShowRule = RuleTestHelper.createInvisibleShowRule();
@@ -194,7 +199,7 @@ public class RuleSWT_PTest {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	private RuleHandle addVisibleRule() {
 		final RuleHandle visibleShowRule = RuleTestHelper.createVisibleShowRule();
@@ -212,9 +217,11 @@ public class RuleSWT_PTest {
 	/**
 	 * @throws NoPropertyDescriptorFoundExeption
 	 * @throws NoRendererFoundException
-	 * 
+	 * @throws EMFFormsNoRendererException
+	 *
 	 */
-	private void render() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+	private void render() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
+		EMFFormsNoRendererException {
 		renderedControl = SWTViewTestHelper.render(view, input, shell);
 
 	}

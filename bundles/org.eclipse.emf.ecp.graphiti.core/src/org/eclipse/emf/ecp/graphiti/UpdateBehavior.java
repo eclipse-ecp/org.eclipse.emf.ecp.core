@@ -10,7 +10,6 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.ui.editor.DefaultUpdateBehavior;
@@ -355,17 +354,17 @@ public class UpdateBehavior extends DefaultUpdateBehavior {
 
 	}
 
-	/**
-	 * Created the {@link TransactionalEditingDomain} that shall be used within
-	 * the diagram editor and initializes it by delegating to
-	 * {@link #initializeEditingDomain(TransactionalEditingDomain)}.
-	 */
-	@Override
-	protected void createEditingDomain() {
-		final TransactionalEditingDomain editingDomain = (TransactionalEditingDomain) AdapterFactoryEditingDomain
-			.getEditingDomainFor(diagramBehavior.getDiagram());
-		initializeEditingDomain(editingDomain);
-	}
+	// /**
+	// * Created the {@link TransactionalEditingDomain} that shall be used within
+	// * the diagram editor and initializes it by delegating to
+	// * {@link #initializeEditingDomain(TransactionalEditingDomain)}.
+	// */
+	// @Override
+	// protected void createEditingDomain() {
+	// final TransactionalEditingDomain editingDomain = (TransactionalEditingDomain) AdapterFactoryEditingDomain
+	// .getEditingDomainFor(diagramBehavior.getDiagram());
+	// initializeEditingDomain(editingDomain);
+	// }
 
 	/**
 	 * This sets up the editing domain for this model editor.

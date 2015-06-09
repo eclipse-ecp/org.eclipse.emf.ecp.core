@@ -11,20 +11,20 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.table.columnservice;
 
-import java.util.Iterator;
-
+import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.internal.table.generator.TableColumnGenerator;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 
 /**
  * This service will iterate over all contents of the {@link org.eclipse.emf.ecp.view.spi.model.VView VView} and will
@@ -36,6 +36,8 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
  */
 public class AddColumnService implements ViewModelService {
 
+	private ViewModelContext context;
+
 	/**
 	 * {@inheritDoc}
 	 *
@@ -43,6 +45,7 @@ public class AddColumnService implements ViewModelService {
 	 */
 	@Override
 	public void instantiate(ViewModelContext context) {
+		this.context = context;
 		final VElement viewModel = context.getViewModel();
 		if (viewModel instanceof VTableControl) {
 			addColumnsIfNeeded((VTableControl) viewModel);
@@ -67,12 +70,23 @@ public class AddColumnService implements ViewModelService {
 		}
 		if (VTableDomainModelReference.class.cast(tableControl.getDomainModelReference())
 			.getColumnDomainModelReferences().size() < 1) {
-			final Iterator<Setting> settings = tableControl.getDomainModelReference().getIterator();
-			if (!settings.hasNext()) {
+			final VTableDomainModelReference tableDMR = (VTableDomainModelReference) tableControl
+				.getDomainModelReference();
+			final IValueProperty valueProperty;
+			try {
+				if (tableDMR.getDomainModelReference() != null) {
+					valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+						.getValueProperty(tableDMR.getDomainModelReference(), context.getDomainModel());
+				} else {
+					valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+						.getValueProperty(tableDMR, context.getDomainModel());
+				}
+			} catch (final DatabindingFailedException ex) {
+				Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 				return;
 			}
-			final Setting firstSetting = settings.next();
-			final EStructuralFeature structuralFeature = firstSetting.getEStructuralFeature();
+
+			final EStructuralFeature structuralFeature = (EStructuralFeature) valueProperty.getValueType();
 			final EClassifier eType = structuralFeature.getEType();
 			if (eType instanceof EClass) {
 				final EClass clazz = (EClass) eType;

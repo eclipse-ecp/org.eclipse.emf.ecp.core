@@ -22,6 +22,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecp.edit.spi.EMFDeleteServiceImpl;
 import org.eclipse.emf.ecp.internal.ide.util.EcoreHelper;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.DefaultReferenceService;
@@ -95,23 +96,17 @@ public class TemplateModelEditorPart extends EditorPart {
 		super.setPartName(input.getName());
 
 		basicCommandStack = new BasicCommandStack();
-		basicCommandStack.addCommandStackListener
-			(new CommandStackListener()
-			{
-				@Override
-				public void commandStackChanged(final EventObject event)
-				{
-					parent.getDisplay().asyncExec
-						(new Runnable()
-						{
-							@Override
-							public void run()
-							{
-								firePropertyChange(IEditorPart.PROP_DIRTY);
-							}
-						});
-				}
-			});
+		basicCommandStack.addCommandStackListener(new CommandStackListener() {
+			@Override
+			public void commandStackChanged(final EventObject event) {
+				parent.getDisplay().asyncExec(new Runnable() {
+					@Override
+					public void run() {
+						firePropertyChange(IEditorPart.PROP_DIRTY);
+					}
+				});
+			}
+		});
 
 		final FileEditorInput fei = (FileEditorInput) getEditorInput();
 
@@ -156,7 +151,7 @@ public class TemplateModelEditorPart extends EditorPart {
 		parent.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
 		final VView view = ViewProviderHelper.getView(template, null);
 		final ViewModelContext viewContext = ViewModelContextFactory.INSTANCE.createViewModelContext(view,
-			template, new DefaultReferenceService());
+			template, new DefaultReferenceService(), new EMFDeleteServiceImpl());
 		try {
 			ECPSWTViewRenderer.INSTANCE.render(parent, viewContext);
 		} catch (final ECPRendererException ex) {

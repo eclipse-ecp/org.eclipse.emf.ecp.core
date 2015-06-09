@@ -41,18 +41,22 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xml.type.AnyType;
+import org.eclipse.emf.ecp.edit.spi.EMFDeleteServiceImpl;
 import org.eclipse.emf.ecp.ide.editor.view.messages.Messages;
 import org.eclipse.emf.ecp.ide.view.service.ViewModelEditorCallback;
 import org.eclipse.emf.ecp.internal.ide.util.EcoreHelper;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
+import org.eclipse.emf.ecp.ui.view.swt.DefaultReferenceService;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.migrator.ViewModelMigrationException;
 import org.eclipse.emf.ecp.view.migrator.ViewModelMigrator;
 import org.eclipse.emf.ecp.view.migrator.ViewModelMigratorUtil;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.reporting.StatusReport;
+import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -149,36 +153,7 @@ public class ViewEditorPart extends EditorPart implements
 		partListener = new ViewPartListener();
 		getSite().getPage().addPartListener(partListener);
 
-		final IResourceChangeListener listener = new IResourceChangeListener() {
-			@Override
-			public void resourceChanged(IResourceChangeEvent event) {
-				final IResourceDelta delta = event.getDelta();
-				final IResourceDeltaVisitor visitor = new IResourceDeltaVisitor() {
-					@Override
-					public boolean visit(IResourceDelta delta)
-					{
-						if (delta.getKind() == IResourceDelta.REMOVED) {
-							final FileEditorInput fei = (FileEditorInput) instance.getEditorInput();
-							if (delta.getFullPath().equals(fei.getFile().getFullPath())) {
-								final IWorkbenchPage page = instance.getSite().getPage();
-								Display.getDefault().asyncExec(new Runnable() {
-									@Override
-									public void run() {
-										page.closeEditor(instance, false);
-									}
-								});
-								return false;
-							}
-						}
-						return true;
-					}
-				};
-				try {
-					delta.accept(visitor);
-				} catch (final CoreException ex) {
-				}
-			}
-		};
+		final IResourceChangeListener listener = new EditorResourceChangedListener();
 		ResourcesPlugin.getWorkspace().addResourceChangeListener(listener);
 	}
 
@@ -405,7 +380,10 @@ public class ViewEditorPart extends EditorPart implements
 		}
 
 		try {
-			render = ECPSWTViewRenderer.INSTANCE.render(parent, view);
+
+			render = ECPSWTViewRenderer.INSTANCE.render(parent, ViewModelContextFactory.INSTANCE
+				.createViewModelContext(ViewProviderHelper.getView(view, null), view, new DefaultReferenceService(),
+					new EMFDeleteServiceImpl()));
 		} catch (final ECPRendererException ex) {
 			Activator.getDefault().getReportService().report(
 				new StatusReport(new Status(IStatus.ERROR, Activator.PLUGIN_ID, ex.getMessage(), ex)));
@@ -427,6 +405,11 @@ public class ViewEditorPart extends EditorPart implements
 
 			@Override
 			public void run() {
+				if (parent == null || parent.isDisposed()) {
+					final IWorkbenchPage page = instance.getSite().getPage();
+					page.closeEditor(instance, true);
+					return;
+				}
 				if (render != null) {
 					render.dispose();
 					render.getSWTControl().dispose();
@@ -603,5 +586,46 @@ public class ViewEditorPart extends EditorPart implements
 	public void signalEcoreOutOfSync() {
 		ecoreOutOfSync = true;
 
+	}
+
+	/** Listens for changes in the editor's resource. */
+	private class EditorResourceChangedListener implements IResourceChangeListener {
+
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @see org.eclipse.core.resources.IResourceChangeListener#resourceChanged(org.eclipse.core.resources.IResourceChangeEvent)
+		 */
+		@Override
+		public void resourceChanged(IResourceChangeEvent event) {
+			final IResourceDelta delta = event.getDelta();
+			final IResourceDeltaVisitor visitor = new IResourceDeltaVisitor() {
+				@Override
+				public boolean visit(IResourceDelta delta)
+				{
+					if (delta.getKind() == IResourceDelta.REMOVED) {
+						final FileEditorInput fei = (FileEditorInput) instance.getEditorInput();
+						if (delta.getFullPath().equals(fei.getFile().getFullPath())) {
+							final IWorkbenchPage page = instance.getSite().getPage();
+							Display.getDefault().asyncExec(new Runnable() {
+								@Override
+								public void run() {
+									page.closeEditor(instance, false);
+								}
+							});
+							return false;
+						}
+					}
+					return true;
+				}
+			};
+			try {
+				if (delta == null) {
+					return;
+				}
+				delta.accept(visitor);
+			} catch (final CoreException ex) {
+			}
+		}
 	}
 }

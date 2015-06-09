@@ -648,11 +648,6 @@
       <observer
             logoutObserver="org.eclipse.emf.ecp.emfstore.internal.ui.decorator.RepositoryViewLabelDecorator">
       </observer>
-   </extension> <extension
-         point="org.eclipse.emf.emfstore.client.commitObserver">
-      <observer
-            commitObserver="org.eclipse.emf.ecp.emfstore.internal.ui.decorator.EMFStoreDirtyDecorator">
-      </observer>
    </extension>
                 <extension
                       point="org.eclipse.emf.emfstore.client.shareObserver">

@@ -11,6 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.swt;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -25,11 +26,7 @@ import org.eclipse.emf.ecp.view.model.common.ECPRendererTester;
 import org.eclipse.emf.ecp.view.model.common.ECPStaticRendererTester;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport;
-import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil;
-import org.eclipse.emf.ecp.view.spi.swt.AbstractAdditionalSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.ECPAdditionalRendererTester;
 import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emf.ecp.view.spi.swt.UnknownVElementSWTRenderer;
@@ -37,12 +34,17 @@ import org.eclipse.emf.ecp.view.spi.swt.reporting.AmbiguousRendererPriorityRepor
 import org.eclipse.emf.ecp.view.spi.swt.reporting.ECPRendererDescriptionInitFailedReport;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.NoRendererFoundReport;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RendererInitFailedReport;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.swt.core.AbstractAdditionalSWTRenderer;
+import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
 import org.osgi.framework.Bundle;
 
 /**
  * @author Eugen
  *
  */
+@Deprecated
 public class SWTRendererFactoryImpl implements SWTRendererFactory {
 
 	private static final String TEST_DYNAMIC = "dynamicTest";//$NON-NLS-1$
@@ -59,14 +61,12 @@ public class SWTRendererFactoryImpl implements SWTRendererFactory {
 	/**
 	 * A description of all available renderers.
 	 */
-	private final Set<ECPRendererDescription> rendererDescriptors =
-		new LinkedHashSet<ECPRendererDescription>();
+	private final Set<ECPRendererDescription> rendererDescriptors = new LinkedHashSet<ECPRendererDescription>();
 
 	/**
 	 * A description of all additionally available renderers.
 	 */
-	private final Set<ECPAdditionalRendererDescription> additionalRendererDescriptors =
-		new LinkedHashSet<ECPAdditionalRendererDescription>();
+	private final Set<ECPAdditionalRendererDescription> additionalRendererDescriptors = new LinkedHashSet<ECPAdditionalRendererDescription>();
 
 	/**
 	 * Default constructor for the renderer factory.
@@ -104,14 +104,13 @@ public class SWTRendererFactoryImpl implements SWTRendererFactory {
 				try {
 					final Class<AbstractSWTRenderer<VElement>> renderer = loadClass(configurationElement
 						.getContributor().getName(), configurationElement
-						.getAttribute("renderer")); //$NON-NLS-1$
+							.getAttribute("renderer")); //$NON-NLS-1$
 
 					final Set<ECPRendererTester> tester = new LinkedHashSet<ECPRendererTester>();
 					for (final IConfigurationElement testerExtension : configurationElement.getChildren()) {
 						if (TEST_DYNAMIC.equals(testerExtension.getName())) {
 							tester.add((ECPRendererTester) testerExtension.createExecutableExtension(RENDERER_TESTER));
-						}
-						else if (TEST_STATIC.equals(testerExtension.getName())) {
+						} else if (TEST_STATIC.equals(testerExtension.getName())) {
 
 							final int priority = Integer.parseInt(testerExtension.getAttribute(TESTER_PRIORITY));
 
@@ -148,7 +147,7 @@ public class SWTRendererFactoryImpl implements SWTRendererFactory {
 				try {
 					final Class<AbstractAdditionalSWTRenderer<VElement>> renderer = loadClass(configurationElement
 						.getContributor().getName(), configurationElement
-						.getAttribute("renderer")); //$NON-NLS-1$
+							.getAttribute("renderer")); //$NON-NLS-1$
 					final ECPAdditionalRendererTester tester = (ECPAdditionalRendererTester) configurationElement
 						.createExecutableExtension("tester"); //$NON-NLS-1$
 					// final Set<ECPAdditionalRendererTester> tester = new LinkedHashSet<ECPAdditionalRendererTester>();
@@ -208,9 +207,8 @@ public class SWTRendererFactoryImpl implements SWTRendererFactory {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory#getRenderer(org.eclipse.emf.ecp.view.spi.model.VElement,
-	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
-	 */
+	 * @see SWTRendererFactory#getRenderer(VElement, ViewModelContext)
+	 **/
 	@Override
 	public AbstractSWTRenderer<VElement> getRenderer(VElement vElement, ViewModelContext viewContext) {
 
@@ -240,12 +238,11 @@ public class SWTRendererFactoryImpl implements SWTRendererFactory {
 
 			if (currentPriority > highestPriority) {
 				highestPriority = currentPriority;
-				try {
-					bestCandidate = description.getRenderer().newInstance();
-				} catch (final InstantiationException ex) {
-					reportService.report(new RendererInitFailedReport(ex));
-				} catch (final IllegalAccessException ex) {
-					reportService.report(new RendererInitFailedReport(ex));
+				final AbstractSWTRenderer<VElement> renderer = createRenderer(vElement, viewContext, reportService,
+					description.getRenderer());
+				if (renderer != null) {
+					bestCandidate = renderer;
+
 				}
 			}
 		}
@@ -253,22 +250,46 @@ public class SWTRendererFactoryImpl implements SWTRendererFactory {
 		if (bestCandidate == null) {
 			reportService.report(new NoRendererFoundReport(vElement));
 			if (ViewModelUtil.isDebugMode()) {
-				bestCandidate = new UnknownVElementSWTRenderer();
+				bestCandidate = new UnknownVElementSWTRenderer(vElement, viewContext, reportService);
 			} else {
-				bestCandidate = new EmptyVElementSWTRenderer();
+				bestCandidate = new EmptyVElementSWTRenderer(vElement, viewContext, reportService);
 			}
 		}
 
-		bestCandidate.init(vElement, viewContext);
+		bestCandidate.init();
 
 		return bestCandidate;
+	}
+
+	private AbstractSWTRenderer<VElement> createRenderer(VElement vElement, ViewModelContext viewContext,
+		final ReportService reportService,
+		final Class<? extends AbstractSWTRenderer<VElement>> rendererClass) {
+		try {
+			return rendererClass
+				.getConstructor(vElement.getClass().getInterfaces()[0], ViewModelContext.class)
+				.newInstance(vElement, viewContext);
+		} catch (final InstantiationException ex) {
+			reportService.report(new RendererInitFailedReport(ex));
+		} catch (final IllegalAccessException ex) {
+			reportService.report(new RendererInitFailedReport(ex));
+		} catch (final IllegalArgumentException ex) {
+			reportService.report(new RendererInitFailedReport(ex));
+		} catch (final InvocationTargetException ex) {
+			reportService.report(new RendererInitFailedReport(ex));
+		} catch (final NoSuchMethodException ex) {
+			reportService.report(new RendererInitFailedReport(ex));
+		} catch (final SecurityException ex) {
+			reportService.report(new RendererInitFailedReport(ex));
+		}
+		// TODO: Throw Exception
+		return null;
 	}
 
 	/**
 	 *
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory#getAdditionalRenderer(org.eclipse.emf.ecp.view.spi.model.VElement,
+	 * @see SWTRendererFactory#getAdditionalRenderer(org.eclipse.emf.ecp.view.spi.model.VElement,
 	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	@Override
@@ -276,25 +297,18 @@ public class SWTRendererFactoryImpl implements SWTRendererFactory {
 		ViewModelContext viewModelContext) {
 
 		final ReportService reportService = Activator.getDefault().getReportService();
-		final Set<AbstractAdditionalSWTRenderer<VElement>> renderers =
-			new LinkedHashSet<AbstractAdditionalSWTRenderer<VElement>>();
+		final Set<AbstractAdditionalSWTRenderer<VElement>> renderers = new LinkedHashSet<AbstractAdditionalSWTRenderer<VElement>>();
 
 		for (final ECPAdditionalRendererDescription description : additionalRendererDescriptors) {
 			final ECPAdditionalRendererTester tester = description.getTester();
 			if (tester.isApplicable(vElement, viewModelContext)) {
-				try {
-					final AbstractAdditionalSWTRenderer<VElement> renderer = description.getRenderer()
-						.newInstance();
-					renderer.init(vElement, viewModelContext);
-					renderers.add(renderer);
-					continue;
-				} catch (final InstantiationException ex) {
-					reportService.report(new RendererInitFailedReport(ex));
-					continue;
-				} catch (final IllegalAccessException ex) {
-					reportService.report(new RendererInitFailedReport(ex));
+				final AbstractSWTRenderer<VElement> renderer = createRenderer(vElement, viewModelContext,
+					reportService, description.getRenderer());
+				if (renderer == null) {
 					continue;
 				}
+				renderer.init();
+				renderers.add((AbstractAdditionalSWTRenderer<VElement>) renderer);
 			}
 		}
 		return renderers;

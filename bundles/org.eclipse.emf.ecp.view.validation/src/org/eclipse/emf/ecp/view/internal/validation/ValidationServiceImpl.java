@@ -14,7 +14,6 @@ package org.eclipse.emf.ecp.view.internal.validation;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
@@ -23,6 +22,8 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
+import org.eclipse.core.databinding.observable.IObserving;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
@@ -58,6 +59,8 @@ import org.eclipse.emf.ecp.view.spi.validation.ValidationService;
 import org.eclipse.emf.ecp.view.spi.validation.ViewValidationListener;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 
 /**
  * Validation service that, once instantiated, synchronizes the validation result of a model element with its
@@ -91,14 +94,31 @@ public class ValidationServiceImpl implements ValidationService {
 					if (domainModelReference == null) {
 						return;
 					}
-					final Iterator<Setting> settings = domainModelReference.getIterator();
+					IObservableValue observableValue;
+					try {
+						observableValue = Activator.getDefault().getEMFFormsDatabinding()
+							.getObservableValue(domainModelReference, context.getDomainModel());
+					} catch (final DatabindingFailedException ex) {
+						Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+						return;
+					}
+					final EObject observed = (EObject) ((IObserving) observableValue).getObserved();
+					validate(observed);
+					// TODO: add test case fo this
 					final Set<EObject> eObjectsToValidate = new LinkedHashSet<EObject>();
-					while (settings.hasNext()) {
-						eObjectsToValidate.add(settings.next().getEObject());
+					eObjectsToValidate.add(observed);
+					final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+					if (EReference.class.isInstance(structuralFeature)) {
+						if (structuralFeature.isMany()) {
+							@SuppressWarnings("unchecked")
+							final List<EObject> list = (List<EObject>) observableValue.getValue();
+							eObjectsToValidate.addAll(list);
+						} else {
+							eObjectsToValidate.add((EObject) observableValue.getValue());
+						}
 					}
-					for (final EObject eObject : eObjectsToValidate) {
-						validate(eObject);
-					}
+					validate(eObjectsToValidate);
+					observableValue.dispose();
 				}
 			}
 			if (!VElement.class.isInstance(notification.getNotifier())) {
@@ -123,14 +143,31 @@ public class ValidationServiceImpl implements ValidationService {
 				if (domainModelReference == null) {
 					return;
 				}
-				final Iterator<Setting> settings = domainModelReference.getIterator();
+
+				IObservableValue observableValue;
+				try {
+					observableValue = Activator.getDefault().getEMFFormsDatabinding()
+						.getObservableValue(domainModelReference, context.getDomainModel());
+				} catch (final DatabindingFailedException ex) {
+					Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+					return;
+				}
+				final EObject observed = (EObject) ((IObserving) observableValue).getObserved();
+				validate(observed);
 				final Set<EObject> eObjectsToValidate = new LinkedHashSet<EObject>();
-				while (settings.hasNext()) {
-					eObjectsToValidate.add(settings.next().getEObject());
+				eObjectsToValidate.add(observed);
+				final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+				if (EReference.class.isInstance(structuralFeature)) {
+					if (structuralFeature.isMany()) {
+						@SuppressWarnings("unchecked")
+						final List<EObject> list = (List<EObject>) observableValue.getValue();
+						eObjectsToValidate.addAll(list);
+					} else {
+						eObjectsToValidate.add((EObject) observableValue.getValue());
+					}
 				}
-				for (final EObject eObject : eObjectsToValidate) {
-					validate(eObject);
-				}
+				validate(eObjectsToValidate);
+				observableValue.dispose();
 			}
 		}
 
@@ -594,8 +631,21 @@ public class ValidationServiceImpl implements ValidationService {
 	 */
 	@Override
 	public void addValidationProvider(ValidationProvider validationProvider) {
+		addValidationProvider(validationProvider, true);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.validation.ValidationService#addValidationProvider(org.eclipse.emf.ecp.view.spi.validation.ValidationProvider,
+	 *      boolean)
+	 */
+	@Override
+	public void addValidationProvider(ValidationProvider validationProvider, boolean revalidate) {
 		validationProviders.add(validationProvider);
-		validate(getAllEObjects(context.getDomainModel()));
+		if (revalidate) {
+			validate(getAllEObjects(context.getDomainModel()));
+		}
 	}
 
 	/**
@@ -606,8 +656,21 @@ public class ValidationServiceImpl implements ValidationService {
 	 */
 	@Override
 	public void removeValidationProvider(ValidationProvider validationProvider) {
+		removeValidationProvider(validationProvider, true);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.validation.ValidationService#removeValidationProvider(org.eclipse.emf.ecp.view.spi.validation.ValidationProvider,
+	 *      boolean)
+	 */
+	@Override
+	public void removeValidationProvider(ValidationProvider validationProvider, boolean revalidate) {
 		validationProviders.remove(validationProvider);
-		validate(getAllEObjects(context.getDomainModel()));
+		if (revalidate) {
+			validate(getAllEObjects(context.getDomainModel()));
+		}
 	}
 
 	private final Set<ViewValidationListener> validationListeners = new LinkedHashSet<ViewValidationListener>();

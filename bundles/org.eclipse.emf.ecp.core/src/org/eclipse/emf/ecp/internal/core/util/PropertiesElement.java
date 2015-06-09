@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2011-2015 Eike Stepper (Berlin, Germany) and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -29,6 +29,7 @@ import org.eclipse.emf.ecp.internal.core.util.PropertiesStore.StorableElement;
  */
 public abstract class PropertiesElement extends Element implements StorableElement, ECPPropertiesAware {
 	private final ECPProperties properties;
+	private ECPPropertiesObserver observer;
 
 	/**
 	 * Constructor.
@@ -79,12 +80,27 @@ public abstract class PropertiesElement extends Element implements StorableEleme
 	}
 
 	private void observeProperties() {
-		properties.addObserver(new ECPPropertiesObserver() {
+		if (observer != null) {
+			cleanup();
+		}
+		observer = new ECPPropertiesObserver() {
 			@Override
 			public void propertiesChanged(ECPProperties properties, Collection<Entry<String, String>> oldProperties,
 				Collection<Entry<String, String>> newProperties) {
 				PropertiesElement.this.propertiesChanged(oldProperties, newProperties);
 			}
-		});
+		};
+		properties.addObserver(observer);
+	}
+
+	/**
+	 * Cleans up after the PropertiesElement. This call unregisters the {@link ECPPropertiesObserver} from the
+	 * {@link ECPProperties}.
+	 */
+	protected void cleanup() {
+		if (properties == null || observer == null) {
+			return;
+		}
+		properties.removeObserver(observer);
 	}
 }

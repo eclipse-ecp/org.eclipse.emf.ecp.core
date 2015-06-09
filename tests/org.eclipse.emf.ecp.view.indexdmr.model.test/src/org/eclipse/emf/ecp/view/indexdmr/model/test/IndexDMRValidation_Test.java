@@ -90,6 +90,7 @@ public class IndexDMRValidation_Test {
 		index = VIndexdmrFactory.eINSTANCE.createIndexDomainModelReference();
 		target = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
 		index.setTargetDMR(target);
+		index.setPrefixDMR(VViewFactory.eINSTANCE.createFeaturePathDomainModelReference());
 		control.setDomainModelReference(index);
 
 		validator = IndexdmrValidator.INSTANCE;

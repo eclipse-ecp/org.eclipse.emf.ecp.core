@@ -24,17 +24,16 @@ import org.eclipse.emf.ecp.test.university.UniversityPackage;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.test.university.impl.CourseImpl#getId <em>Id</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.test.university.impl.CourseImpl#getName <em>Name</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.test.university.impl.CourseImpl#getEtcs <em>Etcs</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
-public class CourseImpl extends MinimalEObjectImpl.Container implements Course
-{
+public class CourseImpl extends MinimalEObjectImpl.Container implements Course {
 	/**
 	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -107,8 +106,7 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	 *
 	 * @generated
 	 */
-	protected CourseImpl()
-	{
+	protected CourseImpl() {
 		super();
 	}
 
@@ -119,8 +117,7 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return UniversityPackage.Literals.COURSE;
 	}
 
@@ -130,8 +127,7 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	 *
 	 * @generated
 	 */
-	public String getId()
-	{
+	public String getId() {
 		return id;
 	}
 
@@ -141,8 +137,7 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	 *
 	 * @generated
 	 */
-	public void setId(String newId)
-	{
+	public void setId(String newId) {
 		final String oldId = id;
 		id = newId;
 		if (eNotificationRequired()) {
@@ -156,8 +151,7 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	 *
 	 * @generated
 	 */
-	public String getName()
-	{
+	public String getName() {
 		return name;
 	}
 
@@ -167,8 +161,7 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	 *
 	 * @generated
 	 */
-	public void setName(String newName)
-	{
+	public void setName(String newName) {
 		final String oldName = name;
 		name = newName;
 		if (eNotificationRequired()) {
@@ -182,8 +175,7 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	 *
 	 * @generated
 	 */
-	public int getEtcs()
-	{
+	public int getEtcs() {
 		return etcs;
 	}
 
@@ -193,8 +185,7 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	 *
 	 * @generated
 	 */
-	public void setEtcs(int newEtcs)
-	{
+	public void setEtcs(int newEtcs) {
 		final int oldEtcs = etcs;
 		etcs = newEtcs;
 		if (eNotificationRequired()) {
@@ -209,10 +200,8 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
-		switch (featureID)
-		{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 		case UniversityPackage.COURSE__ID:
 			return getId();
 		case UniversityPackage.COURSE__NAME:
@@ -230,10 +219,8 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	 * @generated
 	 */
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
-		switch (featureID)
-		{
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 		case UniversityPackage.COURSE__ID:
 			setId((String) newValue);
 			return;
@@ -254,10 +241,8 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
-		switch (featureID)
-		{
+	public void eUnset(int featureID) {
+		switch (featureID) {
 		case UniversityPackage.COURSE__ID:
 			setId(ID_EDEFAULT);
 			return;
@@ -278,10 +263,8 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
-		switch (featureID)
-		{
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 		case UniversityPackage.COURSE__ID:
 			return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
 		case UniversityPackage.COURSE__NAME:
@@ -299,8 +282,7 @@ public class CourseImpl extends MinimalEObjectImpl.Container implements Course
 	 * @generated
 	 */
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		if (eIsProxy()) {
 			return super.toString();
 		}

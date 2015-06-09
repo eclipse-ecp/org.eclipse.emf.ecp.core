@@ -14,11 +14,12 @@ package org.eclipse.emf.ecp.edit.spi;
 
 import java.util.Set;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 
 /**
  * The ControlFactory provides a
- * method ({@link ECPControlFactory#createControl(Class, VDomainModelReference)}) for creating a
+ * method ({@link ECPControlFactory#createControl(Class,EObject, VDomainModelReference)}) for creating a
  * suitable
  * control with the known widgets.
  *
@@ -35,13 +36,14 @@ public interface ECPControlFactory {
 	 * Creates an {@link ECPAbstractControl} based on a {@link Class} and the {@link VDomainModelReference}.
 	 *
 	 * @param controlTypeClass the type of the control to return
+	 * @param domainModel The domain model object which is the root of the domain model reference
 	 * @param domainModelReference the {@link VDomainModelReference} to use to identify the control
 	 * @param <T> the type of the control to return
 	 * @return the found control or null
 	 *
-	 * @since 1.2
+	 * @since 1.6
 	 */
-	<T> T createControl(Class<T> controlTypeClass, VDomainModelReference domainModelReference);
+	<T> T createControl(Class<T> controlTypeClass, EObject domainModel, VDomainModelReference domainModelReference);
 
 	/**
 	 * Creates an {@link ECPAbstractControl} based on an id.

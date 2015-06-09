@@ -11,20 +11,15 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.swt;
 
-import java.util.Collections;
-
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
+import org.eclipse.emf.ecp.view.internal.table.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.model.VView;
-import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -61,19 +56,6 @@ public class DetailDialog extends Dialog {
 	 * @param parentShell the {@link Shell} to use in the dialog
 	 * @param selection the {@link EObject} to edit
 	 * @param tableControl the {@link VTableControl}
-	 * @deprecated use {@link #DetailDialog(Shell, EObject, VTableControl, VView)} instead.
-	 */
-	@Deprecated
-	public DetailDialog(Shell parentShell, EObject selection, VTableControl tableControl) {
-		this(parentShell, selection, tableControl, getView(tableControl));
-	}
-
-	/**
-	 * Creates a dialog allowing to edit an {@link EObject}.
-	 *
-	 * @param parentShell the {@link Shell} to use in the dialog
-	 * @param selection the {@link EObject} to edit
-	 * @param tableControl the {@link VTableControl}
 	 * @param view the view model for the detail dialog. May <b>not</b> be <code>null</code>.
 	 * @since 1.5
 	 */
@@ -82,17 +64,6 @@ public class DetailDialog extends Dialog {
 		this.selection = selection;
 		this.view = view;
 		init();
-	}
-
-	private static VView getView(VTableControl tableControl) {
-		VView detailView = tableControl.getDetailView();
-		if (detailView == null) {
-			final Setting setting = tableControl.getDomainModelReference().getIterator().next();
-			final EReference reference = (EReference) setting.getEStructuralFeature();
-			detailView = ViewProviderHelper.getView(EcoreUtil.create(reference.getEReferenceType()),
-				Collections.<String, Object> emptyMap());
-		}
-		return EcoreUtil.copy(detailView);
 	}
 
 	@Override
@@ -144,10 +115,15 @@ public class DetailDialog extends Dialog {
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(content);
 
 		try {
-			ECPSWTViewRenderer.INSTANCE.render(content,
-				selection, view);
+			if (view == null) {
+				ECPSWTViewRenderer.INSTANCE.render(content,
+					selection);
+			} else {
+				ECPSWTViewRenderer.INSTANCE.render(content,
+					selection, view);
+			}
 		} catch (final ECPRendererException ex) {
-			ex.printStackTrace();
+			Activator.log(ex);
 		}
 
 		scrolledComposite.setContent(content);

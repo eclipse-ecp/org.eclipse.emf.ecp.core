@@ -6,8 +6,8 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _5nADsDNtEeSiS7b7ptZeHw
-Runtime-Version: 1.5.3.201409120955
-Save-Time: 11/7/14 4:23 PM
+Runtime-Version: 1.5.5.201503020312
+Save-Time: 4/2/15 1:06 PM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -47,26 +47,19 @@ with [get-view "EMF Forms Preview" | get-control Any -after [get-label "View Edi
     get-property "getChildren().Control[1].getStyle()" | contains "NO_FOCUS" | verify-true
     get-property "getChildren().Control[1].getStyle()" | contains "LEFT_TO_RIGHT" | verify-true
     get-property "getChildren().Control[1].getStyle()" | contains "LEAD" | verify-true
-    get-property "getChildren().Control[2].getChildren().length" | equals 2 | verify-true
-    get-property "getChildren().Control[2].getChildren().Control[0].getText()" | equals "" | verify-true
-    get-property "getChildren().Control[2].getChildren().Control[0].isVisible()" | equals true | verify-true
-    get-property "getChildren().Control[2].getChildren().Control[0].getStyle()" 
-        | contains "SINGLE" | verify-true
-    get-property "getChildren().Control[2].getChildren().Control[0].getStyle()" 
-        | contains "BORDER" | verify-true
-    get-property "getChildren().Control[2].getChildren().Control[0].getStyle()" 
-        | contains "LEFT_TO_RIGHT" | verify-true
-    get-property "getChildren().Control[2].getChildren().Control[0].getStyle()" 
-        | contains "LEFT" | verify-true
-    get-property "getChildren().Control[2].getChildren().Control[1].getClassName()" 
-        | equals "org.eclipse.swt.widgets.Button" | verify-true
-    get-property "getChildren().Control[2].getChildren().Control[1].getGrayed()" | equals false | verify-true
-    get-property "getChildren().Control[2].getChildren().Control[1].getStyle()" 
-        | contains "PUSH" | verify-true
-    get-property "getChildren().Control[2].getChildren().Control[1].getStyle()" 
-        | contains "LEFT_TO_RIGHT" | verify-true
-    get-property "getChildren().Control[2].getChildren().Control[1].getStyle()" 
-        | contains "CENTER" | verify-true
+    get-property "getChildren().Control[2].getChildren().length" | equals 1 | verify-true
+}
+with [get-view "EMF Forms Preview"] {
+    with [get-editbox -after [get-label "Date Of Birth"]] {
+        get-property "getText()" | equals "" | verify-true
+        get-property "isVisible()" | equals true | verify-true
+        get-property "getStyle()" | contains "[SINGLE, BORDER, LEFT_TO_RIGHT, LEFT]" | verify-true
+    }
+    with [get-button -after [get-label "Date Of Birth"]] {
+        get-property "getClassName()" | equals "org.eclipse.swt.widgets.Button" | verify-true
+        get-property "getGrayed()" | equals false | verify-true
+        get-property "getStyle()" | contains "[PUSH, LEFT_TO_RIGHT, CENTER]" | verify-true
+    }
 }
 
 get-view "EMF Forms Preview" | get-button -after [get-label "Date Of Birth"] | click

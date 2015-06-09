@@ -11,8 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.editor.controls;
 
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 
 /**
@@ -22,14 +21,8 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 public class RootEClassControlECPTester extends ControlRootEClassControl2SWTRendererTester {
 
 	@Override
-	protected int isApplicable(Setting setting) {
-		if (!VView.class.isInstance(setting.getEObject())) {
-			return NOT_APPLICABLE;
-		}
-		if (VViewPackage.eINSTANCE.getView_RootEClass() != setting.getEStructuralFeature()) {
-			return NOT_APPLICABLE;
-		}
-		if (setting.get(true) != null) {
+	protected int isApplicable(EStructuralFeature feature) {
+		if (VViewPackage.eINSTANCE.getView_RootEClass() != feature) {
 			return NOT_APPLICABLE;
 		}
 		return 3;

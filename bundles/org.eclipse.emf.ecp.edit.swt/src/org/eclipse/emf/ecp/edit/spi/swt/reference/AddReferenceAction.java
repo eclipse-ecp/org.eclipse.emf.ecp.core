@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -17,18 +17,23 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
-import org.eclipse.emf.ecp.edit.internal.swt.reference.ActionMessages;
+import org.eclipse.emf.ecp.edit.internal.swt.reference.ReferenceMessageKeys;
 import org.eclipse.emf.ecp.edit.internal.swt.util.OverlayImageDescriptor;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.edit.spi.swt.actions.ECPSWTAction;
+import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedImage;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.graphics.ImageData;
 
 /**
@@ -77,8 +82,7 @@ public class AddReferenceAction extends ECPSWTAction {
 		}
 		if (URL.class.isInstance(labelProviderImageResult)) {
 			imageData = Activator.getImageData((URL) labelProviderImageResult);
-		}
-		else {
+		} else {
 			imageData = Activator.getImageData((URL) null);
 		}
 		String overlayString = "icons/link_overlay.png";//$NON-NLS-1$
@@ -98,7 +102,8 @@ public class AddReferenceAction extends ECPSWTAction {
 		} else if (attribute.endsWith("s")) {//$NON-NLS-1$
 			attribute = attribute.substring(0, attribute.length() - 1);
 		}
-		setToolTipText(ActionMessages.AddReferenceAction_Link + attribute);
+		setToolTipText(
+			LocalizationServiceHelper.getString(getClass(), ReferenceMessageKeys.AddReferenceAction_Link) + attribute);
 	}
 
 	/**
@@ -106,9 +111,43 @@ public class AddReferenceAction extends ECPSWTAction {
 	 */
 	@Override
 	public void run() {
-		referenceService.addExistingModelElements(getSetting().getEObject(), (EReference) getSetting()
+		final EReference eReference = (EReference) getSetting().getEStructuralFeature();
+		if (eReference.isContainment()) {
+			final MessageDialog dialog = getContainmentWarningDialog();
+			new ECPDialogExecutor(dialog) {
+				@Override
+				public void handleResult(int codeResult) {
+					if (codeResult == Window.OK) {
+						addExistingElementsToReferenceService(getSetting().getEObject(), (EReference) getSetting()
+							.getEStructuralFeature());
+					}
+				}
+			}.execute();
+		}
+		addExistingElementsToReferenceService(getSetting().getEObject(), (EReference) getSetting()
 			.getEStructuralFeature());
-
 	}
 
+	private void addExistingElementsToReferenceService(EObject eObject, EReference eReference) {
+		if (referenceService == null) {
+			return;
+		}
+		referenceService.addExistingModelElements(eObject, eReference);
+	}
+
+	private MessageDialog getContainmentWarningDialog() {
+		return new MessageDialog(null,
+			LocalizationServiceHelper.getString(AddReferenceAction.class,
+				ReferenceMessageKeys.AddReferenceAction_Confirmation),
+			null,
+			LocalizationServiceHelper.getString(AddReferenceAction.class,
+				ReferenceMessageKeys.AddReferenceAction_Warning),
+			MessageDialog.WARNING,
+			new String[] {
+				LocalizationServiceHelper.getString(AddReferenceAction.class,
+					ReferenceMessageKeys.AddReferenceAction_Yes),
+				LocalizationServiceHelper.getString(AddReferenceAction.class,
+					ReferenceMessageKeys.AddReferenceAction_No) },
+			0);
+	}
 }

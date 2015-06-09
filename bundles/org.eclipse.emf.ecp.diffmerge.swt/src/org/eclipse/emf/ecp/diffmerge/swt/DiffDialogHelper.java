@@ -11,15 +11,11 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.diffmerge.swt;
 
-import org.eclipse.emf.common.notify.AdapterFactory;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.diffmerge.spi.context.ControlPair;
 import org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
-import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
+import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
@@ -47,7 +43,7 @@ public final class DiffDialogHelper {
 	public static void showDialog(DiffMergeModelContext diffModelContext, int diffIndex)
 		throws IllegalArgumentException {
 		final VControl control = diffModelContext.getControl(diffIndex);
-		final String label = getControlLabel(control);
+		final String label = getControlLabel(control, diffModelContext);
 		showDialog(diffModelContext, control, label);
 	}
 
@@ -76,7 +72,8 @@ public final class DiffDialogHelper {
 		}
 		shell
 			.setText(String.format(
-				Messages.DiffDialog_title, featureLabel, index + 1, diffModelContext.getTotalNumberOfDiffs()));
+				LocalizationServiceHelper.getString(DiffDialogHelper.class, MessageKeys.DiffDialog_title),
+				featureLabel, index + 1, diffModelContext.getTotalNumberOfDiffs()));
 		shell.setLayout(new FillLayout());
 		final Rectangle clientArea = shell.getDisplay().getBounds();
 		shell.setSize(clientArea.width / 2, 500);
@@ -85,18 +82,12 @@ public final class DiffDialogHelper {
 		shell.open();
 	}
 
-	private static String getControlLabel(VControl control) {
-		final Setting firstSetting = control.getDomainModelReference().getIterator().next();
-		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
-			new ReflectiveItemProviderAdapterFactory(),
-			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
-		final AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
-			composedAdapterFactory);
-		final IItemPropertyDescriptor propertyDescriptor =
-			adapterFactoryItemDelegator
-				.getPropertyDescriptor(firstSetting.getEObject(), firstSetting.getEStructuralFeature());
-
-		composedAdapterFactory.dispose();
-		return propertyDescriptor.getDisplayName(firstSetting.getEObject());
+	private static String getControlLabel(VControl control, DiffMergeModelContext diffModelContext) {
+		try {
+			return (String) Activator.getInstance().getEMFFormsLabelProvider()
+				.getDisplayName(control.getDomainModelReference(), diffModelContext.getDomainModel()).getValue();
+		} catch (final NoLabelFoundException e) {
+			return e.getMessage();
+		}
 	}
 }

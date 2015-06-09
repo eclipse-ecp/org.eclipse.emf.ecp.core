@@ -1,4 +1,12 @@
 /**
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
  */
 package org.eclipse.emf.ecp.view.edapt.util.test.model.f;
 
@@ -12,10 +20,10 @@ import org.eclipse.emf.ecp.view.edapt.util.test.model.e.EdaptTestE;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.edapt.util.test.model.f.EdaptTestF#getE <em>E</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.ecp.view.edapt.util.test.model.f.EdaptTestFPackage#getF()
  * @model
@@ -26,7 +34,8 @@ public interface EdaptTestF extends EObject {
 	 * Returns the value of the '<em><b>E</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>E</em>' reference isn't clear, there really should be more of a description here...
+	 * If the meaning of the '<em>E</em>' reference isn't clear,
+	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * 

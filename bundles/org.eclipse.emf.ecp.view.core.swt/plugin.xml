@@ -5,54 +5,11 @@
    <extension
          point="org.eclipse.emf.ecp.ui.view.swt.renderers">
       <renderer
-            renderer="org.eclipse.emf.ecp.view.internal.core.swt.renderer.ViewSWTRenderer">
-         <staticTest
-               element="org.eclipse.emf.ecp.view.spi.model.VView"
-               priority="1">
-         </staticTest>
-      </renderer>
-      <renderer
             renderer="org.eclipse.emf.ecp.view.internal.core.swt.renderer.ECPLegacyControlSWTRenderer">
          <staticTest
                element="org.eclipse.emf.ecp.view.spi.model.VControl"
                priority="1">
          </staticTest>
-      </renderer>
-      <renderer
-            renderer="org.eclipse.emf.ecp.view.spi.core.swt.renderer.TextControlSWTRenderer">
-         <dynamicTest
-               testClass="org.eclipse.emf.ecp.view.model.common.TextControlRendererTester">
-         </dynamicTest>
-      </renderer>
-      <renderer
-            renderer="org.eclipse.emf.ecp.view.internal.core.swt.renderer.BooleanControlSWTRenderer">
-         <dynamicTest
-               testClass="org.eclipse.emf.ecp.view.model.common.BooleanControlRendererTester">
-         </dynamicTest>
-      </renderer>
-      <renderer
-            renderer="org.eclipse.emf.ecp.view.internal.core.swt.renderer.EnumComboViewerSWTRenderer">
-         <dynamicTest
-               testClass="org.eclipse.emf.ecp.view.model.common.EnumComboViewerRendererTester">
-         </dynamicTest>
-      </renderer>
-      <renderer
-            renderer="org.eclipse.emf.ecp.view.internal.core.swt.renderer.NumberControlSWTRenderer">
-         <dynamicTest
-               testClass="org.eclipse.emf.ecp.view.model.common.NumberControlRendererTester">
-         </dynamicTest>
-      </renderer>
-      <renderer
-            renderer="org.eclipse.emf.ecp.view.internal.core.swt.renderer.DateTimeControlSWTRenderer">
-         <dynamicTest
-               testClass="org.eclipse.emf.ecp.view.model.common.DateTimeControlRendererTester">
-         </dynamicTest>
-      </renderer>
-      <renderer
-            renderer="org.eclipse.emf.ecp.view.internal.core.swt.renderer.XMLDateControlSWTRenderer">
-         <dynamicTest
-               testClass="org.eclipse.emf.ecp.view.model.common.XMLDateControlRendererTester">
-         </dynamicTest>
       </renderer>
    </extension>
    

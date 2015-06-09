@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.eclipse.emfforms.swt.core.rendererfactory">
+   <implementation class="org.eclipse.emfforms.internal.swt.core.EMFFormsRendererFactoryImpl"/>
+   <service>
+      <provide interface="org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory"/>
+   </service>
+   <reference bind="addEMFFormsRendererService" cardinality="0..n" interface="org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService" name="EMFFormsRendererService" policy="dynamic" unbind="removeEMFFormsRendererService"/>
+   <reference bind="addEMFFormsAdditionalRendererService" cardinality="0..n" interface="org.eclipse.emfforms.spi.swt.core.EMFFormsAdditionalRendererService" name="EMFFormsAdditionalRendererService" policy="dynamic" unbind="removeEMFFormsAdditionalRendererService"/>
+</scr:component>

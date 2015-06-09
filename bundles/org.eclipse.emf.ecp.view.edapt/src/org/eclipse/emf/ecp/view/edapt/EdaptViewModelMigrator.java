@@ -367,7 +367,7 @@ public class EdaptViewModelMigrator implements ViewModelMigrator {
 	 */
 	private List<String> getNamespaceURIs(URI resourceURI) {
 		@SuppressWarnings("restriction")
-		final File file = org.eclipse.emf.edapt.common.URIUtils.getJavaFile(resourceURI);
+		final File file = org.eclipse.emf.edapt.internal.common.URIUtils.getJavaFile(resourceURI);
 		// read all namespaces from root element with SAX
 		final NameSpaceHandler handler = new NameSpaceHandler();
 		executeContentHandler(file, handler);
@@ -380,7 +380,7 @@ public class EdaptViewModelMigrator implements ViewModelMigrator {
 	 */
 	private String getRootPackageURI(URI resourceURI) {
 		@SuppressWarnings("restriction")
-		final File file = org.eclipse.emf.edapt.common.URIUtils.getJavaFile(resourceURI);
+		final File file = org.eclipse.emf.edapt.internal.common.URIUtils.getJavaFile(resourceURI);
 		// read root package namespace uri with SAX
 		final RootPackageHandler handler = new RootPackageHandler();
 		executeContentHandler(file, handler);
@@ -441,9 +441,9 @@ public class EdaptViewModelMigrator implements ViewModelMigrator {
 			+ migrationPath, true);
 		try {
 			MigratorRegistry.getInstance().registerMigrator(migratorURI,
-				new org.eclipse.emf.edapt.internal.migration.execution.BundleClassLoader(bundle));
+				new org.eclipse.emf.edapt.internal.migration.execution.internal.BundleClassLoader(bundle));
 		} catch (final MigrationException e) {
-			org.eclipse.emf.edapt.common.LoggingUtils.logError(MigrationPlugin.getPlugin(), e);
+			org.eclipse.emf.edapt.internal.common.LoggingUtils.logError(MigrationPlugin.getPlugin(), e);
 		}
 	}
 

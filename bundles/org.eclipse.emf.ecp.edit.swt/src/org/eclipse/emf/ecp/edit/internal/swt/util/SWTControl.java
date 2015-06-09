@@ -66,6 +66,8 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 	 */
 	protected static final String VALIDATION_ERROR_ICON = "icons/validation_error.png";//$NON-NLS-1$
 
+	private static final String ICONS_UNSET_FEATURE = "icons/unset_feature.png"; //$NON-NLS-1$
+
 	/**
 	 * The label for the validation icon.
 	 */
@@ -232,7 +234,7 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 				numControls++;
 				unsetButton = new Button(controlComposite, SWT.PUSH);
 				unsetButton.setToolTipText(getUnsetButtonTooltip());
-				unsetButton.setImage(Activator.getImage("icons/delete.png")); //$NON-NLS-1$
+				unsetButton.setImage(Activator.getImage(ICONS_UNSET_FEATURE));
 			}
 			unsetButton.addSelectionListener(new SelectionAdapter() {
 				@Override

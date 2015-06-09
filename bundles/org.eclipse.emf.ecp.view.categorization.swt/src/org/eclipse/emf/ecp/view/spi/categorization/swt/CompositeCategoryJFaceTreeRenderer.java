@@ -11,12 +11,16 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.categorization.swt;
 
+import javax.inject.Inject;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VAbstractCategorization;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorization;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 
 /**
  * Tree renderer for composite category.
@@ -26,23 +30,23 @@ import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
  */
 public class CompositeCategoryJFaceTreeRenderer extends AbstractJFaceTreeRenderer<VCategorization> {
 
-	private VCategorizationElement categorizationElement;
-
 	/**
 	 * Default constructor.
+	 *
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param reportService the {@link ReportService}
+	 * @param emfFormsRendererFactory The {@link EMFFormsRendererFactory}
+	 * @since 1.6
 	 */
-	public CompositeCategoryJFaceTreeRenderer() {
-		super();
+	@Inject
+	public CompositeCategoryJFaceTreeRenderer(VCategorization vElement, ViewModelContext viewContext,
+		ReportService reportService,
+		EMFFormsRendererFactory emfFormsRendererFactory) {
+		super(vElement, viewContext, reportService, emfFormsRendererFactory);
 	}
 
-	/**
-	 * Test constructor.
-	 *
-	 * @param factory the {@link SWTRendererFactory} to use.
-	 */
-	CompositeCategoryJFaceTreeRenderer(SWTRendererFactory factory) {
-		super(factory);
-	}
+	private VCategorizationElement categorizationElement;
 
 	/**
 	 * {@inheritDoc}

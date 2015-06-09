@@ -38,9 +38,11 @@ import org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceI
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.impl.VIndexDomainModelReferenceImpl#getTargetDMR <em>Target
+ * <li>{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.impl.VIndexDomainModelReferenceImpl#getPrefixDMR <em>Prefix
  * DMR</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.impl.VIndexDomainModelReferenceImpl#getIndex <em>Index</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.impl.VIndexDomainModelReferenceImpl#getTargetDMR <em>Target
+ * DMR</em>}</li>
  * </ul>
  * </p>
  *
@@ -50,15 +52,15 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	VIndexDomainModelReference
 {
 	/**
-	 * The cached value of the '{@link #getTargetDMR() <em>Target DMR</em>}' containment reference.
+	 * The cached value of the '{@link #getPrefixDMR() <em>Prefix DMR</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
-	 * @see #getTargetDMR()
+	 * @see #getPrefixDMR()
 	 * @generated
 	 * @ordered
 	 */
-	protected VDomainModelReference targetDMR;
+	protected VDomainModelReference prefixDMR;
 
 	/**
 	 * The default value of the '{@link #getIndex() <em>Index</em>}' attribute.
@@ -83,6 +85,17 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	protected int index = INDEX_EDEFAULT;
 
 	/**
+	 * The cached value of the '{@link #getTargetDMR() <em>Target DMR</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see #getTargetDMR()
+	 * @generated
+	 * @ordered
+	 */
+	protected VDomainModelReference targetDMR;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -103,6 +116,72 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	protected EClass eStaticClass()
 	{
 		return VIndexdmrPackage.Literals.INDEX_DOMAIN_MODEL_REFERENCE;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public VDomainModelReference getPrefixDMR()
+	{
+		return prefixDMR;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public NotificationChain basicSetPrefixDMR(VDomainModelReference newPrefixDMR, NotificationChain msgs)
+	{
+		final VDomainModelReference oldPrefixDMR = prefixDMR;
+		prefixDMR = newPrefixDMR;
+		if (eNotificationRequired())
+		{
+			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
+				VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE__PREFIX_DMR, oldPrefixDMR, newPrefixDMR);
+			if (msgs == null) {
+				msgs = notification;
+			} else {
+				msgs.add(notification);
+			}
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public void setPrefixDMR(VDomainModelReference newPrefixDMR)
+	{
+		if (newPrefixDMR != prefixDMR)
+		{
+			NotificationChain msgs = null;
+			if (prefixDMR != null) {
+				msgs = ((InternalEObject) prefixDMR).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
+					- VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE__PREFIX_DMR, null, msgs);
+			}
+			if (newPrefixDMR != null) {
+				msgs = ((InternalEObject) newPrefixDMR).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
+					- VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE__PREFIX_DMR, null, msgs);
+			}
+			msgs = basicSetPrefixDMR(newPrefixDMR, msgs);
+			if (msgs != null) {
+				msgs.dispatch();
+			}
+		}
+		else if (eNotificationRequired()) {
+			eNotify(new ENotificationImpl(this, Notification.SET,
+				VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE__PREFIX_DMR, newPrefixDMR, newPrefixDMR));
+		}
 	}
 
 	/**
@@ -211,6 +290,8 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	{
 		switch (featureID)
 		{
+		case VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE__PREFIX_DMR:
+			return basicSetPrefixDMR(null, msgs);
 		case VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE__TARGET_DMR:
 			return basicSetTargetDMR(null, msgs);
 		}
@@ -228,10 +309,12 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	{
 		switch (featureID)
 		{
-		case VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE__TARGET_DMR:
-			return getTargetDMR();
+		case VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE__PREFIX_DMR:
+			return getPrefixDMR();
 		case VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE__INDEX:
 			return getIndex();
+		case VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE__TARGET_DMR:
+			return getTargetDMR();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -247,11 +330,14 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	{
 		switch (featureID)
 		{
-		case VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE__TARGET_DMR:
-			setTargetDMR((VDomainModelReference) newValue);
+		case VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE__PREFIX_DMR:
+			setPrefixDMR((VDomainModelReference) newValue);
 			return;
 		case VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE__INDEX:
 			setIndex((Integer) newValue);
+			return;
+		case VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE__TARGET_DMR:
+			setTargetDMR((VDomainModelReference) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -268,11 +354,14 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	{
 		switch (featureID)
 		{
-		case VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE__TARGET_DMR:
-			setTargetDMR((VDomainModelReference) null);
+		case VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE__PREFIX_DMR:
+			setPrefixDMR((VDomainModelReference) null);
 			return;
 		case VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE__INDEX:
 			setIndex(INDEX_EDEFAULT);
+			return;
+		case VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE__TARGET_DMR:
+			setTargetDMR((VDomainModelReference) null);
 			return;
 		}
 		super.eUnset(featureID);
@@ -289,10 +378,12 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	{
 		switch (featureID)
 		{
-		case VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE__TARGET_DMR:
-			return targetDMR != null;
+		case VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE__PREFIX_DMR:
+			return prefixDMR != null;
 		case VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE__INDEX:
 			return index != INDEX_EDEFAULT;
+		case VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE__TARGET_DMR:
+			return targetDMR != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -330,14 +421,32 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 		if (getIndex() < 0) {
 			return false;
 		}
-		final boolean init = super.init(eObject);
-		final List<EObject> list = (List<EObject>) lastResolvedEObject.eGet(getDomainModelEFeature());
-		if (list.size() <= getIndex() && getIndex() != 0) {
+		boolean init;
+		if (getPrefixDMR() == null) {
+			init = super.init(eObject);
+		} else {
+			init = getPrefixDMR().init(eObject);
+		}
+
+		List<EObject> list;
+		if (getPrefixDMR() == null) {
+			list = (List<EObject>) lastResolvedEObject.eGet(getDomainModelEFeature());
+		} else {
+			list = (List<EObject>) getPrefixDMR().getIterator().next().get(true);
+		}
+
+		if (list.size() < getIndex() && getIndex() != 0) {
 			return false;
 		}
 		EObject foundChild = null;
-		if (list.size() == 0) {
-			final EReference eReference = (EReference) getDomainModelEFeature();
+		if (list.size() == getIndex()) {
+			EReference eReference;
+			if (getPrefixDMR() == null) {
+				eReference = (EReference) getDomainModelEFeature();
+			}
+			else {
+				eReference = (EReference) getPrefixDMR().getEStructuralFeatureIterator().next();
+			}
 			foundChild = EcoreUtil.create(eReference.getEReferenceType());
 			list.add(foundChild);
 		}

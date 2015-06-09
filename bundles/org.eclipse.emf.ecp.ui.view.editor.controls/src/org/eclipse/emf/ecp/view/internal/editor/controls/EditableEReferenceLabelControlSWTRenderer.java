@@ -11,9 +11,25 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.editor.controls;
 
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.core.databinding.UpdateValueStrategy;
+import org.eclipse.core.databinding.observable.IObserving;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.emf.databinding.EMFDataBindingContext;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
+import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.dialogs.IDialogLabelKeys;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridLayoutFactory;
+import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -28,31 +44,73 @@ import org.eclipse.swt.widgets.Shell;
  */
 public abstract class EditableEReferenceLabelControlSWTRenderer extends EReferenceLabelControlSWTRenderer {
 
+	private final EMFDataBindingContext viewModelDBC;
+
+	/**
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param reportService the {@link ReportService}
+	 */
+	public EditableEReferenceLabelControlSWTRenderer(VControl vElement, ViewModelContext viewContext,
+		ReportService reportService) {
+		super(vElement, viewContext, reportService);
+		viewModelDBC = new EMFDataBindingContext();
+	}
+
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.internal.editor.controls.ControlRootEClassControl2SWTRenderer#createSWTControl(org.eclipse.swt.widgets.Composite,
-	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
+	 * @see org.eclipse.emf.ecp.view.internal.editor.controls.ControlRootEClassControl2SWTRenderer#createSWTControl(org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
-	protected Control createSWTControl(final Composite parent2, final Setting setting) {
-		// TODO Auto-generated method stub
-		final Composite composite = (Composite) super.createSWTControl(parent2, setting);
+	protected Control createSWTControl(final Composite parent2) throws DatabindingFailedException {
+		final Composite composite = (Composite) super.createSWTControl(parent2);
 
 		GridLayoutFactory.fillDefaults().numColumns(3).spacing(0, 0).equalWidth(false).applyTo(composite);
 
-		final IItemPropertyDescriptor itemPropertyDescriptor = getItemPropertyDescriptor(setting);
-
-		String labelText = ""; //$NON-NLS-1$
-		String tooltip = ""; //$NON-NLS-1$
-		if (itemPropertyDescriptor != null) {
-			labelText = itemPropertyDescriptor.getDisplayName(setting.getEObject());
-			tooltip = itemPropertyDescriptor.getDescription(setting.getEObject());
-		}
-
+		final EMFFormsLabelProvider labelProvider = Activator.getDefault().getEMFFormsLabelProvider();
 		final Button selectClass = new Button(composite, SWT.PUSH);
-		selectClass.setText("Link " + labelText); //$NON-NLS-1$
-		selectClass.setToolTipText("Link " + tooltip); //$NON-NLS-1$
+		try {
+			final IObservableValue labelText = labelProvider.getDisplayName(getVElement().getDomainModelReference(),
+				getViewModelContext().getDomainModel());
+			final IObservableValue tooltip = labelProvider.getDescription(getVElement().getDomainModelReference(),
+				getViewModelContext().getDomainModel());
+
+			viewModelDBC.bindValue(SWTObservables.observeText(selectClass), labelText, null, new UpdateValueStrategy() {
+
+				/**
+				 * {@inheritDoc}
+				 * 
+				 * @see org.eclipse.core.databinding.UpdateValueStrategy#convert(java.lang.Object)
+				 */
+				@Override
+				public Object convert(Object value) {
+					final String result = (String) super.convert(value);
+					return "Link " + result; //$NON-NLS-1$
+				}
+
+			});
+			viewModelDBC.bindValue(SWTObservables.observeTooltipText(selectClass), tooltip, null,
+				new UpdateValueStrategy() {
+
+					/**
+					 * {@inheritDoc}
+					 * 
+					 * @see org.eclipse.core.databinding.UpdateValueStrategy#convert(java.lang.Object)
+					 */
+					@Override
+					public Object convert(Object value) {
+						final String result = (String) super.convert(value);
+						return "Link " + result; //$NON-NLS-1$
+					}
+
+				});
+		} catch (final NoLabelFoundException e) {
+			// FIXME Expectation?
+			getReportService().getReports().add(new RenderingFailedReport(e));
+			selectClass.setText("Link "); //$NON-NLS-1$
+			selectClass.setToolTipText("Link "); //$NON-NLS-1$
+		}
 		selectClass.addSelectionListener(new SelectionAdapter() {
 
 			/**
@@ -72,6 +130,12 @@ public abstract class EditableEReferenceLabelControlSWTRenderer extends EReferen
 		final Button unset = new Button(composite, SWT.PUSH);
 		unset.setText("Unset"); //$NON-NLS-1$
 		unset.setToolTipText("Unset"); //$NON-NLS-1$
+		final IObservableValue observableValue = Activator.getDefault().getEMFFormsDatabinding()
+			.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
+		final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
+		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+		observableValue.dispose();
+
 		unset.addSelectionListener(new SelectionAdapter() {
 
 			/**
@@ -82,7 +146,7 @@ public abstract class EditableEReferenceLabelControlSWTRenderer extends EReferen
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
-				setting.unset();
+				eObject.eUnset(structuralFeature);
 				composite.layout(true, true);
 			}
 
@@ -97,4 +161,35 @@ public abstract class EditableEReferenceLabelControlSWTRenderer extends EReferen
 	 * @param shell the Shell
 	 */
 	protected abstract void linkValue(Shell shell);
+
+	/**
+	 * Shows an error message dialog indicating a failed value link due to an exception.
+	 *
+	 * @param shell The parent {@link Shell} of the message dialog
+	 * @param ex The {@link Exception} causing the failure
+	 */
+	protected void showLinkValueFailedMessageDialog(Shell shell, final Exception ex) {
+		final MessageDialog dialog = new MessageDialog(
+			shell, "Link Value Failed", null, //$NON-NLS-1$
+			"The value could not be linked due to an exception: " + ex.getMessage(), MessageDialog.ERROR, new String[] { //$NON-NLS-1$
+			JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
+
+		new ECPDialogExecutor(dialog) {
+			@Override
+			public void handleResult(int codeResult) {
+				// no op
+			}
+		}.execute();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.internal.editor.controls.EReferenceLabelControlSWTRenderer#dispose()
+	 */
+	@Override
+	public void dispose() {
+		viewModelDBC.dispose();
+		super.dispose();
+	}
 }

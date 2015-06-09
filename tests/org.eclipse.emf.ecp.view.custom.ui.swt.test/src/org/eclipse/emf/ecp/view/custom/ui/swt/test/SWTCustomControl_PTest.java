@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Johannes Faltermeier
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.custom.ui.swt.test;
 
@@ -17,7 +17,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomFactory;
@@ -31,6 +30,7 @@ import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTViewTestHelper;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
 import org.eclipse.emf.emfstore.bowling.Fan;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 import org.junit.Ignore;
@@ -42,7 +42,7 @@ public class SWTCustomControl_PTest {
 
 	/**
 	 * @author Jonas
-	 * 
+	 *
 	 */
 	public class TestHandel {
 
@@ -80,12 +80,14 @@ public class SWTCustomControl_PTest {
 	private static final String BUNDLE_ID = "org.eclipse.emf.ecp.view.custom.ui.swt.test";
 
 	/**
-	 * 
+	 * @throws EMFFormsNoRendererException
+	 *
 	 */
 	// FIXME what to expect
 	@Test
 	@Ignore
-	public void testCustomControlinView() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+	public void testCustomControlinView() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
+		EMFFormsNoRendererException {
 		final VElement controlInView = createCustomControlInView();
 		final Shell shell = SWTViewTestHelper.createShell();
 		final Composite composite = (Composite) SWTViewTestHelper.render(controlInView, shell);
@@ -112,9 +114,9 @@ public class SWTCustomControl_PTest {
 		return view;
 	}
 
-	@Test
+	@Test(expected = IllegalStateException.class)
 	public void testCustomControlinViewWithoutClass() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
 		final VView view = VViewFactory.eINSTANCE.createView();
 
 		final VCustomControl customControl = createCustomControl();
@@ -139,7 +141,8 @@ public class SWTCustomControl_PTest {
 	}
 
 	@Test
-	public void testCustomControlInit() {
+	public void testCustomControlInit() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
+		EMFFormsNoRendererException {
 		final VView view = VViewFactory.eINSTANCE.createView();
 
 		final VCustomControl customControl = createCustomControl();
@@ -155,7 +158,9 @@ public class SWTCustomControl_PTest {
 		customControl.setDomainModelReference(domainModelReference);
 
 		final Fan domainModel = BowlingFactory.eINSTANCE.createFan();
-		ViewModelContextFactory.INSTANCE.createViewModelContext(view, domainModel);
+		final Shell shell = SWTViewTestHelper.createShell();
+		SWTViewTestHelper.render(view, domainModel, shell);
+		// ViewModelContextFactory.INSTANCE.createViewModelContext(view, domainModel);
 
 		assertNotNull(domainModel.getFavouriteMerchandise());
 	}

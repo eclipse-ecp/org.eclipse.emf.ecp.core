@@ -11,10 +11,18 @@
  */
 package org.eclipse.emf.ecp.test.university.impl;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.emf.ecp.test.university.Address;
 import org.eclipse.emf.ecp.test.university.Assistant;
 import org.eclipse.emf.ecp.test.university.UniversityPackage;
 
@@ -24,15 +32,15 @@ import org.eclipse.emf.ecp.test.university.UniversityPackage;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.test.university.impl.AssistantImpl#getName <em>Name</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.test.university.impl.AssistantImpl#getAddresses <em>Addresses</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
-public class AssistantImpl extends MinimalEObjectImpl.Container implements Assistant
-{
+public class AssistantImpl extends MinimalEObjectImpl.Container implements Assistant {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -55,13 +63,23 @@ public class AssistantImpl extends MinimalEObjectImpl.Container implements Assis
 	protected String name = NAME_EDEFAULT;
 
 	/**
+	 * The cached value of the '{@link #getAddresses() <em>Addresses</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see #getAddresses()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Address> addresses;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
-	protected AssistantImpl()
-	{
+	protected AssistantImpl() {
 		super();
 	}
 
@@ -72,8 +90,7 @@ public class AssistantImpl extends MinimalEObjectImpl.Container implements Assis
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return UniversityPackage.Literals.ASSISTANT;
 	}
 
@@ -83,8 +100,7 @@ public class AssistantImpl extends MinimalEObjectImpl.Container implements Assis
 	 *
 	 * @generated
 	 */
-	public String getName()
-	{
+	public String getName() {
 		return name;
 	}
 
@@ -94,8 +110,7 @@ public class AssistantImpl extends MinimalEObjectImpl.Container implements Assis
 	 *
 	 * @generated
 	 */
-	public void setName(String newName)
-	{
+	public void setName(String newName) {
 		final String oldName = name;
 		name = newName;
 		if (eNotificationRequired()) {
@@ -109,13 +124,42 @@ public class AssistantImpl extends MinimalEObjectImpl.Container implements Assis
 	 *
 	 * @generated
 	 */
+	public EList<Address> getAddresses() {
+		if (addresses == null) {
+			addresses = new EObjectContainmentEList<Address>(Address.class, this,
+				UniversityPackage.ASSISTANT__ADDRESSES);
+		}
+		return addresses;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
-		switch (featureID)
-		{
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+		case UniversityPackage.ASSISTANT__ADDRESSES:
+			return ((InternalEList<?>) getAddresses()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 		case UniversityPackage.ASSISTANT__NAME:
 			return getName();
+		case UniversityPackage.ASSISTANT__ADDRESSES:
+			return getAddresses();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -126,13 +170,16 @@ public class AssistantImpl extends MinimalEObjectImpl.Container implements Assis
 	 *
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
-		switch (featureID)
-		{
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 		case UniversityPackage.ASSISTANT__NAME:
 			setName((String) newValue);
+			return;
+		case UniversityPackage.ASSISTANT__ADDRESSES:
+			getAddresses().clear();
+			getAddresses().addAll((Collection<? extends Address>) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -145,12 +192,13 @@ public class AssistantImpl extends MinimalEObjectImpl.Container implements Assis
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
-		switch (featureID)
-		{
+	public void eUnset(int featureID) {
+		switch (featureID) {
 		case UniversityPackage.ASSISTANT__NAME:
 			setName(NAME_EDEFAULT);
+			return;
+		case UniversityPackage.ASSISTANT__ADDRESSES:
+			getAddresses().clear();
 			return;
 		}
 		super.eUnset(featureID);
@@ -163,12 +211,12 @@ public class AssistantImpl extends MinimalEObjectImpl.Container implements Assis
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
-		switch (featureID)
-		{
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 		case UniversityPackage.ASSISTANT__NAME:
 			return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+		case UniversityPackage.ASSISTANT__ADDRESSES:
+			return addresses != null && !addresses.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -180,8 +228,7 @@ public class AssistantImpl extends MinimalEObjectImpl.Container implements Assis
 	 * @generated
 	 */
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		if (eIsProxy()) {
 			return super.toString();
 		}

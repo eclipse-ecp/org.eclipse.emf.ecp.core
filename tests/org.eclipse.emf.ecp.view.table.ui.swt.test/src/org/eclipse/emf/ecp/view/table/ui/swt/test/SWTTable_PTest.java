@@ -34,7 +34,6 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecp.common.spi.UniqueSetting;
-import org.eclipse.emf.ecp.view.internal.swt.SWTRendererFactoryImpl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextDisposeListener;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
@@ -49,9 +48,6 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.spi.table.model.DetailEditing;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
@@ -60,6 +56,12 @@ import org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTTestUtil;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTViewTestHelper;
+import org.eclipse.emfforms.internal.swt.core.di.EMFFormsContextProviderImpl;
+import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
+import org.eclipse.emfforms.spi.swt.core.di.EMFFormsContextProvider;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.custom.ScrolledComposite;
@@ -75,11 +77,15 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 @RunWith(DatabindingClassRunner.class)
 public class SWTTable_PTest {
 	private static String log;
-	private static SWTRendererFactory rendererFactory = new SWTRendererFactoryImpl();
+	private static ServiceReference<EMFFormsRendererFactory> factoryServiceReference;
+	private static EMFFormsRendererFactory rendererFactory;
 	private static PrintStream systemErr;
 	private Shell shell;
 	private EObject domainElement;
@@ -88,11 +94,16 @@ public class SWTTable_PTest {
 	public static void beforeClass() {
 		systemErr = System.err;
 		System.setErr(new PrintStreamWrapper(systemErr));
+		final BundleContext bundleContext = FrameworkUtil.getBundle(SWTTable_PTest.class).getBundleContext();
+		factoryServiceReference = bundleContext.getServiceReference(EMFFormsRendererFactory.class);
+		rendererFactory = bundleContext.getService(factoryServiceReference);
 	}
 
 	@AfterClass
 	public static void afterClass() {
 		System.setErr(systemErr);
+		final BundleContext bundleContext = FrameworkUtil.getBundle(SWTTable_PTest.class).getBundleContext();
+		bundleContext.ungetService(factoryServiceReference);
 	}
 
 	@Before
@@ -102,7 +113,6 @@ public class SWTTable_PTest {
 
 		final EClass eClass = EcoreFactory.eINSTANCE.createEClass();
 		eClass.getESuperTypes().add(EcorePackage.eINSTANCE.getEClass());
-		new TableControlSWTRenderer();
 		domainElement = eClass;
 	}
 
@@ -115,7 +125,7 @@ public class SWTTable_PTest {
 
 	@Test
 	public void testUninitializedTableWithoutColumns() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
 		// setup model
 		final TableControlHandle handle = createUninitializedTableWithoutColumns();
 		//
@@ -126,7 +136,7 @@ public class SWTTable_PTest {
 
 	@Test
 	public void testInitializedTableWithoutColumnsAndEmptyReference() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
 		// setup model
 		final EClass createEClass = EcoreFactory.eINSTANCE.createEClass();
 		createEClass.eUnset(EcorePackage.eINSTANCE.getEClass_ESuperTypes());
@@ -144,7 +154,7 @@ public class SWTTable_PTest {
 	@Ignore
 	@Test
 	public void testInitializedTableWithoutColumnsSingleReference() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
 		// setup model
 		final VView view = VViewFactory.eINSTANCE.createView();
 		view.setRootEClass(VViewPackage.eINSTANCE.getView());
@@ -167,7 +177,7 @@ public class SWTTable_PTest {
 	@Ignore
 	@Test
 	public void testInitializedTableWithoutColumnsEmptySingleReference() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
 		// setup model
 		final VView view = VViewFactory.eINSTANCE.createView();
 		domainElement = view;
@@ -186,7 +196,8 @@ public class SWTTable_PTest {
 	}
 
 	@Test
-	public void testTableWithoutColumns() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+	public void testTableWithoutColumns() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
+		EMFFormsNoRendererException {
 		// setup model
 		final TableControlHandle handle = createInitializedTableWithoutTableColumns();
 
@@ -205,9 +216,10 @@ public class SWTTable_PTest {
 
 	@Test
 	public void testTableWithoutColumnsWithoutViewServices() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
 		final TableControlHandle handle = createInitializedTableWithoutTableColumns();
-		final AbstractSWTRenderer<VElement> tableRenderer = rendererFactory.getRenderer(handle.getTableControl(),
+		final AbstractSWTRenderer<VElement> tableRenderer = rendererFactory.getRendererInstance(
+			handle.getTableControl(),
 			new ViewModelContextWithoutServices(handle.getTableControl()));
 
 		final Control render = tableRenderer.render(new SWTGridCell(0, 0, tableRenderer), shell);
@@ -226,7 +238,8 @@ public class SWTTable_PTest {
 	}
 
 	@Test
-	public void testTableWithTwoColumns() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+	public void testTableWithTwoColumns() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
+		EMFFormsNoRendererException {
 		// setup model
 		final TableControlHandle handle = createTableWithTwoTableColumns();
 		final Control render = SWTViewTestHelper.render(handle.getTableControl(), domainElement, shell);
@@ -241,10 +254,11 @@ public class SWTTable_PTest {
 
 	@Test
 	public void testTableWithTwoColumnsWithoutViewServices() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
 		// setup model
 		final TableControlHandle handle = createTableWithTwoTableColumns();
-		final AbstractSWTRenderer<VElement> tableRenderer = rendererFactory.getRenderer(handle.getTableControl(),
+		final AbstractSWTRenderer<VElement> tableRenderer = rendererFactory.getRendererInstance(
+			handle.getTableControl(),
 			new ViewModelContextWithoutServices(handle.getTableControl()));
 
 		final Control render = tableRenderer.render(new SWTGridCell(0, 0, tableRenderer), shell);
@@ -260,9 +274,11 @@ public class SWTTable_PTest {
 	}
 
 	@Test
-	public void testTableWithTwoColumnsAdd() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+	public void testTableWithTwoColumnsAdd() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
+		EMFFormsNoRendererException {
 		final TableControlHandle handle = createTableWithTwoTableColumns();
-		final AbstractSWTRenderer<VElement> tableRenderer = rendererFactory.getRenderer(handle.getTableControl(),
+		final AbstractSWTRenderer<VElement> tableRenderer = rendererFactory.getRendererInstance(
+			handle.getTableControl(),
 			new ViewModelContextWithoutServices(handle.getTableControl()));
 
 		final Control control = tableRenderer.render(new SWTGridCell(0, 0, tableRenderer), shell);
@@ -277,9 +293,11 @@ public class SWTTable_PTest {
 	}
 
 	@Test
-	public void testTableWithTwoColumnsRemove() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+	public void testTableWithTwoColumnsRemove() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
+		EMFFormsNoRendererException {
 		final TableControlHandle handle = createTableWithTwoTableColumns();
-		final AbstractSWTRenderer<VElement> tableRenderer = rendererFactory.getRenderer(handle.getTableControl(),
+		final AbstractSWTRenderer<VElement> tableRenderer = rendererFactory.getRendererInstance(
+			handle.getTableControl(),
 			new ViewModelContextWithoutServices(handle.getTableControl()));
 
 		final Control control = tableRenderer.render(new SWTGridCell(0, 0, tableRenderer), shell);
@@ -294,11 +312,13 @@ public class SWTTable_PTest {
 	}
 
 	@Test
-	public void testTableWithTwoColumnsClear() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+	public void testTableWithTwoColumnsClear() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
+		EMFFormsNoRendererException {
 		final EClass eClass = EcoreFactory.eINSTANCE.createEClass();
 		((EClass) domainElement).getESuperTypes().add(eClass);
 		final TableControlHandle handle = createTableWithTwoTableColumns();
-		final AbstractSWTRenderer<VElement> tableRenderer = rendererFactory.getRenderer(handle.getTableControl(),
+		final AbstractSWTRenderer<VElement> tableRenderer = rendererFactory.getRendererInstance(
+			handle.getTableControl(),
 			new ViewModelContextWithoutServices(handle.getTableControl()));
 
 		final Control control = tableRenderer.render(new SWTGridCell(0, 0, tableRenderer), shell);
@@ -312,13 +332,15 @@ public class SWTTable_PTest {
 	}
 
 	@Test
-	public void testPanelTableWithTwoColumns() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+	public void testPanelTableWithTwoColumns() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
+		EMFFormsNoRendererException {
 		final EClass eClass = EcoreFactory.eINSTANCE.createEClass();
 		((EClass) domainElement).getESuperTypes().add(eClass);
 		final TableControlHandle handle = createTableWithTwoTableColumns();
 		handle.getTableControl().setDetailEditing(DetailEditing.WITH_PANEL);
 		handle.getTableControl().setDetailView(createDetailView());
-		final AbstractSWTRenderer<VElement> tableRenderer = rendererFactory.getRenderer(handle.getTableControl(),
+		final AbstractSWTRenderer<VElement> tableRenderer = rendererFactory.getRendererInstance(
+			handle.getTableControl(),
 			new ViewModelContextWithoutServices(handle.getTableControl()));
 		final Control control = tableRenderer.render(new SWTGridCell(0, 0, tableRenderer), shell);
 		if (control == null) {
@@ -357,7 +379,8 @@ public class SWTTable_PTest {
 	}
 
 	@Test
-	public void testTableSorting() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+	public void testTableSorting() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
+		EMFFormsNoRendererException {
 		// domain
 		((EClass) domainElement).getESuperTypes().clear();
 		final EClass class1 = createEClass("a", "b");
@@ -376,7 +399,7 @@ public class SWTTable_PTest {
 			createDMR(EcorePackage.eINSTANCE.getEClassifier_InstanceClassName()));
 
 		// render
-		final AbstractSWTRenderer<VElement> tableRenderer = rendererFactory.getRenderer(tableControl,
+		final AbstractSWTRenderer<VElement> tableRenderer = rendererFactory.getRendererInstance(tableControl,
 			new ViewModelContextWithoutServices(tableControl));
 		final Control control = tableRenderer.render(new SWTGridCell(0, 0, tableRenderer), shell);
 		if (control == null) {
@@ -533,9 +556,11 @@ public class SWTTable_PTest {
 	private class ViewModelContextWithoutServices implements ViewModelContext {
 
 		private final VElement view;
+		private final EMFFormsContextProvider contextProvider;
 
 		public ViewModelContextWithoutServices(VElement view) {
 			this.view = view;
+			contextProvider = new EMFFormsContextProviderImpl();
 			ViewModelUtil.resolveDomainReferences(getViewModel(), getDomainModel());
 		}
 
@@ -620,6 +645,9 @@ public class SWTTable_PTest {
 		 */
 		@Override
 		public <T> boolean hasService(Class<T> serviceType) {
+			if (EMFFormsContextProvider.class.equals(serviceType)) {
+				return true;
+			}
 			return false;
 		}
 
@@ -628,8 +656,12 @@ public class SWTTable_PTest {
 		 *
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getService(java.lang.Class)
 		 */
+		@SuppressWarnings("unchecked")
 		@Override
 		public <T> T getService(Class<T> serviceType) {
+			if (EMFFormsContextProvider.class.equals(serviceType)) {
+				return (T) contextProvider;
+			}
 			return null;
 		}
 

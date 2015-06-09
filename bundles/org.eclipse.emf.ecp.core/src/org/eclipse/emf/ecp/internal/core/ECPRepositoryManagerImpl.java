@@ -60,13 +60,6 @@ import org.eclipse.net4j.util.io.IOUtil;
  */
 public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepository, ECPObserver> implements
 	ECPRepositoryManager, ECPProvidersChangedObserver {
-	/**
-	 * The Singleton to access the implementation of the Default ECPRepositoryManagerImpl.
-	 *
-	 * @deprecated use {@link ECPUtil} instead
-	 */
-	@Deprecated
-	public static ECPRepositoryManagerImpl INSTANCE;
 
 	/**
 	 * The file extension that is used for dynamic properties of statically declared repositories.
@@ -79,10 +72,7 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 	 * Should not be called directly, use service instead.
 	 */
 	public ECPRepositoryManagerImpl() {
-		if (INSTANCE != null) {
-			throw new IllegalStateException("Manager must not be initialized twice");
-		}
-		INSTANCE = this;
+
 		final File stateLocation = Activator.getInstance().getStateLocation().toFile();
 		setFolder(new File(stateLocation, "repositories"));
 	}
@@ -146,7 +136,7 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 
 		try {
 			ECPUtil.getECPObserverBus().notify(ECPRepositoryContentChangedObserver.class)
-				.contentChanged(repository, objects);
+			.contentChanged(repository, objects);
 		} catch (final Exception ex) {
 			Activator.log(ex);
 		}
@@ -188,7 +178,7 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 	protected void notifyObservers(Collection<InternalRepository> oldRepositories,
 		Collection<InternalRepository> newRepositories) throws Exception {
 		ECPUtil.getECPObserverBus().notify(ECPRepositoriesChangedObserver.class)
-			.repositoriesChanged((Collection) oldRepositories, (Collection) newRepositories);
+		.repositoriesChanged((Collection) oldRepositories, (Collection) newRepositories);
 	}
 
 	@Override
@@ -228,7 +218,7 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 	 * @author Eike Stepper
 	 */
 	private final class RepositoryDescriptor extends ExtensionDescriptor<InternalRepository> implements
-		InternalRepository {
+	InternalRepository {
 		private final Set<String> declaredPropertyKeys;
 		private final ECPProperties properties = new Properties() {
 			@Override
@@ -294,7 +284,8 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 				@Override
 				public void propertiesChanged(ECPProperties properties,
 					Collection<Entry<String, String>> oldProperties, Collection<Entry<String, String>> newProperties) {
-					ECPRepositoryManagerImpl.INSTANCE.storeElement(RepositoryDescriptor.this);
+					((ECPRepositoryManagerImpl) ECPUtil.getECPRepositoryManager())
+						.storeElement(RepositoryDescriptor.this);
 				}
 			});
 		}

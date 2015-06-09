@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecp.edit.spi.EMFDeleteServiceImpl;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.DefaultReferenceService;
@@ -35,6 +36,7 @@ import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
+import org.eclipse.emf.ecp.view.spi.model.LocalizationAdapter;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
@@ -63,7 +65,7 @@ public class Preview {
 	 * The constructor.
 	 *
 	 * @param parent - the {@link Composite} in which to render
-	 * */
+	 */
 	public Preview(Composite parent) {
 		this.parent = parent;
 	}
@@ -73,7 +75,7 @@ public class Preview {
 	 *
 	 * @param view the {@link VView}
 	 * @param sampleData the sample data to be displayed in the view
-	 * */
+	 */
 	public void render(final VView view, EObject sampleData) {
 		if (adapter != null) {
 			removeAdapter();
@@ -145,9 +147,15 @@ public class Preview {
 
 			final ReferenceService previewRefServ = new DefaultReferenceService();
 			final VView copy = EcoreUtil.copy(view);
+			copy.eAdapters().add(new LocalizationAdapter() {
+				@Override
+				public String localize(String key) {
+					return key;
+				}
+			});
 			clearViewDiagnostics(copy);
 			final ViewModelContext viewModelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(
-				copy, dummyData, previewRefServ);
+				copy, dummyData, previewRefServ, new EMFDeleteServiceImpl());
 			composite = createComposite(parent);
 			render = ECPSWTViewRenderer.INSTANCE.render(composite, viewModelContext);
 			composite.layout();

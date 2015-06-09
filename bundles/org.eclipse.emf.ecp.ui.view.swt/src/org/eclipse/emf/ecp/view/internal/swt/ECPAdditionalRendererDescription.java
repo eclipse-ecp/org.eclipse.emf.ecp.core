@@ -12,8 +12,8 @@
 package org.eclipse.emf.ecp.view.internal.swt;
 
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.swt.AbstractAdditionalSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.swt.ECPAdditionalRendererTester;
+import org.eclipse.emfforms.spi.swt.core.AbstractAdditionalSWTRenderer;
 
 /**
  * A class describing a rendererClass.

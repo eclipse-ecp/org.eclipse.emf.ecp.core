@@ -12,6 +12,7 @@
 package org.eclipse.emf.ecp.view.spi.model.reporting;
 
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
 
 /**
  * A {@link Status} that may be passed to the report service.
@@ -37,7 +38,7 @@ public class StatusReport extends AbstractReport {
 	 *
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport#getMessage()
+	 * @see org.eclipse.emfforms.spi.common.report.AbstractReport#getMessage()
 	 */
 	@Override
 	public String getMessage() {
@@ -48,7 +49,7 @@ public class StatusReport extends AbstractReport {
 	 *
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport#hasException()
+	 * @see org.eclipse.emfforms.spi.common.report.AbstractReport#hasException()
 	 */
 	@Override
 	public boolean hasException() {
@@ -59,7 +60,7 @@ public class StatusReport extends AbstractReport {
 	 *
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport#getException()
+	 * @see org.eclipse.emfforms.spi.common.report.AbstractReport#getException()
 	 */
 	@Override
 	public Throwable getException() {
@@ -70,7 +71,7 @@ public class StatusReport extends AbstractReport {
 	 *
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport#getSeverity()
+	 * @see org.eclipse.emfforms.spi.common.report.AbstractReport#getSeverity()
 	 */
 	@Override
 	public int getSeverity() {

@@ -55,6 +55,7 @@ public interface VDomainModelReference extends EObject, ModelChangeListener
 	 * @model dataType="org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener" transient="true"
 	 * @generated
 	 */
+	@Deprecated
 	EList<DomainModelReferenceChangeListener> getChangeListener();
 
 	/**
@@ -66,6 +67,7 @@ public interface VDomainModelReference extends EObject, ModelChangeListener
 	 * @return true if resolution succeeded and false otherwise
 	 * @since 1.3
 	 */
+	@Deprecated
 	boolean init(EObject object);
 
 	/**
@@ -74,6 +76,7 @@ public interface VDomainModelReference extends EObject, ModelChangeListener
 	 *
 	 * @return the {@link Iterator} for this domain model reference
 	 */
+	@Deprecated
 	Iterator<Setting> getIterator();
 
 	/**
@@ -84,6 +87,7 @@ public interface VDomainModelReference extends EObject, ModelChangeListener
 	 *         reference
 	 * @since 1.3
 	 */
+	@Deprecated
 	Iterator<EStructuralFeature> getEStructuralFeatureIterator();
 
 	/**
@@ -93,6 +97,7 @@ public interface VDomainModelReference extends EObject, ModelChangeListener
 	 * @return the {@link Iterator} over setting paths for this domain model reference
 	 * @since 1.3
 	 */
+	@Deprecated
 	Iterator<SettingPath> getFullPathIterator();
 
 } // VDomainModelReference

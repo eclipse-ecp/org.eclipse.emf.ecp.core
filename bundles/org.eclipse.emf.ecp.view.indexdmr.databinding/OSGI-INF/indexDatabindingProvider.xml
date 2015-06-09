@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.eclipse.emf.ecp.view.indexdmr.databinding">
-   <implementation class="org.eclipse.emf.ecp.view.indexdmr.databinding.IndexDatabindingProviderService"/>
-   <service>
-      <provide interface="org.eclipse.emf.ecp.view.model.common.spi.databinding.DatabindingProviderService"/>
-   </service>
-   <property name="domainModelReference" type="String" value="org.eclipse.emf.ecp.view.spi.indexdmr.model.impl.VIndexDomainModelReferenceImpl"/>
-</scr:component>

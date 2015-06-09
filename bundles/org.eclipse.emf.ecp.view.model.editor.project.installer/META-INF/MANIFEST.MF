@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: New View Model Project Wizard
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.model.project.installer;singleton:=true
-Bundle-Version: 1.5.1.qualifier
+Bundle-Version: 1.6.0.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.view.model.internal.project.installer.Activator
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.emf.ecp.view.model.editor;bundle-version="[1.5.0,2.0.0)",
@@ -18,6 +18,6 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.emf.ecp.view.model.internal.project.handle
- rs;version="1.5.1";x-internal:=true,org.eclipse.emf.ecp.view.model.in
- ternal.project.installer;version="1.5.1";x-internal:=true
+ rs;version="1.6.0";x-internal:=true,org.eclipse.emf.ecp.view.model.in
+ ternal.project.installer;version="1.6.0";x-internal:=true
 Bundle-Vendor: Eclipse Modeling Project

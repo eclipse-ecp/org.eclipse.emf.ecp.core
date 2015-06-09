@@ -27,7 +27,6 @@ public class MakeItHappenApplicationConfiguration implements ApplicationConfigur
 	@SuppressWarnings("deprecation")
 	@Override
 	public void configure(Application application) {
-		application.addPhaseListener(new DataBindingPhaseListener());
 		application.addEntryPoint("/makeithappen_j2ee", MakeItHappenEntryPoint.class, null); //$NON-NLS-1$
 	}
 

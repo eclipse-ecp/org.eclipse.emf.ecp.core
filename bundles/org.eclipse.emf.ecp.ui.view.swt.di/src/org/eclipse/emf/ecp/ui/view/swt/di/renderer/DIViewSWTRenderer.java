@@ -16,9 +16,15 @@ import org.eclipse.emf.ecp.ui.view.swt.di.util.SWTContextUtil;
 import org.eclipse.emf.ecp.view.internal.core.swt.renderer.ViewSWTRenderer;
 import org.eclipse.emf.ecp.view.model.common.di.renderer.DIRendererUtil;
 import org.eclipse.emf.ecp.view.model.common.di.renderer.POJORendererFactory;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
+import org.eclipse.emfforms.spi.common.locale.EMFFormsLocaleProvider;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
@@ -29,12 +35,27 @@ import org.eclipse.swt.widgets.Control;
 @SuppressWarnings("restriction")
 public class DIViewSWTRenderer extends ViewSWTRenderer {
 
+	/**
+	 * Default constructor.
+	 *
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param reportService the {@link ReportService}
+	 * @param factory the {@link EMFFormsRendererFactory}
+	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
+	 * @param localeProvider The {@link EMFFormsLocaleProvider}
+	 */
+	public DIViewSWTRenderer(VView vElement, ViewModelContext viewContext, ReportService reportService,
+		EMFFormsRendererFactory factory, EMFFormsDatabinding emfFormsDatabinding, EMFFormsLocaleProvider localeProvider) {
+		super(vElement, viewContext, reportService, factory, emfFormsDatabinding, localeProvider);
+	}
+
 	private Object pojo;
 
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#render(org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell,
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#render(org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell,
 	 *      org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
@@ -42,8 +63,7 @@ public class DIViewSWTRenderer extends ViewSWTRenderer {
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		pojo = POJORendererFactory.getInstance().getRenderer(getVElement(), getViewModelContext());
 		final IEclipseContext childContext = DIRendererUtil.getContextForElement(getVElement(), getViewModelContext());
-		SWTContextUtil.setAbstractSWTRendererObjects(childContext, getVElement(), getViewModelContext(),
-			getSWTRendererFactory(), parent);
+		SWTContextUtil.setAbstractSWTRendererObjects(childContext, getVElement(), getViewModelContext(), parent);
 		childContext.set(SWTGridCell.class, cell);
 		DIRendererUtil.render(pojo, getVElement(), getViewModelContext());
 		return parent;

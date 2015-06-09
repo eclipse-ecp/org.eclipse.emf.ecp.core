@@ -48,6 +48,10 @@ public final class Messages extends NLS {
 	public static String CreateProjectWizard_PageMessage_SetProjectName;
 	public static String CreateProjectWizard_PageMessage_SelectProviderAndSetName;
 	public static String CreateProjectWizard_PageTitle_CreateProject;
+	public static String DefaultUIProvider_Calculating;
+
+	public static String DefaultUIProvider_CantFindInPackageRegistry;
+
 	public static String DeleteDialog_DialogTitle;
 	public static String DeleteDialog_Message_AreYouSure;
 	public static String DeleteDialog_Message_element;

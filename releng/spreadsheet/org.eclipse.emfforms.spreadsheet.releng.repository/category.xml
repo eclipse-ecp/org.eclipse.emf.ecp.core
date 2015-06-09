@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature id="org.eclipse.emfforms.spreadsheet.feature" version="0.0.0">
+      <category name="org.eclipse.emfforms.spreadsheet"/>
+   </feature>
+   <category-def name="org.eclipse.emfforms.spreadsheet" label="Spreadsheet Import Export for EMFForms">
+      <description>
+         Contains the EMFForms Support for import and export of Spreadsheerts.
+      </description>
+   </category-def>
+</site>

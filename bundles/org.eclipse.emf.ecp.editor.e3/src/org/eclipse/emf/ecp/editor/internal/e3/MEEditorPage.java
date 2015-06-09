@@ -13,8 +13,9 @@ package org.eclipse.emf.ecp.editor.internal.e3;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecp.edit.spi.DeleteService;
 import org.eclipse.emf.ecp.editor.e3.ECPEditorContext;
+import org.eclipse.emf.ecp.spi.ui.ECPDeleteServiceImpl;
 import org.eclipse.emf.ecp.spi.ui.ECPReferenceServiceImpl;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
@@ -24,8 +25,6 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
-import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.jface.action.Action;
@@ -61,6 +60,7 @@ public class MEEditorPage extends FormPage {
 
 	private ComposedAdapterFactory composedAdapterFactory;
 	private ECPSWTView ecpView;
+	private DeleteService deleteService;
 
 	/**
 	 * Default constructor.
@@ -125,8 +125,9 @@ public class MEEditorPage extends FormPage {
 
 		final EObject domainObject = modelElementContext.getDomainObject();
 		final VView view = ViewProviderHelper.getView(domainObject, null);
+		deleteService = new ECPDeleteServiceImpl();
 		final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(view, domainObject,
-			new ECPReferenceServiceImpl());
+			new ECPReferenceServiceImpl(), deleteService);
 		try {
 			ecpView = ECPSWTViewRenderer.INSTANCE.render(body, vmc);
 		} catch (final ECPRendererException ex) {
@@ -183,23 +184,12 @@ public class MEEditorPage extends FormPage {
 
 		form.getToolBarManager().add(new Action("", Activator.getImageDescriptor(ISharedImages.IMG_TOOL_DELETE)) { //$NON-NLS-1$
 
-				@Override
-				public void run() {
-					final EditingDomain editingDomain = AdapterFactoryEditingDomain
-						.getEditingDomainFor(modelElementContext
-							.getDomainObject());
-					new ECPCommand(modelElementContext.getDomainObject(), editingDomain) {
-
-						@Override
-						protected void doRun() {
-							EcoreUtil.delete(modelElementContext.getDomainObject(), true);
-						}
-
-					}.run(true);
-
-					MEEditorPage.this.getEditor().close(true);
-				}
-			});
+			@Override
+			public void run() {
+				deleteService.deleteElement(modelElementContext.getDomainObject());
+				MEEditorPage.this.getEditor().close(true);
+			}
+		});
 		menuService.populateContributionManager((ContributionManager) form.getToolBarManager(),
 			TOOLBAR_ORG_ECLIPSE_EMF_ECP_EDITOR_INTERNAL_E3_ME_EDITOR_PAGE);
 		form.getToolBarManager().update(true);

@@ -13,9 +13,15 @@ package org.eclipse.emf.ecp.view.spi.stack.ui.swt;
 
 import java.util.Collection;
 
+import javax.inject.Inject;
+
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.stack.model.VStackItem;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 
 /**
  * The SWT {@link VStackItem} renderer.
@@ -24,6 +30,23 @@ import org.eclipse.emf.ecp.view.spi.stack.model.VStackItem;
  *
  */
 public class SWTStackItemRenderer extends ContainerSWTRenderer<VStackItem> {
+
+	/**
+	 * Default constructor.
+	 *
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param reportService the {@link ReportService}
+	 * @param factory the {@link EMFFormsRendererFactory}
+	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
+	 * @since 1.6
+	 */
+	@Inject
+	public SWTStackItemRenderer(VStackItem vElement, ViewModelContext viewContext,
+		ReportService reportService,
+		EMFFormsRendererFactory factory, EMFFormsDatabinding emfFormsDatabinding) {
+		super(vElement, viewContext, reportService, factory, emfFormsDatabinding);
+	}
 
 	private static final String LAYOUT_STACK_ITEM = "org_eclipse_emf_ecp_ui_layout_stackitem"; //$NON-NLS-1$
 

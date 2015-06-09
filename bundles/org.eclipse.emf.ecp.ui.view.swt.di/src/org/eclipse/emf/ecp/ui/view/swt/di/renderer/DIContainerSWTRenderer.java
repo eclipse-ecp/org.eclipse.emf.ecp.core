@@ -15,8 +15,12 @@ import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.emf.ecp.ui.view.swt.di.util.SWTContextUtil;
 import org.eclipse.emf.ecp.view.model.common.di.renderer.DIRendererUtil;
 import org.eclipse.emf.ecp.view.model.common.di.renderer.POJORendererFactory;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 import org.eclipse.swt.widgets.Composite;
 
 /**
@@ -27,6 +31,20 @@ import org.eclipse.swt.widgets.Composite;
  */
 @SuppressWarnings("restriction")
 public class DIContainerSWTRenderer extends ContainerSWTRenderer<VElement> {
+
+	/**
+	 * Default constructor.
+	 *
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param reportService the {@link ReportService}
+	 * @param factory the {@link EMFFormsRendererFactory}
+	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
+	 */
+	public DIContainerSWTRenderer(VElement vElement, ViewModelContext viewContext, ReportService reportService,
+		EMFFormsRendererFactory factory, EMFFormsDatabinding emfFormsDatabinding) {
+		super(vElement, viewContext, reportService, factory, emfFormsDatabinding);
+	}
 
 	/**
 	 * Named string for the children of a container.
@@ -42,8 +60,7 @@ public class DIContainerSWTRenderer extends ContainerSWTRenderer<VElement> {
 	@Override
 	protected Composite getComposite(Composite parent) {
 		final IEclipseContext childContext = DIRendererUtil.getContextForElement(getVElement(), getViewModelContext());
-		SWTContextUtil.setAbstractSWTRendererObjects(childContext, getVElement(), getViewModelContext(),
-			getSWTRendererFactory(), parent);
+		SWTContextUtil.setAbstractSWTRendererObjects(childContext, getVElement(), getViewModelContext(), parent);
 		childContext.set(CHILDREN, getChildren());
 		putInContext(childContext, getVElement());
 		return doGetComposite();

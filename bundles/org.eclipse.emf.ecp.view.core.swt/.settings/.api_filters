@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.ecp.view.core.swt" version="2">
+    <resource path="META-INF/MANIFEST.MF">
+        <filter comment="SPI Change in 1.6" id="923795461">
+            <message_arguments>
+                <message_argument value="1.6.0"/>
+                <message_argument value="1.5.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/core/swt/AbstractControlSWTRenderer.java" type="org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer">
+        <filter comment="SPI Change in 1.6" id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer"/>
+                <message_argument value="AbstractControlSWTRenderer()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change in 1.6" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer"/>
+                <message_argument value="getEditingDomain(EStructuralFeature.Setting)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change in 1.6" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer"/>
+                <message_argument value="getItemPropertyDescriptor(EStructuralFeature.Setting)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change in 1.6" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer"/>
+                <message_argument value="getModelValue(EStructuralFeature.Setting)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/core/swt/ContainerSWTRenderer.java" type="org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer">
+        <filter comment="SPI Change in 1.6" id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer"/>
+                <message_argument value="ContainerSWTRenderer()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change in 1.6" id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer"/>
+                <message_argument value="ContainerSWTRenderer(SWTRendererFactory)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="EMFForms 1.6 SPI Change" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer"/>
+                <message_argument value="getGridDescription(SWTGridDescription)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="EMFForms 1.6 SPI Change" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer"/>
+                <message_argument value="renderControl(SWTGridCell, Composite)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/core/swt/SimpleControlJFaceViewerSWTRenderer.java" type="org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlJFaceViewerSWTRenderer">
+        <filter comment="SPI Change in 1.6" id="336695337">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlJFaceViewerSWTRenderer"/>
+                <message_argument value="createBindings(Viewer)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change in 1.6" id="336695337">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlJFaceViewerSWTRenderer"/>
+                <message_argument value="createJFaceViewer(Composite)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change in 1.6" id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlJFaceViewerSWTRenderer"/>
+                <message_argument value="SimpleControlJFaceViewerSWTRenderer()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change in 1.6" id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlJFaceViewerSWTRenderer"/>
+                <message_argument value="SimpleControlJFaceViewerSWTRenderer(SWTRendererFactory)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change in 1.6" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlJFaceViewerSWTRenderer"/>
+                <message_argument value="createBindings(Viewer, EStructuralFeature.Setting)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change in 1.6" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlJFaceViewerSWTRenderer"/>
+                <message_argument value="createJFaceViewer(Composite, EStructuralFeature.Setting)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/core/swt/SimpleControlSWTControlSWTRenderer.java" type="org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer">
+        <filter comment="SPI Change in 1.6" id="336695337">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer"/>
+                <message_argument value="createBindings(Control)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change in 1.6" id="336695337">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer"/>
+                <message_argument value="createSWTControl(Composite)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change in 1.6" id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer"/>
+                <message_argument value="SimpleControlSWTControlSWTRenderer()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change in 1.6" id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer"/>
+                <message_argument value="SimpleControlSWTControlSWTRenderer(SWTRendererFactory)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change in 1.6" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer"/>
+                <message_argument value="createBindings(Control, EStructuralFeature.Setting)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change in 1.6" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer"/>
+                <message_argument value="createSWTControl(Composite, EStructuralFeature.Setting)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/core/swt/SimpleControlSWTRenderer.java" type="org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTRenderer">
+        <filter comment="SPI Change in 1.6" id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTRenderer"/>
+                <message_argument value="SimpleControlSWTRenderer()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="EMFForms 1.6 SPI Change" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTRenderer"/>
+                <message_argument value="getGridDescription(SWTGridDescription)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="EMFForms 1.6 SPI Change" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTRenderer"/>
+                <message_argument value="renderControl(SWTGridCell, Composite)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="EMFForms 1.6 SPI Change" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTRenderer"/>
+                <message_argument value="setControlEnabled(SWTGridCell, Control, boolean)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/core/swt/renderer/TextControlSWTRenderer.java" type="org.eclipse.emf.ecp.view.spi.core.swt.renderer.TextControlSWTRenderer">
+        <filter comment="SPI Change in 1.6" id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.core.swt.renderer.TextControlSWTRenderer"/>
+                <message_argument value="TextControlSWTRenderer()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change in 1.6" id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.core.swt.renderer.TextControlSWTRenderer"/>
+                <message_argument value="TextControlSWTRenderer(SWTRendererFactory)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change in 1.6" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.core.swt.renderer.TextControlSWTRenderer"/>
+                <message_argument value="createBindings(Control, EStructuralFeature.Setting)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change in 1.6" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.core.swt.renderer.TextControlSWTRenderer"/>
+                <message_argument value="createSWTControl(Composite, EStructuralFeature.Setting)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change in 1.6" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.core.swt.renderer.TextControlSWTRenderer"/>
+                <message_argument value="getTextMessage(EStructuralFeature.Setting)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="EMFForms 1.6 SPI Change" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.core.swt.renderer.TextControlSWTRenderer"/>
+                <message_argument value="setControlEnabled(SWTGridCell, Control, boolean)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

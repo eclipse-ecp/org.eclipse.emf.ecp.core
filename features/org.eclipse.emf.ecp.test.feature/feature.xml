@@ -113,20 +113,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.emf.ecp.view.group.ui.swt.test"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.ecp.view.horizontal.ui.swt.test"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.emf.ecp.view.model.edit.test"
          download-size="0"
          install-size="0"
@@ -215,13 +201,6 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.emf.ecp.view.vertical.ui.swt.test"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.emf.ecp.integrationtest"
          download-size="0"
          install-size="0"
@@ -262,6 +241,30 @@
 
    <plugin
          id="org.eclipse.emf.ecp.view.template.service.test"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.ecp.view.group.ui.swt.test"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.ecp.view.horizontal.ui.swt.test"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.ecp.view.vertical.ui.swt.test"
          download-size="0"
          install-size="0"
          version="0.0.0"

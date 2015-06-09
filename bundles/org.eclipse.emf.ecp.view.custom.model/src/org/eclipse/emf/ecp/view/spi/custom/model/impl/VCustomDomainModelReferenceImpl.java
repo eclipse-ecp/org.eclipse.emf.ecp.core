@@ -15,6 +15,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.Stack;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.notify.Notification;
@@ -30,7 +31,6 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.eclipse.emf.ecp.internal.edit.EditMessages;
 import org.eclipse.emf.ecp.view.spi.custom.model.ECPHardcodedReferences;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage;
@@ -38,6 +38,7 @@ import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.SettingPath;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.osgi.framework.Bundle;
 
 /**
@@ -490,9 +491,8 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	private static ECPHardcodedReferences loadObject(String bundleName, String clazz) {
 		final Bundle bundle = Platform.getBundle(bundleName);
 		if (bundle == null) {
-			new ClassNotFoundException(clazz + EditMessages.CONTROLFACTROY_CANNOT_BE_LOADED
-				+ bundleName
-				+ EditMessages.CONTROLFACTORY_CANNOT_BE_RESOLVED);
+			new ClassNotFoundException(String.format(LocalizationServiceHelper.getString(
+				VCustomDomainModelReferenceImpl.class, "BundleNotFound_ExceptionMessage"), clazz, bundleName)); //$NON-NLS-1$
 			return null;
 		}
 		try {
@@ -547,28 +547,37 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	 * Private helper class to iterate over sub iterators.
 	 *
 	 * @author Eugen Neufeld
+	 * @author jfaltermeier
 	 *
 	 * @param <T> the type to iterate over
 	 */
 	private abstract class ExistingIteratorIterator<T> implements Iterator<T> {
-		private Iterator<T> currentSubIterator;
-		private final Iterator<VDomainModelReference> referencesIterator = getDomainModelReferences().iterator();
+
+		private final Stack<Iterator<T>> subIterators = new Stack<Iterator<T>>();
+
+		public ExistingIteratorIterator() {
+			for (int i = getDomainModelReferences().size() - 1; i >= 0; i--) {
+				final VDomainModelReference vDomainModelReference = getDomainModelReferences().get(i);
+				final Iterator<T> subIterator = getSubIterator(vDomainModelReference);
+				if (subIterator.hasNext()) {
+					subIterators.push(subIterator);
+				}
+			}
+
+		}
 
 		@Override
 		public boolean hasNext() {
-			return referencesIterator.hasNext() || currentSubIterator != null && currentSubIterator.hasNext();
+			return !subIterators.isEmpty() && subIterators.peek().hasNext();
 		}
 
 		@Override
 		public T next() {
-			if (currentSubIterator == null) {
-				currentSubIterator = getSubIterator(referencesIterator.next());
+			final T next = subIterators.peek().next();
+			if (!subIterators.peek().hasNext()) {
+				subIterators.pop();
 			}
-			final T result = currentSubIterator.next();
-			if (!currentSubIterator.hasNext()) {
-				currentSubIterator = null;
-			}
-			return result;
+			return next;
 		}
 
 		@Override

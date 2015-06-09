@@ -5,17 +5,61 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.eclipse.emf.ecp</groupId>
 	<artifactId>ecp-tests-parent</artifactId>
-	<version>1.5.1-SNAPSHOT</version>
+	<version>1.6.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<parent>
 		<groupId>org.eclipse.emf.ecp</groupId>
 		<artifactId>ecp-parent</artifactId>
-		<version>1.5.1-SNAPSHOT</version>
+		<version>1.6.0-SNAPSHOT</version>
 		<relativePath>../../releng/org.eclipse.emf.ecp.releng/</relativePath>
 	</parent>
-
+	<profiles>
+		<profile>
+			<id>slowTests</id>
+			<activation>
+				<property>
+					<name>slowTests</name>
+				</property>
+			</activation>
+			<modules>
+				<module>../../tests/org.eclipse.emf.ecp.view.ui.editor.test</module>
+				<module>../../tests/org.eclipse.emf.ecp.view.validation.test</module>
+				<module>../../tests/org.eclipse.emf.ecp.view.rule.test</module>
+				<module>../../tests/org.eclipse.emf.ecp.view.rule.ui.swt.test</module> <!-- must be moved because of dependency to rule.test -->
+				<module>../../tests/org.eclipse.emf.ecp.view.unset.test</module><!-- must be moved because of dependency to rule.test -->
+				<module>../../tests/org.eclipse.emf.ecp.validation.test</module>
+				<module>../../tests/org.eclipse.emf.ecp.core.test</module>
+			</modules>
+		</profile>
+		
+		<profile>
+			<id>build-server</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.eclipse.cbi.maven.plugins</groupId>
+						<artifactId>eclipse-jarsigner-plugin</artifactId>
+						<version>${jarsigner-version}</version>
+						<executions>
+							<execution>
+								<id>sign</id>
+								<phase>package</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<excludeInnerJars>true</excludeInnerJars>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 	<modules>
 		<!-- Bundles/Features -->
+		<module>../../bundles/org.eclipse.emf.ecp.test.common</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.dynamictree.model</module>
         <module>../../tests/org.eclipse.emf.ecp.view.dynamictree.model.edit</module>
         <module>../../tests/org.eclipse.emf.ecp.view.dynamictree.ui</module>
@@ -26,33 +70,36 @@
 		<module>../../tests/org.eclipse.emf.ecp.test.model</module>
 		<module>../../tests/org.eclipse.emf.ecp.test.model.edit</module>
 		<module>../../tests/org.eclipse.emf.ecp.test.model.feature</module>
+		<module>../../tests/org.eclipse.emf.ecp.core.rap.sessionprovider.test</module>
 
 		<!-- Tests -->
 		<module>../../tests/org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.edit.swt.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.test.common</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.test.common.swt</module>
-		<module>../../tests/org.eclipse.emf.ecp.core.test</module>
+		
 		<module>../../tests/org.eclipse.emf.ecp.ui.view.editor.controls.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.ui.view.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.ui.view.swt.test</module>
-		<module>../../tests/org.eclipse.emf.ecp.validation.test</module>
+		
 		<module>../../tests/org.eclipse.emf.ecp.view.categorization.swt.test</module>
+		<!-- 
 		<module>../../tests/org.eclipse.emf.ecp.view.context.test</module>
+		-->
 		<module>../../tests/org.eclipse.emf.ecp.view.custom.ui.swt.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.group.ui.swt.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.horizontal.ui.swt.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.model.edit.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.model.integrationtest</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.model.provider.xmi.test</module>
-		<module>../../tests/org.eclipse.emf.ecp.view.rule.test</module>
-		<module>../../tests/org.eclipse.emf.ecp.view.rule.ui.swt.test</module>
-		<module>../../tests/org.eclipse.emf.ecp.view.unset.test</module>
+		
+		
+		
 		<module>../../tests/org.eclipse.emf.ecp.view.table.ui.swt.test</module>
-		<module>../../tests/org.eclipse.emf.ecp.view.validation.test</module>
+		
 		<module>../../tests/org.eclipse.emf.ecp.view.validation.bean.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.vertical.ui.swt.test</module>
-		<module>../../tests/org.eclipse.emf.ecp.view.ui.editor.test</module>
+		
 		<module>../../tests/org.eclipse.emf.ecp.view.dynamictree.model.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.stack.ui.swt.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.ecore.editor.test</module>
@@ -66,6 +113,11 @@
 		<module>../../tests/org.eclipse.emf.ecp.view.core.swt.tests</module>	
 		<module>../../tests/org.eclipse.emf.ecp.view.viewproxy.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.treemasterdetail.validation.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.model.common.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.common.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.control.multireference.tests</module>
+
+		<module>../../tests/org.eclipse.emf.ecp.core.rap.test</module>
 		
 		<!-- Key Attribute DMR -->
 		<module>../../tests/org.eclipse.emf.ecp.view.keyattributedmr.model.test</module>	
@@ -80,6 +132,23 @@
 		<module>../../tests/org.eclipse.emf.ecp.view.edapt.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.edapt.util.test</module>
 		
+		<!-- Core Services -->
+		<module>../../tests/org.eclipse.emfforms.core.services.databinding.featurepath.tests</module>
+		<module>../../tests/org.eclipse.emfforms.core.services.databinding.index.tests</module>
+		<module>../../tests/org.eclipse.emfforms.core.services.databinding.mapping.tests</module>
+		<module>../../tests/org.eclipse.emfforms.core.services.databinding.integrationtest</module>
+		<module>../../tests/org.eclipse.emfforms.core.services.databinding.testmodel</module>
+		<module>../../tests/org.eclipse.emfforms.swt.core.tests</module>
+		<module>../../tests/org.eclipse.emfforms.swt.core.di.tests</module>
+		<module>../../tests/org.eclipse.emfforms.swt.core.di.extension.tests</module>
+		<module>../../tests/org.eclipse.emfforms.common.tests</module>
+		<module>../../tests/org.eclipse.emfforms.core.services.emf.tests</module>
+		
+		<!-- Localization Bundle -->
+		<module>../../tests/org.eclipse.emfforms.localization.tests</module>
+		<module>../../tests/org.eclipse.emfforms.view.model.localization.tests</module>
+		
+		<module>../../tests/org.eclipse.emfforms.swt.control.text.autocomplete.tests</module>
 	</modules>
 	
 	<build>
@@ -151,29 +220,5 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	
-	<profiles>
-		<profile>
-			<id>build-server</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.eclipse.cbi.maven.plugins</groupId>
-						<artifactId>eclipse-jarsigner-plugin</artifactId>
-						<version>${jarsigner-version}</version>
-						<executions>
-							<execution>
-								<id>sign</id>
-								<phase>package</phase>
-								<goals>
-									<goal>sign</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
 			
 </project>

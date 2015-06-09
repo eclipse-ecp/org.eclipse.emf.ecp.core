@@ -200,4 +200,49 @@ public class ValidationProvider_PTest {
 		validationService.removeValidationProvider(validationProvider);
 		assertEquals(Diagnostic.OK, control.getDiagnostic().getHighestSeverity());
 	}
+
+	@Test
+	public void testValidationProviderTriggerNoSelfValidation() {
+		final List<Integer> called = new ArrayList<Integer>(1);
+		called.add(0);
+		validationService.addValidationProvider(new ValidationProvider() {
+
+			@Override
+			public List<Diagnostic> validate(EObject eObject) {
+				if (Computer.class.isInstance(eObject)) {
+
+					eObject.eNotify(new ValidationNotification(eObject));
+					called.set(0, called.get(0) + 1);
+				}
+				return Collections.emptyList();
+			}
+		}, false);
+		assertEquals((Integer) 0, called.get(0));
+	}
+
+	@Test
+	public void testRemoveValidationProviderNoRevalidation() {
+		// setup
+		final ValidationProvider validationProvider = new ValidationProvider() {
+			@Override
+			public List<Diagnostic> validate(EObject eObject) {
+				if (!Computer.class.isInstance(eObject)) {
+					return Collections.emptyList();
+				}
+				final Diagnostic diagnostic = new BasicDiagnostic(Diagnostic.WARNING, "bla", 0, "bl", new Object[] {
+					eObject, TestPackage.eINSTANCE.getComputer_Name() });
+				return Collections.singletonList(diagnostic);
+			}
+		};
+		validationService.addValidationProvider(validationProvider);
+		assertEquals(Diagnostic.WARNING, control.getDiagnostic().getHighestSeverity());
+
+		// act
+		validationService.removeValidationProvider(validationProvider, false);
+		/* no revalidation yet */
+		assertEquals(Diagnostic.WARNING, control.getDiagnostic().getHighestSeverity());
+		/* revalidate to see if provider was removed */
+		validationService.validate(Collections.singleton(EObject.class.cast(computer)));
+		assertEquals(Diagnostic.OK, control.getDiagnostic().getHighestSeverity());
+	}
 }

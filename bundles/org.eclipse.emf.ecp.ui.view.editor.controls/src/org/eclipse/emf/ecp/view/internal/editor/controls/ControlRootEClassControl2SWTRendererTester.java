@@ -11,13 +11,15 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.editor.controls;
 
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.model.common.ECPRendererTester;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 
 /**
  * @author Alexandra Buzila
@@ -27,35 +29,33 @@ public class ControlRootEClassControl2SWTRendererTester implements ECPRendererTe
 
 	/**
 	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.SimpleControlRendererTester#getSupportedClassType()
 	 */
 	@Override
 	public int isApplicable(VElement vElement, ViewModelContext context) {
 		if (!VControl.class.isInstance(vElement)) {
 			return NOT_APPLICABLE;
 		}
-		if (!VControl.class.cast(vElement).getDomainModelReference().getIterator().hasNext()) {
+		final VControl control = (VControl) vElement;
+		IValueProperty valueProperty;
+		try {
+			valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+				.getValueProperty(control.getDomainModelReference(), context.getDomainModel());
+		} catch (final DatabindingFailedException ex) {
+			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 			return NOT_APPLICABLE;
 		}
-		final Setting setting = VControl.class.cast(vElement).getDomainModelReference().getIterator().next();
-		return isApplicable(setting);
+		final EStructuralFeature feature = (EStructuralFeature) valueProperty.getValueType();
+		return isApplicable(feature);
 	}
 
 	/**
-	 * Test if setting contains the correct data.
+	 * Test if the structural feature and the corresponding EObject contain the correct data.
 	 *
-	 * @param setting the {@link Setting} to check
+	 * @param feature The {@link EStructuralFeature} to check
 	 * @return the priority of the control
 	 */
-	protected int isApplicable(Setting setting) {
-		if (!VView.class.isInstance(setting.getEObject())) {
-			return NOT_APPLICABLE;
-		}
-		if (VViewPackage.eINSTANCE.getView_RootEClass() != setting.getEStructuralFeature()) {
-			return NOT_APPLICABLE;
-		}
-		if (setting.get(true) == null) {
+	protected int isApplicable(EStructuralFeature feature) {
+		if (VViewPackage.eINSTANCE.getView_RootEClass() != feature) {
 			return NOT_APPLICABLE;
 		}
 		return 3;

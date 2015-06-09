@@ -7,8 +7,20 @@
                 <message_argument value="1.2.1"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change in 1.6" id="923795461">
+            <message_arguments>
+                <message_argument value="1.6.0"/>
+                <message_argument value="1.5.0"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/ecp/view/spi/vertical/swt/VerticalLayoutSWTRenderer.java" type="org.eclipse.emf.ecp.view.spi.vertical.swt.VerticalLayoutSWTRenderer">
+        <filter comment="SPI Change in 1.6" id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.vertical.swt.VerticalLayoutSWTRenderer"/>
+                <message_argument value="VerticalLayoutSWTRenderer()"/>
+            </message_arguments>
+        </filter>
         <filter comment="This is SPI" id="338792546">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.vertical.swt.VerticalLayoutSWTRenderer"/>

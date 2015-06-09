@@ -1,10 +1,333 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.emf.ecp.view.categorization.model" version="2">
     <resource path="META-INF/MANIFEST.MF">
-        <filter comment="There was no change that would require us to update the minor version.." id="929038356">
+        <filter comment="SPI Change in 1.6" id="923795461">
             <message_arguments>
-                <message_argument value="1.5.1"/>
-                <message_argument value="org.eclipse.emf.ecp.view.model"/>
+                <message_argument value="1.6.0"/>
+                <message_argument value="1.5.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport">
+        <filter comment="SPI Change in 1.6" id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport"/>
+                <message_argument value="org.eclipse.emf.ecp.view.categorization.model_1.5.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.model.reporting.ReportService">
+        <filter comment="SPI Change in 1.6" id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.reporting.ReportService"/>
+                <message_argument value="org.eclipse.emf.ecp.view.categorization.model_1.5.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.model.reporting.ReportServiceConsumer">
+        <filter comment="SPI Change in 1.6" id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.reporting.ReportServiceConsumer"/>
+                <message_argument value="org.eclipse.emf.ecp.view.categorization.model_1.5.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/categorization/model/VCategorizationPackage.java">
+        <filter comment="Changes due to new label field in 1.6" id="0"/>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/categorization/model/VCategorizationPackage.java" type="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage">
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage"/>
+                <message_argument value="ABSTRACT_CATEGORIZATION_FEATURE_COUNT"/>
+                <message_argument value="8"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage"/>
+                <message_argument value="ABSTRACT_CATEGORIZATION__ACTIONS"/>
+                <message_argument value="7"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage"/>
+                <message_argument value="ABSTRACT_CATEGORIZATION__ATTACHMENTS"/>
+                <message_argument value="5"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage"/>
+                <message_argument value="ABSTRACT_CATEGORIZATION__DIAGNOSTIC"/>
+                <message_argument value="4"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage"/>
+                <message_argument value="ABSTRACT_CATEGORIZATION__ENABLED"/>
+                <message_argument value="2"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage"/>
+                <message_argument value="ABSTRACT_CATEGORIZATION__LABEL_OBJECT"/>
+                <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage"/>
+                <message_argument value="ABSTRACT_CATEGORIZATION__READONLY"/>
+                <message_argument value="3"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage"/>
+                <message_argument value="ABSTRACT_CATEGORIZATION__VISIBLE"/>
+                <message_argument value="1"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage"/>
+                <message_argument value="CATEGORIZABLE_ELEMENT_FEATURE_COUNT"/>
+                <message_argument value="7"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage"/>
+                <message_argument value="CATEGORIZABLE_ELEMENT__ATTACHMENTS"/>
+                <message_argument value="5"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage"/>
+                <message_argument value="CATEGORIZABLE_ELEMENT__DIAGNOSTIC"/>
+                <message_argument value="4"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage"/>
+                <message_argument value="CATEGORIZABLE_ELEMENT__ENABLED"/>
+                <message_argument value="2"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage"/>
+                <message_argument value="CATEGORIZABLE_ELEMENT__LABEL_OBJECT"/>
+                <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage"/>
+                <message_argument value="CATEGORIZABLE_ELEMENT__READONLY"/>
+                <message_argument value="3"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage"/>
+                <message_argument value="CATEGORIZABLE_ELEMENT__VISIBLE"/>
+                <message_argument value="1"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage"/>
+                <message_argument value="CATEGORIZATION_ELEMENT_FEATURE_COUNT"/>
+                <message_argument value="9"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage"/>
+                <message_argument value="CATEGORIZATION_ELEMENT__ATTACHMENTS"/>
+                <message_argument value="5"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage"/>
+                <message_argument value="CATEGORIZATION_ELEMENT__CATEGORIZATIONS"/>
+                <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage"/>
+                <message_argument value="CATEGORIZATION_ELEMENT__CURRENT_SELECTION"/>
+                <message_argument value="7"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage"/>
+                <message_argument value="CATEGORIZATION_ELEMENT__DIAGNOSTIC"/>
+                <message_argument value="4"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage"/>
+                <message_argument value="CATEGORIZATION_ELEMENT__ENABLED"/>
+                <message_argument value="2"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage"/>
+                <message_argument value="CATEGORIZATION_ELEMENT__MAIN_CATEGORY_DEPTH"/>
+                <message_argument value="8"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage"/>
+                <message_argument value="CATEGORIZATION_ELEMENT__READONLY"/>
+                <message_argument value="3"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage"/>
+                <message_argument value="CATEGORIZATION_ELEMENT__VISIBLE"/>
+                <message_argument value="1"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage"/>
+                <message_argument value="CATEGORIZATION_FEATURE_COUNT"/>
+                <message_argument value="9"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage"/>
+                <message_argument value="CATEGORIZATION__ACTIONS"/>
+                <message_argument value="7"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage"/>
+                <message_argument value="CATEGORIZATION__ATTACHMENTS"/>
+                <message_argument value="5"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage"/>
+                <message_argument value="CATEGORIZATION__CATEGORIZATIONS"/>
+                <message_argument value="8"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage"/>
+                <message_argument value="CATEGORIZATION__DIAGNOSTIC"/>
+                <message_argument value="4"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage"/>
+                <message_argument value="CATEGORIZATION__ENABLED"/>
+                <message_argument value="2"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage"/>
+                <message_argument value="CATEGORIZATION__LABEL_OBJECT"/>
+                <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage"/>
+                <message_argument value="CATEGORIZATION__READONLY"/>
+                <message_argument value="3"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage"/>
+                <message_argument value="CATEGORIZATION__VISIBLE"/>
+                <message_argument value="1"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage"/>
+                <message_argument value="CATEGORY_FEATURE_COUNT"/>
+                <message_argument value="9"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage"/>
+                <message_argument value="CATEGORY__ACTIONS"/>
+                <message_argument value="7"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage"/>
+                <message_argument value="CATEGORY__ATTACHMENTS"/>
+                <message_argument value="5"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage"/>
+                <message_argument value="CATEGORY__COMPOSITE"/>
+                <message_argument value="8"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage"/>
+                <message_argument value="CATEGORY__DIAGNOSTIC"/>
+                <message_argument value="4"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage"/>
+                <message_argument value="CATEGORY__ENABLED"/>
+                <message_argument value="2"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage"/>
+                <message_argument value="CATEGORY__LABEL_OBJECT"/>
+                <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage"/>
+                <message_argument value="CATEGORY__READONLY"/>
+                <message_argument value="3"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage"/>
+                <message_argument value="CATEGORY__VISIBLE"/>
+                <message_argument value="1"/>
             </message_arguments>
         </filter>
     </resource>

@@ -13,13 +13,21 @@
 package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 
 import org.eclipse.core.databinding.Binding;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
 import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
 import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * Renderer for {@link org.eclipse.swt.widgets.Control Controls}.
@@ -32,10 +40,40 @@ import org.eclipse.swt.widgets.Control;
 @Deprecated
 public class ECPLegacyControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 
+	private static final EMFFormsDatabinding emfFormsDatabinding;
+	private static final EMFFormsLabelProvider emfFormsLabelProvider;
+	private static final VTViewTemplateProvider vtViewTemplateProvider;
+
+	static {
+		final BundleContext bundleContext = FrameworkUtil.getBundle(ECPLegacyControlSWTRenderer.class)
+			.getBundleContext();
+		final ServiceReference<EMFFormsDatabinding> emfFormsDatabindingServiceReference = bundleContext
+			.getServiceReference(EMFFormsDatabinding.class);
+		emfFormsDatabinding = bundleContext.getService(emfFormsDatabindingServiceReference);
+		final ServiceReference<EMFFormsLabelProvider> emfFormsLabelProviderServiceReference = bundleContext
+			.getServiceReference(EMFFormsLabelProvider.class);
+		emfFormsLabelProvider = bundleContext.getService(emfFormsLabelProviderServiceReference);
+		final ServiceReference<VTViewTemplateProvider> vtViewTemplateProviderServiceReference = bundleContext
+			.getServiceReference(VTViewTemplateProvider.class);
+		vtViewTemplateProvider = bundleContext.getService(vtViewTemplateProviderServiceReference);
+	}
+
+	/**
+	 * Default constructor.
+	 *
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param reportService The {@link ReportService}
+	 */
+	public ECPLegacyControlSWTRenderer(VControl vElement, ViewModelContext viewContext,
+		ReportService reportService) {
+		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
+	}
+
 	private SWTControl control;
 
 	@Override
-	protected Control createSWTControl(Composite parent, Setting setting) {
+	protected Control createSWTControl(Composite parent) {
 		final ECPControlFactory controlFactory = Activator.getDefault().getECPControlFactory();
 
 		if (controlFactory == null) {
@@ -43,8 +81,8 @@ public class ECPLegacyControlSWTRenderer extends SimpleControlSWTControlSWTRende
 			return null;
 		}
 
-		control = controlFactory.createControl(SWTControl.class,
-			getVElement().getDomainModelReference());
+		control = controlFactory.createControl(SWTControl.class, getViewModelContext().getDomainModel(), getVElement()
+			.getDomainModelReference());
 
 		Activator.getDefault().ungetECPControlFactory();
 		if (control == null) {
@@ -69,7 +107,7 @@ public class ECPLegacyControlSWTRenderer extends SimpleControlSWTControlSWTRende
 	}
 
 	@Override
-	protected Binding[] createBindings(Control control, Setting setting) {
+	protected Binding[] createBindings(Control control) {
 		// TODO Auto-generated method stub
 		return null;
 	}

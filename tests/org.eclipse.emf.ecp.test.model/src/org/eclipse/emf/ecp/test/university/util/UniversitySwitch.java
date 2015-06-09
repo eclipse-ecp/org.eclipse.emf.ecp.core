@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.test.university.util;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
+import org.eclipse.emf.ecp.test.university.Address;
 import org.eclipse.emf.ecp.test.university.Assistant;
 import org.eclipse.emf.ecp.test.university.Course;
 import org.eclipse.emf.ecp.test.university.CourseCatalog;
@@ -36,8 +37,7 @@ import org.eclipse.emf.ecp.test.university.UniversityPackage;
  * @see org.eclipse.emf.ecp.test.university.UniversityPackage
  * @generated
  */
-public class UniversitySwitch<T> extends Switch<T>
-{
+public class UniversitySwitch<T> extends Switch<T> {
 	/**
 	 * The cached model package
 	 * <!-- begin-user-doc -->
@@ -54,10 +54,8 @@ public class UniversitySwitch<T> extends Switch<T>
 	 *
 	 * @generated
 	 */
-	public UniversitySwitch()
-	{
-		if (modelPackage == null)
-		{
+	public UniversitySwitch() {
+		if (modelPackage == null) {
 			modelPackage = UniversityPackage.eINSTANCE;
 		}
 	}
@@ -67,13 +65,12 @@ public class UniversitySwitch<T> extends Switch<T>
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
-	 * @parameter ePackage the package in question.
+	 * @param ePackage the package in question.
 	 * @return whether this is a switch for the given package.
 	 * @generated
 	 */
 	@Override
-	protected boolean isSwitchFor(EPackage ePackage)
-	{
+	protected boolean isSwitchFor(EPackage ePackage) {
 		return ePackage == modelPackage;
 	}
 
@@ -87,10 +84,8 @@ public class UniversitySwitch<T> extends Switch<T>
 	 * @generated
 	 */
 	@Override
-	protected T doSwitch(int classifierID, EObject theEObject)
-	{
-		switch (classifierID)
-		{
+	protected T doSwitch(int classifierID, EObject theEObject) {
+		switch (classifierID) {
 		case UniversityPackage.COURSE_CATALOG: {
 			final CourseCatalog courseCatalog = (CourseCatalog) theEObject;
 			T result = caseCourseCatalog(courseCatalog);
@@ -145,6 +140,14 @@ public class UniversitySwitch<T> extends Switch<T>
 			}
 			return result;
 		}
+		case UniversityPackage.ADDRESS: {
+			final Address address = (Address) theEObject;
+			T result = caseAddress(address);
+			if (result == null) {
+				result = defaultCase(theEObject);
+			}
+			return result;
+		}
 		default:
 			return defaultCase(theEObject);
 		}
@@ -162,8 +165,7 @@ public class UniversitySwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseCourseCatalog(CourseCatalog object)
-	{
+	public T caseCourseCatalog(CourseCatalog object) {
 		return null;
 	}
 
@@ -179,8 +181,7 @@ public class UniversitySwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseCourse(Course object)
-	{
+	public T caseCourse(Course object) {
 		return null;
 	}
 
@@ -196,8 +197,7 @@ public class UniversitySwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseStaff(Staff object)
-	{
+	public T caseStaff(Staff object) {
 		return null;
 	}
 
@@ -213,8 +213,7 @@ public class UniversitySwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseProfessor(Professor object)
-	{
+	public T caseProfessor(Professor object) {
 		return null;
 	}
 
@@ -230,8 +229,7 @@ public class UniversitySwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseAssistant(Assistant object)
-	{
+	public T caseAssistant(Assistant object) {
 		return null;
 	}
 
@@ -247,8 +245,23 @@ public class UniversitySwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T casePerson(Person object)
-	{
+	public T casePerson(Person object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Address</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 *
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Address</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseAddress(Address object) {
 		return null;
 	}
 
@@ -265,8 +278,7 @@ public class UniversitySwitch<T> extends Switch<T>
 	 * @generated
 	 */
 	@Override
-	public T defaultCase(EObject object)
-	{
+	public T defaultCase(EObject object) {
 		return null;
 	}
 

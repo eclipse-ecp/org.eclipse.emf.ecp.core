@@ -21,6 +21,5 @@ package org.eclipse.emf.ecp.test.university;
  * @model
  * @generated
  */
-public interface Assistant extends Person
-{
+public interface Assistant extends Person {
 } // Assistant

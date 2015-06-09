@@ -15,6 +15,7 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.test.university.Address;
 import org.eclipse.emf.ecp.test.university.Assistant;
 import org.eclipse.emf.ecp.test.university.Course;
 import org.eclipse.emf.ecp.test.university.CourseCatalog;
@@ -32,8 +33,7 @@ import org.eclipse.emf.ecp.test.university.UniversityPackage;
  * @see org.eclipse.emf.ecp.test.university.UniversityPackage
  * @generated
  */
-public class UniversityAdapterFactory extends AdapterFactoryImpl
-{
+public class UniversityAdapterFactory extends AdapterFactoryImpl {
 	/**
 	 * The cached model package.
 	 * <!-- begin-user-doc -->
@@ -50,10 +50,8 @@ public class UniversityAdapterFactory extends AdapterFactoryImpl
 	 *
 	 * @generated
 	 */
-	public UniversityAdapterFactory()
-	{
-		if (modelPackage == null)
-		{
+	public UniversityAdapterFactory() {
+		if (modelPackage == null) {
 			modelPackage = UniversityPackage.eINSTANCE;
 		}
 	}
@@ -69,14 +67,11 @@ public class UniversityAdapterFactory extends AdapterFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public boolean isFactoryForType(Object object)
-	{
-		if (object == modelPackage)
-		{
+	public boolean isFactoryForType(Object object) {
+		if (object == modelPackage) {
 			return true;
 		}
-		if (object instanceof EObject)
-		{
+		if (object instanceof EObject) {
 			return ((EObject) object).eClass().getEPackage() == modelPackage;
 		}
 		return false;
@@ -89,51 +84,47 @@ public class UniversityAdapterFactory extends AdapterFactoryImpl
 	 *
 	 * @generated
 	 */
-	protected UniversitySwitch<Adapter> modelSwitch =
-		new UniversitySwitch<Adapter>()
-		{
-			@Override
-			public Adapter caseCourseCatalog(CourseCatalog object)
-			{
-				return createCourseCatalogAdapter();
-			}
+	protected UniversitySwitch<Adapter> modelSwitch = new UniversitySwitch<Adapter>() {
+		@Override
+		public Adapter caseCourseCatalog(CourseCatalog object) {
+			return createCourseCatalogAdapter();
+		}
 
-			@Override
-			public Adapter caseCourse(Course object)
-			{
-				return createCourseAdapter();
-			}
+		@Override
+		public Adapter caseCourse(Course object) {
+			return createCourseAdapter();
+		}
 
-			@Override
-			public Adapter caseStaff(Staff object)
-			{
-				return createStaffAdapter();
-			}
+		@Override
+		public Adapter caseStaff(Staff object) {
+			return createStaffAdapter();
+		}
 
-			@Override
-			public Adapter caseProfessor(Professor object)
-			{
-				return createProfessorAdapter();
-			}
+		@Override
+		public Adapter caseProfessor(Professor object) {
+			return createProfessorAdapter();
+		}
 
-			@Override
-			public Adapter caseAssistant(Assistant object)
-			{
-				return createAssistantAdapter();
-			}
+		@Override
+		public Adapter caseAssistant(Assistant object) {
+			return createAssistantAdapter();
+		}
 
-			@Override
-			public Adapter casePerson(Person object)
-			{
-				return createPersonAdapter();
-			}
+		@Override
+		public Adapter casePerson(Person object) {
+			return createPersonAdapter();
+		}
 
-			@Override
-			public Adapter defaultCase(EObject object)
-			{
-				return createEObjectAdapter();
-			}
-		};
+		@Override
+		public Adapter caseAddress(Address object) {
+			return createAddressAdapter();
+		}
+
+		@Override
+		public Adapter defaultCase(EObject object) {
+			return createEObjectAdapter();
+		}
+	};
 
 	/**
 	 * Creates an adapter for the <code>target</code>.
@@ -145,8 +136,7 @@ public class UniversityAdapterFactory extends AdapterFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public Adapter createAdapter(Notifier target)
-	{
+	public Adapter createAdapter(Notifier target) {
 		return modelSwitch.doSwitch((EObject) target);
 	}
 
@@ -162,8 +152,7 @@ public class UniversityAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.test.university.CourseCatalog
 	 * @generated
 	 */
-	public Adapter createCourseCatalogAdapter()
-	{
+	public Adapter createCourseCatalogAdapter() {
 		return null;
 	}
 
@@ -179,8 +168,7 @@ public class UniversityAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.test.university.Course
 	 * @generated
 	 */
-	public Adapter createCourseAdapter()
-	{
+	public Adapter createCourseAdapter() {
 		return null;
 	}
 
@@ -195,8 +183,7 @@ public class UniversityAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.test.university.Staff
 	 * @generated
 	 */
-	public Adapter createStaffAdapter()
-	{
+	public Adapter createStaffAdapter() {
 		return null;
 	}
 
@@ -212,8 +199,7 @@ public class UniversityAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.test.university.Professor
 	 * @generated
 	 */
-	public Adapter createProfessorAdapter()
-	{
+	public Adapter createProfessorAdapter() {
 		return null;
 	}
 
@@ -229,8 +215,7 @@ public class UniversityAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.test.university.Assistant
 	 * @generated
 	 */
-	public Adapter createAssistantAdapter()
-	{
+	public Adapter createAssistantAdapter() {
 		return null;
 	}
 
@@ -246,8 +231,23 @@ public class UniversityAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.test.university.Person
 	 * @generated
 	 */
-	public Adapter createPersonAdapter()
-	{
+	public Adapter createPersonAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.test.university.Address <em>Address</em>
+	 * }'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.test.university.Address
+	 * @generated
+	 */
+	public Adapter createAddressAdapter() {
 		return null;
 	}
 
@@ -260,8 +260,7 @@ public class UniversityAdapterFactory extends AdapterFactoryImpl
 	 * @return the new adapter.
 	 * @generated
 	 */
-	public Adapter createEObjectAdapter()
-	{
+	public Adapter createEObjectAdapter() {
 		return null;
 	}
 

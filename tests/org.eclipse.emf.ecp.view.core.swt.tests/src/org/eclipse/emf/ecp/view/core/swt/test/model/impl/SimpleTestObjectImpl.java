@@ -1,4 +1,14 @@
 /**
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ * Eugen Neufeld - initial API and implementation
+ * Lucas Koehler - extension for EnumComboViewerRenderer_PTest
  */
 package org.eclipse.emf.ecp.view.core.swt.test.model.impl;
 
@@ -11,6 +21,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecp.view.core.swt.test.model.SimpleTestObject;
+import org.eclipse.emf.ecp.view.core.swt.test.model.TestEnum;
 import org.eclipse.emf.ecp.view.core.swt.test.model.TestPackage;
 
 /**
@@ -22,6 +33,7 @@ import org.eclipse.emf.ecp.view.core.swt.test.model.TestPackage;
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.core.swt.test.model.impl.SimpleTestObjectImpl#getDate <em>Date</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.core.swt.test.model.impl.SimpleTestObjectImpl#getXmlDate <em>Xml Date</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.core.swt.test.model.impl.SimpleTestObjectImpl#getMyEnum <em>My Enum</em>}</li>
  * </ul>
  * </p>
  *
@@ -71,6 +83,17 @@ public class SimpleTestObjectImpl extends MinimalEObjectImpl.Container implement
 	 * @ordered
 	 */
 	protected XMLGregorianCalendar xmlDate = XML_DATE_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getMyEnum() <em>My Enum</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see #getMyEnum()
+	 * @generated
+	 * @ordered
+	 */
+	protected TestEnum myEnum;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -153,12 +176,41 @@ public class SimpleTestObjectImpl extends MinimalEObjectImpl.Container implement
 	 * @generated
 	 */
 	@Override
+	public TestEnum getMyEnum() {
+		return myEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public void setMyEnum(TestEnum newMyEnum) {
+		final TestEnum oldMyEnum = myEnum;
+		myEnum = newMyEnum == null ? null : newMyEnum;
+		if (eNotificationRequired()) {
+			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.SIMPLE_TEST_OBJECT__MY_ENUM, oldMyEnum,
+				myEnum));
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case TestPackage.SIMPLE_TEST_OBJECT__DATE:
 			return getDate();
 		case TestPackage.SIMPLE_TEST_OBJECT__XML_DATE:
 			return getXmlDate();
+		case TestPackage.SIMPLE_TEST_OBJECT__MY_ENUM:
+			return getMyEnum();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -177,6 +229,9 @@ public class SimpleTestObjectImpl extends MinimalEObjectImpl.Container implement
 			return;
 		case TestPackage.SIMPLE_TEST_OBJECT__XML_DATE:
 			setXmlDate((XMLGregorianCalendar) newValue);
+			return;
+		case TestPackage.SIMPLE_TEST_OBJECT__MY_ENUM:
+			setMyEnum((TestEnum) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -197,6 +252,9 @@ public class SimpleTestObjectImpl extends MinimalEObjectImpl.Container implement
 		case TestPackage.SIMPLE_TEST_OBJECT__XML_DATE:
 			setXmlDate(XML_DATE_EDEFAULT);
 			return;
+		case TestPackage.SIMPLE_TEST_OBJECT__MY_ENUM:
+			setMyEnum((TestEnum) null);
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -214,6 +272,8 @@ public class SimpleTestObjectImpl extends MinimalEObjectImpl.Container implement
 			return DATE_EDEFAULT == null ? date != null : !DATE_EDEFAULT.equals(date);
 		case TestPackage.SIMPLE_TEST_OBJECT__XML_DATE:
 			return XML_DATE_EDEFAULT == null ? xmlDate != null : !XML_DATE_EDEFAULT.equals(xmlDate);
+		case TestPackage.SIMPLE_TEST_OBJECT__MY_ENUM:
+			return myEnum != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -231,10 +291,12 @@ public class SimpleTestObjectImpl extends MinimalEObjectImpl.Container implement
 		}
 
 		final StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (date: ");
+		result.append(" (date: "); //$NON-NLS-1$
 		result.append(date);
-		result.append(", xmlDate: ");
+		result.append(", xmlDate: "); //$NON-NLS-1$
 		result.append(xmlDate);
+		result.append(", myEnum: "); //$NON-NLS-1$
+		result.append(myEnum);
 		result.append(')');
 		return result.toString();
 	}

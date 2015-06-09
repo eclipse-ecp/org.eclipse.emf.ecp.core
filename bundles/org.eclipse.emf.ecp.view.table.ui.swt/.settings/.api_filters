@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.ecp.view.table.ui.swt" version="2">
+    <resource path="META-INF/MANIFEST.MF">
+        <filter comment="SPI Change in 1.6" id="923795461">
+            <message_arguments>
+                <message_argument value="1.6.0"/>
+                <message_argument value="1.5.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/table/swt/DetailDialog.java" type="org.eclipse.emf.ecp.view.spi.table.swt.DetailDialog">
+        <filter comment="SPI Change in 1.6" id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.swt.DetailDialog"/>
+                <message_argument value="DetailDialog(Shell, EObject, VTableControl)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/table/swt/TableControlDetailDialogSWTRenderer.java" type="org.eclipse.emf.ecp.view.spi.table.swt.TableControlDetailDialogSWTRenderer">
+        <filter comment="SPI Change in 1.6" id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.swt.TableControlDetailDialogSWTRenderer"/>
+                <message_argument value="TableControlDetailDialogSWTRenderer()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/table/swt/TableControlDetailPanelRenderer.java" type="org.eclipse.emf.ecp.view.spi.table.swt.TableControlDetailPanelRenderer">
+        <filter comment="SPI Change in 1.6" id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.swt.TableControlDetailPanelRenderer"/>
+                <message_argument value="TableControlDetailPanelRenderer()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change in 1.6" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.swt.TableControlDetailPanelRenderer"/>
+                <message_argument value="deleteRows(List&lt;EObject&gt;, EStructuralFeature.Setting)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/table/swt/TableControlSWTRenderer.java" type="org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer">
+        <filter comment="SPI Change in 1.6" id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer"/>
+                <message_argument value="TableControlSWTRenderer()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change in 1.6" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer"/>
+                <message_argument value="addRow(EClass, EStructuralFeature.Setting)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change in 1.6" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer"/>
+                <message_argument value="deleteRowUserConfirmDialog(List&lt;EObject&gt;, EStructuralFeature.Setting, Button, Button)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change in 1.6" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer"/>
+                <message_argument value="deleteRows(List&lt;EObject&gt;, EStructuralFeature.Setting)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="EMFForms 1.6 SPI Change" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer"/>
+                <message_argument value="getGridDescription(SWTGridDescription)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change in 1.6" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer"/>
+                <message_argument value="isDebug()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="EMFForms 1.6 SPI Change" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer"/>
+                <message_argument value="renderControl(SWTGridCell, Composite)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/table/swt/TableControlSWTRenderer.java" type="org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer$ECPCellLabelProvider">
+        <filter comment="SPI change in 1.6" id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer.ECPCellLabelProvider"/>
+                <message_argument value="ECPCellLabelProvider(TableControlSWTRenderer, EStructuralFeature, CellEditor, IObservableMap, VTableControl, VDomainModelReference)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

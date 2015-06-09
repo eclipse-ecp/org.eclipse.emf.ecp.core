@@ -19,24 +19,33 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
+import javax.inject.Inject;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecp.edit.internal.swt.controls.ControlMessages;
 import org.eclipse.emf.ecp.edit.internal.swt.util.DateUtil;
-import org.eclipse.emf.ecp.edit.spi.ViewLocaleService;
 import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
-import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
+import org.eclipse.emf.ecp.view.internal.core.swt.MessageKeys;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.renderer.TextControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.edit.command.SetCommand;
+import org.eclipse.emfforms.spi.common.locale.EMFFormsLocaleChangeListener;
+import org.eclipse.emfforms.spi.common.locale.EMFFormsLocaleProvider;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
+import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
+import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -56,6 +65,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Eugen
@@ -63,6 +73,38 @@ import org.eclipse.swt.widgets.Text;
  */
 @SuppressWarnings("restriction")
 public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
+
+	private final EMFFormsLocaleProvider localeProvider;
+	private final EMFFormsLocalizationService localizationService;
+	private final ImageRegistryService imageRegistryService;
+
+	/**
+	 * Default constructor.
+	 *
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param reportService The {@link ReportService}
+	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
+	 * @param emfFormsLabelProvider The {@link EMFFormsLabelProvider}
+	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
+	 * @param emfFormsEditSupport The {@link EMFFormsEditSupport}
+	 * @param localizationService The {@link EMFFormsLocalizationService}
+	 * @param localeProvider The {@link EMFFormsLocaleProvider}
+	 * @param imageRegistryService The {@link ImageRegistryService}
+	 */
+	@Inject
+	public XMLDateControlSWTRenderer(VControl vElement, ViewModelContext viewContext,
+		ReportService reportService,
+		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
+		VTViewTemplateProvider vtViewTemplateProvider, EMFFormsEditSupport emfFormsEditSupport,
+		EMFFormsLocalizationService localizationService, EMFFormsLocaleProvider localeProvider,
+		ImageRegistryService imageRegistryService) {
+		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider,
+			emfFormsEditSupport);
+		this.localizationService = localizationService;
+		this.localeProvider = localeProvider;
+		this.imageRegistryService = imageRegistryService;
+	}
 
 	private static final DateFormat CHECK_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH); //$NON-NLS-1$
 	private static final Pattern CHECK_PATTERN = Pattern.compile("^\\d{4}-\\d{2}-\\d{2}$"); //$NON-NLS-1$
@@ -101,7 +143,7 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 
 			final DateTime calendar = new DateTime(dialog, SWT.CALENDAR | SWT.BORDER);
 			final XMLGregorianCalendar gregorianCalendar = (XMLGregorianCalendar) modelValue.getValue();
-			final Calendar cal = Calendar.getInstance(getLocale(viewModelContext));
+			final Calendar cal = Calendar.getInstance(localeProvider.getLocale());
 			if (gregorianCalendar != null) {
 				cal.setTime(gregorianCalendar.toGregorianCalendar().getTime());
 			}
@@ -230,8 +272,9 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 			final Object result = modelValue.getValue();
 
 			final MessageDialog messageDialog = new MessageDialog(text.getShell(),
-				ControlMessages.XmlDateControlText_InvalidNumber, null,
-				ControlMessages.XmlDateControlText_NumberInvalidValueWillBeUnset, MessageDialog.ERROR,
+				LocalizationServiceHelper.getString(getClass(), MessageKeys.XmlDateControlText_InvalidNumber), null,
+				LocalizationServiceHelper.getString(getClass(),
+					MessageKeys.XmlDateControlText_NumberInvalidValueWillBeUnset), MessageDialog.ERROR,
 				new String[] { JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
 
 			new ECPDialogExecutor(messageDialog) {
@@ -251,41 +294,26 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 	}
 
 	private Shell dialog;
-
-	/**
-	 * Default constructor.
-	 */
-	public XMLDateControlSWTRenderer() {
-		super();
-	}
-
-	/**
-	 * Test constructor.
-	 *
-	 * @param factory the renderer factory
-	 */
-	/* package */XMLDateControlSWTRenderer(SWTRendererFactory factory) {
-		super(factory);
-	}
+	private EMFFormsLocaleChangeListener emfFormsLocaleChangeListener;
 
 	@Override
-	protected Control createSWTControl(Composite parent, Setting setting) {
+	protected Control createSWTControl(Composite parent) {
 		final Composite main = new Composite(parent, SWT.NONE);
 		main.setBackground(parent.getBackground());
 		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(main);
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(main);
-		final Control text = super.createSWTControl(main, setting);
+		final Text text = (Text) super.createSWTControl(main);
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.CENTER).applyTo(text);
 		final Button bDate = new Button(main, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(false, false).align(SWT.CENTER, SWT.CENTER).applyTo(bDate);
-		bDate.setImage(Activator.getImage("icons/date.png")); //$NON-NLS-1$
+		bDate.setImage(imageRegistryService.getImage(FrameworkUtil.getBundle(getClass()), "icons/date.png")); //$NON-NLS-1$
 		bDate.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_xmldate"); //$NON-NLS-1$
 
 		return main;
 	}
 
 	@Override
-	protected String getTextMessage(Setting setting) {
+	protected String getTextMessage() {
 		return ((SimpleDateFormat) setupFormat()).toPattern();
 	}
 
@@ -295,26 +323,43 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 	}
 
 	@Override
-	protected Binding[] createBindings(Control control, Setting setting) {
+	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
+		final EStructuralFeature structuralFeature = (EStructuralFeature) getModelValue().getValueType();
 		final Text text = (Text) ((Composite) control).getChildren()[0];
 		final Button button = (Button) ((Composite) control).getChildren()[1];
-		button.addSelectionListener(new SelectionAdapterExtension(text, button, getModelValue(setting),
+		button.addSelectionListener(new SelectionAdapterExtension(text, button, getModelValue(),
 			getViewModelContext(),
-			getDataBindingContext(), setting.getEStructuralFeature()));
+			getDataBindingContext(), structuralFeature));
 
 		final IObservableValue value = SWTObservables.observeText(text, SWT.FocusOut);
 
 		final DateTargetToModelUpdateStrategy targetToModelUpdateStrategy = new DateTargetToModelUpdateStrategy(
-			setting.getEStructuralFeature(), getModelValue(setting), getDataBindingContext(),
+			structuralFeature, getModelValue(), getDataBindingContext(),
 			text);
 
 		final DateModelToTargetUpdateStrategy modelToTargetUpdateStrategy = new DateModelToTargetUpdateStrategy(false);
 
-		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(setting),
+		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(),
 			targetToModelUpdateStrategy, modelToTargetUpdateStrategy);
 
-		final Binding tooltipBinding = createTooltipBinding(control, getModelValue(setting), getDataBindingContext(),
+		final Binding tooltipBinding = createTooltipBinding(control, getModelValue(), getDataBindingContext(),
 			targetToModelUpdateStrategy, new DateModelToTargetUpdateStrategy(true));
+
+		emfFormsLocaleChangeListener = new EMFFormsLocaleChangeListener() {
+
+			/**
+			 * {@inheritDoc}
+			 *
+			 * @see org.eclipse.emfforms.spi.common.locale.EMFFormsLocaleChangeListener#notifyLocaleChange()
+			 */
+			@Override
+			public void notifyLocaleChange() {
+				text.setMessage(getTextMessage());
+				binding.updateModelToTarget();
+			}
+		};
+		localeProvider.addEMFFormsLocaleChangeListener(emfFormsLocaleChangeListener);
+
 		return new Binding[] { binding, tooltipBinding };
 	}
 
@@ -324,17 +369,9 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 	 * @return the {@link DateFormat}
 	 */
 	protected DateFormat setupFormat() {
-		final DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, getLocale(getViewModelContext()));
+		final DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, localeProvider.getLocale());
 		df.setLenient(false);
 		return df;
-	}
-
-	private Locale getLocale(ViewModelContext viewModelContext) {
-		final ViewLocaleService service = viewModelContext.getService(ViewLocaleService.class);
-		if (service == null) {
-			return Locale.getDefault();
-		}
-		return service.getLocale();
 	}
 
 	/**
@@ -366,7 +403,8 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 	 */
 	@Override
 	protected String getUnsetText() {
-		return RendererMessages.XmlDateControlText_NoDateSetClickToSetDate;
+		return localizationService
+			.getString(getClass(), MessageKeys.XmlDateControlText_NoDateSetClickToSetDate);
 	}
 
 	/**
@@ -379,6 +417,7 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 		if (dialog != null && !dialog.isDisposed()) {
 			dialog.dispose();
 		}
+		localeProvider.removeEMFFormsLocaleChangeListener(emfFormsLocaleChangeListener);
 		super.dispose();
 	}
 

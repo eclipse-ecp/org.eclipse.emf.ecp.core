@@ -48,9 +48,7 @@ public final class UniversityEditPlugin extends EMFPlugin {
 	 * @generated
 	 */
 	public UniversityEditPlugin() {
-		super(new ResourceLocator[]
-		{
-			});
+		super(new ResourceLocator[] {});
 	}
 
 	/**

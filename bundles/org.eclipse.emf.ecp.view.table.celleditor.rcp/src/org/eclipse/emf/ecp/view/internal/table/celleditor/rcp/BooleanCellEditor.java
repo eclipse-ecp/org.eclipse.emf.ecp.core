@@ -11,6 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.table.celleditor.rcp;
 
+import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.Diffs;
 import org.eclipse.core.databinding.observable.value.AbstractObservableValue;
@@ -118,20 +119,20 @@ public class BooleanCellEditor extends CellEditor implements ECPCellEditor {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getTargetToModelStrategy()
+	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getTargetToModelStrategy(org.eclipse.core.databinding.DataBindingContext)
 	 */
 	@Override
-	public UpdateValueStrategy getTargetToModelStrategy() {
+	public UpdateValueStrategy getTargetToModelStrategy(DataBindingContext databindingContext) {
 		return new EMFUpdateValueStrategy();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getModelToTargetStrategy()
+	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getModelToTargetStrategy(org.eclipse.core.databinding.DataBindingContext)
 	 */
 	@Override
-	public UpdateValueStrategy getModelToTargetStrategy() {
+	public UpdateValueStrategy getModelToTargetStrategy(DataBindingContext databindingContext) {
 		return new EMFUpdateValueStrategy();
 	}
 
@@ -291,5 +292,15 @@ public class BooleanCellEditor extends CellEditor implements ECPCellEditor {
 			super.dispose();
 		}
 
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getMinWidth()
+	 */
+	@Override
+	public int getMinWidth() {
+		return 0;
 	}
 }

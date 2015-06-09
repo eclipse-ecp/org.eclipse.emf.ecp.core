@@ -15,19 +15,31 @@ package org.eclipse.emf.ecp.edit.spi.swt.reference;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
-import org.eclipse.emf.ecp.edit.internal.swt.reference.ActionMessages;
+import org.eclipse.emf.ecp.edit.internal.swt.reference.ReferenceMessageKeys;
 import org.eclipse.emf.ecp.edit.internal.swt.util.OverlayImageDescriptor;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.edit.spi.swt.actions.ECPSWTAction;
+import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedImage;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
+import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
+import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.graphics.ImageData;
 
 /**
@@ -46,12 +58,19 @@ public class NewReferenceAction extends ECPSWTAction {
 	 * The constructor for a new reference action.
 	 *
 	 * @param editingDomain the {@link EditingDomain} to use
-	 * @param itemPropertyDescriptor teh {@link IItemPropertyDescriptor} to use
 	 * @param setting the {@link Setting} to use
+	 * @param editSupport the {@link EMFFormsEditSupport} to use
+	 * @param labelProvider the {@link EMFFormsLabelProvider} to use
 	 * @param referenceService the {@link ReferenceService} to use
+	 * @param reportService the {@link ReportService} to use
+	 * @param domainModelReference the {@link VDomainModelReference} to use
+	 * @param domainModel the domain model of the given {@link VDomainModelReference}
+	 * @since 1.6
+	 *
 	 */
-	public NewReferenceAction(EditingDomain editingDomain, Setting setting,
-		IItemPropertyDescriptor itemPropertyDescriptor, ReferenceService referenceService) {
+	public NewReferenceAction(EditingDomain editingDomain, Setting setting, EMFFormsEditSupport editSupport,
+		EMFFormsLabelProvider labelProvider, ReferenceService referenceService, ReportService reportService,
+		VDomainModelReference domainModelReference, EObject domainModel) {
 		super(editingDomain, setting);
 		this.referenceService = referenceService;
 		Object obj = null;
@@ -62,9 +81,7 @@ public class NewReferenceAction extends ECPSWTAction {
 			obj = eReference.getEReferenceType().getEPackage().getEFactoryInstance()
 				.create(eReference.getEReferenceType());
 		}
-		final IItemLabelProvider labelProvider = itemPropertyDescriptor.getLabelProvider(
-			getSetting().getEObject());
-		Object labelProviderImageResult = labelProvider.getImage(obj);
+		Object labelProviderImageResult = editSupport.getImage(domainModelReference, domainModel, obj);
 
 		ImageData imageData = null;
 
@@ -80,8 +97,7 @@ public class NewReferenceAction extends ECPSWTAction {
 		}
 		if (URL.class.isInstance(labelProviderImageResult)) {
 			imageData = Activator.getImageData((URL) labelProviderImageResult);
-		}
-		else {
+		} else {
 			imageData = Activator.getImageData((URL) null);
 		}
 
@@ -90,7 +106,16 @@ public class NewReferenceAction extends ECPSWTAction {
 			OverlayImageDescriptor.LOWER_RIGHT);
 		setImageDescriptor(imageDescriptor);
 
-		String attribute = itemPropertyDescriptor.getDisplayName(eReference);
+		String attribute;
+		try {
+			final IObservableValue displayName = labelProvider.getDisplayName(domainModelReference, domainModel);
+			attribute = (String) displayName.getValue();
+			displayName.dispose();
+		} catch (final NoLabelFoundException ex) {
+			reportService.report(new AbstractReport(ex));
+			setToolTipText(ex.getMessage());
+			return;
+		}
 		// TODO language, same text as in addreference
 		// make singular attribute labels
 		if (attribute.endsWith("ies")) {//$NON-NLS-1$
@@ -98,7 +123,30 @@ public class NewReferenceAction extends ECPSWTAction {
 		} else if (attribute.endsWith("s")) {//$NON-NLS-1$
 			attribute = attribute.substring(0, attribute.length() - 1);
 		}
-		setToolTipText(ActionMessages.NewReferenceAction_CreateAndLinkNew + attribute);
+		setToolTipText(LocalizationServiceHelper.getString(getClass(),
+			ReferenceMessageKeys.NewReferenceAction_CreateAndLinkNew)
+			+ attribute);
+	}
+
+	/**
+	 * The constructor for a new reference action.
+	 *
+	 * @param editingDomain The {@link EditingDomain} to use
+	 * @param eObject The {@link EObject} to use
+	 * @param structuralFeature The {@link EStructuralFeature} defining which feature of the {@link EObject} is used
+	 * @param editSupport The {@link EMFFormsEditSupport} to use
+	 * @param labelProvider the {@link EMFFormsLabelProvider} to use
+	 * @param referenceService The {@link ReferenceService} to use
+	 * @param reportService The {@link ReportService} to use
+	 * @param domainModelReference the {@link VDomainModelReference} to use
+	 * @param domainModel the domain model of the given {@link VDomainModelReference}
+	 * @since 1.6
+	 */
+	public NewReferenceAction(EditingDomain editingDomain, EObject eObject, EStructuralFeature structuralFeature,
+		EMFFormsEditSupport editSupport, EMFFormsLabelProvider labelProvider, ReferenceService referenceService,
+		ReportService reportService, VDomainModelReference domainModelReference, EObject domainModel) {
+		this(editingDomain, ((InternalEObject) eObject).eSetting(structuralFeature), editSupport, labelProvider,
+			referenceService, reportService, domainModelReference, domainModel);
 	}
 
 	/**
@@ -153,8 +201,40 @@ public class NewReferenceAction extends ECPSWTAction {
 	public void run() {
 		// checks if we try to create a container for ourself, this is not allowed
 		final EReference eReference = (EReference) getSetting().getEStructuralFeature();
-		referenceService.addNewModelElements(getSetting().getEObject(),
-			eReference);
+		if (eReference.isContainment() && getSetting().getEObject().eIsSet(eReference)) {
+			final MessageDialog dialog = getContainmentWarningDialog();
+			new ECPDialogExecutor(dialog) {
+				@Override
+				public void handleResult(int codeResult) {
+					if (codeResult == Window.OK) {
+						addNewElementsToReferenceService(getSetting().getEObject(), eReference);
+					}
+				}
+			}.execute();
+		}
+		addNewElementsToReferenceService(getSetting().getEObject(), eReference);
 	}
 
+	private void addNewElementsToReferenceService(EObject eObject, EReference eReference) {
+		if (referenceService == null) {
+			return;
+		}
+		referenceService.addNewModelElements(eObject, eReference);
+	}
+
+	private MessageDialog getContainmentWarningDialog() {
+		return new MessageDialog(null,
+			LocalizationServiceHelper.getString(NewReferenceAction.class,
+				ReferenceMessageKeys.NewReferenceAction_Confirmation),
+			null,
+			LocalizationServiceHelper.getString(NewReferenceAction.class,
+				ReferenceMessageKeys.NewReferenceAction_Warning),
+			MessageDialog.WARNING,
+			new String[] {
+				LocalizationServiceHelper.getString(NewReferenceAction.class,
+					ReferenceMessageKeys.NewReferenceAction_Yes),
+				LocalizationServiceHelper.getString(NewReferenceAction.class,
+					ReferenceMessageKeys.NewReferenceAction_No) },
+			0);
+	}
 }

@@ -14,13 +14,15 @@ package org.eclipse.emf.ecp.view.internal.swt;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
+import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
@@ -36,10 +38,12 @@ public final class EmptyVElementSWTRenderer extends AbstractSWTRenderer<VElement
 	private final SWTGridDescription gridDescription;
 
 	/**
-	 * Default constructor.
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param reportService teh {@link ReportService}
 	 */
-	public EmptyVElementSWTRenderer() {
-		super();
+	public EmptyVElementSWTRenderer(VElement vElement, ViewModelContext viewContext, ReportService reportService) {
+		super(vElement, viewContext, reportService);
 		gridDescription = GridDescriptionFactory.INSTANCE.createEmptyGridDescription();
 		final SWTGridCell gc = new SWTGridCell(0, 0, this);
 		gc.setHorizontalFill(true);
@@ -54,7 +58,7 @@ public final class EmptyVElementSWTRenderer extends AbstractSWTRenderer<VElement
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription)
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#getGridDescription(org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription)
 	 */
 	@Override
 	public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
@@ -64,7 +68,7 @@ public final class EmptyVElementSWTRenderer extends AbstractSWTRenderer<VElement
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell,
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#renderControl(org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell,
 	 *      org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
@@ -77,7 +81,7 @@ public final class EmptyVElementSWTRenderer extends AbstractSWTRenderer<VElement
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#applyEnable()
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#applyEnable()
 	 */
 	@Override
 	protected void applyEnable() {
@@ -87,7 +91,7 @@ public final class EmptyVElementSWTRenderer extends AbstractSWTRenderer<VElement
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#applyReadOnly()
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#applyReadOnly()
 	 */
 	@Override
 	protected void applyReadOnly() {
@@ -97,7 +101,7 @@ public final class EmptyVElementSWTRenderer extends AbstractSWTRenderer<VElement
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#applyValidation()
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#applyValidation()
 	 */
 	@Override
 	protected void applyValidation() {
@@ -107,7 +111,7 @@ public final class EmptyVElementSWTRenderer extends AbstractSWTRenderer<VElement
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#applyVisible()
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#applyVisible()
 	 */
 	@Override
 	protected void applyVisible() {

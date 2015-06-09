@@ -55,7 +55,7 @@
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProvider"/>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.emfforms.spi.swt.core.layout.LayoutProvider"/>
                </appinfo>
             </annotation>
          </attribute>

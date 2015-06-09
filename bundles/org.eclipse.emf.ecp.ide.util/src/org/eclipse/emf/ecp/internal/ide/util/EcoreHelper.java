@@ -20,6 +20,7 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -28,6 +29,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecp.ide.util.Activator;
 
 /**
  * Helper methods for dealing with ecores.
@@ -68,7 +70,7 @@ public final class EcoreHelper {
 	 * @param ecorePath - path to the ecore
 	 * @throws IOException if resource cannot be loaded
 	 *
-	 * */
+	 */
 	public static void registerEcore(String ecorePath) throws IOException {
 		if (ecorePath == null) {
 			return;
@@ -108,10 +110,16 @@ public final class EcoreHelper {
 
 			if (isContainedInPackageRegistry(ePackage.getNsURI())) {
 				if (!ALL_NSURIS_REGISTERED_BY_TOOLING.contains(ePackage.getNsURI())) {
+					Activator.log(
+						IStatus.INFO,
+						String.format(
+							"Tooling Registered Packages don't contain package with URI %1$s.", ePackage.getNsURI())); //$NON-NLS-1$
 					continue;
 				}
 				final EPackage registeredPackage = EPackage.Registry.INSTANCE.getEPackage(ePackage.getNsURI());
 				if (EcoreUtil.equals(ePackage, registeredPackage)) {
+					Activator.log(IStatus.INFO,
+						String.format("Another package with same URI is already registered: %1$s.", registeredPackage)); //$NON-NLS-1$
 					continue;
 				}
 			}
@@ -127,7 +135,23 @@ public final class EcoreHelper {
 		virtualResource.getContents().add(ePackage);
 		EPackage.Registry.INSTANCE.put(ePackage.getNsURI(), ePackage);
 		ALL_NSURIS_REGISTERED_BY_TOOLING.add(ePackage.getNsURI());
+		Activator.log(IStatus.INFO, String.format("Registered Package with URI %1$s.", ePackage.getNsURI())); //$NON-NLS-1$
 		WORKSPACEURI_TO_REGISTEREDPACKAGE.put(platformResourceURI, ePackage);
+		Activator.log(IStatus.INFO,
+			String.format("Mapped Package with URI %1$s to %2$s.", ePackage.getNsURI(), platformResourceURI)); //$NON-NLS-1$
+		registerSubpackages(ePackage);
+	}
+
+	/**
+	 * @param ePackage - the EPackage whose subpackages need to be registered
+	 */
+	private static void registerSubpackages(EPackage ePackage) {
+		for (final EPackage subpackage : ePackage.getESubpackages()) {
+			EPackage.Registry.INSTANCE.put(subpackage.getNsURI(), subpackage);
+			Activator.log(IStatus.INFO,
+				String.format("Register subpackage %1$s of package %2$s.", subpackage.getNsURI(), ePackage.getNsURI())); //$NON-NLS-1$
+			registerSubpackages(subpackage);
+		}
 	}
 
 	/**
@@ -161,6 +185,12 @@ public final class EcoreHelper {
 				ECOREPATH_TO_WORKSPACEURIS.put(ecorePath, new HashSet<String>());
 			}
 			ECOREPATH_TO_WORKSPACEURIS.get(ecorePath).add(physicalResource.getURI().toString());
+			Activator
+				.log(
+					IStatus.INFO,
+					String
+						.format(
+							"Resolved ecorePath %1$s to workspace path %2$s.", ecorePath, physicalResource.getURI().toString())); //$NON-NLS-1$
 		}
 		return uri;
 	}
@@ -176,7 +206,7 @@ public final class EcoreHelper {
 	 *
 	 * @param ecorePath - the path of the ecore to be removed.
 	 *
-	 * */
+	 */
 	public static void unregisterEcore(String ecorePath) {
 		if (ecorePath == null || ECOREPATH_TO_WORKSPACEURIS.get(ecorePath) == null) {
 			return;
@@ -223,6 +253,22 @@ public final class EcoreHelper {
 			}
 			EPackage.Registry.INSTANCE.remove(pkgToRemove.getNsURI());
 			ALL_NSURIS_REGISTERED_BY_TOOLING.remove(pkgToRemove.getNsURI());
+			Activator.log(IStatus.INFO,
+				String.format("Unregister package %1$s.", pkgToRemove.getNsURI())); //$NON-NLS-1$
+			unregisterSubpackages(pkgToRemove);
+		}
+	}
+
+	/**
+	 * @param ePackage - the EPackage whose subpackages need to be unregistered
+	 */
+	private static void unregisterSubpackages(EPackage ePackage) {
+		for (final EPackage subpackage : ePackage.getESubpackages()) {
+			EPackage.Registry.INSTANCE.remove(subpackage.getNsURI());
+			Activator.log(IStatus.INFO,
+				String
+					.format("Unregister subpackage %1$s of package %2$s.", subpackage.getNsURI(), ePackage.getNsURI())); //$NON-NLS-1$
+			unregisterSubpackages(subpackage);
 		}
 	}
 
@@ -249,6 +295,7 @@ public final class EcoreHelper {
 	private static void initResourceSet(ResourceSet resourceSet, boolean withLocalRegistry) {
 		if (withLocalRegistry) {
 			resourceSet.getPackageRegistry().putAll(WORKSPACEURI_TO_REGISTEREDPACKAGE);
+			Activator.log(IStatus.INFO, "Added map of platformuri to epackage to resourceset package registry."); //$NON-NLS-1$
 		}
 		if (!resourceSet.getURIConverter().exists(
 			URI.createURI(ECORE_RESOURCE_URI), null)) {

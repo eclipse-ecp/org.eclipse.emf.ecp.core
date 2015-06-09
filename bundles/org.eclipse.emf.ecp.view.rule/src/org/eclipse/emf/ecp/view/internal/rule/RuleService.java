@@ -363,10 +363,23 @@ public class RuleService implements ViewModelService {
 
 		final Map<VElement, Boolean> visibleMap = evalAffectedRenderables(showRuleRegistry, ShowRule.class,
 			setting);
+		final Set<VElement> toBeVisible = new LinkedHashSet<VElement>();
+		final Set<VElement> toBeInvisible = new LinkedHashSet<VElement>();
 		for (final Map.Entry<VElement, Boolean> e : visibleMap.entrySet()) {
 			final Boolean isVisible = e.getValue();
 			final VElement renderable = e.getKey();
-			renderable.setVisible(isVisible);
+			if (isVisible) {
+				toBeVisible.add(renderable);
+			} else {
+				toBeInvisible.add(renderable);
+			}
+		}
+
+		for (final VElement vElement : toBeInvisible) {
+			vElement.setVisible(false);
+		}
+		for (final VElement vElement : toBeVisible) {
+			vElement.setVisible(true);
 		}
 	}
 

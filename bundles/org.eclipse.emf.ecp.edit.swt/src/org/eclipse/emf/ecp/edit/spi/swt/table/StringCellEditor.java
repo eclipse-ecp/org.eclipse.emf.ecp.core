@@ -11,6 +11,7 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.spi.swt.table;
 
+import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -107,10 +108,11 @@ public class StringCellEditor extends TextCellEditor implements ECPCellEditor {
 	 *
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getTargetToModelStrategy()
+	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getTargetToModelStrategy(org.eclipse.core.databinding.DataBindingContext)
+	 * @since 1.6
 	 */
 	@Override
-	public UpdateValueStrategy getTargetToModelStrategy() {
+	public UpdateValueStrategy getTargetToModelStrategy(DataBindingContext databindingContext) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -119,10 +121,11 @@ public class StringCellEditor extends TextCellEditor implements ECPCellEditor {
 	 *
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getModelToTargetStrategy()
+	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getModelToTargetStrategy(org.eclipse.core.databinding.DataBindingContext)
+	 * @since 1.6
 	 */
 	@Override
-	public UpdateValueStrategy getModelToTargetStrategy() {
+	public UpdateValueStrategy getModelToTargetStrategy(DataBindingContext databindingContext) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -142,12 +145,23 @@ public class StringCellEditor extends TextCellEditor implements ECPCellEditor {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getImage(java.lang.Object)
 	 */
 	@Override
 	public Image getImage(Object value) {
 		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getMinWidth()
+	 * @since 1.6
+	 */
+	@Override
+	public int getMinWidth() {
+		return 0;
 	}
 
 }

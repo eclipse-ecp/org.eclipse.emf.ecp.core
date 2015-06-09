@@ -88,22 +88,6 @@ import org.eclipse.emf.ecp.core.util.observer.ECPObserverBus;
  */
 public class ECPObserverBusImpl implements ECPObserverBus {
 
-	/**
-	 * Initializes the singleton instance statically.
-	 */
-	private static class SingletonHolder {
-		public static final ECPObserverBusImpl INSTANCE = new ECPObserverBusImpl();
-	}
-
-	/**
-	 * Static ObserverBus singleton. Use of singleton is optional, for that reason the constructor is public.
-	 *
-	 * @return Static instance of the observerbus
-	 */
-	public static ECPObserverBusImpl getInstance() {
-		return SingletonHolder.INSTANCE;
-	}
-
 	private final HashMap<Class<? extends ECPObserver>, List<ECPObserver>> observerMap;
 
 	/**

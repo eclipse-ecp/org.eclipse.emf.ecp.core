@@ -15,12 +15,15 @@ import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Scanner;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -53,6 +56,7 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.eclipse.ui.part.FileEditorInput;
+import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceReference;
 
 /**
@@ -63,6 +67,7 @@ import org.osgi.framework.ServiceReference;
  */
 public class ViewModelWizard extends Wizard implements INewWizard {
 
+	private static final String MANIFEST_PATH = "META-INF/MANIFEST.MF"; //$NON-NLS-1$
 	private static final String PLUGIN_ID = "org.eclipse.emf.ecp.view.model.presentation"; //$NON-NLS-1$
 	private Object selectedContainer;
 	private List<ViewModelWizardNewFileCreationPage> fileCreationPages;
@@ -210,7 +215,6 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 	 */
 	@Override
 	public void addPages() {
-
 		selectEcorePage = new SelectEcorePage(PLUGIN_ID);
 		addPage(selectEcorePage);
 
@@ -226,8 +230,7 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 	 */
 	@Override
 	public IWizardPage getStartingPage() {
-		if (selectedContainer == null)
-		{
+		if (selectedContainer == null) {
 			return selectEcorePage;
 		}
 
@@ -292,8 +295,7 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 		EPackage ePackage = null;
 		if (EPackage.class.isInstance(selectedContainer)) {
 			ePackage = EPackage.class.cast(selectedContainer);
-		}
-		else if (IFile.class.isInstance(selectedContainer)) {
+		} else if (IFile.class.isInstance(selectedContainer)) {
 			final ResourceSetImpl resourceSet = new ResourceSetImpl();
 			final String path = ((IFile) selectedContainer).getFullPath().toString();
 			final URI uri = URI.createPlatformResourceURI(path, true);
@@ -347,8 +349,7 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 
 		if (page == selectEClassPage) {
 			return selectEcorePage;
-		}
-		else if (ViewModelWizardNewFileCreationPage.class.isInstance(page)) {
+		} else if (ViewModelWizardNewFileCreationPage.class.isInstance(page)) {
 			return selectEClassPage;
 		}
 
@@ -458,8 +459,7 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 		final String path;
 		if (lastPathDelimiter == -1) {
 			path = projectRelPath;
-		}
-		else {
+		} else {
 			path = projectRelPath.substring(0, projectRelPath.lastIndexOf("/") + 1); //$NON-NLS-1$
 		}
 		final String includes = "bin.includes"; //$NON-NLS-1$
@@ -525,14 +525,18 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 	protected void addContribution(IFile modelFile) {
 
 		final IProject project = modelFile.getProject();
-		final IFile pluginFile = project.getFile("plugin.xml"); //$NON-NLS-1$
-		try {
-			if (!pluginFile.exists())
-			{
-				final String pluginXmlContents = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<?eclipse version=\"3.4\"?>\n<plugin>\n</plugin>"; //$NON-NLS-1$
-				pluginFile.create(new ByteArrayInputStream(pluginXmlContents.getBytes()), true, null);
-				project.refreshLocal(IResource.DEPTH_INFINITE, null);
 
+		final boolean isFragmentProject = isFragmentProject(project);
+		final String contributionFileName = isFragmentProject ? "fragment.xml" : "plugin.xml"; //$NON-NLS-1$ //$NON-NLS-2$
+
+		final IFile pluginFile = project.getFile(contributionFileName);
+		try {
+			if (!pluginFile.exists()) {
+				final String xmlContents = MessageFormat.format(
+					"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<?eclipse version=\"3.4\"?>\n<{0}>\n</{0}>", //$NON-NLS-1$
+					isFragmentProject ? "fragment" : "plugin"); //$NON-NLS-1$//$NON-NLS-2$
+				pluginFile.create(new ByteArrayInputStream(xmlContents.getBytes()), true, null);
+				project.refreshLocal(IResource.DEPTH_INFINITE, null);
 			}
 			final BufferedReader in = new BufferedReader(new InputStreamReader(pluginFile.getContents()));
 			final String extension = "org.eclipse.emf.ecp.view.model.provider.xmi.file"; //$NON-NLS-1$
@@ -548,16 +552,16 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 
 						line = line.substring(0, end)
 							+ ">\n" + filePathAttribute + "\n</extension>\n" + line.substring(end + 2, line.length()); //$NON-NLS-1$ //$NON-NLS-2$
-					}
-					else {
+					} else {
 						final String filePathAttribute = "<file filePath=\"" //$NON-NLS-1$
 							+ modelFile.getProjectRelativePath().toString() + "\"/>"; //$NON-NLS-1$
 						line = line.concat("\n" + filePathAttribute + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
 					}
 					extensionAdded = true;
 				}
-				if (line.contains("</plugin>") && !extensionAdded) { //$NON-NLS-1$
-					final int end = line.indexOf("</plugin>"); //$NON-NLS-1$
+				final String eof = isFragmentProject ? "</fragment>" : "</plugin>"; //$NON-NLS-1$ //$NON-NLS-2$
+				if (line.contains(eof) && !extensionAdded) {
+					final int end = line.indexOf(eof);
 					line = line.substring(0, end)
 						+ "\n<extension  point=\"org.eclipse.emf.ecp.view.model.provider.xmi.file\">\n<file filePath=\"" //$NON-NLS-1$
 						+ modelFile.getProjectRelativePath().toString()
@@ -578,6 +582,26 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 			ViewEditorPlugin.INSTANCE.log(new Status(IStatus.ERROR, PLUGIN_ID, e.getMessage(), e));
 		} catch (final IOException e) {
 			ViewEditorPlugin.INSTANCE.log(new Status(IStatus.ERROR, PLUGIN_ID, e.getMessage(), e));
+		}
+	}
+
+	private boolean isFragmentProject(IProject project) {
+		try {
+			final IResource manifest = project.findMember(MANIFEST_PATH);
+			if (manifest == null || !IFile.class.isInstance(manifest)) {
+				/* no osgi project at all */
+				return false;
+			}
+			final InputStream inputStream = IFile.class.cast(manifest).getContents(true);
+			final Scanner scanner = new Scanner(inputStream, "UTF-8"); //$NON-NLS-1$
+			/* read file as one string */
+			final String content = scanner.useDelimiter("\\A").next(); //$NON-NLS-1$
+			scanner.close();
+			/* Every fragment has a fragment host header in the manifest */
+			final int index = content.indexOf(Constants.FRAGMENT_HOST);
+			return index != -1;
+		} catch (final CoreException ex) {
+			return false;
 		}
 	}
 

@@ -11,7 +11,14 @@
  */
 package org.eclipse.emf.ecp.view.label.rap;
 
+import javax.inject.Inject;
+
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.label.model.VLabel;
 import org.eclipse.emf.ecp.view.spi.label.swt.LabelSWTRenderer;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.swt.widgets.Label;
 
 /**
@@ -19,6 +26,21 @@ import org.eclipse.swt.widgets.Label;
  *
  */
 public class LabelRapRenderer extends LabelSWTRenderer {
+
+	/**
+	 * Default Constructor.
+	 *
+	 * @param vElement the view element to be rendered
+	 * @param viewContext The view model context
+	 * @param reportService the ReportService to use
+	 * @param emfFormsDatabinding the EMFFormsDatabinding to use
+	 * @param vtViewTemplateProvider the VTViewTemplateProvider to use
+	 */
+	@Inject
+	public LabelRapRenderer(final VLabel vElement, final ViewModelContext viewContext, ReportService reportService,
+		EMFFormsDatabinding emfFormsDatabinding, VTViewTemplateProvider vtViewTemplateProvider) {
+		super(vElement, viewContext, reportService, emfFormsDatabinding, vtViewTemplateProvider);
+	}
 
 	/*
 	 * (non-Javadoc)

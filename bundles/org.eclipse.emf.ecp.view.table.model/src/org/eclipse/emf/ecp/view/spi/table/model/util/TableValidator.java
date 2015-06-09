@@ -14,13 +14,13 @@ package org.eclipse.emf.ecp.view.spi.table.model.util;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticChain;
@@ -33,6 +33,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.util.EObjectValidator;
+import org.eclipse.emf.ecp.view.internal.table.model.Activator;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewValidator;
@@ -42,11 +43,14 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTableColumnConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 
 /**
  * <!-- begin-user-doc -->
  * The <b>Validator</b> for the model.
- * 
+ *
  * @since 1.5
  *        <!-- end-user-doc -->
  *
@@ -103,6 +107,27 @@ public class TableValidator extends EObjectValidator
 	 * @generated
 	 */
 	protected ViewValidator viewValidator;
+	/**
+	 * The test EMFFormsDatabinding service.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated NOT
+	 */
+	private EMFFormsDatabinding emfFormsDatabinding;
+
+	/**
+	 * Creates an instance of the switch.
+	 * <!-- begin-user-doc -->
+	 * This is a constructor for test cases.
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated NOT
+	 */
+	TableValidator(EMFFormsDatabinding emfFormsDatabinding) {
+		this();
+		this.emfFormsDatabinding = emfFormsDatabinding;
+	}
 
 	/**
 	 * Creates an instance of the switch.
@@ -289,11 +314,15 @@ public class TableValidator extends EObjectValidator
 		}
 
 		// test if table ends a multi reference
-		final Iterator<EStructuralFeature> iterator = pathToMultiRef.getEStructuralFeatureIterator();
-		if (!iterator.hasNext()) {
+		IValueProperty valueProperty;
+		try {
+			valueProperty = getEMFFormsDatabinding()
+				.getValueProperty(pathToMultiRef, null);
+		} catch (final DatabindingFailedException ex) {
+			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 			return true;
 		}
-		final EStructuralFeature feature = iterator.next();
+		final EStructuralFeature feature = (EStructuralFeature) valueProperty.getValueType();
 		if (!EReference.class.isInstance(feature) || !feature.isMany()) {
 			if (diagnostics != null) {
 				final String message = "Domain model reference does not end at a multi reference."; //$NON-NLS-1$
@@ -366,6 +395,13 @@ public class TableValidator extends EObjectValidator
 		}
 		return true;
 
+	}
+
+	private EMFFormsDatabinding getEMFFormsDatabinding() {
+		if (emfFormsDatabinding != null) {
+			return emfFormsDatabinding;
+		}
+		return Activator.getDefault().getEMFFormsDatabinding();
 	}
 
 	// END COMPLEX CODE

@@ -7,10 +7,10 @@
                 <message_argument value="1.2.1"/>
             </message_arguments>
         </filter>
-        <filter comment="There was no change that would require us to update the minor version.." id="929038356">
+        <filter comment="SPI Change in 1.6" id="923795461">
             <message_arguments>
-                <message_argument value="1.5.1"/>
-                <message_argument value="org.eclipse.emf.ecp.edit.swt"/>
+                <message_argument value="1.6.0"/>
+                <message_argument value="1.5.0"/>
             </message_arguments>
         </filter>
     </resource>
@@ -19,6 +19,26 @@
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.custom.ui.ECPAbstractCustomControl"/>
                 <message_argument value="org.eclipse.emf.ecp.view.custom.ui.swt_1.2.1"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/custom/swt/CustomControlSWTRenderer.java" type="org.eclipse.emf.ecp.view.spi.custom.swt.CustomControlSWTRenderer">
+        <filter comment="SPI Change in 1.6" id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.custom.swt.CustomControlSWTRenderer"/>
+                <message_argument value="CustomControlSWTRenderer()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="EMFForms 1.6 SPI Change" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.custom.swt.CustomControlSWTRenderer"/>
+                <message_argument value="getGridDescription(SWTGridDescription)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="EMFForms 1.6 SPI Change" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.custom.swt.CustomControlSWTRenderer"/>
+                <message_argument value="renderControl(SWTGridCell, Composite)"/>
             </message_arguments>
         </filter>
     </resource>
@@ -71,10 +91,22 @@
                 <message_argument value="createControls(Composite)"/>
             </message_arguments>
         </filter>
+        <filter comment="EMFForms 1.6 SPI Change" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT"/>
+                <message_argument value="createSimpleGrid(int, int)"/>
+            </message_arguments>
+        </filter>
         <filter comment="This is SPI" id="338792546">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT"/>
                 <message_argument value="createValidationLabel(Composite)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="EMFForms 1.6 SPI Change" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT"/>
+                <message_argument value="getGridDescription()"/>
             </message_arguments>
         </filter>
         <filter comment="This is SPI" id="338792546">
@@ -107,6 +139,12 @@
                 <message_argument value="handleValidation(Diagnostic)"/>
             </message_arguments>
         </filter>
+        <filter comment="EMFForms 1.6 SPI Change" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT"/>
+                <message_argument value="renderControl(SWTGridCell, Composite)"/>
+            </message_arguments>
+        </filter>
         <filter comment="This is SPI" id="338792546">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT"/>
@@ -117,6 +155,12 @@
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT"/>
                 <message_argument value="resetValidation()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="EMFForms 1.6 SPI Change" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT"/>
+                <message_argument value="setControlEnabled(SWTGridCell, Control, boolean)"/>
             </message_arguments>
         </filter>
         <filter comment="This is SPI" id="338792546">

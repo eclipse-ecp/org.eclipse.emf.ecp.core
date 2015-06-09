@@ -12,27 +12,35 @@
 package org.eclipse.emf.ecp.view.spi.label.swt;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+
+import javax.inject.Inject;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
-import org.eclipse.emf.databinding.EMFObservables;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.databinding.edit.EMFEditObservables;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.label.model.VLabel;
 import org.eclipse.emf.ecp.view.spi.label.model.VLabelStyle;
+import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontPropertiesFactory;
 import org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontPropertiesStyleProperty;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
+import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
@@ -53,6 +61,29 @@ import org.eclipse.swt.widgets.Label;
  *
  */
 public class LabelSWTRenderer extends AbstractSWTRenderer<VLabel> {
+	private final EMFDataBindingContext dbc;
+	private final EMFFormsDatabinding emfFormsDatabinding;
+	private final VTViewTemplateProvider vtViewTemplateProvider;
+
+	/**
+	 * Default Constructor.
+	 *
+	 * @param vElement the view element to be rendered
+	 * @param viewContext The view model context
+	 * @param reportService the ReportService to use
+	 * @param emfFormsDatabinding the EMFFormsDatabinding to use
+	 * @param vtViewTemplateProvider the VTViewTemplateProvider to use
+	 * @since 1.6
+	 */
+	@Inject
+	public LabelSWTRenderer(final VLabel vElement, final ViewModelContext viewContext, ReportService reportService,
+		EMFFormsDatabinding emfFormsDatabinding, VTViewTemplateProvider vtViewTemplateProvider) {
+		super(vElement, viewContext, reportService);
+		this.emfFormsDatabinding = emfFormsDatabinding;
+		this.vtViewTemplateProvider = vtViewTemplateProvider;
+		dbc = new EMFDataBindingContext();
+	}
+
 	private SWTGridDescription rendererGridDescription;
 	private Font font;
 	private org.eclipse.swt.graphics.Color labelColor;
@@ -64,7 +95,7 @@ public class LabelSWTRenderer extends AbstractSWTRenderer<VLabel> {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#dispose()
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#dispose()
 	 */
 	@Override
 	protected void dispose() {
@@ -79,13 +110,14 @@ public class LabelSWTRenderer extends AbstractSWTRenderer<VLabel> {
 			dataBindingContext.dispose();
 			dataBindingContext = null;
 		}
+		dbc.dispose();
 		super.dispose();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(SWTGridDescription)
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#getGridDescription(SWTGridDescription)
 	 */
 	@Override
 	public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
@@ -117,14 +149,11 @@ public class LabelSWTRenderer extends AbstractSWTRenderer<VLabel> {
 
 	private void setText(Label label) {
 		if (getVElement().getDomainModelReference() != null) {
-			final Iterator<Setting> iterator = getVElement().getDomainModelReference().getIterator();
-			if (iterator.hasNext()) {
-				final Setting setting = iterator.next();
-
+			try {
+				final IObservableValue observableValue = emfFormsDatabinding
+					.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 				final ISWTObservableValue observeText = SWTObservables.observeText(label);
-				final IObservableValue observeValue = EMFObservables.observeValue(setting.getEObject(),
-					setting.getEStructuralFeature());
-				final Binding binding = getDataBindingContext().bindValue(observeText, observeValue);
+				final Binding binding = getDataBindingContext().bindValue(observeText, observableValue);
 
 				label.addDisposeListener(new DisposeListener() {
 					@Override
@@ -132,13 +161,17 @@ public class LabelSWTRenderer extends AbstractSWTRenderer<VLabel> {
 						binding.dispose();
 					}
 				});
+			} catch (final DatabindingFailedException ex) {
+				getReportService().report(new RenderingFailedReport(ex));
+				label.setText(ex.getMessage());
 			}
 		} else {
-			if (getVElement().getName() != null) {
-				label.setText(getVElement().getName());
-			} else {
-				label.setText(""); //$NON-NLS-1$
-			}
+			final IObservableValue modelValue = EMFEditObservables.observeValue(
+				AdapterFactoryEditingDomain.getEditingDomainFor(getVElement()), getVElement(),
+				VViewPackage.eINSTANCE.getElement_Label());
+			final IObservableValue targetValue = SWTObservables.observeText(label);
+
+			dbc.bindValue(targetValue, modelValue);
 		}
 	}
 
@@ -202,7 +235,7 @@ public class LabelSWTRenderer extends AbstractSWTRenderer<VLabel> {
 
 	private VTFontPropertiesStyleProperty getFontProperty() {
 		VTFontPropertiesStyleProperty fontProperties;
-		final Set<VTStyleProperty> styleProperties = Activator.getDefault().getVTViewTemplateProvider()
+		final Set<VTStyleProperty> styleProperties = vtViewTemplateProvider
 			.getStyleProperties(getVElement(), getViewModelContext());
 		for (final VTStyleProperty styleProperty : styleProperties) {
 			if (VTFontPropertiesStyleProperty.class.isInstance(styleProperty)) {

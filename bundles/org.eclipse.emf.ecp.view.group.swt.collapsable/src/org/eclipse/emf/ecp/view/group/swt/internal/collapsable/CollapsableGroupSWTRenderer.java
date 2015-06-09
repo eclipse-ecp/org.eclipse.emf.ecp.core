@@ -11,11 +11,17 @@
  */
 package org.eclipse.emf.ecp.view.group.swt.internal.collapsable;
 
+import javax.inject.Inject;
+
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.group.model.VGroup;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ExpandEvent;
 import org.eclipse.swt.events.ExpandListener;
@@ -35,18 +41,33 @@ import org.eclipse.swt.widgets.ExpandItem;
  */
 public class CollapsableGroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 
+	/**
+	 * Default constructor.
+	 *
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param reportService the {@link ReportService}
+	 * @param factory the {@link EMFFormsRendererFactory}
+	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
+	 */
+	@Inject
+	public CollapsableGroupSWTRenderer(VGroup vElement, ViewModelContext viewContext, ReportService reportService,
+		EMFFormsRendererFactory factory, EMFFormsDatabinding emfFormsDatabinding) {
+		super(vElement, viewContext, reportService, factory, emfFormsDatabinding);
+	}
+
 	private static final int MARGIN = 5;
 
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer#renderControl(org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell,
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer#renderControl(org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell,
 	 *      org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
 	protected Control renderControl(SWTGridCell gridCell, final Composite parent) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
-		final ExpandBar bar = new ExpandBar(parent, SWT.V_SCROLL);
+		final ExpandBar bar = new ExpandBar(parent, SWT.NONE);
 		bar.setBackground(parent.getBackground());
 
 		// First item
@@ -74,6 +95,7 @@ public class CollapsableGroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 				updateLayoutData(layoutData, item0.getHeaderHeight() + 2 * MARGIN);
 				parent.layout(true, true);
 				getVElement().setCollapsed(true);
+				postCollapsed();
 			}
 
 			@Override
@@ -84,6 +106,7 @@ public class CollapsableGroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 					+ 2 * MARGIN);
 				parent.layout(true, true);
 				getVElement().setCollapsed(false);
+				postExpanded();
 			}
 
 			// XXX relayout upon expand/collapse will only work properly when the grid data is adjusted
@@ -98,6 +121,20 @@ public class CollapsableGroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 		});
 		item0.setExpanded(!getVElement().isCollapsed());
 		return bar;
+	}
+
+	/**
+	 * This method gets called after the group has been expanded. Default implementation does nothing.
+	 */
+	protected void postExpanded() {
+		// no op
+	}
+
+	/**
+	 * This method gets called after the group has been collapsed. Default implementation does nothing.
+	 */
+	protected void postCollapsed() {
+		// no op
 	}
 
 	private int computeHeight(Composite composite) {

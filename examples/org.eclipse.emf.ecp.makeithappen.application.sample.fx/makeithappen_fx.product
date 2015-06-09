@@ -3,7 +3,6 @@
 
 <product name="MakeItHappen Sample FX Product" uid="org.eclipse.emf.ecp.makeithappen.sample.product.fx" id="org.eclipse.emf.ecp.makeithappen.application.sample.fx.product" application="org.eclipse.emf.ecp.makeithappen.application.sample.fx.application" version="1.4.0" useFeatures="false" includeLaunchers="true">
 
-
    <configIni use="default">
    </configIni>
 
@@ -18,7 +17,6 @@
 
    <windowImages i16="/org.eclipse.emf.ecp.makeithappen.application.sample.fx/icons/bricks.png"/>
 
-
    <vm>
       <linux include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8</linux>
    </vm>
@@ -30,7 +28,6 @@
       <plugin id="javax.servlet"/>
       <plugin id="javax.xml"/>
       <plugin id="org.apache.commons.lang"/>
-      <plugin id="org.eclipse.ant.core"/>
       <plugin id="org.eclipse.core.commands"/>
       <plugin id="org.eclipse.core.contenttype"/>
       <plugin id="org.eclipse.core.databinding"/>
@@ -41,7 +38,6 @@
       <plugin id="org.eclipse.core.jobs"/>
       <plugin id="org.eclipse.core.resources"/>
       <plugin id="org.eclipse.core.runtime"/>
-      <plugin id="org.eclipse.core.variables"/>
       <plugin id="org.eclipse.e4.core.commands"/>
       <plugin id="org.eclipse.e4.core.contexts"/>
       <plugin id="org.eclipse.e4.core.di"/>

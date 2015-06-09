@@ -1,4 +1,14 @@
 /**
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ * Eugen Neufeld - initial API and implementation
+ * Lucas Koehler - extension for EnumComboViewerRenderer_PTest
  */
 package org.eclipse.emf.ecp.view.core.swt.test.model.impl;
 
@@ -11,6 +21,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecp.view.core.swt.test.model.SimpleTestObject;
+import org.eclipse.emf.ecp.view.core.swt.test.model.TestEnum;
 import org.eclipse.emf.ecp.view.core.swt.test.model.TestFactory;
 import org.eclipse.emf.ecp.view.core.swt.test.model.TestPackage;
 
@@ -18,7 +29,7 @@ import org.eclipse.emf.ecp.view.core.swt.test.model.TestPackage;
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Factory</b>.
  * <!-- end-user-doc -->
- *
+ * 
  * @generated
  */
 public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
@@ -26,7 +37,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public static TestFactory init() {
@@ -46,7 +57,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	 * Creates an instance of the factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public TestFactoryImpl() {
@@ -56,7 +67,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -65,46 +76,50 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 		case TestPackage.SIMPLE_TEST_OBJECT:
 			return createSimpleTestObject();
 		default:
-			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Object createFromString(EDataType eDataType, String initialValue) {
 		switch (eDataType.getClassifierID()) {
+		case TestPackage.TEST_ENUM:
+			return createTestEnumFromString(eDataType, initialValue);
 		case TestPackage.XML_DATE:
 			return createXMLDateFromString(eDataType, initialValue);
 		default:
-			throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+			throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public String convertToString(EDataType eDataType, Object instanceValue) {
 		switch (eDataType.getClassifierID()) {
+		case TestPackage.TEST_ENUM:
+			return convertTestEnumToString(eDataType, instanceValue);
 		case TestPackage.XML_DATE:
 			return convertXMLDateToString(eDataType, instanceValue);
 		default:
-			throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+			throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -116,7 +131,33 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
+	 * @generated
+	 */
+	public TestEnum createTestEnumFromString(EDataType eDataType, String initialValue) {
+		final TestEnum result = TestEnum.get(initialValue);
+		if (result == null)
+		{
+			throw new IllegalArgumentException(
+				"The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		}
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public String convertTestEnumToString(EDataType eDataType, Object instanceValue) {
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public XMLGregorianCalendar createXMLDateFromString(EDataType eDataType, String initialValue) {
@@ -126,7 +167,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public String convertXMLDateToString(EDataType eDataType, Object instanceValue) {
@@ -136,7 +177,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -147,7 +188,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @deprecated
 	 * @generated
 	 */

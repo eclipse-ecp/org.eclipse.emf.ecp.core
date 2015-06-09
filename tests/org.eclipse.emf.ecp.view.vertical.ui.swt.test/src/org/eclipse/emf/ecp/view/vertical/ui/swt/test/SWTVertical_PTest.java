@@ -30,6 +30,7 @@ import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalFactory;
 import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalLayout;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTViewTestHelper;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
@@ -54,7 +55,7 @@ public class SWTVertical_PTest {
 
 	@Test
 	public void testVerticalWithoutChildren() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
 		// setup model
 		final HierarchyViewModelHandle handle = createVerticalWithoutChildren();
 		final Control render = SWTViewTestHelper.render(handle.getRoot(), domainElement, shell);
@@ -65,7 +66,7 @@ public class SWTVertical_PTest {
 
 	@Test
 	public void testVerticalWithTwoControlsAsChildren() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
 		// setup model
 		final HierarchyViewModelHandle handle = createVerticalWithTwoControlsAsChildren();
 		final Control render = SWTViewTestHelper.render(handle.getRoot(), domainElement, shell);
@@ -79,7 +80,7 @@ public class SWTVertical_PTest {
 
 	@Test
 	public void testVerticalWithTwoVerticalAsChildrenAndControlAsSubChildren() throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
 		// setup model
 		final HierarchyViewModelHandle handle =
 			createVerticalWithTwoVerticalAsChildrenAndControlAsSubChildren();

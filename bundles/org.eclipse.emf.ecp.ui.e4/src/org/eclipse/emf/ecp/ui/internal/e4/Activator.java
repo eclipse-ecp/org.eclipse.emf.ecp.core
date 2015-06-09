@@ -11,7 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.ui.internal.e4;
 
-import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
+import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;

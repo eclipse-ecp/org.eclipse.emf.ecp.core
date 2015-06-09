@@ -16,6 +16,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.ecp.test.common.DefaultRealm;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
@@ -29,6 +30,8 @@ import org.eclipse.emf.ecp.view.validation.test.model.Computer;
 import org.eclipse.emf.ecp.view.validation.test.model.TestFactory;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
 import org.eclipse.emf.ecp.view.validation.test.model.Writer;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -40,6 +43,18 @@ import org.junit.Test;
  * @author emueller
  */
 public class ValidationServiceGC_PTest extends CommonValidationTest {
+
+	private DefaultRealm defaultRealm;
+
+	@Before
+	public void setup() {
+		defaultRealm = new DefaultRealm();
+	}
+
+	@After
+	public void tearDown() {
+		defaultRealm.dispose();
+	}
 
 	/**
 	 * Creates a basic view with an column that contains a control

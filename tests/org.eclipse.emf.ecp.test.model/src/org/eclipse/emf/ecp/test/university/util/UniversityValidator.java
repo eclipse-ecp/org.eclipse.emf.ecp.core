@@ -24,6 +24,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.EObjectValidator;
+import org.eclipse.emf.ecp.test.university.Address;
 import org.eclipse.emf.ecp.test.university.Assistant;
 import org.eclipse.emf.ecp.test.university.Course;
 import org.eclipse.emf.ecp.test.university.CourseCatalog;
@@ -41,8 +42,7 @@ import org.eclipse.emf.ecp.view.internal.validation.ValidationNotification;
  * @see org.eclipse.emf.ecp.test.university.UniversityPackage
  * @generated
  */
-public class UniversityValidator extends EObjectValidator
-{
+public class UniversityValidator extends EObjectValidator {
 	/**
 	 * The cached model package
 	 * <!-- begin-user-doc -->
@@ -90,8 +90,7 @@ public class UniversityValidator extends EObjectValidator
 	 *
 	 * @generated
 	 */
-	public UniversityValidator()
-	{
+	public UniversityValidator() {
 		super();
 	}
 
@@ -103,8 +102,7 @@ public class UniversityValidator extends EObjectValidator
 	 * @generated
 	 */
 	@Override
-	protected EPackage getEPackage()
-	{
+	protected EPackage getEPackage() {
 		return UniversityPackage.eINSTANCE;
 	}
 
@@ -116,10 +114,9 @@ public class UniversityValidator extends EObjectValidator
 	 * @generated
 	 */
 	@Override
-	protected boolean validate(int classifierID, Object value, DiagnosticChain diagnostics, Map<Object, Object> context)
-	{
-		switch (classifierID)
-		{
+	protected boolean validate(int classifierID, Object value, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
+		switch (classifierID) {
 		case UniversityPackage.COURSE_CATALOG:
 			return validateCourseCatalog((CourseCatalog) value, diagnostics, context);
 		case UniversityPackage.COURSE:
@@ -132,6 +129,8 @@ public class UniversityValidator extends EObjectValidator
 			return validateAssistant((Assistant) value, diagnostics, context);
 		case UniversityPackage.PERSON:
 			return validatePerson((Person) value, diagnostics, context);
+		case UniversityPackage.ADDRESS:
+			return validateAddress((Address) value, diagnostics, context);
 		default:
 			return true;
 		}
@@ -144,8 +143,7 @@ public class UniversityValidator extends EObjectValidator
 	 * @generated
 	 */
 	public boolean validateCourseCatalog(CourseCatalog courseCatalog, DiagnosticChain diagnostics,
-		Map<Object, Object> context)
-	{
+		Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(courseCatalog, diagnostics, context);
 	}
 
@@ -155,8 +153,7 @@ public class UniversityValidator extends EObjectValidator
 	 *
 	 * @generated
 	 */
-	public boolean validateCourse(Course course, DiagnosticChain diagnostics, Map<Object, Object> context)
-	{
+	public boolean validateCourse(Course course, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		if (!validate_NoCircularContainment(course, diagnostics, context)) {
 			return false;
 		}
@@ -199,8 +196,8 @@ public class UniversityValidator extends EObjectValidator
 	 * @generated NOT
 	 */
 	// BEGIN COMPLEX CODE
-	public boolean validateCourse_UniqueItemById(Course course, DiagnosticChain diagnostics, Map<Object, Object> context)
-	{
+	public boolean validateCourse_UniqueItemById(Course course, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
 		// method name is generated
 		boolean validationResult = true;
 		final CourseCatalog courseCatalog = (CourseCatalog) course.eContainer();
@@ -252,13 +249,10 @@ public class UniversityValidator extends EObjectValidator
 	private void createDiagnostics(Course course, DiagnosticChain diagnostics, Map<Object, Object> context,
 		final List<Course> duplicates) {
 		for (final Course courseWithDuplicatedId : duplicates) {
-			if (diagnostics != null)
-			{
+			if (diagnostics != null) {
 				if (courseWithDuplicatedId != course) {
 					diagnostics
-						.add
-						(createDiagnostic
-						(Diagnostic.WARNING,
+						.add(createDiagnostic(Diagnostic.WARNING,
 							DIAGNOSTIC_SOURCE,
 							0, "_UI_GenericConstraint_diagnostic", //$NON-NLS-1$
 							new Object[] { "The id of a course must be unique" }, //$NON-NLS-1$
@@ -277,22 +271,18 @@ public class UniversityValidator extends EObjectValidator
 	 * @generated NOT
 	 */
 	// BEGIN COMPLEX CODE
-	public boolean validateCourse_NameNotEmpty(Course course, DiagnosticChain diagnostics, Map<Object, Object> context)
-	{
+	public boolean validateCourse_NameNotEmpty(Course course, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
 		// method name is generated
 		if (course.getName() != null && course.getName().length() < 1 || course.getId() != null
-			&& course.getId().length() < 1)
-		{
-			if (diagnostics != null)
-			{
-				diagnostics.add
-					(createDiagnostic
-					(Diagnostic.ERROR,
-						DIAGNOSTIC_SOURCE,
-						0, "_UI_GenericConstraint_diagnostic", //$NON-NLS-1$
-						new Object[] { "A course needs a name and an id." }, //$NON-NLS-1$
-						new Object[] { course, UniversityPackage.eINSTANCE.getCourse_Name() },
-						context));
+			&& course.getId().length() < 1) {
+			if (diagnostics != null) {
+				diagnostics.add(createDiagnostic(Diagnostic.ERROR,
+					DIAGNOSTIC_SOURCE,
+					0, "_UI_GenericConstraint_diagnostic", //$NON-NLS-1$
+					new Object[] { "A course needs a name and an id." }, //$NON-NLS-1$
+					new Object[] { course, UniversityPackage.eINSTANCE.getCourse_Name() },
+					context));
 			}
 			return false;
 		}
@@ -307,8 +297,7 @@ public class UniversityValidator extends EObjectValidator
 	 *
 	 * @generated
 	 */
-	public boolean validateStaff(Staff staff, DiagnosticChain diagnostics, Map<Object, Object> context)
-	{
+	public boolean validateStaff(Staff staff, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(staff, diagnostics, context);
 	}
 
@@ -318,8 +307,7 @@ public class UniversityValidator extends EObjectValidator
 	 *
 	 * @generated
 	 */
-	public boolean validateProfessor(Professor professor, DiagnosticChain diagnostics, Map<Object, Object> context)
-	{
+	public boolean validateProfessor(Professor professor, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(professor, diagnostics, context);
 	}
 
@@ -329,8 +317,7 @@ public class UniversityValidator extends EObjectValidator
 	 *
 	 * @generated
 	 */
-	public boolean validateAssistant(Assistant assistant, DiagnosticChain diagnostics, Map<Object, Object> context)
-	{
+	public boolean validateAssistant(Assistant assistant, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(assistant, diagnostics, context);
 	}
 
@@ -340,9 +327,18 @@ public class UniversityValidator extends EObjectValidator
 	 *
 	 * @generated
 	 */
-	public boolean validatePerson(Person person, DiagnosticChain diagnostics, Map<Object, Object> context)
-	{
+	public boolean validatePerson(Person person, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(person, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public boolean validateAddress(Address address, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(address, diagnostics, context);
 	}
 
 	/**
@@ -353,8 +349,7 @@ public class UniversityValidator extends EObjectValidator
 	 * @generated
 	 */
 	@Override
-	public ResourceLocator getResourceLocator()
-	{
+	public ResourceLocator getResourceLocator() {
 		// TODO
 		// Specialize this to return a resource locator for messages specific to this validator.
 		// Ensure that you remove @generated or mark it @generated NOT

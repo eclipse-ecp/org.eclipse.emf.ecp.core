@@ -18,65 +18,64 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecp.view.internal.section.ui.swt.Activator;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.section.model.VSection;
-import org.eclipse.emf.ecp.view.spi.swt.AbstractAdditionalSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.swt.core.AbstractAdditionalSWTRenderer;
+import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
+import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Layout;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * Common super class for all section renderer.
  *
  * @author jfaltermeier
- *
+ * @noextend This class is not intended to be subclassed by clients.
  */
 public abstract class AbstractSectionSWTRenderer extends
 	AbstractSWTRenderer<VSection> {
+
+	/**
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param reportService the {@link ReportService}
+	 * @since 1.6
+	 */
+	public AbstractSectionSWTRenderer(VSection vElement, ViewModelContext viewContext, ReportService reportService) {
+		super(vElement, viewContext, reportService);
+	}
 
 	@Override
 	protected Control renderControl(SWTGridCell cell, Composite parent)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		if (cell.getRenderer() == this) {
-			switch (cell.getColumn()) {
-			case 0:
+			if (cell.getColumn() == 0) {
 				return createFirstColumn(parent);
-
-			case 1:
-				if (getVElement().getChildren().size() < 3) {
-					return renderEmpty(parent);
-				}
-				return renderChild(parent, getVElement().getChildren().get(0));
-
-			case 2:
-				if (getVElement().getChildren().size() < 2) {
-					return renderEmpty(parent);
-				}
-				return renderChild(
-					parent,
-					getVElement().getChildren().get(
-						getVElement().getChildren().size() - 2));
-
-			case 3:
-				return renderChild(
-					parent,
-					getVElement().getChildren().get(
-						getVElement().getChildren().size() - 1));
-			default:
-				throw new IllegalArgumentException(""); //$NON-NLS-1$
+			} else if (cell.getColumn() < 0) {
+				return renderEmpty(parent);
+			} else {
+				/*-1 because label is column 0*/
+				return renderChild(parent, getVElement().getChildren().get(cell.getColumn() - 1));
 			}
 		}
 		return cell.getRenderer().render(cell, parent);
@@ -106,20 +105,32 @@ public abstract class AbstractSectionSWTRenderer extends
 		final Map<VContainedElement, SWTGridDescription> rowGridDescription = new LinkedHashMap<VContainedElement, SWTGridDescription>();
 		final Map<VContainedElement, SWTGridDescription> controlGridDescription = new LinkedHashMap<VContainedElement, SWTGridDescription>();
 
-		if (VControl.class.isInstance(child)
-			&& (VControl.class.cast(child).getDomainModelReference() == null || !VControl.class
-				.cast(child).getDomainModelReference().getIterator()
-				.hasNext())) {
+		if (VControl.class.isInstance(child)) {
+			if (VControl.class.cast(child).getDomainModelReference() == null) {
+				return columnComposite;
+			}
+			try {
+				Activator
+					.getDefault()
+					.getEMFFormsDatabinding()
+					.getValueProperty(VControl.class.cast(child).getDomainModelReference(),
+						getViewModelContext().getDomainModel());
+			} catch (final DatabindingFailedException ex) {
+				Activator.getDefault().getReportService().report(new RenderingFailedReport(ex));
+				return columnComposite;
+			}
+		}
+
+		AbstractSWTRenderer<VElement> renderer;
+		try {
+			renderer = getEMFFormsRendererFactory()
+				.getRendererInstance(child, getViewModelContext());
+		} catch (final EMFFormsNoRendererException ex) {
+			getReportService().report(new RenderingFailedReport(ex));
 			return columnComposite;
 		}
-		final AbstractSWTRenderer<VElement> renderer = getSWTRendererFactory()
-			.getRenderer(child, getViewModelContext());
-		if (renderer == null) {
-			// TODO log
-			return columnComposite;
-		}
-		final Collection<AbstractAdditionalSWTRenderer<VElement>> additionalRenderers = getSWTRendererFactory()
-			.getAdditionalRenderer(child, getViewModelContext());
+		final Collection<AbstractAdditionalSWTRenderer<VElement>> additionalRenderers = getEMFFormsRendererFactory()
+			.getAdditionalRendererInstances(child, getViewModelContext());
 		SWTGridDescription gridDescription = renderer
 			.getGridDescription(GridDescriptionFactory.INSTANCE
 				.createEmptyGridDescription());
@@ -143,12 +154,6 @@ public abstract class AbstractSectionSWTRenderer extends
 			maximalGridDescription.getColumns(), false));
 
 		try {
-			if (VControl.class.isInstance(child)
-				&& (VControl.class.cast(child).getDomainModelReference() == null || !VControl.class
-					.cast(child).getDomainModelReference()
-					.getIterator().hasNext())) {
-				return columnComposite;
-			}
 			final SWTGridDescription gridDescription2 = rowGridDescription
 				.get(child);
 			if (gridDescription2 == null) {
@@ -167,7 +172,8 @@ public abstract class AbstractSectionSWTRenderer extends
 				setLayoutDataForControl(childGridCell,
 					controlGridDescription.get(child), gridDescription2,
 					maximalGridDescription, childGridCell.getRenderer()
-						.getVElement(), control);
+						.getVElement(),
+					control);
 
 			}
 			for (final SWTGridCell childGridCell : gridDescription2.getGrid()) {
@@ -206,4 +212,46 @@ public abstract class AbstractSectionSWTRenderer extends
 			getControls().get(gridCell).setVisible(visible);
 		}
 	}
+
+	/**
+	 * Access to the EMFFormsRendererFactory.
+	 *
+	 * @return The {@link EMFFormsRendererFactory}
+	 * @since 1.6
+	 */
+	protected EMFFormsRendererFactory getEMFFormsRendererFactory() {
+		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
+		final ServiceReference<EMFFormsRendererFactory> serviceReference = bundleContext
+			.getServiceReference(EMFFormsRendererFactory.class);
+		final EMFFormsRendererFactory rendererFactory = bundleContext.getService(serviceReference);
+		bundleContext.ungetService(serviceReference);
+		return rendererFactory;
+	}
+
+	/**
+	 * Sets the LayoutData for the specified control.
+	 *
+	 * @param gridCell the {@link GridCell} used to render the control
+	 * @param gridDescription the {@link GridDescription} of the parent which rendered the control
+	 * @param currentRowGridDescription the {@link GridDescription} of the current row
+	 * @param fullGridDescription the {@link GridDescription} of the whole container
+	 * @param vElement the {@link VElement} to set the layoutData for
+	 * @param control the control to set the layout to
+	 */
+	private void setLayoutDataForControl(SWTGridCell gridCell, SWTGridDescription gridDescription,
+		SWTGridDescription currentRowGridDescription, SWTGridDescription fullGridDescription, VElement vElement,
+		Control control) {
+
+		control.setLayoutData(LayoutProviderHelper.getLayoutData(gridCell, gridDescription, currentRowGridDescription,
+			fullGridDescription, vElement, getViewModelContext().getDomainModel(), control));
+
+	}
+
+	/**
+	 * Called by the {@link org.eclipse.emf.ecp.view.spi.section.model.VSectionedArea} when all children have been
+	 * renderered. Initialises the collapse state based on {@link VSection#isCollapsed()}.
+	 *
+	 * @since 1.6
+	 */
+	protected abstract void initCollapseState();
 }

@@ -12,17 +12,20 @@
 package org.eclipse.emf.ecp.view.spi.custom.swt;
 
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
+import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
@@ -32,14 +35,17 @@ import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.edit.spi.ECPAbstractControl;
 import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
 import org.eclipse.emf.ecp.view.internal.custom.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.custom.model.ECPCustomControlChangeListener;
+import org.eclipse.emf.ecp.view.spi.custom.model.ECPHardcodedReferences;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomDomainModelReferenceImpl;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
@@ -47,15 +53,21 @@ import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
+import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
+import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
+import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
+import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.viewers.ViewerSupport;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.swt.SWT;
@@ -63,6 +75,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
+import org.osgi.framework.Bundle;
 
 /**
  * Extend this class in order to provide an own implementation of an {@link ECPAbstractCustomControlSWT}.
@@ -72,8 +85,7 @@ import org.eclipse.swt.widgets.Label;
  *
  */
 @SuppressWarnings("deprecation")
-public abstract class ECPAbstractCustomControlSWT
-{
+public abstract class ECPAbstractCustomControlSWT {
 	/**
 	 * Variant constant for indicating RAP controls.
 	 *
@@ -106,6 +118,7 @@ public abstract class ECPAbstractCustomControlSWT
 	private AdapterFactoryItemDelegator adapterFactoryItemDelegator;
 	private VCustomControl customControl;
 	private DataBindingContext dataBindingContext;
+	private final EMFDataBindingContext viewModelDBC = new EMFDataBindingContext();
 
 	/**
 	 * Called by the framework to trigger an initialization.
@@ -133,6 +146,45 @@ public abstract class ECPAbstractCustomControlSWT
 	 * @since 1.3
 	 */
 	protected void postInit() {
+		if (!VCustomDomainModelReference.class.isInstance(customControl.getDomainModelReference())) {
+			return;
+		}
+		final VCustomDomainModelReference customDomainModelReference = VCustomDomainModelReference.class
+			.cast(customControl.getDomainModelReference());
+
+		final ECPHardcodedReferences hardcodedReferences = loadObject(customDomainModelReference.getBundleName(),
+			customDomainModelReference.getClassName());
+		if (!customDomainModelReference.isControlChecked()) {
+			// read stuff from control
+			final Set<VDomainModelReference> controlReferences = new LinkedHashSet<VDomainModelReference>();
+			controlReferences.addAll(hardcodedReferences.getNeededDomainModelReferences());
+			controlReferences.addAll(customDomainModelReference.getDomainModelReferences());
+			customDomainModelReference.getDomainModelReferences().clear();
+			customDomainModelReference.getDomainModelReferences().addAll(controlReferences);
+			customDomainModelReference.setControlChecked(true);
+		}
+	}
+
+	private static ECPHardcodedReferences loadObject(String bundleName, String clazz) {
+		final Bundle bundle = Platform.getBundle(bundleName);
+		if (bundle == null) {
+			new ClassNotFoundException(String.format(LocalizationServiceHelper.getString(
+				VCustomDomainModelReferenceImpl.class, "BundleNotFound_ExceptionMessage"), clazz, bundleName)); //$NON-NLS-1$
+			return null;
+		}
+		try {
+			final Class<?> loadClass = bundle.loadClass(clazz);
+			if (!ECPHardcodedReferences.class.isAssignableFrom(loadClass)) {
+				return null;
+			}
+			return ECPHardcodedReferences.class.cast(loadClass.newInstance());
+		} catch (final ClassNotFoundException ex) {
+			return null;
+		} catch (final InstantiationException ex) {
+			return null;
+		} catch (final IllegalAccessException ex) {
+			return null;
+		}
 
 	}
 
@@ -140,13 +192,13 @@ public abstract class ECPAbstractCustomControlSWT
 	 * Is called by the framework to trigger a dispose of the control.
 	 */
 	public final void dispose() {
-		viewModelContext = null;
 		if (composedAdapterFactory != null) {
 			composedAdapterFactory.dispose();
 		}
 		if (dataBindingContext != null) {
 			dataBindingContext.dispose();
 		}
+		viewModelDBC.dispose();
 		customControl = null;
 		if (adapterMap != null) {
 			for (final VDomainModelReference domainModelReference : adapterMap.keySet()) {
@@ -162,6 +214,7 @@ public abstract class ECPAbstractCustomControlSWT
 			}
 			controlMap.clear();
 		}
+		viewModelContext = null;
 
 		Activator.getDefault().ungetECPControlFactory();
 		controlFactory = null;
@@ -254,7 +307,7 @@ public abstract class ECPAbstractCustomControlSWT
 		case ADD_IMAGE:
 			return Activator.getImage("icons/add.png"); //$NON-NLS-1$
 		case DELETE_IMAGE:
-			return Activator.getImage("icons/delete.png"); //$NON-NLS-1$
+			return Activator.getImage("icons/unset_reference.png"); //$NON-NLS-1$
 		default:
 			return null;
 		}
@@ -273,27 +326,60 @@ public abstract class ECPAbstractCustomControlSWT
 		throws NoPropertyDescriptorFoundExeption {
 		Label label = null;
 		labelRender: if (getCustomControl().getLabelAlignment() == LabelAlignment.LEFT) {
-			final Setting setting = getCustomControl().getDomainModelReference().getIterator().next();
-			if (setting == null) {
+			IValueProperty valueProperty;
+			try {
+				valueProperty = Activator
+					.getDefault()
+					.getEMFFormsDatabinding()
+					.getValueProperty(getCustomControl().getDomainModelReference(),
+						getViewModelContext().getDomainModel());
+			} catch (final DatabindingFailedException ex) {
+				Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 				break labelRender;
 			}
-			final IItemPropertyDescriptor itemPropertyDescriptor = getItemPropertyDescriptor(setting);
-
-			if (itemPropertyDescriptor == null) {
-				throw new NoPropertyDescriptorFoundExeption(setting.getEObject(), setting.getEStructuralFeature());
-			}
+			final EStructuralFeature structuralFeature = (EStructuralFeature) valueProperty.getValueType();
 
 			label = new Label(parent, SWT.NONE);
 			label.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_label"); //$NON-NLS-1$
 			label.setBackground(parent.getBackground());
-			String extra = ""; //$NON-NLS-1$
-			if (setting.getEStructuralFeature().getLowerBound() > 0) {
-				extra = "*"; //$NON-NLS-1$
-			}
-			final String labelText = itemPropertyDescriptor.getDisplayName(setting.getEObject());
-			if (labelText != null && labelText.trim().length() != 0) {
-				label.setText(labelText + extra);
-				label.setToolTipText(itemPropertyDescriptor.getDescription(setting.getEObject()));
+
+			try {
+				viewModelDBC.bindValue(
+					SWTObservables.observeText(label),
+					Activator
+						.getDefault()
+						.getEMFFormsLabelProvider()
+						.getDisplayName(getCustomControl().getDomainModelReference(),
+							getViewModelContext().getDomainModel()),
+					null, new UpdateValueStrategy() {
+
+						/**
+						 * {@inheritDoc}
+						 *
+						 * @see org.eclipse.core.databinding.UpdateValueStrategy#convert(java.lang.Object)
+						 */
+						@Override
+						public Object convert(Object value) {
+							final String labelText = (String) super.convert(value);
+							String extra = ""; //$NON-NLS-1$
+							if (structuralFeature.getLowerBound() > 0) {
+								extra = "*"; //$NON-NLS-1$
+							}
+							return labelText + extra;
+						}
+
+					});
+				viewModelDBC.bindValue(
+					SWTObservables.observeTooltipText(label),
+					Activator
+						.getDefault()
+						.getEMFFormsLabelProvider()
+						.getDescription(getCustomControl().getDomainModelReference(),
+							getViewModelContext().getDomainModel()));
+			} catch (final NoLabelFoundException e) {
+				Activator.getDefault().getReportService().report(new RenderingFailedReport(e));
+				label.setText(e.getMessage());
+				label.setToolTipText(e.toString());
 			}
 
 		}
@@ -323,9 +409,13 @@ public abstract class ECPAbstractCustomControlSWT
 	 */
 	protected final void createViewerBinding(VDomainModelReference customControlFeature, StructuredViewer viewer,
 		IValueProperty[] labelProperties) {
-
-		final IObservableList list = getObservableList(customControlFeature);
-		ViewerSupport.bind(viewer, list, labelProperties);
+		try {
+			final IObservableList list = Activator.getDefault().getEMFFormsDatabinding()
+				.getObservableList(customControlFeature, getViewModelContext().getDomainModel());
+			ViewerSupport.bind(viewer, list, labelProperties);
+		} catch (final DatabindingFailedException ex) {
+			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+		}
 	}
 
 	/**
@@ -334,12 +424,14 @@ public abstract class ECPAbstractCustomControlSWT
 	 * @param domainModelReference the {@link VDomainModelReference} to use
 	 * @return the {@link IObservableList}
 	 * @since 1.3
+	 * @deprecated This method is deprecated and must not be used anymore. Use the
+	 *             {@link org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding
+	 *             databinding service} instead.
 	 */
+	@Deprecated
 	protected final IObservableList getObservableList(VDomainModelReference domainModelReference) {
-		final Setting setting = domainModelReference.getIterator().next();
-		return EMFEditObservables.observeList(
-			getEditingDomain(setting),
-			setting.getEObject(), setting.getEStructuralFeature());
+		throw new UnsupportedOperationException(
+			"This method is deprecated and must not be used anymore. Use the databinding service instead."); //$NON-NLS-1$
 	}
 
 	/**
@@ -358,24 +450,20 @@ public abstract class ECPAbstractCustomControlSWT
 	 * @return the setting or throws an {@link IllegalStateException} if too many or too few elements are found.
 	 */
 	private Setting getFirstSetting(VDomainModelReference modelFeature) {
-		final Iterator<Setting> iterator = modelFeature.getIterator();
-		int numElments = 0;
-		Setting setting = null;
-		while (iterator.hasNext()) {
-			setting = iterator.next();
-			numElments++;
+		IObservableValue observableValue;
+		try {
+			observableValue = Activator.getDefault().getEMFFormsDatabinding()
+				.getObservableValue(modelFeature, getViewModelContext().getDomainModel());
+		} catch (final DatabindingFailedException ex) {
+			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+			throw new IllegalStateException("The databinding failed due to an incorrect VDomainModelReference: " //$NON-NLS-1$
+				+ ex.getMessage());
 		}
-		if (numElments == 0) {
-			throw new IllegalStateException("The VDomainModelReference was not initialised."); //$NON-NLS-1$
-		}
-		else if (numElments > 1) {
-			throw new IllegalStateException(
-				"The VDomainModelReference is ambigous, please use VDomainModelReference which resolve to exactly one setting."); //$NON-NLS-1$
-		}
-		// if (!isEditable()) {
-		// throw new IllegalArgumentException("Feature is not registered as editable");
-		// }
-		return setting;
+		final InternalEObject internalEObject = (InternalEObject) ((IObserving) observableValue).getObserved();
+		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+		observableValue.dispose();
+
+		return internalEObject.eSetting(structuralFeature);
 	}
 
 	/**
@@ -390,20 +478,26 @@ public abstract class ECPAbstractCustomControlSWT
 	 */
 	protected final <T extends ECPAbstractControl> T getControl(Class<T> clazz,
 		VDomainModelReference domainModelReference) {
-		final T createControl = controlFactory.createControl(clazz, domainModelReference);
+		final T createControl = controlFactory.createControl(clazz, getViewModelContext().getDomainModel(),
+			domainModelReference);
 		final VControl vControl = VViewFactory.eINSTANCE.createControl();
 		final VDomainModelReference modelReference = EcoreUtil.copy(domainModelReference);
 		modelReference.init(getViewModelContext().getDomainModel());
 		vControl.setDomainModelReference(modelReference);
 		vControl.setDiagnostic(VViewFactory.eINSTANCE.createDiagnostic());
 		createControl.init(getViewModelContext(), vControl);
-		final Iterator<Setting> iterator = domainModelReference.getIterator();
-		final boolean hasNext = iterator.hasNext();
-		if (hasNext) {
-			controlMap.put(iterator.next().getEStructuralFeature(), createControl);
-			return createControl;
+
+		IValueProperty valueProperty;
+		try {
+			valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+				.getValueProperty(domainModelReference, getViewModelContext().getDomainModel());
+		} catch (final DatabindingFailedException ex) {
+			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+			return null;
 		}
-		return null;
+		final EStructuralFeature structuralFeature = (EStructuralFeature) valueProperty.getValueType();
+		controlMap.put(structuralFeature, createControl);
+		return createControl;
 	}
 
 	/**
@@ -501,7 +595,7 @@ public abstract class ECPAbstractCustomControlSWT
 	 * @since 1.3
 	 */
 	protected final EditingDomain getEditingDomain() {
-		return getEditingDomain(getCustomControl().getDomainModelReference().getIterator().next());
+		return getEditingDomain(getFirstSetting(getCustomControl().getDomainModelReference()));
 	}
 
 	/**
@@ -619,7 +713,7 @@ public abstract class ECPAbstractCustomControlSWT
 	 * Returns the GridDescription for this Renderer.
 	 *
 	 * @return the GridDescription
-	 * @since 1.3
+	 * @since 1.6
 	 */
 	public abstract SWTGridDescription getGridDescription();
 
@@ -631,7 +725,7 @@ public abstract class ECPAbstractCustomControlSWT
 	 * @return the rendered {@link Control}
 	 * @throws NoRendererFoundException this is thrown when a renderer cannot be found
 	 * @throws NoPropertyDescriptorFoundExeption this is thrown when no property descriptor can be found
-	 * @since 1.3
+	 * @since 1.6
 	 */
 	public abstract Control renderControl(SWTGridCell cell, Composite parent) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption;
@@ -672,7 +766,7 @@ public abstract class ECPAbstractCustomControlSWT
 	 * @param gridCell the {@link SWTGridCell} to enable/disable
 	 * @param control the {@link Control} to enable/disable
 	 * @param enabled true if the control should be enabled false otherwise
-	 * @since 1.3
+	 * @since 1.6
 	 */
 	protected void setControlEnabled(SWTGridCell gridCell, Control control, boolean enabled) {
 		// ignore labels as they are readonly per definition
@@ -714,7 +808,7 @@ public abstract class ECPAbstractCustomControlSWT
 	 * @param rows the number of rows
 	 * @param columns the number of columns
 	 * @return the {@link GridDescription}
-	 * @since 1.3
+	 * @since 1.6
 	 */
 	protected final SWTGridDescription createSimpleGrid(int rows, int columns) {
 		return GridDescriptionFactory.INSTANCE.createSimpleGrid(rows, columns, null);

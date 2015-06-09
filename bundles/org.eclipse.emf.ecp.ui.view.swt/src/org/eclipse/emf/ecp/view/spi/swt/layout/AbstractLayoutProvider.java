@@ -11,12 +11,10 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.swt.layout;
 
-import org.eclipse.emf.common.notify.AdapterFactory;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.view.internal.swt.Activator;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emfforms.spi.swt.core.layout.LayoutProvider;
 
 /**
  * Abstract implementation of a {@link LayoutProvider} which contributes helper methods.
@@ -30,22 +28,13 @@ public abstract class AbstractLayoutProvider implements LayoutProvider {
 	/**
 	 * Checks whether a setting is set to multiline.
 	 *
-	 * @param setting the {@link Setting} to check
+	 * @param domainModelReference the {@link VDomainModelReference} pointing to the feature to check
+	 * @param domainModel the root {@link EObject} of the domain model reference
 	 * @return true if multiline, false otherwise
+	 * @since 1.6
 	 */
-	protected static boolean isMultiLine(Setting setting) {
-		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
-			new ReflectiveItemProviderAdapterFactory(),
-			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
-		final AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
-			composedAdapterFactory);
-		final IItemPropertyDescriptor descriptor = adapterFactoryItemDelegator.getPropertyDescriptor(
-			setting.getEObject(), setting.getEStructuralFeature());
-		final boolean multiline = descriptor.isMultiLine(null);
-
-		composedAdapterFactory.dispose();
-
-		return multiline;
+	protected static boolean isMultiLine(VDomainModelReference domainModelReference, EObject domainModel) {
+		return Activator.getDefault().getEMFFormsEditSupport().isMultiLine(domainModelReference, domainModel);
 	}
 
 }

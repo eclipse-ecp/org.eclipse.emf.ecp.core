@@ -11,17 +11,20 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.template.internal.tooling.controls;
 
-import java.util.Iterator;
-
+import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.model.common.ECPRendererTester;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.template.internal.tooling.Activator;
 import org.eclipse.emf.ecp.view.template.model.VTTemplatePackage;
+import org.eclipse.emf.ecp.view.template.style.background.model.VTBackgroundPackage;
 import org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontPropertiesPackage;
 import org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationPackage;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 
 /**
  * The tester for the
@@ -42,17 +45,16 @@ public class TemplateColorHexControlTester implements ECPRendererTester {
 		if (dmr == null) {
 			return NOT_APPLICABLE;
 		}
-		final Iterator<EStructuralFeature> iterator = dmr.getEStructuralFeatureIterator();
-		if (iterator == null) {
+		final VControl control = (VControl) vElement;
+		IValueProperty valueProperty;
+		try {
+			valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+				.getValueProperty(control.getDomainModelReference(), viewModelContext.getDomainModel());
+		} catch (final DatabindingFailedException ex) {
+			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 			return NOT_APPLICABLE;
 		}
-		if (!iterator.hasNext()) {
-			return NOT_APPLICABLE;
-		}
-		final EStructuralFeature feature = iterator.next();
-		if (feature == null) {
-			return NOT_APPLICABLE;
-		}
+		final EStructuralFeature feature = (EStructuralFeature) valueProperty.getValueType();
 		if (VTFontPropertiesPackage.eINSTANCE.getFontPropertiesStyleProperty_ColorHEX().equals(feature)) {
 			return 5;
 		}
@@ -87,6 +89,10 @@ public class TemplateColorHexControlTester implements ECPRendererTester {
 			return 5;
 		}
 		if (VTTemplatePackage.eINSTANCE.getControlValidationTemplate_CancelColorHEX().equals(feature)) {
+			return 5;
+		}
+		// background
+		if (VTBackgroundPackage.eINSTANCE.getBackgroundStyleProperty_Color().equals(feature)) {
 			return 5;
 		}
 

@@ -11,7 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.editor.controls;
 
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.model.common.ECPRendererTester;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.label.model.VLabelPackage;
@@ -20,6 +21,8 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.stack.model.VStackPackage;
 import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 
 /**
  * @author Alexandra Buzila
@@ -39,31 +42,35 @@ public class DomainModelReferenceControlSWTRendererTester implements ECPRenderer
 		if (!VControl.class.isInstance(vElement)) {
 			return NOT_APPLICABLE;
 		}
-		final Setting setting = VControl.class.cast(vElement).getDomainModelReference().getIterator().next();
-		return isApplicable(setting);
+		final VControl control = (VControl) vElement;
+		IValueProperty valueProperty;
+		try {
+			valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+				.getValueProperty(control.getDomainModelReference(), viewModelContext.getDomainModel());
+		} catch (final DatabindingFailedException ex) {
+			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+			return NOT_APPLICABLE;
+		}
+		return isApplicable((EStructuralFeature) valueProperty.getValueType());
 	}
 
 	/**
-	 * Test if setting contains the correct data.
+	 * Test if the structural feature contains the correct data.
 	 *
-	 * @param setting the {@link Setting} to check
+	 * @param feature the {@link EStructuralFeature} to check
 	 * @return the priority of the control
 	 */
-	protected int isApplicable(Setting setting) {
-		if (setting == null) {
-			return NOT_APPLICABLE;
-		}
-		if (VViewPackage.eINSTANCE.getControl_DomainModelReference() == setting.getEStructuralFeature()) {
+	protected int isApplicable(EStructuralFeature feature) {
+		if (VViewPackage.eINSTANCE.getControl_DomainModelReference() == feature) {
 			return 3;
 		}
-		if (VLabelPackage.eINSTANCE.getLabel_DomainModelReference() == setting.getEStructuralFeature()) {
+		if (VLabelPackage.eINSTANCE.getLabel_DomainModelReference() == feature) {
 			return 3;
 		}
-		if (VStackPackage.eINSTANCE.getStackLayout_DomainModelReference() == setting.getEStructuralFeature()) {
+		if (VStackPackage.eINSTANCE.getStackLayout_DomainModelReference() == feature) {
 			return 3;
 		}
-		if (VTablePackage.eINSTANCE.getTableDomainModelReference_DomainModelReference() == setting
-			.getEStructuralFeature()) {
+		if (VTablePackage.eINSTANCE.getTableDomainModelReference_DomainModelReference() == feature) {
 			return 3;
 		}
 		return NOT_APPLICABLE;

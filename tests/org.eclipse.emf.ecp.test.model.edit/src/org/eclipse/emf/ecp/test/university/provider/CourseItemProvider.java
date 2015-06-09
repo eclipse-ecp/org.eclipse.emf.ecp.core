@@ -24,6 +24,7 @@ import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
+import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
@@ -37,7 +38,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class CourseItemProvider extends ItemProviderAdapter implements
-	IEditingDomainItemProvider, ITreeItemContentProvider, IItemLabelProvider,
+	IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider,
 	IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -59,8 +60,7 @@ public class CourseItemProvider extends ItemProviderAdapter implements
 	 */
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (itemPropertyDescriptors == null)
-		{
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addIdPropertyDescriptor(object);
@@ -78,9 +78,8 @@ public class CourseItemProvider extends ItemProviderAdapter implements
 	 * @generated
 	 */
 	protected void addIdPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_Course_id_feature"), //$NON-NLS-1$
 				getString("_UI_PropertyDescriptor_description", "_UI_Course_id_feature", "_UI_Course_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -101,9 +100,8 @@ public class CourseItemProvider extends ItemProviderAdapter implements
 	 * @generated
 	 */
 	protected void addNamePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_Course_name_feature"), //$NON-NLS-1$
 				getString("_UI_PropertyDescriptor_description", "_UI_Course_name_feature", "_UI_Course_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -123,11 +121,9 @@ public class CourseItemProvider extends ItemProviderAdapter implements
 	 *
 	 * @generated
 	 */
-	protected void addEtcsPropertyDescriptor(Object object)
-	{
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+	protected void addEtcsPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_Course_etcs_feature"), //$NON-NLS-1$
 				getString("_UI_PropertyDescriptor_description", "_UI_Course_etcs_feature", "_UI_Course_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -162,9 +158,8 @@ public class CourseItemProvider extends ItemProviderAdapter implements
 	@Override
 	public String getText(Object object) {
 		final String label = ((Course) object).getName();
-		return label == null || label.length() == 0 ?
-			getString("_UI_Course_type") : //$NON-NLS-1$
-			getString("_UI_Course_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+		return label == null || label.length() == 0 ? getString("_UI_Course_type") //$NON-NLS-1$
+			: getString("_UI_Course_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -179,8 +174,7 @@ public class CourseItemProvider extends ItemProviderAdapter implements
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(Course.class))
-		{
+		switch (notification.getFeatureID(Course.class)) {
 		case UniversityPackage.COURSE__ID:
 		case UniversityPackage.COURSE__NAME:
 		case UniversityPackage.COURSE__ETCS:

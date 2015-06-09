@@ -11,20 +11,19 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.context.reporting.test;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
-
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
-import org.eclipse.emf.ecp.view.internal.swt.ECPRendererDescription;
 import org.eclipse.emf.ecp.view.internal.swt.ECPSWTViewRendererImpl;
-import org.eclipse.emf.ecp.view.model.common.ECPRendererTester;
-import org.eclipse.emf.ecp.view.model.common.ECPStaticRendererTester;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
+import org.eclipse.emfforms.internal.swt.core.EMFFormsRendererFactoryImpl;
+import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService;
 import org.eclipse.swt.widgets.Composite;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * SWT Test renderer factory that allows to register and unregister renderers.
@@ -34,10 +33,13 @@ import org.eclipse.swt.widgets.Composite;
  */
 public class TestSWTRendererFactory {
 
-	private final SWTTestRendererFactoryImpl factory;
+	private final EMFFormsRendererFactoryImpl factory;
 
 	public TestSWTRendererFactory() {
-		factory = new SWTTestRendererFactoryImpl();
+		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
+		final ServiceReference<EMFFormsRendererFactory> serviceReference = bundleContext
+			.getServiceReference(EMFFormsRendererFactory.class);
+		factory = (EMFFormsRendererFactoryImpl) bundleContext.getService(serviceReference);
 	}
 
 	public void clearRenderers() {
@@ -46,31 +48,58 @@ public class TestSWTRendererFactory {
 
 	public ECPSWTView render(Composite parent, ViewModelContext viewModelContext) throws ECPRendererException {
 		final ECPSWTViewRendererImpl renderer = new ECPSWTViewRendererImpl() {
-			@Override
-			protected SWTRendererFactory createFactory() {
-				return factory;
-			}
 		};
 		return renderer.render(parent, viewModelContext);
 	}
 
-	public void registerRenderer(int priority,
-		Class<AbstractSWTRenderer<VElement>> class1,
-		Class<? extends VElement> supportedEObject) {
-
-		final Set<ECPRendererTester> tester = new LinkedHashSet<ECPRendererTester>();
-		tester.add(new ECPStaticRendererTester(priority, supportedEObject));
-		final ECPRendererDescription descriptor = new ECPRendererDescription(class1, tester);
-		factory.registerRenderer(descriptor);
+	public TestEMFFormsRendererService registerRenderer(int priority, AbstractSWTRenderer renderer,
+		Class<?> supportedEClass) {
+		final TestEMFFormsRendererService rendererService = new TestEMFFormsRendererService(priority, renderer,
+			supportedEClass);
+		factory.addEMFFormsRendererService(rendererService);
+		return rendererService;
 	}
 
-	public void replaceViewRenderer(int priority, Class<AbstractSWTRenderer<VElement>> class1,
-		Class<? extends VElement> supportedEObject) {
-
-		final Set<ECPRendererTester> tester = new LinkedHashSet<ECPRendererTester>();
-		tester.add(new ECPStaticRendererTester(priority, supportedEObject));
-		final ECPRendererDescription descriptor = new ECPRendererDescription(class1, tester);
-		factory.replaceViewRenderer(descriptor);
+	public void deleteRegisteredRenderer(TestEMFFormsRendererService rendererService) {
+		factory.removeEMFFormsRendererService(rendererService);
 	}
 
+	public static class TestEMFFormsRendererService implements EMFFormsRendererService {
+
+		private final double priority;
+		private final AbstractSWTRenderer renderer;
+		private final Class<?> supportedEClass;
+
+		public TestEMFFormsRendererService(double priority, AbstractSWTRenderer renderer, Class<?> supportedEClass) {
+			this.priority = priority;
+			this.renderer = renderer;
+			this.supportedEClass = supportedEClass;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @see org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService#isApplicable(VElement,ViewModelContext)
+		 */
+		@Override
+		public double isApplicable(VElement vElement, ViewModelContext viewModelContext) {
+			if (supportedEClass.isInstance(vElement)) {
+				return priority;
+			}
+			return NOT_APPLICABLE;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @see org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService#getRendererInstance(org.eclipse.emf.ecp.view.spi.model.VElement,
+		 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
+		 */
+		@Override
+		public AbstractSWTRenderer getRendererInstance(VElement vElement, ViewModelContext viewModelContext) {
+
+			return renderer;
+		}
+
+	}
 }

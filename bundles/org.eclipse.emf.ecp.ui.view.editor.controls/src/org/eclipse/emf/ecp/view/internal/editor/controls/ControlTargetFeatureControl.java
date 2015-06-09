@@ -80,7 +80,7 @@ public class ControlTargetFeatureControl extends LinkControl {
 		final Button[] buttons = new Button[2];
 		final Setting setting = getFirstSetting();
 		buttons[0] = createButtonForAction(new DeleteReferenceAction(getEditingDomain(setting), setting,
-			getItemPropertyDescriptor(setting), getService(ReferenceService.class)) {
+			getService(ReferenceService.class)) {
 
 			@Override
 			public void run() {

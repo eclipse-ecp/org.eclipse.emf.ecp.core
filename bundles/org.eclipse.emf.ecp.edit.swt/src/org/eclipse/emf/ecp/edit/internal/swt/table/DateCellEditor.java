@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
@@ -269,10 +270,10 @@ public class DateCellEditor extends CellEditor implements ECPCellEditor {
 	 *
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getTargetToModelStrategy()
+	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getTargetToModelStrategy(org.eclipse.core.databinding.DataBindingContext)
 	 */
 	@Override
-	public UpdateValueStrategy getTargetToModelStrategy() {
+	public UpdateValueStrategy getTargetToModelStrategy(DataBindingContext databindingContext) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -281,10 +282,10 @@ public class DateCellEditor extends CellEditor implements ECPCellEditor {
 	 *
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getModelToTargetStrategy()
+	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getModelToTargetStrategy(org.eclipse.core.databinding.DataBindingContext)
 	 */
 	@Override
-	public UpdateValueStrategy getModelToTargetStrategy() {
+	public UpdateValueStrategy getModelToTargetStrategy(DataBindingContext databindingContext) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -303,11 +304,21 @@ public class DateCellEditor extends CellEditor implements ECPCellEditor {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getImage(java.lang.Object)
 	 */
 	@Override
 	public Image getImage(Object value) {
 		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getMinWidth()
+	 */
+	@Override
+	public int getMinWidth() {
+		return 0;
 	}
 }

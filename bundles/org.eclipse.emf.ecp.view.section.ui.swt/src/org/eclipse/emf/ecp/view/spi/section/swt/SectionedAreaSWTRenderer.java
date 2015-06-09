@@ -16,22 +16,29 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.eclipse.emf.ecp.view.internal.section.ui.swt.Activator;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.section.model.VSection;
 import org.eclipse.emf.ecp.view.spi.section.model.VSectionedArea;
-import org.eclipse.emf.ecp.view.spi.swt.AbstractAdditionalSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.swt.core.AbstractAdditionalSWTRenderer;
+import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
+import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * Renderer for {@link VSectionedArea}.
@@ -42,9 +49,22 @@ import org.eclipse.swt.widgets.Control;
 public class SectionedAreaSWTRenderer extends
 	AbstractSWTRenderer<VSectionedArea> {
 
+	/**
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param reportService the {@link ReportService}
+	 * @since 1.6
+	 */
+	public SectionedAreaSWTRenderer(VSectionedArea vElement, ViewModelContext viewContext,
+		ReportService reportService) {
+		super(vElement, viewContext, reportService);
+	}
+
 	private static final String CUSTOM_VARIANT_VALUE = "org_eclipse_emf_ecp_ui_section"; //$NON-NLS-1$
 
 	private SWTGridDescription gridDescription;
+
+	private AbstractSectionSWTRenderer rootRenderer;
 
 	@Override
 	public SWTGridDescription getGridDescription(
@@ -70,14 +90,16 @@ public class SectionedAreaSWTRenderer extends
 		SWTGridDescription rowGridDescription = null;
 		SWTGridDescription controlGridDescription = null;
 		final VSection child = getVElement().getRoot();
-		final AbstractSWTRenderer<VElement> renderer = getSWTRendererFactory()
-			.getRenderer(child, getViewModelContext());
-		if (renderer == null) {
+		try {
+			rootRenderer = AbstractSectionSWTRenderer.class.cast(getEMFFormsRendererFactory()
+				.getRendererInstance(child, getViewModelContext()));
+		} catch (final EMFFormsNoRendererException ex) {
+			getReportService().report(new RenderingFailedReport(ex));
 			return columnComposite;
 		}
-		final Collection<AbstractAdditionalSWTRenderer<VElement>> additionalRenderers = getSWTRendererFactory()
-			.getAdditionalRenderer(child, getViewModelContext());
-		SWTGridDescription gridDescription = renderer
+		final Collection<AbstractAdditionalSWTRenderer<VElement>> additionalRenderers = getEMFFormsRendererFactory()
+			.getAdditionalRendererInstances(child, getViewModelContext());
+		SWTGridDescription gridDescription = rootRenderer
 			.getGridDescription(GridDescriptionFactory.INSTANCE
 				.createEmptyGridDescription());
 		controlGridDescription = gridDescription;
@@ -88,8 +110,8 @@ public class SectionedAreaSWTRenderer extends
 		}
 		rowGridDescription = gridDescription;
 		maximalGridDescription = gridDescription;
-		final Set<AbstractSWTRenderer<VElement>> allRenderer = new LinkedHashSet<AbstractSWTRenderer<VElement>>();
-		allRenderer.add(renderer);
+		final Set<AbstractSWTRenderer<?>> allRenderer = new LinkedHashSet<AbstractSWTRenderer<?>>();
+		allRenderer.add(rootRenderer);
 		allRenderer.addAll(additionalRenderers);
 
 		if (maximalGridDescription == null) {
@@ -115,7 +137,8 @@ public class SectionedAreaSWTRenderer extends
 				// TODO possible layout issues?
 				setLayoutDataForControl(childGridCell, controlGridDescription,
 					gridDescription2, maximalGridDescription, childGridCell
-						.getRenderer().getVElement(), control);
+						.getRenderer().getVElement(),
+					control);
 
 			}
 			for (final SWTGridCell childGridCell : gridDescription2.getGrid()) {
@@ -129,34 +152,47 @@ public class SectionedAreaSWTRenderer extends
 		return columnComposite;
 	}
 
-	@Override
-	protected void setLayoutDataForControl(SWTGridCell gridCell,
+	private void setLayoutDataForControl(SWTGridCell gridCell,
 		SWTGridDescription gridDescription,
 		SWTGridDescription currentRowGridDescription,
 		SWTGridDescription fullGridDescription, VElement vElement,
 		Control control) {
 
-		final Object layoutData = LayoutProviderHelper.getLayoutData(gridCell,
-			gridDescription, currentRowGridDescription,
-			fullGridDescription, vElement, control);
+		final Object layoutData = LayoutProviderHelper.getLayoutData(gridCell, gridDescription,
+			currentRowGridDescription, fullGridDescription, vElement, getViewModelContext().getDomainModel(), control);
 		if (!GridData.class.isInstance(layoutData)) {
 			return;
 		}
-		if (gridCell.getColumn() == 0) {
-			GridData.class.cast(layoutData).widthHint = 300;
-		} else if (gridCell.getColumn() == 1) {
-			GridData.class.cast(layoutData).widthHint = 20;
-		} else if (gridCell.getColumn() == 2) {
-			GridData.class.cast(layoutData).widthHint = 20;
-		} else if (gridCell.getColumn() == 3) {
+		final int lastColumnIndex = fullGridDescription.getColumns() - 1;
+		if (gridCell.getColumn() == lastColumnIndex) {
 			if (SectionLeafSWTRenderer.class.isInstance(gridCell
 				.getRenderer())) {
 				GridData.class.cast(layoutData).grabExcessHorizontalSpace = false;
 				GridData.class.cast(layoutData).horizontalAlignment = SWT.BEGINNING;
 			}
-			GridData.class.cast(layoutData).widthHint = 500;
+			GridData.class.cast(layoutData).widthHint = 250;
 		}
 		control.setLayoutData(layoutData);
 	}
 
+	private EMFFormsRendererFactory getEMFFormsRendererFactory() {
+		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
+		final ServiceReference<EMFFormsRendererFactory> serviceReference = bundleContext
+			.getServiceReference(EMFFormsRendererFactory.class);
+		final EMFFormsRendererFactory rendererFactory = bundleContext.getService(serviceReference);
+		bundleContext.ungetService(serviceReference);
+		return rendererFactory;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#finalizeRendering(org.eclipse.swt.widgets.Composite)
+	 */
+	@Override
+	public void finalizeRendering(Composite parent) {
+		/* after all children have been rendered, we can init the visibility state */
+		rootRenderer.initCollapseState();
+		super.finalizeRendering(parent);
+	}
 }

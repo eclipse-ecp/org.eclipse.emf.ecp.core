@@ -12,9 +12,10 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.spi.common.ui.composites;
 
-import org.eclipse.emf.ecp.internal.common.ui.Messages;
+import org.eclipse.emf.ecp.internal.common.ui.MessageKeys;
 import org.eclipse.emf.ecp.spi.common.ui.CompositeProvider;
 import org.eclipse.emf.ecp.spi.common.ui.ECPViewerFilter;
+import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -59,9 +60,11 @@ public abstract class AbstractFilteredSelectionComposite<T extends StructuredVie
 		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false).applyTo(composite);
 
 		final Label filterLabel = new Label(composite, SWT.LEFT);
-		filterLabel.setText(Messages.AbstractModelElementHelper_FilterLabel);
+		filterLabel.setText(LocalizationServiceHelper.getString(AbstractFilteredSelectionComposite.class,
+			MessageKeys.AbstractModelElementHelper_FilterLabel));
 		final Text filterInput = new Text(composite, SWT.SEARCH);
-		filterInput.setMessage(Messages.AbstractModelElementHelper_FilterText);
+		filterInput.setMessage(LocalizationServiceHelper.getString(AbstractFilteredSelectionComposite.class,
+			MessageKeys.AbstractModelElementHelper_FilterText));
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false).applyTo(filterInput);
 
 		viewer = createViewer(composite);

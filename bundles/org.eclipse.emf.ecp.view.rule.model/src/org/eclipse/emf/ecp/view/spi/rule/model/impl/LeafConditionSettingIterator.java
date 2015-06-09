@@ -67,6 +67,7 @@ public class LeafConditionSettingIterator implements Iterator<Setting> {
 			expectedStackSize = expectedStackSize + 1;
 		}
 		iterators = new Stack<Iterator<Setting>>();
+		// TODO: remove after segments are introduced.
 		iterators.push(condition.getDomainModelReference().getIterator());
 		organizeStack();
 	}
@@ -117,6 +118,7 @@ public class LeafConditionSettingIterator implements Iterator<Setting> {
 			final VDomainModelReference valueDMR = EcoreUtil.copy(condition.getValueDomainModelReference());
 			valueDMR.init(nextDomain);
 			dmrs.add(valueDMR);
+			// TODO: remove after segments are introduced.
 			iterators.push(valueDMR.getIterator());
 			organizeStack();
 			return;

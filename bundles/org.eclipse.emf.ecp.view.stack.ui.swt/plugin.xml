@@ -16,13 +16,6 @@
                priority="1">
          </staticTest>
       </renderer>
-      <renderer
-            renderer="org.eclipse.emf.ecp.view.spi.stack.ui.swt.SWTStackItemRenderer">
-         <staticTest
-               element="org.eclipse.emf.ecp.view.spi.stack.model.VStackItem"
-               priority="1">
-         </staticTest>
-      </renderer>
    </extension>
 
 </plugin>

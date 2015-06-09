@@ -50,13 +50,6 @@ import org.eclipse.net4j.util.AdapterUtil;
  */
 public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, ECPObserver> implements
 	ECPProviderRegistry {
-	/**
-	 * The Singleton to access the implementation of the Default ECPProviderRegistry.
-	 *
-	 * @deprecated use {@link ECPUtil} instead
-	 */
-	@Deprecated
-	public static ECPProviderRegistryImpl INSTANCE;
 
 	private final ProviderParser extensionParser = new ProviderParser();
 
@@ -64,10 +57,7 @@ public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvi
 	 * Should not be called directly, use service instead.
 	 */
 	public ECPProviderRegistryImpl() {
-		if (INSTANCE != null) {
-			throw new IllegalStateException("Manager must not be initialized twice"); //$NON-NLS-1$
-		}
-		INSTANCE = this;
+
 	}
 
 	/** {@inheritDoc} **/

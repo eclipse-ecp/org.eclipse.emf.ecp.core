@@ -41,6 +41,7 @@ import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.core.util.Disposable;
 import org.eclipse.emf.ecp.internal.core.util.Element;
 import org.eclipse.emf.ecp.internal.ui.Activator;
+import org.eclipse.emf.ecp.internal.ui.Messages;
 import org.eclipse.emf.ecp.internal.ui.composites.PropertiesComposite;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.ui.util.ECPHandlerHelper;
@@ -94,7 +95,7 @@ public class DefaultUIProvider extends Element implements UIProvider {
 	public DefaultUIProvider(String name) {
 		super(name);
 		label = name;
-		description = "";
+		description = ""; //$NON-NLS-1$
 	}
 
 	/** {@inheritDoc} **/
@@ -184,6 +185,9 @@ public class DefaultUIProvider extends Element implements UIProvider {
 		disposable.removeDisposeListener(listener);
 	}
 
+	/**
+	 * Subclasses can override.
+	 */
 	protected void doDispose() {
 		// Subclasses can override.
 	}
@@ -321,13 +325,15 @@ public class DefaultUIProvider extends Element implements UIProvider {
 
 	/** {@inheritDoc} **/
 	@Override
-	public Control createCheckoutUI(Composite parent, ECPCheckoutSource checkoutSource, ECPProperties projectProperties) {
+	public Control createCheckoutUI(Composite parent, ECPCheckoutSource checkoutSource,
+		ECPProperties projectProperties) {
 		return new PropertiesComposite(parent, true, projectProperties);
 	}
 
 	/** {@inheritDoc} **/
 	@Override
-	public Control createNewProjectUI(Composite parent, CompositeStateObserver observer, ECPProperties projectProperties) {
+	public Control createNewProjectUI(Composite parent, CompositeStateObserver observer,
+		ECPProperties projectProperties) {
 		return null;
 	}
 
@@ -359,7 +365,7 @@ public class DefaultUIProvider extends Element implements UIProvider {
 		final ImageDescriptor imageDescriptor = Activator.getImageDescriptor(UNKNOWN_PACKAGE_ICON);
 		final MenuManager submenuManager = new MenuManager(nsURI, imageDescriptor, nsURI);
 		submenuManager.setRemoveAllWhenShown(true);
-		submenuManager.add(new Action("Calculating...") {
+		submenuManager.add(new Action(Messages.DefaultUIProvider_Calculating) {
 		});
 
 		submenuManager.addMenuListener(new IMenuListener() {
@@ -371,7 +377,7 @@ public class DefaultUIProvider extends Element implements UIProvider {
 				if (ePackage != null) {
 					populateSubMenu(resource, ePackage, submenuManager);
 				} else {
-					Activator.log(MessageFormat.format("Can't find {0} in package registry", nsURI));
+					Activator.log(MessageFormat.format(Messages.DefaultUIProvider_CantFindInPackageRegistry, nsURI));
 				}
 			}
 		});

@@ -33,8 +33,7 @@ import org.eclipse.emf.ecore.EReference;
  * @model kind="package"
  * @generated
  */
-public interface UniversityPackage extends EPackage
-{
+public interface UniversityPackage extends EPackage {
 	/**
 	 * The package name.
 	 * <!-- begin-user-doc -->
@@ -257,6 +256,16 @@ public interface UniversityPackage extends EPackage
 	int PERSON__NAME = 0;
 
 	/**
+	 * The feature id for the '<em><b>Addresses</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int PERSON__ADDRESSES = 1;
+
+	/**
 	 * The number of structural features of the '<em>Person</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -264,7 +273,7 @@ public interface UniversityPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int PERSON_FEATURE_COUNT = 1;
+	int PERSON_FEATURE_COUNT = 2;
 
 	/**
 	 * The number of operations of the '<em>Person</em>' class.
@@ -297,6 +306,16 @@ public interface UniversityPackage extends EPackage
 	 * @ordered
 	 */
 	int PROFESSOR__NAME = PERSON__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Addresses</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int PROFESSOR__ADDRESSES = PERSON__ADDRESSES;
 
 	/**
 	 * The number of structural features of the '<em>Professor</em>' class.
@@ -341,6 +360,16 @@ public interface UniversityPackage extends EPackage
 	int ASSISTANT__NAME = PERSON__NAME;
 
 	/**
+	 * The feature id for the '<em><b>Addresses</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int ASSISTANT__ADDRESSES = PERSON__ADDRESSES;
+
+	/**
 	 * The number of structural features of the '<em>Assistant</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -359,6 +388,37 @@ public interface UniversityPackage extends EPackage
 	 * @ordered
 	 */
 	int ASSISTANT_OPERATION_COUNT = PERSON_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.test.university.impl.AddressImpl <em>Address</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see org.eclipse.emf.ecp.test.university.impl.AddressImpl
+	 * @see org.eclipse.emf.ecp.test.university.impl.UniversityPackageImpl#getAddress()
+	 * @generated
+	 */
+	int ADDRESS = 6;
+
+	/**
+	 * The number of structural features of the '<em>Address</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int ADDRESS_FEATURE_COUNT = 0;
+
+	/**
+	 * The number of operations of the '<em>Address</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int ADDRESS_OPERATION_COUNT = 0;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.test.university.CourseCatalog
@@ -531,6 +591,30 @@ public interface UniversityPackage extends EPackage
 	EAttribute getPerson_Name();
 
 	/**
+	 * Returns the meta object for the containment reference list '
+	 * {@link org.eclipse.emf.ecp.test.university.Person#getAddresses <em>Addresses</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the containment reference list '<em>Addresses</em>'.
+	 * @see org.eclipse.emf.ecp.test.university.Person#getAddresses()
+	 * @see #getPerson()
+	 * @generated
+	 */
+	EReference getPerson_Addresses();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.test.university.Address <em>Address</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for class '<em>Address</em>'.
+	 * @see org.eclipse.emf.ecp.test.university.Address
+	 * @generated
+	 */
+	EClass getAddress();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -554,8 +638,7 @@ public interface UniversityPackage extends EPackage
 	 *
 	 * @generated
 	 */
-	interface Literals
-	{
+	interface Literals {
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.test.university.impl.CourseCatalogImpl
 		 * <em>Course Catalog</em>}' class.
@@ -698,6 +781,27 @@ public interface UniversityPackage extends EPackage
 		 * @generated
 		 */
 		EAttribute PERSON__NAME = eINSTANCE.getPerson_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Addresses</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EReference PERSON__ADDRESSES = eINSTANCE.getPerson_Addresses();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.test.university.impl.AddressImpl <em>Address</em>
+		 * }' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @see org.eclipse.emf.ecp.test.university.impl.AddressImpl
+		 * @see org.eclipse.emf.ecp.test.university.impl.UniversityPackageImpl#getAddress()
+		 * @generated
+		 */
+		EClass ADDRESS = eINSTANCE.getAddress();
 
 	}
 

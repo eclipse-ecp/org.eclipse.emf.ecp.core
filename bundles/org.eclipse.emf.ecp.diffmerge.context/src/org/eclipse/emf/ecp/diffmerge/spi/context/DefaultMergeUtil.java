@@ -12,19 +12,23 @@
 package org.eclipse.emf.ecp.diffmerge.spi.context;
 
 import java.util.Collection;
-import java.util.Iterator;
 
+import org.eclipse.core.databinding.observable.IObserving;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecp.diffmerge.internal.context.Activator;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 
 /**
  * This util class provides a method, which allows to copy values from one {@link VControl} to another generically.
@@ -42,63 +46,68 @@ public final class DefaultMergeUtil {
 	 * Copies the values from one {@link VControl} to another.
 	 *
 	 * @param from the {@link VControl} holding the values
+	 * @param fromDomainModel The domain model belonging to the 'from control'.
 	 * @param to the {@link VControl} which values should be updated
+	 * @param toDomainModel The domain model belonging to the 'to control'.
+	 * @since 1.6
 	 */
 	@SuppressWarnings("unchecked")
-	public static void copyValues(VControl from, VControl to) {
-		final Iterator<Setting> fromIterator = from.getDomainModelReference().getIterator();
-		Iterator<Setting> toIterator = to.getDomainModelReference().getIterator();
-		int stepsChecked = 0;
-		while (fromIterator.hasNext()) {
-			final Setting toSetting = toIterator.next();
-			final Setting fromSetting = fromIterator.next();
-			stepsChecked++;
-			// break because of derived tables
-			// if (toSetting.getEStructuralFeature().isDerived()) {
-			// break;
-			// }
-			if (!toSetting.getEStructuralFeature().isChangeable()) {
-				continue;
-			}
-			final EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(toSetting
-				.getEObject());
+	public static void copyValues(VControl from, EObject fromDomainModel, VControl to, EObject toDomainModel) {
+		final IObservableValue fromObservableValue;
+		final IObservableValue toObservableValue;
+		try {
+			fromObservableValue = Activator.getDefault().getEMFFormsDatabinding()
+				.getObservableValue(from.getDomainModelReference(), fromDomainModel);
+			toObservableValue = Activator.getDefault().getEMFFormsDatabinding()
+				.getObservableValue(to.getDomainModelReference(), toDomainModel);
+		} catch (final DatabindingFailedException ex) {
+			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+			return;
+		}
+		final EObject fromEObject = (EObject) ((IObserving) fromObservableValue).getObserved();
+		final EStructuralFeature fromStructuralFeature = (EStructuralFeature) fromObservableValue.getValueType();
+		final EObject toEObject = (EObject) ((IObserving) toObservableValue).getObserved();
+		final EStructuralFeature toStructuralFeature = (EStructuralFeature) toObservableValue.getValueType();
 
-			if (toSetting.getEStructuralFeature().isMany()) {
+		fromObservableValue.dispose();
+		toObservableValue.dispose();
+
+		if (!toStructuralFeature.isChangeable()) {
+			return;
+		}
+
+		final EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(toEObject);
+
+		if (toStructuralFeature.isMany()) {
+			editingDomain.getCommandStack().execute(
+				RemoveCommand.create(editingDomain, toEObject, toStructuralFeature,
+					(Collection<?>) toEObject.eGet(toStructuralFeature, true)));
+		}
+		if (EAttribute.class.isInstance(toStructuralFeature)) {
+
+			if (toStructuralFeature.isMany()) {
 				editingDomain.getCommandStack().execute(
-					RemoveCommand.create(editingDomain, toSetting.getEObject(), toSetting.getEStructuralFeature(),
-						(Collection<?>) toSetting.get(true)));
+					AddCommand.create(editingDomain, toEObject, toStructuralFeature,
+						(Collection<?>) fromEObject.eGet(fromStructuralFeature, true)));
 			}
-			if (EAttribute.class.isInstance(toSetting.getEStructuralFeature())) {
-
-				if (toSetting.getEStructuralFeature().isMany()) {
-					editingDomain.getCommandStack().execute(
-						AddCommand.create(editingDomain, toSetting.getEObject(), toSetting.getEStructuralFeature(),
-							(Collection<?>) fromSetting.get(true)));
-				}
-				else {
-					editingDomain.getCommandStack().execute(
-						SetCommand.create(editingDomain, toSetting.getEObject(), toSetting.getEStructuralFeature(),
-							fromSetting.get(true)));
-				}
-			}
-			if (EReference.class.isInstance(toSetting.getEStructuralFeature())) {
-				if (toSetting.getEStructuralFeature().isMany()) {
-					for (final EObject eObject : (Collection<EObject>) fromSetting.get(true)) {
-						editingDomain.getCommandStack().execute(
-							AddCommand.create(editingDomain, toSetting.getEObject(), toSetting.getEStructuralFeature(),
-								EcoreUtil.copy(eObject)));
-					}
-					toIterator = to.getDomainModelReference().getIterator();
-					for (int i = 0; i < stepsChecked; i++) {
-						toIterator.next();
-					}
-					break;
-				}
+			else {
 				editingDomain.getCommandStack().execute(
-					SetCommand.create(editingDomain, toSetting.getEObject(), toSetting.getEStructuralFeature(),
-						EcoreUtil.copy((EObject) fromSetting.get(true))));
-
+					SetCommand.create(editingDomain, toEObject, toStructuralFeature,
+						fromEObject.eGet(fromStructuralFeature, true)));
 			}
+		}
+		if (EReference.class.isInstance(toStructuralFeature)) {
+			if (toStructuralFeature.isMany()) {
+				for (final EObject eObject : (Collection<EObject>) fromEObject.eGet(fromStructuralFeature, true)) {
+					editingDomain.getCommandStack().execute(
+						AddCommand.create(editingDomain, toEObject, toStructuralFeature, EcoreUtil.copy(eObject)));
+				}
+				return;
+			}
+			editingDomain.getCommandStack().execute(
+				SetCommand.create(editingDomain, toEObject, toStructuralFeature,
+					EcoreUtil.copy((EObject) fromEObject.eGet(fromStructuralFeature, true))));
+
 		}
 	}
 }

@@ -19,13 +19,19 @@ import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.spi.util.ECPModelElementChangeListener;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -34,12 +40,45 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author Alexandra Buzila
  *
  */
 public class ControlRootEClassControl2SWTRenderer extends SimpleControlSWTControlSWTRenderer {
+
+	private static final EMFFormsDatabinding emfFormsDatabinding;
+	private static final EMFFormsLabelProvider emfFormsLabelProvider;
+	private static final VTViewTemplateProvider vtViewTemplateProvider;
+
+	static {
+		final BundleContext bundleContext = FrameworkUtil.getBundle(ControlRootEClassControl2SWTRenderer.class)
+			.getBundleContext();
+		final ServiceReference<EMFFormsDatabinding> emfFormsDatabindingServiceReference = bundleContext
+			.getServiceReference(EMFFormsDatabinding.class);
+		emfFormsDatabinding = bundleContext.getService(emfFormsDatabindingServiceReference);
+		final ServiceReference<EMFFormsLabelProvider> emfFormsLabelProviderServiceReference = bundleContext
+			.getServiceReference(EMFFormsLabelProvider.class);
+		emfFormsLabelProvider = bundleContext.getService(emfFormsLabelProviderServiceReference);
+		final ServiceReference<VTViewTemplateProvider> vtViewTemplateProviderServiceReference = bundleContext
+			.getServiceReference(VTViewTemplateProvider.class);
+		vtViewTemplateProvider = bundleContext.getService(vtViewTemplateProviderServiceReference);
+	}
+
+	/**
+	 * Default constructor.
+	 *
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param reportService The {@link ReportService}
+	 */
+	public ControlRootEClassControl2SWTRenderer(VControl vElement, ViewModelContext viewContext,
+		ReportService reportService) {
+		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
+	}
 
 	private Composite labelComposite;
 	private Label label;
@@ -55,16 +94,21 @@ public class ControlRootEClassControl2SWTRenderer extends SimpleControlSWTContro
 	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
 	 */
 	@Override
-	protected Binding[] createBindings(Control control, final Setting setting) {
+	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
 
 		final Binding[] bindings = new Binding[3];
 		final IObservableValue value = SWTObservables.observeText(label);
 
-		bindings[0] = getDataBindingContext().bindValue(value, getModelValue(setting), new UpdateValueStrategy() {
+		bindings[0] = getDataBindingContext().bindValue(value, getModelValue(), new UpdateValueStrategy() {
 
 			@Override
 			public Object convert(Object value) {
-				return getModelValue(setting).getValue();
+				try {
+					return getModelValue().getValue();
+				} catch (final DatabindingFailedException ex) {
+					getReportService().report(new DatabindingFailedReport(ex));
+					return null;
+				}
 			}
 		}, new UpdateValueStrategy() {
 			@Override
@@ -74,12 +118,17 @@ public class ControlRootEClassControl2SWTRenderer extends SimpleControlSWTContro
 			}
 		});
 		final IObservableValue tooltipValue = SWTObservables.observeTooltipText(label);
-		bindings[1] = getDataBindingContext().bindValue(tooltipValue, getModelValue(setting),
+		bindings[1] = getDataBindingContext().bindValue(tooltipValue, getModelValue(),
 			new UpdateValueStrategy() {
 
 				@Override
 				public Object convert(Object value) {
-					return getModelValue(setting).getValue();
+					try {
+						return getModelValue().getValue();
+					} catch (final DatabindingFailedException ex) {
+						Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+						return null;
+					}
 				}
 			}, new UpdateValueStrategy() {
 				@Override
@@ -89,11 +138,16 @@ public class ControlRootEClassControl2SWTRenderer extends SimpleControlSWTContro
 			});
 
 		final IObservableValue imageValue = SWTObservables.observeImage(imageLabel);
-		bindings[2] = getDataBindingContext().bindValue(imageValue, getModelValue(setting), new UpdateValueStrategy() {
+		bindings[2] = getDataBindingContext().bindValue(imageValue, getModelValue(), new UpdateValueStrategy() {
 
 			@Override
 			public Object convert(Object value) {
-				return getModelValue(setting).getValue();
+				try {
+					return getModelValue().getValue();
+				} catch (final DatabindingFailedException ex) {
+					Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+					return null;
+				}
 			}
 		}, new UpdateValueStrategy() {
 			@Override
@@ -146,11 +200,10 @@ public class ControlRootEClassControl2SWTRenderer extends SimpleControlSWTContro
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer#createSWTControl(org.eclipse.swt.widgets.Composite,
-	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer#createSWTControl(org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
-	protected Control createSWTControl(Composite parent2, Setting setting) {
+	protected Control createSWTControl(Composite parent2) {
 		final Composite composite2 = new Composite(parent2, SWT.NONE);
 		composite2.setBackground(parent2.getBackground());
 		GridLayoutFactory.fillDefaults().numColumns(1).spacing(0, 0).equalWidth(false).applyTo(composite2);

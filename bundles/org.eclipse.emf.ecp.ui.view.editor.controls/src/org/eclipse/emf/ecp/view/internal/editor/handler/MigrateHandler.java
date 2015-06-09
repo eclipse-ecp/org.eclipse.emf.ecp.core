@@ -18,11 +18,13 @@ import java.util.Map;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.view.internal.editor.controls.Activator;
 import org.eclipse.emf.ecp.view.spi.editor.controls.Helper;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
@@ -31,6 +33,8 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 
@@ -67,10 +71,17 @@ public class MigrateHandler extends AbstractHandler {
 				continue;
 			}
 			final VControl control = (VControl) eObject;
-			final Setting setting = control.getDomainModelReference().getIterator().next();
-			final List<EReference> bottomUpPath = Helper.getReferencePath(rootClass, setting.getEStructuralFeature()
-				.getEContainingClass(),
-				childParentReferenceMap);
+			IValueProperty valueProperty;
+			try {
+				valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+					.getValueProperty(control.getDomainModelReference(), null);
+			} catch (final DatabindingFailedException ex) {
+				Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+				continue;
+			}
+			final EStructuralFeature structuralFeature = (EStructuralFeature) valueProperty.getValueType();
+			final List<EReference> bottomUpPath = Helper.getReferencePath(rootClass,
+				structuralFeature.getEContainingClass(), childParentReferenceMap);
 			// control.getPathToFeature().addAll(bottomUpPath);
 			((VFeaturePathDomainModelReference) control.getDomainModelReference()).getDomainModelEReferencePath()
 				.clear();

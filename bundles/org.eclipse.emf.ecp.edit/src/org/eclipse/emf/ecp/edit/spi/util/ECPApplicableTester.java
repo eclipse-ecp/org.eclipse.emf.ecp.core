@@ -51,7 +51,9 @@ public interface ECPApplicableTester {
 	 * @return {@link #NOT_APPLICABLE} if the corresponding control should not be used, a positivie integer value
 	 *         otherwise. The control with the highest priority will be taken.
 	 * @since 1.2
+	 * @deprecated Do not use. Use {@link #isApplicable(EObject, EStructuralFeature)} instead.
 	 */
+	@Deprecated
 	int isApplicable(VDomainModelReference domainModelReference);
 
 	/**

@@ -17,6 +17,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.internal.ui.Activator;
@@ -47,9 +48,13 @@ public final class ECPTooltipModifierHelper {
 	}
 
 	private static void readStringModifiers() {
-		final IConfigurationElement[] controls = Platform.getExtensionRegistry()
+		final IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
+		if (extensionRegistry == null) {
+			return;
+		}
+		final IConfigurationElement[] controls = extensionRegistry
 			.getConfigurationElementsFor(
-				EXTENSION_POINT_ID);
+			EXTENSION_POINT_ID);
 		for (final IConfigurationElement e : controls) {
 			try {
 				final String clazz = e.getAttribute(CLASS);

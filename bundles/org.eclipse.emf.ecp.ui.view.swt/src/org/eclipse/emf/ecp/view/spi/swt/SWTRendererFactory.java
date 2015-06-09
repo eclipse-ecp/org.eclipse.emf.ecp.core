@@ -16,6 +16,8 @@ import java.util.Collection;
 
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emfforms.spi.swt.core.AbstractAdditionalSWTRenderer;
+import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
 
 /**
  * A RendererFactory for SWT controls.
@@ -24,6 +26,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  * @since 1.2
  *
  */
+@Deprecated
 public interface SWTRendererFactory {
 
 	/**
@@ -32,6 +35,7 @@ public interface SWTRendererFactory {
 	 * @param viewContext the {@link ViewModelContext} to use
 	 * @param vElement the {@link VElement} to render
 	 * @return the list for {@link AbstractSWTRenderer} the fitting render or null
+	 * @since 1.6
 	 */
 	AbstractSWTRenderer<VElement> getRenderer(VElement vElement, ViewModelContext viewContext);
 

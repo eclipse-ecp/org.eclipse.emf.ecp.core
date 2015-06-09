@@ -17,6 +17,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.databinding.observable.IObserving;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.Enumerator;
@@ -28,11 +30,13 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.rule.model.Activator;
 import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.NotApplicableForEvaluationException;
 import org.eclipse.emf.ecp.view.spi.rule.model.RulePackage;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 
 /**
  * <!-- begin-user-doc -->
@@ -426,7 +430,8 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 		final Object expectedValue = getExpectedValue();
 		while (settingIterator.hasNext()) {
 			try {
-				result |= doEvaluate(settingIterator.next(), expectedValue, false, null);
+				final Setting setting = settingIterator.next();
+				result |= doEvaluate(setting.getEObject(), setting.getEStructuralFeature(), expectedValue, false, null);
 			} catch (final NotApplicableForEvaluationException e) {
 				continue;
 			}
@@ -435,11 +440,10 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 		return result;
 	}
 
-	private static boolean doEvaluate(Setting setting, Object expectedValue, boolean useNewValue, Object newValue)
+	private static boolean doEvaluate(EObject parent, EStructuralFeature feature, Object expectedValue,
+		boolean useNewValue, Object newValue)
 		throws NotApplicableForEvaluationException {
 
-		final EObject parent = setting.getEObject();
-		final EStructuralFeature feature = setting.getEStructuralFeature();
 		final EClass attributeClass = feature.getEContainingClass();
 		if (!attributeClass.isInstance(parent)) {
 			throw new NotApplicableForEvaluationException();
@@ -489,21 +493,29 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 					if (getValueDomainModelReference() == null) {
 						continue;
 					}
-					final VDomainModelReference dmr = EcoreUtil.copy(getValueDomainModelReference());
-					final boolean init = dmr.init(domain);
-					if (!init) {
+					IObservableValue observableValue;
+					try {
+						observableValue = Activator.getDefault().getEMFFormsDatabinding()
+							.getObservableValue(getValueDomainModelReference(), domain);
+					} catch (final DatabindingFailedException ex) {
+						Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 						continue;
 					}
-					final Setting next = dmr.getIterator().next();
+					final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
+					final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+					observableValue.dispose();
+
 					try {
-						result |= doEvaluate(next, expectedValue, true, next.get(true));
+						result |= doEvaluate(eObject, structuralFeature, expectedValue, true,
+							eObject.eGet(structuralFeature, true));
 					} catch (final NotApplicableForEvaluationException ex) {
 						continue;
 					}
 				}
 			} else {
 				try {
-					result |= doEvaluate(setting, expectedValue, true, possibleNewValues.get(setting));
+					result |= doEvaluate(setting.getEObject(), setting.getEStructuralFeature(), expectedValue, true,
+						possibleNewValues.get(setting));
 				} catch (final NotApplicableForEvaluationException e) {
 					continue;
 				}

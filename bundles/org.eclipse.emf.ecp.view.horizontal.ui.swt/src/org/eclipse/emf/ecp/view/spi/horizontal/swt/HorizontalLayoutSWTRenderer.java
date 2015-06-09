@@ -15,20 +15,26 @@ package org.eclipse.emf.ecp.view.spi.horizontal.swt;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.emf.ecp.view.internal.horizontal.swt.Activator;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalLayout;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.reporting.StatusReport;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
 import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
+import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -42,13 +48,31 @@ import org.eclipse.swt.widgets.Control;
  */
 public class HorizontalLayoutSWTRenderer extends AbstractSWTRenderer<VHorizontalLayout> {
 
+	private final EMFFormsRendererFactory rendererFactory;
+
+	/**
+	 * Default Constructor.
+	 *
+	 * @param vElement the view element to be rendered
+	 * @param viewContext The view model context
+	 * @param reportService the ReportService to use
+	 * @param rendererFactory the EMFFormsRendererFactory to use
+	 * @since 1.6
+	 */
+	@Inject
+	public HorizontalLayoutSWTRenderer(final VHorizontalLayout vElement, final ViewModelContext viewContext,
+		ReportService reportService, EMFFormsRendererFactory rendererFactory) {
+		super(vElement, viewContext, reportService);
+		this.rendererFactory = rendererFactory;
+	}
+
 	private static final String CONTROL_COLUMN_COMPOSITE = "org_eclipse_emf_ecp_ui_layout_horizontal"; //$NON-NLS-1$
 	private SWTGridDescription rendererGridDescription;
 
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#dispose()
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#dispose()
 	 */
 	@Override
 	protected void dispose() {
@@ -59,12 +83,13 @@ public class HorizontalLayoutSWTRenderer extends AbstractSWTRenderer<VHorizontal
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(SWTGridDescription)
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#getGridDescription(SWTGridDescription)
 	 */
 	@Override
 	public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
 		if (rendererGridDescription == null) {
 			rendererGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 1, this);
+			rendererGridDescription.getGrid().get(0).setVerticalGrab(false);
 		}
 		return rendererGridDescription;
 	}
@@ -72,7 +97,7 @@ public class HorizontalLayoutSWTRenderer extends AbstractSWTRenderer<VHorizontal
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(int, org.eclipse.swt.widgets.Composite,
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#renderControl(int, org.eclipse.swt.widgets.Composite,
 	 *      org.eclipse.emf.ecp.view.spi.model.VElement, org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	@Override
@@ -88,15 +113,14 @@ public class HorizontalLayoutSWTRenderer extends AbstractSWTRenderer<VHorizontal
 		final Map<VContainedElement, AbstractSWTRenderer<VElement>> elementRendererMap = new LinkedHashMap<VContainedElement, AbstractSWTRenderer<VElement>>();
 		for (final VContainedElement child : getVElement().getChildren()) {
 
-			final AbstractSWTRenderer<VElement> renderer = getSWTRendererFactory().getRenderer(child,
-				getViewModelContext());
-			if (renderer == null) {
-				Activator
-					.getDefault()
-					.getLog()
-					.log(
-						new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format(
-							"No Renderer for %s found.", child.eClass().getName()))); //$NON-NLS-1$
+			AbstractSWTRenderer<VElement> renderer;
+			try {
+				renderer = rendererFactory.getRendererInstance(child,
+					getViewModelContext());
+			} catch (final EMFFormsNoRendererException ex) {
+				getReportService().report(new StatusReport(
+					new Status(IStatus.INFO, "org.eclipse.emf.ecp.view.horizontal.ui.swt",//$NON-NLS-1$
+						String.format("No Renderer for %s found.", child.eClass().getName())))); //$NON-NLS-1$
 				continue;
 			}
 			elementRendererMap.put(child, renderer);
@@ -123,15 +147,14 @@ public class HorizontalLayoutSWTRenderer extends AbstractSWTRenderer<VHorizontal
 					}
 					// TODO who should apply the layout
 					control.setLayoutData(LayoutProviderHelper.getLayoutData(childGridCell, gridDescription,
-						gridDescription,
-						gridDescription, childGridCell.getRenderer().getVElement(),
-						control));
+						gridDescription, gridDescription, childGridCell.getRenderer().getVElement(),
+						getViewModelContext().getDomainModel(), control));
 				}
 				for (final SWTGridCell childGridCell : gridDescription.getGrid()) {
 					childGridCell.getRenderer().finalizeRendering(column);
 				}
 			} catch (final NoPropertyDescriptorFoundExeption e) {
-				Activator.getDefault().getReportService().report(new RenderingFailedReport(e));
+				getReportService().report(new RenderingFailedReport(e));
 				continue;
 			}
 		}

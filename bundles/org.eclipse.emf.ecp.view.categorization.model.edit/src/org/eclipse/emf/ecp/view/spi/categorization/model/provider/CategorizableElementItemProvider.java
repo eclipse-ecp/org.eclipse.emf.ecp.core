@@ -18,14 +18,11 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizableElement;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VElementUtil;
 import org.eclipse.emf.ecp.view.spi.model.provider.ElementItemProvider;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
@@ -38,12 +35,6 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  */
 public class CategorizableElementItemProvider
 	extends ElementItemProvider
-	implements
-	IEditingDomainItemProvider,
-	IStructuredItemContentProvider,
-	ITreeItemContentProvider,
-	IItemLabelProvider,
-	IItemPropertySource
 {
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -107,12 +98,15 @@ public class CategorizableElementItemProvider
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String getText(Object object)
 	{
-		final String label = ((VCategorizableElement) object).getName();
+		String label = ((VCategorizableElement) object).getLabel();
+		if (label == null) {
+			label = VElementUtil.getCleanName(VElement.class.cast(object));
+		}
 		return label == null || label.length() == 0 ?
 			getString("_UI_CategorizableElement_type") : //$NON-NLS-1$
 			getString("_UI_CategorizableElement_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$

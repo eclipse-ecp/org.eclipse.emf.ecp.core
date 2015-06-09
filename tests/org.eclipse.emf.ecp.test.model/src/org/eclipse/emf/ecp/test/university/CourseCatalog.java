@@ -21,17 +21,16 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.test.university.CourseCatalog#getCourses <em>Courses</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.ecp.test.university.UniversityPackage#getCourseCatalog()
  * @model
  * @generated
  */
-public interface CourseCatalog extends EObject
-{
+public interface CourseCatalog extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Courses</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.emf.ecp.test.university.Course}.

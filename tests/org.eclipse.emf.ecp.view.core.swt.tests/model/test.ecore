@@ -4,6 +4,12 @@
   <eClassifiers xsi:type="ecore:EClass" name="SimpleTestObject">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="date" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="xmlDate" eType="#//XMLDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="myEnum" eType="#//TestEnum"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="TestEnum" instanceTypeName="TestEnum">
+    <eLiterals name="a"/>
+    <eLiterals name="b" value="1"/>
+    <eLiterals name="c" value="2"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="XMLDate" instanceClassName="javax.xml.datatype.XMLGregorianCalendar"/>
 </ecore:EPackage>

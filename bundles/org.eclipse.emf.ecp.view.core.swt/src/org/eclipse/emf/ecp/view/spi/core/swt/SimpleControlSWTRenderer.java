@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,24 +11,32 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.core.swt;
 
+import org.eclipse.core.databinding.observable.IObserving;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.common.util.Diagnostic;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
-import org.eclipse.emf.ecp.view.internal.core.swt.renderer.RendererMessages;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
-import org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport;
-import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
-import org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil;
 import org.eclipse.emf.ecp.view.spi.provider.ECPTooltipModifierHelper;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
@@ -47,28 +55,35 @@ import org.eclipse.swt.widgets.Label;
  *
  */
 public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRenderer<VControl> {
-	private SWTGridDescription rendererGridDescription;
+
+	private static final String ICONS_UNSET_REFERENCE = "icons/unset_reference.png"; //$NON-NLS-1$
+	private static final String ICONS_UNSET_FEATURE = "icons/unset_feature.png"; //$NON-NLS-1$
+	private static final String ICONS_SET_REFERENCE = "icons/set_reference.png"; //$NON-NLS-1$
+	private static final String ICONS_SET_FEATURE = "icons/set_feature.png"; //$NON-NLS-1$
 
 	/**
 	 * Default constructor.
+	 *
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param reportService The {@link ReportService}
+	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
+	 * @param emfFormsLabelProvider The {@link EMFFormsLabelProvider}
+	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
+	 * @since 1.6
 	 */
-	public SimpleControlSWTRenderer() {
-		super();
+	public SimpleControlSWTRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService,
+		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
+		VTViewTemplateProvider vtViewTemplateProvider) {
+		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
 	}
 
-	/**
-	 * Test constructor.
-	 *
-	 * @param factory the {@link SWTRendererFactory} to use.
-	 */
-	SimpleControlSWTRenderer(SWTRendererFactory factory) {
-		super(factory);
-	}
+	private SWTGridDescription rendererGridDescription;
 
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(SWTGridDescription)
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#getGridDescription(SWTGridDescription)
 	 */
 	@Override
 	public final SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
@@ -82,7 +97,7 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(int, org.eclipse.swt.widgets.Composite,
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#renderControl(int, org.eclipse.swt.widgets.Composite,
 	 *      org.eclipse.emf.ecp.view.spi.model.VElement, org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	@Override
@@ -98,15 +113,23 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 		case 1:
 			return createValidationIcon(parent);
 		case 2:
-			if (isUnsettable()) {
-				return createUnsettableControl(parent);
+			try {
+				if (isUnsettable()) {
+					return createUnsettableControl(parent);
+				}
+				return createControl(parent);
+			} catch (final DatabindingFailedException ex) {
+				getReportService().report(new RenderingFailedReport(ex));
+				final Label errorLabel = new Label(parent, SWT.NONE);
+				errorLabel.setText(ex.getMessage());
+				return errorLabel;
 			}
-			return createControl(parent);
 		default:
 			throw new IllegalArgumentException(
 				String
 					.format(
-						"The provided SWTGridCell (%1$s) cannot be used by this (%2$s) renderer.", gridCell.toString(), toString())); //$NON-NLS-1$
+						"The provided SWTGridCell (%1$s) cannot be used by this (%2$s) renderer.", gridCell.toString(), //$NON-NLS-1$
+						toString()));
 		}
 	}
 
@@ -114,12 +137,16 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 	 * Returns true if the control is unsettable.
 	 *
 	 * @return true if unsettable, false otherwise
+	 * @throws DatabindingFailedException if the databinding fails
 	 */
-	protected boolean isUnsettable() {
-		return getVElement().getDomainModelReference().getEStructuralFeatureIterator().next().isUnsettable();
+	protected boolean isUnsettable() throws DatabindingFailedException {
+		final IValueProperty valueProperty = getEMFFormsDatabinding()
+			.getValueProperty(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
+		final EStructuralFeature feature = (EStructuralFeature) valueProperty.getValueType();
+		return feature.isUnsettable();
 	}
 
-	private Control createUnsettableControl(Composite parent) {
+	private Control createUnsettableControl(Composite parent) throws DatabindingFailedException {
 		final Composite composite = new Composite(parent, SWT.NONE);
 		composite.setBackground(parent.getBackground());
 		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false).applyTo(composite);
@@ -133,7 +160,6 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 		final Button unsetButton = new Button(composite, SWT.PUSH);
 		GridDataFactory.fillDefaults().align(SWT.CENTER, SWT.CENTER).grab(false, false).applyTo(unsetButton);
 		unsetButton.addSelectionListener(new SelectionAdapter() {
-
 			/**
 			 * {@inheritDoc}
 			 *
@@ -142,33 +168,43 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
-				final Setting setting = getVElement().getDomainModelReference().getIterator().next();
-				Object value = null;
-				if (!setting.isSet()) {
-					sl.topControl = baseControl;
-					unsetButton.setText(RendererMessages.SimpleControlSWTRenderer_Unset);
-					value = setting
-						.getEStructuralFeature().getDefaultValue();
+				IObservableValue observableValue;
+				try {
+					observableValue = getEMFFormsDatabinding()
+						.getObservableValue(getVElement().getDomainModelReference(),
+							getViewModelContext().getDomainModel());
+				} catch (final DatabindingFailedException ex) {
+					getReportService().report(new DatabindingFailedReport(ex));
+					return;
 				}
-				else {
+				final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+				final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
+				observableValue.dispose();
+				Object value = null;
+				if (!eObject.eIsSet(structuralFeature)) {
+					sl.topControl = baseControl;
+					unsetButton.setImage(Activator.getImage(ICONS_UNSET_FEATURE));
+					value = structuralFeature.getDefaultValue();
+				} else {
 					sl.topControl = createUnsetLabel;
-					unsetButton.setText(RendererMessages.SimpleControlSWTRenderer_Set);
+					unsetButton.setImage(Activator.getImage(ICONS_SET_FEATURE));
 					value = SetCommand.UNSET_VALUE;
 				}
-				final EditingDomain editingDomain = getEditingDomain(setting);
+				final EditingDomain editingDomain = getEditingDomain(eObject);
 				editingDomain.getCommandStack().execute(
-					SetCommand.create(editingDomain, setting.getEObject(), setting.getEStructuralFeature(), value));
-				composite.layout();
+					SetCommand.create(editingDomain, eObject, structuralFeature, value));
+				controlComposite.layout();
 			}
 		});
 
-		if (getVElement().getDomainModelReference().getIterator().next().isSet()) {
+		final EStructuralFeature structuralFeature = (EStructuralFeature) getModelValue().getValueType();
+		final EObject eObject = (EObject) ((IObserving) getModelValue()).getObserved();
+		if (eObject.eIsSet(structuralFeature)) {
 			sl.topControl = baseControl;
-			unsetButton.setText(RendererMessages.SimpleControlSWTRenderer_Unset);
-		}
-		else {
+			unsetButton.setImage(Activator.getImage(ICONS_UNSET_FEATURE));
+		} else {
 			sl.topControl = createUnsetLabel;
-			unsetButton.setText(RendererMessages.SimpleControlSWTRenderer_Set);
+			unsetButton.setImage(Activator.getImage(ICONS_SET_FEATURE));
 		}
 
 		return composite;
@@ -242,10 +278,7 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 			editControl = getControls().get(new SWTGridCell(0, 2, SimpleControlSWTRenderer.this));
 			break;
 		default:
-			if (ViewModelUtil.isDebugMode()) {
-				final ReportService reportService = Activator.getDefault().getReportService();
-				reportService.report(new AbstractReport("Wrong number of controls!")); //$NON-NLS-1$
-			}
+			getReportService().report(new AbstractReport("Wrong number of controls!")); //$NON-NLS-1$
 			return;
 		}
 		// triggered due to another validation rule before this control is rendered
@@ -278,13 +311,14 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 	 *
 	 * @param parent the {@link Composite} to render onto
 	 * @return the rendered control
+	 * @throws DatabindingFailedException if the databinding of the control fails
 	 */
-	protected abstract Control createControl(Composite parent);
+	protected abstract Control createControl(Composite parent) throws DatabindingFailedException;
 
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#dispose()
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#dispose()
 	 */
 	@Override
 	protected void dispose() {

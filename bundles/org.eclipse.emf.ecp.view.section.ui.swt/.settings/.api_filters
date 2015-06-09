@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<component id="org.eclipse.emf.ecp.view.custom.model" version="2">
+<component id="org.eclipse.emf.ecp.view.section.ui.swt" version="2">
     <resource path="META-INF/MANIFEST.MF">
         <filter comment="This is SPI" id="923795461">
             <message_arguments>
                 <message_argument value="1.3.0"/>
                 <message_argument value="1.2.1"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change in 1.6" id="923795461">
+            <message_arguments>
+                <message_argument value="1.6.0"/>
+                <message_argument value="1.5.0"/>
             </message_arguments>
         </filter>
     </resource>
@@ -32,203 +38,63 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/ecp/view/spi/custom/model/VCustomFactory.java" type="org.eclipse.emf.ecp.view.spi.custom.model.VCustomFactory">
-        <filter comment="This is SPI" id="403804204">
+    <resource path="src/org/eclipse/emf/ecp/view/spi/section/swt/SectionLeafSWTRenderer.java" type="org.eclipse.emf.ecp.view.spi.section.swt.SectionLeafSWTRenderer">
+        <filter comment="SPI Change in 1.6" id="338722907">
             <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.custom.model.VCustomFactory"/>
-                <message_argument value="createCustomControl()"/>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.section.swt.SectionLeafSWTRenderer"/>
+                <message_argument value="SectionLeafSWTRenderer()"/>
             </message_arguments>
         </filter>
-        <filter comment="This is SPI" id="403804204">
+        <filter comment="EMFForms 1.6 SPI Change" id="338792546">
             <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.custom.model.VCustomFactory"/>
-                <message_argument value="createCustomDomainModelReference()"/>
-            </message_arguments>
-        </filter>
-        <filter comment="This is SPI" id="405901410">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.custom.model.VCustomFactory"/>
-                <message_argument value="createHardcodedDomainModelReference()"/>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.section.swt.SectionLeafSWTRenderer"/>
+                <message_argument value="getGridDescription(SWTGridDescription)"/>
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/ecp/view/spi/custom/model/VCustomPackage.java" type="org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage">
-        <filter comment="This is SPI" id="405864542">
+    <resource path="src/org/eclipse/emf/ecp/view/spi/section/swt/SectionNodeSWTRenderer.java" type="org.eclipse.emf.ecp.view.spi.section.swt.SectionNodeSWTRenderer">
+        <filter comment="SPI Change in 1.6" id="338722907">
             <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage"/>
-                <message_argument value="HARDCODED_DOMAIN_MODEL_REFERENCE"/>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.section.swt.SectionNodeSWTRenderer"/>
+                <message_argument value="SectionNodeSWTRenderer()"/>
             </message_arguments>
         </filter>
-        <filter comment="This is SPI" id="405864542">
+        <filter comment="EMFForms 1.6 SPI Change" id="338792546">
             <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage"/>
-                <message_argument value="HARDCODED_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT"/>
-            </message_arguments>
-        </filter>
-        <filter comment="This is SPI" id="405864542">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage"/>
-                <message_argument value="HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_CHECKED"/>
-            </message_arguments>
-        </filter>
-        <filter comment="This is SPI" id="405864542">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage"/>
-                <message_argument value="HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_ID"/>
-            </message_arguments>
-        </filter>
-        <filter comment="This is SPI" id="405864542">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage"/>
-                <message_argument value="HARDCODED_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCES"/>
-            </message_arguments>
-        </filter>
-        <filter comment="This is SPI" id="405901410">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage"/>
-                <message_argument value="getHardcodedDomainModelReference()"/>
-            </message_arguments>
-        </filter>
-        <filter comment="This is SPI" id="405901410">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage"/>
-                <message_argument value="getHardcodedDomainModelReference_ControlChecked()"/>
-            </message_arguments>
-        </filter>
-        <filter comment="This is SPI" id="405901410">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage"/>
-                <message_argument value="getHardcodedDomainModelReference_ControlId()"/>
-            </message_arguments>
-        </filter>
-        <filter comment="This is SPI" id="405901410">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage"/>
-                <message_argument value="getHardcodedDomainModelReference_DomainModelReferences()"/>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.section.swt.SectionNodeSWTRenderer"/>
+                <message_argument value="getGridDescription(SWTGridDescription)"/>
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/ecp/view/spi/custom/model/VCustomPackage.java" type="org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage$Literals">
-        <filter comment="This is SPI" id="403767336">
+    <resource path="src/org/eclipse/emf/ecp/view/spi/section/swt/SectionedAreaSWTRenderer.java" type="org.eclipse.emf.ecp.view.spi.section.swt.SectionedAreaSWTRenderer">
+        <filter comment="SPI Change in 1.6" id="338722907">
             <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage.Literals"/>
-                <message_argument value="CUSTOM_CONTROL"/>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.section.swt.SectionedAreaSWTRenderer"/>
+                <message_argument value="SectionedAreaSWTRenderer()"/>
             </message_arguments>
         </filter>
-        <filter comment="This is SPI" id="403767336">
+        <filter comment="EMFForms 1.6 SPI Change" id="338792546">
             <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage.Literals"/>
-                <message_argument value="CUSTOM_CONTROL__BUNDLE_NAME"/>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.section.swt.SectionedAreaSWTRenderer"/>
+                <message_argument value="getGridDescription(SWTGridDescription)"/>
             </message_arguments>
         </filter>
-        <filter comment="This is SPI" id="403767336">
+        <filter comment="EMFForms 1.6 SPI Change" id="338792546">
             <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage.Literals"/>
-                <message_argument value="CUSTOM_CONTROL__CLASS_NAME"/>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.section.swt.SectionedAreaSWTRenderer"/>
+                <message_argument value="renderControl(SWTGridCell, Composite)"/>
             </message_arguments>
         </filter>
-        <filter comment="This is SPI" id="403767336">
+        <filter comment="EMFForms 1.6 SPI Change" id="338792546">
             <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage.Literals"/>
-                <message_argument value="CUSTOM_DOMAIN_MODEL_REFERENCE"/>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.section.swt.SectionedAreaSWTRenderer"/>
+                <message_argument value="setLayoutDataForControl(SWTGridCell, SWTGridDescription, SWTGridDescription, SWTGridDescription, VElement, Control)"/>
             </message_arguments>
         </filter>
-        <filter comment="This is SPI" id="403767336">
+        <filter comment="SPI Change in 1.6" id="421572723">
             <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage.Literals"/>
-                <message_argument value="CUSTOM_DOMAIN_MODEL_REFERENCE__BUNDLE_NAME"/>
-            </message_arguments>
-        </filter>
-        <filter comment="This is SPI" id="403767336">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage.Literals"/>
-                <message_argument value="CUSTOM_DOMAIN_MODEL_REFERENCE__CLASS_NAME"/>
-            </message_arguments>
-        </filter>
-        <filter comment="This is SPI" id="403767336">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage.Literals"/>
-                <message_argument value="CUSTOM_DOMAIN_MODEL_REFERENCE__CONTROL_CHECKED"/>
-            </message_arguments>
-        </filter>
-        <filter comment="This is SPI" id="403767336">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage.Literals"/>
-                <message_argument value="CUSTOM_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCES"/>
-            </message_arguments>
-        </filter>
-        <filter comment="This is SPI" id="405864542">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage.Literals"/>
-                <message_argument value="HARDCODED_DOMAIN_MODEL_REFERENCE"/>
-            </message_arguments>
-        </filter>
-        <filter comment="This is SPI" id="405864542">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage.Literals"/>
-                <message_argument value="HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_CHECKED"/>
-            </message_arguments>
-        </filter>
-        <filter comment="This is SPI" id="405864542">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage.Literals"/>
-                <message_argument value="HARDCODED_DOMAIN_MODEL_REFERENCE__CONTROL_ID"/>
-            </message_arguments>
-        </filter>
-        <filter comment="This is SPI" id="405864542">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage.Literals"/>
-                <message_argument value="HARDCODED_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCES"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/emf/ecp/view/spi/custom/model/impl/VCustomFactoryImpl.java" type="org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomFactoryImpl">
-        <filter comment="This is SPI" id="338792546">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomFactoryImpl"/>
-                <message_argument value="createHardcodedDomainModelReference()"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/emf/ecp/view/spi/custom/model/impl/VCustomPackageImpl.java" type="org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomPackageImpl">
-        <filter comment="This is SPI" id="338792546">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomPackageImpl"/>
-                <message_argument value="getHardcodedDomainModelReference()"/>
-            </message_arguments>
-        </filter>
-        <filter comment="This is SPI" id="338792546">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomPackageImpl"/>
-                <message_argument value="getHardcodedDomainModelReference_ControlChecked()"/>
-            </message_arguments>
-        </filter>
-        <filter comment="This is SPI" id="338792546">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomPackageImpl"/>
-                <message_argument value="getHardcodedDomainModelReference_ControlId()"/>
-            </message_arguments>
-        </filter>
-        <filter comment="This is SPI" id="338792546">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.custom.model.impl.VCustomPackageImpl"/>
-                <message_argument value="getHardcodedDomainModelReference_DomainModelReferences()"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/emf/ecp/view/spi/custom/model/util/CustomAdapterFactory.java" type="org.eclipse.emf.ecp.view.spi.custom.model.util.CustomAdapterFactory">
-        <filter comment="This is SPI" id="338792546">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.custom.model.util.CustomAdapterFactory"/>
-                <message_argument value="createHardcodedDomainModelReferenceAdapter()"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/emf/ecp/view/spi/custom/model/util/CustomSwitch.java" type="org.eclipse.emf.ecp.view.spi.custom.model.util.CustomSwitch">
-        <filter comment="This is SPI" id="338792546">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.custom.model.util.CustomSwitch"/>
-                <message_argument value="caseHardcodedDomainModelReference(VHardcodedDomainModelReference)"/>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.section.swt.SectionedAreaSWTRenderer"/>
+                <message_argument value="setLayoutDataForControl(SWTGridCell, SWTGridDescription, SWTGridDescription, SWTGridDescription, VElement, Control)"/>
             </message_arguments>
         </filter>
     </resource>

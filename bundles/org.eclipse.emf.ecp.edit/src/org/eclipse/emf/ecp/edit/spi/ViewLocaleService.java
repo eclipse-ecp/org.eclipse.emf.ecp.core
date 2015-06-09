@@ -20,8 +20,11 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
  *
  * @author Eugen Neufeld
  * @since 1.2
- *
+ * @deprecated Please use the {@link org.eclipse.emfforms.spi.core.services.locale.EMFFormsLocaleProvider
+ *             EMFFormsLocaleProvider}
  */
+@SuppressWarnings("javadoc")
+@Deprecated
 public interface ViewLocaleService extends ViewModelService {
 
 	/**

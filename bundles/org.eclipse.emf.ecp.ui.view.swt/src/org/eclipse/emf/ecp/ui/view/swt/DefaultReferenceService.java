@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -124,9 +124,36 @@ public class DefaultReferenceService implements ReferenceService {
 			return;
 		}
 
+		if (!eReference.isContainment()) {
+			addElementToModel(newMEInstance, eObject);
+		}
+
 		ECPControlHelper.addModelElementInReference(eObject, newMEInstance, eReference,
 			editingDomain);
 		openInNewContext(newMEInstance);
+	}
+
+	/**
+	 * Tries to add {@code newElement} recursively upwards starting from {@code eObject}. If no applicable
+	 * {@link EObject} is found, the {@code newElement} will be added to {@code eObject}'s {@link Resource}.
+	 *
+	 * @param newElement
+	 *            The {@link EObject} which is added to the model.
+	 * @param eObject
+	 *            The starting point from which the {@code newElement} is recursively tried to be added upwards.
+	 */
+	private void addElementToModel(EObject newElement, EObject eObject) {
+		for (final EReference ref : eObject.eClass().getEAllContainments()) {
+			if (ref.getEType().isInstance(newElement)) {
+				ECPControlHelper.addModelElementInReference(eObject, newElement, ref, editingDomain);
+				return;
+			}
+		}
+		if (eObject.eContainer() != null) {
+			addElementToModel(newElement, eObject.eContainer());
+		} else {
+			eObject.eResource().getContents().add(newElement);
+		}
 	}
 
 	/**

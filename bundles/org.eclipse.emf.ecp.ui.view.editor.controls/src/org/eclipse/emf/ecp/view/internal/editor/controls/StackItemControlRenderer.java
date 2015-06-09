@@ -14,7 +14,8 @@ package org.eclipse.emf.ecp.view.internal.editor.controls;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.stack.model.VStackItem;
 import org.eclipse.emf.ecp.view.spi.stack.model.VStackLayout;
@@ -22,6 +23,9 @@ import org.eclipse.emf.ecp.view.spi.stack.model.VStackPackage;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Label;
 
@@ -32,15 +36,30 @@ import org.eclipse.swt.widgets.Label;
 public class StackItemControlRenderer extends ExpectedValueControlRenderer {
 
 	/**
+	 * Default constructor.
+	 *
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param reportService the {@link ReportService}
+	 */
+	public StackItemControlRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService) {
+		super(vElement, viewContext, reportService);
+	}
+
+	/**
 	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.emf.ecp.view.internal.editor.controls.ExpectedValueControlRenderer#onSelectButton(org.eclipse.swt.widgets.Text)
 	 */
 	@Override
 	protected void onSelectButton(Label control) {
-		final Setting setting = getSetting(getVElement());
-
-		final VStackItem stackItem = (VStackItem) setting.getEObject();
+		VStackItem stackItem;
+		try {
+			stackItem = (VStackItem) getObservedEObject();
+		} catch (final DatabindingFailedException ex) {
+			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+			return;
+		}
 		final VStackLayout eContainer = (VStackLayout) stackItem.eContainer();
 
 		if (eContainer.getDomainModelReference() == null) {

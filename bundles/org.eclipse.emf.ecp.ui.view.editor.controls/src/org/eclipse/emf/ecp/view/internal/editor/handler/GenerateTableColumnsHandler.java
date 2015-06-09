@@ -11,17 +11,18 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.editor.handler;
 
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.view.internal.editor.controls.Activator;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
@@ -32,6 +33,8 @@ import org.eclipse.emf.ecp.view.spi.treemasterdetail.ui.swt.MasterDetailAction;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 
@@ -82,11 +85,19 @@ public class GenerateTableColumnsHandler extends MasterDetailAction {
 		}
 
 		final VTableDomainModelReference tableDMR = (VTableDomainModelReference) domainModelReference;
-		final Iterator<EStructuralFeature> structuralFeatureIterator = tableDMR.getEStructuralFeatureIterator();
-		if (structuralFeatureIterator == null || !structuralFeatureIterator.hasNext()) {
+		IValueProperty valueProperty;
+		try {
+			if (tableDMR.getDomainModelReference() != null) {
+				valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+					.getValueProperty(tableDMR.getDomainModelReference(), null);
+			} else {
+				valueProperty = Activator.getDefault().getEMFFormsDatabinding().getValueProperty(tableDMR, null);
+			}
+		} catch (final DatabindingFailedException ex) {
+			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 			return;
 		}
-		final EStructuralFeature eStructuralFeature = structuralFeatureIterator.next();
+		final Object eStructuralFeature = valueProperty.getValueType();
 		if (!EReference.class.isInstance(eStructuralFeature)) {
 			return;
 		}

@@ -44,18 +44,35 @@ public class ViewProvider implements IViewProvider {
 	@Override
 	public VView generate(EObject eObject, Map<String, Object> context) {
 		final VView view = VViewFactory.eINSTANCE.createView();
-		for (final EStructuralFeature feature : getValidFeatures(eObject)) {
+		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
+			new AdapterFactory[] {
+				new ReflectiveItemProviderAdapterFactory(),
+				new ComposedAdapterFactory(
+					ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
+		final AdapterFactoryItemDelegator delegator = new AdapterFactoryItemDelegator(
+			composedAdapterFactory);
+		for (final EStructuralFeature feature : getValidFeatures(delegator, eObject)) {
 
 			final VControl control = VViewFactory.eINSTANCE.createControl();
 			final VFeaturePathDomainModelReference modelReference = VViewFactory.eINSTANCE
 				.createFeaturePathDomainModelReference();
 			modelReference.setDomainModelEFeature(feature);
 			control.setDomainModelReference(modelReference);
-			control.setReadonly(!feature.isChangeable());
+			control.setReadonly(isReadOnly(delegator, eObject, feature));
 			view.getChildren().add(control);
 		}
-
+		composedAdapterFactory.dispose();
 		return view;
+	}
+
+	private boolean isReadOnly(AdapterFactoryItemDelegator delegator,
+		EObject owner, EStructuralFeature feature) {
+		if (!feature.isChangeable()) {
+			return true;
+		}
+		final IItemPropertyDescriptor descriptor = delegator.getPropertyDescriptor(owner,
+			feature);
+		return !descriptor.canSetProperty(feature);
 	}
 
 	private boolean isInvalidFeature(EStructuralFeature feature) {
@@ -81,19 +98,15 @@ public class ViewProvider implements IViewProvider {
 		return feature.isVolatile();
 	}
 
-	private Set<EStructuralFeature> getValidFeatures(EObject eObject) {
-		final Collection<EStructuralFeature> features = eObject.eClass().getEAllStructuralFeatures();
-		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
-			new ReflectiveItemProviderAdapterFactory(),
-			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
-		final AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
-			composedAdapterFactory);
+	private Set<EStructuralFeature> getValidFeatures(
+		AdapterFactoryItemDelegator itemDelegator, EObject eObject) {
+		final Collection<EStructuralFeature> features = eObject.eClass()
+			.getEAllStructuralFeatures();
 		final Set<EStructuralFeature> featuresToAdd = new LinkedHashSet<EStructuralFeature>();
 		IItemPropertyDescriptor propertyDescriptor = null;
 		for (final EStructuralFeature feature : features) {
-			propertyDescriptor =
-				adapterFactoryItemDelegator
-					.getPropertyDescriptor(eObject, feature);
+			propertyDescriptor = itemDelegator
+				.getPropertyDescriptor(eObject, feature);
 			if (propertyDescriptor == null || isInvalidFeature(feature)) {
 				continue;
 			}
@@ -101,7 +114,6 @@ public class ViewProvider implements IViewProvider {
 			featuresToAdd.add(feature);
 
 		}
-		composedAdapterFactory.dispose();
 		return featuresToAdd;
 	}
 

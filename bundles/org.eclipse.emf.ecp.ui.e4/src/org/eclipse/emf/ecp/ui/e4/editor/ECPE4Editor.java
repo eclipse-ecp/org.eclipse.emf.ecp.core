@@ -28,6 +28,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
+import org.eclipse.emf.ecp.spi.ui.ECPDeleteServiceImpl;
 import org.eclipse.emf.ecp.spi.ui.ECPReferenceServiceImpl;
 import org.eclipse.emf.ecp.ui.internal.e4.Activator;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
@@ -96,7 +97,7 @@ public class ECPE4Editor {
 			// render = ECPSWTViewRenderer.INSTANCE.render(parent, modelElement);
 			final VView view = ViewProviderHelper.getView(modelElement, null);
 			final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(view, modelElement,
-				new ECPReferenceServiceImpl());
+				new ECPReferenceServiceImpl(), new ECPDeleteServiceImpl());
 
 			render = ECPSWTViewRenderer.INSTANCE.render(parent, vmc);
 

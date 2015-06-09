@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.diffmerge.swt;
 
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
+import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.swt.graphics.Image;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -43,6 +44,15 @@ public class Activator extends Plugin {
 	// END SUPRESS CATCH EXCEPTION
 
 	/**
+	 * Returns the shared instance.
+	 *
+	 * @return the shared instance
+	 */
+	public static Activator getInstance() {
+		return instance;
+	}
+
+	/**
 	 * Finds and returns an image for the provided path.
 	 *
 	 * @param path the path to get the image from
@@ -65,5 +75,21 @@ public class Activator extends Plugin {
 				.getServiceReference(ImageRegistryService.class);
 		}
 		return getBundle().getBundleContext().getService(imageRegistryServiceReference);
+	}
+
+	/**
+	 * Returns the {@link EMFFormsLabelProvider} service.
+	 *
+	 * @return The {@link EMFFormsLabelProvider}
+	 */
+	public EMFFormsLabelProvider getEMFFormsLabelProvider() {
+		final ServiceReference<EMFFormsLabelProvider> serviceReference = instance.getBundle().getBundleContext()
+			.getServiceReference(EMFFormsLabelProvider.class);
+
+		final EMFFormsLabelProvider service = instance.getBundle().getBundleContext()
+			.getService(serviceReference);
+		instance.getBundle().getBundleContext().ungetService(serviceReference);
+
+		return service;
 	}
 }

@@ -6,12 +6,12 @@
 	<parent>
 		<groupId>org.eclipse.emf.ecp</groupId>
 		<artifactId>ecp-tests-parent</artifactId>
-		<version>1.5.1-SNAPSHOT</version>
+		<version>1.6.0-SNAPSHOT</version>
 		<relativePath>../../releng/org.eclipse.emf.ecp.releng.tests/</relativePath>
 	</parent>
 	<groupId>org.eclipse.emf.ecp</groupId>
 	<artifactId>org.eclipse.emf.ecp.view.horizontal.ui.swt.test</artifactId>
-	<version>1.5.1-SNAPSHOT</version>
+	<version>1.6.0-SNAPSHOT</version>
 	<packaging>eclipse-test-plugin</packaging>
 
 	<build>
@@ -24,38 +24,61 @@
 				<configuration>
 		          	<useUIHarness>true</useUIHarness>
 		          	<useUIThread>true</useUIThread>
-					<dependencies>
-						<dependency>
-							<type>eclipse-feature</type>
-							<artifactId>org.eclipse.emf.ecp.target.feature</artifactId>
-							<version>0.0.0</version>
-						</dependency>
-						<dependency>
-							<type>eclipse-feature</type>
-							<artifactId>org.eclipse.emf.ecp.feature</artifactId>
-							<version>0.0.0</version>
-						</dependency>
-						<dependency>
-							<type>eclipse-feature</type>
-							<artifactId>org.eclipse.emf.ecp.viewmodel.feature</artifactId>
-							<version>0.0.0</version>
-						</dependency>
-						<dependency>
-							<type>eclipse-feature</type>
-							<artifactId>org.eclipse.emf.ecp.view.horizontal.feature</artifactId>
-							<version>0.0.0</version>
-						</dependency>
-						<dependency>
-							<type>eclipse-feature</type>
-							<artifactId>org.eclipse.emf.ecp.emfstore.feature</artifactId>
-							<version>0.0.0</version>
-						</dependency>
-						<dependency>
-							<type>eclipse-feature</type>
-							<artifactId>org.eclipse.emf.ecp.view.template.feature</artifactId>
-							<version>0.0.0</version>
-						</dependency>
-					</dependencies>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>target-platform-configuration</artifactId>
+				<configuration>
+					<dependency-resolution>
+						<extraRequirements>
+							<requirement>
+								<type>p2-installable-unit</type>
+								<id>org.eclipse.emfforms.core.services.locale.default</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+							<requirement>
+								<type>p2-installable-unit</type>
+								<id>org.eclipse.equinox.ds</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+							<requirement>
+								<type>p2-installable-unit</type>
+								<id>org.eclipse.emfforms.core.services.databinding.featurepath</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+							<requirement>
+								<type>p2-installable-unit</type>
+								<id>org.eclipse.emfforms.core.services.emf</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+							<requirement>
+								<type>p2-installable-unit</type>
+								<id>org.eclipse.emf.ecp.view.template.service</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+							<requirement>
+								<type>p2-installable-unit</type>
+								<id>org.eclipse.emfforms.localization</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+							<requirement>
+								<type>p2-installable-unit</type>
+								<id>org.eclipse.emf.ecp.view.core.swt</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+							<requirement>
+								<type>p2-installable-unit</type>
+								<id>org.eclipse.emf.ecp.view.swt.layout</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+							<requirement>
+								<type>p2-installable-unit</type>
+								<id>org.eclipse.emf.ecore.edit</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+						</extraRequirements>
+					</dependency-resolution>
 				</configuration>
 			</plugin>
 		</plugins>

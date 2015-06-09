@@ -11,18 +11,20 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.model.common;
 
-import java.util.Iterator;
-
+import org.eclipse.core.databinding.observable.IObserving;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecp.view.internal.model.common.Activator;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 
 /**
  * Tester for Control Renderer.
@@ -44,13 +46,17 @@ public abstract class SimpleControlRendererTester implements ECPRendererTester {
 			return NOT_APPLICABLE;
 		}
 		final VControl control = (VControl) vElement;
-		final Setting setting = getSetting(control);
-		if (setting == null) {
+		IObservableValue observableValue;
+		try {
+			observableValue = Activator.getDefault().getEMFFormsDatabinding()
+				.getObservableValue(control.getDomainModelReference(), viewModelContext.getDomainModel());
+		} catch (final DatabindingFailedException ex) {
+			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 			return NOT_APPLICABLE;
 		}
-
-		final EStructuralFeature feature = setting.getEStructuralFeature();
-		final EObject eObject = setting.getEObject();
+		final EStructuralFeature feature = (EStructuralFeature) observableValue.getValueType();
+		final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
+		observableValue.dispose();
 		// if the feature is a multiValue and the description is a singlevalue continue
 		if (isSingleValue() == feature.isMany()) {
 			return NOT_APPLICABLE;
@@ -92,20 +98,6 @@ public abstract class SimpleControlRendererTester implements ECPRendererTester {
 	 */
 	protected boolean checkFeatureETypeAnnotations(EList<EAnnotation> eAnnotations) {
 		return true;
-	}
-
-	private Setting getSetting(VControl control) {
-		final Iterator<Setting> iterator = control.getDomainModelReference().getIterator();
-		int count = 0;
-		Setting setting = null;
-		while (iterator.hasNext()) {
-			count++;
-			setting = iterator.next();
-		}
-		if (count != 1) {
-			return null;
-		}
-		return setting;
 	}
 
 	private boolean checkAttributeInvalid(EAttribute attribute) {

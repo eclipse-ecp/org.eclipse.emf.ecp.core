@@ -11,16 +11,16 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.editor.controls;
 
-import java.util.Iterator;
-
+import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.model.common.ECPRendererTester;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.stack.model.VStackPackage;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 
 /**
  * @author Alexandra Buzila
@@ -39,12 +39,15 @@ public class StackItemControlRendererTester implements ECPRendererTester {
 			return NOT_APPLICABLE;
 		}
 		final VControl control = (VControl) vElement;
-		final Setting setting = getSetting(control);
-		if (setting == null) {
+		IValueProperty valueProperty;
+		try {
+			valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+				.getValueProperty(control.getDomainModelReference(), viewModelContext.getDomainModel());
+		} catch (final DatabindingFailedException ex) {
+			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 			return NOT_APPLICABLE;
 		}
-
-		final EStructuralFeature feature = setting.getEStructuralFeature();
+		final EStructuralFeature feature = (EStructuralFeature) valueProperty.getValueType();
 		if (feature.isMany()) {
 			return NOT_APPLICABLE;
 		}
@@ -58,19 +61,5 @@ public class StackItemControlRendererTester implements ECPRendererTester {
 		}
 
 		return NOT_APPLICABLE;
-	}
-
-	private Setting getSetting(VControl control) {
-		final Iterator<Setting> iterator = control.getDomainModelReference().getIterator();
-		int count = 0;
-		Setting setting = null;
-		while (iterator.hasNext()) {
-			count++;
-			setting = iterator.next();
-		}
-		if (count != 1) {
-			return null;
-		}
-		return setting;
 	}
 }

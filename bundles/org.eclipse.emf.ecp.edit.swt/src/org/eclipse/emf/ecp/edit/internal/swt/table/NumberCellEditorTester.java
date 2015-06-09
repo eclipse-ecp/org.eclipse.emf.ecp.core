@@ -41,6 +41,26 @@ public class NumberCellEditorTester implements ECPCellEditorTester {
 			if (Number.class.isAssignableFrom(instanceClass)) {
 				return 1;
 			}
+
+			// if the attribute class is an primitive test the primitive types
+			if (instanceClass.isPrimitive()) {
+				if (int.class.equals(instanceClass)) {
+					return 1;
+				}
+				else if (float.class.equals(instanceClass)) {
+					return 1;
+				}
+				else if (long.class.equals(instanceClass)) {
+					return 1;
+				}
+				else if (double.class.equals(instanceClass)) {
+					return 1;
+				}
+				else if (short.class.equals(instanceClass)) {
+					return 1;
+				}
+			}
+
 		}
 		return NOT_APPLICABLE;
 	}

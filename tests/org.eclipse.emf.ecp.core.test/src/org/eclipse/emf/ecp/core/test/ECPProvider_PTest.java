@@ -16,8 +16,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
-import java.util.Arrays;
-
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.exceptions.ECPProjectWithNameExistsException;
@@ -78,7 +76,7 @@ public class ECPProvider_PTest extends AbstractTest {
 		try {
 			// try to create an offline project;
 			final ECPProject project = getProjectManager().createProject(getProvider(), "test");
-			if (project == null && !Arrays.asList(getProjectManager().getProjects()).contains(project)) {
+			if (project == null && !getProjectManager().getProjects().contains(project)) {
 				isActuallyPossible = false;
 			} else {
 				isActuallyPossible = true;

@@ -15,6 +15,7 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -26,18 +27,21 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Descriptor;
 import org.eclipse.emf.ecore.EPackage.Registry;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
-import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.ide.view.internal.service.IDEViewModelRegistryImpl;
 import org.eclipse.emf.ecp.ide.view.service.IDEViewModelRegistry;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
@@ -61,21 +65,30 @@ import org.osgi.framework.ServiceReference;
 public class ControlRootEClassControlChangeableSWTRenderer extends ControlRootEClassControl2SWTRenderer {
 
 	/**
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param reportService the {@link ReportService}
+	 */
+	public ControlRootEClassControlChangeableSWTRenderer(VControl vElement, ViewModelContext viewContext,
+		ReportService reportService) {
+		super(vElement, viewContext, reportService);
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.internal.editor.controls.ControlRootEClassControl2SWTRenderer#createSWTControl(org.eclipse.swt.widgets.Composite,
-	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
+	 * @see org.eclipse.emf.ecp.view.internal.editor.controls.ControlRootEClassControl2SWTRenderer#createSWTControl(org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
-	protected Control createSWTControl(final Composite parent2, Setting setting) {
-		// TODO Auto-generated method stub
-		final Composite composite = (Composite) super.createSWTControl(parent2, setting);
+	protected Control createSWTControl(final Composite parent2) {
+		final Composite composite = (Composite) super.createSWTControl(parent2);
 
 		GridLayoutFactory.fillDefaults().numColumns(2).spacing(0, 0).equalWidth(false).applyTo(composite);
 
 		final Button selectClass = new Button(composite, SWT.PUSH);
-		selectClass.setText("Link Root EClass");
-		selectClass.setToolTipText("Link Root EClass");
+		selectClass.setText("Link Root EClass"); //$NON-NLS-1$
+		selectClass.setToolTipText("Link Root EClass"); //$NON-NLS-1$
 		selectClass.addSelectionListener(new SelectionAdapter() {
 
 			/**
@@ -125,7 +138,20 @@ public class ControlRootEClassControlChangeableSWTRenderer extends ControlRootEC
 			final Object selection = dialog.getFirstResult();
 			if (EClass.class.isInstance(selection)) {
 				final EClass selectedFeature = (EClass) selection;
-				final VView view = (VView) getVElement().getDomainModelReference().getIterator().next().getEObject();
+				final VView view;
+				final IObservableValue observableValue;
+				try {
+					observableValue = Activator
+						.getDefault()
+						.getEMFFormsDatabinding()
+						.getObservableValue(getVElement().getDomainModelReference(),
+							getViewModelContext().getDomainModel());
+				} catch (final DatabindingFailedException ex) {
+					Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+					return;
+				}
+				view = (VView) observableValue.getValue();
+				observableValue.dispose();
 
 				if (view.getRootEClass() != null) {
 					getViewModelRegistry().unregister(

@@ -85,13 +85,13 @@ public class ECPDiagramBehavior extends DiagramBehavior {
 	}
 
 	@Override
-	protected void disableAdapters() {
+	public void disableAdapters() {
 		// TODO Auto-generated method stub
 		super.disableAdapters();
 	}
 
 	@Override
-	protected void enableAdapters() {
+	public void enableAdapters() {
 		// TODO Auto-generated method stub
 		super.enableAdapters();
 	}

@@ -66,7 +66,13 @@ public class WorkspaceProvider extends DefaultProvider {
 	/** Root URI Property Name. */
 	public static final String PROP_ROOT_URI = "rootURI"; //$NON-NLS-1$
 
-	/** The Workspace Provider Instance. */
+	/**
+	 * The Workspace Provider Instance.
+	 *
+	 * @deprecated use ECPUtil.getECPProviderRegistry().getProvider(WorkspaceProvider.NAME) instead
+	 *
+	 */
+	@Deprecated
 	static WorkspaceProvider INSTANCE;
 
 	/**

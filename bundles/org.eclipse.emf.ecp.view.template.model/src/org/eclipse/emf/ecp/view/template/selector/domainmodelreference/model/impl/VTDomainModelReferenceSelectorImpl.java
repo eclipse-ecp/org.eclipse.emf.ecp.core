@@ -11,22 +11,26 @@
  */
 package org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.impl;
 
-import java.util.Iterator;
-
+import org.eclipse.core.databinding.observable.IObserving;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecp.common.spi.UniqueSetting;
+import org.eclipse.emf.ecp.internal.view.template.model.Activator;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainModelReferenceSelector;
 import org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainmodelreferencePackage;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 
 /**
  * <!-- begin-user-doc -->
@@ -251,26 +255,29 @@ public class VTDomainModelReferenceSelectorImpl extends MinimalEObjectImpl.Conta
 		if (controlDomainModelReference == null) {
 			return NOT_APPLICABLE;
 		}
-		final boolean resolve = getDomainModelReference().init(viewModelContext.getDomainModel());
-		if (!resolve) {
+
+		IObservableValue controlObservableValue;
+		IObservableValue selectorObservableValue;
+		try {
+			controlObservableValue = Activator.getDefault().getEMFFormsDatabinding()
+				.getObservableValue(controlDomainModelReference, viewModelContext.getDomainModel());
+			selectorObservableValue = Activator.getDefault().getEMFFormsDatabinding()
+				.getObservableValue(getDomainModelReference(), viewModelContext.getDomainModel());
+		} catch (final DatabindingFailedException ex) {
+			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 			return NOT_APPLICABLE;
 		}
-		final Iterator<Setting> controlSettings = controlDomainModelReference.getIterator();
-		final Iterator<Setting> selectorSettings = getDomainModelReference().getIterator();
+		final EObject controlEObject = (EObject) ((IObserving) controlObservableValue).getObserved();
+		final EStructuralFeature controlStructuralFeature = (EStructuralFeature) controlObservableValue.getValueType();
+		final EObject selectorEObject = (EObject) ((IObserving) selectorObservableValue).getObserved();
+		final EStructuralFeature selectorStructuralFeature = (EStructuralFeature) selectorObservableValue
+			.getValueType();
+		controlObservableValue.dispose();
+		selectorObservableValue.dispose();
 
-		while (selectorSettings.hasNext()) {
-			final Setting selectorSetting = selectorSettings.next();
-			if (!controlSettings.hasNext()) {
-				return NOT_APPLICABLE;
-			}
-			final Setting controlSetting = controlSettings.next();
-			final boolean equal = UniqueSetting.createSetting(selectorSetting).equals(
-				UniqueSetting.createSetting(controlSetting));
-			if (!equal) {
-				return NOT_APPLICABLE;
-			}
-		}
-		if (controlSettings.hasNext()) {
+		final boolean equal = UniqueSetting.createSetting(selectorEObject, selectorStructuralFeature).equals(
+			UniqueSetting.createSetting(controlEObject, controlStructuralFeature));
+		if (!equal) {
 			return NOT_APPLICABLE;
 		}
 

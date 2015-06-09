@@ -11,10 +11,10 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.internal.view.model.provider.xmi;
 
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
-import org.eclipse.core.runtime.Status;
+import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
 /**
  * Activator of the bundle.
@@ -30,6 +30,8 @@ public class Activator extends Plugin {
 	public static final String PLUGIN_ID = "org.eclipse.emf.ecp.view.model.provider.xmi"; //$NON-NLS-1$
 
 	private static Activator activator;
+
+	private static ServiceReference<ReportService> reportServiceReference;
 
 	/**
 	 *
@@ -55,12 +57,15 @@ public class Activator extends Plugin {
 	}
 
 	/**
-	 * Logs an exception.
+	 * Returns the {@link ReportService}.
 	 *
-	 * @param e the exception
+	 * @return the {@link ReportService}
 	 */
-	public static void log(Exception e) {
-		activator.getLog().log(
-			new Status(IStatus.ERROR, PLUGIN_ID, e.getMessage(), e));
+	public static ReportService getReportService() {
+		if (reportServiceReference == null) {
+			reportServiceReference = activator.getBundle().getBundleContext()
+				.getServiceReference(ReportService.class);
+		}
+		return activator.getBundle().getBundleContext().getService(reportServiceReference);
 	}
 }

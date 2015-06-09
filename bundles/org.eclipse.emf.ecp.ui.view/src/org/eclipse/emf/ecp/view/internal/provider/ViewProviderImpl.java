@@ -24,11 +24,11 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.internal.ui.Activator;
 import org.eclipse.emf.ecp.view.spi.model.VView;
-import org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport;
 import org.eclipse.emf.ecp.view.spi.provider.IViewProvider;
 import org.eclipse.emf.ecp.view.spi.provider.reporting.NoViewProviderFoundReport;
 import org.eclipse.emf.ecp.view.spi.provider.reporting.ViewModelIsNullReport;
 import org.eclipse.emf.ecp.view.spi.provider.reporting.ViewProviderInitFailedReport;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.osgi.framework.Bundle;
 
 /**

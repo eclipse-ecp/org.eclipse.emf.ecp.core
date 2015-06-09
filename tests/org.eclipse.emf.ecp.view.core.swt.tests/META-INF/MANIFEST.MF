@@ -2,19 +2,19 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.core.swt.tests;singleton:=true
-Bundle-Version: 1.5.1.qualifier
+Bundle-Version: 1.6.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Fragment-Host: org.eclipse.emf.ecp.view.core.swt;bundle-version="1.4.0"
+Fragment-Host: org.eclipse.emf.ecp.view.core.swt;bundle-version="[1.6.0,2.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.eclipse.emf.ecp.view.core.swt.test.model;version="
- 1.5.1";x-internal:=true,org.eclipse.emf.ecp.view.core.swt.test.model.
- impl;version="1.5.1";x-internal:=true,org.eclipse.emf.ecp.view.core.s
- wt.test.model.util;version="1.5.1";x-internal:=true,org.eclipse.emf.e
- cp.view.core.swt.tests;version="1.5.1";x-internal:=true,org.eclipse.e
- mf.ecp.view.internal.core.swt.renderer;version="1.5.1";x-internal:=tr
- ue,org.eclipse.emf.ecp.view.spi.core.swt.renderer;version="1.5.1"
+ 1.6.0";x-internal:=true,org.eclipse.emf.ecp.view.core.swt.test.model.
+ impl;version="1.6.0";x-internal:=true,org.eclipse.emf.ecp.view.core.s
+ wt.test.model.util;version="1.6.0";x-internal:=true,org.eclipse.emf.e
+ cp.view.core.swt.tests;version="1.6.0";x-internal:=true,org.eclipse.e
+ mf.ecp.view.internal.core.swt.renderer;version="1.6.0";x-internal:=tr
+ ue,org.eclipse.emf.ecp.view.spi.core.swt.renderer;version="1.6.0"
 Require-Bundle: org.junit;bundle-version="[4.11.0,5.0.0)",
  org.eclipse.emf.ecp.view.test.common.swt;bundle-version="[1.5.0,2.0.0)",
  org.eclipse.emf.ecp.ui.view.swt;bundle-version="[1.5.0,2.0.0)",
@@ -22,5 +22,10 @@ Require-Bundle: org.junit;bundle-version="[4.11.0,5.0.0)",
  org.eclipse.emf.ecore;bundle-version="[2.7.0,3.0.0)";visibility:=reexport,
  org.eclipse.emf.emfstore.examplemodel;bundle-version="[1.3.0,2.0.0)",
  org.eclipse.emf.emfstore.examplemodel.edit;bundle-version="[1.3.0,2.0.0)",
- org.mockito.mockito-all;bundle-version="[1.9.5,2.0.0)"
+ org.mockito.mockito-all;bundle-version="[1.9.5,2.0.0)",
+ org.eclipse.core.databinding.observable;bundle-version="[1.3.0,2.0.0)",
+ org.eclipse.emf.ecp.test.common;bundle-version="[1.5.0,2.0.0)",
+ org.eclipse.emf.ecp.view.swt.layout;bundle-version="[1.5.0,2.0.0)"
 Bundle-ActivationPolicy: lazy
+Import-Package: com.ibm.icu.text;version="52.1.1",
+ org.eclipse.swt.widgets;version="0.0.0"

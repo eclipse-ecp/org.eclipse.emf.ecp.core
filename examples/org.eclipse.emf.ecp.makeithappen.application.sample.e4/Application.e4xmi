@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmi:id="_GMrUQAD5EeSknd978uYCFA" elementId="org.eclipse.e4.ide.application" bindingContexts="_GMrUSQD5EeSknd978uYCFA">
-  <children xsi:type="basic:TrimmedWindow" xmi:id="_GMrUQQD5EeSknd978uYCFA" label="MakeItHappen ECP Sample e4 Application" iconURI="platform:/plugin/org.eclipse.emf.ecp.makeithappen.application.sample.e4/icons/bricks.png" width="800" height="500">
+  <children xsi:type="basic:TrimmedWindow" xmi:id="_GMrUQQD5EeSknd978uYCFA" label="MakeItHappen ECP Sample e4 Application" iconURI="platform:/plugin/org.eclipse.emf.ecp.makeithappen.application.sample.e4/icons/bricks.png" width="800" height="600">
     <children xsi:type="basic:Part" xmi:id="_GMr7ZQD5EeSknd978uYCFA" contributionURI="bundleclass://org.eclipse.emf.ecp.makeithappen.application.sample.e4/org.eclipse.emf.ecp.makeithappen.application.sample.e4.parts.SamplePart" label="Sample Part" iconURI="platform:/plugin/org.eclipse.emf.ecp.makeithappen.application.sample.e4/icons/bricks.png"/>
   </children>
   <bindingTables xmi:id="_GMrUTgD5EeSknd978uYCFA" bindingContext="_GMrUSQD5EeSknd978uYCFA">

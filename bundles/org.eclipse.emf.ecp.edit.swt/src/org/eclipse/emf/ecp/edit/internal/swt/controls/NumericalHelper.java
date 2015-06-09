@@ -52,7 +52,11 @@ public final class NumericalHelper {
 		// int integerDigits = totalDigits - fractionalDigits;
 		// format.setMaximumIntegerDigits(integerDigits);
 		// } else {
-		format.setMaximumFractionDigits(100);
+		if (isDouble(instanceClass)) {
+			format.setMaximumFractionDigits(100);
+		} else {
+			format.setMaximumFractionDigits(0);
+		}
 		// }
 		return format;
 	}

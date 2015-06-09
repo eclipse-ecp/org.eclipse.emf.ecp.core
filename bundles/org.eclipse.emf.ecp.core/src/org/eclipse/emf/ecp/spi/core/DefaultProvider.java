@@ -21,6 +21,8 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -363,7 +365,12 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	 */
 	@Override
 	public Iterator<EObject> getLinkElements(InternalProject project, EObject modelElement, EReference eReference) {
-		return ItemPropertyDescriptor.getReachableObjectsOfType(modelElement, eReference.getEType()).iterator();
+		final EClass elementClass = modelElement.eClass();
+		EClassifier type = EcoreUtil.getReifiedType(elementClass, eReference.getEGenericType()).getEClassifier();
+		if (type == null) {
+			type = eReference.getEType();
+		}
+		return ItemPropertyDescriptor.getReachableObjectsOfType(modelElement, type).iterator();
 	}
 
 	/**

@@ -30,6 +30,7 @@ import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.emf.emfstore.bowling.Fan;
 import org.eclipse.emf.emfstore.bowling.Merchandise;
 import org.eclipse.emf.emfstore.bowling.Player;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
@@ -207,6 +208,8 @@ public class DynamicDMR_PTest {
 		} catch (final NoRendererFoundException e) {
 			fail("Could not render view: " + e.getMessage());
 		} catch (final NoPropertyDescriptorFoundExeption e) {
+			fail("Could not render view: " + e.getMessage());
+		} catch (final EMFFormsNoRendererException e) {
 			fail("Could not render view: " + e.getMessage());
 		}
 	}

@@ -22,19 +22,18 @@ import org.eclipse.emf.ecore.util.FeatureMap;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.test.university.Staff#getProfessors <em>Professors</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.test.university.Staff#getAssistants <em>Assistants</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.test.university.Staff#getStaff <em>Staff</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.ecp.test.university.UniversityPackage#getStaff()
  * @model
  * @generated
  */
-public interface Staff extends EObject
-{
+public interface Staff extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Professors</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.emf.ecp.test.university.Professor}.

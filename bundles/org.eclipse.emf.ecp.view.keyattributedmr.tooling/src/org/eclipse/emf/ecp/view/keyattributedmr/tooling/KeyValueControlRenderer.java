@@ -14,14 +14,18 @@ package org.eclipse.emf.ecp.view.keyattributedmr.tooling;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.internal.editor.controls.ExpectedValueControlRenderer;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.keyattributedmr.model.VKeyAttributeDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.keyattributedmr.model.VKeyattributedmrPackage;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Label;
 
@@ -32,11 +36,24 @@ import org.eclipse.swt.widgets.Label;
 @SuppressWarnings("restriction")
 public class KeyValueControlRenderer extends ExpectedValueControlRenderer {
 
+	/**
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param reportService the {@link ReportService}
+	 */
+	public KeyValueControlRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService) {
+		super(vElement, viewContext, reportService);
+	}
+
 	@Override
 	protected void onSelectButton(Label control) {
-		final Setting setting = getSetting(getVElement());
-
-		final VKeyAttributeDomainModelReference condition = (VKeyAttributeDomainModelReference) setting.getEObject();
+		VKeyAttributeDomainModelReference condition;
+		try {
+			condition = (VKeyAttributeDomainModelReference) getObservedEObject();
+		} catch (final DatabindingFailedException ex) {
+			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+			return;
+		}
 
 		if (!VFeaturePathDomainModelReference.class.isInstance(condition.getKeyDMR())) {
 			MessageDialog.openError(control.getShell(), "No Feature Path Domain Model Reference found", //$NON-NLS-1$

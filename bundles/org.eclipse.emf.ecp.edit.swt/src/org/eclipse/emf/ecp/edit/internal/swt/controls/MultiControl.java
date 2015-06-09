@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -65,6 +65,7 @@ public abstract class MultiControl extends SWTControl {
 
 	private static final String ICONS_ARROW_DOWN_PNG = "icons/arrow_down.png";//$NON-NLS-1$
 	private static final String ICONS_ARROW_UP_PNG = "icons/arrow_up.png";//$NON-NLS-1$
+	private static final String ICONS_UNSET_FEATURE = "icons/unset_feature.png"; //$NON-NLS-1$
 
 	private IObservableList model;
 	private IListChangeListener changeListener;
@@ -202,7 +203,8 @@ public abstract class MultiControl extends SWTControl {
 						}
 						final int widthAfterChange = sectionComposite.getSize().x;
 						if (widthBeforeChange != widthAfterChange) {
-							scrolledComposite.setMinHeight(sectionComposite.computeSize(widthAfterChange, SWT.DEFAULT).y);
+							scrolledComposite
+								.setMinHeight(sectionComposite.computeSize(widthAfterChange, SWT.DEFAULT).y);
 							widthBeforeChange = widthAfterChange;
 						}
 					}
@@ -316,7 +318,7 @@ public abstract class MultiControl extends SWTControl {
 			unsetButton = new Button(toolbarComposite, SWT.PUSH);
 			unsetButton.setEnabled(!getControl().isReadonly());
 			unsetButton.setToolTipText(getUnsetButtonTooltip());
-			unsetButton.setImage(Activator.getImage("icons/delete.png")); //$NON-NLS-1$
+			unsetButton.setImage(Activator.getImage(ICONS_UNSET_FEATURE));
 		}
 	}
 
@@ -369,7 +371,7 @@ public abstract class MultiControl extends SWTControl {
 		 */
 		private void createDeleteButton(Composite composite) {
 			final Button delB = new Button(composite, SWT.PUSH);
-			delB.setImage(Activator.getImage("icons/delete.png")); //$NON-NLS-1$
+			delB.setImage(Activator.getImage(ICONS_UNSET_FEATURE));
 			delB.setEnabled(!getControl().isReadonly());
 			delB.addSelectionListener(new SelectionAdapter() {
 				private static final long serialVersionUID = 1L;

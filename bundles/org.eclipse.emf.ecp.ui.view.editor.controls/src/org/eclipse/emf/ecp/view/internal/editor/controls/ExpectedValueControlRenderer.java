@@ -14,23 +14,32 @@ package org.eclipse.emf.ecp.view.internal.editor.controls;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Iterator;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
+import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EEnumLiteral;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EEnumImpl;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.provider.ECPTooltipModifierHelper;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -47,8 +56,10 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.ListDialog;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * A control for defining an value in a leaf condition.
@@ -59,6 +70,36 @@ import org.eclipse.ui.dialogs.ListDialog;
 // APITODO no api yet
 public abstract class ExpectedValueControlRenderer extends SimpleControlSWTControlSWTRenderer {
 
+	private static final EMFFormsDatabinding emfFormsDatabinding;
+	private static final EMFFormsLabelProvider emfFormsLabelProvider;
+	private static final VTViewTemplateProvider vtViewTemplateProvider;
+
+	static {
+		final BundleContext bundleContext = FrameworkUtil.getBundle(ExpectedValueControlRenderer.class)
+			.getBundleContext();
+		final ServiceReference<EMFFormsDatabinding> emfFormsDatabindingServiceReference = bundleContext
+			.getServiceReference(EMFFormsDatabinding.class);
+		emfFormsDatabinding = bundleContext.getService(emfFormsDatabindingServiceReference);
+		final ServiceReference<EMFFormsLabelProvider> emfFormsLabelProviderServiceReference = bundleContext
+			.getServiceReference(EMFFormsLabelProvider.class);
+		emfFormsLabelProvider = bundleContext.getService(emfFormsLabelProviderServiceReference);
+		final ServiceReference<VTViewTemplateProvider> vtViewTemplateProviderServiceReference = bundleContext
+			.getServiceReference(VTViewTemplateProvider.class);
+		vtViewTemplateProvider = bundleContext.getService(vtViewTemplateProviderServiceReference);
+	}
+
+	/**
+	 * Default constructor.
+	 *
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param reportService The {@link ReportService}
+	 */
+	public ExpectedValueControlRenderer(VControl vElement, ViewModelContext viewContext,
+		ReportService reportService) {
+		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
+	}
+
 	private Label text;
 
 	private String getTextVariantID() {
@@ -68,11 +109,10 @@ public abstract class ExpectedValueControlRenderer extends SimpleControlSWTContr
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer#createSWTControl(org.eclipse.swt.widgets.Composite,
-	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer#createSWTControl(org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
-	protected Control createSWTControl(Composite parent, Setting setting) {
+	protected Control createSWTControl(Composite parent) {
 		final Composite composite = new Composite(parent, SWT.NONE);
 		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(composite);
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(composite);
@@ -101,14 +141,14 @@ public abstract class ExpectedValueControlRenderer extends SimpleControlSWTContr
 	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
 	 */
 	@Override
-	protected Binding[] createBindings(Control control, Setting setting) {
+	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
 		final Label text = (Label) control;
 		final TargetToModelUpdateStrategy targetToModelUpdateStrategy = new TargetToModelUpdateStrategy();
 		final ModelToTargetUpdateStrategy modelToTargetUpdateStrategy = new ModelToTargetUpdateStrategy();
 
 		final IObservableValue value = SWTObservables.observeText(text);
 
-		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(setting),
+		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(),
 			targetToModelUpdateStrategy, modelToTargetUpdateStrategy);
 		return new Binding[] { binding };
 	}
@@ -220,18 +260,18 @@ public abstract class ExpectedValueControlRenderer extends SimpleControlSWTContr
 	 */
 	protected abstract void onSelectButton(Label text);
 
-	protected Setting getSetting(VControl control) {
-		final Iterator<Setting> iterator = control.getDomainModelReference().getIterator();
-		int count = 0;
-		Setting setting = null;
-		while (iterator.hasNext()) {
-			count++;
-			setting = iterator.next();
-		}
-		if (count != 1) {
-			return null;
-		}
-		return setting;
+	/**
+	 * Returns the model object representing the value for this renderer's domain model reference.
+	 *
+	 * @return the EObject
+	 * @throws DatabindingFailedException if the databinding fails
+	 */
+	protected EObject getObservedEObject() throws DatabindingFailedException {
+		final IObservableValue observableValue = Activator.getDefault().getEMFFormsDatabinding()
+			.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
+		final EObject result = (EObject) ((IObserving) observableValue).getObserved();
+		observableValue.dispose();
+		return result;
 	}
 
 	/**
@@ -260,8 +300,20 @@ public abstract class ExpectedValueControlRenderer extends SimpleControlSWTContr
 		public Object convert(Object value) {
 			final Object converted = value.toString();
 			if (String.class.isInstance(converted)) {
-				return ECPTooltipModifierHelper.modifyString(String.class.cast(converted), getVElement()
-					.getDomainModelReference().getIterator().next());
+				IObservableValue observableValue;
+				try {
+					observableValue = emfFormsDatabinding
+						.getObservableValue(getVElement().getDomainModelReference(),
+							getViewModelContext().getDomainModel());
+				} catch (final DatabindingFailedException ex) {
+					getReportService().report(new DatabindingFailedReport(ex));
+					return converted;
+				}
+				final InternalEObject internalEObject = (InternalEObject) ((IObserving) observableValue).getObserved();
+				final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+				observableValue.dispose();
+				return ECPTooltipModifierHelper.modifyString(String.class.cast(converted),
+					internalEObject.eSetting(structuralFeature));
 			}
 			return converted;
 		}
@@ -278,8 +330,6 @@ public abstract class ExpectedValueControlRenderer extends SimpleControlSWTContr
 
 		/**
 		 * Constructor for indicating whether a value is unsettable.
-		 *
-		 * @param unsettable true if value is unsettable, false otherwise
 		 */
 		public TargetToModelUpdateStrategy() {
 		}

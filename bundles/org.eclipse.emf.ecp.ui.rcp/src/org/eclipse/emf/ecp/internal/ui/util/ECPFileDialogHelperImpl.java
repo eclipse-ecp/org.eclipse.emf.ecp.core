@@ -18,6 +18,7 @@ import org.eclipse.emf.ecp.internal.ui.PreferenceHelper;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * {@link ECPFileDialogHelper} using the SWT implementation of the {@link FileDialog}.
@@ -25,6 +26,7 @@ import org.eclipse.swt.widgets.Shell;
  * @author jfaltermeier
  *
  */
+@Component
 public class ECPFileDialogHelperImpl implements ECPFileDialogHelper {
 
 	private static final String IMPORT_MODEL_PATH = "org.eclipse.emf.emfstore.client.ui.importModelPath"; //$NON-NLS-1$

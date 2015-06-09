@@ -13,12 +13,14 @@ package org.eclipse.emf.ecp.view.custom.ui.swt.di.renderer;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl;
 import org.eclipse.emf.ecp.view.spi.custom.swt.CustomControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.osgi.framework.Bundle;
@@ -30,6 +32,15 @@ import org.osgi.framework.Bundle;
  *
  */
 public class DICustomControlSWTRenderer extends CustomControlSWTRenderer {
+
+	/**
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param factory the {@link ReportService}
+	 */
+	public DICustomControlSWTRenderer(VCustomControl vElement, ViewModelContext viewContext, ReportService factory) {
+		super(vElement, viewContext, factory);
+	}
 
 	private IEclipseContext eclipseContext;
 
@@ -78,7 +89,7 @@ public class DICustomControlSWTRenderer extends CustomControlSWTRenderer {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.custom.swt.CustomControlSWTRenderer#renderControl(org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell,
+	 * @see org.eclipse.emf.ecp.view.spi.custom.swt.CustomControlSWTRenderer#renderControl(org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell,
 	 *      org.eclipse.swt.widgets.Composite)
 	 */
 	@SuppressWarnings("restriction")
@@ -86,7 +97,7 @@ public class DICustomControlSWTRenderer extends CustomControlSWTRenderer {
 	protected Control renderControl(SWTGridCell cell, Composite parent) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		org.eclipse.emf.ecp.ui.view.swt.di.util.SWTContextUtil.setAbstractSWTRendererObjects(eclipseContext,
-			getVElement(), getViewModelContext(), getSWTRendererFactory(), parent);
+			getVElement(), getViewModelContext(), parent);
 		eclipseContext.set(SWTGridCell.class, cell);
 		return super.renderControl(cell, parent);
 	}

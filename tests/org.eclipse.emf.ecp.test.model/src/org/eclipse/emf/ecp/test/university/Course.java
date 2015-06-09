@@ -20,19 +20,18 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.test.university.Course#getId <em>Id</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.test.university.Course#getName <em>Name</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.test.university.Course#getEtcs <em>Etcs</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.ecp.test.university.UniversityPackage#getCourse()
  * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='UniqueItemById NameNotEmpty'"
  * @generated
  */
-public interface Course extends EObject
-{
+public interface Course extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->

@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.emf.ecp.test.university.Address;
 import org.eclipse.emf.ecp.test.university.Assistant;
 import org.eclipse.emf.ecp.test.university.Course;
 import org.eclipse.emf.ecp.test.university.CourseCatalog;
@@ -31,8 +32,7 @@ import org.eclipse.emf.ecp.test.university.UniversityPackage;
  *
  * @generated
  */
-public class UniversityFactoryImpl extends EFactoryImpl implements UniversityFactory
-{
+public class UniversityFactoryImpl extends EFactoryImpl implements UniversityFactory {
 	/**
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
@@ -40,18 +40,14 @@ public class UniversityFactoryImpl extends EFactoryImpl implements UniversityFac
 	 *
 	 * @generated
 	 */
-	public static UniversityFactory init()
-	{
-		try
-		{
+	public static UniversityFactory init() {
+		try {
 			final UniversityFactory theUniversityFactory = (UniversityFactory) EPackage.Registry.INSTANCE
 				.getEFactory(UniversityPackage.eNS_URI);
-			if (theUniversityFactory != null)
-			{
+			if (theUniversityFactory != null) {
 				return theUniversityFactory;
 			}
-		} catch (final Exception exception)
-		{
+		} catch (final Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new UniversityFactoryImpl();
@@ -64,8 +60,7 @@ public class UniversityFactoryImpl extends EFactoryImpl implements UniversityFac
 	 *
 	 * @generated
 	 */
-	public UniversityFactoryImpl()
-	{
+	public UniversityFactoryImpl() {
 		super();
 	}
 
@@ -76,10 +71,8 @@ public class UniversityFactoryImpl extends EFactoryImpl implements UniversityFac
 	 * @generated
 	 */
 	@Override
-	public EObject create(EClass eClass)
-	{
-		switch (eClass.getClassifierID())
-		{
+	public EObject create(EClass eClass) {
+		switch (eClass.getClassifierID()) {
 		case UniversityPackage.COURSE_CATALOG:
 			return createCourseCatalog();
 		case UniversityPackage.COURSE:
@@ -90,6 +83,8 @@ public class UniversityFactoryImpl extends EFactoryImpl implements UniversityFac
 			return createProfessor();
 		case UniversityPackage.ASSISTANT:
 			return createAssistant();
+		case UniversityPackage.ADDRESS:
+			return createAddress();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -101,8 +96,7 @@ public class UniversityFactoryImpl extends EFactoryImpl implements UniversityFac
 	 *
 	 * @generated
 	 */
-	public CourseCatalog createCourseCatalog()
-	{
+	public CourseCatalog createCourseCatalog() {
 		final CourseCatalogImpl courseCatalog = new CourseCatalogImpl();
 		return courseCatalog;
 	}
@@ -113,8 +107,7 @@ public class UniversityFactoryImpl extends EFactoryImpl implements UniversityFac
 	 *
 	 * @generated
 	 */
-	public Course createCourse()
-	{
+	public Course createCourse() {
 		final CourseImpl course = new CourseImpl();
 		return course;
 	}
@@ -125,8 +118,7 @@ public class UniversityFactoryImpl extends EFactoryImpl implements UniversityFac
 	 *
 	 * @generated
 	 */
-	public Staff createStaff()
-	{
+	public Staff createStaff() {
 		final StaffImpl staff = new StaffImpl();
 		return staff;
 	}
@@ -137,8 +129,7 @@ public class UniversityFactoryImpl extends EFactoryImpl implements UniversityFac
 	 *
 	 * @generated
 	 */
-	public Professor createProfessor()
-	{
+	public Professor createProfessor() {
 		final ProfessorImpl professor = new ProfessorImpl();
 		return professor;
 	}
@@ -149,8 +140,7 @@ public class UniversityFactoryImpl extends EFactoryImpl implements UniversityFac
 	 *
 	 * @generated
 	 */
-	public Assistant createAssistant()
-	{
+	public Assistant createAssistant() {
 		final AssistantImpl assistant = new AssistantImpl();
 		return assistant;
 	}
@@ -161,8 +151,18 @@ public class UniversityFactoryImpl extends EFactoryImpl implements UniversityFac
 	 *
 	 * @generated
 	 */
-	public UniversityPackage getUniversityPackage()
-	{
+	public Address createAddress() {
+		final AddressImpl address = new AddressImpl();
+		return address;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public UniversityPackage getUniversityPackage() {
 		return (UniversityPackage) getEPackage();
 	}
 
@@ -174,8 +174,7 @@ public class UniversityFactoryImpl extends EFactoryImpl implements UniversityFac
 	 * @generated
 	 */
 	@Deprecated
-	public static UniversityPackage getPackage()
-	{
+	public static UniversityPackage getPackage() {
 		return UniversityPackage.eINSTANCE;
 	}
 

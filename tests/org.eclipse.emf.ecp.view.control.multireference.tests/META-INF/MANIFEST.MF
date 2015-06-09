@@ -1,0 +1,20 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Multi Reference Control Tests
+Bundle-SymbolicName: org.eclipse.emf.ecp.view.control.multireference.tests
+Bundle-Version: 1.6.0.qualifier
+Bundle-Vendor: Eclipse Modeling Project
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Fragment-Host: org.eclipse.emf.ecp.view.control.multireference;bundle-version="[1.5.0,2.0.0)"
+Require-Bundle: org.junit;bundle-version="[4.11.0,5.0.0)",
+ org.mockito.mockito-all;bundle-version="[1.9.5,2.0.0)",
+ org.eclipse.emf.ecp.view.test.common.swt;bundle-version="[1.6.0,2.0.0)",
+ org.eclipse.emfforms.core.services.databinding.testmodel;bundle-version="[1.6.0,2.0.0)"
+Import-Package: org.eclipse.emfforms.spi.common.report;version="[1.6.0,2.0.0)",
+ org.eclipse.swt;version="0.0.0",
+ org.eclipse.swt.widgets;version="0.0.0",
+ org.osgi.framework;version="[1.1.0,2.0.0)"
+Bundle-ActivationPolicy: lazy
+Export-Package: org.eclipse.emf.ecp.view.control.multireference.tests;
+ version="1.6.0";x-internal:=true,org.eclipse.emf.ecp.view.internal.co
+ ntrol.multireference;version="1.6.0";x-internal:=true

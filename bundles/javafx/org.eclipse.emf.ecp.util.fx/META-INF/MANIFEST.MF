@@ -2,10 +2,10 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: FX Util
 Bundle-SymbolicName: org.eclipse.emf.ecp.util.fx
-Bundle-Version: 1.5.1.qualifier
+Bundle-Version: 1.6.0.qualifier
 Bundle-Vendor: ECLIPSESOURCE
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Export-Package: org.eclipse.emf.ecp.util.fx;version="1.5.1"
+Export-Package: org.eclipse.emf.ecp.util.fx;version="1.6.0"
 Require-Bundle: org.eclipse.emf.edit
 Import-Package: javafx.collections;version="2.2.0",
  javafx.event;version="2.2.0",

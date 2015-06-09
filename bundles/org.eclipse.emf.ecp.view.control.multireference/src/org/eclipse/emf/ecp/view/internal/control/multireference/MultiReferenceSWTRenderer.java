@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,34 +8,51 @@
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
+ * Lucas Koehler - use data binding services
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.control.multireference;
 
-import java.util.Iterator;
+import java.util.Collection;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.list.IObservableList;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.AdapterFactory;
-import org.eclipse.emf.databinding.edit.EMFEditObservables;
+import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.TableViewerColumnBuilder;
+import org.eclipse.emf.ecp.edit.spi.DeleteService;
+import org.eclipse.emf.ecp.edit.spi.EMFDeleteServiceImpl;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
+import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
+import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
+import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
+import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -56,12 +73,14 @@ import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TableColumn;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * Renderer for MultiReferenceControl.
@@ -72,15 +91,38 @@ import org.eclipse.swt.widgets.TableColumn;
 @SuppressWarnings("restriction")
 public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VControl> {
 
+	private final ImageRegistryService imageRegistryService;
+
+	/**
+	 * Default constructor.
+	 *
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
+	 * @param emfFormsLabelProvider The {@link EMFFormsLabelProvider}
+	 * @param reportService The {@link ReportService}
+	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
+	 * @param imageRegistryService The {@link ImageRegistryService}
+	 */
+	@Inject
+	public MultiReferenceSWTRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService,
+		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
+		VTViewTemplateProvider vtViewTemplateProvider, ImageRegistryService imageRegistryService) {
+		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
+		this.imageRegistryService = imageRegistryService;
+		viewModelDBC = new EMFDataBindingContext();
+	}
+
 	private Label validationIcon;
 	private AdapterFactoryLabelProvider labelProvider;
 	private ComposedAdapterFactory composedAdapterFactory;
 	private TableViewer tableViewer;
+	private final EMFDataBindingContext viewModelDBC;
 
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription)
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#getGridDescription(org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription)
 	 */
 	@Override
 	public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
@@ -90,7 +132,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell,
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#renderControl(org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell,
 	 *      org.eclipse.emf.ecp.view.spi.swt.Composite)
 	 */
 	@Override
@@ -104,14 +146,12 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		composite.setLayout(new GridLayout(1, false));
 		composite.setBackgroundMode(SWT.INHERIT_FORCE);
 
-		final Iterator<Setting> settings = getVElement().getDomainModelReference().getIterator();
-		if (!settings.hasNext()) {
-			return null;
+		try {
+			createTitleComposite(composite);
+		} catch (final DatabindingFailedException ex) {
+			getReportService().report(new RenderingFailedReport(ex));
+			return createErrorLabel(parent, ex);
 		}
-
-		final Setting mainSetting = settings.next();
-
-		createTitleComposite(composite, mainSetting);
 
 		createLabelProvider();
 
@@ -120,9 +160,27 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 			.hint(1, 300)
 			.applyTo(controlComposite);
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(controlComposite);
-		createContent(controlComposite, mainSetting);
+		try {
+			createContent(controlComposite);
+		} catch (final DatabindingFailedException ex) {
+			getReportService().report(new RenderingFailedReport(ex));
+			return createErrorLabel(parent, ex);
+		}
 
 		return composite;
+	}
+
+	/**
+	 * Creates an error label for the given {@link Exception}.
+	 *
+	 * @param parent The parent of the {@link Label}
+	 * @param ex The {@link Exception} causing the error
+	 * @return The error {@link Label}
+	 */
+	protected Control createErrorLabel(Composite parent, final Exception ex) {
+		final Label errorLabel = new Label(parent, SWT.NONE);
+		errorLabel.setText(ex.getMessage());
+		return errorLabel;
 	}
 
 	private void createLabelProvider() {
@@ -142,11 +200,12 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	protected void dispose() {
 		composedAdapterFactory.dispose();
 		labelProvider.dispose();
+		viewModelDBC.dispose();
 		super.dispose();
 	}
 
-	private void createTitleComposite(Composite composite, final Setting mainSetting)
-		throws NoPropertyDescriptorFoundExeption {
+	private void createTitleComposite(Composite composite)
+		throws NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final Composite titleComposite = new Composite(composite, SWT.NONE);
 		titleComposite.setBackgroundMode(SWT.INHERIT_FORCE);
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING)
@@ -166,10 +225,17 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.END, SWT.FILL)
 			.applyTo(buttonComposite);
 
+		final IObservableValue observableValue = getEMFFormsDatabinding()
+			.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
+		final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
+		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+		observableValue.dispose();
+
 		final Button btnAddExisting = new Button(buttonComposite, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(btnAddExisting);
-		btnAddExisting.setImage(Activator.getImage("icons/link.png")); //$NON-NLS-1$
-		btnAddExisting.setToolTipText(Messages.MultiReferenceSWTRenderer_addExistingTooltip);
+		btnAddExisting.setImage(getImage("icons/link.png")); //$NON-NLS-1$
+		btnAddExisting.setToolTipText(LocalizationServiceHelper.getString(getClass(),
+			MessageKeys.MultiReferenceSWTRenderer_addExistingTooltip));
 		btnAddExisting.addSelectionListener(new SelectionAdapter() {
 
 			/**
@@ -180,15 +246,16 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
-				handleAddExisting(tableViewer, mainSetting);
+				handleAddExisting(tableViewer, eObject, structuralFeature);
 			}
 
 		});
 
 		final Button btnAddNew = new Button(buttonComposite, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(btnAddNew);
-		btnAddNew.setImage(Activator.getImage("icons/link_add.png")); //$NON-NLS-1$
-		btnAddNew.setToolTipText(Messages.MultiReferenceSWTRenderer_addNewTooltip);
+		btnAddNew.setImage(getImage("icons/link_add.png")); //$NON-NLS-1$
+		btnAddNew.setToolTipText(LocalizationServiceHelper.getString(getClass(),
+			MessageKeys.MultiReferenceSWTRenderer_addNewTooltip));
 		btnAddNew.addSelectionListener(new SelectionAdapter() {
 
 			/**
@@ -199,15 +266,16 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
-				handleAddNew(tableViewer, mainSetting);
+				handleAddNew(tableViewer, eObject, structuralFeature);
 			}
 
 		});
 
 		final Button btnDelete = new Button(buttonComposite, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(btnDelete);
-		btnDelete.setImage(Activator.getImage("icons/delete.png")); //$NON-NLS-1$
-		btnDelete.setToolTipText(Messages.MultiReferenceSWTRenderer_deleteTooltip);
+		btnDelete.setImage(getImage("icons/unset_reference.png")); //$NON-NLS-1$
+		btnDelete.setToolTipText(LocalizationServiceHelper.getString(getClass(),
+			MessageKeys.MultiReferenceSWTRenderer_deleteTooltip));
 		btnDelete.addSelectionListener(new SelectionAdapter() {
 
 			/**
@@ -218,7 +286,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				super.widgetSelected(e);
-				handleDelete(tableViewer, mainSetting);
+				handleDelete(tableViewer, eObject, structuralFeature);
 			}
 
 		});
@@ -230,7 +298,11 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 
 	}
 
-	private void createContent(Composite composite, Setting mainSetting) {
+	private Image getImage(String path) {
+		return imageRegistryService.getImage(FrameworkUtil.getBundle(getClass()), path);
+	}
+
+	private void createContent(Composite composite) throws DatabindingFailedException {
 		tableViewer = new TableViewer(composite, SWT.MULTI | SWT.V_SCROLL | SWT.FULL_SELECTION
 			| SWT.BORDER);
 		tableViewer.getTable().setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_multireference"); //$NON-NLS-1$
@@ -257,31 +329,37 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 
 		final ObservableListContentProvider cp = new ObservableListContentProvider();
 
-		final EStructuralFeature eStructuralFeature = mainSetting.getEStructuralFeature();
-		String text = eStructuralFeature.getName();
-		String tooltipText = eStructuralFeature.getName();
-		final IItemPropertyDescriptor itemPropertyDescriptor = getItemPropertyDescriptor(mainSetting);
-		if (itemPropertyDescriptor != null) {
-			text = itemPropertyDescriptor.getDisplayName(null);
-			tooltipText = itemPropertyDescriptor.getDescription(null);
-		}
+		final EMFFormsLabelProvider labelService = getEMFFormsLabelProvider();
 
 		final TableViewerColumn column = TableViewerColumnBuilder
 			.create()
-			.setText(text)
-			.setToolTipText(tooltipText)
 			.setResizable(false)
 			.setMoveable(false)
 			.setStyle(SWT.NONE)
 			.build(tableViewer);
+
+		final IObservableValue textObservableValue = SWTObservables.observeText(column.getColumn());
+		final IObservableValue tooltipObservableValue = SWTObservables.observeTooltipText(column.getColumn());
+		try {
+			viewModelDBC.bindValue(textObservableValue,
+				labelService.getDisplayName(getVElement().getDomainModelReference(), getViewModelContext()
+					.getDomainModel()));
+
+			viewModelDBC.bindValue(tooltipObservableValue,
+				labelService.getDescription(getVElement().getDomainModelReference(), getViewModelContext()
+					.getDomainModel()));
+		} catch (final NoLabelFoundException e) {
+			// FIXME Expectations?
+			getReportService().report(new RenderingFailedReport(e));
+		}
 
 		column.getColumn().addSelectionListener(
 			getSelectionAdapter(tableViewer, comparator, column.getColumn(), 0));
 
 		tableViewer.setLabelProvider(labelProvider);
 		tableViewer.setContentProvider(cp);
-		final IObservableList list = EMFEditObservables.observeList(getEditingDomain(mainSetting),
-			mainSetting.getEObject(), mainSetting.getEStructuralFeature());
+		final IObservableList list = getEMFFormsDatabinding()
+			.getObservableList(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 		tableViewer.setInput(list);
 
 		final TableColumnLayout layout = new TableColumnLayout();
@@ -330,24 +408,24 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 * Method for adding an existing element.
 	 *
 	 * @param tableViewer the {@link TableViewer}
-	 * @param setting the {@link Setting} to add to
+	 * @param eObject The {@link EObject} to add to
+	 * @param structuralFeature The corresponding {@link EStructuralFeature}
 	 */
-	protected void handleAddExisting(TableViewer tableViewer, Setting setting) {
+	protected void handleAddExisting(TableViewer tableViewer, EObject eObject, EStructuralFeature structuralFeature) {
 		final ReferenceService referenceService = getViewModelContext().getService(ReferenceService.class);
-		referenceService.addExistingModelElements(setting.getEObject(), (EReference) setting.getEStructuralFeature());
-		referenceService.openInNewContext(setting.getEObject());
+		referenceService.addExistingModelElements(eObject, (EReference) structuralFeature);
 	}
 
 	/**
 	 * Method for adding a new element.
 	 *
 	 * @param tableViewer the {@link TableViewer}
-	 * @param setting the {@link Setting} to add to
+	 * @param eObject The {@link EObject} to add to
+	 * @param structuralFeature The corresponding {@link EStructuralFeature}
 	 */
-	protected void handleAddNew(TableViewer tableViewer, Setting setting) {
+	protected void handleAddNew(TableViewer tableViewer, EObject eObject, EStructuralFeature structuralFeature) {
 		final ReferenceService referenceService = getViewModelContext().getService(ReferenceService.class);
-		referenceService.addNewModelElements(setting.getEObject(),
-			(EReference) setting.getEStructuralFeature());
+		referenceService.addNewModelElements(eObject, (EReference) structuralFeature);
 
 	}
 
@@ -355,15 +433,43 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 * Method for deleting elements.
 	 *
 	 * @param tableViewer the {@link TableViewer}
-	 * @param mainSetting the {@link Setting} to delete from
+	 * @param eObject The {@link EObject} to delete from
+	 * @param structuralFeature The corresponding {@link EStructuralFeature}
 	 */
-	protected void handleDelete(TableViewer tableViewer, Setting mainSetting) {
-		final List<?> deletionList = IStructuredSelection.class.cast(tableViewer.getSelection()).toList();
+	protected void handleDelete(TableViewer tableViewer, EObject eObject, EStructuralFeature structuralFeature) {
 
-		final EObject modelElement = mainSetting.getEObject();
-		final EditingDomain editingDomain = getEditingDomain(mainSetting);
-		editingDomain.getCommandStack().execute(
-			RemoveCommand.create(editingDomain, modelElement, mainSetting.getEStructuralFeature(), deletionList));
+		@SuppressWarnings("unchecked")
+		final List<Object> deletionList = IStructuredSelection.class.cast(tableViewer.getSelection()).toList();
+		final EditingDomain editingDomain = getEditingDomain(eObject);
+
+		/* assured by #isApplicable */
+		final EReference reference = EReference.class.cast(structuralFeature);
+
+		if (reference.isContainment()) {
+			DeleteService deleteService = getViewModelContext().getService(DeleteService.class);
+			if (deleteService == null) {
+				/*
+				 * #getService(Class<?>) will report to the reportservice if it could not be found
+				 * Use Default
+				 */
+				deleteService = new EMFDeleteServiceImpl();
+			}
+			deleteService.deleteElements(deletionList);
+		} else {
+			removeElements(editingDomain, eObject, reference, deletionList);
+		}
+	}
+
+	private void removeElements(EditingDomain editingDomain, Object source, EStructuralFeature feature,
+		Collection<Object> toRemove) {
+		final Command removeCommand = RemoveCommand.create(editingDomain, source, feature, toRemove);
+		if (removeCommand.canExecute()) {
+			if (editingDomain.getCommandStack() == null) {
+				removeCommand.execute();
+			} else {
+				editingDomain.getCommandStack().execute(removeCommand);
+			}
+		}
 	}
 
 	/**

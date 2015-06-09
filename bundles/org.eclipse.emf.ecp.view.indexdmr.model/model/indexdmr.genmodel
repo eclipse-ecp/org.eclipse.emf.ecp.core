@@ -14,8 +14,9 @@
       testsPackageSuffix="model.tests" extensibleProviderFactory="true" childCreationExtenders="true"
       ecorePackage="indexdmr.ecore#/">
     <genClasses ecoreClass="indexdmr.ecore#//IndexDomainModelReference">
-      <genFeatures children="true" createChild="true" ecoreFeature="ecore:EReference indexdmr.ecore#//IndexDomainModelReference/targetDMR"/>
+      <genFeatures children="true" createChild="true" ecoreFeature="ecore:EReference indexdmr.ecore#//IndexDomainModelReference/prefixDMR"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute indexdmr.ecore#//IndexDomainModelReference/index"/>
+      <genFeatures children="true" createChild="true" ecoreFeature="ecore:EReference indexdmr.ecore#//IndexDomainModelReference/targetDMR"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

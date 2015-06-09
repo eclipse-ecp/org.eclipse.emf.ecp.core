@@ -11,7 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.swt.reporting;
 
-import org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
 
 /**
  * Indicates that the initialization of a custom control failed.

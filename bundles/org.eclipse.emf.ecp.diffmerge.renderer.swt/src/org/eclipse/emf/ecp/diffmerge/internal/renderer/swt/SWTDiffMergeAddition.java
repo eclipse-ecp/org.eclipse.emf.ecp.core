@@ -12,25 +12,23 @@
 package org.eclipse.emf.ecp.diffmerge.internal.renderer.swt;
 
 import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext;
 import org.eclipse.emf.ecp.diffmerge.swt.DiffDialogHelper;
 import org.eclipse.emf.ecp.spi.diffmerge.model.VDiffAttachment;
 import org.eclipse.emf.ecp.spi.diffmerge.model.VDiffmergePackage;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.swt.AbstractAdditionalSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
-import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
+import org.eclipse.emfforms.spi.swt.core.AbstractAdditionalSWTRenderer;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
@@ -49,9 +47,18 @@ import org.eclipse.swt.widgets.Control;
 public class SWTDiffMergeAddition extends AbstractAdditionalSWTRenderer<VControl> {
 
 	/**
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param reportService the {@link ReportService}
+	 */
+	public SWTDiffMergeAddition(VControl vElement, ViewModelContext viewContext, ReportService reportService) {
+		super(vElement, viewContext, reportService);
+	}
+
+	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription)
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#getGridDescription(org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription)
 	 */
 	@Override
 	public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
@@ -64,7 +71,7 @@ public class SWTDiffMergeAddition extends AbstractAdditionalSWTRenderer<VControl
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell,
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#renderControl(org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell,
 	 *      org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
@@ -143,30 +150,16 @@ public class SWTDiffMergeAddition extends AbstractAdditionalSWTRenderer<VControl
 
 	private void openDiffDialog(DiffMergeModelContext diffModelContext, VControl vControl) {
 
-		final Setting setting = vControl.getDomainModelReference().getIterator().next();
-		if (setting == null) {
-			return;
+		String label;
+		try {
+			label = (String) Activator.getInstance().getEMFFormsLabelProvider()
+				.getDisplayName(vControl.getDomainModelReference(), diffModelContext.getDomainModel()).getValue();
+		} catch (final NoLabelFoundException ex) {
+			Activator.getInstance().getReportService().report(new AbstractReport(ex));
+			label = ex.getMessage();
 		}
-		final IItemPropertyDescriptor itemPropertyDescriptor = getItemPropertyDescriptor(setting);
-		final String label = itemPropertyDescriptor.getDisplayName(setting.getEObject());
 
 		DiffDialogHelper.showDialog(diffModelContext, vControl, label);
-
-	}
-
-	private IItemPropertyDescriptor getItemPropertyDescriptor(Setting setting) {
-		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
-			new ReflectiveItemProviderAdapterFactory(),
-			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
-		final AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
-			composedAdapterFactory);
-
-		final IItemPropertyDescriptor descriptor = adapterFactoryItemDelegator.getPropertyDescriptor(
-			setting.getEObject(),
-			setting.getEStructuralFeature());
-		composedAdapterFactory.dispose();
-		return descriptor;
-
 	}
 
 }

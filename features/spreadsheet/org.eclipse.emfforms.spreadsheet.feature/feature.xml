@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.emfforms.spreadsheet.feature"
+      label="EMFForms Spreadsheet Feature"
+      version="1.0.0.qualifier"
+      plugin="org.eclipse.emfforms.spreadsheet.core"
+      image="eclipse_update_120.jpg"
+      license-feature="org.eclipse.emf.ecp.license.feature"
+      license-feature-version="1.6.0.qualifier">
+
+   <description>
+      %description
+   </description>
+
+   <copyright url="%copyrightURL">
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <plugin
+         id="org.eclipse.emfforms.spreadsheet.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emfforms.spreadsheet.core.importer"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emfforms.spreadsheet.core.renderer"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emfforms.spreadsheet.core.renderer.categorization"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emfforms.spreadsheet.core.renderer.custom"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emfforms.spreadsheet.core.renderer.table"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -69,7 +69,7 @@ public class IDEViewModelRegistryImpl implements IDEViewModelRegistry {
 						if (ecorePath == null) {
 							return;
 						}
-						if (ecorePath.contains(delta.getResource().getFullPath().toString())) {
+						if (delta.getResource().getFullPath().toString().contains(ecorePath)) {
 							final ViewModelEditorCallback viewModelEditorCallback = viewModelViewModelEditorMapping
 								.get(view);
 							if (viewModelEditorCallback == null) {

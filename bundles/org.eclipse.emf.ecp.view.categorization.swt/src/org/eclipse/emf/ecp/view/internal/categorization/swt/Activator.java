@@ -14,9 +14,7 @@ package org.eclipse.emf.ecp.view.internal.categorization.swt;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
 
 /**
  * The activator class controls the plug-in life cycle.
@@ -73,15 +71,4 @@ public class Activator extends Plugin {
 		plugin.getLog().log(new Status(IStatus.ERROR, PLUGIN_ID, throwable.getMessage(), throwable));
 	}
 
-	/**
-	 * Returns the {@link ReportService}.
-	 *
-	 * @return the {@link ReportService}
-	 */
-	public ReportService getReportService() {
-		final BundleContext bundleContext = getBundle().getBundleContext();
-		final ServiceReference<ReportService> serviceReference =
-			bundleContext.getServiceReference(ReportService.class);
-		return bundleContext.getService(serviceReference);
-	}
 }

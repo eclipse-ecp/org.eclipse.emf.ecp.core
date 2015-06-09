@@ -21,6 +21,5 @@ package org.eclipse.emf.ecp.test.university;
  * @model
  * @generated
  */
-public interface Professor extends Person
-{
+public interface Professor extends Person {
 } // Professor

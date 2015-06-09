@@ -12,6 +12,7 @@
 package org.eclipse.emf.ecp.internal.ui.model;
 
 import org.eclipse.emf.ecp.core.ECPProvider;
+import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.core.ECPProviderRegistryImpl;
 import org.eclipse.emf.ecp.internal.core.util.ElementDescriptor;
 import org.eclipse.emf.ecp.internal.ui.Activator;
@@ -29,7 +30,7 @@ import org.eclipse.swt.widgets.Display;
  * @author Eike Stepper
  */
 public class ProvidersLabelProvider extends ECPLabelProvider implements IColorProvider,
-	ResolveListener<InternalProvider> {
+ResolveListener<InternalProvider> {
 	private static final Image PROVIDER = Activator.getImage("icons/provider.gif"); //$NON-NLS-1$
 
 	private static final Image PROVIDER_DISABLED = Activator.getImage("icons/provider_disabled.gif"); //$NON-NLS-1$
@@ -38,12 +39,12 @@ public class ProvidersLabelProvider extends ECPLabelProvider implements IColorPr
 
 	public ProvidersLabelProvider() {
 		super(null);
-		ECPProviderRegistryImpl.INSTANCE.addResolveListener(this);
+		((ECPProviderRegistryImpl) ECPUtil.getECPProviderRegistry()).addResolveListener(this);
 	}
 
 	@Override
 	public void dispose() {
-		ECPProviderRegistryImpl.INSTANCE.removeResolveListener(this);
+		((ECPProviderRegistryImpl) ECPUtil.getECPProviderRegistry()).removeResolveListener(this);
 		super.dispose();
 	}
 

@@ -18,6 +18,8 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -27,6 +29,7 @@ import org.eclipse.emf.ecp.spi.common.ui.SelectModelElementWizard;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.DefaultReferenceService;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
+import org.eclipse.emf.ecp.view.internal.editor.controls.Activator;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference;
@@ -35,11 +38,14 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.wizard.IWizardPage;
@@ -58,7 +64,8 @@ public class CreateDomainModelReferenceWizard extends SelectModelElementWizard {
 	private WizardPageExtension firstPage;
 	private final EClass eclass;
 	private final EditingDomain editingDomain;
-	private final Setting setting;
+	private final EObject eObject;
+	private final EStructuralFeature structuralFeature;
 	private final VDomainModelReference domainModelReference;
 
 	/**
@@ -76,8 +83,29 @@ public class CreateDomainModelReferenceWizard extends SelectModelElementWizard {
 	public CreateDomainModelReferenceWizard(final Setting setting, final EditingDomain editingDomain,
 		final EClass eclass, final String windowTitle,
 		final String pageName, String pageTitle, String description, VDomainModelReference domainModelReference) {
+		this(setting.getEObject(), setting.getEStructuralFeature(), editingDomain, eclass, windowTitle, pageName,
+			pageTitle, description, domainModelReference);
+	}
+
+	/**
+	 * A wizard used for creating a new DomainModelReference.
+	 *
+	 * @param eObject The {@link EObject} to use
+	 * @param structuralFeature The corresponding {@link EStructuralFeature}
+	 * @param editingDomain - the setting's editing domain
+	 * @param eclass - the root EClass of the VView the setting belongs to
+	 * @param windowTitle - title for the wizard window
+	 * @param pageName - the name of the page
+	 * @param pageTitle - the title of the page
+	 * @param description - the description
+	 * @param domainModelReference - the domain model reference
+	 */
+	public CreateDomainModelReferenceWizard(final EObject eObject, final EStructuralFeature structuralFeature,
+		final EditingDomain editingDomain, final EClass eclass, final String windowTitle, final String pageName,
+		String pageTitle, String description, VDomainModelReference domainModelReference) {
 		super(windowTitle, pageName, pageTitle, description);
-		this.setting = setting;
+		this.eObject = eObject;
+		this.structuralFeature = structuralFeature;
 		this.editingDomain = editingDomain;
 		this.eclass = eclass;
 		this.domainModelReference = domainModelReference;
@@ -166,13 +194,13 @@ public class CreateDomainModelReferenceWizard extends SelectModelElementWizard {
 			return false;
 		}
 		Command command = null;
-		if (setting.getEStructuralFeature().isMany()) {
-			command = AddCommand.create(editingDomain, setting.getEObject(),
-				setting.getEStructuralFeature(), customizeDMRPage.getvControl().getDomainModelReference());
+		if (structuralFeature.isMany()) {
+			command = AddCommand.create(editingDomain, eObject,
+				structuralFeature, customizeDMRPage.getvControl().getDomainModelReference());
 		}
 		else {
-			command = SetCommand.create(editingDomain, setting.getEObject(),
-				setting.getEStructuralFeature(), customizeDMRPage.getvControl().getDomainModelReference());
+			command = SetCommand.create(editingDomain, eObject,
+				structuralFeature, customizeDMRPage.getvControl().getDomainModelReference());
 		}
 		editingDomain.getCommandStack().execute(command);
 		return super.performFinish();
@@ -203,13 +231,22 @@ public class CreateDomainModelReferenceWizard extends SelectModelElementWizard {
 			}
 			return false;
 		}
+		VDomainModelReference dmrToCheck = customizeDMRPage.getvControl().getDomainModelReference();
+		if (VTableDomainModelReference.class.isInstance(dmrToCheck)) {
+			final VTableDomainModelReference tableDomainModelReference = VTableDomainModelReference.class
+				.cast(dmrToCheck);
+			if (tableDomainModelReference.getDomainModelReference() != null) {
+				dmrToCheck = tableDomainModelReference.getDomainModelReference();
+			}
+		}
+		try {
+			Activator.getDefault().getEMFFormsDatabinding()
+				.getValueProperty(dmrToCheck, null);
+		} catch (final DatabindingFailedException ex) {
+			// Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+			return false;
+		}
 
-		if (customizeDMRPage.getvControl().getDomainModelReference().getEStructuralFeatureIterator() == null) {
-			return false;
-		}
-		if (!customizeDMRPage.getvControl().getDomainModelReference().getEStructuralFeatureIterator().hasNext()) {
-			return false;
-		}
 		return super.canFinish();
 	}
 
@@ -329,10 +366,23 @@ public class CreateDomainModelReferenceWizard extends SelectModelElementWizard {
 			if (getvControl().getDomainModelReference() == null) {
 				return false;
 			}
-			if (getvControl().getDomainModelReference().getEStructuralFeatureIterator() == null) {
+			VDomainModelReference dmrToCheck = getvControl().getDomainModelReference();
+			if (VTableDomainModelReference.class.isInstance(dmrToCheck)) {
+				final VTableDomainModelReference tableDomainModelReference = VTableDomainModelReference.class
+					.cast(dmrToCheck);
+				if (tableDomainModelReference.getDomainModelReference() != null) {
+					dmrToCheck = tableDomainModelReference.getDomainModelReference();
+				}
+			}
+			try {
+				Activator.getDefault().getEMFFormsDatabinding()
+					.getValueProperty(dmrToCheck, null);
+			} catch (final DatabindingFailedException ex) {
+				Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 				return false;
 			}
-			return getvControl().getDomainModelReference().getEStructuralFeatureIterator().hasNext();
+
+			return true;
 		}
 
 	}

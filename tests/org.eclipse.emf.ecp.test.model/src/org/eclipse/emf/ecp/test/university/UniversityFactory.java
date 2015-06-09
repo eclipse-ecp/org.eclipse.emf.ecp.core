@@ -22,8 +22,7 @@ import org.eclipse.emf.ecore.EFactory;
  * @see org.eclipse.emf.ecp.test.university.UniversityPackage
  * @generated
  */
-public interface UniversityFactory extends EFactory
-{
+public interface UniversityFactory extends EFactory {
 	/**
 	 * The singleton instance of the factory.
 	 * <!-- begin-user-doc -->
@@ -82,6 +81,16 @@ public interface UniversityFactory extends EFactory
 	 * @generated
 	 */
 	Assistant createAssistant();
+
+	/**
+	 * Returns a new object of class '<em>Address</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return a new object of class '<em>Address</em>'.
+	 * @generated
+	 */
+	Address createAddress();
 
 	/**
 	 * Returns the package supported by this factory.

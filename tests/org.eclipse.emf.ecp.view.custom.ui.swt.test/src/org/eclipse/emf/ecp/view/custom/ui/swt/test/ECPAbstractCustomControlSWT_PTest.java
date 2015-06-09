@@ -28,6 +28,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
+import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EAttribute;
@@ -47,12 +48,14 @@ import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTViewTestHelper;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -471,13 +474,15 @@ public class ECPAbstractCustomControlSWT_PTest {
 	}
 
 	private VDomainModelReference getFeature(Collection<VDomainModelReference> features,
-		EStructuralFeature structuralFeature, boolean isEditable) {
+		EStructuralFeature structuralFeature, boolean isEditable) throws DatabindingFailedException {
 		final Iterator<VDomainModelReference> iterator = features.iterator();
 
 		while (iterator.hasNext()) {
 			final VDomainModelReference feature = iterator.next();
-			final Setting setting = feature.getIterator().next();
-			if (setting.getEStructuralFeature() == structuralFeature) { // && feature.isEditable() == isEditable
+			final IValueProperty valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+				.getValueProperty(feature, null);
+			final EStructuralFeature currentStructuralFeature = (EStructuralFeature) valueProperty.getValueType();
+			if (currentStructuralFeature == structuralFeature) { // && feature.isEditable() == isEditable
 				return feature;
 			}
 		}
@@ -486,7 +491,7 @@ public class ECPAbstractCustomControlSWT_PTest {
 	}
 
 	@Test
-	public void testCustomControlGetHelp() {
+	public void testCustomControlGetHelp() throws DatabindingFailedException {
 		final VDomainModelReference feature = getFeature(customControl.getResolvedReferences(),
 			VCustomPackage.eINSTANCE.getCustomDomainModelReference_BundleName(), true);
 		final String help = customControl.getStubSWTHelper().getHelp(feature);
@@ -512,7 +517,7 @@ public class ECPAbstractCustomControlSWT_PTest {
 	}
 
 	@Test
-	public void testCustomControlGetLabel() {
+	public void testCustomControlGetLabel() throws DatabindingFailedException {
 		final VDomainModelReference feature = getFeature(customControl.getResolvedReferences(),
 			VCustomPackage.eINSTANCE.getCustomDomainModelReference_BundleName(), true);
 		final String label = customControl.getStubSWTHelper().getLabel(feature);
@@ -613,7 +618,8 @@ public class ECPAbstractCustomControlSWT_PTest {
 	// }
 
 	@Test
-	public void testReadonlyCustomControl() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+	public void testReadonlyCustomControl() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
+		EMFFormsNoRendererException {
 
 		controlModel.setReadonly(true);
 		controlModel.setBundleName("org.eclipse.emf.ecp.view.custom.ui.swt.test");

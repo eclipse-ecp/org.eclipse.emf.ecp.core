@@ -11,17 +11,19 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.template.internal.tooling.controls;
 
-import java.util.Iterator;
-
+import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.model.common.ECPRendererTester;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.template.internal.tooling.Activator;
 import org.eclipse.emf.ecp.view.template.model.VTTemplatePackage;
 import org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableValidationPackage;
 import org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationPackage;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 
 /**
  * The tester for the
@@ -42,17 +44,16 @@ public class TemplateImagePathControlTester implements ECPRendererTester {
 		if (dmr == null) {
 			return NOT_APPLICABLE;
 		}
-		final Iterator<EStructuralFeature> iterator = dmr.getEStructuralFeatureIterator();
-		if (iterator == null) {
+		final VControl control = (VControl) vElement;
+		IValueProperty valueProperty;
+		try {
+			valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+				.getValueProperty(control.getDomainModelReference(), viewModelContext.getDomainModel());
+		} catch (final DatabindingFailedException ex) {
+			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 			return NOT_APPLICABLE;
 		}
-		if (!iterator.hasNext()) {
-			return NOT_APPLICABLE;
-		}
-		final EStructuralFeature feature = iterator.next();
-		if (feature == null) {
-			return NOT_APPLICABLE;
-		}
+		final EStructuralFeature feature = (EStructuralFeature) valueProperty.getValueType();
 		// tablevalidation
 		if (VTTableValidationPackage.eINSTANCE.getTableValidationStyleProperty_ImagePath().equals(feature)) {
 			return 5;

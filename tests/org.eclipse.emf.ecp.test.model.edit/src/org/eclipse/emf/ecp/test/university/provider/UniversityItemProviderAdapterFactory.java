@@ -105,8 +105,7 @@ public class UniversityItemProviderAdapterFactory extends
 	 */
 	@Override
 	public Adapter createCourseCatalogAdapter() {
-		if (courseCatalogItemProvider == null)
-		{
+		if (courseCatalogItemProvider == null) {
 			courseCatalogItemProvider = new CourseCatalogItemProvider(this);
 		}
 
@@ -131,8 +130,7 @@ public class UniversityItemProviderAdapterFactory extends
 	 */
 	@Override
 	public Adapter createCourseAdapter() {
-		if (courseItemProvider == null)
-		{
+		if (courseItemProvider == null) {
 			courseItemProvider = new CourseItemProvider(this);
 		}
 
@@ -156,10 +154,8 @@ public class UniversityItemProviderAdapterFactory extends
 	 * @generated
 	 */
 	@Override
-	public Adapter createStaffAdapter()
-	{
-		if (staffItemProvider == null)
-		{
+	public Adapter createStaffAdapter() {
+		if (staffItemProvider == null) {
 			staffItemProvider = new StaffItemProvider(this);
 		}
 
@@ -183,10 +179,8 @@ public class UniversityItemProviderAdapterFactory extends
 	 * @generated
 	 */
 	@Override
-	public Adapter createProfessorAdapter()
-	{
-		if (professorItemProvider == null)
-		{
+	public Adapter createProfessorAdapter() {
+		if (professorItemProvider == null) {
 			professorItemProvider = new ProfessorItemProvider(this);
 		}
 
@@ -210,14 +204,37 @@ public class UniversityItemProviderAdapterFactory extends
 	 * @generated
 	 */
 	@Override
-	public Adapter createAssistantAdapter()
-	{
-		if (assistantItemProvider == null)
-		{
+	public Adapter createAssistantAdapter() {
+		if (assistantItemProvider == null) {
 			assistantItemProvider = new AssistantItemProvider(this);
 		}
 
 		return assistantItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.test.university.Address} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected AddressItemProvider addressItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.test.university.Address}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public Adapter createAddressAdapter() {
+		if (addressItemProvider == null) {
+			addressItemProvider = new AddressItemProvider(this);
+		}
+
+		return addressItemProvider;
 	}
 
 	/**
@@ -274,11 +291,9 @@ public class UniversityItemProviderAdapterFactory extends
 	 */
 	@Override
 	public Object adapt(Object object, Object type) {
-		if (isFactoryForType(type))
-		{
+		if (isFactoryForType(type)) {
 			final Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter))
-			{
+			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter)) {
 				return adapter;
 			}
 		}
@@ -318,8 +333,7 @@ public class UniversityItemProviderAdapterFactory extends
 	public void fireNotifyChanged(Notification notification) {
 		changeNotifier.fireNotifyChanged(notification);
 
-		if (parentAdapterFactory != null)
-		{
+		if (parentAdapterFactory != null) {
 			parentAdapterFactory.fireNotifyChanged(notification);
 		}
 	}
@@ -346,6 +360,9 @@ public class UniversityItemProviderAdapterFactory extends
 		}
 		if (assistantItemProvider != null) {
 			assistantItemProvider.dispose();
+		}
+		if (addressItemProvider != null) {
+			addressItemProvider.dispose();
 		}
 	}
 

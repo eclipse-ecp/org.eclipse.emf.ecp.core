@@ -13,12 +13,11 @@ package org.eclipse.emf.ecp.emfstore.internal.ui.handler;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.emfstore.internal.ui.Activator;
+import org.eclipse.emf.ecp.internal.ui.util.ECPExportHandlerHelper;
 import org.eclipse.emf.ecp.internal.ui.util.ECPFileDialogHelper;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.emfstore.client.ESLocalProject;
@@ -27,7 +26,9 @@ import org.eclipse.emf.emfstore.internal.client.importexport.ExportImportControl
 import org.eclipse.emf.emfstore.internal.client.importexport.impl.ExportImportDataUnits;
 import org.eclipse.emf.emfstore.internal.client.model.impl.api.ESLocalProjectImpl;
 import org.eclipse.swt.widgets.Shell;
-import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * A helper class that can be used to export projects.
@@ -80,37 +81,13 @@ public final class ExportProjectHelper {
 	}
 
 	private static String getFilePathByFileDialog(Shell shell, String modelElementName) {
-		try {
-			final Class<ECPFileDialogHelper> clazz = loadClass(ECP_UI_PLUGIN_ID,
-				FILE_DIALOG_HELPER_CLASS);
-			final ECPFileDialogHelper fileDialogHelper = clazz.getConstructor().newInstance();
-			return fileDialogHelper.getPathForExport(shell, modelElementName);
-		} catch (final ClassNotFoundException ex) {
-			Activator.log(ex);
-		} catch (final InstantiationException ex) {
-			Activator.log(ex);
-		} catch (final IllegalAccessException ex) {
-			Activator.log(ex);
-		} catch (final IllegalArgumentException ex) {
-			Activator.log(ex);
-		} catch (final InvocationTargetException ex) {
-			Activator.log(ex);
-		} catch (final NoSuchMethodException ex) {
-			Activator.log(ex);
-		} catch (final SecurityException ex) {
-			Activator.log(ex);
-		}
-		return null;
-	}
-
-	@SuppressWarnings("unchecked")
-	private static <T> Class<T> loadClass(String bundleName, String clazz) throws ClassNotFoundException {
-		final Bundle bundle = Platform.getBundle(bundleName);
-		if (bundle == null) {
-			throw new ClassNotFoundException(clazz + " cannot be loaded because bundle " + bundleName //$NON-NLS-1$
-				+ " cannot be resolved"); //$NON-NLS-1$
-		}
-		return (Class<T>) bundle.loadClass(clazz);
+		final BundleContext bundleContext = FrameworkUtil.getBundle(ECPExportHandlerHelper.class).getBundleContext();
+		final ServiceReference<ECPFileDialogHelper> serviceReference = bundleContext
+			.getServiceReference(ECPFileDialogHelper.class);
+		final ECPFileDialogHelper fileDialogHelper = bundleContext.getService(serviceReference);
+		final String result = fileDialogHelper.getPathForExport(shell, modelElementName);
+		bundleContext.ungetService(serviceReference);
+		return result;
 	}
 
 }

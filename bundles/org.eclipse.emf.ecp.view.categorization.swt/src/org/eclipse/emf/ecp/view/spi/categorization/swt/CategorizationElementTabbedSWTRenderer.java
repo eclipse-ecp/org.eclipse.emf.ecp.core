@@ -11,10 +11,14 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.categorization.swt;
 
+import javax.inject.Inject;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VAbstractCategorization;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 
 /**
  * Tab renderer for VCategorizationElement.
@@ -26,18 +30,18 @@ public class CategorizationElementTabbedSWTRenderer extends AbstractSWTTabRender
 
 	/**
 	 * Default constructor.
-	 */
-	public CategorizationElementTabbedSWTRenderer() {
-		super();
-	}
-
-	/**
-	 * Test constructor.
 	 *
-	 * @param factory the {@link SWTRendererFactory} to use.
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param reportService the {@link ReportService}
+	 * @param emfFormsRendererFactory The {@link EMFFormsRendererFactory}
+	 * @since 1.6
 	 */
-	CategorizationElementTabbedSWTRenderer(SWTRendererFactory factory) {
-		super(factory);
+	@Inject
+	public CategorizationElementTabbedSWTRenderer(VCategorizationElement vElement, ViewModelContext viewContext,
+		ReportService reportService,
+		EMFFormsRendererFactory emfFormsRendererFactory) {
+		super(vElement, viewContext, reportService, emfFormsRendererFactory);
 	}
 
 	/**

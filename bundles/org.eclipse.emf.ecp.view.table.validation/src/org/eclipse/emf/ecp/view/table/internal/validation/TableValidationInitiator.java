@@ -12,15 +12,17 @@
 package org.eclipse.emf.ecp.view.table.internal.validation;
 
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.eclipse.core.databinding.observable.IObserving;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.common.spi.UniqueSetting;
 import org.eclipse.emf.ecp.view.spi.context.GlobalViewModelService;
@@ -31,6 +33,9 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.ecp.view.spi.table.model.DetailEditing;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 
 /**
  * The TableValidationInitiator searches for Tables with an Editing Panel, and creates the necessary ViewModelContexts.
@@ -38,7 +43,6 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
  * @author Eugen Neufeld
  *
  */
-@SuppressWarnings("restriction")
 public class TableValidationInitiator implements GlobalViewModelService {
 
 	/**
@@ -64,9 +68,11 @@ public class TableValidationInitiator implements GlobalViewModelService {
 	}
 
 	private final Map<UniqueSetting, TableContextMapping> mapping = new LinkedHashMap<UniqueSetting, TableContextMapping>();
+	private ViewModelContext context;
 
 	@Override
 	public void instantiate(ViewModelContext context) {
+		this.context = context;
 		context.registerDomainChangeListener(new ModelChangeListener() {
 
 			@Override
@@ -80,8 +86,12 @@ public class TableValidationInitiator implements GlobalViewModelService {
 					return;
 				}
 				for (final EObject newValue : notification.getNewEObjects()) {
-					tableContextMapping.context.getChildContext(newValue,
-						tableContextMapping.control, getView(tableContextMapping.control));
+					try {
+						tableContextMapping.context.getChildContext(newValue,
+							tableContextMapping.control, getView(tableContextMapping.control));
+					} catch (final DatabindingFailedException ex) {
+						Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+					}
 				}
 			}
 		});
@@ -98,17 +108,39 @@ public class TableValidationInitiator implements GlobalViewModelService {
 				final VTableControl tableControl = VTableControl.class.cast(eObject);
 
 				if (tableControl.getDetailEditing() == DetailEditing.WITH_PANEL) {
-					final Iterator<Setting> iterator = tableControl
-						.getDomainModelReference().getIterator();
-					final Setting tableSetting = iterator.next();
-					mapping.put(UniqueSetting.createSetting(tableSetting), new TableContextMapping(tableControl,
-						context));
-					final EList<EObject> tableContents = (EList<EObject>) tableSetting.get(true);
+					final VTableDomainModelReference tableDomainModelReference = (VTableDomainModelReference) tableControl
+						.getDomainModelReference();
+					final IObservableValue observableValue;
+					try {
+						if (tableDomainModelReference.getDomainModelReference() != null) {
+							observableValue = Activator.getDefault().getEMFFormsDatabinding()
+								.getObservableValue(tableDomainModelReference.getDomainModelReference(),
+									context.getDomainModel());
+						} else {
+							observableValue = Activator.getDefault().getEMFFormsDatabinding()
+								.getObservableValue(tableDomainModelReference, context.getDomainModel());
+						}
+					} catch (final DatabindingFailedException ex) {
+						Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+						continue;
+					}
+					final IObserving observing = (IObserving) observableValue;
+					final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+					final EObject observed = (EObject) observing.getObserved();
+					observableValue.dispose();
+
+					mapping.put(UniqueSetting.createSetting(observed, structuralFeature), new TableContextMapping(
+						tableControl, context));
+					final EList<EObject> tableContents = (EList<EObject>) observed.eGet(structuralFeature, true);
 					for (final EObject tableEObject : tableContents) {
-						final VView detailView = getView(tableControl);
-						final ViewModelContext childContext = context.getChildContext(tableEObject, tableControl,
-							detailView);
-						childContext.addContextUser(this);
+						try {
+							final VView detailView = getView(tableControl);
+							final ViewModelContext childContext = context.getChildContext(tableEObject, tableControl,
+								detailView);
+							childContext.addContextUser(this);
+						} catch (final DatabindingFailedException ex) {
+							Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+						}
 					}
 
 				}
@@ -116,19 +148,26 @@ public class TableValidationInitiator implements GlobalViewModelService {
 		}
 	}
 
-	private VView getView(VTableControl tableControl) {
+	private VView getView(VTableControl tableControl) throws DatabindingFailedException {
 		VView detailView = tableControl.getDetailView();
 		if (detailView == null) {
-			final Setting setting = tableControl.getDomainModelReference()
-				.getIterator().next();
-			final EReference reference = (EReference) setting
-				.getEStructuralFeature();
+			final VTableDomainModelReference tableDomainModelReference = (VTableDomainModelReference) tableControl
+				.getDomainModelReference();
+			final IValueProperty valueProperty;
+			if (tableDomainModelReference.getDomainModelReference() != null) {
+				valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+					.getValueProperty(tableDomainModelReference.getDomainModelReference(), context.getDomainModel());
+			} else {
+				valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+					.getValueProperty(tableDomainModelReference, context.getDomainModel());
+			}
+			final EReference reference = (EReference) valueProperty.getValueType();
 			detailView = ViewProviderHelper.getView(
 				EcoreUtil.create(reference.getEReferenceType()),
 				Collections.<String, Object> emptyMap());
 		}
 
-		return EcoreUtil.copy(detailView);
+		return detailView;
 	}
 
 	@Override

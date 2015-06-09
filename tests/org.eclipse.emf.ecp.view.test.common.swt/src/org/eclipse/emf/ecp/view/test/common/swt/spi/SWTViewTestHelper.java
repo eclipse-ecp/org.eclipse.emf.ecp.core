@@ -15,17 +15,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.internal.swt.SWTRendererFactoryImpl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
+import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
+import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -34,10 +34,20 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 @SuppressWarnings("restriction")
 public final class SWTViewTestHelper {
-	private static SWTRendererFactory factory = new SWTRendererFactoryImpl();
+	// private static SWTRendererFactory factory = new SWTRendererFactoryImpl();
+	private static EMFFormsRendererFactory factory;
+	static {
+		final BundleContext bundleContext = FrameworkUtil.getBundle(SWTViewTestHelper.class).getBundleContext();
+		final ServiceReference<EMFFormsRendererFactory> serviceReference = bundleContext
+			.getServiceReference(EMFFormsRendererFactory.class);
+		factory = bundleContext.getService(serviceReference);
+	}
 
 	private SWTViewTestHelper() {
 
@@ -51,10 +61,10 @@ public final class SWTViewTestHelper {
 	}
 
 	public static Control render(VElement renderable, EObject input, Shell shell) throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
 		final ViewModelContext viewContext = ViewModelContextFactory.INSTANCE.createViewModelContext(renderable, input);
 		final AbstractSWTRenderer<VElement> renderer = factory
-			.getRenderer(renderable, viewContext);
+			.getRendererInstance(renderable, viewContext);
 		final SWTGridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE
 			.createEmptyGridDescription());
 		final Control control = renderer.render(gridDescription.getGrid().get(gridDescription.getColumns() - 1), shell);
@@ -69,7 +79,7 @@ public final class SWTViewTestHelper {
 	}
 
 	public static Control render(VElement renderable, Shell shell) throws NoRendererFoundException,
-		NoPropertyDescriptorFoundExeption {
+		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
 		return render(renderable, VViewFactory.eINSTANCE.createView(), shell);
 	}
 

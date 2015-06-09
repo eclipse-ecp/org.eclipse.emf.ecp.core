@@ -15,88 +15,47 @@ package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 
 import java.util.Collection;
 
-import org.eclipse.emf.common.notify.AdapterFactory;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import javax.inject.Inject;
+
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.model.VContainedContainer;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
-import org.eclipse.emf.ecp.view.spi.model.VControl;
-import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
-import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
-import org.eclipse.jface.layout.GridDataFactory;
-import org.eclipse.jface.layout.GridLayoutFactory;
-import org.eclipse.swt.SWT;
+import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
+import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
+import org.eclipse.emfforms.spi.common.locale.EMFFormsLocaleChangeListener;
+import org.eclipse.emfforms.spi.common.locale.EMFFormsLocaleProvider;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Layout;
-import org.eclipse.swt.widgets.Text;
 
 /**
  * The Class ViewSWTRenderer.
  */
-public class ViewSWTRenderer extends ContainerSWTRenderer<VView> {
+public class ViewSWTRenderer extends ContainerSWTRenderer<VView> implements EMFFormsLocaleChangeListener {
+
+	private Composite renderControl;
+	private final EMFFormsLocaleProvider localeProvider;
+
 	/**
 	 * Default constructor.
-	 */
-	public ViewSWTRenderer() {
-		super();
-	}
-
-	/**
-	 * Test constructor.
 	 *
-	 * @param factory the {@link SWTRendererFactory} to use.
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param reportService the {@link ReportService}
+	 * @param factory the {@link EMFFormsRendererFactory}
+	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
+	 * @param localeProvider The {@link EMFFormsLocaleProvider}
 	 */
-	ViewSWTRenderer(SWTRendererFactory factory) {
-		super(factory);
-	}
-
-	@Override
-	protected final void setLayoutDataForControl(SWTGridCell gridCell,
-		SWTGridDescription controlGridDescription,
-		SWTGridDescription currentRowGridDescription, SWTGridDescription fullGridDescription, VElement vElement,
-		Control control) {
-		if (VControl.class.isInstance(vElement)) {
-			// last column of control
-			if (gridCell.getColumn() + gridCell.getHorizontalSpan() == controlGridDescription.getColumns()) {
-				getControlGridData(gridCell.getHorizontalSpan() + fullGridDescription.getColumns()
-					- currentRowGridDescription.getColumns(), VControl.class.cast(vElement), control).applyTo(control);
-			} else if (controlGridDescription.getColumns() == 3 && gridCell.getColumn() == 0) {
-				GridDataFactory.fillDefaults().grab(false, false)
-					.align(SWT.BEGINNING, SWT.CENTER).applyTo(control);
-			} else if (controlGridDescription.getColumns() == 3 && gridCell.getColumn() == 1) {
-				GridDataFactory.fillDefaults().align(SWT.CENTER, SWT.CENTER)
-					.hint(16, 17).grab(false, false).applyTo(control);
-			} else if (controlGridDescription.getColumns() == 2 && gridCell.getColumn() == 0) {
-				GridDataFactory.fillDefaults().align(SWT.CENTER, SWT.CENTER)
-					.hint(16, 17).grab(false, false).applyTo(control);
-			}
-		} else if (VContainedContainer.class.isInstance(vElement)) {
-			GridDataFactory
-				.fillDefaults()
-				.align(gridCell.isHorizontalFill() ? SWT.FILL : SWT.BEGINNING,
-					gridCell.isVerticalFill() ? SWT.FILL : SWT.CENTER)
-				.grab(gridCell.isHorizontalGrab(), false)
-				.span(gridCell.getHorizontalSpan() + fullGridDescription.getColumns()
-					- currentRowGridDescription.getColumns(), 1).applyTo(control);
-		}
-		else {
-			// we have some kind of container -> render with necessary span
-			GridDataFactory
-				.fillDefaults()
-				.align(gridCell.isHorizontalFill() ? SWT.FILL : SWT.BEGINNING,
-					gridCell.isVerticalFill() ? SWT.FILL : SWT.CENTER)
-				.grab(gridCell.isHorizontalGrab(), gridCell.isVerticalGrab())
-				.span(gridCell.getHorizontalSpan() + fullGridDescription.getColumns()
-					- currentRowGridDescription.getColumns(), 1).applyTo(control);
-		}
-
+	@Inject
+	public ViewSWTRenderer(VView vElement, ViewModelContext viewContext, ReportService reportService,
+		EMFFormsRendererFactory factory, EMFFormsDatabinding emfFormsDatabinding, EMFFormsLocaleProvider localeProvider) {
+		super(vElement, viewContext, reportService, factory, emfFormsDatabinding);
+		this.localeProvider = localeProvider;
+		localeProvider.addEMFFormsLocaleChangeListener(this);
 	}
 
 	/**
@@ -109,11 +68,6 @@ public class ViewSWTRenderer extends ContainerSWTRenderer<VView> {
 		return getVElement().getChildren();
 	}
 
-	@Override
-	protected Layout getLayout(int numControls, boolean equalWidth) {
-		return GridLayoutFactory.fillDefaults().numColumns(numControls).equalWidth(equalWidth).create();
-	}
-
 	/**
 	 * {@inheritDoc}
 	 *
@@ -124,35 +78,38 @@ public class ViewSWTRenderer extends ContainerSWTRenderer<VView> {
 		return "org_eclipse_emf_ecp_ui_layout_view"; //$NON-NLS-1$
 	}
 
-	private GridDataFactory getControlGridData(int xSpan, VControl vControl, Control control) {
-		GridDataFactory gdf =
-			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
-				.grab(true, false).span(xSpan, 1);
-
-		if (Text.class.isInstance(control) && vControl.getDomainModelReference() != null) {
-			final Setting setting = vControl.getDomainModelReference().getIterator().next();
-
-			if (isMultiLine(setting)) {
-				gdf = gdf.hint(50, 200); // set x hint to enable wrapping
-			}
-		}
-
-		return gdf;
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see EMFFormsLocaleChangeListener#notifyLocaleChange()
+	 */
+	@Override
+	public void notifyLocaleChange() {
+		renderControl.layout(true, true);
 	}
 
-	private boolean isMultiLine(Setting setting) {
-		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
-			new ReflectiveItemProviderAdapterFactory(),
-			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
-		final AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
-			composedAdapterFactory);
-		final IItemPropertyDescriptor descriptor = adapterFactoryItemDelegator.getPropertyDescriptor(
-			setting.getEObject(), setting.getEStructuralFeature());
-		final boolean multiline = descriptor.isMultiLine(null);
-
-		composedAdapterFactory.dispose();
-
-		return multiline;
-
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer#renderControl(org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell,
+	 *      org.eclipse.swt.widgets.Composite)
+	 */
+	@Override
+	protected Control renderControl(SWTGridCell gridCell, Composite parent) throws NoRendererFoundException,
+		NoPropertyDescriptorFoundExeption {
+		renderControl = (Composite) super.renderControl(gridCell, parent);
+		return renderControl;
 	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer#dispose()
+	 */
+	@Override
+	protected void dispose() {
+		localeProvider.removeEMFFormsLocaleChangeListener(this);
+		super.dispose();
+	}
+
 }

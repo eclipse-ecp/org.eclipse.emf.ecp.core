@@ -15,11 +15,12 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecp.view.model.internal.reporting.LogConsumer;
-import org.eclipse.emf.ecp.view.model.internal.reporting.ReportServiceImpl;
-import org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport;
-import org.eclipse.emf.ecp.view.spi.model.reporting.ReportService;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.common.report.ReportServiceConsumer;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Eugen Neufeld
@@ -39,6 +40,8 @@ public class Activator extends Plugin {
 
 	private ServiceReference<ReportService> reportServiceReference;
 
+	private ServiceRegistration<ReportServiceConsumer> registerLogConsumerService;
+
 	/**
 	 * The constructor.
 	 */
@@ -49,16 +52,16 @@ public class Activator extends Plugin {
 	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
-		final ReportService reportService = new ReportServiceImpl();
-		context.registerService(ReportService.class, reportService, null);
-		reportService.addConsumer(new LogConsumer());
+		final LogConsumer logConsumer = new LogConsumer();
+		registerLogConsumerService = context.registerService(ReportServiceConsumer.class, logConsumer, null);
 		plugin = this;
 	}
 
 	@Override
 	public void stop(BundleContext context) throws Exception {
-		super.stop(context);
+		registerLogConsumerService.unregister();
 		plugin = null;
+		super.stop(context);
 	}
 
 	// END SUPRESS CATCH EXCEPTION
@@ -98,7 +101,7 @@ public class Activator extends Plugin {
 	 *
 	 * @param report
 	 *            the {@link AbstractReport} to be logged
-	 * @since 1.5
+	 * @since 1.6
 	 */
 	public static void log(AbstractReport report) {
 		getDefault().getLog().log(
@@ -112,7 +115,7 @@ public class Activator extends Plugin {
 	 * Returns the {@link ReportService}.
 	 *
 	 * @return the {@link ReportService}
-	 * @since 1.5
+	 * @since 1.6
 	 */
 	public ReportService getReportService() {
 		if (reportServiceReference == null) {

@@ -5,18 +5,18 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.eclipse.emf.ecp</groupId>
 	<artifactId>ecp-parent</artifactId>
-	<version>1.5.1-SNAPSHOT</version>
+	<version>1.6.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<properties>
-		<tycho-version>0.20.0</tycho-version>
-		<tycho-extras-version>0.20.0</tycho-extras-version>
+		<tycho-version>0.22.0</tycho-version>
+		<tycho-extras-version>0.22.0</tycho-extras-version>
 		<javadoc-version>2.9</javadoc-version>
-		<javadoc-title>EMF Client Platform 1.5.1 API</javadoc-title>
+		<javadoc-title>EMF Client Platform 1.6.0 API</javadoc-title>
 		<maven.antrun.plugin.version>1.7</maven.antrun.plugin.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<tycho.scmUrl>scm:git:git://git.eclipse.org/gitroot/emfclient/org.eclipse.emf.ecp.core.git</tycho.scmUrl>
-		<jarsigner-version>1.0.5</jarsigner-version>
+		<jarsigner-version>1.1.0</jarsigner-version>
 		<mav-surefire-version>2.16</mav-surefire-version>
 		<junit-version>4.11</junit-version>
 		
@@ -94,6 +94,7 @@
 	</pluginRepositories>
 
 	<modules>
+		
 		<module>../../releng/org.eclipse.emf.ecp.target.rcp</module>
 		<module>../../releng/org.eclipse.emf.ecp.target.rap</module>
 		<module>../../releng/org.eclipse.emf.ecp.repository</module>
@@ -105,6 +106,8 @@
 		<module>../../releng/org.eclipse.emf.ecp.releng.features</module>
 		<module>../../releng/org.eclipse.emf.ecp.releng.tests</module>
 		<module>../../releng/org.eclipse.emf.ecp.releng.examples</module>
+		
+		<module>../../releng/spreadsheet/org.eclipse.emfforms.spreadsheet.releng</module>
 	</modules>
 
 	<build>
@@ -259,7 +262,7 @@
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.6.2.201302030002</version>
+				<version>0.7.4.201502262128</version>
 				<configuration>
 					<destFile>${sonar.jacoco.reportPath}</destFile>
 					<append>true</append> 

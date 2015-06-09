@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -64,14 +64,9 @@ public final class ViewModelUtil {
 				return;
 			}
 			final boolean init = control.getDomainModelReference().init(domainModelRoot);
-			if (!init && ViewModelUtil.isDebugMode()) {
-				// report only in debug mode
-				Activator.getDefault()
-					.getReportService()
-					.report(
-						new DomainModelReferenceResolutionFailedReport(
-							control.getDomainModelReference(),
-							control));
+			if (!init) {
+				Activator.getDefault().getReportService()
+					.report(new DomainModelReferenceResolutionFailedReport(control.getDomainModelReference(), control));
 			}
 		}
 		// XXX get rid of the following code as soon as possible!
@@ -83,14 +78,9 @@ public final class ViewModelUtil {
 			for (final EObject object : element.eContents()) {
 				if (VDomainModelReference.class.isInstance(object)) {
 					final boolean init = VDomainModelReference.class.cast(object).init(domainModelRoot);
-					if (!init && ViewModelUtil.isDebugMode()) {
-						// report only in debug mode
-						Activator.getDefault()
-							.getReportService()
-							.report(
-								new DomainModelReferenceResolutionFailedReport(
-									VDomainModelReference.class.cast(object),
-									element));
+					if (!init) {
+						Activator.getDefault().getReportService().report(new DomainModelReferenceResolutionFailedReport(
+							VDomainModelReference.class.cast(object), element));
 					}
 				}
 			}

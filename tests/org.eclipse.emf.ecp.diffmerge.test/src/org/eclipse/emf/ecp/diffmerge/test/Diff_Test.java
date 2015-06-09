@@ -15,6 +15,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeContextFactory;
 import org.eclipse.emf.ecp.diffmerge.spi.context.DiffMergeModelContext;
+import org.eclipse.emf.ecp.test.common.DefaultRealm;
 import org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalFactory;
 import org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalLayout;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -29,6 +30,8 @@ import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.emf.emfstore.bowling.Gender;
 import org.eclipse.emf.emfstore.bowling.League;
 import org.eclipse.emf.emfstore.bowling.Player;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -38,6 +41,17 @@ import org.junit.Test;
  *
  */
 public class Diff_Test {
+	private DefaultRealm realm;
+
+	@Before
+	public void setUp() {
+		realm = new DefaultRealm();
+	}
+
+	@After
+	public void tearDown() {
+		realm.dispose();
+	}
 
 	@Test
 	public void testSingleControlViewWithDiff() {
@@ -80,7 +94,7 @@ public class Diff_Test {
 		left.getPlayers().add(left1);
 		final League right = BowlingFactory.eINSTANCE.createLeague();
 		final Player right1 = BowlingFactory.eINSTANCE.createPlayer();
-		left.setName("b"); //$NON-NLS-1$
+		right1.setName("b"); //$NON-NLS-1$
 		right.getPlayers().add(right1);
 		final League target = BowlingFactory.eINSTANCE.createLeague();
 		final Player target1 = BowlingFactory.eINSTANCE.createPlayer();

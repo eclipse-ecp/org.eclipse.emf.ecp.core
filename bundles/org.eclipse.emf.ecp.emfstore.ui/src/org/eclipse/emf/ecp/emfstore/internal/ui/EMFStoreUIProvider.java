@@ -28,6 +28,7 @@ import org.eclipse.emf.emfstore.internal.client.ui.views.emfstorebrowser.views.C
 import org.eclipse.emf.emfstore.server.exceptions.ESException;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -184,16 +185,16 @@ public class EMFStoreUIProvider extends DefaultUIProvider {
 		ArrayList<String> certificates;
 		try {
 			certificates = KeyStoreManager.getInstance().getCertificates();
-			// csd.setElements(certificates.toArray());
+			csd.setElements(certificates.toArray());
 		} catch (final ESCertificateException e1) {
-			// csd.setErrorMessage(e1.getMessage());
+			csd.setErrorMessage(e1.getMessage());
 		}
-		// csd.setBlockOnOpen(true);
-		// csd.setTitle("Certificate Selection Dialog");
-		// csd.open();
-		// if (csd.getReturnCode() == Window.OK) {
-		// return csd.getCertificateAlias();
-		// }
+		csd.setBlockOnOpen(true);
+		csd.setTitle("Certificate Selection Dialog"); //$NON-NLS-1$
+		csd.open();
+		if (csd.getReturnCode() == Window.OK) {
+			return csd.getCertificateAlias();
+		}
 		return ""; //$NON-NLS-1$
 	}
 

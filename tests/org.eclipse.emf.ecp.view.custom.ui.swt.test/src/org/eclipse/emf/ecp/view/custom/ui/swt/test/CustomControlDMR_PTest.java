@@ -31,6 +31,7 @@ import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTViewTestHelper;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
 import org.eclipse.emf.emfstore.bowling.Fan;
 import org.eclipse.emf.emfstore.bowling.Merchandise;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.junit.Test;
@@ -48,7 +49,7 @@ public class CustomControlDMR_PTest {
 
 	@Test
 	public void testDMRChangeListener() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
-		InterruptedException {
+		InterruptedException, EMFFormsNoRendererException {
 		final Fan fan = BowlingFactory.eINSTANCE.createFan();
 		final Merchandise old = BowlingFactory.eINSTANCE.createMerchandise();
 		old.setName(OLD_NAME);

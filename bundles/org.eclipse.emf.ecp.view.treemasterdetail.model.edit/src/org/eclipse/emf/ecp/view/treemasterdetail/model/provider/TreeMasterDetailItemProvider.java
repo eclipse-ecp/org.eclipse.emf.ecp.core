@@ -17,6 +17,8 @@ import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VElementUtil;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.provider.ContainedElementItemProvider;
 import org.eclipse.emf.ecp.view.treemasterdetail.model.VTreeMasterDetail;
@@ -114,11 +116,14 @@ public class TreeMasterDetailItemProvider extends ContainedElementItemProvider i
 	 * <!-- begin-user-doc
 	 * --> <!-- end-user-doc -->
 	 *
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String getText(Object object) {
-		final String label = ((VTreeMasterDetail) object).getName();
+		String label = ((VTreeMasterDetail) object).getName();
+		if (label == null) {
+			label = VElementUtil.getCleanName(VElement.class.cast(object));
+		}
 		return label == null || label.length() == 0 ?
 			getString("_UI_TreeMasterDetail_type") : //$NON-NLS-1$
 			getString("_UI_TreeMasterDetail_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$

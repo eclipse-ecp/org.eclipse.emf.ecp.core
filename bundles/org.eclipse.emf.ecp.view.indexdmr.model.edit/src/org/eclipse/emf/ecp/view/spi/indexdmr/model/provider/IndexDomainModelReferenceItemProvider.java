@@ -59,10 +59,37 @@ public class IndexDomainModelReferenceItemProvider extends
 		{
 			super.getPropertyDescriptors(object);
 
-			addTargetDMRPropertyDescriptor(object);
+			addPrefixDMRPropertyDescriptor(object);
 			addIndexPropertyDescriptor(object);
+			addTargetDMRPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
+	}
+
+	/**
+	 * This adds a property descriptor for the Prefix DMR feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected void addPrefixDMRPropertyDescriptor(Object object)
+	{
+		itemPropertyDescriptors
+			.add
+			(createItemPropertyDescriptor
+			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_IndexDomainModelReference_prefixDMR_feature"), //$NON-NLS-1$
+				getString(
+					"_UI_PropertyDescriptor_description", "_UI_IndexDomainModelReference_prefixDMR_feature", "_UI_IndexDomainModelReference_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				VIndexdmrPackage.Literals.INDEX_DOMAIN_MODEL_REFERENCE__PREFIX_DMR,
+				true,
+				false,
+				false,
+				null,
+				null,
+				null));
 	}
 
 	/**
@@ -129,6 +156,7 @@ public class IndexDomainModelReferenceItemProvider extends
 		if (childrenFeatures == null)
 		{
 			super.getChildrenFeatures(object);
+			childrenFeatures.add(VIndexdmrPackage.Literals.INDEX_DOMAIN_MODEL_REFERENCE__PREFIX_DMR);
 			childrenFeatures.add(VIndexdmrPackage.Literals.INDEX_DOMAIN_MODEL_REFERENCE__TARGET_DMR);
 		}
 		return childrenFeatures;
@@ -189,6 +217,7 @@ public class IndexDomainModelReferenceItemProvider extends
 		case VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE__INDEX:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
+		case VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE__PREFIX_DMR:
 		case VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE__TARGET_DMR:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;
@@ -210,6 +239,16 @@ public class IndexDomainModelReferenceItemProvider extends
 
 		newChildDescriptors.add
 			(createChildParameter
+			(VIndexdmrPackage.Literals.INDEX_DOMAIN_MODEL_REFERENCE__PREFIX_DMR,
+				VIndexdmrFactory.eINSTANCE.createIndexDomainModelReference()));
+
+		newChildDescriptors.add
+			(createChildParameter
+			(VIndexdmrPackage.Literals.INDEX_DOMAIN_MODEL_REFERENCE__PREFIX_DMR,
+				VViewFactory.eINSTANCE.createFeaturePathDomainModelReference()));
+
+		newChildDescriptors.add
+			(createChildParameter
 			(VIndexdmrPackage.Literals.INDEX_DOMAIN_MODEL_REFERENCE__TARGET_DMR,
 				VIndexdmrFactory.eINSTANCE.createIndexDomainModelReference()));
 
@@ -217,6 +256,31 @@ public class IndexDomainModelReferenceItemProvider extends
 			(createChildParameter
 			(VIndexdmrPackage.Literals.INDEX_DOMAIN_MODEL_REFERENCE__TARGET_DMR,
 				VViewFactory.eINSTANCE.createFeaturePathDomainModelReference()));
+	}
+
+	/**
+	 * This returns the label text for {@link org.eclipse.emf.edit.command.CreateChildCommand}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public String getCreateChildText(Object owner, Object feature, Object child, Collection<?> selection)
+	{
+		final Object childFeature = feature;
+		final Object childObject = child;
+
+		final boolean qualify =
+			childFeature == VIndexdmrPackage.Literals.INDEX_DOMAIN_MODEL_REFERENCE__PREFIX_DMR ||
+				childFeature == VIndexdmrPackage.Literals.INDEX_DOMAIN_MODEL_REFERENCE__TARGET_DMR;
+
+		if (qualify)
+		{
+			return getString("_UI_CreateChild_text2", //$NON-NLS-1$
+				new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
+		}
+		return super.getCreateChildText(owner, feature, child, selection);
 	}
 
 }

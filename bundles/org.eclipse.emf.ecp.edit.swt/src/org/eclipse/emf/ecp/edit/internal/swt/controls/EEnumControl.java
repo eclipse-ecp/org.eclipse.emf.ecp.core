@@ -16,6 +16,7 @@ import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
+import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.viewers.ViewersObservables;
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -33,6 +34,7 @@ import org.eclipse.swt.widgets.Control;
  * @author Eugen Neufeld
  *
  */
+@Deprecated
 public class EEnumControl extends SingleControl {
 
 	private ComboViewer combo;
@@ -78,7 +80,8 @@ public class EEnumControl extends SingleControl {
 	 */
 	@Override
 	protected String getUnsetLabelText() {
-		return ControlMessages.EEnumControl_NoValueSetClickToSetValue;
+		return LocalizationServiceHelper.getString(getClass(),
+			DepricatedControlMessageKeys.EEnumControl_NoValueSetClickToSetValue);
 	}
 
 	/*
@@ -87,7 +90,7 @@ public class EEnumControl extends SingleControl {
 	 */
 	@Override
 	protected String getUnsetButtonTooltip() {
-		return ControlMessages.EEnumControl_UnsetValue;
+		return LocalizationServiceHelper.getString(getClass(), DepricatedControlMessageKeys.EEnumControl_UnsetValue);
 	}
 
 	/*

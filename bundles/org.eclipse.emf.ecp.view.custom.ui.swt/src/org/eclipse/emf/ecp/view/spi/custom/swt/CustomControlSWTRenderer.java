@@ -13,13 +13,15 @@ package org.eclipse.emf.ecp.view.spi.custom.swt;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecp.edit.spi.swt.util.SWTValidationHelper;
-import org.eclipse.emf.ecp.internal.edit.EditMessages;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
+import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
@@ -34,15 +36,27 @@ import org.osgi.framework.Bundle;
  * @author Eugen Neufeld
  * @since 1.3
  */
-@SuppressWarnings("restriction")
 public class CustomControlSWTRenderer extends AbstractSWTRenderer<VCustomControl> {
+
+	/**
+	 * Default Constructor.
+	 *
+	 * @param vElement the view element to be rendered
+	 * @param viewContext The view model context
+	 * @param reportService the ReportService to use
+	 * @since 1.6
+	 */
+	public CustomControlSWTRenderer(final VCustomControl vElement, final ViewModelContext viewContext,
+		ReportService reportService) {
+		super(vElement, viewContext, reportService);
+	}
 
 	private ECPAbstractCustomControlSWT swtCustomControl;
 
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#preInit()
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#preInit()
 	 */
 	@Override
 	protected void preInit() {
@@ -82,9 +96,10 @@ public class CustomControlSWTRenderer extends AbstractSWTRenderer<VCustomControl
 	private static ECPAbstractCustomControlSWT loadObject(String bundleName, String clazz) {
 		final Bundle bundle = Platform.getBundle(bundleName);
 		if (bundle == null) {
-			new ClassNotFoundException(clazz + EditMessages.CONTROLFACTROY_CANNOT_BE_LOADED
-				+ bundleName
-				+ EditMessages.CONTROLFACTORY_CANNOT_BE_RESOLVED);
+			// why do we create a class not found exception without doing anything with it
+			new ClassNotFoundException(
+				String.format(LocalizationServiceHelper.getString(CustomControlSWTRenderer.class,
+					"BundleNotFound_ExceptionMessage"), clazz, bundleName)); //$NON-NLS-1$
 			return null;
 		}
 		try {
@@ -106,7 +121,7 @@ public class CustomControlSWTRenderer extends AbstractSWTRenderer<VCustomControl
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#dispose()
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#dispose()
 	 */
 	@Override
 	protected void dispose() {
@@ -117,7 +132,7 @@ public class CustomControlSWTRenderer extends AbstractSWTRenderer<VCustomControl
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(SWTGridDescription)
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#getGridDescription(SWTGridDescription)
 	 */
 	@Override
 	public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
@@ -132,7 +147,7 @@ public class CustomControlSWTRenderer extends AbstractSWTRenderer<VCustomControl
 	 *
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell,
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#renderControl(org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell,
 	 *      org.eclipse.swt.widgets.Composite)
 	 */
 	@Override

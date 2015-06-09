@@ -1,4 +1,12 @@
 /**
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
  */
 package org.eclipse.emf.ecp.view.edapt.util.test.model.f.impl;
 
@@ -45,13 +53,16 @@ public class EdaptTestFPackageImpl extends EPackageImpl implements EdaptTestFPac
 	private EClass fEClass = null;
 
 	/**
-	 * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
-	 * EPackage.Registry} by the package
+	 * Creates an instance of the model <b>Package</b>, registered with
+	 * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
 	 * package URI value.
 	 * <p>
-	 * Note: the correct way to create the package is via the static factory method {@link #init init()}, which also
-	 * performs initialization of the package, or returns the registered package, if one already exists. <!--
-	 * begin-user-doc --> <!-- end-user-doc -->
+	 * Note: the correct way to create the package is via the static
+	 * factory method {@link #init init()}, which also performs
+	 * initialization of the package, or returns the registered package,
+	 * if one already exists.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * 
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
 	 * @see org.eclipse.emf.ecp.view.edapt.util.test.model.f.EdaptTestFPackage#eNS_URI
@@ -74,9 +85,10 @@ public class EdaptTestFPackageImpl extends EPackageImpl implements EdaptTestFPac
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
 	 *
 	 * <p>
-	 * This method is used to initialize {@link EdaptTestFPackage#eINSTANCE} when that field is accessed. Clients should
-	 * not invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc
-	 * --> <!-- end-user-doc -->
+	 * This method is used to initialize {@link EdaptTestFPackage#eINSTANCE} when that field is accessed.
+	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * 
 	 * @see #eNS_URI
 	 * @see #createPackageContents()
@@ -89,40 +101,40 @@ public class EdaptTestFPackageImpl extends EPackageImpl implements EdaptTestFPac
 		}
 
 		// Obtain or create and register package
-		final EdaptTestFPackageImpl theFPackage = (EdaptTestFPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof EdaptTestFPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI)
-			: new EdaptTestFPackageImpl());
+		final EdaptTestFPackageImpl theFPackage = (EdaptTestFPackageImpl) (EPackage.Registry.INSTANCE
+			.get(eNS_URI) instanceof EdaptTestFPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
+				: new EdaptTestFPackageImpl());
 
 		isInited = true;
 
 		// Obtain or create and register interdependencies
 		final EdaptTestAPackageImpl theAPackage = (EdaptTestAPackageImpl) (EPackage.Registry.INSTANCE
-			.getEPackage(EdaptTestAPackage.eNS_URI) instanceof EdaptTestAPackageImpl ? EPackage.Registry.INSTANCE
-			.getEPackage(EdaptTestAPackage.eNS_URI) : EdaptTestAPackage.eINSTANCE);
+			.getEPackage(EdaptTestAPackage.eNS_URI) instanceof EdaptTestAPackageImpl
+				? EPackage.Registry.INSTANCE.getEPackage(EdaptTestAPackage.eNS_URI) : EdaptTestAPackage.eINSTANCE);
 		final EdaptTestBPackageImpl theBPackage = (EdaptTestBPackageImpl) (EPackage.Registry.INSTANCE
-			.getEPackage(EdaptTestBPackage.eNS_URI) instanceof EdaptTestBPackageImpl ? EPackage.Registry.INSTANCE
-			.getEPackage(EdaptTestBPackage.eNS_URI) : EdaptTestBPackage.eINSTANCE);
+			.getEPackage(EdaptTestBPackage.eNS_URI) instanceof EdaptTestBPackageImpl
+				? EPackage.Registry.INSTANCE.getEPackage(EdaptTestBPackage.eNS_URI) : EdaptTestBPackage.eINSTANCE);
 		final EdaptTestCPackageImpl theCPackage = (EdaptTestCPackageImpl) (EPackage.Registry.INSTANCE
-			.getEPackage(EdaptTestCPackage.eNS_URI) instanceof EdaptTestCPackageImpl ? EPackage.Registry.INSTANCE
-			.getEPackage(EdaptTestCPackage.eNS_URI) : EdaptTestCPackage.eINSTANCE);
+			.getEPackage(EdaptTestCPackage.eNS_URI) instanceof EdaptTestCPackageImpl
+				? EPackage.Registry.INSTANCE.getEPackage(EdaptTestCPackage.eNS_URI) : EdaptTestCPackage.eINSTANCE);
 		final EdaptTestDPackageImpl theDPackage = (EdaptTestDPackageImpl) (EPackage.Registry.INSTANCE
-			.getEPackage(EdaptTestDPackage.eNS_URI) instanceof EdaptTestDPackageImpl ? EPackage.Registry.INSTANCE
-			.getEPackage(EdaptTestDPackage.eNS_URI) : EdaptTestDPackage.eINSTANCE);
+			.getEPackage(EdaptTestDPackage.eNS_URI) instanceof EdaptTestDPackageImpl
+				? EPackage.Registry.INSTANCE.getEPackage(EdaptTestDPackage.eNS_URI) : EdaptTestDPackage.eINSTANCE);
 		final EdaptTestEPackageImpl theEPackage = (EdaptTestEPackageImpl) (EPackage.Registry.INSTANCE
-			.getEPackage(EdaptTestEPackage.eNS_URI) instanceof EdaptTestEPackageImpl ? EPackage.Registry.INSTANCE
-			.getEPackage(EdaptTestEPackage.eNS_URI) : EdaptTestEPackage.eINSTANCE);
+			.getEPackage(EdaptTestEPackage.eNS_URI) instanceof EdaptTestEPackageImpl
+				? EPackage.Registry.INSTANCE.getEPackage(EdaptTestEPackage.eNS_URI) : EdaptTestEPackage.eINSTANCE);
 		final EdaptTestWPackageImpl theWPackage = (EdaptTestWPackageImpl) (EPackage.Registry.INSTANCE
-			.getEPackage(EdaptTestWPackage.eNS_URI) instanceof EdaptTestWPackageImpl ? EPackage.Registry.INSTANCE
-			.getEPackage(EdaptTestWPackage.eNS_URI) : EdaptTestWPackage.eINSTANCE);
+			.getEPackage(EdaptTestWPackage.eNS_URI) instanceof EdaptTestWPackageImpl
+				? EPackage.Registry.INSTANCE.getEPackage(EdaptTestWPackage.eNS_URI) : EdaptTestWPackage.eINSTANCE);
 		final EdaptTestXPackageImpl theXPackage = (EdaptTestXPackageImpl) (EPackage.Registry.INSTANCE
-			.getEPackage(EdaptTestXPackage.eNS_URI) instanceof EdaptTestXPackageImpl ? EPackage.Registry.INSTANCE
-			.getEPackage(EdaptTestXPackage.eNS_URI) : EdaptTestXPackage.eINSTANCE);
+			.getEPackage(EdaptTestXPackage.eNS_URI) instanceof EdaptTestXPackageImpl
+				? EPackage.Registry.INSTANCE.getEPackage(EdaptTestXPackage.eNS_URI) : EdaptTestXPackage.eINSTANCE);
 		final EdaptTestYPackageImpl theYPackage = (EdaptTestYPackageImpl) (EPackage.Registry.INSTANCE
-			.getEPackage(EdaptTestYPackage.eNS_URI) instanceof EdaptTestYPackageImpl ? EPackage.Registry.INSTANCE
-			.getEPackage(EdaptTestYPackage.eNS_URI) : EdaptTestYPackage.eINSTANCE);
+			.getEPackage(EdaptTestYPackage.eNS_URI) instanceof EdaptTestYPackageImpl
+				? EPackage.Registry.INSTANCE.getEPackage(EdaptTestYPackage.eNS_URI) : EdaptTestYPackage.eINSTANCE);
 		final EdaptTestZPackageImpl theZPackage = (EdaptTestZPackageImpl) (EPackage.Registry.INSTANCE
-			.getEPackage(EdaptTestZPackage.eNS_URI) instanceof EdaptTestZPackageImpl ? EPackage.Registry.INSTANCE
-			.getEPackage(EdaptTestZPackage.eNS_URI) : EdaptTestZPackage.eINSTANCE);
+			.getEPackage(EdaptTestZPackage.eNS_URI) instanceof EdaptTestZPackageImpl
+				? EPackage.Registry.INSTANCE.getEPackage(EdaptTestZPackage.eNS_URI) : EdaptTestZPackage.eINSTANCE);
 
 		// Create package meta-data objects
 		theFPackage.createPackageContents();

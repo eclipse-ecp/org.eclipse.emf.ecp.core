@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ECP Core
 Bundle-SymbolicName: org.eclipse.emf.ecp.core;singleton:=true
-Bundle-Version: 1.5.1.qualifier
+Bundle-Version: 1.6.0.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.internal.core.Activator
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.core.expressions;bundle-version="[3.4.0,4.0.0)";resolution:=optional,
@@ -12,17 +12,20 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.emf.ecp.common;bundle-version="[1.5.0,2.0.0)"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Export-Package: org.eclipse.emf.ecp.core;version="1.5.1",org.eclipse.e
- mf.ecp.core.exceptions;version="1.5.1",org.eclipse.emf.ecp.core.util;
- version="1.5.1",org.eclipse.emf.ecp.core.util.observer;version="1.5.1
- ",org.eclipse.emf.ecp.internal.core;version="1.5.1";x-friends:="org.e
- clipse.emf.ecp.ui,org.eclipse.emf.ecp.ui.view.test,org.eclipse.emf.ec
- p.edit.ecore.swt",org.eclipse.emf.ecp.internal.core.properties;versio
- n="1.5.1";x-internal:=true,org.eclipse.emf.ecp.internal.core.util;ver
- sion="1.5.1";x-friends:="org.eclipse.emf.ecp.ui",org.eclipse.emf.ecp.
- internal.core.util.observer;version="1.5.1";x-internal:=true,org.ecli
- pse.emf.ecp.spi.core;version="1.5.1",org.eclipse.emf.ecp.spi.core.uti
- l;version="1.5.1"
-Service-Component:  OSGI-INF/ecpProviderRegistry.xml,OSGI-INF/ecpRepositoryManager.xml,OSGI-INF/ecpProjectManager.xml
+Export-Package: org.eclipse.emf.ecp.core;version="1.6.0",
+ org.eclipse.emf.ecp.core.exceptions;version="1.6.0",
+ org.eclipse.emf.ecp.core.util;version="1.6.0",
+ org.eclipse.emf.ecp.core.util.observer;version="1.6.0",
+ org.eclipse.emf.ecp.internal.core;version="1.6.0";
+  x-friends:="org.eclipse.emf.ecp.ui,
+   org.eclipse.emf.ecp.ui.view.test,
+   org.eclipse.emf.ecp.edit.ecore.swt,
+   org.eclipse.emf.ecp.core.rap",
+ org.eclipse.emf.ecp.internal.core.properties;version="1.6.0";x-internal:=true,
+ org.eclipse.emf.ecp.internal.core.util;version="1.6.0";x-friends:="org.eclipse.emf.ecp.ui",
+ org.eclipse.emf.ecp.internal.core.util.observer;version="1.6.0";x-friends:="org.eclipse.emf.ecp.core.rap",
+ org.eclipse.emf.ecp.spi.core;version="1.6.0",
+ org.eclipse.emf.ecp.spi.core.util;version="1.6.0"
+Service-Component:  OSGI-INF/ecpProviderRegistry.xml,OSGI-INF/ecpRepositoryManager.xml,OSGI-INF/ecpProjectManager.xml,OSGI-INF/ecpObserverBus.xml
 Bundle-Vendor: Eclipse Modeling Project
 

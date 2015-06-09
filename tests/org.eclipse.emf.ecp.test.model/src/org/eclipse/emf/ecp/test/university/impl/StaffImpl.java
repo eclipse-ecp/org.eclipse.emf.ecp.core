@@ -32,17 +32,16 @@ import org.eclipse.emf.ecp.test.university.UniversityPackage;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.test.university.impl.StaffImpl#getProfessors <em>Professors</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.test.university.impl.StaffImpl#getAssistants <em>Assistants</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.test.university.impl.StaffImpl#getStaff <em>Staff</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
-public class StaffImpl extends MinimalEObjectImpl.Container implements Staff
-{
+public class StaffImpl extends MinimalEObjectImpl.Container implements Staff {
 	/**
 	 * The cached value of the '{@link #getStaff() <em>Staff</em>}' attribute list.
 	 * <!-- begin-user-doc -->
@@ -60,8 +59,7 @@ public class StaffImpl extends MinimalEObjectImpl.Container implements Staff
 	 *
 	 * @generated
 	 */
-	protected StaffImpl()
-	{
+	protected StaffImpl() {
 		super();
 	}
 
@@ -72,8 +70,7 @@ public class StaffImpl extends MinimalEObjectImpl.Container implements Staff
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return UniversityPackage.Literals.STAFF;
 	}
 
@@ -83,8 +80,7 @@ public class StaffImpl extends MinimalEObjectImpl.Container implements Staff
 	 *
 	 * @generated
 	 */
-	public EList<Professor> getProfessors()
-	{
+	public EList<Professor> getProfessors() {
 		return getStaff().list(UniversityPackage.Literals.STAFF__PROFESSORS);
 	}
 
@@ -94,8 +90,7 @@ public class StaffImpl extends MinimalEObjectImpl.Container implements Staff
 	 *
 	 * @generated
 	 */
-	public EList<Assistant> getAssistants()
-	{
+	public EList<Assistant> getAssistants() {
 		return getStaff().list(UniversityPackage.Literals.STAFF__ASSISTANTS);
 	}
 
@@ -105,10 +100,8 @@ public class StaffImpl extends MinimalEObjectImpl.Container implements Staff
 	 *
 	 * @generated
 	 */
-	public FeatureMap getStaff()
-	{
-		if (staff == null)
-		{
+	public FeatureMap getStaff() {
+		if (staff == null) {
 			staff = new BasicFeatureMap(this, UniversityPackage.STAFF__STAFF);
 		}
 		return staff;
@@ -121,10 +114,8 @@ public class StaffImpl extends MinimalEObjectImpl.Container implements Staff
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-	{
-		switch (featureID)
-		{
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
 		case UniversityPackage.STAFF__PROFESSORS:
 			return ((InternalEList<?>) getProfessors()).basicRemove(otherEnd, msgs);
 		case UniversityPackage.STAFF__ASSISTANTS:
@@ -142,10 +133,8 @@ public class StaffImpl extends MinimalEObjectImpl.Container implements Staff
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
-		switch (featureID)
-		{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 		case UniversityPackage.STAFF__PROFESSORS:
 			return getProfessors();
 		case UniversityPackage.STAFF__ASSISTANTS:
@@ -167,10 +156,8 @@ public class StaffImpl extends MinimalEObjectImpl.Container implements Staff
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
-		switch (featureID)
-		{
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 		case UniversityPackage.STAFF__PROFESSORS:
 			getProfessors().clear();
 			getProfessors().addAll((Collection<? extends Professor>) newValue);
@@ -193,10 +180,8 @@ public class StaffImpl extends MinimalEObjectImpl.Container implements Staff
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
-		switch (featureID)
-		{
+	public void eUnset(int featureID) {
+		switch (featureID) {
 		case UniversityPackage.STAFF__PROFESSORS:
 			getProfessors().clear();
 			return;
@@ -217,10 +202,8 @@ public class StaffImpl extends MinimalEObjectImpl.Container implements Staff
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
-		switch (featureID)
-		{
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 		case UniversityPackage.STAFF__PROFESSORS:
 			return !getProfessors().isEmpty();
 		case UniversityPackage.STAFF__ASSISTANTS:
@@ -238,8 +221,7 @@ public class StaffImpl extends MinimalEObjectImpl.Container implements Staff
 	 * @generated
 	 */
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		if (eIsProxy()) {
 			return super.toString();
 		}

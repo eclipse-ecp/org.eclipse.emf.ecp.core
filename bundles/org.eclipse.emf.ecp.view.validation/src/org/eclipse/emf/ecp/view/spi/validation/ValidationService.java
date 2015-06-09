@@ -23,11 +23,21 @@ import org.eclipse.emf.ecp.view.spi.context.GlobalViewModelService;
  */
 public interface ValidationService extends GlobalViewModelService {
 	/**
-	 * Adds a validation provider to the list of known validation providers.
+	 * Adds a validation provider to the list of known validation providers. The domain model will be revalidated after
+	 * the provider has been added.
 	 *
 	 * @param validationProvider the {@link ValidationProvider} to add
 	 */
 	void addValidationProvider(ValidationProvider validationProvider);
+
+	/**
+	 * Adds a validation provider to the list of known validation providers.
+	 *
+	 * @param validationProvider the {@link ValidationProvider} to add
+	 * @param revalidate whether to revalidate the domain model after the provider has been added
+	 * @since 1.6
+	 */
+	void addValidationProvider(ValidationProvider validationProvider, boolean revalidate);
 
 	/**
 	 * Removes a validation provider from the list of known validation providers.
@@ -35,6 +45,16 @@ public interface ValidationService extends GlobalViewModelService {
 	 * @param validationProvider the {@link ValidationProvider} to remove
 	 */
 	void removeValidationProvider(ValidationProvider validationProvider);
+
+	/**
+	 * Removes a validation provider from the list of known validation providers. The domain model will be revalidated
+	 * after the provider has been removed
+	 *
+	 * @param validationProvider the {@link ValidationProvider} to remove
+	 * @param revalidate whether to revalidate the domain model after the provider has been removed
+	 * @since 1.6
+	 */
+	void removeValidationProvider(ValidationProvider validationProvider, boolean revalidate);
 
 	/**
 	 * Registers a listener that will receive {@link org.eclipse.emf.common.util.Diagnostic Diagnostic}s with severity

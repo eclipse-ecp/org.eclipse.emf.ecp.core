@@ -12,8 +12,6 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.internal.ui.util;
 
-import java.lang.reflect.InvocationTargetException;
-
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -31,6 +29,9 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.swt.widgets.Shell;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * A utility class which provides support for importing {@link EObject}s.
@@ -52,8 +53,6 @@ public final class ECPImportHandlerHelper {
 	 * These filter names are used to filter which files are displayed.
 	 */
 	public static final String[] FILTER_NAMES = { "Model Files (*.xmi)" }; //$NON-NLS-1$
-
-	private static final String FILE_DIALOG_HELPER_CLASS = "org.eclipse.emf.ecp.internal.ui.util.ECPFileDialogHelperImpl"; //$NON-NLS-1$
 
 	private static boolean imported;
 
@@ -219,26 +218,12 @@ public final class ECPImportHandlerHelper {
 	// }
 
 	private static String getFileName(Shell shell) {
-		try {
-			final Class<ECPFileDialogHelper> clazz = HandlerHelperUtil.loadClass(Activator.PLUGIN_ID,
-				FILE_DIALOG_HELPER_CLASS);
-			final ECPFileDialogHelper fileDialogHelper = clazz.getConstructor().newInstance();
-			return fileDialogHelper.getPathForImport(shell);
-		} catch (final ClassNotFoundException ex) {
-			Activator.log(ex);
-		} catch (final InstantiationException ex) {
-			Activator.log(ex);
-		} catch (final IllegalAccessException ex) {
-			Activator.log(ex);
-		} catch (final IllegalArgumentException ex) {
-			Activator.log(ex);
-		} catch (final InvocationTargetException ex) {
-			Activator.log(ex);
-		} catch (final NoSuchMethodException ex) {
-			Activator.log(ex);
-		} catch (final SecurityException ex) {
-			Activator.log(ex);
-		}
-		return null;
+		final BundleContext bundleContext = FrameworkUtil.getBundle(ECPExportHandlerHelper.class).getBundleContext();
+		final ServiceReference<ECPFileDialogHelper> serviceReference = bundleContext
+			.getServiceReference(ECPFileDialogHelper.class);
+		final ECPFileDialogHelper fileDialogHelper = bundleContext.getService(serviceReference);
+		final String result = fileDialogHelper.getPathForImport(shell);
+		bundleContext.ungetService(serviceReference);
+		return result;
 	}
 }

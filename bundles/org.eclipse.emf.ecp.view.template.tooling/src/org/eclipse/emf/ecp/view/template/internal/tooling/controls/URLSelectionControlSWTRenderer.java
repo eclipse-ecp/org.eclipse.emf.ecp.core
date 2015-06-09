@@ -15,16 +15,26 @@ import java.io.File;
 import java.net.MalformedURLException;
 
 import org.eclipse.core.databinding.Binding;
+import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.template.internal.tooling.Activator;
 import org.eclipse.emf.ecp.view.template.internal.tooling.Messages;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -42,6 +52,9 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.dialogs.ElementTreeSelectionDialog;
 import org.eclipse.ui.model.WorkbenchContentProvider;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * Control for selecting a file and saving the path as url.
@@ -51,6 +64,36 @@ import org.eclipse.ui.model.WorkbenchLabelProvider;
  */
 public class URLSelectionControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 
+	private static final EMFFormsDatabinding emfFormsDatabinding;
+	private static final EMFFormsLabelProvider emfFormsLabelProvider;
+	private static final VTViewTemplateProvider vtViewTemplateProvider;
+
+	static {
+		final BundleContext bundleContext = FrameworkUtil.getBundle(URLSelectionControlSWTRenderer.class)
+			.getBundleContext();
+		final ServiceReference<EMFFormsDatabinding> emfFormsDatabindingServiceReference = bundleContext
+			.getServiceReference(EMFFormsDatabinding.class);
+		emfFormsDatabinding = bundleContext.getService(emfFormsDatabindingServiceReference);
+		final ServiceReference<EMFFormsLabelProvider> emfFormsLabelProviderServiceReference = bundleContext
+			.getServiceReference(EMFFormsLabelProvider.class);
+		emfFormsLabelProvider = bundleContext.getService(emfFormsLabelProviderServiceReference);
+		final ServiceReference<VTViewTemplateProvider> vtViewTemplateProviderServiceReference = bundleContext
+			.getServiceReference(VTViewTemplateProvider.class);
+		vtViewTemplateProvider = bundleContext.getService(vtViewTemplateProviderServiceReference);
+	}
+
+	/**
+	 * Default constructor.
+	 *
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param reportService The {@link ReportService}
+	 */
+	public URLSelectionControlSWTRenderer(VControl vElement, ViewModelContext viewContext,
+		ReportService reportService) {
+		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
+	}
+
 	/**
 	 * {@inheritDoc}
 	 *
@@ -58,25 +101,24 @@ public class URLSelectionControlSWTRenderer extends SimpleControlSWTControlSWTRe
 	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
 	 */
 	@Override
-	protected Binding[] createBindings(Control control, Setting setting) {
+	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
 		final Composite composite = Composite.class.cast(control);
 		final Control childControl = composite.getChildren()[0];
 		final IObservableValue value = SWTObservables.observeText(childControl);
-		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(setting));
+		final Binding binding = getDataBindingContext().bindValue(value, getModelValue());
 
 		final IObservableValue toolTip = SWTObservables.observeTooltipText(childControl);
-		final Binding tooltipBinding = getDataBindingContext().bindValue(toolTip, getModelValue(setting));
+		final Binding tooltipBinding = getDataBindingContext().bindValue(toolTip, getModelValue());
 		return new Binding[] { binding, tooltipBinding };
 	}
 
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer#createSWTControl(org.eclipse.swt.widgets.Composite,
-	 *      org.eclipse.emf.ecore.EStructuralFeature.Setting)
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer#createSWTControl(org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
-	protected Control createSWTControl(Composite parent, final Setting setting) {
+	protected Control createSWTControl(Composite parent) {
 		final Composite composite = new Composite(parent, SWT.NONE);
 		composite.setBackgroundMode(SWT.INHERIT_FORCE);
 		GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(composite);
@@ -108,7 +150,7 @@ public class URLSelectionControlSWTRenderer extends SimpleControlSWTControlSWTRe
 				} catch (final MalformedURLException ex) {
 					Activator.log(ex);
 				}
-				setValue(selectedURL, setting);
+				setValue(selectedURL);
 			}
 
 		});
@@ -140,17 +182,28 @@ public class URLSelectionControlSWTRenderer extends SimpleControlSWTControlSWTRe
 
 				final String selectedURL = "platform:/plugin" + resource.getFullPath().toString(); //$NON-NLS-1$
 
-				setValue(selectedURL, setting);
+				setValue(selectedURL);
 			}
 
 		});
 		return composite;
 	}
 
-	private void setValue(String selectedURL, Setting setting) {
-		final EditingDomain editingDomain = getEditingDomain(setting);
-		final Command command = SetCommand.create(editingDomain, setting.getEObject(), setting.getEStructuralFeature(),
-			selectedURL);
+	private void setValue(String selectedURL) {
+		IObservableValue observableValue;
+		try {
+			observableValue = Activator.getDefault().getEMFFormsDatabinding()
+				.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
+		} catch (final DatabindingFailedException ex) {
+			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+			return;
+		}
+		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+		final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
+		observableValue.dispose();
+
+		final EditingDomain editingDomain = getEditingDomain(eObject);
+		final Command command = SetCommand.create(editingDomain, eObject, structuralFeature, selectedURL);
 		editingDomain.getCommandStack().execute(command);
 	}
 

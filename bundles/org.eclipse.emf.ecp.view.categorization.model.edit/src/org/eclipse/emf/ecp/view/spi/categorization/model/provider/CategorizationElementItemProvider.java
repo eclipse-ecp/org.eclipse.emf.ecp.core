@@ -23,14 +23,12 @@ import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizableElement;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationFactory;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VElementUtil;
 import org.eclipse.emf.ecp.view.spi.model.provider.ContainedElementItemProvider;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
@@ -44,12 +42,6 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  */
 public class CategorizationElementItemProvider
 	extends ContainedElementItemProvider
-	implements
-	IEditingDomainItemProvider,
-	IStructuredItemContentProvider,
-	ITreeItemContentProvider,
-	IItemLabelProvider,
-	IItemPropertySource
 {
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -166,7 +158,10 @@ public class CategorizationElementItemProvider
 	@Override
 	public String getText(Object object)
 	{
-		final String label = ((VCategorizationElement) object).getName();
+		String label = ((VCategorizationElement) object).getLabel();
+		if (label == null) {
+			label = VElementUtil.getCleanName(VElement.class.cast(object));
+		}
 		return label == null || label.length() == 0 ?
 			getString("_UI_CategorizationElement_type") : label; //$NON-NLS-1$
 	}

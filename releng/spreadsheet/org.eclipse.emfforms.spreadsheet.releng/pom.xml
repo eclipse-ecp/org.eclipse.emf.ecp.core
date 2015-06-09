@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.eclipse.emfforms.spreadsheet</groupId>
+	<artifactId>emfforms-spreadsheet-parent</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<properties>
+		<tycho-version>0.22.0</tycho-version>
+		<tycho-extras-version>0.22.0</tycho-extras-version>
+		<javadoc-version>2.9</javadoc-version>
+		<javadoc-title>EMFForms Spreadsheet 1.0.0 API</javadoc-title>
+		<maven.antrun.plugin.version>1.7</maven.antrun.plugin.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<tycho.scmUrl>scm:git:git://git.eclipse.org/gitroot/emfclient/org.eclipse.emf.ecp.core.git</tycho.scmUrl>
+		<jarsigner-version>1.1.0</jarsigner-version>
+		<mav-surefire-version>2.16</mav-surefire-version>
+		<junit-version>4.11</junit-version>
+		
+		<!-- Properties to enable jacoco code coverage analysis with sonar -->
+		<sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
+		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+		<sonar.jacoco.reportPath>../../tests/coverage/jacoco.exec</sonar.jacoco.reportPath>
+		<sonar.exclusions>**/model/**,**/test/**</sonar.exclusions>
+		
+		<target-spreadsheet>emfforms_spreadsheet</target-spreadsheet>
+	</properties>
+
+	<profiles>
+		<!-- Profile for adding aggregate sites to the built p2 repositry -->
+		<profile>
+			<id>aggregateSites</id>
+			<activation>
+				<property>
+					<name>aggSite</name>
+				</property>
+			</activation>
+		</profile>
+		
+		<!-- Profile for use on the eclipse build server. Enables code signing, etc. -->
+		<profile>
+			<id>build-server</id>
+			<activation>
+				<property>
+					<name>build-server</name>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<!-- Configure build to use the jdk specified in manifest -->
+					<plugin>
+						<groupId>org.eclipse.tycho</groupId>
+						<artifactId>tycho-compiler-plugin</artifactId>
+						<version>${tycho-version}</version>
+						<configuration>
+							<useJDK>BREE</useJDK>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>eclipse-maven-releases</id>
+			<url>https://repo.eclipse.org/content/repositories/releases/</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<modules>
+		<module>../org.eclipse.emfforms.spreadsheet.releng.bundles</module>
+		<module>../org.eclipse.emfforms.spreadsheet.releng.features</module>
+		<module>../org.eclipse.emfforms.spreadsheet.releng.tests</module>
+		<module>../org.eclipse.emfforms.spreadsheet.releng.target</module>
+		<module>../org.eclipse.emfforms.spreadsheet.releng.repository</module>
+	</modules>
+
+	<build>
+		<sourceDirectory>src</sourceDirectory>
+		<outputDirectory>bin</outputDirectory>
+
+		<plugins>
+			<plugin>  
+				<groupId>org.eclipse.tycho</groupId>  
+				<artifactId>tycho-versions-plugin</artifactId>  
+				<version>${tycho-version}</version>  
+			</plugin>
+
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-maven-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<extensions>true</extensions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>target-platform-configuration</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<resolver>p2</resolver>
+					<pomDependencies>consider</pomDependencies>
+					<allowConflictingDependencies>true</allowConflictingDependencies>
+					<includePackedArtifacts>true</includePackedArtifacts>
+					<environments>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<!--  Beginning with mars this environment is removed -->
+						<!--environment>
+							<os>macosx</os>
+							<ws>cocoa</ws>
+							<arch>x86</arch>
+						</environment-->
+						<environment>
+							<os>macosx</os>
+							<ws>cocoa</ws>
+							<arch>x86_64</arch>
+						</environment>
+					</environments>
+					<target>
+						<artifact>
+							<groupId>org.eclipse.emfforms.spreadsheet</groupId>
+							<artifactId>${target-spreadsheet}</artifactId>
+							<version>1.0.0-SNAPSHOT</version>
+						</artifact>
+					</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-packaging-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.eclipse.tycho.extras</groupId>
+						<artifactId>tycho-buildtimestamp-jgit</artifactId>
+						<version>${tycho-extras-version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.eclipse.tycho.extras</groupId>
+						<artifactId>tycho-sourceref-jgit</artifactId>
+						<version>${tycho-extras-version}</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<!-- <timestampProvider>jgit</timestampProvider> -->
+					<!-- generate new qualifier even if it is only the pom.xml that changed 
+						<jgit.ignore> pom.xml </jgit.ignore> -->
+					<format>yyyyMMdd-HHmm</format>
+					<sourceReferences>
+						<generate>true</generate>
+					</sourceReferences>
+				</configuration>
+			</plugin>
+			<!-- enable javadocgeneration -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>${javadoc-version}</version>
+				<configuration>
+					<doctitle>${javadoc-title}</doctitle>
+					<show>protected</show>
+					<show>public</show>
+					<nohelp>true</nohelp>
+				</configuration>
+			</plugin>
+			<!-- to disable use -Dcheckstyle.skip -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>2.11</version>
+				<configuration>
+					<configLocation>http://download.eclipse.org/ecp/config/esmCheckstyle.xml</configLocation>
+
+					<suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
+					<suppressionsLocation>http://download.eclipse.org/ecp/config/suppressions.xml</suppressionsLocation>
+					<failsOnError>false</failsOnError>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>check</goal>
+						</goals>
+						<phase>verify</phase>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- enable source bundle generation -->
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-source-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<executions>
+					<execution>
+						<id>plugin-source</id>
+						<goals>
+							<goal>plugin-source</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.7.4.201502262128</version>
+				<configuration>
+					<destFile>${sonar.jacoco.reportPath}</destFile>
+					<append>true</append> 
+				</configuration>
+				<executions>
+					<execution>
+						<id>jacoco-initialize</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+		
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>sonar-maven-plugin</artifactId>
+					<version>2.3.1</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>

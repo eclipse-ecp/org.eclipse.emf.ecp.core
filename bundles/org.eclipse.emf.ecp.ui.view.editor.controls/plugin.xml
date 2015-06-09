@@ -36,13 +36,6 @@
          </dynamicTest>
       </control>
       <control
-            class="org.eclipse.emf.ecp.view.internal.editor.controls.ControlRootEClassControl2SWTRenderer"
-            id="org.eclipse.emf.ecp.view.editor.controls.rootEClass2">
-         <dynamicTest
-               testClass="org.eclipse.emf.ecp.view.internal.editor.controls.RootEClassControlIDETester">
-         </dynamicTest>
-      </control>
-      <control
             class="org.eclipse.emf.ecp.view.internal.editor.controls.TableColumnDomainModelReferenceControl"
             id="org.eclipse.emf.ecp.view.editor.controls.tableColumnDomainModelReference">
          <dynamicTest

@@ -11,12 +11,12 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.swt.internal.layout;
 
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.swt.layout.AbstractLayoutProvider;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
@@ -40,15 +40,14 @@ public class ECPLayoutProvider extends AbstractLayoutProvider {
 	}
 
 	@Override
-	public Object getLayoutData(SWTGridCell gridCell,
-		SWTGridDescription controlGridDescription,
+	public Object getLayoutData(SWTGridCell gridCell, SWTGridDescription controlGridDescription,
 		SWTGridDescription currentRowGridDescription, SWTGridDescription fullGridDescription, VElement vElement,
-		Control control) {
+		EObject domainModel, Control control) {
 		if (VControl.class.isInstance(vElement)) {
 			// last column of control
 			if (gridCell.getColumn() + gridCell.getHorizontalSpan() == controlGridDescription.getColumns()) {
 				return getControlGridData(gridCell.getHorizontalSpan() + fullGridDescription.getColumns()
-					- currentRowGridDescription.getColumns(), VControl.class.cast(vElement), control);
+					- currentRowGridDescription.getColumns(), VControl.class.cast(vElement), domainModel, control);
 			} else if (controlGridDescription.getColumns() == 3 && gridCell.getColumn() == 0) {
 				return getLabelGridData();
 			} else if (controlGridDescription.getColumns() == 3 && gridCell.getColumn() == 1) {
@@ -79,15 +78,13 @@ public class ECPLayoutProvider extends AbstractLayoutProvider {
 			.hint(16, 17).grab(false, false).create();
 	}
 
-	private GridData getControlGridData(int xSpan, VControl vControl, Control control) {
+	private GridData getControlGridData(int xSpan, VControl vControl, EObject domainModel, Control control) {
 		GridDataFactory gdf =
 			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
 				.grab(true, false).span(xSpan, 1);
 
 		if (Text.class.isInstance(control) && vControl.getDomainModelReference() != null) {
-			final Setting setting = vControl.getDomainModelReference().getIterator().next();
-
-			if (isMultiLine(setting)) {
+			if (isMultiLine(vControl.getDomainModelReference(), domainModel)) {
 				gdf = gdf.hint(50, 200); // set x hint to enable wrapping
 			}
 		}

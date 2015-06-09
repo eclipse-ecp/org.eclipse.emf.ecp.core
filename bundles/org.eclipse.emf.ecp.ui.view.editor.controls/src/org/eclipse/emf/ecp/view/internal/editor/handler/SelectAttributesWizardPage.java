@@ -12,21 +12,24 @@
 package org.eclipse.emf.ecp.view.internal.editor.handler;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.view.internal.editor.controls.Activator;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -374,14 +377,19 @@ public class SelectAttributesWizardPage extends WizardPage {
 				if (domainModelReference == null) {
 					continue;
 				}
-				final Iterator<EStructuralFeature> structuralFeatureIterator = domainModelReference
-					.getEStructuralFeatureIterator();
-				while (structuralFeatureIterator.hasNext()) {
-					final EStructuralFeature feature = structuralFeatureIterator.next();
-					if (feature != null && feature.getEContainingClass() != null
-						&& feature.getEContainingClass().equals(eClass)) {
-						result.add(feature);
-					}
+
+				IValueProperty valueProperty;
+				try {
+					valueProperty = Activator.getDefault().getEMFFormsDatabinding()
+						.getValueProperty(domainModelReference, null);
+				} catch (final DatabindingFailedException ex) {
+					Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+					continue;
+				}
+				final EStructuralFeature feature = (EStructuralFeature) valueProperty.getValueType();
+				if (feature != null && feature.getEContainingClass() != null
+					&& feature.getEContainingClass().equals(eClass)) {
+					result.add(feature);
 				}
 			}
 

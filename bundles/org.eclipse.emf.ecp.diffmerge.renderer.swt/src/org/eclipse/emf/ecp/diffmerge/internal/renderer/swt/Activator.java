@@ -13,6 +13,9 @@ package org.eclipse.emf.ecp.diffmerge.internal.renderer.swt;
 
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.swt.graphics.Image;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -27,6 +30,7 @@ public class Activator extends Plugin {
 
 	private static Activator instance;
 	private ServiceReference<ImageRegistryService> imageRegistryServiceReference;
+	private ServiceReference<ReportService> reportServiceReference;
 
 	// BEGIN SUPRESS CATCH EXCEPTION
 	@Override
@@ -64,5 +68,59 @@ public class Activator extends Plugin {
 				.getServiceReference(ImageRegistryService.class);
 		}
 		return getBundle().getBundleContext().getService(imageRegistryServiceReference);
+	}
+
+	/**
+	 * Returns the shared instance.
+	 *
+	 * @return the shared instance
+	 */
+	public static Activator getInstance() {
+		return instance;
+	}
+
+	/**
+	 * Returns the {@link ReportService}.
+	 *
+	 * @return the {@link ReportService}
+	 */
+	public ReportService getReportService() {
+		if (reportServiceReference == null) {
+			reportServiceReference = instance.getBundle().getBundleContext()
+				.getServiceReference(ReportService.class);
+		}
+		return instance.getBundle().getBundleContext().getService(reportServiceReference);
+	}
+
+	/**
+	 * Returns the {@link EMFFormsDatabinding} service.
+	 *
+	 * @return The {@link EMFFormsDatabinding}
+	 */
+	public EMFFormsDatabinding getEMFFormsDatabinding() {
+		final ServiceReference<EMFFormsDatabinding> serviceReference = instance.getBundle().getBundleContext()
+			.getServiceReference(EMFFormsDatabinding.class);
+
+		final EMFFormsDatabinding service = instance.getBundle().getBundleContext()
+			.getService(serviceReference);
+		instance.getBundle().getBundleContext().ungetService(serviceReference);
+
+		return service;
+	}
+
+	/**
+	 * Returns the {@link EMFFormsLabelProvider} service.
+	 *
+	 * @return The {@link EMFFormsLabelProvider}
+	 */
+	public EMFFormsLabelProvider getEMFFormsLabelProvider() {
+		final ServiceReference<EMFFormsLabelProvider> serviceReference = instance.getBundle().getBundleContext()
+			.getServiceReference(EMFFormsLabelProvider.class);
+
+		final EMFFormsLabelProvider service = instance.getBundle().getBundleContext()
+			.getService(serviceReference);
+		instance.getBundle().getBundleContext().ungetService(serviceReference);
+
+		return service;
 	}
 }

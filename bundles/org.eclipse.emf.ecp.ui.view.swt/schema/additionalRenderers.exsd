@@ -55,7 +55,7 @@
                   The class defining the renderer.
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn="org.eclipse.emf.ecp.view.spi.swt.AbstractAdditionalSWTRenderer:"/>
+                  <meta.attribute kind="java" basedOn="org.eclipse.emfforms.spi.swt.core.AbstractAdditionalSWTRenderer:"/>
                </appinfo>
             </annotation>
          </attribute>

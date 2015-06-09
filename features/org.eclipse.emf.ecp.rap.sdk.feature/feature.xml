@@ -2,10 +2,10 @@
 <feature
       id="org.eclipse.emf.ecp.rap.sdk.feature"
       label="ECP RAP SDK (Experimental)"
-      version="1.5.1.qualifier"
+      version="1.6.0.qualifier"
       provider-name="%providerName"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.5.1.qualifier">
+      license-feature-version="1.6.0.qualifier">
 
    <description>
       %description
@@ -48,10 +48,6 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.emf.ecp.view.template.helper.feature.source"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.emf.ecp.emfstore.feature"
          version="0.0.0"/>
 
@@ -81,10 +77,6 @@
 
    <includes
          id="org.eclipse.emf.ecp.rap.util.feature"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.ecp.view.template.helper.feature"
          version="0.0.0"/>
 
 </feature>

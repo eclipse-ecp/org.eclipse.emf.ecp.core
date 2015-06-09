@@ -224,6 +224,7 @@ public class ECPProject_PTest extends AbstractTest {
 	/**
 	 * Test save properties.
 	 */
+	@SuppressWarnings("deprecation")
 	@Test
 	public void testSaveProperties() {
 		project.saveProperties();

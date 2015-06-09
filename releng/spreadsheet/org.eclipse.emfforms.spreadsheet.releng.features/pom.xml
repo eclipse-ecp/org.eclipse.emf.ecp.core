@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.eclipse.emfforms.spreadsheet</groupId>
+		<artifactId>emfforms-spreadsheet-parent</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+		<relativePath>../org.eclipse.emfforms.spreadsheet.releng/</relativePath>
+	</parent>
+	
+	<groupId>org.eclipse.emfforms.spreadsheet</groupId>
+	<artifactId>emfforms-spreadsheet-features-parent</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>../../../features/spreadsheet/org.eclipse.emfforms.spreadsheet.feature</module>
+	</modules>
+
+	<!-- Parent used for features. This POM contains all build steps for code signing. -->
+	<build>
+		<plugins>
+			<!-- 1. -->
+			<plugin>
+				<groupId>org.eclipse.tycho.extras</groupId>
+				<artifactId>tycho-source-feature-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<executions>
+					<execution>
+						<id>generate-source-feature</id>
+						<goals>
+							<goal>source-feature</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<excludes>
+						<feature id="org.eclipse.emf.ecp.license.feature"/>
+					</excludes>
+					<labelSuffix>&#xA0;incl. Sources</labelSuffix>
+				</configuration>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-p2-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<executions>
+					<execution>
+						<!-- 2. -->
+						<id>default-p2-metadata-default</id>
+						<configuration>
+							<attachP2Metadata>false</attachP2Metadata>
+						</configuration>
+					</execution>
+					<execution>
+						<id>attach-p2-metadata</id>
+						<phase>package</phase>
+						<goals>
+							<goal>p2-metadata</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	<profiles>
+		<!-- 3. -->
+		<profile>
+			<id>build-server</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.eclipse.cbi.maven.plugins</groupId>
+						<artifactId>eclipse-jarsigner-plugin</artifactId>
+						<version>${jarsigner-version}</version>
+						<executions>
+							<execution>
+								<id>sign</id>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<excludeInnerJars>true</excludeInnerJars>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.eclipse.tycho</groupId>
+						<artifactId>tycho-p2-plugin</artifactId>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+</project>

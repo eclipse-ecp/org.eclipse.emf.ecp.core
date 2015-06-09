@@ -13,20 +13,19 @@ package org.eclipse.emf.ecp.emfstore.internal.ui.handler;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecp.core.exceptions.ECPProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
+import org.eclipse.emf.ecp.emfstore.core.internal.ECPEMFUtils;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.emfstore.internal.ui.Activator;
 import org.eclipse.emf.ecp.internal.ui.PreferenceHelper;
+import org.eclipse.emf.ecp.internal.ui.util.ECPExportHandlerHelper;
 import org.eclipse.emf.ecp.internal.ui.util.ECPFileDialogHelper;
 import org.eclipse.emf.emfstore.client.ESLocalProject;
-import org.eclipse.emf.emfstore.client.ESWorkspaceProvider;
 import org.eclipse.emf.emfstore.internal.client.importexport.ExportImportControllerExecutor;
 import org.eclipse.emf.emfstore.internal.client.importexport.ExportImportControllerFactory;
 import org.eclipse.emf.emfstore.internal.client.importexport.impl.ExportImportDataUnits;
@@ -34,7 +33,9 @@ import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
-import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * A helper class that can be used to import projects.
@@ -58,10 +59,6 @@ public final class ImportProjectHelper {
 
 	private static final String EXPORT_MODEL_PATH = "org.eclipse.emf.ecp.exportProjectModelPath"; //$NON-NLS-1$
 
-	private static final String ECP_UI_PLUGIN_ID = "org.eclipse.emf.ecp.ui"; //$NON-NLS-1$
-
-	private static final String FILE_DIALOG_HELPER_CLASS = "org.eclipse.emf.ecp.internal.ui.util.ECPFileDialogHelperImpl"; //$NON-NLS-1$
-
 	private ImportProjectHelper() {
 	}
 
@@ -81,7 +78,8 @@ public final class ImportProjectHelper {
 				.execute(ExportImportControllerFactory.Import.getImportProjectSpaceController());
 			PreferenceHelper.setPreference(EXPORT_MODEL_PATH, file.getParent());
 
-			final List<ESLocalProject> localProjects = ESWorkspaceProvider.INSTANCE.getWorkspace().getLocalProjects();
+			final List<ESLocalProject> localProjects = ECPEMFUtils.getESWorkspaceProviderInstance().getWorkspace()
+				.getLocalProjects();
 			final ESLocalProject localProject = localProjects.get(localProjects.size() - 1);
 			final ECPProperties properties = ECPUtil.createProperties();
 			properties.addProperty(EMFStoreProvider.PROP_PROJECTSPACEID, localProject.getLocalProjectId().getId());
@@ -110,40 +108,16 @@ public final class ImportProjectHelper {
 	}
 
 	private static File getFile(Shell shell) {
-		try {
-			final Class<ECPFileDialogHelper> clazz = loadClass(ECP_UI_PLUGIN_ID,
-				FILE_DIALOG_HELPER_CLASS);
-			final ECPFileDialogHelper fileDialogHelper = clazz.getConstructor().newInstance();
-			final String fileName = fileDialogHelper.getPathForImport(shell);
-			if (fileName != null) {
-				return new File(fileName);
-			}
-		} catch (final ClassNotFoundException ex) {
-			Activator.log(ex);
-		} catch (final InstantiationException ex) {
-			Activator.log(ex);
-		} catch (final IllegalAccessException ex) {
-			Activator.log(ex);
-		} catch (final IllegalArgumentException ex) {
-			Activator.log(ex);
-		} catch (final InvocationTargetException ex) {
-			Activator.log(ex);
-		} catch (final NoSuchMethodException ex) {
-			Activator.log(ex);
-		} catch (final SecurityException ex) {
-			Activator.log(ex);
+		final BundleContext bundleContext = FrameworkUtil.getBundle(ECPExportHandlerHelper.class).getBundleContext();
+		final ServiceReference<ECPFileDialogHelper> serviceReference = bundleContext
+			.getServiceReference(ECPFileDialogHelper.class);
+		final ECPFileDialogHelper fileDialogHelper = bundleContext.getService(serviceReference);
+		final String result = fileDialogHelper.getPathForImport(shell);
+		bundleContext.ungetService(serviceReference);
+		if (result == null) {
+			return null;
 		}
-		return null;
-	}
-
-	@SuppressWarnings("unchecked")
-	private static <T> Class<T> loadClass(String bundleName, String clazz) throws ClassNotFoundException {
-		final Bundle bundle = Platform.getBundle(bundleName);
-		if (bundle == null) {
-			throw new ClassNotFoundException(clazz + " cannot be loaded because bundle " + bundleName //$NON-NLS-1$
-				+ " cannot be resolved"); //$NON-NLS-1$
-		}
-		return (Class<T>) bundle.loadClass(clazz);
+		return new File(result);
 	}
 
 }

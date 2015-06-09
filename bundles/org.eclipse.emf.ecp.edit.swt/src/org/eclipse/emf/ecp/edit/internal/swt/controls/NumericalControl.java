@@ -24,6 +24,7 @@ import org.eclipse.core.databinding.observable.value.ValueChangeEvent;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.edit.command.SetCommand;
+import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -37,6 +38,7 @@ import org.eclipse.swt.widgets.Text;
  * @author Eugen Neufeld
  * @author emueller
  */
+@Deprecated
 public class NumericalControl extends AbstractTextControl {
 
 	@Override
@@ -59,7 +61,8 @@ public class NumericalControl extends AbstractTextControl {
 	 */
 	@Override
 	protected String getUnsetLabelText() {
-		return ControlMessages.NumericalControl_NoNumberClickToSetNumber;
+		return LocalizationServiceHelper.getString(getClass(),
+			DepricatedControlMessageKeys.NumericalControl_NoNumberClickToSetNumber);
 	}
 
 	/*
@@ -68,7 +71,8 @@ public class NumericalControl extends AbstractTextControl {
 	 */
 	@Override
 	protected String getUnsetButtonTooltip() {
-		return ControlMessages.NumericalControl_UnsetNumber;
+		return LocalizationServiceHelper.getString(getClass(),
+			DepricatedControlMessageKeys.NumericalControl_UnsetNumber);
 	}
 
 	@Override
@@ -122,9 +126,11 @@ public class NumericalControl extends AbstractTextControl {
 	private String getFormatText() {
 
 		if (NumericalHelper.isInteger(getInstanceClass())) {
-			return ControlMessages.NumericalControl_FormatNumerical;
+			return LocalizationServiceHelper.getString(getClass(),
+				DepricatedControlMessageKeys.NumericalControl_FormatNumerical);
 		} else if (NumericalHelper.isDouble(getInstanceClass())) {
-			return ControlMessages.NumericalControl_FormatNumericalDecimal;
+			return LocalizationServiceHelper.getString(getClass(),
+				DepricatedControlMessageKeys.NumericalControl_FormatNumericalDecimal);
 		}
 
 		return ""; //$NON-NLS-1$
@@ -239,8 +245,10 @@ public class NumericalControl extends AbstractTextControl {
 			final Object result = getModelValue().getValue();
 
 			final MessageDialog messageDialog = new MessageDialog(getText().getShell(),
-				ControlMessages.NumericalControl_InvalidNumber, null,
-				ControlMessages.NumericalControl_InvalidNumberWillBeUnset, MessageDialog.ERROR,
+				LocalizationServiceHelper.getString(getClass(),
+					DepricatedControlMessageKeys.NumericalControl_InvalidNumber), null,
+				LocalizationServiceHelper.getString(getClass(),
+					DepricatedControlMessageKeys.NumericalControl_InvalidNumberWillBeUnset), MessageDialog.ERROR,
 				new String[] { JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
 
 			new ECPDialogExecutor(messageDialog) {

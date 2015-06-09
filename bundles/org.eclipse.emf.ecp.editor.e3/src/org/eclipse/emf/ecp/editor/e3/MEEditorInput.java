@@ -97,6 +97,9 @@ public class MEEditorInput implements IEditorInput {
 			if (modelElementContext == other.modelElementContext) {
 				return true;
 			}
+			if (other.modelElementContext == null) {
+				return false;
+			}
 			final boolean ret = modelElementContext.getDomainObject().equals(
 				other.modelElementContext.getDomainObject());
 			return ret;

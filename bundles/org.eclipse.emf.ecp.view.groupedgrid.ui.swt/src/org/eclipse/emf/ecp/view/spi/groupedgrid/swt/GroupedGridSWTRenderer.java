@@ -11,6 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.groupedgrid.swt;
 
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.groupedgrid.model.VGroup;
 import org.eclipse.emf.ecp.view.spi.groupedgrid.model.VGroupedGrid;
 import org.eclipse.emf.ecp.view.spi.groupedgrid.model.VRow;
@@ -20,10 +21,14 @@ import org.eclipse.emf.ecp.view.spi.model.VAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer;
-import org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell;
-import org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription;
+import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
+import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
@@ -31,6 +36,9 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author Eugen Neufeld
@@ -38,12 +46,24 @@ import org.eclipse.swt.widgets.Label;
  *
  */
 public class GroupedGridSWTRenderer extends AbstractSWTRenderer<VGroupedGrid> {
+	/**
+	 * Default Constructor.
+	 *
+	 * @param vElement the view element to be rendered
+	 * @param viewContext The view model context
+	 * @param reportService the ReportService to use
+	 */
+	public GroupedGridSWTRenderer(final VGroupedGrid vElement, final ViewModelContext viewContext,
+		ReportService reportService) {
+		super(vElement, viewContext, reportService);
+	}
+
 	private SWTGridDescription rendererGridDescription;
 
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#getGridDescription(SWTGridDescription)
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#getGridDescription(SWTGridDescription)
 	 */
 	@Override
 	public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
@@ -56,7 +76,7 @@ public class GroupedGridSWTRenderer extends AbstractSWTRenderer<VGroupedGrid> {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#dispose()
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#dispose()
 	 */
 	@Override
 	protected void dispose() {
@@ -67,7 +87,7 @@ public class GroupedGridSWTRenderer extends AbstractSWTRenderer<VGroupedGrid> {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell,
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#renderControl(org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell,
 	 *      org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
@@ -102,15 +122,17 @@ public class GroupedGridSWTRenderer extends AbstractSWTRenderer<VGroupedGrid> {
 				for (final org.eclipse.emf.ecp.view.spi.model.VContainedElement child : row.getChildren()) {
 
 					final int hSpan = getHSpanOfComposite(child);
-					final AbstractSWTRenderer<VElement> renderer = getSWTRendererFactory().getRenderer(child,
-						getViewModelContext());
+					AbstractSWTRenderer<VElement> renderer;
+					try {
+						renderer = getEMFFormsRendererFactory().getRendererInstance(child,
+							getViewModelContext());
+					} catch (final EMFFormsNoRendererException ex) {
+						getReportService().report(new RenderingFailedReport(ex));
+						continue;
+					}
 					final Control childRender = renderer.render(new SWTGridCell(0, 0, this),
 						columnComposite);
 
-					// TOOD; when does this case apply?
-					if (childRender == null) {
-						continue;
-					}
 					childRender.setBackground(parent.getBackground());
 					GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).indent(0, 0)
 						.span(hSpan, 1).applyTo(childRender);
@@ -180,4 +202,12 @@ public class GroupedGridSWTRenderer extends AbstractSWTRenderer<VGroupedGrid> {
 
 	}
 
+	private EMFFormsRendererFactory getEMFFormsRendererFactory() {
+		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
+		final ServiceReference<EMFFormsRendererFactory> serviceReference = bundleContext
+			.getServiceReference(EMFFormsRendererFactory.class);
+		final EMFFormsRendererFactory rendererFactory = bundleContext.getService(serviceReference);
+		bundleContext.ungetService(serviceReference);
+		return rendererFactory;
+	}
 }

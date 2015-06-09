@@ -44,7 +44,6 @@ import org.eclipse.emf.ecp.view.spi.model.util.ViewValidator;
  * @since 1.2
  *        <!--
  *        end-user-doc -->
- *
  * @generated
  */
 public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
@@ -247,12 +246,14 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.6
+	 *        <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
 	@Override
-	public EAttribute getElement_Visible()
+	public EAttribute getElement_Label()
 	{
 		return (EAttribute) elementEClass.getEStructuralFeatures().get(1);
 	}
@@ -264,7 +265,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * @generated
 	 */
 	@Override
-	public EAttribute getElement_Enabled()
+	public EAttribute getElement_Visible()
 	{
 		return (EAttribute) elementEClass.getEStructuralFeatures().get(2);
 	}
@@ -276,7 +277,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * @generated
 	 */
 	@Override
-	public EAttribute getElement_Readonly()
+	public EAttribute getElement_Enabled()
 	{
 		return (EAttribute) elementEClass.getEStructuralFeatures().get(3);
 	}
@@ -288,9 +289,21 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * @generated
 	 */
 	@Override
+	public EAttribute getElement_Readonly()
+	{
+		return (EAttribute) elementEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
 	public EReference getElement_Diagnostic()
 	{
-		return (EReference) elementEClass.getEStructuralFeatures().get(4);
+		return (EReference) elementEClass.getEStructuralFeatures().get(5);
 	}
 
 	/**
@@ -302,7 +315,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	@Override
 	public EReference getElement_Attachments()
 	{
-		return (EReference) elementEClass.getEStructuralFeatures().get(5);
+		return (EReference) elementEClass.getEStructuralFeatures().get(6);
 	}
 
 	/**
@@ -436,7 +449,6 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
@@ -462,7 +474,6 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
@@ -606,6 +617,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 		elementEClass = createEClass(ELEMENT);
 		createEAttribute(elementEClass, ELEMENT__NAME);
+		createEAttribute(elementEClass, ELEMENT__LABEL);
 		createEAttribute(elementEClass, ELEMENT__VISIBLE);
 		createEAttribute(elementEClass, ELEMENT__ENABLED);
 		createEAttribute(elementEClass, ELEMENT__READONLY);
@@ -714,6 +726,10 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 			theEcorePackage.getEString(),
 			"name", null, 0, 1, VElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(
+			getElement_Label(),
+			ecorePackage.getEString(),
+			"label", null, 0, 1, VElement.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(
 			getElement_Visible(),
 			ecorePackage.getEBoolean(),
 			"visible", "true", 0, 1, VElement.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
@@ -800,7 +816,6 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 *
 	 * @since 1.5
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	protected void createEcoreAnnotations()

@@ -141,9 +141,21 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 	 * @generated
 	 */
 	@Override
-	public EReference getIndexDomainModelReference_TargetDMR()
+	public EReference getIndexDomainModelReference_PrefixDMR()
 	{
 		return (EReference) indexDomainModelReferenceEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EReference getIndexDomainModelReference_TargetDMR()
+	{
+		return (EReference) indexDomainModelReferenceEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -195,8 +207,9 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 
 		// Create classes and their features
 		indexDomainModelReferenceEClass = createEClass(INDEX_DOMAIN_MODEL_REFERENCE);
-		createEReference(indexDomainModelReferenceEClass, INDEX_DOMAIN_MODEL_REFERENCE__TARGET_DMR);
+		createEReference(indexDomainModelReferenceEClass, INDEX_DOMAIN_MODEL_REFERENCE__PREFIX_DMR);
 		createEAttribute(indexDomainModelReferenceEClass, INDEX_DOMAIN_MODEL_REFERENCE__INDEX);
+		createEReference(indexDomainModelReferenceEClass, INDEX_DOMAIN_MODEL_REFERENCE__TARGET_DMR);
 	}
 
 	/**
@@ -241,14 +254,19 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 		initEClass(indexDomainModelReferenceEClass, VIndexDomainModelReference.class,
 			"IndexDomainModelReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(
-			getIndexDomainModelReference_TargetDMR(),
+			getIndexDomainModelReference_PrefixDMR(),
 			theViewPackage.getDomainModelReference(),
 			null,
-			"targetDMR", null, 1, 1, VIndexDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+			"prefixDMR", null, 1, 1, VIndexDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEAttribute(
 			getIndexDomainModelReference_Index(),
 			ecorePackage.getEInt(),
 			"index", null, 0, 1, VIndexDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+			getIndexDomainModelReference_TargetDMR(),
+			theViewPackage.getDomainModelReference(),
+			null,
+			"targetDMR", null, 1, 1, VIndexDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		// Create resource
 		createResource(eNS_URI);

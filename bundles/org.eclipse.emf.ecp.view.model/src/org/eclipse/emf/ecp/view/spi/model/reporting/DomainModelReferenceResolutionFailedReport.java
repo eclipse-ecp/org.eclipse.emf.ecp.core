@@ -15,6 +15,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
 
 /**
  * Indicates that a {@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference VDomainModelReference} could not be

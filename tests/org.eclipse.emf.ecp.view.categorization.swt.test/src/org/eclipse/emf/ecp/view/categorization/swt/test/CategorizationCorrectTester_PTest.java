@@ -15,15 +15,14 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import org.eclipse.emf.ecp.view.internal.categorization.swt.CategorizationTabRendererTester;
-import org.eclipse.emf.ecp.view.internal.categorization.swt.CategorizationTreeRendererTester;
-import org.eclipse.emf.ecp.view.internal.categorization.swt.CompositeCategoryDefaultRendererTester;
-import org.eclipse.emf.ecp.view.internal.categorization.swt.CompositeCategoryTabRendererTester;
-import org.eclipse.emf.ecp.view.internal.categorization.swt.CompositeCategoryTreeRendererTester;
-import org.eclipse.emf.ecp.view.model.common.ECPRendererTester;
+import org.eclipse.emf.ecp.view.internal.categorization.swt.CategorizationElementTabbedRendererService;
+import org.eclipse.emf.ecp.view.internal.categorization.swt.CompositeCategoryJFaceTreeRendererService;
+import org.eclipse.emf.ecp.view.internal.categorization.swt.CompositeCategorySWTTabRendererService;
+import org.eclipse.emf.ecp.view.internal.categorization.swt.SWTCategorizationElementRendererService;
+import org.eclipse.emf.ecp.view.internal.categorization.swt.SWTCategorizationRendererService;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorization;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -45,39 +44,39 @@ public class CategorizationCorrectTester_PTest {
 	public void testCorrectTesterForCategorizationWithDepth0() {
 		final VCategorizationElement categorizationElement = mock(VCategorizationElement.class);
 		when(categorizationElement.getMainCategoryDepth()).thenReturn(0);
-		final CategorizationTabRendererTester tabTester = new CategorizationTabRendererTester();
-		final int applicable = tabTester.isApplicable(categorizationElement, mock(ViewModelContext.class));
-		assertEquals(ECPRendererTester.NOT_APPLICABLE, applicable);
+		final CategorizationElementTabbedRendererService tabTester = new CategorizationElementTabbedRendererService();
+		final double applicable = tabTester.isApplicable(categorizationElement, null);
+		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicable, 0d);
 
-		final CategorizationTreeRendererTester treeTester = new CategorizationTreeRendererTester();
-		final int applicableTree = treeTester.isApplicable(categorizationElement, mock(ViewModelContext.class));
-		assertEquals(1, applicableTree);
+		final SWTCategorizationElementRendererService treeTester = new SWTCategorizationElementRendererService();
+		final double applicableTree = treeTester.isApplicable(categorizationElement, null);
+		assertEquals(1, applicableTree, 0d);
 	}
 
 	@Test
 	public void testCorrectTesterForCategorizationWithDepth1() {
 		final VCategorizationElement categorizationElement = mock(VCategorizationElement.class);
 		when(categorizationElement.getMainCategoryDepth()).thenReturn(1);
-		final CategorizationTabRendererTester tabTester = new CategorizationTabRendererTester();
-		final int applicable = tabTester.isApplicable(categorizationElement, mock(ViewModelContext.class));
-		assertEquals(1, applicable);
+		final CategorizationElementTabbedRendererService tabTester = new CategorizationElementTabbedRendererService();
+		final double applicable = tabTester.isApplicable(categorizationElement, null);
+		assertEquals(1, applicable, 0d);
 
-		final CategorizationTreeRendererTester treeTester = new CategorizationTreeRendererTester();
-		final int applicableTree = treeTester.isApplicable(categorizationElement, mock(ViewModelContext.class));
-		assertEquals(ECPRendererTester.NOT_APPLICABLE, applicableTree);
+		final SWTCategorizationElementRendererService treeTester = new SWTCategorizationElementRendererService();
+		final double applicableTree = treeTester.isApplicable(categorizationElement, null);
+		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTree, 0d);
 	}
 
 	@Test
 	public void testCorrectTesterForCategorizationWithDepth2() {
 		final VCategorizationElement categorizationElement = mock(VCategorizationElement.class);
 		when(categorizationElement.getMainCategoryDepth()).thenReturn(2);
-		final CategorizationTabRendererTester tabTester = new CategorizationTabRendererTester();
-		final int applicable = tabTester.isApplicable(categorizationElement, mock(ViewModelContext.class));
-		assertEquals(1, applicable);
+		final CategorizationElementTabbedRendererService tabTester = new CategorizationElementTabbedRendererService();
+		final double applicable = tabTester.isApplicable(categorizationElement, null);
+		assertEquals(1, applicable, 0d);
 
-		final CategorizationTreeRendererTester treeTester = new CategorizationTreeRendererTester();
-		final int applicableTree = treeTester.isApplicable(categorizationElement, mock(ViewModelContext.class));
-		assertEquals(ECPRendererTester.NOT_APPLICABLE, applicableTree);
+		final SWTCategorizationElementRendererService treeTester = new SWTCategorizationElementRendererService();
+		final double applicableTree = treeTester.isApplicable(categorizationElement, null);
+		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTree, 0d);
 	}
 
 	@Test
@@ -93,45 +92,45 @@ public class CategorizationCorrectTester_PTest {
 		final VCategorization categorization3 = mock(VCategorization.class);
 		when(categorization3.eContainer()).thenReturn(categorization2);
 
-		final CompositeCategoryDefaultRendererTester defaultTester = new CompositeCategoryDefaultRendererTester();
-		final CompositeCategoryTabRendererTester tabTester = new CompositeCategoryTabRendererTester();
-		final CompositeCategoryTreeRendererTester treeTester = new CompositeCategoryTreeRendererTester();
+		final SWTCategorizationRendererService defaultTester = new SWTCategorizationRendererService();
+		final CompositeCategorySWTTabRendererService tabTester = new CompositeCategorySWTTabRendererService();
+		final CompositeCategoryJFaceTreeRendererService treeTester = new CompositeCategoryJFaceTreeRendererService();
 
-		final int applicable0 = defaultTester.isApplicable(categorization0, mock(ViewModelContext.class));
-		assertEquals(1, applicable0);
+		final double applicable0 = defaultTester.isApplicable(categorization0, null);
+		assertEquals(1, applicable0, 0d);
 
-		final int applicableTab0 = tabTester.isApplicable(categorization0, mock(ViewModelContext.class));
-		assertEquals(ECPRendererTester.NOT_APPLICABLE, applicableTab0);
+		final double applicableTab0 = tabTester.isApplicable(categorization0, null);
+		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTab0, 0d);
 
-		final int applicableTree0 = treeTester.isApplicable(categorization0, mock(ViewModelContext.class));
-		assertEquals(ECPRendererTester.NOT_APPLICABLE, applicableTree0);
+		final double applicableTree0 = treeTester.isApplicable(categorization0, null);
+		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTree0, 0d);
 
-		final int applicable1 = defaultTester.isApplicable(categorization1, mock(ViewModelContext.class));
-		assertEquals(1, applicable1);
+		final double applicable1 = defaultTester.isApplicable(categorization1, null);
+		assertEquals(1, applicable1, 0d);
 
-		final int applicableTab1 = tabTester.isApplicable(categorization1, mock(ViewModelContext.class));
-		assertEquals(ECPRendererTester.NOT_APPLICABLE, applicableTab1);
+		final double applicableTab1 = tabTester.isApplicable(categorization1, null);
+		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTab1, 0d);
 
-		final int applicableTree1 = treeTester.isApplicable(categorization1, mock(ViewModelContext.class));
-		assertEquals(ECPRendererTester.NOT_APPLICABLE, applicableTree1);
+		final double applicableTree1 = treeTester.isApplicable(categorization1, null);
+		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTree1, 0d);
 
-		final int applicable2 = defaultTester.isApplicable(categorization2, mock(ViewModelContext.class));
-		assertEquals(1, applicable2);
+		final double applicable2 = defaultTester.isApplicable(categorization2, null);
+		assertEquals(1, applicable2, 0d);
 
-		final int applicableTab2 = tabTester.isApplicable(categorization2, mock(ViewModelContext.class));
-		assertEquals(ECPRendererTester.NOT_APPLICABLE, applicableTab2);
+		final double applicableTab2 = tabTester.isApplicable(categorization2, null);
+		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTab2, 0d);
 
-		final int applicableTree2 = treeTester.isApplicable(categorization2, mock(ViewModelContext.class));
-		assertEquals(ECPRendererTester.NOT_APPLICABLE, applicableTree2);
+		final double applicableTree2 = treeTester.isApplicable(categorization2, null);
+		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTree2, 0d);
 
-		final int applicable3 = defaultTester.isApplicable(categorization3, mock(ViewModelContext.class));
-		assertEquals(1, applicable3);
+		final double applicable3 = defaultTester.isApplicable(categorization3, null);
+		assertEquals(1, applicable3, 0d);
 
-		final int applicableTab3 = tabTester.isApplicable(categorization3, mock(ViewModelContext.class));
-		assertEquals(ECPRendererTester.NOT_APPLICABLE, applicableTab3);
+		final double applicableTab3 = tabTester.isApplicable(categorization3, null);
+		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTab3, 0d);
 
-		final int applicableTree3 = treeTester.isApplicable(categorization3, mock(ViewModelContext.class));
-		assertEquals(ECPRendererTester.NOT_APPLICABLE, applicableTree3);
+		final double applicableTree3 = treeTester.isApplicable(categorization3, null);
+		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTree3, 0d);
 	}
 
 	@Test
@@ -147,45 +146,45 @@ public class CategorizationCorrectTester_PTest {
 		final VCategorization categorization3 = mock(VCategorization.class);
 		when(categorization3.eContainer()).thenReturn(categorization2);
 
-		final CompositeCategoryDefaultRendererTester defaultTester = new CompositeCategoryDefaultRendererTester();
-		final CompositeCategoryTabRendererTester tabTester = new CompositeCategoryTabRendererTester();
-		final CompositeCategoryTreeRendererTester treeTester = new CompositeCategoryTreeRendererTester();
+		final SWTCategorizationRendererService defaultTester = new SWTCategorizationRendererService();
+		final CompositeCategorySWTTabRendererService tabTester = new CompositeCategorySWTTabRendererService();
+		final CompositeCategoryJFaceTreeRendererService treeTester = new CompositeCategoryJFaceTreeRendererService();
 
-		final int applicable0 = defaultTester.isApplicable(categorization0, mock(ViewModelContext.class));
-		assertEquals(ECPRendererTester.NOT_APPLICABLE, applicable0);
+		final double applicable0 = defaultTester.isApplicable(categorization0, null);
+		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicable0, 0d);
 
-		final int applicableTab0 = tabTester.isApplicable(categorization0, mock(ViewModelContext.class));
-		assertEquals(ECPRendererTester.NOT_APPLICABLE, applicableTab0);
+		final double applicableTab0 = tabTester.isApplicable(categorization0, null);
+		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTab0, 0d);
 
-		final int applicableTree0 = treeTester.isApplicable(categorization0, mock(ViewModelContext.class));
-		assertEquals(1, applicableTree0);
+		final double applicableTree0 = treeTester.isApplicable(categorization0, null);
+		assertEquals(1, applicableTree0, 0d);
 
-		final int applicable1 = defaultTester.isApplicable(categorization1, mock(ViewModelContext.class));
-		assertEquals(1, applicable1);
+		final double applicable1 = defaultTester.isApplicable(categorization1, null);
+		assertEquals(1, applicable1, 0d);
 
-		final int applicableTab1 = tabTester.isApplicable(categorization1, mock(ViewModelContext.class));
-		assertEquals(ECPRendererTester.NOT_APPLICABLE, applicableTab1);
+		final double applicableTab1 = tabTester.isApplicable(categorization1, null);
+		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTab1, 0d);
 
-		final int applicableTree1 = treeTester.isApplicable(categorization1, mock(ViewModelContext.class));
-		assertEquals(ECPRendererTester.NOT_APPLICABLE, applicableTree1);
+		final double applicableTree1 = treeTester.isApplicable(categorization1, null);
+		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTree1, 0d);
 
-		final int applicable2 = defaultTester.isApplicable(categorization2, mock(ViewModelContext.class));
-		assertEquals(1, applicable2);
+		final double applicable2 = defaultTester.isApplicable(categorization2, null);
+		assertEquals(1, applicable2, 0d);
 
-		final int applicableTab2 = tabTester.isApplicable(categorization2, mock(ViewModelContext.class));
-		assertEquals(ECPRendererTester.NOT_APPLICABLE, applicableTab2);
+		final double applicableTab2 = tabTester.isApplicable(categorization2, null);
+		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTab2, 0d);
 
-		final int applicableTree2 = treeTester.isApplicable(categorization2, mock(ViewModelContext.class));
-		assertEquals(ECPRendererTester.NOT_APPLICABLE, applicableTree2);
+		final double applicableTree2 = treeTester.isApplicable(categorization2, null);
+		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTree2, 0d);
 
-		final int applicable3 = defaultTester.isApplicable(categorization3, mock(ViewModelContext.class));
-		assertEquals(1, applicable3);
+		final double applicable3 = defaultTester.isApplicable(categorization3, null);
+		assertEquals(1, applicable3, 0d);
 
-		final int applicableTab3 = tabTester.isApplicable(categorization3, mock(ViewModelContext.class));
-		assertEquals(ECPRendererTester.NOT_APPLICABLE, applicableTab3);
+		final double applicableTab3 = tabTester.isApplicable(categorization3, null);
+		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTab3, 0d);
 
-		final int applicableTree3 = treeTester.isApplicable(categorization3, mock(ViewModelContext.class));
-		assertEquals(ECPRendererTester.NOT_APPLICABLE, applicableTree3);
+		final double applicableTree3 = treeTester.isApplicable(categorization3, null);
+		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTree3, 0d);
 	}
 
 	@Test
@@ -201,45 +200,45 @@ public class CategorizationCorrectTester_PTest {
 		final VCategorization categorization3 = mock(VCategorization.class);
 		when(categorization3.eContainer()).thenReturn(categorization2);
 
-		final CompositeCategoryDefaultRendererTester defaultTester = new CompositeCategoryDefaultRendererTester();
-		final CompositeCategoryTabRendererTester tabTester = new CompositeCategoryTabRendererTester();
-		final CompositeCategoryTreeRendererTester treeTester = new CompositeCategoryTreeRendererTester();
+		final SWTCategorizationRendererService defaultTester = new SWTCategorizationRendererService();
+		final CompositeCategorySWTTabRendererService tabTester = new CompositeCategorySWTTabRendererService();
+		final CompositeCategoryJFaceTreeRendererService treeTester = new CompositeCategoryJFaceTreeRendererService();
 
-		final int applicable0 = defaultTester.isApplicable(categorization0, mock(ViewModelContext.class));
-		assertEquals(ECPRendererTester.NOT_APPLICABLE, applicable0);
+		final double applicable0 = defaultTester.isApplicable(categorization0, null);
+		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicable0, 0d);
 
-		final int applicableTab0 = tabTester.isApplicable(categorization0, mock(ViewModelContext.class));
-		assertEquals(1, applicableTab0);
+		final double applicableTab0 = tabTester.isApplicable(categorization0, null);
+		assertEquals(1, applicableTab0, 0d);
 
-		final int applicableTree0 = treeTester.isApplicable(categorization0, mock(ViewModelContext.class));
-		assertEquals(ECPRendererTester.NOT_APPLICABLE, applicableTree0);
+		final double applicableTree0 = treeTester.isApplicable(categorization0, null);
+		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTree0, 0d);
 
-		final int applicable1 = defaultTester.isApplicable(categorization1, mock(ViewModelContext.class));
-		assertEquals(ECPRendererTester.NOT_APPLICABLE, applicable1);
+		final double applicable1 = defaultTester.isApplicable(categorization1, null);
+		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicable1, 0d);
 
-		final int applicableTab1 = tabTester.isApplicable(categorization1, mock(ViewModelContext.class));
-		assertEquals(ECPRendererTester.NOT_APPLICABLE, applicableTab1);
+		final double applicableTab1 = tabTester.isApplicable(categorization1, null);
+		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTab1, 0d);
 
-		final int applicableTree1 = treeTester.isApplicable(categorization1, mock(ViewModelContext.class));
-		assertEquals(1, applicableTree1);
+		final double applicableTree1 = treeTester.isApplicable(categorization1, null);
+		assertEquals(1, applicableTree1, 0d);
 
-		final int applicable2 = defaultTester.isApplicable(categorization2, mock(ViewModelContext.class));
-		assertEquals(1, applicable2);
+		final double applicable2 = defaultTester.isApplicable(categorization2, null);
+		assertEquals(1, applicable2, 0d);
 
-		final int applicableTab2 = tabTester.isApplicable(categorization2, mock(ViewModelContext.class));
-		assertEquals(ECPRendererTester.NOT_APPLICABLE, applicableTab2);
+		final double applicableTab2 = tabTester.isApplicable(categorization2, null);
+		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTab2, 0d);
 
-		final int applicableTree2 = treeTester.isApplicable(categorization2, mock(ViewModelContext.class));
-		assertEquals(ECPRendererTester.NOT_APPLICABLE, applicableTree2);
+		final double applicableTree2 = treeTester.isApplicable(categorization2, null);
+		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTree2, 0d);
 
-		final int applicable3 = defaultTester.isApplicable(categorization3, mock(ViewModelContext.class));
-		assertEquals(1, applicable3);
+		final double applicable3 = defaultTester.isApplicable(categorization3, null);
+		assertEquals(1, applicable3, 0d);
 
-		final int applicableTab3 = tabTester.isApplicable(categorization3, mock(ViewModelContext.class));
-		assertEquals(ECPRendererTester.NOT_APPLICABLE, applicableTab3);
+		final double applicableTab3 = tabTester.isApplicable(categorization3, null);
+		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTab3, 0d);
 
-		final int applicableTree3 = treeTester.isApplicable(categorization3, mock(ViewModelContext.class));
-		assertEquals(ECPRendererTester.NOT_APPLICABLE, applicableTree3);
+		final double applicableTree3 = treeTester.isApplicable(categorization3, null);
+		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTree3, 0d);
 	}
 
 	@Test
@@ -255,44 +254,44 @@ public class CategorizationCorrectTester_PTest {
 		final VCategorization categorization3 = mock(VCategorization.class);
 		when(categorization3.eContainer()).thenReturn(categorization2);
 
-		final CompositeCategoryDefaultRendererTester defaultTester = new CompositeCategoryDefaultRendererTester();
-		final CompositeCategoryTabRendererTester tabTester = new CompositeCategoryTabRendererTester();
-		final CompositeCategoryTreeRendererTester treeTester = new CompositeCategoryTreeRendererTester();
+		final SWTCategorizationRendererService defaultTester = new SWTCategorizationRendererService();
+		final CompositeCategorySWTTabRendererService tabTester = new CompositeCategorySWTTabRendererService();
+		final CompositeCategoryJFaceTreeRendererService treeTester = new CompositeCategoryJFaceTreeRendererService();
 
-		final int applicable0 = defaultTester.isApplicable(categorization0, mock(ViewModelContext.class));
-		assertEquals(ECPRendererTester.NOT_APPLICABLE, applicable0);
+		final double applicable0 = defaultTester.isApplicable(categorization0, null);
+		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicable0, 0d);
 
-		final int applicableTab0 = tabTester.isApplicable(categorization0, mock(ViewModelContext.class));
-		assertEquals(1, applicableTab0);
+		final double applicableTab0 = tabTester.isApplicable(categorization0, null);
+		assertEquals(1, applicableTab0, 0d);
 
-		final int applicableTree0 = treeTester.isApplicable(categorization0, mock(ViewModelContext.class));
-		assertEquals(ECPRendererTester.NOT_APPLICABLE, applicableTree0);
+		final double applicableTree0 = treeTester.isApplicable(categorization0, null);
+		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTree0, 0d);
 
-		final int applicable1 = defaultTester.isApplicable(categorization1, mock(ViewModelContext.class));
-		assertEquals(ECPRendererTester.NOT_APPLICABLE, applicable1);
+		final double applicable1 = defaultTester.isApplicable(categorization1, null);
+		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicable1, 0d);
 
-		final int applicableTab1 = tabTester.isApplicable(categorization1, mock(ViewModelContext.class));
-		assertEquals(1, applicableTab1);
+		final double applicableTab1 = tabTester.isApplicable(categorization1, null);
+		assertEquals(1, applicableTab1, 0d);
 
-		final int applicableTree1 = treeTester.isApplicable(categorization1, mock(ViewModelContext.class));
-		assertEquals(ECPRendererTester.NOT_APPLICABLE, applicableTree1);
+		final double applicableTree1 = treeTester.isApplicable(categorization1, null);
+		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTree1, 0d);
 
-		final int applicable2 = defaultTester.isApplicable(categorization2, mock(ViewModelContext.class));
-		assertEquals(ECPRendererTester.NOT_APPLICABLE, applicable2);
+		final double applicable2 = defaultTester.isApplicable(categorization2, null);
+		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicable2, 0d);
 
-		final int applicableTab2 = tabTester.isApplicable(categorization2, mock(ViewModelContext.class));
-		assertEquals(ECPRendererTester.NOT_APPLICABLE, applicableTab2);
+		final double applicableTab2 = tabTester.isApplicable(categorization2, null);
+		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTab2, 0d);
 
-		final int applicableTree2 = treeTester.isApplicable(categorization2, mock(ViewModelContext.class));
-		assertEquals(1, applicableTree2);
+		final double applicableTree2 = treeTester.isApplicable(categorization2, null);
+		assertEquals(1, applicableTree2, 0d);
 
-		final int applicable3 = defaultTester.isApplicable(categorization3, mock(ViewModelContext.class));
-		assertEquals(1, applicable3);
+		final double applicable3 = defaultTester.isApplicable(categorization3, null);
+		assertEquals(1, applicable3, 0d);
 
-		final int applicableTab3 = tabTester.isApplicable(categorization3, mock(ViewModelContext.class));
-		assertEquals(ECPRendererTester.NOT_APPLICABLE, applicableTab3);
+		final double applicableTab3 = tabTester.isApplicable(categorization3, null);
+		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTab3, 0d);
 
-		final int applicableTree3 = treeTester.isApplicable(categorization3, mock(ViewModelContext.class));
-		assertEquals(ECPRendererTester.NOT_APPLICABLE, applicableTree3);
+		final double applicableTree3 = treeTester.isApplicable(categorization3, null);
+		assertEquals(EMFFormsRendererService.NOT_APPLICABLE, applicableTree3, 0d);
 	}
 }
