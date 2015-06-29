@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="MakeItHappen Sample e3 Product" uid="org.eclipse.emf.ecp.makeithappen.sample.product.e3" id="org.eclipse.emf.ecp.makeithappen.application.sample.e3.product" application="org.eclipse.emf.ecp.makeithappen.application.sample.e3.application" version="1.6.0" useFeatures="false" includeLaunchers="true">
+<product name="MakeItHappen Sample e3 Product" uid="org.eclipse.emf.ecp.makeithappen.sample.product.e3" id="org.eclipse.emf.ecp.makeithappen.application.sample.e3.product" application="org.eclipse.emf.ecp.makeithappen.application.sample.e3.application" version="1.6.1" useFeatures="false" includeLaunchers="true">
 
    <configIni use="default">
    </configIni>

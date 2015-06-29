@@ -2,12 +2,12 @@
 <feature
       id="org.eclipse.emf.ecp.view.dynamictree.feature"
       label="Dynamic Tree Feature"
-      version="1.6.0.qualifier"
+      version="1.6.1.qualifier"
       provider-name="Eclipse Modeling Project"
       plugin="org.eclipse.emf.ecp.view.dynamictree.model"
       image="eclipse_update_120.jpg"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.6.0.qualifier">
+      license-feature-version="1.6.1.qualifier">
 
    <description>
       %description

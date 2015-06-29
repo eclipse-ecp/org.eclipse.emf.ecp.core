@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Make It Happen Examples
 Bundle-SymbolicName: org.eclipse.emf.ecp.makeithappen.wizards;singleton:=true
-Bundle-Version: 1.6.0.qualifier
+Bundle-Version: 1.6.1.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.makeithappen.internal.wizards.Activator
 Require-Bundle: org.eclipse.ui;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
@@ -12,7 +12,6 @@ Require-Bundle: org.eclipse.ui;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.core.resources;bundle-version="[3.7.0,4.0.0)",
  org.eclipse.emf.common;bundle-version="[2.9.0,3.0.0)"
 Bundle-ActivationPolicy: lazy
-Export-Package: org.eclipse.emf.ecp.makeithappen.internal.wizards;x-in
- ternal:=true;version="1.6.0"
+Export-Package: org.eclipse.emf.ecp.makeithappen.internal.wizards;version="1.6.1";x-internal:="true"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: Eclipse Modeling Project

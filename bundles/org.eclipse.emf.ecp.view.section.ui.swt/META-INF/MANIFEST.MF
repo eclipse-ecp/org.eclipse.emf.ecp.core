@@ -2,25 +2,24 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: View Model Section UI SWT
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.section.ui.swt;singleton:=true
-Bundle-Version: 1.6.0.qualifier
+Bundle-Version: 1.6.1.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: Eclipse Modeling Project
 Require-Bundle: org.eclipse.emf.ecp.view.section.model;bundle-version="[1.5.0,2.0.0)",
  org.eclipse.emf.ecp.ui.view.swt;bundle-version="[1.5.0,2.0.0)",
  org.eclipse.core.runtime;bundle-version="[3.8.0,4.0.0)",
- org.eclipse.emfforms.core.services;bundle-version="[1.6.0,2.0.0)",
+ org.eclipse.emfforms.core.services;bundle-version="[1.6.1,2.0.0)",
  org.eclipse.core.databinding.property;bundle-version="[1.4.0,2.0.0)",
- org.eclipse.emfforms.swt.core;bundle-version="[1.6.0,2.0.0)"
-Import-Package: org.eclipse.emfforms.spi.common.report;version="1.6.0",
+ org.eclipse.emfforms.swt.core;bundle-version="[1.6.1,2.0.0)"
+Import-Package: org.eclipse.emfforms.spi.common.report;version="[1.6.1,2.0.0)",
  org.eclipse.jface.layout;version="0.0.0",
  org.eclipse.swt;version="0.0.0",
  org.eclipse.swt.layout;version="0.0.0",
  org.eclipse.swt.widgets;version="0.0.0",
  org.eclipse.ui.forms.events;version="0.0.0",
  org.eclipse.ui.forms.widgets;version="0.0.0"
-Export-Package: org.eclipse.emf.ecp.view.internal.section.swt;version=
- "1.6.0";x-internal:=true,org.eclipse.emf.ecp.view.internal.section.ui
- .swt;version="1.6.0";x-internal:=true,org.eclipse.emf.ecp.view.spi.se
- ction.swt;version="1.6.0"
+Export-Package: org.eclipse.emf.ecp.view.internal.section.swt;version="1.6.1";x-internal:="true",
+ org.eclipse.emf.ecp.view.internal.section.ui.swt;version="1.6.1";x-internal:="true",
+ org.eclipse.emf.ecp.view.spi.section.swt;version="1.6.1"
 Bundle-Activator: org.eclipse.emf.ecp.view.internal.section.ui.swt.Activator
 Bundle-ActivationPolicy: lazy

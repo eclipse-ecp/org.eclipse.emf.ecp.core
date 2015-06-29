@@ -2,11 +2,11 @@
 <feature
       id="org.eclipse.emfforms.view.annotation.feature"
       label="EMFForms Annotation View Model Feature"
-      version="1.6.0.qualifier"
+      version="1.6.1.qualifier"
       provider-name="Eclipse Modeling Project"
       plugin="org.eclipse.emfforms.view.annotation.model"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.6.0.qualifier">
+      license-feature-version="1.6.1.qualifier">
 
    <description>
       %description

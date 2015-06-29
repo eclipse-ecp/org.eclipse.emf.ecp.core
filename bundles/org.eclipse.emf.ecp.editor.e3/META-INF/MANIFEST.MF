@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ECP Editor integration for 3.x Workbench
 Bundle-SymbolicName: org.eclipse.emf.ecp.editor.e3;singleton:=true
-Bundle-Version: 1.6.0.qualifier
+Bundle-Version: 1.6.1.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.editor.internal.e3.Activator
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.emf.ecore;bundle-version="[2.5.0,3.0.0)",
@@ -15,7 +15,7 @@ Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.eclipse.core.commands;version="0.0.0",
  org.eclipse.emf.edit.ui.provider;version="0.0.0",
- org.eclipse.emfforms.spi.common.report;version="1.6.0",
+ org.eclipse.emfforms.spi.common.report;version="[1.6.1,2.0.0)",
  org.eclipse.jface.action;version="0.0.0",
  org.eclipse.jface.dialogs;version="0.0.0",
  org.eclipse.jface.resource;version="0.0.0",
@@ -36,6 +36,5 @@ Import-Package: org.eclipse.core.commands;version="0.0.0",
  org.eclipse.ui.plugin;version="0.0.0",
  org.eclipse.ui.services;version="0.0.0"
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emf.ecp.editor.e3;version="1.6.0";x-friend
- s:="org.eclipse.emf.ecp.explorereditorbridge",org.eclipse.emf.ecp.edi
- tor.internal.e3;version="1.6.0";x-internal:=true
+Export-Package: org.eclipse.emf.ecp.editor.e3;version="1.6.1";x-friends:="org.eclipse.emf.ecp.explorereditorbridge",
+ org.eclipse.emf.ecp.editor.internal.e3;version="1.6.1";x-internal:="true"

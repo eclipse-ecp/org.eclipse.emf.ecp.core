@@ -2,10 +2,10 @@
 <feature
       id="org.eclipse.emf.ecp.view.table.celleditor.rcp.feature"
       label="EMFForms Table UI SWT Additional Cell Editors (non-RAP)"
-      version="1.6.0.qualifier"
+      version="1.6.1.qualifier"
       plugin="org.eclipse.emf.ecp.view.table.celleditor.rcp"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.6.0.qualifier">
+      license-feature-version="1.6.1.qualifier">
 
    <description>
       %description

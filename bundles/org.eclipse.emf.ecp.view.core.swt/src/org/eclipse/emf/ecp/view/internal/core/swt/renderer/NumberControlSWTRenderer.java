@@ -110,8 +110,13 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 			// return localizationService.getString(getClass(),
 			// MessageKeys.NumericalControl_FormatNumericalDecimal);
 			// }
-			return NumericalHelper.setupFormat(localeProvider.getLocale(),
-				getInstanceClass(structuralFeature)).toPattern();
+
+			final DecimalFormat format = NumericalHelper.setupFormat(localeProvider.getLocale(),
+				getInstanceClass(structuralFeature));
+			if (format.getMaximumFractionDigits() > 1) {
+				format.setMaximumFractionDigits(1);
+			}
+			return format.toLocalizedPattern();
 		} catch (final DatabindingFailedException ex) {
 			getReportService().report(new DatabindingFailedReport(ex));
 		}

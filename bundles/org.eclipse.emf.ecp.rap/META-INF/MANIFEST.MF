@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ECP RAP
 Bundle-SymbolicName: org.eclipse.emf.ecp.rap; singleton:=true
-Bundle-Version: 1.6.0.qualifier
+Bundle-Version: 1.6.1.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.rap.Activator
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
@@ -10,5 +10,4 @@ Require-Bundle: org.eclipse.emf.ecp.ui;bundle-version="[1.5.0,2.0.0)",
  org.eclipse.core.runtime;bundle-version="3.8.0",
  org.eclipse.rap.ui;bundle-version="2.0.0"
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emf.ecp.rap;version="1.6.0";x-internal:=tr
- ue
+Export-Package: org.eclipse.emf.ecp.rap;version="1.6.1";x-internal:="true"

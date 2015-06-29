@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.emf.ecp.view.model.editor.test.feature"
       label="View Model Editor Test Feature"
-      version="1.6.0.qualifier">
+      version="1.6.1.qualifier">
 
    <description>
       Plugins for testing the View Model Editor with Q7. 

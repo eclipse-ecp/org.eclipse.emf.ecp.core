@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ECP EMFStore Provider Core Plugin
 Bundle-SymbolicName: org.eclipse.emf.ecp.emfstore.core;singleton:=true
-Bundle-Version: 1.6.0.qualifier
+Bundle-Version: 1.6.1.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.emfstore.core.internal.Activator
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.emf.ecp.core;bundle-version="[1.5.0,2.0.0)",
@@ -10,13 +10,6 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.net4j.util;bundle-version="[3.0.0,4.0.0)"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Export-Package: org.eclipse.emf.ecp.emfstore.core.internal;version="1.6.0";
-  x-friends:="org.eclipse.emf.ecp.emfstore.ui,
-   org.eclipse.emf.ecp.emfstore.ui.search,
-   org.eclipse.emf.ecp.view.ui.editor.test,
-   org.eclipse.emf.ecp.emfstore.ui.e3,
-   org.eclipse.emf.ecp.emfstore.ui.e4,
-   org.eclipse.emf.ecp.changebroker.emfstore,
-   org.eclipse.emf.ecp.emfstore.core.rap"
+Export-Package: org.eclipse.emf.ecp.emfstore.core.internal;version="1.6.1";x-friends:="org.eclipse.emf.ecp.emfstore.ui,  org.eclipse.emf.ecp.emfstore.ui.search,  org.eclipse.emf.ecp.view.ui.editor.test,  org.eclipse.emf.ecp.emfstore.ui.e3,  org.eclipse.emf.ecp.emfstore.ui.e4,  org.eclipse.emf.ecp.changebroker.emfstore,  org.eclipse.emf.ecp.emfstore.core.rap"
 Service-Component:  OSGI-INF/esWorkspaceProviderProvider.xml
 Bundle-Vendor: Eclipse Modeling Project
