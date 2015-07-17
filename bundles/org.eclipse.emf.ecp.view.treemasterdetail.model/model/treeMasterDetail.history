@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:history="http://www.eclipse.org/emf/edapt/history/0.3">
+  <releases date="2014-08-28T11:35:36.145+0200" label="140">
+    <changes xsi:type="history:CompositeChange">
+      <changes xsi:type="history:Create" element="treeMasterDetail.ecore#/">
+        <changes xsi:type="history:Set" element="treeMasterDetail.ecore#/" featureName="name"
+            dataValue="treemasterdetail"/>
+        <changes xsi:type="history:Set" element="treeMasterDetail.ecore#/" featureName="nsURI"
+            dataValue="http://org/eclipse/emf/ecp/view/treemasterview/model"/>
+        <changes xsi:type="history:Set" element="treeMasterDetail.ecore#/" featureName="nsPrefix"
+            dataValue="org.eclipse.emf.ecp.view.treemasterview.model"/>
+      </changes>
+      <changes xsi:type="history:Create" target="treeMasterDetail.ecore#/" referenceName="eClassifiers"
+          element="treeMasterDetail.ecore#//TreeMasterDetail">
+        <changes xsi:type="history:Set" element="treeMasterDetail.ecore#//TreeMasterDetail"
+            featureName="name" dataValue="TreeMasterDetail"/>
+        <changes xsi:type="history:Add" element="treeMasterDetail.ecore#//TreeMasterDetail"
+            featureName="eSuperTypes" referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//ContainedElement"/>
+      </changes>
+      <changes xsi:type="history:Create" target="treeMasterDetail.ecore#//TreeMasterDetail"
+          referenceName="eStructuralFeatures" element="treeMasterDetail.ecore#//TreeMasterDetail/detailView">
+        <changes xsi:type="history:Set" element="treeMasterDetail.ecore#//TreeMasterDetail/detailView"
+            featureName="name" dataValue="detailView"/>
+        <changes xsi:type="history:Set" element="treeMasterDetail.ecore#//TreeMasterDetail/detailView"
+            featureName="containment" dataValue="true" oldDataValue="false"/>
+        <changes xsi:type="history:Set" element="treeMasterDetail.ecore#//TreeMasterDetail/detailView"
+            featureName="eType" referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//View"/>
+      </changes>
+    </changes>
+  </releases>
+  <releases/>
+</history:History>

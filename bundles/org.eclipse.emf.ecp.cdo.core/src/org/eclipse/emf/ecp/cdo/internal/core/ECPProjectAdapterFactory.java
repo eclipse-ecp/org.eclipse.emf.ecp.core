@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
  *******************************************************************************/
@@ -25,25 +25,27 @@ public class ECPProjectAdapterFactory implements IAdapterFactory {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.core.runtime.IAdapterFactory#getAdapterList()
 	 */
+	@Override
 	public Class[] getAdapterList() {
 		return CLASSES;
 	}
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.core.runtime.IAdapterFactory#getAdapter(java.lang.Object, java.lang.Class)
 	 */
+	@Override
 	public Object getAdapter(Object adaptable, Class adapterType) {
 		return adapt(adaptable, adapterType);
 	}
 
 	/**
 	 * Adapt the given adaptable to the given type.
-	 * 
+	 *
 	 * @param adaptable an adaptable
 	 * @param adapterType the target type
 	 * @param <T> the type of the adapter
@@ -52,9 +54,9 @@ public class ECPProjectAdapterFactory implements IAdapterFactory {
 	public static <T> T adapt(Object adaptable, Class<T> adapterType) {
 		if (adapterType == CLASSES[0]) {
 			if (adaptable instanceof ECPProject) {
-				ECPProject project = (ECPProject) adaptable;
+				final ECPProject project = (ECPProject) adaptable;
 				if (project.isOpen() && project.getProvider().getName().equals(CDOProvider.NAME)) {
-					CDOProjectData data = CDOProvider.getProjectData((InternalProject) project);
+					final CDOProjectData data = CDOProvider.getProjectData((InternalProject) project);
 					return (T) data.getWorkspace();
 				}
 			}

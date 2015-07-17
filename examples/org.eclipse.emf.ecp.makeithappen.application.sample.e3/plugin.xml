@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         id="application"
+         point="org.eclipse.core.runtime.applications">
+      <application
+            icon="icons/bricks.png">
+         <run
+               class="org.eclipse.emf.ecp.makeithappen.application.sample.e3.Application">
+         </run>
+      </application>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="org.eclipse.emf.ecp.makeithappen.application.sample.e3.Perspective"
+            fixed="true"
+            icon="icons/bricks.png"
+            id="TestApp.perspective"
+            name="Perspective">
+      </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="org.eclipse.emf.ecp.makeithappen.application.sample.e3.View"
+            icon="icons/bricks.png"
+            id="TestApp.view"
+            name="View">
+      </view>
+   </extension>
+   <extension
+         id="product"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="org.eclipse.emf.ecp.makeithappen.application.sample.e3.application"
+            name="MakeItHappen Sample e3 Product">
+         <property
+               name="appName"
+               value="MakeItHappen Sample e3 Product">
+         </property>
+         <property
+               name="windowImages"
+               value="icons/bricks.png">
+         </property>
+      </product>
+   </extension>
+
+</plugin>

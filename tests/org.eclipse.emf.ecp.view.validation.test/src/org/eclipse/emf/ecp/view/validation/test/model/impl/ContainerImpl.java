@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  *******************************************************************************/
@@ -34,7 +34,7 @@ import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.ContainerImpl#getContents <em>Contents</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class ContainerImpl extends EObjectImpl implements Container {
@@ -42,7 +42,7 @@ public class ContainerImpl extends EObjectImpl implements Container {
 	 * The cached value of the '{@link #getContents() <em>Contents</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getContents()
 	 * @generated
 	 * @ordered
@@ -52,7 +52,7 @@ public class ContainerImpl extends EObjectImpl implements Container {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected ContainerImpl() {
@@ -62,7 +62,7 @@ public class ContainerImpl extends EObjectImpl implements Container {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -73,9 +73,10 @@ public class ContainerImpl extends EObjectImpl implements Container {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public EList<Content> getContents() {
 		if (contents == null) {
 			contents = new EObjectContainmentEList<Content>(Content.class, this, TestPackage.CONTAINER__CONTENTS);
@@ -86,7 +87,7 @@ public class ContainerImpl extends EObjectImpl implements Container {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -101,7 +102,7 @@ public class ContainerImpl extends EObjectImpl implements Container {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -116,7 +117,7 @@ public class ContainerImpl extends EObjectImpl implements Container {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -134,7 +135,7 @@ public class ContainerImpl extends EObjectImpl implements Container {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -150,7 +151,7 @@ public class ContainerImpl extends EObjectImpl implements Container {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override

@@ -1,0 +1,56 @@
+--- Q7 testcase ---
+Format-Version: 1.0
+Q7-vendor: www.xored.com/q7
+Contexts: _rr2EEFpSEeKcnaHGSt8OwA,_IuFcgFpZEeKcnaHGSt8OwA,_f3qEUVpSEeKcnaHGSt8OwA,__UtTgD-XEeK-yuKsz0Lang
+Element-Name: BigInteger
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _nU15wDy-EeO8kN1jLMK8wg
+Q7-Runtime-Version: 1.3.9.201310250528
+Save-Time: 1/29/14 3:47 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]/Tournament Pro/Matchup" | double-click
+get-editor Matchup | get-editbox -after [get-label "Nr Spectators"] | set-text 2374520935720357209385727
+get-editor "Matchup 2374520935720357209385727" | get-editbox -after [get-label "Nr Spectators"] 
+    | set-text "23745209357203572093857272ÃŸ582ÃŸ020385230582035093475983758923758375923875893452349857220394875239475"
+with [get-window "Invalid Number"] {
+    get-property title | equals "Invalid Number" | verify-true
+    get-label "The Number you have entered is invalid. The value will be unset." | get-property caption 
+        | equals "The Number you have entered is invalid. The value will be unset." | verify-true
+}
+get-window "Invalid Number" | get-button OK | click
+get-editor "Matchup 2374520935720357209385727" | get-editbox -after [get-label "Nr Spectators"] | set-text "345.345"
+with [get-window "Invalid Number"] {
+    get-property title | equals "Invalid Number" | verify-true
+    get-label "The Number you have entered is invalid. The value will be unset." | get-property caption 
+        | equals "The Number you have entered is invalid. The value will be unset." | verify-true
+}
+get-window "Invalid Number" | get-button OK | click
+get-editor "Matchup 2374520935720357209385727" | get-editbox -after [get-label "Nr Spectators"] | set-text sdfg
+with [get-window "Invalid Number"] {
+    get-property title | equals "Invalid Number" | verify-true
+    get-label "The Number you have entered is invalid. The value will be unset." | get-property caption 
+        | equals "The Number you have entered is invalid. The value will be unset." | verify-true
+}
+get-window "Invalid Number" | get-button OK | click
+with [get-view "Model Explorer"] {
+    get-tree | select "TestProject \\[trunk, Version 0\\]"
+    get-tree | select "TestProject \\[trunk, Version 0\\]" | get-menu Commit | click
+}
+get-window Commit | get-button OK | click
+get-view "Model Explorer" | get-tree | select "TestProjectSecondCheckOut \\[trunk, Version 0\\]" | get-menu Update 
+    | click
+get-window Update | get-button OK | click
+get-view "Model Explorer" | get-tree 
+    | select "TestProjectSecondCheckOut \\[trunk, Version 1\\]/Tournament Pro/Matchup 2374520935720357209385727" 
+    | double-click
+get-editor "Matchup 2374520935720357209385727" -index 1 | get-editbox -after [get-label "Nr Spectators"] 
+    | get-property text | equals 2374520935720357209385727 | verify-true    
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

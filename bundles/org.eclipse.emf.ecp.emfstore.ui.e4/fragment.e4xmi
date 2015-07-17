@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ASCII"?>
 <fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:commands="http://www.eclipse.org/ui/2010/UIModel/application/commands" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmlns:ui="http://www.eclipse.org/ui/2010/UIModel/application/ui" xmi:id="_nICRUJoyEeKJoJcmiy2C6w">
-  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_n_mLcJoyEeKJoJcmiy2C6w" featurename="commands" parentElementId="org.eclipse.e4.ide.application">
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_n_mLcJoyEeKJoJcmiy2C6w" featurename="commands" parentElementId="org.eclipse.emf.ecp.demo.e4">
     <elements xsi:type="commands:Command" xmi:id="_pCdWoJoyEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.emfstore.command.login" commandName="LogIn"/>
     <elements xsi:type="commands:Command" xmi:id="_39_5UJpoEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.emfstore.command.logout" commandName="LogOut"/>
     <elements xsi:type="commands:Command" xmi:id="_IU0E0JprEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.emfstore.command.startLocalServer" commandName="Start Local Server"/>
@@ -18,8 +18,10 @@
     <elements xsi:type="commands:Command" xmi:id="_m91NYHkWEeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.e4.emfstore.command.branchCreate" commandName="Create Branch"/>
     <elements xsi:type="commands:Command" xmi:id="_o3rD4HkWEeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.e4.emfstore.command.branchMerge" commandName="Merge with Branch"/>
     <elements xsi:type="commands:Command" xmi:id="_rBTp4HkWEeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.e4.emfstore.command.updateToVersion" commandName="Update to version..."/>
+    <elements xsi:type="commands:Command" xmi:id="_8LZM4KN_EeOHes-ZueR8hA" elementId="org.eclipse.emf.ecp.e4.emfstore.command.importProject" commandName="Import Project"/>
+    <elements xsi:type="commands:Command" xmi:id="_4GkskKN_EeOHes-ZueR8hA" elementId="org.eclipse.emf.ecp.e4.emfstore.command.exportProject" commandName="Export Project"/>
   </fragments>
-  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_8oN_0JozEeKJoJcmiy2C6w" featurename="handlers" parentElementId="org.eclipse.e4.ide.application">
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_8oN_0JozEeKJoJcmiy2C6w" featurename="handlers" parentElementId="org.eclipse.emf.ecp.demo.e4">
     <elements xsi:type="commands:Handler" xmi:id="_qRumIJoyEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.emfstore.handler.login" contributionURI="bundleclass://org.eclipse.emf.ecp.emfstore.ui.e4/org.eclipse.emf.ecp.e4.emfstore.LogInHandler" command="_pCdWoJoyEeKJoJcmiy2C6w"/>
     <elements xsi:type="commands:Handler" xmi:id="_517rUJpoEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.emfstore.handler.logout" contributionURI="bundleclass://org.eclipse.emf.ecp.emfstore.ui.e4/org.eclipse.emf.ecp.e4.emfstore.LogOutHandler" command="_39_5UJpoEeKJoJcmiy2C6w"/>
     <elements xsi:type="commands:Handler" xmi:id="_L67P4JprEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.emfstore.handler.startLocalServer" contributionURI="bundleclass://org.eclipse.emf.ecp.emfstore.ui.e4/org.eclipse.emf.ecp.e4.emfstore.StartLocalServerHandler" command="_IU0E0JprEeKJoJcmiy2C6w"/>
@@ -37,60 +39,66 @@
     <elements xsi:type="commands:Handler" xmi:id="_gZAZAHkXEeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.e4.emfstore.handler.branchCreate" contributionURI="bundleclass://org.eclipse.emf.ecp.emfstore.ui.e4/org.eclipse.emf.ecp.e4.emfstore.CreateBranchHandler" command="_m91NYHkWEeOKPMuLiPS6LA"/>
     <elements xsi:type="commands:Handler" xmi:id="_gpFcYHkXEeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.e4.emfstore.handler.branchMerge" contributionURI="bundleclass://org.eclipse.emf.ecp.emfstore.ui.e4/org.eclipse.emf.ecp.e4.emfstore.MergeBranchHandler" command="_o3rD4HkWEeOKPMuLiPS6LA"/>
     <elements xsi:type="commands:Handler" xmi:id="_g53qYHkXEeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.e4.emfstore.handler.updateToVersion" contributionURI="bundleclass://org.eclipse.emf.ecp.emfstore.ui.e4/org.eclipse.emf.ecp.e4.emfstore.UpdateToVersionHandler" command="_rBTp4HkWEeOKPMuLiPS6LA"/>
+    <elements xsi:type="commands:Handler" xmi:id="__dDK4KN_EeOHes-ZueR8hA" elementId="org.eclipse.emf.ecp.e4.emfstore.handler.importProject" contributionURI="bundleclass://org.eclipse.emf.ecp.emfstore.ui.e4/org.eclipse.emf.ecp.e4.emfstore.ImportProjectHandler" command="_8LZM4KN_EeOHes-ZueR8hA"/>
+    <elements xsi:type="commands:Handler" xmi:id="_c-vHIKOAEeOHes-ZueR8hA" elementId="org.eclipse.emf.ecp.e4.emfstore.handler.exportProject" contributionURI="bundleclass://org.eclipse.emf.ecp.emfstore.ui.e4/org.eclipse.emf.ecp.e4.emfstore.ExportProjectHandler" command="_4GkskKN_EeOHes-ZueR8hA"/>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="__dQ6UJozEeKJoJcmiy2C6w" featurename="children" parentElementId="org.eclipse.emf.ecp.e4.application.popupmenu.repository">
     <elements xsi:type="menu:HandledMenuItem" xmi:id="_szdjEJoyEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.emfstore.handledmenuitem.login" label="LogIn" iconURI="platform:/plugin/org.eclipse.emf.ecp.emfstore.ui.e4/icons/repository/login.png" command="_pCdWoJoyEeKJoJcmiy2C6w">
-      <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_QFHzoHk_EeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.emfstore.ui.login"/>
+      <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_QFHzoHk_EeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.emfstore.ui.e4.login"/>
     </elements>
     <elements xsi:type="menu:HandledMenuItem" xmi:id="_-I6jcJpoEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.emfstore.handledmenuitem.logout" label="LogOut" iconURI="platform:/plugin/org.eclipse.emf.ecp.emfstore.ui.e4/icons/repository/logout.png" command="_39_5UJpoEeKJoJcmiy2C6w">
-      <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_5h_EEHkhEeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.emfstore.ui.logout"/>
+      <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_5h_EEHkhEeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.emfstore.ui.e4.logout"/>
     </elements>
     <elements xsi:type="menu:HandledMenuItem" xmi:id="_Qvw34JprEeKJoJcmiy2C6w" elementId="org.eclipse.emf.ecp.e4.emfstore.handledmenuitem.startLocalServer" label="Start Local Server" iconURI="platform:/plugin/org.eclipse.emf.ecp.emfstore.ui.e4/icons/repository/startLocalServer.png" mnemonics="M1+F2" command="_IU0E0JprEeKJoJcmiy2C6w">
-      <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_7FZ-oHkhEeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.emfstore.ui.localServer"/>
+      <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_7FZ-oHkhEeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.emfstore.ui.e4.localServer"/>
     </elements>
     <elements xsi:type="menu:HandledMenuItem" xmi:id="_BqK3sHkYEeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.e4.emfstore.handledmenuitem.serverDelete" label="Delete on server" iconURI="platform:/plugin/org.eclipse.emf.ecp.emfstore.ui.e4/icons/repository/server_delete.png" command="_wIEIUHkWEeOKPMuLiPS6LA">
-      <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_8sZxoHkhEeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.emfstore.ui.serverDelete"/>
+      <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_8sZxoHkhEeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.emfstore.ui.e4.serverDelete"/>
     </elements>
     <elements xsi:type="menu:HandledMenuItem" xmi:id="_CWvp0HkYEeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.e4.emfstore.handledmenuitem.serverCheckoutBranch" label="Checkout Branch..." command="_zn6TUHkWEeOKPMuLiPS6LA">
-      <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_-RLXEHkhEeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.emfstore.ui.branchCheckout"/>
+      <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_-RLXEHkhEeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.emfstore.ui.e4.branchCheckout"/>
     </elements>
     <elements xsi:type="menu:HandledMenuItem" xmi:id="_Dgp4MHkYEeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.e4.emfstore.handledmenuitem.manageUser" label="Manage Users/Groups..." iconURI="platform:/plugin/org.eclipse.emf.ecp.emfstore.ui.e4/icons/repository/user_edit.png" command="_29E4UHkWEeOKPMuLiPS6LA">
-      <visibleWhen xsi:type="ui:CoreExpression" xmi:id="__8u58HkhEeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.emfstore.ui.serverUsers"/>
+      <visibleWhen xsi:type="ui:CoreExpression" xmi:id="__8u58HkhEeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.emfstore.ui.e4.serverUsers"/>
     </elements>
     <elements xsi:type="menu:HandledMenuItem" xmi:id="_D4KZQHkYEeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.e4.emfstore.handledmenuitem.registerEPackage" label="Register EPackage" iconURI="platform:/plugin/org.eclipse.emf.ecp.emfstore.ui.e4/icons/repository/arrow_up.png" command="_6izB0HkWEeOKPMuLiPS6LA">
-      <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_CotYAHkiEeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.emfstore.ui.registerEPackage"/>
+      <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_CotYAHkiEeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.emfstore.ui.e4.registerEPackage"/>
     </elements>
     <elements xsi:type="menu:HandledMenuItem" xmi:id="_ER3SsHkYEeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.e4.emfstore.handledmenuitem.remoteCreateProject" label="Create new project..." iconURI="platform:/plugin/org.eclipse.emf.ecp.emfstore.ui.e4/icons/repository/projectAdd.png" command="_E0hJQHkXEeOKPMuLiPS6LA">
-      <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_DyMIkHkiEeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.emfstore.ui.serverProjectCreate"/>
+      <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_DyMIkHkiEeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.emfstore.ui.e4.serverProjectCreate"/>
     </elements>
   </fragments>
   <fragments xsi:type="fragment:StringModelFragment" xmi:id="_QnBwYHlLEeOKPMuLiPS6LA" featurename="children" parentElementId="org.eclipse.emf.ecp.e4.application.popupmenu.navigator">
     <elements xsi:type="menu:HandledMenuItem" xmi:id="_FNwTMHkYEeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.e4.emfstore.handledmenuitem.share" label="Share" iconURI="platform:/plugin/org.eclipse.emf.ecp.emfstore.ui.e4/icons/project/share.png" command="_Vif-8HkWEeOKPMuLiPS6LA">
-      <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_IEYWgHkiEeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.emfstore.ui.share"/>
+      <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_IEYWgHkiEeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.emfstore.ui.e4.share"/>
     </elements>
     <elements xsi:type="menu:HandledMenuItem" xmi:id="_EmLV0HkYEeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.e4.emfstore.handledmenuitem.commit" label="Commit" iconURI="platform:/plugin/org.eclipse.emf.ecp.emfstore.ui.e4/icons/project/commit.gif" command="_NQuWAHkWEeOKPMuLiPS6LA">
-      <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_GDv7gHkiEeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.emfstore.ui.commit"/>
+      <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_GDv7gHkiEeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.emfstore.ui.e4.commit"/>
     </elements>
     <elements xsi:type="menu:HandledMenuItem" xmi:id="_E0bNMHkYEeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.e4.emfstore.handledmenuitem.update" label="Update" iconURI="platform:/plugin/org.eclipse.emf.ecp.emfstore.ui.e4/icons/project/update.png" command="_SudKAHkWEeOKPMuLiPS6LA">
-      <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_HE0-AHkiEeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.emfstore.ui.update"/>
+      <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_HE0-AHkiEeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.emfstore.ui.e4.update"/>
     </elements>
     <elements xsi:type="menu:HandledMenuItem" xmi:id="_HBL_sHkYEeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.e4.emfstore.handledmenuitem.updateToVersion" label="Update to version..." iconURI="platform:/plugin/org.eclipse.emf.ecp.emfstore.ui.e4/icons/project/update.png" command="_rBTp4HkWEeOKPMuLiPS6LA">
-      <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_PNcq8HkiEeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.emfstore.ui.updateToVersion"/>
+      <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_PNcq8HkiEeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.emfstore.ui.e4.updateToVersion"/>
     </elements>
     <elements xsi:type="menu:HandledMenuItem" xmi:id="_FfPEwHkYEeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.e4.emfstore.handledmenuitem.undo" label="Undo Last Operation" iconURI="platform:/plugin/org.eclipse.emf.ecp.emfstore.ui.e4/icons/project/undo.png" command="_Wz_cAHkWEeOKPMuLiPS6LA">
-      <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_JHbu8HkiEeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.emfstore.ui.undo"/>
+      <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_JHbu8HkiEeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.emfstore.ui.e4.undo"/>
     </elements>
     <elements xsi:type="menu:HandledMenuItem" xmi:id="_Fu87wHkYEeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.e4.emfstore.handledmenuitem.revert" label="Revert All Operations" iconURI="platform:/plugin/org.eclipse.emf.ecp.emfstore.ui.e4/icons/project/revert.png" command="_YOPMcHkWEeOKPMuLiPS6LA">
-      <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_KZiQAHkiEeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.emfstore.ui.revert"/>
+      <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_KZiQAHkiEeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.emfstore.ui.e4.revert"/>
     </elements>
     <elements xsi:type="menu:HandledMenuItem" xmi:id="_GFrZsHkYEeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.e4.emfstore.handledmenuitem.historyview" label="Show Historyview" iconURI="platform:/plugin/org.eclipse.emf.ecp.emfstore.ui.e4/icons/project/historyview.png" command="_g0Yi4HkWEeOKPMuLiPS6LA">
-      <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_LfvDEHkiEeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.emfstore.ui.historyview"/>
+      <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_LfvDEHkiEeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.emfstore.ui.e4.historyview"/>
     </elements>
     <elements xsi:type="menu:HandledMenuItem" xmi:id="_GeCPUHkYEeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.e4.emfstore.handledmenuitem.branchCreate" label="Create Branch" iconURI="platform:/plugin/org.eclipse.emf.ecp.emfstore.ui.e4/icons/project/branch.png" command="_m91NYHkWEeOKPMuLiPS6LA">
-      <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_MtZJAHkiEeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.emfstore.ui.branchCreate"/>
+      <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_MtZJAHkiEeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.emfstore.ui.e4.branchCreate"/>
     </elements>
     <elements xsi:type="menu:HandledMenuItem" xmi:id="_Gu5V0HkYEeOKPMuLiPS6LA" elementId="org.eclipse.emf.ecp.e4.emfstore.handledmenuitem.branchMerge" label="Merge with Branch" iconURI="platform:/plugin/org.eclipse.emf.ecp.emfstore.ui.e4/icons/project/merge.png" command="_o3rD4HkWEeOKPMuLiPS6LA">
-      <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_N5Xz8HkiEeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.emfstore.ui.branchMerge"/>
+      <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_N5Xz8HkiEeOKPMuLiPS6LA" coreExpressionId="org.eclipse.emf.ecp.emfstore.ui.e4.branchMerge"/>
     </elements>
+    <elements xsi:type="menu:HandledMenuItem" xmi:id="_4EB5cKOAEeOHes-ZueR8hA" elementId="org.eclipse.emf.ecp.e4.emfstore.handledmenuitem.exportProject" label="Export Project" command="_4GkskKN_EeOHes-ZueR8hA">
+      <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_iIYsEKOBEeOHes-ZueR8hA" coreExpressionId="org.eclipse.emf.ecp.emfstore.ui.e4.exportProject"/>
+    </elements>
+    <elements xsi:type="menu:HandledMenuItem" xmi:id="_IDkUwKOAEeOHes-ZueR8hA" elementId="org.eclipse.emf.ecp.e4.emfstore.handledmenuitem.importProject" label="Import Project" command="_8LZM4KN_EeOHes-ZueR8hA"/>
   </fragments>
 </fragment:ModelFragments>

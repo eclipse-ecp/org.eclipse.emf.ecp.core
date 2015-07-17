@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
  *******************************************************************************/
@@ -21,7 +21,7 @@ import org.eclipse.emf.ecp.spi.core.InternalProject;
 
 /**
  * Represents the data of an ECP project.
- * 
+ *
  * @author Eike Stepper
  */
 public final class CDOProjectData {
@@ -35,7 +35,7 @@ public final class CDOProjectData {
 
 	/**
 	 * Default constructor.
-	 * 
+	 *
 	 * @param project the project
 	 */
 	public CDOProjectData(InternalProject project) {
@@ -44,7 +44,7 @@ public final class CDOProjectData {
 
 	/**
 	 * Returns the project.
-	 * 
+	 *
 	 * @return the project
 	 */
 	public InternalProject getProject() {
@@ -53,12 +53,12 @@ public final class CDOProjectData {
 
 	/**
 	 * Returns the {@link CDOWorkspace} of the project.
-	 * 
+	 *
 	 * @return the {@link CDOWorkspace}
 	 */
 	public synchronized CDOWorkspace getWorkspace() {
 		if (workspace == null) {
-			CDOWorkspaceConfiguration config = createWorkspaceConfiguration();
+			final CDOWorkspaceConfiguration config = createWorkspaceConfiguration();
 			workspace = config.open();
 		}
 
@@ -67,23 +67,23 @@ public final class CDOProjectData {
 
 	/**
 	 * Check out the {@link CDOWorkspace} of the project.
-	 * 
+	 *
 	 * @return the {@link CDOWorkspace}
 	 */
 	public synchronized CDOWorkspace checkoutWorkspace() {
-		CDOWorkspaceConfiguration config = createWorkspaceConfiguration();
+		final CDOWorkspaceConfiguration config = createWorkspaceConfiguration();
 		workspace = config.checkout();
 		return workspace;
 	}
 
 	/**
 	 * Get the a transaction fot the project.
-	 * 
+	 *
 	 * @return the {@link CDOTransaction}
 	 */
 	public synchronized CDOTransaction getTransaction() {
 		if (transaction == null) {
-			ResourceSet resourceSet = project.getEditingDomain().getResourceSet();
+			final ResourceSet resourceSet = project.getEditingDomain().getResourceSet();
 			transaction = getWorkspace().openTransaction(resourceSet);
 		}
 
@@ -92,7 +92,7 @@ public final class CDOProjectData {
 
 	/**
 	 * Get the root resource of the {@link CDOTransaction}, @see {@link CDOTransaction#getRootResource()}.
-	 * 
+	 *
 	 * @return the {@link CDOResource}
 	 */
 	public synchronized CDOResource getRootResource() {
@@ -123,7 +123,7 @@ public final class CDOProjectData {
 	}
 
 	private CDOWorkspaceConfiguration createWorkspaceConfiguration() {
-		CDOProvider provider = (CDOProvider) ECPUtil.getResolvedElement(project.getProvider());
+		final CDOProvider provider = (CDOProvider) ECPUtil.getResolvedElement(project.getProvider());
 		return provider.createWorkspaceConfiguration(project);
 	}
 }

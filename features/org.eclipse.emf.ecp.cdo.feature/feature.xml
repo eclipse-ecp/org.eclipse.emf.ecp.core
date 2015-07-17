@@ -11,13 +11,13 @@
 -->
 <feature
       id="org.eclipse.emf.ecp.cdo.feature"
-      label="EMF Client Platform CDO Integration (Experimental)"
-      version="1.1.1.qualifier"
+      label="ECP CDO Integration (Experimental)"
+      version="1.7.0.qualifier"
       provider-name="Eclipse Modeling Project"
       plugin="org.eclipse.emf.ecp.cdo.core"
       image="eclipse_update_120.jpg"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.1.1.qualifier">
+      license-feature-version="1.7.0.qualifier">
 
    <description>
       Integration of the CDO model repository.
@@ -31,6 +31,12 @@
       %license
    </license>
 
+   <requires>
+      <import plugin="org.eclipse.net4j.tcp"/>
+      <import plugin="org.eclipse.net4j.ui"/>
+      <import plugin="org.h2"/>
+   </requires>
+
    <plugin
          id="org.eclipse.emf.ecp.cdo.core"
          download-size="0"
@@ -40,27 +46,6 @@
 
    <plugin
          id="org.eclipse.emf.ecp.cdo.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.h2"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.net4j.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.net4j.tcp"
          download-size="0"
          install-size="0"
          version="0.0.0"

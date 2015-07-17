@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.HashSet;
 
 import org.eclipse.core.internal.resources.File;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -28,12 +29,11 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
-import org.eclipse.emf.ecp.internal.wizards.SelectModelElementWizard;
+import org.eclipse.emf.ecp.spi.common.ui.CompositeFactory;
+import org.eclipse.emf.ecp.spi.common.ui.SelectModelElementWizard;
+import org.eclipse.emf.ecp.spi.common.ui.composites.SelectionComposite;
 import org.eclipse.emf.ecp.spi.ui.CompositeStateObserver;
-import org.eclipse.emf.ecp.ui.common.CompositeFactory;
-import org.eclipse.emf.ecp.ui.common.SelectionComposite;
 import org.eclipse.emf.ecp.workspace.internal.core.WorkspaceProvider;
-import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
@@ -61,7 +61,7 @@ import org.eclipse.ui.model.WorkbenchLabelProvider;
 /**
  * The NewWorkspaceProjectComposite allows a user to provide the information needed for the
  * creation of a WorkspaceProject.
- * 
+ *
  * @author Tobias Verhoeven
  */
 public class NewWorkspaceProjectComposite extends Composite {
@@ -73,47 +73,49 @@ public class NewWorkspaceProjectComposite extends Composite {
 	private final class ImportWorkspaceAdapter extends SelectionAdapter {
 		@Override
 		public void widgetSelected(SelectionEvent e) {
-			ElementTreeSelectionDialog dialog = new ElementTreeSelectionDialog(Display.getDefault()
+			final ElementTreeSelectionDialog dialog = new ElementTreeSelectionDialog(Display.getDefault()
 				.getActiveShell(), new WorkbenchLabelProvider(), new BaseWorkbenchContentProvider());
 			dialog.setInput(ResourcesPlugin.getWorkspace().getRoot());
 			dialog.setAllowMultiple(false);
 			dialog.setValidator(new ISelectionStatusValidator() {
 
+				@Override
 				public IStatus validate(Object[] selection) {
 					if (selection.length == 1) {
 						if (selection[0] instanceof File) {
-							File file = (File) selection[0];
-							if (file.getType() == File.FILE) {
+							final File file = (File) selection[0];
+							if (file.getType() == IResource.FILE) {
 								return new Status(IStatus.OK, Activator.PLUGIN_ID, IStatus.OK, null, null);
 							}
 						}
 					}
-					return new Status(IStatus.ERROR, Activator.PLUGIN_ID, IStatus.ERROR, "Please Select a File",
+					return new Status(IStatus.ERROR, Activator.PLUGIN_ID, IStatus.ERROR, Messages.NewWorkspaceProjectComposite_PLEASE_SELECT_FILE,
 						null);
 				}
 			});
-			dialog.setTitle("Select XMI");
+			dialog.setTitle(Messages.NewWorkspaceProjectComposite_SELECT_XMI);
 
-			if (dialog.open() == Dialog.OK) {
+			if (dialog.open() == Window.OK) {
 				if (dialog.getFirstResult() instanceof File) {
-					File file = (File) dialog.getFirstResult();
-					ResourceSet resourceSet = new ResourceSetImpl();
-					Resource resource = resourceSet.createResource(URI.createPlatformResourceURI(file.getFullPath()
+					final File file = (File) dialog.getFirstResult();
+					final ResourceSet resourceSet = new ResourceSetImpl();
+					final Resource resource = resourceSet.createResource(URI.createPlatformResourceURI(file
+						.getFullPath()
 						.toString(), true));
 					try {
 						resource.load(null);
 						importFileText.setText(URI.createPlatformResourceURI(file.getFullPath().toString(), true)
 							.toString());
-					} catch (IOException ex) {
-						MessageDialog.openError(getShell(), "Error", "Error parsing XMI-File!");
+					} catch (final IOException ex) {
+						MessageDialog.openError(getShell(), Messages.NewWorkspaceProjectComposite_ERROR, Messages.NewWorkspaceProjectComposite_ERROR_PARSINGXMIFILE);
 					}
 				}
 			}
 		}
 	}
 
-	private CompositeStateObserver compositeStateObserver;
-	private ECPProperties properties;
+	private final CompositeStateObserver compositeStateObserver;
+	private final ECPProperties properties;
 	private boolean complete;
 
 	private Text newFileText;
@@ -135,7 +137,7 @@ public class NewWorkspaceProjectComposite extends Composite {
 
 	/**
 	 * Instantiates a new new workspace project composite.
-	 * 
+	 *
 	 * @param parent a widget which will be the parent of the new instance (cannot be null)
 	 * @param observer the observer
 	 * @param projectProperties the project properties
@@ -159,7 +161,7 @@ public class NewWorkspaceProjectComposite extends Composite {
 		grpDoYouWant.setLayout(new GridLayout(2, false));
 
 		createButton = new Button(grpDoYouWant, SWT.RADIO);
-		createButton.setText("Create empty project");
+		createButton.setText(Messages.NewWorkspaceProjectComposite_CREATE_EMPTY_PROJECT);
 
 		createButton.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -172,7 +174,7 @@ public class NewWorkspaceProjectComposite extends Composite {
 
 		createButton.setSelection(true);
 		importButton = new Button(grpDoYouWant, SWT.RADIO);
-		importButton.setText("Import existing XMI-File");
+		importButton.setText(Messages.NewWorkspaceProjectComposite_IMPORT_XMI_FILE);
 
 		importButton.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -192,16 +194,17 @@ public class NewWorkspaceProjectComposite extends Composite {
 
 		providerStackLayout.topControl = newProjectComposite;
 
-		Button rootClassButton = new Button(newProjectComposite, SWT.ARROW);
-		rootClassButton.setText("Choose Root Class \u2026");
+		final Button rootClassButton = new Button(newProjectComposite, SWT.ARROW);
+		rootClassButton.setText(Messages.NewWorkspaceProjectComposite_CHOOSE_ROOT_CLASS);
 		rootClassButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 
 		rootClassButton.addListener(SWT.Selection, new Listener() {
+			@Override
 			public void handleEvent(Event event) {
 				eClass = openClassSelectionDialog(newProjectComposite);
 				fillResource();
 				if (eClass != null) {
-					rootClassText.setText(eClass.getEPackage().getNsURI() + "/" + eClass.getName());
+					rootClassText.setText(eClass.getEPackage().getNsURI() + "/" + eClass.getName()); //$NON-NLS-1$
 				}
 			}
 		});
@@ -214,44 +217,45 @@ public class NewWorkspaceProjectComposite extends Composite {
 		importProjectComposite.setLayout(new GridLayout(3, false));
 
 		final Label selectFileLabel = new Label(importProjectComposite, SWT.NONE);
-		selectFileLabel.setText("Select File: ");//$NON-NLS-1$
+		selectFileLabel.setText(Messages.NewWorkspaceProjectComposite_SELECT_FILE);
 
 		importFileText = new Text(importProjectComposite, SWT.BORDER | SWT.SINGLE | SWT.READ_ONLY);
 		importFileText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 		importFileText.addModifyListener(new ModifyListener() {
+			@Override
 			public void modifyText(ModifyEvent e) {
 				checkStatusChanged();
 			}
 		});
 		new Label(importProjectComposite, SWT.NONE);
 
-		Button importFileButton = new Button(importProjectComposite, SWT.NONE);
+		final Button importFileButton = new Button(importProjectComposite, SWT.NONE);
 		importFileButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				FileDialog fileDialog = new FileDialog(composite.getShell(), SWT.OPEN);
-				fileDialog.setText("Open");
+				final FileDialog fileDialog = new FileDialog(composite.getShell(), SWT.OPEN);
+				fileDialog.setText(Messages.NewWorkspaceProjectComposite_OPEN);
 				fileDialog.setFilterPath(ResourcesPlugin.getWorkspace().getRoot().getLocation().toString());
 
-				String path = fileDialog.open();
+				final String path = fileDialog.open();
 				if (path != null) {
-					ResourceSet resourceSet = new ResourceSetImpl();
-					Resource resource = resourceSet.createResource(URI.createFileURI(path));
+					final ResourceSet resourceSet = new ResourceSetImpl();
+					final Resource resource = resourceSet.createResource(URI.createFileURI(path));
 					try {
 						resource.load(null);
 						importFileText.setText(URI.createFileURI(path).toString());
-					} catch (IOException ex) {
-						MessageDialog.openError(getShell(), "Error", "Error parsing XMI-File!");
+					} catch (final IOException ex) {
+						MessageDialog.openError(getShell(), Messages.NewWorkspaceProjectComposite_ERROR, Messages.NewWorkspaceProjectComposite_ERROR_PARSINGXMIFILE);
 					}
 
 				}
 			}
 		});
-		importFileButton.setText("Browse File System ...");
+		importFileButton.setText(Messages.NewWorkspaceProjectComposite_BROWSE_FILE_SYSTEM);
 
 		importWorkspaceButton = new Button(importProjectComposite, SWT.NONE);
 		importWorkspaceButton.addSelectionListener(new ImportWorkspaceAdapter());
-		importWorkspaceButton.setText("Browse Workspace ...");
+		importWorkspaceButton.setText(Messages.NewWorkspaceProjectComposite_BROWSE_WORKSPACE);
 	}
 
 	/**
@@ -264,10 +268,11 @@ public class NewWorkspaceProjectComposite extends Composite {
 		newProjectComposite.setLayout(new GridLayout(4, false));
 
 		final Label filenameLabel = new Label(newProjectComposite, SWT.NONE);
-		filenameLabel.setText("Filename:");//$NON-NLS-1$
+		filenameLabel.setText(Messages.NewWorkspaceProjectComposite_FILENAME);
 
 		newFileText = new Text(newProjectComposite, SWT.BORDER | SWT.SINGLE | SWT.READ_ONLY);
 		newFileText.addModifyListener(new ModifyListener() {
+			@Override
 			public void modifyText(ModifyEvent e) {
 				checkStatusChanged();
 			}
@@ -275,21 +280,21 @@ public class NewWorkspaceProjectComposite extends Composite {
 		newFileText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 		new Label(newProjectComposite, SWT.NONE);
 
-		Button newFileButton = new Button(newProjectComposite, SWT.NONE);
-		newFileButton.setText("Browse File System ...");
+		final Button newFileButton = new Button(newProjectComposite, SWT.NONE);
+		newFileButton.setText(Messages.NewWorkspaceProjectComposite_BROWSE_FILE_SYSTEM);
 
 		newFileButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				FileDialog fileDialog = new FileDialog(composite.getShell(), SWT.SAVE);
-				fileDialog.setText("Open");
+				final FileDialog fileDialog = new FileDialog(composite.getShell(), SWT.SAVE);
+				fileDialog.setText(Messages.NewWorkspaceProjectComposite_OPEN);
 				fileDialog.setOverwrite(true);
 				fileDialog.setFilterPath(ResourcesPlugin.getWorkspace().getRoot().getLocation().toString());
-				String path = fileDialog.open();
+				final String path = fileDialog.open();
 
 				if (path != null) {
-					URI pathURI = URI.createFileURI(path);
-					ResourceSet resourceSet = new ResourceSetImpl();
+					final URI pathURI = URI.createFileURI(path);
+					final ResourceSet resourceSet = new ResourceSetImpl();
 					resource = resourceSet.createResource(pathURI);
 
 					fillResource();
@@ -303,10 +308,10 @@ public class NewWorkspaceProjectComposite extends Composite {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 
-				NewXMIFileWizard newXMIFileWizard = new NewXMIFileWizard();
-				WizardDialog wizardDialog = new WizardDialog(composite.getShell(), newXMIFileWizard);
+				final NewXMIFileWizard newXMIFileWizard = new NewXMIFileWizard();
+				final WizardDialog wizardDialog = new WizardDialog(composite.getShell(), newXMIFileWizard);
 				if (wizardDialog.open() == Window.OK) {
-					ResourceSet resourceSet = new ResourceSetImpl();
+					final ResourceSet resourceSet = new ResourceSetImpl();
 					resource = resourceSet.createResource(newXMIFileWizard.getFileURI());
 					fillResource();
 					newFileText.setText(newXMIFileWizard.getFileURI().toString());
@@ -317,7 +322,7 @@ public class NewWorkspaceProjectComposite extends Composite {
 		});
 
 		newWorkspaceButton.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
-		newWorkspaceButton.setText("Browse Workspace ...");
+		newWorkspaceButton.setText(Messages.NewWorkspaceProjectComposite_BROWSE_WORKSPACE);
 		new Label(newProjectComposite, SWT.NONE);
 
 		label = new Label(newProjectComposite, SWT.SEPARATOR | SWT.HORIZONTAL);
@@ -328,6 +333,7 @@ public class NewWorkspaceProjectComposite extends Composite {
 
 		rootClassText = new Text(newProjectComposite, SWT.BORDER | SWT.SINGLE | SWT.READ_ONLY);
 		rootClassText.addModifyListener(new ModifyListener() {
+			@Override
 			public void modifyText(ModifyEvent e) {
 				checkStatusChanged();
 			}
@@ -337,18 +343,18 @@ public class NewWorkspaceProjectComposite extends Composite {
 
 	private EClass openClassSelectionDialog(Composite composite) {
 
-		SelectionComposite helper = CompositeFactory.getSelectModelClassComposite(new HashSet<EPackage>(),
+		final SelectionComposite helper = CompositeFactory.getSelectModelClassComposite(new HashSet<EPackage>(),
 			ECPUtil.getAllRegisteredEPackages(), new HashSet<EClass>());
 
-		SelectModelElementWizard wizard = new SelectModelElementWizard("Choose Root Class", "Choose Root Class",
-			"Choose Root Class", "Select the class that will be used as the root of the your new project.");
+		final SelectModelElementWizard wizard = new SelectModelElementWizard(Messages.NewWorkspaceProjectComposite_CHOOSE_ROOT_CLASS, Messages.NewWorkspaceProjectComposite_CHOOSE_ROOT_CLASS,
+			Messages.NewWorkspaceProjectComposite_CHOOSE_ROOT_CLASS, Messages.NewWorkspaceProjectComposite_SELECT_ROOT_CLASS_DESCRIPTION);
 		wizard.setCompositeProvider(helper);
 
-		WizardDialog wd = new WizardDialog(composite.getShell(), wizard);
+		final WizardDialog wd = new WizardDialog(composite.getShell(), wizard);
 
-		int wizardResult = wd.open();
-		if (wizardResult == WizardDialog.OK) {
-			Object[] selection = helper.getSelection();
+		final int wizardResult = wd.open();
+		if (wizardResult == Window.OK) {
+			final Object[] selection = helper.getSelection();
 			if (selection == null || selection.length == 0) {
 				return null;
 			}
@@ -368,7 +374,7 @@ public class NewWorkspaceProjectComposite extends Composite {
 		properties.addProperty(WorkspaceProvider.PROP_ROOT_URI, createButton.getSelection() ? newFileText.getText()
 			: importFileText.getText());
 
-		boolean pendingStatus = createButton.getSelection() && newFileTextStatus() && rootClassTextStatus()
+		final boolean pendingStatus = createButton.getSelection() && newFileTextStatus() && rootClassTextStatus()
 			|| importButton.getSelection() && importFileTextStatus();
 
 		if (pendingStatus != complete) {
@@ -395,14 +401,14 @@ public class NewWorkspaceProjectComposite extends Composite {
 
 	private void fillResource() {
 		if (resource != null && eClass != null) {
-			EObject root = EcoreUtil.create(eClass);
+			final EObject root = EcoreUtil.create(eClass);
 
 			resource.getContents().clear();
 
 			resource.getContents().add(root);
 			try {
 				resource.save(null);
-			} catch (IOException ex) {
+			} catch (final IOException ex) {
 				// TODO Auto-generated catch block
 				ex.printStackTrace();
 			}

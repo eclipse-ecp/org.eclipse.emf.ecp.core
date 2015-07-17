@@ -1,18 +1,17 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ * Philip Langer - bug fix 460968
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.reference;
-
-import java.net.URL;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.UpdateValueStrategy;
@@ -22,13 +21,17 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
-import org.eclipse.emf.ecp.edit.internal.swt.controls.ControlMessages;
+import org.eclipse.emf.ecp.edit.internal.swt.SWTImageHelper;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.SingleControl;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
+import org.eclipse.emf.ecp.edit.spi.swt.reference.AddReferenceAction;
+import org.eclipse.emf.ecp.edit.spi.swt.reference.DeleteReferenceAction;
+import org.eclipse.emf.ecp.edit.spi.swt.reference.NewReferenceAction;
 import org.eclipse.emf.ecp.edit.spi.util.ECPModelElementChangeListener;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -47,9 +50,9 @@ import org.eclipse.swt.widgets.Link;
 /**
  * This class defines a Control which is used for displaying {@link org.eclipse.emf.ecore.EStructuralFeature
  * EStructuralFeature}s which have a reference.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public class LinkControl extends SingleControl {
 
@@ -99,7 +102,7 @@ public class LinkControl extends SingleControl {
 		mainComposite.setLayout(stackLayout);
 
 		unsetLabel = new Label(mainComposite, SWT.NONE);
-		unsetLabel.setText(ControlMessages.LinkControl_NotSet);
+		unsetLabel.setText(LocalizationServiceHelper.getString(getClass(), ReferenceMessageKeys.LinkControl_NotSet));
 		unsetLabel.setBackground(mainComposite.getBackground());
 		unsetLabel.setForeground(getSystemColor(SWT.COLOR_DARK_GRAY));
 		unsetLabel.setAlignment(SWT.CENTER);
@@ -121,7 +124,7 @@ public class LinkControl extends SingleControl {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return number of buttons added by the link control.
 	 */
 	protected int getNumButtons() {
@@ -130,7 +133,7 @@ public class LinkControl extends SingleControl {
 
 	/**
 	 * Creates the buttons to delete a reference, add one to an existing and add a new element to be referenced.
-	 * 
+	 *
 	 * @param composite the {@link Composite} to place the buttons on
 	 * @return An array of buttons
 	 */
@@ -138,11 +141,13 @@ public class LinkControl extends SingleControl {
 		final Button[] buttons = new Button[3];
 		final Setting setting = getFirstSetting();
 		buttons[0] = createButtonForAction(new DeleteReferenceAction(getEditingDomain(getFirstSetting()), setting,
-			getItemPropertyDescriptor(setting), getService(ReferenceService.class)), composite);
+			getService(ReferenceService.class)), composite);
 		buttons[1] = createButtonForAction(new AddReferenceAction(getEditingDomain(getFirstSetting()), setting,
 			getItemPropertyDescriptor(setting), getService(ReferenceService.class)), composite);
 		buttons[2] = createButtonForAction(new NewReferenceAction(getEditingDomain(getFirstSetting()), setting,
-			getItemPropertyDescriptor(setting), getService(ReferenceService.class)), composite);
+			Activator.getDefault().getEMFFormsEditSupport(), Activator.getDefault().getEMFFormsLabelProvider(),
+			getService(ReferenceService.class), Activator.getDefault().getReportService(), getDomainModelReference(),
+			getViewModelContext().getDomainModel()), composite);
 		return buttons;
 	}
 
@@ -182,7 +187,7 @@ public class LinkControl extends SingleControl {
 	/**
 	 * This code is called whenever the link of the link widget is clicked. You can overwrite this to change the
 	 * behavior.
-	 * 
+	 *
 	 * @param value the EObject that is linked
 	 */
 	protected void linkClicked(EObject value) {
@@ -206,63 +211,91 @@ public class LinkControl extends SingleControl {
 	public Binding bindValue() {
 
 		final IObservableValue value = SWTObservables.observeText(hyperlink);
+		getDataBindingContext().bindValue(value, getModelValue(), createValueExtractingUpdateStrategy(),
+			new UpdateValueStrategy() {
+				@Override
+				public Object convert(Object value) {
+					updateChangeListener((EObject) value);
+					return "<a>" + getLinkText(value) + "</a>"; //$NON-NLS-1$ //$NON-NLS-2$
+				}
+			});
 
-		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(), new UpdateValueStrategy() {
-
-			@Override
-			public Object convert(Object value) {
-				return getModelValue().getValue();
-			}
-		}, new UpdateValueStrategy() {
-			@Override
-			public Object convert(Object value) {
-				updateChangeListener((EObject) value);
-				return "<a>" + getLinkText(value) + "</a>"; //$NON-NLS-1$ //$NON-NLS-2$
-			}
-		});
 		final IObservableValue tooltipValue = SWTObservables.observeTooltipText(hyperlink);
-		getDataBindingContext().bindValue(tooltipValue, getModelValue(), new UpdateValueStrategy() {
-
-			@Override
-			public Object convert(Object value) {
-				return getModelValue().getValue();
-			}
-		}, new UpdateValueStrategy() {
-			@Override
-			public Object convert(Object value) {
-				return getLinkText(value);
-			}
-		});
+		getDataBindingContext().bindValue(tooltipValue, getModelValue(),
+			createValueExtractingUpdateStrategy(),
+			new UpdateValueStrategy() {
+				@Override
+				public Object convert(Object value) {
+					return getLinkText(value);
+				}
+			});
 
 		final IObservableValue imageValue = SWTObservables.observeImage(imageHyperlink);
-		getDataBindingContext().bindValue(imageValue, getModelValue(), new UpdateValueStrategy() {
+		getDataBindingContext().bindValue(imageValue, getModelValue(),
+			new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER),
+			new UpdateValueStrategy() {
+				@Override
+				public Object convert(Object value) {
+					return getImage(value);
+				}
+			});
 
-			@Override
-			public Object convert(Object value) {
-				return getModelValue().getValue();
-			}
-		}, new UpdateValueStrategy() {
-			@Override
-			public Object convert(Object value) {
-				return getImage(value);
-			}
-		});
+		final IObservableValue deleteButtonEnablement = SWTObservables.observeEnabled(getDeleteButton());
+		getDataBindingContext().bindValue(deleteButtonEnablement, getModelValue(),
+			createValueExtractingUpdateStrategy(),
+			new UpdateValueStrategy() {
+				@Override
+				public Object convert(Object value) {
+					return value != null;
+				}
+			});
 
 		return null;
 	}
 
-	protected Object getImage(Object value) {
-		return Activator.getImage((URL) getAdapterFactoryItemDelegator().getImage(value));
+	private UpdateValueStrategy createValueExtractingUpdateStrategy() {
+		return new UpdateValueStrategy() {
+			@Override
+			public Object convert(Object value) {
+				return getModelValue().getValue();
+			}
+		};
 	}
 
+	/**
+	 * Returns the image to be used for the given linked {@code value}.
+	 *
+	 * @param value the value
+	 * @return The image.
+	 */
+	protected Object getImage(Object value) {
+		final Object image = getAdapterFactoryItemDelegator().getImage(value);
+		return SWTImageHelper.getImage(image);
+	}
+
+	/**
+	 * Returns the link text to be used for the given linked {@code value}.
+	 *
+	 * @param value the value
+	 * @return The link text.
+	 */
 	protected Object getLinkText(Object value) {
 		final String linkName = getAdapterFactoryItemDelegator().getText(value);
 		return linkName == null ? "" : linkName; //$NON-NLS-1$
 	}
 
 	/**
+	 * Returns the delete button of this control.
+	 *
+	 * @return The delete button of this control.
+	 */
+	protected Button getDeleteButton() {
+		return buttons[0];
+	}
+
+	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.controls.SingleControl#updateValidationColor(org.eclipse.swt.graphics.Color)
 	 */
 	@Override
@@ -298,6 +331,7 @@ public class LinkControl extends SingleControl {
 				public void onChange(Notification notification) {
 					Display.getDefault().syncExec(new Runnable() {
 
+						@Override
 						public void run() {
 							getDataBindingContext().updateTargets();
 							linkComposite.layout();
@@ -331,7 +365,8 @@ public class LinkControl extends SingleControl {
 	 */
 	@Override
 	protected String getUnsetLabelText() {
-		return ControlMessages.LinkControl_NoLinkSetClickToSetLink;
+		return LocalizationServiceHelper
+			.getString(getClass(), ReferenceMessageKeys.LinkControl_NoLinkSetClickToSetLink);
 	}
 
 	/*
@@ -340,7 +375,7 @@ public class LinkControl extends SingleControl {
 	 */
 	@Override
 	protected String getUnsetButtonTooltip() {
-		return ControlMessages.LinkControl_UnsetLink;
+		return LocalizationServiceHelper.getString(getClass(), ReferenceMessageKeys.LinkControl_UnsetLink);
 	}
 
 	/*

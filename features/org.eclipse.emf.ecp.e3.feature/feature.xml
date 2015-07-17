@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipse.emf.ecp.e3.feature"
-      label="EMF Client Platform UI 3.x Feature"
-      version="1.1.1.qualifier"
+      label="ECP 3.x UI Integration"
+      version="1.7.0.qualifier"
       provider-name="Eclipse Modeling Project"
       plugin="org.eclipse.emf.ecp.ui.e3"
       image="eclipse_update_120.jpg"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.1.1.qualifier">
+      license-feature-version="1.7.0.qualifier">
 
    <description>
       Integration of the EMF Client Platform UI into the Eclipse 3.x workbench, including views and perspectives.
@@ -20,6 +20,10 @@
    <license url="%licenseURL">
       %license
    </license>
+
+   <includes
+         id="org.eclipse.emf.ecp.feature"
+         version="0.0.0"/>
 
    <plugin
          id="org.eclipse.emf.ecp.editor.e3"
@@ -36,7 +40,7 @@
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.emf.ecp.application.e3"
+         id="org.eclipse.emf.ecp.validation.connector"
          download-size="0"
          install-size="0"
          version="0.0.0"

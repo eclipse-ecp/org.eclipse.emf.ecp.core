@@ -1,195 +1,189 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.emf.ecp.edit" version="2">
     <resource path="META-INF/MANIFEST.MF">
-        <filter comment="Package was incorrectly not marked as SPI" id="923795461">
+        <filter comment="The changes were SPI" id="923795461">
             <message_arguments>
-                <message_argument value="1.1.0"/>
-                <message_argument value="1.0.1"/>
+                <message_argument value="1.2.0"/>
+                <message_argument value="1.1.1"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI break only" id="923795461">
+            <message_arguments>
+                <message_argument value="1.4.0"/>
+                <message_argument value="1.4.0"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change in 1.6" id="923795461">
+            <message_arguments>
+                <message_argument value="1.6.0"/>
+                <message_argument value="1.5.0"/>
             </message_arguments>
         </filter>
     </resource>
-    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.edit.ECPAbstractControl">
-        <filter comment="Package was not incorrectly marked as SPI" id="305324134">
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.edit.spi.ECPControl">
+        <filter comment="This class is SPI" id="305324134">
             <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.edit.ECPAbstractControl"/>
-                <message_argument value="org.eclipse.emf.ecp.edit_1.1.0"/>
+                <message_argument value="org.eclipse.emf.ecp.edit.spi.ECPControl"/>
+                <message_argument value="org.eclipse.emf.ecp.edit_1.2.0"/>
             </message_arguments>
         </filter>
     </resource>
-    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.edit.ECPContextDisposedListener">
-        <filter comment="Package was incorrectly not marked as SPI" id="305324134">
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.edit.spi.ECPControlContext">
+        <filter comment="This class is SPI" id="305324134">
             <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.edit.ECPContextDisposedListener"/>
-                <message_argument value="org.eclipse.emf.ecp.edit_1.1.0"/>
+                <message_argument value="org.eclipse.emf.ecp.edit.spi.ECPControlContext"/>
+                <message_argument value="org.eclipse.emf.ecp.edit_1.2.0"/>
             </message_arguments>
         </filter>
     </resource>
-    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.edit.ECPControl">
-        <filter comment="Package was incorrectly not marked as SPI" id="305324134">
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.edit.spi.ECPEditorContext">
+        <filter comment="This class is SPI" id="305324134">
             <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.edit.ECPControl"/>
-                <message_argument value="org.eclipse.emf.ecp.edit_1.1.0"/>
+                <message_argument value="org.eclipse.emf.ecp.edit.spi.ECPEditorContext"/>
+                <message_argument value="org.eclipse.emf.ecp.edit_1.2.0"/>
             </message_arguments>
         </filter>
     </resource>
-    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.edit.ECPControlContext">
-        <filter comment="Package was incorrectly not marked as SPI" id="305324134">
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport">
+        <filter comment="SPI Change in 1.6" id="305422471">
             <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.edit.ECPControlContext"/>
-                <message_argument value="org.eclipse.emf.ecp.edit_1.1.0"/>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport"/>
+                <message_argument value="org.eclipse.emf.ecp.edit_1.5.0"/>
             </message_arguments>
         </filter>
     </resource>
-    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.edit.ECPControlDescription">
-        <filter comment="Package was incorrectly not marked as SPI" id="305324134">
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.model.reporting.ReportService">
+        <filter comment="SPI Change in 1.6" id="305422471">
             <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.edit.ECPControlDescription"/>
-                <message_argument value="org.eclipse.emf.ecp.edit_1.1.0"/>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.reporting.ReportService"/>
+                <message_argument value="org.eclipse.emf.ecp.edit_1.5.0"/>
             </message_arguments>
         </filter>
     </resource>
-    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.edit.ECPControlFactory">
-        <filter comment="Package was incorrectly not marked as SPI" id="305324134">
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.model.reporting.ReportServiceConsumer">
+        <filter comment="SPI Change in 1.6" id="305422471">
             <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.edit.ECPControlFactory"/>
-                <message_argument value="org.eclipse.emf.ecp.edit_1.1.0"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.edit.ECPEditorContext">
-        <filter comment="Package was incorrectly not marked as SPI" id="305324134">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.edit.ECPEditorContext"/>
-                <message_argument value="org.eclipse.emf.ecp.edit_1.1.0"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.edit.util.ECPApplicableTester">
-        <filter comment="Package was incorrectly not marked as SPI" id="305324134">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.edit.util.ECPApplicableTester"/>
-                <message_argument value="org.eclipse.emf.ecp.edit_1.1.0"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.edit.util.ECPModelElementChangeListener">
-        <filter comment="Package was incorrectly not marked as SPI" id="305324134">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.edit.util.ECPModelElementChangeListener"/>
-                <message_argument value="org.eclipse.emf.ecp.edit_1.1.0"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.edit.util.ECPStaticApplicableTester">
-        <filter comment="Package was incorrectly not marked as SPI" id="305324134">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.edit.util.ECPStaticApplicableTester"/>
-                <message_argument value="org.eclipse.emf.ecp.edit_1.1.0"/>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.reporting.ReportServiceConsumer"/>
+                <message_argument value="org.eclipse.emf.ecp.edit_1.5.0"/>
             </message_arguments>
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/ecp/edit/spi/ECPAbstractControl.java" type="org.eclipse.emf.ecp.edit.spi.ECPAbstractControl">
-        <filter comment="Package was not incorrectly marked as SPI" id="643842064">
-            <message_arguments>
-                <message_argument value="VDomainModelReference"/>
-                <message_argument value="ECPAbstractControl"/>
-                <message_argument value="getDomainModelReference()"/>
-            </message_arguments>
-        </filter>
-        <filter comment="Package was not incorrectly marked as SPI" id="643846161">
-            <message_arguments>
-                <message_argument value="VDomainModelReference"/>
-                <message_argument value="ECPAbstractControl"/>
-                <message_argument value="init(ECPControlContext, VDomainModelReference)"/>
-            </message_arguments>
-        </filter>
-        <filter comment="Package was not incorrectly marked as SPI" id="1110441988">
+        <filter comment="This class is SPI" id="337682486">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.edit.spi.ECPAbstractControl"/>
             </message_arguments>
         </filter>
-    </resource>
-    <resource path="src/org/eclipse/emf/ecp/edit/spi/ECPContextDisposedListener.java" type="org.eclipse.emf.ecp.edit.spi.ECPContextDisposedListener">
-        <filter comment="Package was not incorrectly marked as SPI" id="1110441988">
+        <filter comment="This class is SPI" id="338792546">
             <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.edit.spi.ECPContextDisposedListener"/>
+                <message_argument value="org.eclipse.emf.ecp.edit.spi.ECPAbstractControl"/>
+                <message_argument value="getDomainModelReference()"/>
             </message_arguments>
         </filter>
-    </resource>
-    <resource path="src/org/eclipse/emf/ecp/edit/spi/ECPControlContext.java" type="org.eclipse.emf.ecp.edit.spi.ECPControlContext">
-        <filter comment="Package was not incorrectly marked as SPI" id="643842064">
+        <filter comment="This class is SPI" id="338792546">
             <message_arguments>
-                <message_argument value="ViewModelContext"/>
-                <message_argument value="ECPControlContext"/>
-                <message_argument value="getViewContext()"/>
+                <message_argument value="org.eclipse.emf.ecp.edit.spi.ECPAbstractControl"/>
+                <message_argument value="getModelElementContext()"/>
             </message_arguments>
         </filter>
-        <filter comment="Package was not incorrectly marked as SPI" id="1110441988">
+        <filter comment="This class is SPI" id="338792546">
             <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.edit.spi.ECPControlContext"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/emf/ecp/edit/spi/ECPControlDescription.java" type="org.eclipse.emf.ecp.edit.spi.ECPControlDescription">
-        <filter comment="Package was not incorrectly marked as SPI" id="1110441988">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.edit.spi.ECPControlDescription"/>
+                <message_argument value="org.eclipse.emf.ecp.edit.spi.ECPAbstractControl"/>
+                <message_argument value="init(ECPControlContext, VDomainModelReference)"/>
             </message_arguments>
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/ecp/edit/spi/ECPControlFactory.java" type="org.eclipse.emf.ecp.edit.spi.ECPControlFactory">
-        <filter comment="Package was not incorrectly marked as SPI" id="643846161">
+        <filter comment="This class is SPI" id="405901410">
             <message_arguments>
-                <message_argument value="VDomainModelReference"/>
-                <message_argument value="ECPControlFactory"/>
+                <message_argument value="org.eclipse.emf.ecp.edit.spi.ECPControlFactory"/>
+                <message_argument value="createControl(Class&lt;T&gt;, IItemPropertyDescriptor, ECPControlContext)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="This class is SPI" id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.edit.spi.ECPControlFactory"/>
                 <message_argument value="createControl(Class&lt;T&gt;, VDomainModelReference)"/>
             </message_arguments>
         </filter>
-        <filter comment="Package was not incorrectly marked as SPI" id="1110441988">
+        <filter comment="This class is SPI" id="405901410">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.edit.spi.ECPControlFactory"/>
+                <message_argument value="createControl(IItemPropertyDescriptor, ECPControlContext, String)"/>
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/ecp/edit/spi/ECPEditorContext.java" type="org.eclipse.emf.ecp.edit.spi.ECPEditorContext">
-        <filter comment="Package was not incorrectly marked as SPI" id="1110441988">
+    <resource path="src/org/eclipse/emf/ecp/edit/spi/ReferenceService.java" type="org.eclipse.emf.ecp.edit.spi.ReferenceService">
+        <filter comment="SPI break only" id="403804204">
             <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.edit.spi.ECPEditorContext"/>
+                <message_argument value="org.eclipse.emf.ecp.edit.spi.ReferenceService"/>
+                <message_argument value="addExistingModelElements(EObject, EReference)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI break only" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.edit.spi.ReferenceService"/>
+                <message_argument value="addNewModelElements(EObject, EReference)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI break only" id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.edit.spi.ReferenceService"/>
+                <message_argument value="addModelElement(EObject, EReference)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI break only" id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.edit.spi.ReferenceService"/>
+                <message_argument value="getExistingElementFor(EReference)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI break only" id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.edit.spi.ReferenceService"/>
+                <message_argument value="getNewElementFor(EReference)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI break only" id="1209008130">
+            <message_arguments>
+                <message_argument value="1.5"/>
+                <message_argument value="1.4"/>
+                <message_argument value="addExistingModelElements(EObject, EReference)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI break only" id="1209008130">
+            <message_arguments>
+                <message_argument value="1.5"/>
+                <message_argument value="1.4"/>
+                <message_argument value="addNewModelElements(EObject, EReference)"/>
             </message_arguments>
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/ecp/edit/spi/util/ECPApplicableTester.java" type="org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester">
-        <filter comment="Package was not incorrectly marked as SPI" id="643846161">
+        <filter comment="This class is SPI" id="403804204">
             <message_arguments>
-                <message_argument value="VDomainModelReference"/>
-                <message_argument value="ECPApplicableTester"/>
+                <message_argument value="org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester"/>
+                <message_argument value="isApplicable(EObject, EStructuralFeature)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="This class is SPI" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester"/>
                 <message_argument value="isApplicable(VDomainModelReference)"/>
             </message_arguments>
         </filter>
-        <filter comment="Package was not incorrectly marked as SPI" id="1110441988">
+        <filter comment="This class is SPI" id="405901410">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/emf/ecp/edit/spi/util/ECPModelElementChangeListener.java" type="org.eclipse.emf.ecp.edit.spi.util.ECPModelElementChangeListener">
-        <filter comment="Package was not incorrectly marked as SPI" id="1110441988">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.edit.spi.util.ECPModelElementChangeListener"/>
+                <message_argument value="isApplicable(VDomainModelReference)"/>
             </message_arguments>
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/ecp/edit/spi/util/ECPStaticApplicableTester.java" type="org.eclipse.emf.ecp.edit.spi.util.ECPStaticApplicableTester">
-        <filter comment="Package was not incorrectly marked as SPI" id="643846161">
-            <message_arguments>
-                <message_argument value="VDomainModelReference"/>
-                <message_argument value="ECPStaticApplicableTester"/>
-                <message_argument value="isApplicable(VDomainModelReference)"/>
-            </message_arguments>
-        </filter>
-        <filter comment="Package was not incorrectly marked as SPI" id="1110441988">
+        <filter comment="This class is SPI" id="338792546">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.edit.spi.util.ECPStaticApplicableTester"/>
+                <message_argument value="isApplicable(VDomainModelReference)"/>
             </message_arguments>
         </filter>
     </resource>

@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Edgar Mueller - initial API and implementation
  ******************************************************************************/
@@ -24,7 +24,7 @@ import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
-import org.eclipse.emf.ecp.ui.common.TreeViewerFactory;
+import org.eclipse.emf.ecp.ui.common.ECPViewerFactory;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -48,7 +48,7 @@ import org.junit.runner.RunWith;
 
 /**
  * @author emueller
- * 
+ *
  */
 @RunWith(SWTBotJunit4ClassRunner.class)
 public class ModifyNavigatorTest extends SWTBotTestCase {
@@ -64,6 +64,7 @@ public class ModifyNavigatorTest extends SWTBotTestCase {
 	public void init() {
 		display = Display.getDefault();
 		shell = UIThreadRunnable.syncExec(display, new Result<Shell>() {
+			@Override
 			public Shell run() {
 				final Shell shell = new Shell(display);
 				shell.setLayout(new FillLayout());
@@ -80,6 +81,7 @@ public class ModifyNavigatorTest extends SWTBotTestCase {
 	@After
 	public void after() {
 		UIThreadRunnable.syncExec(new VoidResult() {
+			@Override
 			public void run() {
 				shell.dispose();
 				shell.close();
@@ -106,9 +108,10 @@ public class ModifyNavigatorTest extends SWTBotTestCase {
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see java.lang.Runnable#run()
 		 */
+		@Override
 		public void run() {
 			final ECPProject[] project = new ECPProject[1];
 			final Object monitor = new Object();
@@ -119,8 +122,9 @@ public class ModifyNavigatorTest extends SWTBotTestCase {
 			}
 			UIThreadRunnable.syncExec(display, new VoidResult() {
 
+				@Override
 				public void run() {
-					viewer = TreeViewerFactory.createModelExplorerViewer(shell, false,
+					viewer = ECPViewerFactory.createModelExplorerViewer(shell, false,
 						PlatformUI.getWorkbench().getDecoratorManager().getLabelDecorator());
 					shell.open();
 				}
@@ -148,6 +152,7 @@ public class ModifyNavigatorTest extends SWTBotTestCase {
 			}.start();
 
 			UIThreadRunnable.syncExec(new VoidResult() {
+				@Override
 				public void run() {
 					bot.tree().getTreeItem(PROJECTNAME).expand();
 					if (project[0].getContents().size() != viewer.getTree().getItems()[0].getItems().length) {
@@ -165,6 +170,7 @@ public class ModifyNavigatorTest extends SWTBotTestCase {
 			}
 
 			UIThreadRunnable.syncExec(new VoidResult() {
+				@Override
 				public void run() {
 					shell.close();
 				}

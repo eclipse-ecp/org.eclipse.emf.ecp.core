@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
  *******************************************************************************/
@@ -33,7 +33,7 @@ import org.eclipse.ui.services.IEvaluationService;
 
 /**
  * Abstract Handler for executing commands.
- * 
+ *
  * @author Eike Stepper
  */
 public abstract class AbstractWorkspaceHandler extends AbstractHandler {
@@ -41,7 +41,7 @@ public abstract class AbstractWorkspaceHandler extends AbstractHandler {
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param jobName display job name
 	 */
 	public AbstractWorkspaceHandler(String jobName) {
@@ -50,7 +50,7 @@ public abstract class AbstractWorkspaceHandler extends AbstractHandler {
 
 	/**
 	 * Get the display name of the current job.
-	 * 
+	 *
 	 * @return the name
 	 */
 	public final String getJobName() {
@@ -59,24 +59,26 @@ public abstract class AbstractWorkspaceHandler extends AbstractHandler {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.core.commands.AbstractHandler#execute(org.eclipse.core.commands.ExecutionEvent)
 	 */
+	@Override
 	public final Object execute(final ExecutionEvent event) throws ExecutionException {
-		ISelection selection = HandlerUtil.getCurrentSelectionChecked(event);
+		final ISelection selection = HandlerUtil.getCurrentSelectionChecked(event);
 		if (selection instanceof IStructuredSelection) {
-			Object element = ((IStructuredSelection) selection).getFirstElement();
+			final Object element = ((IStructuredSelection) selection).getFirstElement();
 
 			final CDOWorkspace workspace = AdapterUtil.adapt(element, CDOWorkspace.class);
 			if (workspace != null) {
 				try {
 					if (jobName == null) {
 						PlatformUI.getWorkbench().getProgressService().busyCursorWhile(new IRunnableWithProgress() {
+							@Override
 							public void run(IProgressMonitor monitor) throws InvocationTargetException,
 								InterruptedException {
 								try {
 									execute(event, workspace, monitor);
-								} catch (ExecutionException ex) {
+								} catch (final ExecutionException ex) {
 									Activator.log(ex);
 								}
 							}
@@ -88,15 +90,15 @@ public abstract class AbstractWorkspaceHandler extends AbstractHandler {
 								try {
 									execute(event, workspace, monitor);
 									return Status.OK_STATUS;
-								} catch (ExecutionException ex) {
+								} catch (final ExecutionException ex) {
 									return new Status(IStatus.ERROR, Activator.PLUGIN_ID, ex.getMessage(), ex);
 								}
 							}
 						}.schedule();
 					}
-				} catch (InvocationTargetException ex) {
+				} catch (final InvocationTargetException ex) {
 					throw new ExecutionException("Problem while handling " + element, ex); //$NON-NLS-1$
-				} catch (InterruptedException ex) {
+				} catch (final InterruptedException ex) {
 					throw new ExecutionException("Problem while handling " + element, ex); //$NON-NLS-1$
 				}
 			}
@@ -107,7 +109,7 @@ public abstract class AbstractWorkspaceHandler extends AbstractHandler {
 
 	/**
 	 * Execute the given event.
-	 * 
+	 *
 	 * @param event the event
 	 * @param workspace the {@link CDOWorkspace}
 	 * @param monitor a progress monitor
@@ -118,13 +120,15 @@ public abstract class AbstractWorkspaceHandler extends AbstractHandler {
 
 	/**
 	 * Refresh the dirty state of the {@link CDOWorkspace}.
-	 * 
+	 *
 	 * @param event the event
 	 * @throws ExecutionException if refresh fails
 	 */
 	protected static void refreshDirtyState(ExecutionEvent event) throws ExecutionException {
-		IWorkbenchWindow ww = HandlerUtil.getActiveWorkbenchWindowChecked(event);
-		IEvaluationService service = (IEvaluationService) ww.getService(IEvaluationService.class);
+		final IWorkbenchWindow ww = HandlerUtil.getActiveWorkbenchWindowChecked(event);
+		// We keep the cast, otherwise we loose SRC compatibility with Luna
+		@SuppressWarnings("cast")
+		final IEvaluationService service = (IEvaluationService) ww.getService(IEvaluationService.class);
 		if (service != null) {
 			service.requestEvaluation("org.eclipse.emf.cdo.workspace.dirty"); //$NON-NLS-1$
 		}

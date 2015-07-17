@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
  * Eugen Neufeld - JavaDoc
@@ -45,7 +45,7 @@ public final class ECPRepositoryProperties extends Properties<ECPRepository> {
 		add(new Property<ECPRepository>("providerName") {
 			@Override
 			protected Object eval(ECPRepository repository) {
-				ECPProvider provider = repository.getProvider();
+				final ECPProvider provider = repository.getProvider();
 				if (provider != null) {
 					return provider.getName();
 				}

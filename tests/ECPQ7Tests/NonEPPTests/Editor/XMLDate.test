@@ -1,0 +1,58 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _mY5uUKEgEeKX8e34E6tWIg,_rr2EEFpSEeKcnaHGSt8OwA,_IuFcgFpZEeKcnaHGSt8OwA,_f3qEUVpSEeKcnaHGSt8OwA,__UtTgD-XEeK-yuKsz0Lang
+Element-Name: XMLDate
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _GYZaMHlAEeO9Ja8zvRhhOQ
+Runtime-Version: 1.5.4.201410231434
+Save-Time: 12/5/14 5:51 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]" | get-menu "New Model Element" 
+    | click
+with [get-window "Add new model element"] {
+    try { get-tree | select "Referee" } -catch { get-tree | select "bowling/Referee" }
+    get-button Finish | click
+}
+get-editor Referee | get-button -after [get-label "Date Of Birth"] | click
+get-window -from "XmlDateControlText$SelectionAdapterExtension.widgetSelected()" | get-date-time | set-value "2013/12/1 0:0:0"
+with [get-editor "Referee 2013-12-01" | get-editbox -after [get-label "Date Of Birth"]] {
+    set-text "15/4/2012"
+}
+get-window "Invalid Number" | get-button OK | click
+with [get-editor "Referee 2013-12-01" | get-editbox -after [get-label "Date Of Birth"]] {
+    set-text "Jan, 05,2012"
+}
+get-window "Invalid Number" | get-button OK | click
+with [get-editor "Referee 2013-12-01" | get-editbox -after [get-label "Date Of Birth"]] {
+    set-text "Jan 1, 2013"
+}
+get-editor "Referee 2013-01-01" | get-editbox -after [get-label "Date Of Birth"] | set-text "Jans 1, 2013"
+get-window "Invalid Number" | get-label "The Number you have entered is invalid. The value will be unset." 
+    | get-property caption | equals "The Number you have entered is invalid. The value will be unset." | verify-true
+get-window "Invalid Number" | get-button OK | click
+get-editor "Referee 2013-01-01" | get-editbox -after [get-label "Date Of Birth"] | get-property text 
+    | equals "Jan 1, 2013" | verify-true
+get-editor "Referee 2013-01-01" | get-editbox -after [get-label "Date Of Birth"] | set-text "5.3.1954"
+get-window "Invalid Number" | get-label "The Number you have entered is invalid. The value will be unset." 
+    | get-property caption | equals "The Number you have entered is invalid. The value will be unset." | verify-true
+get-window "Invalid Number" | get-button OK | click
+get-editor "Referee 2013-01-01" | get-editbox -after [get-label "Date Of Birth"] | get-property text 
+    | equals "Jan 1, 2013" | verify-true
+get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]" | get-menu Commit | click
+get-window Commit | get-button OK | click
+get-view "Model Explorer" | get-tree | select "TestProjectSecondCheckOut \\[trunk, Version 0\\]" | get-menu Update 
+    | click
+get-window Update | get-button OK | click
+get-editor "Referee 2013-01-01" | close
+get-view "Model Explorer" | get-tree | select "TestProjectSecondCheckOut \\[trunk, Version 1\\]/Referee 2013-01-01" 
+    | double-click
+get-editor "Referee 2013-01-01" | get-editbox -after [get-label "Date Of Birth"] | get-property text 
+    | equals "Jan 1, 2013" | verify-true
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

@@ -19,16 +19,62 @@
       <!-- @generated view -->
       <category
             id="org.eclipse.emf.ecp.view.ide"
-            name="EMF Client Platform"/>
+            name="EMF Forms"/>
       <wizard
             id="org.eclipse.emf.ecp.view.model.presentation.ViewModelWizardID"
             name="%_UI_ViewModelWizard_label"
             class="org.eclipse.emf.ecp.view.model.presentation.ViewModelWizard"
             category="org.eclipse.emf.ecp.view.ide"
-            icon="icons/full/obj16/ViewModelFile.gif">
+            icon="icons/full/obj16/view.png">
          <description>%_UI_ViewModelWizard_description</description>
          <selection class="org.eclipse.core.resources.IResource"/>
       </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="true"
+            locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu">
+         <menu
+               id="org.eclipse.emf.ecp.ui.e3.emfFormsMenu"
+               label="EMF Forms">
+            <command
+                  commandId="org.eclipse.emf.ecp.view.model.actions.CreateViewModel"
+                  icon="icons/full/obj16/view.png"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="false">
+                  <reference
+                        definitionId="org.eclipse.emf.ecp.view.model.editor.ecoreSelected">
+                  </reference>
+               </visibleWhen>
+            </command>
+         </menu>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="org.eclipse.emf.ecp.view.model.actions.CreateViewModel"
+            id="org.eclipse.emf.ecp.view.model.actions.CreateViewModel"
+            name="Create View Model">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.core.expressions.definitions">
+      <definition
+            id="org.eclipse.emf.ecp.view.model.editor.ecoreSelected">
+         <iterate
+               ifEmpty="false">
+            <adapt
+                  type="org.eclipse.core.resources.IFile">
+               <test
+                     property="org.eclipse.core.resources.name"
+                     value="*.ecore">
+               </test>
+            </adapt>
+         </iterate>
+      </definition>
    </extension>
 
 

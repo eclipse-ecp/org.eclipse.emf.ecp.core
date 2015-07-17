@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
@@ -37,17 +37,19 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VViewImpl#getRootEClass <em>Root EClass</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VViewImpl#getChildren <em>Children</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VViewImpl#getEcorePath <em>Ecore Path</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
+ * @since 1.2
  */
 public class VViewImpl extends VElementImpl implements VView {
 	/**
 	 * The cached value of the '{@link #getRootEClass() <em>Root EClass</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getRootEClass()
 	 * @generated
 	 * @ordered
@@ -58,7 +60,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	 * The cached value of the '{@link #getChildren() <em>Children</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getChildren()
 	 * @generated
 	 * @ordered
@@ -66,9 +68,33 @@ public class VViewImpl extends VElementImpl implements VView {
 	protected EList<VContainedElement> children;
 
 	/**
+	 * The default value of the '{@link #getEcorePath() <em>Ecore Path</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
+	 * @see #getEcorePath()
+	 * @generated
+	 * @ordered
+	 * @since 1.3
+	 */
+	protected static final String ECORE_PATH_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getEcorePath() <em>Ecore Path</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see #getEcorePath()
+	 * @generated
+	 * @ordered
+	 * @since 1.3
+	 */
+	protected String ecorePath = ECORE_PATH_EDEFAULT;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	protected VViewImpl() {
@@ -78,7 +104,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -89,19 +115,21 @@ public class VViewImpl extends VElementImpl implements VView {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public EClass getRootEClass() {
 		if (rootEClass != null && rootEClass.eIsProxy())
 		{
-			InternalEObject oldRootEClass = (InternalEObject) rootEClass;
+			final InternalEObject oldRootEClass = (InternalEObject) rootEClass;
 			rootEClass = (EClass) eResolveProxy(oldRootEClass);
 			if (rootEClass != oldRootEClass)
 			{
-				if (eNotificationRequired())
+				if (eNotificationRequired()) {
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, VViewPackage.VIEW__ROOT_ECLASS,
 						oldRootEClass, rootEClass));
+				}
 			}
 		}
 		return rootEClass;
@@ -110,7 +138,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public EClass basicGetRootEClass() {
@@ -120,23 +148,26 @@ public class VViewImpl extends VElementImpl implements VView {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void setRootEClass(EClass newRootEClass) {
-		EClass oldRootEClass = rootEClass;
+		final EClass oldRootEClass = rootEClass;
 		rootEClass = newRootEClass;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, VViewPackage.VIEW__ROOT_ECLASS, oldRootEClass,
 				rootEClass));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public EList<VContainedElement> getChildren() {
 		if (children == null)
 		{
@@ -149,7 +180,38 @@ public class VViewImpl extends VElementImpl implements VView {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
+	 * @generated
+	 * @since 1.3
+	 */
+	@Override
+	public String getEcorePath()
+	{
+		return ecorePath;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @since 1.3
+	 */
+	@Override
+	public void setEcorePath(String newEcorePath)
+	{
+		final String oldEcorePath = ecorePath;
+		ecorePath = newEcorePath;
+		if (eNotificationRequired()) {
+			eNotify(new ENotificationImpl(this, Notification.SET, VViewPackage.VIEW__ECORE_PATH, oldEcorePath,
+				ecorePath));
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
@@ -165,7 +227,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -173,11 +235,14 @@ public class VViewImpl extends VElementImpl implements VView {
 		switch (featureID)
 		{
 		case VViewPackage.VIEW__ROOT_ECLASS:
-			if (resolve)
+			if (resolve) {
 				return getRootEClass();
+			}
 			return basicGetRootEClass();
 		case VViewPackage.VIEW__CHILDREN:
 			return getChildren();
+		case VViewPackage.VIEW__ECORE_PATH:
+			return getEcorePath();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -185,7 +250,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -200,6 +265,9 @@ public class VViewImpl extends VElementImpl implements VView {
 			getChildren().clear();
 			getChildren().addAll((Collection<? extends VContainedElement>) newValue);
 			return;
+		case VViewPackage.VIEW__ECORE_PATH:
+			setEcorePath((String) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -207,7 +275,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -220,6 +288,9 @@ public class VViewImpl extends VElementImpl implements VView {
 		case VViewPackage.VIEW__CHILDREN:
 			getChildren().clear();
 			return;
+		case VViewPackage.VIEW__ECORE_PATH:
+			setEcorePath(ECORE_PATH_EDEFAULT);
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -227,7 +298,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -238,15 +309,38 @@ public class VViewImpl extends VElementImpl implements VView {
 			return rootEClass != null;
 		case VViewPackage.VIEW__CHILDREN:
 			return children != null && !children.isEmpty();
+		case VViewPackage.VIEW__ECORE_PATH:
+			return ECORE_PATH_EDEFAULT == null ? ecorePath != null : !ECORE_PATH_EDEFAULT.equals(ecorePath);
 		}
 		return super.eIsSet(featureID);
 	}
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public String toString()
+	{
+		if (eIsProxy()) {
+			return super.toString();
+		}
+
+		final StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (ecorePath: "); //$NON-NLS-1$
+		result.append(ecorePath);
+		result.append(')');
+		return result.toString();
+	}
+
+	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.model.VView#setAllContentsReadOnly()
 	 */
+	@Override
 	public void setAllContentsReadOnly() {
 		final TreeIterator<EObject> contents = super.eAllContents();
 		setReadonly(true);

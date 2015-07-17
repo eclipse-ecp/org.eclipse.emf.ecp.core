@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  *******************************************************************************/
@@ -19,12 +19,13 @@ import java.util.GregorianCalendar;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.internal.swt.util.DateUtil;
-import org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor;
+import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.jface.databinding.swt.WidgetValueProperty;
 import org.eclipse.jface.viewers.CellEditor;
@@ -37,30 +38,57 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.TraverseEvent;
 import org.eclipse.swt.events.TraverseListener;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DateTime;
 
+/**
+ * A cell editor for editing an {@link XMLGregorianCalendar}.
+ *
+ * @author Eugen Neufeld
+ *
+ */
 public class XmlDateCellEditor extends CellEditor implements ECPCellEditor {
 
 	private DateTime dateWidget;
 	private final DateFormat dateFormat = SimpleDateFormat.getDateInstance(DateFormat.MEDIUM);
 
+	/**
+	 * Default constructor.
+	 */
 	public XmlDateCellEditor() {
-		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * A constructor which takes only a parent.
+	 *
+	 * @param parent the {@link Composite} to use as a parent.
+	 */
 	public XmlDateCellEditor(Composite parent) {
 		super(parent);
 	}
 
+	/**
+	 * A constructor which takes the parent and the style.
+	 *
+	 * @param parent the {@link Composite} to use as a parent
+	 * @param style the Style to set
+	 */
 	public XmlDateCellEditor(Composite parent, int style) {
 		super(parent, style);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getValueProperty()
+	 */
+	@Override
 	public IValueProperty getValueProperty() {
 		return new WidgetValueProperty() {
 
+			@Override
 			public Object getValueType() {
 				return XMLGregorianCalendar.class;
 			}
@@ -87,10 +115,11 @@ public class XmlDateCellEditor extends CellEditor implements ECPCellEditor {
 
 	/**
 	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#instantiate(org.eclipse.emf.ecore.EStructuralFeature,
+	 *
+	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#instantiate(org.eclipse.emf.ecore.EStructuralFeature,
 	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
+	@Override
 	public void instantiate(EStructuralFeature feature, ViewModelContext viewModelContext) {
 
 	}
@@ -100,6 +129,8 @@ public class XmlDateCellEditor extends CellEditor implements ECPCellEditor {
 		dateWidget = new DateTime(parent, SWT.DATE | SWT.DROP_DOWN);
 		dateWidget.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_edit_cellEditor_xmlDate"); //$NON-NLS-1$
 		dateWidget.addKeyListener(new KeyAdapter() {
+			private static final long serialVersionUID = 1L;
+
 			// hook key pressed - see PR 14201
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -107,6 +138,8 @@ public class XmlDateCellEditor extends CellEditor implements ECPCellEditor {
 			}
 		});
 		dateWidget.addSelectionListener(new SelectionAdapter() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void widgetDefaultSelected(SelectionEvent event) {
 				applyEditorValueAndDeactivate();
@@ -115,6 +148,9 @@ public class XmlDateCellEditor extends CellEditor implements ECPCellEditor {
 		});
 
 		dateWidget.addTraverseListener(new TraverseListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
 			public void keyTraversed(TraverseEvent e) {
 				if (e.detail == SWT.TRAVERSE_ESCAPE || e.detail == SWT.TRAVERSE_RETURN) {
 					e.doit = false;
@@ -123,6 +159,8 @@ public class XmlDateCellEditor extends CellEditor implements ECPCellEditor {
 		});
 
 		dateWidget.addFocusListener(new FocusAdapter() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void focusLost(FocusEvent e) {
 				XmlDateCellEditor.this.focusLost();
@@ -198,10 +236,13 @@ public class XmlDateCellEditor extends CellEditor implements ECPCellEditor {
 		deactivate();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getFormatedString(java.lang.Object)
+	/**
+	 *
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getFormatedString(java.lang.Object)
 	 */
+	@Override
 	public String getFormatedString(Object value) {
 		final XMLGregorianCalendar cal = (XMLGregorianCalendar) value;
 		if (value == null) {
@@ -210,29 +251,68 @@ public class XmlDateCellEditor extends CellEditor implements ECPCellEditor {
 		return dateFormat.format(cal.toGregorianCalendar().getTime());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getColumnWidthWeight()
+	/**
+	 *
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getColumnWidthWeight()
 	 */
+	@Override
 	public int getColumnWidthWeight() {
 		return 75;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getTargetToModelStrategy()
+	/**
+	 *
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getTargetToModelStrategy(org.eclipse.core.databinding.DataBindingContext)
 	 */
-	public UpdateValueStrategy getTargetToModelStrategy() {
-		// TODO Auto-generated method stub
+	@Override
+	public UpdateValueStrategy getTargetToModelStrategy(DataBindingContext databindingContext) {
 		return null;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getModelToTargetStrategy()
+	/**
+	 *
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getModelToTargetStrategy(org.eclipse.core.databinding.DataBindingContext)
 	 */
-	public UpdateValueStrategy getModelToTargetStrategy() {
-		// TODO Auto-generated method stub
+	@Override
+	public UpdateValueStrategy getModelToTargetStrategy(DataBindingContext databindingContext) {
 		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#setEditable(boolean)
+	 */
+	@Override
+	public void setEditable(boolean editable) {
+		if (dateWidget != null) {
+			dateWidget.setEnabled(editable);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getImage(java.lang.Object)
+	 */
+	@Override
+	public Image getImage(Object value) {
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getMinWidth()
+	 */
+	@Override
+	public int getMinWidth() {
+		return 0;
 	}
 }

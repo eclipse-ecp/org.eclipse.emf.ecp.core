@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="model" nsURI="http://org/eclipse/emf/ecp/view/template/model"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="template" nsURI="http://org/eclipse/emf/ecp/view/template/model"
     nsPrefix="org.eclipse.emf.ecp.view.template.model">
   <eClassifiers xsi:type="ecore:EClass" name="ViewTemplate">
     <eStructuralFeatures xsi:type="ecore:EReference" name="controlValidationConfiguration"
         lowerBound="1" eType="#//ControlValidationTemplate" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="styles" upperBound="-1"
+        eType="#//Style" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="referencedEcores" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ControlValidationTemplate">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="okColorHEX" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -23,4 +27,12 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="cancelImageURL" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="cancelOverlayURL" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Style">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="selector" lowerBound="1"
+        eType="#//StyleSelector" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="properties" upperBound="-1"
+        eType="#//StyleProperty" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StyleProperty" abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="StyleSelector" abstract="true" interface="true"/>
 </ecore:EPackage>

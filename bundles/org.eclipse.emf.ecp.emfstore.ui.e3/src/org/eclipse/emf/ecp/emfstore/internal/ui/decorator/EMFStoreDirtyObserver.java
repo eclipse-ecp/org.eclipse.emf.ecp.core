@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.emfstore.internal.ui.decorator;
 
@@ -25,26 +25,28 @@ import org.eclipse.emf.emfstore.internal.common.model.ModelElementId;
 import org.eclipse.emf.emfstore.internal.common.model.Project;
 import org.eclipse.emf.emfstore.internal.server.model.versioning.operations.AbstractOperation;
 import org.eclipse.emf.emfstore.internal.server.model.versioning.operations.CreateDeleteOperation;
+import org.eclipse.emf.emfstore.server.ESCloseableIterable;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IDecoratorManager;
 import org.eclipse.ui.PlatformUI;
 
 /**
  * Project change observer that marks elements as dirty.
- * 
+ *
  * @author Tobias Verhoeven
  */
 public class EMFStoreDirtyObserver implements OperationObserver {
 
+	private static final String DIRTYDECORATORID = "org.eclipse.emf.ecp.emfstore.ui.decorators.EMFStoreDirtyDecorator"; //$NON-NLS-1$
 	private ProjectSpace projectSpace;
 	private InternalProject internalProject;
-	private Map<ModelElementId, Integer> modelElementIdToOperationCount = new HashMap<ModelElementId, Integer>();
+	private final Map<ModelElementId, Integer> modelElementIdToOperationCount = new HashMap<ModelElementId, Integer>();
 	private Set<EObject> lastAffected;
 	private int operations;
 
 	/**
 	 * Default constructor.
-	 * 
+	 *
 	 * @param projectSpace the ProjectSpace of the decorator
 	 * @param project the ecpproject of the decorator
 	 */
@@ -59,19 +61,23 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 	}
 
 	private void initCachedTree(ProjectSpace ps) {
-		for (AbstractOperation operation : ps.getOperations()) {
+		@SuppressWarnings("restriction")
+		final ESCloseableIterable<AbstractOperation> operationIterator = ps.getLocalChangePackage().operations();
+		for (final AbstractOperation operation : operationIterator.iterable()) {
 			operations++;
-			for (ModelElementId modelElementId : operation.getAllInvolvedModelElements()) {
-				EObject element = ps.getProject().getModelElement(modelElementId);
+			for (final ModelElementId modelElementId : operation.getAllInvolvedModelElements()) {
+				final EObject element = ps.getProject().getModelElement(modelElementId);
 				if (element != null) {
 					EMFStoreDirtyDecoratorCachedTree.getInstance(internalProject).addOperation(element);
 				}
 			}
 			removeDeletedElementsFromCachedTree(ps, operation);
 		}
+		operationIterator.close();
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void operationExecuted(AbstractOperation operation) {
 		operations++;
 		if (!projectSpace.isShared()) {
@@ -79,10 +85,10 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 		}
 
 		lastAffected = new HashSet<EObject>();
-		for (ModelElementId modelElementId : operation.getAllInvolvedModelElements()) {
-			Project project = projectSpace.getProject();
+		for (final ModelElementId modelElementId : operation.getAllInvolvedModelElements()) {
+			final Project project = projectSpace.getProject();
 
-			EObject element = project.getModelElement(modelElementId);
+			final EObject element = project.getModelElement(modelElementId);
 
 			if (element != null) {
 				lastAffected.add(element);
@@ -95,6 +101,7 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void operationUndone(AbstractOperation operation) {
 		operations--;
 		if (!projectSpace.isShared()) {
@@ -102,9 +109,9 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 		}
 		lastAffected = new HashSet<EObject>();
 
-		for (ModelElementId modelElementId : operation.getAllInvolvedModelElements()) {
-			Project project = projectSpace.getProject();
-			EObject element = project.get(modelElementId);
+		for (final ModelElementId modelElementId : operation.getAllInvolvedModelElements()) {
+			final Project project = projectSpace.getProject();
+			final EObject element = project.get(modelElementId);
 
 			if (element != null) {
 				lastAffected.add(element);
@@ -122,8 +129,9 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 		if (decoratorManager != null) {
 			Display.getDefault().syncExec(new Runnable() {
 
+				@Override
 				public void run() {
-					decoratorManager.update("org.eclipse.emf.ecp.emfstore.ui.decorators.EMFStoreDirtyDecorator");
+					decoratorManager.update(DIRTYDECORATORID);
 				}
 			});
 
@@ -136,7 +144,7 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 	 */
 	private void removeDeletedElementsFromCachedTree(ProjectSpace projectSpace, AbstractOperation operation) {
 		if (operation instanceof CreateDeleteOperation) {
-			CreateDeleteOperation cdo = (CreateDeleteOperation) operation;
+			final CreateDeleteOperation cdo = (CreateDeleteOperation) operation;
 
 			if (cdo.isDelete()) {
 
@@ -155,7 +163,7 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 	 */
 	private void initializeRestoredDeletedElement(AbstractOperation operation) {
 		if (operation instanceof CreateDeleteOperation) {
-			CreateDeleteOperation cdo = (CreateDeleteOperation) operation;
+			final CreateDeleteOperation cdo = (CreateDeleteOperation) operation;
 
 			if (cdo.isDelete()) {
 				lastAffected.addAll(EMFStoreDirtyDecoratorCachedTree.getInstance(internalProject).setOperationCount(
@@ -170,7 +178,7 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 
 	/**
 	 * The Collection of {@link EObject} that were affected during last operation.
-	 * 
+	 *
 	 * @return a {@link Set} of {@link EObject} affected or null if none
 	 */
 	public Set<EObject> getLastAffected() {
@@ -187,7 +195,7 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 
 	/**
 	 * Returns weather the observed projectSpac is dirty.
-	 * 
+	 *
 	 * @return true, if is dirty.
 	 */
 	public boolean isDirty() {

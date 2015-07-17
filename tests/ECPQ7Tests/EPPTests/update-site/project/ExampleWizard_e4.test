@@ -1,0 +1,30 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _ihvnUC3mEeSwhO5Nwx0hPg,_ih4KMC3mEeSwhO5Nwx0hPg
+Element-Name: ExampleWizard_e4
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _kXwGsC3mEeSwhO5Nwx0hPg
+Runtime-Version: 1.5.2.201408180747
+Save-Time: 9/29/14 4:17 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-view "Project Explorer" | get-tree | get-menu "New/Example..." | click
+with [get-window "New Example"] {
+    get-tree | select "EMF Forms/Make it happen: sample e4 application"
+    get-button "Next >" | click
+    get-button Finish | click
+}
+
+get-view "Project Explorer" | get-tree | select "org.eclipse.emf.ecp.makeithappen.application.sample.e4/Application.e4xmi" 
+    | select "org.eclipse.emf.ecp.makeithappen.application.sample.e4/makeithappen_e4.product" 
+    | select "org.eclipse.emf.ecp.makeithappen.model/model/task.ecore" 
+    | select "org.eclipse.emf.ecp.makeithappen.model/model/task.genmodel" 
+    | select "org.eclipse.emf.ecp.makeithappen.model.edit/META-INF/MANIFEST.MF" 
+    | select "org.eclipse.emf.ecp.makeithappen.model.viewmodel/viewmodels/User.view"
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.emf.ecp.license.feature"
       label="EMF Client Platform License"
-      version="1.1.1.qualifier"
+      version="1.7.0.qualifier"
       provider-name="Eclipse Modeling Project"
       image="eclipse_update_120.jpg">
 

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:history="http://www.eclipse.org/emf/edapt/history/0.3">
+  <releases date="2014-09-12T12:30:30.165+0200" label="140">
+    <changes xsi:type="history:CompositeChange">
+      <changes xsi:type="history:Create" element="compoundcontrol.ecore#/">
+        <changes xsi:type="history:Set" element="compoundcontrol.ecore#/" featureName="name"
+            dataValue="compoundcontrol"/>
+        <changes xsi:type="history:Set" element="compoundcontrol.ecore#/" featureName="nsURI"
+            dataValue="http://org/eclipse/emf/ecp/view/compoundcontrol/model"/>
+        <changes xsi:type="history:Set" element="compoundcontrol.ecore#/" featureName="nsPrefix"
+            dataValue="org.eclipse.emf.ecp.view.compoundcontrol.model"/>
+      </changes>
+      <changes xsi:type="history:Create" target="compoundcontrol.ecore#/" referenceName="eClassifiers"
+          element="compoundcontrol.ecore#//CompoundControl">
+        <changes xsi:type="history:Set" element="compoundcontrol.ecore#//CompoundControl"
+            featureName="name" dataValue="CompoundControl"/>
+        <changes xsi:type="history:Add" element="compoundcontrol.ecore#//CompoundControl"
+            featureName="eSuperTypes" referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//ContainedElement"/>
+      </changes>
+      <changes xsi:type="history:Create" target="compoundcontrol.ecore#//CompoundControl"
+          referenceName="eStructuralFeatures" element="compoundcontrol.ecore#//CompoundControl/controls">
+        <changes xsi:type="history:Set" element="compoundcontrol.ecore#//CompoundControl/controls"
+            featureName="name" dataValue="controls"/>
+        <changes xsi:type="history:Set" element="compoundcontrol.ecore#//CompoundControl/controls"
+            featureName="lowerBound" dataValue="1" oldDataValue="0"/>
+        <changes xsi:type="history:Set" element="compoundcontrol.ecore#//CompoundControl/controls"
+            featureName="upperBound" dataValue="-1" oldDataValue="1"/>
+        <changes xsi:type="history:Set" element="compoundcontrol.ecore#//CompoundControl/controls"
+            featureName="containment" dataValue="true" oldDataValue="false"/>
+        <changes xsi:type="history:Set" element="compoundcontrol.ecore#//CompoundControl/controls"
+            featureName="eType" referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//Control"/>
+      </changes>
+    </changes>
+  </releases>
+  <releases/>
+</history:History>

@@ -1,15 +1,15 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  * Johannes Faltermeier
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.validation.test.test.impl;
 
@@ -35,7 +35,7 @@ import org.eclipse.emf.ecp.validation.test.test.Writer;
  * <li>{@link org.eclipse.emf.ecp.validation.test.test.impl.BookImpl#getWriters <em>Writers</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class BookImpl extends EObjectImpl implements Book {
@@ -43,7 +43,7 @@ public class BookImpl extends EObjectImpl implements Book {
 	 * The default value of the '{@link #getTitle() <em>Title</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getTitle()
 	 * @generated
 	 * @ordered
@@ -54,7 +54,7 @@ public class BookImpl extends EObjectImpl implements Book {
 	 * The cached value of the '{@link #getTitle() <em>Title</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getTitle()
 	 * @generated
 	 * @ordered
@@ -65,7 +65,7 @@ public class BookImpl extends EObjectImpl implements Book {
 	 * The default value of the '{@link #getPages() <em>Pages</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getPages()
 	 * @generated
 	 * @ordered
@@ -76,7 +76,7 @@ public class BookImpl extends EObjectImpl implements Book {
 	 * The cached value of the '{@link #getPages() <em>Pages</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getPages()
 	 * @generated
 	 * @ordered
@@ -87,7 +87,7 @@ public class BookImpl extends EObjectImpl implements Book {
 	 * The cached value of the '{@link #getWriters() <em>Writers</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getWriters()
 	 * @generated
 	 * @ordered
@@ -97,7 +97,7 @@ public class BookImpl extends EObjectImpl implements Book {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected BookImpl() {
@@ -107,7 +107,7 @@ public class BookImpl extends EObjectImpl implements Book {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -118,9 +118,10 @@ public class BookImpl extends EObjectImpl implements Book {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public String getTitle() {
 		return title;
 	}
@@ -128,9 +129,10 @@ public class BookImpl extends EObjectImpl implements Book {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void setTitle(String newTitle) {
 		final String oldTitle = title;
 		title = newTitle;
@@ -142,9 +144,10 @@ public class BookImpl extends EObjectImpl implements Book {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public int getPages() {
 		return pages;
 	}
@@ -152,9 +155,10 @@ public class BookImpl extends EObjectImpl implements Book {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void setPages(int newPages) {
 		final int oldPages = pages;
 		pages = newPages;
@@ -166,9 +170,10 @@ public class BookImpl extends EObjectImpl implements Book {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public Writer getWriters() {
 		if (writers != null && writers.eIsProxy()) {
 			final InternalEObject oldWriters = (InternalEObject) writers;
@@ -186,7 +191,7 @@ public class BookImpl extends EObjectImpl implements Book {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public Writer basicGetWriters() {
@@ -196,7 +201,7 @@ public class BookImpl extends EObjectImpl implements Book {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public NotificationChain basicSetWriters(Writer newWriters, NotificationChain msgs) {
@@ -217,9 +222,10 @@ public class BookImpl extends EObjectImpl implements Book {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void setWriters(Writer newWriters) {
 		if (newWriters != writers) {
 			NotificationChain msgs = null;
@@ -242,7 +248,7 @@ public class BookImpl extends EObjectImpl implements Book {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -260,7 +266,7 @@ public class BookImpl extends EObjectImpl implements Book {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -275,7 +281,7 @@ public class BookImpl extends EObjectImpl implements Book {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -297,7 +303,7 @@ public class BookImpl extends EObjectImpl implements Book {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -319,7 +325,7 @@ public class BookImpl extends EObjectImpl implements Book {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -341,7 +347,7 @@ public class BookImpl extends EObjectImpl implements Book {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -360,7 +366,7 @@ public class BookImpl extends EObjectImpl implements Book {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override

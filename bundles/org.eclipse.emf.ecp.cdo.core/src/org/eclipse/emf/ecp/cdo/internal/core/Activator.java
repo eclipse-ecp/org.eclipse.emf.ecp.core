@@ -1,17 +1,18 @@
 /*******************************************************************************
  * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
  *******************************************************************************/
 package org.eclipse.emf.ecp.cdo.internal.core;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.runtime.CoreException;
@@ -28,10 +29,58 @@ import org.osgi.framework.BundleContext;
 
 /**
  * The activator class controls the plug-in life cycle.
- * 
+ *
  * @author Eike Stepper
  */
 public class Activator extends Plugin {
+	/**
+	 * @author Jonas
+	 *
+	 */
+	private final class CDOServerBrowserImpl extends CDOServerBrowser {
+		/**
+		 * @param repositories
+		 */
+		private CDOServerBrowserImpl(Map<String, InternalRepository> repositories) {
+			super(repositories);
+		}
+
+		@Override
+		protected Set<String> getRepositoryNames() {
+			final Set<String> names = new HashSet<String>();
+			for (final ECPProject project : ECPUtil.getECPProjectManager().getProjects()) {
+				if (project.getProvider().getName().equals(CDOProvider.NAME)) {
+					final CDOProjectData projectData = CDOProvider.getProjectData((InternalProject) project);
+					final InternalCDOWorkspace workspace = (InternalCDOWorkspace) projectData.getWorkspace();
+					if (workspace != null) {
+						final InternalRepository localRepository = workspace.getLocalRepository();
+						names.add(localRepository.getName());
+					}
+				}
+			}
+
+			return names;
+		}
+
+		@Override
+		protected InternalRepository getRepository(String name) {
+			for (final ECPProject project : ECPUtil.getECPProjectManager().getProjects()) {
+				if (project.getProvider().getName().equals(CDOProvider.NAME)) {
+					final CDOProjectData projectData = CDOProvider.getProjectData((InternalProject) project);
+					final InternalCDOWorkspace workspace = (InternalCDOWorkspace) projectData.getWorkspace();
+					if (workspace != null) {
+						final InternalRepository localRepository = workspace.getLocalRepository();
+						if (localRepository.getName().equals(name)) {
+							return localRepository;
+						}
+					}
+				}
+			}
+
+			return null;
+		}
+	}
+
 	/**
 	 * The PlugIn ID.
 	 */
@@ -47,47 +96,12 @@ public class Activator extends Plugin {
 		super.start(bundleContext);
 		instance = this;
 
-		serverBrowser = new CDOServerBrowser(null) {
-			@Override
-			protected Set<String> getRepositoryNames() {
-				Set<String> names = new HashSet<String>();
-				for (ECPProject project : ECPUtil.getECPProjectManager().getProjects()) {
-					if (project.getProvider().getName().equals(CDOProvider.NAME)) {
-						CDOProjectData projectData = CDOProvider.getProjectData((InternalProject) project);
-						InternalCDOWorkspace workspace = (InternalCDOWorkspace) projectData.getWorkspace();
-						if (workspace != null) {
-							InternalRepository localRepository = workspace.getLocalRepository();
-							names.add(localRepository.getName());
-						}
-					}
-				}
-
-				return names;
-			}
-
-			@Override
-			protected InternalRepository getRepository(String name) {
-				for (ECPProject project : ECPUtil.getECPProjectManager().getProjects()) {
-					if (project.getProvider().getName().equals(CDOProvider.NAME)) {
-						CDOProjectData projectData = CDOProvider.getProjectData((InternalProject) project);
-						InternalCDOWorkspace workspace = (InternalCDOWorkspace) projectData.getWorkspace();
-						if (workspace != null) {
-							InternalRepository localRepository = workspace.getLocalRepository();
-							if (localRepository.getName().equals(name)) {
-								return localRepository;
-							}
-						}
-					}
-				}
-
-				return null;
-			}
-		};
+		serverBrowser = new CDOServerBrowserImpl(null);
 		// TODO: Please check this. Added. because EMFCP fails on start up if this port is in use
 		try {
 			serverBrowser.setPort(7778);
 			serverBrowser.activate();
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			log(e.getMessage());
 			// TODO: Please check this. Added. because EMFCP fails on start up if this port is in use
 		}
@@ -109,7 +123,7 @@ public class Activator extends Plugin {
 	// END SUPRESS CATCH EXCEPTION
 	/**
 	 * Returns the shared instance.
-	 * 
+	 *
 	 * @return the shared instance
 	 */
 	public static Activator getInstance() {
@@ -118,7 +132,7 @@ public class Activator extends Plugin {
 
 	/**
 	 * Logs messages.
-	 * 
+	 *
 	 * @param message the message
 	 */
 	public static void log(String message) {
@@ -127,7 +141,7 @@ public class Activator extends Plugin {
 
 	/**
 	 * Logs {@link IStatus}.
-	 * 
+	 *
 	 * @param status the {@link IStatus}
 	 */
 	public static void log(IStatus status) {
@@ -136,25 +150,25 @@ public class Activator extends Plugin {
 
 	/**
 	 * Logs {@link Throwable}.
-	 * 
+	 *
 	 * @param t the {@link Throwable}
 	 * @return the message of the created status
 	 */
 	public static String log(Throwable t) {
-		IStatus status = getStatus(t);
+		final IStatus status = getStatus(t);
 		log(status);
 		return status.getMessage();
 	}
 
 	/**
 	 * Gets a {@link IStatus} for a throwable.
-	 * 
+	 *
 	 * @param t the {@link Throwable}
 	 * @return the created {@link IStatus}
 	 */
 	public static IStatus getStatus(Throwable t) {
 		if (t instanceof CoreException) {
-			CoreException coreException = (CoreException) t;
+			final CoreException coreException = (CoreException) t;
 			return coreException.getStatus();
 		}
 

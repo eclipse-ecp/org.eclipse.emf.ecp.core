@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<constraint-mappings
+        xmlns="http://jboss.org/xml/ns/javax/validation/mapping"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation=
+            "http://jboss.org/xml/ns/javax/validation/mapping validation-mapping-1.1.xsd"
+        >
+ 
+    <default-package>car.impl</default-package>
+ 
+    <bean class="CarImpl" ignore-annotations="true">
+        <field name="seatCount">
+            <constraint annotation="javax.validation.constraints.Min">
+                <element name="value">2</element>
+            </constraint>
+        </field>
+        <field name="licensePlate">
+            <constraint annotation="javax.validation.constraints.NotNull" />
+            <constraint annotation="javax.validation.constraints.Size">
+                <element name="min">2</element>
+                <element name="max">14</element>
+            </constraint>
+            <!-- 
+            <constraint annotation="com.eclipsesource.bean.customvalidation.LicensePlate" >
+            	<element name="startsWith">M-</element>
+            </constraint>
+            -->
+        </field>
+        <field name="manufacturer">
+            <constraint annotation="javax.validation.constraints.NotNull" />
+        </field>
+        <field name="driver">
+        	<valid/>
+        </field>
+    </bean>
+    
+    <bean class="DriverImpl" ignore-annotations="true">
+        <field name="age">
+            <constraint annotation="javax.validation.constraints.Min">
+                <element name="value">18</element>
+            </constraint>
+        </field>
+    </bean>
+    
+ 	<bean class="PersonImpl" ignore-annotations="true">
+        <field name="name">
+            <constraint annotation="javax.validation.constraints.NotNull" />
+        </field>
+        <field name="birthPlace">
+            <constraint annotation="javax.validation.constraints.NotNull" />
+        </field>
+		<field name="children">
+            <valid/>
+        </field>
+    </bean>
+</constraint-mappings>

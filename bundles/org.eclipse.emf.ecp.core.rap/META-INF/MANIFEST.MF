@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ECP Core RAP
+Bundle-SymbolicName: org.eclipse.emf.ecp.core.rap
+Bundle-Version: 1.7.0.qualifier
+Bundle-Activator: org.eclipse.emf.ecp.core.rap.Activator
+Export-Package: org.eclipse.emf.ecp.core.rap;version="1.7.0"
+Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
+ org.eclipse.emf.ecp.core;bundle-version="[1.5.0,2.0.0)"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Import-Package: org.eclipse.core.runtime;version="0.0.0",
+ org.eclipse.net4j.util.lifecycle;version="0.0.0",
+ org.eclipse.rap.rwt;version="0.0.0",
+ org.eclipse.rap.rwt.service;version="0.0.0",
+ org.eclipse.swt.widgets;version="0.0.0",
+ org.osgi.framework;version="0.0.0"
+Bundle-ActivationPolicy: lazy
+Bundle-Vendor: Eclipse Modeling Project

@@ -1,19 +1,21 @@
 /*******************************************************************************
  * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  *******************************************************************************/
 
 package org.eclipse.emf.ecp.internal.wizards;
 
-import org.eclipse.emf.ecp.internal.ui.composites.SelectModelElementCompositeImpl;
+import org.eclipse.emf.ecp.internal.ui.Messages;
+import org.eclipse.emf.ecp.spi.common.ui.ECPWizard;
+import org.eclipse.emf.ecp.spi.common.ui.composites.SelectModelElementCompositeImpl;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;
 
@@ -37,19 +39,20 @@ public class AddReferenceModelElementWizard extends ECPWizard<SelectModelElement
 	@Override
 	public void addPages() {
 		super.addPages();
-		WizardPage page = new WizardPage("AddReferencePage") {
+		final WizardPage page = new WizardPage("AddReferencePage") { //$NON-NLS-1$
 
+			@Override
 			public void createControl(Composite parent) {
-				Composite composite = getCompositeProvider().createUI(parent);
+				final Composite composite = getCompositeProvider().createUI(parent);
 
 				setPageComplete(true);
 				setControl(composite);
 			}
 		};
 		addPage(page);
-		page.setTitle("Reference to set");
-		page.setDescription("Select the EObject to set as the reference.");
-		setWindowTitle("Add Reference");
+		page.setTitle(Messages.AddReferenceModelElementWizard_ReferenceToSet);
+		page.setDescription(Messages.AddReferenceModelElementWizard_SelectEObjectToReference);
+		setWindowTitle(Messages.AddReferenceModelElementWizard_AddReference);
 	}
 
 }

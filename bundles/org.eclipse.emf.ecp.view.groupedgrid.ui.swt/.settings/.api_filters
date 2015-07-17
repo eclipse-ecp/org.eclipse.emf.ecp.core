@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.ecp.view.groupedgrid.ui.swt" version="2">
+    <resource path="META-INF/MANIFEST.MF">
+        <filter comment="This is SPI" id="923795461">
+            <message_arguments>
+                <message_argument value="1.3.0"/>
+                <message_argument value="1.2.1"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.groupedgrid.swt.SWTControlRenderer">
+        <filter comment="This is SPI" id="305324134">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.groupedgrid.swt.SWTControlRenderer"/>
+                <message_argument value="org.eclipse.emf.ecp.view.groupedgrid.ui.swt_1.3.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/groupedgrid/swt/GroupedGridSWTRenderer.java" type="org.eclipse.emf.ecp.view.spi.groupedgrid.swt.GroupedGridSWTRenderer">
+        <filter comment="This is SPI" id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.groupedgrid.swt.GroupedGridSWTRenderer"/>
+                <message_argument value="INSTANCE"/>
+            </message_arguments>
+        </filter>
+        <filter comment="This is SPI" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.groupedgrid.swt.GroupedGridSWTRenderer"/>
+                <message_argument value="renderModel(Composite, VGroupedGrid, ViewModelContext)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

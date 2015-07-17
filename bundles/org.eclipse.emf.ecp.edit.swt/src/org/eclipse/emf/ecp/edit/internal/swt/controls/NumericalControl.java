@@ -1,15 +1,15 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  * Edgar Mueller - refactored control to respect locale settings
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
@@ -22,8 +22,9 @@ import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.IValueChangeListener;
 import org.eclipse.core.databinding.observable.value.ValueChangeEvent;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
-import org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor;
+import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.edit.command.SetCommand;
+import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -33,10 +34,11 @@ import org.eclipse.swt.widgets.Text;
 
 /**
  * This class is used as a common class for all number controls.
- * 
+ *
  * @author Eugen Neufeld
  * @author emueller
  */
+@Deprecated
 public class NumericalControl extends AbstractTextControl {
 
 	@Override
@@ -59,7 +61,8 @@ public class NumericalControl extends AbstractTextControl {
 	 */
 	@Override
 	protected String getUnsetLabelText() {
-		return ControlMessages.NumericalControl_NoNumberClickToSetNumber;
+		return LocalizationServiceHelper.getString(getClass(),
+			DepricatedControlMessageKeys.NumericalControl_NoNumberClickToSetNumber);
 	}
 
 	/*
@@ -68,7 +71,8 @@ public class NumericalControl extends AbstractTextControl {
 	 */
 	@Override
 	protected String getUnsetButtonTooltip() {
-		return ControlMessages.NumericalControl_UnsetNumber;
+		return LocalizationServiceHelper.getString(getClass(),
+			DepricatedControlMessageKeys.NumericalControl_UnsetNumber);
 	}
 
 	@Override
@@ -90,10 +94,13 @@ public class NumericalControl extends AbstractTextControl {
 		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(), targetToModelStrategy,
 			modelToTargetStrategy);
 
+		createTooltipBinding(targetToModelStrategy, modelToTargetStrategy);
+
 		if (isEmbedded()) {
 			// focus out is not fired if control is embedded;
 			// use value change listener to get same behavior for control
 			value.addValueChangeListener(new IValueChangeListener() {
+				@Override
 				public void handleValueChange(ValueChangeEvent event) {
 					final Object newValue = event.diff.getNewValue();
 					final DecimalFormat format = NumericalHelper.setupFormat(getLocale(),
@@ -119,9 +126,11 @@ public class NumericalControl extends AbstractTextControl {
 	private String getFormatText() {
 
 		if (NumericalHelper.isInteger(getInstanceClass())) {
-			return ControlMessages.NumericalControl_FormatNumerical;
+			return LocalizationServiceHelper.getString(getClass(),
+				DepricatedControlMessageKeys.NumericalControl_FormatNumerical);
 		} else if (NumericalHelper.isDouble(getInstanceClass())) {
-			return ControlMessages.NumericalControl_FormatNumericalDecimal;
+			return LocalizationServiceHelper.getString(getClass(),
+				DepricatedControlMessageKeys.NumericalControl_FormatNumericalDecimal);
 		}
 
 		return ""; //$NON-NLS-1$
@@ -136,7 +145,7 @@ public class NumericalControl extends AbstractTextControl {
 		@Override
 		public Object convertValue(Object value) {
 			if (value == null) {
-				return "";
+				return ""; //$NON-NLS-1$
 			}
 			final DecimalFormat format = NumericalHelper.setupFormat(getLocale(),
 				getInstanceClass());
@@ -236,8 +245,10 @@ public class NumericalControl extends AbstractTextControl {
 			final Object result = getModelValue().getValue();
 
 			final MessageDialog messageDialog = new MessageDialog(getText().getShell(),
-				ControlMessages.NumericalControl_InvalidNumber, null,
-				ControlMessages.NumericalControl_InvalidNumberWillBeUnset, MessageDialog.ERROR,
+				LocalizationServiceHelper.getString(getClass(),
+					DepricatedControlMessageKeys.NumericalControl_InvalidNumber), null,
+				LocalizationServiceHelper.getString(getClass(),
+					DepricatedControlMessageKeys.NumericalControl_InvalidNumberWillBeUnset), MessageDialog.ERROR,
 				new String[] { JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
 
 			new ECPDialogExecutor(messageDialog) {

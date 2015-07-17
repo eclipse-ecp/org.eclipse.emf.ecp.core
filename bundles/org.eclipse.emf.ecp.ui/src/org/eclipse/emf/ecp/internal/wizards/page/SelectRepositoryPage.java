@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  *******************************************************************************/
 
 package org.eclipse.emf.ecp.internal.wizards.page;
@@ -37,7 +37,7 @@ public class SelectRepositoryPage extends WizardPage {
 
 	/**
 	 * A WizardPage for selecting a repository.
-	 * 
+	 *
 	 * @param pageName the name of the wizard page, needed due to the {@link WizardPage} constructor
 	 */
 	public SelectRepositoryPage(String pageName) {
@@ -47,13 +47,14 @@ public class SelectRepositoryPage extends WizardPage {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void createControl(Composite parent) {
-		Composite container = new Composite(parent, SWT.NULL);
+		final Composite container = new Composite(parent, SWT.NULL);
 		container.setLayout(new GridLayout(1, true));
 
-		RepositoriesContentProvider contentProvider = new RepositoriesContentProvider(
+		final RepositoriesContentProvider contentProvider = new RepositoriesContentProvider(
 			((ShareWizard) getWizard()).getProvider());
-		TableViewer viewer = new TableViewer(container, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
+		final TableViewer viewer = new TableViewer(container, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		viewer.setContentProvider(contentProvider);
 		viewer.setLabelProvider(new RepositoriesLabelProvider(contentProvider));
 		viewer.setSorter(new ViewerSorter());
@@ -62,8 +63,9 @@ public class SelectRepositoryPage extends WizardPage {
 
 		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
 
+			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
-				ECPRepository ecpRepository = (ECPRepository) ((IStructuredSelection) event.getSelection())
+				final ECPRepository ecpRepository = (ECPRepository) ((IStructuredSelection) event.getSelection())
 					.getFirstElement();
 				((ShareWizard) getWizard()).setSelectedRepository(ecpRepository);
 				setPageComplete(true);

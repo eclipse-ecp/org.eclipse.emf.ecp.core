@@ -3,4 +3,5 @@
 <plugin>
    <extension-point id="viewModelProviders" name="View Model Providers" schema="schema/viewModelProviders.exsd"/>
    <extension-point id="renderingConfiguration" name="Rendering Configuration" schema="schema/renderingConfiguration.exsd"/>
+   <extension-point id="tooltipModifier" name="ECP Tooltip Modifier" schema="schema/tooltipModifier.exsd"/>
 </plugin>

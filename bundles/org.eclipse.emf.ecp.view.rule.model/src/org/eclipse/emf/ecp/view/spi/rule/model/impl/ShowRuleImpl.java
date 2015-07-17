@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich GmbH - initial API and implementation
  ******************************************************************************/
@@ -20,14 +20,16 @@ import org.eclipse.emf.ecp.view.spi.rule.model.ShowRule;
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Show Rule</b></em>'.
- * <!-- end-user-doc -->
- * <p>
- * The following features are implemented:
- * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.ShowRuleImpl#isHide <em>Hide</em>}</li>
- * </ul>
- * </p>
- * 
+ *
+ * @since 1.2
+ *        <!-- end-user-doc -->
+ *        <p>
+ *        The following features are implemented:
+ *        <ul>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.ShowRuleImpl#isHide <em>Hide</em>}</li>
+ *        </ul>
+ *        </p>
+ *
  * @generated
  */
 public class ShowRuleImpl extends RuleImpl implements ShowRule {
@@ -35,7 +37,7 @@ public class ShowRuleImpl extends RuleImpl implements ShowRule {
 	 * The default value of the '{@link #isHide() <em>Hide</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #isHide()
 	 * @generated
 	 * @ordered
@@ -46,7 +48,7 @@ public class ShowRuleImpl extends RuleImpl implements ShowRule {
 	 * The cached value of the '{@link #isHide() <em>Hide</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #isHide()
 	 * @generated
 	 * @ordered
@@ -56,7 +58,7 @@ public class ShowRuleImpl extends RuleImpl implements ShowRule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected ShowRuleImpl() {
@@ -66,7 +68,7 @@ public class ShowRuleImpl extends RuleImpl implements ShowRule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -77,9 +79,10 @@ public class ShowRuleImpl extends RuleImpl implements ShowRule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public boolean isHide() {
 		return hide;
 	}
@@ -87,20 +90,22 @@ public class ShowRuleImpl extends RuleImpl implements ShowRule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void setHide(boolean newHide) {
-		boolean oldHide = hide;
+		final boolean oldHide = hide;
 		hide = newHide;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, RulePackage.SHOW_RULE__HIDE, oldHide, hide));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -116,7 +121,7 @@ public class ShowRuleImpl extends RuleImpl implements ShowRule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -133,7 +138,7 @@ public class ShowRuleImpl extends RuleImpl implements ShowRule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -150,7 +155,7 @@ public class ShowRuleImpl extends RuleImpl implements ShowRule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -166,15 +171,16 @@ public class ShowRuleImpl extends RuleImpl implements ShowRule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy())
+		if (eIsProxy()) {
 			return super.toString();
+		}
 
-		StringBuffer result = new StringBuffer(super.toString());
+		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (hide: "); //$NON-NLS-1$
 		result.append(hide);
 		result.append(')');

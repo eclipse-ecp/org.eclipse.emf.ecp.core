@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
@@ -20,9 +20,9 @@ import org.eclipse.swt.widgets.Shell;
 
 /**
  * This is the EMFStore ShowHistory Helper delegating to the EMFStore {@link UIShowHistoryController}.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public final class ShowHistoryViewHelper {
 	private ShowHistoryViewHelper() {
@@ -30,7 +30,7 @@ public final class ShowHistoryViewHelper {
 
 	/**
 	 * Shows an HistoryView based on an {@link Object}. Delegates to {@link UIShowHistoryController}.
-	 * 
+	 *
 	 * @param object the {@link Object}
 	 * @param shell the {@link Shell}
 	 */

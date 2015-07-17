@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde version="3.8"?><target name="ECP RAP" sequenceNumber="251">
+<locations>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
+<unit id="org.h2" version="0.0.0"/>
+<unit id="org.h2.source" version="0.0.0"/>
+<unit id="org.apache.log4j.source" version="0.0.0"/>
+<unit id="org.apache.log4j" version="0.0.0"/>
+<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20140525021250/repository/"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.equinox.sdk.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.platform.ide" version="0.0.0"/>
+<repository location="http://download.eclipse.org/eclipse/updates/4.5"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.emf.cdo.sdk.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.emf.rap.sdk.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.emf.sdk.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.emf.transaction.sdk.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.emf.validation.sdk.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.gef.sdk.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.graphiti.export.feature.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.graphiti.feature.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.jdt.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.net4j.sdk.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.rap.equinox.target.feature.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.rap.feature.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.rap.sdk.feature.feature.group" version="0.0.0"/>
+<repository location="http://download.eclipse.org/releases/mars/"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.emf.emfstore.client.transaction.feature.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.emf.emfstore.client.feature.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.emf.emfstore.common.feature.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.emf.emfstore.server.feature.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.emf.emfstore.example.feature.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.emf.emfstore.client.ui.feature.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.emf.emfstore.ecore.feature.feature.group" version="0.0.0"/>
+<repository location="http://download.eclipse.org/emfstore/releases_15"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.swtbot.eclipse.gef.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.swtbot.eclipse.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.swtbot.forms.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.swtbot.feature.group" version="0.0.0"/>
+<repository location="http://download.eclipse.org/technology/swtbot/releases/latest/"/>
+</location>
+</locations>
+</target>

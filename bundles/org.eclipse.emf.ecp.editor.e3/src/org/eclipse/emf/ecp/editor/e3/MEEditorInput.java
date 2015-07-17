@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  *******************************************************************************/
 
 package org.eclipse.emf.ecp.editor.e3;
@@ -21,7 +21,7 @@ import org.eclipse.ui.IPersistableElement;
 
 /**
  * The {@link IEditorInput} for the {@link org.eclipse.emf.ecp.editor.internal.e3.MEEditor MEEditor}.
- * 
+ *
  * @author helming
  * @author shterev
  * @author naughton
@@ -33,7 +33,7 @@ public class MEEditorInput implements IEditorInput {
 
 	/**
 	 * Constructor to add a probleFeature.
-	 * 
+	 *
 	 * @param context context of the model element
 	 * @param problemFeature the problem feature
 	 */
@@ -44,7 +44,7 @@ public class MEEditorInput implements IEditorInput {
 
 	/**
 	 * Default constructor.
-	 * 
+	 *
 	 * @param context context of the modelelement
 	 */
 	public MEEditorInput(ECPEditorContext context) {
@@ -55,6 +55,7 @@ public class MEEditorInput implements IEditorInput {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public boolean exists() {
 		// TODO Auto-generated method stub
 		return false;
@@ -63,6 +64,7 @@ public class MEEditorInput implements IEditorInput {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public IPersistableElement getPersistable() {
 		// TODO Auto-generated method stub
 		return null;
@@ -84,7 +86,7 @@ public class MEEditorInput implements IEditorInput {
 
 	/**
 	 * Custom equals() for this class.
-	 * 
+	 *
 	 * @param obj the compared object.
 	 * @return the boolean state. {@inheritDoc}
 	 */
@@ -92,6 +94,12 @@ public class MEEditorInput implements IEditorInput {
 	public boolean equals(Object obj) {
 		if (obj instanceof MEEditorInput) {
 			final MEEditorInput other = (MEEditorInput) obj;
+			if (modelElementContext == other.modelElementContext) {
+				return true;
+			}
+			if (other.modelElementContext == null) {
+				return false;
+			}
 			final boolean ret = modelElementContext.getDomainObject().equals(
 				other.modelElementContext.getDomainObject());
 			return ret;
@@ -110,25 +118,27 @@ public class MEEditorInput implements IEditorInput {
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public Object getAdapter(@SuppressWarnings("rawtypes") Class clazz) {
 
-		if (clazz.equals(EObject.class)) {
+		if (clazz.equals(EObject.class) && modelElementContext != null) {
 			return modelElementContext.getDomainObject();
 		}
 		return null;
 	}
 
 	/**
-	 * Returns the {@link ECPModelelemenContext}.
-	 * 
-	 * @return {@link ECPControlContext}
+	 * Returns the {@link ECPEditorContext}.
+	 *
+	 * @return {@link ECPEditorContext}
 	 */
 	public ECPEditorContext getModelElementContext() {
 		return modelElementContext;
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Disposes the input.
 	 */
 	public void dispose() {
 		modelElementContext.dispose();
@@ -138,6 +148,7 @@ public class MEEditorInput implements IEditorInput {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public ImageDescriptor getImageDescriptor() {
 		// TODO Auto-generated method stub
 		return null;
@@ -146,13 +157,18 @@ public class MEEditorInput implements IEditorInput {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public String getName() {
+		if (modelElementContext == null) {
+			return "Error"; //$NON-NLS-1$
+		}
 		return modelElementContext.getDomainObject().eClass().getName();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public String getToolTipText() {
 		return getName();
 	}

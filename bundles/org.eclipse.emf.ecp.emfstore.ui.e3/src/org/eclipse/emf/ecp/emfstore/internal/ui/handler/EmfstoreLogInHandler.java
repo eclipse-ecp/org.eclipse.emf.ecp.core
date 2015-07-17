@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -20,12 +20,13 @@ import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
  * A login handler delegating the login to {@link EMFStoreLogInHelper}.
- * 
+ *
  * @author Eugen Neufeld
  */
 public class EmfstoreLogInHandler extends AbstractHandler {
 
 	/** {@inheritDoc} */
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final InternalRepository ecpRepository = (InternalRepository) ((IStructuredSelection) HandlerUtil
 			.getActiveMenuSelection(event)).getFirstElement();

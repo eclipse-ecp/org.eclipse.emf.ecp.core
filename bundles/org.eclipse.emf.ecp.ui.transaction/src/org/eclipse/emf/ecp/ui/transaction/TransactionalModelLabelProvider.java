@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Edgar Mueller - initial API and implementation
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.ui.transaction;
 
@@ -24,7 +24,7 @@ import org.eclipse.jface.viewers.LabelProviderChangedEvent;
 
 /**
  * Label provider that wraps its {@code getText} calls in a transaction.
- * 
+ *
  * @author emueller
  */
 public class TransactionalModelLabelProvider extends ECPLabelProvider implements ECPProjectOpenClosedObserver {
@@ -59,6 +59,7 @@ public class TransactionalModelLabelProvider extends ECPLabelProvider implements
 		try {
 			final String result = (String) transactionalEditingDomain
 				.runExclusive(new RunnableWithResult.Impl<String>() {
+					@Override
 					public void run() {
 						setResult(TransactionalModelLabelProvider.super.getText(element));
 					}
@@ -70,6 +71,7 @@ public class TransactionalModelLabelProvider extends ECPLabelProvider implements
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void projectChanged(final ECPProject project, boolean opened) {
 		fireEvent(new LabelProviderChangedEvent(this, project));
 	}

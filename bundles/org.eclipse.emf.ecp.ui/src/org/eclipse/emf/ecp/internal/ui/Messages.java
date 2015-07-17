@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  *******************************************************************************/
 
 package org.eclipse.emf.ecp.internal.ui;
@@ -21,10 +21,15 @@ import org.eclipse.osgi.util.NLS;
  */
 public final class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.eclipse.emf.ecp.ui.messages"; //$NON-NLS-1$
-	public static String AbstractModelElementHelper_FilterLabel;
-	public static String AbstractModelElementHelper_FilterText;
+
 	public static String ActionHelper_ErrorMessage_ElementDeleted;
 	public static String ActionHelper_ErrorTitle_ElementDeleted;
+	public static String AddReferenceModelElementWizard_AddReference;
+
+	public static String AddReferenceModelElementWizard_ReferenceToSet;
+
+	public static String AddReferenceModelElementWizard_SelectEObjectToReference;
+
 	public static String AddRepositoryComposite_RepositoryDescription;
 	public static String AddRepositoryComposite_RepositoryLabel;
 	public static String AddRepositoryComposite_RepositoryName;
@@ -33,8 +38,7 @@ public final class Messages extends NLS {
 	public static String AddRepositoryPage_PageTitle_AddRepository;
 	public static String AddRepositoryWizard_PageTitle_AddReposditory;
 	public static String AddRepositoryWizard_Title_AddRepository;
-	public static String CheckedModelElementHelper_DeselectAllLabel;
-	public static String CheckedModelElementHelper_SelectAllLabel;
+
 	public static String CheckoutProjectComposite_ProjectName;
 	public static String CheckoutProjectWizard_PageMessage_CheckoutFrom;
 	public static String CheckoutProjectWizard_PageMessage_CheckoutProject;
@@ -44,6 +48,10 @@ public final class Messages extends NLS {
 	public static String CreateProjectWizard_PageMessage_SetProjectName;
 	public static String CreateProjectWizard_PageMessage_SelectProviderAndSetName;
 	public static String CreateProjectWizard_PageTitle_CreateProject;
+	public static String DefaultUIProvider_Calculating;
+
+	public static String DefaultUIProvider_CantFindInPackageRegistry;
+
 	public static String DeleteDialog_DialogTitle;
 	public static String DeleteDialog_Message_AreYouSure;
 	public static String DeleteDialog_Message_element;

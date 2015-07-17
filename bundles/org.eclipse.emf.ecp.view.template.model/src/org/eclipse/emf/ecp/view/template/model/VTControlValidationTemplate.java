@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
  */
@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Control Validation Template</b></em>'.
  * <!-- end-user-doc -->
- * 
+ *
  * <p>
  * The following features are supported:
  * <ul>
@@ -51,7 +51,7 @@ import org.eclipse.emf.ecore.EObject;
  * URL</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.ecp.view.template.model.VTTemplatePackage#getControlValidationTemplate()
  * @model
  * @generated
@@ -66,7 +66,7 @@ public interface VTControlValidationTemplate extends EObject
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Ok Color HEX</em>' attribute.
 	 * @see #setOkColorHEX(String)
 	 * @see org.eclipse.emf.ecp.view.template.model.VTTemplatePackage#getControlValidationTemplate_OkColorHEX()
@@ -80,7 +80,7 @@ public interface VTControlValidationTemplate extends EObject
 	 * <em>Ok Color HEX</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Ok Color HEX</em>' attribute.
 	 * @see #getOkColorHEX()
 	 * @generated
@@ -95,7 +95,7 @@ public interface VTControlValidationTemplate extends EObject
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Ok Image URL</em>' attribute.
 	 * @see #setOkImageURL(String)
 	 * @see org.eclipse.emf.ecp.view.template.model.VTTemplatePackage#getControlValidationTemplate_OkImageURL()
@@ -109,7 +109,7 @@ public interface VTControlValidationTemplate extends EObject
 	 * <em>Ok Image URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Ok Image URL</em>' attribute.
 	 * @see #getOkImageURL()
 	 * @generated
@@ -124,7 +124,7 @@ public interface VTControlValidationTemplate extends EObject
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Ok Overlay URL</em>' attribute.
 	 * @see #setOkOverlayURL(String)
 	 * @see org.eclipse.emf.ecp.view.template.model.VTTemplatePackage#getControlValidationTemplate_OkOverlayURL()
@@ -139,7 +139,7 @@ public interface VTControlValidationTemplate extends EObject
 	 * <em>Ok Overlay URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Ok Overlay URL</em>' attribute.
 	 * @see #getOkOverlayURL()
 	 * @generated
@@ -154,7 +154,7 @@ public interface VTControlValidationTemplate extends EObject
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Info Color HEX</em>' attribute.
 	 * @see #setInfoColorHEX(String)
 	 * @see org.eclipse.emf.ecp.view.template.model.VTTemplatePackage#getControlValidationTemplate_InfoColorHEX()
@@ -169,7 +169,7 @@ public interface VTControlValidationTemplate extends EObject
 	 * <em>Info Color HEX</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Info Color HEX</em>' attribute.
 	 * @see #getInfoColorHEX()
 	 * @generated
@@ -184,7 +184,7 @@ public interface VTControlValidationTemplate extends EObject
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Info Image URL</em>' attribute.
 	 * @see #setInfoImageURL(String)
 	 * @see org.eclipse.emf.ecp.view.template.model.VTTemplatePackage#getControlValidationTemplate_InfoImageURL()
@@ -199,7 +199,7 @@ public interface VTControlValidationTemplate extends EObject
 	 * <em>Info Image URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Info Image URL</em>' attribute.
 	 * @see #getInfoImageURL()
 	 * @generated
@@ -214,7 +214,7 @@ public interface VTControlValidationTemplate extends EObject
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Info Overlay URL</em>' attribute.
 	 * @see #setInfoOverlayURL(String)
 	 * @see org.eclipse.emf.ecp.view.template.model.VTTemplatePackage#getControlValidationTemplate_InfoOverlayURL()
@@ -229,7 +229,7 @@ public interface VTControlValidationTemplate extends EObject
 	 * <em>Info Overlay URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Info Overlay URL</em>' attribute.
 	 * @see #getInfoOverlayURL()
 	 * @generated
@@ -244,7 +244,7 @@ public interface VTControlValidationTemplate extends EObject
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Warning Color HEX</em>' attribute.
 	 * @see #setWarningColorHEX(String)
 	 * @see org.eclipse.emf.ecp.view.template.model.VTTemplatePackage#getControlValidationTemplate_WarningColorHEX()
@@ -259,7 +259,7 @@ public interface VTControlValidationTemplate extends EObject
 	 * <em>Warning Color HEX</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Warning Color HEX</em>' attribute.
 	 * @see #getWarningColorHEX()
 	 * @generated
@@ -274,7 +274,7 @@ public interface VTControlValidationTemplate extends EObject
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Warning Image URL</em>' attribute.
 	 * @see #setWarningImageURL(String)
 	 * @see org.eclipse.emf.ecp.view.template.model.VTTemplatePackage#getControlValidationTemplate_WarningImageURL()
@@ -289,7 +289,7 @@ public interface VTControlValidationTemplate extends EObject
 	 * <em>Warning Image URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Warning Image URL</em>' attribute.
 	 * @see #getWarningImageURL()
 	 * @generated
@@ -304,7 +304,7 @@ public interface VTControlValidationTemplate extends EObject
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Warning Overlay URL</em>' attribute.
 	 * @see #setWarningOverlayURL(String)
 	 * @see org.eclipse.emf.ecp.view.template.model.VTTemplatePackage#getControlValidationTemplate_WarningOverlayURL()
@@ -319,7 +319,7 @@ public interface VTControlValidationTemplate extends EObject
 	 * <em>Warning Overlay URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Warning Overlay URL</em>' attribute.
 	 * @see #getWarningOverlayURL()
 	 * @generated
@@ -334,7 +334,7 @@ public interface VTControlValidationTemplate extends EObject
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Error Color HEX</em>' attribute.
 	 * @see #setErrorColorHEX(String)
 	 * @see org.eclipse.emf.ecp.view.template.model.VTTemplatePackage#getControlValidationTemplate_ErrorColorHEX()
@@ -349,7 +349,7 @@ public interface VTControlValidationTemplate extends EObject
 	 * <em>Error Color HEX</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Error Color HEX</em>' attribute.
 	 * @see #getErrorColorHEX()
 	 * @generated
@@ -364,7 +364,7 @@ public interface VTControlValidationTemplate extends EObject
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Error Image URL</em>' attribute.
 	 * @see #setErrorImageURL(String)
 	 * @see org.eclipse.emf.ecp.view.template.model.VTTemplatePackage#getControlValidationTemplate_ErrorImageURL()
@@ -379,7 +379,7 @@ public interface VTControlValidationTemplate extends EObject
 	 * <em>Error Image URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Error Image URL</em>' attribute.
 	 * @see #getErrorImageURL()
 	 * @generated
@@ -394,7 +394,7 @@ public interface VTControlValidationTemplate extends EObject
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Error Overlay URL</em>' attribute.
 	 * @see #setErrorOverlayURL(String)
 	 * @see org.eclipse.emf.ecp.view.template.model.VTTemplatePackage#getControlValidationTemplate_ErrorOverlayURL()
@@ -409,7 +409,7 @@ public interface VTControlValidationTemplate extends EObject
 	 * <em>Error Overlay URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Error Overlay URL</em>' attribute.
 	 * @see #getErrorOverlayURL()
 	 * @generated
@@ -424,7 +424,7 @@ public interface VTControlValidationTemplate extends EObject
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Cancel Color HEX</em>' attribute.
 	 * @see #setCancelColorHEX(String)
 	 * @see org.eclipse.emf.ecp.view.template.model.VTTemplatePackage#getControlValidationTemplate_CancelColorHEX()
@@ -439,7 +439,7 @@ public interface VTControlValidationTemplate extends EObject
 	 * <em>Cancel Color HEX</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Cancel Color HEX</em>' attribute.
 	 * @see #getCancelColorHEX()
 	 * @generated
@@ -454,7 +454,7 @@ public interface VTControlValidationTemplate extends EObject
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Cancel Image URL</em>' attribute.
 	 * @see #setCancelImageURL(String)
 	 * @see org.eclipse.emf.ecp.view.template.model.VTTemplatePackage#getControlValidationTemplate_CancelImageURL()
@@ -469,7 +469,7 @@ public interface VTControlValidationTemplate extends EObject
 	 * <em>Cancel Image URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Cancel Image URL</em>' attribute.
 	 * @see #getCancelImageURL()
 	 * @generated
@@ -484,7 +484,7 @@ public interface VTControlValidationTemplate extends EObject
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Cancel Overlay URL</em>' attribute.
 	 * @see #setCancelOverlayURL(String)
 	 * @see org.eclipse.emf.ecp.view.template.model.VTTemplatePackage#getControlValidationTemplate_CancelOverlayURL()
@@ -499,7 +499,7 @@ public interface VTControlValidationTemplate extends EObject
 	 * <em>Cancel Overlay URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Cancel Overlay URL</em>' attribute.
 	 * @see #getCancelOverlayURL()
 	 * @generated

@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
  */
@@ -17,6 +17,9 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate;
+import org.eclipse.emf.ecp.view.template.model.VTStyle;
+import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
+import org.eclipse.emf.ecp.view.template.model.VTStyleSelector;
 import org.eclipse.emf.ecp.view.template.model.VTTemplateFactory;
 import org.eclipse.emf.ecp.view.template.model.VTTemplatePackage;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplate;
@@ -25,7 +28,7 @@ import org.eclipse.emf.ecp.view.template.model.VTViewTemplate;
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Package</b>.
  * <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePackage
@@ -33,7 +36,7 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass viewTemplateEClass = null;
@@ -41,10 +44,34 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private EClass controlValidationTemplateEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	private EClass styleEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	private EClass stylePropertyEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	private EClass styleSelectorEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
@@ -54,7 +81,7 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 	 * Note: the correct way to create the package is via the static factory method {@link #init init()}, which also
 	 * performs initialization of the package, or returns the registered package, if one already exists. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
 	 * @see org.eclipse.emf.ecp.view.template.model.VTTemplatePackage#eNS_URI
 	 * @see #init()
@@ -68,19 +95,19 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private static boolean isInited = false;
 
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-	 * 
+	 *
 	 * <p>
 	 * This method is used to initialize {@link VTTemplatePackage#eINSTANCE} when that field is accessed. Clients should
 	 * not invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc
 	 * --> <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #eNS_URI
 	 * @see #createPackageContents()
 	 * @see #initializePackageContents()
@@ -88,11 +115,13 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 	 */
 	public static VTTemplatePackage init()
 	{
-		if (isInited)
+		if (isInited) {
 			return (VTTemplatePackage) EPackage.Registry.INSTANCE.getEPackage(VTTemplatePackage.eNS_URI);
+		}
 
 		// Obtain or create and register package
-		VTTemplatePackageImpl theTemplatePackage = (VTTemplatePackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof VTTemplatePackageImpl ? EPackage.Registry.INSTANCE
+		final VTTemplatePackageImpl theTemplatePackage = (VTTemplatePackageImpl) (EPackage.Registry.INSTANCE
+			.get(eNS_URI) instanceof VTTemplatePackageImpl ? EPackage.Registry.INSTANCE
 			.get(eNS_URI) : new VTTemplatePackageImpl());
 
 		isInited = true;
@@ -114,9 +143,10 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public EClass getViewTemplate()
 	{
 		return viewTemplateEClass;
@@ -125,9 +155,10 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public EReference getViewTemplate_ControlValidationConfiguration()
 	{
 		return (EReference) viewTemplateEClass.getEStructuralFeatures().get(0);
@@ -136,9 +167,34 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
+	public EReference getViewTemplate_Styles()
+	{
+		return (EReference) viewTemplateEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EAttribute getViewTemplate_ReferencedEcores()
+	{
+		return (EAttribute) viewTemplateEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
 	public EClass getControlValidationTemplate()
 	{
 		return controlValidationTemplateEClass;
@@ -147,9 +203,10 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public EAttribute getControlValidationTemplate_OkColorHEX()
 	{
 		return (EAttribute) controlValidationTemplateEClass.getEStructuralFeatures().get(0);
@@ -158,9 +215,10 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public EAttribute getControlValidationTemplate_OkImageURL()
 	{
 		return (EAttribute) controlValidationTemplateEClass.getEStructuralFeatures().get(1);
@@ -169,9 +227,10 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public EAttribute getControlValidationTemplate_OkOverlayURL()
 	{
 		return (EAttribute) controlValidationTemplateEClass.getEStructuralFeatures().get(2);
@@ -180,9 +239,10 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public EAttribute getControlValidationTemplate_InfoColorHEX()
 	{
 		return (EAttribute) controlValidationTemplateEClass.getEStructuralFeatures().get(3);
@@ -191,9 +251,10 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public EAttribute getControlValidationTemplate_InfoImageURL()
 	{
 		return (EAttribute) controlValidationTemplateEClass.getEStructuralFeatures().get(4);
@@ -202,9 +263,10 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public EAttribute getControlValidationTemplate_InfoOverlayURL()
 	{
 		return (EAttribute) controlValidationTemplateEClass.getEStructuralFeatures().get(5);
@@ -213,9 +275,10 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public EAttribute getControlValidationTemplate_WarningColorHEX()
 	{
 		return (EAttribute) controlValidationTemplateEClass.getEStructuralFeatures().get(6);
@@ -224,9 +287,10 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public EAttribute getControlValidationTemplate_WarningImageURL()
 	{
 		return (EAttribute) controlValidationTemplateEClass.getEStructuralFeatures().get(7);
@@ -235,9 +299,10 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public EAttribute getControlValidationTemplate_WarningOverlayURL()
 	{
 		return (EAttribute) controlValidationTemplateEClass.getEStructuralFeatures().get(8);
@@ -246,9 +311,10 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public EAttribute getControlValidationTemplate_ErrorColorHEX()
 	{
 		return (EAttribute) controlValidationTemplateEClass.getEStructuralFeatures().get(9);
@@ -257,9 +323,10 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public EAttribute getControlValidationTemplate_ErrorImageURL()
 	{
 		return (EAttribute) controlValidationTemplateEClass.getEStructuralFeatures().get(10);
@@ -268,9 +335,10 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public EAttribute getControlValidationTemplate_ErrorOverlayURL()
 	{
 		return (EAttribute) controlValidationTemplateEClass.getEStructuralFeatures().get(11);
@@ -279,9 +347,10 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public EAttribute getControlValidationTemplate_CancelColorHEX()
 	{
 		return (EAttribute) controlValidationTemplateEClass.getEStructuralFeatures().get(12);
@@ -290,9 +359,10 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public EAttribute getControlValidationTemplate_CancelImageURL()
 	{
 		return (EAttribute) controlValidationTemplateEClass.getEStructuralFeatures().get(13);
@@ -301,9 +371,10 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public EAttribute getControlValidationTemplate_CancelOverlayURL()
 	{
 		return (EAttribute) controlValidationTemplateEClass.getEStructuralFeatures().get(14);
@@ -312,9 +383,70 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
+	public EClass getStyle()
+	{
+		return styleEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EReference getStyle_Selector()
+	{
+		return (EReference) styleEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EReference getStyle_Properties()
+	{
+		return (EReference) styleEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EClass getStyleProperty()
+	{
+		return stylePropertyEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EClass getStyleSelector()
+	{
+		return styleSelectorEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
 	public VTTemplateFactory getTemplateFactory()
 	{
 		return (VTTemplateFactory) getEFactoryInstance();
@@ -323,7 +455,7 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private boolean isCreated = false;
@@ -333,18 +465,21 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 	 * guarded to have no affect on any invocation but its first.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public void createPackageContents()
 	{
-		if (isCreated)
+		if (isCreated) {
 			return;
+		}
 		isCreated = true;
 
 		// Create classes and their features
 		viewTemplateEClass = createEClass(VIEW_TEMPLATE);
 		createEReference(viewTemplateEClass, VIEW_TEMPLATE__CONTROL_VALIDATION_CONFIGURATION);
+		createEReference(viewTemplateEClass, VIEW_TEMPLATE__STYLES);
+		createEAttribute(viewTemplateEClass, VIEW_TEMPLATE__REFERENCED_ECORES);
 
 		controlValidationTemplateEClass = createEClass(CONTROL_VALIDATION_TEMPLATE);
 		createEAttribute(controlValidationTemplateEClass, CONTROL_VALIDATION_TEMPLATE__OK_COLOR_HEX);
@@ -362,12 +497,20 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 		createEAttribute(controlValidationTemplateEClass, CONTROL_VALIDATION_TEMPLATE__CANCEL_COLOR_HEX);
 		createEAttribute(controlValidationTemplateEClass, CONTROL_VALIDATION_TEMPLATE__CANCEL_IMAGE_URL);
 		createEAttribute(controlValidationTemplateEClass, CONTROL_VALIDATION_TEMPLATE__CANCEL_OVERLAY_URL);
+
+		styleEClass = createEClass(STYLE);
+		createEReference(styleEClass, STYLE__SELECTOR);
+		createEReference(styleEClass, STYLE__PROPERTIES);
+
+		stylePropertyEClass = createEClass(STYLE_PROPERTY);
+
+		styleSelectorEClass = createEClass(STYLE_SELECTOR);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private boolean isInitialized = false;
@@ -377,13 +520,14 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 	 * method is guarded to have no affect on any invocation but its first.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public void initializePackageContents()
 	{
-		if (isInitialized)
+		if (isInitialized) {
 			return;
+		}
 		isInitialized = true;
 
 		// Initialize package
@@ -402,9 +546,18 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 			"ViewTemplate", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(
 			getViewTemplate_ControlValidationConfiguration(),
-			this.getControlValidationTemplate(),
+			getControlValidationTemplate(),
 			null,
 			"controlValidationConfiguration", null, 1, 1, VTViewTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+			getViewTemplate_Styles(),
+			getStyle(),
+			null,
+			"styles", null, 0, -1, VTViewTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(
+			getViewTemplate_ReferencedEcores(),
+			ecorePackage.getEString(),
+			"referencedEcores", null, 0, -1, VTViewTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(controlValidationTemplateEClass, VTControlValidationTemplate.class,
 			"ControlValidationTemplate", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
@@ -468,6 +621,24 @@ public class VTTemplatePackageImpl extends EPackageImpl implements VTTemplatePac
 			getControlValidationTemplate_CancelOverlayURL(),
 			ecorePackage.getEString(),
 			"cancelOverlayURL", null, 0, 1, VTControlValidationTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(styleEClass, VTStyle.class, "Style", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(
+			getStyle_Selector(),
+			getStyleSelector(),
+			null,
+			"selector", null, 1, 1, VTStyle.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+			getStyle_Properties(),
+			getStyleProperty(),
+			null,
+			"properties", null, 0, -1, VTStyle.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(stylePropertyEClass, VTStyleProperty.class,
+			"StyleProperty", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		initEClass(styleSelectorEClass, VTStyleSelector.class,
+			"StyleSelector", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		// Create resource
 		createResource(eNS_URI);

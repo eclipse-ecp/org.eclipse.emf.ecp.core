@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.ecp.view.table.ui.swt.test" version="2">
+    <resource path="src/org/eclipse/emf/ecp/view/table/ui/swt/test/SWTTable_PTest.java" type="org.eclipse.emf.ecp.view.table.ui.swt.test.SWTTable_PTest$ViewModelContextWithoutServices">
+        <filter comment="Used for testing purposes" id="574619656">
+            <message_arguments>
+                <message_argument value="ViewModelContext"/>
+                <message_argument value="ViewModelContextWithoutServices"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

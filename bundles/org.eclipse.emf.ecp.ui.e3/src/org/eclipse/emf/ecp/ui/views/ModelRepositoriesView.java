@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
  *******************************************************************************/
@@ -16,7 +16,7 @@ import java.util.Collection;
 import org.eclipse.emf.ecp.core.ECPProvider;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.core.util.observer.ECPProvidersChangedObserver;
-import org.eclipse.emf.ecp.ui.common.TreeViewerFactory;
+import org.eclipse.emf.ecp.ui.common.ECPViewerFactory;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.Composite;
@@ -47,6 +47,7 @@ public class ModelRepositoriesView extends TreeView implements ECPProvidersChang
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void providersChanged(Collection<ECPProvider> oldProviders, Collection<ECPProvider> newProviders)
 	{
 	}
@@ -54,7 +55,7 @@ public class ModelRepositoriesView extends TreeView implements ECPProvidersChang
 	@Override
 	protected TreeViewer createViewer(Composite parent)
 	{
-		final TreeViewer viewer = TreeViewerFactory.createRepositoryExplorerViewer(parent, createLabelDecorator());
+		final TreeViewer viewer = ECPViewerFactory.createRepositoryExplorerViewer(parent, createLabelDecorator());
 		ECPUtil.getECPObserverBus().register(this);
 		return viewer;
 	}

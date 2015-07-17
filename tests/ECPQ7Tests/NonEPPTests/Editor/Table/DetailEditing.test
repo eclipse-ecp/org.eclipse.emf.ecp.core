@@ -1,0 +1,124 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _mY5uUKEgEeKX8e34E6tWIg,_rr2EEFpSEeKcnaHGSt8OwA,_IuFcgFpZEeKcnaHGSt8OwA,_f3qEUVpSEeKcnaHGSt8OwA
+Element-Name: DetailEditing
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _S2QsofiCEeOywJv-3eEoIg
+Runtime-Version: 1.5.4.201410231434
+Save-Time: 12/19/14 4:45 PM
+Tags: skipExecution
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-view "Model Explorer" | get-tree | get-menu "Create new project" | click
+with [get-window "Create Project"] {
+    get-editbox -after [get-label "Project Name:"] | set-text University
+    get-button Finish | click
+}
+get-view "Model Explorer" | get-tree | select University | get-menu "New Model Element" | click
+with [get-window "Add new model element"] {
+    get-tree | select "university/CourseCatalog"
+    get-button Finish | click
+}
+get-editor "Course Catalog" | get-button -after [get-label Courses] | get-property enablement | equals false 
+    | verify-true
+get-editor "Course Catalog" | get-button "Add an instance of Course" | click
+get-editor "Course Catalog" | get-button -after [get-label Courses] | get-property enablement | equals false 
+    | verify-true
+get-editor "Course Catalog" | get-table | select 0 -column Etcs
+get-editor "Course Catalog" | get-button -after [get-label Courses] | get-property enablement | equals true 
+    | verify-true
+get-editor "Course Catalog" | get-button -after [get-label Courses] | click
+with [get-window Course] {
+    get-label "Id*" | get-property caption | equals "Id*" | verify-true
+    get-label "Name*" | get-property caption | equals "Name*" | verify-true
+    get-label "Etcs*" | get-property caption | equals "Etcs*" | verify-true
+    with [get-editbox -after [get-label "Id*"]] {
+        get-property readOnly | equals false | verify-true
+        get-property backgroundColor | equals "#FF0000" | verify-true
+        get-property "getMessage()" | equals Id | verify-true
+    }
+    with [get-editbox -after [get-label "Name*"]] {
+        get-property readOnly | equals false | verify-true
+        get-property backgroundColor | equals "#FF0000" | verify-true
+        get-property "getMessage()" | equals Name | verify-true
+    }
+    with [get-editbox -after [get-label "Etcs*"]] {
+        get-property readOnly | equals false | verify-true
+        get-property backgroundColor | equals "#FFFFFF" | verify-true
+    }
+}
+with [get-window Course] {
+    get-editbox -after [get-label "Id*"] | set-text IN0001
+    get-editbox -after [get-label "Name*"] | click-text
+}
+with [get-window Course | get-editbox -after [get-label "Id*"]] {
+    get-property text | equals IN0001 | verify-true
+    get-property backgroundColor | equals "#FFFFFF" | verify-true
+}
+with [get-window Course] {
+    get-editbox -after [get-label "Name*"] | set-text "Informatik 1"
+    get-editbox -after [get-label "Etcs*"] | click-text 1
+}
+with [get-window "Course Informatik 1" | get-editbox -after [get-label "Name*"]] {
+    get-property text | equals "Informatik 1" | verify-true
+    get-property backgroundColor | equals "#FFFFFF" | verify-true
+}
+with [get-window "Course Informatik 1"] {
+    get-editbox -after [get-label "Etcs*"] | set-text 8
+    get-editbox -after [get-label "Name*"] | click-text 13
+    get-button OK | click
+}
+with [get-editor "Course Catalog" | get-table] {
+    get-item IN0001 -column Id | get-property "columns[0]" | equals "" | verify-true
+    get-item IN0001 -column Id | get-property "columns[1]" | equals IN0001 | verify-true
+    get-item IN0001 -column Id | get-property "columns[2]" | equals "Informatik 1" | verify-true
+    get-item IN0001 -column Id | get-property "columns[3]" | equals 8 | verify-true
+    get-item IN0001 -column Id | get-property "columnsBackgroundColor[1]" | equals "#FFFFFF" | verify-true
+    get-item IN0001 -column Id | get-property "columnsBackgroundColor[2]" | equals "#FFFFFF" | verify-true
+    get-item IN0001 -column Id | get-property "columnsBackgroundColor[3]" | equals "#FFFFFF" | verify-true
+}
+with [get-editor "Course Catalog"] {
+    get-button "Add an instance of Course" | click
+    with [get-table] {
+        select 0 -column Etcs | activate-cell-edit -column 3
+        get-editbox | click-text 1 2
+        apply-cell-edit -deactivate
+    }
+    get-button -after [get-label Courses] | click
+}
+with [get-window Course] {
+    get-editbox -after [get-label "Id*"] | get-property backgroundColor | equals "#FF0000" | verify-true
+    get-editbox -after [get-label "Name*"] | get-property backgroundColor | equals "#FF0000" | verify-true
+}
+get-window Course | get-button OK | click
+get-editor "Course Catalog" | get-table | select IN0001 -column Id
+with [get-editor "Course Catalog" | get-table] {
+    get-item 0 -column Etcs | get-property "columns[1]" | equals "" | verify-true
+    get-item 0 -column Etcs | get-property "columns[2]" | equals "" | verify-true
+    get-item 0 -column Etcs | get-property "columns[3]" | equals 0 | verify-true
+    get-item 0 -column Etcs | get-property "columnsBackgroundColor[1]" | equals "#FF0000" | verify-true
+    get-item 0 -column Etcs | get-property "columnsBackgroundColor[2]" | equals "#FF0000" | verify-true
+    get-item 0 -column Etcs | get-property "columnsBackgroundColor[3]" | equals "#FFFFFF" | verify-true
+}
+with [get-editor "Course Catalog"] {
+    get-table | select 0 -column Etcs
+    get-button -after [get-label Courses] | click
+}
+with [get-window Course] {
+    with [get-editbox -after [get-label "Id*"]] {
+        get-property text | equals "" | verify-true
+        get-property backgroundColor | equals "#FF0000" | verify-true
+    }
+    with [get-editbox -after [get-label "Name*"]] {
+        get-property text | equals "" | verify-true
+        get-property backgroundColor | equals "#FF0000" | verify-true
+    }
+}
+get-window Course | get-button OK | click
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

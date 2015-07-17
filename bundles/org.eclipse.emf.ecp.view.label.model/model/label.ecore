@@ -3,6 +3,8 @@
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="label" nsURI="http://org/eclipse/emf/ecp/view/label/model" nsPrefix="org.eclipse.emf.ecp.view.label.model">
   <eClassifiers xsi:type="ecore:EClass" name="Label" eSuperTypes="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//ContainedElement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="#//VLabelStyle"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="domainModelReference" eType="ecore:EClass ../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="VLabelStyle">
     <eLiterals name="H0"/>

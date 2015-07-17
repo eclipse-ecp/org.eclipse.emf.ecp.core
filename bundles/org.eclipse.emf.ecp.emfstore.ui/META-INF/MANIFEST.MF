@@ -2,24 +2,22 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ECP EMFStore UI Provider
 Bundle-SymbolicName: org.eclipse.emf.ecp.emfstore.ui;singleton:=true
-Bundle-Version: 1.1.1.qualifier
+Bundle-Version: 1.7.0.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.emfstore.internal.ui.Activator
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.core.expressions;bundle-version="[3.4.0,4.0.0)",
- org.eclipse.emf.ecp.emfstore.core;bundle-version="[1.1.0,2.0.0)",
- org.eclipse.emf.ecp.ui;bundle-version="[1.1.0,2.0.0)",
+ org.eclipse.emf.ecp.emfstore.core;bundle-version="[1.5.0,2.0.0)",
+ org.eclipse.emf.ecp.ui;bundle-version="[1.5.0,2.0.0)",
  org.eclipse.emf.emfstore.client;bundle-version="[1.0.0,2.0.0)",
  org.eclipse.emf.emfstore.client.ui;bundle-version="[1.0.0,2.0.0)",
  org.eclipse.net4j.util;bundle-version="[3.0.0,4.0.0)",
- org.eclipse.emf.ecp.common;bundle-version="[1.1.0,2.0.0)",
- org.eclipse.rap.rwt.supplemental.filedialog;bundle-version="2.0.0";resolution:=optional,
- org.eclipse.swt;bundle-version="[3.1.0,4.0.0)";resolution:=optional
+ org.eclipse.emf.ecp.common;bundle-version="[1.5.0,2.0.0)"
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: org.eclipse.emf.ecp.emfstore.internal.ui;version="1.1.0";x-internal:=true,
- org.eclipse.emf.ecp.emfstore.internal.ui.handler;version="1.1.1";x-internal:=true,
- org.eclipse.emf.ecp.emfstore.internal.ui.observer;version="1.1.0";x-internal:=true,
- org.eclipse.emf.ecp.emfstore.internal.ui.property;version="1.1.0";x-internal:=true
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Export-Package: org.eclipse.emf.ecp.emfstore.internal.ui;version="1.7.0";x-internal:="true",
+ org.eclipse.emf.ecp.emfstore.internal.ui.handler;version="1.7.0";x-friends:="org.eclipse.emf.ecp.emfstore.ui.e4,org.eclipse.emf.ecp.emfstore.ui.e3",
+ org.eclipse.emf.ecp.emfstore.internal.ui.observer;version="1.7.0";x-internal:="true",
+ org.eclipse.emf.ecp.emfstore.internal.ui.property;version="1.7.0";x-internal:="true"
 Import-Package: org.eclipse.core.commands;version="0.0.0",
  org.eclipse.jface.action;version="0.0.0",
  org.eclipse.jface.dialogs;version="0.0.0",
@@ -30,5 +28,6 @@ Import-Package: org.eclipse.core.commands;version="0.0.0",
  org.eclipse.swt;version="0.0.0",
  org.eclipse.swt.events;version="0.0.0",
  org.eclipse.swt.graphics;version="0.0.0",
- org.eclipse.swt.layout;version="0.0.0"
+ org.eclipse.swt.layout;version="0.0.0",
+ org.eclipse.swt.widgets;version="0.0.0"
 Bundle-Vendor: Eclipse Modeling Project

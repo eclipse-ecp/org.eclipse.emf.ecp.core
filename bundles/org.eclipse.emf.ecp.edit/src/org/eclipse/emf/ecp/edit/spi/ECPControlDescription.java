@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.spi;
 
@@ -19,9 +19,10 @@ import org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester;
 /**
  * This class describes the control extensionpoint. It is used to provide the possibility to access all known controls
  * without reading the extension point.
- * 
+ *
  * @author Eugen Neufeld
  */
+@Deprecated
 public final class ECPControlDescription {
 
 	private final String id;
@@ -31,7 +32,7 @@ public final class ECPControlDescription {
 
 	/**
 	 * The constructor of the ControlDescription.
-	 * 
+	 *
 	 * @param controlClass the class implementing the control
 	 * @param showLabel whether to show a label for this control or not
 	 * @param tester the class testing whether the control is applicable for the current feature of the current eobject
@@ -48,7 +49,7 @@ public final class ECPControlDescription {
 
 	/**
 	 * The id of this control.
-	 * 
+	 *
 	 * @return the id of the control
 	 */
 	public String getId() {
@@ -57,7 +58,7 @@ public final class ECPControlDescription {
 
 	/**
 	 * The class implementing the Control. It extends the {@link ECPAbstractControl}.
-	 * 
+	 *
 	 * @return the class implementing this control
 	 */
 	public Class<? extends ECPAbstractControl> getControlClass() {
@@ -66,7 +67,7 @@ public final class ECPControlDescription {
 
 	/**
 	 * Whether to show a label for this control or not.
-	 * 
+	 *
 	 * @return true if a label should be shown
 	 */
 	public boolean isShowLabel() {
@@ -76,7 +77,7 @@ public final class ECPControlDescription {
 	/**
 	 * The tester for this control. The tester is used to check whether this control is usable on a specific feature of
 	 * a specific eobject.
-	 * 
+	 *
 	 * @return the {@link ECPApplicableTester} implementation
 	 */
 	public Set<ECPApplicableTester> getTester() {

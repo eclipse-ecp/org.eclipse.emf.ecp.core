@@ -1,0 +1,8 @@
+#
+#Wed Oct 08 07:02:40 EDT 2014
+Signature=0a200214d5a8822238cf2b7f5a46217d4f8cad40a20522ed66f601c7f8be8d47bed340488c307d9d077c35b2c0f5445d26272302cadc645b417b5e06d64f163a3b63b866d8d7e67a3010ec573e86e82c147e14fbc600cd486576fabe19e4e731dd5ea229ce8fbf47a7b4ed36be9636d10723bda6a8a01d9b8087f7f33e9298ca
+Type=Opensource
+Allowed-Bundles=*.source,ch.qos.logback*,com.google.guava,com.google.inject,com.ibm.icu*,com.jcraft.jsch,com.sun.*,javaewah,javax.*,lpg.runtime.java,org.apache.*,org.eclipse.*,org.h2,org.hamcrest*,org.jdom,org.jsoup,org.junit*,org.mortbay.jetty*,org.objectweb.asm,org.sat4j*,org.slf4j*,org.w3c,org.w3c.*,com.xored.*,com.google.gson,org.aspectj.*,org.fantom*,net.sourceforge.*,java_cup.*,com.jcraft.jzlib,org.xmlpull,org.custommonkey.xmlunit*,org.restlet*,org.json,com.vaadin,com.thoughtworks.xstream,com.thoughtworks.selenium,org.uddi4j,org.mozilla*,org.antlr*,ch.ethz.iks.slp,org.easymock,com.thoughtworks.qdox,edu.emory.mathcs*,org.xbill.dns,org.codehaus.jackson*,org.opensaml*,org.aopalliance*,commonj.sdo*,org.dojotoolkit*,com.lowagie.text*,org.kohsuke.args4j,com.google.gwt*,com.google.gerrit*,com.google.protobuf*,net.miginfocom.layout*,org.prefuse*,org.objenesis*,org.mockito*,org.cyberneko*,org.openid4java*,org.quartz*,me.prettyprint*,osgi.enterprise*,org.cliffc.high_scale_lib*,org.jmock,com.novell.ldap,org.swtchart,org.ccil.cowan.tagsoup,org.ow2*,cdi.api,javassist,scannotation,org.glassfish*,bcprov,bcpg,ca.odell.glazedlists,org.pushingpixels.trident,org.tukaani.xz,edu.umd.cs.findbugs.*,net.sf.eclipsecs*,net.sf.jautodoc*,org.objectweb.asm*,com.ning.async-http-client*,org.jboss.netty*,org.sonatype.m2e.buildhelper*,
+Version=1.0
+Email=dsoto@eclipsesource.com
+Opensource-Project=Eclipse ECP

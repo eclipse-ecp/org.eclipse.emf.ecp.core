@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.emf.ecp.nosite.feature"
+      label="ECP Feature for features which are not in the SDK"
+      version="1.7.0.qualifier"
+      provider-name="Eclipse Modeling Project"
+      license-feature="org.eclipse.emf.ecp.license.feature"
+      license-feature-version="1.1.1.qualifier">
+
+   <description>
+      %description
+   </description>
+
+   <copyright url="%copyrightURL">
+      %copyright
+   </copyright>
+
+   <license url="http://www.example.com/license">
+      [Enter License Description here.]
+   </license>
+
+   <includes
+         id="org.eclipse.emf.ecp.diffmerge.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.test.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.graphiti.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.examplemodel.ui.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.application.e4.fx.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.view.sdk.fx.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.ecore.editor.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.ecore.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.ecp.view.groupedgrid.feature"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.emf.ecp.doc"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.emf.ecp.rap.util"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+</feature>

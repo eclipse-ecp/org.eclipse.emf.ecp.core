@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -28,14 +28,14 @@ import org.osgi.framework.BundleContext;
 
 /**
  * The activator class controls the plug-in life cycle.
- * 
+ *
  * @author Eike Stepper
  */
 public class Activator extends Plugin {
 	/**
 	 * The plug-in ID.
 	 */
-	public static final String PLUGIN_ID = "org.eclipse.emf.ecp.workspace.core";
+	public static final String PLUGIN_ID = "org.eclipse.emf.ecp.workspace.core"; //$NON-NLS-1$
 
 	private static Activator instance;
 
@@ -59,7 +59,7 @@ public class Activator extends Plugin {
 	// END SUPRESS CATCH EXCEPTION
 	/**
 	 * Returns the shared instance.
-	 * 
+	 *
 	 * @return the shared instance
 	 */
 	public static final Activator getInstance() {
@@ -68,7 +68,7 @@ public class Activator extends Plugin {
 
 	/**
 	 * Logs and Info message.
-	 * 
+	 *
 	 * @param message the message to log
 	 */
 	public static void log(String message) {
@@ -81,19 +81,19 @@ public class Activator extends Plugin {
 
 	/**
 	 * Logs a {@link Throwable}.
-	 * 
+	 *
 	 * @param t the {@link Throwable} to log
 	 * @return the message of the {@link Throwable}
 	 */
 	public static String log(Throwable t) {
-		IStatus status = getStatus(t);
+		final IStatus status = getStatus(t);
 		log(status);
 		return status.getMessage();
 	}
 
 	private static IStatus getStatus(Throwable t) {
 		if (t instanceof CoreException) {
-			CoreException coreException = (CoreException) t;
+			final CoreException coreException = (CoreException) t;
 			return coreException.getStatus();
 		}
 

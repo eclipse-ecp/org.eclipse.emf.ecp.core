@@ -92,7 +92,7 @@
             <visibleWhen
                   checkEnabled="false">
                <reference
-                     definitionId="org.eclipse.emf.ecp.emfstore.ui.share">
+                     definitionId="org.eclipse.emf.ecp.emfstore.ui.e3.share">
                </reference>
             </visibleWhen>
          </command>
@@ -104,7 +104,7 @@
             <visibleWhen
                   checkEnabled="false">
                <reference
-                     definitionId="org.eclipse.emf.ecp.emfstore.ui.commit">
+                     definitionId="org.eclipse.emf.ecp.emfstore.ui.e3.commit">
                </reference>
             </visibleWhen>
          </command>
@@ -116,7 +116,7 @@
             <visibleWhen
                   checkEnabled="false">
                <reference
-                     definitionId="org.eclipse.emf.ecp.emfstore.ui.update">
+                     definitionId="org.eclipse.emf.ecp.emfstore.ui.e3.update">
                </reference>
             </visibleWhen>
          </command>
@@ -129,7 +129,7 @@
             <visibleWhen
                   checkEnabled="false">
                <reference
-                     definitionId="org.eclipse.emf.ecp.emfstore.ui.undo">
+                     definitionId="org.eclipse.emf.ecp.emfstore.ui.e3.undo">
                </reference>
             </visibleWhen>
          </command>
@@ -142,7 +142,7 @@
             <visibleWhen
                   checkEnabled="false">
                <reference
-                     definitionId="org.eclipse.emf.ecp.emfstore.ui.revert">
+                     definitionId="org.eclipse.emf.ecp.emfstore.ui.e3.revert">
                </reference>
             </visibleWhen>
          </command>
@@ -155,7 +155,7 @@
             <visibleWhen
                   checkEnabled="false">
                <reference
-                     definitionId="org.eclipse.emf.ecp.emfstore.ui.historyview">
+                     definitionId="org.eclipse.emf.ecp.emfstore.ui.e3.historyview">
                </reference>
             </visibleWhen>
          </command>
@@ -167,7 +167,7 @@
             <visibleWhen
                   checkEnabled="false">
                <reference
-                     definitionId="org.eclipse.emf.ecp.emfstore.ui.branchCreate">
+                     definitionId="org.eclipse.emf.ecp.emfstore.ui.e3.branchCreate">
                </reference>
             </visibleWhen>
          </command>
@@ -179,7 +179,7 @@
             <visibleWhen
                   checkEnabled="false">
                <reference
-                     definitionId="org.eclipse.emf.ecp.emfstore.ui.branchMerge">
+                     definitionId="org.eclipse.emf.ecp.emfstore.ui.e3.branchMerge">
                </reference>
             </visibleWhen>
          </command>
@@ -191,7 +191,7 @@
             <visibleWhen
                   checkEnabled="false">
                <reference
-                     definitionId="org.eclipse.emf.ecp.emfstore.ui.updateToVersion">
+                     definitionId="org.eclipse.emf.ecp.emfstore.ui.e3.updateToVersion">
                </reference>
             </visibleWhen>
          </command>
@@ -250,7 +250,7 @@
             <visibleWhen
                   checkEnabled="false">
                <reference
-                     definitionId="org.eclipse.emf.ecp.emfstore.ui.login">
+                     definitionId="org.eclipse.emf.ecp.emfstore.ui.e3.login">
                </reference>
             </visibleWhen>
          </command>
@@ -262,7 +262,7 @@
             <visibleWhen
                   checkEnabled="false">
                <reference
-                     definitionId="org.eclipse.emf.ecp.emfstore.ui.logout">
+                     definitionId="org.eclipse.emf.ecp.emfstore.ui.e3.logout">
                </reference>
             </visibleWhen>
          </command>
@@ -274,7 +274,7 @@
             <visibleWhen
                   checkEnabled="false">
                <reference
-                     definitionId="org.eclipse.emf.ecp.emfstore.ui.serverDelete">
+                     definitionId="org.eclipse.emf.ecp.emfstore.ui.e3.serverDelete">
                </reference>
             </visibleWhen>
          </command>
@@ -285,7 +285,7 @@
             <visibleWhen
                   checkEnabled="false">
                <reference
-                     definitionId="org.eclipse.emf.ecp.emfstore.ui.branchCheckout">
+                     definitionId="org.eclipse.emf.ecp.emfstore.ui.e3.branchCheckout">
                </reference>
             </visibleWhen>
          </command>
@@ -297,7 +297,7 @@
             <visibleWhen
                   checkEnabled="false">
                <reference
-                     definitionId="org.eclipse.emf.ecp.emfstore.ui.serverUsers">
+                     definitionId="org.eclipse.emf.ecp.emfstore.ui.e3.serverUsers">
                </reference>
             </visibleWhen>
          </command>
@@ -309,7 +309,7 @@
             <visibleWhen
                   checkEnabled="false">
                <reference
-                     definitionId="org.eclipse.emf.ecp.emfstore.ui.registerEPackage">
+                     definitionId="org.eclipse.emf.ecp.emfstore.ui.e3.registerEPackage">
                </reference>
             </visibleWhen>
          </command>
@@ -322,7 +322,7 @@
             <visibleWhen
                   checkEnabled="false">
                <reference
-                     definitionId="org.eclipse.emf.ecp.emfstore.ui.serverProjectCreate">
+                     definitionId="org.eclipse.emf.ecp.emfstore.ui.e3.serverProjectCreate">
                </reference>
             </visibleWhen>
          </command>
@@ -334,7 +334,7 @@
             <visibleWhen
                   checkEnabled="false">
                <reference
-                     definitionId="org.eclipse.emf.ecp.emfstore.ui.localServer">
+                     definitionId="org.eclipse.emf.ecp.emfstore.ui.e3.localServer">
                </reference>
             </visibleWhen>
          </command>
@@ -648,17 +648,776 @@
       <observer
             logoutObserver="org.eclipse.emf.ecp.emfstore.internal.ui.decorator.RepositoryViewLabelDecorator">
       </observer>
-   </extension> <extension
-         point="org.eclipse.emf.emfstore.client.commitObserver">
-      <observer
-            commitObserver="org.eclipse.emf.ecp.emfstore.internal.ui.decorator.EMFStoreDirtyDecorator">
-      </observer>
    </extension>
                 <extension
                       point="org.eclipse.emf.emfstore.client.shareObserver">
                    <observer
                          shareObserver="org.eclipse.emf.ecp.emfstore.internal.ui.decorator.ProjectEMFStoreBranchDecorator">
                    </observer>
+                </extension>
+                <extension
+                      point="org.eclipse.core.expressions.definitions">
+                   <definition
+                         id="org.eclipse.emf.ecp.emfstore.ui.e3.share">
+                      <with
+                            variable="selection">
+                         <or>
+                            <and>
+                               <instanceof
+                                     value="org.eclipse.emf.ecp.core.ECPProject">
+                               </instanceof>
+                               <test
+                                     property="org.eclipse.emf.ecp.core.project.providerName"
+                                     value="org.eclipse.emf.ecp.emfstore.provider">
+                               </test>
+                               <test
+                                     args="org.eclipse.emf.ecp.emfstore.ui.share"
+                                     property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                                     value="true">
+                               </test>
+                            </and>
+                            <and>
+                               <count
+                                     value="1">
+                               </count>
+                               <iterate
+                                     ifEmpty="false"
+                                     operator="and">
+                                  <instanceof
+                                        value="org.eclipse.emf.ecp.core.ECPProject">
+                                  </instanceof>
+                                  <test
+                                        property="org.eclipse.emf.ecp.core.project.providerName"
+                                        value="org.eclipse.emf.ecp.emfstore.provider">
+                                  </test>
+                                  <test
+                                        args="org.eclipse.emf.ecp.emfstore.ui.share"
+                                        property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                                        value="true">
+                                  </test>
+                               </iterate>
+                            </and>
+                         </or>
+                      </with>
+                   </definition>
+                   <definition
+                         id="org.eclipse.emf.ecp.emfstore.ui.e3.commit">
+                      <with
+                            variable="selection">
+                         <or>
+                            <and>
+                               <instanceof
+                                     value="org.eclipse.emf.ecp.core.ECPProject">
+                               </instanceof>
+                               <test
+                                     property="org.eclipse.emf.ecp.core.project.providerName"
+                                     value="org.eclipse.emf.ecp.emfstore.provider">
+                               </test>
+                               <test
+                                     args="org.eclipse.emf.ecp.emfstore.ui.commit"
+                                     property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                                     value="true">
+                               </test>
+                            </and>
+                            <and>
+                               <count
+                                     value="1">
+                               </count>
+                               <iterate>
+                                  <instanceof
+                                        value="org.eclipse.emf.ecp.core.ECPProject">
+                                  </instanceof>
+                                  <test
+                                        property="org.eclipse.emf.ecp.core.project.providerName"
+                                        value="org.eclipse.emf.ecp.emfstore.provider">
+                                  </test>
+                                  <test
+                                        args="org.eclipse.emf.ecp.emfstore.ui.commit"
+                                        property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                                        value="true">
+                                  </test>
+                               </iterate>
+                            </and>
+                         </or>
+                      </with>
+                   </definition>
+                   <definition
+                         id="org.eclipse.emf.ecp.emfstore.ui.e3.update">
+                      <with
+                            variable="selection">
+                         <or>
+                            <and>
+                               <reference
+                                     definitionId="org.eclipse.emf.ecp.emfstore.ui.emfstoreProject">
+                               </reference>
+                               <test
+                                     args="org.eclipse.emf.ecp.emfstore.ui.update"
+                                     property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                                     value="true">
+                               </test>
+                            </and>
+                            <and>
+                               <count
+                                     value="1">
+                               </count>
+                               <iterate>
+                                  <instanceof
+                                        value="org.eclipse.emf.ecp.core.ECPProject">
+                                  </instanceof>
+                                  <test
+                                        property="org.eclipse.emf.ecp.core.project.providerName"
+                                        value="org.eclipse.emf.ecp.emfstore.provider">
+                                  </test>
+                                  <test
+                                        args="org.eclipse.emf.ecp.emfstore.ui.update"
+                                        property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                                        value="true">
+                                  </test>
+                               </iterate>
+                            </and>
+                         </or>
+                      </with>
+                   </definition>
+                   <definition
+                         id="org.eclipse.emf.ecp.emfstore.ui.e3.undo">
+                      <with
+                            variable="selection">
+                         <or>
+                            <and>
+                               <reference
+                                     definitionId="org.eclipse.emf.ecp.emfstore.ui.emfstoreProject">
+                               </reference>
+                               <test
+                                     args="org.eclipse.emf.ecp.emfstore.ui.undoLastOperation"
+                                     property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                                     value="true">
+                               </test>
+                            </and>
+                            <and>
+                               <count
+                                     value="1">
+                               </count>
+                               <iterate>
+                                  <instanceof
+                                        value="org.eclipse.emf.ecp.core.ECPProject">
+                                  </instanceof>
+                                  <test
+                                        property="org.eclipse.emf.ecp.core.project.providerName"
+                                        value="org.eclipse.emf.ecp.emfstore.provider">
+                                  </test>
+                                  <test
+                                        args="org.eclipse.emf.ecp.emfstore.ui.undoLastOperation"
+                                        property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                                        value="true">
+                                  </test>
+                               </iterate>
+                            </and>
+                         </or>
+                      </with>
+                   </definition>
+                   <definition
+                         id="org.eclipse.emf.ecp.emfstore.ui.e3.revert">
+                      <with
+                            variable="selection">
+                         <or>
+                            <and>
+                               <reference
+                                     definitionId="org.eclipse.emf.ecp.emfstore.ui.emfstoreProject">
+                               </reference>
+                               <test
+                                     args="org.eclipse.emf.ecp.emfstore.ui.revertAllOperations"
+                                     property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                                     value="true">
+                               </test>
+                            </and>
+                            <and>
+                               <count
+                                     value="1">
+                               </count>
+                               <iterate>
+                                  <instanceof
+                                        value="org.eclipse.emf.ecp.core.ECPProject">
+                                  </instanceof>
+                                  <test
+                                        property="org.eclipse.emf.ecp.core.project.providerName"
+                                        value="org.eclipse.emf.ecp.emfstore.provider">
+                                  </test>
+                                  <test
+                                        args="org.eclipse.emf.ecp.emfstore.ui.revertAllOperations"
+                                        property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                                        value="true">
+                                  </test>
+                               </iterate>
+                            </and>
+                         </or>
+                      </with>
+                   </definition>
+                   <definition
+                         id="org.eclipse.emf.ecp.emfstore.ui.e3.historyview">
+                      <with
+                            variable="selection">
+                         <or>
+                            <and>
+                               <test
+                                     property="org.eclipse.emf.ecp.emfstore.ui.testers.hasHistory"
+                                     value="true">
+                               </test>
+                               <test
+                                     args="org.eclipse.emf.ecp.emfstore.ui.showHistoryView"
+                                     property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                                     value="true">
+                               </test>
+                            </and>
+                            <and>
+                               <count
+                                     value="1">
+                               </count>
+                               <iterate>
+                                  <test
+                                        property="org.eclipse.emf.ecp.emfstore.ui.testers.hasHistory"
+                                        value="true">
+                                  </test>
+                                  <test
+                                        args="org.eclipse.emf.ecp.emfstore.ui.showHistoryView"
+                                        property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                                        value="true">
+                                  </test>
+                               </iterate>
+                            </and>
+                         </or>
+                      </with>
+                   </definition>
+                   <definition
+                         id="org.eclipse.emf.ecp.emfstore.ui.e3.branchCreate">
+                      <with
+                            variable="selection">
+                         <or>
+                            <and>
+                               <reference
+                                     definitionId="org.eclipse.emf.ecp.emfstore.ui.emfstoreProject">
+                               </reference>
+                               <test
+                                     args="org.eclipse.emf.ecp.emfstore.ui.branchCreate"
+                                     property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                                     value="true">
+                               </test>
+                            </and>
+                            <and>
+                               <count
+                                     value="1">
+                               </count>
+                               <iterate>
+                                  <instanceof
+                                        value="org.eclipse.emf.ecp.core.ECPProject">
+                                  </instanceof>
+                                  <test
+                                        property="org.eclipse.emf.ecp.core.project.providerName"
+                                        value="org.eclipse.emf.ecp.emfstore.provider">
+                                  </test>
+                                  <test
+                                        args="org.eclipse.emf.ecp.emfstore.ui.branchCreate"
+                                        property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                                        value="true">
+                                  </test>
+                               </iterate>
+                            </and>
+                         </or>
+                      </with>
+                   </definition>
+                   <definition
+                         id="org.eclipse.emf.ecp.emfstore.ui.e3.branchMerge">
+                      <with
+                            variable="selection">
+                         <or>
+                            <and>
+                               <reference
+                                     definitionId="org.eclipse.emf.ecp.emfstore.ui.emfstoreProject">
+                               </reference>
+                               <test
+                                     args="org.eclipse.emf.ecp.emfstore.ui.branchMerge"
+                                     property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                                     value="true">
+                               </test>
+                            </and>
+                            <and>
+                               <count
+                                     value="1">
+                               </count>
+                               <iterate>
+                                  <instanceof
+                                        value="org.eclipse.emf.ecp.core.ECPProject">
+                                  </instanceof>
+                                  <test
+                                        property="org.eclipse.emf.ecp.core.project.providerName"
+                                        value="org.eclipse.emf.ecp.emfstore.provider">
+                                  </test>
+                                  <test
+                                        args="org.eclipse.emf.ecp.emfstore.ui.branchMerge"
+                                        property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                                        value="true">
+                                  </test>
+                               </iterate>
+                            </and>
+                         </or>
+                      </with>
+                   </definition>
+                   <definition
+                         id="org.eclipse.emf.ecp.emfstore.ui.e3.updateToVersion">
+                      <with
+                            variable="selection">
+                         <or>
+                            <and>
+                               <reference
+                                     definitionId="org.eclipse.emf.ecp.emfstore.ui.emfstoreProject">
+                               </reference>
+                               <test
+                                     args="org.eclipse.emf.ecp.emfstore.ui.updateToVersion"
+                                     property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                                     value="true">
+                               </test>
+                            </and>
+                            <and>
+                               <count
+                                     value="1">
+                               </count>
+                               <iterate>
+                                  <instanceof
+                                        value="org.eclipse.emf.ecp.core.ECPProject">
+                                  </instanceof>
+                                  <test
+                                        property="org.eclipse.emf.ecp.core.project.providerName"
+                                        value="org.eclipse.emf.ecp.emfstore.provider">
+                                  </test>
+                                  <test
+                                        args="org.eclipse.emf.ecp.emfstore.ui.updateToVersion"
+                                        property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                                        value="true">
+                                  </test>
+                               </iterate>
+                            </and>
+                         </or>
+                      </with>
+                   </definition>
+                   <definition
+                         id="org.eclipse.emf.ecp.emfstore.ui.e3.login">
+                      <with
+                            variable="selection">
+                         <or>
+                            <and>
+                               <instanceof
+                                     value="org.eclipse.emf.ecp.core.ECPRepository">
+                               </instanceof>
+                               <test
+                                     property="org.eclipse.emf.ecp.core.repository.providerName"
+                                     value="org.eclipse.emf.ecp.emfstore.provider">
+                               </test>
+                               <test
+                                     forcePluginActivation="true"
+                                     property="org.eclipse.emf.ecp.emfstore.ui.testers.emfserverIsLoggedIn"
+                                     value="false">
+                               </test>
+                               <test
+                                     args="org.eclipse.emf.ecp.emfstore.ui.emfserverLogin"
+                                     property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                                     value="true">
+                               </test>
+                            </and>
+                            <and>
+                               <count
+                                     value="1">
+                               </count>
+                               <iterate
+                                     ifEmpty="false"
+                                     operator="and">
+                                  <instanceof
+                                        value="org.eclipse.emf.ecp.core.ECPRepository">
+                                  </instanceof>
+                                  <test
+                                        property="org.eclipse.emf.ecp.core.repository.providerName"
+                                        value="org.eclipse.emf.ecp.emfstore.provider">
+                                  </test>
+                                  <test
+                                        forcePluginActivation="true"
+                                        property="org.eclipse.emf.ecp.emfstore.ui.testers.emfserverIsLoggedIn"
+                                        value="false">
+                                  </test>
+                                  <test
+                                        args="org.eclipse.emf.ecp.emfstore.ui.emfserverLogin"
+                                        property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                                        value="true">
+                                  </test>
+                               </iterate>
+                            </and>
+                         </or>
+                      </with>
+                   </definition>
+                   <definition
+                         id="org.eclipse.emf.ecp.emfstore.ui.e3.logout">
+                      <with
+                            variable="selection">
+                         <or>
+                            <and>
+                               <instanceof
+                                     value="org.eclipse.emf.ecp.core.ECPRepository">
+                               </instanceof>
+                               <test
+                                     property="org.eclipse.emf.ecp.core.repository.providerName"
+                                     value="org.eclipse.emf.ecp.emfstore.provider">
+                               </test>
+                               <test
+                                     forcePluginActivation="true"
+                                     property="org.eclipse.emf.ecp.emfstore.ui.testers.emfserverIsLoggedIn"
+                                     value="true">
+                               </test>
+                               <test
+                                     args="org.eclipse.emf.ecp.emfstore.ui.emfserverLogout"
+                                     property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                                     value="true">
+                               </test>
+                            </and>
+                            <and>
+                               <count
+                                     value="1">
+                               </count>
+                               <iterate
+                                     ifEmpty="false"
+                                     operator="and">
+                                  <instanceof
+                                        value="org.eclipse.emf.ecp.core.ECPRepository">
+                                  </instanceof>
+                                  <test
+                                        property="org.eclipse.emf.ecp.core.repository.providerName"
+                                        value="org.eclipse.emf.ecp.emfstore.provider">
+                                  </test>
+                                  <test
+                                        forcePluginActivation="true"
+                                        property="org.eclipse.emf.ecp.emfstore.ui.testers.emfserverIsLoggedIn"
+                                        value="true">
+                                  </test>
+                                  <test
+                                        args="org.eclipse.emf.ecp.emfstore.ui.emfserverLogout"
+                                        property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                                        value="true">
+                                  </test>
+                               </iterate>
+                            </and>
+                         </or>
+                      </with>
+                   </definition>
+                   <definition
+                         id="org.eclipse.emf.ecp.emfstore.ui.e3.serverDelete">
+                      <with
+                            variable="selection">
+                         <or>
+                            <and>
+                               <instanceof
+                                     value="org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProjectWrapper">
+                               </instanceof>
+                               <test
+                                     forcePluginActivation="true"
+                                     property="org.eclipse.emf.ecp.emfstore.ui.testers.isServerAdmin"
+                                     value="true">
+                               </test>
+                               <test
+                                     args="org.eclipse.emf.ecp.emfstore.ui.deleteOnServer"
+                                     property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                                     value="true">
+                               </test>
+                            </and>
+                            <and>
+                               <count
+                                     value="1">
+                               </count>
+                               <iterate
+                                     ifEmpty="false"
+                                     operator="and">
+                                  <instanceof
+                                        value="org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProjectWrapper">
+                                  </instanceof>
+                                  <test
+                                        forcePluginActivation="true"
+                                        property="org.eclipse.emf.ecp.emfstore.ui.testers.isServerAdmin"
+                                        value="true">
+                                  </test>
+                                  <test
+                                        args="org.eclipse.emf.ecp.emfstore.ui.deleteOnServer"
+                                        property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                                        value="true">
+                                  </test>
+                               </iterate>
+                            </and>
+                         </or>
+                      </with>
+                   </definition>
+                   <definition
+                         id="org.eclipse.emf.ecp.emfstore.ui.e3.branchCheckout">
+                      <with
+                            variable="selection">
+                         <or>
+                            <and>
+                               <instanceof
+                                     value="org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProjectWrapper">
+                               </instanceof>
+                               <test
+                                     args="org.eclipse.emf.ecp.emfstore.ui.branchCheckout"
+                                     property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                                     value="true">
+                               </test>
+                            </and>
+                            <and>
+                               <count
+                                     value="1">
+                               </count>
+                               <iterate
+                                     ifEmpty="false"
+                                     operator="and">
+                                  <instanceof
+                                        value="org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProjectWrapper">
+                                  </instanceof>
+                                  <test
+                                        args="org.eclipse.emf.ecp.emfstore.ui.branchCheckout"
+                                        property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                                        value="true">
+                                  </test>
+                               </iterate>
+                            </and>
+                         </or>
+                      </with>
+                   </definition>
+                   <definition
+                         id="org.eclipse.emf.ecp.emfstore.ui.e3.serverUsers">
+                      <with
+                            variable="selection">
+                         <or>
+                            <and>
+                               <instanceof
+                                     value="org.eclipse.emf.ecp.core.ECPRepository">
+                               </instanceof>
+                               <test
+                                     property="org.eclipse.emf.ecp.core.repository.providerName"
+                                     value="org.eclipse.emf.ecp.emfstore.provider">
+                               </test>
+                               <test
+                                     forcePluginActivation="true"
+                                     property="org.eclipse.emf.ecp.emfstore.ui.testers.emfserverIsLoggedIn"
+                                     value="true">
+                               </test>
+                               <test
+                                     forcePluginActivation="true"
+                                     property="org.eclipse.emf.ecp.emfstore.ui.testers.isServerAdmin"
+                                     value="true">
+                               </test>
+                               <test
+                                     args="org.eclipse.emf.ecp.emfstore.ui.manageUserGroups"
+                                     property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                                     value="true">
+                               </test>
+                            </and>
+                            <and>
+                               <count
+                                     value="1">
+                               </count>
+                               <iterate
+                                     ifEmpty="false"
+                                     operator="and">
+                                  <instanceof
+                                        value="org.eclipse.emf.ecp.core.ECPRepository">
+                                  </instanceof>
+                                  <test
+                                        property="org.eclipse.emf.ecp.core.repository.providerName"
+                                        value="org.eclipse.emf.ecp.emfstore.provider">
+                                  </test>
+                                  <test
+                                        forcePluginActivation="true"
+                                        property="org.eclipse.emf.ecp.emfstore.ui.testers.emfserverIsLoggedIn"
+                                        value="true">
+                                  </test>
+                                  <test
+                                        forcePluginActivation="true"
+                                        property="org.eclipse.emf.ecp.emfstore.ui.testers.isServerAdmin"
+                                        value="true">
+                                  </test>
+                                  <test
+                                        args="org.eclipse.emf.ecp.emfstore.ui.manageUserGroups"
+                                        property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                                        value="true">
+                                  </test>
+                               </iterate>
+                            </and>
+                         </or>
+                      </with>
+                   </definition>
+                   <definition
+                         id="org.eclipse.emf.ecp.emfstore.ui.e3.registerEPackage">
+                      <with
+                            variable="selection">
+                         <or>
+                            <and>
+                               <instanceof
+                                     value="org.eclipse.emf.ecp.core.ECPRepository">
+                               </instanceof>
+                               <test
+                                     property="org.eclipse.emf.ecp.core.repository.providerName"
+                                     value="org.eclipse.emf.ecp.emfstore.provider">
+                               </test>
+                               <test
+                                     forcePluginActivation="true"
+                                     property="org.eclipse.emf.ecp.emfstore.ui.testers.emfserverIsLoggedIn"
+                                     value="true">
+                               </test>
+                               <test
+                                     forcePluginActivation="true"
+                                     property="org.eclipse.emf.ecp.emfstore.ui.testers.isServerAdmin"
+                                     value="true">
+                               </test>
+                               <test
+                                     args="org.eclipse.emf.ecp.emfstore.ui.emfserverRegisterEPackage"
+                                     property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                                     value="true">
+                               </test>
+                            </and>
+                            <and>
+                               <count
+                                     value="1">
+                               </count>
+                               <iterate
+                                     ifEmpty="false"
+                                     operator="and">
+                                  <instanceof
+                                        value="org.eclipse.emf.ecp.core.ECPRepository">
+                                  </instanceof>
+                                  <test
+                                        property="org.eclipse.emf.ecp.core.repository.providerName"
+                                        value="org.eclipse.emf.ecp.emfstore.provider">
+                                  </test>
+                                  <test
+                                        forcePluginActivation="true"
+                                        property="org.eclipse.emf.ecp.emfstore.ui.testers.emfserverIsLoggedIn"
+                                        value="true">
+                                  </test>
+                                  <test
+                                        forcePluginActivation="true"
+                                        property="org.eclipse.emf.ecp.emfstore.ui.testers.isServerAdmin"
+                                        value="true">
+                                  </test>
+                                  <test
+                                        args="org.eclipse.emf.ecp.emfstore.ui.emfserverRegisterEPackage"
+                                        property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                                        value="true">
+                                  </test>
+                               </iterate>
+                            </and>
+                         </or>
+                      </with>
+                   </definition>
+                   <definition
+                         id="org.eclipse.emf.ecp.emfstore.ui.e3.serverProjectCreate">
+                      <with
+                            variable="selection">
+                         <or>
+                            <and>
+                               <instanceof
+                                     value="org.eclipse.emf.ecp.core.ECPRepository">
+                               </instanceof>
+                               <test
+                                     property="org.eclipse.emf.ecp.core.repository.providerName"
+                                     value="org.eclipse.emf.ecp.emfstore.provider">
+                               </test>
+                               <test
+                                     forcePluginActivation="true"
+                                     property="org.eclipse.emf.ecp.emfstore.ui.testers.emfserverIsLoggedIn"
+                                     value="true">
+                               </test>
+                               <test
+                                     forcePluginActivation="true"
+                                     property="org.eclipse.emf.ecp.emfstore.ui.testers.isServerAdmin"
+                                     value="true">
+                               </test>
+                               <test
+                                     args="org.eclipse.emf.ecp.emfstore.ui.emfserverCreateRemoteProject"
+                                     property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                                     value="true">
+                               </test>
+                            </and>
+                            <and>
+                               <count
+                                     value="1">
+                               </count>
+                               <iterate
+                                     ifEmpty="false"
+                                     operator="and">
+                                  <instanceof
+                                        value="org.eclipse.emf.ecp.core.ECPRepository">
+                                  </instanceof>
+                                  <test
+                                        property="org.eclipse.emf.ecp.core.repository.providerName"
+                                        value="org.eclipse.emf.ecp.emfstore.provider">
+                                  </test>
+                                  <test
+                                        forcePluginActivation="true"
+                                        property="org.eclipse.emf.ecp.emfstore.ui.testers.emfserverIsLoggedIn"
+                                        value="true">
+                                  </test>
+                                  <test
+                                        forcePluginActivation="true"
+                                        property="org.eclipse.emf.ecp.emfstore.ui.testers.isServerAdmin"
+                                        value="true">
+                                  </test>
+                                  <test
+                                        args="org.eclipse.emf.ecp.emfstore.ui.emfserverCreateRemoteProject"
+                                        property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                                        value="true">
+                                  </test>
+                               </iterate>
+                            </and>
+                         </or>
+                      </with>
+                   </definition>
+                   <definition
+                         id="org.eclipse.emf.ecp.emfstore.ui.e3.localServer">
+                      <with
+                            variable="selection">
+                         <or>
+                            <and>
+                               <instanceof
+                                     value="org.eclipse.emf.ecp.core.ECPRepository">
+                               </instanceof>
+                               <test
+                                     forcePluginActivation="true"
+                                     property="org.eclipse.emf.ecp.core.repository.providerName"
+                                     value="org.eclipse.emf.ecp.emfstore.provider">
+                               </test>
+                               <test
+                                     args="org.eclipse.emf.ecp.emfstore.ui.startLocalServer"
+                                     property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                                     value="true">
+                               </test>
+                            </and>
+                            <and>
+                               <count
+                                     value="1">
+                               </count>
+                               <iterate
+                                     ifEmpty="false"
+                                     operator="and">
+                                  <instanceof
+                                        value="org.eclipse.emf.ecp.core.ECPRepository">
+                                  </instanceof>
+                                  <test
+                                        forcePluginActivation="true"
+                                        property="org.eclipse.emf.ecp.core.repository.providerName"
+                                        value="org.eclipse.emf.ecp.emfstore.provider">
+                                  </test>
+                                  <test
+                                        args="org.eclipse.emf.ecp.emfstore.ui.startLocalServer"
+                                        property="org.eclipse.emf.ecp.ui.e3.workbench.menu.enablement"
+                                        value="true">
+                                  </test>
+                               </iterate>
+                            </and>
+                         </or>
+                      </with>
+                   </definition>
                 </extension>
                 
 </plugin>

@@ -9,7 +9,6 @@ import org.eclipse.emf.ecp.emfstore.internal.ui.handler.EMFStoreLogInHelper;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
 import org.eclipse.swt.widgets.Shell;
 
-@SuppressWarnings("restriction")
 public class LogInHandler {
 	@Execute
 	public void execute(Shell shell,

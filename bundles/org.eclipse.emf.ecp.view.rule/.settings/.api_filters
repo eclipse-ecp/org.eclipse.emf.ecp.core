@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.ecp.view.rule" version="2">
+    <resource path="META-INF/MANIFEST.MF">
+        <filter comment="This is SPI" id="923795461">
+            <message_arguments>
+                <message_argument value="1.5.0"/>
+                <message_argument value="1.4.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/rule/RuleServiceHelper.java" type="org.eclipse.emf.ecp.view.spi.rule.RuleServiceHelper">
+        <filter comment="This is SPI" id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.rule.RuleServiceHelper"/>
+                <message_argument value="getInvolvedEObjects(EStructuralFeature.Setting, Object, EAttribute, Class&lt;T&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change" id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.rule.RuleServiceHelper"/>
+                <message_argument value="getInvolvedEObjects(Map&lt;EStructuralFeature.Setting,Object&gt;, EAttribute, Class&lt;T&gt;)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

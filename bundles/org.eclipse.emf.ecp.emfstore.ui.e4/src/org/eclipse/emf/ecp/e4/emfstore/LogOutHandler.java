@@ -9,7 +9,6 @@ import org.eclipse.emf.ecp.emfstore.internal.ui.handler.EMFStoreLogOutHelper;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
 import org.eclipse.swt.widgets.Shell;
 
-@SuppressWarnings("restriction")
 public class LogOutHandler {
 	@Execute
 	public void execute(Shell shell,

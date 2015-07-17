@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
  * Eugen Neufeld - JavaDoc
@@ -20,12 +20,13 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.core.ECPRepositoryManager;
+import org.eclipse.emf.ecp.core.util.observer.ECPObserverBus;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
 /**
  * This is the Activator for the ECP Core plugin.
- * 
+ *
  * @author Eike Stepper
  * @author Eugen Neufeld
  */
@@ -47,18 +48,11 @@ public final class Activator extends Plugin {
 	@Override
 	public void start(BundleContext bundleContext) throws Exception {
 		instance = this;
-		// Initialize all manager
-		getECPProviderRegistry();
-		getECPRepositoryManager();
-		getECPProjectManager();
 		super.start(bundleContext);
 	}
 
 	@Override
 	public void stop(BundleContext bundleContext) throws Exception {
-		ECPProjectManagerImpl.INSTANCE.deactivate();
-		ECPRepositoryManagerImpl.INSTANCE.deactivate();
-		ECPProviderRegistryImpl.INSTANCE.deactivate();
 
 		instance = null;
 		super.stop(bundleContext);
@@ -67,7 +61,7 @@ public final class Activator extends Plugin {
 	// END SUPRESS CATCH EXCEPTION
 	/**
 	 * Returns the instance of this Activator.
-	 * 
+	 *
 	 * @return the saved instance
 	 */
 	public static Activator getInstance() {
@@ -76,7 +70,7 @@ public final class Activator extends Plugin {
 
 	/**
 	 * Logs and Info message.
-	 * 
+	 *
 	 * @param message the message to log
 	 */
 	public static void log(String message) {
@@ -85,7 +79,7 @@ public final class Activator extends Plugin {
 
 	/**
 	 * Logs a message with a specific status.
-	 * 
+	 *
 	 * @param status the {@link IStatus} value
 	 * @param message the message to log
 	 */
@@ -99,7 +93,7 @@ public final class Activator extends Plugin {
 
 	/**
 	 * Logs a {@link Throwable}.
-	 * 
+	 *
 	 * @param t the {@link Throwable} to log
 	 * @return the message of the {@link Throwable}
 	 */
@@ -123,51 +117,76 @@ public final class Activator extends Plugin {
 		return new Status(IStatus.ERROR, PLUGIN_ID, msg, t);
 	}
 
-	private static ECPProjectManager ecpProjectManager;
-
 	/**
 	 * Helper method to get the {@link ECPProjectManager}.
-	 * 
+	 *
 	 * @return the {@link ECPProjectManager}
 	 */
-	public static ECPProjectManager getECPProjectManager() {
-		if (ecpProjectManager == null) {
-			final ServiceReference<ECPProjectManager> serviceRef = instance.getBundle().getBundleContext()
-				.getServiceReference(ECPProjectManager.class);
-			ecpProjectManager = instance.getBundle().getBundleContext().getService(serviceRef);
-		}
+	public static synchronized ECPProjectManager getECPProjectManager() {
+		ECPProjectManager ecpProjectManager = null;
+		final ServiceReference<ECPProjectManager> serviceRef = instance.getBundle().getBundleContext()
+			.getServiceReference(ECPProjectManager.class);
+		ecpProjectManager = instance.getBundle().getBundleContext().getService(serviceRef);
+		// because we are using a service factory for the RAP implementation we must unget
+		// the service so that the service factory is called again on each call. otherwise
+		// the service factor will keep returning the same cached instance as the reference
+		// count of the service will remain greater than zero
+		instance.getBundle().getBundleContext().ungetService(serviceRef);
 		return ecpProjectManager;
 	}
 
-	private static ECPRepositoryManager ecpRepositoryManager;
-
 	/**
 	 * Helper method to get the {@link ECPRepositoryManager}.
-	 * 
+	 *
 	 * @return the {@link ECPRepositoryManager}
 	 */
-	public static ECPRepositoryManager getECPRepositoryManager() {
-		if (ecpRepositoryManager == null) {
-			final ServiceReference<ECPRepositoryManager> serviceRef = instance.getBundle().getBundleContext()
-				.getServiceReference(ECPRepositoryManager.class);
-			ecpRepositoryManager = instance.getBundle().getBundleContext().getService(serviceRef);
-		}
+	public static synchronized ECPRepositoryManager getECPRepositoryManager() {
+		ECPRepositoryManager ecpRepositoryManager = null;
+		final ServiceReference<ECPRepositoryManager> serviceRef = instance.getBundle().getBundleContext()
+			.getServiceReference(ECPRepositoryManager.class);
+		ecpRepositoryManager = instance.getBundle().getBundleContext().getService(serviceRef);
+		// because we are using a service factory for the RAP implementation we must unget
+		// the service so that the service factory is called again on each call. otherwise
+		// the service factor will keep returning the same cached instance as the reference
+		// count of the service will remian greater that zero
+		instance.getBundle().getBundleContext().ungetService(serviceRef);
 		return ecpRepositoryManager;
 	}
 
-	private static ECPProviderRegistry ecpProviderRegistry;
-
 	/**
 	 * Helper method to get the {@link ECPProviderRegistry}.
-	 * 
+	 *
 	 * @return the {@link ECPProviderRegistry}
 	 */
-	public static ECPProviderRegistry getECPProviderRegistry() {
-		if (ecpProviderRegistry == null) {
-			final ServiceReference<ECPProviderRegistry> serviceRef = instance.getBundle().getBundleContext()
-				.getServiceReference(ECPProviderRegistry.class);
-			ecpProviderRegistry = instance.getBundle().getBundleContext().getService(serviceRef);
-		}
+	public static synchronized ECPProviderRegistry getECPProviderRegistry() {
+		ECPProviderRegistry ecpProviderRegistry = null;
+		final ServiceReference<ECPProviderRegistry> serviceRef = instance.getBundle().getBundleContext()
+			.getServiceReference(ECPProviderRegistry.class);
+		ecpProviderRegistry = instance.getBundle().getBundleContext().getService(serviceRef);
+		// because we are using a service factory for the RAP implementation we must unget
+		// the service so that the service factory is called again on each call. otherwise
+		// the service factor will keep returning the same cached instance as the reference
+		// count of the service will remain greater than zero
+		instance.getBundle().getBundleContext().ungetService(serviceRef);
 		return ecpProviderRegistry;
 	}
+
+	/**
+	 * Helper method to get the {@link ECPObserverBus}.
+	 *
+	 * @return the {@link ECPObserverBus}
+	 */
+	public static synchronized ECPObserverBus getECPObserverBus() {
+		ECPObserverBus ecpObserverBus = null;
+		final ServiceReference<ECPObserverBus> serviceRef = instance.getBundle().getBundleContext()
+			.getServiceReference(ECPObserverBus.class);
+		ecpObserverBus = instance.getBundle().getBundleContext().getService(serviceRef);
+		// because we are using a service factory for the RAP implementation we must unget
+		// the service so that the service factory is called again on each call. otherwise
+		// the service factor will keep returning the same cached instance as the reference
+		// count of the service will remain greater than zero
+		instance.getBundle().getBundleContext().ungetService(serviceRef);
+		return ecpObserverBus;
+	}
+
 }

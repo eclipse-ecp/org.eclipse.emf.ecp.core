@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich GmbH - initial API and implementation
  ******************************************************************************/
@@ -21,29 +21,24 @@ import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.RulePackage;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
  * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition} object.
  * <!-- begin-user-doc -->
- * <!-- end-user-doc -->
- * 
+ *
+ * @since 1.2
+ *        <!-- end-user-doc -->
  * @generated
  */
-public class LeafConditionItemProvider extends ConditionItemProvider implements IEditingDomainItemProvider,
-	IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
+public class LeafConditionItemProvider extends ConditionItemProvider {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public LeafConditionItemProvider(AdapterFactory adapterFactory) {
@@ -54,7 +49,7 @@ public class LeafConditionItemProvider extends ConditionItemProvider implements 
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -72,7 +67,7 @@ public class LeafConditionItemProvider extends ConditionItemProvider implements 
 	 * This adds a property descriptor for the Expected Value feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected void addExpectedValuePropertyDescriptor(Object object) {
@@ -99,7 +94,7 @@ public class LeafConditionItemProvider extends ConditionItemProvider implements 
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -109,6 +104,7 @@ public class LeafConditionItemProvider extends ConditionItemProvider implements 
 		{
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(RulePackage.Literals.LEAF_CONDITION__DOMAIN_MODEL_REFERENCE);
+			childrenFeatures.add(RulePackage.Literals.LEAF_CONDITION__VALUE_DOMAIN_MODEL_REFERENCE);
 		}
 		return childrenFeatures;
 	}
@@ -116,7 +112,7 @@ public class LeafConditionItemProvider extends ConditionItemProvider implements 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -132,7 +128,7 @@ public class LeafConditionItemProvider extends ConditionItemProvider implements 
 	 * This returns LeafCondition.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -144,13 +140,13 @@ public class LeafConditionItemProvider extends ConditionItemProvider implements 
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	public String getText(Object object) {
-		Object labelValue = ((LeafCondition) object).getExpectedValue();
-		String label = labelValue == null ? null : labelValue.toString();
+		final Object labelValue = ((LeafCondition) object).getExpectedValue();
+		final String label = labelValue == null ? null : labelValue.toString();
 		return label == null || label.length() == 0 ?
 			getString("_UI_LeafCondition_type") : //$NON-NLS-1$
 			getString("_UI_LeafCondition_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
@@ -161,7 +157,7 @@ public class LeafConditionItemProvider extends ConditionItemProvider implements 
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -174,6 +170,7 @@ public class LeafConditionItemProvider extends ConditionItemProvider implements 
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
 		case RulePackage.LEAF_CONDITION__DOMAIN_MODEL_REFERENCE:
+		case RulePackage.LEAF_CONDITION__VALUE_DOMAIN_MODEL_REFERENCE:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;
 		}
@@ -185,7 +182,7 @@ public class LeafConditionItemProvider extends ConditionItemProvider implements 
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.&#xD;&#xA;&#xD;&#xA;All rights reserved. This program and the accompanying materials&#xD;&#xA;are made available under the terms of the Eclipse Public License v1.0&#xD;&#xA;which accompanies this distribution, and is available at&#xD;&#xA;http://www.eclipse.org/legal/epl-v10.html&#xD;&#xA;&#xD;&#xA;Contributors:&#xD;&#xA;Eugen Neufeld - initial API and implementation&#xD;&#xA;Lucas Koehler - extension for EnumComboViewerRenderer_PTest"
+    modelDirectory="/org.eclipse.emf.ecp.view.core.swt.tests/src" modelPluginID="org.eclipse.emf.ecp.view.core.swt.tests"
+    modelName="Test" nonNLSMarkers="true" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>test.ecore</foreignModel>
+  <genPackages prefix="Test" basePackage="org.eclipse.emf.ecp.view.core.swt" disposableProviderFactory="true"
+      interfacePackageSuffix="model" metaDataPackageSuffix="model" classPackageSuffix="model.impl"
+      utilityPackageSuffix="model.util" providerPackageSuffix="model.provider" presentationPackageSuffix="model.presentation"
+      testsPackageSuffix="model.tests" ecorePackage="test.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="test.ecore#//Enum">
+      <genEnumLiterals ecoreEnumLiteral="test.ecore#//Enum/a"/>
+      <genEnumLiterals ecoreEnumLiteral="test.ecore#//Enum/b"/>
+    </genEnums>
+    <genDataTypes ecoreDataType="test.ecore#//XMLDate"/>
+    <genClasses ecoreClass="test.ecore#//SimpleTestObject">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//SimpleTestObject/date"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//SimpleTestObject/xmlDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//SimpleTestObject/enum"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

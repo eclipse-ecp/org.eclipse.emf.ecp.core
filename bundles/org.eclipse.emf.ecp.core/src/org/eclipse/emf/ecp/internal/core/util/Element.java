@@ -1,11 +1,11 @@
 /********************************************************************************
  * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
  ********************************************************************************/
@@ -21,7 +21,7 @@ public abstract class Element implements ECPElement {
 
 	/**
 	 * The constructor of an {@link Element}.
-	 * 
+	 *
 	 * @param name the name of the created element
 	 */
 	public Element(String name) {
@@ -33,11 +33,13 @@ public abstract class Element implements ECPElement {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final String getName() {
 		return name;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public int compareTo(ECPElement o) {
 		return name.compareTo(o.getName());
 	}
@@ -62,7 +64,7 @@ public abstract class Element implements ECPElement {
 		}
 
 		if (obj instanceof Element) {
-			Element that = (Element) obj;
+			final Element that = (Element) obj;
 			return getType().equals(that.getType()) && name.equals(that.getName());
 		}
 
@@ -76,7 +78,7 @@ public abstract class Element implements ECPElement {
 
 	/**
 	 * This return the type of the object.
-	 * 
+	 *
 	 * @return the type
 	 */
 	public abstract String getType();

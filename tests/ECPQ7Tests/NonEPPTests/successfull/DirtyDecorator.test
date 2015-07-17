@@ -1,0 +1,156 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _rr2EEFpSEeKcnaHGSt8OwA,_f3qEUVpSEeKcnaHGSt8OwA,_IuFcgFpZEeKcnaHGSt8OwA,__UtTgD-XEeK-yuKsz0Lang
+Element-Name: DirtyDecorator
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _z2GgIEBxEeKAxsN-kffdlw
+Runtime-Version: 1.5.4.201410231434
+Save-Time: 12/19/14 4:43 PM
+Tags: skipExecution
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+with [get-view "Model Explorer" | get-tree] {
+    select "TestProject \\[trunk, Version 0\\]/Tournament Pro/Matchup" | get-menu Game | click
+    select "TestProjectSecondCheckOut \\[trunk, Version 0\\]/Tournament Pro/Matchup" | get-menu Game | click
+}
+with [get-view "Model Explorer" | get-tree] {
+    get-item "TestProject \\[trunk, Version 0\\]" | get-property "getImage().getImageData().transparentPixel" | equals "-1" | verify-true
+    get-item "TestProjectSecondCheckOut \\[trunk, Version 0\\]" | get-property "getImage().getImageData().transparentPixel" | equals "-1" 
+        | verify-true
+}
+get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]" | get-menu Commit | click
+get-window Commit | get-button OK | click
+get-view "Model Explorer" | get-tree | get-item "TestProject \\[trunk, Version 1\\]" | get-property "getImage().getImageData().transparentPixel" 
+    | equals [get-by-os -macosx "0" -win "53" -linux "0"] | verify-true
+get-view "Model Explorer" | get-tree | get-item "TestProjectSecondCheckOut \\[trunk, Version 0\\]"
+    | get-property "getImage().getImageData().transparentPixel" | equals "-1" | verify-true
+get-view "Model Explorer" | get-tree | select "TestProjectSecondCheckOut \\[trunk, Version 0\\]" | get-menu Commit | click
+get-window Confirmation | get-button OK | click
+get-window Update | get-button OK | click
+get-window Commit | get-button OK | click
+get-view "Model Explorer" | get-tree | select [get-item "TestProjectSecondCheckOut \\[trunk, Version 2\\]/Tournament Pro/Matchup" 
+    | get-item Game -index 2] | get-menu "Delete Model Element" | click
+get-view "Model Explorer" | get-tree | get-item "TestProjectSecondCheckOut \\[trunk, Version 2\\]"
+    | get-property "getImage().getImageData().transparentPixel" | equals "-1" | verify-true
+get-view "Model Explorer" | get-tree | select "TestProjectSecondCheckOut \\[trunk, Version 2\\]" | get-menu Delete | click
+get-window Delete | get-button OK | click
+get-view "Model Repositories" | get-tree | select "Local EMFStore/TestProject" | get-menu "Checkout..." | click
+with [get-window Checkout] {
+    get-editbox -after [get-label "Project name:"] | set-text TestProjectSecondCheckout
+    get-button Finish | click
+}
+with [get-view "Model Explorer" | get-tree] {
+    select [get-item "TestProjectSecondCheckout \\[trunk, Version 2\\]/Tournament Pro/Matchup" | get-item Game -index 2] 
+        | get-menu "Delete Model Element" | click
+    select "TestProjectSecondCheckout \\[trunk, Version 2\\]" | get-menu Commit | click
+}
+get-window Commit | get-button OK | click
+get-view "Model Repositories" | get-tree | select "Local EMFStore/TestProject" | get-menu "Checkout..." | click
+with [get-window Checkout] {
+    get-editbox -after [get-label "Project name:"] | set-text TestProjectThirdCheckout
+    get-button Finish | click
+}
+get-view "Model Explorer" | get-tree | get-item "TestProjectThirdCheckout \\[trunk, Version 3\\]"
+    | get-property "getImage().getImageData().transparentPixel" | equals [get-by-os -macosx "0" -win "53" -linux "0"] | verify-true
+with [get-view "Model Explorer" | get-tree] {
+    select "TestProjectThirdCheckout \\[trunk, Version 3\\]/Tournament Pro/Matchup/Game" | get-menu "Delete Model Element" | click
+    select "TestProjectThirdCheckout \\[trunk, Version 3\\]/League Europe" | get-menu "Delete Model Element" | click
+    select "TestProjectThirdCheckout \\[trunk, Version 3\\]/League America" | get-menu "Delete Model Element" | click
+    select "TestProjectThirdCheckout \\[trunk, Version 3\\]/Tournament Pro" | get-menu "Delete Model Element" | click
+    select "TestProjectThirdCheckout \\[trunk, Version 3\\]" | get-menu "Undo Last Operation" | click
+    select "TestProjectThirdCheckout \\[trunk, Version 3\\]" | get-menu "Revert All Operations" | click
+}
+get-window Confirmation | get-button Yes | click
+get-window Revert | get-button OK | click
+get-view "Model Explorer" | get-tree | get-item "TestProjectThirdCheckout \\[trunk, Version 3\\]"
+    | get-property "getImage().getImageData().transparentPixel" | equals [get-by-os -macosx "0" -win "53" -linux "0"] | verify-true
+with [get-view "Model Explorer" | get-tree] {
+    select "TestProjectSecondCheckout \\[trunk, Version 3\\]/League America/Player Jonas" | get-menu "Delete Model Element" | click
+    select "TestProjectSecondCheckout \\[trunk, Version 3\\]/League America/Player Maximilian" | double-click
+}
+get-editor "Player Maximilian" | get-editbox -after [get-label Name] | set-text Maximilianiks
+get-view "Model Explorer" | get-tree | select "TestProjectSecondCheckout \\[trunk, Version 3\\]/Tournament Pro" | double-click
+
+get-editor "Tournament Pro" | get-combo -after [get-label Type] | set-text Amateur
+get-view "Model Explorer" | get-tree | get-item "TestProjectSecondCheckout \\[trunk, Version 3\\]"
+    | get-property "getImage().getImageData().transparentPixel" | equals "-1" | verify-true
+get-view "Model Explorer" | get-tree | select "TestProjectSecondCheckout \\[trunk, Version 3\\]" | get-menu "Undo Last Operation" | click
+get-view "Model Explorer" | get-tree | get-item "TestProjectSecondCheckout \\[trunk, Version 3\\]"
+    | get-property "getImage().getImageData().transparentPixel" | equals "-1" | verify-true
+get-view "Model Explorer" | get-tree | select "TestProjectSecondCheckout \\[trunk, Version 3\\]" | get-menu "Undo Last Operation" | click
+get-view "Model Explorer" | get-tree | get-item "TestProjectSecondCheckout \\[trunk, Version 3\\]"
+    | get-property "getImage().getImageData().transparentPixel" | equals "-1" | verify-true
+get-view "Model Explorer" | get-tree | select "TestProjectSecondCheckout \\[trunk, Version 3\\]" | get-menu "Undo Last Operation" | click
+get-view "Model Explorer" | get-tree | get-item "TestProjectSecondCheckout \\[trunk, Version 3\\]"
+    | get-property "getImage().getImageData().transparentPixel" | equals [get-by-os -macosx "0" -win "53" -linux "0"] | verify-true
+get-view "Model Explorer" | get-tree | get-menu "Create new project" | click
+with [get-window "Create Project"] {
+    get-combo -after [get-label "Provider:"] | set-text EMFStore
+    get-editbox -after [get-label "Project Name:"] | set-text NeuesProjekt
+    get-button Finish | click
+}
+get-view "Model Explorer" | get-tree | get-item NeuesProjekt 
+    | get-property "getImage().getImageData().transparentPixel" | equals [get-by-os -macosx "0" -win "53" -linux "0"] | verify-true
+get-view "Model Explorer" | get-tree | select NeuesProjekt | get-menu "New Model Element" | click
+get-window "Add new model element" | try { get-tree | select "Player" } -catch { get-tree | select "bowling/Player" } | double-click
+with [get-editor "Player"] {
+    get-button "Add Entry" | click
+    with [get-editbox -after [get-label "EMails*"]] {
+        set-text jonas
+        key-type "M1+M3+q" "@"
+        set-text "jonas@helming.de"
+    }
+}
+get-editor "Player" | close
+get-view "Model Explorer" | get-tree | get-item NeuesProjekt 
+    | get-property "getImage().getImageData().transparentPixel" | equals [get-by-os -macosx "0" -win "53" -linux "0"] | verify-true
+get-view "Model Explorer" | get-tree | select NeuesProjekt | get-menu Share | click
+with [get-window "ECPRepository Wizard"] {
+    get-button "Select existing repository" | click
+    get-button "Next >" | click
+    get-table | select "Local EMFStore"
+    get-button Finish | click
+}
+get-window "Share succeeded" | get-button OK | click
+get-view "Model Explorer" | get-tree | get-item "NeuesProjekt \\[trunk, Version 0\\]"
+    | get-property "getImage().getImageData().transparentPixel" | equals [get-by-os -macosx "0" -win "53" -linux "0"] | verify-true
+get-view "Model Explorer" | get-tree | select "NeuesProjekt \\[trunk, Version 0\\]/Player" | double-click
+with [get-editor Player] {
+    get-editbox -after [get-label Name] | set-text h
+    close
+}
+get-view "Model Explorer" | get-tree | select "NeuesProjekt \\[trunk, Version 0\\]"
+get-view "Model Explorer" | get-tree | get-item "NeuesProjekt \\[trunk, Version 0\\]"
+    | get-property "getImage().getImageData().transparentPixel" | equals "-1" | verify-true
+get-view "Model Explorer" | get-tree | select "NeuesProjekt \\[trunk, Version 0\\]" | get-menu Commit | click
+get-window Commit | get-button OK | click
+get-view "Model Explorer" | get-tree | get-item "NeuesProjekt \\[trunk, Version 1\\]"
+    | get-property "getImage().getImageData().transparentPixel" | equals [get-by-os -macosx "0" -win "53" -linux "0"] | verify-true
+with [get-view "Model Explorer" | get-tree] {
+    select "NeuesProjekt \\[trunk, Version 1\\]/Player h" | get-menu "Delete Model Element" | click
+    select [get-item "TestProjectSecondCheckout \\[trunk, Version 3\\]/Tournament Pro/Matchup" | get-item Game -index 1] 
+        | get-menu "Delete Model Element" | click
+    select "TestProject \\[trunk, Version 1\\]/Tournament Pro" | get-menu "Delete Model Element" | click
+    select "TestProjectThirdCheckout \\[trunk, Version 3\\]/Tournament Pro" | get-menu "Delete Model Element" | click
+    select "TestProjectSecondCheckout \\[trunk, Version 3\\]" | get-menu "Revert All Operations" | click
+}
+get-window Confirmation | get-button Yes | click
+get-window Revert | get-button OK | click
+get-view "Model Explorer" | get-tree | select "TestProjectThirdCheckout \\[trunk, Version 3\\]" | get-menu "Revert All Operations" | click
+get-window Confirmation | get-button Yes | click
+get-window Revert | get-button OK | click
+with [get-view "Model Explorer" | get-tree] {
+    get-item "TestProjectThirdCheckout \\[trunk, Version 3\\]" | get-property "getImage().getImageData().transparentPixel" | equals [get-by-os -macosx "0" -win "53" -linux "0"] 
+        | verify-true
+    get-item "NeuesProjekt \\[trunk, Version 1\\]" | get-property "getImage().getImageData().transparentPixel" | equals "-1" | verify-true
+    get-item "TestProjectSecondCheckout \\[trunk, Version 3\\]" | get-property "getImage().getImageData().transparentPixel" | equals [get-by-os -macosx "0" -win "53" -linux "0"] 
+        | verify-true
+    get-item "TestProject \\[trunk, Version 1\\]" | get-property "getImage().getImageData().transparentPixel" | equals "-1" | verify-true
+}
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

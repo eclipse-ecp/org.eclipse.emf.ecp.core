@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.ecp.common.ui" version="2">
+    <resource path="src/org/eclipse/emf/ecp/internal/common/ui/Messages.java" type="org.eclipse.emf.ecp.internal.common.ui.Messages">
+        <filter comment="made internal class invisble (Nobody should reference it) [1.5.0]" id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.internal.common.ui.Messages"/>
+                <message_argument value="org.eclipse.emf.ecp.common.ui_1.5.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/spi/common/ui/CompositeFactory.java" type="org.eclipse.emf.ecp.spi.common.ui.CompositeFactory">
+        <filter comment="SPI Change for 1.5.0" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.spi.common.ui.CompositeFactory"/>
+                <message_argument value="getTableSelectionComposite(Object)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/spi/common/ui/SelectModelElementWizard.java" type="org.eclipse.emf.ecp.spi.common.ui.SelectModelElementWizard">
+        <filter comment="SPI Change for 1.5.0" id="388018290">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.spi.common.ui.SelectModelElementWizard"/>
+                <message_argument value="classtoSelect"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change for 1.5.0" id="388018290">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.spi.common.ui.SelectModelElementWizard"/>
+                <message_argument value="description"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change for 1.5.0" id="388018290">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.spi.common.ui.SelectModelElementWizard"/>
+                <message_argument value="pageName"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change for 1.5.0" id="388018290">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.spi.common.ui.SelectModelElementWizard"/>
+                <message_argument value="pageTitle"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/spi/common/ui/composites/SelectModelElementCompositeImpl.java" type="org.eclipse.emf.ecp.spi.common.ui.composites.SelectModelElementCompositeImpl">
+        <filter comment="SPI Change for 1.5.0" id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.spi.common.ui.composites.SelectModelElementCompositeImpl"/>
+                <message_argument value="SelectModelElementCompositeImpl(Object)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

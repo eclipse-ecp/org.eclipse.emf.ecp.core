@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
  */
@@ -36,7 +36,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class ControlValidationTemplateItemProvider
@@ -52,7 +52,7 @@ public class ControlValidationTemplateItemProvider
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public ControlValidationTemplateItemProvider(AdapterFactory adapterFactory)
@@ -64,7 +64,7 @@ public class ControlValidationTemplateItemProvider
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -97,7 +97,7 @@ public class ControlValidationTemplateItemProvider
 	 * This adds a property descriptor for the Ok Color HEX feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected void addOkColorHEXPropertyDescriptor(Object object)
@@ -123,7 +123,7 @@ public class ControlValidationTemplateItemProvider
 	 * This adds a property descriptor for the Ok Image URL feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected void addOkImageURLPropertyDescriptor(Object object)
@@ -149,7 +149,7 @@ public class ControlValidationTemplateItemProvider
 	 * This adds a property descriptor for the Ok Overlay URL feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected void addOkOverlayURLPropertyDescriptor(Object object)
@@ -175,7 +175,7 @@ public class ControlValidationTemplateItemProvider
 	 * This adds a property descriptor for the Info Color HEX feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected void addInfoColorHEXPropertyDescriptor(Object object)
@@ -201,7 +201,7 @@ public class ControlValidationTemplateItemProvider
 	 * This adds a property descriptor for the Info Image URL feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected void addInfoImageURLPropertyDescriptor(Object object)
@@ -227,7 +227,7 @@ public class ControlValidationTemplateItemProvider
 	 * This adds a property descriptor for the Info Overlay URL feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected void addInfoOverlayURLPropertyDescriptor(Object object)
@@ -253,7 +253,7 @@ public class ControlValidationTemplateItemProvider
 	 * This adds a property descriptor for the Warning Color HEX feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected void addWarningColorHEXPropertyDescriptor(Object object)
@@ -279,7 +279,7 @@ public class ControlValidationTemplateItemProvider
 	 * This adds a property descriptor for the Warning Image URL feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected void addWarningImageURLPropertyDescriptor(Object object)
@@ -305,7 +305,7 @@ public class ControlValidationTemplateItemProvider
 	 * This adds a property descriptor for the Warning Overlay URL feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected void addWarningOverlayURLPropertyDescriptor(Object object)
@@ -331,7 +331,7 @@ public class ControlValidationTemplateItemProvider
 	 * This adds a property descriptor for the Error Color HEX feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected void addErrorColorHEXPropertyDescriptor(Object object)
@@ -357,7 +357,7 @@ public class ControlValidationTemplateItemProvider
 	 * This adds a property descriptor for the Error Image URL feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected void addErrorImageURLPropertyDescriptor(Object object)
@@ -383,7 +383,7 @@ public class ControlValidationTemplateItemProvider
 	 * This adds a property descriptor for the Error Overlay URL feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected void addErrorOverlayURLPropertyDescriptor(Object object)
@@ -409,7 +409,7 @@ public class ControlValidationTemplateItemProvider
 	 * This adds a property descriptor for the Cancel Color HEX feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected void addCancelColorHEXPropertyDescriptor(Object object)
@@ -435,7 +435,7 @@ public class ControlValidationTemplateItemProvider
 	 * This adds a property descriptor for the Cancel Image URL feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected void addCancelImageURLPropertyDescriptor(Object object)
@@ -461,7 +461,7 @@ public class ControlValidationTemplateItemProvider
 	 * This adds a property descriptor for the Cancel Overlay URL feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected void addCancelOverlayURLPropertyDescriptor(Object object)
@@ -487,7 +487,7 @@ public class ControlValidationTemplateItemProvider
 	 * This returns ControlValidationTemplate.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -500,13 +500,13 @@ public class ControlValidationTemplateItemProvider
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	public String getText(Object object)
 	{
-		String label = ((VTControlValidationTemplate) object).getOkColorHEX();
+		final String label = ((VTControlValidationTemplate) object).getOkColorHEX();
 		return label == null || label.length() == 0 ?
 			getString("_UI_ControlValidationTemplate_type") : //$NON-NLS-1$
 			getString("_UI_ControlValidationTemplate_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
@@ -517,7 +517,7 @@ public class ControlValidationTemplateItemProvider
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -553,7 +553,7 @@ public class ControlValidationTemplateItemProvider
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -566,7 +566,7 @@ public class ControlValidationTemplateItemProvider
 	 * Return the resource locator for this item provider's resources.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override

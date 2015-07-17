@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
@@ -52,7 +52,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  * Note that most of the adapters are shared among multiple instances.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class TableItemProviderAdapterFactory extends TableAdapterFactory implements ComposeableAdapterFactory,
@@ -61,7 +61,7 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	 * This keeps track of the root adapter factory that delegates to this adapter factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected ComposedAdapterFactory parentAdapterFactory;
@@ -70,7 +70,7 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	 * This is used to implement {@link org.eclipse.emf.edit.provider.IChangeNotifier}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected IChangeNotifier changeNotifier = new ChangeNotifier();
@@ -79,7 +79,7 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	 * This helps manage the child creation extenders.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected ChildCreationExtenderManager childCreationExtenderManager = new ChildCreationExtenderManager(
@@ -89,7 +89,7 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	 * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected Collection<Object> supportedTypes = new ArrayList<Object>();
@@ -98,7 +98,7 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	 * This constructs an instance.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public TableItemProviderAdapterFactory() {
@@ -114,7 +114,7 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	 * instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected TableControlItemProvider tableControlItemProvider;
@@ -123,7 +123,7 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -137,38 +137,11 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.spi.table.model.VTableColumn}
-	 * instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	protected TableColumnItemProvider tableColumnItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.table.model.VTableColumn}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	@Override
-	public Adapter createTableColumnAdapter() {
-		if (tableColumnItemProvider == null)
-		{
-			tableColumnItemProvider = new TableColumnItemProvider(this);
-		}
-
-		return tableColumnItemProvider;
-	}
-
-	/**
 	 * This keeps track of the one adapter used for all
 	 * {@link org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected TableDomainModelReferenceItemProvider tableDomainModelReferenceItemProvider;
@@ -177,7 +150,7 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -192,12 +165,41 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all
+	 * {@link org.eclipse.emf.ecp.view.spi.table.model.VReadOnlyColumnConfiguration} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected ReadOnlyColumnConfigurationItemProvider readOnlyColumnConfigurationItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.table.model.VReadOnlyColumnConfiguration}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public Adapter createReadOnlyColumnConfigurationAdapter()
+	{
+		if (readOnlyColumnConfigurationItemProvider == null)
+		{
+			readOnlyColumnConfigurationItemProvider = new ReadOnlyColumnConfigurationItemProvider(this);
+		}
+
+		return readOnlyColumnConfigurationItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public ComposeableAdapterFactory getRootAdapterFactory() {
 		return parentAdapterFactory == null ? this : parentAdapterFactory.getRootAdapterFactory();
 	}
@@ -206,9 +208,10 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	 * This sets the composed adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void setParentAdapterFactory(ComposedAdapterFactory parentAdapterFactory) {
 		this.parentAdapterFactory = parentAdapterFactory;
 	}
@@ -216,7 +219,7 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -228,7 +231,7 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	 * This implementation substitutes the factory itself as the key for the adapter.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -239,15 +242,15 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	public Object adapt(Object object, Object type) {
 		if (isFactoryForType(type))
 		{
-			Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || (((Class<?>) type).isInstance(adapter)))
+			final Object adapter = super.adapt(object, type);
+			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter))
 			{
 				return adapter;
 			}
@@ -259,7 +262,7 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public List<IChildCreationExtender> getChildCreationExtenders() {
@@ -269,9 +272,10 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public Collection<?> getNewChildDescriptors(Object object, EditingDomain editingDomain) {
 		return childCreationExtenderManager.getNewChildDescriptors(object, editingDomain);
 	}
@@ -279,9 +283,10 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public ResourceLocator getResourceLocator() {
 		return childCreationExtenderManager;
 	}
@@ -290,9 +295,10 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	 * This adds a listener.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void addListener(INotifyChangedListener notifyChangedListener) {
 		changeNotifier.addListener(notifyChangedListener);
 	}
@@ -301,9 +307,10 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	 * This removes a listener.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void removeListener(INotifyChangedListener notifyChangedListener) {
 		changeNotifier.removeListener(notifyChangedListener);
 	}
@@ -312,9 +319,10 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	 * This delegates to {@link #changeNotifier} and to {@link #parentAdapterFactory}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void fireNotifyChanged(Notification notification) {
 		changeNotifier.fireNotifyChanged(notification);
 
@@ -328,23 +336,27 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	 * This disposes all of the item providers created by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void dispose() {
-		if (tableControlItemProvider != null)
+		if (tableControlItemProvider != null) {
 			tableControlItemProvider.dispose();
-		if (tableColumnItemProvider != null)
-			tableColumnItemProvider.dispose();
-		if (tableDomainModelReferenceItemProvider != null)
+		}
+		if (tableDomainModelReferenceItemProvider != null) {
 			tableDomainModelReferenceItemProvider.dispose();
+		}
+		if (readOnlyColumnConfigurationItemProvider != null) {
+			readOnlyColumnConfigurationItemProvider.dispose();
+		}
 	}
 
 	/**
 	 * A child creation extender for the {@link VViewPackage}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public static class ViewChildCreationExtender implements IChildCreationExtender {
@@ -352,7 +364,7 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 		 * The switch for creating child descriptors specific to each extended class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		protected static class CreationSwitch extends ViewSwitch<Object> {
@@ -360,7 +372,7 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 			 * The child descriptors being populated.
 			 * <!-- begin-user-doc -->
 			 * <!-- end-user-doc -->
-			 * 
+			 *
 			 * @generated
 			 */
 			protected List<Object> newChildDescriptors;
@@ -369,7 +381,7 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 			 * The domain in which to create the children.
 			 * <!-- begin-user-doc -->
 			 * <!-- end-user-doc -->
-			 * 
+			 *
 			 * @generated
 			 */
 			protected EditingDomain editingDomain;
@@ -378,7 +390,7 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 			 * Creates the a switch for populating child descriptors in the given domain.
 			 * <!-- begin-user-doc -->
 			 * <!-- end-user-doc -->
-			 * 
+			 *
 			 * @generated
 			 */
 			CreationSwitch(List<Object> newChildDescriptors, EditingDomain editingDomain) {
@@ -389,7 +401,7 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 			/**
 			 * <!-- begin-user-doc -->
 			 * <!-- end-user-doc -->
-			 * 
+			 *
 			 * @generated
 			 */
 			@Override
@@ -405,24 +417,7 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 			/**
 			 * <!-- begin-user-doc -->
 			 * <!-- end-user-doc -->
-			 * 
-			 * @generated
-			 */
-			@Override
-			public Object caseControl(VControl object)
-			{
-				newChildDescriptors.add
-					(createChildParameter
-					(VViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCE,
-						VTableFactory.eINSTANCE.createTableDomainModelReference()));
-
-				return null;
-			}
-
-			/**
-			 * <!-- begin-user-doc -->
-			 * <!-- end-user-doc -->
-			 * 
+			 *
 			 * @generated
 			 */
 			@Override
@@ -439,7 +434,24 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 			/**
 			 * <!-- begin-user-doc -->
 			 * <!-- end-user-doc -->
-			 * 
+			 *
+			 * @generated
+			 */
+			@Override
+			public Object caseControl(VControl object)
+			{
+				newChildDescriptors.add
+					(createChildParameter
+					(VViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCE,
+						VTableFactory.eINSTANCE.createTableDomainModelReference()));
+
+				return null;
+			}
+
+			/**
+			 * <!-- begin-user-doc -->
+			 * <!-- end-user-doc -->
+			 *
 			 * @generated
 			 */
 			protected CommandParameter createChildParameter(Object feature, Object child) {
@@ -451,11 +463,12 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 		/**
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
+		@Override
 		public Collection<Object> getNewChildDescriptors(Object object, EditingDomain editingDomain) {
-			ArrayList<Object> result = new ArrayList<Object>();
+			final ArrayList<Object> result = new ArrayList<Object>();
 			new CreationSwitch(result, editingDomain).doSwitch((EObject) object);
 			return result;
 		}
@@ -463,9 +476,10 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 		/**
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
+		@Override
 		public ResourceLocator getResourceLocator() {
 			return TableEditPlugin.INSTANCE;
 		}

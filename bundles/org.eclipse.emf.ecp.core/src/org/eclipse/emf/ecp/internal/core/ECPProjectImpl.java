@@ -1,14 +1,14 @@
 /*******************************************************************************
- * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
- * 
+ * Copyright (c) 2011-2015 Eike Stepper (Berlin, Germany) and others.
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.internal.core;
 
@@ -75,9 +75,11 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 
 	private boolean open;
 
+	private boolean initialized = false;
+
 	/**
 	 * Constructor used when an offline project is created.
-	 * 
+	 *
 	 * @param provider the {@link InternalProvider} of this project
 	 * @param name the name of the project
 	 * @param properties the properties of the project
@@ -92,7 +94,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 
 	/**
 	 * Constructor used when an online project is created.
-	 * 
+	 *
 	 * @param repository the {@link ECPRepository} of this project
 	 * @param name the name of the project
 	 * @param properties the properties of the project
@@ -113,7 +115,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 
 	/**
 	 * Constructor used to load persisted projects on startup.
-	 * 
+	 *
 	 * @param in the {@link ObjectInput} to parse
 	 * @throws IOException is thrown when file can't be read.
 	 */
@@ -204,7 +206,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 		if (repository != null) {
 			out.writeBoolean(true);
 			out.writeUTF(repository.getName());
-		} else {
+		} else if (provider != null) {
 			out.writeBoolean(false);
 			out.writeUTF(provider.getName());
 		}
@@ -230,6 +232,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void disposed(ECPDisposable disposable) {
 		if (disposable == repository) {
 			dispose();
@@ -237,16 +240,19 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public boolean isStorable() {
 		return true;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public InternalProject getProject() {
 		return this;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public InternalRepository getRepository() {
 		return repository;
 	}
@@ -265,31 +271,36 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public InternalProvider getProvider() {
 		return provider;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public Object getProviderSpecificData() {
 		return providerSpecificData;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void setProviderSpecificData(Object providerSpecificData) {
 		this.providerSpecificData = providerSpecificData;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void notifyObjectsChanged(Collection<Object> objects, boolean structural) {
 		if (objects != null && objects.size() != 0) {
 			// if (getProvider().isDirty(this)) {
 			// getProvider().doSave(this);
 			// }
-			ECPProjectManagerImpl.INSTANCE.notifyObjectsChanged(this, objects, structural);
+			((ECPProjectManagerImpl) ECPUtil.getECPProjectManager()).notifyObjectsChanged(this, objects, structural);
 		}
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public synchronized EditingDomain getEditingDomain() {
 		if (editingDomain == null) {
 			editingDomain = getProvider().createEditingDomain(this);
@@ -308,7 +319,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	 * override this method (however, if they do so, they should invoke the method on their superclass to ensure that
 	 * the Platform's adapter manager is consulted).
 	 * </p>
-	 * 
+	 *
 	 * @param adapterType
 	 *            the class to adapt to
 	 * @return the adapted object or <code>null</code>
@@ -328,23 +339,29 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public boolean canDelete() {
 		return true;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void delete() {
 		ECPUtil.getECPObserverBus().notify(ECPProjectPreDeleteObserver.class).projectDelete(this);
+		// FIXME https://bugs.eclipse.org/bugs/show_bug.cgi?id=462399
+		cleanup();
 		getProvider().handleLifecycle(this, LifecycleEvent.REMOVE);
-		ECPProjectManagerImpl.INSTANCE.changeElements(Collections.singleton(getName()), null);
+		((ECPProjectManagerImpl) ECPUtil.getECPProjectManager()).changeElements(Collections.singleton(getName()), null);
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public synchronized boolean isOpen() {
 		return !isRepositoryDisposed() && open;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public synchronized void open() {
 		if (!isRepositoryDisposed()) {
 			setOpen(true);
@@ -352,6 +369,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public synchronized void close() {
 		if (!isRepositoryDisposed()) {
 			setOpen(false);
@@ -379,15 +397,22 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 		}
 
 		if (modified) {
-			ECPProjectManagerImpl.INSTANCE.changeProject(this, open, true);
+			((ECPProjectManagerImpl) ECPUtil.getECPProjectManager()).changeProject(this, open, true);
 		}
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void notifyProvider(LifecycleEvent event) {
+		// guard to prevent multiple initializations
+		if (event == LifecycleEvent.INIT && initialized) {
+			return;
+		}
 		final InternalProvider provider = getProvider();
+
 		provider.handleLifecycle(this, event);
 		if (event == LifecycleEvent.INIT) {
+			initialized = true;
 			final Notifier root = provider.getRoot(this);
 			if (root != null) {
 				root.eAdapters().add(new ECPModelContextAdapter(this));
@@ -396,12 +421,13 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void undispose(InternalRepository repository) {
 		setRepository(repository);
 		notifyProvider(LifecycleEvent.INIT);
 
 		if (open) {
-			ECPProjectManagerImpl.INSTANCE.changeProject(this, true, true);
+			((ECPProjectManagerImpl) ECPUtil.getECPProjectManager()).changeProject(this, true, true);
 		}
 	}
 
@@ -414,7 +440,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 		providerSpecificData = null;
 		editingDomain = null;
 
-		ECPProjectManagerImpl.INSTANCE.changeProject(this, false, false);
+		((ECPProjectManagerImpl) ECPUtil.getECPProjectManager()).changeProject(this, false, false);
 	}
 
 	/**
@@ -428,147 +454,177 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public String getName() {
 			return name;
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public boolean isDisposed() {
 			return true;
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public String getLabel() {
 			return null;
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public String getDescription() {
 			return null;
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public int compareTo(ECPElement o) {
 			return 0;
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public ECPProperties getProperties() {
 			return null;
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public boolean canDelete() {
 			return false;
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public void delete() {
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public boolean isStorable() {
 			return false;
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public void write(ObjectOutput out) throws IOException {
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public void setLabel(String label) {
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public void setDescription(String description) {
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public void dispose() {
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public void addDisposeListener(DisposeListener listener) {
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public void removeDisposeListener(DisposeListener listener) {
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public InternalProvider getProvider() {
 			return null;
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public Object getProviderSpecificData() {
 			return null;
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public void setProviderSpecificData(Object data) {
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public void notifyObjectsChanged(Collection<Object> objects) {
 		}
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	@SuppressWarnings("unchecked")
 	public EList<Object> getContents() {
 		return (EList<Object>) getProvider().getElements(this);
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public Set<EPackage> getUnsupportedEPackages() {
 		return getProvider().getUnsupportedEPackages(ECPUtil.getAllRegisteredEPackages(), getRepository());
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void setVisiblePackages(Set<EPackage> filteredPackages) {
 		filteredEPackages = filteredPackages;
-		ECPProjectManagerImpl.INSTANCE.storeElement(this);
+		((ECPProjectManagerImpl) ECPUtil.getECPProjectManager()).storeElement(this);
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public Set<EPackage> getVisiblePackages() {
 		return filteredEPackages;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public Set<EClass> getVisibleEClasses() {
 		return filteredEClasses;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void setVisibleEClasses(Set<EClass> filteredEClasses) {
 		this.filteredEClasses = filteredEClasses;
-		ECPProjectManagerImpl.INSTANCE.storeElement(this);
+		((ECPProjectManagerImpl) ECPUtil.getECPProjectManager()).storeElement(this);
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public Iterator<EObject> getReferenceCandidates(EObject modelElement, EReference eReference) {
 		return getProvider().getLinkElements(this, modelElement, eReference);
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void saveContents() {
 		getProvider().doSave(this);
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public boolean hasDirtyContents() {
 		return getProvider().isDirty(this);
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void deleteElements(Collection<Object> objects) {
 		getProvider().delete(this, objects);
 		notifyObjectsChanged(Collections.singleton((Object) this), true);
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public InternalProject clone(String name) {
 		try {
 			super.clone();
@@ -585,23 +641,26 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	@Override
 	protected void propertiesChanged(Collection<Entry<String, String>> oldProperties,
 		Collection<Entry<String, String>> newProperties) {
-		ECPProjectManagerImpl.INSTANCE.storeElement(this);
+		((ECPProjectManagerImpl) ECPUtil.getECPProjectManager()).storeElement(this);
 	}
 
 	/**
 	 * You must not call this anymore as properties are save automatically now.
 	 */
+	@Override
 	@Deprecated
 	public void saveProperties() {
-		ECPProjectManagerImpl.INSTANCE.storeElement(this);
+		((ECPProjectManagerImpl) ECPUtil.getECPProjectManager()).storeElement(this);
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public boolean isModelRoot(Object object) {
 		return getProvider().getRoot(this).equals(object);
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public boolean contains(Object object) {
 		return getProvider().contains(this, object);
 	}

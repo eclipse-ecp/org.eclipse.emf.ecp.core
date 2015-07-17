@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" activate="startup" immediate="true" name="org.eclipse.emf.ecp.view.template.service">
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" activate="startup" immediate="false" name="org.eclipse.emf.ecp.view.template.service">
    <implementation class="org.eclipse.emf.ecp.view.template.service.ViewTemplateProviderImpl"/>
    <service>
       <provide interface="org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider"/>

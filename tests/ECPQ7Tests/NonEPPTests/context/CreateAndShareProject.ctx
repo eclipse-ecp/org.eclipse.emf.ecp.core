@@ -1,0 +1,77 @@
+--- Q7 testcase ---
+Format-Version: 1.0
+Q7-vendor: www.xored.com/q7
+Context-Type: com.xored.q7.ecl.context
+Element-Name: CreateAndShareProject
+Element-Type: context
+Element-Version: 2.0
+Id: _qKLa8G60EeKbTKOCBYPcow
+Q7-Runtime-Version: 1.3.10.201312200736
+Save-Time: 6/13/14 9:46 AM
+
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
+Content-Type: text/ecl
+Entry-Name: .ecl.context
+
+get-view "Model Explorer" | get-tree | get-menu "Create new project" | click
+with [get-window "Create Project"] {
+    get-combo -after [get-label "Provider:"] | set-text EMFStore
+    get-editbox -after [get-label "Project Name:"] | set-text TestProject
+    get-button Finish | click
+}
+get-view "Model Explorer" | get-tree | select TestProject | get-menu "New Model Element" | click
+with [get-window "Add new model element"] {
+	try { get-tree | select "League" } -catch { get-tree | select "bowling/League" }
+    get-button Finish | click
+}
+get-editor League | get-editbox -after [get-label Name] | set-text America
+get-view "Model Explorer" | get-tree | select TestProject | get-menu "New Model Element" | click
+with [get-window "Add new model element"] {
+    try { get-tree | select "League" } -catch { get-tree | select "bowling/League" }
+    get-button Finish | click
+}
+get-editor League | get-editbox -after [get-label Name] | set-text Europe
+get-view "Model Explorer" | get-tree | select "TestProject/League America" | get-menu Player | click
+get-editor Player | get-editbox -after [get-label Name] | set-text Jonas
+get-view "Model Explorer" | get-tree | select "TestProject/League America" | get-menu Player | click
+get-editor Player | get-editbox -after [get-label Name] | set-text Maximilian
+get-view "Model Explorer" | get-tree | select TestProject | get-menu "New Model Element" | click
+with [get-window "Add new model element"] {
+    try { get-tree | select "Tournament" } -catch { get-tree | select "bowling/Tournament" }
+    get-button Finish | click
+}
+with [get-view "Model Explorer" | get-tree] {
+    select "TestProject/Tournament Pro" | get-menu Matchup | click
+    select "TestProject/Tournament Pro/Matchup" | get-menu Game | click
+    select TestProject | get-menu "New Model Element" | click
+}
+get-window "Add new model element" | get-tree 
+    | key-type "TRAVERSE_ESCAPE"
+get-view "Model Explorer" | get-tree | select "TestProject/Tournament Pro/Matchup/Game" | double-click
+get-editor Game | get-button "Link Player" | click
+get-window "Select Elements" | get-table | select "Player Jonas" | double-click
+get-editor "League America" | close
+get-editor "Player Jonas" | close
+get-editor "Player Maximilian" | close
+get-editor "Tournament Pro" | close
+get-editor "League Europe" | close
+get-editor Matchup | close
+get-editor Game | close
+get-view "Model Explorer" | get-tree | select TestProject | get-menu Share | click
+with [get-window "ECPRepository Wizard"] {
+    get-button "Select existing repository" | click
+    get-button "Next >" | click
+    get-table | select "Local EMFStore"
+    get-button Finish | click
+}
+try{
+with [get-window "Authentication required"] {
+    get-combo -after [get-label Username] | set-text super
+    get-editbox -after [get-label Password] | set-text super
+    get-button | click
+    get-button OK | click
+}
+} -catch {}
+//get-window "Progress Information"|
+get-window "Share succeeded" | get-button OK | click
+------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998--

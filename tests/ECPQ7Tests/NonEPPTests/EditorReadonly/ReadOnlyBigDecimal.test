@@ -1,0 +1,75 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _mY5uUKEgEeKX8e34E6tWIg,_rr2EEFpSEeKcnaHGSt8OwA,_IuFcgFpZEeKcnaHGSt8OwA,_f3qEUVpSEeKcnaHGSt8OwA,_fQ0PgDsqEeOHj9Cw0T_k4Q,_T7Yg8DstEeOHj9Cw0T_k4Q
+Element-Name: ReadOnlyBigDecimal
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _b8sq4DzAEeO8kN1jLMK8wg
+Runtime-Version: 1.5.4.201410231434
+Save-Time: 12/11/14 10:26 AM
+Tags: skipExecution
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+try {
+get-editor View | get-button "Link Root EClass" | click
+get-window "Select an EClass." | get-tree | select "bowling/Player \\[org.eclipse.emf.emfstore.bowling.Player\\]" 
+    | double-click
+get-view "Model Explorer" | get-tree | select "Project/View" | get-menu Control | click
+get-editor Control | get-editbox -after [get-label "Name*"] | set-text winnLossRatio
+get-editor winnLossRatio | get-button -after [get-label Readonly] | check
+get-view "Model Explorer" | get-tree | select "Project/View/winnLossRatio" 
+    | get-menu "Feature Path Domain Model Reference" | click
+get-editor "Feature Path Domain Model Reference" | get-button "Link Domain Model EFeature" | click
+get-window "Select a EStructuralFeature" | get-tree | select "winLossRatio : EBigDecimal" | double-click
+with [get-view "Model Explorer"] {
+	try {
+    get-tree | select Project
+    get-button "Save Project" | click
+	} -catch {
+		wait 1000
+		try {
+		get-tree | select "Project/View"
+		get-button "Save Project" | click
+		} -catch {
+			wait 1000
+			get-tree | select Project
+			get-button "Save Project" | click
+		}
+	}
+	get-tree | select "TestProject/Player John" | double-click
+}
+
+get-editor "Player John" | close
+get-view "Model Explorer" | get-tree | select "TestProject/Player John" | double-click
+get-editor "Player John" | get-editbox -after [get-label "Win Loss Ratio"] | get-property readOnly | equals true 
+    | verify-true
+
+} -finally {
+/*
+	get-view "Model Explorer" | get-tree | select "Project/View" | double-click
+	get-editor View | get-button "Delete Reference" | click
+	with [get-view "Model Explorer"] {
+		try {
+		get-tree | select Project
+		get-button "Save Project" | click
+		} -catch {
+			wait 1000
+			try {
+			get-tree | select "Project/View"
+			get-button "Save Project" | click
+			} -catch {
+				wait 1000
+				get-tree | select Project
+				get-button "Save Project" | click
+			}
+		}
+	}
+	*/
+	get-view "Model Explorer" | get-tree | select "Project/View" | get-menu "Unset Root EClass" | click
+}
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

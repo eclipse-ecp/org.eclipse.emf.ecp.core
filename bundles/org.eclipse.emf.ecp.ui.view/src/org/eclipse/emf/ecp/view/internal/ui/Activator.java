@@ -1,21 +1,21 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Muenchen - initial API and implementation
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.ui;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
+import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
@@ -29,6 +29,8 @@ public class Activator extends Plugin {
 
 	// The shared instance
 	private static Activator plugin;
+
+	private ServiceReference<ReportService> reportServiceReference;
 
 	/**
 	 * The constructor.
@@ -59,7 +61,7 @@ public class Activator extends Plugin {
 
 	/**
 	 * Returns the shared instance.
-	 * 
+	 *
 	 * @return the shared instance
 	 */
 	public static Activator getDefault() {
@@ -68,7 +70,7 @@ public class Activator extends Plugin {
 
 	/**
 	 * Logs exception.
-	 * 
+	 *
 	 * @param e
 	 *            the {@link Exception} to log
 	 */
@@ -78,29 +80,17 @@ public class Activator extends Plugin {
 				.getMessage(), e));
 	}
 
-	private ServiceReference<ECPControlFactory> controlFactoryReference;
-
 	/**
-	 * Returns the {@link ECPControlFactory}.
-	 * 
-	 * @return the {@link ECPControlFactory}
+	 * Returns the {@link ReportService}.
+	 *
+	 * @return the {@link ReportService}
 	 */
-	public ECPControlFactory getECPControlFactory() {
-		if (controlFactoryReference == null) {
-			controlFactoryReference = plugin.getBundle().getBundleContext()
-				.getServiceReference(ECPControlFactory.class);
+	public ReportService getReportService() {
+		if (reportServiceReference == null) {
+			reportServiceReference = plugin.getBundle().getBundleContext()
+				.getServiceReference(ReportService.class);
 		}
-		return plugin.getBundle().getBundleContext().getService(controlFactoryReference);
+		return plugin.getBundle().getBundleContext().getService(reportServiceReference);
 	}
 
-	/**
-	 * Frees the {@link ECPControlFactory} from use, allowing the OSGi Bundle to be shutdown.
-	 */
-	public void ungetECPControlFactory() {
-		if (controlFactoryReference == null) {
-			return;
-		}
-		plugin.getBundle().getBundleContext().ungetService(controlFactoryReference);
-		controlFactoryReference = null;
-	}
 }

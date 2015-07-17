@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
@@ -15,9 +15,9 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 
 /**
  * Represents a compare pair of two controls.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public class ControlPair {
 	private final VControl leftControl;
@@ -25,7 +25,7 @@ public class ControlPair {
 
 	/**
 	 * The left compare of the compare.
-	 * 
+	 *
 	 * @return the leftControl
 	 */
 	public VControl getLeftControl() {
@@ -34,7 +34,7 @@ public class ControlPair {
 
 	/**
 	 * The right control of the compare.
-	 * 
+	 *
 	 * @return the rightControl
 	 */
 	public VControl getRightControl() {
@@ -43,7 +43,7 @@ public class ControlPair {
 
 	/**
 	 * Creates the pair.
-	 * 
+	 *
 	 * @param left the left {@link VControl}
 	 * @param right the right {@link VControl}
 	 */

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.ecp.view.section.model.edit" version="2">
+    <resource path="META-INF/MANIFEST.MF">
+        <filter comment="This is SPI" id="923795461">
+            <message_arguments>
+                <message_argument value="1.3.0"/>
+                <message_argument value="1.2.1"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change in 1.6" id="923795461">
+            <message_arguments>
+                <message_argument value="1.6.0"/>
+                <message_argument value="1.5.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.custom.model.HardcodedTester">
+        <filter comment="This is SPI" id="305324134">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.custom.model.HardcodedTester"/>
+                <message_argument value="org.eclipse.emf.ecp.view.custom.model_1.3.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference">
+        <filter comment="This is SPI" id="305324134">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.custom.model.VHardcodedDomainModelReference"/>
+                <message_argument value="org.eclipse.emf.ecp.view.custom.model_1.3.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.custom.model.impl.VHardcodedDomainModelReferenceImpl">
+        <filter comment="This is SPI" id="305324134">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.custom.model.impl.VHardcodedDomainModelReferenceImpl"/>
+                <message_argument value="org.eclipse.emf.ecp.view.custom.model_1.3.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport">
+        <filter comment="SPI Change in 1.6" id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport"/>
+                <message_argument value="org.eclipse.emf.ecp.view.section.model.edit_1.5.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.model.reporting.ReportService">
+        <filter comment="SPI Change in 1.6" id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.reporting.ReportService"/>
+                <message_argument value="org.eclipse.emf.ecp.view.section.model.edit_1.5.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.model.reporting.ReportServiceConsumer">
+        <filter comment="SPI Change in 1.6" id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.reporting.ReportServiceConsumer"/>
+                <message_argument value="org.eclipse.emf.ecp.view.section.model.edit_1.5.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

@@ -1,0 +1,203 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _mcduMZbkEeKcXZzAzrCw-Q,_rr2EEFpSEeKcnaHGSt8OwA,_f3qEUVpSEeKcnaHGSt8OwA,_IuFcgFpZEeKcnaHGSt8OwA,_KY8s8YQIEeKCBM8mH5lmmw
+Element-Name: ManageUserGroups
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _L6tvoG-ZEeKndsdNMEr_UQ
+Runtime-Version: 1.5.4.201410231434
+Save-Time: 12/5/14 5:12 PM
+Tags: skipExecution
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-view "Model Repositories" | get-tree | select "Local EMFStore" | get-menu Login | click
+with [get-window "Progress Information" | get-window "Authentication required"] {
+    with [get-combo -after [get-label Username]] {
+        set-text super
+        key-type "TRAVERSE_TAB_NEXT"
+    }
+    get-editbox -after [get-label Password] | set-text super
+    get-button | click
+    get-button OK | click
+}
+get-view "Model Repositories" | get-tree | select "Local EMFStore" | get-menu "Create new project..." | click
+with [get-window "Remote Project Name"] {
+    get-editbox -after [get-label "Please enter a name"] | set-text A
+    get-button OK | click
+}
+get-view "Model Repositories" | get-tree | select "Local EMFStore" | get-menu "Create new project..." | click
+with [get-window "Remote Project Name"] {
+    get-editbox -after [get-label "Please enter a name"] | set-text B
+    get-button OK | click
+}
+get-view "Model Repositories" | get-tree | select "Local EMFStore" | get-menu "Manage Users\\/Groups..." | click
+get-window "Progress Information" | get-window -from "Window.createShell()" | get-tab-folder | get-tab-item Projects 
+    | click
+get-window "Progress Information" | get-window -from "Window.createShell()" | get-tab-folder | get-tab-item Users 
+    | click
+with [get-window "Progress Information" | get-window -from "Window.createShell()" | get-table] {
+    get-property itemCount | equals 1 | verify-true
+    get-item super | get-property caption | equals super | verify-true
+}
+with [get-window "Progress Information" | get-window -from "Window.createShell()"] {
+    get-button "Create new user" | click
+    with [get-window "Please enter a user name"] {
+        get-editbox -after [get-label "User name:"] | set-text testUserA
+        get-button OK | click
+    }
+    get-button "Create new user" | click
+    with [get-window "Please enter a user name"] {
+        get-editbox -after [get-label "User name:"] | set-text testUserB
+        get-button OK | click
+    }
+}
+with [get-window "Progress Information" | get-window -from "Window.createShell()" | get-table] {
+    get-property itemCount | equals 3 | verify-true
+    get-item testUserA | get-property caption | equals testUserA | verify-true
+    get-item testUserB | get-property caption | equals testUserB | verify-true
+}
+with [get-window "Progress Information" | get-window -from "Window.createShell()"] {
+    get-tab-folder | get-tab-item Projects | click
+    get-table | select "A \\[0\\]" | double-click
+    get-group Participants | get-button "Add..." | click
+    get-window "Select a participant" | get-table | select testUserA
+    
+get-window "Progress Information" | get-window -from "Window.createShell()" | get-window "Select a participant" 
+    | get-button OK | click
+    with [get-group Participants | get-table] {
+        select [get-item "" -index 1] | activate-cell-edit -column 3
+        select [get-item "" -index 1] | get-combo | set-text Writer
+        apply-cell-edit
+    }
+    get-table | select "B \\[0\\]" | double-click
+    get-group Participants | get-button "Add..." | click
+    get-window "Select a participant" | get-table | select testUserB
+    get-window "Progress Information" | get-window -from "Window.createShell()" | get-window "Select a participant" 
+    | get-button OK | click
+    with [get-group Participants] {
+        with [get-table] {
+            select [get-item "" -index 1] | activate-cell-edit -column 3
+            select [get-item "" -index 1] | get-combo | set-text Writer
+        }
+        get-button "Add..." | click
+    }
+    get-window "Select a participant" | get-table | select testUserA
+    get-window "Progress Information" | get-window -from "Window.createShell()" | get-window "Select a participant" 
+    | get-button OK | click
+    get-button Close | click
+}
+with [get-view "Model Repositories" | get-tree] {
+    select "Local EMFStore" | get-menu Logout | click
+    select "Local EMFStore" | get-menu Login | click
+}
+with [get-window "Progress Information" | get-window "Authentication required"] {
+    get-combo -after [get-label Username] | set-text testUserA
+    get-editbox -after [get-label Password] | set-text password
+    get-button OK | click
+}
+get-view "Model Repositories" | get-tree | select "Local EMFStore/A" | get-menu "Checkout..." | click
+get-window Checkout | get-button Finish | click
+get-view "Model Repositories" | get-tree | select "Local EMFStore/B" | get-menu "Checkout..." | click
+get-window Checkout | get-button Finish | click
+with [get-view "Model Explorer" | get-tree] {
+    get-property itemCount | equals 2 | verify-true
+    get-item "A \\[trunk, Version 0\\]" | get-property caption | equals "A \\[trunk, Version 0\\]" | verify-true
+    get-item "B \\[trunk, Version 0\\]" | get-property caption | equals "B \\[trunk, Version 0\\]" | verify-true
+}
+get-view "Model Explorer" | get-tree | select "A \\[trunk, Version 0\\]" | get-menu "New Model Element" | click
+with [get-window "Add new model element"] {
+    try { get-tree | select "Game" } -catch { get-tree | select "bowling/Game" }
+    get-button Finish | click
+}
+get-view "Model Explorer" | get-tree | select "A \\[trunk, Version 0\\]" | get-menu Commit | click
+get-window Commit | get-label "Commit your local changes of project \"A\" to the server" | get-property caption 
+    | equals "Commit your local changes of project \"A\" to the server" | verify-true
+get-window Commit | get-button OK | click
+get-view "Model Explorer" | get-tree | select "B \\[trunk, Version 0\\]" | get-menu "New Model Element" | click
+with [get-window "Add new model element"] {
+    try { get-tree | select "Player" } -catch { get-tree | select "bowling/Player" }
+    get-button Finish | click
+}
+get-view "Model Explorer" | get-tree | select "B \\[trunk, Version 0\\]" | get-menu Commit | click
+get-window Commit | get-label "Commit your local changes of project \"B\" to the server" | get-property caption 
+    | equals "Commit your local changes of project \"B\" to the server" | verify-true
+get-window Commit | get-button OK | click
+get-window "Commit failed" | get-label "Insufficient access rights." | get-property caption 
+    | equals "Insufficient access rights." | verify-true
+get-window "Commit failed" | get-button OK | click
+get-view "Model Explorer" | get-tree | select "B \\[trunk, Version 0\\]" | get-menu "Revert All Operations" | click
+get-window Confirmation | get-button Yes | click
+get-window Revert | get-button OK | click
+with [get-view "Model Repositories" | get-tree] {
+    select "Local EMFStore" | get-menu Logout | click
+    select "Local EMFStore" | get-menu Login | click
+}
+with [get-window "Progress Information" | get-window "Authentication required"] {
+    get-combo -after [get-label Username] | set-text testUserB
+    get-editbox -after [get-label Password] | set-text password
+    get-button OK | click
+}
+with [get-view "Model Repositories" | get-tree] {
+    get-item "Local EMFStore" | get-property childCount | equals 1 | verify-true
+    get-item "Local EMFStore/B" | get-property caption | equals B | verify-true
+}
+get-view "Model Repositories" | get-tree | select "Local EMFStore/B" | get-menu "Checkout..." | click
+with [get-window Checkout] {
+    get-editbox -after [get-label "Project name:"] | set-text "B_2"
+    get-button Finish | click
+}
+get-view "Model Explorer" | get-tree | select "B_2 \\[trunk, Version 0\\]" | get-menu "New Model Element" | click
+get-window "Add new model element" | try { get-tree | select "Player" } -catch { get-tree | select "bowling/Player" } | double-click
+get-view "Model Explorer" | get-tree | select "B_2 \\[trunk, Version 0\\]" | get-menu Commit | click
+get-window Commit | get-label "Commit your local changes of project \"B_2\" to the server" | get-property caption 
+    | equals "Commit your local changes of project \"B_2\" to the server" | verify-true
+get-window Commit | get-button OK | click
+get-view "Model Repositories" | get-tree | select "Local EMFStore" | get-menu Logout | click
+
+get-view "Model Repositories" | get-tree | select "Local EMFStore" | get-menu Login | click
+with [get-window "Progress Information" | get-window "Authentication required"] {
+    with [get-combo -after [get-label Username]] {
+        set-text testUserA
+        key-type "TRAVERSE_TAB_NEXT"
+    }
+    get-editbox -after [get-label Password] | set-text password
+    get-button OK | click
+}
+get-view "Model Explorer" | get-tree | select "B \\[trunk, Version 0\\]" | get-menu Update | click
+get-window Update | get-label "Incoming changes from server for project \"B\"" | get-property caption 
+    | equals "Incoming changes from server for project \"B\"" | verify-true
+get-window Update | get-button OK | click
+with [get-view "Model Explorer" | get-tree] {
+    get-item "B \\[trunk, Version 1\\]" | get-property childCount | equals 1 | verify-true
+    get-item "B \\[trunk, Version 1\\]/Player" | get-property caption | equals Player | verify-true
+}
+with [get-view "Model Repositories" | get-tree] {
+    select "Local EMFStore" | get-menu Logout | click
+    select "Local EMFStore" | get-menu Login | click
+}
+with [get-window "Progress Information" | get-window "Authentication required"] {
+    with [get-combo -after [get-label Username]] {
+        set-text super
+        key-type "TRAVERSE_TAB_NEXT"
+    }
+    get-editbox -after [get-label Password] | set-text super
+    get-button OK | click
+}
+get-view "Model Repositories" | get-tree | select "Local EMFStore" | get-menu "Manage Users\\/Groups..." | click
+with [get-window "Progress Information" | get-window -from "Window.createShell()"] {
+    with [get-tab-folder] {
+        get-tab-item Projects | click
+        get-tab-item Users | click
+    }
+    get-table | select testUserA
+    get-button "Delete user" | click
+    get-table | select testUserB
+    get-button "Delete user" | click
+    get-button Close | click
+}
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

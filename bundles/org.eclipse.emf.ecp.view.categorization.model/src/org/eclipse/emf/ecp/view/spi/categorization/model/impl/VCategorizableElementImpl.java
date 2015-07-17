@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
  */
@@ -30,7 +30,7 @@ import org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl;
  * Object</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public abstract class VCategorizableElementImpl extends VElementImpl implements VCategorizableElement
@@ -40,7 +40,7 @@ public abstract class VCategorizableElementImpl extends VElementImpl implements 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated NOT
 	 */
 	protected VCategorizableElementImpl()
@@ -51,9 +51,9 @@ public abstract class VCategorizableElementImpl extends VElementImpl implements 
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -65,9 +65,10 @@ public abstract class VCategorizableElementImpl extends VElementImpl implements 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public EObject getLabelObject()
 	{
 		// TODO: implement this method to return the 'Label Object' reference
@@ -76,9 +77,9 @@ public abstract class VCategorizableElementImpl extends VElementImpl implements 
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -95,7 +96,7 @@ public abstract class VCategorizableElementImpl extends VElementImpl implements 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override

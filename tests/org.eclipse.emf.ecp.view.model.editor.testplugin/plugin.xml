@@ -6,6 +6,12 @@
       <file
             filePath="Project/View.view">
       </file>
+      <file
+            filePath="TableControl.view">
+      </file>
+      <file
+            filePath="TableDomainModelReference.view">
+      </file>
    </extension>
 
 </plugin>

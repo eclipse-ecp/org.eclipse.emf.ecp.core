@@ -1,15 +1,15 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
  * Eugen Neufeld - javaDoc
- * 
+ *
  *******************************************************************************/
 
 package org.eclipse.emf.ecp.spi.core.util;
@@ -18,7 +18,7 @@ import java.util.Collection;
 
 /**
  * This class defines a List.
- * 
+ *
  * @author Eike Stepper
  * @author Eugen Neufeld
  * @noextend This interface is not intended to be extended by clients.
@@ -29,21 +29,21 @@ public interface InternalChildrenList {
 
 	/**
 	 * The size of the list.
-	 * 
+	 *
 	 * @return number of elements in the list
 	 */
 	int size();
 
 	/**
 	 * Whether this list has children.
-	 * 
+	 *
 	 * @return true if this list has children, false otherwise.
 	 */
 	boolean hasChildren();
 
 	/**
 	 * Returns the children of this list.
-	 * 
+	 *
 	 * @return an array containing all children
 	 */
 
@@ -51,7 +51,7 @@ public interface InternalChildrenList {
 
 	/**
 	 * Returns the object with this index from the list. Throws an IndexOutOfBoundException if index is invalid.
-	 * 
+	 *
 	 * @param index the index of the element to get
 	 * @return the element
 	 */
@@ -60,7 +60,7 @@ public interface InternalChildrenList {
 
 	/**
 	 * Return the parent element of this list.
-	 * 
+	 *
 	 * @return the parent of the list
 	 */
 	Object getParent();
@@ -68,7 +68,7 @@ public interface InternalChildrenList {
 	// TODO describe what slow means
 	/**
 	 * Whether this list is slow or not.
-	 * 
+	 *
 	 * @return true if it is slow, false otherwise
 	 */
 
@@ -77,7 +77,7 @@ public interface InternalChildrenList {
 	// TODO describe what complete means
 	/**
 	 * Whether this list is complete or not.
-	 * 
+	 *
 	 * @return true if it is complete, false otherwise
 	 */
 	boolean isComplete();
@@ -86,7 +86,7 @@ public interface InternalChildrenList {
 
 	/**
 	 * Adds a child to the list.
-	 * 
+	 *
 	 * @param child the child
 	 */
 	void addChild(Object child);
@@ -95,7 +95,7 @@ public interface InternalChildrenList {
 
 	/**
 	 * Adds a list of children to the list.
-	 * 
+	 *
 	 * @param children a collection of new children
 	 */
 	<T> void addChildren(Collection<T> children);

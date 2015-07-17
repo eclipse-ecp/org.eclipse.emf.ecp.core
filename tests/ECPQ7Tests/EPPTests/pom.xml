@@ -1,0 +1,74 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.eclipse.emf.ecp</groupId>
+	<artifactId>q7-epp-tests</artifactId>
+	<packaging>pom</packaging>
+
+	<parent>
+		<groupId>org.eclipse.emf.ecp</groupId>
+		<artifactId>q7tests</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<modules>
+		<module>update-site</module>
+	</modules>
+	<properties>
+		<emfstore-update-site>http://download.eclipse.org/emfstore/releases_15</emfstore-update-site>
+	</properties>
+
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.xored.ci4rcptt</groupId>
+						<artifactId>ci4rcptt-maven-plugin</artifactId>
+						<version>${ci4rcptt-maven-version}</version>
+						<extensions>true</extensions>
+						<configuration>
+								<runner>
+									<version>${ci4rcptt-runner-version}</version>
+								</runner>
+							<aut>
+								<!--
+								<explicit>https://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/${eclipse-name}/${eclipse-sr}/eclipse-modeling-${eclipse-name}-${eclipse-sr}-win32-x86_64.zip&r=1</explicit>
+								-->
+								<!--
+								<explicit>http://mirror.netcologne.de/eclipse//technology/epp/downloads/release/${eclipse-name}/${eclipse-sr}/eclipse-modeling-${eclipse-name}-${eclipse-sr}-linux-gtk-x86_64.tar.gz</explicit>
+								-->
+								<explicit>http://mirror.cc.columbia.edu/pub/software/eclipse/technology/epp/downloads/release/${eclipse-name}/${eclipse-sr}/eclipse-modeling-${eclipse-name}-${eclipse-sr}-linux-gtk-x86_64.tar.gz</explicit>
+								
+								<!--win32-x86_64.zip-->
+								<!--linux-gtk-x86_64.tar.gz-->
+
+								<injections>
+									<injection>
+										<site>${emfstore-update-site}</site>
+										<features>
+											<feature>org.eclipse.emf.emfstore.server.feature.feature.group</feature>
+											<feature>org.eclipse.emf.emfstore.ecore.feature.feature.group</feature>
+											<feature>org.eclipse.emf.emfstore.example.feature.feature.group</feature>
+											<feature>org.eclipse.emf.emfstore.client.feature.feature.group</feature>
+											<feature>org.eclipse.emf.emfstore.common.feature.feature.group</feature>
+											<feature>org.eclipse.emf.emfstore.client.transaction.feature.feature.group</feature>
+											<feature>org.eclipse.emf.emfstore.client.ui.feature.feature.group</feature>
+										</features>
+									</injection>
+									<injection>
+										<site>${currentBuild}/repository/</site>
+										<features>
+											<feature>org.eclipse.emf.ecp.sdk.feature.feature.group</feature>
+										</features>
+									</injection>
+								</injections>
+							</aut>
+							<projects>
+								<project>${project.basedir}/../project</project>
+							</projects>
+
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		
+</project>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" immediate="true" name="org.eclipse.emf.ecp.changebroker">
+   <implementation class="org.eclipse.emf.ecp.changebroker.internal.ChangeBrokerImpl"/>
+   <reference bind="addNotificationProvider" cardinality="0..n" interface="org.eclipse.emf.ecp.changebroker.spi.NotificationProvider" name="NotificationProvider" policy="dynamic" unbind="removeNotificationProvider"/>
+   <service>
+      <provide interface="org.eclipse.emf.ecp.changebroker.spi.ChangeBroker"/>
+   </service>
+</scr:component>

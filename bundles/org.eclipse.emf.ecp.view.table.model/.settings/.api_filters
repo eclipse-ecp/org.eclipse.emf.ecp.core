@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.ecp.view.table.model" version="2">
+    <resource path="META-INF/MANIFEST.MF">
+        <filter comment="SPI Change with 1.5.0" id="923795461">
+            <message_arguments>
+                <message_argument value="1.5.0"/>
+                <message_argument value="1.4.0"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change in 1.6" id="923795461">
+            <message_arguments>
+                <message_argument value="1.6.0"/>
+                <message_argument value="1.5.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport">
+        <filter comment="SPI Change in 1.6" id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport"/>
+                <message_argument value="org.eclipse.emf.ecp.view.table.model_1.5.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.model.reporting.ReportService">
+        <filter comment="SPI Change in 1.6" id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.reporting.ReportService"/>
+                <message_argument value="org.eclipse.emf.ecp.view.table.model_1.5.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.model.reporting.ReportServiceConsumer">
+        <filter comment="SPI Change in 1.6" id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.reporting.ReportServiceConsumer"/>
+                <message_argument value="org.eclipse.emf.ecp.view.table.model_1.5.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/table/model/VTableDomainModelReference.java" type="org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference">
+        <filter comment="SPI Change with 1.5.0" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference"/>
+                <message_argument value="getDomainModelReference()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change with 1.5.0" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference"/>
+                <message_argument value="setDomainModelReference(VDomainModelReference)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/table/model/VTablePackage.java" type="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage">
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="TABLE_CONTROL_FEATURE_COUNT"/>
+                <message_argument value="13"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="TABLE_CONTROL__ADD_REMOVE_DISABLED"/>
+                <message_argument value="8"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="TABLE_CONTROL__ATTACHMENTS"/>
+                <message_argument value="5"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="TABLE_CONTROL__COLUMN_CONFIGURATIONS"/>
+                <message_argument value="9"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="TABLE_CONTROL__DETAIL_EDITING"/>
+                <message_argument value="10"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="TABLE_CONTROL__DETAIL_VIEW"/>
+                <message_argument value="11"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="TABLE_CONTROL__DIAGNOSTIC"/>
+                <message_argument value="4"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="TABLE_CONTROL__DOMAIN_MODEL_REFERENCE"/>
+                <message_argument value="7"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="TABLE_CONTROL__ENABLED"/>
+                <message_argument value="2"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="TABLE_CONTROL__ENABLE_DETAIL_EDITING_DIALOG"/>
+                <message_argument value="12"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="TABLE_CONTROL__LABEL_ALIGNMENT"/>
+                <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="TABLE_CONTROL__READONLY"/>
+                <message_argument value="3"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="TABLE_CONTROL__VISIBLE"/>
+                <message_argument value="1"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change with 1.5.0" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="TABLE_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT"/>
+                <message_argument value="4"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change with 1.5.0" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="eNS_URI"/>
+                <message_argument value="http://org/eclipse/emf/ecp/view/table/model"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change with 1.5.0" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="TABLE_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change with 1.5.0" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="getTableDomainModelReference_DomainModelReference()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/table/model/VTablePackage.java" type="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage$Literals">
+        <filter comment="SPI Change with 1.5.0" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage.Literals"/>
+                <message_argument value="TABLE_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

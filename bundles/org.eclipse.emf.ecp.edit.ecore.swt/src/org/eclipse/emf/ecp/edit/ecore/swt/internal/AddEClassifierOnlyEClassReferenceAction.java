@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  ******************************************************************************/
@@ -25,15 +25,15 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 /**
  * An action to select an {@link EClassifier} which is an {@link EClass}. Will be used for editing the type of an
  * {@link org.eclipse.emf.ecore.EReference EReference}.
- * 
+ *
  * @author jfaltermeier
- * 
+ *
  */
 public class AddEClassifierOnlyEClassReferenceAction extends AddEClassifierReferenceAction {
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param editingDomain the {@link EditingDomain} to use
 	 * @param setting the {@link Setting} to use
 	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor} to use
@@ -47,7 +47,7 @@ public class AddEClassifierOnlyEClassReferenceAction extends AddEClassifierRefer
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.ecore.swt.internal.AddEClassifierReferenceAction#getEClassifiersFromRegistry()
 	 */
 	@Override

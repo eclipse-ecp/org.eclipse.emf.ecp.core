@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-   <extension
+  <extension
          point="org.eclipse.ui.editors">
       <editor
             class="org.eclipse.emf.ecp.ide.editor.view.ViewEditorPart"
             default="false"
-            extensions="viewmodel"
+            extensions="view"
+            icon="icons/view.png"
             id="org.eclipse.emf.ecp.ide.editor.view.editor"
             name="View Model Editor">
       </editor>
    </extension>
-
 </plugin>

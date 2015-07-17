@@ -1,15 +1,15 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  * Johannes Faltermeier
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.validation.test.test.impl;
 
@@ -28,7 +28,7 @@ import org.eclipse.emf.ecp.validation.test.test.Writer;
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Factory</b>.
  * <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
@@ -36,7 +36,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public static TestFactory init() {
@@ -56,7 +56,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	 * Creates an instance of the factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public TestFactoryImpl() {
@@ -66,7 +66,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -86,9 +86,10 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public Library createLibrary() {
 		final LibraryImpl library = new LibraryImpl();
 		return library;
@@ -97,9 +98,10 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public Writer createWriter() {
 		final WriterImpl writer = new WriterImpl();
 		return writer;
@@ -108,9 +110,10 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public Book createBook() {
 		final BookImpl book = new BookImpl();
 		return book;
@@ -119,9 +122,10 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public TestPackage getTestPackage() {
 		return (TestPackage) getEPackage();
 	}
@@ -129,7 +133,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @deprecated
 	 * @generated
 	 */

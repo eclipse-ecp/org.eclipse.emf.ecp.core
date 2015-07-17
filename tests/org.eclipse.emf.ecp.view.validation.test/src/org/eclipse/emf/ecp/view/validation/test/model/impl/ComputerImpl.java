@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  *******************************************************************************/
@@ -34,7 +34,7 @@ import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.ComputerImpl#getPowerBlock <em>Power Block</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class ComputerImpl extends EObjectImpl implements Computer {
@@ -42,7 +42,7 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 	 * The cached value of the '{@link #getMainboard() <em>Mainboard</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getMainboard()
 	 * @generated
 	 * @ordered
@@ -53,7 +53,7 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getName()
 	 * @generated
 	 * @ordered
@@ -64,7 +64,7 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getName()
 	 * @generated
 	 * @ordered
@@ -75,7 +75,7 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 	 * The cached value of the '{@link #getPowerBlock() <em>Power Block</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getPowerBlock()
 	 * @generated
 	 * @ordered
@@ -85,7 +85,7 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected ComputerImpl() {
@@ -95,7 +95,7 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -106,9 +106,10 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public Mainboard getMainboard() {
 		return mainboard;
 	}
@@ -116,19 +117,20 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public NotificationChain basicSetMainboard(Mainboard newMainboard, NotificationChain msgs) {
-		Mainboard oldMainboard = mainboard;
+		final Mainboard oldMainboard = mainboard;
 		mainboard = newMainboard;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
+			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
 				TestPackage.COMPUTER__MAINBOARD, oldMainboard, newMainboard);
-			if (msgs == null)
+			if (msgs == null) {
 				msgs = notification;
-			else
+			} else {
 				msgs.add(notification);
+			}
 		}
 		return msgs;
 	}
@@ -136,33 +138,39 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void setMainboard(Mainboard newMainboard) {
 		if (newMainboard != mainboard) {
 			NotificationChain msgs = null;
-			if (mainboard != null)
+			if (mainboard != null) {
 				msgs = ((InternalEObject) mainboard).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
 					- TestPackage.COMPUTER__MAINBOARD, null, msgs);
-			if (newMainboard != null)
+			}
+			if (newMainboard != null) {
 				msgs = ((InternalEObject) newMainboard).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
 					- TestPackage.COMPUTER__MAINBOARD, null, msgs);
+			}
 			msgs = basicSetMainboard(newMainboard, msgs);
-			if (msgs != null)
+			if (msgs != null) {
 				msgs.dispatch();
+			}
 		}
-		else if (eNotificationRequired())
+		else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.COMPUTER__MAINBOARD, newMainboard,
 				newMainboard));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public String getName() {
 		return name;
 	}
@@ -170,22 +178,25 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void setName(String newName) {
-		String oldName = name;
+		final String oldName = name;
 		name = newName;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.COMPUTER__NAME, oldName, name));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public PowerBlock getPowerBlock() {
 		return powerBlock;
 	}
@@ -193,19 +204,20 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public NotificationChain basicSetPowerBlock(PowerBlock newPowerBlock, NotificationChain msgs) {
-		PowerBlock oldPowerBlock = powerBlock;
+		final PowerBlock oldPowerBlock = powerBlock;
 		powerBlock = newPowerBlock;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
+			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
 				TestPackage.COMPUTER__POWER_BLOCK, oldPowerBlock, newPowerBlock);
-			if (msgs == null)
+			if (msgs == null) {
 				msgs = notification;
-			else
+			} else {
 				msgs.add(notification);
+			}
 		}
 		return msgs;
 	}
@@ -213,31 +225,36 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void setPowerBlock(PowerBlock newPowerBlock) {
 		if (newPowerBlock != powerBlock) {
 			NotificationChain msgs = null;
-			if (powerBlock != null)
+			if (powerBlock != null) {
 				msgs = ((InternalEObject) powerBlock).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
 					- TestPackage.COMPUTER__POWER_BLOCK, null, msgs);
-			if (newPowerBlock != null)
+			}
+			if (newPowerBlock != null) {
 				msgs = ((InternalEObject) newPowerBlock).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
 					- TestPackage.COMPUTER__POWER_BLOCK, null, msgs);
+			}
 			msgs = basicSetPowerBlock(newPowerBlock, msgs);
-			if (msgs != null)
+			if (msgs != null) {
 				msgs.dispatch();
+			}
 		}
-		else if (eNotificationRequired())
+		else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.COMPUTER__POWER_BLOCK, newPowerBlock,
 				newPowerBlock));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -254,7 +271,7 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -273,7 +290,7 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -295,7 +312,7 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -317,7 +334,7 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -336,15 +353,16 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy())
+		if (eIsProxy()) {
 			return super.toString();
+		}
 
-		StringBuffer result = new StringBuffer(super.toString());
+		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (name: ");
 		result.append(name);
 		result.append(')');

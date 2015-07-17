@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -23,16 +23,17 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 /**
  * Class for the DomainModelReferenceIterator which iterates over all found {@link Setting Settings}.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ * @since 1.2
+ *
  */
 public class DomainModelReferenceIterator implements Iterator<EStructuralFeature.Setting> {
 	/**
 	 * Helper Class for tuple.
-	 * 
+	 *
 	 * @author Eugen Neufeld
-	 * 
+	 *
 	 */
 	private class ReferenceCounter {
 		private EReference eReference;
@@ -46,7 +47,7 @@ public class DomainModelReferenceIterator implements Iterator<EStructuralFeature
 
 	/**
 	 * Constructor for the {@link DomainModelReferenceIterator}.
-	 * 
+	 *
 	 * @param leftReferences the references which could not be used in the normal resolve process
 	 * @param lastResolvedEObject the last {@link EObject} that was resolved
 	 * @param domainModelFeature the {@link EStructuralFeature} which is referenced
@@ -69,18 +70,20 @@ public class DomainModelReferenceIterator implements Iterator<EStructuralFeature
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see java.util.Iterator#remove()
 	 */
+	@Override
 	public void remove() {
 		// TODO do we need it?
 	}
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see java.util.Iterator#next()
 	 */
+	@Override
 	public Setting next() {
 		if (lastResolvedEObject == null) {
 			return null;
@@ -102,8 +105,8 @@ public class DomainModelReferenceIterator implements Iterator<EStructuralFeature
 				@SuppressWarnings("unchecked")
 				final List<EObject> children = (List<EObject>) current.eGet(eReference);
 				if (children == null || children.size() == 0) {
-					throw new IllegalStateException("The EReference " + eReference.getName() + " is wrong for "
-						+ current.eClass().getName() + "!");
+					throw new IllegalStateException("The EReference " + eReference.getName() + " is wrong for " //$NON-NLS-1$ //$NON-NLS-2$
+						+ current.eClass().getName() + "!"); //$NON-NLS-1$
 				}
 				child = children.get(referenceCounter.position);
 				if (i + 1 == references.size()) {
@@ -114,8 +117,8 @@ public class DomainModelReferenceIterator implements Iterator<EStructuralFeature
 				}
 			}
 			if (child == null) {
-				throw new IllegalStateException("EObject in reference" + eReference.getName() + " of EObject "
-					+ current.eClass().getName() + " not set!");
+				throw new IllegalStateException("EObject in reference" + eReference.getName() + " of EObject " //$NON-NLS-1$ //$NON-NLS-2$
+					+ current.eClass().getName() + " not set!"); //$NON-NLS-1$
 			}
 			current = child;
 
@@ -210,9 +213,10 @@ public class DomainModelReferenceIterator implements Iterator<EStructuralFeature
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see java.util.Iterator#hasNext()
 	 */
+	@Override
 	public boolean hasNext() {
 		return hasNext;
 	}

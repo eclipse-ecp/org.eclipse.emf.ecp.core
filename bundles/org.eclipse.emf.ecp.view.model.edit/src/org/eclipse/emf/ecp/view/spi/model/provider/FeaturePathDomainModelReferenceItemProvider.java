@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
@@ -17,6 +17,7 @@ import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
+import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IChildCreationExtender;
@@ -32,8 +33,10 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
  * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference}
  * object.
  * <!-- begin-user-doc -->
- * <!-- end-user-doc -->
- * 
+ *
+ * @since 1.2
+ *        <!-- end-user-doc -->
+ *
  * @generated
  */
 public class FeaturePathDomainModelReferenceItemProvider
@@ -46,7 +49,7 @@ public class FeaturePathDomainModelReferenceItemProvider
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public FeaturePathDomainModelReferenceItemProvider(AdapterFactory adapterFactory)
@@ -58,7 +61,7 @@ public class FeaturePathDomainModelReferenceItemProvider
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -77,7 +80,7 @@ public class FeaturePathDomainModelReferenceItemProvider
 	 * This adds a property descriptor for the Domain Model EFeature feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected void addDomainModelEFeaturePropertyDescriptor(Object object)
@@ -103,7 +106,7 @@ public class FeaturePathDomainModelReferenceItemProvider
 	 * This returns FeaturePathDomainModelReference.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -116,13 +119,18 @@ public class FeaturePathDomainModelReferenceItemProvider
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
+	 *
+	 * @generated NOT
 	 */
 	@Override
 	public String getText(Object object)
 	{
-		return getString("_UI_FeaturePathDomainModelReference_type"); //$NON-NLS-1$
+		final VFeaturePathDomainModelReference dmr = (VFeaturePathDomainModelReference) object;
+		if (dmr == null || dmr.getDomainModelEFeature() == null)
+		{
+			return getString("_UI_FeaturePathDomainModelReference_type"); //$NON-NLS-1$
+		}
+		return dmr.getDomainModelEFeature().getName();
 	}
 
 	/**
@@ -130,7 +138,7 @@ public class FeaturePathDomainModelReferenceItemProvider
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -145,7 +153,7 @@ public class FeaturePathDomainModelReferenceItemProvider
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -158,7 +166,7 @@ public class FeaturePathDomainModelReferenceItemProvider
 	 * Return the resource locator for this item provider's resources.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override

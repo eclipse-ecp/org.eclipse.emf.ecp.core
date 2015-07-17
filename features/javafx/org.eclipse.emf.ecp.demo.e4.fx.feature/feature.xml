@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.emf.ecp.demo.e4.fx.feature"
+      label="EMF Forms FX Demo Feature"
+      version="1.6.0.qualifier"
+      provider-name="Eclipse Modeling Project">
+
+   <description url="http://www.example.com/description">
+      [Enter Feature Description here.]
+   </description>
+
+   <copyright url="http://www.example.com/copyright">
+      [Enter Copyright Description here.]
+   </copyright>
+
+   <license url="http://www.example.com/license">
+      [Enter License Description here.]
+   </license>
+
+   <includes
+         id="org.eclipse.emf.ecp.view.sdk.fx.feature"
+         version="0.0.0"/>
+
+   <requires>
+      <import plugin="org.eclipse.equinox.event"/>
+   </requires>
+
+   <plugin
+         id="org.eclipse.emf.ecp.application.e4.fx"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

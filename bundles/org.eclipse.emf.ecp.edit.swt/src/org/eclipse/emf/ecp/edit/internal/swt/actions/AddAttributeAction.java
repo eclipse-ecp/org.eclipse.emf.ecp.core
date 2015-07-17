@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -15,20 +15,22 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
+import org.eclipse.emf.ecp.edit.spi.swt.actions.ECPSWTAction;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 
 /**
  * The action to allow adding of attribute values to multi attribute controls.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public class AddAttributeAction extends ECPSWTAction {
 
 	/**
 	 * The constructor for the add attribute action.
-	 * 
+	 *
 	 * @param editingDomain the {@link EditingDomain} to use
 	 * @param setting the {@link Setting} to use
 	 */
@@ -36,12 +38,15 @@ public class AddAttributeAction extends ECPSWTAction {
 		super(editingDomain, setting);
 		// TODO remove PlatformUI
 		setImageDescriptor(Activator.getImageDescriptor("icons/add.png")); //$NON-NLS-1$
-		setToolTipText(ActionMessages.AddAttributeAction_AddEntry);
+		setToolTipText(LocalizationServiceHelper.getString(getClass(), ActionMessageKeys.AddAttributeAction_AddEntry));
 	}
 
 	@Override
 	public void run() {
 		super.run();
+		if (getEditingDomain() == null) {
+			return;
+		}
 		// TODO show message if something goes wrong
 		Object defaultValue = getSetting().getEStructuralFeature().getEType().getDefaultValue();
 		if (defaultValue == null) {

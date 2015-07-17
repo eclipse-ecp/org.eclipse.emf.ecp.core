@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  *******************************************************************************/
@@ -34,7 +34,7 @@ import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.TableWithUniqueImpl#getContent <em>Content</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class TableWithUniqueImpl extends EObjectImpl implements TableWithUnique {
@@ -42,7 +42,7 @@ public class TableWithUniqueImpl extends EObjectImpl implements TableWithUnique 
 	 * The cached value of the '{@link #getContent() <em>Content</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getContent()
 	 * @generated
 	 * @ordered
@@ -52,7 +52,7 @@ public class TableWithUniqueImpl extends EObjectImpl implements TableWithUnique 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected TableWithUniqueImpl() {
@@ -62,7 +62,7 @@ public class TableWithUniqueImpl extends EObjectImpl implements TableWithUnique 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -73,9 +73,10 @@ public class TableWithUniqueImpl extends EObjectImpl implements TableWithUnique 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public EList<TableContent> getContent() {
 		if (content == null) {
 			content = new EObjectContainmentEList<TableContent>(TableContent.class, this,
@@ -87,7 +88,7 @@ public class TableWithUniqueImpl extends EObjectImpl implements TableWithUnique 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -102,7 +103,7 @@ public class TableWithUniqueImpl extends EObjectImpl implements TableWithUnique 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -117,7 +118,7 @@ public class TableWithUniqueImpl extends EObjectImpl implements TableWithUnique 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -135,7 +136,7 @@ public class TableWithUniqueImpl extends EObjectImpl implements TableWithUnique 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -151,7 +152,7 @@ public class TableWithUniqueImpl extends EObjectImpl implements TableWithUnique 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override

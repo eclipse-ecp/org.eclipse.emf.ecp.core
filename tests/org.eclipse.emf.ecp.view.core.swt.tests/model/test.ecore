@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="test" nsURI="http://eclipse.org/emf/ecp/core/test" nsPrefix="org.eclipse.emf.ecp.core.test">
+  <eClassifiers xsi:type="ecore:EClass" name="SimpleTestObject">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="date" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="xmlDate" eType="#//XMLDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="myEnum" eType="#//TestEnum"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="TestEnum" instanceTypeName="TestEnum">
+    <eLiterals name="a"/>
+    <eLiterals name="b" value="1"/>
+    <eLiterals name="c" value="2"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="XMLDate" instanceClassName="javax.xml.datatype.XMLGregorianCalendar"/>
+</ecore:EPackage>

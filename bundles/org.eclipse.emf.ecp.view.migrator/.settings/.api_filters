@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.ecp.view.model" version="2">
+    <resource path="META-INF/MANIFEST.MF">
+        <filter comment="SPI change (1.3)" id="923795461">
+            <message_arguments>
+                <message_argument value="1.3.0"/>
+                <message_argument value="1.2.1"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/model/VDomainModelReference.java" type="org.eclipse.emf.ecp.view.spi.model.VDomainModelReference">
+        <filter comment="SPI change (1.3)" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VDomainModelReference"/>
+                <message_argument value="getChangeListener()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change (1.3)" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VDomainModelReference"/>
+                <message_argument value="getFullPathIterator()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change (1.3)" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VDomainModelReference"/>
+                <message_argument value="init(EObject)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change (1.3)" id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VDomainModelReference"/>
+                <message_argument value="resolve(EObject)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/model/VViewPackage.java" type="org.eclipse.emf.ecp.view.spi.model.VViewPackage">
+        <filter comment="SPI change (1.3)" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
+                <message_argument value="DOMAIN_MODEL_REFERENCE_FEATURE_COUNT"/>
+                <message_argument value="0"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change (1.3)" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
+                <message_argument value="FEATURE_PATH_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT"/>
+                <message_argument value="2"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change (1.3)" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
+                <message_argument value="FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE"/>
+                <message_argument value="0"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change (1.3)" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
+                <message_argument value="FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH"/>
+                <message_argument value="1"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Internal Model Changes" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage"/>
+                <message_argument value="VIEW_FEATURE_COUNT"/>
+                <message_argument value="8"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/model/VViewPackage.java" type="org.eclipse.emf.ecp.view.spi.model.VViewPackage$Literals">
+        <filter comment="SPI change (1.3)" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage.Literals"/>
+                <message_argument value="DOMAIN_MODEL_REFERENCE_CHANGE_LISTENER"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI change (1.3)" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage.Literals"/>
+                <message_argument value="DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Internal Model Changes" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.VViewPackage.Literals"/>
+                <message_argument value="VIEW__ECORE_PATH"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/model/impl/VFeaturePathDomainModelReferenceImpl.java" type="org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceImpl">
+        <filter comment="SPI change (1.3)" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceImpl"/>
+                <message_argument value="resolve(EObject)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/model/util/ViewModelUtil.java" type="org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil">
+        <filter comment="SPI change (1.3)" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil"/>
+                <message_argument value="resolveDomainReferences(VElement, EObject)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

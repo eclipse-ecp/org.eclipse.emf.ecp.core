@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension-point id="org.eclipse.emf.ecp.view.model.fx.renderer" name="ECP View Model Renderer" schema="schema/org.eclipse.emf.ecp.view.model.fx.renderer.exsd"/>
+   <extension
+         point="org.eclipse.emf.ecp.view.model.fx.renderer">
+      <renderer
+            renderer="org.eclipse.emf.ecp.view.model.internal.fx.ViewRendererFX">
+         <staticTest
+               element="org.eclipse.emf.ecp.view.spi.model.VView"
+               priority="2">
+         </staticTest>
+      </renderer>
+   </extension>
+
+</plugin>

@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich GmbH - initial API and implementation
  ******************************************************************************/
@@ -24,14 +24,16 @@ import org.eclipse.emf.ecp.view.spi.rule.model.RulePackage;
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Rule</b></em>'.
- * <!-- end-user-doc -->
- * <p>
- * The following features are implemented:
- * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.RuleImpl#getCondition <em>Condition</em>}</li>
- * </ul>
- * </p>
- * 
+ *
+ * @since 1.2
+ *        <!-- end-user-doc -->
+ *        <p>
+ *        The following features are implemented:
+ *        <ul>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.RuleImpl#getCondition <em>Condition</em>}</li>
+ *        </ul>
+ *        </p>
+ *
  * @generated
  */
 public abstract class RuleImpl extends VAttachmentImpl implements Rule {
@@ -39,7 +41,7 @@ public abstract class RuleImpl extends VAttachmentImpl implements Rule {
 	 * The cached value of the '{@link #getCondition() <em>Condition</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getCondition()
 	 * @generated
 	 * @ordered
@@ -49,7 +51,7 @@ public abstract class RuleImpl extends VAttachmentImpl implements Rule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected RuleImpl() {
@@ -59,7 +61,7 @@ public abstract class RuleImpl extends VAttachmentImpl implements Rule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -70,9 +72,10 @@ public abstract class RuleImpl extends VAttachmentImpl implements Rule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public Condition getCondition() {
 		return condition;
 	}
@@ -80,21 +83,23 @@ public abstract class RuleImpl extends VAttachmentImpl implements Rule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public NotificationChain basicSetCondition(Condition newCondition,
 		NotificationChain msgs) {
-		Condition oldCondition = condition;
+		final Condition oldCondition = condition;
 		condition = newCondition;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, RulePackage.RULE__CONDITION,
+			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
+				RulePackage.RULE__CONDITION,
 				oldCondition, newCondition);
-			if (msgs == null)
+			if (msgs == null) {
 				msgs = notification;
-			else
+			} else {
 				msgs.add(notification);
+			}
 		}
 		return msgs;
 	}
@@ -102,32 +107,37 @@ public abstract class RuleImpl extends VAttachmentImpl implements Rule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void setCondition(Condition newCondition) {
 		if (newCondition != condition)
 		{
 			NotificationChain msgs = null;
-			if (condition != null)
+			if (condition != null) {
 				msgs = ((InternalEObject) condition).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
 					- RulePackage.RULE__CONDITION, null, msgs);
-			if (newCondition != null)
+			}
+			if (newCondition != null) {
 				msgs = ((InternalEObject) newCondition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
 					- RulePackage.RULE__CONDITION, null, msgs);
+			}
 			msgs = basicSetCondition(newCondition, msgs);
-			if (msgs != null)
+			if (msgs != null) {
 				msgs.dispatch();
+			}
 		}
-		else if (eNotificationRequired())
+		else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, RulePackage.RULE__CONDITION, newCondition,
 				newCondition));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -144,7 +154,7 @@ public abstract class RuleImpl extends VAttachmentImpl implements Rule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -160,7 +170,7 @@ public abstract class RuleImpl extends VAttachmentImpl implements Rule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -177,7 +187,7 @@ public abstract class RuleImpl extends VAttachmentImpl implements Rule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -194,7 +204,7 @@ public abstract class RuleImpl extends VAttachmentImpl implements Rule {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override

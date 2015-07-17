@@ -1,11 +1,11 @@
 /********************************************************************************
  * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
  ********************************************************************************/
@@ -47,7 +47,7 @@ public abstract class PropertiesStore<ELEMENT extends StorableElement, OBSERVER 
 	}
 
 	/**
-	 * 
+	 *
 	 * @return The folder, where this property store stores its properties as a {@link File}
 	 */
 	public final File getFolder() {
@@ -122,7 +122,7 @@ public abstract class PropertiesStore<ELEMENT extends StorableElement, OBSERVER 
 
 	/**
 	 * Loads an element.
-	 * 
+	 *
 	 * @param in an {@link ObjectInput} to load the element from
 	 * @return the element
 	 * @throws IOException if the element cannot be loaded correctly

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.emf.ecp.edit.swt.cellEditor">
+      <cellEditor
+            class="org.eclipse.emf.ecp.view.internal.table.celleditor.rcp.BooleanCellEditor"
+            id="org.eclipse.emf.ecp.view.internal.table.celleditor.rcp.BooleanCellEditor"
+            tester="org.eclipse.emf.ecp.view.internal.table.celleditor.rcp.BooleanCellEditorTester">
+      </cellEditor>
+   </extension>
+
+</plugin>

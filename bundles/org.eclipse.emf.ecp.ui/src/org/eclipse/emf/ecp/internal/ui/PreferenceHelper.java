@@ -5,7 +5,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  ******************************************************************************/
 package org.eclipse.emf.ecp.internal.ui;
@@ -16,9 +16,9 @@ import org.osgi.service.prefs.BackingStoreException;
 
 /**
  * The preference helper aids storing {key, value} pairs.
- * 
+ *
  * @author pfeifferc
- * 
+ *
  */
 public final class PreferenceHelper {
 
@@ -27,11 +27,11 @@ public final class PreferenceHelper {
 	}
 
 	// TODO: ChainSaw namespace?
-	private static final String PREFERENCE_NODE = "ecp";
+	private static final String PREFERENCE_NODE = "ecp"; //$NON-NLS-1$
 
 	/**
 	 * Get a preference value for a specific key.
-	 * 
+	 *
 	 * @param key the
 	 * @param defaultValue the
 	 * @return the value if it exists, otherwise the defaultValue
@@ -44,7 +44,7 @@ public final class PreferenceHelper {
 
 	/**
 	 * Set the preference value for a specific key. Key and value must not equal null.
-	 * 
+	 *
 	 * @param key the
 	 * @param value the
 	 */
@@ -57,7 +57,7 @@ public final class PreferenceHelper {
 					.flush();
 			} catch (final BackingStoreException e) {
 				Activator.log(
-					"Could not persist the preference change: {" + key + ", " + value + "}", e);
+					"Could not persist the preference change: {" + key + ", " + value + "}", e); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			}
 		}
 	}

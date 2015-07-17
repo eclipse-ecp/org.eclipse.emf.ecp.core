@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
@@ -19,9 +19,9 @@ import org.eclipse.swt.widgets.Shell;
 
 /**
  * This is the EMFStore UndoLastOperation Handler delegating to the EMFStore {@link UIUndoLastOperationController}.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public final class UndoLastOperationHelper {
 	private UndoLastOperationHelper() {
@@ -30,7 +30,7 @@ public final class UndoLastOperationHelper {
 
 	/**
 	 * Undo the last change on an {@link InternalProject}. Delegates to {@link UIUndoLastOperationController}.
-	 * 
+	 *
 	 * @param project the {@link InternalProject}
 	 * @param shell the {@link Shell}
 	 */

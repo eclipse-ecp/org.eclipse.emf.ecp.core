@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.&#xD;&#xA;&#xD;&#xA;All rights reserved. This program and the accompanying materials&#xD;&#xA;are made available under the terms of the Eclipse Public License v1.0&#xD;&#xA;which accompanies this distribution, and is available at&#xD;&#xA;http://www.eclipse.org/legal/epl-v10.html&#xD;&#xA;&#xD;&#xA;Contributors:&#xD;&#xA;Johannes Faltermeier - initial API and implementation"
+    modelDirectory="/org.eclipse.emf.ecp.view.mappingdmr.model.test/src" editDirectory="/org.eclipse.emf.ecp.view.mappingdmr.model.test.edit/src"
+    editorDirectory="/org.eclipse.emf.ecp.view.mappingdmr.model.test.editor/src" modelPluginID="org.eclipse.emf.ecp.view.mappingdmr.model.test"
+    modelName="Example" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="6.0" copyrightFields="false"
+    editPluginID="org.eclipse.emf.ecp.view.mappingdmr.model.test.edit" editorPluginID="org.eclipse.emf.ecp.view.mappingdmr.model.test.editor"
+    usedGenPackages="../../org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore" operationReflection="true"
+    importOrganizing="true">
+  <foreignModel>example.ecore</foreignModel>
+  <genPackages prefix="Example" basePackage="org.eclipse.emf.ecp.view.mapping.test"
+      disposableProviderFactory="true" ecorePackage="example.ecore#/">
+    <genClasses ecoreClass="example.ecore#//Root">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference example.ecore#//Root/intermediate"/>
+    </genClasses>
+    <genClasses ecoreClass="example.ecore#//Intermediate">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference example.ecore#//Intermediate/container"/>
+    </genClasses>
+    <genClasses ecoreClass="example.ecore#//Container">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference example.ecore#//Container/children"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="example.ecore#//AbstractChild"/>
+    <genClasses ecoreClass="example.ecore#//Child">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference example.ecore#//Child/intermediateTarget"/>
+    </genClasses>
+    <genClasses ecoreClass="example.ecore#//IntermediateTarget">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference example.ecore#//IntermediateTarget/target"/>
+    </genClasses>
+    <genClasses ecoreClass="example.ecore#//Target">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute example.ecore#//Target/name"/>
+    </genClasses>
+    <genClasses ecoreClass="example.ecore#//EClassToAdditionMap">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference example.ecore#//EClassToAdditionMap/key"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference example.ecore#//EClassToAdditionMap/value"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

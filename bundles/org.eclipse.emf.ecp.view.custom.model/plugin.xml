@@ -14,5 +14,11 @@
             class="org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage"
             genModel="model/custom.genmodel"/>
    </extension>
+   <extension
+         point="org.eclipse.emf.edapt.migrators">
+      <migrator
+            path="model/custom.history">
+      </migrator>
+   </extension>
 
 </plugin>

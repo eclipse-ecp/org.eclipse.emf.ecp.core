@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.internal.ui.composites;
 
@@ -45,15 +45,15 @@ import org.eclipse.swt.widgets.Text;
 /**
  * This class generates a composite on top of a parent composite containing all ui elements necessary to create an
  * ecpproject.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public class CreateProjectCompositeImpl implements CreateProjectComposite {
 
 	/**
 	 * Constructor for the Project composite.
-	 * 
+	 *
 	 * @param providers list of valid providers
 	 */
 	public CreateProjectCompositeImpl(List<ECPProvider> providers) {
@@ -79,6 +79,7 @@ public class CreateProjectCompositeImpl implements CreateProjectComposite {
 	private ECPProperties properties;
 
 	/** {@inheritDoc} **/
+	@Override
 	public Composite createUI(Composite parent) {
 
 		final Composite composite = new Composite(parent, SWT.NONE);
@@ -92,8 +93,8 @@ public class CreateProjectCompositeImpl implements CreateProjectComposite {
 			label.setText(Messages.UICreateProject_ProjectProvider + ":");//$NON-NLS-1$
 
 			providersViewer = new ComboViewer(composite, SWT.NONE | SWT.READ_ONLY);
-			Combo combo = providersViewer.getCombo();
-			GridData gdCombo = new GridData(SWT.FILL, SWT.BEGINNING, true, false, 1, 1);
+			final Combo combo = providersViewer.getCombo();
+			final GridData gdCombo = new GridData(SWT.FILL, SWT.BEGINNING, true, false, 1, 1);
 			gdCombo.minimumWidth = 150;
 			combo.setLayoutData(gdCombo);
 
@@ -105,8 +106,9 @@ public class CreateProjectCompositeImpl implements CreateProjectComposite {
 			providersViewer.setSelection(new StructuredSelection(providers.get(0)));
 
 			providersViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+				@Override
 				public void selectionChanged(SelectionChangedEvent event) {
-					IStructuredSelection selection = (IStructuredSelection) event.getSelection();
+					final IStructuredSelection selection = (IStructuredSelection) event.getSelection();
 					provider = (ECPProvider) selection.getFirstElement();
 					updateUI();
 					if (listener != null) {
@@ -118,7 +120,7 @@ public class CreateProjectCompositeImpl implements CreateProjectComposite {
 		}
 
 		provider = providers.get(0);
-		Label labelName = new Label(composite, SWT.NONE);
+		final Label labelName = new Label(composite, SWT.NONE);
 		labelName.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false, 1, 1));
 		labelName.setText(Messages.UICreateProject_ProjectName + ":"); //$//$NON-NLS-1$
 
@@ -126,9 +128,10 @@ public class CreateProjectCompositeImpl implements CreateProjectComposite {
 		textProjectName.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING, true, false, 1, 1));
 		textProjectName.addModifyListener(new ModifyListener() {
 
+			@Override
 			public void modifyText(ModifyEvent e) {
 				projectName = textProjectName.getText();
-				if (projectName.equals("")) //$NON-NLS-1$ 
+				if (projectName.equals("")) //$NON-NLS-1$
 				{
 					projectName = null;
 
@@ -149,7 +152,7 @@ public class CreateProjectCompositeImpl implements CreateProjectComposite {
 			}
 		});
 
-		Label seperator = new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL);
+		final Label seperator = new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL);
 		seperator.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, false, false, 2, 2));
 
 		providerStackLayout = new StackLayout();
@@ -161,9 +164,10 @@ public class CreateProjectCompositeImpl implements CreateProjectComposite {
 	}
 
 	private void updateUI() {
-		UIProvider uiProvider = UIProviderRegistry.INSTANCE.getUIProvider(provider);
-		Control newProjectUI = uiProvider.createNewProjectUI(providerStack, new CompositeStateObserver() {
+		final UIProvider uiProvider = UIProviderRegistry.INSTANCE.getUIProvider(provider);
+		final Control newProjectUI = uiProvider.createNewProjectUI(providerStack, new CompositeStateObserver() {
 
+			@Override
 			public void compositeChangedState(Composite caller, boolean complete, ECPProperties projectProperties) {
 				compositeStatus = complete;
 				properties = projectProperties;
@@ -193,16 +197,19 @@ public class CreateProjectCompositeImpl implements CreateProjectComposite {
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public ECPProvider getProvider() {
 		return provider;
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public String getProjectName() {
 		return projectName;
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public void setListener(CreateProjectChangeListener listener) {
 		this.listener = listener;
 		if (listener != null) {
@@ -213,11 +220,13 @@ public class CreateProjectCompositeImpl implements CreateProjectComposite {
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public ECPProperties getProperties() {
 		return properties == null ? ECPUtil.createProperties() : properties;
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public void dispose() {
 	}
 

@@ -5,7 +5,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  ******************************************************************************/
 package org.eclipse.emf.ecp.editor.internal.e3;
@@ -39,16 +39,24 @@ import org.eclipse.ui.forms.editor.SharedHeaderFormEditor;
 
 /**
  * GUI view for editing MEs.
- * 
+ *
  * @author helming
  * @author naughton
  */
 public class MEEditor extends SharedHeaderFormEditor {
 
+	private static final String STATUS_EXTENSIONPOINT_ID = "org.eclipse.emf.ecp.editor.statusmessage"; //$NON-NLS-1$
+
+	private static final String DEFAULT_PAGE_ID = "Edit"; //$NON-NLS-1$
+
+	private static final String REPLACE_ATTRIBUTE = "replace"; //$NON-NLS-1$
+
+	private static final String EDITOR_PAGES_EXTENSIONPOINT_ID = "org.eclipse.emf.ecp.editor.pages"; //$NON-NLS-1$
+
 	/**
 	 * The Id for MEEditor. We need this to open a model element.
 	 */
-	public static final String ID = "org.eclipse.emf.ecp.editor.internal.e3";
+	public static final String ID = "org.eclipse.emf.ecp.editor.internal.e3"; //$NON-NLS-1$
 
 	private MEEditorPage mePage;
 
@@ -77,26 +85,27 @@ public class MEEditor extends SharedHeaderFormEditor {
 	 */
 	@Override
 	protected void addPages() {
-		final String editorID = "Edit";
-		final String editorDesc = "Standard View";
+		final String editorID = DEFAULT_PAGE_ID;
+		final String editorDesc = Messages.MEEditor_Standard_View_Name;
 		final MEEditorInput editorInput = (MEEditorInput) getEditorInput();
 
 		// add pages from the extension point
 		final IConfigurationElement[] configTemp = Platform.getExtensionRegistry().getConfigurationElementsFor(
-			"org.eclipse.emf.ecp.editor.internal.e3.pages");
+			EDITOR_PAGES_EXTENSIONPOINT_ID);
 		IConfigurationElement[] configIn = null;
 
 		boolean replaceMEEditor = false;
 		int counter = 0;
 
 		for (int i = 0; i < configTemp.length; i++) {
-			if (configTemp[i].getAttribute("replace") != null && configTemp[i].getAttribute("replace").equals(editorID)) {
+			if (configTemp[i].getAttribute(REPLACE_ATTRIBUTE) != null
+				&& configTemp[i].getAttribute(REPLACE_ATTRIBUTE).equals(editorID)) {
 				// if a replacement is found, create this page, so it becomes the first one
 				replaceMEEditor = true;
 				AbstractMEEditorPage newPage;
 
 				try {
-					newPage = (AbstractMEEditorPage) configTemp[i].createExecutableExtension("class");
+					newPage = (AbstractMEEditorPage) configTemp[i].createExecutableExtension("class"); //$NON-NLS-1$
 					final FormPage createPage = newPage.createPage(this, modelElementContext);
 					if (createPage != null) {
 						addPage(createPage);
@@ -144,7 +153,7 @@ public class MEEditor extends SharedHeaderFormEditor {
 		final List<IConfigurationElement> config = PageCandidate.getPages(configIn);
 		for (final IConfigurationElement e : config) {
 			try {
-				final AbstractMEEditorPage newPage = (AbstractMEEditorPage) e.createExecutableExtension("class");
+				final AbstractMEEditorPage newPage = (AbstractMEEditorPage) e.createExecutableExtension("class"); //$NON-NLS-1$
 				final FormPage createPage = newPage.createPage(this, modelElementContext);
 				if (createPage != null) {
 					addPage(createPage);
@@ -154,10 +163,6 @@ public class MEEditor extends SharedHeaderFormEditor {
 			}
 		}
 
-		// commentsPage = new METhreadPage(this, "Discussion", "Discussion", editingDomain, modelElement);
-		// descriptionPage = new MEDescriptionPage(this, "Description", "Description", editingDomain, modelElement);
-		// addPage(descriptionPage);
-		// addPage(commentsPage);
 	}
 
 	/**
@@ -177,7 +182,7 @@ public class MEEditor extends SharedHeaderFormEditor {
 
 	/**
 	 * Save is not allowed as the editor can only modify model elements.
-	 * 
+	 *
 	 * @return false
 	 */
 	@Override
@@ -205,6 +210,7 @@ public class MEEditor extends SharedHeaderFormEditor {
 
 			modelElementContextListener = new ECPContextDisposedListener() {
 
+				@Override
 				public void contextDisposed() {
 					close(false);
 				}
@@ -216,6 +222,7 @@ public class MEEditor extends SharedHeaderFormEditor {
 				@Override
 				public void onChange(Notification notification) {
 					Display.getDefault().asyncExec(new Runnable() {
+						@Override
 						public void run() {
 							updateIcon();
 							setPartName(shortLabelProvider.getText(modelElementContext.getDomainObject()));
@@ -244,21 +251,21 @@ public class MEEditor extends SharedHeaderFormEditor {
 			// meInput.getLabelProvider().addListener(labelProviderListener);
 
 		} else {
-			throw new PartInitException("MEEditor is only appliable for MEEditorInputs");
+			throw new PartInitException("MEEditor is only appliable for MEEditorInputs"); //$NON-NLS-1$
 		}
 	}
 
 	private void initStatusProvider() {
 		final IConfigurationElement[] configurationElements = Platform.getExtensionRegistry()
 			.getConfigurationElementsFor(
-				"org.eclipse.emf.ecp.editor.internal.e3.statusmessage");
+				STATUS_EXTENSIONPOINT_ID);
 		final ArrayList<IConfigurationElement> provider = new ArrayList<IConfigurationElement>();
 		provider.addAll(Arrays.asList(configurationElements));
 		int priority = 0;
 		for (final IConfigurationElement e : provider) {
 			try {
 				final StatusMessageProvider statusMessageProvider = (StatusMessageProvider) e
-					.createExecutableExtension("class");
+					.createExecutableExtension("class"); //$NON-NLS-1$
 				final int newpriority = statusMessageProvider.canRender(modelElementContext.getDomainObject());
 				if (newpriority > priority) {
 					priority = newpriority;

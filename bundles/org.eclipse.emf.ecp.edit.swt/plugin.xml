@@ -154,6 +154,11 @@
             id="org.eclipse.emf.ecp.edit.swt.cellEditor.link"
             tester="org.eclipse.emf.ecp.edit.internal.swt.reference.LinkCellEditorTester">
       </cellEditor>
+      <cellEditor
+            class="org.eclipse.emf.ecp.edit.spi.swt.table.StringCellEditor"
+            id="org.eclipse.emf.ecp.edit.swt.cellEditor.text"
+            tester="org.eclipse.emf.ecp.edit.internal.swt.table.StringCellEditorTester">
+      </cellEditor>
    </extension>
 
 </plugin>

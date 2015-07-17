@@ -2,5 +2,5 @@
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="vertical" nsURI="http://org/eclipse/emf/ecp/view/vertical/model"
     nsPrefix="org.eclipse.emf.ecp.view.vertical.model">
-  <eClassifiers xsi:type="ecore:EClass" name="VerticalLayout" eSuperTypes="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//Container"/>
+  <eClassifiers xsi:type="ecore:EClass" name="VerticalLayout" eSuperTypes="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//ContainedContainer"/>
 </ecore:EPackage>

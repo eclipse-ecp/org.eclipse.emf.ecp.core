@@ -1,0 +1,3 @@
+
+a#ecp-introLink img { background-image : url(graphics/ecp.png); }
+a#ecp-introLink:hover img { background-image : url(graphics/ecp_hov.png); }

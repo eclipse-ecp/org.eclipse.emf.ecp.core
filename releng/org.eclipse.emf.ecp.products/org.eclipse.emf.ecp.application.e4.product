@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="org.eclipse.emf.ecp.e4.application" uid="org.eclipse.emf.ecp.application.e4.demo" id="org.eclipse.emf.ecp.application.e4.product" application="org.eclipse.e4.ui.workbench.swt.E4Application" version="1.0.0.qualifier" useFeatures="false" includeLaunchers="true">
+<product name="org.eclipse.emf.ecp.e4.application" uid="org.eclipse.emf.ecp.application.e4.demo" id="org.eclipse.emf.ecp.application.e4.product" application="org.eclipse.e4.ui.workbench.swt.E4Application" version="1.7.0.qualifier" useFeatures="false" includeLaunchers="true">
 
    <configIni use="default">
    </configIni>
 
    <launcherArgs>
-      <programArgs>-clearPersistedState</programArgs>
-      <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
+      <programArgs>-clearPersistedState
+      </programArgs>
+      <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts
+      </vmArgsMac>
    </launcherArgs>
 
    <windowImages/>
@@ -51,7 +53,6 @@
       <plugin id="org.eclipse.core.resources.win32.x86" fragment="true"/>
       <plugin id="org.eclipse.core.resources.win32.x86_64" fragment="true"/>
       <plugin id="org.eclipse.core.runtime"/>
-      <plugin id="org.eclipse.core.runtime.compatibility.registry" fragment="true"/>
       <plugin id="org.eclipse.e4.core.commands"/>
       <plugin id="org.eclipse.e4.core.contexts"/>
       <plugin id="org.eclipse.e4.core.di"/>
@@ -88,9 +89,11 @@
       <plugin id="org.eclipse.emf.ecp.editor.e3"/>
       <plugin id="org.eclipse.emf.ecp.emfstore.core"/>
       <plugin id="org.eclipse.emf.ecp.emfstore.ui"/>
+      <plugin id="org.eclipse.emf.ecp.emfstore.ui.e4"/>
       <plugin id="org.eclipse.emf.ecp.explorereditorbridge"/>
       <plugin id="org.eclipse.emf.ecp.ui"/>
       <plugin id="org.eclipse.emf.ecp.ui.e4"/>
+      <plugin id="org.eclipse.emf.ecp.ui.rcp" fragment="true"/>
       <plugin id="org.eclipse.emf.ecp.ui.view"/>
       <plugin id="org.eclipse.emf.ecp.ui.view.swt"/>
       <plugin id="org.eclipse.emf.ecp.view.context"/>
@@ -131,7 +134,6 @@
       <plugin id="org.eclipse.osgi"/>
       <plugin id="org.eclipse.osgi.services"/>
       <plugin id="org.eclipse.swt"/>
-      <plugin id="org.eclipse.swt.cocoa.macosx" fragment="true"/>
       <plugin id="org.eclipse.swt.cocoa.macosx.x86_64" fragment="true"/>
       <plugin id="org.eclipse.swt.gtk.linux.x86" fragment="true"/>
       <plugin id="org.eclipse.swt.gtk.linux.x86_64" fragment="true"/>

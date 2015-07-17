@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  ******************************************************************************/
 package org.eclipse.emf.ecp.emfstore.internal.ui.decorator;
 
@@ -25,12 +25,12 @@ import org.eclipse.jface.viewers.ILightweightLabelDecorator;
 
 /**
  * Dirty Decorator for Projects.
- * 
+ *
  * @author Tobias Verhoeven
  */
 public class ProjectEMFStoreDirtyDecorator implements ILightweightLabelDecorator {
 
-	private String dirtyPath = "icons/dirty.png";
+	private final String dirtyPath = EMFStoreDirtyDecorator.dirtyPath;
 
 	/**
 	 * Instantiates a new EMFStoreDirtyDecorator.
@@ -40,18 +40,19 @@ public class ProjectEMFStoreDirtyDecorator implements ILightweightLabelDecorator
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void decorate(Object element, IDecoration decoration) {
 
 		if (!(element instanceof ECPProject)) {
 			return;
 		}
-		ECPProvider ecpProvider = ECPUtil.getECPProviderRegistry().getProvider(EMFStoreProvider.NAME);
-		EMFStoreProvider provider = (EMFStoreProvider) ECPUtil.getResolvedElement(ecpProvider);
-		InternalProject project = (InternalProject) element;
+		final ECPProvider ecpProvider = ECPUtil.getECPProviderRegistry().getProvider(EMFStoreProvider.NAME);
+		final EMFStoreProvider provider = (EMFStoreProvider) ECPUtil.getResolvedElement(ecpProvider);
+		final InternalProject project = (InternalProject) element;
 		if (!project.getProvider().equals(provider)) {
 			return;
 		}
-		ESLocalProject projectSpace = provider.getProjectSpace(project);
+		final ESLocalProject projectSpace = provider.getProjectSpace(project);
 
 		if (projectSpace == null) {
 			return;
@@ -64,20 +65,24 @@ public class ProjectEMFStoreDirtyDecorator implements ILightweightLabelDecorator
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void addListener(ILabelProviderListener listener) {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void dispose() {
 
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public boolean isLabelProperty(Object element, String property) {
 		return false;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void removeListener(ILabelProviderListener listener) {
 	}
 }

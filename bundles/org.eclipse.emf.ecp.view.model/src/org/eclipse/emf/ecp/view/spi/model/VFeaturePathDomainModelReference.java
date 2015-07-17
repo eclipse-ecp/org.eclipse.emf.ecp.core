@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>VFeature Path Domain Model Reference</b></em>'.
  * <!-- end-user-doc -->
- * 
+ *
  * <p>
  * The following features are supported:
  * <ul>
@@ -29,10 +29,11 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  * Domain Model EReference Path</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getFeaturePathDomainModelReference()
  * @model
  * @generated
+ * @since 1.2
  */
 public interface VFeaturePathDomainModelReference extends VDomainModelReference
 {
@@ -45,7 +46,7 @@ public interface VFeaturePathDomainModelReference extends VDomainModelReference
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Domain Model EFeature</em>' reference.
 	 * @see #setDomainModelEFeature(EStructuralFeature)
 	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getFeaturePathDomainModelReference_DomainModelEFeature()
@@ -60,7 +61,7 @@ public interface VFeaturePathDomainModelReference extends VDomainModelReference
 	 * <em>Domain Model EFeature</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Domain Model EFeature</em>' reference.
 	 * @see #getDomainModelEFeature()
 	 * @generated
@@ -76,7 +77,7 @@ public interface VFeaturePathDomainModelReference extends VDomainModelReference
 	 * more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Domain Model EReference Path</em>' reference list.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getFeaturePathDomainModelReference_DomainModelEReferencePath()
 	 * @model

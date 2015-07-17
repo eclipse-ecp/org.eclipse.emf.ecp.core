@@ -1,24 +1,28 @@
 /*******************************************************************************
  * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.application3x;
 
 import java.net.URL;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.ui.activities.IActivityManager;
+import org.eclipse.ui.activities.IWorkbenchActivitySupport;
 import org.eclipse.ui.application.IWorkbenchConfigurer;
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchAdvisor;
@@ -31,9 +35,9 @@ import org.osgi.framework.Bundle;
 
 /**
  * The {@link ApplicationWorkbenchAdvisor} class.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 @SuppressWarnings({ "deprecation", "restriction" })
 public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
@@ -61,6 +65,18 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
 	public void initialize(IWorkbenchConfigurer configurer) {
 		configurer.setSaveAndRestore(true);
 		declareWorkbenchImages();
+
+		final IWorkbenchActivitySupport activitySupport = configurer.getWorkbench()
+			.getActivitySupport();
+		final IActivityManager activityManager = activitySupport.getActivityManager();
+
+		final Set<String> enabledActivities = new HashSet<String>();
+		final String id = "org.eclipse.emf.ecp.application.e3.enablement"; //$NON-NLS-1$
+		if (activityManager.getActivity(id).isDefined()) {
+			enabledActivities.add(id);
+		}
+
+		activitySupport.setEnabledActivityIds(enabledActivities);
 	}
 
 	@Override
@@ -100,7 +116,7 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
 		// View icons
 		final String PATH_EVIEW = ICONS_PATH + "eview16/"; //$NON-NLS-1$
 
-		Bundle ideBundle = Platform.getBundle(IDEWorkbenchPlugin.IDE_WORKBENCH);
+		final Bundle ideBundle = Platform.getBundle(IDEWorkbenchPlugin.IDE_WORKBENCH);
 
 		declareWorkbenchImage(ideBundle, IDEInternalWorkbenchImages.IMG_ETOOL_BUILD_EXEC,
 			PATH_ETOOL + "build_exec.gif", false); //$NON-NLS-1$
@@ -223,7 +239,7 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
 
 	/**
 	 * Declares an IDE-specific workbench image.
-	 * 
+	 *
 	 * @param symbolicName
 	 *            the symbolic name of the image
 	 * @param path
@@ -234,8 +250,8 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
 	 * @see IWorkbenchConfigurer#declareImage
 	 */
 	private void declareWorkbenchImage(Bundle ideBundle, String symbolicName, String path, boolean shared) {
-		URL url = FileLocator.find(ideBundle, new Path(path), null);
-		ImageDescriptor desc = ImageDescriptor.createFromURL(url);
+		final URL url = FileLocator.find(ideBundle, new Path(path), null);
+		final ImageDescriptor desc = ImageDescriptor.createFromURL(url);
 		getWorkbenchConfigurer().declareImage(symbolicName, desc, shared);
 	}
 

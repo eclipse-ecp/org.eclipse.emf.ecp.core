@@ -1,158 +1,51 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.ui.commands;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.emf.common.notify.AdapterFactory;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecp.internal.ui.PreferenceHelper;
-import org.eclipse.emf.ecp.ui.platform.Activator;
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
-import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.dialogs.ProgressMonitorDialog;
+import org.eclipse.emf.ecp.internal.ui.util.ECPExportHandlerHelper;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
+/**
+ * Export model element handler.
+ *
+ * @author Eugen Neufeld
+ *
+ */
 public class ExportHandler extends AbstractHandler {
-
-	private static final String FILE_EXTENSION = "xmi";
-
-	/**
-	 * These filter names are used to filter which files are displayed.
-	 */
-	public static final String[] FILTER_NAMES = { "Model Files (*." + FILE_EXTENSION + ")" };
-
-	/**
-	 * These filter extensions are used to filter which files are displayed.
-	 */
-	public static final String[] FILTER_EXTS = { "*." + FILE_EXTENSION };
-
-	private static final String EXPORT_MODEL_PATH = "org.eclipse.emf.emfstore.client.ui.exportModelPath";
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.core.commands.AbstractHandler#execute(org.eclipse.core.commands.ExecutionEvent)
 	 */
+	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 
 		final List<EObject> exportModelElements = getSelfContainedModelElementTree(event);
 
-		if (exportModelElements.size() > 0) {
-
-			final String filePath = getFilePathByFileDialog(getNameForModelElement(exportModelElements.get(0)));
-
-			if (filePath == null) {
-				return null;
-			}
-
-			PreferenceHelper.setPreference(EXPORT_MODEL_PATH, new File(filePath).getParent());
-
-			runCommand(exportModelElements, filePath, HandlerUtil.getActiveShell(event));
-
-		}
+		ECPExportHandlerHelper.export(HandlerUtil.getActiveShell(event), exportModelElements);
 
 		return null;
-	}
-
-	private AdapterFactoryLabelProvider labelProvider;
-
-	/**
-	 * Get the name of a model element.
-	 * 
-	 * @param modelElement the model element
-	 * @return the name for the model element
-	 */
-	private String getNameForModelElement(EObject modelElement) {
-		ComposedAdapterFactory adapterFactory = null;
-
-		if (labelProvider == null) {
-			adapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
-				new ReflectiveItemProviderAdapterFactory(),
-				new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
-			labelProvider = new AdapterFactoryLabelProvider(adapterFactory);
-		}
-
-		final String text = labelProvider.getText(modelElement);
-		if (adapterFactory != null) {
-			adapterFactory.dispose();
-		}
-		labelProvider.dispose();
-		return text;
-	}
-
-	private void runCommand(final List<EObject> exportModelElements, String filePath, Shell shell) {
-		final File file = new File(filePath);
-
-		final URI uri = URI.createFileURI(filePath);
-
-		final ProgressMonitorDialog progressDialog = new ProgressMonitorDialog(PlatformUI.getWorkbench()
-			.getActiveWorkbenchWindow().getShell());
-
-		progressDialog.open();
-		progressDialog.getProgressMonitor().beginTask("Export modelelement...", 100);
-		progressDialog.getProgressMonitor().worked(10);
-
-		try {
-			saveEObjectToResource(exportModelElements, uri);
-		} catch (final IOException e) {
-			showExceptionDialog(e.getMessage(), e, shell);
-		}
-		progressDialog.getProgressMonitor().done();
-		progressDialog.close();
-
-		MessageDialog.openInformation(null, "Export", "Exported modelelement to file " + file.getName());
-	}
-
-	/**
-	 * This method opens a standard error dialog displaying an exception to the user.
-	 * 
-	 * @param cause the exception to be shown.
-	 * @param message the message to be shown.
-	 */
-	private void showExceptionDialog(String message, Exception cause, Shell shell) {
-
-		final StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append(message);
-		String title = "Error";
-		if (cause != null) {
-			stringBuilder.append(": ");
-			stringBuilder.append(cause.getMessage());
-			title = cause.getClass().getName();
-		}
-		final String string = stringBuilder.toString();
-		MessageDialog.openError(shell, title, string);
-		Activator.log("An unexpected error in a ECP plugin occured.", cause);
 	}
 
 	private List<EObject> getSelfContainedModelElementTree(ExecutionEvent event) {
@@ -182,62 +75,4 @@ public class ExportHandler extends AbstractHandler {
 
 		return result;
 	}
-
-	private String getFilePathByFileDialog(String modelElementName) {
-		final FileDialog dialog = new FileDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
-			SWT.SAVE);
-		dialog.setFilterNames(FILTER_NAMES);
-		dialog.setFilterExtensions(FILTER_EXTS);
-		final String initialPath = PreferenceHelper.getPreference(EXPORT_MODEL_PATH, System.getProperty("user.home"));
-		dialog.setFilterPath(initialPath);
-		dialog.setOverwrite(true);
-
-		try {
-			// String initialFileName = projectSpace.getProjectName() + "@"
-			// + projectSpace.getBaseVersion().getIdentifier() + ".ucp";
-			final String initialFileName = "ModelElement_" + modelElementName + "." + FILE_EXTENSION;
-			dialog.setFileName(initialFileName);
-
-		} catch (final NullPointerException e) {
-			// do nothing
-		}
-
-		final String filePath = dialog.open();
-
-		return filePath;
-	}
-
-	/**
-	 * Save a list of EObjects to the resource with the given URI.
-	 * 
-	 * @param eObjects the EObjects to be saved
-	 * @param resourceURI the URI of the resource, which should be used to save the EObjects
-	 * @throws IOException if saving to the resource fails
-	 */
-	public void saveEObjectToResource(List<? extends EObject> eObjects, URI resourceURI) throws IOException {
-		final ResourceSet resourceSet = new ResourceSetImpl();
-		final Resource resource = resourceSet.createResource(resourceURI);
-		final EList<EObject> contents = resource.getContents();
-
-		for (final EObject eObject : eObjects) {
-			contents.add(eObject);
-		}
-
-		contents.addAll(eObjects);
-		resource.save(null);
-	}
-
-	/**
-	 * Save an EObject to a resource.
-	 * 
-	 * @param eObject the object
-	 * @param resourceURI the resources URI
-	 * @throws IOException if saving to the resource fails.
-	 */
-	public void saveEObjectToResource(EObject eObject, URI resourceURI) throws IOException {
-		final ArrayList<EObject> list = new ArrayList<EObject>();
-		list.add(eObject);
-		saveEObjectToResource(list, resourceURI);
-	}
-
 }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.emf.ecp.view.indexdmr.model.test/src"
+    modelPluginID="org.eclipse.emf.ecp.view.indexdmr.model.test" modelName="Example"
+    rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="6.0" copyrightFields="false" operationReflection="true" importOrganizing="true">
+  <foreignModel>example.ecore</foreignModel>
+  <genPackages prefix="Example" basePackage="org.eclipse.emf.ecp.view.index.test"
+      disposableProviderFactory="true" ecorePackage="example.ecore#/">
+    <genClasses ecoreClass="example.ecore#//Root">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference example.ecore#//Root/intermediate"/>
+    </genClasses>
+    <genClasses ecoreClass="example.ecore#//Intermediate">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference example.ecore#//Intermediate/container"/>
+    </genClasses>
+    <genClasses ecoreClass="example.ecore#//Container">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference example.ecore#//Container/children"/>
+    </genClasses>
+    <genClasses ecoreClass="example.ecore#//Child">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference example.ecore#//Child/intermediateTarget"/>
+    </genClasses>
+    <genClasses ecoreClass="example.ecore#//IntermediateTarget">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference example.ecore#//IntermediateTarget/target"/>
+    </genClasses>
+    <genClasses ecoreClass="example.ecore#//Target">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute example.ecore#//Target/name"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

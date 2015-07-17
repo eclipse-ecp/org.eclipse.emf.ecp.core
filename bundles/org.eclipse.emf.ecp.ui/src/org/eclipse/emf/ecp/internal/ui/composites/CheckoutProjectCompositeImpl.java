@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  *******************************************************************************/
 
 package org.eclipse.emf.ecp.internal.ui.composites;
@@ -40,7 +40,7 @@ public class CheckoutProjectCompositeImpl implements CheckoutProjectComposite {
 
 	private String projectName;
 
-	private ECPProperties projectProperties = ECPUtil.createProperties();
+	private final ECPProperties projectProperties = ECPUtil.createProperties();
 
 	private final ECPCheckoutSource checkoutSource;
 
@@ -48,7 +48,7 @@ public class CheckoutProjectCompositeImpl implements CheckoutProjectComposite {
 
 	/**
 	 * Constructor for creating a checkout composite.
-	 * 
+	 *
 	 * @param checkoutSource the object to checkout
 	 */
 	public CheckoutProjectCompositeImpl(ECPCheckoutSource checkoutSource) {
@@ -61,18 +61,20 @@ public class CheckoutProjectCompositeImpl implements CheckoutProjectComposite {
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public Composite createUI(Composite parent) {
-		Composite composite = new Composite(parent, SWT.NONE);
+		final Composite composite = new Composite(parent, SWT.NONE);
 		composite.setLayoutData(new GridData(GridData.FILL_BOTH));
 		composite.setLayout(new GridLayout(2, false));
 
-		Label lblNewLabel = new Label(composite, SWT.NONE);
+		final Label lblNewLabel = new Label(composite, SWT.NONE);
 		lblNewLabel.setText(Messages.CheckoutProjectComposite_ProjectName);
 
 		final Text projectNameText = new Text(composite, SWT.BORDER);
 		projectNameText.setText(projectName);
 		projectNameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		projectNameText.addModifyListener(new ModifyListener() {
+			@Override
 			public void modifyText(ModifyEvent e) {
 				projectName = projectNameText.getText();
 				if (listener != null) {
@@ -80,11 +82,11 @@ public class CheckoutProjectCompositeImpl implements CheckoutProjectComposite {
 				}
 			}
 		});
-		StackLayout providerStackLayout = new StackLayout();
-		Composite providerStack = new Composite(composite, SWT.NONE);
+		final StackLayout providerStackLayout = new StackLayout();
+		final Composite providerStack = new Composite(composite, SWT.NONE);
 		providerStack.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
 		providerStack.setLayout(providerStackLayout);
-		Control checkoutUI = uiProvider.createCheckoutUI(providerStack, checkoutSource, projectProperties);
+		final Control checkoutUI = uiProvider.createCheckoutUI(providerStack, checkoutSource, projectProperties);
 		if (checkoutUI != null) {
 			providerStackLayout.topControl = checkoutUI;
 			providerStack.layout();
@@ -94,31 +96,37 @@ public class CheckoutProjectCompositeImpl implements CheckoutProjectComposite {
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public String getProjectName() {
 		return projectName;
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public ECPProperties getProjectProperties() {
 		return projectProperties;
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public ECPCheckoutSource getCheckoutSource() {
 		return checkoutSource;
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public UIProvider getUiProvider() {
 		return uiProvider;
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public void setListener(CheckoutProjectChangeListener listener) {
 		this.listener = listener;
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public void dispose() {
 	}
 }

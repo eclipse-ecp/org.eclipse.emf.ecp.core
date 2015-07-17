@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  *******************************************************************************/
@@ -50,7 +50,7 @@ import org.eclipse.emf.ecp.view.validation.test.model.util.TestValidator;
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.WriterImpl#getLibrary <em>Library</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class WriterImpl extends EObjectImpl implements Writer {
@@ -58,7 +58,7 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	 * The default value of the '{@link #getFirstName() <em>First Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getFirstName()
 	 * @generated
 	 * @ordered
@@ -69,7 +69,7 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	 * The cached value of the '{@link #getFirstName() <em>First Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getFirstName()
 	 * @generated
 	 * @ordered
@@ -80,7 +80,7 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	 * The default value of the '{@link #getLastName() <em>Last Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getLastName()
 	 * @generated
 	 * @ordered
@@ -91,7 +91,7 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	 * The cached value of the '{@link #getLastName() <em>Last Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getLastName()
 	 * @generated
 	 * @ordered
@@ -102,7 +102,7 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	 * The default value of the '{@link #getEMail() <em>EMail</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getEMail()
 	 * @generated
 	 * @ordered
@@ -113,7 +113,7 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	 * The cached value of the '{@link #getEMail() <em>EMail</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getEMail()
 	 * @generated
 	 * @ordered
@@ -124,7 +124,7 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	 * The default value of the '{@link #getBirthDate() <em>Birth Date</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getBirthDate()
 	 * @generated
 	 * @ordered
@@ -135,7 +135,7 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	 * The cached value of the '{@link #getBirthDate() <em>Birth Date</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getBirthDate()
 	 * @generated
 	 * @ordered
@@ -146,7 +146,7 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	 * The cached value of the '{@link #getBooks() <em>Books</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getBooks()
 	 * @generated
 	 * @ordered
@@ -157,7 +157,7 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	 * The default value of the '{@link #isPseudonym() <em>Pseudonym</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #isPseudonym()
 	 * @generated
 	 * @ordered
@@ -168,7 +168,7 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	 * The cached value of the '{@link #isPseudonym() <em>Pseudonym</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #isPseudonym()
 	 * @generated
 	 * @ordered
@@ -178,7 +178,7 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected WriterImpl() {
@@ -188,7 +188,7 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -199,9 +199,10 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public String getFirstName() {
 		return firstName;
 	}
@@ -209,23 +210,26 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void setFirstName(String newFirstName) {
-		String oldFirstName = firstName;
+		final String oldFirstName = firstName;
 		firstName = newFirstName;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.WRITER__FIRST_NAME, oldFirstName,
 				firstName));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public String getLastName() {
 		return lastName;
 	}
@@ -233,22 +237,25 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void setLastName(String newLastName) {
-		String oldLastName = lastName;
+		final String oldLastName = lastName;
 		lastName = newLastName;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.WRITER__LAST_NAME, oldLastName, lastName));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public String getEMail() {
 		return eMail;
 	}
@@ -256,22 +263,25 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void setEMail(String newEMail) {
-		String oldEMail = eMail;
+		final String oldEMail = eMail;
 		eMail = newEMail;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.WRITER__EMAIL, oldEMail, eMail));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public Date getBirthDate() {
 		return birthDate;
 	}
@@ -279,23 +289,26 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void setBirthDate(Date newBirthDate) {
-		Date oldBirthDate = birthDate;
+		final Date oldBirthDate = birthDate;
 		birthDate = newBirthDate;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.WRITER__BIRTH_DATE, oldBirthDate,
 				birthDate));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public EList<Book> getBooks() {
 		if (books == null) {
 			books = new EObjectWithInverseResolvingEList<Book>(Book.class, this, TestPackage.WRITER__BOOKS,
@@ -307,9 +320,10 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public boolean isPseudonym() {
 		return pseudonym;
 	}
@@ -317,33 +331,37 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void setPseudonym(boolean newPseudonym) {
-		boolean oldPseudonym = pseudonym;
+		final boolean oldPseudonym = pseudonym;
 		pseudonym = newPseudonym;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.WRITER__PSEUDONYM, oldPseudonym,
 				pseudonym));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public Library getLibrary() {
-		if (eContainerFeatureID() != TestPackage.WRITER__LIBRARY)
+		if (eContainerFeatureID() != TestPackage.WRITER__LIBRARY) {
 			return null;
+		}
 		return (Library) eInternalContainer();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public NotificationChain basicSetLibrary(Library newLibrary, NotificationChain msgs) {
@@ -354,34 +372,41 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void setLibrary(Library newLibrary) {
-		if (newLibrary != eInternalContainer()
-			|| (eContainerFeatureID() != TestPackage.WRITER__LIBRARY && newLibrary != null)) {
-			if (EcoreUtil.isAncestor(this, newLibrary))
+		if (newLibrary != eInternalContainer() || eContainerFeatureID() != TestPackage.WRITER__LIBRARY
+			&& newLibrary != null) {
+			if (EcoreUtil.isAncestor(this, newLibrary)) {
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+			}
 			NotificationChain msgs = null;
-			if (eInternalContainer() != null)
+			if (eInternalContainer() != null) {
 				msgs = eBasicRemoveFromContainer(msgs);
-			if (newLibrary != null)
+			}
+			if (newLibrary != null) {
 				msgs = ((InternalEObject) newLibrary).eInverseAdd(this, TestPackage.LIBRARY__WRITERS, Library.class,
 					msgs);
+			}
 			msgs = basicSetLibrary(newLibrary, msgs);
-			if (msgs != null)
+			if (msgs != null) {
 				msgs.dispatch();
+			}
 		}
-		else if (eNotificationRequired())
+		else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.WRITER__LIBRARY, newLibrary, newLibrary));
+		}
 	}
 
 	/**
 	 * Validates the writer. Only adds one diagnostic item to the chain.
-	 * 
+	 *
 	 * @generated NOT
 	 */
 	// BEGIN COMPLEX CODE
+	@Override
 	public boolean validate(DiagnosticChain chain, Map<Object, Object> context) {
 		boolean valid = true;
 		// cancel if name is offensive
@@ -476,7 +501,7 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -486,8 +511,9 @@ public class WriterImpl extends EObjectImpl implements Writer {
 		case TestPackage.WRITER__BOOKS:
 			return ((InternalEList<InternalEObject>) (InternalEList<?>) getBooks()).basicAdd(otherEnd, msgs);
 		case TestPackage.WRITER__LIBRARY:
-			if (eInternalContainer() != null)
+			if (eInternalContainer() != null) {
 				msgs = eBasicRemoveFromContainer(msgs);
+			}
 			return basicSetLibrary((Library) otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -496,7 +522,7 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -513,7 +539,7 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -528,7 +554,7 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -555,7 +581,7 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -591,7 +617,7 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -625,7 +651,7 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -652,15 +678,16 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy())
+		if (eIsProxy()) {
 			return super.toString();
+		}
 
-		StringBuffer result = new StringBuffer(super.toString());
+		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (firstName: ");
 		result.append(firstName);
 		result.append(", lastName: ");

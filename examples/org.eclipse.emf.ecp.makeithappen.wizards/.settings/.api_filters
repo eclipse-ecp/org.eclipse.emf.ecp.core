@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.ecp.view.model.editor" version="2">
+    <resource path="META-INF/MANIFEST.MF">
+        <filter comment="Bundle should not be imported by anyone" id="927989779">
+            <message_arguments>
+                <message_argument value="1.2.1"/>
+                <message_argument value="org.eclipse.core.resources"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

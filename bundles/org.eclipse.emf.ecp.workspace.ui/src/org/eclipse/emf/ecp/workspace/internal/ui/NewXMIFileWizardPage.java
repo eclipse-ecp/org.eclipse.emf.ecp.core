@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -24,14 +24,14 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.WizardNewFileCreationPage;
-import org.eclipse.ui.internal.Workbench;
 import org.eclipse.ui.internal.ide.misc.ContainerSelectionGroup;
 import org.eclipse.ui.wizards.newresource.BasicNewProjectResourceWizard;
 
 /**
  * The Class NewXMIFileWizardPage.
- * 
+ *
  * @author Tobias Verhoeven
  */
 public class NewXMIFileWizardPage extends WizardNewFileCreationPage {
@@ -65,18 +65,18 @@ public class NewXMIFileWizardPage extends WizardNewFileCreationPage {
 		// ...
 		Composite composite = (Composite) parent.getChildren()[0];
 		composite = (Composite) composite.getChildren()[0];
-		ContainerSelectionGroup csg = (ContainerSelectionGroup) composite.getChildren()[0];
+		final ContainerSelectionGroup csg = (ContainerSelectionGroup) composite.getChildren()[0];
 
 		try {
 
-			Field field = ContainerSelectionGroup.class.getDeclaredField("treeViewer");
+			final Field field = ContainerSelectionGroup.class.getDeclaredField("treeViewer");
 			field.setAccessible(true);
 			memTreeViewer = (TreeViewer) field.get(csg);
 
-		} catch (IllegalArgumentException ex) {
-		} catch (IllegalAccessException ex) {
-		} catch (NoSuchFieldException ex) {
-		} catch (SecurityException ex) {
+		} catch (final IllegalArgumentException ex) {
+		} catch (final IllegalAccessException ex) {
+		} catch (final NoSuchFieldException ex) {
+		} catch (final SecurityException ex) {
 		}
 	}
 
@@ -87,16 +87,16 @@ public class NewXMIFileWizardPage extends WizardNewFileCreationPage {
 	@Override
 	protected void createAdvancedControls(final Composite parent) {
 
-		Button btnCreateNewProject = new Button(parent, SWT.NONE);
+		final Button btnCreateNewProject = new Button(parent, SWT.NONE);
 		btnCreateNewProject.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 		btnCreateNewProject.setText("Create New Project ...");
 
 		btnCreateNewProject.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				BasicNewProjectResourceWizard bd = new BasicNewProjectResourceWizard();
-				bd.init(Workbench.getInstance(), null);
-				WizardDialog wizardDialog = new WizardDialog(parent.getShell(), bd);
+				final BasicNewProjectResourceWizard bd = new BasicNewProjectResourceWizard();
+				bd.init(PlatformUI.getWorkbench(), null);
+				final WizardDialog wizardDialog = new WizardDialog(parent.getShell(), bd);
 				if (wizardDialog.open() == Window.OK) {
 
 				} else {

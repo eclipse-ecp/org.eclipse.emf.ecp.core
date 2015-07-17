@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ASCII"?>
+<fragment:ModelFragments xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:commands="http://www.eclipse.org/ui/2010/UIModel/application/commands" xmlns:fragment="http://www.eclipse.org/ui/2010/UIModel/fragment" xmlns:menu="http://www.eclipse.org/ui/2010/UIModel/application/ui/menu" xmlns:ui="http://www.eclipse.org/ui/2010/UIModel/application/ui" xmi:id="_StXpoLaHEeOr48JOm0TjkA">
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_nZaa4LaHEeOr48JOm0TjkA" featurename="commands" parentElementId="com.gide.profiler.application">
+    <elements xsi:type="commands:Command" xmi:id="_yTe7wLaHEeOr48JOm0TjkA" elementId="org.eclipse.emf.ecp.ui.validation.e4.command.validate" commandName="Validate"/>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_9EuQwLaHEeOr48JOm0TjkA" featurename="handlers" parentElementId="com.gide.profiler.application">
+    <elements xsi:type="commands:Handler" xmi:id="_QWzI8LaJEeOr48JOm0TjkA" elementId="org.eclipse.emf.ecp.ui.validation.e4.handler.validate" contributionURI="bundleclass://org.eclipse.emf.ecp.ui.validation.e4/org.eclipse.emf.ecp.ui.validation.e4.handler.ValidateHandler" command="_yTe7wLaHEeOr48JOm0TjkA"/>
+  </fragments>
+  <fragments xsi:type="fragment:StringModelFragment" xmi:id="_jzi1gLaJEeOr48JOm0TjkA" featurename="children" parentElementId="org.eclipse.emf.ecp.e4.application.popupmenu.navigator">
+    <elements xsi:type="menu:HandledMenuItem" xmi:id="_n4hG0LaJEeOr48JOm0TjkA" elementId="org.eclipse.emf.ecp.ui.validation.e4.handledmenuitem.validate" label="Validate" command="_yTe7wLaHEeOr48JOm0TjkA">
+      <visibleWhen xsi:type="ui:CoreExpression" xmi:id="_ECSIAMPqEeO4XIDaHuCfCw" coreExpressionId="org.eclipse.emf.ecp.application.e4.isModelElementSelected"/>
+    </elements>
+  </fragments>
+</fragment:ModelFragments>

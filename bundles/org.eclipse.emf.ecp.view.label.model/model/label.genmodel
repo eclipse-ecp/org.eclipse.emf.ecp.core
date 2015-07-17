@@ -27,6 +27,7 @@
     </genEnums>
     <genClasses ecoreClass="label.ecore#//Label">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute label.ecore#//Label/style"/>
+      <genFeatures createChild="true" ecoreFeature="ecore:EReference label.ecore#//Label/domainModelReference"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

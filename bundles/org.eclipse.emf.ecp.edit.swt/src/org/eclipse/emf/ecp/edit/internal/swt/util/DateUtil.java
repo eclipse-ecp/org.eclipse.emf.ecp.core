@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
@@ -20,15 +20,22 @@ import org.eclipse.emf.ecore.xml.type.internal.XMLCalendar;
 
 /**
  * Helper class for Date conversion.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public final class DateUtil {
 
 	private DateUtil() {
 	}
 
+	/**
+	 * Convert a {@link Calendar} object to an {@link XMLGregorianCalendar} (to the {@link XMLCalendar} implementation)
+	 * which contains only the date without the timezone.
+	 *
+	 * @param calendar the {@link Calendar} to convert
+	 * @return the {@link XMLGregorianCalendar} containing only the date
+	 */
 	public static XMLGregorianCalendar convertOnlyDateToXMLGregorianCalendar(Calendar calendar) {
 		final XMLGregorianCalendar cal = new XMLCalendar(calendar.getTime(), XMLCalendar.DATE);
 

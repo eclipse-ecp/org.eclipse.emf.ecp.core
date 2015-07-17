@@ -1,22 +1,30 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
+import java.util.Set;
+
 import org.eclipse.core.databinding.Binding;
+import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
+import org.eclipse.emf.ecp.edit.internal.swt.Activator;
+import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
+import org.eclipse.emf.ecp.view.template.style.textControlEnablement.model.VTTextControlEnablementStyleProperty;
 import org.eclipse.emf.edit.command.SetCommand;
+import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
@@ -28,9 +36,10 @@ import org.eclipse.swt.widgets.ToolTip;
 
 /**
  * This abstract class is used as a common superclass for all widgets that use a {@link Text} widget.
- * 
+ *
  * @author Eugen Neufeld
  */
+@Deprecated
 public abstract class AbstractTextControl extends SingleControl {
 
 	/**
@@ -54,8 +63,10 @@ public abstract class AbstractTextControl extends SingleControl {
 	private void createTextWidget(Composite composite) {
 		text = new Text(composite, getTextWidgetStyle());
 		text.setLayoutData(getTextWidgetLayoutData());
+
 		if (getFirstStructuralFeature().isUnsettable()) {
-			text.setMessage(ControlMessages.AbstractTextControl_Unset);
+			text.setMessage(LocalizationServiceHelper.getString(getClass(),
+				DepricatedControlMessageKeys.AbstractTextControl_Unset));
 		}
 		text.setData(CUSTOM_VARIANT, getTextVariantID());
 		customizeText(text);
@@ -64,7 +75,7 @@ public abstract class AbstractTextControl extends SingleControl {
 
 	/**
 	 * Creates a {@link ToolTip}.
-	 * 
+	 *
 	 * @param style the SWT style
 	 * @param text the text
 	 * @param message the message
@@ -80,7 +91,7 @@ public abstract class AbstractTextControl extends SingleControl {
 
 	/**
 	 * This method allows to set custom values to the text field, e.g. a tooltip or a validation.
-	 * 
+	 *
 	 * @param text the text widget to customize
 	 */
 	protected void customizeText(Text text) {
@@ -89,14 +100,14 @@ public abstract class AbstractTextControl extends SingleControl {
 
 	/**
 	 * The VariantId to use e.g. for RAP
-	 * 
+	 *
 	 * @return the String identifying this control
 	 */
 	protected abstract String getTextVariantID();
 
 	/**
 	 * The LayoutData for the created {@link Text} widget. Can be changed by the concrete classes.
-	 * 
+	 *
 	 * @return the {@link GridData} to apply
 	 */
 	protected GridData getTextWidgetLayoutData() {
@@ -105,7 +116,7 @@ public abstract class AbstractTextControl extends SingleControl {
 
 	/**
 	 * The style to apply to the text widget. This can be changed by the concrete classes.
-	 * 
+	 *
 	 * @return the style to apply
 	 */
 	protected int getTextWidgetStyle() {
@@ -123,21 +134,58 @@ public abstract class AbstractTextControl extends SingleControl {
 	 */
 	@Override
 	public void setEditable(boolean isEditable) {
-		text.setEditable(isEditable);
+		if (isDisableRenderedAsEditable()) {
+			text.setEditable(isEditable);
+		}
+		text.setEnabled(isEditable);
+	}
+
+	private boolean isDisableRenderedAsEditable() {
+		final VTViewTemplateProvider vtViewTemplateProvider = Activator.getDefault().getVTViewTemplateProvider();
+		if (vtViewTemplateProvider == null) {
+			return false;
+		}
+		final Set<VTStyleProperty> styleProperties = vtViewTemplateProvider
+			.getStyleProperties(getControl(), getViewModelContext());
+		for (final VTStyleProperty styleProperty : styleProperties) {
+			if (VTTextControlEnablementStyleProperty.class.isInstance(styleProperty)) {
+				return VTTextControlEnablementStyleProperty.class.cast(styleProperty).isRenderDisableAsEditable();
+			}
+		}
+		return false;
 	}
 
 	@Override
 	public Binding bindValue() {
 		final IObservableValue value = SWTObservables.observeText(text, SWT.FocusOut);
+		final TargetToModelUpdateStrategy targetToModelUpdateStrategy = new TargetToModelUpdateStrategy();
+		final ModelToTargetUpdateStrategy modelToTargetUpdateStrategy = new ModelToTargetUpdateStrategy();
 		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(),
-			new TargetToModelUpdateStrategy(),
-			new ModelToTargetUpdateStrategy());
+			targetToModelUpdateStrategy,
+			modelToTargetUpdateStrategy);
+
+		createTooltipBinding(targetToModelUpdateStrategy, modelToTargetUpdateStrategy);
+
 		return binding;
 	}
 
 	/**
+	 * Creates a tooltip binding for this control.
+	 *
+	 * @param targetToModel the {@link UpdateValueStrategy} from target to Model
+	 * @param modelToTarget the {@link UpdateValueStrategy} from model to target
+	 * @return the created {@link Binding}
+	 */
+	protected Binding createTooltipBinding(UpdateValueStrategy targetToModel, UpdateValueStrategy modelToTarget) {
+		final IObservableValue toolTip = SWTObservables.observeTooltipText(text);
+		return getDataBindingContext().bindValue(toolTip, getModelValue(),
+			targetToModel,
+			modelToTarget);
+	}
+
+	/**
 	 * Sets the content of the SWT text control to the given string without calling {@link #validateString(String)}.
-	 * 
+	 *
 	 * @param string
 	 *            the content of the SWT Text control
 	 */
@@ -166,9 +214,9 @@ public abstract class AbstractTextControl extends SingleControl {
 	 * of the actual value. Use this class to provide a specific context
 	 * for the conversion of the value, but likewise enable it clients to modify
 	 * the conversion behavior.
-	 * 
+	 *
 	 * @author emueller
-	 * 
+	 *
 	 */
 	class EMFUpdateConvertValueStrategy extends EMFUpdateValueStrategy {
 

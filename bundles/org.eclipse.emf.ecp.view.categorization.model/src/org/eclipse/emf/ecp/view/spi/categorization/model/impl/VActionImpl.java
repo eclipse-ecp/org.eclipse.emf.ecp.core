@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
  */
@@ -29,7 +29,7 @@ import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage;
  * <li>{@link org.eclipse.emf.ecp.view.spi.categorization.model.impl.VActionImpl#getClassName <em>Class Name</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class VActionImpl extends MinimalEObjectImpl.Container implements VAction
@@ -38,7 +38,7 @@ public class VActionImpl extends MinimalEObjectImpl.Container implements VAction
 	 * The default value of the '{@link #getBundle() <em>Bundle</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getBundle()
 	 * @generated
 	 * @ordered
@@ -49,7 +49,7 @@ public class VActionImpl extends MinimalEObjectImpl.Container implements VAction
 	 * The cached value of the '{@link #getBundle() <em>Bundle</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getBundle()
 	 * @generated
 	 * @ordered
@@ -60,7 +60,7 @@ public class VActionImpl extends MinimalEObjectImpl.Container implements VAction
 	 * The default value of the '{@link #getClassName() <em>Class Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getClassName()
 	 * @generated
 	 * @ordered
@@ -71,7 +71,7 @@ public class VActionImpl extends MinimalEObjectImpl.Container implements VAction
 	 * The cached value of the '{@link #getClassName() <em>Class Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getClassName()
 	 * @generated
 	 * @ordered
@@ -81,7 +81,7 @@ public class VActionImpl extends MinimalEObjectImpl.Container implements VAction
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected VActionImpl()
@@ -92,7 +92,7 @@ public class VActionImpl extends MinimalEObjectImpl.Container implements VAction
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -104,9 +104,10 @@ public class VActionImpl extends MinimalEObjectImpl.Container implements VAction
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public String getBundle()
 	{
 		return bundle;
@@ -115,24 +116,27 @@ public class VActionImpl extends MinimalEObjectImpl.Container implements VAction
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void setBundle(String newBundle)
 	{
-		String oldBundle = bundle;
+		final String oldBundle = bundle;
 		bundle = newBundle;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, VCategorizationPackage.ACTION__BUNDLE, oldBundle,
 				bundle));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public String getClassName()
 	{
 		return className;
@@ -141,22 +145,24 @@ public class VActionImpl extends MinimalEObjectImpl.Container implements VAction
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void setClassName(String newClassName)
 	{
-		String oldClassName = className;
+		final String oldClassName = className;
 		className = newClassName;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, VCategorizationPackage.ACTION__CLASS_NAME,
 				oldClassName, className));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -175,7 +181,7 @@ public class VActionImpl extends MinimalEObjectImpl.Container implements VAction
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -196,7 +202,7 @@ public class VActionImpl extends MinimalEObjectImpl.Container implements VAction
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -217,7 +223,7 @@ public class VActionImpl extends MinimalEObjectImpl.Container implements VAction
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -236,16 +242,17 @@ public class VActionImpl extends MinimalEObjectImpl.Container implements VAction
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	public String toString()
 	{
-		if (eIsProxy())
+		if (eIsProxy()) {
 			return super.toString();
+		}
 
-		StringBuffer result = new StringBuffer(super.toString());
+		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (bundle: "); //$NON-NLS-1$
 		result.append(bundle);
 		result.append(", className: "); //$NON-NLS-1$

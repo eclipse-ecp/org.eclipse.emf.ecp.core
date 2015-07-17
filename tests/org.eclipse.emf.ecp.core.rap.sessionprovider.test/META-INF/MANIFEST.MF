@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ECP Core Rap Sessionprovider Test
+Bundle-SymbolicName: org.eclipse.emf.ecp.core.rap.sessionprovider.test
+Bundle-Version: 1.7.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: org.eclipse.emf.ecp.core.rap;bundle-version="[1.5.0,2.0.0)"
+Export-Package: org.eclipse.emf.ecp.core.rap.sessionprovider.test;version="1.7.0"
+Service-Component: OSGI-INF/component.xml
+Bundle-ActivationPolicy: lazy
+Bundle-Vendor: Eclipse Modeling Project

@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
  */
@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.template.model.VTTemplateFactory;
 import org.eclipse.emf.ecp.view.template.model.VTTemplatePackage;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplate;
+import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IChildCreationExtender;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -35,7 +36,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.template.model.VTViewTemplate} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class ViewTemplateItemProvider
@@ -51,7 +52,7 @@ public class ViewTemplateItemProvider
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public ViewTemplateItemProvider(AdapterFactory adapterFactory)
@@ -63,7 +64,7 @@ public class ViewTemplateItemProvider
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -73,8 +74,34 @@ public class ViewTemplateItemProvider
 		{
 			super.getPropertyDescriptors(object);
 
+			addStylesPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
+	}
+
+	/**
+	 * This adds a property descriptor for the Styles feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected void addStylesPropertyDescriptor(Object object)
+	{
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_ViewTemplate_styles_feature"), //$NON-NLS-1$
+				getString(
+					"_UI_PropertyDescriptor_description", "_UI_ViewTemplate_styles_feature", "_UI_ViewTemplate_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				VTTemplatePackage.Literals.VIEW_TEMPLATE__STYLES,
+				true,
+				false,
+				false,
+				null,
+				null,
+				null));
 	}
 
 	/**
@@ -83,7 +110,7 @@ public class ViewTemplateItemProvider
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -93,6 +120,7 @@ public class ViewTemplateItemProvider
 		{
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(VTTemplatePackage.Literals.VIEW_TEMPLATE__CONTROL_VALIDATION_CONFIGURATION);
+			childrenFeatures.add(VTTemplatePackage.Literals.VIEW_TEMPLATE__STYLES);
 		}
 		return childrenFeatures;
 	}
@@ -100,7 +128,7 @@ public class ViewTemplateItemProvider
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -116,7 +144,7 @@ public class ViewTemplateItemProvider
 	 * This returns ViewTemplate.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -129,7 +157,7 @@ public class ViewTemplateItemProvider
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -143,7 +171,7 @@ public class ViewTemplateItemProvider
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -154,6 +182,7 @@ public class ViewTemplateItemProvider
 		switch (notification.getFeatureID(VTViewTemplate.class))
 		{
 		case VTTemplatePackage.VIEW_TEMPLATE__CONTROL_VALIDATION_CONFIGURATION:
+		case VTTemplatePackage.VIEW_TEMPLATE__STYLES:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;
 		}
@@ -165,7 +194,7 @@ public class ViewTemplateItemProvider
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -177,13 +206,18 @@ public class ViewTemplateItemProvider
 			(createChildParameter
 			(VTTemplatePackage.Literals.VIEW_TEMPLATE__CONTROL_VALIDATION_CONFIGURATION,
 				VTTemplateFactory.eINSTANCE.createControlValidationTemplate()));
+
+		newChildDescriptors.add
+			(createChildParameter
+			(VTTemplatePackage.Literals.VIEW_TEMPLATE__STYLES,
+				VTTemplateFactory.eINSTANCE.createStyle()));
 	}
 
 	/**
 	 * Return the resource locator for this item provider's resources.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override

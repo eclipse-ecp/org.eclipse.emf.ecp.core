@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  *******************************************************************************/
@@ -13,12 +13,13 @@ package org.eclipse.emf.ecp.edit.internal.swt.reference;
 
 import java.text.MessageFormat;
 
+import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor;
+import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor;
 import org.eclipse.emf.ecp.edit.spi.util.ECPModelElementChangeListener;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
@@ -30,10 +31,17 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Link;
 
+/**
+ * A cell editor displaying a link.
+ *
+ * @author Eugen Neufeld
+ *
+ */
 public class LinkCellEditor extends CellEditor implements ECPCellEditor {
 
 	private Link link;
@@ -43,7 +51,7 @@ public class LinkCellEditor extends CellEditor implements ECPCellEditor {
 
 	/**
 	 * Default constructor.
-	 * 
+	 *
 	 * @param parent the parent
 	 */
 	public LinkCellEditor(Composite parent) {
@@ -52,7 +60,7 @@ public class LinkCellEditor extends CellEditor implements ECPCellEditor {
 
 	/**
 	 * Constructor allowing to specify a SWT style.
-	 * 
+	 *
 	 * @param parent the parent
 	 * @param style the SWT style
 	 */
@@ -60,9 +68,17 @@ public class LinkCellEditor extends CellEditor implements ECPCellEditor {
 		super(parent, style);
 	}
 
+	/**
+	 *
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getValueProperty()
+	 */
+	@Override
 	public IValueProperty getValueProperty() {
 		return new WidgetValueProperty() {
 
+			@Override
 			public Object getValueType() {
 				return String.class;
 			}
@@ -89,10 +105,11 @@ public class LinkCellEditor extends CellEditor implements ECPCellEditor {
 
 	/**
 	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#instantiate(org.eclipse.emf.ecore.EStructuralFeature,
+	 *
+	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#instantiate(org.eclipse.emf.ecore.EStructuralFeature,
 	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
+	@Override
 	public void instantiate(EStructuralFeature eStructuralFeature, ViewModelContext viewModelContext) {
 
 	}
@@ -107,6 +124,8 @@ public class LinkCellEditor extends CellEditor implements ECPCellEditor {
 		link = new Link(parent, SWT.NONE);
 		link.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_edit_cellEditor_reference"); //$NON-NLS-1$
 		link.addSelectionListener(new SelectionAdapter() {
+
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
@@ -192,37 +211,81 @@ public class LinkCellEditor extends CellEditor implements ECPCellEditor {
 		deactivate();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getFormatedString(java.lang.Object)
+	/**
+	 *
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getFormatedString(java.lang.Object)
 	 */
+	@Override
 	public String getFormatedString(Object value) {
 		return adapterFactoryItemDelegator.getText(value);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getColumnWidthWeight()
+	/**
+	 *
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getColumnWidthWeight()
 	 */
+	@Override
 	public int getColumnWidthWeight() {
 		return 100;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getTargetToModelStrategy()
+	/**
+	 *
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getTargetToModelStrategy(org.eclipse.core.databinding.DataBindingContext)
 	 */
-	public UpdateValueStrategy getTargetToModelStrategy() {
+	@Override
+	public UpdateValueStrategy getTargetToModelStrategy(DataBindingContext databindingContext) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getModelToTargetStrategy()
+	/**
+	 *
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getModelToTargetStrategy(org.eclipse.core.databinding.DataBindingContext)
 	 */
-	public UpdateValueStrategy getModelToTargetStrategy() {
+	@Override
+	public UpdateValueStrategy getModelToTargetStrategy(DataBindingContext databindingContext) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#setEditable(boolean)
+	 */
+	@Override
+	public void setEditable(boolean editable) {
+		if (link != null) {
+			link.setEnabled(editable);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getImage(java.lang.Object)
+	 */
+	@Override
+	public Image getImage(Object value) {
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getMinWidth()
+	 */
+	@Override
+	public int getMinWidth() {
+		return 0;
 	}
 }

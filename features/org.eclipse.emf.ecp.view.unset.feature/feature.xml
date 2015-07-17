@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipse.emf.ecp.view.unset.feature"
-      label="View Model Unset Service Feature"
-      version="1.1.1.qualifier"
-      provider-name="Eclipse Modeling Project"
+      label="EMF Forms Unset Service"
+      version="1.7.0.qualifier"
+      provider-name="%providerName"
       plugin="org.eclipse.emf.ecp.view.unset"
+      image="eclipse_update_120.jpg"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.1.1.qualifier">
+      license-feature-version="1.7.0.qualifier">
 
    <description>
       %description
@@ -16,8 +17,8 @@
       %copyright
    </copyright>
 
-   <license url="http://www.example.com/license">
-      [Enter License Description here.]
+   <license url="%licenseURL">
+      %license
    </license>
 
    <plugin

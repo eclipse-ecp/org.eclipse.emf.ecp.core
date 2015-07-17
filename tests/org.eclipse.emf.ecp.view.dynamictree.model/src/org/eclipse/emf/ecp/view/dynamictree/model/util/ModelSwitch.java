@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Edgar Mueller - initial API and implementation
  */
@@ -38,6 +38,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  * until a non-null result is returned,
  * which is the result of the switch.
  * <!-- end-user-doc -->
+ *
  * @see org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage
  * @generated
  */
@@ -47,6 +48,7 @@ public class ModelSwitch<T> extends Switch<T>
 	 * The cached model package
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	protected static ModelPackage modelPackage;
@@ -55,6 +57,7 @@ public class ModelSwitch<T> extends Switch<T>
 	 * Creates an instance of the switch.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	public ModelSwitch()
@@ -68,6 +71,7 @@ public class ModelSwitch<T> extends Switch<T>
 	 * Checks whether this is a switch for the given package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @parameter ePackage the package in question.
 	 * @return whether this is a switch for the given package.
 	 * @generated
@@ -79,9 +83,11 @@ public class ModelSwitch<T> extends Switch<T>
 	}
 
 	/**
-	 * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
+	 * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that
+	 * result.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @return the first non-null result returned by a <code>caseXXX</code> call.
 	 * @generated
 	 */
@@ -89,56 +95,85 @@ public class ModelSwitch<T> extends Switch<T>
 	protected T doSwitch(int classifierID, EObject theEObject)
 	{
 		switch (classifierID) {
-			case ModelPackage.DYNAMIC_CONTAINMENT_TREE: {
-				DynamicContainmentTree dynamicContainmentTree = (DynamicContainmentTree)theEObject;
-				T result = caseDynamicContainmentTree(dynamicContainmentTree);
-				if (result == null) result = caseCategory(dynamicContainmentTree);
-				if (result == null) result = caseAbstractCategorization(dynamicContainmentTree);
-				if (result == null) result = caseCategorizableElement(dynamicContainmentTree);
-				if (result == null) result = caseElement(dynamicContainmentTree);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
+		case ModelPackage.DYNAMIC_CONTAINMENT_TREE: {
+			final DynamicContainmentTree dynamicContainmentTree = (DynamicContainmentTree) theEObject;
+			T result = caseDynamicContainmentTree(dynamicContainmentTree);
+			if (result == null) {
+				result = caseCategory(dynamicContainmentTree);
 			}
-			case ModelPackage.DYNAMIC_CONTAINMENT_ITEM: {
-				DynamicContainmentItem dynamicContainmentItem = (DynamicContainmentItem)theEObject;
-				T result = caseDynamicContainmentItem(dynamicContainmentItem);
-				if (result == null) result = caseCategorizableElement(dynamicContainmentItem);
-				if (result == null) result = caseElement(dynamicContainmentItem);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
+			if (result == null) {
+				result = caseAbstractCategorization(dynamicContainmentTree);
 			}
-			case ModelPackage.TEST_ELEMENT: {
-				TestElement testElement = (TestElement)theEObject;
-				T result = caseTestElement(testElement);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
+			if (result == null) {
+				result = caseCategorizableElement(dynamicContainmentTree);
 			}
-			case ModelPackage.DOMAIN_ROOT: {
-				DomainRoot domainRoot = (DomainRoot)theEObject;
-				T result = caseDomainRoot(domainRoot);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
+			if (result == null) {
+				result = caseElement(dynamicContainmentTree);
 			}
-			case ModelPackage.DOMAIN_INTERMEDIATE: {
-				DomainIntermediate domainIntermediate = (DomainIntermediate)theEObject;
-				T result = caseDomainIntermediate(domainIntermediate);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
+			if (result == null) {
+				result = defaultCase(theEObject);
 			}
-			case ModelPackage.TEST_ELEMENT_CONTAINER: {
-				TestElementContainer testElementContainer = (TestElementContainer)theEObject;
-				T result = caseTestElementContainer(testElementContainer);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
+			return result;
+		}
+		case ModelPackage.DYNAMIC_CONTAINMENT_ITEM: {
+			final DynamicContainmentItem dynamicContainmentItem = (DynamicContainmentItem) theEObject;
+			T result = caseDynamicContainmentItem(dynamicContainmentItem);
+			if (result == null) {
+				result = caseCategorizableElement(dynamicContainmentItem);
 			}
-			case ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE: {
-				DynamicContainmentTreeDomainModelReference dynamicContainmentTreeDomainModelReference = (DynamicContainmentTreeDomainModelReference)theEObject;
-				T result = caseDynamicContainmentTreeDomainModelReference(dynamicContainmentTreeDomainModelReference);
-				if (result == null) result = caseDomainModelReference(dynamicContainmentTreeDomainModelReference);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
+			if (result == null) {
+				result = caseElement(dynamicContainmentItem);
 			}
-			default: return defaultCase(theEObject);
+			if (result == null) {
+				result = defaultCase(theEObject);
+			}
+			return result;
+		}
+		case ModelPackage.TEST_ELEMENT: {
+			final TestElement testElement = (TestElement) theEObject;
+			T result = caseTestElement(testElement);
+			if (result == null) {
+				result = defaultCase(theEObject);
+			}
+			return result;
+		}
+		case ModelPackage.DOMAIN_ROOT: {
+			final DomainRoot domainRoot = (DomainRoot) theEObject;
+			T result = caseDomainRoot(domainRoot);
+			if (result == null) {
+				result = defaultCase(theEObject);
+			}
+			return result;
+		}
+		case ModelPackage.DOMAIN_INTERMEDIATE: {
+			final DomainIntermediate domainIntermediate = (DomainIntermediate) theEObject;
+			T result = caseDomainIntermediate(domainIntermediate);
+			if (result == null) {
+				result = defaultCase(theEObject);
+			}
+			return result;
+		}
+		case ModelPackage.TEST_ELEMENT_CONTAINER: {
+			final TestElementContainer testElementContainer = (TestElementContainer) theEObject;
+			T result = caseTestElementContainer(testElementContainer);
+			if (result == null) {
+				result = defaultCase(theEObject);
+			}
+			return result;
+		}
+		case ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE: {
+			final DynamicContainmentTreeDomainModelReference dynamicContainmentTreeDomainModelReference = (DynamicContainmentTreeDomainModelReference) theEObject;
+			T result = caseDynamicContainmentTreeDomainModelReference(dynamicContainmentTreeDomainModelReference);
+			if (result == null) {
+				result = caseDomainModelReference(dynamicContainmentTreeDomainModelReference);
+			}
+			if (result == null) {
+				result = defaultCase(theEObject);
+			}
+			return result;
+		}
+		default:
+			return defaultCase(theEObject);
 		}
 	}
 
@@ -148,6 +183,7 @@ public class ModelSwitch<T> extends Switch<T>
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
+	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Dynamic Containment Tree</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -164,6 +200,7 @@ public class ModelSwitch<T> extends Switch<T>
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
+	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Dynamic Containment Item</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -180,6 +217,7 @@ public class ModelSwitch<T> extends Switch<T>
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
+	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Test Element</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -196,6 +234,7 @@ public class ModelSwitch<T> extends Switch<T>
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
+	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Domain Root</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -212,6 +251,7 @@ public class ModelSwitch<T> extends Switch<T>
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
+	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Domain Intermediate</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -228,6 +268,7 @@ public class ModelSwitch<T> extends Switch<T>
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
+	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Test Element Container</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -239,13 +280,16 @@ public class ModelSwitch<T> extends Switch<T>
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Dynamic Containment Tree Domain Model Reference</em>'.
+	 * Returns the result of interpreting the object as an instance of '
+	 * <em>Dynamic Containment Tree Domain Model Reference</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
+	 *
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Dynamic Containment Tree Domain Model Reference</em>'.
+	 * @return the result of interpreting the object as an instance of '
+	 *         <em>Dynamic Containment Tree Domain Model Reference</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
@@ -259,6 +303,7 @@ public class ModelSwitch<T> extends Switch<T>
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
+	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Element</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -275,6 +320,7 @@ public class ModelSwitch<T> extends Switch<T>
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
+	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Categorizable Element</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -290,6 +336,7 @@ public class ModelSwitch<T> extends Switch<T>
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
+	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Abstract Categorization</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -305,6 +352,7 @@ public class ModelSwitch<T> extends Switch<T>
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
+	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Category</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -320,6 +368,7 @@ public class ModelSwitch<T> extends Switch<T>
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
+	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Domain Model Reference</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -335,6 +384,7 @@ public class ModelSwitch<T> extends Switch<T>
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch, but this is the last case anyway.
 	 * <!-- end-user-doc -->
+	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>EObject</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject)

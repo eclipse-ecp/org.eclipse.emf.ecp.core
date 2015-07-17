@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -22,9 +22,9 @@ import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 
 /**
  * This class compares to {@link VDiagnostic} elements for equality.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public final class VDiagnosticHelper {
 
@@ -34,7 +34,7 @@ public final class VDiagnosticHelper {
 
 	/**
 	 * Compares two {@link VDiagnostic VDiagnostics} with each other.
-	 * 
+	 *
 	 * @param vDiagnostic1 the first {@link VDiagnostic} to compare
 	 * @param vDiagnostic2 the second {@link VDiagnostic} to compare
 	 * @return true if both {@link VDiagnostic VDiagnostics} are equal
@@ -56,10 +56,9 @@ public final class VDiagnosticHelper {
 		if (!vDiagnostic1.getMessage().equals(vDiagnostic2.getMessage())) {
 			return false;
 		}
-		// TODO: this case also never applies since getMessage depends on the size
-		// if (vDiagnostic1.getDiagnostics().size() != vDiagnostic2.getDiagnostics().size()) {
-		// return false;
-		// }
+		if (vDiagnostic1.getDiagnostics().size() != vDiagnostic2.getDiagnostics().size()) {
+			return false;
+		}
 
 		for (int i = 0; i < vDiagnostic1.getDiagnostics().size(); i++) {
 			final Diagnostic diagnostic1 = (Diagnostic) vDiagnostic1.getDiagnostics().get(i);
@@ -113,7 +112,7 @@ public final class VDiagnosticHelper {
 
 	/**
 	 * Analysis a {@link VDiagnostic} and merges all Diagnostic pointing to the same EObject.
-	 * 
+	 *
 	 * @param value the {@link VDiagnostic} that should be cleaned
 	 * @return a cleaned {@link VDiagnostic}
 	 */

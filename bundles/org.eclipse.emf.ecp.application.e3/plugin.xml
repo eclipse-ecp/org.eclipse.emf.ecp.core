@@ -53,15 +53,15 @@
       </factory>
    </extension>
    <extension
-         point="org.eclipse.ui.menus">
-      <menuContribution
-            allPopups="false"
-            locationURI="menu:org.eclipse.ui.main.menu">
-         <command
-               commandId="org.eclipse.ui.help.aboutAction"
-               style="push">
-         </command>
-      </menuContribution>
+         point="org.eclipse.ui.activities">
+      <activity
+            id="org.eclipse.emf.ecp.application.e3.enablement"
+            name="3x Application UI Enablement">
+      </activity>
+      <activityPatternBinding
+            activityId="org.eclipse.emf.ecp.application.e3.enablement"
+            pattern=".*/org\.eclipse\.emf\.ecp\.application3x\.perspective">
+      </activityPatternBinding>
    </extension>
   
 

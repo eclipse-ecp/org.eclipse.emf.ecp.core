@@ -1,17 +1,18 @@
 /********************************************************************************
  * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
  ********************************************************************************/
 package org.eclipse.emf.ecp.internal.ui.model;
 
 import org.eclipse.emf.ecp.core.ECPProvider;
+import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.core.ECPProviderRegistryImpl;
 import org.eclipse.emf.ecp.internal.core.util.ElementDescriptor;
 import org.eclipse.emf.ecp.internal.ui.Activator;
@@ -29,7 +30,7 @@ import org.eclipse.swt.widgets.Display;
  * @author Eike Stepper
  */
 public class ProvidersLabelProvider extends ECPLabelProvider implements IColorProvider,
-	ResolveListener<InternalProvider> {
+ResolveListener<InternalProvider> {
 	private static final Image PROVIDER = Activator.getImage("icons/provider.gif"); //$NON-NLS-1$
 
 	private static final Image PROVIDER_DISABLED = Activator.getImage("icons/provider_disabled.gif"); //$NON-NLS-1$
@@ -38,16 +39,17 @@ public class ProvidersLabelProvider extends ECPLabelProvider implements IColorPr
 
 	public ProvidersLabelProvider() {
 		super(null);
-		ECPProviderRegistryImpl.INSTANCE.addResolveListener(this);
+		((ECPProviderRegistryImpl) ECPUtil.getECPProviderRegistry()).addResolveListener(this);
 	}
 
 	@Override
 	public void dispose() {
-		ECPProviderRegistryImpl.INSTANCE.removeResolveListener(this);
+		((ECPProviderRegistryImpl) ECPUtil.getECPProviderRegistry()).removeResolveListener(this);
 		super.dispose();
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void descriptorChanged(InternalDescriptor<InternalProvider> descriptor, boolean resolved) throws Exception {
 		fireEvent(new LabelProviderChangedEvent(this, descriptor));
 	}
@@ -55,7 +57,7 @@ public class ProvidersLabelProvider extends ECPLabelProvider implements IColorPr
 	@Override
 	public String getText(Object element) {
 		if (element instanceof ECPProvider) {
-			ECPProvider provider = (ECPProvider) element;
+			final ECPProvider provider = (ECPProvider) element;
 			return provider.getLabel();
 		}
 
@@ -66,7 +68,7 @@ public class ProvidersLabelProvider extends ECPLabelProvider implements IColorPr
 	public Image getImage(Object element) {
 		if (element instanceof ECPProvider) {
 			if (element instanceof ElementDescriptor) {
-				ElementDescriptor<?> descriptor = (ElementDescriptor<?>) element;
+				final ElementDescriptor<?> descriptor = (ElementDescriptor<?>) element;
 				if (!descriptor.isResolved()) {
 					return PROVIDER_DISABLED;
 				}
@@ -79,9 +81,10 @@ public class ProvidersLabelProvider extends ECPLabelProvider implements IColorPr
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public Color getForeground(Object element) {
 		if (element instanceof ElementDescriptor) {
-			ElementDescriptor<?> descriptor = (ElementDescriptor<?>) element;
+			final ElementDescriptor<?> descriptor = (ElementDescriptor<?>) element;
 			if (!descriptor.isResolved()) {
 				return GRAY;
 			}
@@ -91,6 +94,7 @@ public class ProvidersLabelProvider extends ECPLabelProvider implements IColorPr
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public Color getBackground(Object element) {
 		return null;
 	}

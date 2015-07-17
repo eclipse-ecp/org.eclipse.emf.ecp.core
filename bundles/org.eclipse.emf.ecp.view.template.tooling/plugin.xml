@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            name="Template Model"
+            icon="icons/template.gif"
+            category="org.eclipse.emf.ecp.view.ide"
+            class="org.eclipse.emf.ecp.view.template.tooling.wizards.EMFFormsTemplateWizard"
+            id="org.eclipse.emf.ecp.view.template.tooling.wizards.EMFFormsTemplateWizard">
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="org.eclipse.emf.ecp.view.template.tooling.editor.TemplateModelEditorPart"
+            default="false"
+            extensions="template"
+            icon="icons/template.gif"
+            id="org.eclipse.emf.ecp.view.template.tooling.editor"
+            name="Template Model Editor">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.emf.ecp.view.model.provider.xmi.file">
+<file filePath="viewmodel/viewModelElementSelector.view"/>
+
+<file filePath="viewmodel/dmrSelector.view"/>
+
+      <file
+            filePath="viewmodel/template.view">
+      </file>
+   </extension>
+   <extension
+         point="org.eclipse.emf.ecp.ui.view.swt.renderers">
+      <renderer
+            renderer="org.eclipse.emf.ecp.view.template.internal.tooling.controls.ViewModelSelectControlSWTRenderer">
+         <dynamicTest
+               testClass="org.eclipse.emf.ecp.view.template.internal.tooling.controls.ViewModelSelectControlTester">
+         </dynamicTest>
+      </renderer>
+      <renderer
+            renderer="org.eclipse.emf.ecp.view.template.internal.tooling.controls.AttributeSelectControlSWTRenderer">
+         <dynamicTest
+               testClass="org.eclipse.emf.ecp.view.template.internal.tooling.controls.AttributeSelectControlTester">
+         </dynamicTest>
+      </renderer>
+      <renderer
+            renderer="org.eclipse.emf.ecp.view.template.internal.tooling.controls.AttributeValueControlSWTRenderer">
+         <dynamicTest
+               testClass="org.eclipse.emf.ecp.view.template.internal.tooling.controls.AttributeValueControlTester">
+         </dynamicTest>
+      </renderer>
+      <renderer
+            renderer="org.eclipse.emf.ecp.view.template.internal.tooling.controls.DMRSelectorControlSWTRenderer">
+         <dynamicTest
+               testClass="org.eclipse.emf.ecp.view.template.internal.tooling.controls.DMRSelectorControlTester">
+         </dynamicTest>
+      </renderer>
+      <renderer
+            renderer="org.eclipse.emf.ecp.view.template.internal.tooling.controls.URLSelectionControlSWTRenderer">
+         <dynamicTest
+               testClass="org.eclipse.emf.ecp.view.template.internal.tooling.controls.TemplateImagePathControlTester">
+         </dynamicTest>
+      </renderer>
+      <renderer
+            renderer="org.eclipse.emf.ecp.view.template.internal.tooling.controls.HexColorSelectionControlSWTRenderer">
+         <dynamicTest
+               testClass="org.eclipse.emf.ecp.view.template.internal.tooling.controls.TemplateColorHexControlTester">
+         </dynamicTest>
+      </renderer>
+   </extension>
+
+</plugin>

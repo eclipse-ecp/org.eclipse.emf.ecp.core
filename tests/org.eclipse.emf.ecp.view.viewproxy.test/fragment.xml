@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<fragment>
+   <extension
+         point="org.eclipse.emf.ecp.view.model.provider.xmi.file">
+      <file
+            filePath="Player.view">
+      </file>
+      <file
+            filePath="Player2.view">
+         <filter
+               key="proxyId"
+               value="player2">
+         </filter>
+      </file>
+   </extension>
+
+</fragment>

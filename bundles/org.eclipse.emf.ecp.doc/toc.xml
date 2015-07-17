@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?NLS TYPE="org.eclipse.help.toc"?>
 
-<toc label="Sample Table of Contents">
-	<topic label="Main Topic"  href="html/maintopic.html"> 
-		<topic label="Sub Topic" href="html/subtopic.html"/> 
-	</topic>
-	<topic label="Main Topic 2"/>
+<toc label="EMF Client Platform Documentation" topic="html/main.html">
+	<topic href="html/online.html" label="Online Documentation">
+    <topic href="http://eclipse.org/ecp/index.html" label="Homepage">
+    </topic>
+    <topic href="http://eclipse.org/ecp/gettinginvolved.html" label="Getting Involved">
+    </topic>
+    <topic href="http://eclipse.org/ecp/documentation.html" label="Documentation">
+    </topic>
+ </topic>
+ <topic href="about.html" label="Legal">
+ </topic>
 </toc>

@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  *******************************************************************************/
@@ -36,11 +36,14 @@ import org.eclipse.emf.ecp.view.validation.test.model.Library;
 import org.eclipse.emf.ecp.view.validation.test.model.Mainboard;
 import org.eclipse.emf.ecp.view.validation.test.model.PowerBlock;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContent;
+import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild;
+import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild2;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithValidation;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithoutValidation;
 import org.eclipse.emf.ecp.view.validation.test.model.TableWithMultiplicity;
 import org.eclipse.emf.ecp.view.validation.test.model.TableWithUnique;
 import org.eclipse.emf.ecp.view.validation.test.model.TableWithoutMultiplicity;
+import org.eclipse.emf.ecp.view.validation.test.model.TableWithoutMultiplicityConcrete;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
 import org.eclipse.emf.ecp.view.validation.test.model.Writer;
 
@@ -48,7 +51,7 @@ import org.eclipse.emf.ecp.view.validation.test.model.Writer;
  * <!-- begin-user-doc -->
  * The <b>Validator</b> for the model.
  * <!-- end-user-doc -->
- * 
+ *
  * @see org.eclipse.emf.ecp.view.validation.test.model.TestPackage
  * @generated
  */
@@ -57,7 +60,7 @@ public class TestValidator extends EObjectValidator {
 	 * The cached model package
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public static final TestValidator INSTANCE = new TestValidator();
@@ -67,7 +70,7 @@ public class TestValidator extends EObjectValidator {
 	 * {@link org.eclipse.emf.common.util.Diagnostic#getCode() codes} from this package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.common.util.Diagnostic#getSource()
 	 * @see org.eclipse.emf.common.util.Diagnostic#getCode()
 	 * @generated
@@ -78,7 +81,7 @@ public class TestValidator extends EObjectValidator {
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate' of 'Library'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public static final int LIBRARY__VALIDATE = 1;
@@ -87,7 +90,7 @@ public class TestValidator extends EObjectValidator {
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate' of 'Writer'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public static final int WRITER__VALIDATE = 2;
@@ -96,7 +99,7 @@ public class TestValidator extends EObjectValidator {
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate' of 'Book'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public static final int BOOK__VALIDATE = 3;
@@ -105,7 +108,7 @@ public class TestValidator extends EObjectValidator {
 	 * The {@link org.eclipse.emf.common.util.Diagnostic#getCode() code} for constraint 'Validate' of 'Librarian'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public static final int LIBRARIAN__VALIDATE = 4;
@@ -114,7 +117,7 @@ public class TestValidator extends EObjectValidator {
 	 * A constant with a fixed name that can be used as the base value for additional hand written constants.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private static final int GENERATED_DIAGNOSTIC_CODE_COUNT = 4;
@@ -124,7 +127,7 @@ public class TestValidator extends EObjectValidator {
 	 * derived class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected static final int DIAGNOSTIC_CODE_COUNT = GENERATED_DIAGNOSTIC_CODE_COUNT;
@@ -133,7 +136,7 @@ public class TestValidator extends EObjectValidator {
 	 * Creates an instance of the switch.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public TestValidator() {
@@ -144,7 +147,7 @@ public class TestValidator extends EObjectValidator {
 	 * Returns the package of this validator switch.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -156,7 +159,7 @@ public class TestValidator extends EObjectValidator {
 	 * Calls <code>validateXXX</code> for the corresponding classifier of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -192,6 +195,13 @@ public class TestValidator extends EObjectValidator {
 			return validateTableWithoutMultiplicity((TableWithoutMultiplicity) value, diagnostics, context);
 		case TestPackage.TABLE_WITH_UNIQUE:
 			return validateTableWithUnique((TableWithUnique) value, diagnostics, context);
+		case TestPackage.TABLE_CONTENT_WITH_INNER_CHILD2:
+			return validateTableContentWithInnerChild2((TableContentWithInnerChild2) value, diagnostics, context);
+		case TestPackage.TABLE_CONTENT_WITH_INNER_CHILD:
+			return validateTableContentWithInnerChild((TableContentWithInnerChild) value, diagnostics, context);
+		case TestPackage.TABLE_WITHOUT_MULTIPLICITY_CONCRETE:
+			return validateTableWithoutMultiplicityConcrete((TableWithoutMultiplicityConcrete) value, diagnostics,
+				context);
 		default:
 			return true;
 		}
@@ -200,7 +210,7 @@ public class TestValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public boolean validateLibrary(Library library, DiagnosticChain diagnostics, Map<Object, Object> context) {
@@ -239,7 +249,7 @@ public class TestValidator extends EObjectValidator {
 	 * Validates the validate constraint of '<em>Library</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public boolean validateLibrary_validate(Library library, DiagnosticChain diagnostics, Map<Object, Object> context) {
@@ -249,7 +259,7 @@ public class TestValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public boolean validateWriter(Writer writer, DiagnosticChain diagnostics, Map<Object, Object> context) {
@@ -288,7 +298,7 @@ public class TestValidator extends EObjectValidator {
 	 * Validates the validate constraint of '<em>Writer</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public boolean validateWriter_validate(Writer writer, DiagnosticChain diagnostics, Map<Object, Object> context) {
@@ -298,7 +308,7 @@ public class TestValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public boolean validateBook(Book book, DiagnosticChain diagnostics, Map<Object, Object> context) {
@@ -337,7 +347,7 @@ public class TestValidator extends EObjectValidator {
 	 * Validates the validate constraint of '<em>Book</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public boolean validateBook_validate(Book book, DiagnosticChain diagnostics, Map<Object, Object> context) {
@@ -347,7 +357,7 @@ public class TestValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public boolean validateLibrarian(Librarian librarian, DiagnosticChain diagnostics, Map<Object, Object> context) {
@@ -386,7 +396,7 @@ public class TestValidator extends EObjectValidator {
 	 * Validates the validate constraint of '<em>Librarian</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public boolean validateLibrarian_validate(Librarian librarian, DiagnosticChain diagnostics,
@@ -397,7 +407,7 @@ public class TestValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public boolean validateComputer(Computer computer, DiagnosticChain diagnostics, Map<Object, Object> context) {
@@ -407,7 +417,7 @@ public class TestValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public boolean validateMainboard(Mainboard mainboard, DiagnosticChain diagnostics, Map<Object, Object> context) {
@@ -417,7 +427,7 @@ public class TestValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public boolean validatePowerBlock(PowerBlock powerBlock, DiagnosticChain diagnostics, Map<Object, Object> context) {
@@ -427,7 +437,7 @@ public class TestValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated NOT
 	 */
 	public boolean validateContainer(Container container, DiagnosticChain diagnostics, Map<Object, Object> context) {
@@ -436,7 +446,7 @@ public class TestValidator extends EObjectValidator {
 	}
 
 	/**
-	 * 
+	 *
 	 * @generated NOT
 	 */
 	public boolean validateContainerUniqueAttribuite(Container container,
@@ -469,10 +479,7 @@ public class TestValidator extends EObjectValidator {
 		}
 		// create ok results
 		for (final Content content : contents) {
-			diagnostics.add(createDiagnostic(Diagnostic.OK, DIAGNOSTIC_SOURCE, 0,
-				"_UI_GenericConstraint_diagnostic",
-				new Object[] { "OK", getObjectLabel(content, context) }, new Object[] { content,
-					TestPackage.eINSTANCE.getContent_UniqueAttribute() }, context));
+			content.eNotify(new ValidationNotification(content));
 		}
 
 		final boolean result = true;
@@ -497,7 +504,7 @@ public class TestValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated NOT
 	 */
 	public boolean validateContent(Content content, DiagnosticChain diagnostics, Map<Object, Object> context) {
@@ -510,7 +517,7 @@ public class TestValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public boolean validateTableWithMultiplicity(TableWithMultiplicity tableWithMultiplicity,
@@ -521,7 +528,7 @@ public class TestValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public boolean validateTableContent(TableContent tableContent, DiagnosticChain diagnostics,
@@ -532,7 +539,7 @@ public class TestValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated NOT
 	 */
 	public boolean validateTableContentWithoutValidation(TableContentWithoutValidation tableContentWithoutValidation,
@@ -544,7 +551,7 @@ public class TestValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated NOT
 	 */
 	public boolean validateTableContentWithValidation(TableContentWithValidation tableContentWithValidation,
@@ -556,7 +563,7 @@ public class TestValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public boolean validateTableWithoutMultiplicity(TableWithoutMultiplicity tableWithoutMultiplicity,
@@ -567,13 +574,47 @@ public class TestValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated NOT
 	 */
 	public boolean validateTableWithUnique(TableWithUnique tableWithUnique, DiagnosticChain diagnostics,
 		Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(tableWithUnique, diagnostics, context)
 			& validateUniqueness(tableWithUnique, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public boolean validateTableContentWithInnerChild2(TableContentWithInnerChild2 tableContentWithInnerChild2,
+		DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(tableContentWithInnerChild2, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public boolean validateTableContentWithInnerChild(TableContentWithInnerChild tableContentWithInnerChild,
+		DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(tableContentWithInnerChild, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public boolean validateTableWithoutMultiplicityConcrete(
+		TableWithoutMultiplicityConcrete tableWithoutMultiplicityConcrete, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(tableWithoutMultiplicityConcrete, diagnostics, context);
 	}
 
 	private boolean validateUniqueness(TableWithUnique tableWithUnique, DiagnosticChain diagnostics,
@@ -615,13 +656,6 @@ public class TestValidator extends EObjectValidator {
 		// create ok results
 		for (final TableContent content : contents) {
 			content.eNotify(new ValidationNotification(content));
-			if (duplicates.contains(content)) {
-				continue;
-			}
-			diagnostics.add(createDiagnostic(Diagnostic.OK, DIAGNOSTIC_SOURCE, 0,
-				"_UI_GenericConstraint_diagnostic",
-				new Object[] { "OK", getObjectLabel(content, context) }, new Object[] { content,
-					nameFeature }, context));
 		}
 
 		return noDuplicates;
@@ -631,7 +665,7 @@ public class TestValidator extends EObjectValidator {
 	 * Returns the resource locator that will be used to fetch messages for this validator's diagnostics.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override

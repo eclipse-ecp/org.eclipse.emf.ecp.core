@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  *******************************************************************************/
@@ -16,16 +16,19 @@ import java.text.ParseException;
 import java.text.ParsePosition;
 import java.util.Locale;
 
+import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.NumericalHelper;
-import org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor;
-import org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.edit.spi.ViewLocaleService;
+import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor;
+import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.edit.command.SetCommand;
+import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.CellEditorProperties;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
@@ -33,34 +36,60 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 
+/**
+ * A number cell Editor which displays numbers.
+ *
+ * @author Eugen Neufeld
+ *
+ */
 public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 
 	private EStructuralFeature eStructuralFeature;
 	private ViewModelContext viewModelContext;
 	private ViewLocaleService localeService;
 
+	/**
+	 * The constructor which only takes a parent composite.
+	 *
+	 * @param parent the {@link Composite} to use as a parent.
+	 */
 	public NumberCellEditor(Composite parent) {
 		super(parent, SWT.RIGHT);
 	}
 
+	/**
+	 * A constructor which takes a parent and the style to use, the style is ignored by this cell editor.
+	 *
+	 * @param parent the {@link Composite} to use as a parent
+	 * @param style the SWT style to set
+	 */
 	public NumberCellEditor(Composite parent, int style) {
 		super(parent, style | SWT.RIGHT);
 	}
 
+	/**
+	 *
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getValueProperty()
+	 */
+	@Override
 	public IValueProperty getValueProperty() {
 		return CellEditorProperties.control().value(WidgetProperties.text(SWT.FocusOut));
 	}
 
 	/**
-	 * 
+	 *
 	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#instantiate(org.eclipse.emf.ecore.EStructuralFeature,
+	 *
+	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#instantiate(org.eclipse.emf.ecore.EStructuralFeature,
 	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
+	@Override
 	public void instantiate(EStructuralFeature eStructuralFeature, ViewModelContext viewModelContext) {
 		this.eStructuralFeature = eStructuralFeature;
 		this.viewModelContext = viewModelContext;
@@ -68,13 +97,17 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 		localeService = viewModelContext.getService(ViewLocaleService.class);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getFormatedString(java.lang.Object)
+	/**
+	 *
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getFormatedString(java.lang.Object)
 	 */
+	@Override
 	public String getFormatedString(Object value) {
 		if (value == null) {
-			setErrorMessage(TableMessages.NumberCellEditor_ValueIsNull);
+			setErrorMessage(LocalizationServiceHelper.getString(getClass(),
+				TableMessageKeys.NumberCellEditor_ValueIsNull));
 			return ""; //$NON-NLS-1$
 		}
 
@@ -95,24 +128,30 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 		return Locale.getDefault();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getColumnWidthWeight()
+	/**
+	 *
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getColumnWidthWeight()
 	 */
+	@Override
 	public int getColumnWidthWeight() {
 		return 50;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getTargetToModelStrategy()
+	/**
+	 *
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getTargetToModelStrategy(org.eclipse.core.databinding.DataBindingContext)
 	 */
-	public UpdateValueStrategy getTargetToModelStrategy() {
+	@Override
+	public UpdateValueStrategy getTargetToModelStrategy(final DataBindingContext databindingContext) {
 		return new EMFUpdateValueStrategy() {
 
 			@Override
 			public Object convert(final Object value) {
-				DecimalFormat format = format = NumericalHelper.setupFormat(getLocale(),
+				final DecimalFormat format = NumericalHelper.setupFormat(getLocale(),
 					getInstanceClass());
 				try {
 					Number number = null;
@@ -184,12 +223,13 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 					return null;
 				}
 
-				// Object result = getModelValue().getValue();
 				final Object result = null;
 
-				final MessageDialog messageDialog = new MessageDialog(getText().getShell(),
-					TableMessages.NumberCellEditor_InvalidNumber, null,
-					TableMessages.NumberCellEditor_NumberYouEnteredIsInvalid, MessageDialog.ERROR,
+				final MessageDialog messageDialog = new MessageDialog(text.getShell(),
+					LocalizationServiceHelper.getString(getClass(), TableMessageKeys.NumberCellEditor_InvalidNumber),
+					null, LocalizationServiceHelper.getString(getClass(),
+						TableMessageKeys.NumberCellEditor_NumberYouEnteredIsInvalid),
+					MessageDialog.ERROR,
 					new String[] { JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
 
 				new ECPDialogExecutor(messageDialog) {
@@ -199,28 +239,24 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 					}
 				}.execute();
 
-				if (result == null) {
-					getText().setText(""); //$NON-NLS-1$
-				} else {
-					DecimalFormat format = format = NumericalHelper.setupFormat(getLocale(),
-						getInstanceClass());
-					getText().setText(format.format(result));
-				}
+				databindingContext.updateTargets();
 
-				// if (getStructuralFeature().isUnsettable() && result == null) {
-				// showUnsetLabel();
-				// return SetCommand.UNSET_VALUE;
-				// }
+				if (eStructuralFeature.isUnsettable()) {
+					return SetCommand.UNSET_VALUE;
+				}
 				return result;
 			}
 		};
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor#getModelToTargetStrategy()
+	/**
+	 *
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getModelToTargetStrategy(org.eclipse.core.databinding.DataBindingContext)
 	 */
-	public UpdateValueStrategy getModelToTargetStrategy() {
+	@Override
+	public UpdateValueStrategy getModelToTargetStrategy(DataBindingContext databindingContext) {
 		return new EMFUpdateValueStrategy() {
 			@Override
 			public Object convert(Object value) {
@@ -240,5 +276,37 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 
 	private Text getText() {
 		return text;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#setEditable(boolean)
+	 */
+	@Override
+	public void setEditable(boolean editable) {
+		if (getText() != null) {
+			getText().setEditable(editable);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getImage(java.lang.Object)
+	 */
+	@Override
+	public Image getImage(Object value) {
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getMinWidth()
+	 */
+	@Override
+	public int getMinWidth() {
+		return 0;
 	}
 }

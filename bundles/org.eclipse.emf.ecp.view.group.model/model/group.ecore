@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="group" nsURI="http://org/eclipse/emf/ecp/view/group/model" nsPrefix="org.eclipse.emf.ecp.view.group.model">
-  <eClassifiers xsi:type="ecore:EClass" name="Group" eSuperTypes="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//Container"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Group" eSuperTypes="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//ContainedContainer">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="groupType" lowerBound="1"
+        eType="#//GroupType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="labelAlignment" eType="#//GroupLabelAlignment"
+        defaultValueLiteral="LabelAligned"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="collapsed" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="GroupType">
+    <eLiterals name="Normal"/>
+    <eLiterals name="Embedded" value="1"/>
+    <eLiterals name="Collapsible" value="2"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="GroupLabelAlignment">
+    <eLiterals name="LabelAligned"/>
+    <eLiterals name="InputAligned" value="1"/>
+  </eClassifiers>
 </ecore:EPackage>

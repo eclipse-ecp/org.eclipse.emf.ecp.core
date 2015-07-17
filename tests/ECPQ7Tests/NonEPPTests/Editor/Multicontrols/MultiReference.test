@@ -1,0 +1,72 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _rr2EEFpSEeKcnaHGSt8OwA,_f3qEUVpSEeKcnaHGSt8OwA,_IuFcgFpZEeKcnaHGSt8OwA,__UtTgD-XEeK-yuKsz0Lang
+Element-Name: MultiReference
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _7fNEUHXLEeK2tZkPdpUavQ
+Runtime-Version: 1.5.4.201410231434
+Save-Time: 11/28/14 3:23 PM
+Tags: skipExecution
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]/Tournament Pro" | double-click
+get-editor "Tournament Pro" | get-table -after [get-label Type] -index 1 | get-property itemCount | equals 0 
+    | verify-true
+get-editor "Tournament Pro" | get-button Link -after [get-label Type] -index 1 | click
+with [get-window "Select Elements"] {
+    get-table | select "Player Jonas"
+    get-button Finish | click
+}
+get-editor "Tournament Pro" | get-table -after [get-label Type] -index 1 | get-property itemCount | equals 1 
+    | verify-true
+get-editor "Tournament Pro" | get-button Link -after [get-label Type] -index 1 | click
+with [get-window "Select Elements"] {
+    get-table | select "Player Maximilian"
+    get-button Finish | click
+}
+get-editor "Tournament Pro" | get-table -after [get-label Type] -index 1 | get-property itemCount | equals 2 
+    | verify-true
+with [get-editor "Tournament Pro"] {
+    get-table -after [get-label Type] -index 1 | select "Player Jonas" "Player Maximilian"
+    get-button Delete -after [get-label Type] -index 1 | click
+    get-button Link -after [get-label Type] -index 1 | click
+}
+get-editor "Tournament Pro" | get-table -after [get-label Type] -index 1 | get-property itemCount | equals 0 
+    | verify-true
+with [get-window "Select Elements"] {
+    get-table | select "Player Jonas" "Player Maximilian"
+    get-button Finish | click
+}
+get-editor "Tournament Pro" | get-table -after [get-label Type] -index 1 | get-property itemCount | equals 2 
+    | verify-true
+get-editor "Tournament Pro" | get-button "Create and link" -after [get-label Type] -index 1 | click
+get-editor Player | get-editbox -after [get-label Name] | set-text Hans
+get-editor "Tournament Pro" | get-table -after [get-label Type] -index 1 | get-item "Player Hans" 
+    | get-property caption | equals "Player Hans" | verify-true
+get-editor "Player Hans" | get-editbox -after [get-label Name] | set-text Hansilein
+with [get-editor "Tournament Pro" | get-table -after [get-label Type] -index 1] {
+    get-item "Player Hansilein" | get-property caption | equals "Player Hansilein" | verify-true
+    get-property itemCount | equals 3 | verify-true
+}
+get-editor "Tournament Pro" | get-table -after [get-label Type] -index 1 | select "Player Jonas" | double-click
+get-tab-folder -index 1 | get-property activePage | equals "Player Jonas" | verify-true
+get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]" | get-menu Commit | click
+get-window Commit | get-button OK | click
+with [get-view "Model Explorer" | get-tree] {
+    select "TestProjectSecondCheckOut \\[trunk, Version 0\\]/Tournament Pro" | double-click
+    select "TestProjectSecondCheckOut \\[trunk, Version 0\\]"
+}
+get-view "Model Explorer" | get-tree | select "TestProjectSecondCheckOut \\[trunk, Version 0\\]" | get-menu Update 
+    | click
+get-window Update | get-button OK | click
+get-view "Model Explorer" | get-tree | select "TestProjectSecondCheckOut \\[trunk, Version 1\\]/Tournament Pro" 
+    | double-click
+get-editor "Tournament Pro" | get-table -after [get-label Type] -index 1 | get-property itemCount | equals 3 
+    | verify-true
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

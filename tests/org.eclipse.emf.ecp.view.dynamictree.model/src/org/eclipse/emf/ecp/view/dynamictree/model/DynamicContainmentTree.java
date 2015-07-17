@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Edgar Mueller - initial API and implementation
  */
@@ -25,11 +25,13 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree#getDomainModel <em>Domain Model</em>}</li>
- *   <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree#getChildReference <em>Child Reference</em>}</li>
- *   <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree#getPathToRoot <em>Path To Root</em>}</li>
- *   <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree#getChildComposite <em>Child Composite</em>}</li>
- *   <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree#getItems <em>Items</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree#getDomainModel <em>Domain Model</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree#getChildReference <em>Child Reference
+ * </em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree#getPathToRoot <em>Path To Root</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree#getChildComposite <em>Child Composite
+ * </em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree#getItems <em>Items</em>}</li>
  * </ul>
  * </p>
  *
@@ -47,6 +49,7 @@ public interface DynamicContainmentTree extends VCategory
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 *
 	 * @return the value of the '<em>Domain Model</em>' reference.
 	 * @see #setDomainModel(EObject)
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage#getDynamicContainmentTree_DomainModel()
@@ -56,9 +59,11 @@ public interface DynamicContainmentTree extends VCategory
 	EObject getDomainModel();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree#getDomainModel <em>Domain Model</em>}' reference.
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree#getDomainModel
+	 * <em>Domain Model</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @param value the new value of the '<em>Domain Model</em>' reference.
 	 * @see #getDomainModel()
 	 * @generated
@@ -73,6 +78,7 @@ public interface DynamicContainmentTree extends VCategory
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 *
 	 * @return the value of the '<em>Child Reference</em>' reference.
 	 * @see #setChildReference(EReference)
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage#getDynamicContainmentTree_ChildReference()
@@ -82,9 +88,12 @@ public interface DynamicContainmentTree extends VCategory
 	EReference getChildReference();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree#getChildReference <em>Child Reference</em>}' reference.
+	 * Sets the value of the '
+	 * {@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree#getChildReference
+	 * <em>Child Reference</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @param value the new value of the '<em>Child Reference</em>' reference.
 	 * @see #getChildReference()
 	 * @generated
@@ -100,6 +109,7 @@ public interface DynamicContainmentTree extends VCategory
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 *
 	 * @return the value of the '<em>Path To Root</em>' reference list.
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage#getDynamicContainmentTree_PathToRoot()
 	 * @model
@@ -115,6 +125,7 @@ public interface DynamicContainmentTree extends VCategory
 	 * of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 *
 	 * @return the value of the '<em>Child Composite</em>' containment reference.
 	 * @see #setChildComposite(VContainedElement)
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage#getDynamicContainmentTree_ChildComposite()
@@ -124,9 +135,12 @@ public interface DynamicContainmentTree extends VCategory
 	VContainedElement getChildComposite();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree#getChildComposite <em>Child Composite</em>}' containment reference.
+	 * Sets the value of the '
+	 * {@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree#getChildComposite
+	 * <em>Child Composite</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @param value the new value of the '<em>Child Composite</em>' containment reference.
 	 * @see #getChildComposite()
 	 * @generated
@@ -142,6 +156,7 @@ public interface DynamicContainmentTree extends VCategory
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 *
 	 * @return the value of the '<em>Items</em>' containment reference list.
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage#getDynamicContainmentTree_Items()
 	 * @model containment="true"

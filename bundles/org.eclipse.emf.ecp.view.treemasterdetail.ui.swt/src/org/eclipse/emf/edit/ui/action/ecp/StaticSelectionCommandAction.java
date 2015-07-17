@@ -5,7 +5,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * IBM - Initial API and implementation
  */
@@ -37,7 +37,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
  * implements {@link CommandActionDelegate}, the text, the toolbar icon, and
  * the tool tip text; however, this need only be done once, at the time the
  * action is created.
- * 
+ *
  * <p>
  * Subclasses must provide an implementation for {@link #createActionCommand} that creates the command to perform this
  * action. They may also override {@link #getDefaultImageDescriptor} to provide a default icon and {@link #disable} to
@@ -60,7 +60,7 @@ public abstract class StaticSelectionCommandAction extends Action
 
 	/**
 	 * This constructs an instance for a command to be executed via the given editing domain.
-	 * 
+	 *
 	 * @since 2.4.0
 	 */
 	public StaticSelectionCommandAction(EditingDomain editingDomain)

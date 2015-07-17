@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="org.eclipse.emf.ecp.ui.e3" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="org.eclipse.emf.ecp.ui" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appinfo>
-         <meta.schema plugin="org.eclipse.emf.ecp.ui.e3" id="menuContributionEnablement" name="Menu Contribution Enablement"/>
+         <meta.schema plugin="org.eclipse.emf.ecp.ui" id="menuContributionEnablement" name="Menu Contribution Enablement"/>
       </appinfo>
       <documentation>
          This ExtensionPoint allows to modify the enablement of menus.

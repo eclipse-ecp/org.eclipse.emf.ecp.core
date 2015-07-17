@@ -72,7 +72,7 @@
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":org.eclipse.emf.ecp.edit.util.ECPApplicableTester"/>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditorTester"/>
                </appinfo>
             </annotation>
          </attribute>

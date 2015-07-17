@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmi:id="_BUkhcY_dEeOHvPp6CHTYfA" elementId="org.eclipse.e4.application" bindingContexts="_BUkhcI_dEeOHvPp6CHTYfA">
+  <children xsi:type="basic:TrimmedWindow" xmi:id="_CDDioI_eEeOCIdrGVh4OSw" elementId="org.eclipse.emf.ecp.application.e4.fx.trimmedwindow.0">
+    <children xsi:type="advanced:PerspectiveStack" xmi:id="_DTeosI_eEeOCIdrGVh4OSw" elementId="org.eclipse.emf.ecp.application.e4.fx.perspectivestack.0">
+      <children xsi:type="advanced:Perspective" xmi:id="_DmedMI_eEeOCIdrGVh4OSw" elementId="org.eclipse.emf.ecp.application.e4.fx.perspective.0">
+        <children xsi:type="basic:PartSashContainer" xmi:id="_GAS0QI_eEeOCIdrGVh4OSw" elementId="org.eclipse.emf.ecp.application.e4.fx.partsashcontainer.0" horizontal="true">
+          <children xsi:type="basic:PartStack" xmi:id="_Lp12sI_eEeOCIdrGVh4OSw" elementId="org.eclipse.emf.ecp.application.e4.fx.partstack.0"/>
+          <children xsi:type="basic:PartStack" xmi:id="_HOeyoNXPEeOYYqVDLUXLlg" elementId="org.eclipse.emf.ecp.application.e4.fx.partstack.1">
+            <tags>editorPart</tags>
+          </children>
+        </children>
+      </children>
+    </children>
+  </children>
+  <rootContext xmi:id="_BUkhcI_dEeOHvPp6CHTYfA" elementId="org.eclipse.ui.contexts.dialogAndWindow" name="In Dialog and Windows">
+    <children xmi:id="_BUkhco_dEeOHvPp6CHTYfA" elementId="org.eclipse.ui.contexts.window" name="In Windows"/>
+    <children xmi:id="_BUkhc4_dEeOHvPp6CHTYfA" elementId="org.eclipse.ui.contexts.dialog" name="In Dialogs"/>
+  </rootContext>
+  <descriptors xmi:id="_HtrQENXPEeOYYqVDLUXLlg" elementId="org.eclipse.emf.ecp.application.e4.fx.partdescriptor.editor" allowMultiple="true" category="editorPart" closeable="true" contributionURI="bundleclass://org.eclipse.emf.ecp.application.e4.fx/org.eclipse.emf.ecp.application.e4.fx.EditorPart"/>
+  <addons xmi:id="_BUkhdI_dEeOHvPp6CHTYfA" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
+  <addons xmi:id="_BUkhdY_dEeOHvPp6CHTYfA" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
+  <addons xmi:id="_BUkhdo_dEeOHvPp6CHTYfA" elementId="org.eclipse.fx.ui.keybindings.e4.service" contributionURI="bundleclass://org.eclipse.fx.ui.keybindings.e4/org.eclipse.fx.ui.keybindings.e4.BindingServiceAddon"/>
+  <addons xmi:id="_BUkhd4_dEeOHvPp6CHTYfA" elementId="org.eclipse.e4.ui.workbench.commands.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.CommandProcessingAddon"/>
+  <addons xmi:id="_BUkheI_dEeOHvPp6CHTYfA" elementId="org.eclipse.e4.ui.workbench.contexts.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.ContextProcessingAddon"/>
+  <addons xmi:id="_BUlIgI_dEeOHvPp6CHTYfA" elementId="org.eclipse.fx.ui.keybindings.e4.model" contributionURI="bundleclass://org.eclipse.fx.ui.keybindings.e4/org.eclipse.fx.ui.keybindings.e4.BindingProcessingAddon"/>
+  <addons xmi:id="_BUlIgY_dEeOHvPp6CHTYfA" elementId="org.eclipse.e4.ui.workbench.addons.HandlerProcessingAddon" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.HandlerProcessingAddon"/>
+</application:Application>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension-point id="doubleClickListener" name="Validation View Double Click Listener" schema="schema/doubleClickListener.exsd"/>
+
+</plugin>

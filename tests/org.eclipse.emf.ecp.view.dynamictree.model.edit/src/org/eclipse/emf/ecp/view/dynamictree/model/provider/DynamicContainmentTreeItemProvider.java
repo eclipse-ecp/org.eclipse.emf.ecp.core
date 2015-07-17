@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Edgar Mueller - initial API and implementation
  */
@@ -35,18 +35,22 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTree}
+ * object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
+ *
  * @generated
  */
 public class DynamicContainmentTreeItemProvider
-	extends CategoryItemProvider implements IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+	extends CategoryItemProvider implements IEditingDomainItemProvider, IStructuredItemContentProvider,
+	ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	public DynamicContainmentTreeItemProvider(AdapterFactory adapterFactory)
@@ -58,6 +62,7 @@ public class DynamicContainmentTreeItemProvider
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
@@ -77,69 +82,75 @@ public class DynamicContainmentTreeItemProvider
 	 * This adds a property descriptor for the Domain Model feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	protected void addDomainModelPropertyDescriptor(Object object)
 	{
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_DynamicContainmentTree_domainModel_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_DynamicContainmentTree_domainModel_feature", "_UI_DynamicContainmentTree_type"),
-				 ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE__DOMAIN_MODEL,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
+			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_DynamicContainmentTree_domainModel_feature"),
+				getString("_UI_PropertyDescriptor_description", "_UI_DynamicContainmentTree_domainModel_feature",
+					"_UI_DynamicContainmentTree_type"),
+				ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE__DOMAIN_MODEL,
+				true,
+				false,
+				true,
+				null,
+				null,
+				null));
 	}
 
 	/**
 	 * This adds a property descriptor for the Child Reference feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	protected void addChildReferencePropertyDescriptor(Object object)
 	{
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_DynamicContainmentTree_childReference_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_DynamicContainmentTree_childReference_feature", "_UI_DynamicContainmentTree_type"),
-				 ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE__CHILD_REFERENCE,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
+			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_DynamicContainmentTree_childReference_feature"),
+				getString("_UI_PropertyDescriptor_description", "_UI_DynamicContainmentTree_childReference_feature",
+					"_UI_DynamicContainmentTree_type"),
+				ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE__CHILD_REFERENCE,
+				true,
+				false,
+				true,
+				null,
+				null,
+				null));
 	}
 
 	/**
 	 * This adds a property descriptor for the Path To Root feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	protected void addPathToRootPropertyDescriptor(Object object)
 	{
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_DynamicContainmentTree_pathToRoot_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_DynamicContainmentTree_pathToRoot_feature", "_UI_DynamicContainmentTree_type"),
-				 ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE__PATH_TO_ROOT,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
+			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_DynamicContainmentTree_pathToRoot_feature"),
+				getString("_UI_PropertyDescriptor_description", "_UI_DynamicContainmentTree_pathToRoot_feature",
+					"_UI_DynamicContainmentTree_type"),
+				ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE__PATH_TO_ROOT,
+				true,
+				false,
+				true,
+				null,
+				null,
+				null));
 	}
 
 	/**
@@ -148,6 +159,7 @@ public class DynamicContainmentTreeItemProvider
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
@@ -164,6 +176,7 @@ public class DynamicContainmentTreeItemProvider
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
@@ -179,6 +192,7 @@ public class DynamicContainmentTreeItemProvider
 	 * This returns DynamicContainmentTree.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
@@ -191,12 +205,13 @@ public class DynamicContainmentTreeItemProvider
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
 	public String getText(Object object)
 	{
-		String label = ((DynamicContainmentTree)object).getName();
+		final String label = ((DynamicContainmentTree) object).getName();
 		return label == null || label.length() == 0 ?
 			getString("_UI_DynamicContainmentTree_type") :
 			getString("_UI_DynamicContainmentTree_type") + " " + label;
@@ -207,6 +222,7 @@ public class DynamicContainmentTreeItemProvider
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
@@ -215,10 +231,10 @@ public class DynamicContainmentTreeItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(DynamicContainmentTree.class)) {
-			case ModelPackage.DYNAMIC_CONTAINMENT_TREE__CHILD_COMPOSITE:
-			case ModelPackage.DYNAMIC_CONTAINMENT_TREE__ITEMS:
-				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
-				return;
+		case ModelPackage.DYNAMIC_CONTAINMENT_TREE__CHILD_COMPOSITE:
+		case ModelPackage.DYNAMIC_CONTAINMENT_TREE__ITEMS:
+			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
+			return;
 		}
 		super.notifyChanged(notification);
 	}
@@ -228,6 +244,7 @@ public class DynamicContainmentTreeItemProvider
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
@@ -237,40 +254,40 @@ public class DynamicContainmentTreeItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE__CHILD_COMPOSITE,
-				 VCategorizationFactory.eINSTANCE.createCategorizationElement()));
+			(ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE__CHILD_COMPOSITE,
+				VCategorizationFactory.eINSTANCE.createCategorizationElement()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE__CHILD_COMPOSITE,
-				 VViewFactory.eINSTANCE.createControl()));
+			(ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE__CHILD_COMPOSITE,
+				VViewFactory.eINSTANCE.createControl()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE__ITEMS,
-				 ModelFactory.eINSTANCE.createDynamicContainmentItem()));
+			(ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE__ITEMS,
+				ModelFactory.eINSTANCE.createDynamicContainmentItem()));
 	}
 
 	/**
 	 * This returns the label text for {@link org.eclipse.emf.edit.command.CreateChildCommand}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
 	public String getCreateChildText(Object owner, Object feature, Object child, Collection<?> selection)
 	{
-		Object childFeature = feature;
-		Object childObject = child;
+		final Object childFeature = feature;
+		final Object childObject = child;
 
-		boolean qualify =
+		final boolean qualify =
 			childFeature == VCategorizationPackage.Literals.CATEGORY__COMPOSITE ||
-			childFeature == ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE__CHILD_COMPOSITE;
+				childFeature == ModelPackage.Literals.DYNAMIC_CONTAINMENT_TREE__CHILD_COMPOSITE;
 
 		if (qualify) {
-			return getString
-				("_UI_CreateChild_text2",
-				 new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
+			return getString("_UI_CreateChild_text2",
+				new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
 		}
 		return super.getCreateChildText(owner, feature, child, selection);
 	}
@@ -279,6 +296,7 @@ public class DynamicContainmentTreeItemProvider
 	 * Return the resource locator for this item provider's resources.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.emf.ecp.view.model.fx.renderer">
+      <renderer
+            renderer="org.eclipse.emf.ecp.controls.renderer.fx.BooleanRendererFX">
+         <dynamicTest
+               testClass="org.eclipse.emf.ecp.view.model.common.BooleanControlRendererTester">
+         </dynamicTest>
+      </renderer>
+      <renderer
+            renderer="org.eclipse.emf.ecp.controls.renderer.fx.DateRendererFX">
+         <dynamicTest
+               testClass="org.eclipse.emf.ecp.view.model.common.DateTimeControlRendererTester">
+         </dynamicTest>
+      </renderer>
+      <renderer
+            renderer="org.eclipse.emf.ecp.controls.renderer.fx.XmlDateRendererFX">
+         <dynamicTest
+               testClass="org.eclipse.emf.ecp.view.model.common.XMLDateControlRendererTester">
+         </dynamicTest>
+      </renderer>
+      <renderer
+            renderer="org.eclipse.emf.ecp.controls.renderer.fx.EnumRendererFX">
+         <dynamicTest
+               testClass="org.eclipse.emf.ecp.view.model.common.EnumComboViewerRendererTester">
+         </dynamicTest>
+      </renderer>
+      <renderer
+            renderer="org.eclipse.emf.ecp.controls.renderer.fx.NumericalRendererFX">
+         <dynamicTest
+               testClass="org.eclipse.emf.ecp.view.model.common.NumberControlRendererTester">
+         </dynamicTest>
+      </renderer>
+      <renderer
+            renderer="org.eclipse.emf.ecp.controls.renderer.fx.TextRendererFX">
+         <dynamicTest
+               testClass="org.eclipse.emf.ecp.view.model.common.TextControlRendererTester">
+         </dynamicTest>
+      </renderer>
+      <renderer
+            renderer="org.eclipse.emf.ecp.controls.renderer.fx.SingleReferenceRendererFX">
+         <dynamicTest
+               testClass="org.eclipse.emf.ecp.view.model.common.SingleReferenceRendererTester">
+         </dynamicTest>
+      </renderer>
+      <renderer
+            renderer="org.eclipse.emf.ecp.controls.renderer.fx.StringListRendererFX">
+         <staticTest
+               element="org.eclipse.emf.ecp.view.spi.model.VControl"
+               priority="1">
+         </staticTest>
+      </renderer>
+   </extension>
+
+</plugin>

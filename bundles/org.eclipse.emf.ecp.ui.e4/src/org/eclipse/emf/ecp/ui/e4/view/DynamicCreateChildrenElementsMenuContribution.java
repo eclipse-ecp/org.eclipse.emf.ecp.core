@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.ui.e4.view;
 
@@ -26,10 +26,10 @@ import org.eclipse.e4.ui.model.application.ui.menu.MMenuElement;
 import org.eclipse.e4.ui.model.application.ui.menu.MMenuFactory;
 import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.common.ChildrenDescriptorCollector;
+import org.eclipse.emf.ecp.common.spi.ChildrenDescriptorCollector;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
-import org.eclipse.emf.ecp.internal.ui.util.ECPHandlerHelper;
+import org.eclipse.emf.ecp.spi.ui.util.ECPHandlerHelper;
 import org.eclipse.emf.edit.command.CommandActionDelegate;
 import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -41,14 +41,13 @@ import org.eclipse.jface.viewers.StructuredSelection;
 
 /**
  * @author krusche
- * 
+ *
  */
-@SuppressWarnings("restriction")
 public class DynamicCreateChildrenElementsMenuContribution {
 	@Inject
 	private ESelectionService selectionService;
 
-	public List<?> getSelectedObjects() {
+	private List<?> getSelectedObjects() {
 		final Object sel = selectionService.getSelection();
 		if (sel != null) {
 			if (sel instanceof Collection) {
@@ -67,6 +66,11 @@ public class DynamicCreateChildrenElementsMenuContribution {
 		return null;
 	}
 
+	/**
+	 * Adds the child create items to the popup menue.
+	 *
+	 * @param items the list to add the items to
+	 */
 	@AboutToShow
 	public void aboutToShow(List<MMenuElement> items) {
 		final List<?> selectedObjects = getSelectedObjects();
@@ -120,6 +124,12 @@ public class DynamicCreateChildrenElementsMenuContribution {
 		}
 	}
 
+	/**
+	 * Action to create a new {@link EObject} as child.
+	 *
+	 * @author Jonas
+	 *
+	 */
 	private final class CustomCreateChildAction extends CreateChildAction {
 
 		private CustomCreateChildAction(EditingDomain editingDomain,

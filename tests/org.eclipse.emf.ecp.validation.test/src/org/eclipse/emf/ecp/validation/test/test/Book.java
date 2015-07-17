@@ -1,15 +1,15 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  * Johannes Faltermeier
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.validation.test.test;
 
@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Book</b></em>'.
  * <!-- end-user-doc -->
- * 
+ *
  * <p>
  * The following features are supported:
  * <ul>
@@ -28,7 +28,7 @@ import org.eclipse.emf.ecore.EObject;
  * <li>{@link org.eclipse.emf.ecp.validation.test.test.Book#getWriters <em>Writers</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.ecp.validation.test.test.TestPackage#getBook()
  * @model
  * @generated
@@ -42,7 +42,7 @@ public interface Book extends EObject {
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Title</em>' attribute.
 	 * @see #setTitle(String)
 	 * @see org.eclipse.emf.ecp.validation.test.test.TestPackage#getBook_Title()
@@ -55,7 +55,7 @@ public interface Book extends EObject {
 	 * Sets the value of the '{@link org.eclipse.emf.ecp.validation.test.test.Book#getTitle <em>Title</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Title</em>' attribute.
 	 * @see #getTitle()
 	 * @generated
@@ -71,7 +71,7 @@ public interface Book extends EObject {
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Pages</em>' attribute.
 	 * @see #setPages(int)
 	 * @see org.eclipse.emf.ecp.validation.test.test.TestPackage#getBook_Pages()
@@ -84,7 +84,7 @@ public interface Book extends EObject {
 	 * Sets the value of the '{@link org.eclipse.emf.ecp.validation.test.test.Book#getPages <em>Pages</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Pages</em>' attribute.
 	 * @see #getPages()
 	 * @generated
@@ -101,7 +101,7 @@ public interface Book extends EObject {
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Writers</em>' reference.
 	 * @see #setWriters(Writer)
 	 * @see org.eclipse.emf.ecp.validation.test.test.TestPackage#getBook_Writers()
@@ -116,7 +116,7 @@ public interface Book extends EObject {
 	 * reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Writers</em>' reference.
 	 * @see #getWriters()
 	 * @generated

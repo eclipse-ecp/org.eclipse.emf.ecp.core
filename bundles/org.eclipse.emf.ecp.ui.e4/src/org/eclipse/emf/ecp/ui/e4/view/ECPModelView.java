@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.ui.e4.view;
 
@@ -21,20 +21,19 @@ import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.model.application.ui.menu.MToolBarElement;
 import org.eclipse.e4.ui.model.application.ui.menu.MToolItem;
+import org.eclipse.e4.ui.services.EMenuService;
 import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
 import org.eclipse.e4.ui.workbench.modeling.EPartService.PartState;
 import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
-import org.eclipse.e4.ui.workbench.swt.modeling.EMenuService;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.util.ECPContainer;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.ui.model.ModelContentProvider;
-import org.eclipse.emf.ecp.internal.ui.util.ECPHandlerHelper;
-import org.eclipse.emf.ecp.ui.common.TreeViewerFactory;
+import org.eclipse.emf.ecp.spi.ui.util.ECPHandlerHelper;
+import org.eclipse.emf.ecp.ui.common.ECPViewerFactory;
 import org.eclipse.emf.ecp.ui.e4.editor.ECPE4Editor;
-import org.eclipse.emf.ecp.ui.e4.util.EPartServiceHelper;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
@@ -48,25 +47,27 @@ import org.eclipse.swt.widgets.Composite;
 /**
  * Because {@link EMenuService} is still internal.
  */
-@SuppressWarnings("restriction")
 /**
  * Model Explorer View Part.
+ *
  * @author Jonas
  *
  */
 public class ECPModelView {
 
-	public static final String P_LINK_WITH_EDITOR = "linkWithEditor";
+	public static final String P_LINK_WITH_EDITOR = "linkWithEditor"; //$NON-NLS-1$
 	private static final String POPUPMENU_NAVIGATOR = "org.eclipse.emf.ecp.e4.application.popupmenu.navigator"; //$NON-NLS-1$
 	private TreeViewer modelExplorerTree;
 	private ModelContentProvider contentProvider;
-	private final EPartService partService = EPartServiceHelper.getEPartService();
+
+	@Inject
+	private EPartService partService;
 
 	private MPart modelViewPart;
 
 	/**
 	 * Creates the model explorer view.
-	 * 
+	 *
 	 * @param composite the parent {@link Composite}
 	 * @param menuService the menu service to register the context menu
 	 * @param selectionService the selection service to publish the selection of the tree viewer.
@@ -85,12 +86,13 @@ public class ECPModelView {
 				}
 			}
 		}
-		modelExplorerTree = TreeViewerFactory.createModelExplorerViewer(composite, false, null);
+		modelExplorerTree = ECPViewerFactory.createModelExplorerViewer(composite, true, null);
 		menuService.registerContextMenu(modelExplorerTree.getTree(),
 			POPUPMENU_NAVIGATOR);
 		contentProvider = (ModelContentProvider) modelExplorerTree.getContentProvider();
 		modelExplorerTree.addDoubleClickListener(new IDoubleClickListener() {
 
+			@Override
 			public void doubleClick(DoubleClickEvent event) {
 				if (event.getSelection() instanceof IStructuredSelection) {
 					final IStructuredSelection structuredSelection = (IStructuredSelection) event.getSelection();
@@ -113,6 +115,7 @@ public class ECPModelView {
 		});
 		modelExplorerTree.addSelectionChangedListener(new ISelectionChangedListener() {
 
+			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
 				final ISelection selection = event.getSelection();
 				if (IStructuredSelection.class.isInstance(selection)) {

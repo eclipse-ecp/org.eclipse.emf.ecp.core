@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -19,13 +19,20 @@ import org.eclipse.jface.viewers.Viewer;
 
 /**
  * @author Eugen Neufeld
- * 
+ *
  */
 public abstract class ECPDropAdapter extends EditingDomainViewerDropAdapter {
 
 	/**
+	 * Default constructor for drop adapters initialized by extension point.
+	 */
+	public ECPDropAdapter() {
+		this(null, null);
+	}
+
+	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param domain the {@link EditingDomain} to use
 	 * @param viewer the Viewer this {@link EditingDomainViewerDropAdapter} is applied to
 	 */
@@ -34,7 +41,7 @@ public abstract class ECPDropAdapter extends EditingDomainViewerDropAdapter {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param editingDomain Th {@link EditingDomain} to be used.
 	 */
 	public void setEditingDomain(EditingDomain editingDomain) {
@@ -42,7 +49,7 @@ public abstract class ECPDropAdapter extends EditingDomainViewerDropAdapter {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param viewer The {@link Viewer}, this drop adapter operates on
 	 */
 	public void setViewer(Viewer viewer) {
@@ -51,7 +58,7 @@ public abstract class ECPDropAdapter extends EditingDomainViewerDropAdapter {
 
 	/**
 	 * Helper method to find the editing domain the provided object belongs to.
-	 * 
+	 *
 	 * @param object the {@link Object} to find the {@link EditingDomain} for
 	 * @return the EditingDomain of this Object or null
 	 */

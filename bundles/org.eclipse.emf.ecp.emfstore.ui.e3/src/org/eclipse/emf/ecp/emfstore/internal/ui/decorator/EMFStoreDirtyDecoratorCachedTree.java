@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Edgar Mueller - initial API and implementation
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.emfstore.internal.ui.decorator;
 
@@ -17,17 +17,17 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.common.cachetree.AbstractCachedTree;
-import org.eclipse.emf.ecp.common.cachetree.CachedTreeNode;
-import org.eclipse.emf.ecp.common.cachetree.IExcludedObjectsCallback;
+import org.eclipse.emf.ecp.common.spi.cachetree.AbstractCachedTree;
+import org.eclipse.emf.ecp.common.spi.cachetree.CachedTreeNode;
+import org.eclipse.emf.ecp.common.spi.cachetree.IExcludedObjectsCallback;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 
 /**
  * Cached tree implementation for dirty decorators of model elements managed by EMFStore.
- * 
+ *
  * @author emueller
- * 
+ *
  */
 public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<Integer> {
 
@@ -35,7 +35,7 @@ public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<I
 
 	/**
 	 * Removes an ECPProject from the Cache.
-	 * 
+	 *
 	 * @param project the project
 	 */
 	public static void removeProject(ECPProject project) {
@@ -44,7 +44,7 @@ public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<I
 
 	/**
 	 * Static {@link EMFStoreDirtyDecoratorCachedTree} singleton.
-	 * 
+	 *
 	 * @param project the {@link ECPProject} to initialize this CashedTree on
 	 * @return Static instance of the {@link EMFStoreDirtyDecoratorCachedTree}
 	 */
@@ -52,6 +52,7 @@ public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<I
 		if (!cashedTrees.containsKey(project)) {
 			cashedTrees.put(project, new EMFStoreDirtyDecoratorCachedTree(new IExcludedObjectsCallback() {
 
+				@Override
 				public boolean isExcluded(Object object) {
 					return ((InternalProject) project).isModelRoot(object);
 				}
@@ -74,7 +75,7 @@ public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<I
 
 		/**
 		 * Constructor.
-		 * 
+		 *
 		 * @param value
 		 *            the initial value for this entry
 		 */
@@ -125,7 +126,7 @@ public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<I
 
 	/**
 	 * Call to indicate that an {@link EObject} was added.
-	 * 
+	 *
 	 * @param eObject the new {@link EObject}
 	 * @return the {@link Set} of {@link EObject} affected by this change
 	 */
@@ -140,7 +141,7 @@ public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<I
 
 	/**
 	 * Call to indicate that an {@link EObject} was removed.
-	 * 
+	 *
 	 * @param eObject the removed {@link EObject}
 	 * @return the {@link Set} of {@link EObject} affected by this change
 	 */
@@ -156,7 +157,7 @@ public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<I
 
 	/**
 	 * Sets the operation count for the given object.
-	 * 
+	 *
 	 * @param eObject the eobject
 	 * @param count the new count
 	 * @return the set of affected elements
@@ -167,7 +168,7 @@ public final class EMFStoreDirtyDecoratorCachedTree extends AbstractCachedTree<I
 
 	/**
 	 * Gets the own cached value of the given object.
-	 * 
+	 *
 	 * @param eObject the e object
 	 * @return the own cached value
 	 */

@@ -1,0 +1,79 @@
+--- Q7 testcase ---
+Format-Version: 1.0
+Q7-vendor: www.xored.com/q7
+Contexts: _rr2EEFpSEeKcnaHGSt8OwA,_f3qEUVpSEeKcnaHGSt8OwA,_IuFcgFpZEeKcnaHGSt8OwA,__UtTgD-XEeK-yuKsz0Lang
+Element-Name: Int
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _1mLz4HHYEeKndsdNMEr_UQ
+Q7-Runtime-Version: 1.3.7.201309090800
+Save-Time: 1/9/14 3:49 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]/League America/Player Jonas" | double-click
+get-editor "Player Jonas" | get-editbox -after [get-label "Number Of Victories"] | click-text 1 2
+get-editor "Player Jonas" | get-editbox -after [get-label "Number Of Victories"] | get-property text | equals 0 
+    | verify-true
+with [get-editor "Player Jonas"] {
+    get-editbox -after [get-label "Number Of Victories"] | set-text 9987
+    close
+}
+get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]/League America/Player Jonas" | double-click
+get-editor "Player Jonas" | get-editbox -after [get-label "Number Of Victories"] | get-property text | equals 9987 
+    | verify-true
+get-editor "Player Jonas" | get-editbox -after [get-label "Number Of Victories"] 
+    | set-text 9987999999999999999999999999999999999999
+get-editor "Player Jonas" | get-editbox -after [get-label "Number Of Victories"] | get-property text | equals 2147483647 
+    | verify-true
+
+get-editor "Player Jonas" | get-editbox -after [get-label "Number Of Victories"] | set-text "1.5"
+with [get-window "Invalid Number"] {
+    get-property title | equals "Invalid Number" | verify-true
+    get-label "The Number you have entered is invalid. The value will be unset." | get-property caption 
+        | equals "The Number you have entered is invalid. The value will be unset." | verify-true
+}
+get-window "Invalid Number" | get-button OK | click
+
+get-editor "Player Jonas" | get-editbox -after [get-label "Number Of Victories"] | set-text gzfghjcjhcxhjf
+with [get-window "Invalid Number"] {
+    get-property title | equals "Invalid Number" | verify-true
+    get-label "The Number you have entered is invalid. The value will be unset." | get-property caption 
+        | equals "The Number you have entered is invalid. The value will be unset." | verify-true
+}
+get-window "Invalid Number" | get-button OK | click
+
+get-editor "Player Jonas" | get-editbox -after [get-label "Number Of Victories"] | get-property text | equals 2147483647 
+    | verify-true
+
+
+get-editor "Player Jonas" | close
+with [get-view "Model Explorer" | get-tree] {
+    select "TestProject \\[trunk, Version 0\\]/League America" | double-click
+    select "TestProject \\[trunk, Version 0\\]/League America/Player Jonas" | double-click
+}
+get-editor "Player Jonas" | get-editbox -after [get-label "Number Of Victories"] | get-property text | equals 2147483647 
+    | verify-true
+    get-view "Model Explorer" | get-tree | select "TestProjectSecondCheckOut \\[trunk, Version 0\\]/League America/Player Maximilian" 
+    | double-click
+with [get-editor "Player Maximilian"] {
+    get-editbox -after [get-label "Number Of Victories"] | set-text 100000
+    close
+}
+get-view "Model Explorer" | get-tree | select "TestProjectSecondCheckOut \\[trunk, Version 0\\]" | get-menu Commit | click
+with [get-window Commit] {
+    get-editbox -after [get-label "Log message:"] | set-text Int
+    get-button OK | click
+}
+get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]/League America/Player Maximilian" | double-click
+get-editor "Player Maximilian" | get-editbox -after [get-label "Number Of Victories"] | get-property text | equals 0 
+    | verify-true
+get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]" | get-menu Update | click
+get-window Update | get-button OK | click
+get-editor "Player Maximilian" | get-editbox -after [get-label "Number Of Victories"] | get-property text 
+    | equals 100000 | verify-true
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

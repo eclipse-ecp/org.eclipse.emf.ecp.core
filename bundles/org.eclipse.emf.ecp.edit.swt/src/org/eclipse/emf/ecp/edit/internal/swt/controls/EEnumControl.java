@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
@@ -16,6 +16,8 @@ import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
+import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
+import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.viewers.ViewersObservables;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
@@ -28,10 +30,11 @@ import org.eclipse.swt.widgets.Control;
  * This class defines a Control which is used for displaying {@link org.eclipse.emf.ecore.EStructuralFeature
  * EStructuralFeature}s which have a enum
  * value.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
+@Deprecated
 public class EEnumControl extends SingleControl {
 
 	private ComboViewer combo;
@@ -66,7 +69,9 @@ public class EEnumControl extends SingleControl {
 	@Override
 	public Binding bindValue() {
 		final IObservableValue target = ViewersObservables.observeSingleSelection(combo);
-		return getDataBindingContext().bindValue(target, getModelValue());
+		final Binding bindValue = getDataBindingContext().bindValue(target, getModelValue());
+		getDataBindingContext().bindValue(SWTObservables.observeTooltipText(combo.getControl()), getModelValue());
+		return bindValue;
 	}
 
 	/*
@@ -75,7 +80,8 @@ public class EEnumControl extends SingleControl {
 	 */
 	@Override
 	protected String getUnsetLabelText() {
-		return ControlMessages.EEnumControl_NoValueSetClickToSetValue;
+		return LocalizationServiceHelper.getString(getClass(),
+			DepricatedControlMessageKeys.EEnumControl_NoValueSetClickToSetValue);
 	}
 
 	/*
@@ -84,7 +90,7 @@ public class EEnumControl extends SingleControl {
 	 */
 	@Override
 	protected String getUnsetButtonTooltip() {
-		return ControlMessages.EEnumControl_UnsetValue;
+		return LocalizationServiceHelper.getString(getClass(), DepricatedControlMessageKeys.EEnumControl_UnsetValue);
 	}
 
 	/*
@@ -99,7 +105,7 @@ public class EEnumControl extends SingleControl {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.controls.SingleControl#updateValidationColor(org.eclipse.swt.graphics.Color)
 	 */
 	@Override

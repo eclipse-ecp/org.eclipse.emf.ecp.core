@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  *******************************************************************************/
 
 package org.eclipse.emf.ecp.emfstore.internal.ui.decorator;
@@ -23,7 +23,6 @@ import org.eclipse.emf.emfstore.client.ESServer;
 import org.eclipse.emf.emfstore.client.ESUsersession;
 import org.eclipse.emf.emfstore.client.observer.ESLoginObserver;
 import org.eclipse.emf.emfstore.client.observer.ESLogoutObserver;
-import org.eclipse.emf.emfstore.internal.client.model.impl.api.ESServerImpl;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ILightweightLabelDecorator;
@@ -34,7 +33,7 @@ import org.eclipse.swt.widgets.Display;
 /**
  * Decorates the label of a {@link org.eclipse.emf.emfstore.internal.client.model.ServerInfo} object according to its
  * login state.
- * 
+ *
  * @author Eugen Neufeld
  * @see ILightweightLabelDecorator
  */
@@ -44,6 +43,7 @@ public class RepositoryViewLabelDecorator extends LabelProvider implements ILigh
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void decorate(Object element, IDecoration decoration) {
 		if (element instanceof ECPRepository) {
 			final InternalRepository repository = (InternalRepository) element;
@@ -52,10 +52,10 @@ public class RepositoryViewLabelDecorator extends LabelProvider implements ILigh
 			if (provider != null && EMFStoreProvider.NAME.equalsIgnoreCase(provider.getName())) {
 				final ESServer server = EMFStoreProvider.INSTANCE.getServerInfo(repository);
 				if (server.getLastUsersession() != null && server.getLastUsersession().isLoggedIn()) {
-					decoration.addOverlay(Activator.getImageDescriptor("icons/bullet_green.png"),
+					decoration.addOverlay(Activator.getImageDescriptor("icons/bullet_green.png"), //$NON-NLS-1$
 						IDecoration.BOTTOM_RIGHT);
 				} else {
-					decoration.addOverlay(Activator.getImageDescriptor("icons/bullet_delete.png"),
+					decoration.addOverlay(Activator.getImageDescriptor("icons/bullet_delete.png"), //$NON-NLS-1$
 						IDecoration.BOTTOM_RIGHT);
 				}
 			}
@@ -64,7 +64,7 @@ public class RepositoryViewLabelDecorator extends LabelProvider implements ILigh
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.jface.viewers.BaseLabelProvider#addListener(org.eclipse.jface.viewers.ILabelProviderListener)
 	 */
 	@Override
@@ -73,7 +73,7 @@ public class RepositoryViewLabelDecorator extends LabelProvider implements ILigh
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.jface.viewers.BaseLabelProvider#dispose()
 	 */
 	@Override
@@ -90,7 +90,7 @@ public class RepositoryViewLabelDecorator extends LabelProvider implements ILigh
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.jface.viewers.BaseLabelProvider#removeListener(org.eclipse.jface.viewers.ILabelProviderListener)
 	 */
 	@Override
@@ -100,6 +100,7 @@ public class RepositoryViewLabelDecorator extends LabelProvider implements ILigh
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void loginCompleted(ESUsersession session) {
 		update(session);
 	}
@@ -107,6 +108,7 @@ public class RepositoryViewLabelDecorator extends LabelProvider implements ILigh
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void logoutCompleted(ESUsersession session) {
 		update(session);
 	}
@@ -114,6 +116,7 @@ public class RepositoryViewLabelDecorator extends LabelProvider implements ILigh
 	private void update(final ESUsersession usersession) {
 
 		Display.getDefault().asyncExec(new Runnable() {
+			@Override
 			public void run() {
 				// TODO cast
 				fireLabelProviderChanged(new LabelProviderChangedEvent(RepositoryViewLabelDecorator.this,
@@ -121,8 +124,8 @@ public class RepositoryViewLabelDecorator extends LabelProvider implements ILigh
 					// EMFStoreProvider.INSTANCE.getRepository(((ESServerImpl) usersession.getServer())
 					// .toInternalAPI())));
 					((EMFStoreProvider) ECPUtil.getResolvedElement(ECPUtil.getECPProviderRegistry()
-						.getProvider(EMFStoreProvider.NAME))).getRepository(((ESServerImpl) usersession.getServer())
-						.toInternalAPI())));
+						.getProvider(EMFStoreProvider.NAME))).getRepository(usersession.getServer()
+						)));
 			}
 		});
 	}

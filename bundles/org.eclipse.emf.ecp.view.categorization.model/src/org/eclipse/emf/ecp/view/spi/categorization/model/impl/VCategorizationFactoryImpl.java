@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
  */
@@ -27,7 +27,7 @@ import org.eclipse.emf.ecp.view.spi.categorization.model.VCategory;
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Factory</b>.
  * <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class VCategorizationFactoryImpl extends EFactoryImpl implements VCategorizationFactory
@@ -36,20 +36,20 @@ public class VCategorizationFactoryImpl extends EFactoryImpl implements VCategor
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public static VCategorizationFactory init()
 	{
 		try
 		{
-			VCategorizationFactory theCategorizationFactory = (VCategorizationFactory) EPackage.Registry.INSTANCE
+			final VCategorizationFactory theCategorizationFactory = (VCategorizationFactory) EPackage.Registry.INSTANCE
 				.getEFactory(VCategorizationPackage.eNS_URI);
 			if (theCategorizationFactory != null)
 			{
 				return theCategorizationFactory;
 			}
-		} catch (Exception exception)
+		} catch (final Exception exception)
 		{
 			EcorePlugin.INSTANCE.log(exception);
 		}
@@ -60,7 +60,7 @@ public class VCategorizationFactoryImpl extends EFactoryImpl implements VCategor
 	 * Creates an instance of the factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public VCategorizationFactoryImpl()
@@ -71,7 +71,7 @@ public class VCategorizationFactoryImpl extends EFactoryImpl implements VCategor
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -95,57 +95,62 @@ public class VCategorizationFactoryImpl extends EFactoryImpl implements VCategor
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public VCategorization createCategorization()
 	{
-		VCategorizationImpl categorization = new VCategorizationImpl();
+		final VCategorizationImpl categorization = new VCategorizationImpl();
 		return categorization;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public VCategory createCategory()
 	{
-		VCategoryImpl category = new VCategoryImpl();
+		final VCategoryImpl category = new VCategoryImpl();
 		return category;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public VAction createAction()
 	{
-		VActionImpl action = new VActionImpl();
+		final VActionImpl action = new VActionImpl();
 		return action;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public VCategorizationElement createCategorizationElement()
 	{
-		VCategorizationElementImpl categorizationElement = new VCategorizationElementImpl();
+		final VCategorizationElementImpl categorizationElement = new VCategorizationElementImpl();
 		return categorizationElement;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public VCategorizationPackage getCategorizationPackage()
 	{
 		return (VCategorizationPackage) getEPackage();
@@ -154,7 +159,7 @@ public class VCategorizationFactoryImpl extends EFactoryImpl implements VCategor
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @deprecated
 	 * @generated
 	 */

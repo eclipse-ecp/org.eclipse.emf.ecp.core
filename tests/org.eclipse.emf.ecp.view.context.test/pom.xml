@@ -4,14 +4,14 @@
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-    <groupId>org.eclipse.emf.ecp</groupId>
-    <artifactId>ecp-parent</artifactId>
-    <version>1.1.1-SNAPSHOT</version>
-    <relativePath>../../releng/org.eclipse.emf.ecp.releng/</relativePath>
-  </parent>
+		<groupId>org.eclipse.emf.ecp</groupId>
+		<artifactId>ecp-tests-parent</artifactId>
+		<version>1.7.0-SNAPSHOT</version>
+		<relativePath>../../releng/org.eclipse.emf.ecp.releng.tests/</relativePath>
+	</parent>
 	<groupId>org.eclipse.emf.ecp</groupId>
 	<artifactId>org.eclipse.emf.ecp.view.context.test</artifactId>
-	<version>1.1.1-SNAPSHOT</version>
+	<version>1.7.0-SNAPSHOT</version>
 	<packaging>eclipse-test-plugin</packaging>
 
 	<build>
@@ -19,32 +19,22 @@
 		<plugins>
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>tycho-surefire-plugin</artifactId>
-				<version>${tycho-version}</version>
+				<artifactId>target-platform-configuration</artifactId>
 				<configuration>
-				<testFailureIgnore>true</testFailureIgnore>
-					<dependencies>
-						<dependency>
-							<type>eclipse-feature</type>
-							<artifactId>org.eclipse.emf.ecp.target.feature</artifactId>
-							<version>0.0.0</version>
-						</dependency>
-						<dependency>
-							<type>eclipse-feature</type>
-							<artifactId>org.eclipse.emf.ecp.viewmodel.feature</artifactId>
-							<version>0.0.0</version>
-						</dependency>
-						<dependency>
-							<type>eclipse-feature</type>
-							<artifactId>org.eclipse.emf.ecp.feature</artifactId>
-							<version>0.0.0</version>
-						</dependency>
-						<dependency>
-							<type>eclipse-feature</type>
-							<artifactId>org.eclipse.emf.emfstore.example.feature</artifactId>
-							<version>0.0.0</version>
-						</dependency>
-					</dependencies>
+					<dependency-resolution>
+						<extraRequirements>
+							<requirement>
+								<type>eclipse-feature</type>
+								<id>org.eclipse.emf.ecp.viewmodel.feature</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+							<requirement>
+								<type>eclipse-feature</type>
+								<id>org.eclipse.emf.ecp.target.feature</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+						</extraRequirements>
+					</dependency-resolution>
 				</configuration>
 			</plugin>
 		</plugins>

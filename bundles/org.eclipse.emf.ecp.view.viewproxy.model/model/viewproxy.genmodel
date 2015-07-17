@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.&#xD;&#xA;&#xD;&#xA;All rights reserved. This program and the accompanying materials&#xD;&#xA;are made available under the terms of the Eclipse Public License v1.0&#xD;&#xA;which accompanies this distribution, and is available at&#xD;&#xA;http://www.eclipse.org/legal/epl-v10.html&#xD;&#xA;&#xD;&#xA;Contributors:&#xD;&#xA;Johannes Faltermeier - initial API and implementation"
+    modelDirectory="/org.eclipse.emf.ecp.view.viewproxy.model/src" modelPluginID="org.eclipse.emf.ecp.view.viewproxy.model"
+    modelName="Viewproxy" editPluginClass="org.eclipse.emf.ecp.view.viewproxy.model.provider.ViewproxyEditPlugin"
+    editorPluginClass="org.eclipse.emf.ecp.view.viewproxy.model.presentation.ViewproxyEditorPlugin"
+    nonNLSMarkers="true" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    codeFormatting="true" commentFormatting="true" testSuiteClass="org.eclipse.emf.ecp.view.viewproxy.model.tests.ViewproxyAllTests"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="6.0" copyrightFields="false"
+    runtimeVersion="2.7" usedGenPackages="../../org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model"
+    interfaceNamePattern="V{0}" classNamePattern="V{0}Impl" importOrganizing="true">
+  <foreignModel>viewproxy.ecore</foreignModel>
+  <genPackages prefix="Viewproxy" basePackage="org.eclipse.emf.ecp.view.spi" disposableProviderFactory="true"
+      interfacePackageSuffix="model" metaDataPackageSuffix="model" classPackageSuffix="model.impl"
+      utilityPackageSuffix="model.util" providerPackageSuffix="model.provider" presentationPackageSuffix="model.presentation"
+      testsPackageSuffix="model.tests" extensibleProviderFactory="true" childCreationExtenders="true"
+      ecorePackage="viewproxy.ecore#/">
+    <genClasses ecoreClass="viewproxy.ecore#//ViewProxy">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute viewproxy.ecore#//ViewProxy/bundleName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute viewproxy.ecore#//ViewProxy/filePath"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference viewproxy.ecore#//ViewProxy/domainModelReference"/>
+    </genClasses>
+    <genClasses ecoreClass="viewproxy.ecore#//ProxyDomainModelReference">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference viewproxy.ecore#//ProxyDomainModelReference/proxyDomainModelReference"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference viewproxy.ecore#//ProxyDomainModelReference/viewDomainModelReference"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

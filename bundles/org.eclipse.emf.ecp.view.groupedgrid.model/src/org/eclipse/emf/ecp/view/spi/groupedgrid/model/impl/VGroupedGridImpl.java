@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
@@ -34,8 +34,9 @@ import org.eclipse.emf.ecp.view.spi.model.impl.VContainedElementImpl;
  * <li>{@link org.eclipse.emf.ecp.view.spi.groupedgrid.model.impl.VGroupedGridImpl#getGroups <em>Groups</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
+ * @since 1.2
  */
 public class VGroupedGridImpl extends VContainedElementImpl implements VGroupedGrid
 {
@@ -43,7 +44,7 @@ public class VGroupedGridImpl extends VContainedElementImpl implements VGroupedG
 	 * The cached value of the '{@link #getGroups() <em>Groups</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getGroups()
 	 * @generated
 	 * @ordered
@@ -53,7 +54,7 @@ public class VGroupedGridImpl extends VContainedElementImpl implements VGroupedG
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected VGroupedGridImpl()
@@ -64,7 +65,7 @@ public class VGroupedGridImpl extends VContainedElementImpl implements VGroupedG
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -76,9 +77,10 @@ public class VGroupedGridImpl extends VContainedElementImpl implements VGroupedG
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public EList<VGroup> getGroups()
 	{
 		if (groups == null)
@@ -91,7 +93,7 @@ public class VGroupedGridImpl extends VContainedElementImpl implements VGroupedG
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -108,7 +110,7 @@ public class VGroupedGridImpl extends VContainedElementImpl implements VGroupedG
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -125,7 +127,7 @@ public class VGroupedGridImpl extends VContainedElementImpl implements VGroupedG
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -145,7 +147,7 @@ public class VGroupedGridImpl extends VContainedElementImpl implements VGroupedG
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -163,7 +165,7 @@ public class VGroupedGridImpl extends VContainedElementImpl implements VGroupedG
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override

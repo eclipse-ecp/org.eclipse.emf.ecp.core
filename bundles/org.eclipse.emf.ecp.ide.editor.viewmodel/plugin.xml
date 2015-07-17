@@ -4,7 +4,22 @@
    <extension
          point="org.eclipse.emf.ecp.view.model.provider.xmi.file">
       <file
-            filePath="view.viewmodel">
+            filePath="viewmodel/view.viewmodel">
+      </file>
+      <file
+            filePath="viewmodel/group.view">
+      </file>
+      <file
+            filePath="viewmodel/control.view">
+      </file>
+      <file
+            filePath="viewmodel/TableControl.view">
+      </file>
+      <file
+            filePath="viewmodel/MappingDomainModelReference.view">
+      </file>
+      <file
+            filePath="viewmodel/TableDomainModelReference.view">
       </file>
    </extension>
 

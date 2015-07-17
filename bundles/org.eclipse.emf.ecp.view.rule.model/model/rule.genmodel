@@ -15,6 +15,7 @@
     <genClasses ecoreClass="rule.ecore#//LeafCondition">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rule.ecore#//LeafCondition/expectedValue"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rule.ecore#//LeafCondition/domainModelReference"/>
+      <genFeatures property="None" children="true" createChild="false" ecoreFeature="ecore:EReference rule.ecore#//LeafCondition/valueDomainModelReference"/>
     </genClasses>
     <genClasses ecoreClass="rule.ecore#//OrCondition">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rule.ecore#//OrCondition/conditions"/>

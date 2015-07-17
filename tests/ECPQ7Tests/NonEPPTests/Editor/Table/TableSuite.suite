@@ -1,0 +1,35 @@
+--- Q7 testcase ---
+Format-Version: 1.0
+Q7-vendor: www.xored.com/q7
+Element-Name: TableSuite
+Element-Type: testsuite
+Element-Version: 2.0
+Id: __Gg_AIpgEeK80-dAVHg-DA
+Q7-Runtime-Version: 1.3.11.201403141124
+Save-Time: 6/20/14 3:55 PM
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
+Content-Type: text/testcase
+Entry-Name: testcase-items
+
+_zSJeQIpOEeK80-dAVHg-DA	// kind: 'test' name: 'SetDouble' path: 'SetDouble.test'
+_Mr1VQYpNEeK80-dAVHg-DA	// kind: 'test' name: 'SetString' path: 'SetString.test'
+_b_DD0IpREeK80-dAVHg-DA	// kind: 'test' name: 'SetEMail' path: 'SetEMail.test'
+_ObfJcIpXEeK80-dAVHg-DA	// kind: 'test' name: 'DeleteRows' path: 'DeleteRows.test'
+_cga1EIpdEeK80-dAVHg-DA	// kind: 'test' name: 'SetMultiRef' path: 'SetMultiRef.test'
+_X66MEIf4EeKpyoBptqEfAg	// kind: 'test' name: 'SetInt' path: 'SetInt.test'
+_bYjBUIpNEeK80-dAVHg-DA	// kind: 'test' name: 'SetDate' path: 'SetDate.test'
+_IWxDYIpWEeK80-dAVHg-DA	// kind: 'test' name: 'DeleteRow' path: 'DeleteRow.test'
+_GLHKgIpeEeK80-dAVHg-DA	// kind: 'test' name: 'AddRowAndSetBigInt' path: 'AddRowAndSetBigInt.test'
+_amLggIpeEeK80-dAVHg-DA	// kind: 'test' name: 'SetBigDecimal' path: 'SetBigDecimal.test'
+_aJUTcIpgEeK80-dAVHg-DA	// kind: 'test' name: 'ValidateBigDecimal' path: 'ValidateBigDecimal.test'
+_GW5PoIpREeK80-dAVHg-DA	// kind: 'test' name: 'SetBoolean' path: 'SetBoolean.test'
+_kms5UIpVEeK80-dAVHg-DA	// kind: 'test' name: 'AddRow' path: 'AddRow.test'
+_Uv2qIEYKEeOmh5SOkeuFtw	// kind: 'test' name: 'SetBigInteger' path: 'SetBigInteger.test'
+_s2yJMDsaEeOSoJrMKArUHA	// kind: 'test' name: 'SetEnum' path: 'SetEnum.test'
+_S2QsofiCEeOywJv-3eEoIg	// kind: 'test' name: 'DetailEditing' path: 'DetailEditing.test'
+_oawGcUYVEeO347zZ7X5NJw	// kind: 'test' name: 'ReadOnlyTable' path: 'ReadOnlyTable.test'
+_ud-CkEYUEeOmh5SOkeuFtw	// kind: 'test' name: 'MaxBoundReference' path: 'MaxBoundReference.test'
+_gvAuUEYLEeOmh5SOkeuFtw	// kind: 'test' name: 'MinBoundReference' path: 'MinBoundReference.test'
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--

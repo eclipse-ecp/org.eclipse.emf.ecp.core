@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.explorereditorbridge.internal;
 
@@ -28,19 +28,20 @@ import org.eclipse.emf.ecp.spi.core.InternalProject;
 
 /**
  * An EditorContext depending on an {@link ECPProject}.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public class EditorContext implements ECPEditorContext {
 
 	/**
 	 * @author Jonas
-	 * 
+	 *
 	 */
 	private final class IECPProjectsChangedUIObserverImplementation implements ECPProjectsChangedObserver,
 		ECPProjectOpenClosedObserver, ECPProjectContentTouchedObserver {
 		/** {@inheritDoc} */
+		@Override
 		public void projectsChanged(Collection<ECPProject> oldProjects, Collection<ECPProject> newProjects) {
 			// TODO Auto-generated method stub
 			if (!newProjects.contains(ecpProject)) {
@@ -52,6 +53,7 @@ public class EditorContext implements ECPEditorContext {
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public void projectChanged(ECPProject project, boolean opened) {
 			if (!opened) {
 				for (final ECPContextDisposedListener contextListener : contextListeners) {
@@ -62,6 +64,7 @@ public class EditorContext implements ECPEditorContext {
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public void contentTouched(ECPProject project, Collection<Object> objects, boolean structural) {
 			// if we have a structural change (otherwise nothing should be closed), and the change is in our project
 			// and our model element is no longer contained
@@ -85,7 +88,7 @@ public class EditorContext implements ECPEditorContext {
 
 	/**
 	 * Default constructor.
-	 * 
+	 *
 	 * @param modelElement the model element to be displayed in the editor
 	 * @param ecpProject the {@link ECPProject} containing the model element
 	 */
@@ -97,6 +100,7 @@ public class EditorContext implements ECPEditorContext {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void addECPContextDisposeListener(ECPContextDisposedListener modelElementContextListener) {
 		contextListeners.add(modelElementContextListener);
 	}
@@ -104,6 +108,7 @@ public class EditorContext implements ECPEditorContext {
 	/**
 	 * Dispose the context.
 	 */
+	@Override
 	public void dispose() {
 		ECPUtil.getECPObserverBus().unregister(projectObserver);
 		contextListeners.clear();
@@ -111,9 +116,10 @@ public class EditorContext implements ECPEditorContext {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.editor.e3.ECPEditorContext#getDomainObject()
 	 */
+	@Override
 	public EObject getDomainObject() {
 		return modelElement;
 	}

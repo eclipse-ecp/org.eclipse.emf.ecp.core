@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.emf.ecp.view.validation.bean.feature"
+      label="Bean Validation Feature"
+      version="1.7.0.qualifier"
+      provider-name="Eclipse Modeling Project"
+      plugin="org.eclipse.emf.ecp.view.validation.bean"
+      image="eclipse_update_120.jpg"
+      license-feature="org.eclipse.emf.ecp.license.feature"
+      license-feature-version="1.7.0.qualifier">
+
+   <description>
+      %description
+   </description>
+
+   <copyright url="%copyrightURL">
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <plugin
+         id="org.eclipse.emf.ecp.view.validation.bean"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.ecp.view.validation.bean.default"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

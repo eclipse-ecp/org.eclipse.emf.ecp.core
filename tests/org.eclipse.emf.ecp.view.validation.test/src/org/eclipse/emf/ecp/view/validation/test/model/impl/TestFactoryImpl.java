@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  *******************************************************************************/
@@ -23,11 +23,14 @@ import org.eclipse.emf.ecp.view.validation.test.model.Librarian;
 import org.eclipse.emf.ecp.view.validation.test.model.Library;
 import org.eclipse.emf.ecp.view.validation.test.model.Mainboard;
 import org.eclipse.emf.ecp.view.validation.test.model.PowerBlock;
+import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild;
+import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild2;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithValidation;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithoutValidation;
 import org.eclipse.emf.ecp.view.validation.test.model.TableWithMultiplicity;
 import org.eclipse.emf.ecp.view.validation.test.model.TableWithUnique;
 import org.eclipse.emf.ecp.view.validation.test.model.TableWithoutMultiplicity;
+import org.eclipse.emf.ecp.view.validation.test.model.TableWithoutMultiplicityConcrete;
 import org.eclipse.emf.ecp.view.validation.test.model.TestFactory;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
 import org.eclipse.emf.ecp.view.validation.test.model.Writer;
@@ -36,7 +39,7 @@ import org.eclipse.emf.ecp.view.validation.test.model.Writer;
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Factory</b>.
  * <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
@@ -44,16 +47,17 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public static TestFactory init() {
 		try {
-			TestFactory theTestFactory = (TestFactory) EPackage.Registry.INSTANCE.getEFactory(TestPackage.eNS_URI);
+			final TestFactory theTestFactory = (TestFactory) EPackage.Registry.INSTANCE
+				.getEFactory(TestPackage.eNS_URI);
 			if (theTestFactory != null) {
 				return theTestFactory;
 			}
-		} catch (Exception exception) {
+		} catch (final Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new TestFactoryImpl();
@@ -63,7 +67,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	 * Creates an instance of the factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public TestFactoryImpl() {
@@ -73,7 +77,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -107,6 +111,12 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 			return createTableWithoutMultiplicity();
 		case TestPackage.TABLE_WITH_UNIQUE:
 			return createTableWithUnique();
+		case TestPackage.TABLE_CONTENT_WITH_INNER_CHILD2:
+			return createTableContentWithInnerChild2();
+		case TestPackage.TABLE_CONTENT_WITH_INNER_CHILD:
+			return createTableContentWithInnerChild();
+		case TestPackage.TABLE_WITHOUT_MULTIPLICITY_CONCRETE:
+			return createTableWithoutMultiplicityConcrete();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -115,163 +125,214 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public Library createLibrary() {
-		LibraryImpl library = new LibraryImpl();
+		final LibraryImpl library = new LibraryImpl();
 		return library;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public Writer createWriter() {
-		WriterImpl writer = new WriterImpl();
+		final WriterImpl writer = new WriterImpl();
 		return writer;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public Book createBook() {
-		BookImpl book = new BookImpl();
+		final BookImpl book = new BookImpl();
 		return book;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public Librarian createLibrarian() {
-		LibrarianImpl librarian = new LibrarianImpl();
+		final LibrarianImpl librarian = new LibrarianImpl();
 		return librarian;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public Computer createComputer() {
-		ComputerImpl computer = new ComputerImpl();
+		final ComputerImpl computer = new ComputerImpl();
 		return computer;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public Mainboard createMainboard() {
-		MainboardImpl mainboard = new MainboardImpl();
+		final MainboardImpl mainboard = new MainboardImpl();
 		return mainboard;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public PowerBlock createPowerBlock() {
-		PowerBlockImpl powerBlock = new PowerBlockImpl();
+		final PowerBlockImpl powerBlock = new PowerBlockImpl();
 		return powerBlock;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public org.eclipse.emf.ecp.view.validation.test.model.Container createContainer() {
-		ContainerImpl container = new ContainerImpl();
+		final ContainerImpl container = new ContainerImpl();
 		return container;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public Content createContent() {
-		ContentImpl content = new ContentImpl();
+		final ContentImpl content = new ContentImpl();
 		return content;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public TableWithMultiplicity createTableWithMultiplicity() {
-		TableWithMultiplicityImpl tableWithMultiplicity = new TableWithMultiplicityImpl();
+		final TableWithMultiplicityImpl tableWithMultiplicity = new TableWithMultiplicityImpl();
 		return tableWithMultiplicity;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public TableContentWithoutValidation createTableContentWithoutValidation() {
-		TableContentWithoutValidationImpl tableContentWithoutValidation = new TableContentWithoutValidationImpl();
+		final TableContentWithoutValidationImpl tableContentWithoutValidation = new TableContentWithoutValidationImpl();
 		return tableContentWithoutValidation;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public TableContentWithValidation createTableContentWithValidation() {
-		TableContentWithValidationImpl tableContentWithValidation = new TableContentWithValidationImpl();
+		final TableContentWithValidationImpl tableContentWithValidation = new TableContentWithValidationImpl();
 		return tableContentWithValidation;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public TableWithoutMultiplicity createTableWithoutMultiplicity() {
-		TableWithoutMultiplicityImpl tableWithoutMultiplicity = new TableWithoutMultiplicityImpl();
+		final TableWithoutMultiplicityImpl tableWithoutMultiplicity = new TableWithoutMultiplicityImpl();
 		return tableWithoutMultiplicity;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public TableWithUnique createTableWithUnique() {
-		TableWithUniqueImpl tableWithUnique = new TableWithUniqueImpl();
+		final TableWithUniqueImpl tableWithUnique = new TableWithUniqueImpl();
 		return tableWithUnique;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
+	public TableContentWithInnerChild2 createTableContentWithInnerChild2() {
+		final TableContentWithInnerChild2Impl tableContentWithInnerChild2 = new TableContentWithInnerChild2Impl();
+		return tableContentWithInnerChild2;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public TableContentWithInnerChild createTableContentWithInnerChild() {
+		final TableContentWithInnerChildImpl tableContentWithInnerChild = new TableContentWithInnerChildImpl();
+		return tableContentWithInnerChild;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public TableWithoutMultiplicityConcrete createTableWithoutMultiplicityConcrete() {
+		final TableWithoutMultiplicityConcreteImpl tableWithoutMultiplicityConcrete = new TableWithoutMultiplicityConcreteImpl();
+		return tableWithoutMultiplicityConcrete;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
 	public TestPackage getTestPackage() {
 		return (TestPackage) getEPackage();
 	}
@@ -279,7 +340,7 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @deprecated
 	 * @generated
 	 */

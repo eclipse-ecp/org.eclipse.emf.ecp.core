@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+   <extension-point id="renderers" name="org.eclipse.emf.ecp.view.model.common.di.renderers" schema="schema/renderers.exsd"/>
+   <extension
+         point="org.eclipse.emf.ecp.view.context.viewServices">
+      <viewService
+            class="org.eclipse.emf.ecp.view.model.common.di.service.impl.EclipseContextViewServiceImpl">
+      </viewService>
+   </extension>
+
+</plugin>

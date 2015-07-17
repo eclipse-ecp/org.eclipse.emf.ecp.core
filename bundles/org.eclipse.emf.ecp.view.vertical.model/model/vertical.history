@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:history="http://www.eclipse.org/emf/edapt/history/0.3">
+  <releases date="2014-10-16T15:50:58.239+0200" label="140">
+    <changes xsi:type="history:CompositeChange">
+      <changes xsi:type="history:Create" element="vertical.ecore#/">
+        <changes xsi:type="history:Set" element="vertical.ecore#/" featureName="name"
+            dataValue="vertical"/>
+        <changes xsi:type="history:Set" element="vertical.ecore#/" featureName="nsURI"
+            dataValue="http://org/eclipse/emf/ecp/view/vertical/model"/>
+        <changes xsi:type="history:Set" element="vertical.ecore#/" featureName="nsPrefix"
+            dataValue="org.eclipse.emf.ecp.view.vertical.model"/>
+      </changes>
+      <changes xsi:type="history:Create" target="vertical.ecore#/" referenceName="eClassifiers"
+          element="vertical.ecore#//VerticalLayout">
+        <changes xsi:type="history:Set" element="vertical.ecore#//VerticalLayout"
+            featureName="name" dataValue="VerticalLayout"/>
+        <changes xsi:type="history:Add" element="vertical.ecore#//VerticalLayout"
+            featureName="eSuperTypes" referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//ContainedContainer"/>
+      </changes>
+    </changes>
+  </releases>
+  <releases/>
+</history:History>

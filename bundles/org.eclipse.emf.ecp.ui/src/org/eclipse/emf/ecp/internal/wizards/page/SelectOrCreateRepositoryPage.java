@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  *******************************************************************************/
 
 package org.eclipse.emf.ecp.internal.wizards.page;
@@ -32,7 +32,7 @@ public class SelectOrCreateRepositoryPage extends WizardPage {
 
 	/**
 	 * A WizardPage allowing the user to choose whether to use an existing repository or to create a new one.
-	 * 
+	 *
 	 * @param pageName the name of the wizard page, needed due to the {@link WizardPage} constructor
 	 */
 	public SelectOrCreateRepositoryPage(String pageName) {
@@ -44,6 +44,7 @@ public class SelectOrCreateRepositoryPage extends WizardPage {
 	private boolean createNewRepository;
 
 	/** {@inheritDoc} */
+	@Override
 	public void createControl(Composite parent) {
 		final Composite container = new Composite(parent, SWT.NULL);
 		container.setLayout(new GridLayout(1, true));
@@ -52,11 +53,13 @@ public class SelectOrCreateRepositoryPage extends WizardPage {
 		bCreateNewRepository.setText(Messages.SelectOrCreateRepositoryPage_CreateNewRepository);
 		bCreateNewRepository.addSelectionListener(new SelectionListener() {
 
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				createNewRepository = true;
 				((ShareWizard) getWizard()).setUseExistingRepository(false);
 			}
 
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				widgetSelected(e);
 			}
@@ -67,11 +70,13 @@ public class SelectOrCreateRepositoryPage extends WizardPage {
 		bSelectRepository.setText(Messages.SelectOrCreateRepositoryPage_SelectExistingRepository);
 		bSelectRepository.addSelectionListener(new SelectionListener() {
 
+			@Override
 			public void widgetSelected(SelectionEvent e) {
 				createNewRepository = false;
 				((ShareWizard) getWizard()).setUseExistingRepository(true);
 			}
 
+			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
 				widgetSelected(e);
 			}

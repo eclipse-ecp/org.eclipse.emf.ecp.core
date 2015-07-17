@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
@@ -27,8 +27,9 @@ import org.eclipse.emf.ecp.view.spi.groupedgrid.model.VSpan;
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Factory</b>.
  * <!-- end-user-doc -->
- * 
+ *
  * @generated
+ * @since 1.2
  */
 public class VGroupedGridFactoryImpl extends EFactoryImpl implements VGroupedGridFactory
 {
@@ -36,20 +37,20 @@ public class VGroupedGridFactoryImpl extends EFactoryImpl implements VGroupedGri
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public static VGroupedGridFactory init()
 	{
 		try
 		{
-			VGroupedGridFactory theGroupedGridFactory = (VGroupedGridFactory) EPackage.Registry.INSTANCE
+			final VGroupedGridFactory theGroupedGridFactory = (VGroupedGridFactory) EPackage.Registry.INSTANCE
 				.getEFactory(VGroupedGridPackage.eNS_URI);
 			if (theGroupedGridFactory != null)
 			{
 				return theGroupedGridFactory;
 			}
-		} catch (Exception exception)
+		} catch (final Exception exception)
 		{
 			EcorePlugin.INSTANCE.log(exception);
 		}
@@ -60,7 +61,7 @@ public class VGroupedGridFactoryImpl extends EFactoryImpl implements VGroupedGri
 	 * Creates an instance of the factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public VGroupedGridFactoryImpl()
@@ -71,7 +72,7 @@ public class VGroupedGridFactoryImpl extends EFactoryImpl implements VGroupedGri
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -95,57 +96,62 @@ public class VGroupedGridFactoryImpl extends EFactoryImpl implements VGroupedGri
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public VGroupedGrid createGroupedGrid()
 	{
-		VGroupedGridImpl groupedGrid = new VGroupedGridImpl();
+		final VGroupedGridImpl groupedGrid = new VGroupedGridImpl();
 		return groupedGrid;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public VGroup createGroup()
 	{
-		VGroupImpl group = new VGroupImpl();
+		final VGroupImpl group = new VGroupImpl();
 		return group;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public VRow createRow()
 	{
-		VRowImpl row = new VRowImpl();
+		final VRowImpl row = new VRowImpl();
 		return row;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public VSpan createSpan()
 	{
-		VSpanImpl span = new VSpanImpl();
+		final VSpanImpl span = new VSpanImpl();
 		return span;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public VGroupedGridPackage getGroupedGridPackage()
 	{
 		return (VGroupedGridPackage) getEPackage();
@@ -154,7 +160,7 @@ public class VGroupedGridFactoryImpl extends EFactoryImpl implements VGroupedGri
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @deprecated
 	 * @generated
 	 */

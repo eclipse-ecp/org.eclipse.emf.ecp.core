@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -22,8 +22,10 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
-import org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester;
+import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor;
+import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditorTester;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.widgets.Composite;
@@ -53,7 +55,7 @@ public final class CellEditorFactory {
 				final String id = e.getAttribute(ID);
 				final String clazz = e.getAttribute(CLASS_ATTRIBUTE);
 				final Class<? extends CellEditor> resolvedClass = loadClass(e.getContributor().getName(), clazz);
-				final ECPApplicableTester tester = (ECPApplicableTester) e.createExecutableExtension(TESTER);
+				final ECPCellEditorTester tester = (ECPCellEditorTester) e.createExecutableExtension(TESTER);
 				descriptors.add(new CellDescriptor(id, resolvedClass, tester));
 			} catch (final ClassNotFoundException e1) {
 				Activator.logException(e1);
@@ -67,9 +69,12 @@ public final class CellEditorFactory {
 	private static <T> Class<T> loadClass(String bundleName, String clazz) throws ClassNotFoundException {
 		final Bundle bundle = Platform.getBundle(bundleName);
 		if (bundle == null) {
-			throw new ClassNotFoundException(clazz + UtilMessages.CellEditorFactory_CannotBeLoadedBecauseBundle
+			throw new ClassNotFoundException(clazz
+				+ LocalizationServiceHelper.getString(CellEditorFactory.class,
+					UtilMessageKeys.CellEditorFactory_CannotBeLoadedBecauseBundle)
 				+ bundleName
-				+ UtilMessages.CellEditorFactory_CannotBeResolved);
+				+ LocalizationServiceHelper.getString(CellEditorFactory.class,
+					UtilMessageKeys.CellEditorFactory_CannotBeResolved));
 		}
 		return (Class<T>) bundle.loadClass(clazz);
 
@@ -80,7 +85,7 @@ public final class CellEditorFactory {
 		int bestPriority = -1;
 		CellDescriptor bestCandidate = null;
 		for (final CellDescriptor descriptor : descriptors) {
-			final int priority = descriptor.getTester().isApplicable(eObject, eStructuralFeature);
+			final int priority = descriptor.getTester().isApplicable(eObject, eStructuralFeature, viewModelContext);
 			if (priority > bestPriority) {
 				bestCandidate = descriptor;
 				bestPriority = priority;
@@ -120,9 +125,9 @@ public final class CellEditorFactory {
 	private class CellDescriptor {
 		private final String id;
 		private final Class<? extends CellEditor> cellEditorClass;
-		private final ECPApplicableTester tester;
+		private final ECPCellEditorTester tester;
 
-		CellDescriptor(String id, Class<? extends CellEditor> cellEditorClass, ECPApplicableTester tester) {
+		CellDescriptor(String id, Class<? extends CellEditor> cellEditorClass, ECPCellEditorTester tester) {
 			super();
 			this.id = id;
 			this.cellEditorClass = cellEditorClass;
@@ -137,7 +142,7 @@ public final class CellEditorFactory {
 			return cellEditorClass;
 		}
 
-		ECPApplicableTester getTester() {
+		ECPCellEditorTester getTester() {
 			return tester;
 		}
 	}

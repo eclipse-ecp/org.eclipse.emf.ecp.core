@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich GmbH - initial API and implementation
  ******************************************************************************/
@@ -27,8 +27,9 @@ import org.eclipse.emf.ecp.view.spi.rule.model.ShowRule;
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Factory</b>.
- * <!-- end-user-doc -->
- * 
+ *
+ * @since 1.2
+ *        <!-- end-user-doc -->
  * @generated
  */
 public class RuleFactoryImpl extends EFactoryImpl implements RuleFactory {
@@ -36,18 +37,19 @@ public class RuleFactoryImpl extends EFactoryImpl implements RuleFactory {
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public static RuleFactory init() {
 		try
 		{
-			RuleFactory theRuleFactory = (RuleFactory) EPackage.Registry.INSTANCE.getEFactory(RulePackage.eNS_URI);
+			final RuleFactory theRuleFactory = (RuleFactory) EPackage.Registry.INSTANCE
+				.getEFactory(RulePackage.eNS_URI);
 			if (theRuleFactory != null)
 			{
 				return theRuleFactory;
 			}
-		} catch (Exception exception)
+		} catch (final Exception exception)
 		{
 			EcorePlugin.INSTANCE.log(exception);
 		}
@@ -58,7 +60,7 @@ public class RuleFactoryImpl extends EFactoryImpl implements RuleFactory {
 	 * Creates an instance of the factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public RuleFactoryImpl() {
@@ -68,7 +70,7 @@ public class RuleFactoryImpl extends EFactoryImpl implements RuleFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -93,64 +95,70 @@ public class RuleFactoryImpl extends EFactoryImpl implements RuleFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public LeafCondition createLeafCondition() {
-		LeafConditionImpl leafCondition = new LeafConditionImpl();
+		final LeafConditionImpl leafCondition = new LeafConditionImpl();
 		return leafCondition;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public OrCondition createOrCondition() {
-		OrConditionImpl orCondition = new OrConditionImpl();
+		final OrConditionImpl orCondition = new OrConditionImpl();
 		return orCondition;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public AndCondition createAndCondition() {
-		AndConditionImpl andCondition = new AndConditionImpl();
+		final AndConditionImpl andCondition = new AndConditionImpl();
 		return andCondition;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public ShowRule createShowRule() {
-		ShowRuleImpl showRule = new ShowRuleImpl();
+		final ShowRuleImpl showRule = new ShowRuleImpl();
 		return showRule;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public EnableRule createEnableRule() {
-		EnableRuleImpl enableRule = new EnableRuleImpl();
+		final EnableRuleImpl enableRule = new EnableRuleImpl();
 		return enableRule;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public RulePackage getRulePackage() {
 		return (RulePackage) getEPackage();
 	}
@@ -158,7 +166,7 @@ public class RuleFactoryImpl extends EFactoryImpl implements RuleFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @deprecated
 	 * @generated
 	 */

@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
@@ -27,7 +27,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * 
+ *
  * @see org.eclipse.emf.ecp.view.treemasterdetail.model.VTreeMasterDetailFactory
  * @model kind="package"
  * @generated
@@ -38,16 +38,16 @@ public interface VTreeMasterDetailPackage extends EPackage
 	 * The package name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
-	String eNAME = "model"; //$NON-NLS-1$
+	String eNAME = "treemasterdetail"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace URI.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNS_URI = "http://org/eclipse/emf/ecp/view/treemasterview/model"; //$NON-NLS-1$
@@ -56,7 +56,7 @@ public interface VTreeMasterDetailPackage extends EPackage
 	 * The package namespace name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	String eNS_PREFIX = "org.eclipse.emf.ecp.view.treemasterview.model"; //$NON-NLS-1$
@@ -65,7 +65,7 @@ public interface VTreeMasterDetailPackage extends EPackage
 	 * The singleton instance of the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	VTreeMasterDetailPackage eINSTANCE = org.eclipse.emf.ecp.view.treemasterdetail.model.impl.VTreeMasterDetailPackageImpl
@@ -76,7 +76,7 @@ public interface VTreeMasterDetailPackage extends EPackage
 	 * <em>Tree Master Detail</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.treemasterdetail.model.impl.VTreeMasterDetailImpl
 	 * @see org.eclipse.emf.ecp.view.treemasterdetail.model.impl.VTreeMasterDetailPackageImpl#getTreeMasterDetail()
 	 * @generated
@@ -87,7 +87,7 @@ public interface VTreeMasterDetailPackage extends EPackage
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -97,7 +97,7 @@ public interface VTreeMasterDetailPackage extends EPackage
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -107,7 +107,7 @@ public interface VTreeMasterDetailPackage extends EPackage
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -117,7 +117,7 @@ public interface VTreeMasterDetailPackage extends EPackage
 	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -127,7 +127,7 @@ public interface VTreeMasterDetailPackage extends EPackage
 	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -137,7 +137,7 @@ public interface VTreeMasterDetailPackage extends EPackage
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -147,7 +147,7 @@ public interface VTreeMasterDetailPackage extends EPackage
 	 * The feature id for the '<em><b>Detail View</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -157,7 +157,7 @@ public interface VTreeMasterDetailPackage extends EPackage
 	 * The number of structural features of the '<em>Tree Master Detail</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -168,7 +168,7 @@ public interface VTreeMasterDetailPackage extends EPackage
 	 * <em>Tree Master Detail</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for class '<em>Tree Master Detail</em>'.
 	 * @see org.eclipse.emf.ecp.view.treemasterdetail.model.VTreeMasterDetail
 	 * @generated
@@ -180,7 +180,7 @@ public interface VTreeMasterDetailPackage extends EPackage
 	 * {@link org.eclipse.emf.ecp.view.treemasterdetail.model.VTreeMasterDetail#getDetailView <em>Detail View</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the meta object for the containment reference '<em>Detail View</em>'.
 	 * @see org.eclipse.emf.ecp.view.treemasterdetail.model.VTreeMasterDetail#getDetailView()
 	 * @see #getTreeMasterDetail()
@@ -192,7 +192,7 @@ public interface VTreeMasterDetailPackage extends EPackage
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the factory that creates the instances of the model.
 	 * @generated
 	 */
@@ -208,7 +208,7 @@ public interface VTreeMasterDetailPackage extends EPackage
 	 * <li>and each data type</li>
 	 * </ul>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	interface Literals
@@ -219,7 +219,7 @@ public interface VTreeMasterDetailPackage extends EPackage
 		 * <em>Tree Master Detail</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.treemasterdetail.model.impl.VTreeMasterDetailImpl
 		 * @see org.eclipse.emf.ecp.view.treemasterdetail.model.impl.VTreeMasterDetailPackageImpl#getTreeMasterDetail()
 		 * @generated
@@ -230,7 +230,7 @@ public interface VTreeMasterDetailPackage extends EPackage
 		 * The meta object literal for the '<em><b>Detail View</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * 
+		 *
 		 * @generated
 		 */
 		EReference TREE_MASTER_DETAIL__DETAIL_VIEW = eINSTANCE.getTreeMasterDetail_DetailView();

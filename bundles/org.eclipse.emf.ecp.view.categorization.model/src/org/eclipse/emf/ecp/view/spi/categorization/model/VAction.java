@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
  */
@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Action</b></em>'.
  * <!-- end-user-doc -->
- * 
+ *
  * <p>
  * The following features are supported:
  * <ul>
@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.EObject;
  * <li>{@link org.eclipse.emf.ecp.view.spi.categorization.model.VAction#getClassName <em>Class Name</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage#getAction()
  * @model
  * @generated
@@ -40,7 +40,7 @@ public interface VAction extends EObject
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Bundle</em>' attribute.
 	 * @see #setBundle(String)
 	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage#getAction_Bundle()
@@ -54,7 +54,7 @@ public interface VAction extends EObject
 	 * <em>Bundle</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Bundle</em>' attribute.
 	 * @see #getBundle()
 	 * @generated
@@ -69,7 +69,7 @@ public interface VAction extends EObject
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Class Name</em>' attribute.
 	 * @see #setClassName(String)
 	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage#getAction_ClassName()
@@ -83,7 +83,7 @@ public interface VAction extends EObject
 	 * <em>Class Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Class Name</em>' attribute.
 	 * @see #getClassName()
 	 * @generated

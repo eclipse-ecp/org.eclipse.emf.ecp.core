@@ -111,4 +111,17 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="content" upperBound="-1"
         eType="#//TableContent" containment="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TableContentWithInnerChild2" eSuperTypes="#//TableContent">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="innerChild" eType="#//TableContent"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TableContentWithInnerChild" eSuperTypes="#//TableContent">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="innerChild" eType="#//TableContent"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="stuff" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TableWithoutMultiplicityConcrete">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="content" upperBound="-1"
+        eType="#//TableContentWithInnerChild" containment="true"/>
+  </eClassifiers>
 </ecore:EPackage>

@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.ui.platform;
 
@@ -20,12 +20,8 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.emf.ecp.internal.ui.util.ECPHandlerHelper;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.IWorkbenchListener;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -39,7 +35,7 @@ public class Activator extends AbstractUIPlugin {
 
 	// The shared instance
 	private static Activator instance;
-	
+
 	/**
 	 * The constructor.
 	 */
@@ -51,25 +47,15 @@ public class Activator extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		instance = this;
-		
-		PlatformUI.getWorkbench().addWorkbenchListener(new IWorkbenchListener() {
 
-			public boolean preShutdown(IWorkbench workbench, boolean forced) {
-				
-				return ECPHandlerHelper.showDirtyProjectsDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell());
-			}
-
-			public void postShutdown(IWorkbench workbench) {
-				// do nothing
-			}
-		});
 	}
-	
+
 	@Override
 	public void stop(BundleContext context) throws Exception {
 		instance = null;
 		super.stop(context);
 	}
+
 	// END SUPRESS CATCH EXCEPTION
 	/**
 	 * Returns the shared instance.
@@ -79,9 +65,10 @@ public class Activator extends AbstractUIPlugin {
 	public static Activator getDefault() {
 		return instance;
 	}
+
 	/**
 	 * Logs messages.
-	 * 
+	 *
 	 * @param message the message
 	 */
 	public static void log(String message) {
@@ -90,13 +77,13 @@ public class Activator extends AbstractUIPlugin {
 
 	/**
 	 * Logs messages and {@link Throwable}.
-	 * 
+	 *
 	 * @param message the message
 	 * @param t the throwable
 	 */
 	public static void log(String message, Throwable t) {
 		if (t instanceof CoreException) {
-			CoreException coreException = (CoreException) t;
+			final CoreException coreException = (CoreException) t;
 			instance.getLog().log(coreException.getStatus());
 		} else {
 			instance.getLog().log(new Status(IStatus.ERROR, PLUGIN_ID, message, t));
@@ -105,7 +92,7 @@ public class Activator extends AbstractUIPlugin {
 
 	/**
 	 * Logs {@link IStatus}.
-	 * 
+	 *
 	 * @param status the {@link IStatus}
 	 */
 	public static void log(IStatus status) {
@@ -114,25 +101,25 @@ public class Activator extends AbstractUIPlugin {
 
 	/**
 	 * Logs {@link Throwable}.
-	 * 
+	 *
 	 * @param t the {@link Throwable}
 	 * @return the message of the created status
 	 */
 	public static String log(Throwable t) {
-		IStatus status = getStatus(t);
+		final IStatus status = getStatus(t);
 		log(status);
 		return status.getMessage();
 	}
 
 	/**
 	 * Gets a {@link IStatus} for a throwable.
-	 * 
+	 *
 	 * @param t the {@link Throwable}
 	 * @return the created {@link IStatus}
 	 */
 	public static IStatus getStatus(Throwable t) {
 		if (t instanceof CoreException) {
-			CoreException coreException = (CoreException) t;
+			final CoreException coreException = (CoreException) t;
 			return coreException.getStatus();
 		}
 
@@ -146,7 +133,7 @@ public class Activator extends AbstractUIPlugin {
 
 	/**
 	 * Returns an {@link ImageDescriptor} for a path.
-	 * 
+	 *
 	 * @param path the path to an image
 	 * @return the {@link ImageDescriptor}
 	 */
@@ -161,7 +148,7 @@ public class Activator extends AbstractUIPlugin {
 
 	/**
 	 * Gets an {@link Image} for a path.
-	 * 
+	 *
 	 * @param path the path to an image
 	 * @return the image
 	 */
@@ -174,7 +161,7 @@ public class Activator extends AbstractUIPlugin {
 	}
 
 	private static Image loadImage(String path) {
-		ImageDescriptor id = loadImageDescriptor(path);
+		final ImageDescriptor id = loadImageDescriptor(path);
 		if (id == null) {
 			return null;
 		}
@@ -183,11 +170,11 @@ public class Activator extends AbstractUIPlugin {
 	}
 
 	private static ImageDescriptor loadImageDescriptor(String path) {
-		URL url = FileLocator.find(Platform.getBundle(PLUGIN_ID), new Path(path), null);
+		final URL url = FileLocator.find(Platform.getBundle(PLUGIN_ID), new Path(path), null);
 		if (url == null) {
 			return null;
 		}
-		ImageDescriptor imageDescriptor = ImageDescriptor.createFromURL(url);
+		final ImageDescriptor imageDescriptor = ImageDescriptor.createFromURL(url);
 		getDefault().getImageRegistry().put(path, imageDescriptor);
 		return imageDescriptor;
 	}

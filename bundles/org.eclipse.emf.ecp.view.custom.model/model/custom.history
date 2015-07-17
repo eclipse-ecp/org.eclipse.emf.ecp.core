@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:history="http://www.eclipse.org/emf/edapt/history/0.3">
+  <releases date="2014-08-28T11:28:34.429+0200" label="140">
+    <changes xsi:type="history:CompositeChange">
+      <changes xsi:type="history:Create" element="custom.ecore#/">
+        <changes xsi:type="history:Set" element="custom.ecore#/" featureName="name"
+            dataValue="custom"/>
+        <changes xsi:type="history:Set" element="custom.ecore#/" featureName="nsURI"
+            dataValue="http://org/eclipse/emf/ecp/view/custom/model"/>
+        <changes xsi:type="history:Set" element="custom.ecore#/" featureName="nsPrefix"
+            dataValue="org.eclipse.emf.ecp.view.custom.model"/>
+      </changes>
+      <changes xsi:type="history:Create" target="custom.ecore#/" referenceName="eClassifiers"
+          element="custom.ecore#//CustomControl">
+        <changes xsi:type="history:Set" element="custom.ecore#//CustomControl" featureName="name"
+            dataValue="CustomControl"/>
+        <changes xsi:type="history:Add" element="custom.ecore#//CustomControl" featureName="eSuperTypes"
+            referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//Control"/>
+      </changes>
+      <changes xsi:type="history:Create" target="custom.ecore#//CustomControl" referenceName="eStructuralFeatures"
+          element="custom.ecore#//CustomControl/bundleName">
+        <changes xsi:type="history:Set" element="custom.ecore#//CustomControl/bundleName"
+            featureName="name" dataValue="bundleName"/>
+        <changes xsi:type="history:Set" element="custom.ecore#//CustomControl/bundleName"
+            featureName="lowerBound" dataValue="1" oldDataValue="0"/>
+        <changes xsi:type="history:Set" element="custom.ecore#//CustomControl/bundleName"
+            featureName="eType" referenceValue="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </changes>
+      <changes xsi:type="history:Create" target="custom.ecore#//CustomControl" referenceName="eStructuralFeatures"
+          element="custom.ecore#//CustomControl/className">
+        <changes xsi:type="history:Set" element="custom.ecore#//CustomControl/className"
+            featureName="name" dataValue="className"/>
+        <changes xsi:type="history:Set" element="custom.ecore#//CustomControl/className"
+            featureName="lowerBound" dataValue="1" oldDataValue="0"/>
+        <changes xsi:type="history:Set" element="custom.ecore#//CustomControl/className"
+            featureName="eType" referenceValue="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </changes>
+      <changes xsi:type="history:Create" target="custom.ecore#/" referenceName="eClassifiers"
+          element="custom.ecore#//CustomDomainModelReference">
+        <changes xsi:type="history:Set" element="custom.ecore#//CustomDomainModelReference"
+            featureName="name" dataValue="CustomDomainModelReference"/>
+        <changes xsi:type="history:Add" element="custom.ecore#//CustomDomainModelReference"
+            featureName="eSuperTypes" referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"/>
+      </changes>
+      <changes xsi:type="history:Create" target="custom.ecore#//CustomDomainModelReference"
+          referenceName="eStructuralFeatures" element="custom.ecore#//CustomDomainModelReference/domainModelReferences">
+        <changes xsi:type="history:Set" element="custom.ecore#//CustomDomainModelReference/domainModelReferences"
+            featureName="name" dataValue="domainModelReferences"/>
+        <changes xsi:type="history:Set" element="custom.ecore#//CustomDomainModelReference/domainModelReferences"
+            featureName="upperBound" dataValue="-1" oldDataValue="1"/>
+        <changes xsi:type="history:Set" element="custom.ecore#//CustomDomainModelReference/domainModelReferences"
+            featureName="containment" dataValue="true" oldDataValue="false"/>
+        <changes xsi:type="history:Set" element="custom.ecore#//CustomDomainModelReference/domainModelReferences"
+            featureName="eType" referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"/>
+      </changes>
+      <changes xsi:type="history:Create" target="custom.ecore#//CustomDomainModelReference"
+          referenceName="eStructuralFeatures" element="custom.ecore#//CustomDomainModelReference/bundleName">
+        <changes xsi:type="history:Set" element="custom.ecore#//CustomDomainModelReference/bundleName"
+            featureName="name" dataValue="bundleName"/>
+        <changes xsi:type="history:Set" element="custom.ecore#//CustomDomainModelReference/bundleName"
+            featureName="lowerBound" dataValue="1" oldDataValue="0"/>
+        <changes xsi:type="history:Set" element="custom.ecore#//CustomDomainModelReference/bundleName"
+            featureName="eType" referenceValue="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </changes>
+      <changes xsi:type="history:Create" target="custom.ecore#//CustomDomainModelReference"
+          referenceName="eStructuralFeatures" element="custom.ecore#//CustomDomainModelReference/className">
+        <changes xsi:type="history:Set" element="custom.ecore#//CustomDomainModelReference/className"
+            featureName="name" dataValue="className"/>
+        <changes xsi:type="history:Set" element="custom.ecore#//CustomDomainModelReference/className"
+            featureName="lowerBound" dataValue="1" oldDataValue="0"/>
+        <changes xsi:type="history:Set" element="custom.ecore#//CustomDomainModelReference/className"
+            featureName="eType" referenceValue="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </changes>
+      <changes xsi:type="history:Create" target="custom.ecore#//CustomDomainModelReference"
+          referenceName="eStructuralFeatures" element="custom.ecore#//CustomDomainModelReference/controlChecked">
+        <changes xsi:type="history:Set" element="custom.ecore#//CustomDomainModelReference/controlChecked"
+            featureName="name" dataValue="controlChecked"/>
+        <changes xsi:type="history:Set" element="custom.ecore#//CustomDomainModelReference/controlChecked"
+            featureName="lowerBound" dataValue="1" oldDataValue="0"/>
+        <changes xsi:type="history:Set" element="custom.ecore#//CustomDomainModelReference/controlChecked"
+            featureName="transient" dataValue="true" oldDataValue="false"/>
+        <changes xsi:type="history:Set" element="custom.ecore#//CustomDomainModelReference/controlChecked"
+            featureName="defaultValueLiteral" dataValue="false"/>
+        <changes xsi:type="history:Set" element="custom.ecore#//CustomDomainModelReference/controlChecked"
+            featureName="eType" referenceValue="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      </changes>
+    </changes>
+  </releases>
+  <releases/>
+</history:History>

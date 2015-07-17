@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Edgar Mueller - initial API and implementation
  */
@@ -21,7 +21,8 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DomainIntermediate#getTestElementContainer <em>Test Element Container</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DomainIntermediate#getTestElementContainer <em>Test Element
+ * Container</em>}</li>
  * </ul>
  * </p>
  *
@@ -39,6 +40,7 @@ public interface DomainIntermediate extends EObject
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 *
 	 * @return the value of the '<em>Test Element Container</em>' containment reference.
 	 * @see #setTestElementContainer(TestElementContainer)
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage#getDomainIntermediate_TestElementContainer()
@@ -48,9 +50,12 @@ public interface DomainIntermediate extends EObject
 	TestElementContainer getTestElementContainer();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.dynamictree.model.DomainIntermediate#getTestElementContainer <em>Test Element Container</em>}' containment reference.
+	 * Sets the value of the '
+	 * {@link org.eclipse.emf.ecp.view.dynamictree.model.DomainIntermediate#getTestElementContainer
+	 * <em>Test Element Container</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @param value the new value of the '<em>Test Element Container</em>' containment reference.
 	 * @see #getTestElementContainer()
 	 * @generated

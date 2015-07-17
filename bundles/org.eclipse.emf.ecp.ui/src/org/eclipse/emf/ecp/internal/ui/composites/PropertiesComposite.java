@@ -1,11 +1,11 @@
 /********************************************************************************
  * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
  ********************************************************************************/
@@ -23,6 +23,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.ViewerSorter;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -57,13 +58,13 @@ public class PropertiesComposite extends Composite {
 		table.setHeaderVisible(true);
 		table.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 
-		TableViewerColumn tableViewerColumn = new TableViewerColumn(tableViewer, SWT.NONE);
-		TableColumn tblclmnNewColumn = tableViewerColumn.getColumn();
+		final TableViewerColumn tableViewerColumn = new TableViewerColumn(tableViewer, SWT.NONE);
+		final TableColumn tblclmnNewColumn = tableViewerColumn.getColumn();
 		tblclmnNewColumn.setWidth(122);
 		tblclmnNewColumn.setText(Messages.PropertiesComposite_TableColumnName_Key);
 
-		TableViewerColumn tableViewerColumn1 = new TableViewerColumn(tableViewer, SWT.NONE);
-		TableColumn tableColumn1 = tableViewerColumn1.getColumn();
+		final TableViewerColumn tableViewerColumn1 = new TableViewerColumn(tableViewer, SWT.NONE);
+		final TableColumn tableColumn1 = tableViewerColumn1.getColumn();
 		tableColumn1.setWidth(314);
 		tableColumn1.setText(Messages.PropertiesComposite_TableColumnName_Value);
 
@@ -73,62 +74,69 @@ public class PropertiesComposite extends Composite {
 		tableViewer.setInput(properties);
 
 		if (editable) {
-			Composite buttonBar = new Composite(this, SWT.NONE);
-			GridLayout gridLayoutButtonBar = new GridLayout(3, false);
+			final Composite buttonBar = new Composite(this, SWT.NONE);
+			final GridLayout gridLayoutButtonBar = new GridLayout(3, false);
 			gridLayoutButtonBar.marginWidth = 0;
 			gridLayoutButtonBar.marginHeight = 0;
 			buttonBar.setLayout(gridLayoutButtonBar);
 
-			Button addButton = new Button(buttonBar, SWT.NONE);
+			final Button addButton = new Button(buttonBar, SWT.NONE);
 			addButton.setText(Messages.PropertiesComposite_AddProperty);
 			addButton.addSelectionListener(new SelectionListener() {
+				@Override
 				public void widgetSelected(SelectionEvent e) {
-					PropertyDialog dialog = new PropertyDialog(table.getShell());
-					if (dialog.open() == PropertyDialog.OK) {
-						String key = dialog.getKey();
-						String value = dialog.getValue();
+					final PropertyDialog dialog = new PropertyDialog(table.getShell());
+					if (dialog.open() == Window.OK) {
+						final String key = dialog.getKey();
+						final String value = dialog.getValue();
 						properties.addProperty(key, value);
 					}
 				}
 
+				@Override
 				public void widgetDefaultSelected(SelectionEvent e) {
 					widgetSelected(e);
 				}
 			});
 
-			Button editButton = new Button(buttonBar, SWT.NONE);
+			final Button editButton = new Button(buttonBar, SWT.NONE);
 			editButton.setText(Messages.PropertiesComposite_EditProperty);
 			editButton.addSelectionListener(new SelectionListener() {
+				@Override
 				public void widgetSelected(SelectionEvent e) {
-					IStructuredSelection selection = (IStructuredSelection) tableViewer.getSelection();
+					final IStructuredSelection selection = (IStructuredSelection) tableViewer.getSelection();
 
 					@SuppressWarnings("unchecked")
-					Map.Entry<String, String> property = (Entry<String, String>) selection.getFirstElement();
+					final Map.Entry<String, String> property = (Entry<String, String>) selection.getFirstElement();
 
-					PropertyDialog dialog = new PropertyDialog(table.getShell(), false, property.getKey(), property
-						.getValue());
-					if (dialog.open() == PropertyDialog.OK) {
+					final PropertyDialog dialog = new PropertyDialog(table.getShell(), false, property.getKey(),
+						property
+							.getValue());
+					if (dialog.open() == Window.OK) {
 						properties.addProperty(dialog.getKey(), dialog.getValue());
 					}
 				}
 
+				@Override
 				public void widgetDefaultSelected(SelectionEvent e) {
 					// Do nothing
 				}
 			});
 
-			Button removeButton = new Button(buttonBar, SWT.NONE);
+			final Button removeButton = new Button(buttonBar, SWT.NONE);
 			removeButton.setText(Messages.PropertiesComposite_RemoveProperty);
 			removeButton.addSelectionListener(new SelectionListener() {
+				@Override
 				public void widgetSelected(SelectionEvent e) {
-					IStructuredSelection selection = (IStructuredSelection) tableViewer.getSelection();
+					final IStructuredSelection selection = (IStructuredSelection) tableViewer.getSelection();
 
 					@SuppressWarnings("unchecked")
-					Map.Entry<String, String> property = (Entry<String, String>) selection.getFirstElement();
+					final Map.Entry<String, String> property = (Entry<String, String>) selection.getFirstElement();
 
 					properties.removeProperty(property.getKey());
 				}
 
+				@Override
 				public void widgetDefaultSelected(SelectionEvent e) {
 					// Do nothing
 				}

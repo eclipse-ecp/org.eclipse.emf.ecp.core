@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Shterev - initial API and implementation
- * 
+ *
  *******************************************************************************/
 
 package org.eclipse.emf.ecp.edit.internal.swt.util;
@@ -22,7 +22,7 @@ import org.eclipse.swt.graphics.Point;
 /**
  * Allows one image descriptor to be overlayed on another image descriptor to generate a new image. Commonly used to
  * decorate an image with a second image decoration.
- * 
+ *
  * @author Shterev
  */
 public class OverlayImageDescriptor extends CompositeImageDescriptor {
@@ -57,7 +57,7 @@ public class OverlayImageDescriptor extends CompositeImageDescriptor {
 
 	/**
 	 * OverlayImageDescriptor constructor.
-	 * 
+	 *
 	 * @param srcImage the base image
 	 * @param overlayDesc the overlay image
 	 * @param overlayPos the overlay position
@@ -71,7 +71,7 @@ public class OverlayImageDescriptor extends CompositeImageDescriptor {
 
 	/**
 	 * OverlayImageDescriptor constructor.
-	 * 
+	 *
 	 * @param backgroundData the base ImageData
 	 * @param overlayDesc the overlay image
 	 * @param overlayPos the overlay position
@@ -85,7 +85,7 @@ public class OverlayImageDescriptor extends CompositeImageDescriptor {
 
 	/**
 	 * Draws the given source image data into this composite image at the given position.
-	 * 
+	 *
 	 * @param width the width of the image.
 	 * @param height the height of the image.
 	 * @see org.eclipse.jface.resource.CompositeImageDescriptor#drawCompositeImage(int, int)
@@ -124,7 +124,7 @@ public class OverlayImageDescriptor extends CompositeImageDescriptor {
 
 	/**
 	 * Retrieve the size of this composite image.
-	 * 
+	 *
 	 * @return the x and y size of the image expressed as a point object
 	 * @see org.eclipse.jface.resource.CompositeImageDescriptor#getSize()
 	 */

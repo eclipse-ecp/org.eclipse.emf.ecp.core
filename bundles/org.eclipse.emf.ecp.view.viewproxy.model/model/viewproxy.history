@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:history="http://www.eclipse.org/emf/edapt/history/0.3">
+  <releases date="2014-09-12T13:19:43.549+0200" label="140">
+    <changes xsi:type="history:CompositeChange">
+      <changes xsi:type="history:Create" element="viewproxy.ecore#/">
+        <changes xsi:type="history:Set" element="viewproxy.ecore#/" featureName="name"
+            dataValue="viewproxy"/>
+        <changes xsi:type="history:Set" element="viewproxy.ecore#/" featureName="nsURI"
+            dataValue="http://org/eclipse/emf/ecp/view/viewproxy/model"/>
+        <changes xsi:type="history:Set" element="viewproxy.ecore#/" featureName="nsPrefix"
+            dataValue="org.eclipse.emf.ecp.view.viewproxy.model"/>
+      </changes>
+      <changes xsi:type="history:Create" target="viewproxy.ecore#/" referenceName="eClassifiers"
+          element="viewproxy.ecore#//ViewProxy">
+        <changes xsi:type="history:Set" element="viewproxy.ecore#//ViewProxy" featureName="name"
+            dataValue="ViewProxy"/>
+        <changes xsi:type="history:Add" element="viewproxy.ecore#//ViewProxy" featureName="eSuperTypes"
+            referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//ContainedElement"/>
+      </changes>
+      <changes xsi:type="history:Create" target="viewproxy.ecore#//ViewProxy" referenceName="eStructuralFeatures"
+          element="viewproxy.ecore#//ViewProxy/id">
+        <changes xsi:type="history:Set" element="viewproxy.ecore#//ViewProxy/id" featureName="name"
+            dataValue="id"/>
+        <changes xsi:type="history:Set" element="viewproxy.ecore#//ViewProxy/id" featureName="lowerBound"
+            dataValue="1" oldDataValue="0"/>
+        <changes xsi:type="history:Set" element="viewproxy.ecore#//ViewProxy/id" featureName="eType"
+            referenceValue="../../org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+      </changes>
+    </changes>
+  </releases>
+  <releases/>
+</history:History>

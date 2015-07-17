@@ -2,19 +2,17 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ECP Eclipse 3.x Integration
 Bundle-SymbolicName: org.eclipse.emf.ecp.ui.e3;singleton:=true
-Bundle-Version: 1.1.1.qualifier
+Bundle-Version: 1.7.0.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.ui.platform.Activator
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
- org.eclipse.emf.ecp.ui;bundle-version="[1.1.0,2.0.0)",
+ org.eclipse.emf.ecp.ui;bundle-version="[1.5.0,2.0.0)",
  org.eclipse.core.expressions;bundle-version="[3.4.0,4.0.0)",
- org.eclipse.rap.rwt.supplemental.filedialog;bundle-version="2.0.0";resolution:=optional,
- org.eclipse.rap.rwt;bundle-version="2.1.0";resolution:=optional,
- org.eclipse.swt;bundle-version="[3.1.0,4.0.0)";resolution:=optional,
- org.eclipse.emf.ecp.core;bundle-version="[1.1.0,2.0.0)"
+ org.eclipse.emf.ecp.core;bundle-version="[1.5.0,2.0.0)",
+ org.eclipse.emf.ecp.common.ui;bundle-version="[1.5.0,2.0.0)"
 Bundle-ActivationPolicy: lazy
 Bundle-Localization: OSGI-INF/l10n/bundle
 Eclipse-ExtensibleAPI: true
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.eclipse.core.commands;version="0.0.0",
  org.eclipse.emf.edit.ui.provider;version="0.0.0",
  org.eclipse.jface.action;version="0.0.0",
@@ -23,18 +21,22 @@ Import-Package: org.eclipse.core.commands;version="0.0.0",
  org.eclipse.jface.viewers;version="0.0.0",
  org.eclipse.jface.window;version="0.0.0",
  org.eclipse.jface.wizard;version="0.0.0",
+ org.eclipse.swt;version="0.0.0",
+ org.eclipse.swt.events;version="0.0.0",
+ org.eclipse.swt.graphics;version="0.0.0",
+ org.eclipse.swt.widgets;version="0.0.0",
  org.eclipse.ui;ui.workbench=split;version="0.0.0",
  org.eclipse.ui.dialogs;ui.workbench=split;version="0.0.0",
  org.eclipse.ui.handlers;version="0.0.0",
  org.eclipse.ui.part;ui.workbench=split;version="0.0.0",
  org.eclipse.ui.plugin;version="0.0.0",
  org.eclipse.ui.services;version="0.0.0"
-Export-Package: org.eclipse.emf.ecp.ui;version="1.1.0";x-internal:=true,
- org.eclipse.emf.ecp.ui.actions;version="1.1.0";x-internal:=true,
- org.eclipse.emf.ecp.ui.commands;version="1.1.0";x-internal:=true,
- org.eclipse.emf.ecp.ui.linkedView;version="1.1.0";x-internal:=true,
- org.eclipse.emf.ecp.ui.perspective;version="1.1.0";x-internal:=true,
- org.eclipse.emf.ecp.ui.platform;version="1.1.0";x-friends:="org.eclipse.emf.ecp.emfstore.ui",
- org.eclipse.emf.ecp.ui.tester;version="1.1.0";x-internal:=true,
- org.eclipse.emf.ecp.ui.views;version="1.1.0";x-internal:=true
+Export-Package: org.eclipse.emf.ecp.ui.actions;version="1.7.0";x-internal:="true",
+ org.eclipse.emf.ecp.ui.commands;version="1.7.0";x-internal:="true",
+ org.eclipse.emf.ecp.ui.e3;version="1.7.0";x-internal:="true",
+ org.eclipse.emf.ecp.ui.linkedView;version="1.7.0";x-internal:="true",
+ org.eclipse.emf.ecp.ui.perspective;version="1.7.0";x-internal:="true",
+ org.eclipse.emf.ecp.ui.platform;version="1.7.0";x-friends:="org.eclipse.emf.ecp.emfstore.ui",
+ org.eclipse.emf.ecp.ui.tester;version="1.7.0";x-internal:="true",
+ org.eclipse.emf.ecp.ui.views;version="1.7.0";x-internal:="true"
 Bundle-Vendor: Eclipse Modeling Project

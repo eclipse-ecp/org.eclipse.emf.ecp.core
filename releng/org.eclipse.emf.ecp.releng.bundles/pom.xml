@@ -6,22 +6,34 @@
 	<parent>
 		<groupId>org.eclipse.emf.ecp</groupId>
 		<artifactId>ecp-parent</artifactId>
-		<version>1.1.1-SNAPSHOT</version>
+		<version>1.7.0-SNAPSHOT</version>
 		<relativePath>../../releng/org.eclipse.emf.ecp.releng/</relativePath>
 	</parent>
 	<groupId>org.eclipse.emf.ecp</groupId>
 	<artifactId>ecp-bundles-parent</artifactId>
-	<version>1.1.1-SNAPSHOT</version>
+	<version>1.7.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<modules>
+		<!-- Tooling -->
+		<module>../../bundles/org.eclipse.emf.ecp.view.model.preview.common</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.model.editor.project.installer</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.model.preview.e3</module>
+		<module>../../bundles/org.eclipse.emf.ecp.ide.util</module>
+				
 		<module>../../bundles/org.eclipse.emf.ecp.core</module>
 		<module>../../bundles/org.eclipse.emf.ecp.core.emffilter</module>
 		<module>../../bundles/org.eclipse.emf.ecp.common</module>
+		<module>../../bundles/org.eclipse.emf.ecp.common.ui</module>
 		<module>../../bundles/org.eclipse.emf.ecp.edit</module>
 		<module>../../bundles/org.eclipse.emf.ecp.edit.swt</module>
 		<module>../../bundles/org.eclipse.emf.ecp.explorereditorbridge</module>
 		<module>../../bundles/org.eclipse.emf.ecp.ui</module>
+		<module>../../bundles/org.eclipse.emf.ecp.ui.rcp</module>
+		
+		<module>../../bundles/org.eclipse.emf.ecp.core.rap</module>
+		<module>../../bundles/org.eclipse.emf.ecp.core.rap.sessionprovider.rwt</module>
+		<module>../../bundles/org.eclipse.emf.ecp.emfstore.core.rap</module>
 
 		<module>../../bundles/org.eclipse.emf.ecp.cdo.core</module>
 		<module>../../bundles/org.eclipse.emf.ecp.cdo.ui</module>
@@ -45,6 +57,7 @@
 
 		<module>../../bundles/org.eclipse.emf.ecp.view.model</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.model.edit</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.model.common</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.core.swt</module>
 		<module>../../bundles/org.eclipse.emf.ecp.ui.view</module>
 		<module>../../bundles/org.eclipse.emf.ecp.ui.view.swt</module>
@@ -52,14 +65,34 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.model.provider.xmi</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.model.generator</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.context</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.context.locale</module>
+		
+		<module>../../bundles/org.eclipse.emf.ecp.view.swt.layout</module>
+		
+		<module>../../bundles/org.eclipse.emf.ecp.view.util.swt</module>
+		
+		<module>../../bundles/org.eclipse.emf.ecp.view.control.multireference</module>
+
+		<!-- Diagnostician/Validation View -->
+		<module>../../bundles/org.eclipse.emf.ecp.diagnostician</module>
+		<module>../../bundles/org.eclipse.emf.ecp.ui.validation</module>
+		<module>../../bundles/org.eclipse.emf.ecp.ui.validation.e4</module>
+		<module>../../bundles/org.eclipse.emf.ecp.validationvieweditorbridge</module>
 
 		<!-- Ecore Support -->
 		<module>../../bundles/org.eclipse.emf.ecp.edit.ecore.swt</module>
+		
+		<!-- Ecore Wizard -->
+		<module>../../bundles/org.eclipse.emf.ecp.ecore.editor</module>
+		<module>../../bundles/org.eclipse.emf.ecp.ecore.editor.ui</module>
 
 		<!-- Editor controls -->
 		<module>../../bundles/org.eclipse.emf.ecp.ui.view.editor.controls</module>
 
 		<module>../../bundles/org.eclipse.emf.ecp.examplemodel.ui</module>
+		
+		<!-- Transaction support -->
+		<module>../../bundles/org.eclipse.emf.ecp.ui.transaction</module>
 
 		<!-- IDE Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.model.editor</module>
@@ -72,13 +105,7 @@
 		<!-- Custom Control Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.custom.model</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.custom.model.edit</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.custom.ui</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.custom.ui.swt</module>
-
-		<!-- Separator Feature -->
-		<module>../../bundles/org.eclipse.emf.ecp.view.separator.model</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.separator.model.edit</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.separator.ui.swt</module>
 
 		<!-- GroupedGrid Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.groupedgrid.model</module>
@@ -94,6 +121,10 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.group.model</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.group.model.edit</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.group.ui.swt</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.group.swt.embedded</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.group.swt.collapsable</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.group.swt.collapsible.pgroup</module>
+		
 
 		<!-- Rule Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.rule</module>
@@ -102,6 +133,8 @@
 
 		<!-- View Validation Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.validation</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.validation.bean</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.validation.bean.default</module>
 
 		<!-- View Unset Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.unset</module>
@@ -125,36 +158,129 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.model</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.model.edit</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.ui.swt</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.table.editor</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.columnservice</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.table.edapt</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.table.celleditor.rcp</module>
+		
+		<!--  Stack Feature -->
+		<module>../../bundles/org.eclipse.emf.ecp.view.stack.model</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.stack.model.edit</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.stack.ui.swt</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.stack.viewmodel</module>
 
 		<!-- Template Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.template.model</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.template.model.edit</module>
 		<!-- Template Helper Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.template.service</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.template.controls.swt</module>
 
 		<!-- IDE -->
 		<module>../../bundles/org.eclipse.emf.ecp.ide.editor.view</module>
 		<module>../../bundles/org.eclipse.emf.ecp.ide.editor.view.control</module>
 		<module>../../bundles/org.eclipse.emf.ecp.ide.editor.viewmodel</module>
 		<module>../../bundles/org.eclipse.emf.ecp.ide.view.service</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.ideconfig.model</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.ideconfig.model.edit</module>
 
 		<!-- RAP -->
 		<module>../../bundles/org.eclipse.emf.ecp.rap.util</module>
+		<module>../../bundles/org.eclipse.emf.rap.edit.ui.minimal</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.util.swt.rap</module>
+		
 		<module>../../bundles/org.eclipse.emf.ecp.rap</module>
+		
+		
+		<module>../../bundles/org.eclipse.emf.ecp.ui.rap</module>
+		
+		<module>../../bundles/org.eclipse.emf.ecp.view.label.ui.rap</module>
 
 		<!-- e4 demo application -->
 		<module>../../bundles/org.eclipse.emf.ecp.application.e4</module>
 		<module>../../bundles/org.eclipse.emf.ecp.ui.e4</module>
-		
+		<module>../../bundles/org.eclipse.emf.ecp.emfstore.ui.e4</module>
+
 		<!-- diff merge -->
 		<module>../../bundles/org.eclipse.emf.ecp.diffmerge.context</module>
 		<module>../../bundles/org.eclipse.emf.ecp.diffmerge.renderer.swt</module>
 		<module>../../bundles/org.eclipse.emf.ecp.diffmerge.swt</module>
+		<module>../../bundles/org.eclipse.emf.ecp.diffmerge.model</module>
+		<module>../../bundles/org.eclipse.emf.ecp.diffmerge.model.edit</module>
+
+		<!-- mapping dmr -->
+		<module>../../bundles/org.eclipse.emf.ecp.view.mappingdmr.tooling</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.mappingdmr.model</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.mappingdmr.model.edit</module>
+		
+		<module>../../bundles/org.eclipse.emf.ecp.view.template.tooling</module>
+		
+		<!-- DI -->
+		<module>../../bundles/org.eclipse.emf.ecp.view.model.common.di</module>
+		<module>../../bundles/org.eclipse.emf.ecp.ui.view.swt.di</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.custom.ui.swt.di</module>
+		
+		<!-- Compound Control -->
+		<module>../../bundles/org.eclipse.emf.ecp.view.compoundcontrol.model</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.compoundcontrol.model.edit</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.compoundcontrol.swt</module>
+		
+		<!--  Section -->
+		<module>../../bundles/org.eclipse.emf.ecp.view.section.model</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.section.model.edit</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.section.ui.swt</module>
+
+		<!--  View Proxy -->
+		<module>../../bundles/org.eclipse.emf.ecp.view.viewproxy.model</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.viewproxy.model.edit</module>
+		
+		<!-- Key Attribute DMR-->
+		<module>../../bundles/org.eclipse.emf.ecp.view.keyattributedmr.model</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.keyattributedmr.model.edit</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.keyattributedmr.tooling</module>
+		
+		<!-- Index Attribute DMR-->
+		<module>../../bundles/org.eclipse.emf.ecp.view.indexdmr.model</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.indexdmr.model.edit</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.indexdmr.tooling</module>
+		
+		<!-- Migration -->
+		<module>../../bundles/org.eclipse.emf.ecp.view.migrator</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.edapt</module>
+
+		<!-- Initial Validation -->
+		<module>../../bundles/org.eclipse.emf.ecp.view.table.validation</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.treemasterdetail.validation</module>
+		
+		<!-- Change Broker -->
+		<module>../../bundles/org.eclipse.emf.ecp.changebroker</module>
+		<module>../../bundles/org.eclipse.emf.ecp.changebroker.emfstore</module>
+		
+		<!-- Core Services -->
+		<module>../../bundles/org.eclipse.emfforms.common</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.databinding.featurepath</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.databinding.index</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.databinding.mapping</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.domainexpander.default</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.domainexpander.index</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.domainexpander.mapping</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.emfspecificservice</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.editsupport</module>
+		<module>../../bundles/org.eclipse.emfforms.swt.core</module>
+		<module>../../bundles/org.eclipse.emfforms.swt.core.di</module>
+		<module>../../bundles/org.eclipse.emfforms.swt.core.di.extension</module>
+		<module>../../bundles/org.eclipse.emfforms.swt.core.plugin</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.emf</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.locale.default</module>
+		
+		<!-- Localization Services -->
+		<module>../../bundles/org.eclipse.emfforms.localization</module>
+		<module>../../bundles/org.eclipse.emfforms.view.model.localization</module>
+		
+		<module>../../bundles/org.eclipse.emfforms.swt.control.text.autocomplete</module>
+		
+		<!-- Annotation attachement -->
+		<module>../../bundles/org.eclipse.emfforms.view.annotation.model</module>
+		<module>../../bundles/org.eclipse.emfforms.view.annotation.model.edit</module>
+		
+		<module>../../bundles/org.eclipse.emf.ecp.ui.view.linewrapper</module>
 	</modules>
 
 	<build>
@@ -206,6 +332,9 @@
 								</goals>
 							</execution>
 						</executions>
+						<configuration>
+							<excludeInnerJars>true</excludeInnerJars>
+						</configuration>
 					</plugin>
 					<!-- 3.b -->
 					<plugin>

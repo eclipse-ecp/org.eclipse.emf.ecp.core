@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
-    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.&#xD;&#xA;&#xD;&#xA;All rights reserved. This program and the accompanying materials&#xD;&#xA;are made available under the terms of the Eclipse Public License v1.0&#xD;&#xA;which accompanies this distribution, and is available at&#xD;&#xA;http://www.eclipse.org/legal/epl-v10.html&#xD;&#xA;&#xD;&#xA;Contributors:&#xD;&#xA;EclipseSource Munich - initial API and implementation"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.&#xD;&#xA;&#xD;&#xA;All rights reserved. This program and the accompanying materials&#xD;&#xA;are made available under the terms of the Eclipse Public License v1.0&#xD;&#xA;which accompanies this distribution, and is available at&#xD;&#xA;http://www.eclipse.org/legal/epl-v10.html&#xD;&#xA;&#xD;&#xA;Contributors:&#xD;&#xA;EclipseSource Munich - initial API and implementation"
     modelDirectory="/org.eclipse.emf.ecp.view.categorization.model/src" modelPluginID="org.eclipse.emf.ecp.view.categorization.model"
     templateDirectory="" redirection="" modelName="Categorization" modelPluginClass=""
     editPluginClass="org.eclipse.emf.ecp.view.spi.categorization.model.provider.CategorizationEditPlugin"
     nonNLSMarkers="true" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     codeFormatting="true" commentFormatting="true" importerID="org.eclipse.emf.importer.ecore"
-    complianceLevel="5.0" copyrightFields="false" usedGenPackages="../../org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model"
+    complianceLevel="6.0" copyrightFields="false" usedGenPackages="../../org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model"
     interfaceNamePattern="V{0}" classNamePattern="V{0}Impl" importOrganizing="true">
   <foreignModel>categorization.ecore</foreignModel>
   <genPackages prefix="Categorization" basePackage="org.eclipse.emf.ecp.view.spi"
@@ -14,25 +14,28 @@
       classPackageSuffix="model.impl" utilityPackageSuffix="model.util" providerPackageSuffix="model.provider"
       presentationPackageSuffix="model.presentation" extensibleProviderFactory="true"
       childCreationExtenders="true" ecorePackage="categorization.ecore#/">
-    <genClasses image="false" ecoreClass="categorization.ecore#//AbstractCategorization">
+    <genClasses image="false" ecoreClass="categorization.ecore#//AbstractCategorization"
+        labelFeature="../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model/Element/label">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference categorization.ecore#//AbstractCategorization/actions"/>
     </genClasses>
-    <genClasses ecoreClass="categorization.ecore#//Categorization">
+    <genClasses ecoreClass="categorization.ecore#//Categorization" labelFeature="../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model/Element/label">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference categorization.ecore#//Categorization/categorizations"/>
     </genClasses>
-    <genClasses ecoreClass="categorization.ecore#//Category">
+    <genClasses ecoreClass="categorization.ecore#//Category" labelFeature="../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model/Element/label">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference categorization.ecore#//Category/composite"/>
     </genClasses>
     <genClasses ecoreClass="categorization.ecore#//Action">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute categorization.ecore#//Action/bundle"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute categorization.ecore#//Action/className"/>
     </genClasses>
-    <genClasses ecoreClass="categorization.ecore#//CategorizationElement">
+    <genClasses ecoreClass="categorization.ecore#//CategorizationElement" labelFeature="../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model/Element/label">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference categorization.ecore#//CategorizationElement/categorizations"/>
       <genFeatures property="None" notify="false" createChild="false" propertySortChoices="true"
           ecoreFeature="ecore:EReference categorization.ecore#//CategorizationElement/currentSelection"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute categorization.ecore#//CategorizationElement/mainCategoryDepth"/>
     </genClasses>
-    <genClasses image="false" ecoreClass="categorization.ecore#//CategorizableElement">
+    <genClasses image="false" ecoreClass="categorization.ecore#//CategorizableElement"
+        labelFeature="../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model/Element/label">
       <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EReference categorization.ecore#//CategorizableElement/labelObject"/>
     </genClasses>
   </genPackages>

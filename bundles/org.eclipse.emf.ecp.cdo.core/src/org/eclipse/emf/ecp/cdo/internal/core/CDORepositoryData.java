@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
  *******************************************************************************/
@@ -22,7 +22,7 @@ import org.eclipse.net4j.util.container.IPluginContainer;
 
 /**
  * Provider-specific wrapper for an ECO {@link InternalRepository}.
- * 
+ *
  * @author Eike Stepper
  */
 public final class CDORepositoryData implements CDOSessionConfigurationFactory {
@@ -30,7 +30,7 @@ public final class CDORepositoryData implements CDOSessionConfigurationFactory {
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param repository the {@link InternalRepository}
 	 */
 	public CDORepositoryData(InternalRepository repository) {
@@ -39,7 +39,7 @@ public final class CDORepositoryData implements CDOSessionConfigurationFactory {
 
 	/**
 	 * Get the {@link InternalRepository}.
-	 * 
+	 *
 	 * @return the {@link InternalRepository}
 	 */
 	public InternalRepository getRepository() {
@@ -48,18 +48,20 @@ public final class CDORepositoryData implements CDOSessionConfigurationFactory {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory#createSessionConfiguration()
 	 */
+	@Override
 	public CDONet4jSessionConfiguration createSessionConfiguration() {
-		ECPProperties properties = repository.getProperties();
-		String connectorType = properties.getValue(CDOProvider.PROP_CONNECTOR_TYPE);
-		String connectorDescription = properties.getValue(CDOProvider.PROP_CONNECTOR_DESCRIPTION);
-		String repositoryName = properties.getValue(CDOProvider.PROP_REPOSITORY_NAME);
+		final ECPProperties properties = repository.getProperties();
+		final String connectorType = properties.getValue(CDOProvider.PROP_CONNECTOR_TYPE);
+		final String connectorDescription = properties.getValue(CDOProvider.PROP_CONNECTOR_DESCRIPTION);
+		final String repositoryName = properties.getValue(CDOProvider.PROP_REPOSITORY_NAME);
 
-		IConnector connector = Net4jUtil.getConnector(IPluginContainer.INSTANCE, connectorType, connectorDescription);
+		final IConnector connector = Net4jUtil.getConnector(IPluginContainer.INSTANCE, connectorType,
+			connectorDescription);
 
-		CDONet4jSessionConfiguration configuration = CDONet4jUtil.createNet4jSessionConfiguration();
+		final CDONet4jSessionConfiguration configuration = CDONet4jUtil.createNet4jSessionConfiguration();
 		configuration.setConnector(connector);
 		configuration.setRepositoryName(repositoryName);
 		return configuration;
@@ -67,10 +69,10 @@ public final class CDORepositoryData implements CDOSessionConfigurationFactory {
 
 	@Override
 	public String toString() {
-		ECPProperties properties = repository.getProperties();
-		String connectorType = properties.getValue(CDOProvider.PROP_CONNECTOR_TYPE);
-		String connectorDescription = properties.getValue(CDOProvider.PROP_CONNECTOR_DESCRIPTION);
-		String repositoryName = properties.getValue(CDOProvider.PROP_REPOSITORY_NAME);
+		final ECPProperties properties = repository.getProperties();
+		final String connectorType = properties.getValue(CDOProvider.PROP_CONNECTOR_TYPE);
+		final String connectorDescription = properties.getValue(CDOProvider.PROP_CONNECTOR_DESCRIPTION);
+		final String repositoryName = properties.getValue(CDOProvider.PROP_REPOSITORY_NAME);
 		return connectorType + "://" + connectorDescription + "/" + repositoryName; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 }

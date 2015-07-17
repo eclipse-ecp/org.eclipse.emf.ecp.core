@@ -1,0 +1,88 @@
+/* Main CSS-File */
+/**
+Control{
+    -fx-background-insets: -1.4, 0, 1, 2;
+    -fx-background-radius: 5 5 4 3;
+    -fx-border-radius: 5 5 4 3;
+    -fx-border-width: 1;
+	-fx-background-color:linear-gradient(to bottom, #FF0000 0.0%, #CC0000 100.0%);
+}
+*/
+
+.label {
+    -fx-padding: 5.0px;
+    
+}
+.text-field {
+    -fx-padding: 5.0px;
+    -fx-background-insets: -1.4, 0, 1, 2;
+    -fx-background-radius: 0;
+}
+
+.date-picker {
+    -fx-padding: 1.5px;
+    -fx-background-insets: -1.4, 0, 1, 2;
+    -fx-background-radius: 0;
+}
+
+.pane{
+	-fx-padding: 10.0px;
+}
+
+
+.choice-box{
+	-fx-background-insets: -1.4, 0, 1, 2;
+	-fx-background-radius: 0;
+	-fx-border-width:0;
+}
+
+#choice-box-menu-item .label {
+    -fx-padding: 5.0px;
+}
+.button{
+	-fx-padding: 5.0px;
+	-fx-background-insets: -1.4, 0, 1, 2;
+	-fx-background-radius: 0;
+	-fx-border-width:0;
+}
+
+.check-box .box{
+	-fx-background-insets: -1.4, 0, 1, 2;
+	-fx-background-radius: 0;
+}
+.list-view{
+	-fx-background-insets: -1.4, 0, 1, 2;
+	-fx-padding: 0;
+}
+.list-cell{
+    -fx-background-insets: -1.4, 0, 1, 2;
+}
+
+/*
+.list-cell:even{
+	-fx-background-color:  #A7BED1;
+}
+.list-cell:odd{
+	-fx-border-color: #559DD8;
+	-fx-border-width: 1 0 1 0;
+}
+*/
+
+.vertical, .horizontal{
+    -fx-padding: 5;
+    -fx-hgap: 10;
+    -fx-vgap: 5;
+ }
+ #xmlDateBox, #dateBox{
+ 	-fx-spacing: 10.0px;
+ }
+#error {
+	-fx-background-color: #CC373E, #FF444B;
+}
+
+.menu-item .label {
+    -fx-text-fill: black;
+}
+.menu-item:focused .label {
+    -fx-text-fill: white;
+}

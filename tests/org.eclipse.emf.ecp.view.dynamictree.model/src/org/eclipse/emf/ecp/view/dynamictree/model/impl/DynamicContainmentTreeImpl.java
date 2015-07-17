@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Edgar Mueller - initial API and implementation
  */
@@ -48,7 +48,7 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
  * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.impl.DynamicContainmentTreeImpl#getItems <em>Items</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class DynamicContainmentTreeImpl extends VCategoryImpl implements DynamicContainmentTree
@@ -57,7 +57,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	 * The cached value of the '{@link #getDomainModel() <em>Domain Model</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getDomainModel()
 	 * @generated
 	 * @ordered
@@ -68,7 +68,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	 * The cached value of the '{@link #getChildReference() <em>Child Reference</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getChildReference()
 	 * @generated
 	 * @ordered
@@ -79,7 +79,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	 * The cached value of the '{@link #getPathToRoot() <em>Path To Root</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getPathToRoot()
 	 * @generated
 	 * @ordered
@@ -90,7 +90,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	 * The cached value of the '{@link #getChildComposite() <em>Child Composite</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getChildComposite()
 	 * @generated
 	 * @ordered
@@ -101,7 +101,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	 * The cached value of the '{@link #getItems() <em>Items</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getItems()
 	 * @generated
 	 * @ordered
@@ -111,7 +111,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated NOT
 	 */
 	protected DynamicContainmentTreeImpl()
@@ -122,8 +122,9 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * .
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -135,9 +136,10 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public EObject getDomainModel()
 	{
 		if (domainModel != null && domainModel.eIsProxy()) {
@@ -156,7 +158,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public EObject basicGetDomainModel()
@@ -167,9 +169,10 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void setDomainModel(EObject newDomainModel)
 	{
 		final EObject oldDomainModel = domainModel;
@@ -183,9 +186,10 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public EReference getChildReference()
 	{
 		if (childReference != null && childReference.eIsProxy()) {
@@ -204,7 +208,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public EReference basicGetChildReference()
@@ -215,9 +219,10 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void setChildReference(EReference newChildReference)
 	{
 		final EReference oldChildReference = childReference;
@@ -231,9 +236,10 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public EList<EReference> getPathToRoot()
 	{
 		if (pathToRoot == null) {
@@ -246,9 +252,10 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public VContainedElement getChildComposite()
 	{
 		return childComposite;
@@ -257,7 +264,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public NotificationChain basicSetChildComposite(VContainedElement newChildComposite, NotificationChain msgs)
@@ -279,9 +286,10 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void setChildComposite(VContainedElement newChildComposite)
 	{
 		if (newChildComposite != childComposite) {
@@ -308,9 +316,10 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public EList<DynamicContainmentItem> getItems()
 	{
 		if (items == null) {
@@ -323,7 +332,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -341,7 +350,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -371,7 +380,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -403,7 +412,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -432,7 +441,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -455,7 +464,7 @@ public class DynamicContainmentTreeImpl extends VCategoryImpl implements Dynamic
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizableElement#getLabelObject()
 	 */
 	@Override

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<fragment>
+   <extension
+         point="org.eclipse.emf.ecp.validation.diagnostician.ecpValidators">
+      <validator
+            class="org.eclipse.emf.ecp.ui.validation.test.LeagueValidator">
+      </validator>
+   </extension>
+   <extension
+         point="org.eclipse.emf.ecp.ui.validation.doubleClickListener">
+      <doubleClickListener
+            class="org.eclipse.emf.ecp.ui.validation.test.TestDoubleClickListener">
+      </doubleClickListener>
+   </extension>
+
+</fragment>

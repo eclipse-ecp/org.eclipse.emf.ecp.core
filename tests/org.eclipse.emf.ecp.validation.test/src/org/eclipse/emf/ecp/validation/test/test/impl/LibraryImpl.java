@@ -1,15 +1,15 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  * Johannes Faltermeier
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.validation.test.test.impl;
 
@@ -42,7 +42,7 @@ import org.eclipse.emf.ecp.validation.test.test.Writer;
  * <li>{@link org.eclipse.emf.ecp.validation.test.test.impl.LibraryImpl#getBooks <em>Books</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class LibraryImpl extends EObjectImpl implements Library {
@@ -50,7 +50,7 @@ public class LibraryImpl extends EObjectImpl implements Library {
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getName()
 	 * @generated
 	 * @ordered
@@ -61,7 +61,7 @@ public class LibraryImpl extends EObjectImpl implements Library {
 	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getName()
 	 * @generated
 	 * @ordered
@@ -72,7 +72,7 @@ public class LibraryImpl extends EObjectImpl implements Library {
 	 * The cached value of the '{@link #getWriters() <em>Writers</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getWriters()
 	 * @generated
 	 * @ordered
@@ -83,7 +83,7 @@ public class LibraryImpl extends EObjectImpl implements Library {
 	 * The cached value of the '{@link #getBooks() <em>Books</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getBooks()
 	 * @generated
 	 * @ordered
@@ -93,7 +93,7 @@ public class LibraryImpl extends EObjectImpl implements Library {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected LibraryImpl() {
@@ -103,7 +103,7 @@ public class LibraryImpl extends EObjectImpl implements Library {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -114,9 +114,10 @@ public class LibraryImpl extends EObjectImpl implements Library {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public String getName() {
 		return name;
 	}
@@ -124,9 +125,10 @@ public class LibraryImpl extends EObjectImpl implements Library {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void setName(String newName) {
 		final String oldName = name;
 		name = newName;
@@ -138,9 +140,10 @@ public class LibraryImpl extends EObjectImpl implements Library {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public EList<Writer> getWriters() {
 		if (writers == null) {
 			writers = new EObjectContainmentWithInverseEList<Writer>(Writer.class, this, TestPackage.LIBRARY__WRITERS,
@@ -152,9 +155,10 @@ public class LibraryImpl extends EObjectImpl implements Library {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public EList<Book> getBooks() {
 		if (books == null) {
 			books = new EObjectContainmentEList<Book>(Book.class, this, TestPackage.LIBRARY__BOOKS);
@@ -165,7 +169,7 @@ public class LibraryImpl extends EObjectImpl implements Library {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -181,7 +185,7 @@ public class LibraryImpl extends EObjectImpl implements Library {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -198,7 +202,7 @@ public class LibraryImpl extends EObjectImpl implements Library {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -217,7 +221,7 @@ public class LibraryImpl extends EObjectImpl implements Library {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -242,7 +246,7 @@ public class LibraryImpl extends EObjectImpl implements Library {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -264,7 +268,7 @@ public class LibraryImpl extends EObjectImpl implements Library {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -283,7 +287,7 @@ public class LibraryImpl extends EObjectImpl implements Library {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override

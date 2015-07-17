@@ -4,15 +4,15 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <groupId>org.eclipse.emf.ecp</groupId>
-    <artifactId>ecp-parent</artifactId>
-    <version>1.1.1-SNAPSHOT</version>
-    <relativePath>../../releng/org.eclipse.emf.ecp.releng/</relativePath>
-  </parent>
+	<parent>
+		<groupId>org.eclipse.emf.ecp</groupId>
+		<artifactId>ecp-tests-parent</artifactId>
+		<version>1.7.0-SNAPSHOT</version>
+		<relativePath>../../releng/org.eclipse.emf.ecp.releng.tests/</relativePath>
+	</parent>
 
   <artifactId>org.eclipse.emf.ecp.view.test.common.swt</artifactId>
   <packaging>eclipse-plugin</packaging>
-  <version>1.1.1-SNAPSHOT</version>
+  <version>1.7.0-SNAPSHOT</version>
 
 </project>

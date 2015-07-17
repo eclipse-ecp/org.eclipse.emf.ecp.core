@@ -4,7 +4,7 @@
     editorDirectory="/org.eclipse.emf.ecp.view.custom.model.editor/src" modelPluginID="org.eclipse.emf.ecp.view.custom.model"
     modelName="Custom" modelPluginClass="" editPluginClass="org.eclipse.emf.ecp.view.spi.custom.model.provider.CustomEditPlugin"
     nonNLSMarkers="true" codeFormatting="true" commentFormatting="true" importerID="org.eclipse.emf.importer.ecore"
-    complianceLevel="5.0" copyrightFields="false" editPluginID="org.eclipse.emf.ecp.view.custom.model.edit"
+    complianceLevel="6.0" copyrightFields="false" editPluginID="org.eclipse.emf.ecp.view.custom.model.edit"
     usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model"
     interfaceNamePattern="V{0}" classNamePattern="V{0}Impl" importOrganizing="true">
   <foreignModel>custom.ecore</foreignModel>
@@ -13,10 +13,15 @@
       utilityPackageSuffix="model.util" providerPackageSuffix="model.provider" presentationPackageSuffix="model.presentation"
       testsPackageSuffix="model.tests" extensibleProviderFactory="true" childCreationExtenders="true"
       ecorePackage="custom.ecore#/">
-    <genClasses ecoreClass="custom.ecore#//HardcodedDomainModelReference">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute custom.ecore#//HardcodedDomainModelReference/controlId"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference custom.ecore#//HardcodedDomainModelReference/domainModelReferences"/>
-      <genFeatures property="None" createChild="false" ecoreFeature="ecore:EAttribute custom.ecore#//HardcodedDomainModelReference/controlChecked"/>
+    <genClasses ecoreClass="custom.ecore#//CustomControl">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute custom.ecore#//CustomControl/bundleName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute custom.ecore#//CustomControl/className"/>
+    </genClasses>
+    <genClasses ecoreClass="custom.ecore#//CustomDomainModelReference">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference custom.ecore#//CustomDomainModelReference/domainModelReferences"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute custom.ecore#//CustomDomainModelReference/bundleName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute custom.ecore#//CustomDomainModelReference/className"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute custom.ecore#//CustomDomainModelReference/controlChecked"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

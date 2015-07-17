@@ -1,11 +1,11 @@
 /********************************************************************************
  * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
  ********************************************************************************/
@@ -31,7 +31,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecp.common.ChildrenDescriptorCollector;
+import org.eclipse.emf.ecp.common.spi.ChildrenDescriptorCollector;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
@@ -41,12 +41,14 @@ import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.core.util.Disposable;
 import org.eclipse.emf.ecp.internal.core.util.Element;
 import org.eclipse.emf.ecp.internal.ui.Activator;
+import org.eclipse.emf.ecp.internal.ui.Messages;
 import org.eclipse.emf.ecp.internal.ui.composites.PropertiesComposite;
-import org.eclipse.emf.ecp.internal.ui.util.ECPHandlerHelper;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
+import org.eclipse.emf.ecp.spi.ui.util.ECPHandlerHelper;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.ui.action.CreateChildAction;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 import org.eclipse.jface.action.Action;
@@ -71,6 +73,8 @@ public class DefaultUIProvider extends Element implements UIProvider {
 	private static final Image PROJECT_OPEN = Activator.getImage("icons/project_open.gif"); //$NON-NLS-1$
 	private static final Image PROJECT_CLOSED = Activator.getImage("icons/project_closed.gif"); //$NON-NLS-1$
 	private static final Image REPOSITORY = Activator.getImage("icons/repository.gif"); //$NON-NLS-1$
+	private static final String UNKNOWN_PACKAGE_ICON = "icons/EPackageUnknown.gif"; //$NON-NLS-1$
+	private static final String EPACKAGE_ICON = "icons/EPackage.gif"; //$NON-NLS-1$
 
 	private final Disposable disposable = new Disposable(this) {
 		@Override
@@ -85,13 +89,13 @@ public class DefaultUIProvider extends Element implements UIProvider {
 
 	/**
 	 * Constructor of a {@link DefaultUIProvider}.
-	 * 
+	 *
 	 * @param name the name for this {@link UIProvider}
 	 */
 	public DefaultUIProvider(String name) {
 		super(name);
 		label = name;
-		description = "";
+		description = ""; //$NON-NLS-1$
 	}
 
 	/** {@inheritDoc} **/
@@ -101,31 +105,37 @@ public class DefaultUIProvider extends Element implements UIProvider {
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public InternalProvider getProvider() {
 		return (InternalProvider) ECPUtil.getECPProviderRegistry().getProvider(getName());
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public final String getLabel() {
 		return label;
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public final void setLabel(String label) {
 		this.label = label;
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public final String getDescription() {
 		return description;
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public final void setDescription(String description) {
 		this.description = description;
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public <T> T getAdapter(Object adaptable, Class<T> adapterType) {
 		return null;
 	}
@@ -140,41 +150,50 @@ public class DefaultUIProvider extends Element implements UIProvider {
 	 * override this method (however, if they do so, they should invoke the method on their superclass to ensure that
 	 * the Platform's adapter manager is consulted).
 	 * </p>
-	 * 
+	 *
 	 * @param adapterType
 	 *            the class to adapt to
 	 * @return the adapted object or <code>null</code>
 	 * @see org.eclipse.core.runtime.IAdaptable#getAdapter(Class)
 	 */
+	@Override
 	public Object getAdapter(@SuppressWarnings("rawtypes") Class adapterType) {
 		return Platform.getAdapterManager().getAdapter(this, adapterType);
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public final boolean isDisposed() {
 		return disposable.isDisposed();
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public final void dispose() {
 		disposable.dispose();
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public final void addDisposeListener(DisposeListener listener) {
 		disposable.addDisposeListener(listener);
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public final void removeDisposeListener(DisposeListener listener) {
 		disposable.removeDisposeListener(listener);
 	}
 
+	/**
+	 * Subclasses can override.
+	 */
 	protected void doDispose() {
 		// Subclasses can override.
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public String getText(Object element) {
 		if (element instanceof Resource) {
 			final Resource resource = (Resource) element;
@@ -185,6 +204,7 @@ public class DefaultUIProvider extends Element implements UIProvider {
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public Image getImage(Object element) {
 		if (element instanceof ECPProject) {
 			final ECPProject project = (ECPProject) element;
@@ -200,6 +220,7 @@ public class DefaultUIProvider extends Element implements UIProvider {
 
 	/** {@inheritDoc} **/
 	// TODO is this the right place for this implementation?
+	@Override
 	public void fillContextMenu(IMenuManager manager, ECPContainer context, Object[] elements) {
 		if (elements.length == 1) {
 			final Object element = elements[0];
@@ -211,8 +232,11 @@ public class DefaultUIProvider extends Element implements UIProvider {
 
 	private void fillContextMenuForProject(IMenuManager manager, final ECPProject project, Object element) {
 		if (element instanceof Resource) {
-			final Resource resource = (Resource) element;
-			populateNewRoot(resource, manager);
+			// TODO: does it make sense to show "all" registered EPackages in context menu of a resource?
+			// ZH: Do nothing for now. Instead, we show an "Add new Model Element..." in context menu,
+			// when element is a resource
+			// final Resource resource = (Resource) element;
+			// populateNewRoot(resource, manager);
 		} else if (element instanceof EObject) {
 			final EditingDomain domain = project.getEditingDomain();
 			final ChildrenDescriptorCollector childrenDescriptorCollector = new ChildrenDescriptorCollector();
@@ -220,6 +244,13 @@ public class DefaultUIProvider extends Element implements UIProvider {
 			if (descriptors != null) {
 				fillContextMenuWithDescriptors(manager, descriptors, domain, element, project);
 			}
+		} else if (element instanceof ItemProviderAdapter
+			&& ((ItemProviderAdapter) element).getTarget() instanceof EObject) {
+			final EditingDomain domain = project.getEditingDomain();
+			final ItemProviderAdapter adapter = (ItemProviderAdapter) element;
+			element = adapter.getTarget();
+			final Collection<?> descriptors = adapter.getNewChildDescriptors(element, domain, null);
+			fillContextMenuWithDescriptors(manager, descriptors, domain, element, project);
 		}
 	}
 
@@ -243,7 +274,7 @@ public class DefaultUIProvider extends Element implements UIProvider {
 			if (!cp.getEReference().isMany() && eObject.eIsSet(cp.getEStructuralFeature())) {
 				continue;
 			} else if (cp.getEReference().isMany() && cp.getEReference().getUpperBound() != -1
-				&& cp.getEReference().getUpperBound() <= ((List) eObject.eGet(cp.getEReference())).size()) {
+				&& cp.getEReference().getUpperBound() <= ((List<?>) eObject.eGet(cp.getEReference())).size()) {
 				continue;
 			}
 			// TODO: Temporal hack to remove all other elements of the view model for 1.1.M1
@@ -286,18 +317,23 @@ public class DefaultUIProvider extends Element implements UIProvider {
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public Control createAddRepositoryUI(Composite parent, ECPProperties repositoryProperties, Text repositoryNameText,
 		Text repositoryLabelText, Text repositoryDescriptionText) {
 		return new PropertiesComposite(parent, true, repositoryProperties);
 	}
 
 	/** {@inheritDoc} **/
-	public Control createCheckoutUI(Composite parent, ECPCheckoutSource checkoutSource, ECPProperties projectProperties) {
+	@Override
+	public Control createCheckoutUI(Composite parent, ECPCheckoutSource checkoutSource,
+		ECPProperties projectProperties) {
 		return new PropertiesComposite(parent, true, projectProperties);
 	}
 
 	/** {@inheritDoc} **/
-	public Control createNewProjectUI(Composite parent, CompositeStateObserver observer, ECPProperties projectProperties) {
+	@Override
+	public Control createNewProjectUI(Composite parent, CompositeStateObserver observer,
+		ECPProperties projectProperties) {
 		return null;
 	}
 
@@ -320,19 +356,20 @@ public class DefaultUIProvider extends Element implements UIProvider {
 		if (value instanceof EPackage) {
 			final EPackage ePackage = (EPackage) value;
 
-			final ImageDescriptor imageDescriptor = Activator.getImageDescriptor("icons/EPackage.gif");
+			final ImageDescriptor imageDescriptor = Activator.getImageDescriptor(EPACKAGE_ICON);
 			final MenuManager submenuManager = new MenuManager(nsURI, imageDescriptor, nsURI);
 			populateSubMenu(resource, ePackage, submenuManager);
 			return submenuManager;
 		}
 
-		final ImageDescriptor imageDescriptor = Activator.getImageDescriptor("icons/EPackageUnknown.gif");
+		final ImageDescriptor imageDescriptor = Activator.getImageDescriptor(UNKNOWN_PACKAGE_ICON);
 		final MenuManager submenuManager = new MenuManager(nsURI, imageDescriptor, nsURI);
 		submenuManager.setRemoveAllWhenShown(true);
-		submenuManager.add(new Action("Calculating...") {
+		submenuManager.add(new Action(Messages.DefaultUIProvider_Calculating) {
 		});
 
 		submenuManager.addMenuListener(new IMenuListener() {
+			@Override
 			public void menuAboutToShow(IMenuManager manager) {
 				final String nsURI = submenuManager.getMenuText();
 				final EPackage ePackage = packageRegistry.getEPackage(nsURI);
@@ -340,7 +377,7 @@ public class DefaultUIProvider extends Element implements UIProvider {
 				if (ePackage != null) {
 					populateSubMenu(resource, ePackage, submenuManager);
 				} else {
-					Activator.log(MessageFormat.format("Can't find {0} in package registry", nsURI));
+					Activator.log(MessageFormat.format(Messages.DefaultUIProvider_CantFindInPackageRegistry, nsURI));
 				}
 			}
 		});
@@ -361,6 +398,7 @@ public class DefaultUIProvider extends Element implements UIProvider {
 
 		if (!objects.isEmpty()) {
 			Collections.sort(objects, new Comparator<EObject>() {
+				@Override
 				public int compare(EObject o1, EObject o2) {
 					return o1.eClass().getName().compareTo(o2.eClass().getName());
 				}
@@ -394,6 +432,7 @@ public class DefaultUIProvider extends Element implements UIProvider {
 		@SuppressWarnings("unchecked")
 		final Map.Entry<String, Object>[] array = entries.toArray(new Entry[entries.size()]);
 		Arrays.sort(array, new Comparator<Map.Entry<String, Object>>() {
+			@Override
 			public int compare(Map.Entry<String, Object> o1, Map.Entry<String, Object> o2) {
 				return o1.getKey().compareTo(o2.getKey());
 			}

@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  *******************************************************************************/
 
 package org.eclipse.emf.ecp.edit.internal.swt.util;
@@ -18,7 +18,7 @@ import org.eclipse.core.databinding.observable.value.AbstractObservableValue;
 
 /**
  * This implements an ObservableValue of a list. This class is used for binding.
- * 
+ *
  * @author Eugen Neufeld
  */
 public class ECPObservableValue extends AbstractObservableValue {
@@ -31,7 +31,7 @@ public class ECPObservableValue extends AbstractObservableValue {
 
 	/**
 	 * The Constructor to crate an observable value for a {@link IObservableList}, an index and a special value type.
-	 * 
+	 *
 	 * @param list the {@link IObservableList}
 	 * @param index the index of this value
 	 * @param valueType the type of the observed object
@@ -48,6 +48,7 @@ public class ECPObservableValue extends AbstractObservableValue {
 	 * @see org.eclipse.core.databinding.observable.value.IObservableValue#getValueType()
 	 * @generated
 	 */
+	@Override
 	public Object getValueType() {
 		return valueType;
 	}

@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  *******************************************************************************/
 
 package org.eclipse.emf.ecp.internal.wizards.page;
@@ -28,7 +28,7 @@ public class AddRepositoryPage extends WizardPage {
 
 	/**
 	 * A WizardPage for adding a repository.
-	 * 
+	 *
 	 * @param pageName the name of the wizard page, needed due to the {@link WizardPage} constructor
 	 * @param addRepositoryComposite the {@link AddRepositoryComposite} to use in this page
 	 */
@@ -37,9 +37,10 @@ public class AddRepositoryPage extends WizardPage {
 		this.addRepositoryComposite = addRepositoryComposite;
 	}
 
-	private AddRepositoryComposite addRepositoryComposite;
+	private final AddRepositoryComposite addRepositoryComposite;
 
 	/** {@inheritDoc} */
+	@Override
 	public void createControl(Composite parent) {
 		setPageComplete(false);
 		setTitle(Messages.AddRepositoryPage_PageTitle_AddRepository);
@@ -48,9 +49,11 @@ public class AddRepositoryPage extends WizardPage {
 
 		addRepositoryComposite.setListener(new AddRepositoryChangeListener() {
 
+			@Override
 			public void repositoryProviderChanged(ECPProvider provider) {
 			}
 
+			@Override
 			public void repositoryNameChanged(String repositoryName) {
 				if (repositoryName != null && repositoryName.length() != 0) {
 					setPageComplete(true);
@@ -59,13 +62,15 @@ public class AddRepositoryPage extends WizardPage {
 				}
 			}
 
+			@Override
 			public void repositoryLabelChanged(String repositoryLabel) {
 			}
 
+			@Override
 			public void repositoryDescriptionChanged(String repositoryDescription) {
 			}
 		});
-		Composite composite = addRepositoryComposite.createUI(parent);
+		final Composite composite = addRepositoryComposite.createUI(parent);
 		setControl(composite);
 	}
 

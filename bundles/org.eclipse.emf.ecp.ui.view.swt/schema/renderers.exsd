@@ -60,7 +60,7 @@ Renderer are used to render view model elements.
                   The class defining the renderer.
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn="org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer:"/>
+                  <meta.attribute kind="java" basedOn="org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer:"/>
                </appinfo>
             </annotation>
          </attribute>
@@ -77,10 +77,10 @@ Renderer are used to render view model elements.
          <attribute name="testClass" type="string" use="required">
             <annotation>
                <documentation>
-                  The implementation of the tester. The Class must extend the org.eclipse.emf.ecp.view.spi.swt.ECPRendererTester.
+                  The implementation of the tester. The Class must extend the org.eclipse.emf.ecp.view.model.common.ECPRendererTester.
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":org.eclipse.emf.ecp.view.spi.swt.ECPRendererTester"/>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.emf.ecp.view.model.common.ECPRendererTester"/>
                </appinfo>
             </annotation>
          </attribute>

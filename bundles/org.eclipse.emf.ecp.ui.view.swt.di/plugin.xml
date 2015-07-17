@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.emf.ecp.ui.view.swt.renderers">
+      <renderer
+            renderer="org.eclipse.emf.ecp.ui.view.swt.di.renderer.DIControlSWTRenderer">
+         <dynamicTest
+               testClass="org.eclipse.emf.ecp.ui.view.swt.di.renderer.DIControlSWTRendererTester">
+         </dynamicTest>
+      </renderer>
+      <renderer
+            renderer="org.eclipse.emf.ecp.ui.view.swt.di.renderer.DIContainerSWTRenderer">
+         <dynamicTest
+               testClass="org.eclipse.emf.ecp.ui.view.swt.di.renderer.DIContainerSWTRendererTester">
+         </dynamicTest>
+      </renderer>
+      <renderer
+            renderer="org.eclipse.emf.ecp.ui.view.swt.di.renderer.DIViewSWTRenderer">
+         <dynamicTest
+               testClass="org.eclipse.emf.ecp.ui.view.swt.di.renderer.DIViewSWTRendererTester">
+         </dynamicTest>
+      </renderer>
+   </extension>
+
+</plugin>

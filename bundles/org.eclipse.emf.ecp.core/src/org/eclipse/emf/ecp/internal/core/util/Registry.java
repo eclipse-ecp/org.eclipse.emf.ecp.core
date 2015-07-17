@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
  ******************************************************************************/
@@ -44,7 +44,7 @@ public abstract class Registry<ELEMENT, OBSERVER extends ECPObserver> extends Li
 
 	/**
 	 * Retrieves an element with a certain name from the registry.
-	 * 
+	 *
 	 * @param key the name of the element to retrieve
 	 * @return the element or null if not contained in the registry
 	 */
@@ -57,7 +57,7 @@ public abstract class Registry<ELEMENT, OBSERVER extends ECPObserver> extends Li
 
 	/**
 	 * Returns the names of the elements managed by the registry.
-	 * 
+	 *
 	 * @return a set of strings representing the names of elements
 	 */
 	public final Set<String> getElementNames() {
@@ -70,7 +70,7 @@ public abstract class Registry<ELEMENT, OBSERVER extends ECPObserver> extends Li
 
 	/**
 	 * Returns the number of elements managed by the registry.
-	 * 
+	 *
 	 * @return an integer
 	 */
 	public final int getElementCount() {
@@ -82,7 +82,7 @@ public abstract class Registry<ELEMENT, OBSERVER extends ECPObserver> extends Li
 
 	/**
 	 * Returns the list of elements managed by the registry.
-	 * 
+	 *
 	 * @return a collection of elements
 	 */
 	public final Collection<ELEMENT> getElements() {
@@ -96,7 +96,7 @@ public abstract class Registry<ELEMENT, OBSERVER extends ECPObserver> extends Li
 
 	/**
 	 * Returns if the registry has elements.
-	 * 
+	 *
 	 * @return true if the registry has elements
 	 */
 	public final boolean hasElements() {
@@ -108,7 +108,7 @@ public abstract class Registry<ELEMENT, OBSERVER extends ECPObserver> extends Li
 
 	/**
 	 * Checks if an element with a certain name is managed by the registry.
-	 * 
+	 *
 	 * @param name the name of the element to check
 	 * @return true if the element is managed by the registry
 	 */
@@ -121,7 +121,7 @@ public abstract class Registry<ELEMENT, OBSERVER extends ECPObserver> extends Li
 
 	/**
 	 * Adds or remove elements contained in the registry.
-	 * 
+	 *
 	 * @param remove a set of elements to be removed
 	 * @param add a set of elements to be added
 	 */
@@ -131,6 +131,7 @@ public abstract class Registry<ELEMENT, OBSERVER extends ECPObserver> extends Li
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	@SuppressWarnings("unchecked")
 	public final void disposed(ECPDisposable disposable) {
 		if (isRemoveDisposedElements()) {
@@ -147,7 +148,7 @@ public abstract class Registry<ELEMENT, OBSERVER extends ECPObserver> extends Li
 	}
 
 	/**
-	 * 
+	 *
 	 * @return Whether elements should be removed from the registry if they are disposed.
 	 */
 	protected boolean isRemoveDisposedElements() {
@@ -157,7 +158,7 @@ public abstract class Registry<ELEMENT, OBSERVER extends ECPObserver> extends Li
 	/**
 	 * Executes adding or removing elements contained in the registry.
 	 * As a caller, use changeElements().
-	 * 
+	 *
 	 * @param remove a set of elements to be removed
 	 * @param add a set of elements to be added
 	 * @return a set of elements, which have been removed
@@ -224,7 +225,7 @@ public abstract class Registry<ELEMENT, OBSERVER extends ECPObserver> extends Li
 
 	/**
 	 * Adds an {@link ECPObserver} to the {@link org.eclipse.emf.ecp.core.util.observer.ECPObserverBus}.
-	 * 
+	 *
 	 * @param observer the observer to be added
 	 */
 	public void addObserver(OBSERVER observer) {
@@ -233,7 +234,7 @@ public abstract class Registry<ELEMENT, OBSERVER extends ECPObserver> extends Li
 
 	/**
 	 * Removes an {@link ECPObserver} to the {@link org.eclipse.emf.ecp.core.util.observer.ECPObserverBus}.
-	 * 
+	 *
 	 * @param observer the observer to be removed
 	 */
 	public void removeObserver(OBSERVER observer) {
@@ -242,7 +243,7 @@ public abstract class Registry<ELEMENT, OBSERVER extends ECPObserver> extends Li
 
 	/**
 	 * Notifies observers that the elements in the registry have changed.
-	 * 
+	 *
 	 * @param oldArray The old collection of elements
 	 * @param newArray The new collection of elements
 	 * @throws Exception

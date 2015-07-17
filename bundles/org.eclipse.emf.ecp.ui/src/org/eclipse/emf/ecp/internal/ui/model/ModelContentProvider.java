@@ -1,11 +1,11 @@
 /********************************************************************************
  * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
  ********************************************************************************/
@@ -30,16 +30,19 @@ public class ModelContentProvider extends ECPContentProvider<ECPProjectManager> 
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void projectsChanged(Collection<ECPProject> oldProjects, Collection<ECPProject> newProjects) {
 		refreshViewer();
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void projectChanged(ECPProject project, boolean opened) {
 		refreshViewer(true, project);
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void contentTouched(ECPProject project, Collection<Object> objects, boolean structural) {
 		refreshViewer(structural, objects.toArray());
 		if (!objects.contains(project)) {

@@ -6,7 +6,7 @@
     modelName="DynamicTree" editPluginClass="org.eclipse.emf.ecp.view.dynamictree.model.provider.DynamicTreeEditPlugin"
     editorPluginClass="model.presentation.DynamicTreeEditorPlugin" importerID="org.eclipse.emf.importer.ecore"
     complianceLevel="6.0" copyrightFields="false" editPluginID="org.eclipse.emf.ecp.view.dynamictree.model.edit"
-    editorPluginID="org.eclipse.emf.ecp.view.dynamictree.model.editor" usedGenPackages="../../org.eclipse.emf.ecp.view.categorization.model/model/categorization.genmodel#//model platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model">
+    editorPluginID="org.eclipse.emf.ecp.view.dynamictree.model.editor" usedGenPackages="../../org.eclipse.emf.ecp.view.categorization.model/model/categorization.genmodel#//categorization platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model">
   <foreignModel>dynamictree.ecore</foreignModel>
   <genPackages prefix="Model" basePackage="org.eclipse.emf.ecp.view.dynamictree" disposableProviderFactory="true"
       ecorePackage="dynamictree.ecore#/">

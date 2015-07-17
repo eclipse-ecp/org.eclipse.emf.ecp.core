@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
@@ -23,8 +23,10 @@ import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalPackage;
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Factory</b>.
- * <!-- end-user-doc -->
- * 
+ *
+ * @since 1.2
+ *        <!-- end-user-doc -->
+ *
  * @generated
  */
 public class VVerticalFactoryImpl extends EFactoryImpl implements VVerticalFactory
@@ -33,20 +35,20 @@ public class VVerticalFactoryImpl extends EFactoryImpl implements VVerticalFacto
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public static VVerticalFactory init()
 	{
 		try
 		{
-			VVerticalFactory theVerticalFactory = (VVerticalFactory) EPackage.Registry.INSTANCE
+			final VVerticalFactory theVerticalFactory = (VVerticalFactory) EPackage.Registry.INSTANCE
 				.getEFactory(VVerticalPackage.eNS_URI);
 			if (theVerticalFactory != null)
 			{
 				return theVerticalFactory;
 			}
-		} catch (Exception exception)
+		} catch (final Exception exception)
 		{
 			EcorePlugin.INSTANCE.log(exception);
 		}
@@ -57,7 +59,7 @@ public class VVerticalFactoryImpl extends EFactoryImpl implements VVerticalFacto
 	 * Creates an instance of the factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public VVerticalFactoryImpl()
@@ -68,7 +70,7 @@ public class VVerticalFactoryImpl extends EFactoryImpl implements VVerticalFacto
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -86,21 +88,23 @@ public class VVerticalFactoryImpl extends EFactoryImpl implements VVerticalFacto
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public VVerticalLayout createVerticalLayout()
 	{
-		VVerticalLayoutImpl verticalLayout = new VVerticalLayoutImpl();
+		final VVerticalLayoutImpl verticalLayout = new VVerticalLayoutImpl();
 		return verticalLayout;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public VVerticalPackage getVerticalPackage()
 	{
 		return (VVerticalPackage) getEPackage();
@@ -109,7 +113,7 @@ public class VVerticalFactoryImpl extends EFactoryImpl implements VVerticalFacto
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @deprecated
 	 * @generated
 	 */

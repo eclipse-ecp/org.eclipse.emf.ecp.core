@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  *******************************************************************************/
 
 package org.eclipse.emf.ecp.internal.wizards;
@@ -18,6 +18,7 @@ import org.eclipse.emf.ecp.core.util.ECPCheckoutSource;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.ui.Activator;
 import org.eclipse.emf.ecp.internal.ui.Messages;
+import org.eclipse.emf.ecp.spi.common.ui.ECPWizard;
 import org.eclipse.emf.ecp.ui.common.CheckoutProjectComposite;
 import org.eclipse.emf.ecp.ui.common.CheckoutProjectComposite.CheckoutProjectChangeListener;
 import org.eclipse.jface.wizard.WizardPage;
@@ -39,13 +40,15 @@ public class CheckoutProjectWizard extends ECPWizard<CheckoutProjectComposite> {
 
 	@Override
 	public void addPages() {
-		WizardPage wp = new WizardPage("Checkout") //$NON-NLS-1$
+		final WizardPage wp = new WizardPage("Checkout") //$NON-NLS-1$
 		{
 
+			@Override
 			public void createControl(Composite parent) {
-				Composite composite = getCompositeProvider().createUI(parent);
+				final Composite composite = getCompositeProvider().createUI(parent);
 
 				getCompositeProvider().setListener(new CheckoutProjectChangeListener() {
+					@Override
 					public void projectNameChanged(String projectName) {
 						validateName(projectName);
 					}
@@ -71,9 +74,9 @@ public class CheckoutProjectWizard extends ECPWizard<CheckoutProjectComposite> {
 		wp.setTitle(Messages.CheckoutProjectWizard_PageTitle_CheckoutProject);
 		wp.setImageDescriptor(Activator.getImageDescriptor("icons/checkout_project_wiz.png")); //$NON-NLS-1$
 
-		ECPCheckoutSource checkoutSource = getCompositeProvider().getCheckoutSource();
+		final ECPCheckoutSource checkoutSource = getCompositeProvider().getCheckoutSource();
 
-		ECPRepository repository = checkoutSource.getRepository();
+		final ECPRepository repository = checkoutSource.getRepository();
 		if (checkoutSource == repository) {
 			wp.setMessage(Messages.CheckoutProjectWizard_PageMessage_CheckoutRepositrory + repository.getLabel() + "."); //$NON-NLS-1$
 		} else {

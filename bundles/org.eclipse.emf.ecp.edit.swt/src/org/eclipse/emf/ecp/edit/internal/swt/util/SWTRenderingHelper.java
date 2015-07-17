@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -19,8 +19,9 @@ import org.eclipse.swt.widgets.Layout;
 
 /**
  * @author Eugen Neufeld
- * 
+ *
  */
+@Deprecated
 public final class SWTRenderingHelper {
 
 	/**
@@ -32,7 +33,7 @@ public final class SWTRenderingHelper {
 	private final RenderingResultRowFactory<Control> defaultRowFactory;
 
 	/**
-	 * 
+	 *
 	 */
 	private SWTRenderingHelper() {
 		defaultLayoutHelper = new DefaultLayoutHelper();
@@ -40,7 +41,7 @@ public final class SWTRenderingHelper {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return A {@link LayoutHelper} based on the current {@link RenderingConfiguration}.
 	 */
 	public LayoutHelper<Layout> getLayoutHelper() {

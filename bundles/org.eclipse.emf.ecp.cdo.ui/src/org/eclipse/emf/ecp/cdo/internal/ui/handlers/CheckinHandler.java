@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
  *******************************************************************************/
@@ -20,7 +20,7 @@ import org.eclipse.emf.cdo.workspace.CDOWorkspace;
 
 /**
  * Handles Checkins.
- * 
+ *
  * @author Eike Stepper
  */
 public class CheckinHandler extends AbstractWorkspaceHandler {
@@ -40,7 +40,7 @@ public class CheckinHandler extends AbstractWorkspaceHandler {
 		CDOUtil.setLegacyModeDefault(true);
 		try {
 			workspace.checkin("Workspace checkin"); //$NON-NLS-1$
-		} catch (CommitException ex) {
+		} catch (final CommitException ex) {
 			throw new ExecutionException("Commit failed!", ex); //$NON-NLS-1$
 		}
 		refreshDirtyState(event);

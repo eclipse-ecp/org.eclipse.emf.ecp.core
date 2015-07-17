@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.core.expressions.definitions">
+      <definition
+            id="org.eclipse.emf.ecp.view.model.preview.common.definition1">
+         <with
+               variable="selection">
+            <iterate>
+               <instanceof
+                     value="org.eclipse.emf.ecp.view.spi.model.VView">
+               </instanceof>
+            </iterate>
+         </with>
+      </definition>
+   </extension>
+
+</plugin>

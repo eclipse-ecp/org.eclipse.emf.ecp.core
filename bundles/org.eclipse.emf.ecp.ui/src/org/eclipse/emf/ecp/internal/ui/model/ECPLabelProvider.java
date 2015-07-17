@@ -1,11 +1,11 @@
 /********************************************************************************
  * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
  */
@@ -80,6 +80,7 @@ public class ECPLabelProvider extends LabelProvider implements ECPModelContextPr
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public ECPContainer getModelContext(Object element) {
 		if (modelContextProvider != null) {
 			return modelContextProvider.getModelContext(element);
@@ -92,6 +93,7 @@ public class ECPLabelProvider extends LabelProvider implements ECPModelContextPr
 		final Display display = Display.getCurrent();
 		if (display == null) {
 			Display.getDefault().asyncExec(new Runnable() {
+				@Override
 				public void run() {
 					fireLabelProviderChanged(event);
 				}
@@ -103,18 +105,20 @@ public class ECPLabelProvider extends LabelProvider implements ECPModelContextPr
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.internal.ui.model.IECPLabelProvider#getModelContextProvider()
 	 */
+	@Override
 	public ECPModelContextProvider getModelContextProvider() {
 		return modelContextProvider;
 	}
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.internal.ui.model.IECPLabelProvider#setModelContextProvider(org.eclipse.emf.ecp.core.util.ECPModelContextProvider)
 	 */
+	@Override
 	public void setModelContextProvider(ECPModelContextProvider modelContextProvider) {
 		this.modelContextProvider = modelContextProvider;
 	}

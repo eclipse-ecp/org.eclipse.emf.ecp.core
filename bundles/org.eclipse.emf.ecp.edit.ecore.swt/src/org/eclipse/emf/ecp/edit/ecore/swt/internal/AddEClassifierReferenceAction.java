@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  ******************************************************************************/
@@ -19,12 +19,12 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecp.edit.internal.swt.reference.AddReferenceAction;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
+import org.eclipse.emf.ecp.edit.spi.swt.reference.AddReferenceAction;
 import org.eclipse.emf.ecp.internal.ui.Messages;
-import org.eclipse.emf.ecp.internal.wizards.SelectModelElementWizard;
-import org.eclipse.emf.ecp.ui.common.CompositeFactory;
-import org.eclipse.emf.ecp.ui.common.SelectionComposite;
+import org.eclipse.emf.ecp.spi.common.ui.CompositeFactory;
+import org.eclipse.emf.ecp.spi.common.ui.SelectModelElementWizard;
+import org.eclipse.emf.ecp.spi.common.ui.composites.SelectionComposite;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.jface.viewers.TableViewer;
@@ -34,9 +34,9 @@ import org.eclipse.swt.widgets.Display;
 
 /**
  * An action to select an EClassifier from the registry.
- * 
+ *
  * @author jfaltermeier
- * 
+ *
  */
 public class AddEClassifierReferenceAction extends AddReferenceAction {
 
@@ -45,7 +45,7 @@ public class AddEClassifierReferenceAction extends AddReferenceAction {
 
 	/**
 	 * Constructor.
-	 * 
+	 *
 	 * @param editingDomain the {@link EditingDomain} to use
 	 * @param setting the {@link Setting} to use
 	 * @param itemPropertyDescriptor the {@link IItemPropertyDescriptor} to use
@@ -61,7 +61,7 @@ public class AddEClassifierReferenceAction extends AddReferenceAction {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.jface.action.Action#run()
 	 */
 	@Override
@@ -70,7 +70,7 @@ public class AddEClassifierReferenceAction extends AddReferenceAction {
 		if (selectedClassifier == null) {
 			return;
 		}
-		referenceService.addModelElement(selectedClassifier, (EReference) getSetting().getEStructuralFeature());
+		referenceService.addNewModelElements(selectedClassifier, (EReference) getSetting().getEStructuralFeature());
 	}
 
 	private EClassifier getExistingEClassifiers() {
@@ -82,7 +82,7 @@ public class AddEClassifierReferenceAction extends AddReferenceAction {
 			Messages.ModelelementSelectionDialog_DialogMessage_SearchPattern, EObject.class);
 
 		final SelectionComposite<TableViewer> tableSelectionComposite = CompositeFactory
-			.getTableSelectionComposite(elements.toArray());
+			.getTableSelectionComposite(elements.toArray(), false);
 		wizard.setCompositeProvider(tableSelectionComposite);
 
 		final WizardDialog wd = new WizardDialog(Display.getDefault().getActiveShell(), wizard);
@@ -101,9 +101,9 @@ public class AddEClassifierReferenceAction extends AddReferenceAction {
 
 	/**
 	 * Extracts the {@link EClassifier}s from the registry.
-	 * 
+	 *
 	 * @param ePackages the {@link EPackage}s to extract the classifiers from
-	 * 
+	 *
 	 * @return the classifiers
 	 */
 	protected Set<EClassifier> getEClassifiersFromRegistry(Set<EPackage> ePackages) {

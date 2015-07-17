@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.ecp.view.group.model" version="2">
+    <resource path="META-INF/MANIFEST.MF">
+        <filter comment="This is SPI" id="923795461">
+            <message_arguments>
+                <message_argument value="1.3.0"/>
+                <message_argument value="1.2.1"/>
+            </message_arguments>
+        </filter>
+        <filter id="923795461">
+            <message_arguments>
+                <message_argument value="1.4.0"/>
+                <message_argument value="1.3.0"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change in 1.6" id="923795461">
+            <message_arguments>
+                <message_argument value="1.6.0"/>
+                <message_argument value="1.5.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport">
+        <filter comment="SPI Change in 1.6" id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport"/>
+                <message_argument value="org.eclipse.emf.ecp.view.group.model_1.5.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.model.reporting.ReportService">
+        <filter comment="SPI Change in 1.6" id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.reporting.ReportService"/>
+                <message_argument value="org.eclipse.emf.ecp.view.group.model_1.5.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.model.reporting.ReportServiceConsumer">
+        <filter comment="SPI Change in 1.6" id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.reporting.ReportServiceConsumer"/>
+                <message_argument value="org.eclipse.emf.ecp.view.group.model_1.5.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/group/model/VGroup.java" type="org.eclipse.emf.ecp.view.spi.group.model.VGroup">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroup"/>
+                <message_argument value="getGroupType()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="This is SPI" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroup"/>
+                <message_argument value="getLabelAlignment()"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroup"/>
+                <message_argument value="isCollapsed()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="This is SPI" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroup"/>
+                <message_argument value="isContainerLayoutEmbedding()"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroup"/>
+                <message_argument value="setCollapsed(boolean)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="This is SPI" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroup"/>
+                <message_argument value="setContainerLayoutEmbedding(boolean)"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroup"/>
+                <message_argument value="setGroupType(GroupType)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="This is SPI" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroup"/>
+                <message_argument value="setLabelAlignment(GroupLabelAlignment)"/>
+            </message_arguments>
+        </filter>
+        <filter id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroup"/>
+                <message_argument value="isContainerLayoutEmbedding()"/>
+            </message_arguments>
+        </filter>
+        <filter id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroup"/>
+                <message_argument value="setContainerLayoutEmbedding(boolean)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/group/model/VGroupPackage.java">
+        <filter comment="Changes due to new label field in 1.6" id="0"/>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/group/model/VGroupPackage.java" type="org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage">
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage"/>
+                <message_argument value="GROUP_FEATURE_COUNT"/>
+                <message_argument value="10"/>
+            </message_arguments>
+        </filter>
+        <filter comment="This is SPI" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage"/>
+                <message_argument value="GROUP_FEATURE_COUNT"/>
+                <message_argument value="7"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage"/>
+                <message_argument value="GROUP_FEATURE_COUNT"/>
+                <message_argument value="9"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage"/>
+                <message_argument value="GROUP_LABEL_ALIGNMENT"/>
+                <message_argument value="1"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage"/>
+                <message_argument value="GROUP__ATTACHMENTS"/>
+                <message_argument value="5"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage"/>
+                <message_argument value="GROUP__CHILDREN"/>
+                <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage"/>
+                <message_argument value="GROUP__COLLAPSED"/>
+                <message_argument value="9"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage"/>
+                <message_argument value="GROUP__DIAGNOSTIC"/>
+                <message_argument value="4"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage"/>
+                <message_argument value="GROUP__ENABLED"/>
+                <message_argument value="2"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage"/>
+                <message_argument value="GROUP__GROUP_TYPE"/>
+                <message_argument value="7"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage"/>
+                <message_argument value="GROUP__LABEL_ALIGNMENT"/>
+                <message_argument value="8"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage"/>
+                <message_argument value="GROUP__READONLY"/>
+                <message_argument value="3"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage"/>
+                <message_argument value="GROUP__VISIBLE"/>
+                <message_argument value="1"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage"/>
+                <message_argument value="GROUP__CONTAINER_LAYOUT_EMBEDDING"/>
+            </message_arguments>
+        </filter>
+        <filter id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage"/>
+                <message_argument value="getGroup_ContainerLayoutEmbedding()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/group/model/VGroupPackage.java" type="org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage$Literals">
+        <filter comment="This is SPI" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage.Literals"/>
+                <message_argument value="GROUP_LABEL_ALIGNMENT"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage.Literals"/>
+                <message_argument value="GROUP_TYPE"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage.Literals"/>
+                <message_argument value="GROUP__COLLAPSED"/>
+            </message_arguments>
+        </filter>
+        <filter comment="This is SPI" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage.Literals"/>
+                <message_argument value="GROUP__CONTAINER_LAYOUT_EMBEDDING"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage.Literals"/>
+                <message_argument value="GROUP__GROUP_TYPE"/>
+            </message_arguments>
+        </filter>
+        <filter comment="This is SPI" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage.Literals"/>
+                <message_argument value="GROUP__LABEL_ALIGNMENT"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage.Literals"/>
+                <message_argument value="GROUP__CONTAINER_LAYOUT_EMBEDDING"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/group/model/impl/VGroupImpl.java" type="org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupImpl">
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupImpl"/>
+                <message_argument value="CONTAINER_LAYOUT_EMBEDDING_EDEFAULT"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupImpl"/>
+                <message_argument value="containerLayoutEmbedding"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupImpl"/>
+                <message_argument value="isContainerLayoutEmbedding()"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupImpl"/>
+                <message_argument value="setContainerLayoutEmbedding(boolean)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/group/model/impl/VGroupPackageImpl.java" type="org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupPackageImpl">
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupPackageImpl"/>
+                <message_argument value="getGroup_ContainerLayoutEmbedding()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

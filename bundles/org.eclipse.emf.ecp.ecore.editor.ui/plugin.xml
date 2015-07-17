@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="org.eclipse.emf.importer.ui.EMFSimpleModelWizard"
+            name="Eclipse Modeling Framework">
+      </category>
+      <wizard
+            category="org.eclipse.emf.codegen.ecore.ui.wizardCategory"
+            class="org.eclipse.emf.ecp.ecore.editor.ui.EMFSimpleProjectWizard"
+            icon="icons/brick_add.png"
+            id="org.eclipse.emf.ecp.ecore.editor.ui.EMFSimpleProjectWizard"
+            name="Simple EMF Project">
+      </wizard>
+   </extension>
+
+</plugin>

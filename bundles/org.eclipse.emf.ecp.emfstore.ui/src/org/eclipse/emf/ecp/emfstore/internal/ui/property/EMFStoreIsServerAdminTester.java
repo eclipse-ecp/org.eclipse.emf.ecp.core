@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.emfstore.internal.ui.property;
 
@@ -24,18 +24,19 @@ import org.eclipse.emf.emfstore.internal.server.exceptions.AccessControlExceptio
 
 /**
  * This tests whether a user is the serveradmin on a specific repository.
- * 
+ *
  * @author Eugen Neufeld
  * @author Tobias Verhoeven
  */
 public final class EMFStoreIsServerAdminTester extends PropertyTester {
 
 	/** {@inheritDoc} */
+	@Override
 	public boolean test(Object receiver, String property, Object[] args, Object expectedValue) {
 		InternalRepository repository = null;
 
 		if (receiver instanceof EMFStoreProjectWrapper) {
-			EMFStoreProjectWrapper wrapper = (EMFStoreProjectWrapper) receiver;
+			final EMFStoreProjectWrapper wrapper = (EMFStoreProjectWrapper) receiver;
 			repository = (InternalRepository) wrapper.getRepository();
 
 		} else if (receiver instanceof InternalRepository) {
@@ -45,16 +46,17 @@ public final class EMFStoreIsServerAdminTester extends PropertyTester {
 			return false;
 		}
 
-		ServerInfo serverInfo = ((ESServerImpl) EMFStoreProvider.INSTANCE.getServerInfo(repository)).toInternalAPI();
-		Usersession usersession = serverInfo.getLastUsersession();
+		final ServerInfo serverInfo = ((ESServerImpl) EMFStoreProvider.INSTANCE.getServerInfo(repository))
+			.toInternalAPI();
+		final Usersession usersession = serverInfo.getLastUsersession();
 		boolean isAdmin = false;
 		if (usersession != null && usersession.getACUser() != null) {
 			// TODO EMFStore Constructor is missing
-			AccessControlHelper accessControlHelper = new AccessControlHelper(usersession);
+			final AccessControlHelper accessControlHelper = new AccessControlHelper(usersession);
 			try {
 				accessControlHelper.checkServerAdminAccess();
 				isAdmin = true;
-			} catch (AccessControlException e) {
+			} catch (final AccessControlException e) {
 				// not an admin -> ignore
 			}
 		}

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.ecp.view.vertical.model" version="2">
+    <resource path="META-INF/MANIFEST.MF">
+        <filter comment="SPI Change in 1.6" id="923795461">
+            <message_arguments>
+                <message_argument value="1.6.0"/>
+                <message_argument value="1.5.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport">
+        <filter comment="SPI Change in 1.6" id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport"/>
+                <message_argument value="org.eclipse.emf.ecp.view.vertical.model_1.5.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.model.reporting.ReportService">
+        <filter comment="SPI Change in 1.6" id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.reporting.ReportService"/>
+                <message_argument value="org.eclipse.emf.ecp.view.vertical.model_1.5.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.model.reporting.ReportServiceConsumer">
+        <filter comment="SPI Change in 1.6" id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.reporting.ReportServiceConsumer"/>
+                <message_argument value="org.eclipse.emf.ecp.view.vertical.model_1.5.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/vertical/model/VVerticalPackage.java" type="org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalPackage">
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalPackage"/>
+                <message_argument value="VERTICAL_LAYOUT_FEATURE_COUNT"/>
+                <message_argument value="7"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalPackage"/>
+                <message_argument value="VERTICAL_LAYOUT__ATTACHMENTS"/>
+                <message_argument value="5"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalPackage"/>
+                <message_argument value="VERTICAL_LAYOUT__CHILDREN"/>
+                <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalPackage"/>
+                <message_argument value="VERTICAL_LAYOUT__DIAGNOSTIC"/>
+                <message_argument value="4"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalPackage"/>
+                <message_argument value="VERTICAL_LAYOUT__ENABLED"/>
+                <message_argument value="2"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalPackage"/>
+                <message_argument value="VERTICAL_LAYOUT__READONLY"/>
+                <message_argument value="3"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Changes due to new label field in 1.6" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalPackage"/>
+                <message_argument value="VERTICAL_LAYOUT__VISIBLE"/>
+                <message_argument value="1"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

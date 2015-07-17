@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  *******************************************************************************/
@@ -35,7 +35,7 @@ import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
  * </em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class TableWithoutMultiplicityImpl extends EObjectImpl implements TableWithoutMultiplicity {
@@ -43,7 +43,7 @@ public class TableWithoutMultiplicityImpl extends EObjectImpl implements TableWi
 	 * The cached value of the '{@link #getContent() <em>Content</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getContent()
 	 * @generated
 	 * @ordered
@@ -53,7 +53,7 @@ public class TableWithoutMultiplicityImpl extends EObjectImpl implements TableWi
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected TableWithoutMultiplicityImpl() {
@@ -63,7 +63,7 @@ public class TableWithoutMultiplicityImpl extends EObjectImpl implements TableWi
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -74,9 +74,10 @@ public class TableWithoutMultiplicityImpl extends EObjectImpl implements TableWi
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public EList<TableContent> getContent() {
 		if (content == null) {
 			content = new EObjectContainmentEList<TableContent>(TableContent.class, this,
@@ -88,7 +89,7 @@ public class TableWithoutMultiplicityImpl extends EObjectImpl implements TableWi
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -103,7 +104,7 @@ public class TableWithoutMultiplicityImpl extends EObjectImpl implements TableWi
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -118,7 +119,7 @@ public class TableWithoutMultiplicityImpl extends EObjectImpl implements TableWi
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -136,7 +137,7 @@ public class TableWithoutMultiplicityImpl extends EObjectImpl implements TableWi
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -152,7 +153,7 @@ public class TableWithoutMultiplicityImpl extends EObjectImpl implements TableWi
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override

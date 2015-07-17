@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -18,10 +18,12 @@ import org.osgi.framework.ServiceReference;
 
 /**
  * Activator handling the life cycle.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ * @since 1.2
+ *
  */
+@SuppressWarnings("deprecation")
 public class Activator extends Plugin {
 
 	private static Activator plugin;
@@ -49,7 +51,7 @@ public class Activator extends Plugin {
 
 	/**
 	 * Returns the shared instance.
-	 * 
+	 *
 	 * @return the shared instance
 	 */
 	public static Activator getDefault() {
@@ -60,7 +62,7 @@ public class Activator extends Plugin {
 
 	/**
 	 * Returns the {@link ECPControlFactory}.
-	 * 
+	 *
 	 * @return the instance of the {@link ECPControlFactory}
 	 */
 	public ECPControlFactory getECPControlFactory() {

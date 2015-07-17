@@ -1,17 +1,16 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
 package org.eclipse.emf.ecp.emfstore.internal.ui.handler;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.concurrent.Callable;
 
@@ -31,9 +30,9 @@ import org.eclipse.swt.widgets.Shell;
 
 /**
  * This is the EMFStore ShareProject Handler delegating to the EMFStore {@link UIShareProjectController}.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public final class ShareProjectHelper {
 
@@ -42,7 +41,7 @@ public final class ShareProjectHelper {
 
 	/**
 	 * Shares an {@link InternalProject}. Delegates to {@link UIShareProjectController}.
-	 * 
+	 *
 	 * @param project the {@link InternalProject}
 	 * @param shell the {@link Shell}
 	 */
@@ -64,6 +63,7 @@ public final class ShareProjectHelper {
 					.getRepository());
 				final ServerInfo serverInfo = server.toInternalAPI();
 				RunESCommand.run(new Callable<Void>() {
+					@Override
 					public Void call() throws Exception {
 						((ESLocalProjectImpl) localProject).toInternalAPI().setUsersession(
 							serverInfo.getLastUsersession());
@@ -74,8 +74,8 @@ public final class ShareProjectHelper {
 			// TODO EMFStore Constructor is missing
 			new UIShareProjectController(shell, localProject).execute();
 
-			project.notifyObjectsChanged((Collection) Collections.singleton(project), false);
-			repository.notifyObjectsChanged((Collection) Collections.singleton(repository));
+			project.notifyObjectsChanged(Collections.singleton((Object) project), false);
+			repository.notifyObjectsChanged(Collections.singleton((Object) repository));
 		}
 	}
 }

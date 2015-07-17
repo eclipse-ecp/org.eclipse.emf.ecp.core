@@ -1,25 +1,29 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Edgar - initial API and implementation
  ******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 
 /**
- * 
- * 
+ *
+ *
  * @author emueller
- * 
+ *
  */
 public class TableViewerColumnBuilder {
 
@@ -27,8 +31,7 @@ public class TableViewerColumnBuilder {
 	private Boolean isMoveable;
 	private String text;
 	private String tooltip;
-	private String key;
-	private Object value;
+	private final Map<String, Object> data = new LinkedHashMap<String, Object>();
 	private Integer width;
 	private Integer style = SWT.NONE;
 
@@ -57,8 +60,7 @@ public class TableViewerColumnBuilder {
 	}
 
 	public TableViewerColumnBuilder setData(String key, Object value) {
-		this.key = key;
-		this.value = value;
+		data.put(key, value);
 		return this;
 	}
 
@@ -108,8 +110,8 @@ public class TableViewerColumnBuilder {
 	}
 
 	private void setData(TableViewerColumn column) {
-		if (key != null) {
-			column.getColumn().setData(key, value);
+		for (final Entry<String, Object> entry : data.entrySet()) {
+			column.getColumn().setData(entry.getKey(), entry.getValue());
 		}
 	}
 

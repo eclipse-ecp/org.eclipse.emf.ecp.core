@@ -26,6 +26,8 @@
         eType="#//AbstractCategorization" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="currentSelection" eType="#//CategorizableElement"
         transient="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="mainCategoryDepth" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
+        defaultValueLiteral="0"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CategorizableElement" abstract="true"
       eSuperTypes="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//Element">

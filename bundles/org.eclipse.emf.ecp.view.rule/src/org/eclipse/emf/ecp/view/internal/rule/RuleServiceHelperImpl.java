@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Edgar Mueller - initial API and implementation
  ******************************************************************************/
@@ -16,10 +16,10 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecp.common.spi.UniqueSetting;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
@@ -27,7 +27,7 @@ import org.eclipse.emf.ecp.view.spi.rule.RuleServiceHelper;
 
 /**
  * @author emueller
- * 
+ *
  */
 public class RuleServiceHelperImpl implements ViewModelService, RuleServiceHelper {
 
@@ -42,35 +42,11 @@ public class RuleServiceHelperImpl implements ViewModelService, RuleServiceHelpe
 	private ViewModelContext context;
 
 	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.rule.RuleServiceHelper#getInvolvedEObjects(org.eclipse.emf.ecore.EStructuralFeature.Setting,
-	 *      java.lang.Object, org.eclipse.emf.ecore.EAttribute, java.lang.Class)
-	 */
-	public <T extends VElement> Set<T> getInvolvedEObjects(Setting setting, Object newValue, EAttribute attribute,
-		Class<T> renderableClass) {
-
-		final Map<Setting, Object> newValues = new LinkedHashMap<EStructuralFeature.Setting, Object>();
-		newValues.put(setting, newValue);
-
-		final Map<VElement, Boolean> disabledRenderables = context.getService(RuleService.class)
-			.getDisabledRenderables(newValues, attribute);
-		final Map<VElement, Boolean> hiddenRenderables = context.getService(RuleService.class)
-			.getHiddenRenderables(newValues, attribute);
-
-		final Set<T> result = new LinkedHashSet<T>();
-
-		result.addAll(collectFalseValues(renderableClass, disabledRenderables, createDisabledRenderablePredicate()));
-		result.addAll(collectFalseValues(renderableClass, hiddenRenderables, createHiddenRenderablePredicate()));
-
-		return result;
-	}
-
-	/**
 	 * @return
 	 */
 	private RenderablePredicate createDisabledRenderablePredicate() {
 		return new RenderablePredicate() {
+			@Override
 			public boolean checkCurrentState(VElement renderable) {
 				return renderable.isEnabled();
 			}
@@ -82,34 +58,12 @@ public class RuleServiceHelperImpl implements ViewModelService, RuleServiceHelpe
 	 */
 	private RenderablePredicate createHiddenRenderablePredicate() {
 		return new RenderablePredicate() {
+			@Override
 			public boolean checkCurrentState(VElement renderable) {
 				return renderable.isVisible();
 			}
 
 		};
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.rule.RuleServiceHelper#getInvolvedEObjects(java.util.Map,
-	 *      org.eclipse.emf.ecore.EAttribute, java.lang.Class)
-	 */
-	public <T extends VElement> Set<T> getInvolvedEObjects(Map<Setting, Object> possibleNewValues,
-		EAttribute changedAttribute,
-		Class<T> renderableClass) {
-
-		final Set<T> result = new LinkedHashSet<T>();
-
-		final Map<VElement, Boolean> hiddenRenderables = context.getService(RuleService.class)
-			.getHiddenRenderables(possibleNewValues, changedAttribute);
-		final Map<VElement, Boolean> disabledRenderables = context.getService(RuleService.class)
-			.getDisabledRenderables(possibleNewValues, changedAttribute);
-		result
-			.addAll(collectFalseValues(renderableClass, disabledRenderables, createDisabledRenderablePredicate()));
-		result.addAll(collectFalseValues(renderableClass, hiddenRenderables, createHiddenRenderablePredicate()));
-
-		return result;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -149,28 +103,53 @@ public class RuleServiceHelperImpl implements ViewModelService, RuleServiceHelpe
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#instantiate(org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
+	@Override
 	public void instantiate(ViewModelContext context) {
 		this.context = context;
 	}
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#dispose()
 	 */
+	@Override
 	public void dispose() {
 
 	}
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#getPriority()
 	 */
+	@Override
 	public int getPriority() {
 		return 2;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.rule.RuleServiceHelper#getInvolvedEObjects(org.eclipse.emf.ecore.EStructuralFeature.Setting,
+	 *      java.lang.Object, java.lang.Class)
+	 */
+	@Override
+	public <T extends VElement> Set<T> getInvolvedEObjects(Setting setting, Object newValue, Class<T> renderableClass) {
+		final Map<Setting, Object> newValues = new LinkedHashMap<EStructuralFeature.Setting, Object>();
+		newValues.put(setting, newValue);
+
+		final Map<VElement, Boolean> disabledRenderables = context.getService(RuleService.class)
+			.getDisabledRenderables(newValues, UniqueSetting.createSetting(setting));
+		final Map<VElement, Boolean> hiddenRenderables = context.getService(RuleService.class)
+			.getHiddenRenderables(newValues, UniqueSetting.createSetting(setting));
+
+		final Set<T> result = new LinkedHashSet<T>();
+		result.addAll(collectFalseValues(renderableClass, disabledRenderables, createDisabledRenderablePredicate()));
+		result.addAll(collectFalseValues(renderableClass, hiddenRenderables, createHiddenRenderablePredicate()));
+		return result;
 	}
 }

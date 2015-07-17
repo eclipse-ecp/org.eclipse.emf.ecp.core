@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.ecp.ui.view.swt" version="2">
+    <resource path="META-INF/MANIFEST.MF">
+        <filter comment="SPI change" id="923795461">
+            <message_arguments>
+                <message_argument value="1.2.0"/>
+                <message_argument value="1.1.1"/>
+            </message_arguments>
+        </filter>
+        <filter comment="This is SPI" id="923795461">
+            <message_arguments>
+                <message_argument value="1.3.0"/>
+                <message_argument value="1.2.1"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI break only" id="923795461">
+            <message_arguments>
+                <message_argument value="1.4.0"/>
+                <message_argument value="1.4.0"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Changes for 1.6" id="923795461">
+            <message_arguments>
+                <message_argument value="1.6.0"/>
+                <message_argument value="1.5.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.model.common.spi.databinding.DatabindingProviderService">
+        <filter comment="SPI Changes for 1.6" id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.model.common.spi.databinding.DatabindingProviderService"/>
+                <message_argument value="org.eclipse.emf.ecp.ui.view.swt_1.5.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport">
+        <filter comment="SPI Changes for 1.6" id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport"/>
+                <message_argument value="org.eclipse.emf.ecp.ui.view.swt_1.5.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.model.reporting.ReportService">
+        <filter comment="SPI Changes for 1.6" id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.reporting.ReportService"/>
+                <message_argument value="org.eclipse.emf.ecp.ui.view.swt_1.5.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.model.reporting.ReportServiceConsumer">
+        <filter comment="SPI Changes for 1.6" id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.model.reporting.ReportServiceConsumer"/>
+                <message_argument value="org.eclipse.emf.ecp.ui.view.swt_1.5.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.swt.AbstractAdditionalSWTRenderer">
+        <filter comment="EMFForms 1.6 SPI Change" id="305324134">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.swt.AbstractAdditionalSWTRenderer"/>
+                <message_argument value="org.eclipse.emf.ecp.ui.view.swt_1.6.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer">
+        <filter comment="EMFForms 1.6 SPI Change" id="305324134">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer"/>
+                <message_argument value="org.eclipse.emf.ecp.ui.view.swt_1.6.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory">
+        <filter comment="EMFForms 1.6 SPI Change" id="305324134">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.swt.layout.GridDescriptionFactory"/>
+                <message_argument value="org.eclipse.emf.ecp.ui.view.swt_1.6.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProvider">
+        <filter comment="EMFForms 1.6 SPI Change" id="305324134">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProvider"/>
+                <message_argument value="org.eclipse.emf.ecp.ui.view.swt_1.6.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell">
+        <filter comment="EMFForms 1.6 SPI Change" id="305324134">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell"/>
+                <message_argument value="org.eclipse.emf.ecp.ui.view.swt_1.6.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription">
+        <filter comment="EMFForms 1.6 SPI Change" id="305324134">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridDescription"/>
+                <message_argument value="org.eclipse.emf.ecp.ui.view.swt_1.6.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/ui/view/swt/DebugSWTReportConsumer.java" type="org.eclipse.emf.ecp.ui.view.swt.DebugSWTReportConsumer">
+        <filter comment="SPI Changes for 1.6" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.ui.view.swt.DebugSWTReportConsumer"/>
+                <message_argument value="reported(AbstractReport)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/ui/view/swt/DefaultReferenceService.java" type="org.eclipse.emf.ecp.ui.view.swt.DefaultReferenceService">
+        <filter comment="SPI break only" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.ui.view.swt.DefaultReferenceService"/>
+                <message_argument value="addModelElement(EObject, EReference)"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.ui.view.swt.DefaultReferenceService"/>
+                <message_argument value="getExistingElementFor(EReference)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI break only" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.ui.view.swt.DefaultReferenceService"/>
+                <message_argument value="getNewElementFor(EReference)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/ui/view/swt/ECPSWTViewRenderer.java" type="org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer">
+        <filter comment="SPI change" id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer"/>
+                <message_argument value="render(Composite, EObject, VView)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/ui/view/swt/InvalidGridDescriptionReportConsumer.java" type="org.eclipse.emf.ecp.ui.view.swt.InvalidGridDescriptionReportConsumer">
+        <filter comment="SPI Changes for 1.6" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.ui.view.swt.InvalidGridDescriptionReportConsumer"/>
+                <message_argument value="reported(AbstractReport)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/swt/SWTRendererFactory.java" type="org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory">
+        <filter comment="EMFForms 1.6 SPI Change" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory"/>
+                <message_argument value="getRenderer(VElement, ViewModelContext)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="EMFForms 1.6 SPI Change" id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory"/>
+                <message_argument value="getRenderer(VElement, ViewModelContext)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/swt/UnknownVElementSWTRenderer.java" type="org.eclipse.emf.ecp.view.spi.swt.UnknownVElementSWTRenderer">
+        <filter comment="SPI Changes for 1.6" id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.swt.UnknownVElementSWTRenderer"/>
+                <message_argument value="UnknownVElementSWTRenderer()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="EMFForms 1.6 SPI Change" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.swt.UnknownVElementSWTRenderer"/>
+                <message_argument value="getGridDescription(SWTGridDescription)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/swt/layout/AbstractLayoutProvider.java" type="org.eclipse.emf.ecp.view.spi.swt.layout.AbstractLayoutProvider">
+        <filter comment="EMFForms 1.6 SPI Change" id="337682486">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.swt.layout.AbstractLayoutProvider"/>
+            </message_arguments>
+        </filter>
+        <filter comment="EMFForms 1.6 SPI Change" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.swt.layout.AbstractLayoutProvider"/>
+                <message_argument value="isMultiLine(EStructuralFeature.Setting)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/swt/layout/AbstractLayoutProvider.java" type="org.eclipse.emfforms.spi.swt.core.layout.AbstractLayoutProvider">
+        <filter comment="SPI Changes for 1.6" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emfforms.spi.swt.core.layout.AbstractLayoutProvider"/>
+                <message_argument value="isMultiLine(EStructuralFeature.Setting)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/swt/layout/LayoutProviderHelper.java" type="org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper">
+        <filter comment="EMFForms 1.6 SPI Change" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper"/>
+                <message_argument value="getLayoutData(SWTGridCell, SWTGridDescription, SWTGridDescription, SWTGridDescription, VElement, Control)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/swt/layout/LayoutProviderHelper.java" type="org.eclipse.emfforms.spi.swt.core.layout.LayoutProviderHelper">
+        <filter comment="SPI Changes for 1.6" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emfforms.spi.swt.core.layout.LayoutProviderHelper"/>
+                <message_argument value="getLayoutData(SWTGridCell, SWTGridDescription, SWTGridDescription, SWTGridDescription, VElement, Control)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

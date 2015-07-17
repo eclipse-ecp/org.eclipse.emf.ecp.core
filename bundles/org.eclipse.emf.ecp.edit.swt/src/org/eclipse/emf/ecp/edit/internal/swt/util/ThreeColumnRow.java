@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
@@ -19,8 +19,9 @@ import org.eclipse.swt.widgets.Control;
 
 /**
  * @author Eugen
- * 
+ *
  */
+@Deprecated
 public class ThreeColumnRow implements RenderingResultRow<Control> {
 
 	private final Control leftControl;
@@ -29,7 +30,7 @@ public class ThreeColumnRow implements RenderingResultRow<Control> {
 
 	/**
 	 * A {@link RenderingResultRow} which holds two {@link Control Controls}.
-	 * 
+	 *
 	 * @param leftControl the Control for left Column
 	 * @param middleControl the Control for middle Column
 	 * @param rightControl the Control for right Column
@@ -63,9 +64,10 @@ public class ThreeColumnRow implements RenderingResultRow<Control> {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow#getMainControl()
 	 */
+	@Override
 	@Deprecated
 	public Control getMainControl() {
 		return getRightControl();
@@ -73,9 +75,10 @@ public class ThreeColumnRow implements RenderingResultRow<Control> {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow#getControls()
 	 */
+	@Override
 	public Set<Control> getControls() {
 		final Set<Control> controls = new LinkedHashSet<Control>(2);
 		controls.add(leftControl);

@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * wesendon - initial API and implementation
- * 
+ *
  *******************************************************************************/
 
 package org.eclipse.emf.ecp.internal.core.util.observer;
@@ -42,69 +42,53 @@ import org.eclipse.emf.ecp.core.util.observer.ECPObserverBus;
  * which then calls all registered observers.
  * The proxy can also be casted into {@link ECPObserverCall}, which allows to access all results by the different
  * observers.
- * 
- * 
+ *
+ *
  * Example code:
- * 
+ *
  * <pre>
  * // A is ESObserver
  * A a = new A() {
- * 
+ *
  * 	public void foo() {
  * 		System.out.println(&quot;A says: go!&quot;);
  * 	}
  * };
- * 
+ *
  * // B extends A and is IObserver
  * B b = new B() {
- * 
+ *
  * 	public void say(String ja) {
  * 		System.out.println(&quot;B says: &quot; + ja);
  * 	}
- * 
+ *
  * 	public void foo() {
  * 		System.out.println(&quot;B says: h??&quot;);
  * 	}
  * };
- * 
+ *
  * // B is registered first
  * ObserverBus.register(b);
  * ObserverBus.register(a);
- * 
+ *
  * ObserverBus.notify(A.class).foo();
- * 
+ *
  * ObserverBus.notify(B.class).say(&quot;w00t&quot;);
- * 
+ *
  * // Output:
- * 
+ *
  * // B says: h??
  * // A says: go!
  * //
  * // B says: w00t
- * 
+ *
  * </pre>
- * 
+ *
  * @author wesendon
  */
 public class ECPObserverBusImpl implements ECPObserverBus {
 
-	/**
-	 * Initializes the singleton instance statically.
-	 */
-	private static class SingletonHolder {
-		public static final ECPObserverBusImpl INSTANCE = new ECPObserverBusImpl();
-	}
-
-	/**
-	 * Static ObserverBus singleton. Use of singleton is optional, for that reason the constructor is public.
-	 * 
-	 * @return Static instance of the observerbus
-	 */
-	public static ECPObserverBusImpl getInstance() {
-		return SingletonHolder.INSTANCE;
-	}
-
-	private HashMap<Class<? extends ECPObserver>, List<ECPObserver>> observerMap;
+	private final HashMap<Class<? extends ECPObserver>, List<ECPObserver>> observerMap;
 
 	/**
 	 * Default constructor.
@@ -115,22 +99,23 @@ public class ECPObserverBusImpl implements ECPObserverBus {
 
 	/**
 	 * This method allows you to notify all observers.
-	 * 
+	 *
 	 * @param <T> class of observer
 	 * @param clazz class of observer
 	 * @return call object
 	 */
+	@Override
 	public <T extends ECPObserver> T notify(Class<T> clazz) {
 		return notify(clazz, false);
 	}
 
 	/**
 	 * This method allows you to notify all observers.
-	 * 
+	 *
 	 * @param <T> class of observer
 	 * @param clazz class of observer
 	 * @param prioritized sort observer after {@link ECPPrioritizedIObserver}
-	 * 
+	 *
 	 * @return call object
 	 */
 	public <T extends ECPObserver> T notify(Class<T> clazz, boolean prioritized) {
@@ -142,21 +127,22 @@ public class ECPObserverBusImpl implements ECPObserverBus {
 
 	/**
 	 * Registers an observer for all observer interfaces implemented by the object or its super classes.
-	 * 
+	 *
 	 * @param observer observer object
 	 */
+	@Override
 	public void register(ECPObserver observer) {
 		register(observer, getObserverInterfaces(observer));
 	}
 
 	/**
 	 * Registers an observer for the specified observer interfaces.
-	 * 
+	 *
 	 * @param observer observer object
 	 * @param classes set of classes
 	 */
 	public void register(ECPObserver observer, Class<? extends ECPObserver>... classes) {
-		for (Class<? extends ECPObserver> iface : classes) {
+		for (final Class<? extends ECPObserver> iface : classes) {
 			if (iface.isInstance(observer)) {
 				addObserver(observer, iface);
 			}
@@ -165,21 +151,22 @@ public class ECPObserverBusImpl implements ECPObserverBus {
 
 	/**
 	 * Unregisters an observer for all observer interfaces implemented by the object or its super classes.
-	 * 
+	 *
 	 * @param observer observer object
 	 */
+	@Override
 	public void unregister(ECPObserver observer) {
 		unregister(observer, getObserverInterfaces(observer));
 	}
 
 	/**
 	 * Unregisters an observer for the specified observer interfaces.
-	 * 
+	 *
 	 * @param observer observer object
 	 * @param classes set of classes
 	 */
 	public void unregister(ECPObserver observer, Class<? extends ECPObserver>... classes) {
-		for (Class<? extends ECPObserver> iface : classes) {
+		for (final Class<? extends ECPObserver> iface : classes) {
 			if (iface.isInstance(observer)) {
 				removeObserver(observer, iface);
 			}
@@ -187,12 +174,12 @@ public class ECPObserverBusImpl implements ECPObserverBus {
 	}
 
 	private void addObserver(ECPObserver observer, Class<? extends ECPObserver> iface) {
-		List<ECPObserver> observers = initObserverList(iface);
+		final List<ECPObserver> observers = initObserverList(iface);
 		observers.add(observer);
 	}
 
 	private void removeObserver(ECPObserver observer, Class<? extends ECPObserver> iface) {
-		List<ECPObserver> observers = initObserverList(iface);
+		final List<ECPObserver> observers = initObserverList(iface);
 		observers.remove(observer);
 	}
 
@@ -219,7 +206,7 @@ public class ECPObserverBusImpl implements ECPObserverBus {
 		if (!clazz.equals(method.getDeclaringClass())) {
 			return false;
 		}
-		for (Class<?> interfaceClass : clazz.getInterfaces()) {
+		for (final Class<?> interfaceClass : clazz.getInterfaces()) {
 			if (ECPPrioritizedIObserver.class.equals(interfaceClass)) {
 				return true;
 			}
@@ -229,7 +216,7 @@ public class ECPObserverBusImpl implements ECPObserverBus {
 
 	@SuppressWarnings("unchecked")
 	private <T extends ECPObserver> T createProxy(Class<T> clazz, boolean prioritized) {
-		ProxyHandler handler = new ProxyHandler((Class<ECPObserver>) clazz, prioritized);
+		final ProxyHandler handler = new ProxyHandler((Class<ECPObserver>) clazz, prioritized);
 		return (T) Proxy
 			.newProxyInstance(clazz.getClassLoader(), new Class[] { clazz, ECPObserverCall.class }, handler);
 
@@ -237,14 +224,14 @@ public class ECPObserverBusImpl implements ECPObserverBus {
 
 	/**
 	 * Proxyobserver which notifies all observers.
-	 * 
+	 *
 	 * @author wesendon
 	 */
 	private final class ProxyHandler implements InvocationHandler, ECPObserverCall {
 
-		private Class<ECPObserver> clazz;
+		private final Class<ECPObserver> clazz;
 		private List<ECPObserverCall.Result> lastResults;
-		private boolean prioritized;
+		private final boolean prioritized;
 
 		public ProxyHandler(Class<ECPObserver> clazz, boolean prioritized) {
 			this.clazz = clazz;
@@ -253,6 +240,7 @@ public class ECPObserverBusImpl implements ECPObserverBus {
 		}
 
 		// BEGIN SUPRESS CATCH EXCEPTION
+		@Override
 		public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 			// END SUPRESS CATCH EXCEPTION
 			// fork for calls to ObserverCall.class
@@ -260,7 +248,7 @@ public class ECPObserverBusImpl implements ECPObserverBus {
 				return accessObserverCall(method, args);
 			}
 
-			List<ECPObserver> observers = getObserverByClass(clazz);
+			final List<ECPObserver> observers = getObserverByClass(clazz);
 
 			if (prioritized && isPrioritizedObserver(clazz, method)) {
 				sortObservers(observers);
@@ -273,11 +261,11 @@ public class ECPObserverBusImpl implements ECPObserverBus {
 			}
 
 			lastResults = notifiyObservers(observers, method, args);
-			List<Object> result = new ArrayList<Object>();
-			for (Result resultObject : lastResults) {
-				Object res = resultObject.getResultOrDefaultValue();
+			final List<Object> result = new ArrayList<Object>();
+			for (final Result resultObject : lastResults) {
+				final Object res = resultObject.getResultOrDefaultValue();
 				if (res instanceof Object[]) {
-					Object[] arrayRes = (Object[]) res;
+					final Object[] arrayRes = (Object[]) res;
 					result.addAll(Arrays.asList(arrayRes));
 				} else if (res instanceof Collection) {
 					result.addAll((Collection) res);
@@ -296,12 +284,12 @@ public class ECPObserverBusImpl implements ECPObserverBus {
 		}
 
 		private List<ECPObserverCall.Result> notifiyObservers(List<ECPObserver> observers, Method method, Object[] args) {
-			List<ECPObserverCall.Result> results = new ArrayList<ECPObserverCall.Result>(observers.size());
-			for (ECPObserver observer : observers) {
+			final List<ECPObserverCall.Result> results = new ArrayList<ECPObserverCall.Result>(observers.size());
+			for (final ECPObserver observer : observers) {
 				try {
 					results.add(new Result(observer, method, method.invoke(observer, args)));
 					// BEGIN SUPRESS CATCH EXCEPTION
-				} catch (Throwable e) {
+				} catch (final Throwable e) {
 					// END SUPRESS CATCH EXCEPTION
 					results.add(new Result(observer, e, method));
 				}
@@ -309,6 +297,7 @@ public class ECPObserverBusImpl implements ECPObserverBus {
 			return results;
 		}
 
+		@Override
 		public List<Result> getObserverCallResults() {
 			return lastResults;
 		}
@@ -318,14 +307,15 @@ public class ECPObserverBusImpl implements ECPObserverBus {
 
 	/**
 	 * Sorts Observers. Make sure they are {@link ECPPrioritizedIObserver}!!
-	 * 
+	 *
 	 * @param observers list of observers
 	 */
 	private void sortObservers(List<ECPObserver> observers) {
 		Collections.sort(observers, new Comparator<ECPObserver>() {
+			@Override
 			public int compare(ECPObserver o1, ECPObserver o2) {
-				int prio1 = ((ECPPrioritizedIObserver) o1).getPriority();
-				int prio2 = ((ECPPrioritizedIObserver) o2).getPriority();
+				final int prio1 = ((ECPPrioritizedIObserver) o1).getPriority();
+				final int prio2 = ((ECPPrioritizedIObserver) o2).getPriority();
 				if (prio1 == prio2) {
 					return 0;
 				}
@@ -336,14 +326,14 @@ public class ECPObserverBusImpl implements ECPObserverBus {
 
 	@SuppressWarnings("unchecked")
 	private Class<? extends ECPObserver>[] getObserverInterfaces(ECPObserver observer) {
-		HashSet<Class<? extends ECPObserver>> observerInterfacsFound = new HashSet<Class<? extends ECPObserver>>();
+		final HashSet<Class<? extends ECPObserver>> observerInterfacsFound = new HashSet<Class<? extends ECPObserver>>();
 		getClasses(observer.getClass(), observerInterfacsFound);
 		return observerInterfacsFound.toArray(new Class[observerInterfacsFound.size()]);
 	}
 
 	@SuppressWarnings("unchecked")
 	private boolean getClasses(Class<?> clazz, HashSet<Class<? extends ECPObserver>> result) {
-		for (Class<?> iface : getAllInterfaces(clazz, new HashSet<Class<?>>())) {
+		for (final Class<?> iface : getAllInterfaces(clazz, new HashSet<Class<?>>())) {
 			if (iface.equals(ECPObserver.class) && clazz.isInterface()) {
 				result.add((Class<? extends ECPObserver>) clazz);
 				return true;
@@ -358,7 +348,7 @@ public class ECPObserverBusImpl implements ECPObserverBus {
 
 	private Set<Class<?>> getAllInterfaces(final Class<?> clazz, final Set<Class<?>> interfacesFound) {
 
-		for (Class<?> iface : clazz.getInterfaces()) {
+		for (final Class<?> iface : clazz.getInterfaces()) {
 			interfacesFound.add(iface);
 		}
 

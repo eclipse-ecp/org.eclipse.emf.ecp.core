@@ -1,0 +1,35 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _rr2EEFpSEeKcnaHGSt8OwA,_IuFcgFpZEeKcnaHGSt8OwA,_f3qEUVpSEeKcnaHGSt8OwA,__UtTgD-XEeK-yuKsz0Lang
+Element-Name: ValidateBigDecimal
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _aJUTcIpgEeK80-dAVHg-DA
+Runtime-Version: 1.5.4.201410231434
+Save-Time: 12/19/14 4:45 PM
+Tags: skipExecution
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]/League America/Player Jonas" | double-click
+with [get-editor "Player Jonas" | get-editbox -after [get-label "Win Loss Ratio"]] {
+    set-text "1.23"
+    key-type Enter
+}
+get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]" | get-menu Commit | click
+get-window Commit | get-button OK | click
+get-view "Model Explorer" | get-tree | select "TestProjectSecondCheckOut \\[trunk, Version 0\\]/League America/Player Jonas" | double-click
+//get-editor "Player Jonas" | get-editbox -after [get-label "Win Loss Ratio"] | get-property backgroundColor 
+  //  | equals "#FF0000" | verify-true
+get-view "Model Explorer" | get-tree | select "TestProjectSecondCheckOut \\[trunk, Version 0\\]" | get-menu Update | click
+get-window Update | get-button OK | click
+with [get-editor "Player Jonas" | get-editbox -after [get-label "Win Loss Ratio"]] {
+    get-property text | equals "1.23" | verify-true
+    get-property backgroundColor | equals "#FFFFFF" | verify-true
+    get-property foregroundColor | equals "#000000" | verify-true
+}
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

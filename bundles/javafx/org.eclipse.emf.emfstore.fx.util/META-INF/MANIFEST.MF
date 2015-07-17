@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: EMFStore FX Util
+Bundle-SymbolicName: org.eclipse.emf.emfstore.fx.util
+Bundle-Version: 1.6.0.qualifier
+Bundle-Vendor: Eclipse Modeling Project
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: org.eclipse.emf.emfstore.client
+Export-Package: org.eclipse.emf.emfstore.fx.util;version="1.6.0"

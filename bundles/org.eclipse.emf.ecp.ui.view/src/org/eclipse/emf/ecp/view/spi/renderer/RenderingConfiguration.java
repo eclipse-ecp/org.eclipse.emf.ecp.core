@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -24,10 +24,12 @@ import org.eclipse.emf.ecp.view.internal.ui.Activator;
 /**
  * This class allows to get a fitting {@link LayoutHelper} based on the provided {@link Class} as well as to get a
  * fitting {@link RenderingResultRowFactory} based on a {@link Class}.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ * @since 1.2
+ *
  */
+@Deprecated
 public final class RenderingConfiguration {
 
 	private static final String RENDERING_LAYOUT_HELPER = "renderingLayoutHelper"; //$NON-NLS-1$
@@ -44,7 +46,7 @@ public final class RenderingConfiguration {
 
 	/**
 	 * Returns the singleton instance.
-	 * 
+	 *
 	 * @return the singleton
 	 */
 	public static RenderingConfiguration getCurrent() {
@@ -89,7 +91,7 @@ public final class RenderingConfiguration {
 
 	/**
 	 * Returns the {@link RenderingResultRowFactory} registered for a specific {@link Class}.
-	 * 
+	 *
 	 * @param controlClazz the class to get the {@link RenderingResultRowFactory} for
 	 * @param <CONTROL> the type of the control, the factory is working on
 	 * @return the registered {@link RenderingResultRowFactory} or null if none is registered for the provided
@@ -102,7 +104,7 @@ public final class RenderingConfiguration {
 
 	/**
 	 * Returns the layout helper registered for a specific {@link Class}.
-	 * 
+	 *
 	 * @param layoutClazz the class to get the {@link LayoutHelper} for
 	 * @param <LAYOUT> the type of the layout, the layout helper should create
 	 * @return the registered {@link LayoutHelper} or null if none is registered for the provided {@link Class}

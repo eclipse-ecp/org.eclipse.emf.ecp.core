@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.util.EContentAdapter;
 
 /**
  * @author Eugen Neufeld
- * 
+ *
  */
 public class DerivedAttributeAdapter extends AdapterImpl {
 	private final InternalEObject source;
@@ -52,7 +52,7 @@ public class DerivedAttributeAdapter extends AdapterImpl {
 
 	/**
 	 * Convenience constructor for a local and navigated dependency.
-	 * 
+	 *
 	 * @param source the source {@link EObject}
 	 * @param derivedFeature the derived {@link EStructuralFeature}
 	 * @param navigationFeature the feature used for navigation
@@ -68,7 +68,7 @@ public class DerivedAttributeAdapter extends AdapterImpl {
 
 	/**
 	 * Convenience constructor for a navigated dependency.
-	 * 
+	 *
 	 * @param source the source {@link EObject}
 	 * @param derivedFeature the derived {@link EStructuralFeature}
 	 * @param navigationFeature the feature used for navigation
@@ -82,7 +82,7 @@ public class DerivedAttributeAdapter extends AdapterImpl {
 
 	/**
 	 * Convenience constructor for a local dependency.
-	 * 
+	 *
 	 * @param source the source {@link EObject}
 	 * @param derivedFeature the derived {@link EStructuralFeature}
 	 * @param localFeature the local {@link EStructuralFeature} being derived
@@ -95,7 +95,7 @@ public class DerivedAttributeAdapter extends AdapterImpl {
 
 	/**
 	 * Constructor with source object and the derived feature.
-	 * 
+	 *
 	 * @param source the source {@link EObject}
 	 * @param derivedFeature the derived {@link EStructuralFeature}
 	 */
@@ -108,7 +108,7 @@ public class DerivedAttributeAdapter extends AdapterImpl {
 
 	/**
 	 * Adds a navigated dependency for a derived feature.
-	 * 
+	 *
 	 * @param navigationFeature the feature used for navigation
 	 * @param dependantFeature the {@link EStructuralFeature} being derived
 	 */
@@ -120,7 +120,7 @@ public class DerivedAttributeAdapter extends AdapterImpl {
 
 	/**
 	 * Adds a local dependency for a derived feature.
-	 * 
+	 *
 	 * @param localFeature the local {@link EStructuralFeature} being derived
 	 */
 	public void addLocalDependency(EStructuralFeature localFeature) {

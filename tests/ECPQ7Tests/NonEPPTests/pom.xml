@@ -1,0 +1,39 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.eclipse.emf.ecp</groupId>
+	<artifactId>q7-non-epp-tests</artifactId>
+	<packaging>rcpttTest</packaging>
+
+	<parent>
+		<groupId>org.eclipse.emf.ecp</groupId>
+		<artifactId>q7tests</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.xored.ci4rcptt</groupId>
+				<artifactId>ci4rcptt-maven-plugin</artifactId>
+				<version>${ci4rcptt-maven-version}</version>
+				<extensions>true</extensions>
+				<configuration>
+						<runner>
+							<version>${ci4rcptt-runner-version}</version>
+						</runner>
+					<aut>
+						<explicit>${currentBuild}/products/org.eclipse.emf.ecp.3x-[platform].zip</explicit>
+
+						<args>
+							<arg>-nl</arg>
+							<arg>en</arg>
+						</args>
+					</aut>
+					
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+		
+</project>

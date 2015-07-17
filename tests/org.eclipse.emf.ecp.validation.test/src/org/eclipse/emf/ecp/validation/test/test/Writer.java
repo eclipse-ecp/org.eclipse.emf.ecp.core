@@ -1,15 +1,15 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  * Johannes Faltermeier
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.validation.test.test;
 
@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.EObject;
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Writer</b></em>'.
  * <!-- end-user-doc -->
- * 
+ *
  * <p>
  * The following features are supported:
  * <ul>
@@ -37,7 +37,7 @@ import org.eclipse.emf.ecore.EObject;
  * <li>{@link org.eclipse.emf.ecp.validation.test.test.Writer#getLibrary <em>Library</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.ecp.validation.test.test.TestPackage#getWriter()
  * @model
  * @generated
@@ -51,7 +51,7 @@ public interface Writer extends EObject {
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>First Name</em>' attribute.
 	 * @see #setFirstName(String)
 	 * @see org.eclipse.emf.ecp.validation.test.test.TestPackage#getWriter_FirstName()
@@ -65,7 +65,7 @@ public interface Writer extends EObject {
 	 * attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>First Name</em>' attribute.
 	 * @see #getFirstName()
 	 * @generated
@@ -80,7 +80,7 @@ public interface Writer extends EObject {
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Last Name</em>' attribute.
 	 * @see #setLastName(String)
 	 * @see org.eclipse.emf.ecp.validation.test.test.TestPackage#getWriter_LastName()
@@ -94,7 +94,7 @@ public interface Writer extends EObject {
 	 * attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Last Name</em>' attribute.
 	 * @see #getLastName()
 	 * @generated
@@ -109,7 +109,7 @@ public interface Writer extends EObject {
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>EMail</em>' attribute.
 	 * @see #setEMail(String)
 	 * @see org.eclipse.emf.ecp.validation.test.test.TestPackage#getWriter_EMail()
@@ -123,7 +123,7 @@ public interface Writer extends EObject {
 	 * attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>EMail</em>' attribute.
 	 * @see #getEMail()
 	 * @generated
@@ -138,7 +138,7 @@ public interface Writer extends EObject {
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Birth Date</em>' attribute.
 	 * @see #setBirthDate(Date)
 	 * @see org.eclipse.emf.ecp.validation.test.test.TestPackage#getWriter_BirthDate()
@@ -152,7 +152,7 @@ public interface Writer extends EObject {
 	 * attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Birth Date</em>' attribute.
 	 * @see #getBirthDate()
 	 * @generated
@@ -170,7 +170,7 @@ public interface Writer extends EObject {
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Books</em>' reference list.
 	 * @see org.eclipse.emf.ecp.validation.test.test.TestPackage#getWriter_Books()
 	 * @see org.eclipse.emf.ecp.validation.test.test.Book#getWriters
@@ -188,7 +188,7 @@ public interface Writer extends EObject {
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Pseudonym</em>' attribute.
 	 * @see #setPseudonym(boolean)
 	 * @see org.eclipse.emf.ecp.validation.test.test.TestPackage#getWriter_Pseudonym()
@@ -202,7 +202,7 @@ public interface Writer extends EObject {
 	 * attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Pseudonym</em>' attribute.
 	 * @see #isPseudonym()
 	 * @generated
@@ -219,7 +219,7 @@ public interface Writer extends EObject {
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Library</em>' container reference.
 	 * @see #setLibrary(Library)
 	 * @see org.eclipse.emf.ecp.validation.test.test.TestPackage#getWriter_Library()
@@ -234,7 +234,7 @@ public interface Writer extends EObject {
 	 * container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Library</em>' container reference.
 	 * @see #getLibrary()
 	 * @generated
@@ -244,7 +244,7 @@ public interface Writer extends EObject {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @model
 	 * @generated
 	 */

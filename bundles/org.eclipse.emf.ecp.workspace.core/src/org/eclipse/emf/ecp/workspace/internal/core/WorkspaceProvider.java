@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -61,12 +61,18 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 public class WorkspaceProvider extends DefaultProvider {
 
 	/** The Provider Name. */
-	public static final String NAME = "org.eclipse.emf.ecp.workspace.provider";
+	public static final String NAME = "org.eclipse.emf.ecp.workspace.provider"; //$NON-NLS-1$
 
 	/** Root URI Property Name. */
-	public static final String PROP_ROOT_URI = "rootURI";
+	public static final String PROP_ROOT_URI = "rootURI"; //$NON-NLS-1$
 
-	/** The Workspace Provider Instance. */
+	/**
+	 * The Workspace Provider Instance.
+	 *
+	 * @deprecated use ECPUtil.getECPProviderRegistry().getProvider(WorkspaceProvider.NAME) instead
+	 *
+	 */
+	@Deprecated
 	static WorkspaceProvider INSTANCE;
 
 	/**
@@ -162,6 +168,7 @@ public class WorkspaceProvider extends DefaultProvider {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public EList<? extends Object> getElements(InternalProject project) {
 		final ResourceSet resourceSet = project.getEditingDomain().getResourceSet();
 		return ECollections.unmodifiableEList(resourceSet.getResource(
@@ -186,7 +193,7 @@ public class WorkspaceProvider extends DefaultProvider {
 
 	/**
 	 * Reloads the project.
-	 * 
+	 *
 	 * @param project the project to be reloaded.
 	 */
 	public void reload(InternalProject project) {
@@ -206,17 +213,20 @@ public class WorkspaceProvider extends DefaultProvider {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void delete(InternalProject project, Collection<Object> objects) {
 		project.getEditingDomain().getCommandStack().execute(DeleteCommand.create(project.getEditingDomain(), objects));
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void cloneProject(final InternalProject projectToClone, InternalProject targetProject) {
 		throw new UnsupportedOperationException();
 	}
 
 	/** {@inheritDoc} */
 	// FIXME
+	@Override
 	public Notifier getRoot(InternalProject project) {
 		return project.getEditingDomain().getResourceSet()
 			.getResource(URI.createURI(project.getProperties().getValue(PROP_ROOT_URI)), true);
@@ -307,9 +317,10 @@ public class WorkspaceProvider extends DefaultProvider {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#isThreadSafe()
 	 */
+	@Override
 	public boolean isThreadSafe() {
 		return false;
 	}

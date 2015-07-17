@@ -1,11 +1,11 @@
 /********************************************************************************
  * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
  ********************************************************************************/
@@ -35,7 +35,8 @@ public class ProjectPropertiesDialog extends PropertiesDialog {
 	public ProjectPropertiesDialog(Shell parentShell, boolean editable, ECPProject project) {
 		super(parentShell, project.getName(), Messages.ProjectPropertiesDialog_DialogTitle_ProjectIs
 			+ (project.isOpen() ? Messages.ProjectPropertiesDialog_DialogTitle_Open
-				: Messages.ProjectPropertiesDialog_DialogTitle_Closed) + ".", editable, project.getProperties());
+				: Messages.ProjectPropertiesDialog_DialogTitle_Closed)
+			+ ".", editable, project.getProperties()); //$NON-NLS-1$
 		this.project = project;
 	}
 
@@ -63,7 +64,7 @@ public class ProjectPropertiesDialog extends PropertiesDialog {
 
 	@Override
 	protected void createSpecialProperties(Composite parent) {
-		Composite composite = new Composite(parent, SWT.NONE);
+		final Composite composite = new Composite(parent, SWT.NONE);
 		composite.setLayout(new GridLayout(2, false));
 
 		repositoryText = addTextProperty(composite, Messages.ProjectPropertiesDialog_ProjectRepository,

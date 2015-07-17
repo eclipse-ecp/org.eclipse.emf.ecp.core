@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
  *******************************************************************************/
@@ -20,7 +20,7 @@ import org.osgi.framework.BundleContext;
 
 /**
  * The activator class controls the plug-in life cycle.
- * 
+ *
  * @author Eike Stepper
  */
 public final class Activator extends AbstractUIPlugin {
@@ -53,7 +53,7 @@ public final class Activator extends AbstractUIPlugin {
 	// END SUPRESS CATCH EXCEPTION
 	/**
 	 * Returns the shared instance.
-	 * 
+	 *
 	 * @return the shared instance
 	 */
 	public static Activator getInstance() {
@@ -62,7 +62,7 @@ public final class Activator extends AbstractUIPlugin {
 
 	/**
 	 * Logs and Info message.
-	 * 
+	 *
 	 * @param message the message to log
 	 */
 	public static void log(String message) {
@@ -75,19 +75,19 @@ public final class Activator extends AbstractUIPlugin {
 
 	/**
 	 * Logs a {@link Throwable}.
-	 * 
+	 *
 	 * @param t the {@link Throwable} to log
 	 * @return the message of the {@link Throwable}
 	 */
 	public static String log(Throwable t) {
-		IStatus status = getStatus(t);
+		final IStatus status = getStatus(t);
 		log(status);
 		return status.getMessage();
 	}
 
 	private static IStatus getStatus(Throwable t) {
 		if (t instanceof CoreException) {
-			CoreException coreException = (CoreException) t;
+			final CoreException coreException = (CoreException) t;
 			return coreException.getStatus();
 		}
 
@@ -101,7 +101,7 @@ public final class Activator extends AbstractUIPlugin {
 
 	/**
 	 * Returns an {@link ImageDescriptor} for a path.
-	 * 
+	 *
 	 * @param path the path to an image
 	 * @return the {@link ImageDescriptor}
 	 */

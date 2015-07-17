@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:history="http://www.eclipse.org/emf/edapt/history/0.3">
+  <releases date="2014-08-28T11:30:02.503+0200" label="140">
+    <changes xsi:type="history:CompositeChange">
+      <changes xsi:type="history:Create" element="groupedGrid.ecore#/">
+        <changes xsi:type="history:Set" element="groupedGrid.ecore#/" featureName="name"
+            dataValue="groupedgrid"/>
+        <changes xsi:type="history:Set" element="groupedGrid.ecore#/" featureName="nsURI"
+            dataValue="http://org/eclipse/emf/ecp/view/groupedgrid/model"/>
+        <changes xsi:type="history:Set" element="groupedGrid.ecore#/" featureName="nsPrefix"
+            dataValue="org.eclipse.emf.ecp.view.groupedgrid.model"/>
+      </changes>
+      <changes xsi:type="history:Create" target="groupedGrid.ecore#/" referenceName="eClassifiers"
+          element="groupedGrid.ecore#//GroupedGrid">
+        <changes xsi:type="history:Set" element="groupedGrid.ecore#//GroupedGrid"
+            featureName="name" dataValue="GroupedGrid"/>
+        <changes xsi:type="history:Add" element="groupedGrid.ecore#//GroupedGrid"
+            featureName="eSuperTypes" referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//ContainedElement"/>
+      </changes>
+      <changes xsi:type="history:Create" target="groupedGrid.ecore#/" referenceName="eClassifiers"
+          element="groupedGrid.ecore#//Group">
+        <changes xsi:type="history:Set" element="groupedGrid.ecore#//Group" featureName="name"
+            dataValue="Group"/>
+      </changes>
+      <changes xsi:type="history:Create" target="groupedGrid.ecore#//GroupedGrid"
+          referenceName="eStructuralFeatures" element="groupedGrid.ecore#//GroupedGrid/groups">
+        <changes xsi:type="history:Set" element="groupedGrid.ecore#//GroupedGrid/groups"
+            featureName="name" dataValue="groups"/>
+        <changes xsi:type="history:Set" element="groupedGrid.ecore#//GroupedGrid/groups"
+            featureName="upperBound" dataValue="-1" oldDataValue="1"/>
+        <changes xsi:type="history:Set" element="groupedGrid.ecore#//GroupedGrid/groups"
+            featureName="containment" dataValue="true" oldDataValue="false"/>
+        <changes xsi:type="history:Set" element="groupedGrid.ecore#//GroupedGrid/groups"
+            featureName="eType" referenceValue="groupedGrid.ecore#//Group"/>
+      </changes>
+      <changes xsi:type="history:Create" target="groupedGrid.ecore#//Group" referenceName="eStructuralFeatures"
+          element="groupedGrid.ecore#//Group/name">
+        <changes xsi:type="history:Set" element="groupedGrid.ecore#//Group/name" featureName="name"
+            dataValue="name"/>
+        <changes xsi:type="history:Set" element="groupedGrid.ecore#//Group/name" featureName="lowerBound"
+            dataValue="1" oldDataValue="0"/>
+        <changes xsi:type="history:Set" element="groupedGrid.ecore#//Group/name" featureName="eType"
+            referenceValue="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </changes>
+      <changes xsi:type="history:Create" target="groupedGrid.ecore#/" referenceName="eClassifiers"
+          element="groupedGrid.ecore#//Row">
+        <changes xsi:type="history:Set" element="groupedGrid.ecore#//Row" featureName="name"
+            dataValue="Row"/>
+      </changes>
+      <changes xsi:type="history:Create" target="groupedGrid.ecore#//Group" referenceName="eStructuralFeatures"
+          element="groupedGrid.ecore#//Group/rows">
+        <changes xsi:type="history:Set" element="groupedGrid.ecore#//Group/rows" featureName="name"
+            dataValue="rows"/>
+        <changes xsi:type="history:Set" element="groupedGrid.ecore#//Group/rows" featureName="upperBound"
+            dataValue="-1" oldDataValue="1"/>
+        <changes xsi:type="history:Set" element="groupedGrid.ecore#//Group/rows" featureName="containment"
+            dataValue="true" oldDataValue="false"/>
+        <changes xsi:type="history:Set" element="groupedGrid.ecore#//Group/rows" featureName="eType"
+            referenceValue="groupedGrid.ecore#//Row"/>
+      </changes>
+      <changes xsi:type="history:Create" target="groupedGrid.ecore#//Row" referenceName="eStructuralFeatures"
+          element="groupedGrid.ecore#//Row/children">
+        <changes xsi:type="history:Set" element="groupedGrid.ecore#//Row/children"
+            featureName="name" dataValue="children"/>
+        <changes xsi:type="history:Set" element="groupedGrid.ecore#//Row/children"
+            featureName="upperBound" dataValue="-1" oldDataValue="1"/>
+        <changes xsi:type="history:Set" element="groupedGrid.ecore#//Row/children"
+            featureName="containment" dataValue="true" oldDataValue="false"/>
+        <changes xsi:type="history:Set" element="groupedGrid.ecore#//Row/children"
+            featureName="eType" referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//ContainedElement"/>
+      </changes>
+      <changes xsi:type="history:Create" target="groupedGrid.ecore#/" referenceName="eClassifiers"
+          element="groupedGrid.ecore#//Span">
+        <changes xsi:type="history:Set" element="groupedGrid.ecore#//Span" featureName="name"
+            dataValue="Span"/>
+        <changes xsi:type="history:Add" element="groupedGrid.ecore#//Span" featureName="eSuperTypes"
+            referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//Attachment"/>
+      </changes>
+      <changes xsi:type="history:Create" target="groupedGrid.ecore#//Span" referenceName="eStructuralFeatures"
+          element="groupedGrid.ecore#//Span/horizontalSpan">
+        <changes xsi:type="history:Set" element="groupedGrid.ecore#//Span/horizontalSpan"
+            featureName="name" dataValue="horizontalSpan"/>
+        <changes xsi:type="history:Set" element="groupedGrid.ecore#//Span/horizontalSpan"
+            featureName="lowerBound" dataValue="1" oldDataValue="0"/>
+        <changes xsi:type="history:Set" element="groupedGrid.ecore#//Span/horizontalSpan"
+            featureName="eType" referenceValue="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </changes>
+    </changes>
+  </releases>
+  <releases/>
+</history:History>

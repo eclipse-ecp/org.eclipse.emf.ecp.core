@@ -6,7 +6,7 @@
          <meta.schema plugin="org.eclipse.emf.ecp.view.context" id="viewServices" name="View Services"/>
       </appinfo>
       <documentation>
-         [Enter description of this extension point.]
+         This extension point allows to register ViewModelServices.
       </documentation>
    </annotation>
 
@@ -55,7 +55,7 @@
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn="org.eclipse.emf.ecp.view.context.AbstractViewService:"/>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.emf.ecp.view.spi.context.ViewModelService"/>
                </appinfo>
             </annotation>
          </attribute>

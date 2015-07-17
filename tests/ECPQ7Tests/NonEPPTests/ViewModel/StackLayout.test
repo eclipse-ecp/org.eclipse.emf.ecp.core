@@ -1,0 +1,136 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _rr2EEFpSEeKcnaHGSt8OwA,_IuFcgFpZEeKcnaHGSt8OwA,_f3qEUVpSEeKcnaHGSt8OwA,_fQ0PgDsqEeOHj9Cw0T_k4Q
+Element-Name: StackLayout
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _vFWa0B7dEeSIs6wLXEvOCg
+Runtime-Version: 1.5.4.201410231434
+Save-Time: 12/19/14 12:04 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+try {
+	get-editor View | get-button "Link Root EClass" | click
+	with [get-window "Select an EClass."] {
+	    get-tree | select "bowling/Player \\[org.eclipse.emf.emfstore.bowling.Player\\]"
+	    get-button OK | click
+	}
+	get-view "Model Explorer" | get-tree | select "Project/View" | get-menu Control | click
+	get-editor Control | get-button "Create and link new Domain Model Reference" | click
+	with [get-window "New Reference Element"] {
+	    get-tree | select "model/FeaturePathDomainModelReference"
+	    get-button "Next >" | click
+	    get-button "Link Domain Model EFeature" | click
+	    with [get-window "Select a EStructuralFeature"] {
+	        get-tree | select "gender : Gender"
+	        get-button OK | click
+	    }
+	    get-button Finish | click
+	}
+	with [get-view "Model Explorer" | get-tree] {
+	    select "Project/View" | get-menu "Stack Layout" | click
+	    select "Project/View/Stack Layout" | get-menu "Feature Path Domain Model Reference" | click
+	}
+	get-editor "Feature Path Domain Model Reference" | get-button "Link Domain Model EFeature" | click
+	with [get-window "Select a EStructuralFeature"] {
+	    get-tree | select "gender : Gender"
+	    get-button OK | click
+	}
+	get-view "Model Explorer" | get-tree | select "Project/View/Stack Layout" | get-menu "Stack Item" | click
+	get-editor "Stack Item" | get-button "Select Object" | click
+	get-window "Select a value" | get-button OK | click
+	get-view "Model Explorer" | get-tree | select "Project/View/Stack Layout/Stack Item" | get-menu Control | click
+	get-editor Control -index 1 | get-button "Create and link new Domain Model Reference" | click
+	with [get-window "New Reference Element"] {
+	    get-tree | select "model/FeaturePathDomainModelReference"
+	    get-button "Next >" | click
+	    get-button "Link Domain Model EFeature" | click
+	    with [get-window "Select a EStructuralFeature"] {
+	        get-tree | select "dateOfBirth : EDate"
+	        get-button OK | click
+	    }
+	    get-button Finish | click
+	}
+	get-view "Model Explorer" | get-tree | select "Project/View/Stack Layout" | get-menu "Stack Item" | click
+	get-editor "Stack Item" -index 1 | get-button "Select Object" | click
+	with [get-window "Select a value"] {
+	    get-table | select Male
+	    get-button OK | click
+	}
+	get-view "Model Explorer" | get-tree | select [get-item "Project/View/Stack Layout" | get-item "Stack Item" -index 1] 
+	    | get-menu Control | click
+	get-editor Control -index 2 | get-button "Create and link new Domain Model Reference" | click
+	with [get-window "New Reference Element"] {
+	    get-tree | select "model/FeaturePathDomainModelReference"
+	    get-button "Next >" | click
+	    get-button "Link Domain Model EFeature" | click
+	    with [get-window "Select a EStructuralFeature"] {
+	        get-tree | select "height : EDouble"
+	        get-button OK | click
+	    }
+	    get-button Finish | click
+	}
+	with [get-view "Model Explorer"] {
+	    get-tree | select [get-item "Project/View/Stack Layout" | get-item "Stack Item" -index 1]
+	    get-button "Save Project" | click
+	    get-tree | select [get-item "Project/View/Stack Layout" | get-item "Stack Item" -index 1] 
+	        | get-menu "Create new project" | click
+	}
+	with [get-window "Create Project"] {
+	    get-editbox -after [get-label "Project Name:"] | set-text test
+	    get-button Finish | click
+	}
+	get-view "Model Explorer" | get-tree | select test | get-menu "New Model Element" | click
+	with [get-window "Add new model element"] {
+	    get-tree | select "bowling/Player"
+	    get-button Finish | click
+	}
+	with [get-editor Player] {
+	    get-combo -after [get-label Gender] | get-property selection | equals Female | verify-true
+	    get-control Any -after [get-label "Player [Player]"] -index 4 | get-property "getChildren().length" | equals 4 
+	        | verify-true
+	    get-label "Date Of Birth" | get-property caption | equals "Date Of Birth" | verify-true
+	}
+	get-editor Player | get-combo -after [get-label Gender] | select Male
+	with [get-editor Player] {
+	    get-combo -after [get-label Gender] | get-property selection | equals Male | verify-true
+	    get-control Any -after [get-label "Player [Player]"] -index 4 | get-property "getChildren().length" | equals 4 
+	        | verify-true
+	    get-label Height | get-property caption | equals Height | verify-true
+	}
+	get-editor Player | get-combo -after [get-label Gender] | select Female
+	with [get-editor Player] {
+	    get-combo -after [get-label Gender] | get-property selection | equals Female | verify-true
+	    get-control Any -after [get-label "Player [Player]"] -index 4 | get-property "getChildren().length" | equals 4 
+	        | verify-true
+	    get-label "Date Of Birth" | get-property caption | equals "Date Of Birth" | verify-true
+	}
+	get-editor Player | close
+	with [get-view "Model Explorer"] {
+	    with [get-tree] {
+	        select [get-item "Project/View/Stack Layout" | get-item "Stack Item" -index 1] 
+	            | get-menu "Delete Model Element" | click
+	        select "Project/View/Stack Layout"
+	    }
+	    get-button "Save Project" | click
+	    get-tree | select "test/Player" | double-click
+	}
+	get-editor Player | get-combo -after [get-label Gender] | select Male
+	with [get-editor Player] {
+	    get-combo -after [get-label Gender] | get-property selection | equals Male | verify-true
+	    get-control Any -after [get-label Gender] -index 3 | get-property "getChildren().length" | equals 0 | verify-true
+	}
+	get-editor Player | get-combo -after [get-label Gender] | select Female
+	with [get-editor Player] {
+	    get-combo -after [get-label Gender] | get-property selection | equals Female | verify-true
+	    get-label "Date Of Birth" | get-property caption | equals "Date Of Birth" | verify-true
+	}
+} -finally {
+	get-view "Model Explorer" | get-tree | select "Project/View" | get-menu "Unset Root EClass" | click
+}
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
@@ -26,7 +26,7 @@ import org.eclipse.emf.ecp.view.spi.label.model.VLabelStyle;
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Factory</b>.
  * <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class VLabelFactoryImpl extends EFactoryImpl implements VLabelFactory
@@ -35,20 +35,20 @@ public class VLabelFactoryImpl extends EFactoryImpl implements VLabelFactory
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public static VLabelFactory init()
 	{
 		try
 		{
-			VLabelFactory theLabelFactory = (VLabelFactory) EPackage.Registry.INSTANCE
+			final VLabelFactory theLabelFactory = (VLabelFactory) EPackage.Registry.INSTANCE
 				.getEFactory(VLabelPackage.eNS_URI);
 			if (theLabelFactory != null)
 			{
 				return theLabelFactory;
 			}
-		} catch (Exception exception)
+		} catch (final Exception exception)
 		{
 			EcorePlugin.INSTANCE.log(exception);
 		}
@@ -59,7 +59,7 @@ public class VLabelFactoryImpl extends EFactoryImpl implements VLabelFactory
 	 * Creates an instance of the factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public VLabelFactoryImpl()
@@ -70,7 +70,7 @@ public class VLabelFactoryImpl extends EFactoryImpl implements VLabelFactory
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -88,7 +88,7 @@ public class VLabelFactoryImpl extends EFactoryImpl implements VLabelFactory
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -106,7 +106,7 @@ public class VLabelFactoryImpl extends EFactoryImpl implements VLabelFactory
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -124,34 +124,37 @@ public class VLabelFactoryImpl extends EFactoryImpl implements VLabelFactory
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public VLabel createLabel()
 	{
-		VLabelImpl label = new VLabelImpl();
+		final VLabelImpl label = new VLabelImpl();
 		return label;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public VLabelStyle createVLabelStyleFromString(EDataType eDataType, String initialValue)
 	{
-		VLabelStyle result = VLabelStyle.get(initialValue);
+		final VLabelStyle result = VLabelStyle.get(initialValue);
 		if (result == null)
+		{
 			throw new IllegalArgumentException(
 				"The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		}
 		return result;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public String convertVLabelStyleToString(EDataType eDataType, Object instanceValue)
@@ -162,9 +165,10 @@ public class VLabelFactoryImpl extends EFactoryImpl implements VLabelFactory
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public VLabelPackage getLabelPackage()
 	{
 		return (VLabelPackage) getEPackage();
@@ -173,7 +177,7 @@ public class VLabelFactoryImpl extends EFactoryImpl implements VLabelFactory
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @deprecated
 	 * @generated
 	 */

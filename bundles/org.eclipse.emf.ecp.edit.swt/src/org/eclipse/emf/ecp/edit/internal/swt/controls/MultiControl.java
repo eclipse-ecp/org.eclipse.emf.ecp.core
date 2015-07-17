@@ -1,11 +1,11 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -23,17 +23,19 @@ import org.eclipse.core.databinding.observable.list.ListChangeEvent;
 import org.eclipse.core.databinding.observable.list.ListDiff;
 import org.eclipse.core.databinding.observable.list.ListDiffVisitor;
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
-import org.eclipse.emf.ecp.edit.internal.swt.actions.ECPSWTAction;
 import org.eclipse.emf.ecp.edit.internal.swt.util.ECPObservableValue;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
 import org.eclipse.emf.ecp.edit.spi.ECPAbstractControl;
 import org.eclipse.emf.ecp.edit.spi.ECPControlDescription;
 import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
+import org.eclipse.emf.ecp.edit.spi.swt.actions.ECPSWTAction;
 import org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester;
 import org.eclipse.emf.ecp.edit.spi.util.ECPStaticApplicableTester;
+import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.edit.command.MoveCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -49,19 +51,21 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 
 /**
  * This control provides the necessary common functionality to create a multicontrol that are needed for
  * {@link org.eclipse.emf.ecore.EStructuralFeature EStructuralFeature}s that have multiple values.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public abstract class MultiControl extends SWTControl {
 
 	private static final String ICONS_ARROW_DOWN_PNG = "icons/arrow_down.png";//$NON-NLS-1$
 	private static final String ICONS_ARROW_UP_PNG = "icons/arrow_up.png";//$NON-NLS-1$
+	private static final String ICONS_UNSET_FEATURE = "icons/unset_feature.png"; //$NON-NLS-1$
 
 	private IObservableList model;
 	private IListChangeListener changeListener;
@@ -79,7 +83,7 @@ public abstract class MultiControl extends SWTControl {
 
 	/**
 	 * This returns the array of actions to display in the multi control.
-	 * 
+	 *
 	 * @return the array of action to add
 	 */
 	protected abstract ECPSWTAction[] instantiateActions();
@@ -111,7 +115,7 @@ public abstract class MultiControl extends SWTControl {
 
 	/**
 	 * Checks the priority of a tester.
-	 * 
+	 *
 	 * @param tester the {@link ECPStaticApplicableTester} to test
 	 * @param setting the {@link Setting} to use
 	 * @return the priority
@@ -149,62 +153,7 @@ public abstract class MultiControl extends SWTControl {
 		sectionComposite.setBackground(parent.getBackground());
 		GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(false).spacing(0, 5).applyTo(sectionComposite);
 
-		changeListener = new IListChangeListener() {
-
-			public void handleListChange(ListChangeEvent event) {
-				final ListDiff diff = event.diff;
-				diff.accept(new ListDiffVisitor() {
-
-					private int widthBeforeChange = -1; // initial negative value
-
-					@Override
-					public void handleRemove(int index, Object element) {
-						updateIndicesAfterRemove(index);
-						triggerScrollbarUpdate();
-						updateTargets();
-					}
-
-					private void updateTargets() {
-						for (final WidgetWrapper widgetWrapper : widgetWrappers) {
-							widgetWrapper.widget.getDataBindingContext().updateTargets();
-						}
-					}
-
-					@Override
-					public void handleAdd(int index, Object element) {
-						if (sectionComposite.isDisposed()) {
-							return;
-						}
-						addControl();
-
-						sectionComposite.layout();
-						triggerScrollbarUpdate();
-						updateTargets();
-					}
-
-					@Override
-					public void handleMove(int oldIndex, int newIndex, Object element) {
-						updateTargets();
-					}
-
-					@Override
-					public void handleReplace(int index, Object oldElement, Object newElement) {
-						widgetWrappers.get(index).widget.getDataBindingContext().updateTargets();
-					}
-
-					private void triggerScrollbarUpdate() {
-						if (sectionComposite.isDisposed()) {
-							return;
-						}
-						final int widthAfterChange = sectionComposite.getSize().x;
-						if (widthBeforeChange != widthAfterChange) {
-							scrolledComposite.setMinHeight(sectionComposite.computeSize(widthAfterChange, SWT.DEFAULT).y);
-							widthBeforeChange = widthAfterChange;
-						}
-					}
-				});
-			}
-		};
+		changeListener = new ListChangeListener(scrolledComposite);
 		model.addListChangeListener(changeListener);
 		for (int i = 0; i < model.size(); i++) {
 			addControl();
@@ -242,7 +191,7 @@ public abstract class MultiControl extends SWTControl {
 
 	/**
 	 * Returns the {@link SWTControl}.
-	 * 
+	 *
 	 * @return the created {@link SWTControl}
 	 */
 	private SWTControl getSingleInstance() {
@@ -310,16 +259,88 @@ public abstract class MultiControl extends SWTControl {
 
 		if (!isEmbedded() && getFirstStructuralFeature().isUnsettable()) {
 			unsetButton = new Button(toolbarComposite, SWT.PUSH);
+			unsetButton.setEnabled(!getControl().isReadonly());
 			unsetButton.setToolTipText(getUnsetButtonTooltip());
-			unsetButton.setImage(Activator.getImage("icons/delete.png")); //$NON-NLS-1$
+			unsetButton.setImage(Activator.getImage(ICONS_UNSET_FEATURE));
+		}
+	}
+
+	/**
+	 * @author Jonas
+	 *
+	 */
+	private final class ListChangeListener implements IListChangeListener {
+		private final ScrolledComposite scrolledComposite;
+
+		/**
+		 * @param scrolledComposite
+		 */
+		private ListChangeListener(ScrolledComposite scrolledComposite) {
+			this.scrolledComposite = scrolledComposite;
+		}
+
+		@Override
+		public void handleListChange(ListChangeEvent event) {
+			final ListDiff diff = event.diff;
+			diff.accept(new ListDiffVisitor() {
+
+				private int widthBeforeChange = -1; // initial negative value
+
+				@Override
+				public void handleRemove(int index, Object element) {
+					updateIndicesAfterRemove(index);
+					triggerScrollbarUpdate();
+					updateTargets();
+				}
+
+				private void updateTargets() {
+					for (final WidgetWrapper widgetWrapper : widgetWrappers) {
+						widgetWrapper.widget.getDataBindingContext().updateTargets();
+					}
+				}
+
+				@Override
+				public void handleAdd(int index, Object element) {
+					if (sectionComposite.isDisposed()) {
+						return;
+					}
+					addControl();
+
+					sectionComposite.layout();
+					triggerScrollbarUpdate();
+					updateTargets();
+				}
+
+				@Override
+				public void handleMove(int oldIndex, int newIndex, Object element) {
+					updateTargets();
+				}
+
+				@Override
+				public void handleReplace(int index, Object oldElement, Object newElement) {
+					widgetWrappers.get(index).widget.getDataBindingContext().updateTargets();
+				}
+
+				private void triggerScrollbarUpdate() {
+					if (sectionComposite.isDisposed()) {
+						return;
+					}
+					final int widthAfterChange = sectionComposite.getSize().x;
+					if (widthBeforeChange != widthAfterChange) {
+						scrolledComposite
+							.setMinHeight(sectionComposite.computeSize(widthAfterChange, SWT.DEFAULT).y);
+						widthBeforeChange = widthAfterChange;
+					}
+				}
+			});
 		}
 	}
 
 	/**
 	 * This class is the common wrapper for multi controls. It adds a remove, move up and move down button.
-	 * 
+	 *
 	 * @author Eugen Neufeld
-	 * 
+	 *
 	 */
 	private final class WidgetWrapper {
 
@@ -348,6 +369,8 @@ public abstract class MultiControl extends SWTControl {
 			widget.setObservableValue(modelValue);
 			final Composite createControl = widget.createControl(composite);
 
+			widget.setEditable(!getControl().isReadonly());
+
 			GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(createControl);
 
 			createDeleteButton(composite);
@@ -362,7 +385,8 @@ public abstract class MultiControl extends SWTControl {
 		 */
 		private void createDeleteButton(Composite composite) {
 			final Button delB = new Button(composite, SWT.PUSH);
-			delB.setImage(Activator.getImage("icons/delete.png")); //$NON-NLS-1$
+			delB.setImage(Activator.getImage(ICONS_UNSET_FEATURE));
+			delB.setEnabled(!getControl().isReadonly());
 			delB.addSelectionListener(new SelectionAdapter() {
 				private static final long serialVersionUID = 1L;
 
@@ -393,6 +417,7 @@ public abstract class MultiControl extends SWTControl {
 
 			final Button upB = new Button(composite, SWT.PUSH);
 			upB.setImage(up);
+			upB.setEnabled(!getControl().isReadonly());
 			upB.addSelectionListener(new SelectionAdapter() {
 				private static final long serialVersionUID = 1L;
 
@@ -418,6 +443,7 @@ public abstract class MultiControl extends SWTControl {
 			});
 			final Button downB = new Button(composite, SWT.PUSH);
 			downB.setImage(down);
+			downB.setEnabled(!getControl().isReadonly());
 			downB.addSelectionListener(new SelectionAdapter() {
 				private static final long serialVersionUID = 1L;
 
@@ -470,51 +496,67 @@ public abstract class MultiControl extends SWTControl {
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.edit.spi.ECPAbstractControl#applyValidation(org.eclipse.emf.ecp.view.spi.model.VDiagnostic)
 	 */
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @deprecated
-	 */
-	@Deprecated
 	@Override
-	public void handleValidation(Diagnostic diagnostic) {
-		updateValidationColor(getValidationBackgroundColor(diagnostic.getSeverity()));
-		if (validationLabel == null) {
-			return;
+	protected void applyValidation(final VDiagnostic diagnostic) {
+		Display.getDefault().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				final Diagnostic displayedDiagnostic = getMostSevereDiagnostic(diagnostic);
+				if (displayedDiagnostic == null) {
+					if (validationLabel == null || validationLabel.isDisposed()) {
+						return;
+					}
+					updateValidationColor(null);
+					validationLabel.setImage(null);
+					validationLabel.setToolTipText(""); //$NON-NLS-1$
+				} else {
+					updateValidationColor(getValidationBackgroundColor(displayedDiagnostic.getSeverity()));
+					if (validationLabel == null) {
+						return;
+					}
+					final Image image = getValidationIcon(displayedDiagnostic.getSeverity());
+					validationLabel.setImage(image);
+					validationLabel.setToolTipText(displayedDiagnostic.getMessage());
+				}
+			}
+		});
+	}
+
+	/**
+	 * @param diagnostic
+	 * @return
+	 */
+	private Diagnostic getMostSevereDiagnostic(VDiagnostic diagnostic) {
+		int highestSeverity = -1;
+		Diagnostic displayedDiagnostic = null;
+		if (diagnostic == null) {
+			return displayedDiagnostic;
 		}
-		final Image image = getValidationIcon(diagnostic.getSeverity());
-		validationLabel.setImage(image);
-		validationLabel.setToolTipText(diagnostic.getMessage());
+		final EList<Object> diagnostics = diagnostic.getDiagnostics();
+		for (final Object object : diagnostics) {
+			if (object == null) {
+				continue;
+			}
+			final Diagnostic childDiagnostic = (Diagnostic) object;
+			if (childDiagnostic.getSeverity() > highestSeverity) {
+				highestSeverity = childDiagnostic.getSeverity();
+				displayedDiagnostic = childDiagnostic;
+			}
+		}
+		return displayedDiagnostic;
 	}
 
 	/**
 	 * Allows controls to supply a second visual effect for controls on validation. The color to set is provided as the
 	 * parameter.
-	 * 
+	 *
 	 * @param color the color to set, null if the default background color should be set
 	 */
 	protected void updateValidationColor(Color color) {
 
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @deprecated
-	 */
-	@Deprecated
-	@Override
-	public void resetValidation() {
-		if (validationLabel == null || validationLabel.isDisposed()) {
-			return;
-		}
-		updateValidationColor(null);
-		validationLabel.setImage(null);
-		validationLabel.setToolTipText(""); //$NON-NLS-1$
 	}
 
 	/**
@@ -539,7 +581,7 @@ public abstract class MultiControl extends SWTControl {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @deprecated
 	 */
 	@Deprecated
@@ -557,7 +599,7 @@ public abstract class MultiControl extends SWTControl {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @deprecated
 	 */
 	@Override

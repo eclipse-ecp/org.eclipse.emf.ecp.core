@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Integrationtest
+Bundle-SymbolicName: org.eclipse.emf.ecp.integrationtest
+Bundle-Version: 1.7.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: org.junit;bundle-version="[4.0.0,5.0.0)",
+ org.eclipse.osgi;bundle-version="[3.7.0,4.0.0)"
+Bundle-Activator: org.eclipse.emf.ecp.integrationtest.Activator
+Bundle-ActivationPolicy: lazy
+Export-Package: org.eclipse.emf.ecp.integrationtest;version="1.7.0";x-internal:="true"

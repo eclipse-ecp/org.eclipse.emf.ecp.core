@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="alignment" nsURI="http://www.eclipse.org/emf/ecp/view/template/style/alignment/model"
+    nsPrefix="org.eclipse.emf.ecp.view.template.style.alignment.model">
+  <eClassifiers xsi:type="ecore:EClass" name="AlignmentStyleProperty" eSuperTypes="template.ecore#//StyleProperty">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//AlignmentType"
+        defaultValueLiteral="LEFT"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="AlignmentType">
+    <eLiterals name="LEFT"/>
+    <eLiterals name="RIGHT" value="1"/>
+  </eClassifiers>
+</ecore:EPackage>

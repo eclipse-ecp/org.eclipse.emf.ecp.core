@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
  *******************************************************************************/
@@ -15,9 +15,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.Collection;
+import java.util.Set;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
@@ -101,9 +103,11 @@ public class CDOProvider extends DefaultProvider {
 
 	/**
 	 * Get the CDO Provider singleton.
-	 * 
+	 *
 	 * @return the singleton instance or null
+	 * @deprecated use ECPUtil.getECPProviderRegistry().getProvider(CDOProvider.NAME) instead
 	 */
+	@Deprecated
 	public static CDOProvider getInstance() {
 		// TODO: what if instance is still null because constructor was never called?
 		return instance;
@@ -174,6 +178,7 @@ public class CDOProvider extends DefaultProvider {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	@SuppressWarnings("unchecked")
 	public EList<Object> getElements(InternalProject project) {
 		final CDOProjectData data = (CDOProjectData) project.getProviderSpecificData();
@@ -213,7 +218,7 @@ public class CDOProvider extends DefaultProvider {
 
 	/**
 	 * Creates a provider specific project for the given internal project.
-	 * 
+	 *
 	 * @param project the internal project
 	 */
 	protected void createProject(InternalProject project) {
@@ -238,8 +243,26 @@ public class CDOProvider extends DefaultProvider {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 *
+	 */
+	@Override
+	public ECPContainer getModelContext(Object element) {
+		if (element instanceof CDOResource) {
+			final Set<InternalProject> openProjects = getOpenProjects();
+			for (final InternalProject project : openProjects) {
+				final CDOProjectData projectData = (CDOProjectData) project.getProviderSpecificData();
+				if (projectData.getRootResource().getContents().contains(element)) {
+					return project;
+				}
+			}
+		}
+		return super.getModelContext(element);
+	}
+
+	/**
 	 * Create and store a {@link CDOWorkspaceConfiguration} for the given internal project.
-	 * 
+	 *
 	 * @param project the internal project.
 	 * @return the {@link CDOWorkspaceConfiguration}
 	 */
@@ -268,7 +291,7 @@ public class CDOProvider extends DefaultProvider {
 
 	/**
 	 * Create and store a {@link CDOWorkspaceBase}.
-	 * 
+	 *
 	 * @param project the internal project.
 	 * @param folder the folder to put the {@link CDOWorkspaceBase} into
 	 * @return the {@link CDOWorkspaceBase}
@@ -282,7 +305,7 @@ public class CDOProvider extends DefaultProvider {
 
 	/**
 	 * Create a local {@link IDBStore}.
-	 * 
+	 *
 	 * @param project the internal project
 	 * @param folder the folder to store the data in
 	 * @return the {@link IDBStore}
@@ -303,7 +326,7 @@ public class CDOProvider extends DefaultProvider {
 
 	/**
 	 * Dispose the given project and its data.
-	 * 
+	 *
 	 * @param project the internal project
 	 */
 	protected void disposeProject(InternalProject project) {
@@ -313,7 +336,7 @@ public class CDOProvider extends DefaultProvider {
 
 	/**
 	 * Remove the internal project and its configuration data.
-	 * 
+	 *
 	 * @param project the internal project
 	 */
 	protected void removeProject(InternalProject project) {
@@ -327,7 +350,7 @@ public class CDOProvider extends DefaultProvider {
 
 	/**
 	 * Retrieve {@link CDORepositoryData} for a given {@link InternalRepository}.
-	 * 
+	 *
 	 * @param repository the internal repositorz
 	 * @return the {@link CDORepositoryData}
 	 */
@@ -345,7 +368,7 @@ public class CDOProvider extends DefaultProvider {
 
 	/**
 	 * Get {@link CDOProjectData} for the given internal project.
-	 * 
+	 *
 	 * @param project the internal project
 	 * @return the {@link CDOProjectData}
 	 */
@@ -363,7 +386,7 @@ public class CDOProvider extends DefaultProvider {
 
 	/**
 	 * Get the folder for the configuration data of the internal project.
-	 * 
+	 *
 	 * @param project the internal project.
 	 * @return the {@link File}
 	 */
@@ -373,19 +396,20 @@ public class CDOProvider extends DefaultProvider {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void delete(InternalProject project, Collection<Object> objects) {
-		// CDOResource cdoResource = getProjectData(project).getRootResource();
-
-		// cdoResource.eContents().removeAll(eObjects);
-
+		final CDOResource cdoResource = getProjectData(project).getRootResource();
+		cdoResource.getContents().removeAll(objects);
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void cloneProject(final InternalProject projectToClone, InternalProject targetProject) {
 		throw new UnsupportedOperationException();
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public Notifier getRoot(InternalProject project) {
 		final CDOProjectData data = (CDOProjectData) project.getProviderSpecificData();
 		if (data != null) {
@@ -396,9 +420,10 @@ public class CDOProvider extends DefaultProvider {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#isThreadSafe()
 	 */
+	@Override
 	public boolean isThreadSafe() {
 		return true;
 	}

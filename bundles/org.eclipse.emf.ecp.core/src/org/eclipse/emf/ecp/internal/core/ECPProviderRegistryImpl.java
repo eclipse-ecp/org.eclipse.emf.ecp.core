@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
  * Eugen Neufeld - JavaDoc
@@ -44,16 +44,12 @@ import org.eclipse.net4j.util.AdapterUtil;
 
 /**
  * This class manages {@link ECPProvider}.
- * 
+ *
  * @author Eike Stepper
  * @author Eugen Neufeld
  */
 public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, ECPObserver> implements
 	ECPProviderRegistry {
-	/**
-	 * The Singleton to access the implementation of the Default ECPProviderRegistry.
-	 */
-	public static ECPProviderRegistryImpl INSTANCE;
 
 	private final ProviderParser extensionParser = new ProviderParser();
 
@@ -61,10 +57,7 @@ public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvi
 	 * Should not be called directly, use service instead.
 	 */
 	public ECPProviderRegistryImpl() {
-		if (INSTANCE != null) {
-			throw new IllegalStateException("Manager must not be initialized twice");
-		}
-		INSTANCE = this;
+
 	}
 
 	/** {@inheritDoc} **/
@@ -77,21 +70,25 @@ public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvi
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public InternalProvider getProvider(String name) {
 		return getElement(name);
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public Collection<ECPProvider> getProviders() {
 		return (Collection) getElements();
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public void addProvider(ECPProvider provider) {
 		changeElements(null, Collections.singleton((InternalProvider) provider));
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public void removeProvider(String name) {
 		changeElements(Collections.singleton(name), null);
 	}
@@ -130,7 +127,7 @@ public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvi
 	 * @author Eike Stepper
 	 */
 	private final class ProviderParser extends ExtensionParser<InternalProvider> {
-		private static final String EXTENSION_POINT_NAME = "providers";
+		private static final String EXTENSION_POINT_NAME = "providers"; //$NON-NLS-1$
 
 		public ProviderParser() {
 			super(ECPProviderRegistryImpl.this, Activator.PLUGIN_ID, EXTENSION_POINT_NAME);
@@ -140,7 +137,7 @@ public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvi
 		protected InternalProvider createElement(String name, IConfigurationElement configurationElement) {
 			final ProviderDescriptor descriptor = new ProviderDescriptor(name, configurationElement);
 			descriptor.setLabel(configurationElement.getDeclaringExtension().getLabel());
-			descriptor.setDescription(configurationElement.getAttribute("description"));
+			descriptor.setDescription(configurationElement.getAttribute("description")); //$NON-NLS-1$
 			return descriptor;
 		}
 	}
@@ -156,16 +153,19 @@ public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvi
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public ECPProvider getProvider() {
 			return this;
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public AdapterProvider getUIProvider() {
 			return uiProvider;
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public void setUIProvider(AdapterProvider uiProvider) {
 			this.uiProvider = uiProvider;
 			if (isResolved()) {
@@ -174,46 +174,55 @@ public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvi
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public <T> T getAdapter(Object adaptable, Class<T> adapterType) {
 			return getResolvedElement().getAdapter(adaptable, adapterType);
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public Object getAdapter(@SuppressWarnings("rawtypes") Class adapterType) {
 			return getResolvedElement().getAdapter(adapterType);
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public Set<InternalProject> getOpenProjects() {
 			return getResolvedElement().getOpenProjects();
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public EditingDomain createEditingDomain(InternalProject project) {
 			return getResolvedElement().createEditingDomain(project);
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public boolean hasCreateRepositorySupport() {
 			return getResolvedElement().hasCreateRepositorySupport();
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public boolean isSlow(Object parent) {
 			return getResolvedElement().isSlow(parent);
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public ECPContainer getModelContext(Object element) {
 			return getResolvedElement().getModelContext(element);
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public void fillChildren(ECPContainer context, Object parent, InternalChildrenList childrenList) {
 			getResolvedElement().fillChildren(context, parent, childrenList);
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public void handleLifecycle(ECPContainer context, LifecycleEvent event) {
 			getResolvedElement().handleLifecycle(context, event);
 		}
@@ -235,65 +244,77 @@ public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvi
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public boolean hasCreateProjectWithoutRepositorySupport() {
 			return getResolvedElement().hasCreateProjectWithoutRepositorySupport();
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public EList<? extends Object> getElements(InternalProject project) {
 			return getResolvedElement().getElements(project);
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public Iterator<EObject> getLinkElements(InternalProject project, EObject modelElement, EReference eReference) {
 			return getResolvedElement().getLinkElements(project, modelElement, eReference);
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public Set<EPackage> getUnsupportedEPackages(Collection<EPackage> ePackages, InternalRepository repository) {
 			return getResolvedElement().getUnsupportedEPackages(ePackages, repository);
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public void doSave(InternalProject project) {
 			getResolvedElement().doSave(project);
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public boolean isDirty(InternalProject project) {
 			return getResolvedElement().isDirty(project);
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public void delete(InternalProject project, Collection<Object> objects) {
 			getResolvedElement().delete(project, objects);
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public void cloneProject(InternalProject projectToClone, InternalProject targetProject) {
 			getResolvedElement().cloneProject(projectToClone, targetProject);
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public boolean modelExists(InternalProject project) {
 			return getResolvedElement().modelExists(project);
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public Notifier getRoot(InternalProject project) {
 			return getResolvedElement().getRoot(project);
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public boolean contains(InternalProject project, Object object) {
 			return getResolvedElement().contains(project, object);
 		}
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#isThreadSafe()
 		 */
+		@Override
 		public boolean isThreadSafe() {
 			return getResolvedElement().isThreadSafe();
 		}

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="testSubpackages1_root" nsURI="http://testSubpackages1_root"
+    nsPrefix="testSubpackages1_root">
+  <eClassifiers xsi:type="ecore:EClass" name="class1">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="a" unique="false" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ref_class3" eType="#//testSubpackages1_subpackage2/class3"/>
+  </eClassifiers>
+  <eSubpackages name="testSubpackages1_subpackage1" nsURI="http://testSubpackages1_subpackage1"
+      nsPrefix="testSubpackages1_subpackage1">
+    <eClassifiers xsi:type="ecore:EClass" name="class2"/>
+    <eSubpackages name="testSubpackages1_subpackage3" nsURI="http://testSubpackages1_subpackage3"
+        nsPrefix="testSubpackages1_subpackage3">
+      <eClassifiers xsi:type="ecore:EClass" name="class4"/>
+    </eSubpackages>
+  </eSubpackages>
+  <eSubpackages name="testSubpackages1_subpackage2" nsURI="http://testSubpackages1_subpackage2"
+      nsPrefix="testSubpackages1_subpackage2">
+    <eClassifiers xsi:type="ecore:EClass" name="class3"/>
+  </eSubpackages>
+</ecore:EPackage>

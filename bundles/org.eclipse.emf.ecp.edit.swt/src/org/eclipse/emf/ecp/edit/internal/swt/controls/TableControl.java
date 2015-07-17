@@ -1,25 +1,24 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.observable.list.IObservableList;
@@ -40,11 +39,10 @@ import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.table.TableColumnConfiguration;
 import org.eclipse.emf.ecp.edit.internal.swt.table.TableControlConfiguration;
 import org.eclipse.emf.ecp.edit.internal.swt.util.CellEditorFactory;
-import org.eclipse.emf.ecp.edit.internal.swt.util.ECPCellEditor;
-import org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
 import org.eclipse.emf.ecp.edit.internal.swt.util.SWTRenderingHelper;
-import org.eclipse.emf.ecp.view.internal.validation.ValidationService;
+import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor;
+import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
 import org.eclipse.emf.edit.command.AddCommand;
@@ -54,6 +52,7 @@ import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ObservableMapCellLabelProvider;
@@ -100,17 +99,19 @@ import org.eclipse.swt.widgets.TableColumn;
 
 /**
  * The class describing a table control.
- * 
+ *
  * @author Eugen Neufeld
  * @author emueller
  */
 // this class is not serialized
-@SuppressWarnings("serial")
+@Deprecated
 public class TableControl extends SWTControl {
 
 	private static final String FIXED_COLUMNS = "org.eclipse.rap.rwt.fixedColumns"; //$NON-NLS-1$
 
 	private static final String ICON_ADD = "icons/add.png"; //$NON-NLS-1$
+	private static final String ICONS_UNSET_REFERENCE = "icons/unset_reference.png"; //$NON-NLS-1$
+	private static final String ICONS_UNSET_FEATURE = "icons/unset_feature.png"; //$NON-NLS-1$
 
 	private TableViewer tableViewer;
 	private ComposedAdapterFactory composedAdapterFactory;
@@ -125,7 +126,7 @@ public class TableControl extends SWTControl {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param tableControlConfiguration the {@link TableControlConfiguration} to use when creating the table
 	 */
 	public final void setTableControlConfiguration(TableControlConfiguration tableControlConfiguration) {
@@ -138,9 +139,9 @@ public class TableControl extends SWTControl {
 	}
 
 	/**
-	 * 
+	 *
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPControlSWT#createControls(org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
@@ -151,6 +152,7 @@ public class TableControl extends SWTControl {
 		}
 		parent.addDisposeListener(new DisposeListener() {
 
+			@Override
 			public void widgetDisposed(DisposeEvent e) {
 				dispose();
 			}
@@ -211,7 +213,7 @@ public class TableControl extends SWTControl {
 			if (!isEmbedded() && getTableReference().isUnsettable()) {
 				unsetButton = new Button(buttonComposite, SWT.PUSH);
 				unsetButton.setToolTipText(getUnsetButtonTooltip());
-				unsetButton.setImage(Activator.getImage("icons/delete.png")); //$NON-NLS-1$
+				unsetButton.setImage(Activator.getImage(ICONS_UNSET_FEATURE));
 				numButtons++;
 			}
 			GridLayoutFactory.fillDefaults().numColumns(numButtons).equalWidth(true).applyTo(buttonComposite);
@@ -258,9 +260,12 @@ public class TableControl extends SWTControl {
 
 	private void createFixedValidationStatusColumn(TableViewer tableViewer,
 		final List<EStructuralFeature> structuralFeatures) {
-		final TableViewerColumn column = TableViewerColumnBuilder.create()
+		final TableViewerColumn column = TableViewerColumnBuilder
+			.create()
 			.setMoveable(false)
-			.setText(ControlMessages.TableControl_ValidationStatusColumn)
+			.setText(
+				LocalizationServiceHelper.getString(getClass(),
+					DepricatedControlMessageKeys.TableControl_ValidationStatusColumn))
 			.setWidth(80)
 			.build(tableViewer);
 
@@ -315,9 +320,9 @@ public class TableControl extends SWTControl {
 						.getColumnWidthWeight() : 100)
 				.build(tableViewer);
 
-			column.setLabelProvider(new ECPCellLabelProvider(feature, cellEditor, feature.isMany() ?
-				new EObjectObservableMap(cp.getKnownElements(), feature) :
-				EMFProperties.value(feature).observeDetail(cp.getKnownElements())));
+			column.setLabelProvider(new ECPCellLabelProvider(feature, cellEditor,
+				feature.isMany() ? new EObjectObservableMap(cp.getKnownElements(), feature)
+					: EMFProperties.value(feature).observeDetail(cp.getKnownElements())));
 			column.getColumn().addSelectionListener(getSelectionAdapter(comparator, column.getColumn(), columnNumber));
 
 			if (!isReadOnlyFeature(readOnlyConfig, feature)) {
@@ -350,7 +355,8 @@ public class TableControl extends SWTControl {
 			tempInstance, tableViewer.getTable(), getViewModelContext());
 	}
 
-	private static boolean isReadOnlyFeature(Map<EStructuralFeature, Boolean> readOnlyConfig, EStructuralFeature feature) {
+	private static boolean isReadOnlyFeature(Map<EStructuralFeature, Boolean> readOnlyConfig,
+		EStructuralFeature feature) {
 		if (readOnlyConfig != null) {
 			final Boolean isReadOnly = readOnlyConfig.get(feature);
 			if (isReadOnly != null) {
@@ -402,9 +408,10 @@ public class TableControl extends SWTControl {
 
 	private void createRemoveRowButton(EClass clazz, final Composite buttonComposite) {
 		removeButton = new Button(buttonComposite, SWT.None);
-		final Image image = Activator.getImage("icons/delete.png"); //$NON-NLS-1$
+		final Image image = Activator.getImage(ICONS_UNSET_REFERENCE);
 		removeButton.setImage(image);
-		removeButton.setToolTipText(ControlMessages.TableControl_RemoveSelected
+		removeButton.setToolTipText(LocalizationServiceHelper.getString(getClass(),
+			DepricatedControlMessageKeys.TableControl_RemoveSelected)
 			+ clazz.getInstanceClass().getSimpleName());
 		removeButton.addSelectionListener(new SelectionAdapter() {
 			/*
@@ -439,15 +446,19 @@ public class TableControl extends SWTControl {
 
 	/**
 	 * This method shows a user confirmation dialog when the user attempts to delete a row in the table.
-	 * 
+	 *
 	 * @param deletionList the list of selected EObjects to delete
 	 */
 	protected void deleteRowUserConfirmDialog(final List<EObject> deletionList) {
-		final MessageDialog dialog = new MessageDialog(tableViewer.getTable().getShell(),
-			ControlMessages.TableControl_Delete, null,
-			ControlMessages.TableControl_DeleteAreYouSure, MessageDialog.CONFIRM, new String[] {
+		final MessageDialog dialog = new MessageDialog(
+			tableViewer.getTable().getShell(),
+			LocalizationServiceHelper.getString(getClass(), DepricatedControlMessageKeys.TableControl_Delete),
+			null,
+			LocalizationServiceHelper.getString(getClass(), DepricatedControlMessageKeys.TableControl_DeleteAreYouSure),
+			MessageDialog.CONFIRM, new String[] {
 				JFaceResources.getString(IDialogLabelKeys.YES_LABEL_KEY),
-				JFaceResources.getString(IDialogLabelKeys.NO_LABEL_KEY) }, 0);
+				JFaceResources.getString(IDialogLabelKeys.NO_LABEL_KEY) },
+			0);
 
 		new ECPDialogExecutor(dialog) {
 
@@ -473,7 +484,7 @@ public class TableControl extends SWTControl {
 	/**
 	 * This is called by {@link #deleteRowUserConfirmDialog(List)} after the user confirmed to delete the selected
 	 * elements.
-	 * 
+	 *
 	 * @param deletionList the list of {@link EObject EObjects} to delete
 	 */
 	protected void deleteRows(List<EObject> deletionList) {
@@ -487,11 +498,10 @@ public class TableControl extends SWTControl {
 	 * This method is called to add a new entry in the domain model and thus to create a new row in the table. The
 	 * element to create is defined by the provided class.
 	 * You can override this method but you have to call super nonetheless.
-	 * 
+	 *
 	 * @param clazz the {@link EClass} defining the EObject to create
 	 */
 	protected void addRow(EClass clazz) {
-		addingRowWorkaround = 0;
 		final EObject modelElement = mainSetting.getEObject();
 		final EObject instance = clazz.getEPackage().getEFactoryInstance().create(clazz);
 
@@ -506,13 +516,12 @@ public class TableControl extends SWTControl {
 
 	private boolean isDisposing;
 
-	private int addingRowWorkaround = -1;
-
 	private void createAddRowButton(final EClass clazz, final Composite buttonComposite) {
 		addButton = new Button(buttonComposite, SWT.None);
 		final Image image = Activator.getImage(ICON_ADD);
 		addButton.setImage(image);
-		addButton.setToolTipText(ControlMessages.TableControl_AddInstanceOf + clazz.getInstanceClass().getSimpleName());
+		addButton.setToolTipText(LocalizationServiceHelper.getString(getClass(),
+			DepricatedControlMessageKeys.TableControl_AddInstanceOf) + clazz.getInstanceClass().getSimpleName());
 		addButton.addSelectionListener(new SelectionAdapter() {
 
 			/*
@@ -557,7 +566,7 @@ public class TableControl extends SWTControl {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.ECPAbstractControl#applyValidation(org.eclipse.emf.ecp.view.spi.model.VDiagnostic)
 	 */
 	@Override
@@ -570,13 +579,10 @@ public class TableControl extends SWTControl {
 			final Image image = getValidationIcon(diagnostic.getHighestSeverity());
 			validationLabel.setImage(image);
 			validationLabel.setToolTipText(diagnostic.getMessage());
+			for (final Object object : (Collection<?>) mainSetting.get(true)) {
+				tableViewer.update(object, null);
+			}
 		}
-		if (addingRowWorkaround >= 0 && addingRowWorkaround <= 1) {
-			addingRowWorkaround++;
-			return;
-		}
-		addingRowWorkaround = -1;
-		tableViewer.refresh();
 	}
 
 	// /**
@@ -590,7 +596,7 @@ public class TableControl extends SWTControl {
 	// if (validationLabel == null || validationLabel.isDisposed()) {
 	// return;
 	// }
-	//		validationLabel.setToolTipText(""); //$NON-NLS-1$
+	// validationLabel.setToolTipText(""); //$NON-NLS-1$
 	// validationLabel.setImage(null);
 	// tableViewer.refresh();
 	// }
@@ -614,7 +620,7 @@ public class TableControl extends SWTControl {
 
 	/**
 	 * Returns the message of the validation tool tip shown in the table header.
-	 * 
+	 *
 	 * @param diagnostic the {@link Diagnostic} to extract the message from
 	 * @return the message
 	 */
@@ -624,7 +630,7 @@ public class TableControl extends SWTControl {
 
 	/**
 	 * Returns the message of the validation tool tip shown in the row.
-	 * 
+	 *
 	 * @param vDiagnostic the {@link VDiagnostic} to get the message from
 	 * @return the message
 	 */
@@ -634,7 +640,7 @@ public class TableControl extends SWTControl {
 
 	/**
 	 * Returns the message of the validation tool tip shown in the cell.
-	 * 
+	 *
 	 * @param vDiagnostic the {@link VDiagnostic} to get the message from
 	 * @return the message
 	 */
@@ -655,7 +661,7 @@ public class TableControl extends SWTControl {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @deprecated
 	 */
 	@Deprecated
@@ -672,7 +678,7 @@ public class TableControl extends SWTControl {
 
 	/**
 	 * @author Jonas
-	 * 
+	 *
 	 */
 	private final class ValidationStatusCellLabelProvider extends CellLabelProvider {
 		private final List<EStructuralFeature> structuralFeatures;
@@ -686,40 +692,54 @@ public class TableControl extends SWTControl {
 
 		@Override
 		public void update(ViewerCell cell) {
-			final Set<VDiagnostic> allDiagnostics = getAllDiagnostics((EObject) cell.getElement(),
-				structuralFeatures);
 			Integer mostSevere = Diagnostic.OK;
-
-			for (final VDiagnostic vDiagnostic : allDiagnostics) {
-				if (vDiagnostic.getHighestSeverity() > mostSevere) {
-					mostSevere = vDiagnostic.getHighestSeverity();
-				}
-			}
-
-			cell.setImage(getValidationIcon(mostSevere));
-
-			// switch (mostSevere) {
-			// case Diagnostic.OK:
-			// cell.setImage(null);
-			// return;
-			// default:
-			// cell.setImage(Activator.getImage(ICON_VALIDATION_ERROR));
+			final VDiagnostic vDiagnostic = getControl().getDiagnostic();
+			// for (final Object diagObject : vDiagnostic.getDiagnostics()) {
+			// final Diagnostic diagnostic = (Diagnostic) diagObject;
+			// if (diagnostic.getData().size() == 0) {
+			// continue;
 			// }
+			// if (diagnostic.getData().get(0).equals(cell.getElement())) {
+			// final int currentSeverity = diagnostic.getSeverity();
+			// if (currentSeverity > mostSevere) {
+			// mostSevere = currentSeverity;
+			// }
+			// }
+			// }
+			final List<Diagnostic> diagnostics = vDiagnostic.getDiagnostics((EObject) cell.getElement());
+			if (diagnostics.size() != 0) {
+				mostSevere = diagnostics.get(0).getSeverity();
+			}
+			cell.setImage(getValidationIcon(mostSevere));
 		}
 
 		@Override
 		public String getToolTipText(Object element) {
 			final StringBuffer tooltip = new StringBuffer();
-			final Set<VDiagnostic> allDiagnostics = getAllDiagnostics((EObject) element, structuralFeatures);
+			final VDiagnostic vDiagnostic = getControl().getDiagnostic();
+			// for (final Object diagObject : vDiagnostic.getDiagnostics()) {
+			// final Diagnostic diagnostic = (Diagnostic) diagObject;
+			// if (diagnostic.getData().size() < 2) {
+			// continue;
+			// }
+			// if (diagnostic.getSeverity() == Diagnostic.OK) {
+			// continue;
+			// }
+			// if (diagnostic.getData().get(0).equals(element)
+			// && structuralFeatures.contains(diagnostic.getData().get(1))) {
+			// if (tooltip.length() > 0) {
+			// tooltip.append("\n"); //$NON-NLS-1$
+			// }
+			// tooltip.append(diagnostic.getMessage());
+			// }
+			// }
 
-			for (final VDiagnostic vDiagnostic : allDiagnostics) {
-				if (vDiagnostic.getHighestSeverity() == Diagnostic.OK) {
-					continue;
-				}
+			final List<Diagnostic> diagnostics = vDiagnostic.getDiagnostics((EObject) element);
+			for (final Diagnostic diagnostic : diagnostics) {
 				if (tooltip.length() > 0) {
 					tooltip.append("\n"); //$NON-NLS-1$
 				}
-				tooltip.append(getRowTooltipMessage(vDiagnostic));
+				tooltip.append(diagnostic.getMessage());
 			}
 
 			return tooltip.toString();
@@ -729,9 +749,9 @@ public class TableControl extends SWTControl {
 	/**
 	 * The {@link ViewerComparator} for this table which allows 3 states for sort order:
 	 * none, up and down.
-	 * 
+	 *
 	 * @author Eugen Neufeld
-	 * 
+	 *
 	 */
 	private class ECPTableViewerComparator extends ViewerComparator {
 		private int propertyIndex;
@@ -800,9 +820,9 @@ public class TableControl extends SWTControl {
 	/**
 	 * ECP specficic cell label provider that does also implement {@link IColorProvider} in
 	 * order to correctly.
-	 * 
+	 *
 	 * @author emueller
-	 * 
+	 *
 	 */
 	public class ECPCellLabelProvider extends ObservableMapCellLabelProvider implements IColorProvider {
 
@@ -811,7 +831,7 @@ public class TableControl extends SWTControl {
 
 		/**
 		 * Constructor.
-		 * 
+		 *
 		 * @param feature
 		 *            the {@link EStructuralFeature} the cell is bound to
 		 * @param cellEditor
@@ -827,15 +847,65 @@ public class TableControl extends SWTControl {
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.jface.viewers.CellLabelProvider#getToolTipText(java.lang.Object)
 		 */
 		@Override
 		public String getToolTipText(Object element) {
 			final EObject domainObject = (EObject) element;
-			final VDiagnostic vDiagnostic = getDiagnosticForFeature(domainObject, feature);
-			return getCellTooltipMessage(vDiagnostic);
 
+			final StringBuffer tooltip = new StringBuffer();
+			final VDiagnostic vDiagnostic = getControl().getDiagnostic();
+			final List<Diagnostic> diagnostics = vDiagnostic.getDiagnostic(domainObject, feature);
+			for (final Diagnostic diagnostic : diagnostics) {
+				if (tooltip.length() > 0) {
+					tooltip.append("\n"); //$NON-NLS-1$
+				}
+				tooltip.append(diagnostic.getMessage());
+			}
+			return tooltip.toString();
+
+			// final VDiagnostic vDiagnostic = getControl().getDiagnostic();
+			// for (final Object diagObject : vDiagnostic.getDiagnostics()) {
+			// final Diagnostic diagnostic = (Diagnostic) diagObject;
+			// if (diagnostic.getData().size() < 2) {
+			// continue;
+			// }
+			// if (diagnostic.getData().get(0).equals(element) && diagnostic.getData().get(1).equals(feature)) {
+			//
+			// if (diagnostic.getChildren() != null && diagnostic.getChildren().size() != 0) {
+			// boolean childrenUsefull = false;
+			// for (final Diagnostic diagnostic2 : diagnostic.getChildren()) {
+			// if (diagnostic2.getSeverity() != Diagnostic.OK) {
+			// if (tooltip.length() > 0) {
+			// tooltip.append("\n"); //$NON-NLS-1$
+			// }
+			// tooltip.append(diagnostic2.getMessage());
+			// childrenUsefull = true;
+			// }
+			// }
+			// if (!childrenUsefull) {
+			// if (tooltip.length() > 0) {
+			// tooltip.append("\n"); //$NON-NLS-1$
+			// }
+			// tooltip.append(diagnostic.getMessage());
+			// }
+			// } else {
+			// if (tooltip.length() > 0) {
+			// tooltip.append("\n"); //$NON-NLS-1$
+			// }
+			// tooltip.append(diagnostic.getMessage());
+			// }
+			// }
+			// }
+			// if (tooltip.length() != 0) {
+			// return tooltip.toString();
+			// }
+			// final Object value = ((EObject) element).eGet(feature);
+			// if (value == null) {
+			// return null;
+			// }
+			// return String.valueOf(value);
 		}
 
 		@Override
@@ -847,6 +917,7 @@ public class TableControl extends SWTControl {
 				final ECPCellEditor ecpCellEditor = (ECPCellEditor) cellEditor;
 				final String text = ecpCellEditor.getFormatedString(value);
 				cell.setText(text == null ? "" : text); //$NON-NLS-1$
+				cell.setImage(ecpCellEditor.getImage(value));
 			} else {
 				cell.setText(value == null ? "" : value.toString()); //$NON-NLS-1$
 				cell.getControl().setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_edit_cellEditor_string"); //$NON-NLS-1$
@@ -857,37 +928,42 @@ public class TableControl extends SWTControl {
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.jface.viewers.IColorProvider#getForeground(java.lang.Object)
 		 */
+		@Override
 		public Color getForeground(Object element) {
 			return null;
 		}
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.jface.viewers.IColorProvider#getBackground(java.lang.Object)
 		 */
+		@Override
 		public Color getBackground(Object element) {
 			if (isDisposing) {
 				return null;
 			}
-			final VDiagnostic vDiagnostic = getDiagnosticForFeature((EObject) element, feature);
 
-			if (vDiagnostic == null) {
-				return null;
-			}
-
-			return getValidationBackgroundColor(vDiagnostic.getHighestSeverity());
-			// switch (vDiagnostic.getHighestSeverity()) {
-			// case Diagnostic.ERROR:
-			// return Display.getDefault().getSystemColor(SWT.COLOR_RED);
-			// case Diagnostic.WARNING:
-			// return Display.getDefault().getSystemColor(SWT.COLOR_YELLOW);
-			// default:
-			// return null;
+			final Integer mostSevere = Diagnostic.OK;
+			final VDiagnostic vDiagnostic = getControl().getDiagnostic();
+			// for (final Object diagObject : vDiagnostic.getDiagnostics()) {
+			// final Diagnostic diagnostic = (Diagnostic) diagObject;
+			// if (diagnostic.getData().size() < 2) {
+			// continue;
 			// }
+			// if (diagnostic.getData().get(0).equals(element) && diagnostic.getData().get(1).equals(feature)) {
+			// final int currentSeverity = diagnostic.getSeverity();
+			// if (currentSeverity > mostSevere) {
+			// mostSevere = currentSeverity;
+			// }
+			// }
+			// }
+			final List<Diagnostic> diagnostic = vDiagnostic.getDiagnostic((EObject) element, feature);
+			return getValidationBackgroundColor(diagnostic.size() == 0 ? Diagnostic.OK : diagnostic.get(0)
+				.getSeverity());
 		}
 	}
 
@@ -897,7 +973,8 @@ public class TableControl extends SWTControl {
 	 */
 	@Override
 	protected String getUnsetLabelText() {
-		return ControlMessages.TableControl_NotSetClickToSet;
+		return LocalizationServiceHelper.getString(getClass(),
+			DepricatedControlMessageKeys.TableControl_NotSetClickToSet);
 	}
 
 	/*
@@ -906,7 +983,7 @@ public class TableControl extends SWTControl {
 	 */
 	@Override
 	protected String getUnsetButtonTooltip() {
-		return ControlMessages.TableControl_Unset;
+		return LocalizationServiceHelper.getString(getClass(), DepricatedControlMessageKeys.TableControl_Unset);
 	}
 
 	/*
@@ -921,7 +998,7 @@ public class TableControl extends SWTControl {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @deprecated
 	 */
 	@Override
@@ -930,37 +1007,11 @@ public class TableControl extends SWTControl {
 		return false;
 	}
 
-	private VDiagnostic getDiagnosticForFeature(EObject domainObject, EStructuralFeature feature) {
-		final ValidationService validationService = getViewModelContext().getService(ValidationService.class);
-		if (getControl().isReadonly() || validationService == null) {
-			return null;
-		}
-		final Map<EStructuralFeature, VDiagnostic> diagnosticPerFeature = validationService
-			.getDiagnosticPerFeature(domainObject);
-		return diagnosticPerFeature.get(feature);
-	}
-
-	private Set<VDiagnostic> getAllDiagnostics(EObject domainObject, List<EStructuralFeature> features) {
-		final ValidationService validationService = getViewModelContext().getService(ValidationService.class);
-		if (getControl().isReadonly() || validationService == null) {
-			return Collections.emptySet();
-		}
-		final Map<EStructuralFeature, VDiagnostic> diagnosticPerFeature =
-			validationService.getDiagnosticPerFeature(domainObject);
-		final Set<VDiagnostic> result = new LinkedHashSet<VDiagnostic>();
-		for (final EStructuralFeature feature : features) {
-			if (diagnosticPerFeature.containsKey(feature)) {
-				result.add(diagnosticPerFeature.get(feature));
-			}
-		}
-		return result;
-	}
-
 	/**
 	 * Implementation of the {@link EditingSupport} for the generic ECP Table.
-	 * 
+	 *
 	 * @author Eugen Neufeld
-	 * 
+	 *
 	 */
 	private class ECPTableEditingSupport extends EditingSupport {
 
@@ -983,18 +1034,22 @@ public class TableControl extends SWTControl {
 
 		/**
 		 * Default implementation always returns <code>true</code>.
-		 * 
+		 *
 		 * @see org.eclipse.jface.viewers.EditingSupport#canEdit(java.lang.Object)
 		 */
 		@Override
 		protected boolean canEdit(Object element) {
+			if (ECPCellEditor.class.isInstance(cellEditor)) {
+				ECPCellEditor.class.cast(cellEditor).setEditable(editable);
+				return true;
+			}
 			return editable;
 		}
 
 		/**
 		 * Default implementation always returns <code>null</code> as this will be
 		 * handled by the Binding.
-		 * 
+		 *
 		 * @see org.eclipse.jface.viewers.EditingSupport#getValue(java.lang.Object)
 		 */
 		@Override
@@ -1006,7 +1061,7 @@ public class TableControl extends SWTControl {
 		/**
 		 * Default implementation does nothing as this will be handled by the
 		 * Binding.
-		 * 
+		 *
 		 * @see org.eclipse.jface.viewers.EditingSupport#setValue(java.lang.Object, java.lang.Object)
 		 */
 		@Override
@@ -1046,8 +1101,8 @@ public class TableControl extends SWTControl {
 		protected Binding createBinding(IObservableValue target, IObservableValue model) {
 			if (ECPCellEditor.class.isInstance(cellEditor)) {
 				return getDataBindingContext().bindValue(target, model,
-					((ECPCellEditor) cellEditor).getTargetToModelStrategy(),
-					((ECPCellEditor) cellEditor).getModelToTargetStrategy());
+					((ECPCellEditor) cellEditor).getTargetToModelStrategy(getDataBindingContext()),
+					((ECPCellEditor) cellEditor).getModelToTargetStrategy(getDataBindingContext()));
 			}
 			return getDataBindingContext().bindValue(target, model);
 		}
@@ -1082,6 +1137,10 @@ public class TableControl extends SWTControl {
 				editingState = null;
 
 				getViewer().getColumnViewerEditor().removeEditorActivationListener(this);
+				final ViewerCell focusCell = getViewer().getColumnViewerEditor().getFocusCell();
+				if (focusCell != null) {
+					getViewer().update(focusCell.getElement(), null);
+				}
 			}
 
 			@Override
@@ -1118,6 +1177,6 @@ public class TableControl extends SWTControl {
 				model.dispose();
 			}
 		}
-	};
+	}
 
 }

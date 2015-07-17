@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.emf.ecp.changebroker.feature"
+      label="ECP Change Broker Feature"
+      version="1.7.0.qualifier"
+      provider-name="Eclipse Modeling Project"
+      plugin="org.eclipse.emf.ecp.changebroker"
+      license-feature="org.eclipse.emf.ecp.license.feature"
+      license-feature-version="1.7.0.qualifier">
+
+   <description>
+      Generic Observer Bus for EMF Notifications including an ECP/EMFStore-Bridge.
+   </description>
+
+   <copyright url="%copyrightURL">
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <plugin
+         id="org.eclipse.emf.ecp.changebroker"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.ecp.changebroker.emfstore"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

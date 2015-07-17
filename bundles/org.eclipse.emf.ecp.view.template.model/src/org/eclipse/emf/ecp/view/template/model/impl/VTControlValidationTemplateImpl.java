@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
  */
@@ -57,7 +57,7 @@ import org.eclipse.emf.ecp.view.template.model.VTTemplatePackage;
  * Cancel Overlay URL</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Container implements
@@ -67,7 +67,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * The default value of the '{@link #getOkColorHEX() <em>Ok Color HEX</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getOkColorHEX()
 	 * @generated
 	 * @ordered
@@ -78,7 +78,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * The cached value of the '{@link #getOkColorHEX() <em>Ok Color HEX</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getOkColorHEX()
 	 * @generated
 	 * @ordered
@@ -89,7 +89,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * The default value of the '{@link #getOkImageURL() <em>Ok Image URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getOkImageURL()
 	 * @generated
 	 * @ordered
@@ -100,7 +100,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * The cached value of the '{@link #getOkImageURL() <em>Ok Image URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getOkImageURL()
 	 * @generated
 	 * @ordered
@@ -111,7 +111,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * The default value of the '{@link #getOkOverlayURL() <em>Ok Overlay URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getOkOverlayURL()
 	 * @generated
 	 * @ordered
@@ -122,7 +122,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * The cached value of the '{@link #getOkOverlayURL() <em>Ok Overlay URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getOkOverlayURL()
 	 * @generated
 	 * @ordered
@@ -133,7 +133,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * The default value of the '{@link #getInfoColorHEX() <em>Info Color HEX</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getInfoColorHEX()
 	 * @generated
 	 * @ordered
@@ -144,7 +144,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * The cached value of the '{@link #getInfoColorHEX() <em>Info Color HEX</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getInfoColorHEX()
 	 * @generated
 	 * @ordered
@@ -155,7 +155,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * The default value of the '{@link #getInfoImageURL() <em>Info Image URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getInfoImageURL()
 	 * @generated
 	 * @ordered
@@ -166,7 +166,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * The cached value of the '{@link #getInfoImageURL() <em>Info Image URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getInfoImageURL()
 	 * @generated
 	 * @ordered
@@ -177,7 +177,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * The default value of the '{@link #getInfoOverlayURL() <em>Info Overlay URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getInfoOverlayURL()
 	 * @generated
 	 * @ordered
@@ -188,7 +188,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * The cached value of the '{@link #getInfoOverlayURL() <em>Info Overlay URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getInfoOverlayURL()
 	 * @generated
 	 * @ordered
@@ -199,7 +199,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * The default value of the '{@link #getWarningColorHEX() <em>Warning Color HEX</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getWarningColorHEX()
 	 * @generated
 	 * @ordered
@@ -210,7 +210,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * The cached value of the '{@link #getWarningColorHEX() <em>Warning Color HEX</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getWarningColorHEX()
 	 * @generated
 	 * @ordered
@@ -221,7 +221,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * The default value of the '{@link #getWarningImageURL() <em>Warning Image URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getWarningImageURL()
 	 * @generated
 	 * @ordered
@@ -232,7 +232,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * The cached value of the '{@link #getWarningImageURL() <em>Warning Image URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getWarningImageURL()
 	 * @generated
 	 * @ordered
@@ -243,7 +243,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * The default value of the '{@link #getWarningOverlayURL() <em>Warning Overlay URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getWarningOverlayURL()
 	 * @generated
 	 * @ordered
@@ -254,7 +254,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * The cached value of the '{@link #getWarningOverlayURL() <em>Warning Overlay URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getWarningOverlayURL()
 	 * @generated
 	 * @ordered
@@ -265,7 +265,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * The default value of the '{@link #getErrorColorHEX() <em>Error Color HEX</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getErrorColorHEX()
 	 * @generated
 	 * @ordered
@@ -276,7 +276,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * The cached value of the '{@link #getErrorColorHEX() <em>Error Color HEX</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getErrorColorHEX()
 	 * @generated
 	 * @ordered
@@ -287,7 +287,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * The default value of the '{@link #getErrorImageURL() <em>Error Image URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getErrorImageURL()
 	 * @generated
 	 * @ordered
@@ -298,7 +298,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * The cached value of the '{@link #getErrorImageURL() <em>Error Image URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getErrorImageURL()
 	 * @generated
 	 * @ordered
@@ -309,7 +309,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * The default value of the '{@link #getErrorOverlayURL() <em>Error Overlay URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getErrorOverlayURL()
 	 * @generated
 	 * @ordered
@@ -320,7 +320,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * The cached value of the '{@link #getErrorOverlayURL() <em>Error Overlay URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getErrorOverlayURL()
 	 * @generated
 	 * @ordered
@@ -331,7 +331,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * The default value of the '{@link #getCancelColorHEX() <em>Cancel Color HEX</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getCancelColorHEX()
 	 * @generated
 	 * @ordered
@@ -342,7 +342,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * The cached value of the '{@link #getCancelColorHEX() <em>Cancel Color HEX</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getCancelColorHEX()
 	 * @generated
 	 * @ordered
@@ -353,7 +353,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * The default value of the '{@link #getCancelImageURL() <em>Cancel Image URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getCancelImageURL()
 	 * @generated
 	 * @ordered
@@ -364,7 +364,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * The cached value of the '{@link #getCancelImageURL() <em>Cancel Image URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getCancelImageURL()
 	 * @generated
 	 * @ordered
@@ -375,7 +375,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * The default value of the '{@link #getCancelOverlayURL() <em>Cancel Overlay URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getCancelOverlayURL()
 	 * @generated
 	 * @ordered
@@ -386,7 +386,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	 * The cached value of the '{@link #getCancelOverlayURL() <em>Cancel Overlay URL</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getCancelOverlayURL()
 	 * @generated
 	 * @ordered
@@ -396,7 +396,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected VTControlValidationTemplateImpl()
@@ -407,7 +407,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -419,9 +419,10 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public String getOkColorHEX()
 	{
 		return okColorHEX;
@@ -430,24 +431,27 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void setOkColorHEX(String newOkColorHEX)
 	{
-		String oldOkColorHEX = okColorHEX;
+		final String oldOkColorHEX = okColorHEX;
 		okColorHEX = newOkColorHEX;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__OK_COLOR_HEX, oldOkColorHEX, okColorHEX));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public String getOkImageURL()
 	{
 		return okImageURL;
@@ -456,24 +460,27 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void setOkImageURL(String newOkImageURL)
 	{
-		String oldOkImageURL = okImageURL;
+		final String oldOkImageURL = okImageURL;
 		okImageURL = newOkImageURL;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__OK_IMAGE_URL, oldOkImageURL, okImageURL));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public String getOkOverlayURL()
 	{
 		return okOverlayURL;
@@ -482,24 +489,27 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void setOkOverlayURL(String newOkOverlayURL)
 	{
-		String oldOkOverlayURL = okOverlayURL;
+		final String oldOkOverlayURL = okOverlayURL;
 		okOverlayURL = newOkOverlayURL;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__OK_OVERLAY_URL, oldOkOverlayURL, okOverlayURL));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public String getInfoColorHEX()
 	{
 		return infoColorHEX;
@@ -508,24 +518,27 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void setInfoColorHEX(String newInfoColorHEX)
 	{
-		String oldInfoColorHEX = infoColorHEX;
+		final String oldInfoColorHEX = infoColorHEX;
 		infoColorHEX = newInfoColorHEX;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__INFO_COLOR_HEX, oldInfoColorHEX, infoColorHEX));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public String getInfoImageURL()
 	{
 		return infoImageURL;
@@ -534,24 +547,27 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void setInfoImageURL(String newInfoImageURL)
 	{
-		String oldInfoImageURL = infoImageURL;
+		final String oldInfoImageURL = infoImageURL;
 		infoImageURL = newInfoImageURL;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__INFO_IMAGE_URL, oldInfoImageURL, infoImageURL));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public String getInfoOverlayURL()
 	{
 		return infoOverlayURL;
@@ -560,24 +576,27 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void setInfoOverlayURL(String newInfoOverlayURL)
 	{
-		String oldInfoOverlayURL = infoOverlayURL;
+		final String oldInfoOverlayURL = infoOverlayURL;
 		infoOverlayURL = newInfoOverlayURL;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__INFO_OVERLAY_URL, oldInfoOverlayURL, infoOverlayURL));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public String getWarningColorHEX()
 	{
 		return warningColorHEX;
@@ -586,24 +605,27 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void setWarningColorHEX(String newWarningColorHEX)
 	{
-		String oldWarningColorHEX = warningColorHEX;
+		final String oldWarningColorHEX = warningColorHEX;
 		warningColorHEX = newWarningColorHEX;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__WARNING_COLOR_HEX, oldWarningColorHEX, warningColorHEX));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public String getWarningImageURL()
 	{
 		return warningImageURL;
@@ -612,24 +634,27 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void setWarningImageURL(String newWarningImageURL)
 	{
-		String oldWarningImageURL = warningImageURL;
+		final String oldWarningImageURL = warningImageURL;
 		warningImageURL = newWarningImageURL;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__WARNING_IMAGE_URL, oldWarningImageURL, warningImageURL));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public String getWarningOverlayURL()
 	{
 		return warningOverlayURL;
@@ -638,25 +663,28 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void setWarningOverlayURL(String newWarningOverlayURL)
 	{
-		String oldWarningOverlayURL = warningOverlayURL;
+		final String oldWarningOverlayURL = warningOverlayURL;
 		warningOverlayURL = newWarningOverlayURL;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__WARNING_OVERLAY_URL, oldWarningOverlayURL,
 				warningOverlayURL));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public String getErrorColorHEX()
 	{
 		return errorColorHEX;
@@ -665,24 +693,27 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void setErrorColorHEX(String newErrorColorHEX)
 	{
-		String oldErrorColorHEX = errorColorHEX;
+		final String oldErrorColorHEX = errorColorHEX;
 		errorColorHEX = newErrorColorHEX;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__ERROR_COLOR_HEX, oldErrorColorHEX, errorColorHEX));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public String getErrorImageURL()
 	{
 		return errorImageURL;
@@ -691,24 +722,27 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void setErrorImageURL(String newErrorImageURL)
 	{
-		String oldErrorImageURL = errorImageURL;
+		final String oldErrorImageURL = errorImageURL;
 		errorImageURL = newErrorImageURL;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__ERROR_IMAGE_URL, oldErrorImageURL, errorImageURL));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public String getErrorOverlayURL()
 	{
 		return errorOverlayURL;
@@ -717,24 +751,27 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void setErrorOverlayURL(String newErrorOverlayURL)
 	{
-		String oldErrorOverlayURL = errorOverlayURL;
+		final String oldErrorOverlayURL = errorOverlayURL;
 		errorOverlayURL = newErrorOverlayURL;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__ERROR_OVERLAY_URL, oldErrorOverlayURL, errorOverlayURL));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public String getCancelColorHEX()
 	{
 		return cancelColorHEX;
@@ -743,24 +780,27 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void setCancelColorHEX(String newCancelColorHEX)
 	{
-		String oldCancelColorHEX = cancelColorHEX;
+		final String oldCancelColorHEX = cancelColorHEX;
 		cancelColorHEX = newCancelColorHEX;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__CANCEL_COLOR_HEX, oldCancelColorHEX, cancelColorHEX));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public String getCancelImageURL()
 	{
 		return cancelImageURL;
@@ -769,24 +809,27 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void setCancelImageURL(String newCancelImageURL)
 	{
-		String oldCancelImageURL = cancelImageURL;
+		final String oldCancelImageURL = cancelImageURL;
 		cancelImageURL = newCancelImageURL;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__CANCEL_IMAGE_URL, oldCancelImageURL, cancelImageURL));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public String getCancelOverlayURL()
 	{
 		return cancelOverlayURL;
@@ -795,23 +838,25 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void setCancelOverlayURL(String newCancelOverlayURL)
 	{
-		String oldCancelOverlayURL = cancelOverlayURL;
+		final String oldCancelOverlayURL = cancelOverlayURL;
 		cancelOverlayURL = newCancelOverlayURL;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__CANCEL_OVERLAY_URL, oldCancelOverlayURL,
 				cancelOverlayURL));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -856,7 +901,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -916,7 +961,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -976,7 +1021,7 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -1034,16 +1079,17 @@ public class VTControlValidationTemplateImpl extends MinimalEObjectImpl.Containe
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	public String toString()
 	{
-		if (eIsProxy())
+		if (eIsProxy()) {
 			return super.toString();
+		}
 
-		StringBuffer result = new StringBuffer(super.toString());
+		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (okColorHEX: "); //$NON-NLS-1$
 		result.append(okColorHEX);
 		result.append(", okImageURL: "); //$NON-NLS-1$

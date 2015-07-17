@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  *******************************************************************************/
@@ -13,6 +13,12 @@ package org.eclipse.emf.ecp.edit.internal.swt.table;
 
 import org.eclipse.emf.ecore.EAttribute;
 
+/**
+ * The table column configuration defines whether a column is visible and what attribute should be bound to the column.
+ *
+ * @author Eugen Neufeld
+ *
+ */
 public class TableColumnConfiguration {
 	private final boolean readOnly;
 	private final EAttribute columnAttribute;
@@ -28,13 +34,19 @@ public class TableColumnConfiguration {
 	}
 
 	/**
-	 * 
+	 * Whether the column is read only.
+	 *
 	 * @return if the column is read-only
 	 */
 	public boolean isReadOnly() {
 		return readOnly;
 	}
 
+	/**
+	 * The {@link EAttribute} to bind to the column.
+	 *
+	 * @return the {@link EAttribute} to bind
+	 */
 	public EAttribute getColumnAttribute() {
 		return columnAttribute;
 	}

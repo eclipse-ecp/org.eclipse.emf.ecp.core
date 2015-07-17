@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
  */
@@ -21,6 +21,8 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -77,13 +79,13 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 
 	/**
 	 * Convenient constructor for an {@link org.eclipse.emf.ecp.core.ECPProvider ECPProvider}.
-	 * 
+	 *
 	 * @param name the name of the implementing provider
 	 */
 	protected DefaultProvider(String name) {
 		super(name);
 		label = name;
-		description = "";
+		description = ""; //$NON-NLS-1$
 	}
 
 	/** {@inheritDoc} */
@@ -93,41 +95,49 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final InternalProvider getProvider() {
 		return this;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final String getLabel() {
 		return label;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final void setLabel(String label) {
 		this.label = label;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final String getDescription() {
 		return description;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final void setDescription(String description) {
 		this.description = description;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final AdapterProvider getUIProvider() {
 		return uiProvider;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final void setUIProvider(AdapterProvider uiProvider) {
 		this.uiProvider = uiProvider;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final Set<InternalProject> getOpenProjects() {
 		final Set<InternalProject> result = new LinkedHashSet<InternalProject>();
 		for (final ECPProject project : ECPUtil.getECPProjectManager().getProjects()) {
@@ -144,21 +154,25 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final boolean isDisposed() {
 		return disposable.isDisposed();
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final void dispose() {
 		disposable.dispose();
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final void addDisposeListener(DisposeListener listener) {
 		disposable.addDisposeListener(listener);
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public final void removeDisposeListener(DisposeListener listener) {
 		disposable.removeDisposeListener(listener);
 	}
@@ -170,6 +184,7 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public <T> T getAdapter(Object adaptable, Class<T> adapterType) {
 		if (uiProvider != null) {
 			return uiProvider.getAdapter(adaptable, adapterType);
@@ -188,17 +203,19 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	 * override this method (however, if they do so, they should invoke the method on their superclass to ensure that
 	 * the Platform's adapter manager is consulted).
 	 * </p>
-	 * 
+	 *
 	 * @param adapterType
 	 *            the class to adapt to
 	 * @return the adapted object or <code>null</code>
 	 * @see org.eclipse.core.runtime.IAdaptable#getAdapter(Class)
 	 */
+	@Override
 	public Object getAdapter(@SuppressWarnings("rawtypes") Class adapterType) {
 		return Platform.getAdapterManager().getAdapter(this, adapterType);
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public EditingDomain createEditingDomain(InternalProject project) {
 		final CommandStack commandStack = createCommandStack(project);
 		final EditingDomain editingDomain = new AdapterFactoryEditingDomain(InternalProvider.EMF_ADAPTER_FACTORY,
@@ -210,7 +227,7 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	/**
 	 * This is used during the creation of the {@link EditingDomain}. This implementation creates an
 	 * {@link BasicCommandStack}.
-	 * 
+	 *
 	 * @param project the project to create the {@link CommandStack} for
 	 * @return the created {@link CommandStack}
 	 */
@@ -219,16 +236,19 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public boolean hasCreateRepositorySupport() {
 		return true;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public boolean isSlow(Object parent) {
 		return false;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public ECPContainer getModelContext(Object element) {
 		if (element instanceof ECPContainer) {
 			return (ECPContainer) element;
@@ -272,7 +292,7 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	/**
 	 * This allows to get the {@link ECPContainer} from a {@link Notifier} using the EcoreUtil.
 	 * This first gets the {@link ECPModelContextAdapter} and from it it gets the {@link ECPContainer}.
-	 * 
+	 *
 	 * @param notifier the {@link Notifier} to get the {@link ECPContainer} from
 	 * @return the {@link ECPContainer} registered as an Adapter on this {@link Notifier} or null
 	 */
@@ -287,6 +307,7 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void fillChildren(ECPContainer context, Object parent, InternalChildrenList childrenList) {
 		if (parent == ECPUtil.getECPProjectManager()) {
 			childrenList.addChildren(ECPUtil.getECPProjectManager().getProjects());
@@ -307,23 +328,25 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void handleLifecycle(ECPContainer context, LifecycleEvent event) {
 		final String providerClass = getClass().getSimpleName();
 		final String contextClass = context.getClass().getSimpleName();
-		Activator.log(providerClass + " received " + event + " for " + contextClass + " " + context);
+		Activator.log(providerClass + " received " + event + " for " + contextClass + " " + context); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 	}
 
 	/**
 	 * Convenient implementation of the {@link #getUnsupportedEPackages(Collection,InternalRepository)} method to return
 	 * an empty list. The
 	 * provider has to {@link Override} this method if not all {@link EPackage}s are supported.
-	 * 
+	 *
 	 * @param packages available packages
 	 * @param repository the repository to check
-	 * 
+	 *
 	 * @return the {@link Collection} of {@link EPackage EPackages} unsupported by this provider for the specified
 	 *         repository
 	 */
+	@Override
 	public Set<EPackage> getUnsupportedEPackages(Collection<EPackage> packages, InternalRepository repository) {
 		return Collections.emptySet();
 	}
@@ -331,7 +354,7 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	/**
 	 * Convenient implementation of the {@link #getLinkElements(InternalProject, EObject, EReference)} method to use the
 	 * {@link ItemPropertyDescriptor} to get all object of an object.
-	 * 
+	 *
 	 * @param project
 	 *            the project the call is from
 	 * @param modelElement
@@ -340,16 +363,23 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	 *            the {@link EReference} to add
 	 * @return {@link Iterator} of {@link EObject} that can be linked
 	 */
+	@Override
 	public Iterator<EObject> getLinkElements(InternalProject project, EObject modelElement, EReference eReference) {
-		return ItemPropertyDescriptor.getReachableObjectsOfType(modelElement, eReference.getEType()).iterator();
+		final EClass elementClass = modelElement.eClass();
+		EClassifier type = EcoreUtil.getReifiedType(elementClass, eReference.getEGenericType()).getEClassifier();
+		if (type == null) {
+			type = eReference.getEType();
+		}
+		return ItemPropertyDescriptor.getReachableObjectsOfType(modelElement, type).iterator();
 	}
 
 	/**
 	 * Convenient implementation where nothing happens.
-	 * 
+	 *
 	 * @param project
 	 *            the project to save
 	 */
+	@Override
 	public void doSave(InternalProject project) {
 		// do nothing
 	}
@@ -357,36 +387,40 @@ public abstract class DefaultProvider extends Element implements InternalProvide
 	/**
 	 * Convenient implementation where the provider saves changes of the project automatically, so a project never gets
 	 * dirty. Thus this returns false.
-	 * 
+	 *
 	 * @param project
 	 *            the project to check
 	 * @return false
 	 */
+	@Override
 	public boolean isDirty(InternalProject project) {
 		return false;
 	}
 
 	/**
 	 * Convenient implementation that return true during this check.
-	 * 
+	 *
 	 * @param project the project to check
 	 * @return true
 	 */
+	@Override
 	public boolean modelExists(InternalProject project) {
 		return true;
 	}
 
 	/**
 	 * Convenient implementation that return false.
-	 * 
+	 *
 	 * @return false
 	 */
+	@Override
 	public boolean hasCreateProjectWithoutRepositorySupport() {
 		return false;
 	}
 
 	/** {@inheritDoc} */
 	// FIXME implement only in provider
+	@Override
 	public boolean contains(InternalProject project, Object object) {
 		return false;
 	}

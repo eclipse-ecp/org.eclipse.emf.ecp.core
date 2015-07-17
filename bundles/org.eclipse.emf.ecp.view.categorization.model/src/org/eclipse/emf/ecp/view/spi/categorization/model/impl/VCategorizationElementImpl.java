@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
  */
@@ -38,9 +38,11 @@ import org.eclipse.emf.ecp.view.spi.model.impl.VContainedElementImpl;
  * Categorizations</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.categorization.model.impl.VCategorizationElementImpl#getCurrentSelection <em>
  * Current Selection</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.categorization.model.impl.VCategorizationElementImpl#getMainCategoryDepth
+ * <em>Main Category Depth</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class VCategorizationElementImpl extends VContainedElementImpl implements VCategorizationElement
@@ -49,7 +51,7 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	 * The cached value of the '{@link #getCategorizations() <em>Categorizations</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getCategorizations()
 	 * @generated
 	 * @ordered
@@ -60,7 +62,7 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	 * The cached value of the '{@link #getCurrentSelection() <em>Current Selection</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getCurrentSelection()
 	 * @generated
 	 * @ordered
@@ -68,9 +70,31 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	protected VCategorizableElement currentSelection;
 
 	/**
+	 * The default value of the '{@link #getMainCategoryDepth() <em>Main Category Depth</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
+	 * @see #getMainCategoryDepth()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int MAIN_CATEGORY_DEPTH_EDEFAULT = 0;
+
+	/**
+	 * The cached value of the '{@link #getMainCategoryDepth() <em>Main Category Depth</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see #getMainCategoryDepth()
+	 * @generated
+	 * @ordered
+	 */
+	protected int mainCategoryDepth = MAIN_CATEGORY_DEPTH_EDEFAULT;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	protected VCategorizationElementImpl()
@@ -81,7 +105,7 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -93,9 +117,10 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public EList<VAbstractCategorization> getCategorizations()
 	{
 		if (categorizations == null)
@@ -109,21 +134,23 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public VCategorizableElement getCurrentSelection()
 	{
 		if (currentSelection != null && currentSelection.eIsProxy())
 		{
-			InternalEObject oldCurrentSelection = (InternalEObject) currentSelection;
+			final InternalEObject oldCurrentSelection = (InternalEObject) currentSelection;
 			currentSelection = (VCategorizableElement) eResolveProxy(oldCurrentSelection);
 			if (currentSelection != oldCurrentSelection)
 			{
-				if (eNotificationRequired())
+				if (eNotificationRequired()) {
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
 						VCategorizationPackage.CATEGORIZATION_ELEMENT__CURRENT_SELECTION, oldCurrentSelection,
 						currentSelection));
+				}
 			}
 		}
 		return currentSelection;
@@ -132,7 +159,7 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public VCategorizableElement basicGetCurrentSelection()
@@ -143,22 +170,54 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void setCurrentSelection(VCategorizableElement newCurrentSelection)
 	{
-		VCategorizableElement oldCurrentSelection = currentSelection;
+		final VCategorizableElement oldCurrentSelection = currentSelection;
 		currentSelection = newCurrentSelection;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VCategorizationPackage.CATEGORIZATION_ELEMENT__CURRENT_SELECTION, oldCurrentSelection, currentSelection));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
+	 * @generated
+	 */
+	@Override
+	public int getMainCategoryDepth()
+	{
+		return mainCategoryDepth;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public void setMainCategoryDepth(int newMainCategoryDepth)
+	{
+		final int oldMainCategoryDepth = mainCategoryDepth;
+		mainCategoryDepth = newMainCategoryDepth;
+		if (eNotificationRequired()) {
+			eNotify(new ENotificationImpl(this, Notification.SET,
+				VCategorizationPackage.CATEGORIZATION_ELEMENT__MAIN_CATEGORY_DEPTH, oldMainCategoryDepth,
+				mainCategoryDepth));
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
@@ -175,7 +234,7 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -186,9 +245,12 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 		case VCategorizationPackage.CATEGORIZATION_ELEMENT__CATEGORIZATIONS:
 			return getCategorizations();
 		case VCategorizationPackage.CATEGORIZATION_ELEMENT__CURRENT_SELECTION:
-			if (resolve)
+			if (resolve) {
 				return getCurrentSelection();
+			}
 			return basicGetCurrentSelection();
+		case VCategorizationPackage.CATEGORIZATION_ELEMENT__MAIN_CATEGORY_DEPTH:
+			return getMainCategoryDepth();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -196,7 +258,7 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -212,6 +274,9 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 		case VCategorizationPackage.CATEGORIZATION_ELEMENT__CURRENT_SELECTION:
 			setCurrentSelection((VCategorizableElement) newValue);
 			return;
+		case VCategorizationPackage.CATEGORIZATION_ELEMENT__MAIN_CATEGORY_DEPTH:
+			setMainCategoryDepth((Integer) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -219,7 +284,7 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -233,6 +298,9 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 		case VCategorizationPackage.CATEGORIZATION_ELEMENT__CURRENT_SELECTION:
 			setCurrentSelection((VCategorizableElement) null);
 			return;
+		case VCategorizationPackage.CATEGORIZATION_ELEMENT__MAIN_CATEGORY_DEPTH:
+			setMainCategoryDepth(MAIN_CATEGORY_DEPTH_EDEFAULT);
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -240,7 +308,7 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -252,8 +320,30 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 			return categorizations != null && !categorizations.isEmpty();
 		case VCategorizationPackage.CATEGORIZATION_ELEMENT__CURRENT_SELECTION:
 			return currentSelection != null;
+		case VCategorizationPackage.CATEGORIZATION_ELEMENT__MAIN_CATEGORY_DEPTH:
+			return mainCategoryDepth != MAIN_CATEGORY_DEPTH_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public String toString()
+	{
+		if (eIsProxy()) {
+			return super.toString();
+		}
+
+		final StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (mainCategoryDepth: "); //$NON-NLS-1$
+		result.append(mainCategoryDepth);
+		result.append(')');
+		return result.toString();
 	}
 
 } // VCategorizationElementImpl

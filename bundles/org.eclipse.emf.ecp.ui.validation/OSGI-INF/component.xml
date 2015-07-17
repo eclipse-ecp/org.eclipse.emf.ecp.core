@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="ECP Validation View Service">
+   <implementation class="org.eclipse.emf.ecp.internal.ui.validation.ECPValidationResultServiceImpl"/>
+   <service>
+      <provide interface="org.eclipse.emf.ecp.ui.validation.ECPValidationResultService"/>
+   </service>
+</scr:component>

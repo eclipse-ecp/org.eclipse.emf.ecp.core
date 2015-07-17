@@ -1,11 +1,11 @@
 /********************************************************************************
  * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
  ********************************************************************************/
@@ -39,7 +39,7 @@ import org.eclipse.swt.widgets.Text;
  * @author Eike Stepper
  * @author Eugen Neufeld
  */
-public final class UIProviderRegistryImpl extends ElementRegistry<UIProvider, ECPObserver> implements
+public final class UIProviderRegistryImpl extends ElementRegistry<UIProvider, ECPObserver>implements
 	UIProviderRegistry {
 	/**
 	 * This is the Instance used by the {@link UIProviderRegistry} for providing its instance.
@@ -52,9 +52,10 @@ public final class UIProviderRegistryImpl extends ElementRegistry<UIProvider, EC
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public UIProvider getUIProvider(Object adaptable) {
 		if (adaptable instanceof ECPProviderAware) {
-			ECPProvider provider = ((ECPProviderAware) adaptable).getProvider();
+			final ECPProvider provider = ((ECPProviderAware) adaptable).getProvider();
 			if (provider != null) {
 				return getUIProvider(provider);
 			}
@@ -69,7 +70,7 @@ public final class UIProviderRegistryImpl extends ElementRegistry<UIProvider, EC
 			return uiProvider;
 		}
 
-		for (UIProvider ui : getUIProviders()) {
+		for (final UIProvider ui : getUIProviders()) {
 			if (ui.getProvider().equals(provider)) {
 				uiProvider = ui;
 				break;
@@ -77,7 +78,7 @@ public final class UIProviderRegistryImpl extends ElementRegistry<UIProvider, EC
 		}
 
 		if (uiProvider == null) {
-			uiProvider = new DefaultUIProvider(provider.getName() + ".default");
+			uiProvider = new DefaultUIProvider(provider.getName() + ".default"); //$NON-NLS-1$
 		}
 
 		((InternalProvider) provider).setUIProvider(uiProvider);
@@ -85,16 +86,19 @@ public final class UIProviderRegistryImpl extends ElementRegistry<UIProvider, EC
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public UIProvider getUIProvider(String name) {
 		return getElement(name);
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public Collection<UIProvider> getUIProviders() {
 		return getElements();
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public boolean hasUIProviders() {
 		return hasElements();
 	}
@@ -125,7 +129,7 @@ public final class UIProviderRegistryImpl extends ElementRegistry<UIProvider, EC
 	 * @author Eike Stepper
 	 */
 	private final class UIProviderParser extends ExtensionParser<UIProvider> {
-		private static final String EXTENSION_POINT_NAME = "uiProviders";
+		private static final String EXTENSION_POINT_NAME = "uiProviders"; //$NON-NLS-1$
 
 		public UIProviderParser() {
 			super(UIProviderRegistryImpl.this, Activator.PLUGIN_ID, EXTENSION_POINT_NAME);
@@ -133,9 +137,9 @@ public final class UIProviderRegistryImpl extends ElementRegistry<UIProvider, EC
 
 		@Override
 		protected UIProvider createElement(String name, IConfigurationElement configurationElement) {
-			UIProviderDescriptor descriptor = new UIProviderDescriptor(name, configurationElement);
+			final UIProviderDescriptor descriptor = new UIProviderDescriptor(name, configurationElement);
 			descriptor.setLabel(configurationElement.getDeclaringExtension().getLabel());
-			descriptor.setDescription(configurationElement.getAttribute("description"));
+			descriptor.setDescription(configurationElement.getAttribute("description")); //$NON-NLS-1$
 			return descriptor;
 		}
 	}
@@ -143,46 +147,55 @@ public final class UIProviderRegistryImpl extends ElementRegistry<UIProvider, EC
 	/**
 	 * @author Eike Stepper
 	 */
-	private final class UIProviderDescriptor extends ExtensionDescriptor<UIProvider> implements UIProvider {
+	private final class UIProviderDescriptor extends ExtensionDescriptor<UIProvider>implements UIProvider {
 		public UIProviderDescriptor(String name, IConfigurationElement configurationElement) {
 			super(UIProviderRegistryImpl.this, name, TYPE, configurationElement);
 		}
 
+		@Override
 		public InternalProvider getProvider() {
 			return getResolvedElement().getProvider();
 		}
 
+		@Override
 		public <T> T getAdapter(Object adaptable, Class<T> adapterType) {
 			return getResolvedElement().getAdapter(adaptable, adapterType);
 		}
 
+		@Override
 		public Object getAdapter(@SuppressWarnings("rawtypes") Class adapterType) {
 			return getResolvedElement().getAdapter(adapterType);
 		}
 
+		@Override
 		public String getText(Object element) {
 			return getResolvedElement().getText(element);
 		}
 
+		@Override
 		public Image getImage(Object element) {
 			return getResolvedElement().getImage(element);
 		}
 
+		@Override
 		public void fillContextMenu(IMenuManager manager, ECPContainer context, Object[] elements) {
 			getResolvedElement().fillContextMenu(manager, context, elements);
 		}
 
+		@Override
 		public Control createAddRepositoryUI(Composite parent, ECPProperties repositoryProperties,
 			Text repositoryNameText, Text repositoryLabelText, Text repositoryDescriptionText) {
 			return getResolvedElement().createAddRepositoryUI(parent, repositoryProperties, repositoryNameText,
 				repositoryLabelText, repositoryDescriptionText);
 		}
 
+		@Override
 		public Control createCheckoutUI(Composite parent, ECPCheckoutSource checkoutSource,
 			ECPProperties projectProperties) {
 			return getResolvedElement().createCheckoutUI(parent, checkoutSource, projectProperties);
 		}
 
+		@Override
 		public Control createNewProjectUI(Composite parent, CompositeStateObserver observer,
 			ECPProperties projectProperties) {
 			return getResolvedElement().createNewProjectUI(parent, observer, projectProperties);

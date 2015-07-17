@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="model" nsURI="http://org/eclipse/emf/ecp/view/treemasterview/model"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="treemasterdetail" nsURI="http://org/eclipse/emf/ecp/view/treemasterview/model"
     nsPrefix="org.eclipse.emf.ecp.view.treemasterview.model">
   <eClassifiers xsi:type="ecore:EClass" name="TreeMasterDetail" eSuperTypes="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//ContainedElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="detailView" eType="ecore:EClass ../../org.eclipse.emf.ecp.view.model/model/view.ecore#//View"

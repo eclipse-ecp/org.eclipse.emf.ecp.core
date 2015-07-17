@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011 Google, Inc.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Google, Inc. - initial API and implementation
  */
@@ -35,7 +35,7 @@ import org.osgi.framework.Bundle;
  * system resources managed by cached objects when those objects and OS resources are no longer needed (e.g. on
  * application shutdown) This class may be freely distributed as part of any application or plugin.
  * <p>
- * 
+ *
  * @author scheglov_ke
  * @author Dan Rubel
  * @generated
@@ -50,7 +50,7 @@ public class ResourceManager extends SWTResourceManager {
 
 	/**
 	 * Returns an {@link ImageDescriptor} stored in the file at the specified path relative to the specified class.
-	 * 
+	 *
 	 * @param clazz
 	 *            the {@link Class} relative to which to find the image descriptor.
 	 * @param path
@@ -63,7 +63,7 @@ public class ResourceManager extends SWTResourceManager {
 
 	/**
 	 * Returns an {@link ImageDescriptor} stored in the file at the specified path.
-	 * 
+	 *
 	 * @param path
 	 *            the path to the image file.
 	 * @return the {@link ImageDescriptor} stored in the file at the specified path.
@@ -78,7 +78,7 @@ public class ResourceManager extends SWTResourceManager {
 
 	/**
 	 * Returns an {@link Image} based on the specified {@link ImageDescriptor}.
-	 * 
+	 *
 	 * @param descriptor
 	 *            the {@link ImageDescriptor} for the {@link Image}.
 	 * @return the {@link Image} based on the specified {@link ImageDescriptor}.
@@ -103,7 +103,7 @@ public class ResourceManager extends SWTResourceManager {
 
 	/**
 	 * Returns an {@link Image} composed of a base image decorated by another image.
-	 * 
+	 *
 	 * @param baseImage
 	 *            the base {@link Image} that should be decorated.
 	 * @param decorator
@@ -116,7 +116,7 @@ public class ResourceManager extends SWTResourceManager {
 
 	/**
 	 * Returns an {@link Image} composed of a base image decorated by another image.
-	 * 
+	 *
 	 * @param baseImage
 	 *            the base {@link Image} that should be decorated.
 	 * @param decorator
@@ -230,7 +230,7 @@ public class ResourceManager extends SWTResourceManager {
 
 	/**
 	 * Returns an {@link Image} based on a plugin and file path.
-	 * 
+	 *
 	 * @param plugin
 	 *            the plugin {@link Object} containing the image
 	 * @param name
@@ -253,7 +253,7 @@ public class ResourceManager extends SWTResourceManager {
 
 	/**
 	 * Returns an {@link Image} based on a {@link Bundle} and resource entry path.
-	 * 
+	 *
 	 * @param symbolicName
 	 *            the symbolic name of the {@link Bundle}.
 	 * @param path
@@ -301,7 +301,7 @@ public class ResourceManager extends SWTResourceManager {
 
 	/**
 	 * Returns an {@link ImageDescriptor} based on a plugin and file path.
-	 * 
+	 *
 	 * @param plugin
 	 *            the plugin {@link Object} containing the image.
 	 * @param name
@@ -326,7 +326,7 @@ public class ResourceManager extends SWTResourceManager {
 
 	/**
 	 * Returns an {@link ImageDescriptor} based on a {@link Bundle} and resource entry path.
-	 * 
+	 *
 	 * @param symbolicName
 	 *            the symbolic name of the {@link Bundle}.
 	 * @param path
@@ -366,7 +366,7 @@ public class ResourceManager extends SWTResourceManager {
 
 	/**
 	 * Returns an {@link URL} based on a plugin and file path.
-	 * 
+	 *
 	 * @param plugin
 	 *            the plugin {@link Object} containing the file path.
 	 * @param name

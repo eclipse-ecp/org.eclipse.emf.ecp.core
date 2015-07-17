@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.emf.common.ui.examples">
+      <example
+            wizardID="org.eclipse.emf.ecp.ide.view.service.test.ProjectInstallerWizard">
+         <projectDescriptor
+               contentURI="resources/TestIDEViewRegistryProjectResources/"
+               name="org.eclipse.emf.ecp.ecore.test.projectDescriptor1">
+         </projectDescriptor>
+      </example>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            class="org.eclipse.emf.ecp.ide.view.service.test.ProjectInstallerWizard"
+            id="org.eclipse.emf.ecp.ide.view.service.test.ProjectInstallerWizard"
+            name="Project Installer">
+      </wizard>
+   </extension>
+
+</plugin>

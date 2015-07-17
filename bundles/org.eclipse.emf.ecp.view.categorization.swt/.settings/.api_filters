@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.ecp.view.categorization.swt" version="2">
+    <resource path="META-INF/MANIFEST.MF">
+        <filter comment="SPI Change in 1.6" id="923795461">
+            <message_arguments>
+                <message_argument value="1.6.0"/>
+                <message_argument value="1.5.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/categorization/swt/AbstractJFaceTreeRenderer.java" type="org.eclipse.emf.ecp.view.spi.categorization.swt.AbstractJFaceTreeRenderer">
+        <filter comment="SPI Change in 1.6" id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.swt.AbstractJFaceTreeRenderer"/>
+                <message_argument value="AbstractJFaceTreeRenderer()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="EMFForms 1.6 SPI Change" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.swt.AbstractJFaceTreeRenderer"/>
+                <message_argument value="getGridDescription(SWTGridDescription)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="EMFForms 1.6 SPI Change" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.swt.AbstractJFaceTreeRenderer"/>
+                <message_argument value="renderControl(SWTGridCell, Composite)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/categorization/swt/AbstractSWTTabRenderer.java" type="org.eclipse.emf.ecp.view.spi.categorization.swt.AbstractSWTTabRenderer">
+        <filter comment="SPI Change in 1.6" id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.swt.AbstractSWTTabRenderer"/>
+                <message_argument value="AbstractSWTTabRenderer()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="EMFForms 1.6 SPI Change" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.swt.AbstractSWTTabRenderer"/>
+                <message_argument value="getGridDescription(SWTGridDescription)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="EMFForms 1.6 SPI Change" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.swt.AbstractSWTTabRenderer"/>
+                <message_argument value="renderControl(SWTGridCell, Composite)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/categorization/swt/CategorizationElementTabbedSWTRenderer.java" type="org.eclipse.emf.ecp.view.spi.categorization.swt.CategorizationElementTabbedSWTRenderer">
+        <filter comment="SPI Change in 1.6" id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.swt.CategorizationElementTabbedSWTRenderer"/>
+                <message_argument value="CategorizationElementTabbedSWTRenderer()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/categorization/swt/CompositeCategoryJFaceTreeRenderer.java" type="org.eclipse.emf.ecp.view.spi.categorization.swt.CompositeCategoryJFaceTreeRenderer">
+        <filter comment="SPI Change in 1.6" id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.swt.CompositeCategoryJFaceTreeRenderer"/>
+                <message_argument value="CompositeCategoryJFaceTreeRenderer()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/categorization/swt/CompositeCategorySWTTabRenderer.java" type="org.eclipse.emf.ecp.view.spi.categorization.swt.CompositeCategorySWTTabRenderer">
+        <filter comment="SPI Change in 1.6" id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.swt.CompositeCategorySWTTabRenderer"/>
+                <message_argument value="CompositeCategorySWTTabRenderer()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/categorization/swt/SWTCategorizationElementRenderer.java" type="org.eclipse.emf.ecp.view.spi.categorization.swt.SWTCategorizationElementRenderer">
+        <filter comment="SPI Change in 1.6" id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.swt.SWTCategorizationElementRenderer"/>
+                <message_argument value="SWTCategorizationElementRenderer()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/categorization/swt/SWTCategorizationRenderer.java" type="org.eclipse.emf.ecp.view.spi.categorization.swt.SWTCategorizationRenderer">
+        <filter comment="SPI Change in 1.6" id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.swt.SWTCategorizationRenderer"/>
+                <message_argument value="SWTCategorizationRenderer()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="EMFForms 1.6 SPI Change" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.swt.SWTCategorizationRenderer"/>
+                <message_argument value="getGridDescription(SWTGridDescription)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="EMFForms 1.6 SPI Change" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.swt.SWTCategorizationRenderer"/>
+                <message_argument value="renderControl(SWTGridCell, Composite)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/categorization/swt/SWTCategoryRenderer.java" type="org.eclipse.emf.ecp.view.spi.categorization.swt.SWTCategoryRenderer">
+        <filter comment="SPI Change in 1.6" id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.swt.SWTCategoryRenderer"/>
+                <message_argument value="SWTCategoryRenderer()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

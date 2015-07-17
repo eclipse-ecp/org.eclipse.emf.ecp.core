@@ -12,11 +12,13 @@
     usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model"
     interfaceNamePattern="V{0}" classNamePattern="V{0}Impl" importOrganizing="true">
   <foreignModel>treeMasterDetail.ecore</foreignModel>
-  <genPackages prefix="TreeMasterDetail" basePackage="org.eclipse.emf.ecp.view.treemasterdetail"
-      disposableProviderFactory="true" extensibleProviderFactory="true" childCreationExtenders="true"
+  <genPackages prefix="TreeMasterDetail" basePackage="org.eclipse.emf.ecp.view" disposableProviderFactory="true"
+      interfacePackageSuffix="model" metaDataPackageSuffix="model" classPackageSuffix="model.impl"
+      utilityPackageSuffix="model.util" providerPackageSuffix="model.provider" presentationPackageSuffix="model.presentation"
+      testsPackageSuffix="model.tests" extensibleProviderFactory="true" childCreationExtenders="true"
       ecorePackage="treeMasterDetail.ecore#/">
     <genClasses ecoreClass="treeMasterDetail.ecore#//TreeMasterDetail">
-      <genFeatures children="true" createChild="true" ecoreFeature="ecore:EReference treeMasterDetail.ecore#//TreeMasterDetail/detailView"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference treeMasterDetail.ecore#//TreeMasterDetail/detailView"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ASCII"?>
+<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:org.eclipse.emf.ecp.view.label.model="http://org/eclipse/emf/ecp/view/label/model" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model" xmlns:org.eclipse.emf.ecp.view.treemasterview.model="http://org/eclipse/emf/ecp/view/treemasterview/model" name="Template View Model">
+  <rootEClass href="http://org/eclipse/emf/ecp/view/template/model#//ViewTemplate"/>
+  <children xsi:type="org.eclipse.emf.ecp.view.treemasterview.model:TreeMasterDetail">
+    <detailView>
+      <rootEClass href="http://org/eclipse/emf/ecp/view/template/model#//ViewTemplate"/>
+      <children xsi:type="org.eclipse.emf.ecp.view.label.model:Label" name="Add the styles to the tree."/>
+    </detailView>
+  </children>
+</org.eclipse.emf.ecp.view.model:View>

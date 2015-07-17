@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.ecp.view.context" version="2">
+    <resource path="META-INF/MANIFEST.MF">
+        <filter comment="This is SPI" id="923795461">
+            <message_arguments>
+                <message_argument value="1.3.0"/>
+                <message_argument value="1.2.1"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change (1.4)" id="923795461">
+            <message_arguments>
+                <message_argument value="1.4.0"/>
+                <message_argument value="1.3.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.context.ModelChangeNotification">
+        <filter comment="SPI Change (1.3)" id="305324134">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.context.ModelChangeNotification"/>
+                <message_argument value="org.eclipse.emf.ecp.view.context_1.3.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/context/ViewModelContext.java" type="org.eclipse.emf.ecp.view.spi.context.ViewModelContext">
+        <filter comment="SPI Change (1.4)" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.context.ViewModelContext"/>
+                <message_argument value="getContextValue(String)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="This is SPI" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.context.ViewModelContext"/>
+                <message_argument value="getControlsFor(EStructuralFeature.Setting)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="This is SPI" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.context.ViewModelContext"/>
+                <message_argument value="getControlsFor(UniqueSetting)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change (1.4)" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.context.ViewModelContext"/>
+                <message_argument value="putContextValue(String, Object)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change (1.3)" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.context.ViewModelContext"/>
+                <message_argument value="registerDomainChangeListener(ModelChangeListener)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change (1.3)" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.context.ViewModelContext"/>
+                <message_argument value="registerViewChangeListener(ModelChangeListener)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change (1.3)" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.context.ViewModelContext"/>
+                <message_argument value="unregisterDomainChangeListener(ModelChangeListener)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change (1.3)" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.context.ViewModelContext"/>
+                <message_argument value="unregisterViewChangeListener(ModelChangeListener)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change" id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.context.ViewModelContext"/>
+                <message_argument value="getControlsFor(UniqueSetting)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change (1.3)" id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.context.ViewModelContext"/>
+                <message_argument value="registerDomainChangeListener(ViewModelContext.ModelChangeListener)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change (1.3)" id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.context.ViewModelContext"/>
+                <message_argument value="registerViewChangeListener(ViewModelContext.ModelChangeListener)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change (1.3)" id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.context.ViewModelContext"/>
+                <message_argument value="unregisterDomainChangeListener(ViewModelContext.ModelChangeListener)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change (1.3)" id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.context.ViewModelContext"/>
+                <message_argument value="unregisterViewChangeListener(ViewModelContext.ModelChangeListener)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change (1.3)" id="405995624">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.context.ViewModelContext.ModelChangeListener"/>
+                <message_argument value="org.eclipse.emf.ecp.view.context_1.3.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

@@ -1,0 +1,21 @@
+<project default="freeze" basedir=".">
+	<property name="xml" value="${basedir}/reports/xml" />
+	<property name="html" value="${basedir}/reports/html" />
+	<property name="profile" value="C:\Users\Eugen\API_Baselines\repository" />
+	<property name="baseline" value="C:\Users\Eugen\API_Baselines\ecp_111" />
+	<target name="compare">
+		<apitooling.compare baseline="${baseline}" profile="${profile}" report="${basedir}\xml" debug="true" visibility="ALL" />
+	</target>	
+	<target name="analysis">
+		<apitooling.analysis baseline="${baseline}" profile="${profile}" report="${xml}" debug="true" />
+		<apitooling.analysis_reportconversion xmlfiles="${xml}" htmlfiles="${html}" debug="true" />
+	</target>
+	<target name="freeze">
+		<apitooling.apifreeze baseline="${baseline}" profile="${profile}" report="${xml}/test.xml" debug="false" />
+		<apitooling.apifreeze_reportconversion xmlfile="${xml}/test.xml" debug="false" />
+	</target>
+	<target name="freezeReport">
+
+		<apitooling.apifreeze_reportconversion xmlfile="${xml}/test.xml" debug="false" />
+	</target>
+</project>

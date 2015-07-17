@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Migrator
+Bundle-SymbolicName: org.eclipse.emf.ecp.view.migrator;singleton:=true
+Bundle-Version: 1.7.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: org.eclipse.emf.common;bundle-version="[2.7.0,3.0.0)";visibility:=reexport,
+ org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)"
+Bundle-Vendor: Eclipse Modeling Project
+Export-Package: org.eclipse.emf.ecp.view.migrator;version="1.7.0"

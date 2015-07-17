@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Muenchen GmbH - initial API and implementation
  ******************************************************************************/
@@ -34,7 +34,7 @@ import org.eclipse.emf.ecp.ui.view.editor.test.model.test.TestPackage;
  * <li>{@link org.eclipse.emf.ecp.ui.view.editor.test.model.test.impl.Component2Impl#getComposites <em>Composites</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class Component2Impl extends MinimalEObjectImpl.Container implements Component2 {
@@ -42,7 +42,7 @@ public class Component2Impl extends MinimalEObjectImpl.Container implements Comp
 	 * The cached value of the '{@link #getComposites() <em>Composites</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getComposites()
 	 * @generated
 	 * @ordered
@@ -52,7 +52,7 @@ public class Component2Impl extends MinimalEObjectImpl.Container implements Comp
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected Component2Impl() {
@@ -62,7 +62,7 @@ public class Component2Impl extends MinimalEObjectImpl.Container implements Comp
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -73,9 +73,10 @@ public class Component2Impl extends MinimalEObjectImpl.Container implements Comp
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public EList<Composite> getComposites() {
 		if (composites == null) {
 			composites = new EObjectContainmentEList<Composite>(Composite.class, this,
@@ -87,7 +88,7 @@ public class Component2Impl extends MinimalEObjectImpl.Container implements Comp
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -102,7 +103,7 @@ public class Component2Impl extends MinimalEObjectImpl.Container implements Comp
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -117,7 +118,7 @@ public class Component2Impl extends MinimalEObjectImpl.Container implements Comp
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -135,7 +136,7 @@ public class Component2Impl extends MinimalEObjectImpl.Container implements Comp
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -151,7 +152,7 @@ public class Component2Impl extends MinimalEObjectImpl.Container implements Comp
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override

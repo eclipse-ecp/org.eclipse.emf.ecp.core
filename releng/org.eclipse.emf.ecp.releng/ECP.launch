@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.pde.ui.RuntimeWorkbench">
+<setAttribute key="additional_plugins"/>
+<booleanAttribute key="append.args" value="true"/>
+<stringAttribute key="application" value="org.eclipse.emf.ecp.application.e3.application"/>
+<booleanAttribute key="askclear" value="false"/>
+<booleanAttribute key="automaticAdd" value="true"/>
+<booleanAttribute key="automaticValidate" value="false"/>
+<stringAttribute key="bootstrap" value=""/>
+<stringAttribute key="checked" value="[NONE]"/>
+<booleanAttribute key="clearConfig" value="false"/>
+<booleanAttribute key="clearws" value="false"/>
+<booleanAttribute key="clearwslog" value="false"/>
+<stringAttribute key="configLocation" value="${workspace_loc}/.metadata/.plugins/org.eclipse.pde.core/ECP"/>
+<booleanAttribute key="default" value="false"/>
+<stringAttribute key="featureDefaultLocation" value="workspace"/>
+<stringAttribute key="featurePluginResolution" value="workspace"/>
+<booleanAttribute key="includeOptional" value="true"/>
+<stringAttribute key="location" value="${workspace_loc}/../runtime-ECP"/>
+<booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_START_ON_FIRST_THREAD" value="true"/>
+<stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} -consoleLog"/>
+<stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.pde.ui.workbenchClasspathProvider"/>
+<stringAttribute key="pde.version" value="3.3"/>
+<stringAttribute key="product" value="org.eclipse.emf.ecp.application.e3.product"/>
+<setAttribute key="selected_features">
+<setEntry value="org.eclipse.emf.ecp.demo.e3.feature:default"/>
+<setEntry value="org.eclipse.emf.ecp.e3.feature:default"/>
+<setEntry value="org.eclipse.emf.ecp.emfforms.runtime.feature:default"/>
+<setEntry value="org.eclipse.emf.ecp.emfstore.feature:default"/>
+<setEntry value="org.eclipse.emf.ecp.feature:default"/>
+<setEntry value="org.eclipse.emf.ecp.test.model.feature:default"/>
+<setEntry value="org.eclipse.emf.ecp.view.categorization.feature:default"/>
+<setEntry value="org.eclipse.emf.ecp.view.custom.feature:default"/>
+<setEntry value="org.eclipse.emf.ecp.view.group.feature:default"/>
+<setEntry value="org.eclipse.emf.ecp.view.horizontal.feature:default"/>
+<setEntry value="org.eclipse.emf.ecp.view.label.feature:default"/>
+<setEntry value="org.eclipse.emf.ecp.view.model.controls.feature:default"/>
+<setEntry value="org.eclipse.emf.ecp.view.model.editor.feature:default"/>
+<setEntry value="org.eclipse.emf.ecp.view.rule.feature:default"/>
+<setEntry value="org.eclipse.emf.ecp.view.stack.feature:default"/>
+<setEntry value="org.eclipse.emf.ecp.view.table.feature:default"/>
+<setEntry value="org.eclipse.emf.ecp.view.template.feature:default"/>
+<setEntry value="org.eclipse.emf.ecp.view.template.helper.feature:default"/>
+<setEntry value="org.eclipse.emf.ecp.view.treemasterdetail.feature:default"/>
+<setEntry value="org.eclipse.emf.ecp.view.unset.feature:default"/>
+<setEntry value="org.eclipse.emf.ecp.view.validation.feature:default"/>
+<setEntry value="org.eclipse.emf.ecp.view.vertical.feature:default"/>
+<setEntry value="org.eclipse.emf.ecp.viewmodel.feature:default"/>
+<setEntry value="org.eclipse.emf.ecp.workspace.feature:default"/>
+</setAttribute>
+<stringAttribute key="selected_workspace_plugins" value="ViewModelProjectTemplate@default:default,org.eclipse.emf.ecp.application.e3@default:default,org.eclipse.emf.ecp.application.e4@default:default,org.eclipse.emf.ecp.cdo.core@default:default,org.eclipse.emf.ecp.cdo.ui@default:default,org.eclipse.emf.ecp.common@default:default,org.eclipse.emf.ecp.core.emffilter@default:default,org.eclipse.emf.ecp.core.test@default:false,org.eclipse.emf.ecp.core@default:default,org.eclipse.emf.ecp.diffmerge.context@default:default,org.eclipse.emf.ecp.diffmerge.model.edit@default:default,org.eclipse.emf.ecp.diffmerge.model@default:default,org.eclipse.emf.ecp.diffmerge.renderer.swt@default:default,org.eclipse.emf.ecp.diffmerge.swt@default:default,org.eclipse.emf.ecp.diffmerge.test@default:false,org.eclipse.emf.ecp.doc@default:default,org.eclipse.emf.ecp.ecore.editor.test@default:default,org.eclipse.emf.ecp.ecore.editor.ui@default:default,org.eclipse.emf.ecp.ecore.editor@default:default,org.eclipse.emf.ecp.edit.ecore.swt@default:default,org.eclipse.emf.ecp.edit.swt.test@default:false,org.eclipse.emf.ecp.edit.swt@default:default,org.eclipse.emf.ecp.edit@default:default,org.eclipse.emf.ecp.editor.e3@default:default,org.eclipse.emf.ecp.emfstore.core@default:default,org.eclipse.emf.ecp.emfstore.localserver@default:default,org.eclipse.emf.ecp.emfstore.ui.e3@default:default,org.eclipse.emf.ecp.emfstore.ui.e4@default:default,org.eclipse.emf.ecp.emfstore.ui.search@default:default,org.eclipse.emf.ecp.emfstore.ui@default:default,org.eclipse.emf.ecp.examplemodel.ui@default:default,org.eclipse.emf.ecp.explorereditorbridge@default:default,org.eclipse.emf.ecp.ide.editor.view.control@default:default,org.eclipse.emf.ecp.ide.editor.view@default:default,org.eclipse.emf.ecp.ide.editor.viewmodel@default:default,org.eclipse.emf.ecp.ide.util@default:default,org.eclipse.emf.ecp.ide.view.service@default:default,org.eclipse.emf.ecp.integrationtest@default:default,org.eclipse.emf.ecp.products@default:default,org.eclipse.emf.ecp.test.model.edit@default:default,org.eclipse.emf.ecp.test.model@default:default,org.eclipse.emf.ecp.ui.e3@default:default,org.eclipse.emf.ecp.ui.e4@default:default,org.eclipse.emf.ecp.ui.rcp@default:false,org.eclipse.emf.ecp.ui.transaction@default:default,org.eclipse.emf.ecp.ui.validation.test@default:false,org.eclipse.emf.ecp.ui.validation@default:default,org.eclipse.emf.ecp.ui.view.editor.controls.test@default:false,org.eclipse.emf.ecp.ui.view.editor.controls@default:default,org.eclipse.emf.ecp.ui.view.swt.test@default:false,org.eclipse.emf.ecp.ui.view.swt@default:default,org.eclipse.emf.ecp.ui.view.test@default:default,org.eclipse.emf.ecp.ui.view@default:default,org.eclipse.emf.ecp.ui@default:default,org.eclipse.emf.ecp.validation.connector@default:default,org.eclipse.emf.ecp.validation.diagnostician.test@default:false,org.eclipse.emf.ecp.validation.diagnostician@default:default,org.eclipse.emf.ecp.validation.test@default:false,org.eclipse.emf.ecp.validation@default:default,org.eclipse.emf.ecp.validationvieweditorbridge@default:default,org.eclipse.emf.ecp.view.categorization.model.edit@default:default,org.eclipse.emf.ecp.view.categorization.model@default:default,org.eclipse.emf.ecp.view.categorization.swt.test@default:default,org.eclipse.emf.ecp.view.categorization.swt@default:default,org.eclipse.emf.ecp.view.context.locale@default:default,org.eclipse.emf.ecp.view.context.test@default:false,org.eclipse.emf.ecp.view.context@default:default,org.eclipse.emf.ecp.view.core.swt.tests@default:false,org.eclipse.emf.ecp.view.core.swt.ui@default:default,org.eclipse.emf.ecp.view.core.swt@default:default,org.eclipse.emf.ecp.view.custom.model.edit@default:default,org.eclipse.emf.ecp.view.custom.model@default:default,org.eclipse.emf.ecp.view.custom.ui.swt.test@default:default,org.eclipse.emf.ecp.view.custom.ui.swt@default:default,org.eclipse.emf.ecp.view.dynamictree.model.edit@default:default,org.eclipse.emf.ecp.view.dynamictree.model.test@default:default,org.eclipse.emf.ecp.view.dynamictree.model@default:default,org.eclipse.emf.ecp.view.dynamictree.ui.swt@default:default,org.eclipse.emf.ecp.view.dynamictree.ui@default:default,org.eclipse.emf.ecp.view.group.model.edit@default:default,org.eclipse.emf.ecp.view.group.model@default:default,org.eclipse.emf.ecp.view.group.swt.embedded@default:default,org.eclipse.emf.ecp.view.group.ui.swt.test@default:default,org.eclipse.emf.ecp.view.group.ui.swt@default:default,org.eclipse.emf.ecp.view.groupedgrid.model.edit@default:default,org.eclipse.emf.ecp.view.groupedgrid.model@default:default,org.eclipse.emf.ecp.view.groupedgrid.ui.swt@default:default,org.eclipse.emf.ecp.view.horizontal.model.edit@default:default,org.eclipse.emf.ecp.view.horizontal.model@default:default,org.eclipse.emf.ecp.view.horizontal.ui.swt.test@default:default,org.eclipse.emf.ecp.view.horizontal.ui.swt@default:default,org.eclipse.emf.ecp.view.ideconfig.model.edit@default:default,org.eclipse.emf.ecp.view.ideconfig.model@default:default,org.eclipse.emf.ecp.view.label.model.edit@default:default,org.eclipse.emf.ecp.view.label.model@default:default,org.eclipse.emf.ecp.view.label.ui.swt@default:default,org.eclipse.emf.ecp.view.model.common@default:default,org.eclipse.emf.ecp.view.model.edit.test@default:false,org.eclipse.emf.ecp.view.model.edit@default:default,org.eclipse.emf.ecp.view.model.editor.testplugin@default:default,org.eclipse.emf.ecp.view.model.editor@default:default,org.eclipse.emf.ecp.view.model.integrationtest@default:default,org.eclipse.emf.ecp.view.model.preview.common@default:default,org.eclipse.emf.ecp.view.model.preview.e3@default:default,org.eclipse.emf.ecp.view.model.project.installer@default:default,org.eclipse.emf.ecp.view.model.provider.generator@default:default,org.eclipse.emf.ecp.view.model.provider.xmi.test@default:false,org.eclipse.emf.ecp.view.model.provider.xmi@default:default,org.eclipse.emf.ecp.view.model@default:default,org.eclipse.emf.ecp.view.rule.model.edit@default:default,org.eclipse.emf.ecp.view.rule.model@default:default,org.eclipse.emf.ecp.view.rule.test@default:default,org.eclipse.emf.ecp.view.rule.ui.swt.test@default:false,org.eclipse.emf.ecp.view.rule@default:default,org.eclipse.emf.ecp.view.separator.model.edit@default:default,org.eclipse.emf.ecp.view.separator.model@default:default,org.eclipse.emf.ecp.view.separator.ui.swt.test@default:false,org.eclipse.emf.ecp.view.separator.ui.swt@default:default,org.eclipse.emf.ecp.view.swt.layout@default:default,org.eclipse.emf.ecp.view.table.columnservice@default:default,org.eclipse.emf.ecp.view.table.editor@default:default,org.eclipse.emf.ecp.view.table.model.edit@default:default,org.eclipse.emf.ecp.view.table.model@default:default,org.eclipse.emf.ecp.view.table.ui.swt.test@default:default,org.eclipse.emf.ecp.view.table.ui.swt@default:default,org.eclipse.emf.ecp.view.template.controls.swt@default:default,org.eclipse.emf.ecp.view.template.model.edit@default:default,org.eclipse.emf.ecp.view.template.model@default:default,org.eclipse.emf.ecp.view.template.service.test@default:false,org.eclipse.emf.ecp.view.template.service@default:default,org.eclipse.emf.ecp.view.test.common.swt@default:default,org.eclipse.emf.ecp.view.test.common@default:default,org.eclipse.emf.ecp.view.treemasterdetail.model.edit@default:default,org.eclipse.emf.ecp.view.treemasterdetail.model@default:default,org.eclipse.emf.ecp.view.treemasterdetail.ui.swt@default:default,org.eclipse.emf.ecp.view.ui.editor.test@default:default,org.eclipse.emf.ecp.view.unset.test@default:default,org.eclipse.emf.ecp.view.unset@default:default,org.eclipse.emf.ecp.view.validation.test@default:false,org.eclipse.emf.ecp.view.validation@default:default,org.eclipse.emf.ecp.view.vertical.model.edit@default:default,org.eclipse.emf.ecp.view.vertical.model@default:default,org.eclipse.emf.ecp.view.vertical.ui.swt.test@default:default,org.eclipse.emf.ecp.view.vertical.ui.swt@default:default,org.eclipse.emf.ecp.workspace.core@default:default,org.eclipse.emf.ecp.workspace.ui@default:default"/>
+<booleanAttribute key="show_selected_only" value="false"/>
+<stringAttribute key="templateConfig" value="${target_home}\configuration\config.ini"/>
+<booleanAttribute key="tracing" value="false"/>
+<booleanAttribute key="useCustomFeatures" value="true"/>
+<booleanAttribute key="useDefaultConfig" value="true"/>
+<booleanAttribute key="useDefaultConfigArea" value="true"/>
+<booleanAttribute key="useProduct" value="true"/>
+</launchConfiguration>

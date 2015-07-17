@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:history="http://www.eclipse.org/emf/edapt/history/0.3">
+  <releases date="2014-10-16T15:51:48.763+0200" label="140">
+    <changes xsi:type="history:CompositeChange">
+      <changes xsi:type="history:Create" element="table.ecore#/">
+        <changes xsi:type="history:Set" element="table.ecore#/" featureName="name"
+            dataValue="table"/>
+        <changes xsi:type="history:Set" element="table.ecore#/" featureName="nsURI"
+            dataValue="http://org/eclipse/emf/ecp/view/table/model"/>
+        <changes xsi:type="history:Set" element="table.ecore#/" featureName="nsPrefix"
+            dataValue="org.eclipse.emf.ecp.view.table.model"/>
+      </changes>
+      <changes xsi:type="history:Create" target="table.ecore#/" referenceName="eClassifiers"
+          element="table.ecore#//TableControl">
+        <changes xsi:type="history:Set" element="table.ecore#//TableControl" featureName="name"
+            dataValue="TableControl"/>
+        <changes xsi:type="history:Add" element="table.ecore#//TableControl" featureName="eSuperTypes"
+            referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//Control"/>
+      </changes>
+      <changes xsi:type="history:Create" target="table.ecore#//TableControl" referenceName="eStructuralFeatures"
+          element="table.ecore#//TableControl/addRemoveDisabled">
+        <changes xsi:type="history:Set" element="table.ecore#//TableControl/addRemoveDisabled"
+            featureName="name" dataValue="addRemoveDisabled"/>
+        <changes xsi:type="history:Set" element="table.ecore#//TableControl/addRemoveDisabled"
+            featureName="lowerBound" dataValue="1" oldDataValue="0"/>
+        <changes xsi:type="history:Set" element="table.ecore#//TableControl/addRemoveDisabled"
+            featureName="defaultValueLiteral" dataValue="false"/>
+        <changes xsi:type="history:Set" element="table.ecore#//TableControl/addRemoveDisabled"
+            featureName="eType" referenceValue="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      </changes>
+      <changes xsi:type="history:Create" target="table.ecore#//TableControl" referenceName="eStructuralFeatures"
+          element="table.ecore#//TableControl/detailView">
+        <changes xsi:type="history:Set" element="table.ecore#//TableControl/detailView"
+            featureName="name" dataValue="detailView"/>
+        <changes xsi:type="history:Set" element="table.ecore#//TableControl/detailView"
+            featureName="containment" dataValue="true" oldDataValue="false"/>
+        <changes xsi:type="history:Set" element="table.ecore#//TableControl/detailView"
+            featureName="eType" referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//View"/>
+      </changes>
+      <changes xsi:type="history:Create" target="table.ecore#//TableControl" referenceName="eStructuralFeatures"
+          element="table.ecore#//TableControl/enableDetailEditingDialog">
+        <changes xsi:type="history:Set" element="table.ecore#//TableControl/enableDetailEditingDialog"
+            featureName="name" dataValue="enableDetailEditingDialog"/>
+        <changes xsi:type="history:Set" element="table.ecore#//TableControl/enableDetailEditingDialog"
+            featureName="defaultValueLiteral" dataValue="false"/>
+        <changes xsi:type="history:Set" element="table.ecore#//TableControl/enableDetailEditingDialog"
+            featureName="eType" referenceValue="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      </changes>
+      <changes xsi:type="history:Create" target="table.ecore#/" referenceName="eClassifiers"
+          element="table.ecore#//TableColumnConfiguration">
+        <changes xsi:type="history:Set" element="table.ecore#//TableColumnConfiguration"
+            featureName="name" dataValue="TableColumnConfiguration"/>
+        <changes xsi:type="history:Set" element="table.ecore#//TableColumnConfiguration"
+            featureName="abstract" dataValue="true" oldDataValue="false"/>
+        <changes xsi:type="history:Set" element="table.ecore#//TableColumnConfiguration"
+            featureName="interface" dataValue="true" oldDataValue="false"/>
+      </changes>
+      <changes xsi:type="history:Create" target="table.ecore#//TableControl" referenceName="eStructuralFeatures"
+          element="table.ecore#//TableControl/columnConfigurations">
+        <changes xsi:type="history:Set" element="table.ecore#//TableControl/columnConfigurations"
+            featureName="name" dataValue="columnConfigurations"/>
+        <changes xsi:type="history:Set" element="table.ecore#//TableControl/columnConfigurations"
+            featureName="upperBound" dataValue="-1" oldDataValue="1"/>
+        <changes xsi:type="history:Set" element="table.ecore#//TableControl/columnConfigurations"
+            featureName="containment" dataValue="true" oldDataValue="false"/>
+        <changes xsi:type="history:Set" element="table.ecore#//TableControl/columnConfigurations"
+            featureName="eType" referenceValue="table.ecore#//TableColumnConfiguration"/>
+      </changes>
+      <changes xsi:type="history:Create" target="table.ecore#/" referenceName="eClassifiers"
+          element="table.ecore#//TableDomainModelReference">
+        <changes xsi:type="history:Set" element="table.ecore#//TableDomainModelReference"
+            featureName="name" dataValue="TableDomainModelReference"/>
+        <changes xsi:type="history:Add" element="table.ecore#//TableDomainModelReference"
+            featureName="eSuperTypes" referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//FeaturePathDomainModelReference"/>
+      </changes>
+      <changes xsi:type="history:Create" target="table.ecore#//TableDomainModelReference"
+          referenceName="eStructuralFeatures" element="table.ecore#//TableDomainModelReference/columnDomainModelReferences">
+        <changes xsi:type="history:Set" element="table.ecore#//TableDomainModelReference/columnDomainModelReferences"
+            featureName="name" dataValue="columnDomainModelReferences"/>
+        <changes xsi:type="history:Set" element="table.ecore#//TableDomainModelReference/columnDomainModelReferences"
+            featureName="upperBound" dataValue="-1" oldDataValue="1"/>
+        <changes xsi:type="history:Set" element="table.ecore#//TableDomainModelReference/columnDomainModelReferences"
+            featureName="containment" dataValue="true" oldDataValue="false"/>
+        <changes xsi:type="history:Set" element="table.ecore#//TableDomainModelReference/columnDomainModelReferences"
+            featureName="eType" referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"/>
+      </changes>
+      <changes xsi:type="history:Create" target="table.ecore#/" referenceName="eClassifiers"
+          element="table.ecore#//ReadOnlyColumnConfiguration">
+        <changes xsi:type="history:Set" element="table.ecore#//ReadOnlyColumnConfiguration"
+            featureName="name" dataValue="ReadOnlyColumnConfiguration"/>
+        <changes xsi:type="history:Add" element="table.ecore#//ReadOnlyColumnConfiguration"
+            featureName="eSuperTypes" referenceValue="table.ecore#//TableColumnConfiguration"/>
+      </changes>
+      <changes xsi:type="history:Create" target="table.ecore#//ReadOnlyColumnConfiguration"
+          referenceName="eStructuralFeatures" element="table.ecore#//ReadOnlyColumnConfiguration/columnDomainReferences">
+        <changes xsi:type="history:Set" element="table.ecore#//ReadOnlyColumnConfiguration/columnDomainReferences"
+            featureName="name" dataValue="columnDomainReferences"/>
+        <changes xsi:type="history:Set" element="table.ecore#//ReadOnlyColumnConfiguration/columnDomainReferences"
+            featureName="upperBound" dataValue="-1" oldDataValue="1"/>
+        <changes xsi:type="history:Set" element="table.ecore#//ReadOnlyColumnConfiguration/columnDomainReferences"
+            featureName="eType" referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"/>
+      </changes>
+      <changes xsi:type="history:Create" target="table.ecore#/" referenceName="eClassifiers"
+          element="table.ecore#//DetailEditing">
+        <changes xsi:type="history:Set" element="table.ecore#//DetailEditing" featureName="name"
+            dataValue="DetailEditing"/>
+      </changes>
+      <changes xsi:type="history:Create" target="table.ecore#//TableControl" referenceName="eStructuralFeatures"
+          element="table.ecore#//TableControl/detailEditing">
+        <changes xsi:type="history:Set" element="table.ecore#//TableControl/detailEditing"
+            featureName="name" dataValue="detailEditing"/>
+        <changes xsi:type="history:Set" element="table.ecore#//TableControl/detailEditing"
+            featureName="lowerBound" dataValue="1" oldDataValue="0"/>
+        <changes xsi:type="history:Set" element="table.ecore#//TableControl/detailEditing"
+            featureName="defaultValueLiteral" dataValue="None"/>
+        <changes xsi:type="history:Set" element="table.ecore#//TableControl/detailEditing"
+            featureName="eType" referenceValue="table.ecore#//DetailEditing"/>
+      </changes>
+      <changes xsi:type="history:Create" target="table.ecore#//DetailEditing" referenceName="eLiterals"
+          element="table.ecore#//DetailEditing/None">
+        <changes xsi:type="history:Set" element="table.ecore#//DetailEditing/None"
+            featureName="name" dataValue="None"/>
+        <changes xsi:type="history:Set" element="table.ecore#//DetailEditing/None"
+            featureName="literal" dataValue="None"/>
+      </changes>
+      <changes xsi:type="history:Create" target="table.ecore#//DetailEditing" referenceName="eLiterals"
+          element="table.ecore#//DetailEditing/WithDialog">
+        <changes xsi:type="history:Set" element="table.ecore#//DetailEditing/WithDialog"
+            featureName="name" dataValue="WithDialog"/>
+        <changes xsi:type="history:Set" element="table.ecore#//DetailEditing/WithDialog"
+            featureName="value" dataValue="1" oldDataValue="0"/>
+        <changes xsi:type="history:Set" element="table.ecore#//DetailEditing/WithDialog"
+            featureName="literal" dataValue="WithDialog"/>
+      </changes>
+      <changes xsi:type="history:Create" target="table.ecore#//DetailEditing" referenceName="eLiterals"
+          element="table.ecore#//DetailEditing/WithPanel">
+        <changes xsi:type="history:Set" element="table.ecore#//DetailEditing/WithPanel"
+            featureName="name" dataValue="WithPanel"/>
+        <changes xsi:type="history:Set" element="table.ecore#//DetailEditing/WithPanel"
+            featureName="value" dataValue="2" oldDataValue="0"/>
+        <changes xsi:type="history:Set" element="table.ecore#//DetailEditing/WithPanel"
+            featureName="literal" dataValue="WithPanel"/>
+      </changes>
+    </changes>
+    <changes xsi:type="history:OperationChange">
+      <changes xsi:type="history:Create" target="table.ecore#//TableDomainModelReference"
+          referenceName="eStructuralFeatures" element="table.ecore#//TableDomainModelReference/domainModelReference">
+        <changes xsi:type="history:Set" element="table.ecore#//TableDomainModelReference/domainModelReference"
+            featureName="name" dataValue="domainModelReference"/>
+        <changes xsi:type="history:Set" element="table.ecore#//TableDomainModelReference/domainModelReference"
+            featureName="containment" dataValue="true" oldDataValue="false"/>
+        <changes xsi:type="history:Set" element="table.ecore#//TableDomainModelReference/domainModelReference"
+            featureName="eType" referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"/>
+      </changes>
+      <operation name="newReference">
+        <parameters name="eClass">
+          <referenceValue element="table.ecore#//TableDomainModelReference"/>
+        </parameters>
+        <parameters name="name">
+          <dataValue>domainModelReference</dataValue>
+        </parameters>
+        <parameters name="type">
+          <referenceValue element="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"/>
+        </parameters>
+        <parameters name="lowerBound">
+          <dataValue>0</dataValue>
+        </parameters>
+        <parameters name="upperBound">
+          <dataValue>1</dataValue>
+        </parameters>
+        <parameters name="containment">
+          <dataValue>true</dataValue>
+        </parameters>
+        <parameters name="opposite"/>
+      </operation>
+    </changes>
+    <changes xsi:type="history:CompositeChange">
+      <changes xsi:type="history:Create" target="table.ecore#//TableDomainModelReference"
+          referenceName="eAnnotations" element="table.ecore#//TableDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%"/>
+      <changes xsi:type="history:Set" element="table.ecore#//TableDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%"
+          featureName="source" dataValue="http://www.eclipse.org/emf/2002/Ecore"/>
+      <changes xsi:type="history:Create" target="table.ecore#//TableDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%"
+          referenceName="details" element="table.ecore#//TableDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%/@details.0"/>
+      <changes xsi:type="history:Set" element="table.ecore#//TableDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%/@details.0"
+          featureName="key" dataValue="constraints"/>
+      <changes xsi:type="history:Set" element="table.ecore#//TableDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%/@details.0"
+          featureName="value" dataValue="resolveable"/>
+    </changes>
+  </releases>
+  <releases date="2014-10-23T15:19:11.006+0200" label="150">
+    <changes xsi:type="history:MigrationChange" migration="org.eclipse.emf.ecp.view.table.edapt._140to150.AddedDMRToTableDMRMigration"/>
+    <changes xsi:type="history:Set" element="table.ecore#/" featureName="nsURI" dataValue="http://org/eclipse/emf/ecp/view/table/model/150"
+        oldDataValue="http://org/eclipse/emf/ecp/view/table/model"/>
+  </releases>
+  <releases/>
+</history:History>

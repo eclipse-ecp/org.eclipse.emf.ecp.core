@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.controls;
 
@@ -17,6 +17,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
+import java.util.regex.Pattern;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
@@ -24,8 +26,9 @@ import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.util.DateUtil;
-import org.eclipse.emf.ecp.edit.internal.swt.util.ECPDialogExecutor;
+import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.edit.command.SetCommand;
+import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -33,10 +36,10 @@ import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -47,12 +50,15 @@ import org.eclipse.swt.widgets.Text;
 /**
  * This is a XMLDateControl. It is used to display values of type {@link XMLGregorianCalendar}. This control only
  * displays a date widget.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  *         private Button bDate;
  */
+@Deprecated
 public class XmlDateControlText extends AbstractTextControl {
+	private static final DateFormat CHECK_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH); //$NON-NLS-1$
+	private static final Pattern CHECK_PATTERN = Pattern.compile("^\\d{4}-\\d{2}-\\d{2}$"); //$NON-NLS-1$
 	private Button bDate;
 
 	@Override
@@ -62,12 +68,14 @@ public class XmlDateControlText extends AbstractTextControl {
 
 	@Override
 	protected String getUnsetLabelText() {
-		return ControlMessages.XmlDateControlText_NoDateSetClickToSetDate;
+		return LocalizationServiceHelper.getString(getClass(),
+			DepricatedControlMessageKeys.XmlDateControlText_NoDateSetClickToSetDate);
 	}
 
 	@Override
 	protected String getUnsetButtonTooltip() {
-		return ControlMessages.XmlDateControlText_UnsetDate;
+		return LocalizationServiceHelper.getString(getClass(),
+			DepricatedControlMessageKeys.XmlDateControlText_UnsetDate);
 	}
 
 	@Override
@@ -88,26 +96,26 @@ public class XmlDateControlText extends AbstractTextControl {
 		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(main);
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(main);
 		super.fillControlComposite(main);
-		// ((GridLayout) composite.getLayout()).numColumns = 2;
 		bDate = new Button(main, SWT.PUSH);
-		bDate.setImage(Activator.getImageDescriptor("icons/date.png").createImage()); //$NON-NLS-1$
+		bDate.setImage(Activator.getImage("icons/date.png")); //$NON-NLS-1$
 		bDate.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_xmldate"); //$NON-NLS-1$
 		bDate.addSelectionListener(new SelectionAdapterExtension());
 	}
 
 	@Override
 	public Binding bindValue() {
-		// TODO: FocusOut doesn't seem to fire in case the same invalid text is
-		// entered twice
 		final IObservableValue value = SWTObservables.observeText(getText(), SWT.FocusOut);
+		final DateTargetToModelUpdateStrategy targetToModelUpdateStrategy = new DateTargetToModelUpdateStrategy();
+		final DateModelToTargetUpdateStrategy modelToTargetUpdateStrategy = new DateModelToTargetUpdateStrategy();
 		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(),
-			new DateTargetToModelUpdateStrategy(), new DateModelToTargetUpdateStrategy());
+			targetToModelUpdateStrategy, modelToTargetUpdateStrategy);
+		createTooltipBinding(targetToModelUpdateStrategy, modelToTargetUpdateStrategy);
 		return binding;
 	}
 
 	/**
 	 * @author Jonas
-	 * 
+	 *
 	 */
 	private final class SelectionAdapterExtension extends SelectionAdapter {
 		@Override
@@ -127,7 +135,16 @@ public class XmlDateControlText extends AbstractTextControl {
 			final Binding binding = getDataBindingContext().bindValue(dateObserver, getModelValue(),
 				new DateTargetToModelUpdateStrategy(), new DateModelToTargetUpdateStrategy());
 			binding.updateModelToTarget();
-			calendar.addSelectionListener(new SelectionAdapter() {
+
+			final Button okButton = new Button(dialog, SWT.PUSH);
+			okButton.setText(JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY));
+			GridDataFactory.fillDefaults().align(SWT.END, SWT.CENTER).grab(false, false).applyTo(okButton);
+			okButton.addSelectionListener(new SelectionAdapter() {
+				/**
+				 * {@inheritDoc}
+				 *
+				 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+				 */
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					binding.updateTargetToModel();
@@ -135,22 +152,27 @@ public class XmlDateControlText extends AbstractTextControl {
 					dialog.close();
 				}
 			});
-			calendar.addFocusListener(new FocusListener() {
 
-				public void focusLost(FocusEvent event) {
-					binding.updateTargetToModel();
-					binding.dispose();
-					dialog.close();
-				}
-
-				public void focusGained(FocusEvent event) {
-				}
-			});
 			dialog.pack();
 			dialog.layout();
-			dialog.setLocation(bDate.getParent().toDisplay(
-				bDate.getLocation().x + bDate.getSize().x - dialog.getSize().x,
-				bDate.getLocation().y + bDate.getSize().y));
+			final Point dialogSize = dialog.getSize();
+			final Rectangle displayBounds = dialog.getDisplay().getBounds();
+			final Point buttonLocation = okButton.toDisplay(okButton.getSize().x, okButton.getSize().y);
+
+			// TODO what if dialogsize > displaybounds? + some other cases
+
+			int dialogX = buttonLocation.x - dialogSize.x;
+			int dialogY = buttonLocation.y;
+			if (dialogY + dialogSize.y > displayBounds.height) {
+				dialogY = dialogY - okButton.getSize().y - dialogSize.y;
+			}
+			if (dialogX + dialogSize.x > displayBounds.width) {
+				dialogX = dialogX - dialogSize.x;
+			}
+			else if (dialogX - dialogSize.x < displayBounds.x) {
+				dialogX = buttonLocation.x - okButton.getSize().x;
+			}
+			dialog.setLocation(dialogX, dialogY);
 			dialog.open();
 		}
 	}
@@ -194,6 +216,10 @@ public class XmlDateControlText extends AbstractTextControl {
 				} else if (value == null) {
 					return value;
 				}
+				final String xmlFormat = CHECK_FORMAT.format(date);
+				if (!CHECK_PATTERN.matcher(xmlFormat).matches()) {
+					return revertToOldValue(value);
+				}
 				final String formatedDate = format.format(date);
 				getText().setText(formatedDate);
 
@@ -215,8 +241,11 @@ public class XmlDateControlText extends AbstractTextControl {
 			final Object result = getModelValue().getValue();
 
 			final MessageDialog messageDialog = new MessageDialog(getText().getShell(),
-				ControlMessages.XmlDateControlText_InvalidNumber, null,
-				ControlMessages.XmlDateControlText_NumberInvalidValueWillBeUnset, MessageDialog.ERROR,
+				LocalizationServiceHelper.getString(getClass(),
+					DepricatedControlMessageKeys.XmlDateControlText_InvalidNumber), null,
+				LocalizationServiceHelper.getString(getClass(),
+					DepricatedControlMessageKeys.XmlDateControlText_NumberInvalidValueWillBeUnset),
+				MessageDialog.ERROR,
 				new String[] { JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
 
 			new ECPDialogExecutor(messageDialog) {
@@ -244,7 +273,7 @@ public class XmlDateControlText extends AbstractTextControl {
 
 	/**
 	 * Sets up a {@link DateFormat} for the current {@link java.util.Locale}.
-	 * 
+	 *
 	 * @return the date format
 	 */
 	protected DateFormat setupFormat() {

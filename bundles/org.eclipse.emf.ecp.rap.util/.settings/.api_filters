@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.ecp.rap.util" version="2">
+    <resource path="META-INF/MANIFEST.MF">
+        <filter comment="SPI Change 1.5.0" id="923795461">
+            <message_arguments>
+                <message_argument value="1.5.0"/>
+                <message_argument value="1.4.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/rap/spi/util/RAPWrapper.java" type="org.eclipse.emf.ecp.rap.spi.util.RAPWrapper">
+        <filter comment="SPI Change 1.5.0" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.rap.spi.util.RAPWrapper"/>
+                <message_argument value="openDialog(Dialog, ECPDialogExecutor)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

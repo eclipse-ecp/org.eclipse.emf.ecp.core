@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.edit.internal.swt.util;
 
@@ -17,10 +17,13 @@ import java.util.List;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.spi.ECPAbstractControl;
+import org.eclipse.emf.ecp.edit.spi.swt.util.SWTValidationHelper;
+import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -47,10 +50,11 @@ import org.eclipse.swt.widgets.Label;
 
 /**
  * This class defines a SWTCOntrol which is an abstract class defining an {@link ECPAbstractControl} for SWT.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
+@Deprecated
 public abstract class SWTControl extends ECPAbstractControl implements ECPControlSWT {
 
 	/**
@@ -61,6 +65,8 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 	 * The icon for a validation error.
 	 */
 	protected static final String VALIDATION_ERROR_ICON = "icons/validation_error.png";//$NON-NLS-1$
+
+	private static final String ICONS_UNSET_FEATURE = "icons/unset_feature.png"; //$NON-NLS-1$
 
 	/**
 	 * The label for the validation icon.
@@ -76,11 +82,12 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 	private Label unsetLabel;
 
 	/**
-	 * 
+	 *
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.util.ECPControlSWT#createControls(org.eclipse.swt.widgets.Composite)
 	 */
+	@Override
 	public List<RenderingResultRow<Control>> createControls(final Composite parent) {
 		final IItemPropertyDescriptor itemPropertyDescriptor = getItemPropertyDescriptor(getFirstSetting());
 		if (itemPropertyDescriptor == null) {
@@ -88,6 +95,7 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 		}
 		parent.addDisposeListener(new DisposeListener() {
 
+			@Override
 			public void widgetDisposed(DisposeEvent e) {
 				dispose();
 			}
@@ -96,15 +104,19 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 		final List<RenderingResultRow<Control>> list = Collections.singletonList(SWTRenderingHelper.INSTANCE
 			.getResultRowFactory().createRenderingResultRow(
 				validationLabel, createControl(parent)));
+
+		applyValidation(getControl().getDiagnostic());
+
 		// TODO remove asap
 		backwardCompatibleHandleValidation();
+
 		return list;
 
 	}
 
 	/**
 	 * This method is called to render the control on a parent.
-	 * 
+	 *
 	 * @param parent the {@link Composite} which is the parent
 	 * @return the created {@link Composite}
 	 */
@@ -142,7 +154,7 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 	private Composite createDataControl(Composite composite) {
 		final Composite innerComposite = new Composite(composite, SWT.NONE);
 		innerComposite.setBackground(composite.getBackground());
-		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(innerComposite);
+		// GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(innerComposite);
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(innerComposite);
 		createContentControl(innerComposite);
 		return innerComposite;
@@ -159,14 +171,14 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 
 	/**
 	 * Method for retrieving all controls which should have the help text as their tooltip.
-	 * 
+	 *
 	 * @return the array of the controls to set a tooltip to
 	 */
 	protected abstract Control[] getControlsForTooltip();
 
 	/**
 	 * Helper for creating the unset stacklayout and creating the control's composite.
-	 * 
+	 *
 	 * @param composite the parent {@link Composite} to create the control onto
 	 */
 	protected void createContentControl(Composite composite) {
@@ -189,6 +201,7 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 		unsetLabel.setText(getUnsetLabelText());
 		unsetLabel.addMouseListener(new MouseListener() {
 
+			@Override
 			public void mouseUp(MouseEvent e) {
 				sl.topControl = controlComposite;
 				parentComposite.layout(true);
@@ -202,10 +215,12 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 				}
 			}
 
+			@Override
 			public void mouseDown(MouseEvent e) {
 				// nothing to do
 			}
 
+			@Override
 			public void mouseDoubleClick(MouseEvent e) {
 				// nothing to do
 			}
@@ -219,7 +234,7 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 				numControls++;
 				unsetButton = new Button(controlComposite, SWT.PUSH);
 				unsetButton.setToolTipText(getUnsetButtonTooltip());
-				unsetButton.setImage(Activator.getImage("icons/delete.png")); //$NON-NLS-1$
+				unsetButton.setImage(Activator.getImage(ICONS_UNSET_FEATURE));
 			}
 			unsetButton.addSelectionListener(new SelectionAdapter() {
 				@Override
@@ -255,7 +270,7 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	protected void showUnsetLabel() {
 		sl.topControl = unsetLabel;
@@ -265,7 +280,7 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 	/**
 	 * This method must be overridden by concrete classes. Here the widget displaying the data is added to the
 	 * composite.
-	 * 
+	 *
 	 * @param controlComposite the {@link Composite} to add the widget to
 	 */
 	protected abstract void fillControlComposite(Composite controlComposite);
@@ -273,7 +288,7 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 	/**
 	 * The default unset button will be displayed to the right of the control's composite. Concrete classes may override
 	 * this method to include an own unset button in their composite rather than using the default positioning.
-	 * 
+	 *
 	 * @return The custom unset button of the concrete class
 	 */
 	protected Button getCustomUnsetButton() {
@@ -282,7 +297,7 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 
 	/**
 	 * The model value used for databinding. It is either the set one or the calculated.
-	 * 
+	 *
 	 * @return the {@link IObservableValue}
 	 */
 	protected IObservableValue getModelValue() {
@@ -297,7 +312,7 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 
 	/**
 	 * Allows the user to set the {@link IObservableValue} to use in the control during databinding.
-	 * 
+	 *
 	 * @param modelValue the set {@link IObservableValue}
 	 */
 	public void setObservableValue(IObservableValue modelValue) {
@@ -306,14 +321,15 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 
 	/**
 	 * A helper method which creates a button for an action on a composite.
-	 * 
+	 *
 	 * @param action the action to create a button for
 	 * @param composite the composite to create the button onto
 	 * @return the created button
 	 */
 	protected Button createButtonForAction(final Action action, final Composite composite) {
 		final Button selectButton = new Button(composite, SWT.PUSH);
-		selectButton.setImage(action.getImageDescriptor().createImage());
+		selectButton.setImage(Activator.getImage(action));
+		selectButton.setEnabled(!getControl().isReadonly());
 		selectButton.setToolTipText(action.getToolTipText());
 		selectButton.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -328,14 +344,14 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 
 	/**
 	 * Triggers the control to perform the databinding.
-	 * 
+	 *
 	 * @return The {@link Binding}
 	 */
 	protected abstract Binding bindValue();
 
 	/**
 	 * Returns the help information.
-	 * 
+	 *
 	 * @return The help text
 	 */
 	protected String getHelpText() {
@@ -344,7 +360,7 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 
 	/**
 	 * Returns the validation icon matching the given severity.
-	 * 
+	 *
 	 * @param severity the severity of the {@link org.eclipse.emf.common.util.Diagnostic}
 	 * @return the icon to be displayed, or <code>null</code> when no icon is to be displayed
 	 */
@@ -354,7 +370,7 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 
 	/**
 	 * Returns the background color for a control with the given validation severity.
-	 * 
+	 *
 	 * @param severity severity the severity of the {@link org.eclipse.emf.common.util.Diagnostic}
 	 * @return the color to be used as a background color
 	 */
@@ -364,21 +380,21 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 
 	/**
 	 * Returns the string for the unset label.
-	 * 
+	 *
 	 * @return The unset label text
 	 */
 	protected abstract String getUnsetLabelText();
 
 	/**
 	 * Returns the string for the unset button tooltip.
-	 * 
+	 *
 	 * @return The unset button tooltip
 	 */
 	protected abstract String getUnsetButtonTooltip();
 
 	/**
 	 * Method for retrieving a {@link Color} based on the predefined SWT id.
-	 * 
+	 *
 	 * @param color the SWT id of the color
 	 * @return the Color or black if the id was incorrect
 	 */
@@ -391,7 +407,7 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 
 	/**
 	 * Whether this control should be editable.
-	 * 
+	 *
 	 * @return true if the {@link IItemPropertyDescriptor#canSetProperty(Object)} returns true, false otherwise
 	 */
 	@Deprecated
@@ -425,5 +441,30 @@ public abstract class SWTControl extends ECPAbstractControl implements ECPContro
 			unsetLabel = null;
 		}
 		super.dispose();
+	}
+
+	/**
+	 * Helper method to keep the old validation.
+	 *
+	 * @since 1.2
+	 */
+	@Override
+	protected void backwardCompatibleHandleValidation() {
+		final VDiagnostic diagnostic = getControl().getDiagnostic();
+		if (diagnostic == null) {
+			return;
+		}
+		Display.getDefault().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				if (getControl() == null) {
+					return;
+				}
+				resetValidation();
+				for (final Object object : diagnostic.getDiagnostics()) {
+					handleValidation((Diagnostic) object);
+				}
+			}
+		});
 	}
 }

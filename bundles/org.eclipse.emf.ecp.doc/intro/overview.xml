@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<introContent>
+  	<extensionContent id="ecp-introExtension" style="css/ecp.css" name="EMF Client Platform" path="overview/@">
+		<group style-id="content-group" id="ecp-introLink-group">
+       		<link label="EMF Client Platform" url="http://org.eclipse.ui.intro/showHelpTopic?id=/org.eclipse.emf.ecp.doc/html/main.html" id="ecp-introLink" style-id="content-link">
+          		<text>Learn how to get reflective UIs for your EMF models</text>
+       		</link>
+       	</group>
+  	</extensionContent>
+</introContent>

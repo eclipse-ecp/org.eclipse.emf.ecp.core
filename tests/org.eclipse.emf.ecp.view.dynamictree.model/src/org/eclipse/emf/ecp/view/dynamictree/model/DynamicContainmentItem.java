@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Edgar Mueller - initial API and implementation
  */
@@ -24,10 +24,11 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem#getDomainModel <em>Domain Model</em>}</li>
- *   <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem#getItems <em>Items</em>}</li>
- *   <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem#getComposite <em>Composite</em>}</li>
- *   <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem#getBaseItemIndex <em>Base Item Index</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem#getDomainModel <em>Domain Model</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem#getItems <em>Items</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem#getComposite <em>Composite</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem#getBaseItemIndex <em>Base Item Index
+ * </em>}</li>
  * </ul>
  * </p>
  *
@@ -45,6 +46,7 @@ public interface DynamicContainmentItem extends VCategorizableElement
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 *
 	 * @return the value of the '<em>Domain Model</em>' reference.
 	 * @see #setDomainModel(EObject)
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage#getDynamicContainmentItem_DomainModel()
@@ -54,9 +56,11 @@ public interface DynamicContainmentItem extends VCategorizableElement
 	EObject getDomainModel();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem#getDomainModel <em>Domain Model</em>}' reference.
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem#getDomainModel
+	 * <em>Domain Model</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @param value the new value of the '<em>Domain Model</em>' reference.
 	 * @see #getDomainModel()
 	 * @generated
@@ -72,6 +76,7 @@ public interface DynamicContainmentItem extends VCategorizableElement
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 *
 	 * @return the value of the '<em>Items</em>' containment reference list.
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage#getDynamicContainmentItem_Items()
 	 * @model containment="true" transient="true"
@@ -87,6 +92,7 @@ public interface DynamicContainmentItem extends VCategorizableElement
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 *
 	 * @return the value of the '<em>Composite</em>' containment reference.
 	 * @see #setComposite(VContainedElement)
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage#getDynamicContainmentItem_Composite()
@@ -96,9 +102,11 @@ public interface DynamicContainmentItem extends VCategorizableElement
 	VContainedElement getComposite();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem#getComposite <em>Composite</em>}' containment reference.
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem#getComposite
+	 * <em>Composite</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @param value the new value of the '<em>Composite</em>' containment reference.
 	 * @see #getComposite()
 	 * @generated
@@ -109,10 +117,11 @@ public interface DynamicContainmentItem extends VCategorizableElement
 	 * Returns the value of the '<em><b>Base Item Index</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Base Item Index</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * If the meaning of the '<em>Base Item Index</em>' attribute isn't clear, there really should be more of a
+	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 *
 	 * @return the value of the '<em>Base Item Index</em>' attribute.
 	 * @see #setBaseItemIndex(Integer)
 	 * @see org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage#getDynamicContainmentItem_BaseItemIndex()
@@ -122,9 +131,11 @@ public interface DynamicContainmentItem extends VCategorizableElement
 	Integer getBaseItemIndex();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem#getBaseItemIndex <em>Base Item Index</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem#getBaseItemIndex
+	 * <em>Base Item Index</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @param value the new value of the '<em>Base Item Index</em>' attribute.
 	 * @see #getBaseItemIndex()
 	 * @generated

@@ -1,0 +1,56 @@
+target "ECP RCP"
+
+location "http://download.eclipse.org/eclipse/updates/4.4" {
+	org.eclipse.equinox.sdk.feature.group
+	org.eclipse.platform.ide
+}
+
+location "http://download.eclipse.org/emf-store/releases_14" {
+	org.eclipse.emf.emfstore.client.transaction.feature.feature.group
+	org.eclipse.emf.emfstore.client.feature.feature.group
+	org.eclipse.emf.emfstore.common.feature.feature.group
+	org.eclipse.emf.emfstore.server.feature.feature.group
+	org.eclipse.emf.emfstore.example.feature.feature.group
+	org.eclipse.emf.emfstore.client.ui.feature.feature.group
+	org.eclipse.emf.emfstore.ecore.feature.feature.group
+}
+
+location "http://download.eclipse.org/releases/luna/" {
+	org.eclipse.jdt.feature.group
+	org.eclipse.emf.sdk.feature.group
+	org.eclipse.gef.sdk.feature.group
+	org.eclipse.graphiti.feature.feature.group
+	org.eclipse.graphiti.export.feature.feature.group
+	org.eclipse.emf.validation.sdk.feature.group
+	org.eclipse.emf.transaction.sdk.feature.group
+	org.eclipse.net4j.sdk.feature.group
+	org.eclipse.emf.cdo.sdk.feature.group
+	org.eclipse.pde.feature.group
+	org.eclipse.ocl.all.sdk.feature.group	
+}
+
+location "http://build.eclipse.org/rt/rap/base-platforms/2.3/extra-dependencies/" {
+	org.mockito.mockito-all
+}
+
+location "http://download.eclipse.org/tools/orbit/downloads/drops/R20140525021250/repository/" {
+	org.apache.log4j.source
+	org.objenesis.source
+	org.apache.log4j
+	org.objenesis
+	org.h2.source
+	org.h2
+	javax.validation
+	javax.validation.source
+}
+
+location "http://download.eclipse.org/edapt/releases/10x/101" {
+	org.eclipse.emf.edapt.runtime.feature.feature.group
+}
+
+location "http://download.eclipse.org/technology/swtbot/releases/latest/" {
+	org.eclipse.swtbot.eclipse.gef.feature.group
+	org.eclipse.swtbot.forms.feature.group
+	org.eclipse.swtbot.eclipse.feature.group
+	org.eclipse.swtbot.feature.group
+}

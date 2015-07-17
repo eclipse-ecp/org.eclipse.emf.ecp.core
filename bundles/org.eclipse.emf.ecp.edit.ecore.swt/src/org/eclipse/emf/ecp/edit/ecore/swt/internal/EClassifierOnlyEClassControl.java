@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
  ******************************************************************************/
@@ -20,15 +20,15 @@ import org.eclipse.swt.widgets.Composite;
  * This is a control for {@link org.eclipse.emf.ecore.EClassifier EClassifier}s which will offer the possibility to
  * select {@link org.eclipse.emf.ecore.EClass EClass}es. Will be used for editing the type of an
  * {@link org.eclipse.emf.ecore.EReference EReference}.
- * 
+ *
  * @author jfaltermeier
- * 
+ *
  */
 public class EClassifierOnlyEClassControl extends EClassifierControl {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.internal.swt.reference.LinkControl#createButtons(org.eclipse.swt.widgets.Composite)
 	 */
 	@Override

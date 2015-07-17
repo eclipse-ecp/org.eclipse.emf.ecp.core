@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.&#xD;&#xA;&#xD;&#xA;All rights reserved. This program and the accompanying materials&#xD;&#xA;are made available under the terms of the Eclipse Public License v1.0&#xD;&#xA;which accompanies this distribution, and is available at&#xD;&#xA;http://www.eclipse.org/legal/epl-v10.html&#xD;&#xA;&#xD;&#xA;Contributors:"
+    modelDirectory="/org.eclipse.emf.ecp.view.edapt.util.test/src" modelPluginID="org.eclipse.emf.ecp.view.edapt.util.test"
+    modelName="Circle" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    rootImplementsInterface="" runtimeCompatibility="true" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="6.0" copyrightFields="false" interfaceNamePattern="EdaptTest{0}"
+    classNamePattern="EdaptTest{0}Impl" operationReflection="true" importOrganizing="true">
+  <foreignModel>a.ecore</foreignModel>
+  <foreignModel>b.ecore</foreignModel>
+  <foreignModel>c.ecore</foreignModel>
+  <foreignModel>d.ecore</foreignModel>
+  <foreignModel>e.ecore</foreignModel>
+  <foreignModel>f.ecore</foreignModel>
+  <foreignModel>w.ecore</foreignModel>
+  <foreignModel>x.ecore</foreignModel>
+  <foreignModel>y.ecore</foreignModel>
+  <foreignModel>z.ecore</foreignModel>
+  <genPackages prefix="A" basePackage="org.eclipse.emf.ecp.view.edapt.util.test.model"
+      disposableProviderFactory="true" ecorePackage="a.ecore#/">
+    <genClasses ecoreClass="a.ecore#//A"/>
+  </genPackages>
+  <genPackages prefix="B" basePackage="org.eclipse.emf.ecp.view.edapt.util.test.model"
+      disposableProviderFactory="true" ecorePackage="b.ecore#/">
+    <genClasses ecoreClass="b.ecore#//B">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference b.ecore#//B/a"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference b.ecore#//B/c"/>
+    </genClasses>
+  </genPackages>
+  <genPackages prefix="C" basePackage="org.eclipse.emf.ecp.view.edapt.util.test.model"
+      disposableProviderFactory="true" ecorePackage="c.ecore#/">
+    <genClasses ecoreClass="c.ecore#//C">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference c.ecore#//C/d"/>
+    </genClasses>
+  </genPackages>
+  <genPackages prefix="D" basePackage="org.eclipse.emf.ecp.view.edapt.util.test.model"
+      disposableProviderFactory="true" ecorePackage="d.ecore#/">
+    <genClasses ecoreClass="d.ecore#//D">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference d.ecore#//D/b"/>
+    </genClasses>
+  </genPackages>
+  <genPackages prefix="E" basePackage="org.eclipse.emf.ecp.view.edapt.util.test.model"
+      disposableProviderFactory="true" ecorePackage="e.ecore#/">
+    <genClasses ecoreClass="e.ecore#//E">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference e.ecore#//E/d"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference e.ecore#//E/f"/>
+    </genClasses>
+  </genPackages>
+  <genPackages prefix="F" basePackage="org.eclipse.emf.ecp.view.edapt.util.test.model"
+      disposableProviderFactory="true" ecorePackage="f.ecore#/">
+    <genClasses ecoreClass="f.ecore#//F">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference f.ecore#//F/e"/>
+    </genClasses>
+  </genPackages>
+  <genPackages prefix="W" basePackage="org.eclipse.emf.ecp.view.edapt.util.test.model"
+      disposableProviderFactory="true" ecorePackage="w.ecore#/">
+    <genClasses ecoreClass="w.ecore#//W">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference w.ecore#//W/x"/>
+    </genClasses>
+  </genPackages>
+  <genPackages prefix="X" basePackage="org.eclipse.emf.ecp.view.edapt.util.test.model"
+      disposableProviderFactory="true" ecorePackage="x.ecore#/">
+    <genClasses ecoreClass="x.ecore#//X">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference x.ecore#//X/w"/>
+    </genClasses>
+  </genPackages>
+  <genPackages prefix="Y" basePackage="org.eclipse.emf.ecp.view.edapt.util.test.model"
+      disposableProviderFactory="true" ecorePackage="y.ecore#/">
+    <genClasses ecoreClass="y.ecore#//Y">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference y.ecore#//Y/x"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference y.ecore#//Y/z"/>
+    </genClasses>
+  </genPackages>
+  <genPackages prefix="Z" basePackage="org.eclipse.emf.ecp.view.edapt.util.test.model"
+      disposableProviderFactory="true" ecorePackage="z.ecore#/">
+    <genClasses ecoreClass="z.ecore#//Z">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference z.ecore#//Z/y"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

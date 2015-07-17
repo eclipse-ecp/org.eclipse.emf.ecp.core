@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Edgar Mueller - initial API and implementation
  */
@@ -45,7 +45,7 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
  * Index</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class DynamicContainmentItemImpl extends VCategorizableElementImpl implements DynamicContainmentItem
@@ -54,7 +54,7 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	 * The cached value of the '{@link #getDomainModel() <em>Domain Model</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getDomainModel()
 	 * @generated
 	 * @ordered
@@ -65,7 +65,7 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	 * The cached value of the '{@link #getItems() <em>Items</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getItems()
 	 * @generated
 	 * @ordered
@@ -76,7 +76,7 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	 * The cached value of the '{@link #getComposite() <em>Composite</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getComposite()
 	 * @generated
 	 * @ordered
@@ -87,7 +87,7 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	 * The default value of the '{@link #getBaseItemIndex() <em>Base Item Index</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getBaseItemIndex()
 	 * @generated
 	 * @ordered
@@ -98,7 +98,7 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	 * The cached value of the '{@link #getBaseItemIndex() <em>Base Item Index</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getBaseItemIndex()
 	 * @generated
 	 * @ordered
@@ -108,7 +108,7 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated NOT
 	 */
 	protected DynamicContainmentItemImpl()
@@ -119,8 +119,9 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * .
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -132,9 +133,10 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public EObject getDomainModel()
 	{
 		if (domainModel != null && domainModel.eIsProxy()) {
@@ -153,7 +155,7 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public EObject basicGetDomainModel()
@@ -164,9 +166,10 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void setDomainModel(EObject newDomainModel)
 	{
 		final EObject oldDomainModel = domainModel;
@@ -180,9 +183,10 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public EList<DynamicContainmentItem> getItems()
 	{
 		if (items == null) {
@@ -195,9 +199,10 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public VContainedElement getComposite()
 	{
 		return composite;
@@ -206,7 +211,7 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public NotificationChain basicSetComposite(VContainedElement newComposite, NotificationChain msgs)
@@ -228,9 +233,10 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void setComposite(VContainedElement newComposite)
 	{
 		if (newComposite != composite) {
@@ -257,9 +263,10 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public Integer getBaseItemIndex() {
 		return baseItemIndex;
 	}
@@ -267,9 +274,10 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void setBaseItemIndex(Integer newBaseItemIndex) {
 		final Integer oldBaseItemIndex = baseItemIndex;
 		baseItemIndex = newBaseItemIndex;
@@ -282,7 +290,7 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -300,7 +308,7 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -325,7 +333,7 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -353,7 +361,7 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -379,7 +387,7 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -402,7 +410,7 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -420,7 +428,7 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizableElement#getLabelObject()
 	 */
 	@Override
@@ -432,18 +440,20 @@ public class DynamicContainmentItemImpl extends VCategorizableElementImpl implem
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizableElement#getECPActions()
 	 */
+	@Override
 	public List<ECPAction> getECPActions() {
 		return ecpActions;
 	}
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizableElement#setECPActions(java.util.List)
 	 */
+	@Override
 	public void setECPActions(List<ECPAction> actions) {
 		ecpActions = actions;
 	}

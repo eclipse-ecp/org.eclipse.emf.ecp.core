@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -15,6 +15,7 @@ import java.text.DateFormat;
 import java.util.Date;
 
 import org.eclipse.emf.ecp.core.ECPProject;
+import org.eclipse.emf.ecp.core.ECPRepository;
 import org.eclipse.emf.ecp.core.exceptions.ECPProjectWithNameExistsException;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
@@ -29,20 +30,28 @@ import org.eclipse.swt.widgets.Display;
 
 /**
  * Creates a new {@link ECPProject} on checkout.
- * 
+ *
  * @author Jonas
- * 
+ *
  */
 public class CheckoutObserver implements ESCheckoutObserver {
 
 	/**
-	 * 
+	 *
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.emfstore.client.observer.ESCheckoutObserver#checkoutDone(org.eclipse.emf.emfstore.client.ESLocalProject)
 	 */
+	@Override
 	public void checkoutDone(ESLocalProject project) {
 
+		// The project with this name is just temporary used to debug EMFStore. Therefore it should be ignored.
+		if ("log_error_checksum_debug_checkout".equals(project.getProjectName())) { //$NON-NLS-1$
+			return;
+		}
+
+		final ECPRepository repository = EMFStoreProvider.INSTANCE.getRepository(
+			project.getUsersession().getServer());
 		boolean ecpProjectExists = false;
 		boolean validProjectName = false;
 
@@ -62,26 +71,29 @@ public class CheckoutObserver implements ESCheckoutObserver {
 		if (!ecpProjectExists) {
 			while (!validProjectName) {
 				try {
-					ECPUtil.getECPProjectManager().createProject(EMFStoreProvider.INSTANCE.getProvider(), projectName,
+					ECPUtil.getECPProjectManager().createProject(repository, projectName,
 						createECPProperties(project));
 					validProjectName = true;
 				} catch (final ECPProjectWithNameExistsException ex) {
-					final InputDialog id = new InputDialog(Display.getCurrent().getActiveShell(), "Create project",
-						"Enter name for checked out project:", project.getProjectName() + "@" + createDateString(),
+					final InputDialog id = new InputDialog(Display.getCurrent().getActiveShell(),
+						Messages.CheckoutObserver_CreateProject,
+						Messages.CheckoutObserver_EnterNameForProject, project.getProjectName()
+							+ "@" + createDateString(), //$NON-NLS-1$
 						new IInputValidator() {
 
+							@Override
 							public String isValid(String newText) {
 								if (ECPUtil.getECPProjectManager().getProject(newText) == null) {
 									return null;
 								}
-								return "A project with this name already exists!";
+								return Messages.CheckoutObserver_ProjectWithNameExists;
 
 							}
 						});
 					final int inputResult = id.open();
 					if (Window.OK != inputResult) {
 						// cancel, provide default name
-						projectName = project.getProjectName() + "@" + createDateString();
+						projectName = project.getProjectName() + "@" + createDateString(); //$NON-NLS-1$
 					} else {
 						projectName = id.getValue();
 					}

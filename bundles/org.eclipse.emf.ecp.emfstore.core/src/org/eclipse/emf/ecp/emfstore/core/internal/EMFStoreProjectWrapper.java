@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  *******************************************************************************/
 package org.eclipse.emf.ecp.emfstore.core.internal;
 
@@ -24,9 +24,9 @@ import org.eclipse.emf.emfstore.server.exceptions.ESException;
 
 /**
  * This is the EMFStore implementation of a {@link ECPCheckoutSource}.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public class EMFStoreProjectWrapper implements ECPCheckoutSource {
 
@@ -36,7 +36,7 @@ public class EMFStoreProjectWrapper implements ECPCheckoutSource {
 
 	/**
 	 * The Constructor fro creating an {@link EMFStoreProjectWrapper}.
-	 * 
+	 *
 	 * @param repository the repository for this CheckoutSource
 	 * @param remoteProject the remote project to be checked out
 	 */
@@ -46,21 +46,25 @@ public class EMFStoreProjectWrapper implements ECPCheckoutSource {
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public ECPRepository getRepository() {
 		return repository;
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public ECPProvider getProvider() {
 		return repository.getProvider();
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public String getDefaultCheckoutName() {
 		return remoteProject.getProjectName();
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public void checkout(String projectName, ECPProperties projectProperties) throws ECPProjectWithNameExistsException {
 		try {
 			remoteProject.checkout(projectName, new NullProgressMonitor());
@@ -70,9 +74,9 @@ public class EMFStoreProjectWrapper implements ECPCheckoutSource {
 	}
 
 	/**
-	 * This return the {@link EMFStoreCheckoutData} used in this wrapper.
-	 * 
-	 * @return the {@link EMFStoreCheckoutData} used
+	 * This return the {@link ESRemoteProject} used in this wrapper.
+	 *
+	 * @return the {@link ESRemoteProject} used
 	 */
 	public ESRemoteProject getCheckoutData() {
 		return remoteProject;

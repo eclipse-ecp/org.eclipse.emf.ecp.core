@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Edgar - initial API and implementation
  ******************************************************************************/
@@ -29,13 +29,13 @@ import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 
 /**
  * @author Edgar
- * 
+ *
  */
 public class CommonRuleTest {
 
 	/**
 	 * Adds the league show rule.
-	 * 
+	 *
 	 * @param control the control
 	 * @param showOnRightValue the visible on right value
 	 */
@@ -49,7 +49,7 @@ public class CommonRuleTest {
 	/**
 	 * Adds a {@link ShowRule} to the given {@link VElement} and allows specifying
 	 * the condition to be fulfilled.
-	 * 
+	 *
 	 * @param control
 	 *            the {@link VElement} to which the show rule should be attached
 	 * @param showOnRightValue
@@ -156,7 +156,7 @@ public class CommonRuleTest {
 
 	/**
 	 * Adds the league enable rule.
-	 * 
+	 *
 	 * @param control the control
 	 * @param enableOnRightValue the enable on right value
 	 */

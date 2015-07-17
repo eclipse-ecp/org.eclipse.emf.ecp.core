@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+<extension id="product" point="org.eclipse.core.runtime.products">
+	<product name="ECP e4 FX Demo" application="org.eclipse.fx.ui.workbench.fx.application" >
+		<property name="appName" value="ECP e4 FX Demo" />
+		
+		<property name="applicationXMI" value="org.eclipse.emf.ecp.application.e4.fx/Application.e4xmi" />
+		
+		<property name="cssTheme" value="theme.generated" />
+		
+	</product>
+	
+</extension>
+<extension  point="org.eclipse.fx.ui.theme">
+	<theme id="theme.default" basestylesheet="css/default.css" />
+ <theme
+       basestylesheet="css/generated.css"
+       id="theme.generated">
+ </theme>
+	
+</extension>
+</plugin>

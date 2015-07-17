@@ -1,11 +1,11 @@
 /********************************************************************************
  * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
  ********************************************************************************/
@@ -33,7 +33,7 @@ public class DeleteDialog extends TitleAreaDialog {
 
 	/**
 	 * Default constructor.
-	 * 
+	 *
 	 * @param parentShell The parent {@link Shell}
 	 * @param deletables The {@link ECPContainer}s to be deleted
 	 */
@@ -55,7 +55,7 @@ public class DeleteDialog extends TitleAreaDialog {
 		setTitle(Messages.DeleteDialog_Title);
 		setTitleImage(Activator.getImage("icons/delete_wiz.png")); //$NON-NLS-1$
 		setMessage(Messages.DeleteDialog_Message_AreYouSure + count + Messages.DeleteDialog_Message_element
-			+ (count == 1 ? "" : Messages.DeleteDialog_Message_element_plural) + "?");
+			+ (count == 1 ? "" : Messages.DeleteDialog_Message_element_plural) + "?"); //$NON-NLS-1$ //$NON-NLS-2$
 
 		final Composite area = (Composite) super.createDialogArea(parent);
 		final Composite container = new Composite(area, SWT.NONE);

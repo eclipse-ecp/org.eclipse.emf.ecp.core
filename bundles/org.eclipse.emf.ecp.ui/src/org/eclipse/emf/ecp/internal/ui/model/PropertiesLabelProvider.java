@@ -1,11 +1,11 @@
 /********************************************************************************
  * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
  ********************************************************************************/
@@ -28,10 +28,11 @@ public class PropertiesLabelProvider extends LabelProvider implements ITableLabe
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public String getColumnText(Object element, int columnIndex) {
 		if (element instanceof Map.Entry) {
 			@SuppressWarnings("unchecked")
-			Map.Entry<String, String> entry = (Map.Entry<String, String>) element;
+			final Map.Entry<String, String> entry = (Map.Entry<String, String>) element;
 			switch (columnIndex) {
 			case 0:
 				return entry.getKey();
@@ -45,6 +46,7 @@ public class PropertiesLabelProvider extends LabelProvider implements ITableLabe
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public Image getColumnImage(Object element, int columnIndex) {
 		if (element instanceof Map.Entry) {
 			switch (columnIndex) {

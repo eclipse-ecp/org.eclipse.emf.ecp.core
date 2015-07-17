@@ -23,4 +23,78 @@
             genModel="model/template.genmodel"/>
    </extension>
 
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated alignmentStyle -->
+      <package
+            uri="http://www.eclipse.org/emf/ecp/view/template/style/alignment/model"
+            class="org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentPackage"
+            genModel="model/alignmentStyle.genmodel"/>
+   </extension>
+
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated validationStyle -->
+      <package
+            uri="http://www.eclipse.org/emf/ecp/view/template/style/validation/model"
+            class="org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationPackage"
+            genModel="model/validationStyle.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated domainModelReferenceSelector -->
+      <package
+            uri="http://www.eclipse.org/emf/ecp/view/template/selector/domainmodelreference/model"
+            class="org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainmodelreferencePackage"
+            genModel="model/domainModelReferenceSelector.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated fontPropertiesStyle -->
+      <package
+            uri="http://www.eclipse.org/emf/ecp/view/template/style/fontProperties/model"
+            class="org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontPropertiesPackage"
+            genModel="model/fontPropertiesStyle.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated viewModelElementSelector -->
+      <package
+            uri="http://www.eclipse.org/emf/ecp/view/template/selector/viewmodelelement/model"
+            class="org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.VTViewModelElementPackage"
+            genModel="model/viewModelElementSelector.genmodel"/>
+   </extension>
+
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated tableValidationColumnStyleProperty -->
+      <package
+            uri="http://www.eclipse.org/emf/ecp/view/template/style/table/validation/model"
+            class="org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableValidationPackage"
+            genModel="model/tableValidationColumnStyleProperty.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated mandatoryStyle -->
+      <package
+            uri="http://www.eclipse.org/emf/ecp/view/template/style/mandatory/model"
+            class="org.eclipse.emf.ecp.view.template.style.mandatory.model.VTMandatoryPackage"
+            genModel="model/mandatoryStyle.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated textControlEnablementStyle -->
+      <package
+            uri="http://www.eclipse.org/emf/ecp/view/template/style/textcontrol/enablement/model"
+            class="org.eclipse.emf.ecp.view.template.style.textControlEnablement.model.VTTextControlEnablementPackage"
+            genModel="model/textControlEnablementStyle.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated backgroundStyle -->
+      <package
+            uri="http://www.eclipse.org/emf/ecp/view/template/style/background/model"
+            class="org.eclipse.emf.ecp.view.template.style.background.model.VTBackgroundPackage"
+            genModel="model/backgroundStyle.genmodel"/>
+   </extension>
+
 </plugin>

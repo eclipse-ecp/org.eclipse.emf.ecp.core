@@ -6,55 +6,93 @@
 	<parent>
 		<groupId>org.eclipse.emf.ecp</groupId>
 		<artifactId>ecp-parent</artifactId>
-		<version>1.1.1-SNAPSHOT</version>
+		<version>1.7.0-SNAPSHOT</version>
 		<relativePath>../../releng/org.eclipse.emf.ecp.releng/</relativePath>
 	</parent>
 	<groupId>org.eclipse.emf.ecp</groupId>
 	<artifactId>ecp-features-parent</artifactId>
-	<version>1.1.1-SNAPSHOT</version>
+	<version>1.7.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<modules>
+		<module>../../features/org.eclipse.emf.ecp.emfforms.idetooling.feature</module>
+		<module>../../features/org.eclipse.emf.ecp.target.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.cdo.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.emfstore.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.license.feature</module>
-		<module>../../features/org.eclipse.emf.ecp.target.feature</module>
-		<module>../../features/org.eclipse.emf.ecp.e3.feature</module>
-		<module>../../features/org.eclipse.emf.ecp.validation.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.workspace.feature</module>
+		<module>../../features/org.eclipse.emf.ecp.e3.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.model.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.ecore.feature</module>
+		<module>../../features/org.eclipse.emf.ecp.ecore.editor.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.model.editor.feature</module>
+		<module>../../features/org.eclipse.emf.ecp.view.model.controls.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.examplemodel.ui.feature</module>
-		<module>../../features/org.eclipse.emf.ecp.view.model.ide.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.categorization.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.custom.feature</module>
-		<module>../../features/org.eclipse.emf.ecp.view.separator.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.groupedgrid.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.label.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.group.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.rule.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.validation.feature</module>
+		<module>../../features/org.eclipse.emf.ecp.view.validation.bean.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.unset.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.vertical.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.horizontal.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.treemasterdetail.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.table.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.template.feature</module>
-		<module>../../features/org.eclipse.emf.ecp.view.template.helper.feature</module>
-		<module>../../features/org.eclipse.emf.ecp.ide.feature</module>
-		<module>../../features/org.eclipse.emf.ecp.rap.util.feature</module>
-		<module>../../features/org.eclipse.emf.ecp.sdk.feature</module>
+		<module>../../features/org.eclipse.emf.ecp.view.mappingdmr.feature</module>
+		<module>../../features/org.eclipse.emf.ecp.view.stack.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.e4.feature</module>
+		<module>../../features/org.eclipse.emf.ecp.rap.util.feature</module>
+		<module>../../features/org.eclipse.emf.ecp.transaction.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.diffmerge.feature</module>
+		<module>../../features/org.eclipse.emf.ecp.validation.view.feature</module>
+		<module>../../features/org.eclipse.emf.ecp.view.di.feature</module>
+		<module>../../features/org.eclipse.emf.ecp.view.compoundcontrol.feature</module>
+		<module>../../features/org.eclipse.emf.ecp.view.section.feature</module>
+		<module>../../features/org.eclipse.emf.ecp.view.viewproxy.feature</module>
+		<!-- demo -->
+		<module>../../features/org.eclipse.emf.ecp.demo.e4.feature</module>
+		<module>../../features/org.eclipse.emf.ecp.demo.e3.feature</module>
+		<module>../../features/org.eclipse.emf.ecp.rap.feature</module>
+		<!-- composite features -->
+		<module>../../features/org.eclipse.emf.ecp.emfforms.runtime.feature</module>
+		<module>../../features/org.eclipse.emf.ecp.emfforms.sdk.feature</module>
+		<module>../../features/org.eclipse.emf.ecp.sdk.feature</module>
+		<module>../../features/org.eclipse.emf.ecp.sdk.e4.feature</module>
+		<module>../../features/org.eclipse.emf.ecp.rap.sdk.feature</module>
+		
+		<!-- key attribute mapping -->
+		<module>../../features/org.eclipse.emf.ecp.view.keyattributedmr.feature</module>
+		
+		<!-- index mapping -->
+		<module>../../features/org.eclipse.emf.ecp.view.indexdmr.feature</module>
+		
+		<!-- Migration -->
+		<module>../../features/org.eclipse.emf.ecp.view.edapt.feature</module>
+
+		<!-- Initial validation -->
+		<module>../../features/org.eclipse.emf.ecp.view.validation.initial.feature</module>
+
+		<module>../../features/org.eclipse.emf.ecp.changebroker.feature</module>
+		
+		<module>../../features/org.eclipse.emf.ecp.view.table.celleditor.rcp.feature</module>
+		
+		<module>../../features/org.eclipse.emfforms.swt.control.text.autocomplete.feature</module>
+		
+		<module>../../features/org.eclipse.emfforms.view.annotation.feature</module>
+		
+		<module>../../features/org.eclipse.emf.ecp.view.group.swt.collapsible.pgroup.feature</module>
 	</modules>
 
 	<!-- Parent used for features. This POM contains all build steps for code signing. -->
 	<build>
 		<plugins>
 			<!-- 1. -->
-			<!--<plugin>
+			<plugin>
 				<groupId>org.eclipse.tycho.extras</groupId>
 				<artifactId>tycho-source-feature-plugin</artifactId>
 				<version>${tycho-version}</version>
@@ -66,7 +104,14 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>-->
+				<configuration>
+					<excludes>
+						<feature id="org.eclipse.emf.ecp.license.feature"/>
+					</excludes>
+					<labelSuffix>&#xA0;incl. Sources</labelSuffix>
+				</configuration>
+			</plugin>
+			
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-p2-plugin</artifactId>
@@ -108,6 +153,9 @@
 								</goals>
 							</execution>
 						</executions>
+						<configuration>
+							<excludeInnerJars>true</excludeInnerJars>
+						</configuration>
 					</plugin>
 					<plugin>
 						<groupId>org.eclipse.tycho</groupId>

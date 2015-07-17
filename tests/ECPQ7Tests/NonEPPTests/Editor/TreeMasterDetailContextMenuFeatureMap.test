@@ -1,0 +1,39 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _mY5uUKEgEeKX8e34E6tWIg,_rr2EEFpSEeKcnaHGSt8OwA,_IuFcgFpZEeKcnaHGSt8OwA,_f3qEUVpSEeKcnaHGSt8OwA
+Element-Name: TreeMasterDetailContextMenuFeatureMap
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _HzFpMGs4EeSUs_kOwABuHQ
+Runtime-Version: 1.5.2.201408180747
+Save-Time: 11/13/14 2:33 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-view "Model Explorer" | get-tree | get-menu "Create new project" | click
+with [get-window "Create Project"] {
+    get-editbox -after [get-label "Project Name:"] | set-text test
+    get-button Finish | click
+}
+get-view "Model Explorer" | get-tree | select test | get-menu "New Model Element" | click
+with [get-window "Add new model element"] {
+    get-editbox -after [get-label Search] | set-text staff
+    get-tree | select "university/Staff"
+    get-button Finish | click
+}
+with [get-editor Staff] {
+    get-button "Create and link" | click
+    get-button "Create and link" -after [get-label Details] -index 1 | click
+}
+get-editor Professor | close
+get-editor Staff | get-tree | select "Staff/<assistants> Assistant" | get-menu Delete | click
+get-editor Staff | get-table | get-property "getItems().length" | equals 0 | verify-true
+get-editor Staff | get-tree | select "Staff/<professors> Professor" | get-menu Delete | click
+get-editor Staff | get-table -after [get-label Details] -index 1 | get-property "getItems().length" | equals 0 
+    | verify-true
+get-editor Staff | get-tree | get-item Staff | get-property childCount | equals 0 | verify-true
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * EclipseSource Munich - initial API and implementation
  */
@@ -20,7 +20,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Categorizable Element</b></em>'.
  * <!-- end-user-doc -->
- * 
+ *
  * <p>
  * The following features are supported:
  * <ul>
@@ -28,7 +28,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  * </em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage#getCategorizableElement()
  * @model abstract="true"
  * @generated
@@ -44,7 +44,7 @@ public interface VCategorizableElement extends VElement
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Label Object</em>' reference.
 	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage#getCategorizableElement_LabelObject()
 	 * @model resolveProxies="false" transient="true" changeable="false" volatile="true" derived="true"

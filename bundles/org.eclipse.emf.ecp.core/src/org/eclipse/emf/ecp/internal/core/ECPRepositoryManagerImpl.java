@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
  * Eugen Neufeld - JavaDoc
@@ -54,16 +54,12 @@ import org.eclipse.net4j.util.io.IOUtil;
 
 /**
  * This class manages the repositories.
- * 
+ *
  * @author Eike Stepper
  * @author Eugen Neufeld
  */
 public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepository, ECPObserver> implements
 	ECPRepositoryManager, ECPProvidersChangedObserver {
-	/**
-	 * The Singleton to access the implementation of the Default ECPRepositoryManagerImpl.
-	 */
-	public static ECPRepositoryManagerImpl INSTANCE;
 
 	/**
 	 * The file extension that is used for dynamic properties of statically declared repositories.
@@ -76,15 +72,13 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 	 * Should not be called directly, use service instead.
 	 */
 	public ECPRepositoryManagerImpl() {
-		if (INSTANCE != null) {
-			throw new IllegalStateException("Manager must not be initialized twice");
-		}
-		INSTANCE = this;
+
 		final File stateLocation = Activator.getInstance().getStateLocation().toFile();
 		setFolder(new File(stateLocation, "repositories"));
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public InternalRepository getRepository(Object adaptable) {
 		if (adaptable instanceof ECPRepositoryAware) {
 			final ECPRepositoryAware repositoryAware = (ECPRepositoryAware) adaptable;
@@ -95,18 +89,20 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public InternalRepository getRepository(String name) {
 		return getElement(name);
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public Collection<ECPRepository> getRepositories() {
 		return (Collection) getElements();
 	}
 
 	/**
 	 * Checks whether any repositories are available.
-	 * 
+	 *
 	 * @return true if any repository is available, false otherwise
 	 */
 	public boolean hasRepositories() {
@@ -114,6 +110,7 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public ECPRepository addRepository(ECPProvider provider, String name, String label, String description,
 		ECPProperties properties) {
 		if (!provider.hasCreateRepositorySupport()) {
@@ -131,7 +128,7 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 
 	/**
 	 * This is called by the {@link ECPRepository} to notificate observers about chnages it its objects.
-	 * 
+	 *
 	 * @param repository the repository where the changes occured
 	 * @param objects the changed objects
 	 */
@@ -139,13 +136,14 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 
 		try {
 			ECPUtil.getECPObserverBus().notify(ECPRepositoryContentChangedObserver.class)
-				.contentChanged(repository, objects);
+			.contentChanged(repository, objects);
 		} catch (final Exception ex) {
 			Activator.log(ex);
 		}
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public void providersChanged(Collection<ECPProvider> oldProviders, Collection<ECPProvider> newProviders) {
 		final Set<ECPProvider> addedProviders = InternalUtil.getAddedElements(oldProviders, newProviders);
 		if (!addedProviders.isEmpty()) {
@@ -180,7 +178,7 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 	protected void notifyObservers(Collection<InternalRepository> oldRepositories,
 		Collection<InternalRepository> newRepositories) throws Exception {
 		ECPUtil.getECPObserverBus().notify(ECPRepositoriesChangedObserver.class)
-			.repositoriesChanged((Collection) oldRepositories, (Collection) newRepositories);
+		.repositoriesChanged((Collection) oldRepositories, (Collection) newRepositories);
 	}
 
 	@Override
@@ -220,7 +218,7 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 	 * @author Eike Stepper
 	 */
 	private final class RepositoryDescriptor extends ExtensionDescriptor<InternalRepository> implements
-		InternalRepository {
+	InternalRepository {
 		private final Set<String> declaredPropertyKeys;
 		private final ECPProperties properties = new Properties() {
 			@Override
@@ -283,55 +281,66 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 			}
 
 			properties.addObserver(new ECPPropertiesObserver() {
+				@Override
 				public void propertiesChanged(ECPProperties properties,
 					Collection<Entry<String, String>> oldProperties, Collection<Entry<String, String>> newProperties) {
-					ECPRepositoryManagerImpl.INSTANCE.storeElement(RepositoryDescriptor.this);
+					((ECPRepositoryManagerImpl) ECPUtil.getECPRepositoryManager())
+						.storeElement(RepositoryDescriptor.this);
 				}
 			});
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public boolean isStorable() {
 			return true;
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public void write(ObjectOutput out) throws IOException {
 			((Properties) properties).write(out);
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public InternalProvider getProvider() {
 			final String providerName = getConfigurationElement().getAttribute("provider");
 			return (InternalProvider) ECPUtil.getECPProviderRegistry().getProvider(providerName);
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public ECPProperties getProperties() {
 			return properties;
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public Object getProviderSpecificData() {
 			return getResolvedElement().getProviderSpecificData();
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public void setProviderSpecificData(Object data) {
 			getResolvedElement().setProviderSpecificData(data);
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public boolean canDelete() {
 			return false;
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public void delete() {
 			throw new UnsupportedOperationException();
 		}
 
 		/** {@inheritDoc} */
+		@Override
 		public void notifyObjectsChanged(Collection<Object> objects) {
 			getResolvedElement().notifyObjectsChanged(objects);
 		}

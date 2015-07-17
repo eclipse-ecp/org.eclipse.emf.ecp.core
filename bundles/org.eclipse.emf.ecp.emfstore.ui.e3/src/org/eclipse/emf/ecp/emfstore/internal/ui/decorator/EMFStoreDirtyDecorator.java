@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  ******************************************************************************/
 package org.eclipse.emf.ecp.emfstore.internal.ui.decorator;
 
@@ -39,7 +39,7 @@ import org.eclipse.jface.viewers.ILightweightLabelDecorator;
 public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, ESCommitObserver,
 	ECPProjectPreDeleteObserver {
 
-	private final String dirtyPath = "icons/dirty.png";
+	public final static String dirtyPath = "icons/dirty.png"; //$NON-NLS-1$
 	private static Map<ECPProject, EMFStoreDirtyObserver> observers = new HashMap<ECPProject, EMFStoreDirtyObserver>();
 
 	/**
@@ -51,6 +51,7 @@ public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, ESCom
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void decorate(Object element, IDecoration decoration) {
 		if (element instanceof ECPProject) {
 			final InternalProject project = (InternalProject) element;
@@ -89,28 +90,34 @@ public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, ESCom
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void addListener(ILabelProviderListener listener) {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void dispose() {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public boolean isLabelProperty(Object element, String property) {
 		return false;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void removeListener(ILabelProviderListener listener) {
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public boolean inspectChanges(ESLocalProject localProject, ESChangePackage changePackage, IProgressMonitor monitor) {
 		return true;
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void commitCompleted(ESLocalProject localProject, ESPrimaryVersionSpec newRevision, IProgressMonitor monitor) {
 		// TODO: cast, move to EMFStoreDirtyObserver?
 		final ECPProject project = EMFStoreProvider.INSTANCE.getProject(localProject);
@@ -119,6 +126,7 @@ public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, ESCom
 	}
 
 	/** {@inheritDoc} */
+	@Override
 	public void projectDelete(ECPProject project) {
 		EMFStoreDirtyDecoratorCachedTree.removeProject(project);
 		observers.remove(project);

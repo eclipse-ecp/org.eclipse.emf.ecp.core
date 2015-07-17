@@ -1,42 +1,45 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.custom.ui.swt.test;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.core.databinding.Binding;
-import org.eclipse.core.databinding.UpdateValueStrategy;
-import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.internal.swt.util.SWTRenderingHelper;
-import org.eclipse.emf.ecp.view.spi.custom.model.ECPCustomControlChangeListener;
+import org.eclipse.emf.ecp.edit.internal.swt.util.SWTControl;
+import org.eclipse.emf.ecp.view.spi.custom.model.ECPHardcodedReferences;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage;
 import org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT;
+import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
-import org.eclipse.emf.ecp.view.spi.renderer.RenderingResultRow;
+import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
+import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
+import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 
 /**
  * @author Jonas
- * 
+ *
  */
-public class ECPAbstractCustomControlSWTStub extends ECPAbstractCustomControlSWT {
+public class ECPAbstractCustomControlSWTStub extends ECPAbstractCustomControlSWT implements ECPHardcodedReferences {
 
 	private static final String TEST_MESSAGE = "TestMessage";
 	private static final String TEST_TITEL = "TestTitel";
@@ -49,6 +52,7 @@ public class ECPAbstractCustomControlSWTStub extends ECPAbstractCustomControlSWT
 	private final boolean withControl;
 	private boolean validationReseted;
 	private Label validationLabel;
+	private Button button;
 
 	/**
 	 * @return the validationLabel
@@ -68,121 +72,98 @@ public class ECPAbstractCustomControlSWTStub extends ECPAbstractCustomControlSWT
 
 	/**
 	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#createControls(org.eclipse.swt.widgets.Composite)
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#handleContentValidation()
 	 */
 	@Override
-	public List<RenderingResultRow<Control>> createControl(Composite composite) {
-		final List<RenderingResultRow<Control>> result = new ArrayList<RenderingResultRow<Control>>();
-
-		label = new Label(composite, SWT.NONE);
-		label.setText(ECPAbstractCustomControlSWTTest.LABELTEXT);
-		setRendered(true);
-
-		if (!withControl) {
-			result.add(SWTRenderingHelper.INSTANCE.getResultRowFactory()
-				.createRenderingResultRow(label));
-			return result;
+	protected void handleContentValidation() {
+		if (getCustomControl().getDiagnostic() == null) {
+			setValidationReseted(true);
 		}
-		final VFeaturePathDomainModelReference controlFeature = (VFeaturePathDomainModelReference) getResolvedDomainModelReference(VCustomPackage.eINSTANCE
-			.getHardcodedDomainModelReference_ControlId());
-		validationLabel = createValidationLabel(composite);
-		setTextControl(createControl(controlFeature, composite));
-		result.add(SWTRenderingHelper.INSTANCE.getResultRowFactory()
-			.createRenderingResultRow(label, validationLabel, getTextControl()));
-
-		return result;
+		final VDiagnostic diagnostic = getCustomControl().getDiagnostic();
+		if (diagnostic.getDiagnostics().size() == 0) {
+			setValidationReseted(true);
+		}
+		for (final Object diagnosticObject : diagnostic.getDiagnostics()) {
+			final Diagnostic diagnostic2 = (Diagnostic) diagnosticObject;
+			if (diagnostic2.getSeverity() == Diagnostic.OK) {
+				setValidationReseted(true);
+			} else {
+				setLastValidationSeverity(diagnostic2.getSeverity());
+				setLastValidationFeature((EStructuralFeature) diagnostic2.getData().get(1));
+			}
+		}
 	}
 
 	/**
 	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#handleContentValidation(int,
-	 *      org.eclipse.emf.ecore.EStructuralFeature)
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#getGridDescription()
 	 */
 	@Override
-	protected void handleContentValidation(int severity, EStructuralFeature feature) {
-		setLastValidationSeverity(severity);
-		setLastValidationFeature(feature);
-
-	}
-
-	@Override
-	public void setValue(VDomainModelReference domainModelReference, Object value) {
-		super.setValue(domainModelReference, value);
-	}
-
-	@Override
-	public Object getValue(VDomainModelReference domainModelReference) {
-		return super.getValue(domainModelReference);
-	}
-
-	@Override
-	public void registerChangeListener(VDomainModelReference modelReference,
-		final ECPCustomControlChangeListener changeListener) {
-		super.registerChangeListener(modelReference, changeListener);
-	}
-
-	@Override
-	public Binding bindTargetToModel(VDomainModelReference modelFeature, IObservableValue targetValue,
-		UpdateValueStrategy targetToModel,
-		UpdateValueStrategy modelToTarget) {
-		return super.bindTargetToModel(modelFeature, targetValue, targetToModel, modelToTarget);
+	public SWTGridDescription getGridDescription() {
+		if (!withControl) {
+			return GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 2, null);
+		}
+		return GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 3, null);
 	}
 
 	/**
 	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#resetContentValidation()
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#renderControl(org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell,
+	 *      org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
-	protected void resetContentValidation() {
-		setValidationReseted(true);
-
+	public Control renderControl(SWTGridCell cell, Composite parent) throws NoRendererFoundException,
+		NoPropertyDescriptorFoundExeption {
+		if (cell.getColumn() == 0) {
+			label = new Label(parent, SWT.NONE);
+			label.setText(ECPAbstractCustomControlSWT_PTest.LABELTEXT);
+			setRendered(true);
+			return label;
+		}
+		if (cell.getColumn() == 1 && !withControl) {
+			button = new Button(parent, SWT.PUSH);
+			return getButton();
+		}
+		if (cell.getColumn() == 1) {
+			validationLabel = createValidationIcon(parent);
+			return validationLabel;
+		}
+		if (cell.getColumn() == 2) {
+			final VFeaturePathDomainModelReference controlFeature = (VFeaturePathDomainModelReference) getResolvedDomainModelReference(VCustomPackage.eINSTANCE
+				.getCustomControl_BundleName());
+			setTextControl(getControl(SWTControl.class, controlFeature).createControl(parent));
+			return getTextControl();
+		}
+		return null;
 	}
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.custom.ui.ECPAbstractCustomControl#disposeCustomControl()
 	 */
 	@Override
 	protected void disposeCustomControl() {
 		setDisposed(true);
-
+		if (label != null) {
+			label.dispose();
+		}
+		if (textControl != null) {
+			textControl.dispose();
+		}
+		if (validationLabel != null) {
+			validationLabel.dispose();
+		}
 	}
 
 	/**
 	 * @param composite
 	 */
 	public void createValidationLabelInStub(Composite composite) {
-		super.createValidationLabel(composite);
-
-	}
-
-	public void stubShowError() {
-		super.showError(TEST_TITEL, TEST_MESSAGE);
-	}
-
-	public void stubShowInfo() {
-		super.showInfo(TEST_TITEL, TEST_MESSAGE);
-	}
-
-	public SWTCustomControlHelper getStubSWTHelper() {
-		return super.getSWTHelper();
-
-	}
-
-	public CustomControlHelper getStubHelper() {
-		return super.getHelper();
-
-	}
-
-	/**
-	 * 
-	 */
-	public void stubInitValidation(Composite parent) {
-		super.createValidationLabel(parent);
+		super.createValidationIcon(composite);
 
 	}
 
@@ -276,15 +257,24 @@ public class ECPAbstractCustomControlSWTStub extends ECPAbstractCustomControlSWT
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.custom.model.ECPHardcodedReferences#getNeededDomainModelReferences()
 	 */
+	@Override
 	public Set<VDomainModelReference> getNeededDomainModelReferences() {
 		return Collections.emptySet();
 	}
 
 	public List<VDomainModelReference> getResolvedReferences() {
 		return getResolvedDomainModelReferences();
+	}
+
+	public SWTCustomControlHelper getStubSWTHelper() {
+		return super.getHelper();
+	}
+
+	public Button getButton() {
+		return button;
 	}
 
 }

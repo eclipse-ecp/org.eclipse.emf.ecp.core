@@ -1,14 +1,14 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- * 
+ *
  *******************************************************************************/
 
 package org.eclipse.emf.ecp.internal.wizards;
@@ -21,7 +21,7 @@ import org.eclipse.emf.ecp.internal.wizards.page.AddRepositoryPage;
 import org.eclipse.emf.ecp.internal.wizards.page.SelectOrCreateRepositoryPage;
 import org.eclipse.emf.ecp.internal.wizards.page.SelectRepositoryPage;
 import org.eclipse.emf.ecp.ui.common.AddRepositoryComposite;
-import org.eclipse.emf.ecp.ui.common.CompositeFactory;
+import org.eclipse.emf.ecp.ui.common.ECPCompositeFactory;
 import org.eclipse.jface.wizard.Wizard;
 
 /**
@@ -62,7 +62,7 @@ public class ShareWizard extends Wizard {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param useExistingRepository whether to use an existing repository.
 	 */
 	public void setUseExistingRepository(boolean useExistingRepository) {
@@ -77,7 +77,7 @@ public class ShareWizard extends Wizard {
 
 		final SelectOrCreateRepositoryPage userChoicePage = new SelectOrCreateRepositoryPage("UserChoice"); //$NON-NLS-1$
 		final SelectRepositoryPage selectPage = new SelectRepositoryPage("SelectRepository"); //$NON-NLS-1$
-		repositoryComposite = CompositeFactory.getAddRepositoryComposite(provider);
+		repositoryComposite = ECPCompositeFactory.getAddRepositoryComposite(provider);
 		final AddRepositoryPage addPage = new AddRepositoryPage("AddRepository", repositoryComposite); //$NON-NLS-1$
 		addPage(userChoicePage);
 		addPage(selectPage);

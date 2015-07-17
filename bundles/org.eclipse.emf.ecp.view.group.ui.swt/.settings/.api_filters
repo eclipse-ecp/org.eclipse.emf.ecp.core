@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.ecp.view.group.ui.swt" version="2">
+    <resource path="META-INF/MANIFEST.MF">
+        <filter comment="This is SPI" id="923795461">
+            <message_arguments>
+                <message_argument value="1.3.0"/>
+                <message_argument value="1.2.1"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change in 1.6" id="923795461">
+            <message_arguments>
+                <message_argument value="1.6.0"/>
+                <message_argument value="1.5.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.group.swt.SWTGroupRenderer">
+        <filter comment="This is SPI" id="305324134">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.swt.SWTGroupRenderer"/>
+                <message_argument value="org.eclipse.emf.ecp.view.group.ui.swt_1.3.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/group/swt/GroupSWTRenderer.java" type="org.eclipse.emf.ecp.view.spi.group.swt.GroupSWTRenderer">
+        <filter comment="SPI Change in 1.6" id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.swt.GroupSWTRenderer"/>
+                <message_argument value="GroupSWTRenderer()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change in 1.6" id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.swt.GroupSWTRenderer"/>
+                <message_argument value="GroupSWTRenderer(SWTRendererFactory)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

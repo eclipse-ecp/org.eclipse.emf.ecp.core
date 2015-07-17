@@ -1,11 +1,11 @@
 /*******************************************************************************
- * Copyright (c) 2011-2012 EclipseSource Muenchen GmbH and others.
- * 
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
  * Eugen Neufeld - JavaDoc
@@ -41,7 +41,7 @@ import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 
 /**
  * This Class describes a repository.
- * 
+ *
  * @author Eike Stepper
  * @author Eugen Neufeld
  */
@@ -65,7 +65,7 @@ public final class ECPRepositoryImpl extends PropertiesElement implements Intern
 
 	/**
 	 * Constructor used to create an instance through user input.
-	 * 
+	 *
 	 * @param provider the {@link ECPProvider} for this repository
 	 * @param name the name of this repository
 	 * @param properties the {@link ECPProperties} of this repository
@@ -86,7 +86,7 @@ public final class ECPRepositoryImpl extends PropertiesElement implements Intern
 	/**
 	 * Constructor used by the {@link org.eclipse.emf.ecp.core.ECPRepositoryManager ECPRepositoryManager} when loading
 	 * existing repositories during startup.
-	 * 
+	 *
 	 * @param in the {@link ObjectInput} to parse
 	 * @throws IOException when an error occurs
 	 */
@@ -112,6 +112,7 @@ public final class ECPRepositoryImpl extends PropertiesElement implements Intern
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public void disposed(ECPDisposable disposable) throws DisposeException {
 		if (disposable == provider) {
 			dispose();
@@ -119,6 +120,7 @@ public final class ECPRepositoryImpl extends PropertiesElement implements Intern
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public boolean isStorable() {
 		return true;
 	}
@@ -132,26 +134,31 @@ public final class ECPRepositoryImpl extends PropertiesElement implements Intern
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public String getLabel() {
 		return label;
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public void setLabel(String label) {
 		this.label = label;
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public String getDescription() {
 		return description;
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public boolean isDisposed() {
 		return disposable.isDisposed();
 	}
@@ -166,7 +173,7 @@ public final class ECPRepositoryImpl extends PropertiesElement implements Intern
 	 * override this method (however, if they do so, they should invoke the method on their superclass to ensure that
 	 * the Platform's adapter manager is consulted).
 	 * </p>
-	 * 
+	 *
 	 * @param adapterType
 	 *            the class to adapt to
 	 * @return the adapted object or <code>null</code>
@@ -186,65 +193,76 @@ public final class ECPRepositoryImpl extends PropertiesElement implements Intern
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public void dispose() {
 		disposable.dispose();
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public void addDisposeListener(DisposeListener listener) {
 		disposable.addDisposeListener(listener);
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public void removeDisposeListener(DisposeListener listener) {
 		disposable.removeDisposeListener(listener);
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public InternalProvider getProvider() {
 		return provider;
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public Object getProviderSpecificData() {
 		return providerSpecificData;
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public void setProviderSpecificData(Object providerSpecificData) {
 		this.providerSpecificData = providerSpecificData;
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public boolean canDelete() {
 		return isStorable();
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public void delete() {
 		if (!canDelete()) {
 			throw new UnsupportedOperationException();
 		}
-
+		// FIXME https://bugs.eclipse.org/bugs/show_bug.cgi?id=462399
+		cleanup();
 		try {
 			provider.handleLifecycle(this, LifecycleEvent.REMOVE);
 		} catch (final Exception ex) {
 			Activator.log(ex);
 		}
 
-		ECPRepositoryManagerImpl.INSTANCE.changeElements(Collections.singleton(getName()), null);
+		((ECPRepositoryManagerImpl) ECPUtil.getECPRepositoryManager()).changeElements(Collections.singleton(getName()),
+			null);
 	}
 
 	/** {@inheritDoc} **/
+	@Override
 	public void notifyObjectsChanged(Collection<Object> objects) {
 		if (objects != null && objects.size() != 0) {
-			ECPRepositoryManagerImpl.INSTANCE.notifyObjectsChanged(this, objects);
+			((ECPRepositoryManagerImpl) ECPUtil.getECPRepositoryManager()).notifyObjectsChanged(this, objects);
 		}
 	}
 
 	/**
 	 * Return all open projects of that are shared on this repository.
-	 * 
+	 *
 	 * @return array of currently open {@link ECPProject ECPProjects} that are shared on this repository
 	 */
 	public InternalProject[] getOpenProjects() {
@@ -262,6 +280,6 @@ public final class ECPRepositoryImpl extends PropertiesElement implements Intern
 	@Override
 	protected void propertiesChanged(Collection<Entry<String, String>> oldProperties,
 		Collection<Entry<String, String>> newProperties) {
-		ECPRepositoryManagerImpl.INSTANCE.storeElement(this);
+		((ECPRepositoryManagerImpl) ECPUtil.getECPRepositoryManager()).storeElement(this);
 	}
 }

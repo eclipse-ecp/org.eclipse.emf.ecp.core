@@ -1,17 +1,16 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen - initial API and implementation
  ******************************************************************************/
 package org.eclipse.emf.ecp.emfstore.internal.ui.handler;
 
-import java.util.Collection;
 import java.util.Collections;
 
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
@@ -26,9 +25,9 @@ import org.eclipse.swt.widgets.Shell;
 
 /**
  * This is the EMFStore UpdateProject Helper.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
 public final class UpdateProjectHelper {
 
@@ -37,7 +36,7 @@ public final class UpdateProjectHelper {
 
 	/**
 	 * Updates an {@link InternalProject} to head. Delegates to {@link UIUpdateProjectController}.
-	 * 
+	 *
 	 * @param project the {@link InternalProject}
 	 * @param shell the {@link Shell}
 	 */
@@ -50,13 +49,13 @@ public final class UpdateProjectHelper {
 				((ESUsersessionImpl) serverInfo.getLastUsersession()).toInternalAPI());
 		}
 		new UIUpdateProjectController(shell, projectSpace).execute();
-		project.notifyObjectsChanged((Collection) Collections.singleton(project), true);
+		project.notifyObjectsChanged(Collections.singleton((Object) project), true);
 	}
 
 	/**
 	 * Updates an {@link InternalProject} to a specific version. Delegates to {@link UIUpdateProjectToVersionController}
 	 * .
-	 * 
+	 *
 	 * @param project the {@link InternalProject}
 	 * @param shell the {@link Shell}
 	 */
@@ -69,6 +68,6 @@ public final class UpdateProjectHelper {
 				((ESUsersessionImpl) serverInfo.getLastUsersession()).toInternalAPI());
 		}
 		new UIUpdateProjectToVersionController(shell, projectSpace).execute();
-		project.notifyObjectsChanged((Collection) Collections.singleton(project), true);
+		project.notifyObjectsChanged(Collections.singleton((Object) project), true);
 	}
 }

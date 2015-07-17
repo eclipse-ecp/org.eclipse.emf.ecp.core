@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  *******************************************************************************/
@@ -31,7 +31,7 @@ import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
  * </em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class ContentImpl extends EObjectImpl implements Content {
@@ -39,7 +39,7 @@ public class ContentImpl extends EObjectImpl implements Content {
 	 * The default value of the '{@link #getUniqueAttribute() <em>Unique Attribute</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getUniqueAttribute()
 	 * @generated
 	 * @ordered
@@ -50,7 +50,7 @@ public class ContentImpl extends EObjectImpl implements Content {
 	 * The cached value of the '{@link #getUniqueAttribute() <em>Unique Attribute</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getUniqueAttribute()
 	 * @generated
 	 * @ordered
@@ -61,7 +61,7 @@ public class ContentImpl extends EObjectImpl implements Content {
 	 * The default value of the '{@link #getSecondAttribute() <em>Second Attribute</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getSecondAttribute()
 	 * @generated
 	 * @ordered
@@ -72,7 +72,7 @@ public class ContentImpl extends EObjectImpl implements Content {
 	 * The cached value of the '{@link #getSecondAttribute() <em>Second Attribute</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getSecondAttribute()
 	 * @generated
 	 * @ordered
@@ -82,7 +82,7 @@ public class ContentImpl extends EObjectImpl implements Content {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected ContentImpl() {
@@ -92,7 +92,7 @@ public class ContentImpl extends EObjectImpl implements Content {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -103,9 +103,10 @@ public class ContentImpl extends EObjectImpl implements Content {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public String getUniqueAttribute() {
 		return uniqueAttribute;
 	}
@@ -113,23 +114,26 @@ public class ContentImpl extends EObjectImpl implements Content {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void setUniqueAttribute(String newUniqueAttribute) {
-		String oldUniqueAttribute = uniqueAttribute;
+		final String oldUniqueAttribute = uniqueAttribute;
 		uniqueAttribute = newUniqueAttribute;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.CONTENT__UNIQUE_ATTRIBUTE,
 				oldUniqueAttribute, uniqueAttribute));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public String getSecondAttribute() {
 		return secondAttribute;
 	}
@@ -137,21 +141,23 @@ public class ContentImpl extends EObjectImpl implements Content {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public void setSecondAttribute(String newSecondAttribute) {
-		String oldSecondAttribute = secondAttribute;
+		final String oldSecondAttribute = secondAttribute;
 		secondAttribute = newSecondAttribute;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.CONTENT__SECOND_ATTRIBUTE,
 				oldSecondAttribute, secondAttribute));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -168,7 +174,7 @@ public class ContentImpl extends EObjectImpl implements Content {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -187,7 +193,7 @@ public class ContentImpl extends EObjectImpl implements Content {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -206,7 +212,7 @@ public class ContentImpl extends EObjectImpl implements Content {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -225,15 +231,16 @@ public class ContentImpl extends EObjectImpl implements Content {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy())
+		if (eIsProxy()) {
 			return super.toString();
+		}
 
-		StringBuffer result = new StringBuffer(super.toString());
+		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (uniqueAttribute: ");
 		result.append(uniqueAttribute);
 		result.append(", secondAttribute: ");

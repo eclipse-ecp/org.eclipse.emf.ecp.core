@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -16,27 +16,33 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.eclipse.core.databinding.observable.IObserving;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.spi.ECPAbstractControl;
 import org.eclipse.emf.ecp.edit.spi.ECPControlDescription;
 import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
 import org.eclipse.emf.ecp.edit.spi.util.ECPApplicableTester;
 import org.eclipse.emf.ecp.edit.spi.util.ECPStaticApplicableTester;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
+import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.osgi.framework.Bundle;
 
 /**
  * The ControlFactoryImpl is a Singleton which reads the org.eclipse.emf.ecp.editor.widgets ExtensionPoint and provides
- * a method ({@link #createControl(Class, VDomainModelReference)}) for creating a suitable
+ * a method ({@link #createControl(Class, EObject, VDomainModelReference)}) for creating a suitable
  * control for with the known widgets.
- * 
+ *
  * @author Eugen Neufeld
- * 
+ *
  */
-
+@Deprecated
 public final class ControlFactoryImpl implements ECPControlFactory {
 
 	private static final String CONTROL_EXTENSION = "org.eclipse.emf.ecp.edit.controls"; //$NON-NLS-1$
@@ -76,7 +82,8 @@ public final class ControlFactoryImpl implements ECPControlFactory {
 			try {
 				final String id = e.getAttribute(CONTROL_ID);
 				final String clazz = e.getAttribute(CLASS_ATTRIBUTE);
-				final Class<? extends ECPAbstractControl> resolvedClass = loadClass(e.getContributor().getName(), clazz);
+				final Class<? extends ECPAbstractControl> resolvedClass = loadClass(e.getContributor().getName(),
+					clazz);
 				final boolean showLabel = Boolean.parseBoolean(e.getAttribute(LABEL_ATTRIBUTE));
 
 				// ECPApplicableTester tester=null;
@@ -84,8 +91,7 @@ public final class ControlFactoryImpl implements ECPControlFactory {
 				for (final IConfigurationElement testerExtension : e.getChildren()) {
 					if (TEST_DYNAMIC.equals(testerExtension.getName())) {
 						tester.add((ECPApplicableTester) testerExtension.createExecutableExtension(CONTROL_TESTER));
-					}
-					else if (TEST_STATIC.equals(testerExtension.getName())) {
+					} else if (TEST_STATIC.equals(testerExtension.getName())) {
 						final boolean singleValue = Boolean.parseBoolean(testerExtension
 							.getAttribute(TESTER_SINGLEVALUE));
 						final int priority = Integer.parseInt(testerExtension.getAttribute(TESTER_PRIORITY));
@@ -122,9 +128,12 @@ public final class ControlFactoryImpl implements ECPControlFactory {
 	private static <T> Class<T> loadClass(String bundleName, String clazz) throws ClassNotFoundException {
 		final Bundle bundle = Platform.getBundle(bundleName);
 		if (bundle == null) {
-			throw new ClassNotFoundException(clazz + EditMessages.CONTROLFACTROY_CANNOT_BE_LOADED
+			throw new ClassNotFoundException(clazz
+				+ LocalizationServiceHelper.getString(ControlFactoryImpl.class,
+					MessageKeys.CONTROLFACTROY_CANNOT_BE_LOADED)
 				+ bundleName
-				+ EditMessages.CONTROLFACTORY_CANNOT_BE_RESOLVED);
+				+ LocalizationServiceHelper.getString(ControlFactoryImpl.class,
+					MessageKeys.CONTROLFACTORY_CANNOT_BE_RESOLVED));
 		}
 		return (Class<T>) bundle.loadClass(clazz);
 
@@ -132,13 +141,15 @@ public final class ControlFactoryImpl implements ECPControlFactory {
 
 	/**
 	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.edit.spi.ECPControlFactory#createControl(java.lang.Class,
+	 *
+	 * @see org.eclipse.emf.ecp.edit.spi.ECPControlFactory#createControl(java.lang.Class, org.eclipse.emf.ecore.EObject,
 	 *      org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)
 	 */
-	public <T> T createControl(Class<T> controlType, VDomainModelReference domainModelReference) {
+	@Override
+	public <T> T createControl(Class<T> controlType, EObject domainModel, VDomainModelReference domainModelReference) {
 
-		final ECPControlDescription controlDescription = getControlCandidate(controlType, domainModelReference);
+		final ECPControlDescription controlDescription = getControlCandidate(controlType, domainModel,
+			domainModelReference);
 		if (controlDescription == null) {
 			return null;
 		}
@@ -149,9 +160,10 @@ public final class ControlFactoryImpl implements ECPControlFactory {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.ECPControlFactory#createControl(java.lang.String)
 	 */
+	@Override
 	public <T> T createControl(String controlId) {
 
 		ECPControlDescription controlDescription = null;
@@ -172,6 +184,7 @@ public final class ControlFactoryImpl implements ECPControlFactory {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public Set<ECPControlDescription> getControlDescriptors() {
 		return new HashSet<ECPControlDescription>(controlDescriptors);
 	}
@@ -198,13 +211,25 @@ public final class ControlFactoryImpl implements ECPControlFactory {
 		return null;
 	}
 
-	private ECPControlDescription getControlCandidate(Class<?> controlClass,
+	private ECPControlDescription getControlCandidate(Class<?> controlClass, EObject domainModel,
 		VDomainModelReference domainModelReference) {
 		int highestPriority = -1;
 		ECPControlDescription bestCandidate = null;
 		if (domainModelReference == null) {
 			return bestCandidate;
 		}
+		IObservableValue observableValue;
+		try {
+			observableValue = Activator.getDefault().getEMFFormsDatabinding()
+				.getObservableValue(domainModelReference, domainModel);
+		} catch (final DatabindingFailedException ex) {
+			Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+			return bestCandidate;
+		}
+		final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
+		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+		observableValue.dispose();
+
 		for (final ECPControlDescription description : controlDescriptors) {
 
 			if (!controlClass.isAssignableFrom(description.getControlClass())) {
@@ -213,7 +238,7 @@ public final class ControlFactoryImpl implements ECPControlFactory {
 			int currentPriority = -1;
 
 			for (final ECPApplicableTester tester : description.getTester()) {
-				final int testerPriority = tester.isApplicable(domainModelReference);
+				final int testerPriority = tester.isApplicable(eObject, structuralFeature);
 				if (testerPriority > currentPriority) {
 					currentPriority = testerPriority;
 				}

@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011 Eike Stepper (Berlin, Germany) and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eike Stepper - initial API and implementation
  */
@@ -43,7 +43,7 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
 	InternalRegistryElement, AdapterProvider {
 	/**
 	 * Possible lifecycle events.
-	 * 
+	 *
 	 * @author Eike Stepper
 	 */
 	public enum LifecycleEvent {
@@ -74,21 +74,21 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
 
 	/**
 	 * Allows access of the corresponding UI Adapter.
-	 * 
+	 *
 	 * @return the UIProvider for this provider
 	 */
 	AdapterProvider getUIProvider();
 
 	/**
 	 * Allows to set the uiProvider.
-	 * 
+	 *
 	 * @param uiProvider the uiProvider to set
 	 */
 	void setUIProvider(AdapterProvider uiProvider);
 
 	/**
 	 * This method creates an editing domain each time it is called.
-	 * 
+	 *
 	 * @param project the {@link InternalProject} to create the domain for.
 	 * @return the created {@link EditingDomain}
 	 */
@@ -96,7 +96,7 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
 
 	/**
 	 * Whether this provider is slow or not. Slow objects are handled differently.
-	 * 
+	 *
 	 * @param parent to check
 	 * @return true if slow, false otherwise
 	 */
@@ -105,14 +105,14 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
 	/**
 	 * Whether it is safe to modify the {@link EList} of model elements
 	 * ot this provider.
-	 * 
+	 *
 	 * @return true, if the provider is thread-safe, false otherwise
 	 */
 	boolean isThreadSafe();
 
 	/**
 	 * Fills the elements of a certain parent object, depending on the context into the childrenList.
-	 * 
+	 *
 	 * @param context the context to use
 	 * @param parent the parent to read the children from
 	 * @param childrenList the list to fill
@@ -121,7 +121,7 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
 
 	/**
 	 * This method is called to handle a specific life cycle.
-	 * 
+	 *
 	 * @param context the context to handle the lifecycle for
 	 * @param event the lifecycle event to handle
 	 */
@@ -129,7 +129,7 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
 
 	/**
 	 * This method returns an {@link EList} of the root elements.
-	 * 
+	 *
 	 * @param project the project to get the root elements for
 	 * @return list of root elements of this project
 	 */
@@ -137,7 +137,7 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
 
 	/**
 	 * {@link EPackage}s that are not supported by this provider.
-	 * 
+	 *
 	 * @param ePackages
 	 *            packages to filter from
 	 * @param repository the repository to check
@@ -148,7 +148,7 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
 	/**
 	 * Return all {@link EObject}s that this provider supports for linking them to the modelElement and the provided
 	 * eReference.
-	 * 
+	 *
 	 * @param project
 	 *            - the project the call is from
 	 * @param modelElement
@@ -161,14 +161,14 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
 
 	/**
 	 * This method manually triggers the save of the model data.
-	 * 
+	 *
 	 * @param project the project to save the model data for
 	 */
 	void doSave(InternalProject project);
 
 	/**
 	 * This method checks, whether the model is in a dirty state.
-	 * 
+	 *
 	 * @param project the project to check the dirty state for
 	 * @return true if model is dirty, false otherwise
 	 */
@@ -176,7 +176,7 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
 
 	/**
 	 * Deletes a collection of EObjects from the model.
-	 * 
+	 *
 	 * @param project the project from where to delete
 	 * @param objects the {@link Collection} if {@link Object Objects} to delete
 	 */
@@ -184,7 +184,7 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
 
 	/**
 	 * This method clones a project.
-	 * 
+	 *
 	 * @param projectToClone the project to be cloned
 	 * @param targetProject the project to add the cloned data to
 	 */
@@ -193,7 +193,7 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
 	/**
 	 * Checks whether the data of the project still exists, method is called on startup. {@link DefaultProvider}
 	 * implements this by returning true, adopt if needed.
-	 * 
+	 *
 	 * @param project {@link InternalProject} to check
 	 * @return true if data exists, false otherwise
 	 */
@@ -201,7 +201,7 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
 
 	/**
 	 * Method checking whether an object is the root of the model container.
-	 * 
+	 *
 	 * @param project to check the root container for
 	 * @return a {@link Notifier} that is the model root of this project
 	 */
@@ -209,14 +209,14 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
 
 	/**
 	 * Array of all ECPProjects based on this ECPProvider which are open.
-	 * 
+	 *
 	 * @return open projects using this ECPProvider
 	 */
 	Set<InternalProject> getOpenProjects();
 
 	/**
 	 * Checks whether a specific project contains a specific object.
-	 * 
+	 *
 	 * @param project the project to check
 	 * @param object the object to check
 	 * @return true if the project contains such an object, false otherwise

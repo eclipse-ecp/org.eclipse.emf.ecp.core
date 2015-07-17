@@ -8,7 +8,7 @@
 
    <extension point="org.eclipse.emf.ecore.generated_package">
       <package
-            uri="http://org/eclipse/emf/ecp/view/dyanmictree/model"
+            uri="http://org/eclipse/emf/ecp/view/dynamictree/model"
             class="org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage"
             genModel="model/dynamictree.genmodel"/>
    </extension>

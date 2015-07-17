@@ -13,7 +13,7 @@ public class Activator extends AbstractUIPlugin {
 
 	/**
 	 * Delegate for @see {@link #imageDescriptorFromPlugin(String, String)}
-	 * 
+	 *
 	 * @param imagePath the path to the image to load
 	 * @return the {@link ImageDescriptor}
 	 */
@@ -43,7 +43,7 @@ public class Activator extends AbstractUIPlugin {
 
 	/**
 	 * Returns the shared instance.
-	 * 
+	 *
 	 * @return the shared instance
 	 */
 	public static Activator getInstance() {
@@ -56,7 +56,7 @@ public class Activator extends AbstractUIPlugin {
 
 	/**
 	 * Logs a message with a specific status.
-	 * 
+	 *
 	 * @param status the {@link IStatus} value
 	 * @param message the message to log
 	 */
@@ -66,7 +66,7 @@ public class Activator extends AbstractUIPlugin {
 
 	/**
 	 * Logs a {@link Throwable}.
-	 * 
+	 *
 	 * @param t the {@link Throwable}
 	 * @return the message of the {@link Throwable}
 	 */
