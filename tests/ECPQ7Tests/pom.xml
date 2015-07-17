@@ -8,8 +8,8 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<ci4rcptt-runner-version>1.5.5</ci4rcptt-runner-version>
-		<ci4rcptt-maven-version>1.5.5</ci4rcptt-maven-version>
+		<ci4rcptt-runner-version>2.0.0</ci4rcptt-runner-version>
+		<ci4rcptt-maven-version>2.0.1</ci4rcptt-maven-version>
 		<currentBuild>https://hudson.eclipse.org/ecp/job/ecp-develop/lastSuccessfulBuild/artifact/releng/org.eclipse.emf.ecp.repository/target</currentBuild>
 		<currentProduct>https://hudson.eclipse.org/ecp/job/ecp-develop/lastSuccessfulBuild/artifact/releng/org.eclipse.emf.ecp.products/target/products/</currentProduct>
 	</properties> 
@@ -48,13 +48,13 @@
 		<pluginRepository>
 			<id>xored_releases</id>
 			<name>Xored Maven repository</name>
-			<url>http://maven.xored.com/nexus/content/repositories/ci4rcptt-releases/</url>
+			<url>https://repo.eclipse.org/content/repositories/rcptt-releases/</url>
 		</pluginRepository>
-		<pluginRepository>
+		<!--pluginRepository>
 			<id>xored_snapshot</id>
 			<name>Xored Maven repository</name>
-			<url>http://maven.xored.com/nexus/content/repositories/ci4rcptt-snapshots/</url>
-		</pluginRepository>
+			<url>https://repo.eclipse.org/content/repositories/rcptt-snapshots/</url>
+		</pluginRepository-->
 	</pluginRepositories>
 
 </project>
