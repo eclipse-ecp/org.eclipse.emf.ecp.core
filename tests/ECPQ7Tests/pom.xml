@@ -23,7 +23,7 @@
 				</property>
 			</activation>
 			<properties>
-				<currentProduct>https://hudson.eclipse.org/ecp/job/ecp-develop-nightly/lastSuccessfulBuild/artifact/releng/org.eclipse.emf.ecp.products/target/products/</currentProduct>
+				<!--currentProduct>https://hudson.eclipse.org/ecp/job/ecp-develop-nightly/lastSuccessfulBuild/artifact/releng/org.eclipse.emf.ecp.products/target/products/</currentProduct-->
 			</properties>
 			<modules>
 				<module>NonEPPTests</module>
