@@ -11,25 +11,50 @@
 		<ci4rcptt-runner-version>1.5.5</ci4rcptt-runner-version>
 		<ci4rcptt-maven-version>1.5.5</ci4rcptt-maven-version>
 		<currentBuild>https://hudson.eclipse.org/ecp/job/ecp-develop/lastSuccessfulBuild/artifact/releng/org.eclipse.emf.ecp.repository/target</currentBuild>
+		<currentProduct>https://hudson.eclipse.org/ecp/job/ecp-develop/lastSuccessfulBuild/artifact/releng/org.eclipse.emf.ecp.products/target/products/</currentProduct>
 	</properties> 
-	
+
+	<profiles>
+		<profile>
+			<id>nightly</id>
+			<activation>
+				<property>
+					<name>nightly</name>
+				</property>
+			</activation>
+			<properties>
+				<currentProduct>https://hudson.eclipse.org/ecp/job/ecp-develop-nightly/lastSuccessfulBuild/artifact/releng/org.eclipse.emf.ecp.products/target/products/</currentProduct>
+			</properties>
+			<modules>
+				<module>NonEPPTests</module>
+			</modules>
+		</profile>
+		
+		<profile>
+			<id>develop</id>
+			<activation>
+				<property>
+					<name>develop</name>
+				</property>
+			</activation>
+			<modules>
+				<module>EPPTests</module>
+				<module>NonEPPTests</module>
+			</modules>
+		</profile>
+	</profiles>
 
 	<pluginRepositories>
 		<pluginRepository>
-		  <id>xored_releases</id>
-		  <name>Xored Maven repository</name>
-		  <url>http://maven.xored.com/nexus/content/repositories/ci4rcptt-releases/</url>
+			<id>xored_releases</id>
+			<name>Xored Maven repository</name>
+			<url>http://maven.xored.com/nexus/content/repositories/ci4rcptt-releases/</url>
 		</pluginRepository>
 		<pluginRepository>
-		  <id>xored_snapshot</id>
-		  <name>Xored Maven repository</name>
-		  <url>http://maven.xored.com/nexus/content/repositories/ci4rcptt-snapshots/</url>
+			<id>xored_snapshot</id>
+			<name>Xored Maven repository</name>
+			<url>http://maven.xored.com/nexus/content/repositories/ci4rcptt-snapshots/</url>
 		</pluginRepository>
-		
 	</pluginRepositories>
-	<modules>
-		<module>EPPTests</module>
-		<module>NonEPPTests</module>
-	</modules>
-	
+
 </project>

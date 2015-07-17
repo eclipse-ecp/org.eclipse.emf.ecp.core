@@ -23,7 +23,7 @@
 							<version>${ci4rcptt-runner-version}</version>
 						</runner>
 					<aut>
-						<explicit>${currentBuild}/products/org.eclipse.emf.ecp.3x-[platform].zip</explicit>
+						<explicit>${currentProduct}/org.eclipse.emf.ecp.3x-[platform].zip</explicit>
 
 						<args>
 							<arg>-nl</arg>
