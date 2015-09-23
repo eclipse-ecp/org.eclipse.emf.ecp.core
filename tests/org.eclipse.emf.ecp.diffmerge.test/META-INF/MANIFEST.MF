@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Diff Merge Tests
 Bundle-SymbolicName: org.eclipse.emf.ecp.diffmerge.test
-Bundle-Version: 1.7.0.qualifier
+Bundle-Version: 1.7.1.qualifier
 Bundle-Vendor: Eclipse Modeling Project
 Fragment-Host: org.eclipse.emf.ecp.diffmerge.context;bundle-version="[1.5.0,2.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
@@ -11,4 +11,4 @@ Require-Bundle: org.junit;bundle-version="[4.11.0,5.0.0)",
  org.eclipse.emf.ecp.view.table.model;bundle-version="[1.5.0,2.0.0)",
  org.eclipse.emf.ecp.view.horizontal.model;bundle-version="[1.5.0,2.0.0)",
  org.eclipse.emf.ecp.test.common;bundle-version="[1.6.0,2.0.0)"
-Export-Package: org.eclipse.emf.ecp.diffmerge.test;version="1.7.0";x-internal:="true"
+Export-Package: org.eclipse.emf.ecp.diffmerge.test;version="1.7.1";x-internal:="true"

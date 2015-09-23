@@ -2,11 +2,11 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: EMFForms SWT Text Control with Autocomplete
 Bundle-SymbolicName: org.eclipse.emfforms.swt.control.text.autocomplete
-Bundle-Version: 1.7.0.qualifier
+Bundle-Version: 1.7.1.qualifier
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emfforms.internal.swt.control.text.autocomplete;version="1.7.0";x-internal:="true",
- org.eclipse.emfforms.internal.swt.control.text.autocomplete.renderer;version="1.7.0";x-internal:="true",
- org.eclipse.emfforms.spi.swt.control.text.autocomplete.viewservice;version="1.7.0"
+Export-Package: org.eclipse.emfforms.internal.swt.control.text.autocomplete;version="1.7.1";x-internal:="true",
+ org.eclipse.emfforms.internal.swt.control.text.autocomplete.renderer;version="1.7.1";x-internal:="true",
+ org.eclipse.emfforms.spi.swt.control.text.autocomplete.viewservice;version="1.7.1"
 Require-Bundle: org.eclipse.emf.ecp.view.core.swt;bundle-version="[1.6.0,2.0.0)",
  org.eclipse.emfforms.core.services;bundle-version="[1.6.0,2.0.0)",
  org.eclipse.emf.ecp.view.context;bundle-version="[1.6.0,2.0.0)",

@@ -2,11 +2,11 @@
 <feature
       id="org.eclipse.emfforms.swt.control.text.autocomplete.feature"
       label="EMFForms SWT Text Control with Autocomplete Feature"
-      version="1.7.0.qualifier"
+      version="1.7.1.qualifier"
       provider-name="Eclipse Modeling Project"
       plugin="org.eclipse.emfforms.swt.control.text.autocomplete"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.7.0.qualifier">
+      license-feature-version="1.7.1.qualifier">
 
    <description>
       %description

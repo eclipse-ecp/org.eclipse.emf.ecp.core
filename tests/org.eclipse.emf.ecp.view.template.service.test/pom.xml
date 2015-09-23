@@ -6,12 +6,12 @@
 	<parent>
 		<groupId>org.eclipse.emf.ecp</groupId>
 		<artifactId>ecp-tests-parent</artifactId>
-		<version>1.7.0-SNAPSHOT</version>
+		<version>1.7.1-SNAPSHOT</version>
 		<relativePath>../../releng/org.eclipse.emf.ecp.releng.tests/</relativePath>
 	</parent>
 	<artifactId>org.eclipse.emf.ecp.view.template.service.test</artifactId>
 	<packaging>eclipse-test-plugin</packaging>
-	<version>1.7.0-SNAPSHOT</version>
+	<version>1.7.1-SNAPSHOT</version>
 	<groupId>org.eclipse.emf.ecp</groupId>
 	
 		<build>

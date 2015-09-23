@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ECP Core RAP Test
 Bundle-SymbolicName: org.eclipse.emf.ecp.core.rap.test
-Bundle-Version: 1.7.0.qualifier
+Bundle-Version: 1.7.1.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.eclipse.core.runtime;version="0.0.0",
  org.eclipse.emf.ecp.core;version="0.0.0",
@@ -16,5 +16,5 @@ Require-Bundle: org.junit;bundle-version="[4.11.0,5.0.0)",
  org.eclipse.emf.ecp.core.rap;bundle-version="[1.5.0,2.0.0)",
  org.eclipse.emf.ecp.core.rap.sessionprovider.test;bundle-version="[1.5.0,2.0.0)",
  org.eclipse.emf.ecp.emfstore.core.rap;bundle-version="[1.5.0,2.0.0)"
-Export-Package: org.eclipse.emf.ecp.core.rap.test;version="1.7.0";x-internal:="true"
+Export-Package: org.eclipse.emf.ecp.core.rap.test;version="1.7.1";x-internal:="true"
 Bundle-Vendor: Eclipse Modeling Project

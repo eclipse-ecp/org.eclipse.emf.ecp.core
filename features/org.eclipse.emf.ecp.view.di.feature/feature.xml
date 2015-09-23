@@ -2,11 +2,11 @@
 <feature
       id="org.eclipse.emf.ecp.view.di.feature"
       label="EMFForms Dependency Injection Feature (Experimental)"
-      version="1.7.0.qualifier"
+      version="1.7.1.qualifier"
       provider-name="Eclipse Modeling Project"
       plugin="org.eclipse.emf.ecp.view.model.common.di"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.7.0.qualifier">
+      license-feature-version="1.7.1.qualifier">
 
    <description>
       %description

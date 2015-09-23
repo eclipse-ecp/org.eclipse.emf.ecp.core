@@ -2,14 +2,14 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ECP Validation Connector Plugin
 Bundle-SymbolicName: org.eclipse.emf.ecp.validation.connector;singleton:=true
-Bundle-Version: 1.7.0.qualifier
+Bundle-Version: 1.7.1.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.validation.connector.Activator
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.emf.ecp.validation;bundle-version="[1.5.0,2.0.0)",
  org.eclipse.emf.ecp.ui;bundle-version="[1.5.0,2.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
-Export-Package: org.eclipse.emf.ecp.validation.connector;version="1.7.0";x-internal:="true"
+Export-Package: org.eclipse.emf.ecp.validation.connector;version="1.7.1";x-internal:="true"
 Import-Package: org.eclipse.jface.resource;version="0.0.0",
  org.eclipse.jface.viewers;version="0.0.0",
  org.eclipse.swt.graphics;version="0.0.0"
