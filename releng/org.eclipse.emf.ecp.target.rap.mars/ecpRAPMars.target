@@ -54,7 +54,7 @@
 <unit id="org.eclipse.emf.emfstore.example.feature.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.emf.emfstore.client.ui.feature.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.emf.emfstore.ecore.feature.feature.group" version="0.0.0"/>
-<repository location="http://download.eclipse.org/emfstore/releases_15"/>
+<repository location="http://download.eclipse.org/emfstore/releases_16"/>
 </location>
 </locations>
 </target>
