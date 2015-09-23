@@ -78,7 +78,7 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 
 	/** {@inheritDoc} */
 	@Override
-	public void operationExecuted(AbstractOperation operation) {
+	public void operationExecuted(ProjectSpace projectSpace, AbstractOperation operation) {
 		operations++;
 		if (!projectSpace.isShared()) {
 			return;
@@ -102,7 +102,7 @@ public class EMFStoreDirtyObserver implements OperationObserver {
 
 	/** {@inheritDoc} */
 	@Override
-	public void operationUndone(AbstractOperation operation) {
+	public void operationUndone(ProjectSpace projectSpace, AbstractOperation operation) {
 		operations--;
 		if (!projectSpace.isShared()) {
 			return;

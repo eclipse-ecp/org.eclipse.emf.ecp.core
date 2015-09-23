@@ -265,15 +265,15 @@ public final class EMFStoreProvider extends DefaultProvider {
 
 			if (isAutosave()) {
 				// TODO EMFStore how to listen to operations?
-				projectSpace.getOperationManager().addOperationObserver(new OperationObserver() {
+				ESWorkspaceProviderImpl.getObserverBus().register(new OperationObserver() {
 
 					@Override
-					public void operationUndone(AbstractOperation operation) {
+					public void operationUndone(ProjectSpace projectSpace, AbstractOperation operation) {
 						doSave((InternalProject) context);
 					}
 
 					@Override
-					public void operationExecuted(AbstractOperation operation) {
+					public void operationExecuted(ProjectSpace projectSpace, AbstractOperation operation) {
 						doSave((InternalProject) context);
 					}
 				});
