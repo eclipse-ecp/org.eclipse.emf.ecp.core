@@ -158,6 +158,8 @@ public class MEEditorPage extends FormPage {
 	}
 
 	private void createToolbar() {
+		// We need to keep the cast to stay compatible (SRC) with Luna
+		@SuppressWarnings("cast")
 		final IMenuService menuService = (IMenuService) PlatformUI.getWorkbench().getService(IMenuService.class);
 		// sourceProvider = new AbstractSourceProvider() {
 		// public void dispose() {

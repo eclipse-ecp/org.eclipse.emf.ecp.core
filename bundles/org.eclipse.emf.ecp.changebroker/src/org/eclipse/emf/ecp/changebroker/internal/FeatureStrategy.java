@@ -19,7 +19,7 @@ import java.util.Set;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.changebroker.spi.EMFObserver;
+import org.eclipse.emf.ecp.changebroker.spi.ChangeObserver;
 
 /**
  * @author jfaltermeier
@@ -27,17 +27,17 @@ import org.eclipse.emf.ecp.changebroker.spi.EMFObserver;
  */
 public class FeatureStrategy implements Strategy {
 
-	private final Map<EStructuralFeature, Set<EMFObserver>> registry = new LinkedHashMap<EStructuralFeature, Set<EMFObserver>>();
-	private final Map<EMFObserver, Set<EStructuralFeature>> observerToKey = new LinkedHashMap<EMFObserver, Set<EStructuralFeature>>();
+	private final Map<EStructuralFeature, Set<ChangeObserver>> registry = new LinkedHashMap<EStructuralFeature, Set<ChangeObserver>>();
+	private final Map<ChangeObserver, Set<EStructuralFeature>> observerToKey = new LinkedHashMap<ChangeObserver, Set<EStructuralFeature>>();
 
 	/**
 	 * Registers an observer.
 	 * @param observer the observer
 	 * @param feature the feature
 	 */
-	public void register(EMFObserver observer, EStructuralFeature feature) {
+	public void register(ChangeObserver observer, EStructuralFeature feature) {
 		if (!registry.containsKey(feature)) {
-			registry.put(feature, new LinkedHashSet<EMFObserver>());
+			registry.put(feature, new LinkedHashSet<ChangeObserver>());
 		}
 		registry.get(feature).add(observer);
 
@@ -53,28 +53,28 @@ public class FeatureStrategy implements Strategy {
 	 * @see org.eclipse.emf.ecp.changebroker.internal.Strategy#getObservers(org.eclipse.emf.common.notify.Notification)
 	 */
 	@Override
-	public Set<EMFObserver> getObservers(Notification notification) {
+	public Set<ChangeObserver> getObservers(Notification notification) {
 		final Object feature = notification.getFeature();
 		if (!registry.containsKey(feature)) {
 			return Collections.emptySet();
 		}
-		return new LinkedHashSet<EMFObserver>(registry.get(feature));
+		return new LinkedHashSet<ChangeObserver>(registry.get(feature));
 	}
 
 	/**
 	 *
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.changebroker.internal.Strategy#deregister(EMFObserver)
+	 * @see org.eclipse.emf.ecp.changebroker.internal.Strategy#deregister(ChangeObserver)
 	 */
 	@Override
-	public void deregister(EMFObserver observer) {
+	public void deregister(ChangeObserver observer) {
 		final Set<EStructuralFeature> keys = observerToKey.remove(observer);
 		if (keys == null) {
 			return;
 		}
 		for (final EStructuralFeature feature : keys) {
-			final Set<EMFObserver> set = registry.get(feature);
+			final Set<ChangeObserver> set = registry.get(feature);
 			set.remove(observer);
 			if (set.isEmpty()) {
 				registry.remove(feature);
@@ -88,8 +88,8 @@ public class FeatureStrategy implements Strategy {
 	 * @see org.eclipse.emf.ecp.changebroker.internal.Strategy#getAllObservers()
 	 */
 	@Override
-	public Set<EMFObserver> getAllObservers() {
-		return new LinkedHashSet<EMFObserver>(observerToKey.keySet());
+	public Set<ChangeObserver> getAllObservers() {
+		return new LinkedHashSet<ChangeObserver>(observerToKey.keySet());
 	}
 
 }

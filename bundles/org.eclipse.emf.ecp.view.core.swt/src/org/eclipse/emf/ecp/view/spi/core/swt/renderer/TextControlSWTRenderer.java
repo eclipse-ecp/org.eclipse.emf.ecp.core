@@ -199,8 +199,7 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 			if (VTAlignmentStyleProperty.class.isInstance(styleProperty)) {
 				if (VTAlignmentStyleProperty.class.cast(styleProperty).getType() == AlignmentType.LEFT) {
 					return SWT.LEFT;
-				}
-				else if (VTAlignmentStyleProperty.class.cast(styleProperty).getType() == AlignmentType.RIGHT) {
+				} else if (VTAlignmentStyleProperty.class.cast(styleProperty).getType() == AlignmentType.RIGHT) {
 					return SWT.RIGHT;
 				}
 			}
@@ -230,7 +229,7 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	protected void setControlEnabled(SWTGridCell gridCell, Control control, boolean enabled) {
 		if (isDisableRenderedAsEditable()
 			&& (getVElement().getLabelAlignment() == LabelAlignment.NONE && gridCell.getColumn() == 1
-			|| getVElement().getLabelAlignment() == LabelAlignment.LEFT && gridCell.getColumn() == 2)) {
+				|| hasLeftLabelAlignment() && gridCell.getColumn() == 2)) {
 			Control controlToUnset = control;
 			if (isControlUnsettable()) {
 				// if (!setting.isSet()) {

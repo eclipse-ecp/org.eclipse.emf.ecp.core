@@ -29,18 +29,20 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Control</b></em>'.
- * <!-- end-user-doc -->
- * <p>
- * The following features are implemented:
- * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VControlImpl#getLabelAlignment <em>Label Alignment</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VControlImpl#getDomainModelReference <em>Domain Model Reference
- * </em>}</li>
- * </ul>
- * </p>
+ *
+ * @since 1.2
+ *        <!-- end-user-doc -->
+ *        <p>
+ *        The following features are implemented:
+ *        </p>
+ *        <ul>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VControlImpl#getLabelAlignment <em>Label Alignment</em>}
+ *        </li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VControlImpl#getDomainModelReference
+ *        <em>Domain Model Reference</em>}</li>
+ *        </ul>
  *
  * @generated
- * @since 1.2
  */
 public class VControlImpl extends VContainedElementImpl implements VControl {
 	/**
@@ -52,7 +54,7 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final LabelAlignment LABEL_ALIGNMENT_EDEFAULT = LabelAlignment.LEFT;
+	protected static final LabelAlignment LABEL_ALIGNMENT_EDEFAULT = LabelAlignment.DEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getLabelAlignment() <em>Label Alignment</em>}' attribute.
@@ -105,8 +107,7 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	 * @generated
 	 */
 	@Override
-	public VDomainModelReference getDomainModelReference()
-	{
+	public VDomainModelReference getDomainModelReference() {
 		return domainModelReference;
 	}
 
@@ -117,12 +118,10 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	 * @generated
 	 */
 	public NotificationChain basicSetDomainModelReference(VDomainModelReference newDomainModelReference,
-		NotificationChain msgs)
-	{
+		NotificationChain msgs) {
 		final VDomainModelReference oldDomainModelReference = domainModelReference;
 		domainModelReference = newDomainModelReference;
-		if (eNotificationRequired())
-		{
+		if (eNotificationRequired()) {
 			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
 				VViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE, oldDomainModelReference, newDomainModelReference);
 			if (msgs == null) {
@@ -141,25 +140,22 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	 * @generated
 	 */
 	@Override
-	public void setDomainModelReference(VDomainModelReference newDomainModelReference)
-	{
-		if (newDomainModelReference != domainModelReference)
-		{
+	public void setDomainModelReference(VDomainModelReference newDomainModelReference) {
+		if (newDomainModelReference != domainModelReference) {
 			NotificationChain msgs = null;
 			if (domainModelReference != null) {
-				msgs = ((InternalEObject) domainModelReference).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
-					- VViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE, null, msgs);
+				msgs = ((InternalEObject) domainModelReference).eInverseRemove(this,
+					EOPPOSITE_FEATURE_BASE - VViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE, null, msgs);
 			}
 			if (newDomainModelReference != null) {
-				msgs = ((InternalEObject) newDomainModelReference).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
-					- VViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE, null, msgs);
+				msgs = ((InternalEObject) newDomainModelReference).eInverseAdd(this,
+					EOPPOSITE_FEATURE_BASE - VViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE, null, msgs);
 			}
 			msgs = basicSetDomainModelReference(newDomainModelReference, msgs);
 			if (msgs != null) {
 				msgs.dispatch();
 			}
-		}
-		else if (eNotificationRequired()) {
+		} else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, VViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE,
 				newDomainModelReference, newDomainModelReference));
 		}
@@ -172,10 +168,8 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-	{
-		switch (featureID)
-		{
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
 		case VViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE:
 			return basicSetDomainModelReference(null, msgs);
 		}
@@ -189,8 +183,7 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	 * @generated
 	 */
 	@Override
-	public LabelAlignment getLabelAlignment()
-	{
+	public LabelAlignment getLabelAlignment() {
 		return labelAlignment;
 	}
 
@@ -201,8 +194,7 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	 * @generated
 	 */
 	@Override
-	public void setLabelAlignment(LabelAlignment newLabelAlignment)
-	{
+	public void setLabelAlignment(LabelAlignment newLabelAlignment) {
 		final LabelAlignment oldLabelAlignment = labelAlignment;
 		labelAlignment = newLabelAlignment == null ? LABEL_ALIGNMENT_EDEFAULT : newLabelAlignment;
 		if (eNotificationRequired()) {
@@ -219,8 +211,7 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID)
-		{
+		switch (featureID) {
 		case VViewPackage.CONTROL__LABEL_ALIGNMENT:
 			return getLabelAlignment();
 		case VViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE:
@@ -237,8 +228,7 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID)
-		{
+		switch (featureID) {
 		case VViewPackage.CONTROL__LABEL_ALIGNMENT:
 			setLabelAlignment((LabelAlignment) newValue);
 			return;
@@ -257,8 +247,7 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	 */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID)
-		{
+		switch (featureID) {
 		case VViewPackage.CONTROL__LABEL_ALIGNMENT:
 			setLabelAlignment(LABEL_ALIGNMENT_EDEFAULT);
 			return;
@@ -277,8 +266,7 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID)
-		{
+		switch (featureID) {
 		case VViewPackage.CONTROL__LABEL_ALIGNMENT:
 			return labelAlignment != LABEL_ALIGNMENT_EDEFAULT;
 		case VViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE:

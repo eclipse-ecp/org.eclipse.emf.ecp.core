@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="model" nsURI="http://org/eclipse/emf/ecp/view/model" nsPrefix="org.eclipse.emf.ecp.view.model">
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="model" nsURI="http://org/eclipse/emf/ecp/view/model/170" nsPrefix="org.eclipse.emf.ecp.view.model">
   <eClassifiers xsi:type="ecore:EClass" name="Diagnostic">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="diagnostics" upperBound="-1"
         eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EJavaObject"
@@ -43,6 +43,8 @@
         eType="#//ContainedElement" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="ecorePath" lowerBound="1"
         eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="loadingProperties" lowerBound="1"
+        eType="#//ViewModelProperties" transient="true" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ContainedElement" abstract="true" eSuperTypes="#//Element"/>
   <eClassifiers xsi:type="ecore:EClass" name="Container" abstract="true" eSuperTypes="#//Element">
@@ -53,14 +55,28 @@
       eSuperTypes="#//ContainedElement #//Container"/>
   <eClassifiers xsi:type="ecore:EClass" name="Control" eSuperTypes="#//ContainedElement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="labelAlignment" lowerBound="1"
-        eType="#//LabelAlignment" defaultValueLiteral="Left"/>
+        eType="#//LabelAlignment" defaultValueLiteral="Default"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="domainModelReference" lowerBound="1"
         eType="#//DomainModelReference" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="LabelAlignment">
+    <eLiterals name="Default" value="-1"/>
     <eLiterals name="Left"/>
+    <eLiterals name="Top" value="2"/>
     <eLiterals name="None" value="1"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="DomainModelReferenceChangeListener"
       instanceClassName="org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ViewModelLoadingProperties" eSuperTypes="#//ViewModelProperties">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="inheritableProperties"
+        upperBound="-1" eType="#//StringToObjectMapEntry" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="nonInheritableProperties"
+        upperBound="-1" eType="#//StringToObjectMapEntry" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StringToObjectMapEntry" instanceClassName="java.util.Map$Entry">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ViewModelProperties" abstract="true"
+      interface="true"/>
 </ecore:EPackage>

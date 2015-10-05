@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.ecp.changebroker" version="2">
+    <resource path="META-INF/MANIFEST.MF">
+        <filter comment="SPI" id="923795461">
+            <message_arguments>
+                <message_argument value="1.7.0"/>
+                <message_argument value="1.6.1"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.changebroker.spi.ReadOnlyEMFObserver">
+        <filter comment="SPI" id="305324134">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.changebroker.spi.ReadOnlyEMFObserver"/>
+                <message_argument value="org.eclipse.emf.ecp.changebroker_1.7.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/changebroker/spi/AbstractNotificationProvider.java" type="org.eclipse.emf.ecp.changebroker.spi.AbstractNotificationProvider">
+        <filter comment="SPI" id="1143996420">
+            <message_arguments>
+                <message_argument value="canDelete(EObject)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI" id="1143996420">
+            <message_arguments>
+                <message_argument value="notifyCanDelete(EObject)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI" id="1143996420">
+            <message_arguments>
+                <message_argument value="preDelete(EObject)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/changebroker/spi/ChangeBroker.java" type="org.eclipse.emf.ecp.changebroker.spi.ChangeBroker">
+        <filter comment="SPI" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.changebroker.spi.ChangeBroker"/>
+                <message_argument value="subscribe(ChangeObserver)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.changebroker.spi.ChangeBroker"/>
+                <message_argument value="subscribe(PostDeleteListener)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.changebroker.spi.ChangeBroker"/>
+                <message_argument value="subscribe(PreDeleteListener)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.changebroker.spi.ChangeBroker"/>
+                <message_argument value="subscribeToEClass(ChangeObserver, EClass)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.changebroker.spi.ChangeBroker"/>
+                <message_argument value="subscribeToFeature(ChangeObserver, EStructuralFeature)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.changebroker.spi.ChangeBroker"/>
+                <message_argument value="subscribeToTree(ChangeObserver, EClass)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.changebroker.spi.ChangeBroker"/>
+                <message_argument value="unsubsribe(ChangeObserver)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI" id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.changebroker.spi.ChangeBroker"/>
+                <message_argument value="subscribeToEClass(EMFObserver, EClass)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI" id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.changebroker.spi.ChangeBroker"/>
+                <message_argument value="subscribeToFeature(EMFObserver, EStructuralFeature)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI" id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.changebroker.spi.ChangeBroker"/>
+                <message_argument value="subscribeToTree(EMFObserver, EClass)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI" id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.changebroker.spi.ChangeBroker"/>
+                <message_argument value="unsubsribe(EMFObserver)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI" id="1211105284">
+            <message_arguments>
+                <message_argument value="subscribe(ChangeObserver)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI" id="1211105284">
+            <message_arguments>
+                <message_argument value="subscribeToTree(ChangeObserver, EClass)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI" id="1211105284">
+            <message_arguments>
+                <message_argument value="unsubsribe(ChangeObserver)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/changebroker/spi/ChangeObserver.java" type="org.eclipse.emf.ecp.changebroker.spi.ChangeObserver">
+        <filter comment="SPI" id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.changebroker.spi.ChangeObserver"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/changebroker/spi/EMFObserver.java" type="org.eclipse.emf.ecp.changebroker.spi.EMFObserver">
+        <filter comment="SPI" id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.changebroker.spi.EMFObserver"/>
+                <message_argument value="handleNotification(Notification)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/changebroker/spi/NotificationReceiver.java" type="org.eclipse.emf.ecp.changebroker.spi.NotificationReceiver">
+        <filter comment="SPI" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.changebroker.spi.NotificationReceiver"/>
+                <message_argument value="canDelete(EObject)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.changebroker.spi.NotificationReceiver"/>
+                <message_argument value="notifyPostDelete(EObject)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.changebroker.spi.NotificationReceiver"/>
+                <message_argument value="notifyPreDelete(EObject)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI" id="1211105284">
+            <message_arguments>
+                <message_argument value="canDelete(EObject)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/changebroker/spi/ReadOnlyChangeObserver.java" type="org.eclipse.emf.ecp.changebroker.spi.ReadOnlyChangeObserver">
+        <filter comment="SPI" id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.changebroker.spi.ReadOnlyChangeObserver"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/changebroker/spi/VetoableDeleteObserver.java" type="org.eclipse.emf.ecp.changebroker.spi.VetoableDeleteObserver">
+        <filter comment="SPI" id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.changebroker.spi.VetoableDeleteObserver"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

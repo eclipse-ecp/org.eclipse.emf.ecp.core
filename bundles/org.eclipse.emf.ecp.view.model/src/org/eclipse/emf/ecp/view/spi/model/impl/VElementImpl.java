@@ -30,11 +30,12 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Renderable</b></em>'.
- * 
+ *
  * @since 1.2
  *        <!-- end-user-doc -->
  *        <p>
  *        The following features are implemented:
+ *        </p>
  *        <ul>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl#getName <em>Name</em>}</li>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl#getLabel <em>Label</em>}</li>
@@ -44,12 +45,10 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl#getDiagnostic <em>Diagnostic</em>}</li>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl#getAttachments <em>Attachments</em>}</li>
  *        </ul>
- *        </p>
  *
  * @generated
  */
-public abstract class VElementImpl extends EObjectImpl implements VElement
-{
+public abstract class VElementImpl extends EObjectImpl implements VElement {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -75,10 +74,9 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	/**
 	 * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.6
 	 *        <!-- end-user-doc -->
-	 *
 	 * @see #getLabel()
 	 * @generated
 	 * @ordered
@@ -88,10 +86,9 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	/**
 	 * The cached value of the '{@link #getLabel() <em>Label</em>}' attribute.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.6
 	 *        <!-- end-user-doc -->
-	 *
 	 * @see #getLabel()
 	 * @generated
 	 * @ordered
@@ -192,8 +189,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	 *
 	 * @generated
 	 */
-	protected VElementImpl()
-	{
+	protected VElementImpl() {
 		super();
 	}
 
@@ -204,8 +200,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return VViewPackage.Literals.ELEMENT;
 	}
 
@@ -216,8 +211,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	 * @generated
 	 */
 	@Override
-	public String getName()
-	{
+	public String getName() {
 		return name;
 	}
 
@@ -228,8 +222,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	 * @generated
 	 */
 	@Override
-	public void setName(String newName)
-	{
+	public void setName(String newName) {
 		final String oldName = name;
 		name = newName;
 		if (eNotificationRequired()) {
@@ -239,29 +232,25 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.6
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
-	public String getLabel()
-	{
+	public String getLabel() {
 		return label;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.6
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
-	public void setLabel(String newLabel)
-	{
+	public void setLabel(String newLabel) {
 		final String oldLabel = label;
 		label = newLabel;
 		if (eNotificationRequired()) {
@@ -276,8 +265,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	 * @generated
 	 */
 	@Override
-	public boolean isVisible()
-	{
+	public boolean isVisible() {
 		return visible;
 	}
 
@@ -288,8 +276,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	 * @generated
 	 */
 	@Override
-	public void setVisible(boolean newVisible)
-	{
+	public void setVisible(boolean newVisible) {
 		final boolean oldVisible = visible;
 		visible = newVisible;
 		if (eNotificationRequired()) {
@@ -304,8 +291,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	 * @generated
 	 */
 	@Override
-	public boolean isEnabled()
-	{
+	public boolean isEnabled() {
 		return enabled;
 	}
 
@@ -316,8 +302,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	 * @generated
 	 */
 	@Override
-	public void setEnabled(boolean newEnabled)
-	{
+	public void setEnabled(boolean newEnabled) {
 		final boolean oldEnabled = enabled;
 		enabled = newEnabled;
 		if (eNotificationRequired()) {
@@ -332,8 +317,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	 * @generated
 	 */
 	@Override
-	public boolean isReadonly()
-	{
+	public boolean isReadonly() {
 		return readonly;
 	}
 
@@ -344,12 +328,12 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	 * @generated
 	 */
 	@Override
-	public void setReadonly(boolean newReadonly)
-	{
+	public void setReadonly(boolean newReadonly) {
 		final boolean oldReadonly = readonly;
 		readonly = newReadonly;
 		if (eNotificationRequired()) {
-			eNotify(new ENotificationImpl(this, Notification.SET, VViewPackage.ELEMENT__READONLY, oldReadonly, readonly));
+			eNotify(
+				new ENotificationImpl(this, Notification.SET, VViewPackage.ELEMENT__READONLY, oldReadonly, readonly));
 		}
 	}
 
@@ -360,8 +344,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	 * @generated
 	 */
 	@Override
-	public VDiagnostic getDiagnostic()
-	{
+	public VDiagnostic getDiagnostic() {
 		return diagnostic;
 	}
 
@@ -371,12 +354,10 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	 *
 	 * @generated
 	 */
-	public NotificationChain basicSetDiagnostic(VDiagnostic newDiagnostic, NotificationChain msgs)
-	{
+	public NotificationChain basicSetDiagnostic(VDiagnostic newDiagnostic, NotificationChain msgs) {
 		final VDiagnostic oldDiagnostic = diagnostic;
 		diagnostic = newDiagnostic;
-		if (eNotificationRequired())
-		{
+		if (eNotificationRequired()) {
 			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
 				VViewPackage.ELEMENT__DIAGNOSTIC, oldDiagnostic, newDiagnostic);
 			if (msgs == null) {
@@ -395,25 +376,22 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	 * @generated
 	 */
 	@Override
-	public void setDiagnostic(VDiagnostic newDiagnostic)
-	{
-		if (newDiagnostic != diagnostic)
-		{
+	public void setDiagnostic(VDiagnostic newDiagnostic) {
+		if (newDiagnostic != diagnostic) {
 			NotificationChain msgs = null;
 			if (diagnostic != null) {
-				msgs = ((InternalEObject) diagnostic).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
-					- VViewPackage.ELEMENT__DIAGNOSTIC, null, msgs);
+				msgs = ((InternalEObject) diagnostic).eInverseRemove(this,
+					EOPPOSITE_FEATURE_BASE - VViewPackage.ELEMENT__DIAGNOSTIC, null, msgs);
 			}
 			if (newDiagnostic != null) {
-				msgs = ((InternalEObject) newDiagnostic).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
-					- VViewPackage.ELEMENT__DIAGNOSTIC, null, msgs);
+				msgs = ((InternalEObject) newDiagnostic).eInverseAdd(this,
+					EOPPOSITE_FEATURE_BASE - VViewPackage.ELEMENT__DIAGNOSTIC, null, msgs);
 			}
 			msgs = basicSetDiagnostic(newDiagnostic, msgs);
 			if (msgs != null) {
 				msgs.dispatch();
 			}
-		}
-		else if (eNotificationRequired()) {
+		} else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, VViewPackage.ELEMENT__DIAGNOSTIC, newDiagnostic,
 				newDiagnostic));
 		}
@@ -426,10 +404,8 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	 * @generated
 	 */
 	@Override
-	public EList<VAttachment> getAttachments()
-	{
-		if (attachments == null)
-		{
+	public EList<VAttachment> getAttachments() {
+		if (attachments == null) {
 			attachments = new EObjectContainmentEList<VAttachment>(VAttachment.class, this,
 				VViewPackage.ELEMENT__ATTACHMENTS);
 		}
@@ -443,10 +419,8 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-	{
-		switch (featureID)
-		{
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
 		case VViewPackage.ELEMENT__DIAGNOSTIC:
 			return basicSetDiagnostic(null, msgs);
 		case VViewPackage.ELEMENT__ATTACHMENTS:
@@ -462,10 +436,8 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
-		switch (featureID)
-		{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 		case VViewPackage.ELEMENT__NAME:
 			return getName();
 		case VViewPackage.ELEMENT__LABEL:
@@ -492,10 +464,8 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
-		switch (featureID)
-		{
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 		case VViewPackage.ELEMENT__NAME:
 			setName((String) newValue);
 			return;
@@ -529,10 +499,8 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
-		switch (featureID)
-		{
+	public void eUnset(int featureID) {
+		switch (featureID) {
 		case VViewPackage.ELEMENT__NAME:
 			setName(NAME_EDEFAULT);
 			return;
@@ -565,10 +533,8 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
-		switch (featureID)
-		{
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 		case VViewPackage.ELEMENT__NAME:
 			return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 		case VViewPackage.ELEMENT__LABEL:
@@ -594,8 +560,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement
 	 * @generated
 	 */
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		if (eIsProxy()) {
 			return super.toString();
 		}

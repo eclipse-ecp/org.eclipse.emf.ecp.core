@@ -46,6 +46,9 @@ public abstract class SimpleControlRendererTester implements ECPRendererTester {
 			return NOT_APPLICABLE;
 		}
 		final VControl control = (VControl) vElement;
+		if (control.getDomainModelReference() == null) {
+			return NOT_APPLICABLE;
+		}
 		IObservableValue observableValue;
 		try {
 			observableValue = Activator.getDefault().getEMFFormsDatabinding()

@@ -86,8 +86,7 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 					if (!project.isOpen()) {
 						project.open();
 					}
-				}
-				else {
+				} else {
 					final ECPContainer context = ECPUtil
 						.getModelContext(contentProvider, structuredSelection.toArray());
 					ECPHandlerHelper.openModelElement(firstElement, (ECPProject) context);
@@ -128,6 +127,8 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 	@Override
 	public void init(IViewSite site) throws PartInitException {
 		super.init(site);
+		@SuppressWarnings("cast")
+		// Ignore the warning and keep the cast to stay SRC compatible with Luna
 		final IEvaluationService evaluationService = (IEvaluationService) site.getService(IEvaluationService.class);
 		ecpSavePropertySource = new ECPSavePropertySource();
 		evaluationService.addSourceProvider(ecpSavePropertySource);
@@ -140,6 +141,8 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 	 */
 	@Override
 	public void dispose() {
+		@SuppressWarnings("cast")
+		// Ignore the warning and keep the cast to stay SRC compatible with Luna
 		final IEvaluationService evaluationService = (IEvaluationService) getSite()
 			.getService(IEvaluationService.class);
 		evaluationService.removeSourceProvider(ecpSavePropertySource);

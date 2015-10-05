@@ -65,6 +65,9 @@ public class NumberControlSWTRendererService implements EMFFormsDIRendererServic
 			return NOT_APPLICABLE;
 		}
 		final VControl control = (VControl) vElement;
+		if (control.getDomainModelReference() == null) {
+			return NOT_APPLICABLE;
+		}
 		IValueProperty valueProperty;
 		try {
 			valueProperty = databindingService.getValueProperty(control.getDomainModelReference(),
@@ -90,17 +93,13 @@ public class NumberControlSWTRendererService implements EMFFormsDIRendererServic
 		if (instanceClass.isPrimitive()) {
 			if (int.class.equals(instanceClass)) {
 				return CONSTANT_PRIORITY;
-			}
-			else if (float.class.equals(instanceClass)) {
+			} else if (float.class.equals(instanceClass)) {
 				return CONSTANT_PRIORITY;
-			}
-			else if (long.class.equals(instanceClass)) {
+			} else if (long.class.equals(instanceClass)) {
 				return CONSTANT_PRIORITY;
-			}
-			else if (double.class.equals(instanceClass)) {
+			} else if (double.class.equals(instanceClass)) {
 				return CONSTANT_PRIORITY;
-			}
-			else if (short.class.equals(instanceClass)) {
+			} else if (short.class.equals(instanceClass)) {
 				return CONSTANT_PRIORITY;
 			}
 		}

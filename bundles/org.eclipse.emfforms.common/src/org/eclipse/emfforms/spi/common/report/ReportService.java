@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * Edgar Mueller - initial API and implementation
+ * Eugen Neufeld - deprecated getReports and clearReports
  ******************************************************************************/
 package org.eclipse.emfforms.spi.common.report;
 
@@ -32,13 +33,19 @@ public interface ReportService {
 	/**
 	 * Returns all ReportEntities.
 	 *
-	 * @return all ReportEntities
+	 * @return all ReportEntries
+	 * @deprecated If you want to track all reports use {@link #addConsumer(ReportServiceConsumer)}, in order to add an
+	 *             report use {@link #report(AbstractReport)}. This method will be removed with the next release.
 	 */
+	@Deprecated
 	List<AbstractReport> getReports();
 
 	/**
 	 * Discards all ReportEntities.
+	 *
+	 * @deprecated Calling this method doesn't have any effect. It will also be removed with the next release.
 	 */
+	@Deprecated
 	void clearReports();
 
 	/**

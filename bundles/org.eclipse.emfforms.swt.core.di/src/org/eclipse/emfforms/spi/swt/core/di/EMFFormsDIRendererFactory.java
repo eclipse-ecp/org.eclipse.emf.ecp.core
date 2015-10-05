@@ -47,7 +47,7 @@ public class EMFFormsDIRendererFactory implements EMFFormsRendererService<VEleme
 
 	/**
 	 * Returns the {@link ReportService}.
-	 * 
+	 *
 	 * @return The {@link ReportService}
 	 */
 	protected ReportService getReportService() {
@@ -106,7 +106,9 @@ public class EMFFormsDIRendererFactory implements EMFFormsRendererService<VEleme
 	 *
 	 * @see org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService#getRendererInstance(org.eclipse.emf.ecp.view.spi.model.VElement,
 	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
+	 * @since 1.6
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public AbstractSWTRenderer<VElement> getRendererInstance(VElement vElement, ViewModelContext viewModelContext) {
 		double highestPriority = Double.MIN_VALUE;
@@ -141,9 +143,9 @@ public class EMFFormsDIRendererFactory implements EMFFormsRendererService<VEleme
 
 		final Class<? extends VElement> elementClass = vElement.getClass();
 		final Class<?>[] elementInterfaces = elementClass.getInterfaces();
-		for (final Class elementInterface : elementInterfaces) { // TODO: fix raw type warning if possible
+		for (@SuppressWarnings("rawtypes")
+		final Class elementInterface : elementInterfaces) {
 			if (VElement.class.isAssignableFrom(elementInterface)) {
-				// TODO: fix unchecked warning if possible
 				childContext.set(elementInterface, elementInterface.cast(vElement));
 			}
 		}

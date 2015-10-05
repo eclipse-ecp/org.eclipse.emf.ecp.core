@@ -39,6 +39,9 @@ public class StackItemControlRendererTester implements ECPRendererTester {
 			return NOT_APPLICABLE;
 		}
 		final VControl control = (VControl) vElement;
+		if (control.getDomainModelReference() == null) {
+			return NOT_APPLICABLE;
+		}
 		IValueProperty valueProperty;
 		try {
 			valueProperty = Activator.getDefault().getEMFFormsDatabinding()

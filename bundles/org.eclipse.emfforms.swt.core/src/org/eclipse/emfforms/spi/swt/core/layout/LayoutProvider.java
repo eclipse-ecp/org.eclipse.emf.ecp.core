@@ -13,6 +13,7 @@ package org.eclipse.emfforms.spi.swt.core.layout;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Layout;
 
@@ -32,6 +33,17 @@ public interface LayoutProvider {
 	 * @return the layout to use
 	 */
 	Layout getColumnLayout(int numColumns, boolean equalWidth);
+
+	/**
+	 * The Layout for aligning controls vertically in columns.
+	 *
+	 * @param numColumns the number of columns to create
+	 * @param equalWidth whether the columns should be equal width
+	 * @param margins the margins of the layout
+	 * @return the layout to use
+	 * @since 1.7
+	 */
+	Layout getColumnLayout(int numColumns, boolean equalWidth, Point margins);
 
 	/**
 	 * The LayoutData to use.

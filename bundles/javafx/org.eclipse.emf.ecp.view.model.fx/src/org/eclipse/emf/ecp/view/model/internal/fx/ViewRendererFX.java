@@ -1,20 +1,33 @@
 package org.eclipse.emf.ecp.view.model.internal.fx;
 
-import javafx.scene.Node;
-import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
-
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VContainedContainer;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+
+import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 
 public class ViewRendererFX extends RendererFX<VView> {
 
 	private GridDescriptionFX gridDescription;
+
+	/**
+	 * Default constructor.
+	 *
+	 * @param vElement the {@link VElement} to be rendered
+	 * @param viewContext the {@link ViewModelContext} to use
+	 * @param reportService The {@link ReportService} to use
+	 */
+	public ViewRendererFX(VView vElement, ViewModelContext viewContext, ReportService reportService) {
+		super(vElement, viewContext, reportService);
+	}
 
 	@Override
 	public GridDescriptionFX getGridDescription() {

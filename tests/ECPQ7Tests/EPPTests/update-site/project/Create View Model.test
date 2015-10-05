@@ -6,20 +6,20 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _CcjB8C3lEeSwhO5Nwx0hPg
-Runtime-Version: 1.5.2.201408180747
-Save-Time: 9/29/14 4:06 PM
+Runtime-Version: 1.5.4.201412181238
+Save-Time: 9/15/15 9:48 AM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
 Content-Type: text/ecl
 Entry-Name: .content
 
-get-view "Project Explorer" | get-tree | select "com.eclipsesource.makeithappen.model/model/task.ecore" 
-    | select "com.eclipsesource.makeithappen.model/model/task.ecore" | get-menu "EMF Forms/Create View Model" | click
+get-view "Project Explorer" | get-tree | select "org.eclipse.emf.ecp.makeithappen.model/model/task.ecore" 
+    | select "org.eclipse.emf.ecp.makeithappen.model/model/task.ecore" | get-menu "EMF Forms/Create View Model" | click
 with [get-window -class ViewModelWizardDialog] {
     get-tree | select "Task"
     get-button "Next >" | click
-    get-tree | select "com.eclipsesource.makeithappen.model.viewmodel/viewmodels"
+    get-tree | select "org.eclipse.emf.ecp.makeithappen.model.viewmodel/viewmodels"
 }
 get-window -class ViewModelWizardDialog | get-editbox -after [get-label "View Model"] | get-property text 
     | equals "\'Task.view\' already exists." | verify-true
@@ -39,9 +39,9 @@ with [get-tab-folder -index 3] {
     get-property tabCount | equals 1 | verify-true
 }
 
-get-view "Project Explorer" | get-tree | select "com.eclipsesource.makeithappen.model.viewmodel/plugin.xml" 
-    | select "com.eclipsesource.makeithappen.model.viewmodel/plugin.xml" | double-click
-with [get-editor "com.eclipsesource.makeithappen.model.viewmodel"] {
+get-view "Project Explorer" | get-tree | select "org.eclipse.emf.ecp.makeithappen.model.viewmodel/plugin.xml" 
+    | select "org.eclipse.emf.ecp.makeithappen.model.viewmodel/plugin.xml" | double-click
+with [get-editor "org.eclipse.emf.ecp.makeithappen.model.viewmodel"] {
     with [get-tab-folder] {
         get-tab-item Dependencies | click
         get-tab-item Runtime | click
@@ -52,7 +52,7 @@ with [get-editor "com.eclipsesource.makeithappen.model.viewmodel"] {
     }
     get-tab-folder | get-tab-item "plugin.xml" | click
 }
-get-editor "com.eclipsesource.makeithappen.model.viewmodel" | get-text-viewer | get-property text 
+get-editor "org.eclipse.emf.ecp.makeithappen.model.viewmodel" | get-text-viewer | get-property text 
     | equals "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
     + "<?eclipse version=\"3.4\"?>\n"
     + "<plugin>\n"
@@ -64,9 +64,9 @@ get-editor "com.eclipsesource.makeithappen.model.viewmodel" | get-text-viewer | 
     + "<file filePath=\"viewmodels/Task.view\"/>\n\n"
     + "   </extension>\n\n"
     + "</plugin>" | verify-true
-get-view "Project Explorer" | get-tree | select "com.eclipsesource.makeithappen.model.viewmodel/build.properties" 
-    | select "com.eclipsesource.makeithappen.model.viewmodel/build.properties" | double-click
-with [get-editor "com.eclipsesource.makeithappen.model.viewmodel"] {
+get-view "Project Explorer" | get-tree | select "org.eclipse.emf.ecp.makeithappen.model.viewmodel/build.properties" 
+    | select "org.eclipse.emf.ecp.makeithappen.model.viewmodel/build.properties" | double-click
+with [get-editor "org.eclipse.emf.ecp.makeithappen.model.viewmodel"] {
     get-tab-folder | get-tab-item "build.properties" | click
 }
 

@@ -24,7 +24,10 @@ import org.eclipse.emf.ecp.view.spi.context.GlobalViewModelService;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
+import org.eclipse.emf.ecp.view.spi.model.util.ViewModelPropertiesHelper;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.ecp.view.treemasterdetail.model.VTreeMasterDetail;
 import org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.internal.RootObject;
@@ -42,6 +45,52 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 @SuppressWarnings("restriction")
 public class TreeMasterDetailValidationInitiator implements
 	GlobalViewModelService {
+
+	/**
+	 * @author Eugen Neufeld
+	 * @author Johannes Faltermeier
+	 *
+	 */
+	private final class TreeMasterDetailValidationInitiatorDomainChangeListener implements ModelChangeListener {
+		private final ViewModelContext context;
+
+		/**
+		 * @param context
+		 */
+		private TreeMasterDetailValidationInitiatorDomainChangeListener(ViewModelContext context) {
+			this.context = context;
+		}
+
+		@Override
+		public void notifyChange(ModelChangeNotification notification) {
+			if (notification.getRawNotification().isTouch() || mapping.isEmpty()) {
+				return;
+			}
+			for (final TreeContextMapping treeContextEntry : new LinkedHashSet<TreeContextMapping>(mapping.keySet())) {
+				if (!mapping.get(treeContextEntry).contains(manipulateSelection(notification.getNotifier()))) {
+					return;
+				}
+				final Set<Object> children = getAllChildren(notification.getNotifier(),
+					adapterFactoryContentProvider);
+				if (mapping.get(treeContextEntry).containsAll(children)) {
+					return;
+				}
+				children.removeAll(mapping.get(treeContextEntry));
+				for (final Object child : children) {
+					final EObject addedObject = (EObject) manipulateSelection(child);
+					mapping.get(treeContextEntry).add(addedObject);
+					final VElement viewModel = context.getViewModel();
+					final VViewModelProperties properties = ViewModelPropertiesHelper
+						.getInhertitedPropertiesOrEmpty(viewModel);
+					properties.addNonInheritableProperty(DETAIL_KEY, true);
+					final ViewModelContext childContext = treeContextEntry.context.getChildContext(addedObject,
+						treeContextEntry.control, ViewProviderHelper.getView(addedObject, properties));
+					childContext.addContextUser(this);
+				}
+			}
+		}
+	}
+
 	/**
 	 * A Mapping for TreeMasterDetails.
 	 *
@@ -136,36 +185,8 @@ public class TreeMasterDetailValidationInitiator implements
 	}
 
 	@Override
-	public void instantiate(ViewModelContext context) {
-		context.registerDomainChangeListener(new ModelChangeListener() {
-
-			@Override
-			public void notifyChange(ModelChangeNotification notification) {
-				if (notification.getRawNotification().isTouch() || mapping.isEmpty()) {
-					return;
-				}
-				for (final TreeContextMapping treeContextEntry : mapping.keySet()) {
-					if (!mapping.get(treeContextEntry).contains(manipulateSelection(notification.getNotifier()))) {
-						return;
-					}
-					final Set<Object> children = getAllChildren(notification.getNotifier(),
-						adapterFactoryContentProvider);
-					if (mapping.get(treeContextEntry).containsAll(children)) {
-						return;
-					}
-					children.removeAll(mapping.get(treeContextEntry));
-					for (final Object child : children) {
-						final EObject addedObject = (EObject) manipulateSelection(child);
-						mapping.get(treeContextEntry).add(addedObject);
-						final Map<String, Object> context = new LinkedHashMap<String, Object>();
-						context.put(DETAIL_KEY, true);
-						final ViewModelContext childContext = treeContextEntry.context.getChildContext(addedObject,
-							treeContextEntry.control, ViewProviderHelper.getView(addedObject, context));
-						childContext.addContextUser(this);
-					}
-				}
-			}
-		});
+	public void instantiate(final ViewModelContext context) {
+		context.registerDomainChangeListener(new TreeMasterDetailValidationInitiatorDomainChangeListener(context));
 		checkForTreeMasterDetail(context);
 
 	}
@@ -189,8 +210,9 @@ public class TreeMasterDetailValidationInitiator implements
 			adapterFactoryContentProvider);
 
 		for (final Object object : children) {
-			final Map<String, Object> context = new LinkedHashMap<String, Object>();
-			context.put(DETAIL_KEY, true);
+			final VElement viewModel = viewModelContext.getViewModel();
+			final VViewModelProperties properties = ViewModelPropertiesHelper.getInhertitedPropertiesOrEmpty(viewModel);
+			properties.addNonInheritableProperty(DETAIL_KEY, true);
 			final EObject manipulateSelection = (EObject) manipulateSelection(object);
 			final TreeContextMapping entry = new TreeContextMapping();
 			entry.context = viewModelContext;
@@ -200,7 +222,7 @@ public class TreeMasterDetailValidationInitiator implements
 			}
 			mapping.get(entry).add(manipulateSelection);
 
-			final VView view = ViewProviderHelper.getView(manipulateSelection, context);
+			final VView view = ViewProviderHelper.getView(manipulateSelection, properties);
 
 			final ViewModelContext childContext = viewModelContext.getChildContext(manipulateSelection,
 				treeMasterDetail, view);
@@ -209,9 +231,10 @@ public class TreeMasterDetailValidationInitiator implements
 	}
 
 	private void registerRootChildContext(VTreeMasterDetail treeMasterDetail, ViewModelContext viewModelContext) {
-		final Map<String, Object> context = new LinkedHashMap<String, Object>();
-		context.put(DETAIL_KEY, true);
-		context.put(ROOT_KEY, true);
+		final VElement viewModel = viewModelContext.getViewModel();
+		final VViewModelProperties properties = ViewModelPropertiesHelper.getInhertitedPropertiesOrEmpty(viewModel);
+		properties.addNonInheritableProperty(DETAIL_KEY, true);
+		properties.addNonInheritableProperty(ROOT_KEY, true);
 		final Object manipulateSelection = manipulateSelection(viewModelContext.getDomainModel());
 		final TreeContextMapping entry = new TreeContextMapping();
 		entry.context = viewModelContext;
@@ -223,7 +246,7 @@ public class TreeMasterDetailValidationInitiator implements
 
 		VView view = treeMasterDetail.getDetailView();
 		if (view == null || view.getChildren().isEmpty()) {
-			view = ViewProviderHelper.getView((EObject) manipulateSelection, context);
+			view = ViewProviderHelper.getView((EObject) manipulateSelection, properties);
 		}
 		final ViewModelContext childContext = viewModelContext.getChildContext((EObject) manipulateSelection,
 			treeMasterDetail, view);

@@ -21,7 +21,9 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
+import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ExpandEvent;
 import org.eclipse.swt.events.ExpandListener;
@@ -41,6 +43,10 @@ import org.eclipse.swt.widgets.ExpandItem;
  */
 public class CollapsableGroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 
+	private static final int MARGIN = 5;
+
+	private SWTGridDescription rendererGridDescription;
+
 	/**
 	 * Default constructor.
 	 *
@@ -56,7 +62,16 @@ public class CollapsableGroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 		super(vElement, viewContext, reportService, factory, emfFormsDatabinding);
 	}
 
-	private static final int MARGIN = 5;
+	@Override
+	public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
+		if (rendererGridDescription == null) {
+			rendererGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 1, this);
+			final SWTGridCell swtGridCell = rendererGridDescription.getGrid().get(0);
+			swtGridCell.setVerticalFill(false);
+			swtGridCell.setVerticalGrab(false);
+		}
+		return rendererGridDescription;
+	}
 
 	/**
 	 * {@inheritDoc}

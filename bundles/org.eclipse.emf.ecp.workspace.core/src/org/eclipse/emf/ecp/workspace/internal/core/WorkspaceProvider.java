@@ -29,10 +29,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
-import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.common.util.WrappedException;
@@ -50,6 +50,7 @@ import org.eclipse.emf.ecp.spi.core.DefaultProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
+import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.edit.command.DeleteCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -65,6 +66,9 @@ public class WorkspaceProvider extends DefaultProvider {
 
 	/** Root URI Property Name. */
 	public static final String PROP_ROOT_URI = "rootURI"; //$NON-NLS-1$
+
+	/** Constant which is used to indicated the the {@link #PROP_ROOT_URI root uri} is not existing yet. */
+	public static final String VIRTUAL_ROOT_URI = "VIRTUAL_URI"; //$NON-NLS-1$
 
 	/**
 	 * The Workspace Provider Instance.
@@ -109,7 +113,7 @@ public class WorkspaceProvider extends DefaultProvider {
 		if (context instanceof InternalProject) {
 			final InternalProject project = (InternalProject) context;
 			final EditingDomain editingDomain = project.getEditingDomain();
-			editingDomain.getResourceSet().eAdapters().add(new WorkspaceProjectObserver(project));
+			editingDomain.getResourceSet().eAdapters().add(new WorkspaceProjectObserver(project, this));
 		}
 
 	}
@@ -170,9 +174,13 @@ public class WorkspaceProvider extends DefaultProvider {
 	/** {@inheritDoc} */
 	@Override
 	public EList<? extends Object> getElements(InternalProject project) {
+		boolean demandLoad = true;
+		if (project.getProperties().getValue(PROP_ROOT_URI).equals(VIRTUAL_ROOT_URI)) {
+			demandLoad = false;
+		}
 		final ResourceSet resourceSet = project.getEditingDomain().getResourceSet();
-		return ECollections.unmodifiableEList(resourceSet.getResource(
-			URI.createURI(project.getProperties().getValue(PROP_ROOT_URI)), true).getContents());
+		return resourceSet.getResource(
+			URI.createURI(project.getProperties().getValue(PROP_ROOT_URI)), demandLoad).getContents();
 		// TODO: implement WorkspaceProvider.addRootElement(project, rootElement)
 	}
 
@@ -214,12 +222,6 @@ public class WorkspaceProvider extends DefaultProvider {
 
 	/** {@inheritDoc} */
 	@Override
-	public void delete(InternalProject project, Collection<Object> objects) {
-		project.getEditingDomain().getCommandStack().execute(DeleteCommand.create(project.getEditingDomain(), objects));
-	}
-
-	/** {@inheritDoc} */
-	@Override
 	public void cloneProject(final InternalProject projectToClone, InternalProject targetProject) {
 		throw new UnsupportedOperationException();
 	}
@@ -228,8 +230,12 @@ public class WorkspaceProvider extends DefaultProvider {
 	// FIXME
 	@Override
 	public Notifier getRoot(InternalProject project) {
+		boolean demandLoad = true;
+		if (project.getProperties().getValue(PROP_ROOT_URI).equals(VIRTUAL_ROOT_URI)) {
+			demandLoad = false;
+		}
 		return project.getEditingDomain().getResourceSet()
-			.getResource(URI.createURI(project.getProperties().getValue(PROP_ROOT_URI)), true);
+			.getResource(URI.createURI(project.getProperties().getValue(PROP_ROOT_URI)), demandLoad);
 	}
 
 	@Override
@@ -263,10 +269,14 @@ public class WorkspaceProvider extends DefaultProvider {
 
 		editingDomain.getResourceSet().eAdapters().add(new ECPModelContextAdapter(project));
 		final URI uri = URI.createURI(project.getProperties().getValue(PROP_ROOT_URI));
-		try {
-			editingDomain.getResourceSet().getResource(uri, true);
-		} catch (final WrappedException we) {
-			project.close();
+		if (project.getProperties().getValue(PROP_ROOT_URI).equals(VIRTUAL_ROOT_URI)) {
+			editingDomain.getResourceSet().createResource(uri);
+		} else {
+			try {
+				editingDomain.getResourceSet().getResource(uri, true);
+			} catch (final WrappedException we) {
+				project.close();
+			}
 		}
 
 		return editingDomain;
@@ -285,12 +295,14 @@ public class WorkspaceProvider extends DefaultProvider {
 	/**
 	 * Observes changes in a projects resource and notifies the project.
 	 */
-	private static class WorkspaceProjectObserver extends EContentAdapter {
+	private class WorkspaceProjectObserver extends EContentAdapter {
 
 		private final InternalProject project;
+		private final WorkspaceProvider provider;
 
-		public WorkspaceProjectObserver(InternalProject project) {
+		public WorkspaceProjectObserver(InternalProject project, WorkspaceProvider provider) {
 			this.project = project;
+			this.provider = provider;
 		}
 
 		@Override
@@ -298,6 +310,7 @@ public class WorkspaceProvider extends DefaultProvider {
 			super.notifyChanged(notification);
 
 			if (notification.getNotifier() instanceof EObject) {
+				provider.notifyProviderChangeListeners(notification);
 				final EObject eObject = (EObject) notification.getNotifier();
 				project.notifyObjectsChanged((Collection) Collections.singleton(eObject), false);
 
@@ -323,5 +336,45 @@ public class WorkspaceProvider extends DefaultProvider {
 	@Override
 	public boolean isThreadSafe() {
 		return false;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.spi.core.DefaultProvider#doDelete(org.eclipse.emf.ecp.spi.core.InternalProject,
+	 *      java.util.Collection)
+	 */
+	@Override
+	public void doDelete(InternalProject project, final Collection<Object> objects) {
+		final Command deleteCommand = DeleteCommand.create(project.getEditingDomain(), objects);
+		if (deleteCommand.canExecute()) {
+			project.getEditingDomain().getCommandStack().execute(deleteCommand);
+			return;
+		}
+
+		/*
+		 * the default DeleteCommand cannot be executed for whatever reason.
+		 * Wrap an EcoreUtil.delete in a change command for undo support.
+		 */
+		final Command changeCommand = new ChangeCommand(project.getEditingDomain().getResourceSet()) {
+			@Override
+			protected void doExecute() {
+				for (final Object object : objects) {
+					final Object unwrap = AdapterFactoryEditingDomain.unwrap(object);
+					if (!EObject.class.isInstance(unwrap)) {
+						continue;
+					}
+					EcoreUtil.delete(EObject.class.cast(unwrap), true);
+				}
+			}
+		};
+		if (changeCommand.canExecute()) {
+			project.getEditingDomain().getCommandStack().execute(changeCommand);
+			return;
+		}
+
+		// unexpected
+		throw new IllegalStateException("Delete was not successful."); //$NON-NLS-1$
+
 	}
 }

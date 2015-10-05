@@ -148,6 +148,8 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 *
 	 * @param view the view
 	 * @param domainObject the domain object
+	 * @param parent The parent {@link ViewModelContext}
+	 * @param parentVElement the parent {@link VElement}
 	 */
 	public ViewModelContextImpl(VElement view, EObject domainObject, ViewModelContext parent,
 		VElement parentVElement) {
@@ -555,6 +557,12 @@ public class ViewModelContextImpl implements ViewModelContext {
 		}
 		controlChangeListener.clear();
 
+		final Set<ViewModelContext> toDispose = new LinkedHashSet<ViewModelContext>(childContextUsers.keySet());
+		for (final ViewModelContext vmc : toDispose) {
+			vmc.dispose();
+		}
+		childContextUsers.clear();
+		childContexts.clear();
 		isDisposing = false;
 		isDisposed = true;
 

@@ -25,6 +25,7 @@ import org.eclipse.emf.ecp.emfstore.internal.ui.e3.Activator;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.emfstore.client.ESLocalProject;
 import org.eclipse.emf.emfstore.client.observer.ESCommitObserver;
+import org.eclipse.emf.emfstore.internal.client.model.ESWorkspaceProviderImpl;
 import org.eclipse.emf.emfstore.internal.client.model.ProjectSpace;
 import org.eclipse.emf.emfstore.internal.client.model.impl.api.ESLocalProjectImpl;
 import org.eclipse.emf.emfstore.server.model.ESChangePackage;
@@ -63,7 +64,8 @@ public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, ESCom
 
 			if (!observers.containsKey(element)) {
 				final EMFStoreDirtyObserver emfStoreDirtyObserver = new EMFStoreDirtyObserver(projectSpace, project);
-				projectSpace.getOperationManager().addOperationObserver(emfStoreDirtyObserver);
+				ESWorkspaceProviderImpl.getObserverBus().register(emfStoreDirtyObserver);
+				// projectSpace.getOperationManager().addOperationObserver(emfStoreDirtyObserver);
 				observers.put((ECPProject) element, emfStoreDirtyObserver);
 			}
 			if (project.isOpen() && projectSpace.isShared() && observers.get(element).isDirty()) {
@@ -112,13 +114,15 @@ public class EMFStoreDirtyDecorator implements ILightweightLabelDecorator, ESCom
 
 	/** {@inheritDoc} */
 	@Override
-	public boolean inspectChanges(ESLocalProject localProject, ESChangePackage changePackage, IProgressMonitor monitor) {
+	public boolean inspectChanges(ESLocalProject localProject, ESChangePackage changePackage,
+		IProgressMonitor monitor) {
 		return true;
 	}
 
 	/** {@inheritDoc} */
 	@Override
-	public void commitCompleted(ESLocalProject localProject, ESPrimaryVersionSpec newRevision, IProgressMonitor monitor) {
+	public void commitCompleted(ESLocalProject localProject, ESPrimaryVersionSpec newRevision,
+		IProgressMonitor monitor) {
 		// TODO: cast, move to EMFStoreDirtyObserver?
 		final ECPProject project = EMFStoreProvider.INSTANCE.getProject(localProject);
 		EMFStoreDirtyDecoratorCachedTree.getInstance(project).clear();

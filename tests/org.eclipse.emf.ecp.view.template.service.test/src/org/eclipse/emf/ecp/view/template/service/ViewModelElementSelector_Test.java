@@ -32,7 +32,7 @@ import org.junit.Test;
  */
 public class ViewModelElementSelector_Test {
 
-	VTViewModelElementSelector viewModelElementSelector;
+	private VTViewModelElementSelector viewModelElementSelector;
 
 	@Before
 	public void setup() {

@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.internal.view.model.provider.xmi;
 
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
@@ -62,10 +63,32 @@ public class Activator extends Plugin {
 	 * @return the {@link ReportService}
 	 */
 	public static ReportService getReportService() {
-		if (reportServiceReference == null) {
-			reportServiceReference = activator.getBundle().getBundleContext()
-				.getServiceReference(ReportService.class);
+		if (activator == null) {
+			return null;
 		}
-		return activator.getBundle().getBundleContext().getService(reportServiceReference);
+		final Bundle bundle = activator.getBundle();
+		if (bundle == null) {
+			return null;
+		}
+		final BundleContext bundleContext = bundle.getBundleContext();
+		if (bundleContext == null) {
+			return null;
+		}
+		if (reportServiceReference == null) {
+			reportServiceReference = bundleContext.getServiceReference(ReportService.class);
+		}
+		if (reportServiceReference == null) {
+			return null;
+		}
+		return bundleContext.getService(reportServiceReference);
+	}
+
+	/**
+	 * Returns the instance of this Activator.
+	 *
+	 * @return the saved instance
+	 */
+	public static Activator getInstance() {
+		return activator;
 	}
 }

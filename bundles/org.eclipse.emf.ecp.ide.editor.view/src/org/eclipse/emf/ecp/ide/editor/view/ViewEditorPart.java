@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.ide.editor.view;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.text.MessageFormat;
 import java.util.EventObject;
 import java.util.HashMap;
 import java.util.Map;
@@ -77,7 +78,6 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ElementTreeSelectionDialog;
 import org.eclipse.ui.dialogs.ISelectionStatusValidator;
-import org.eclipse.ui.internal.ErrorViewPart;
 import org.eclipse.ui.model.BaseWorkbenchContentProvider;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
 import org.eclipse.ui.part.EditorPart;
@@ -89,7 +89,6 @@ import org.eclipse.ui.part.FileEditorInput;
  * @author Eugen Neufeld
  *
  */
-@SuppressWarnings("restriction")
 public class ViewEditorPart extends EditorPart implements
 	ViewModelEditorCallback {
 
@@ -131,25 +130,43 @@ public class ViewEditorPart extends EditorPart implements
 		super.setInput(input);
 		super.setPartName(input.getName());
 
-		basicCommandStack = new BasicCommandStack();
-		basicCommandStack.addCommandStackListener
-			(new CommandStackListener()
-			{
-				@Override
-				public void commandStackChanged(final EventObject event)
-				{
-					parent.getDisplay().asyncExec
-						(new Runnable()
-						{
-							@Override
-							public void run()
-							{
-								firePropertyChange(IEditorPart.PROP_DIRTY);
-							}
-						});
-				}
-			});
+		try {
+			basicCommandStack = new BasicCommandStack();
+			loadView(false);
+		} // BEGIN SUPRESS CATCH EXCEPTION
+		catch (final Exception e) {// END SUPRESS CATCH EXCEPTION
+			/*
+			 * ignore all exceptions during first loading of view. The view might actually be an outdated view, so the
+			 * second call will migrate the view. if the migration step fails or is not possible at all, we will fail in
+			 * the later call.
+			 */
+		}
 
+		try {
+			registerEcore();
+			// reload view resource after EClass' package resource was loaded into the package registry
+			loadView(true);
+			if (getView() == null) {
+				throw new IllegalArgumentException(Messages.ViewEditorPart_InvalidVView);
+			}
+			// BEGIN SUPRESS CATCH EXCEPTION
+		} catch (final Exception e) {
+			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+			throw new PartInitException(
+				MessageFormat.format(Messages.ViewEditorPart_ViewCannotBeDisplayed, e.getLocalizedMessage()), e);
+		} // END SUPRESS CATCH EXCEPTION
+
+		basicCommandStack.addCommandStackListener(new CommandStackListener() {
+			@Override
+			public void commandStackChanged(final EventObject event) {
+				parent.getDisplay().asyncExec(new Runnable() {
+					@Override
+					public void run() {
+						firePropertyChange(IEditorPart.PROP_DIRTY);
+					}
+				});
+			}
+		});
 		partListener = new ViewPartListener();
 		getSite().getPage().addPartListener(partListener);
 
@@ -184,35 +201,33 @@ public class ViewEditorPart extends EditorPart implements
 	 * Loads the view model.
 	 *
 	 * @param migrate whether the view model should be migrated (if actually needed) <b>before</b> attempting to load it
+	 * @throws IOException if the view model resource failed to load
+	 * @throws PartInitException
 	 */
-	private void loadView(boolean migrate) {
+	private void loadView(boolean migrate) throws IOException, PartInitException {
 		final FileEditorInput fei = (FileEditorInput) getEditorInput();
 
 		final ResourceSet resourceSet = createResourceSet();
-		try {
-			final URI resourceURI = URI.createURI(fei.getURI().toURL().toExternalForm());
+		final URI resourceURI = URI.createURI(fei.getURI().toURL().toExternalForm());
 
-			if (migrate) {
-				checkMigration(resourceURI);
-			}
+		if (migrate) {
+			checkMigration(resourceURI);
+		}
 
-			final Map<Object, Object> loadOptions = new HashMap<Object, Object>();
-			loadOptions
-				.put(XMLResource.OPTION_RECORD_UNKNOWN_FEATURE, Boolean.TRUE);
-
-			resource = resourceSet.createResource(resourceURI);
-
-			resource.load(loadOptions);
-			// resolve all proxies
-			int rsSize = resourceSet.getResources().size();
+		final Map<Object, Object> loadOptions = new HashMap<Object, Object>();
+		loadOptions
+			.put(XMLResource.OPTION_RECORD_UNKNOWN_FEATURE, Boolean.TRUE);
+		resource = resourceSet.createResource(resourceURI);
+		resource.load(loadOptions);
+		if (resource.getContents().size() == 0 || !VView.class.isInstance(resource.getContents().get(0))) {
+			throw new PartInitException(Messages.ViewEditorPart_InvalidVView);
+		}
+		// resolve all proxies
+		int rsSize = resourceSet.getResources().size();
+		EcoreUtil.resolveAll(resourceSet);
+		while (rsSize != resourceSet.getResources().size()) {
 			EcoreUtil.resolveAll(resourceSet);
-			while (rsSize != resourceSet.getResources().size()) {
-				EcoreUtil.resolveAll(resourceSet);
-				rsSize = resourceSet.getResources().size();
-			}
-
-		} catch (final IOException e) {
-			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+			rsSize = resourceSet.getResources().size();
 		}
 	}
 
@@ -221,9 +236,9 @@ public class ViewEditorPart extends EditorPart implements
 		if (migrator == null) {
 			return;
 		}
-		final boolean needsMigration = !migrator.checkMigration(resourceURI);
+		final Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+		final boolean needsMigration = checkIfMigrationIsNeeded(shell, resourceURI, migrator);
 		if (needsMigration) {
-			final Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 			final boolean migrate = MessageDialog.openQuestion(shell, Messages.ViewEditorPart_MigrationTitle,
 				Messages.ViewEditorPart_MigrationQuestion);
 			if (migrate) {
@@ -239,7 +254,7 @@ public class ViewEditorPart extends EditorPart implements
 					}
 				};
 				try {
-					new ProgressMonitorDialog(shell).run(false, false, runnable);
+					new ProgressMonitorDialog(shell).run(true, false, runnable);
 				} catch (final InvocationTargetException e) {
 					MessageDialog.openError(
 						Display.getDefault().getActiveShell(), Messages.ViewEditorPart_MigrationErrorTitle,
@@ -268,58 +283,55 @@ public class ViewEditorPart extends EditorPart implements
 		}
 	}
 
+	private boolean checkIfMigrationIsNeeded(Shell shell, final URI resourceURI, final ViewModelMigrator migrator) {
+		final CheckMigrationRunnable runnable = new CheckMigrationRunnable(migrator, resourceURI);
+		try {
+			new ProgressMonitorDialog(shell).run(true, false, runnable);
+		} catch (final InvocationTargetException ex) {
+			Activator.getDefault().getLog()
+				.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, Messages.ViewEditorPart_MigrationErrorTitle, ex));
+		} catch (final InterruptedException ex) {
+			Activator.getDefault().getLog()
+				.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, Messages.ViewEditorPart_MigrationErrorTitle, ex));
+		}
+		return runnable.getResult();
+	}
+
 	@Override
 	public void createPartControl(Composite parent) {
 		this.parent = parent;
 		parent.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
-		loadView(false);
 
-		registerEcore();
+		final VView view = getView();
 
+		Activator.getViewModelRegistry().registerViewModel(view, resource.getURI().toString());
 		try {
-			// reload view resource after EClass' package resource was loaded into the package registry
-			loadView(true);
-			final VView view = getView();
-
-			Activator.getViewModelRegistry().registerViewModel(view, resource.getURI().toString());
-			try {
-				Activator.getViewModelRegistry().registerViewModelEditor(view, this);
-			} catch (final IOException e) {
-				Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+			Activator.getViewModelRegistry().registerViewModelEditor(view, this);
+		} catch (final IOException e) {
+			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+		}
+		if (view.getRootEClass() != null) {
+			if (view.getRootEClass().eResource() != null) {
+				Activator.getViewModelRegistry().register(view.getRootEClass().eResource().getURI().toString(),
+					view);
+			} else {
+				Activator
+					.getDefault()
+					.getLog()
+					.log(
+						new Status(IStatus.WARNING, Activator.PLUGIN_ID,
+							"The Root EClass of the view cannot be resolved." + view.getRootEClass())); //$NON-NLS-1$
 			}
-			if (view.getRootEClass() != null) {
-				if (view.getRootEClass().eResource() != null) {
-					Activator.getViewModelRegistry().register(view.getRootEClass().eResource().getURI().toString(),
-						view);
-				} else {
-					Activator
-						.getDefault()
-						.getLog()
-						.log(
-							new Status(IStatus.WARNING, Activator.PLUGIN_ID,
-								"The Root EClass of the view cannot be resolved." + view.getRootEClass())); //$NON-NLS-1$
-				}
-			}
-
-			showView();
-
-			// BEGIN SUPRESS CATCH EXCEPTION
-		} catch (final RuntimeException e) {
-			displayError(e);
-		}// END SUPRESS CATCH EXCEPTION
+		}
+		showView();
 	}
 
-	private void registerEcore() {
+	private void registerEcore() throws IOException {
 		final String ecorePath = getEcorePath();
 		if (ecorePath == null) {
 			return;
 		}
-		try {
-			EcoreHelper.registerEcore(ecorePath);
-		} catch (final IOException e) {
-			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
-
-		}
+		EcoreHelper.registerEcore(ecorePath);
 	}
 
 	/**
@@ -401,59 +413,7 @@ public class ViewEditorPart extends EditorPart implements
 	 */
 	@Override
 	public void reloadViewModel() {
-		Display.getDefault().asyncExec(new Runnable() {
-
-			@Override
-			public void run() {
-				if (parent == null || parent.isDisposed()) {
-					final IWorkbenchPage page = instance.getSite().getPage();
-					page.closeEditor(instance, true);
-					return;
-				}
-				if (render != null) {
-					render.dispose();
-					render.getSWTControl().dispose();
-				}
-
-				final String ecorePath = getView().getEcorePath();
-				if (ecorePath != null) {
-					try {
-						EcoreHelper.registerEcore(ecorePath);
-					} catch (final IOException e) {
-						Activator.getDefault().getLog()
-							.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
-					}
-				}
-
-				// reload view resource after EClass' package resource was loaded into the package registry
-				loadView(true);
-				final VView view = getView();
-
-				try {
-					Activator.getViewModelRegistry().registerViewModelEditor(view, instance);
-				} catch (final IOException e) {
-					Activator.getDefault().getLog()
-						.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
-				}
-
-				if (view.getRootEClass() != null) {
-					if (view.getRootEClass().eResource() != null) {
-						Activator.getViewModelRegistry().register(
-							view.getRootEClass().eResource().getURI().toString(),
-							view);
-					} else {
-						Activator
-							.getDefault()
-							.getLog()
-							.log(
-								new Status(IStatus.WARNING, Activator.PLUGIN_ID,
-									"The Root EClass of the view cannot be resolved." + view.getRootEClass())); //$NON-NLS-1$
-					}
-				}
-				showView();
-				parent.layout(true);
-			}
-		});
+		Display.getDefault().asyncExec(new ReladViewModelRunnable());
 	}
 
 	@Override
@@ -490,12 +450,108 @@ public class ViewEditorPart extends EditorPart implements
 		return null;
 	}
 
-	private void displayError(Exception e) {
-		Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
-		final IStatus status = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
-			Messages.ViewEditorPart_ViewCannotBeDisplayed, e);
-		final ErrorViewPart part = new ErrorViewPart(status);
-		part.createPartControl(parent);
+	/**
+	 * Runnable to check if a migration is needed.
+	 *
+	 * @author Johannes Faltermeier
+	 *
+	 */
+	private static final class CheckMigrationRunnable implements IRunnableWithProgress {
+		private final ViewModelMigrator migrator;
+		private final URI resourceURI;
+		private boolean needsMigration;
+
+		/**
+		 * Default constructor.
+		 *
+		 * @param migrator the migrator
+		 * @param resourceURI the resource uri to check
+		 */
+		public CheckMigrationRunnable(ViewModelMigrator migrator, URI resourceURI) {
+			this.migrator = migrator;
+			this.resourceURI = resourceURI;
+		}
+
+		@Override
+		public void run(IProgressMonitor monitor)
+			throws InvocationTargetException {
+			needsMigration = !migrator.checkMigration(resourceURI);
+		}
+
+		/**
+		 * Returns the result of the migration check.
+		 *
+		 * @return <code>true</code> if migration is needed, <code>false</code> otherwise
+		 */
+		public boolean getResult() {
+			return needsMigration;
+		}
+	}
+
+	/**
+	 * @author Jonas
+	 *
+	 */
+	private final class ReladViewModelRunnable implements Runnable {
+		@Override
+		public void run() {
+			if (parent == null || parent.isDisposed()) {
+				final IWorkbenchPage page = instance.getSite().getPage();
+				page.closeEditor(instance, true);
+				return;
+			}
+			if (render != null) {
+				render.dispose();
+				render.getSWTControl().dispose();
+			}
+
+			final String ecorePath = getView().getEcorePath();
+			if (ecorePath != null) {
+				try {
+					EcoreHelper.registerEcore(ecorePath);
+				} catch (final IOException e) {
+					Activator.getDefault().getLog()
+						.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+				}
+			}
+
+			// reload view resource after EClass' package resource was loaded into the package registry
+			try {
+				loadView(true);
+			} catch (final IOException e) {
+				Activator.getDefault().getLog()
+					.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+			} catch (final PartInitException e) {
+				Activator.getDefault().getLog()
+					.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+				return;
+			}
+			final VView view = getView();
+
+			try {
+				Activator.getViewModelRegistry().registerViewModelEditor(view, instance);
+			} catch (final IOException e) {
+				Activator.getDefault().getLog()
+					.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+			}
+
+			if (view.getRootEClass() != null) {
+				if (view.getRootEClass().eResource() != null) {
+					Activator.getViewModelRegistry().register(
+						view.getRootEClass().eResource().getURI().toString(),
+						view);
+				} else {
+					Activator
+						.getDefault()
+						.getLog()
+						.log(
+							new Status(IStatus.WARNING, Activator.PLUGIN_ID,
+								"The Root EClass of the view cannot be resolved." + view.getRootEClass())); //$NON-NLS-1$
+				}
+			}
+			showView();
+			parent.layout(true);
+		}
 	}
 
 	/**
@@ -601,8 +657,7 @@ public class ViewEditorPart extends EditorPart implements
 			final IResourceDelta delta = event.getDelta();
 			final IResourceDeltaVisitor visitor = new IResourceDeltaVisitor() {
 				@Override
-				public boolean visit(IResourceDelta delta)
-				{
+				public boolean visit(IResourceDelta delta) {
 					if (delta.getKind() == IResourceDelta.REMOVED) {
 						final FileEditorInput fei = (FileEditorInput) instance.getEditorInput();
 						if (delta.getFullPath().equals(fei.getFile().getFullPath())) {

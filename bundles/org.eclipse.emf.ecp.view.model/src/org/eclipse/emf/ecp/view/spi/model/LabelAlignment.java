@@ -21,15 +21,28 @@ import org.eclipse.emf.common.util.Enumerator;
  * <!-- begin-user-doc -->
  * A representation of the literals of the enumeration '<em><b>Label Alignment</b></em>',
  * and utility methods for working with them.
- * <!-- end-user-doc -->
+ *
+ * @since 1.2
+ *        <!-- end-user-doc -->
  *
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getLabelAlignment()
  * @model
  * @generated
- * @since 1.2
  */
-public enum LabelAlignment implements Enumerator
-{
+public enum LabelAlignment implements Enumerator {
+	/**
+	 * The '<em><b>Default</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.7
+	 *        <!-- end-user-doc -->
+	 *
+	 * @see #DEFAULT_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	DEFAULT(-1, "Default", "Default"), //$NON-NLS-1$ //$NON-NLS-2$
+
 	/**
 	 * The '<em><b>Left</b></em>' literal object.
 	 * <!-- begin-user-doc -->
@@ -39,7 +52,20 @@ public enum LabelAlignment implements Enumerator
 	 * @generated
 	 * @ordered
 	 */
-	LEFT(0, "Left", "Left"), //$NON-NLS-1$ //$NON-NLS-2$
+	LEFT(0, "Left", "Left"), //$NON-NLS-1$//$NON-NLS-2$
+
+	/**
+	 * The '<em><b>Top</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.7
+	 *        <!-- end-user-doc -->
+	 *
+	 * @see #TOP_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	TOP(2, "Top", "Top"), //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>None</b></em>' literal object.
@@ -51,6 +77,24 @@ public enum LabelAlignment implements Enumerator
 	 * @ordered
 	 */
 	NONE(1, "None", "None"); //$NON-NLS-1$ //$NON-NLS-2$
+
+	/**
+	 * The '<em><b>Default</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>Default</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 *
+	 * @since 1.7
+	 *        <!-- end-user-doc -->
+	 *
+	 * @see #DEFAULT
+	 * @model name="Default"
+	 * @generated
+	 * @ordered
+	 */
+	public static final int DEFAULT_VALUE = -1;
 
 	/**
 	 * The '<em><b>Left</b></em>' literal value.
@@ -67,6 +111,24 @@ public enum LabelAlignment implements Enumerator
 	 * @ordered
 	 */
 	public static final int LEFT_VALUE = 0;
+
+	/**
+	 * The '<em><b>Top</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>Top</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * 
+	 * @since 1.7
+	 *        <!-- end-user-doc -->
+	 *
+	 * @see #TOP
+	 * @model name="Top"
+	 * @generated
+	 * @ordered
+	 */
+	public static final int TOP_VALUE = 2;
 
 	/**
 	 * The '<em><b>None</b></em>' literal value.
@@ -91,12 +153,12 @@ public enum LabelAlignment implements Enumerator
 	 *
 	 * @generated
 	 */
-	private static final LabelAlignment[] VALUES_ARRAY =
-		new LabelAlignment[]
-		{
-			LEFT,
-			NONE,
-		};
+	private static final LabelAlignment[] VALUES_ARRAY = new LabelAlignment[] {
+		DEFAULT,
+		LEFT,
+		TOP,
+		NONE,
+	};
 
 	/**
 	 * A public read-only list of all the '<em><b>Label Alignment</b></em>' enumerators.
@@ -112,15 +174,14 @@ public enum LabelAlignment implements Enumerator
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
+	 * @param literal the literal.
+	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
-	public static LabelAlignment get(String literal)
-	{
-		for (int i = 0; i < VALUES_ARRAY.length; ++i)
-		{
+	public static LabelAlignment get(String literal) {
+		for (int i = 0; i < VALUES_ARRAY.length; ++i) {
 			final LabelAlignment result = VALUES_ARRAY[i];
-			if (result.toString().equals(literal))
-			{
+			if (result.toString().equals(literal)) {
 				return result;
 			}
 		}
@@ -132,15 +193,14 @@ public enum LabelAlignment implements Enumerator
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
+	 * @param name the name.
+	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
-	public static LabelAlignment getByName(String name)
-	{
-		for (int i = 0; i < VALUES_ARRAY.length; ++i)
-		{
+	public static LabelAlignment getByName(String name) {
+		for (int i = 0; i < VALUES_ARRAY.length; ++i) {
 			final LabelAlignment result = VALUES_ARRAY[i];
-			if (result.getName().equals(name))
-			{
+			if (result.getName().equals(name)) {
 				return result;
 			}
 		}
@@ -152,14 +212,18 @@ public enum LabelAlignment implements Enumerator
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
+	 * @param value the integer value.
+	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
-	public static LabelAlignment get(int value)
-	{
-		switch (value)
-		{
+	public static LabelAlignment get(int value) {
+		switch (value) {
+		case DEFAULT_VALUE:
+			return DEFAULT;
 		case LEFT_VALUE:
 			return LEFT;
+		case TOP_VALUE:
+			return TOP;
 		case NONE_VALUE:
 			return NONE;
 		}
@@ -197,8 +261,7 @@ public enum LabelAlignment implements Enumerator
 	 *
 	 * @generated
 	 */
-	private LabelAlignment(int value, String name, String literal)
-	{
+	private LabelAlignment(int value, String name, String literal) {
 		this.value = value;
 		this.name = name;
 		this.literal = literal;
@@ -211,8 +274,7 @@ public enum LabelAlignment implements Enumerator
 	 * @generated
 	 */
 	@Override
-	public int getValue()
-	{
+	public int getValue() {
 		return value;
 	}
 
@@ -223,8 +285,7 @@ public enum LabelAlignment implements Enumerator
 	 * @generated
 	 */
 	@Override
-	public String getName()
-	{
+	public String getName() {
 		return name;
 	}
 
@@ -235,8 +296,7 @@ public enum LabelAlignment implements Enumerator
 	 * @generated
 	 */
 	@Override
-	public String getLiteral()
-	{
+	public String getLiteral() {
 		return literal;
 	}
 
@@ -248,8 +308,7 @@ public enum LabelAlignment implements Enumerator
 	 * @generated
 	 */
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return literal;
 	}
 

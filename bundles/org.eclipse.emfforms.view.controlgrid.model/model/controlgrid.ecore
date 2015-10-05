@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="controlgrid" nsURI="http://org/eclipse/emf/emfforms/view/controlgrid/model"
+    nsPrefix="org.eclipse.emfforms.view.controlgrid.model">
+  <eClassifiers xsi:type="ecore:EClass" name="ControlGrid" eSuperTypes="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//ContainedElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="rows" upperBound="-1" eType="#//ControlGridRow"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ControlGridRow">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cells" upperBound="-1"
+        eType="#//ControlGridCell" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ControlGridCell">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="control" eType="ecore:EClass ../../org.eclipse.emf.ecp.view.model/model/view.ecore#//Control"
+        containment="true"/>
+  </eClassifiers>
+</ecore:EPackage>

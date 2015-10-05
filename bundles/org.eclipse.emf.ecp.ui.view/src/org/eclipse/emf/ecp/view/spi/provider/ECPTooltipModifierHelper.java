@@ -8,13 +8,16 @@
  *
  * Contributors:
  * Eugen - initial API and implementation
+ * Johannes Faltermeier - Bug 459998
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.provider;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.LinkedHashSet;
+import java.util.Comparator;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
@@ -27,6 +30,7 @@ import org.osgi.framework.Bundle;
  * A helper to ease the access to the string modifiers.
  *
  * @author Eugen Neufeld
+ * @author Johannes Faltermeier
  * @since 1.3
  */
 public final class ECPTooltipModifierHelper {
@@ -38,7 +42,18 @@ public final class ECPTooltipModifierHelper {
 
 	}
 
-	private static Set<ECPStringModifier> stringModifiers = new LinkedHashSet<ECPStringModifier>();
+	private static SortedSet<ECPStringModifier> stringModifiers = new TreeSet<ECPStringModifier>(
+		new Comparator<ECPStringModifier>() {
+			@Override
+			public int compare(ECPStringModifier arg0, ECPStringModifier arg1) {
+				if (arg0.getPriority() == arg1.getPriority()) {
+					/* compare would return 0, meaning the modifiers are identical -> 1 service would get lost */
+					return arg0.getClass().getName().compareTo(arg1.getClass().getName());
+				}
+				final double compare = arg0.getPriority() - arg1.getPriority();
+				return compare < 0 ? -1 : 1;
+			}
+		});
 
 	private static Set<ECPStringModifier> getStringModifiers() {
 		if (stringModifiers == null || stringModifiers.isEmpty()) {
@@ -54,7 +69,7 @@ public final class ECPTooltipModifierHelper {
 		}
 		final IConfigurationElement[] controls = extensionRegistry
 			.getConfigurationElementsFor(
-			EXTENSION_POINT_ID);
+				EXTENSION_POINT_ID);
 		for (final IConfigurationElement e : controls) {
 			try {
 				final String clazz = e.getAttribute(CLASS);

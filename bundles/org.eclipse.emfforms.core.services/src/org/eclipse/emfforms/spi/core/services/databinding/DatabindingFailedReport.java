@@ -34,4 +34,15 @@ public class DatabindingFailedReport extends AbstractReport {
 			MessageFormat.format("Databinding not possible due to: {0}.", //$NON-NLS-1$
 				exception.getMessage()));
 	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emfforms.spi.common.report.AbstractReport#getSeverity()
+	 */
+	@Override
+	public int getSeverity() {
+		return 2; // IStatus.Warning
+	}
+
 }

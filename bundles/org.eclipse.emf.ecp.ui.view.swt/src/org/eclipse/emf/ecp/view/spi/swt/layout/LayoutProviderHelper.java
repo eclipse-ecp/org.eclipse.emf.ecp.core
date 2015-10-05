@@ -25,6 +25,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emfforms.spi.swt.core.layout.LayoutProvider;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Layout;
 import org.osgi.framework.Bundle;
@@ -47,7 +48,7 @@ public final class LayoutProviderHelper {
 
 	private static List<LayoutProvider> layoutProviders = new ArrayList<LayoutProvider>();
 
-	private static List<LayoutProvider> getLayoutProvider() {
+	private static synchronized List<LayoutProvider> getLayoutProvider() {
 		if (layoutProviders == null || layoutProviders.isEmpty()) {
 			readLayoutProviders();
 		}
@@ -118,12 +119,29 @@ public final class LayoutProviderHelper {
 	/**
 	 * Eases the access to the layout provider extension point. For the method description.
 	 *
-	 * @see LayoutProvider#getLayoutData(GridCell, GridDescription, GridDescription, GridDescription, VElement, Control)
+	 * @see LayoutProvider#getColumnLayout(int, boolean, Point)
 	 *
-	 * @param gridCell the current {@link GridCell}
-	 * @param controlGridDescription the {@link GridDescription} of the rendered {@link VElement}
-	 * @param currentRowGridDescription the {@link GridDescription} of the current row
-	 * @param fullGridDescription the {@link GridDescription} of the whole container
+	 * @param numColumns the number of columns to create
+	 * @param equalWidth whether the columns should be equal width
+	 * @param margins the margins
+	 * @return the layout to use
+	 * @since 1.7
+	 */
+	public static Layout getColumnLayout(int numColumns, boolean equalWidth, Point margins) {
+		checkProviderLength();
+		return getLayoutProvider().get(0).getColumnLayout(numColumns, equalWidth, margins);
+	}
+
+	/**
+	 * Eases the access to the layout provider extension point. For the method description.
+	 *
+	 * @see LayoutProvider#getLayoutData(SWTGridCell, SWTGridDescription, SWTGridDescription, SWTGridDescription,
+	 *      VElement, EObject, Control)
+	 *
+	 * @param gridCell the current {@link SWTGridCell}
+	 * @param controlGridDescription the {@link SWTGridDescription} of the rendered {@link VElement}
+	 * @param currentRowGridDescription the {@link SWTGridDescription} of the current row
+	 * @param fullGridDescription the {@link SWTGridDescription} of the whole container
 	 * @param vElement the {@link VElement} which is currently rendered
 	 * @param domainModel The domain model object whose feature is currently rendered
 	 * @param control the rendered {@link Control}

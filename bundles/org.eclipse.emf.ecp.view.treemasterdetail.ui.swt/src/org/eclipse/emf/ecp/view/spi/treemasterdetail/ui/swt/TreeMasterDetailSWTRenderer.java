@@ -16,9 +16,7 @@ package org.eclipse.emf.ecp.view.spi.treemasterdetail.ui.swt;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -27,6 +25,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -44,9 +43,14 @@ import org.eclipse.emf.ecp.view.internal.swt.ContextMenuViewModelService;
 import org.eclipse.emf.ecp.view.internal.treemasterdetail.ui.swt.Activator;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
 import org.eclipse.emf.ecp.view.spi.model.reporting.StatusReport;
+import org.eclipse.emf.ecp.view.spi.model.util.ViewModelPropertiesHelper;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
@@ -160,6 +164,8 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 	private Composite rightPanelContainerComposite;
 
+	private ModelChangeListener domainModelListener;
+
 	/**
 	 * @author jfaltermeier
 	 *
@@ -243,6 +249,9 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 	@Override
 	protected void dispose() {
 		rendererGridDescription = null;
+		if (getViewModelContext() != null && domainModelListener != null) {
+			getViewModelContext().unregisterDomainChangeListener(domainModelListener);
+		}
 		super.dispose();
 	}
 
@@ -376,6 +385,23 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		treeViewer.setLabelProvider(getLabelProvider(labelProvider));
 		treeViewer.setAutoExpandLevel(2); // top level element is expanded, but not the children
 		treeViewer.setInput(new RootObject(modelElement));
+
+		// workaround for https://bugs.eclipse.org/bugs/show_bug.cgi?id=27480
+		// the treeviewer doesn't autoexpand on refresh
+		domainModelListener = new ModelChangeListener() {
+
+			@Override
+			public void notifyChange(ModelChangeNotification notification) {
+				// expand the tree if elements are added to the tree and the root isn't already expanded
+				if (notification.getNotifier().equals(((RootObject) treeViewer.getInput()).getRoot())
+					&& !treeViewer.getExpandedState(((RootObject) treeViewer.getInput()).getRoot())
+					&& (notification.getRawNotification().getEventType() == Notification.ADD
+						|| notification.getRawNotification().getEventType() == Notification.ADD_MANY)) {
+					treeViewer.expandToLevel(2);
+				}
+			}
+		};
+		getViewModelContext().registerDomainChangeListener(domainModelListener);
 
 		// Drag and Drop
 		if (hasDnDSupport()) {
@@ -833,38 +859,32 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 					final Object root = manipulateSelection(((RootObject) ((TreeViewer) event.getSource()).getInput())
 						.getRoot());
-					final Map<String, Object> context = new LinkedHashMap<String, Object>();
-					context.put(DETAIL_KEY, true);
 
-					/* root selected */
-					if (selected.equals(root)) {
-						context.put(ROOT_KEY, true);
-						VView vView = getVElement().getDetailView();
-						if (vView.getChildren().isEmpty()) {
-							vView = ViewProviderHelper.getView((EObject) selected, context);
-						}
-						final ReferenceService referenceService = getViewModelContext().getService(
-							ReferenceService.class);
-						final ViewModelContext childContext = getViewModelContext()
-							.getChildContext((EObject) selected, getVElement(), vView,
-								new TreeMasterDetailReferenceService(referenceService));
+					final VElement viewModel = getViewModelContext().getViewModel();
+					final VViewModelProperties properties = ViewModelPropertiesHelper
+						.getInhertitedPropertiesOrEmpty(viewModel);
+					properties.addNonInheritableProperty(DETAIL_KEY, true);
 
-						manipulateViewContext(childContext);
+					final boolean rootSelected = selected.equals(root);
 
-						ECPSWTViewRenderer.INSTANCE.render(childComposite, childContext);
-
+					if (rootSelected) {
+						properties.addNonInheritableProperty(ROOT_KEY, true);
 					}
-					/* child selected */
-					else {
-						final VView view = ViewProviderHelper.getView((EObject) selected, context);
-						final ReferenceService referenceService = getViewModelContext().getService(
-							ReferenceService.class);
-						final ViewModelContext childContext = getViewModelContext().getChildContext((EObject) selected,
-							getVElement(), view, new TreeMasterDetailReferenceService(referenceService));
-
-						manipulateViewContext(childContext);
-						ECPSWTViewRenderer.INSTANCE.render(childComposite, childContext);
+					VView view = null;
+					if (rootSelected) {
+						view = getVElement().getDetailView();
 					}
+					if (view == null || view.getChildren().isEmpty()) {
+						view = ViewProviderHelper.getView((EObject) selected, properties);
+					}
+
+					final ReferenceService referenceService = getViewModelContext().getService(
+						ReferenceService.class);
+					final ViewModelContext childContext = getViewModelContext().getChildContext((EObject) selected,
+						getVElement(), view, new TreeMasterDetailReferenceService(referenceService));
+
+					manipulateViewContext(childContext);
+					ECPSWTViewRenderer.INSTANCE.render(childComposite, childContext);
 
 					relayoutDetail();
 				} catch (final ECPRendererException e) {

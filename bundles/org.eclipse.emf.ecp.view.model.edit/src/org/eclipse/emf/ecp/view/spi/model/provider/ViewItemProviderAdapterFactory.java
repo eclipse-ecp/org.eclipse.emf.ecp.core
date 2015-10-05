@@ -43,10 +43,10 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  * The adapters also support Eclipse property sheets.
  * Note that most of the adapters are shared among multiple instances.
  * <!-- begin-user-doc -->
- * <!-- end-user-doc -->
  *
- * @generated
  * @since 1.2
+ *        <!-- end-user-doc -->
+ * @generated
  */
 public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implements ComposeableAdapterFactory,
 	IChangeNotifier, IDisposable, IChildCreationExtender {
@@ -120,10 +120,8 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * @generated
 	 */
 	@Override
-	public Adapter createDiagnosticAdapter()
-	{
-		if (diagnosticItemProvider == null)
-		{
+	public Adapter createDiagnosticAdapter() {
+		if (diagnosticItemProvider == null) {
 			diagnosticItemProvider = new DiagnosticItemProvider(this);
 		}
 
@@ -148,8 +146,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 */
 	@Override
 	public Adapter createViewAdapter() {
-		if (viewItemProvider == null)
-		{
+		if (viewItemProvider == null) {
 			viewItemProvider = new ViewItemProvider(this);
 		}
 
@@ -174,12 +171,64 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 */
 	@Override
 	public Adapter createControlAdapter() {
-		if (controlItemProvider == null)
-		{
+		if (controlItemProvider == null) {
 			controlItemProvider = new ControlItemProvider(this);
 		}
 
 		return controlItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all
+	 * {@link org.eclipse.emf.ecp.view.spi.model.VViewModelLoadingProperties} instances.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.7
+	 *        <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected ViewModelLoadingPropertiesItemProvider viewModelLoadingPropertiesItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.model.VViewModelLoadingProperties}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public Adapter createViewModelLoadingPropertiesAdapter() {
+		if (viewModelLoadingPropertiesItemProvider == null) {
+			viewModelLoadingPropertiesItemProvider = new ViewModelLoadingPropertiesItemProvider(this);
+		}
+
+		return viewModelLoadingPropertiesItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link java.util.Map.Entry} instances.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.7
+	 *        <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected StringToObjectMapEntryItemProvider stringToObjectMapEntryItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link java.util.Map.Entry}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public Adapter createStringToObjectMapEntryAdapter() {
+		if (stringToObjectMapEntryItemProvider == null) {
+			stringToObjectMapEntryItemProvider = new StringToObjectMapEntryItemProvider(this);
+		}
+
+		return stringToObjectMapEntryItemProvider;
 	}
 
 	/**
@@ -200,10 +249,8 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * @generated
 	 */
 	@Override
-	public Adapter createFeaturePathDomainModelReferenceAdapter()
-	{
-		if (featurePathDomainModelReferenceItemProvider == null)
-		{
+	public Adapter createFeaturePathDomainModelReferenceAdapter() {
+		if (featurePathDomainModelReferenceItemProvider == null) {
 			featurePathDomainModelReferenceItemProvider = new FeaturePathDomainModelReferenceItemProvider(this);
 		}
 
@@ -265,11 +312,9 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 */
 	@Override
 	public Object adapt(Object object, Object type) {
-		if (isFactoryForType(type))
-		{
+		if (isFactoryForType(type)) {
 			final Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter))
-			{
+			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter)) {
 				return adapter;
 			}
 		}
@@ -344,8 +389,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	public void fireNotifyChanged(Notification notification) {
 		changeNotifier.fireNotifyChanged(notification);
 
-		if (parentAdapterFactory != null)
-		{
+		if (parentAdapterFactory != null) {
 			parentAdapterFactory.fireNotifyChanged(notification);
 		}
 	}
@@ -370,6 +414,12 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 		}
 		if (controlItemProvider != null) {
 			controlItemProvider.dispose();
+		}
+		if (viewModelLoadingPropertiesItemProvider != null) {
+			viewModelLoadingPropertiesItemProvider.dispose();
+		}
+		if (stringToObjectMapEntryItemProvider != null) {
+			stringToObjectMapEntryItemProvider.dispose();
 		}
 	}
 

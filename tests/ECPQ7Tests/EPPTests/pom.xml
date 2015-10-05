@@ -14,29 +14,36 @@
 	<modules>
 		<module>update-site</module>
 	</modules>
+	<profiles>
+		<profile>
+			<id>local</id>
+			<properties>
+				<eclipse-product>http://ftp.fau.de/eclipse/technology/epp/downloads/release/${eclipse-name}/${eclipse-sr}/eclipse-modeling-${eclipse-name}-${eclipse-sr}-win32-x86_64.zip</eclipse-product>
+			</properties>
+		</profile>
+	</profiles>
 	<properties>
-		<emfstore-update-site>http://download.eclipse.org/emfstore/releases_15</emfstore-update-site>
+		<emfstore-update-site>http://download.eclipse.org/emfstore/releases_16</emfstore-update-site>
+		<eclipse-product>http://mirror.cc.columbia.edu/pub/software/eclipse/technology/epp/downloads/release/${eclipse-name}/${eclipse-sr}/eclipse-modeling-${eclipse-name}-${eclipse-sr}-linux-gtk-x86_64.tar.gz</eclipse-product>
 	</properties>
 
 			<build>
 				<plugins>
 					<plugin>
-						<groupId>com.xored.ci4rcptt</groupId>
-						<artifactId>ci4rcptt-maven-plugin</artifactId>
-						<version>${ci4rcptt-maven-version}</version>
+						<groupId>org.eclipse.rcptt</groupId>
+						<artifactId>rcptt-maven-plugin</artifactId>
+						<version>${rcptt-maven-version}</version>
 						<extensions>true</extensions>
 						<configuration>
 								<runner>
-									<version>${ci4rcptt-runner-version}</version>
+									<version>${rcptt-runner-version}</version>
+									<vmArgs>
+										  <vmArg>-connectTimeout 600</vmArg>
+									</vmArgs>
 								</runner>
 							<aut>
-								<!--
-								<explicit>https://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/${eclipse-name}/${eclipse-sr}/eclipse-modeling-${eclipse-name}-${eclipse-sr}-win32-x86_64.zip&r=1</explicit>
-								-->
-								<!--
-								<explicit>http://mirror.netcologne.de/eclipse//technology/epp/downloads/release/${eclipse-name}/${eclipse-sr}/eclipse-modeling-${eclipse-name}-${eclipse-sr}-linux-gtk-x86_64.tar.gz</explicit>
-								-->
-								<explicit>http://mirror.cc.columbia.edu/pub/software/eclipse/technology/epp/downloads/release/${eclipse-name}/${eclipse-sr}/eclipse-modeling-${eclipse-name}-${eclipse-sr}-linux-gtk-x86_64.tar.gz</explicit>
+								
+								<explicit>${eclipse-product}</explicit>
 								
 								<!--win32-x86_64.zip-->
 								<!--linux-gtk-x86_64.tar.gz-->
@@ -55,7 +62,7 @@
 										</features>
 									</injection>
 									<injection>
-										<site>${currentBuild}/repository/</site>
+										<site>${currentBuild}/org.eclipse.emf.ecp.repository.target/target/repository</site>
 										<features>
 											<feature>org.eclipse.emf.ecp.sdk.feature.feature.group</feature>
 										</features>

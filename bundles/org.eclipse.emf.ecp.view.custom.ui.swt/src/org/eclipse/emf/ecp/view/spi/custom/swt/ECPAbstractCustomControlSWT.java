@@ -314,6 +314,18 @@ public abstract class ECPAbstractCustomControlSWT {
 	}
 
 	/**
+	 * Whether the label for this control should be rendered on the left of the control. This is the case if the
+	 * {@link VControl#getLabelAlignment()} is set to {@link LabelAlignment#LEFT} or {@link LabelAlignment#DEFAULT}.
+	 *
+	 * @return <code>true</code> if label should be on the left, <code>false</code> otherwise
+	 * @since 1.7
+	 */
+	protected boolean hasLeftLabelAlignment() {
+		return getCustomControl().getLabelAlignment() == LabelAlignment.LEFT
+			|| getCustomControl().getLabelAlignment() == LabelAlignment.DEFAULT;
+	}
+
+	/**
 	 * Create the {@link Control} displaying the label of the current {@link VControl}.
 	 *
 	 * @param parent the {@link Composite} to render onto
@@ -325,7 +337,7 @@ public abstract class ECPAbstractCustomControlSWT {
 	protected final Control createLabel(final Composite parent)
 		throws NoPropertyDescriptorFoundExeption {
 		Label label = null;
-		labelRender: if (getCustomControl().getLabelAlignment() == LabelAlignment.LEFT) {
+		labelRender: if (hasLeftLabelAlignment()) {
 			IValueProperty valueProperty;
 			try {
 				valueProperty = Activator

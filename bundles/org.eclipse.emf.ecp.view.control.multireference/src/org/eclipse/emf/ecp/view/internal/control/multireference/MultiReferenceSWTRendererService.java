@@ -16,7 +16,6 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
-import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
@@ -64,13 +63,10 @@ public class MultiReferenceSWTRendererService implements EMFFormsDIRendererServi
 		if (!VControl.class.isInstance(vElement)) {
 			return NOT_APPLICABLE;
 		}
-		final VControl vControl = (VControl) vElement;
-		final VDomainModelReference domainModelReference = vControl.getDomainModelReference();
-		if (domainModelReference == null) {
+		final VControl control = (VControl) vElement;
+		if (control.getDomainModelReference() == null) {
 			return NOT_APPLICABLE;
 		}
-		final VControl control = (VControl) vElement;
-
 		IValueProperty valueProperty;
 		try {
 			valueProperty = databindingService

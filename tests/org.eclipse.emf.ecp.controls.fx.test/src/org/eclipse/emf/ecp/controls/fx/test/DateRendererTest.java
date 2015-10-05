@@ -18,9 +18,6 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.Locale;
 
-import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
-
 import org.eclipse.emf.ecp.controls.renderer.fx.DateRendererFX;
 import org.eclipse.emf.ecp.view.model.internal.fx.GridCellFX;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
@@ -35,6 +32,9 @@ import org.eclipse.emf.emfstore.bowling.Player;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 
 /**
  * @author Lucas
@@ -62,8 +62,9 @@ public class DateRendererTest extends AbstractControlRendererTest {
 		final ViewModelContext viewModelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(vControl,
 			player);
 
-		renderer = new DateRendererFX();
-		renderer.init(vControl, viewModelContext);
+		final FXTestReportService reportService = new FXTestReportService();
+
+		renderer = new DateRendererFX(vControl, viewModelContext, reportService);
 	}
 
 	@Test

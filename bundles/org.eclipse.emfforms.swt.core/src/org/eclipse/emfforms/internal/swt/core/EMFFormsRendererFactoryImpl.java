@@ -68,7 +68,8 @@ public class EMFFormsRendererFactoryImpl implements EMFFormsRendererFactory {
 	 *
 	 * @param rendererService The EMFFormsAdditionalRendererService to remove
 	 */
-	protected void removeEMFFormsAdditionalRendererService(EMFFormsAdditionalRendererService<VElement> rendererService) {
+	protected void removeEMFFormsAdditionalRendererService(
+		EMFFormsAdditionalRendererService<VElement> rendererService) {
 		additionalRendererServices.remove(rendererService);
 	}
 
@@ -104,7 +105,13 @@ public class EMFFormsRendererFactoryImpl implements EMFFormsRendererFactory {
 			throw new EMFFormsNoRendererException(String.format(
 				"No fitting EMFFormsRendererService for %1$s available!", vElement.eClass().getName())); //$NON-NLS-1$
 		}
-		rendererInstance.init();
+		try {
+			rendererInstance.init();
+                  // BEGIN SUPRESS CATCH EXCEPTION
+		} catch (final RuntimeException e) {
+			throw new EMFFormsNoRendererException(e);
+		}
+          	  // END SUPRESS CATCH EXCEPTION
 		return rendererInstance;
 	}
 

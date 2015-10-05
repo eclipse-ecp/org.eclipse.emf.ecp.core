@@ -145,21 +145,22 @@ public class SelectEcorePage extends WizardPage {
 			public void widgetSelected(SelectionEvent e) {
 
 				final ElementListSelectionDialog selectRegisteredPackageDialog = new ElementListSelectionDialog(
-					getShell(), new LabelProvider()
-					{
-						@Override
-						public Image getImage(Object element)
-						{
-							return ExtendedImageRegistry.getInstance().getImage(
-								EcoreEditPlugin.INSTANCE.getImage("full/obj16/EPackage")); //$NON-NLS-1$
-						}
-					});
+					getShell(), new LabelProvider() {
+					@Override
+					public Image getImage(Object element) {
+						return ExtendedImageRegistry.getInstance().getImage(
+							EcoreEditPlugin.INSTANCE.getImage("full/obj16/EPackage")); //$NON-NLS-1$
+					}
+				});
 				selectRegisteredPackageDialog.setMultipleSelection(false);
 				selectRegisteredPackageDialog.setTitle("Package Selection"); //$NON-NLS-1$
 				selectRegisteredPackageDialog.setMessage("Select a package:"); //$NON-NLS-1$
 				selectRegisteredPackageDialog.setElements(EcoreHelper.getDefaultPackageRegistryContents());
 				selectRegisteredPackageDialog.open();
 				final Object[] result = selectRegisteredPackageDialog.getResult();
+				if (result == null) {
+					return;
+				}
 				final String selectedEPackageURI = (String) result[0];
 				selectedContainer = EPackage.Registry.INSTANCE.getEPackage(selectedEPackageURI);
 				text1.setText(selectedEPackageURI);
@@ -211,8 +212,7 @@ public class SelectEcorePage extends WizardPage {
 		if (selectedContainer != null) {
 			if (EPackage.class.isInstance(selectedContainer)) {
 				containerName = EPackage.class.cast(selectedContainer).getName();
-			}
-			else if (IFile.class.isInstance(selectedContainer)) {
+			} else if (IFile.class.isInstance(selectedContainer)) {
 				containerName = ((IFile) selectedContainer).getFullPath().toString();
 			}
 		}

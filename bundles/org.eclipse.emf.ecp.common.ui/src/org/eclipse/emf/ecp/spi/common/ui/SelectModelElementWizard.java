@@ -21,6 +21,7 @@ import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;
@@ -50,6 +51,10 @@ public class SelectModelElementWizard extends ECPWizard<SelectionComposite<? ext
 		@Override
 		public void createControl(Composite parent) {
 			final Composite composite = getCompositeProvider().createUI(parent);
+			if (getCompositeProvider().getViewer() instanceof TreeViewer) {
+				final TreeViewer tv = (TreeViewer) getCompositeProvider().getViewer();
+				tv.expandToLevel(2);
+			}
 			getCompositeProvider().getViewer().addSelectionChangedListener(new ISelectionChangedListener() {
 
 				@Override

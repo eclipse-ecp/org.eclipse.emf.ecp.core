@@ -5,6 +5,5 @@
         <provide interface="org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetRendererService"/>
     </service>
     <reference name="ReportService" interface="org.eclipse.emfforms.spi.common.report.ReportService" bind="setReportService"/>
-    <reference name="EmfFormsIdProvider" interface="org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsIdProvider" bind="setEmfFormsIdProvider"/>
     <implementation class="org.eclipse.emfforms.internal.spreadsheet.core.renderer.categorization.EMFFormsCategoryRendererService"/>
 </scr:component>

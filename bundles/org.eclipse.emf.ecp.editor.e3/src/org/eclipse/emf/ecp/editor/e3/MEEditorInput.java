@@ -118,6 +118,7 @@ public class MEEditorInput implements IEditorInput {
 	/**
 	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public Object getAdapter(@SuppressWarnings("rawtypes") Class clazz) {
 
@@ -158,8 +159,7 @@ public class MEEditorInput implements IEditorInput {
 	 */
 	@Override
 	public String getName() {
-		if (modelElementContext == null)
-		{
+		if (modelElementContext == null) {
 			return "Error"; //$NON-NLS-1$
 		}
 		return modelElementContext.getDomainObject().eClass().getName();

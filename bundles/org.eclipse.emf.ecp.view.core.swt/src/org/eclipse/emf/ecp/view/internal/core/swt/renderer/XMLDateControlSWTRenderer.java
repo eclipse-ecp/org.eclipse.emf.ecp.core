@@ -152,7 +152,8 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 			final IObservableValue dateObserver = SWTObservables.observeSelection(calendar);
 			final Binding binding = dataBindingContext.bindValue(dateObserver, modelValue,
 				new DateTargetToModelUpdateStrategy(eStructuralFeature, modelValue,
-					dataBindingContext, text), new DateModelToTargetUpdateStrategy(false));
+					dataBindingContext, text),
+				new DateModelToTargetUpdateStrategy(false));
 			binding.updateModelToTarget();
 
 			final Button okButton = new Button(dialog, SWT.PUSH);
@@ -187,8 +188,7 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 			}
 			if (dialogX + dialogSize.x > displayBounds.width) {
 				dialogX = dialogX - dialogSize.x;
-			}
-			else if (dialogX - dialogSize.x < displayBounds.x) {
+			} else if (dialogX - dialogSize.x < displayBounds.x) {
 				dialogX = buttonLocation.x - button.getSize().x;
 			}
 			dialog.setLocation(dialogX, dialogY);
@@ -274,7 +274,8 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 			final MessageDialog messageDialog = new MessageDialog(text.getShell(),
 				LocalizationServiceHelper.getString(getClass(), MessageKeys.XmlDateControlText_InvalidNumber), null,
 				LocalizationServiceHelper.getString(getClass(),
-					MessageKeys.XmlDateControlText_NumberInvalidValueWillBeUnset), MessageDialog.ERROR,
+					MessageKeys.XmlDateControlText_NumberInvalidValueWillBeUnset),
+				MessageDialog.ERROR,
 				new String[] { JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
 
 			new ECPDialogExecutor(messageDialog) {
@@ -388,7 +389,7 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 	@Override
 	protected void setControlEnabled(SWTGridCell gridCell, Control control, boolean enabled) {
 		if (getVElement().getLabelAlignment() == LabelAlignment.NONE && gridCell.getColumn() == 1
-			|| getVElement().getLabelAlignment() == LabelAlignment.LEFT && gridCell.getColumn() == 2) {
+			|| hasLeftLabelAlignment() && gridCell.getColumn() == 2) {
 			((Text) ((Composite) control).getChildren()[0]).setEditable(enabled);
 			((Button) ((Composite) control).getChildren()[1]).setVisible(enabled);
 		} else {

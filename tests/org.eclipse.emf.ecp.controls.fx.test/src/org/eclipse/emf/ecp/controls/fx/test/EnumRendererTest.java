@@ -12,7 +12,6 @@
 package org.eclipse.emf.ecp.controls.fx.test;
 
 import static org.junit.Assert.assertEquals;
-import javafx.scene.control.ChoiceBox;
 
 import org.eclipse.emf.ecp.controls.renderer.fx.EnumRendererFX;
 import org.eclipse.emf.ecp.view.model.internal.fx.GridCellFX;
@@ -28,6 +27,8 @@ import org.eclipse.emf.emfstore.bowling.Gender;
 import org.eclipse.emf.emfstore.bowling.Player;
 import org.junit.Before;
 import org.junit.Test;
+
+import javafx.scene.control.ChoiceBox;
 
 /**
  * @author Lucas
@@ -50,8 +51,9 @@ public class EnumRendererTest extends AbstractControlRendererTest {
 		final ViewModelContext viewModelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(vControl,
 			player);
 
-		renderer = new EnumRendererFX();
-		renderer.init(vControl, viewModelContext);
+		final FXTestReportService reportService = new FXTestReportService();
+
+		renderer = new EnumRendererFX(vControl, viewModelContext, reportService);
 	}
 
 	@SuppressWarnings("unchecked")

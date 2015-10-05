@@ -18,7 +18,6 @@ import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsAbstractSpreadsheetRenderer;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetRendererFactory;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetRendererService;
-import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsIdProvider;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
@@ -35,8 +34,6 @@ import org.osgi.service.component.annotations.Reference;
 public class EMFFormsCategoryRendererService implements EMFFormsSpreadsheetRendererService<VCategory> {
 
 	private EMFFormsSpreadsheetRendererFactory emfformsSpreadsheetRendererFactory;
-	private EMFFormsIdProvider emfFormsIdProvider;
-
 	private ReportService reportService;
 
 	/**
@@ -75,16 +72,6 @@ public class EMFFormsCategoryRendererService implements EMFFormsSpreadsheetRende
 	}
 
 	/**
-	 * The EMFFormsIdProvider to use.
-	 *
-	 * @param emfFormsIdProvider the EMFFormsIdProvider to set
-	 */
-	@Reference
-	protected void setEmfFormsIdProvider(EMFFormsIdProvider emfFormsIdProvider) {
-		this.emfFormsIdProvider = emfFormsIdProvider;
-	}
-
-	/**
 	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetRendererService#isApplicable(VElement,ViewModelContext)
@@ -105,7 +92,7 @@ public class EMFFormsCategoryRendererService implements EMFFormsSpreadsheetRende
 	@Override
 	public EMFFormsAbstractSpreadsheetRenderer<VCategory> getRendererInstance(VCategory vElement,
 		ViewModelContext viewModelContext) {
-		return new EMFFormsCategoryRenderer(emfformsSpreadsheetRendererFactory, emfFormsIdProvider, reportService);
+		return new EMFFormsCategoryRenderer(emfformsSpreadsheetRendererFactory, reportService);
 	}
 
 }

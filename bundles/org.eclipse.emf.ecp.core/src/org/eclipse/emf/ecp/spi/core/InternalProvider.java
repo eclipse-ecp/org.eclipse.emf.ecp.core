@@ -50,18 +50,15 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
 		/**
 		 * Called on create.
 		 */
-		CREATE,
-		/**
-		 * Called on initialization.
-		 */
-		INIT,
-		/**
-		 * Called on disposal.
-		 */
-		DISPOSE,
-		/**
-		 * Called when removed.
-		 */
+		CREATE, /**
+				 * Called on initialization.
+				 */
+		INIT, /**
+				 * Called on disposal.
+				 */
+		DISPOSE, /**
+					 * Called when removed.
+					 */
 		REMOVE;
 	}
 
@@ -222,4 +219,20 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
 	 * @return true if the project contains such an object, false otherwise
 	 */
 	boolean contains(InternalProject project, Object object);
+
+	/**
+	 * Registers a {@link ProviderChangeListener}.
+	 *
+	 * @param listener a {@link ProviderChangeListener}
+	 * @since 1.7
+	 */
+	void registerChangeListener(ProviderChangeListener listener);
+
+	/**
+	 * Unregisters a {@link ProviderChangeListener}.
+	 *
+	 * @param listener a {@link ProviderChangeListener}
+	 * @since 1.7
+	 */
+	void unregisterChangeListener(ProviderChangeListener listener);
 }

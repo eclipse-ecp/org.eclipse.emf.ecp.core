@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="ecpfx" sequenceNumber="28">
+<?pde version="3.8"?><target name="ecpfx" sequenceNumber="301">
 <locations>
 <location includeAllPlatforms="true" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.fx.target.feature.feature.group" version="0.0.0"/>
-<repository location="http://download.eclipse.org/efxclipse/runtime-released/1.1.0/site"/>
+<repository location="http://download.eclipse.org/efxclipse/runtime-released/2.1.0/site"/>
 </location>
 <location includeAllPlatforms="true" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.jdt.feature.group" version="0.0.0"/>
-<repository location="http://download.eclipse.org/releases/luna"/>
+<repository location="http://download.eclipse.org/releases/mars"/>
 </location>
 <location includeAllPlatforms="true" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.emf.ecp.emfforms.runtime.feature.feature.group" version="0.0.0"/>
-<repository location="http://download.eclipse.org/ecp/releases/releases_15"/>
+<repository location="http://download.eclipse.org/ecp/releases/releases_17"/>
 </location>
 <location includeAllPlatforms="true" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.emf.emfstore.example.feature.feature.group" version="0.0.0"/>
@@ -19,7 +19,7 @@
 <unit id="org.eclipse.emf.emfstore.client.ui.feature.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.emf.emfstore.common.feature.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.emf.emfstore.client.feature.feature.group" version="0.0.0"/>
-<repository location="http://download.eclipse.org/emf-store/releases_14"/>
+<repository location="http://download.eclipse.org/emfstore/releases_16"/>
 </location>
 </locations>
 </target>

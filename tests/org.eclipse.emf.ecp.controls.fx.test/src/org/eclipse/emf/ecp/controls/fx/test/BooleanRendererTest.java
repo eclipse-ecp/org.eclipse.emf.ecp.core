@@ -12,7 +12,6 @@
 package org.eclipse.emf.ecp.controls.fx.test;
 
 import static org.junit.Assert.assertEquals;
-import javafx.scene.control.CheckBox;
 
 import org.eclipse.emf.ecp.controls.renderer.fx.BooleanRendererFX;
 import org.eclipse.emf.ecp.view.model.internal.fx.GridCellFX;
@@ -27,6 +26,8 @@ import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.emf.emfstore.bowling.Player;
 import org.junit.Before;
 import org.junit.Test;
+
+import javafx.scene.control.CheckBox;
 
 /**
  * @author Lucas
@@ -50,8 +51,9 @@ public class BooleanRendererTest extends AbstractControlRendererTest {
 		final ViewModelContext viewModelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(vControl,
 			player);
 
-		renderer = new BooleanRendererFX();
-		renderer.init(vControl, viewModelContext);
+		final FXTestReportService reportService = new FXTestReportService();
+
+		renderer = new BooleanRendererFX(vControl, viewModelContext, reportService);
 	}
 
 	@Test

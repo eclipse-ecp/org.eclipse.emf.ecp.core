@@ -12,8 +12,9 @@
 package org.eclipse.emfforms.internal.core.services.label;
 
 import java.text.MessageFormat;
-import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.WeakHashMap;
 
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.WritableValue;
@@ -49,30 +50,6 @@ import org.osgi.framework.ServiceReference;
 public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFFormsLocaleChangeListener {
 
 	/**
-	 * Key for the map of displayname observables.
-	 *
-	 * @author Eugen Neufeld
-	 */
-	private static class DisplayNameKey {
-		private final String key;
-		private final Bundle bundle;
-
-		public DisplayNameKey(String key, Bundle bundle) {
-			super();
-			this.key = key;
-			this.bundle = bundle;
-		}
-
-		String getKey() {
-			return key;
-		}
-
-		Bundle getBundle() {
-			return bundle;
-		}
-	}
-
-	/**
 	 * Key for the map of description observables.
 	 *
 	 * @author Eugen Neufeld
@@ -100,6 +77,55 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 		String getFeatureName() {
 			return featureName;
 		}
+
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + (bundle == null ? 0 : bundle.hashCode());
+			result = prime * result + (eClassName == null ? 0 : eClassName.hashCode());
+			result = prime * result + (featureName == null ? 0 : featureName.hashCode());
+			return result;
+		}
+
+		// BEGIN COMPLEX CODE
+		// path complexity check does not take returns into account
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj) {
+				return true;
+			}
+			if (obj == null) {
+				return false;
+			}
+			if (!(obj instanceof DescriptionKey)) {
+				return false;
+			}
+			final DescriptionKey other = (DescriptionKey) obj;
+			if (bundle == null) {
+				if (other.bundle != null) {
+					return false;
+				}
+			} else if (!bundle.equals(other.bundle)) {
+				return false;
+			}
+			if (eClassName == null) {
+				if (other.eClassName != null) {
+					return false;
+				}
+			} else if (!eClassName.equals(other.eClassName)) {
+				return false;
+			}
+			if (featureName == null) {
+				if (other.featureName != null) {
+					return false;
+				}
+			} else if (!featureName.equals(other.featureName)) {
+				return false;
+			}
+			return true;
+		}
+		// END COMPLEX CODE
 	}
 
 	private static final String DISPLAY_NAME = "_UI_%1$s_%2$s_feature"; //$NON-NLS-1$
@@ -112,11 +138,11 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 	private ReportService reportService;
 	private BundleResolver bundleResolver = new BundleResolverImpl();
 
-	private final Map<DisplayNameKey, WritableValue> displayKeyObservableMap = new LinkedHashMap<DisplayNameKey, WritableValue>();
-	private final Map<DescriptionKey, WritableValue> descriptionKeyObservableMap = new LinkedHashMap<DescriptionKey, WritableValue>();
+	private final Map<WritableValue, BundleKeyWrapper> displayKeyObservableMap = new WeakHashMap<WritableValue, BundleKeyWrapper>();
+	private final Map<WritableValue, DescriptionKey> descriptionKeyObservableMap = new WeakHashMap<WritableValue, DescriptionKey>();
 	private EMFFormsLocaleProvider localeProvider;
-	private ServiceReference<EMFFormsLabelProvider> defaultLabelProviderReference;
-	private EMFFormsLabelProvider labelProviderDefault;
+	private ServiceReference<EMFFormsLabelProviderDefaultImpl> defaultLabelProviderReference;
+	private EMFFormsLabelProviderDefaultImpl labelProviderDefault;
 
 	/**
 	 * Sets the {@link ReportService} service.
@@ -172,7 +198,7 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 	 */
 	protected void activate(BundleContext bundleContext) throws InvalidSyntaxException {
 		defaultLabelProviderReference = bundleContext
-			.getServiceReferences(EMFFormsLabelProvider.class, "(service.ranking=1)").iterator().next(); //$NON-NLS-1$
+			.getServiceReferences(EMFFormsLabelProviderDefaultImpl.class, null).iterator().next();
 		labelProviderDefault = bundleContext.getService(defaultLabelProviderReference);
 	}
 
@@ -183,6 +209,32 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 	 */
 	protected void deactivate(BundleContext bundleContext) {
 		bundleContext.ungetService(defaultLabelProviderReference);
+	}
+
+	private BundleKeyResultWrapper getDisplayBundleKeyResultWrapper(EStructuralFeature structuralFeature)
+		throws NoBundleFoundException {
+		final EClass eContainingClass = structuralFeature.getEContainingClass();
+		final Bundle bundle = bundleResolver.getEditBundle(eContainingClass);
+		final String key = String.format(DISPLAY_NAME, eContainingClass.getName(),
+			structuralFeature.getName());
+		final String displayName = getDisplayName(bundle, key);
+		return new BundleKeyResultWrapper(new BundleKeyWrapper(key, bundle), displayName);
+	}
+
+	/**
+	 * Returns the display name of the {@link EStructuralFeature}.
+	 *
+	 * @param structuralFeature The {@link EStructuralFeature}
+	 * @return The localized feature name
+	 */
+	public String getDisplayName(EStructuralFeature structuralFeature) {
+		try {
+			return getDisplayBundleKeyResultWrapper(structuralFeature).getResult();
+		} catch (final NoBundleFoundException ex) {
+			reportService.report(new AbstractReport(ex, 1));
+			reportService.report(new AbstractReport("Using fallback", 1)); //$NON-NLS-1$
+			return labelProviderDefault.getDisplayName(structuralFeature);
+		}
 	}
 
 	/**
@@ -202,19 +254,17 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 			throw new NoLabelFoundException(ex);
 		}
 		final EStructuralFeature structuralFeature = (EStructuralFeature) valueProperty.getValueType();
-		final EClass eContainingClass = structuralFeature.getEContainingClass();
-		Bundle bundle;
+		BundleKeyResultWrapper bundleKeyResultWrapper;
 		try {
-			bundle = bundleResolver.getEditBundle(eContainingClass);
+			bundleKeyResultWrapper = getDisplayBundleKeyResultWrapper(structuralFeature);
 		} catch (final NoBundleFoundException ex) {
 			reportService.report(new AbstractReport(ex, 1));
 			reportService.report(new AbstractReport("Using fallback", 1)); //$NON-NLS-1$
 			return labelProviderDefault.getDisplayName(domainModelReference);
 		}
-		final String key = String.format(DISPLAY_NAME, eContainingClass.getName(),
-			structuralFeature.getName());
-		final WritableValue value = getObservableValue(getDisplayName(bundle, key));
-		displayKeyObservableMap.put(new DisplayNameKey(key, bundle), value);
+
+		final WritableValue value = getObservableValue(bundleKeyResultWrapper.getResult());
+		displayKeyObservableMap.put(value, bundleKeyResultWrapper.getBundleKeyWrapper());
 		return value;
 	}
 
@@ -238,18 +288,17 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 		}
 		final EStructuralFeature structuralFeature = (EStructuralFeature) valueProperty.getValueType();
 
-		Bundle bundle;
+		BundleKeyResultWrapper displayBundleKeyResultWrapper;
 		try {
-			bundle = bundleResolver.getEditBundle(structuralFeature.getEContainingClass());
+			displayBundleKeyResultWrapper = getDisplayBundleKeyResultWrapper(structuralFeature);
 		} catch (final NoBundleFoundException ex) {
 			reportService.report(new AbstractReport(ex, 1));
 			reportService.report(new AbstractReport("Using fallback", 1)); //$NON-NLS-1$
 			return labelProviderDefault.getDisplayName(domainModelReference, rootObject);
 		}
-		final String key = String.format(DISPLAY_NAME, structuralFeature.getEContainingClass().getName(),
-			structuralFeature.getName());
-		final WritableValue displayObserveValue = getObservableValue(getDisplayName(bundle, key));
-		displayKeyObservableMap.put(new DisplayNameKey(key, bundle), displayObserveValue);
+
+		final WritableValue displayObserveValue = getObservableValue(displayBundleKeyResultWrapper.getResult());
+		displayKeyObservableMap.put(displayObserveValue, displayBundleKeyResultWrapper.getBundleKeyWrapper());
 		return displayObserveValue;
 	}
 
@@ -282,8 +331,8 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 		final WritableValue writableValue = getObservableValue(getDescription(eContainingClass
 			.getName(),
 			structuralFeature.getName(), bundle));
-		descriptionKeyObservableMap.put(new DescriptionKey(eContainingClass.getName(),
-			structuralFeature.getName(), bundle), writableValue);
+		descriptionKeyObservableMap.put(writableValue, new DescriptionKey(eContainingClass.getName(),
+			structuralFeature.getName(), bundle));
 		return writableValue;
 	}
 
@@ -317,8 +366,9 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 		final WritableValue writableValue = getObservableValue(getDescription(structuralFeature.getEContainingClass()
 			.getName(),
 			structuralFeature.getName(), bundle));
-		descriptionKeyObservableMap.put(new DescriptionKey(structuralFeature.getEContainingClass().getName(),
-			structuralFeature.getName(), bundle), writableValue);
+		descriptionKeyObservableMap.put(writableValue,
+			new DescriptionKey(structuralFeature.getEContainingClass().getName(),
+				structuralFeature.getName(), bundle));
 		return writableValue;
 	}
 
@@ -352,12 +402,14 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 	 */
 	@Override
 	public void notifyLocaleChange() {
-		for (final DisplayNameKey displayNameKey : displayKeyObservableMap.keySet()) {
-			final WritableValue writableValue = displayKeyObservableMap.get(displayNameKey);
+		for (final Entry<WritableValue, BundleKeyWrapper> entry : displayKeyObservableMap.entrySet()) {
+			final BundleKeyWrapper displayNameKey = entry.getValue();
+			final WritableValue writableValue = entry.getKey();
 			writableValue.setValue(getDisplayName(displayNameKey.getBundle(), displayNameKey.getKey()));
 		}
-		for (final DescriptionKey descriptionKey : descriptionKeyObservableMap.keySet()) {
-			final WritableValue writableValue = descriptionKeyObservableMap.get(descriptionKey);
+		for (final Entry<WritableValue, DescriptionKey> entry : descriptionKeyObservableMap.entrySet()) {
+			final DescriptionKey descriptionKey = entry.getValue();
+			final WritableValue writableValue = entry.getKey();
 			writableValue.setValue(getDescription(descriptionKey.geteClassName(), descriptionKey.getFeatureName(),
 				descriptionKey.getBundle()));
 		}

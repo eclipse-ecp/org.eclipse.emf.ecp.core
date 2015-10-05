@@ -18,25 +18,24 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>VFeature Path Domain Model Reference</b></em>'.
+ * @since 1.2
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
- * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference#getDomainModelEFeature <em>Domain
- * Model EFeature</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference#getDomainModelEReferencePath <em>
- * Domain Model EReference Path</em>}</li>
- * </ul>
  * </p>
+ * <ul>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference#getDomainModelEFeature
+ * <em>Domain Model EFeature</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference#getDomainModelEReferencePath
+ * <em>Domain Model EReference Path</em>}</li>
+ * </ul>
  *
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getFeaturePathDomainModelReference()
- * @model
+ * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='resolveable'"
  * @generated
- * @since 1.2
  */
-public interface VFeaturePathDomainModelReference extends VDomainModelReference
-{
+public interface VFeaturePathDomainModelReference extends VDomainModelReference {
 
 	/**
 	 * Returns the value of the '<em><b>Domain Model EFeature</b></em>' reference.

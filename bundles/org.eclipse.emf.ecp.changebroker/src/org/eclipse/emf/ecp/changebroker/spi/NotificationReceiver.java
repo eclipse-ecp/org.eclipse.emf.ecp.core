@@ -12,6 +12,7 @@
 package org.eclipse.emf.ecp.changebroker.spi;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * A target for new notifications.
@@ -27,5 +28,29 @@ public interface NotificationReceiver {
 	 * @param notification the notification
 	 */
 	void notify(Notification notification);
+
+	/**
+	 * Called before an element gets deleted, after all {@link VetoableDeleteObserver} have returned true and therefore
+	 * the delete operation is allowed.
+	 *
+	 * @param toBeDeleted The {@link EObject} to be deleted
+	 * @since 1.7
+	 */
+	void notifyPreDelete(EObject toBeDeleted);
+
+	/**
+	 * Called after an element was deleted.
+	 *
+	 * @param toBeDeleted The {@link EObject} to be deleted
+	 * @since 1.7
+	 */
+	void notifyPostDelete(EObject toBeDeleted);
+
+	/**
+	 * @param toBeDeleted The {@link EObject} to be deleted
+	 * @return If all {@link VetoableDeleteObserver} return true and therefore allow the delete operation.
+	 * @since 1.7
+	 */
+	boolean canDelete(EObject toBeDeleted);
 
 }

@@ -27,7 +27,7 @@ public final class PreferenceHelper {
 	}
 
 	// TODO: ChainSaw namespace?
-	private static final String PREFERENCE_NODE = "ecp";
+	private static final String PREFERENCE_NODE = "ecp"; //$NON-NLS-1$
 
 	/**
 	 * Get a preference value for a specific key.
@@ -57,7 +57,7 @@ public final class PreferenceHelper {
 					.flush();
 			} catch (final BackingStoreException e) {
 				Activator.log(
-					"Could not persist the preference change: {" + key + ", " + value + "}", e);
+					"Could not persist the preference change: {" + key + ", " + value + "}", e); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			}
 		}
 	}

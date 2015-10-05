@@ -6,15 +6,15 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _5oiUwDNtEeSiS7b7ptZeHw
-Runtime-Version: 1.5.2.201408180747
-Save-Time: 9/30/14 12:49 PM
+Runtime-Version: 1.5.4.201412181238
+Save-Time: 9/15/15 10:41 AM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
 Content-Type: text/ecl
 Entry-Name: .content
 
-get-view "Project Explorer" | get-tree | select "com.eclipsesource.makeithappen.model.viewmodel/viewmodels/User.view" 
+get-view "Project Explorer" | get-tree | select "org.eclipse.emf.ecp.makeithappen.model.viewmodel/viewmodels/User.view" 
     | double-click
 with [get-editor "User.view"] {
     with [get-tree] {
@@ -104,14 +104,14 @@ get-editor "User.view" | get-button "Open Preview" | click
 get-view "EMF Forms Preview" | get-button "Refresh Preview View" | click
 with [get-view "EMF Forms Preview"] {
     get-combo -after [get-label Gender] | get-property selection | equals Male | verify-true
-    get-control Any -after [get-label "View Editor Preview"] -index 6 
+    get-control Any -after [get-label "View Editor Preview"] -index 7 
         | get-property "getChildren().Control[0].getChildren().Control[0].getChildren().length" | equals 4 | verify-true
     get-label Heigth | get-property caption | equals Heigth | verify-true
 }
 get-view "EMF Forms Preview" | get-combo -after [get-label Gender] | select Female
 with [get-view "EMF Forms Preview"] {
     get-combo -after [get-label Gender] | get-property selection | equals Female | verify-true
-    get-control Any -after [get-label "View Editor Preview"] -index 6 
+    get-control Any -after [get-label "View Editor Preview"] -index 7 
         | get-property "getChildren().Control[0].getChildren().Control[0].getChildren().length" | equals 4 | verify-true
     get-label Weight | get-property caption | equals Weight | verify-true
 }

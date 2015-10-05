@@ -30,10 +30,10 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
 /**
  * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.spi.model.VView} object.
  * <!-- begin-user-doc -->
- * <!-- end-user-doc -->
  *
- * @generated
  * @since 1.2
+ *        <!-- end-user-doc -->
+ * @generated
  */
 public class ViewItemProvider
 	extends ElementItemProvider {
@@ -57,8 +57,7 @@ public class ViewItemProvider
 	 */
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (itemPropertyDescriptors == null)
-		{
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addRootEClassPropertyDescriptor(object);
@@ -75,9 +74,8 @@ public class ViewItemProvider
 	 * @generated
 	 */
 	protected void addRootEClassPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_View_rootEClass_feature"), //$NON-NLS-1$
 				getString("_UI_PropertyDescriptor_description", "_UI_View_rootEClass_feature", "_UI_View_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -98,11 +96,9 @@ public class ViewItemProvider
 	 *        <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addEcorePathPropertyDescriptor(Object object)
-	{
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+	protected void addEcorePathPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_View_ecorePath_feature"), //$NON-NLS-1$
 				getString("_UI_PropertyDescriptor_description", "_UI_View_ecorePath_feature", "_UI_View_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -126,8 +122,7 @@ public class ViewItemProvider
 	 */
 	@Override
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
-		if (childrenFeatures == null)
-		{
+		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(VViewPackage.Literals.VIEW__CHILDREN);
 		}
@@ -190,8 +185,7 @@ public class ViewItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(VView.class))
-		{
+		switch (notification.getFeatureID(VView.class)) {
 		case VViewPackage.VIEW__ECORE_PATH:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
@@ -214,10 +208,8 @@ public class ViewItemProvider
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
-		newChildDescriptors.add
-			(createChildParameter
-			(VViewPackage.Literals.VIEW__CHILDREN,
-				VViewFactory.eINSTANCE.createControl()));
+		newChildDescriptors.add(createChildParameter(VViewPackage.Literals.VIEW__CHILDREN,
+			VViewFactory.eINSTANCE.createControl()));
 	}
 
 }

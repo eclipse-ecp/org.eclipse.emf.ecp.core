@@ -18,7 +18,9 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.CommandStackListener;
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -34,6 +36,7 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emf.ecp.view.template.internal.tooling.Activator;
+import org.eclipse.emf.ecp.view.template.internal.tooling.Messages;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplate;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -114,23 +117,29 @@ public class TemplateModelEditorPart extends EditorPart {
 		try {
 			resource = resourceSet.createResource(URI.createURI(fei.getURI().toURL().toExternalForm()));
 			resource.load(null);
-
-			template = (VTViewTemplate) resource.getContents().get(0);
-
-			for (final String ecorePath : template.getReferencedEcores()) {
-				EcoreHelper.registerEcore(ecorePath);
+			final EList<EObject> resourceContents = resource.getContents();
+			if (resourceContents.size() > 0 && VTViewTemplate.class.isInstance(resourceContents.get(0))) {
+				template = (VTViewTemplate) resourceContents.get(0);
+				for (final String ecorePath : template.getReferencedEcores()) {
+					EcoreHelper.registerEcore(ecorePath);
+				}
+			} else {
+				throw new PartInitException(Messages.TemplateModelEditorPart_initError);
 			}
 
 		} catch (final IOException e) {
 			Activator.log(e);
+			throw new PartInitException(Messages.TemplateModelEditorPart_initError, e);
 		}
 
 	}
 
 	@Override
 	public void dispose() {
-		for (final String ecorePath : template.getReferencedEcores()) {
-			EcoreHelper.unregisterEcore(ecorePath);
+		if (template != null) {
+			for (final String ecorePath : template.getReferencedEcores()) {
+				EcoreHelper.unregisterEcore(ecorePath);
+			}
 		}
 		super.dispose();
 	}

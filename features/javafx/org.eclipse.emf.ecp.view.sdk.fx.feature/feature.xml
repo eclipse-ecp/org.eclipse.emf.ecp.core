@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipse.emf.ecp.view.sdk.fx.feature"
-      label="EMF Forms FX SDK Feature"
-      version="1.6.0.qualifier"
+      label="EMFForms JavaFX SDK Feature"
+      version="1.7.0.qualifier"
       provider-name="Eclipse Modeling Project">
 
    <description url="http://www.example.com/description">

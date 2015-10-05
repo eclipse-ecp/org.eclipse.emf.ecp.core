@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ASCII"?>
+<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model" ecorePath="/org.eclipse.emf.ecp.makeithappen.model/model/task.ecore">
+  <rootEClass href="http://eclipse/org/emf/ecp/makeithappen/model/task#//User"/>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control_firstName">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
+      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://eclipse/org/emf/ecp/makeithappen/model/task#//User/firstName"/>
+    </domainModelReference>
+  </children>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control_lastName">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
+      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://eclipse/org/emf/ecp/makeithappen/model/task#//User/lastName"/>
+    </domainModelReference>
+  </children>
+</org.eclipse.emf.ecp.view.model:View>

@@ -202,7 +202,7 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 			viewModelDBC.bindValue(SWTObservables.observeTooltipText(tableColumn), tooltip);
 		} catch (final NoLabelFoundException e) {
 			// FIXME Expectations?
-			getReportService().getReports().add(new RenderingFailedReport(e));
+			getReportService().report(new RenderingFailedReport(e));
 			tableColumn.setText(e.getMessage());
 			tableColumn.setToolTipText(e.toString());
 		}
@@ -318,8 +318,9 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 			}
 
 			if (VTableControl.class.isInstance(notification.getNotifier())
-				&& (VTableDomainModelReference.class.isInstance(notification.getNewValue()) || VTableDomainModelReference.class
-					.isInstance(notification.getOldValue()))) {
+				&& (VTableDomainModelReference.class.isInstance(notification.getNewValue())
+					|| VTableDomainModelReference.class
+						.isInstance(notification.getOldValue()))) {
 				updateEObjectAndStructuralFeature();
 				viewer.refresh();
 				parent.layout();
@@ -333,7 +334,8 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 				observableValue = Activator
 					.getDefault()
 					.getEMFFormsDatabinding()
-					.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
+					.getObservableValue(getVElement().getDomainModelReference(),
+						getViewModelContext().getDomainModel());
 				list = Activator.getDefault().getEMFFormsDatabinding()
 					.getObservableList(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 			} catch (final DatabindingFailedException ex) {

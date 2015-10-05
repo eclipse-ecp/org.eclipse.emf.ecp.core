@@ -43,11 +43,10 @@
 		</profile>
 	</profiles>
 	<modules>
-	<!-- 
-		<module>../../../tests/spreadsheet/org.eclipse.emfforms.spreadsheet.core.importer.tests</module>
 		<module>../../../tests/spreadsheet/org.eclipse.emfforms.spreadsheet.core.tests</module>
+		<module>../../../tests/spreadsheet/org.eclipse.emfforms.spreadsheet.core.renderer.categorization.tests</module>
+		<module>../../../tests/spreadsheet/org.eclipse.emfforms.spreadsheet.core.renderer.table.tests</module>
 		<module>../../../tests/spreadsheet/org.eclipse.emfforms.spreadsheet.integrationtest</module>
-	-->
 	</modules>
 	
 	<build>

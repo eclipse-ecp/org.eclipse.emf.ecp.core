@@ -19,20 +19,22 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Control</b></em>'.
- * <!-- end-user-doc -->
  *
- * <p>
- * The following features are supported:
- * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.model.VControl#getLabelAlignment <em>Label Alignment</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.model.VControl#getDomainModelReference <em>Domain Model Reference</em>}</li>
- * </ul>
- * </p>
+ * @since 1.2
+ *        <!-- end-user-doc -->
+ *
+ *        <p>
+ *        The following features are supported:
+ *        </p>
+ *        <ul>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.VControl#getLabelAlignment <em>Label Alignment</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.VControl#getDomainModelReference <em>Domain Model Reference</em>
+ *        }</li>
+ *        </ul>
  *
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getControl()
  * @model
  * @generated
- * @since 1.2
  */
 public interface VControl extends VContainedElement {
 	/**
@@ -66,7 +68,7 @@ public interface VControl extends VContainedElement {
 
 	/**
 	 * Returns the value of the '<em><b>Label Alignment</b></em>' attribute.
-	 * The default value is <code>"Left"</code>.
+	 * The default value is <code>"Default"</code>.
 	 * The literals are from the enumeration {@link org.eclipse.emf.ecp.view.spi.model.LabelAlignment}.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -79,7 +81,7 @@ public interface VControl extends VContainedElement {
 	 * @see org.eclipse.emf.ecp.view.spi.model.LabelAlignment
 	 * @see #setLabelAlignment(LabelAlignment)
 	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getControl_LabelAlignment()
-	 * @model default="Left" required="true"
+	 * @model default="Default" required="true"
 	 * @generated
 	 */
 	LabelAlignment getLabelAlignment();

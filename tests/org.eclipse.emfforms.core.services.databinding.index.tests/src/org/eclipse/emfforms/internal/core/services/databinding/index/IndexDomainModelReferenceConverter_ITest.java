@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
-import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.emf.databinding.IEMFValueProperty;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexdmrFactory;
@@ -31,7 +31,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter;
-import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -51,7 +51,7 @@ public class IndexDomainModelReferenceConverter_ITest {
 	private static BundleContext bundleContext;
 	private DomainModelReferenceConverter service;
 	private ServiceReference<DomainModelReferenceConverter> serviceReference;
-	private EMFFormsDatabinding emfFormsDatabinding;
+	private EMFFormsDatabindingEMF emfFormsDatabinding;
 
 	@BeforeClass
 	public static void setUpBeforeClass() {
@@ -63,10 +63,10 @@ public class IndexDomainModelReferenceConverter_ITest {
 	public void setUp() throws DatabindingFailedException {
 		final Dictionary<String, Object> dictionary = new Hashtable<String, Object>();
 		dictionary.put("service.ranking", 50); //$NON-NLS-1$
-		emfFormsDatabinding = mock(EMFFormsDatabinding.class);
+		emfFormsDatabinding = mock(EMFFormsDatabindingEMF.class);
 		when(emfFormsDatabinding.getValueProperty(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
-			mock(IValueProperty.class));
-		bundleContext.registerService(EMFFormsDatabinding.class, emfFormsDatabinding, dictionary);
+			mock(IEMFValueProperty.class));
+		bundleContext.registerService(EMFFormsDatabindingEMF.class, emfFormsDatabinding, dictionary);
 		serviceReference = bundleContext
 			.getServiceReference(DomainModelReferenceConverter.class);
 		service = bundleContext.getService(serviceReference);

@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="ASCII"?>
-<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model" name="the view name">
+<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/170" xmi:id="_shRmgEWAEeWfKJaajyNdyA" name="the view name">
   <rootEClass href="http://org/eclipse/example/bowling#//League"/>
 </org.eclipse.emf.ecp.view.model:View>

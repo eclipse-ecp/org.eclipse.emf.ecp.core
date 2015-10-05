@@ -55,7 +55,7 @@ public class DeleteDialog extends TitleAreaDialog {
 		setTitle(Messages.DeleteDialog_Title);
 		setTitleImage(Activator.getImage("icons/delete_wiz.png")); //$NON-NLS-1$
 		setMessage(Messages.DeleteDialog_Message_AreYouSure + count + Messages.DeleteDialog_Message_element
-			+ (count == 1 ? "" : Messages.DeleteDialog_Message_element_plural) + "?");
+			+ (count == 1 ? "" : Messages.DeleteDialog_Message_element_plural) + "?"); //$NON-NLS-1$ //$NON-NLS-2$
 
 		final Composite area = (Composite) super.createDialogArea(parent);
 		final Composite container = new Composite(area, SWT.NONE);

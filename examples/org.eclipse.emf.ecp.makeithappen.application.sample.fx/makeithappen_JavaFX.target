@@ -1,21 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="makeithappen_JavaFX" sequenceNumber="11">
+<?pde version="3.8"?><target name="makeithappen_JavaFX" sequenceNumber="17">
 <locations>
 <location includeAllPlatforms="true" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.emf.ecp.view.sdk.fx.feature.feature.group" version="0.0.0"/>
-<repository location="http://download.eclipse.org/ecp/javafx"/>
-</location>
-<location includeAllPlatforms="true" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.emf.sdk.feature.group" version="0.0.0"/>
-<repository location="http://download.eclipse.org/releases/luna/"/>
+<repository location="http://download.eclipse.org/releases/mars/"/>
 </location>
 <location includeAllPlatforms="true" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.emf.ecp.emfforms.runtime.feature.feature.group" version="1.5.1.20150303-1542"/>
-<repository location="http://download.eclipse.org/ecp/releases/releases_15"/>
+<unit id="org.eclipse.emf.ecp.emfforms.runtime.feature.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.emf.ecp.view.sdk.fx.feature.feature.group" version="0.0.0"/>
+<repository location="http://download.eclipse.org/ecp/releases/releases_target_17"/>
 </location>
 <location includeAllPlatforms="true" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.fx.target.feature.feature.group" version="1.1.0.201411050703"/>
-<repository location="http://download.eclipse.org/efxclipse/runtime-released/1.1.0/site"/>
+<unit id="org.eclipse.fx.target.feature.feature.group" version="0.0.0"/>
+<repository location="http://download.eclipse.org/efxclipse/runtime-released/2.1.0/site"/>
 </location>
 </locations>
 <targetJRE path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>

@@ -12,6 +12,7 @@
 package org.eclipse.emf.ecp.view.edapt.test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 
 import java.io.File;
@@ -19,15 +20,21 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Map;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.ecp.view.edapt.EdaptViewModelMigrator;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
+import org.eclipse.emf.ecp.view.spi.model.util.VViewResourceFactoryImpl;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -66,6 +73,10 @@ public abstract class AbstractMigrationTest {
 		assertEquals(0, dmr.getDomainModelEReferencePath().size());
 	}
 
+	protected static void assertUUIDPresent(EObject object) {
+		assertNotNull(XMIResource.class.cast(object.eResource()).getID(object));
+	}
+
 	// BEGIN SUPRESS CATCH EXCEPTION
 	protected abstract void performTest() throws Exception;// END SUPRESS CATCH EXCEPTION
 
@@ -80,7 +91,14 @@ public abstract class AbstractMigrationTest {
 	}
 
 	protected VView getMigratedView() throws IOException {
-		final Resource resource = new ResourceSetImpl().createResource(resourceURI);
+		final ResourceSet resourceSet = new ResourceSetImpl();
+		final Map<String, Object> extensionToFactoryMap = resourceSet
+			.getResourceFactoryRegistry().getExtensionToFactoryMap();
+		extensionToFactoryMap.put(Resource.Factory.Registry.DEFAULT_EXTENSION,
+			new VViewResourceFactoryImpl());
+		resourceSet.getPackageRegistry().put(VViewPackage.eNS_URI,
+			VViewPackage.eINSTANCE);
+		final Resource resource = resourceSet.createResource(resourceURI);
 		resource.load(null);
 		final VView view = (VView) resource.getContents().get(0);
 		return view;

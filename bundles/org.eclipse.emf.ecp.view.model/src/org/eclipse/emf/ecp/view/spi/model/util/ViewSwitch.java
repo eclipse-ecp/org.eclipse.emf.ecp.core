@@ -11,6 +11,8 @@
  */
 package org.eclipse.emf.ecp.view.spi.model.util;
 
+import java.util.Map;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
@@ -24,6 +26,8 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VViewModelLoadingProperties;
+import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 
 /**
@@ -32,11 +36,11 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * for each class of the model,
  * starting with the actual class of the object and proceeding up the
  * inheritance hierarchy until a non-null result is returned, which is the
- * result of the switch. <!-- end-user-doc -->
+ * result of the switch.
  *
+ * @since 1.2 <!-- end-user-doc -->
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage
  * @generated
- * @since 1.2
  */
 public class ViewSwitch<T> extends Switch<T> {
 	/**
@@ -55,8 +59,7 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public ViewSwitch() {
-		if (modelPackage == null)
-		{
+		if (modelPackage == null) {
 			modelPackage = VViewPackage.eINSTANCE;
 		}
 	}
@@ -85,8 +88,7 @@ public class ViewSwitch<T> extends Switch<T> {
 	 */
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
-		switch (classifierID)
-		{
+		switch (classifierID) {
 		case VViewPackage.DIAGNOSTIC: {
 			final VDiagnostic diagnostic = (VDiagnostic) theEObject;
 			T result = caseDiagnostic(diagnostic);
@@ -194,6 +196,34 @@ public class ViewSwitch<T> extends Switch<T> {
 			}
 			return result;
 		}
+		case VViewPackage.VIEW_MODEL_LOADING_PROPERTIES: {
+			final VViewModelLoadingProperties viewModelLoadingProperties = (VViewModelLoadingProperties) theEObject;
+			T result = caseViewModelLoadingProperties(viewModelLoadingProperties);
+			if (result == null) {
+				result = caseViewModelProperties(viewModelLoadingProperties);
+			}
+			if (result == null) {
+				result = defaultCase(theEObject);
+			}
+			return result;
+		}
+		case VViewPackage.STRING_TO_OBJECT_MAP_ENTRY: {
+			@SuppressWarnings("unchecked")
+			final Map.Entry<String, Object> stringToObjectMapEntry = (Map.Entry<String, Object>) theEObject;
+			T result = caseStringToObjectMapEntry(stringToObjectMapEntry);
+			if (result == null) {
+				result = defaultCase(theEObject);
+			}
+			return result;
+		}
+		case VViewPackage.VIEW_MODEL_PROPERTIES: {
+			final VViewModelProperties viewModelProperties = (VViewModelProperties) theEObject;
+			T result = caseViewModelProperties(viewModelProperties);
+			if (result == null) {
+				result = defaultCase(theEObject);
+			}
+			return result;
+		}
 		default:
 			return defaultCase(theEObject);
 		}
@@ -211,8 +241,7 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseElement(VElement object)
-	{
+	public T caseElement(VElement object) {
 		return null;
 	}
 
@@ -228,8 +257,7 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseDiagnostic(VDiagnostic object)
-	{
+	public T caseDiagnostic(VDiagnostic object) {
 		return null;
 	}
 
@@ -261,8 +289,7 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseContainedElement(VContainedElement object)
-	{
+	public T caseContainedElement(VContainedElement object) {
 		return null;
 	}
 
@@ -278,8 +305,7 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseContainer(VContainer object)
-	{
+	public T caseContainer(VContainer object) {
 		return null;
 	}
 
@@ -288,16 +314,15 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
 	 *
+	 * @since 1.4
+	 *        <!-- end-user-doc -->
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Contained Container</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
-	 * @since 1.4
 	 */
-	public T caseContainedContainer(VContainedContainer object)
-	{
+	public T caseContainedContainer(VContainedContainer object) {
 		return null;
 	}
 
@@ -318,6 +343,57 @@ public class ViewSwitch<T> extends Switch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Model Loading Properties</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 *
+	 * @since 1.7
+	 *        <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Model Loading Properties</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseViewModelLoadingProperties(VViewModelLoadingProperties object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>String To Object Map Entry</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 *
+	 * @since 1.7
+	 *        <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>String To Object Map Entry</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseStringToObjectMapEntry(Map.Entry<String, Object> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Model Properties</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 *
+	 * @since 1.7
+	 *        <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Model Properties</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseViewModelProperties(VViewModelProperties object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Domain Model Reference</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -329,8 +405,7 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseDomainModelReference(VDomainModelReference object)
-	{
+	public T caseDomainModelReference(VDomainModelReference object) {
 		return null;
 	}
 
@@ -346,8 +421,7 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseFeaturePathDomainModelReference(VFeaturePathDomainModelReference object)
-	{
+	public T caseFeaturePathDomainModelReference(VFeaturePathDomainModelReference object) {
 		return null;
 	}
 
@@ -363,8 +437,7 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseAttachment(VAttachment object)
-	{
+	public T caseAttachment(VAttachment object) {
 		return null;
 	}
 

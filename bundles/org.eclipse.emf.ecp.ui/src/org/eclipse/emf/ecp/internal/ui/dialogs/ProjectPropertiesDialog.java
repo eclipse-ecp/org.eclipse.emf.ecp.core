@@ -35,7 +35,8 @@ public class ProjectPropertiesDialog extends PropertiesDialog {
 	public ProjectPropertiesDialog(Shell parentShell, boolean editable, ECPProject project) {
 		super(parentShell, project.getName(), Messages.ProjectPropertiesDialog_DialogTitle_ProjectIs
 			+ (project.isOpen() ? Messages.ProjectPropertiesDialog_DialogTitle_Open
-				: Messages.ProjectPropertiesDialog_DialogTitle_Closed) + ".", editable, project.getProperties());
+				: Messages.ProjectPropertiesDialog_DialogTitle_Closed)
+			+ ".", editable, project.getProperties()); //$NON-NLS-1$
 		this.project = project;
 	}
 

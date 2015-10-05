@@ -11,10 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.internal.ui.composites;
 
-import java.util.Collection;
-
 import org.eclipse.emf.ecp.core.ECPProject;
-import org.eclipse.emf.ecp.spi.common.ui.composites.AbstractEClassTreeSelectionComposite;
 import org.eclipse.emf.ecp.spi.common.ui.composites.SelectModelClassCompositeImpl;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 
@@ -26,7 +23,7 @@ public class ECPProjectSelectionModelClassCompositeImpl extends SelectModelClass
 
 	/**
 	 * Constructor that delegates to the
-	 * {@link AbstractEClassTreeSelectionComposite#AbstractEClassTreeSelectionComposite(Collection, Collection, Collection)}
+	 * {@link org.eclipse.emf.ecp.spi.common.ui.composites.AbstractEClassTreeSelectionComposite#AbstractEClassTreeSelectionComposite(java.util.Collection, java.util.Collection, java.util.Collection)}
 	 * by reading the data from the project.
 	 *
 	 * @param project the {@link ECPProject} to read the data from

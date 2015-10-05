@@ -11,8 +11,9 @@
  ******************************************************************************/
 package org.eclipse.emfforms.internal.spreadsheet.core;
 
-import java.util.LinkedHashMap;
+import java.util.Collections;
 import java.util.Map;
+import java.util.WeakHashMap;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -21,14 +22,14 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * Simple implementation of the EMFFormsIdProvider which returns a generated UUID per EObject.
- * 
+ *
  * @author Eugen Neufeld
  *
  */
 @Component
 public class EMFFormsIdProviderImpl implements EMFFormsIdProvider {
 
-	private final Map<EObject, String> cache = new LinkedHashMap<EObject, String>();
+	private final Map<EObject, String> cache = Collections.synchronizedMap(new WeakHashMap<EObject, String>());
 
 	/**
 	 * {@inheritDoc}

@@ -39,7 +39,7 @@ import org.eclipse.swt.widgets.Text;
  * @author Eike Stepper
  * @author Eugen Neufeld
  */
-public final class UIProviderRegistryImpl extends ElementRegistry<UIProvider, ECPObserver> implements
+public final class UIProviderRegistryImpl extends ElementRegistry<UIProvider, ECPObserver>implements
 	UIProviderRegistry {
 	/**
 	 * This is the Instance used by the {@link UIProviderRegistry} for providing its instance.
@@ -78,7 +78,7 @@ public final class UIProviderRegistryImpl extends ElementRegistry<UIProvider, EC
 		}
 
 		if (uiProvider == null) {
-			uiProvider = new DefaultUIProvider(provider.getName() + ".default");
+			uiProvider = new DefaultUIProvider(provider.getName() + ".default"); //$NON-NLS-1$
 		}
 
 		((InternalProvider) provider).setUIProvider(uiProvider);
@@ -129,7 +129,7 @@ public final class UIProviderRegistryImpl extends ElementRegistry<UIProvider, EC
 	 * @author Eike Stepper
 	 */
 	private final class UIProviderParser extends ExtensionParser<UIProvider> {
-		private static final String EXTENSION_POINT_NAME = "uiProviders";
+		private static final String EXTENSION_POINT_NAME = "uiProviders"; //$NON-NLS-1$
 
 		public UIProviderParser() {
 			super(UIProviderRegistryImpl.this, Activator.PLUGIN_ID, EXTENSION_POINT_NAME);
@@ -139,7 +139,7 @@ public final class UIProviderRegistryImpl extends ElementRegistry<UIProvider, EC
 		protected UIProvider createElement(String name, IConfigurationElement configurationElement) {
 			final UIProviderDescriptor descriptor = new UIProviderDescriptor(name, configurationElement);
 			descriptor.setLabel(configurationElement.getDeclaringExtension().getLabel());
-			descriptor.setDescription(configurationElement.getAttribute("description"));
+			descriptor.setDescription(configurationElement.getAttribute("description")); //$NON-NLS-1$
 			return descriptor;
 		}
 	}
@@ -147,7 +147,7 @@ public final class UIProviderRegistryImpl extends ElementRegistry<UIProvider, EC
 	/**
 	 * @author Eike Stepper
 	 */
-	private final class UIProviderDescriptor extends ExtensionDescriptor<UIProvider> implements UIProvider {
+	private final class UIProviderDescriptor extends ExtensionDescriptor<UIProvider>implements UIProvider {
 		public UIProviderDescriptor(String name, IConfigurationElement configurationElement) {
 			super(UIProviderRegistryImpl.this, name, TYPE, configurationElement);
 		}

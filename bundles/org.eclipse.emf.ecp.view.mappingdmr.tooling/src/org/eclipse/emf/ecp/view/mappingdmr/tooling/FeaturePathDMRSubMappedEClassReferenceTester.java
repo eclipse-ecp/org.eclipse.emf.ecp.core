@@ -42,6 +42,9 @@ public class FeaturePathDMRSubMappedEClassReferenceTester implements
 		}
 
 		final VControl control = (VControl) vElement;
+		if (control.getDomainModelReference() == null) {
+			return NOT_APPLICABLE;
+		}
 		IObservableValue observableValue;
 		try {
 			observableValue = Activator.getDefault().getEMFFormsDatabinding()

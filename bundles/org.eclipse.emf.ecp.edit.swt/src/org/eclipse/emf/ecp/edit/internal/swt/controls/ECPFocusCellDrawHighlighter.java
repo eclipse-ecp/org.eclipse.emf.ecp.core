@@ -57,7 +57,7 @@ public class ECPFocusCellDrawHighlighter extends FocusCellHighlighter {
 		this.viewer = viewer;
 		// hookListener(viewer);
 		// RAP [if]
-		viewer.getControl().setData(Table.class.getName() + "#alwaysHideSelection", Boolean.TRUE);
+		viewer.getControl().setData(Table.class.getName() + "#alwaysHideSelection", Boolean.TRUE); //$NON-NLS-1$
 	}
 
 	private void markFocusedCell(Event event, ViewerCell cell) {
@@ -130,7 +130,7 @@ public class ECPFocusCellDrawHighlighter extends FocusCellHighlighter {
 	//
 	// Assert
 	// .isNotNull(row,
-	//									"Internal structure invalid. Item without associated row is not possible."); //$NON-NLS-1$
+	// "Internal structure invalid. Item without associated row is not possible."); //$NON-NLS-1$
 	//
 	// // ViewerCell cell = row.getCell(event.index);
 	// //
@@ -215,24 +215,20 @@ public class ECPFocusCellDrawHighlighter extends FocusCellHighlighter {
 	protected void init() {
 		final ColumnViewerEditorActivationListener listener = new ColumnViewerEditorActivationListener() {
 			@Override
-			public void afterEditorActivated(ColumnViewerEditorActivationEvent e)
-			{
+			public void afterEditorActivated(ColumnViewerEditorActivationEvent e) {
 			}
 
 			@Override
-			public void afterEditorDeactivated(ColumnViewerEditorDeactivationEvent e)
-			{
+			public void afterEditorDeactivated(ColumnViewerEditorDeactivationEvent e) {
 				focusCellChanged(getFocusCell(), null);
 			}
 
 			@Override
-			public void beforeEditorActivated(ColumnViewerEditorActivationEvent e)
-			{
+			public void beforeEditorActivated(ColumnViewerEditorActivationEvent e) {
 			}
 
 			@Override
-			public void beforeEditorDeactivated(ColumnViewerEditorDeactivationEvent e)
-			{
+			public void beforeEditorDeactivated(ColumnViewerEditorDeactivationEvent e) {
 			}
 		};
 		final ColumnViewerEditor editor = viewer.getColumnViewerEditor();

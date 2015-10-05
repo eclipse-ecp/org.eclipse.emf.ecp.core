@@ -11,22 +11,36 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.controls.renderer.fx;
 
-import javafx.scene.Node;
-import javafx.scene.control.DatePicker;
-
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecp.view.model.internal.fx.SimpleControlRendererFX;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+
+import javafx.scene.Node;
+import javafx.scene.control.DatePicker;
 
 /**
  * @author Lucas
  *
  */
 public abstract class AbstractDateRendererFX extends SimpleControlRendererFX {
+
+	/**
+	 * Default constructor.
+	 *
+	 * @param vElement the {@link VElement} to be rendered
+	 * @param viewContext the {@link ViewModelContext} to use
+	 * @param reportService The {@link ReportService} to use
+	 */
+	public AbstractDateRendererFX(VControl vElement, ViewModelContext viewContext, ReportService reportService) {
+		super(vElement, viewContext, reportService);
+	}
 
 	/**
 	 * {@inheritDoc}

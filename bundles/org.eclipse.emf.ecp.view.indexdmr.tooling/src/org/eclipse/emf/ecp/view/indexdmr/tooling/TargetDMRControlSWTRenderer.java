@@ -34,6 +34,7 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
@@ -60,10 +61,11 @@ public class TargetDMRControlSWTRenderer extends
 
 	@Override
 	protected void linkValue(Shell shell) {
+		final EMFFormsDatabinding emfFormsDatabinding = Activator.getDefault().getEMFFormsDatabinding();
 		IObservableValue observableValue;
 		try {
-			observableValue = Activator.getDefault().getEMFFormsDatabinding()
-				.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
+			observableValue = emfFormsDatabinding.getObservableValue(getVElement().getDomainModelReference(),
+				getViewModelContext().getDomainModel());
 		} catch (final DatabindingFailedException ex) {
 			showLinkValueFailedMessageDialog(shell, ex);
 			return;
@@ -75,7 +77,24 @@ public class TargetDMRControlSWTRenderer extends
 		final VIndexDomainModelReference mappingDomainModelReference = VIndexDomainModelReference.class
 			.cast(eObject);
 
-		final EClass eclass = EReference.class.cast(mappingDomainModelReference.getDomainModelEFeature())
+		EStructuralFeature feature;
+		if (mappingDomainModelReference.getDomainModelEFeature() != null) {
+			feature = mappingDomainModelReference.getDomainModelEFeature();
+		} else if (mappingDomainModelReference.getPrefixDMR() != null) {
+			try {
+				feature = (EStructuralFeature) emfFormsDatabinding
+					.getValueProperty(mappingDomainModelReference.getPrefixDMR(), null).getValueType();
+			} catch (final DatabindingFailedException ex) {
+				showLinkValueFailedMessageDialog(shell, ex);
+				return;
+			}
+		} else {
+			showLinkValueFailedMessageDialog(shell, new IllegalStateException(
+				"The provided IndexDomainModelReference doesn't have the prefix nor the feature set.")); //$NON-NLS-1$
+			return;
+		}
+
+		final EClass eclass = EReference.class.cast(feature)
 			.getEReferenceType();
 
 		final Collection<EClass> classes = EMFUtils.getSubClasses(VViewPackage.eINSTANCE

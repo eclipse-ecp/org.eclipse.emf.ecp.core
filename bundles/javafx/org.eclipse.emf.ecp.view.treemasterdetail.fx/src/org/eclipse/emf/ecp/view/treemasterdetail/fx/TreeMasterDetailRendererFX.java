@@ -1,5 +1,24 @@
 package org.eclipse.emf.ecp.view.treemasterdetail.fx;
 
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.util.fx.EMFUtil;
+import org.eclipse.emf.ecp.view.model.fx.ECPFXView;
+import org.eclipse.emf.ecp.view.model.fx.ECPFXViewRenderer;
+import org.eclipse.emf.ecp.view.model.internal.fx.GridCellFX;
+import org.eclipse.emf.ecp.view.model.internal.fx.GridDescriptionFX;
+import org.eclipse.emf.ecp.view.model.internal.fx.GridDescriptionFXFactory;
+import org.eclipse.emf.ecp.view.model.internal.fx.RendererFX;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
+import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
+import org.eclipse.emf.ecp.view.treemasterdetail.model.VTreeMasterDetail;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.fx.emf.edit.ui.AdapterFactoryCellFactory.ICellUpdateListener;
+import org.eclipse.fx.emf.edit.ui.AdapterFactoryTreeCellFactory;
+import org.eclipse.fx.emf.edit.ui.AdapterFactoryTreeItem;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
@@ -13,22 +32,22 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.util.Callback;
 
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.util.fx.EMFUtil;
-import org.eclipse.emf.ecp.view.model.fx.ECPFXView;
-import org.eclipse.emf.ecp.view.model.fx.ECPFXViewRenderer;
-import org.eclipse.emf.ecp.view.model.internal.fx.GridCellFX;
-import org.eclipse.emf.ecp.view.model.internal.fx.GridDescriptionFX;
-import org.eclipse.emf.ecp.view.model.internal.fx.GridDescriptionFXFactory;
-import org.eclipse.emf.ecp.view.model.internal.fx.RendererFX;
-import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
-import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-import org.eclipse.emf.ecp.view.treemasterdetail.model.VTreeMasterDetail;
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-
 // TODO api
 @SuppressWarnings("restriction")
 public class TreeMasterDetailRendererFX extends RendererFX<VTreeMasterDetail> {
+
+	/**
+	 * Default constructor.
+	 *
+	 * @param vElement the {@link VElement} to be rendered
+	 * @param viewContext the {@link ViewModelContext} to use
+	 * @param reportService The {@link ReportService} to use
+	 */
+	public TreeMasterDetailRendererFX(VTreeMasterDetail vElement, ViewModelContext viewContext,
+		ReportService reportService) {
+		super(vElement, viewContext, reportService);
+	}
+
 	private GridDescriptionFX gridDescription;
 
 	@Override
@@ -47,7 +66,7 @@ public class TreeMasterDetailRendererFX extends RendererFX<VTreeMasterDetail> {
 			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		final TreeView<Object> treeView = new TreeView<>();
 		final AdapterFactoryTreeItem rootItem = new AdapterFactoryTreeItem(
-			getViewModelContext().getDomainModel(), treeView, adapterFactory);
+			getViewModelContext().getDomainModel(), adapterFactory);
 		treeView.setRoot(rootItem);
 		treeView.setShowRoot(true);
 		final AdapterFactoryTreeCellFactory cellFactory = new AdapterFactoryTreeCellFactory(
@@ -62,13 +81,13 @@ public class TreeMasterDetailRendererFX extends RendererFX<VTreeMasterDetail> {
 						.getCreateChildrenMenu((EObject) item,
 							new Callback<Void, Void>() {
 
-								@Override
-								public Void call(Void param) {
-									treeView.selectionModelProperty()
-										.getValue().selectNext();
-									return null;
-								}
-							});
+						@Override
+						public Void call(Void param) {
+							treeView.selectionModelProperty()
+								.getValue().selectNext();
+							return null;
+						}
+					});
 					if (createChildrenMenu == null) {
 						return;
 					}

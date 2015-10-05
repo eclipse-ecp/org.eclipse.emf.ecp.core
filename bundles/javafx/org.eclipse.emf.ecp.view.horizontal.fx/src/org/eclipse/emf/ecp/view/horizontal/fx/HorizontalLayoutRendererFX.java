@@ -1,23 +1,38 @@
 package org.eclipse.emf.ecp.view.horizontal.fx;
 
-import javafx.scene.Node;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-
 import org.eclipse.emf.ecp.view.model.internal.fx.GridCellFX;
 import org.eclipse.emf.ecp.view.model.internal.fx.GridDescriptionFX;
 import org.eclipse.emf.ecp.view.model.internal.fx.GridDescriptionFXFactory;
 import org.eclipse.emf.ecp.view.model.internal.fx.RendererFX;
 import org.eclipse.emf.ecp.view.model.internal.fx.RendererFactory;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalLayout;
 import org.eclipse.emf.ecp.view.spi.model.VContainedContainer;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+
+import javafx.scene.Node;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 
 public class HorizontalLayoutRendererFX extends RendererFX<VHorizontalLayout> {
+
+	/**
+	 * Default constructor.
+	 *
+	 * @param vElement the {@link VElement} to be rendered
+	 * @param viewContext the {@link ViewModelContext} to use
+	 * @param reportService The {@link ReportService} to use
+	 */
+	public HorizontalLayoutRendererFX(VHorizontalLayout vElement, ViewModelContext viewContext,
+		ReportService reportService) {
+		super(vElement, viewContext, reportService);
+	}
+
 	private GridDescriptionFX gridDescription;
 
 	@Override

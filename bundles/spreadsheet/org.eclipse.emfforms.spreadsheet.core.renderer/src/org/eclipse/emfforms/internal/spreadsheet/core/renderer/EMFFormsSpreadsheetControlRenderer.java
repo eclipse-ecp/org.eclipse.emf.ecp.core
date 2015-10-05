@@ -8,15 +8,16 @@
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
+ * Johannes Faltermeier - template pattern for extenders
  ******************************************************************************/
 package org.eclipse.emfforms.internal.spreadsheet.core.renderer;
 
 import java.io.IOException;
 import java.io.StringWriter;
-import java.util.List;
 import java.util.Set;
 
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.ClientAnchor;
 import org.apache.poi.ss.usermodel.Comment;
 import org.apache.poi.ss.usermodel.CreationHelper;
@@ -25,12 +26,8 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EAnnotation;
-import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EDataType;
-import org.eclipse.emf.ecore.EFactory;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -48,25 +45,34 @@ import org.eclipse.emf.ecp.view.template.style.mandatory.model.VTMandatoryFactor
 import org.eclipse.emf.ecp.view.template.style.mandatory.model.VTMandatoryStyleProperty;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
-import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsAbstractSpreadsheetRenderer;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsExportTableParent;
+import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsIdProvider;
+import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetFormatDescriptionProvider;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetRenderTarget;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetReport;
+import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsConverterException;
+import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsSpreadsheetValueConverter;
+import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsSpreadsheetValueConverterRegistry;
 
 /**
  * Spreadsheet renderer for {@link VControl}.
  *
  * @author Eugen Neufeld
+ * @author Johannes Faltermeier
  */
 public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsheetRenderer<VControl> {
 
-	private final EMFFormsDatabinding emfformsDatabinding;
+	private final EMFFormsDatabindingEMF emfformsDatabinding;
 	private final EMFFormsLabelProvider emfformsLabelProvider;
 	private final ReportService reportService;
 	private final VTViewTemplateProvider vtViewTemplateProvider;
+	private final EMFFormsIdProvider idProvider;
+	private final EMFFormsSpreadsheetValueConverterRegistry converterRegistry;
+	private final EMFFormsSpreadsheetFormatDescriptionProvider formatDescriptionProvider;
 
 	/**
 	 * Default constructor.
@@ -75,14 +81,25 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 	 * @param emfformsLabelProvider The EMFFormsLabelProvider to use
 	 * @param reportService The {@link ReportService}
 	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
+	 * @param idProvider The {@link EMFFormsIdProvider}
+	 * @param converterRegistry The {@link EMFFormsSpreadsheetValueConverterRegistry}
+	 * @param formatDescriptionProvider The {@link EMFFormsSpreadsheetFormatDescriptionProvider}
 	 */
-	public EMFFormsSpreadsheetControlRenderer(EMFFormsDatabinding emfformsDatabinding,
-		EMFFormsLabelProvider emfformsLabelProvider, ReportService reportService,
-		VTViewTemplateProvider vtViewTemplateProvider) {
+	public EMFFormsSpreadsheetControlRenderer(
+		EMFFormsDatabindingEMF emfformsDatabinding,
+		EMFFormsLabelProvider emfformsLabelProvider,
+		ReportService reportService,
+		VTViewTemplateProvider vtViewTemplateProvider,
+		EMFFormsIdProvider idProvider,
+		EMFFormsSpreadsheetValueConverterRegistry converterRegistry,
+		EMFFormsSpreadsheetFormatDescriptionProvider formatDescriptionProvider) {
 		this.emfformsDatabinding = emfformsDatabinding;
 		this.emfformsLabelProvider = emfformsLabelProvider;
 		this.reportService = reportService;
 		this.vtViewTemplateProvider = vtViewTemplateProvider;
+		this.idProvider = idProvider;
+		this.converterRegistry = converterRegistry;
+		this.formatDescriptionProvider = formatDescriptionProvider;
 	}
 
 	/**
@@ -98,6 +115,7 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 		Sheet sheet = workbook.getSheet(renderTarget.getSheetName());
 		if (sheet == null) {
 			sheet = workbook.createSheet(renderTarget.getSheetName());
+			setupSheetFormat(sheet);
 		}
 		Row labelRow = sheet.getRow(0);
 		if (labelRow == null) {
@@ -107,25 +125,29 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 		if (descriptionRow == null) {
 			descriptionRow = sheet.createRow(1);
 		}
-
 		Row formatRow = sheet.getRow(2);
 		if (formatRow == null) {
 			formatRow = sheet.createRow(2);
 		}
 
-		Row valueRow = sheet.getRow(renderTarget.getRow() + 3);
-		if (valueRow == null) {
-			valueRow = sheet.createRow(renderTarget.getRow() + 3);
-		}
-		final Cell labelCell = labelRow.getCell(renderTarget.getColumn(),
-			Row.CREATE_NULL_AS_BLANK);
-		final Cell descriptionCell = descriptionRow.getCell(renderTarget.getColumn(),
-			Row.CREATE_NULL_AS_BLANK);
-		final Cell formatCell = formatRow.getCell(renderTarget.getColumn(),
-			Row.CREATE_NULL_AS_BLANK);
+		final CellStyle readOnly = workbook.getCellStyleAt((short) (workbook.getNumCellStyles() - 2));
+		final CellStyle readOnlyWrap = workbook.getCellStyleAt((short) (workbook.getNumCellStyles() - 1));
 
-		final Cell valueCell = valueRow.getCell(renderTarget.getColumn(),
+		final Cell idCell = labelRow.getCell(0, Row.CREATE_NULL_AS_BLANK);
+		idCell.setCellValue(EMFFormsIdProvider.ID_COLUMN);
+		idCell.setCellStyle(readOnly);
+
+		final Cell labelCell = labelRow.getCell(renderTarget.getColumn() + 1,
 			Row.CREATE_NULL_AS_BLANK);
+		labelCell.setCellStyle(readOnly);
+
+		final Cell descriptionCell = descriptionRow.getCell(renderTarget.getColumn() + 1,
+			Row.CREATE_NULL_AS_BLANK);
+		descriptionCell.setCellStyle(readOnlyWrap);
+
+		final Cell formatCell = formatRow.getCell(renderTarget.getColumn() + 1,
+			Row.CREATE_NULL_AS_BLANK);
+		formatCell.setCellStyle(readOnlyWrap);
 
 		try {
 			final EMFFormsExportTableParent exportTableParent = (EMFFormsExportTableParent) viewModelContext
@@ -138,42 +160,23 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 				dmrToResolve = exportTableParent.getIndexDMRToResolve();
 			}
 
-			final IObservableValue displayName = emfformsLabelProvider
-				.getDisplayName(dmrToResolve, viewModelContext.getDomainModel());
-			String labelValue = displayName.getValue().toString();
-			if (exportTableParent != null) {
-				labelValue = exportTableParent.getLabelPrefix() + "_" + labelValue; //$NON-NLS-1$
+			if (labelCell.getCellComment() == null) {
+				final EStructuralFeature structuralFeature = emfformsDatabinding.getValueProperty(
+					dmrToResolve, viewModelContext.getDomainModel()).getStructuralFeature();
+
+				writeLabel(vElement, viewModelContext, labelCell, exportTableParent, dmrToResolve, structuralFeature);
+
+				final Comment comment = createComment(workbook, sheet, dmrToResolve,
+					renderTarget.getRow(), renderTarget.getColumn() + 1);
+				labelCell.setCellComment(comment);
+
+				writeDescription(viewModelContext, descriptionCell, dmrToResolve);
+
+				writeFormatInformation(formatCell, structuralFeature);
 			}
-
-			String extra = ""; //$NON-NLS-1$
-			final VTMandatoryStyleProperty mandatoryStyle = getMandatoryStyle(vElement, viewModelContext);
-			final EStructuralFeature structuralFeature = (EStructuralFeature) emfformsDatabinding.getValueProperty(
-				dmrToResolve, viewModelContext.getDomainModel()).getValueType();
-			if (mandatoryStyle.isHighliteMandatoryFields() && structuralFeature.getLowerBound() > 0) {
-				extra = mandatoryStyle.getMandatoryMarker();
+			if (viewModelContext.getDomainModel() != null) {
+				writeValue(viewModelContext, renderTarget, sheet, dmrToResolve);
 			}
-			labelValue = labelValue + extra;
-
-			labelCell.setCellValue(labelValue);
-			displayName.dispose();
-
-			final IObservableValue description = emfformsLabelProvider
-				.getDescription(dmrToResolve, viewModelContext.getDomainModel());
-			descriptionCell.setCellValue(description.getValue().toString());
-			description.dispose();
-
-			final String format = getFormatDescription(structuralFeature);
-			formatCell.setCellValue(format);
-
-			final IObservableValue observableValue = emfformsDatabinding
-				.getObservableValue(dmrToResolve,
-					viewModelContext.getDomainModel());
-			valueCell.setCellValue(getValueString(observableValue.getValue(), observableValue.getValueType()));
-			observableValue.dispose();
-
-			final Comment comment = createComment(workbook, sheet, dmrToResolve,
-				renderTarget.getRow(), renderTarget.getColumn());
-			labelCell.setCellComment(comment);
 
 			return 1;
 		} catch (final DatabindingFailedException ex) {
@@ -182,34 +185,100 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 			reportService.report(new EMFFormsSpreadsheetReport(ex, EMFFormsSpreadsheetReport.ERROR));
 		} catch (final IOException ex) {
 			reportService.report(new EMFFormsSpreadsheetReport(ex, EMFFormsSpreadsheetReport.ERROR));
+		} catch (final EMFFormsConverterException ex) {
+			reportService.report(new EMFFormsSpreadsheetReport(ex, EMFFormsSpreadsheetReport.ERROR));
 		}
 
 		return 0;
 	}
 
-	private String getFormatDescription(final EStructuralFeature structuralFeature) {
-		final StringBuilder sb = new StringBuilder();
-		for (final EAnnotation eAnnotation : structuralFeature.getEAnnotations()) {
-			final EMap<String, String> details = eAnnotation.getDetails();
-			for (final String key : details.keySet()) {
-				if ("http:///org/eclipse/emf/ecore/util/ExtendedMetaData".equals(eAnnotation.getSource())) { //$NON-NLS-1$
-					if ("kind".equals(key)) { //$NON-NLS-1$
-						continue;
-					}
-					if ("name".equals(key)) { //$NON-NLS-1$
-						continue;
-					}
-					if ("baseType".equals(key)) { //$NON-NLS-1$
-						continue;
-					}
-				}
-				sb.append(key);
-				sb.append("="); //$NON-NLS-1$
-				sb.append(details.get(key));
-				sb.append("\t"); //$NON-NLS-1$
-			}
+	private void writeValue(ViewModelContext viewModelContext, EMFFormsSpreadsheetRenderTarget renderTarget,
+		Sheet sheet, VDomainModelReference dmrToResolve) throws DatabindingFailedException, EMFFormsConverterException {
+		Row valueRow = sheet.getRow(renderTarget.getRow() + 3);
+		if (valueRow == null) {
+			valueRow = sheet.createRow(renderTarget.getRow() + 3);
 		}
-		return sb.toString().trim();
+		valueRow.getCell(0, Row.CREATE_NULL_AS_BLANK)
+			.setCellValue(idProvider.getId(viewModelContext.getDomainModel()));
+
+		/* init dmr */
+		resolveDMR(viewModelContext, dmrToResolve);
+		final IObservableValue observableValue = emfformsDatabinding
+			.getObservableValue(dmrToResolve, viewModelContext.getDomainModel());
+		final EObject eObject = emfformsDatabinding.extractObserved(observableValue);
+		final EStructuralFeature feature = emfformsDatabinding.extractFeature(observableValue);
+		/* only create new cells for non-unsettable features and unsettable feature which are set */
+		/*
+		 * if the eObject is null, this means that the dmr could not be resolved correctly. in this case we want
+		 * to create an empty cell
+		 */
+		if (eObject == null || !feature.isUnsettable() || feature.isUnsettable() && eObject.eIsSet(feature)) {
+			final Object value = observableValue.getValue();
+			final EMFFormsSpreadsheetValueConverter converter = converterRegistry
+				.getConverter(viewModelContext.getDomainModel(), dmrToResolve);
+
+			final Cell valueCell = valueRow.getCell(renderTarget.getColumn() + 1,
+				Row.CREATE_NULL_AS_BLANK);
+			converter.setCellValue(valueCell, value, feature, viewModelContext);
+
+		}
+		observableValue.dispose();
+	}
+
+	private void writeLabel(VControl vControl, ViewModelContext viewModelContext, final Cell labelCell,
+		final EMFFormsExportTableParent exportTableParent, VDomainModelReference dmrToResolve,
+		final EStructuralFeature structuralFeature) throws NoLabelFoundException {
+		IObservableValue displayName;
+		if (viewModelContext.getDomainModel() != null) {
+			displayName = emfformsLabelProvider.getDisplayName(dmrToResolve, viewModelContext.getDomainModel());
+		} else {
+			displayName = emfformsLabelProvider.getDisplayName(dmrToResolve);
+		}
+		String labelValue = displayName.getValue().toString();
+		if (exportTableParent != null) {
+			labelValue = exportTableParent.getLabelPrefix() + "_" + labelValue; //$NON-NLS-1$
+		}
+
+		String extra = ""; //$NON-NLS-1$
+		final VTMandatoryStyleProperty mandatoryStyle = getMandatoryStyle(vControl, viewModelContext);
+		if (mandatoryStyle.isHighliteMandatoryFields() && structuralFeature.getLowerBound() > 0) {
+			extra = mandatoryStyle.getMandatoryMarker();
+		}
+		labelValue = labelValue + extra;
+
+		labelCell.setCellValue(labelValue);
+		displayName.dispose();
+	}
+
+	private void writeDescription(ViewModelContext viewModelContext, final Cell descriptionCell,
+		VDomainModelReference dmrToResolve) throws NoLabelFoundException {
+		IObservableValue description;
+		if (viewModelContext.getDomainModel() != null) {
+			description = emfformsLabelProvider.getDescription(dmrToResolve, viewModelContext.getDomainModel());
+		} else {
+			description = emfformsLabelProvider.getDescription(dmrToResolve);
+		}
+		descriptionCell.setCellValue(description.getValue().toString());
+		description.dispose();
+	}
+
+	private void writeFormatInformation(final Cell formatCell, final EStructuralFeature structuralFeature) {
+		String format = ""; //$NON-NLS-1$
+		if (formatDescriptionProvider != null) {
+			format = formatDescriptionProvider.getFormatDescription(structuralFeature);
+		}
+		formatCell.setCellValue(format);
+	}
+
+	@SuppressWarnings("deprecation")
+	private void resolveDMR(ViewModelContext viewModelContext, VDomainModelReference dmrToResolve) {
+		dmrToResolve.init(viewModelContext.getDomainModel());
+	}
+
+	private static void setupSheetFormat(final Sheet sheet) {
+		sheet.setDefaultColumnWidth(30);
+		// do not scroll the first column (id) and the three top rows (label+info)
+		sheet.createFreezePane(1, 3);
 	}
 
 	private VTMandatoryStyleProperty getMandatoryStyle(VElement vElement, ViewModelContext viewModelContext) {
@@ -228,33 +297,6 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 
 	private VTMandatoryStyleProperty getDefaultStyle() {
 		return VTMandatoryFactory.eINSTANCE.createMandatoryStyleProperty();
-	}
-
-	private String getValueString(Object fromObject, Object valueType) {
-		if (EAttribute.class.isInstance(valueType)) {
-			final EAttribute eAttribute = (EAttribute) valueType;
-			final EDataType eDataType = eAttribute.getEAttributeType();
-			final EFactory eFactory = eDataType.getEPackage().getEFactoryInstance();
-
-			if (eAttribute.isMany())
-			{
-				final StringBuilder result = new StringBuilder();
-				for (final Object value : (List<?>) fromObject)
-				{
-					if (result.length() == 0)
-					{
-						result.append(' ');
-					}
-					result.append(eFactory.convertToString(eDataType, value));
-				}
-				return result.toString();
-			}
-			return eFactory.convertToString(eDataType, fromObject);
-		}
-		if (fromObject == null) {
-			return ""; //$NON-NLS-1$
-		}
-		return fromObject.toString();
 	}
 
 	private Comment createComment(Workbook workbook, Sheet sheet, VDomainModelReference domainModelReference, int row,

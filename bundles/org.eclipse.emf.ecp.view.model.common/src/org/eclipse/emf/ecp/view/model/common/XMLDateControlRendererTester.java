@@ -54,6 +54,9 @@ public class XMLDateControlRendererTester implements ECPRendererTester {
 			return NOT_APPLICABLE;
 		}
 		final VControl control = (VControl) vElement;
+		if (control.getDomainModelReference() == null) {
+			return NOT_APPLICABLE;
+		}
 		IValueProperty valueProperty;
 		try {
 			valueProperty = Activator.getDefault().getEMFFormsDatabinding()
@@ -63,11 +66,7 @@ public class XMLDateControlRendererTester implements ECPRendererTester {
 			return NOT_APPLICABLE;
 		}
 		final EStructuralFeature feature = (EStructuralFeature) valueProperty.getValueType();
-		if (feature.isMany()) {
-			return NOT_APPLICABLE;
-		}
-
-		if (EReference.class.isInstance(feature)) {
+		if (!isSingleAttribute(feature)) {
 			return NOT_APPLICABLE;
 		}
 
@@ -86,6 +85,17 @@ public class XMLDateControlRendererTester implements ECPRendererTester {
 		}
 
 		return NOT_APPLICABLE;
+	}
+
+	private boolean isSingleAttribute(EStructuralFeature feature) {
+		if (feature.isMany()) {
+			return false;
+		}
+
+		if (EReference.class.isInstance(feature)) {
+			return false;
+		}
+		return true;
 	}
 
 	private int getPriority() {

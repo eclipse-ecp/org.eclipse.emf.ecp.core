@@ -37,7 +37,7 @@ public class TreeMasterDetailValidation_ITest {
 	private static final String VALID_NAME = "test"; //$NON-NLS-1$
 
 	@Test
-	public void test_InvalidRoot() {
+	public void testInvalidRoot() {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		final Root root = TestTMDFactory.eINSTANCE.createRoot();
 		view.setRootEClass(root.eClass());
@@ -55,7 +55,7 @@ public class TreeMasterDetailValidation_ITest {
 	}
 
 	@Test
-	public void test_ValidRoot() {
+	public void testValidRoot() {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		final Root root = TestTMDFactory.eINSTANCE.createRoot();
 		root.setName(VALID_NAME);
@@ -74,7 +74,7 @@ public class TreeMasterDetailValidation_ITest {
 	}
 
 	@Test
-	public void test_InvalidRootInvalidChild() {
+	public void testInvalidRootInvalidChild() {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		final Root root = TestTMDFactory.eINSTANCE.createRoot();
 		final ChildLevel1 childLevel1 = TestTMDFactory.eINSTANCE.createChildLevel1();
@@ -100,7 +100,7 @@ public class TreeMasterDetailValidation_ITest {
 	}
 
 	@Test
-	public void test_ValidRootInvalidChild() {
+	public void testValidRootInvalidChild() {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		final Root root = TestTMDFactory.eINSTANCE.createRoot();
 		root.setName(VALID_NAME);
@@ -124,7 +124,7 @@ public class TreeMasterDetailValidation_ITest {
 	}
 
 	@Test
-	public void test_InvalidRootValidChild() {
+	public void testInvalidRootValidChild() {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		final Root root = TestTMDFactory.eINSTANCE.createRoot();
 		final ChildLevel1 childLevel1 = TestTMDFactory.eINSTANCE.createChildLevel1();
@@ -149,7 +149,7 @@ public class TreeMasterDetailValidation_ITest {
 	}
 
 	@Test
-	public void test_ValidRootValidChild() {
+	public void testValidRootValidChild() {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		final Root root = TestTMDFactory.eINSTANCE.createRoot();
 		root.setName(VALID_NAME);
@@ -172,15 +172,15 @@ public class TreeMasterDetailValidation_ITest {
 	}
 
 	@Test
-	public void test_ValidRootInvalidChildren() {
+	public void testValidRootInvalidChildren() {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		final Root root = TestTMDFactory.eINSTANCE.createRoot();
 		root.setName(VALID_NAME);
 		final ChildLevel1 childLevel1 = TestTMDFactory.eINSTANCE.createChildLevel1();
 		childLevel1.setName(VALID_NAME);
 		root.getChildren().add(childLevel1);
-		final ChildLevel1 childLevel1_2 = TestTMDFactory.eINSTANCE.createChildLevel1();
-		root.getChildren().add(childLevel1_2);
+		final ChildLevel1 childLevel12 = TestTMDFactory.eINSTANCE.createChildLevel1();
+		root.getChildren().add(childLevel12);
 		view.setRootEClass(root.eClass());
 
 		final VTreeMasterDetail control = VTreeMasterDetailFactory.eINSTANCE
@@ -193,14 +193,14 @@ public class TreeMasterDetailValidation_ITest {
 		final VDiagnostic diagnostic = control.getDiagnostic();
 		assertEquals(Diagnostic.ERROR, diagnostic.getHighestSeverity(), 0);
 		assertEquals(1, diagnostic.getDiagnostics(root).size());
-		assertEquals(childLevel1_2, diagnostic.getDiagnostics(root).get(0)
+		assertEquals(childLevel12, diagnostic.getDiagnostics(root).get(0)
 			.getData().get(0));
 		assertEquals(0, diagnostic.getDiagnostics(childLevel1).size());
-		assertEquals(1, diagnostic.getDiagnostics(childLevel1_2).size());
+		assertEquals(1, diagnostic.getDiagnostics(childLevel12).size());
 	}
 
 	@Test
-	public void test_InvalidChildInvalidSubChild() {
+	public void testInvalidChildInvalidSubChild() {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		final Root root = TestTMDFactory.eINSTANCE.createRoot();
 		root.setName(VALID_NAME);
@@ -234,7 +234,7 @@ public class TreeMasterDetailValidation_ITest {
 	}
 
 	@Test
-	public void test_ValidChildInvalidSubChild() {
+	public void testValidChildInvalidSubChild() {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		final Root root = TestTMDFactory.eINSTANCE.createRoot();
 		root.setName(VALID_NAME);
@@ -265,7 +265,7 @@ public class TreeMasterDetailValidation_ITest {
 	}
 
 	@Test
-	public void test_InvalidChildValidSubChild() {
+	public void testInvalidChildValidSubChild() {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		final Root root = TestTMDFactory.eINSTANCE.createRoot();
 		root.setName(VALID_NAME);
@@ -295,7 +295,7 @@ public class TreeMasterDetailValidation_ITest {
 	}
 
 	@Test
-	public void test_ValidChildValidSubChild() {
+	public void testValidChildValidSubChild() {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		final Root root = TestTMDFactory.eINSTANCE.createRoot();
 		root.setName(VALID_NAME);
@@ -323,7 +323,7 @@ public class TreeMasterDetailValidation_ITest {
 	}
 
 	@Test
-	public void test_InvalidRootToValid() {
+	public void testInvalidRootToValid() {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		final Root root = TestTMDFactory.eINSTANCE.createRoot();
 		view.setRootEClass(root.eClass());
@@ -343,7 +343,7 @@ public class TreeMasterDetailValidation_ITest {
 	}
 
 	@Test
-	public void test_ValidRootToInvalid() {
+	public void testValidRootToInvalid() {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		final Root root = TestTMDFactory.eINSTANCE.createRoot();
 		root.setName(VALID_NAME);
@@ -364,7 +364,7 @@ public class TreeMasterDetailValidation_ITest {
 	}
 
 	@Test
-	public void test_InvalidChildToValid() {
+	public void testInvalidChildToValid() {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		final Root root = TestTMDFactory.eINSTANCE.createRoot();
 		root.setName(VALID_NAME);
@@ -389,7 +389,7 @@ public class TreeMasterDetailValidation_ITest {
 	}
 
 	@Test
-	public void test_ValidChildToInvalid() {
+	public void testValidChildToInvalid() {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		final Root root = TestTMDFactory.eINSTANCE.createRoot();
 		root.setName(VALID_NAME);
@@ -416,7 +416,7 @@ public class TreeMasterDetailValidation_ITest {
 	}
 
 	@Test
-	public void test_ValidRootAddValidChild() {
+	public void testValidRootAddValidChild() {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		final Root root = TestTMDFactory.eINSTANCE.createRoot();
 		root.setName(VALID_NAME);
@@ -440,7 +440,7 @@ public class TreeMasterDetailValidation_ITest {
 	}
 
 	@Test
-	public void test_ValidRootAddInvalidChild() {
+	public void testValidRootAddInvalidChild() {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		final Root root = TestTMDFactory.eINSTANCE.createRoot();
 		root.setName(VALID_NAME);
@@ -465,7 +465,7 @@ public class TreeMasterDetailValidation_ITest {
 	}
 
 	@Test
-	public void test_InvalidRootAddValidChild() {
+	public void testInvalidRootAddValidChild() {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		final Root root = TestTMDFactory.eINSTANCE.createRoot();
 		view.setRootEClass(root.eClass());
@@ -488,7 +488,7 @@ public class TreeMasterDetailValidation_ITest {
 	}
 
 	@Test
-	public void test_InvalidRootAddInvalidChild() {
+	public void testInvalidRootAddInvalidChild() {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		final Root root = TestTMDFactory.eINSTANCE.createRoot();
 		view.setRootEClass(root.eClass());
@@ -514,7 +514,7 @@ public class TreeMasterDetailValidation_ITest {
 	}
 
 	@Test
-	public void test_ValidRootAddValidSubTree() {
+	public void testValidRootAddValidSubTree() {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		final Root root = TestTMDFactory.eINSTANCE.createRoot();
 		root.setName(VALID_NAME);
@@ -543,7 +543,7 @@ public class TreeMasterDetailValidation_ITest {
 	}
 
 	@Test
-	public void test_ValidRootAddInvalidSubTree() {
+	public void testValidRootAddInvalidSubTree() {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		final Root root = TestTMDFactory.eINSTANCE.createRoot();
 		root.setName(VALID_NAME);
@@ -573,7 +573,7 @@ public class TreeMasterDetailValidation_ITest {
 	}
 
 	@Test
-	public void test_ValidRootAddInvalidSubTree2() {
+	public void testValidRootAddInvalidSubTree2() {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		final Root root = TestTMDFactory.eINSTANCE.createRoot();
 		root.setName(VALID_NAME);
@@ -605,7 +605,7 @@ public class TreeMasterDetailValidation_ITest {
 	}
 
 	@Test
-	public void test_InvalidRootAddValidSubTree() {
+	public void testInvalidRootAddValidSubTree() {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		final Root root = TestTMDFactory.eINSTANCE.createRoot();
 		view.setRootEClass(root.eClass());
@@ -633,7 +633,7 @@ public class TreeMasterDetailValidation_ITest {
 	}
 
 	@Test
-	public void test_InvalidRootAddInvalidSubTree1() {
+	public void testInvalidRootAddInvalidSubTree1() {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		final Root root = TestTMDFactory.eINSTANCE.createRoot();
 		view.setRootEClass(root.eClass());
@@ -664,7 +664,7 @@ public class TreeMasterDetailValidation_ITest {
 	}
 
 	@Test
-	public void test_InvalidRootAddInvalidSubTree2() {
+	public void testInvalidRootAddInvalidSubTree2() {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		final Root root = TestTMDFactory.eINSTANCE.createRoot();
 		view.setRootEClass(root.eClass());
@@ -697,7 +697,7 @@ public class TreeMasterDetailValidation_ITest {
 	}
 
 	@Test
-	public void test_ValidRootWithChildAddInvalidSibling() {
+	public void testValidRootWithChildAddInvalidSibling() {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		final Root root = TestTMDFactory.eINSTANCE.createRoot();
 		root.setName(VALID_NAME);
@@ -714,20 +714,20 @@ public class TreeMasterDetailValidation_ITest {
 
 		ViewModelContextFactory.INSTANCE.createViewModelContext(view, root);
 
-		final ChildLevel1 childLevel1_2 = TestTMDFactory.eINSTANCE.createChildLevel1();
-		root.getChildren().add(childLevel1_2);
+		final ChildLevel1 childLevel12 = TestTMDFactory.eINSTANCE.createChildLevel1();
+		root.getChildren().add(childLevel12);
 
 		final VDiagnostic diagnostic = control.getDiagnostic();
 		assertEquals(Diagnostic.ERROR, diagnostic.getHighestSeverity(), 0);
 		assertEquals(1, diagnostic.getDiagnostics(root).size());
-		assertEquals(childLevel1_2, diagnostic.getDiagnostics(root).get(0)
+		assertEquals(childLevel12, diagnostic.getDiagnostics(root).get(0)
 			.getData().get(0));
 		assertEquals(0, diagnostic.getDiagnostics(childLevel1).size());
-		assertEquals(1, diagnostic.getDiagnostics(childLevel1_2).size());
+		assertEquals(1, diagnostic.getDiagnostics(childLevel12).size());
 	}
 
 	@Test
-	public void test_ValidChildAddValidSubChild() {
+	public void testValidChildAddValidSubChild() {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		final Root root = TestTMDFactory.eINSTANCE.createRoot();
 		root.setName(VALID_NAME);
@@ -756,7 +756,7 @@ public class TreeMasterDetailValidation_ITest {
 	}
 
 	@Test
-	public void test_ValidChildAddInvalidSubChild() {
+	public void testValidChildAddInvalidSubChild() {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		final Root root = TestTMDFactory.eINSTANCE.createRoot();
 		root.setName(VALID_NAME);
@@ -787,7 +787,7 @@ public class TreeMasterDetailValidation_ITest {
 	}
 
 	@Test
-	public void test_InvalidChildAddValidSubChild() {
+	public void testInvalidChildAddValidSubChild() {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		final Root root = TestTMDFactory.eINSTANCE.createRoot();
 		root.setName(VALID_NAME);
@@ -817,7 +817,7 @@ public class TreeMasterDetailValidation_ITest {
 	}
 
 	@Test
-	public void test_InvalidChildAddInvalidSubChild() {
+	public void testInvalidChildAddInvalidSubChild() {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		final Root root = TestTMDFactory.eINSTANCE.createRoot();
 		root.setName(VALID_NAME);
@@ -852,7 +852,7 @@ public class TreeMasterDetailValidation_ITest {
 	}
 
 	@Test
-	public void test_ValidChildWithSubChildAddInvalidSibling() {
+	public void testValidChildWithSubChildAddInvalidSibling() {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		final Root root = TestTMDFactory.eINSTANCE.createRoot();
 		root.setName(VALID_NAME);
@@ -872,23 +872,23 @@ public class TreeMasterDetailValidation_ITest {
 
 		ViewModelContextFactory.INSTANCE.createViewModelContext(view, root);
 
-		final ChildLevel2 childLevel2_2 = TestTMDFactory.eINSTANCE.createChildLevel2();
-		childLevel1.getChildren().add(childLevel2_2);
+		final ChildLevel2 childLevel22 = TestTMDFactory.eINSTANCE.createChildLevel2();
+		childLevel1.getChildren().add(childLevel22);
 
 		final VDiagnostic diagnostic = control.getDiagnostic();
 		assertEquals(Diagnostic.ERROR, diagnostic.getHighestSeverity(), 0);
 		assertEquals(1, diagnostic.getDiagnostics(root).size());
-		assertEquals(childLevel2_2, diagnostic.getDiagnostics(root).get(0)
+		assertEquals(childLevel22, diagnostic.getDiagnostics(root).get(0)
 			.getData().get(0));
 		assertEquals(1, diagnostic.getDiagnostics(childLevel1).size());
-		assertEquals(childLevel2_2, diagnostic.getDiagnostics(childLevel1).get(0)
+		assertEquals(childLevel22, diagnostic.getDiagnostics(childLevel1).get(0)
 			.getData().get(0));
 		assertEquals(0, diagnostic.getDiagnostics(childLevel2).size());
-		assertEquals(1, diagnostic.getDiagnostics(childLevel2_2).size());
+		assertEquals(1, diagnostic.getDiagnostics(childLevel22).size());
 	}
 
 	@Test
-	public void test_ValidRootAddValidChildToInvalid() {
+	public void testValidRootAddValidChildToInvalid() {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		final Root root = TestTMDFactory.eINSTANCE.createRoot();
 		root.setName(VALID_NAME);

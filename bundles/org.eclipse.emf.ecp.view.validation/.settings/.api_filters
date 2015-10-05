@@ -7,6 +7,12 @@
                 <message_argument value="1.5.0"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Changes with 1.6" id="923795461">
+            <message_arguments>
+                <message_argument value="1.6.0"/>
+                <message_argument value="1.6.0"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/ecp/view/spi/validation/ValidationService.java" type="org.eclipse.emf.ecp.view.spi.validation.ValidationService">
         <filter comment="EMFForms 1.6 SPI Change" id="403804204">
@@ -16,6 +22,18 @@
             </message_arguments>
         </filter>
         <filter comment="EMFForms 1.6 SPI Change" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.validation.ValidationService"/>
+                <message_argument value="removeValidationProvider(ValidationProvider, boolean)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Changes with 1.6" id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.validation.ValidationService"/>
+                <message_argument value="addValidationProvider(ValidationProvider, boolean)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Changes with 1.6" id="405901410">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.validation.ValidationService"/>
                 <message_argument value="removeValidationProvider(ValidationProvider, boolean)"/>

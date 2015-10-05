@@ -39,8 +39,7 @@ import org.eclipse.emf.ecp.view.spi.model.util.ViewValidator;
  * @see org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexdmrPackage
  * @generated
  */
-public class IndexdmrValidator extends EObjectValidator
-{
+public class IndexdmrValidator extends EObjectValidator {
 	/**
 	 * The cached model package
 	 * <!-- begin-user-doc -->
@@ -97,8 +96,7 @@ public class IndexdmrValidator extends EObjectValidator
 	 *
 	 * @generated
 	 */
-	public IndexdmrValidator()
-	{
+	public IndexdmrValidator() {
 		super();
 		viewValidator = ViewValidator.INSTANCE;
 	}
@@ -111,8 +109,7 @@ public class IndexdmrValidator extends EObjectValidator
 	 * @generated
 	 */
 	@Override
-	protected EPackage getEPackage()
-	{
+	protected EPackage getEPackage() {
 		return VIndexdmrPackage.eINSTANCE;
 	}
 
@@ -124,10 +121,9 @@ public class IndexdmrValidator extends EObjectValidator
 	 * @generated
 	 */
 	@Override
-	protected boolean validate(int classifierID, Object value, DiagnosticChain diagnostics, Map<Object, Object> context)
-	{
-		switch (classifierID)
-		{
+	protected boolean validate(int classifierID, Object value, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
+		switch (classifierID) {
 		case VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE:
 			return validateIndexDomainModelReference((VIndexDomainModelReference) value, diagnostics, context);
 		default:
@@ -142,8 +138,7 @@ public class IndexdmrValidator extends EObjectValidator
 	 * @generated
 	 */
 	public boolean validateIndexDomainModelReference(VIndexDomainModelReference indexDomainModelReference,
-		DiagnosticChain diagnostics, Map<Object, Object> context)
-	{
+		DiagnosticChain diagnostics, Map<Object, Object> context) {
 		if (!validate_NoCircularContainment(indexDomainModelReference, diagnostics, context)) {
 			return false;
 		}
@@ -175,6 +170,16 @@ public class IndexdmrValidator extends EObjectValidator
 		return result;
 	}
 
+	@Override
+	protected boolean validate_MultiplicityConforms(EObject eObject, EStructuralFeature eStructuralFeature,
+		DiagnosticChain diagnostics, Map<Object, Object> context) {
+		if (eStructuralFeature == VViewPackage.eINSTANCE.getFeaturePathDomainModelReference_DomainModelEFeature()) {
+			/* we only extend feature path dmr for legacy reasons. the efeature bound can be ignored */
+			return true;
+		}
+		return super.validate_MultiplicityConforms(eObject, eStructuralFeature, diagnostics, context);
+	}
+
 	/**
 	 * Validates the resolveable constraint of '<em>Index Domain Model Reference</em>'.
 	 * <!-- begin-user-doc -->
@@ -186,23 +191,32 @@ public class IndexdmrValidator extends EObjectValidator
 	public boolean validateIndexDomainModelReference_resolveable(VIndexDomainModelReference indexDomainModelReference,
 		DiagnosticChain diagnostics, Map<Object, Object> context) {
 
-		// validate path to index
-		if (!ViewValidator.INSTANCE.validateFeaturePathDomainModelReference_resolveable(indexDomainModelReference,
-			diagnostics, context)) {
-			return false;
-		}
-		final EStructuralFeature feature = indexDomainModelReference.getDomainModelEFeature();
-		if (!EReference.class.isInstance(feature) || !feature.isMany()) {
-			if (diagnostics != null) {
-				final String message = "Domain model reference does not end at a multi reference."; //$NON-NLS-1$
-				if (indexDomainModelReference.eContainer() != null) {
-					diagnostics
-						.add(createDiagnostic(Diagnostic.ERROR, 0,
-							message, indexDomainModelReference.eContainer(),
-							indexDomainModelReference.eContainingFeature()));
+		EClass rootEClass = null;
+		if (indexDomainModelReference.getDomainModelEFeature() != null) {
+			// validate path to index
+			if (!ViewValidator.INSTANCE.validateFeaturePathDomainModelReference_resolveable(indexDomainModelReference,
+				diagnostics, context)) {
+				return false;
+			}
+			final EStructuralFeature feature = indexDomainModelReference.getDomainModelEFeature();
+			if (!EReference.class.isInstance(feature) || !feature.isMany()) {
+				if (diagnostics != null) {
+					final String message = "Domain model reference does not end at a multi reference."; //$NON-NLS-1$
+					addValidationToControl(indexDomainModelReference, diagnostics, message);
+					diagnostics.add(createDiagnostic(Diagnostic.ERROR, 0, message, indexDomainModelReference,
+						VViewPackage.eINSTANCE.getFeaturePathDomainModelReference_DomainModelEFeature()));
 				}
-				diagnostics.add(createDiagnostic(Diagnostic.ERROR, 0, message, indexDomainModelReference,
-					VViewPackage.eINSTANCE.getFeaturePathDomainModelReference_DomainModelEFeature()));
+				return false;
+			}
+			rootEClass = EReference.class.cast(feature).getEReferenceType();
+		} else if (indexDomainModelReference.getPrefixDMR() != null) {
+			// FIXME add retrieval of feature by using the databinding service
+		} else {
+			if (diagnostics != null) {
+				final String message = "DomainModelEFeature or PrefixDMR must be set."; //$NON-NLS-1$
+				addValidationToControl(indexDomainModelReference, diagnostics, message);
+				diagnostics.add(createDiagnostic(Diagnostic.ERROR, 0, message,
+					indexDomainModelReference, VIndexdmrPackage.eINSTANCE.getIndexDomainModelReference_PrefixDMR()));
 			}
 			return false;
 		}
@@ -210,12 +224,7 @@ public class IndexdmrValidator extends EObjectValidator
 		if (indexDomainModelReference.getIndex() < 0) {
 			if (diagnostics != null) {
 				final String message = "Index has invalid value: " + indexDomainModelReference.getIndex(); //$NON-NLS-1$
-				if (indexDomainModelReference.eContainer() != null) {
-					diagnostics
-						.add(createDiagnostic(Diagnostic.ERROR, 0,
-							message, indexDomainModelReference.eContainer(),
-							indexDomainModelReference.eContainingFeature()));
-				}
+				addValidationToControl(indexDomainModelReference, diagnostics, message);
 				diagnostics.add(createDiagnostic(Diagnostic.ERROR, 0, message, indexDomainModelReference,
 					VIndexdmrPackage.eINSTANCE.getIndexDomainModelReference_Index()));
 			}
@@ -230,21 +239,33 @@ public class IndexdmrValidator extends EObjectValidator
 			}
 			return false;
 		}
-		final EClass rootEClass = EReference.class.cast(feature).getEReferenceType();
-		final VDomainModelReference targetDMR = indexDomainModelReference.getTargetDMR();
-		final EValidator validator = EValidator.Registry.INSTANCE.getEValidator(targetDMR.eClass().getEPackage());
-		final Map<Object, Object> newContext = new LinkedHashMap<Object, Object>(context);
-		newContext.put(ViewValidator.ECLASS_KEY, rootEClass);
-		if (!validator.validate(targetDMR, diagnostics, newContext)) {
-			final String message = "Target DMR not resolveable."; //$NON-NLS-1$
-			if (indexDomainModelReference.eContainer() != null && diagnostics != null) {
-				diagnostics.add(createDiagnostic(Diagnostic.ERROR, 0,
-					message, indexDomainModelReference.eContainer(),
-					indexDomainModelReference.eContainingFeature()));
+		// FIXME remove check
+		if (rootEClass != null) {
+			final VDomainModelReference targetDMR = indexDomainModelReference.getTargetDMR();
+			final EValidator validator = EValidator.Registry.INSTANCE.getEValidator(targetDMR.eClass().getEPackage());
+			final Map<Object, Object> newContext = new LinkedHashMap<Object, Object>(context);
+			newContext.put(ViewValidator.ECLASS_KEY, rootEClass);
+			if (!validator.validate(targetDMR, diagnostics, newContext)) {
+				final String message = "Target DMR not resolveable."; //$NON-NLS-1$
+				if (indexDomainModelReference.eContainer() != null && diagnostics != null) {
+					diagnostics.add(createDiagnostic(Diagnostic.ERROR, 0,
+						message, indexDomainModelReference.eContainer(),
+						indexDomainModelReference.eContainingFeature()));
+				}
+				return false;
 			}
-			return false;
 		}
 		return true;
+	}
+
+	private void addValidationToControl(VIndexDomainModelReference indexDomainModelReference,
+		DiagnosticChain diagnostics, final String message) {
+		if (indexDomainModelReference.eContainer() != null) {
+			diagnostics
+				.add(createDiagnostic(Diagnostic.ERROR, 0,
+					message, indexDomainModelReference.eContainer(),
+					indexDomainModelReference.eContainingFeature()));
+		}
 	}
 
 	// END COMPLEX CODE
@@ -267,8 +288,7 @@ public class IndexdmrValidator extends EObjectValidator
 	 * @generated
 	 */
 	@Override
-	public ResourceLocator getResourceLocator()
-	{
+	public ResourceLocator getResourceLocator() {
 		// TODO
 		// Specialize this to return a resource locator for messages specific to this validator.
 		// Ensure that you remove @generated or mark it @generated NOT

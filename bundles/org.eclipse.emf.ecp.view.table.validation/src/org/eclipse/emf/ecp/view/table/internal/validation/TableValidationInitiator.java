@@ -11,7 +11,6 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.table.internal.validation;
 
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -29,7 +28,10 @@ import org.eclipse.emf.ecp.view.spi.context.GlobalViewModelService;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
+import org.eclipse.emf.ecp.view.spi.model.util.ViewModelPropertiesHelper;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.ecp.view.spi.table.model.DetailEditing;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
@@ -106,7 +108,9 @@ public class TableValidationInitiator implements GlobalViewModelService {
 			final EObject eObject = eAllContents.next();
 			if (VTableControl.class.isInstance(eObject)) {
 				final VTableControl tableControl = VTableControl.class.cast(eObject);
-
+				if (!isCorrectContainer(tableControl, viewRoot)) {
+					continue;
+				}
 				if (tableControl.getDetailEditing() == DetailEditing.WITH_PANEL) {
 					final VTableDomainModelReference tableDomainModelReference = (VTableDomainModelReference) tableControl
 						.getDomainModelReference();
@@ -148,6 +152,14 @@ public class TableValidationInitiator implements GlobalViewModelService {
 		}
 	}
 
+	private boolean isCorrectContainer(VTableControl tableControl, EObject root) {
+		EObject current = tableControl.eContainer();
+		while (!VView.class.isInstance(current) && current != root) {
+			current = current.eContainer();
+		}
+		return current == root;
+	}
+
 	private VView getView(VTableControl tableControl) throws DatabindingFailedException {
 		VView detailView = tableControl.getDetailView();
 		if (detailView == null) {
@@ -162,9 +174,11 @@ public class TableValidationInitiator implements GlobalViewModelService {
 					.getValueProperty(tableDomainModelReference, context.getDomainModel());
 			}
 			final EReference reference = (EReference) valueProperty.getValueType();
+			final VElement viewModel = context.getViewModel();
+			final VViewModelProperties properties = ViewModelPropertiesHelper.getInhertitedPropertiesOrEmpty(viewModel);
 			detailView = ViewProviderHelper.getView(
 				EcoreUtil.create(reference.getEReferenceType()),
-				Collections.<String, Object> emptyMap());
+				properties);
 		}
 
 		return detailView;

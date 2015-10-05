@@ -24,7 +24,6 @@ import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VContainer;
-import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.model.reporting.StatusReport;
@@ -128,10 +127,6 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 
 		for (final VContainedElement child : getChildren()) {
 
-			if (!isValidElement(child)) {
-				continue;
-			}
-
 			AbstractSWTRenderer<VElement> renderer;
 			try {
 				renderer = getEMFFormsRendererFactory().getRendererInstance(child,
@@ -170,9 +165,6 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 		}
 		columnComposite.setLayout(getLayout(maximalGridDescription.getColumns(), false));
 		for (final VContainedElement child : getChildren()) {
-			if (!isValidElement(child)) {
-				continue;
-			}
 			final SWTGridDescription gridDescription = rowGridDescription.get(child);
 			if (gridDescription == null) {
 				continue;
@@ -213,23 +205,6 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 		}
 
 		return columnComposite;
-	}
-
-	private boolean isValidElement(VContainedElement child) {
-		if (VControl.class.isInstance(child)) {
-			if (VControl.class.cast(child).getDomainModelReference() == null) {
-				return false;
-			}
-			// TODO: define behaviour that defines when a control is valid
-			// try {
-			// getEMFFormsDatabinding()
-			// .getValueProperty(VControl.class.cast(child).getDomainModelReference());
-			// } catch (final DatabindingFailedException ex) {
-			// getReportService().report(new RenderingFailedReport(ex));
-			// return false;
-			// }
-		}
-		return true;
 	}
 
 	/**

@@ -67,6 +67,69 @@ import org.osgi.framework.ServiceReference;
  */
 public class TableDetailViewControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 
+	/**
+	 * @author Jonas
+	 *
+	 */
+	private final class CreateNewElementHandler implements SelectionListener {
+		private final EObject eObject;
+		private final EStructuralFeature structuralFeature;
+
+		/**
+		 * @param eObject
+		 * @param structuralFeature
+		 */
+		private CreateNewElementHandler(EObject eObject, EStructuralFeature structuralFeature) {
+			this.eObject = eObject;
+			this.structuralFeature = structuralFeature;
+		}
+
+		@Override
+		public void widgetSelected(SelectionEvent e) {
+			final VView detailView = VViewFactory.eINSTANCE.createView();
+			final VTableControl tableControl = (VTableControl) eObject;
+			if (tableControl.getDomainModelReference() == null) {
+				MessageDialog.openInformation(Display.getDefault().getActiveShell(),
+					"Set Domain Model Reference", "Please set a Domain Model Reference first."); //$NON-NLS-1$ //$NON-NLS-2$
+				return;
+			}
+			final VTableDomainModelReference domainModelReference = (VTableDomainModelReference) tableControl
+				.getDomainModelReference();
+			EReference ref = null;
+			if (domainModelReference.getDomainModelReference() == null) {
+				ref = (EReference) domainModelReference.getDomainModelEFeature();
+			} else {
+				IValueProperty valueProperty;
+				try {
+					valueProperty = org.eclipse.emf.ecp.view.internal.editor.controls.Activator
+						.getDefault().getEMFFormsDatabinding()
+						.getValueProperty(domainModelReference, getViewModelContext().getDomainModel());
+				} catch (final DatabindingFailedException ex) {
+					Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+					return;
+				}
+				final EStructuralFeature feature = (EStructuralFeature) valueProperty.getValueType();
+				if (EReference.class.isInstance(feature)) {
+					ref = EReference.class.cast(feature);
+				}
+			}
+
+			if (ref == null) {
+				MessageDialog.openInformation(Display.getDefault().getActiveShell(),
+					"Set Domain Model Reference", "Please set a Domain Model Reference first."); //$NON-NLS-1$ //$NON-NLS-2$
+				return;
+			}
+			detailView.setRootEClass(ref.getEReferenceType());
+			final Command setCommand = SetCommand.create(getEditingDomain(eObject), eObject,
+				structuralFeature, detailView);
+			getEditingDomain(eObject).getCommandStack().execute(setCommand);
+		}
+
+		@Override
+		public void widgetDefaultSelected(SelectionEvent e) {
+		}
+	}
+
 	private static final EMFFormsDatabinding emfFormsDatabinding;
 	private static final EMFFormsEditSupport emfFormsEditSupport;
 	private static final EMFFormsLabelProvider emfFormsLabelProvider;
@@ -250,54 +313,9 @@ public class TableDetailViewControlSWTRenderer extends SimpleControlSWTControlSW
 		/* create button */
 		final Button createButton = createButtonForAction(new NewReferenceAction(getEditingDomain(eObject), eObject,
 			structuralFeature, emfFormsEditSupport, emfFormsLabelProvider, null, getReportService(), getVElement()
-				.getDomainModelReference(), getViewModelContext().getDomainModel()), buttonComposite);
-		createButton.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				final VView detailView = VViewFactory.eINSTANCE.createView();
-				final VTableControl tableControl = (VTableControl) eObject;
-				if (tableControl.getDomainModelReference() == null) {
-					MessageDialog.openInformation(Display.getDefault().getActiveShell(),
-						"Set Domain Model Reference", "Please set a Domain Model Reference first."); //$NON-NLS-1$ //$NON-NLS-2$
-					return;
-				}
-				final VTableDomainModelReference domainModelReference = (VTableDomainModelReference) tableControl
-					.getDomainModelReference();
-				EReference ref = null;
-				if (domainModelReference.getDomainModelReference() == null) {
-					ref = (EReference) domainModelReference.getDomainModelEFeature();
-				} else {
-					IValueProperty valueProperty;
-					try {
-						valueProperty = org.eclipse.emf.ecp.view.internal.editor.controls.Activator
-							.getDefault().getEMFFormsDatabinding()
-							.getValueProperty(domainModelReference, getViewModelContext().getDomainModel());
-					} catch (final DatabindingFailedException ex) {
-						Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
-						return;
-					}
-					final EStructuralFeature feature = (EStructuralFeature) valueProperty.getValueType();
-					if (EReference.class.isInstance(feature)) {
-						ref = EReference.class.cast(feature);
-					}
-				}
-
-				if (ref == null) {
-					MessageDialog.openInformation(Display.getDefault().getActiveShell(),
-						"Set Domain Model Reference", "Please set a Domain Model Reference first."); //$NON-NLS-1$ //$NON-NLS-2$
-					return;
-				}
-				detailView.setRootEClass(ref.getEReferenceType());
-				final Command setCommand = SetCommand.create(getEditingDomain(eObject), eObject,
-					structuralFeature, detailView);
-				getEditingDomain(eObject).getCommandStack().execute(setCommand);
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-			}
-		});
+				.getDomainModelReference(),
+			getViewModelContext().getDomainModel()), buttonComposite);
+		createButton.addSelectionListener(new CreateNewElementHandler(eObject, structuralFeature));
 
 		/* init */
 		composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {

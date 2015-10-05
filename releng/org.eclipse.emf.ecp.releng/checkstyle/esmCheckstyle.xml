@@ -212,7 +212,7 @@
 	</module>
 	<module name="RegexpHeader">
 		<metadata name="net.sf.eclipsecs.core.comment" value="EclipseSource and others"/>
-		<property name="header" value="^\/\*+$\n^ \* Copyright( \(c\))? \d\d\d\d(-\d\d\d\d)? ((Chair for Applied Software Engineering\,)|(Eike Stepper \(Berlin, Germany\) and others\.)|(Google, Inc\.)|(Florian Pirchner \(Vienna\, Austria\) and others\.)|(EclipseSource Muenchen GmbH and others\.)|(EclipseSource\.))$\n^ \*(( Technische Universitaet Muenchen\.)|(.*))$\n^ \* All rights reserved\. This program and the accompanying materials$\n^ \* are made available under the terms of the Eclipse Public License v1\.0$\n^ \* which accompanies this distribution\, and is available at$\n^ \* http\:\/\/www\.eclipse\.org\/legal\/epl-v10\.html$\n^ \*.*$\n^ \* Contributors\:.*$\n"/>
+		<property name="header" value="^\/\*+$\n^ \* Copyright( \(c\))? \d\d\d\d(-\d\d\d\d)? (.*)$\n^ \*(( Technische Universitaet Muenchen\.)|(.*))$\n^ \* All rights reserved\. This program and the accompanying materials$\n^ \* are made available under the terms of the Eclipse Public License v1\.0$\n^ \* which accompanies this distribution\, and is available at$\n^ \* http\:\/\/www\.eclipse\.org\/legal\/epl-v10\.html$\n^ \*.*$\n^ \* Contributors\:.*$\n"/>
 		<property name="fileExtensions" value="java"/>
 	</module>
 </module>

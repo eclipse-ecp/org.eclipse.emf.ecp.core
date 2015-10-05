@@ -1,5 +1,14 @@
 package org.eclipse.emf.emfstore.fx.internal.projects;
 
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EPackage.Registry;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.fx.emf.edit.ui.AdapterFactoryTreeCellFactory;
+import org.eclipse.fx.emf.edit.ui.AdapterFactoryTreeItem;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -16,13 +25,6 @@ import javafx.scene.layout.VBoxBuilder;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EPackage.Registry;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-
 public class CreateEObjectStage extends Stage {
 
 	private final class TreeItemExtension extends TreeItem<Object> {
@@ -32,8 +34,7 @@ public class CreateEObjectStage extends Stage {
 		private TreeItemExtension(TreeView<Object> treeView) {
 			super();
 			this.treeView = treeView;
-			children = FXCollections.unmodifiableObservableList(super
-				.getChildren());
+			children = FXCollections.unmodifiableObservableList(super.getChildren());
 			updateChildren();
 		}
 
@@ -43,7 +44,7 @@ public class CreateEObjectStage extends Stage {
 			for (final String nsURI : Registry.INSTANCE.keySet()) {
 				final EPackage ePackage = Registry.INSTANCE.getEPackage(nsURI);
 				final AdapterFactoryTreeItem rootItem = new AdapterFactoryTreeItem(
-					ePackage, treeView, adapterFactory);
+					ePackage, adapterFactory);
 				children.add(rootItem);
 			}
 		}

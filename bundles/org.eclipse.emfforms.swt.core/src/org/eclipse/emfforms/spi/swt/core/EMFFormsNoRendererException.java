@@ -29,4 +29,14 @@ public class EMFFormsNoRendererException extends Exception {
 	public EMFFormsNoRendererException(String message) {
 		super(message);
 	}
+
+	/**
+	 * The EMFFormsNoRendererException throwed by {@link EMFFormsRendererFactory}.
+	 *
+	 * @param throwable The reason for this exception
+	 * @since 1.7
+	 */
+	public EMFFormsNoRendererException(Throwable throwable) {
+		super(throwable);
+	}
 }

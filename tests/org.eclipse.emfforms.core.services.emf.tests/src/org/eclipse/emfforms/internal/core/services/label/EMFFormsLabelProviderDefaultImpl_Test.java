@@ -85,6 +85,29 @@ public class EMFFormsLabelProviderDefaultImpl_Test {
 
 	/**
 	 * Test method for
+	 * {@link EMFFormsLabelProviderDefaultImpl#getDisplayName(EStructuralFeature)}
+	 * .
+	 *
+	 * @throws DatabindingFailedException should not happen, just needs to be thrown because the databinding service
+	 *             defines the throw in its interface.
+	 */
+	@Test
+	public void testGetDisplayNameOneParamFeature() throws DatabindingFailedException {
+		final String expectedResult = "expected"; //$NON-NLS-1$
+		final EStructuralFeature structuralFeature = mock(EStructuralFeature.class);
+
+		when(structuralFeature.getEContainingClass()).thenReturn(TestPackage.eINSTANCE.getD());
+		when(itemPropertyDescriptor.getDisplayName(any(Object.class))).thenReturn(expectedResult);
+		when(valueProperty.getValueType()).thenReturn(structuralFeature);
+
+		final String result = labelProvider.getDisplayName(structuralFeature);
+
+		verify(itemPropertyDescriptor).getDisplayName(any(D.class));
+		assertEquals(expectedResult, result);
+	}
+
+	/**
+	 * Test method for
 	 * {@link EMFFormsLabelProviderDefaultImpl#getDisplayName(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)}
 	 * .
 	 *
@@ -116,7 +139,7 @@ public class EMFFormsLabelProviderDefaultImpl_Test {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testGetDisplayNameOneParamNull() {
-		labelProvider.getDisplayName(null);
+		labelProvider.getDisplayName((VDomainModelReference) null);
 	}
 
 	/**

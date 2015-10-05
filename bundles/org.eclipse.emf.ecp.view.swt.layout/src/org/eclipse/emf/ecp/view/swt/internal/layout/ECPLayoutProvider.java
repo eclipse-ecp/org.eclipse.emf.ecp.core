@@ -20,6 +20,7 @@ import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Layout;
@@ -37,6 +38,11 @@ public class ECPLayoutProvider extends AbstractLayoutProvider {
 	public Layout getColumnLayout(int numColumns, boolean equalWidth) {
 		return GridLayoutFactory.fillDefaults().numColumns(numColumns)
 			.equalWidth(equalWidth).create();
+	}
+
+	@Override
+	public Layout getColumnLayout(int numColumns, boolean equalWidth, Point margins) {
+		return GridLayoutFactory.fillDefaults().numColumns(numColumns).equalWidth(equalWidth).margins(margins).create();
 	}
 
 	@Override
@@ -64,7 +70,8 @@ public class ECPLayoutProvider extends AbstractLayoutProvider {
 				gridCell.isVerticalFill() ? SWT.FILL : SWT.CENTER)
 			.grab(gridCell.isHorizontalGrab(), gridCell.isVerticalGrab())
 			.span(gridCell.getHorizontalSpan() + fullGridDescription.getColumns()
-				- currentRowGridDescription.getColumns(), 1).create();
+				- currentRowGridDescription.getColumns(), 1)
+			.create();
 
 	}
 
@@ -79,9 +86,8 @@ public class ECPLayoutProvider extends AbstractLayoutProvider {
 	}
 
 	private GridData getControlGridData(int xSpan, VControl vControl, EObject domainModel, Control control) {
-		GridDataFactory gdf =
-			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
-				.grab(true, false).span(xSpan, 1);
+		GridDataFactory gdf = GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
+			.grab(true, false).span(xSpan, 1);
 
 		if (Text.class.isInstance(control) && vControl.getDomainModelReference() != null) {
 			if (isMultiLine(vControl.getDomainModelReference(), domainModel)) {

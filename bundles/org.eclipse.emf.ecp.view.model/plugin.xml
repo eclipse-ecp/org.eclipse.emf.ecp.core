@@ -9,9 +9,16 @@
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated view -->
       <package
-            uri="http://org/eclipse/emf/ecp/view/model"
+            uri="http://org/eclipse/emf/ecp/view/model/170"
             class="org.eclipse.emf.ecp.view.spi.model.VViewPackage"
             genModel="model/view.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated view -->
+      <parser
+            type="view"
+            class="org.eclipse.emf.ecp.view.spi.model.util.VViewResourceFactoryImpl"/>
    </extension>
    <extension
          point="org.eclipse.emf.edapt.migrators">

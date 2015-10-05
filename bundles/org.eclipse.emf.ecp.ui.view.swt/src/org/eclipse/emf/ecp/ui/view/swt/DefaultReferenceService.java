@@ -36,6 +36,7 @@ import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -50,8 +51,9 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 /**
- * @author Eugen
- * @noreference This class is not intended to be referenced by clients.
+ * The DefaultReferenceService provides a sample implementation for the ReferenceService.
+ * 
+ * @author Eugen Neufeld
  * @noextend This class is not intended to be subclassed by clients.
  * @since 1.4
  *
@@ -98,20 +100,7 @@ public class DefaultReferenceService implements ReferenceService {
 
 	@Override
 	public void addNewModelElements(EObject eObject, EReference eReference) {
-		final Collection<EClass> classes = EMFUtils.getSubClasses(eReference.getEReferenceType());
-		EObject newMEInstance = null;
-		if (classes.size() > 1) {
-			final SelectionComposite<TreeViewer> helper = CompositeFactory.getSelectModelClassComposite(
-				new HashSet<EPackage>(),
-				new HashSet<EPackage>(), classes);
-
-			newMEInstance = SelectModelElementWizardFactory.openCreateNewModelElementDialog(helper);
-		}
-		else {
-			newMEInstance = eReference.getEReferenceType().getEPackage().getEFactoryInstance()
-				.create(eReference.getEReferenceType());
-
-		}
+		final EObject newMEInstance = getNewModelElementInstance(eReference);
 
 		if (newMEInstance == null) {
 			return;
@@ -119,7 +108,7 @@ public class DefaultReferenceService implements ReferenceService {
 
 		if (eReference.isContainer()) {
 			// TODO language
-			MessageDialog.openError(Display.getDefault().getActiveShell(), "Error",//$NON-NLS-1$
+			MessageDialog.openError(Display.getDefault().getActiveShell(), "Error", //$NON-NLS-1$
 				"Operation not permitted for container references!");//$NON-NLS-1$
 			return;
 		}
@@ -131,6 +120,31 @@ public class DefaultReferenceService implements ReferenceService {
 		ECPControlHelper.addModelElementInReference(eObject, newMEInstance, eReference,
 			editingDomain);
 		openInNewContext(newMEInstance);
+	}
+
+	private EObject getNewModelElementInstance(EReference eReference) {
+		final Collection<EClass> classes = EMFUtils.getSubClasses(eReference.getEReferenceType());
+		if (classes.isEmpty()) {
+			final String errorMessage = String.format("No concrete classes for the type %1$s were found!", //$NON-NLS-1$
+				eReference.getEReferenceType().getName());
+			MessageDialog.openError(Display.getDefault().getActiveShell(), "Error", //$NON-NLS-1$
+				errorMessage);
+			Activator.getDefault().getReportService().report(new AbstractReport(errorMessage));
+			return null;
+		}
+		if (classes.size() > 1) {
+			return getModelElementInstanceFromList(classes);
+		}
+		return eReference.getEReferenceType().getEPackage().getEFactoryInstance()
+			.create(classes.iterator().next());
+	}
+
+	private EObject getModelElementInstanceFromList(Collection<EClass> classes) {
+		final SelectionComposite<TreeViewer> helper = CompositeFactory.getSelectModelClassComposite(
+			new HashSet<EPackage>(),
+			new HashSet<EPackage>(), classes);
+
+		return SelectModelElementWizardFactory.openCreateNewModelElementDialog(helper);
 	}
 
 	/**
@@ -183,9 +197,9 @@ public class DefaultReferenceService implements ReferenceService {
 	 */
 	@Override
 	public void addExistingModelElements(EObject eObject, EReference eReference) {
-		final Iterator<EObject> allElements =
-			ItemPropertyDescriptor.getReachableObjectsOfType(eObject, eReference.getEType())
-				.iterator();
+		final Iterator<EObject> allElements = ItemPropertyDescriptor
+			.getReachableObjectsOfType(eObject, eReference.getEType())
+			.iterator();
 
 		final Set<EObject> elements = new LinkedHashSet<EObject>();
 		while (allElements.hasNext()) {

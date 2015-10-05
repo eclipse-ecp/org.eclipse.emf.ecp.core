@@ -33,6 +33,7 @@ import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.forms.events.ExpansionEvent;
@@ -274,14 +275,15 @@ public class SectionNodeSWTRenderer extends AbstractSectionSWTRenderer {
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#applyEnable()
-	 */
 	@Override
 	protected void applyEnable() {
 		expandableComposite.setEnabled(getVElement().isEnabled());
+	}
+
+	@Override
+	protected void applyReadOnly() {
+		super.applyReadOnly();
+		expandableComposite.getParent().setEnabled(true);
 	}
 
 	@Override
@@ -298,6 +300,17 @@ public class SectionNodeSWTRenderer extends AbstractSectionSWTRenderer {
 	 */
 	@Override
 	protected void initCollapseState() {
+		/* top root gets current width as width hint so that further resizes will keep the column width intact */
+		for (final Control control : getControls().values()) {
+			final int width = control.getSize().x;
+			final Object layoutData = control.getLayoutData();
+			if (GridData.class.isInstance(layoutData)) {
+				final GridData gridData = (GridData) layoutData;
+				if (gridData != null) {
+					gridData.widthHint = width;
+				}
+			}
+		}
 		handleCollapseState();
 	}
 

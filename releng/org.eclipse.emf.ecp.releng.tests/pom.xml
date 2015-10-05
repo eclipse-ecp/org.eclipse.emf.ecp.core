@@ -5,12 +5,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.eclipse.emf.ecp</groupId>
 	<artifactId>ecp-tests-parent</artifactId>
-	<version>1.6.1-SNAPSHOT</version>
+	<version>1.7.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<parent>
 		<groupId>org.eclipse.emf.ecp</groupId>
 		<artifactId>ecp-parent</artifactId>
-		<version>1.6.1-SNAPSHOT</version>
+		<version>1.7.1-SNAPSHOT</version>
 		<relativePath>../../releng/org.eclipse.emf.ecp.releng/</relativePath>
 	</parent>
 	<profiles>
@@ -83,9 +83,6 @@
 		<module>../../tests/org.eclipse.emf.ecp.ui.view.swt.test</module>
 		
 		<module>../../tests/org.eclipse.emf.ecp.view.categorization.swt.test</module>
-		<!-- 
-		<module>../../tests/org.eclipse.emf.ecp.view.context.test</module>
-		-->
 		<module>../../tests/org.eclipse.emf.ecp.view.custom.ui.swt.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.group.ui.swt.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.horizontal.ui.swt.test</module>
@@ -126,7 +123,7 @@
 		<module>../../tests/org.eclipse.emf.ecp.view.mappingdmr.model.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.table.model.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.changebroker.test</module>
-		<module>../../tests/org.eclipse.emf.ecp.changebroker.emfstore.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.changebroker.provider.test</module>
 		
 		<!-- Migration -->
 		<module>../../tests/org.eclipse.emf.ecp.view.edapt.test</module>
@@ -138,6 +135,9 @@
 		<module>../../tests/org.eclipse.emfforms.core.services.databinding.mapping.tests</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.databinding.integrationtest</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.databinding.testmodel</module>
+		<module>../../tests/org.eclipse.emfforms.core.services.domainexpander.default.tests</module>
+		<module>../../tests/org.eclipse.emfforms.core.services.domainexpander.index.tests</module>
+		<module>../../tests/org.eclipse.emfforms.core.services.domainexpander.mapping.tests</module>
 		<module>../../tests/org.eclipse.emfforms.swt.core.tests</module>
 		<module>../../tests/org.eclipse.emfforms.swt.core.di.tests</module>
 		<module>../../tests/org.eclipse.emfforms.swt.core.di.extension.tests</module>
@@ -149,6 +149,12 @@
 		<module>../../tests/org.eclipse.emfforms.view.model.localization.tests</module>
 		
 		<module>../../tests/org.eclipse.emfforms.swt.control.text.autocomplete.tests</module>
+		
+		<module>../../tests/org.eclipse.emf.ecp.ui.view.linewrapper.tests</module>
+		
+		<module>../../tests/org.eclipse.emf.ecp.view.template.service.test</module>
+		
+		<module>../../tests/org.eclipse.emf.ecp.quickfix.test</module>
 	</modules>
 	
 	<build>

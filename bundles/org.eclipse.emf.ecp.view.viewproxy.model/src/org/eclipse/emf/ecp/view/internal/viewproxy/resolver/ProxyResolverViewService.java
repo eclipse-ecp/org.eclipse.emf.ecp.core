@@ -11,9 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.viewproxy.resolver;
 
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
@@ -21,7 +19,10 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
+import org.eclipse.emf.ecp.view.spi.model.util.ViewModelPropertiesHelper;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalFactory;
 import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalLayout;
@@ -119,10 +120,11 @@ public class ProxyResolverViewService implements ViewModelService {
 
 	private VView resolveView(VViewProxy proxy) {
 		final EObject eObject = context.getDomainModel();
-		final Map<String, Object> map = new LinkedHashMap<String, Object>();
+		final VElement viewModel = context.getViewModel();
+		final VViewModelProperties properties = ViewModelPropertiesHelper.getInhertitedPropertiesOrEmpty(viewModel);
 		final String id = proxy.getId() == null ? "" : proxy.getId(); //$NON-NLS-1$
-		map.put(VIEW_MODEL_ID, id);
-		final VView view = ViewProviderHelper.getView(eObject, map);
+		properties.addNonInheritableProperty(VIEW_MODEL_ID, id);
+		final VView view = ViewProviderHelper.getView(eObject, properties);
 		return view;
 	}
 }

@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.emfstore.core.internal.EMFStoreProvider;
 import org.eclipse.emf.ecp.spi.core.InternalProject;
+import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.ui.util.ECPHandlerHelper;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
@@ -49,8 +50,21 @@ public class SearchModelElementHandler extends AbstractHandler {
 		final IStructuredSelection selection = (IStructuredSelection) HandlerUtil.getCurrentSelection(event);
 		final InternalProject project = (InternalProject) ECPUtil.getECPProjectManager().getProject(
 			selection.getFirstElement());
-
-		final ESLocalProject projectSpace = EMFStoreProvider.INSTANCE.getProjectSpace(project);
+		if (project == null) {
+			MessageDialog.openInformation(HandlerUtil.getActiveShell(event),
+				Messages.SearchModelElementHandler_Information,
+				Messages.SearchModelElementHandler_YouMustSelectProject);
+			return null;
+		}
+		InternalProvider internalProvider = project.getProvider();
+		if (internalProvider == null) {
+			return null;
+		}
+		internalProvider = (InternalProvider) ECPUtil.getResolvedElement(internalProvider);
+		if (!EMFStoreProvider.NAME.equals(internalProvider.getName())) {
+			return null;
+		}
+		final ESLocalProject projectSpace = ((EMFStoreProvider) internalProvider).getProjectSpace(project);
 
 		if (projectSpace == null) {
 			return null;
@@ -58,33 +72,27 @@ public class SearchModelElementHandler extends AbstractHandler {
 
 		final Set<EObject> eObjects = projectSpace.getAllModelElements();
 
-		if (project == null) {
-			MessageDialog.openInformation(HandlerUtil.getActiveShell(event),
-				Messages.SearchModelElementHandler_Information,
-				Messages.SearchModelElementHandler_YouMustSelectProject);
-		} else {
-			final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
-				new ReflectiveItemProviderAdapterFactory(),
-				new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
-			final AdapterFactoryLabelProvider adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(
-				composedAdapterFactory);
-			final ElementListSelectionDialog dialog = new ElementListSelectionDialog(HandlerUtil.getActiveShell(event),
-				adapterFactoryLabelProvider);
-			dialog.setElements(eObjects.toArray());
-			dialog.setMultipleSelection(false);
-			dialog.setMessage(Messages.SearchModelElementHandler_EnterModelName);
-			dialog.setTitle(Messages.SearchModelElementHandler_SearchModelElement);
-			if (dialog.open() == Window.OK) {
-				final Object[] selections = dialog.getResult();
+		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
+			new ReflectiveItemProviderAdapterFactory(),
+			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
+		final AdapterFactoryLabelProvider adapterFactoryLabelProvider = new AdapterFactoryLabelProvider(
+			composedAdapterFactory);
+		final ElementListSelectionDialog dialog = new ElementListSelectionDialog(HandlerUtil.getActiveShell(event),
+			adapterFactoryLabelProvider);
+		dialog.setElements(eObjects.toArray());
+		dialog.setMultipleSelection(false);
+		dialog.setMessage(Messages.SearchModelElementHandler_EnterModelName);
+		dialog.setTitle(Messages.SearchModelElementHandler_SearchModelElement);
+		if (dialog.open() == Window.OK) {
+			final Object[] selections = dialog.getResult();
 
-				if (selections != null && selections.length == 1 && selections[0] instanceof EObject) {
-					ECPHandlerHelper.openModelElement(selections[0],
-						project);
-				}
+			if (selections != null && selections.length == 1 && selections[0] instanceof EObject) {
+				ECPHandlerHelper.openModelElement(selections[0],
+					project);
 			}
-			adapterFactoryLabelProvider.dispose();
-			composedAdapterFactory.dispose();
 		}
+		adapterFactoryLabelProvider.dispose();
+		composedAdapterFactory.dispose();
 
 		return null;
 	}

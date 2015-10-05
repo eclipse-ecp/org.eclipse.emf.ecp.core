@@ -27,16 +27,16 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Composite Collection</b></em>'.
+ * @since 1.4
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VContainedContainerImpl#getChildren <em>Children</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
- * @since 1.4
  */
 public abstract class VContainedContainerImpl extends VContainedElementImpl implements VContainedContainer {
 	/**
@@ -79,8 +79,7 @@ public abstract class VContainedContainerImpl extends VContainedElementImpl impl
 	 */
 	@Override
 	public EList<VContainedElement> getChildren() {
-		if (children == null)
-		{
+		if (children == null) {
 			children = new EObjectContainmentEList<VContainedElement>(VContainedElement.class, this,
 				VViewPackage.CONTAINED_CONTAINER__CHILDREN);
 		}
@@ -95,8 +94,7 @@ public abstract class VContainedContainerImpl extends VContainedElementImpl impl
 	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID)
-		{
+		switch (featureID) {
 		case VViewPackage.CONTAINED_CONTAINER__CHILDREN:
 			return ((InternalEList<?>) getChildren()).basicRemove(otherEnd, msgs);
 		}
@@ -111,8 +109,7 @@ public abstract class VContainedContainerImpl extends VContainedElementImpl impl
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID)
-		{
+		switch (featureID) {
 		case VViewPackage.CONTAINED_CONTAINER__CHILDREN:
 			return getChildren();
 		}
@@ -128,8 +125,7 @@ public abstract class VContainedContainerImpl extends VContainedElementImpl impl
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID)
-		{
+		switch (featureID) {
 		case VViewPackage.CONTAINED_CONTAINER__CHILDREN:
 			getChildren().clear();
 			getChildren().addAll((Collection<? extends VContainedElement>) newValue);
@@ -146,8 +142,7 @@ public abstract class VContainedContainerImpl extends VContainedElementImpl impl
 	 */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID)
-		{
+		switch (featureID) {
 		case VViewPackage.CONTAINED_CONTAINER__CHILDREN:
 			getChildren().clear();
 			return;
@@ -163,8 +158,7 @@ public abstract class VContainedContainerImpl extends VContainedElementImpl impl
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID)
-		{
+		switch (featureID) {
 		case VViewPackage.CONTAINED_CONTAINER__CHILDREN:
 			return children != null && !children.isEmpty();
 		}
@@ -178,12 +172,9 @@ public abstract class VContainedContainerImpl extends VContainedElementImpl impl
 	 * @generated
 	 */
 	@Override
-	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass)
-	{
-		if (baseClass == VContainer.class)
-		{
-			switch (derivedFeatureID)
-			{
+	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+		if (baseClass == VContainer.class) {
+			switch (derivedFeatureID) {
 			case VViewPackage.CONTAINED_CONTAINER__CHILDREN:
 				return VViewPackage.CONTAINER__CHILDREN;
 			default:
@@ -200,12 +191,9 @@ public abstract class VContainedContainerImpl extends VContainedElementImpl impl
 	 * @generated
 	 */
 	@Override
-	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass)
-	{
-		if (baseClass == VContainer.class)
-		{
-			switch (baseFeatureID)
-			{
+	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+		if (baseClass == VContainer.class) {
+			switch (baseFeatureID) {
 			case VViewPackage.CONTAINER__CHILDREN:
 				return VViewPackage.CONTAINED_CONTAINER__CHILDREN;
 			default:

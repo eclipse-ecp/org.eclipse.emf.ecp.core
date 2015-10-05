@@ -1426,6 +1426,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		@Override
 		public String getToolTipText(Object element) {
 			final VDiagnostic vDiagnostic = vTableControl.getDiagnostic();
+			if (vDiagnostic == null) {
+				return null;
+			}
 			final String message = DiagnosticMessageExtractor.getMessage(vDiagnostic.getDiagnostics((EObject) element));
 			return ECPTooltipModifierHelper.modifyString(message, null);
 		}

@@ -1,21 +1,35 @@
 package org.eclipse.emf.ecp.view.model.internal.fx;
 
+import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
+import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 
-import org.eclipse.emf.common.util.Diagnostic;
-import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
-import org.eclipse.emf.ecp.view.spi.model.VControl;
-import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
-import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
-import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-
 public abstract class SimpleControlRendererFX extends AbstractControlRendererFX {
 
 	private GridDescriptionFX rendererGridDescription;
 	private Label validationIcon;
+
+	/**
+	 * Default constructor.
+	 *
+	 * @param vElement the {@link VElement} to be rendered
+	 * @param viewContext the {@link ViewModelContext} to use
+	 * @param reportService The {@link ReportService} to use
+	 */
+	public SimpleControlRendererFX(VControl vElement, ViewModelContext viewContext, ReportService reportService) {
+		super(vElement, viewContext, reportService);
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -51,7 +65,8 @@ public abstract class SimpleControlRendererFX extends AbstractControlRendererFX 
 			throw new IllegalArgumentException(
 				String
 					.format(
-						"The provided GridCellFX (%1$s) cannot be used by this (%2$s) renderer.", gridCell.toString(), toString())); //$NON-NLS-1$
+						"The provided GridCellFX (%1$s) cannot be used by this (%2$s) renderer.", gridCell.toString(), //$NON-NLS-1$
+						toString()));
 		}
 	}
 

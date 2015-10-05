@@ -32,7 +32,7 @@
    <extension point="org.eclipse.emf.edit.childCreationExtenders">
       <!-- @generated stack -->
       <extender
-            uri="http://org/eclipse/emf/ecp/view/model"
+            uri="http://org/eclipse/emf/ecp/view/model/170"
             class="org.eclipse.emf.ecp.view.spi.stack.model.provider.StackItemProviderAdapterFactory$ViewChildCreationExtender"/>
    </extension>
 </plugin>

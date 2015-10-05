@@ -5,11 +5,11 @@
   <parent>
     <groupId>org.eclipse.emf.ecp</groupId>
     <artifactId>ecp-bundles-parent</artifactId>
-    <version>1.6.1-SNAPSHOT</version>
+    <version>1.7.1-SNAPSHOT</version>
     <relativePath>../../releng/org.eclipse.emf.ecp.releng.bundles/</relativePath>
   </parent>
   <groupId>org.eclipse.emf.ecp</groupId>
   <artifactId>org.eclipse.emf.ecp.view.table.celleditor.rcp</artifactId>
-  <version>1.6.1-SNAPSHOT</version>
+  <version>1.7.1-SNAPSHOT</version>
   <packaging>eclipse-plugin</packaging>
 </project>

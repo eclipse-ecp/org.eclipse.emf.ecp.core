@@ -26,23 +26,27 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>View</b></em>'.
- * <!-- end-user-doc -->
- * <p>
- * The following features are implemented:
- * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VViewImpl#getRootEClass <em>Root EClass</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VViewImpl#getChildren <em>Children</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VViewImpl#getEcorePath <em>Ecore Path</em>}</li>
- * </ul>
- * </p>
+ *
+ * @since 1.2
+ *        <!-- end-user-doc -->
+ *        <p>
+ *        The following features are implemented:
+ *        </p>
+ *        <ul>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VViewImpl#getRootEClass <em>Root EClass</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VViewImpl#getChildren <em>Children</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VViewImpl#getEcorePath <em>Ecore Path</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VViewImpl#getLoadingProperties <em>Loading Properties</em>}
+ *        </li>
+ *        </ul>
  *
  * @generated
- * @since 1.2
  */
 public class VViewImpl extends VElementImpl implements VView {
 	/**
@@ -70,26 +74,39 @@ public class VViewImpl extends VElementImpl implements VView {
 	/**
 	 * The default value of the '{@link #getEcorePath() <em>Ecore Path</em>}' attribute.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 *
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * @see #getEcorePath()
 	 * @generated
 	 * @ordered
-	 * @since 1.3
 	 */
 	protected static final String ECORE_PATH_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getEcorePath() <em>Ecore Path</em>}' attribute.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 *
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * @see #getEcorePath()
 	 * @generated
 	 * @ordered
-	 * @since 1.3
 	 */
 	protected String ecorePath = ECORE_PATH_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getLoadingProperties() <em>Loading Properties</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.7
+	 *        <!-- end-user-doc -->
+	 *
+	 * @see #getLoadingProperties()
+	 * @generated
+	 * @ordered
+	 */
+	protected VViewModelProperties loadingProperties;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -120,12 +137,10 @@ public class VViewImpl extends VElementImpl implements VView {
 	 */
 	@Override
 	public EClass getRootEClass() {
-		if (rootEClass != null && rootEClass.eIsProxy())
-		{
+		if (rootEClass != null && rootEClass.eIsProxy()) {
 			final InternalEObject oldRootEClass = (InternalEObject) rootEClass;
 			rootEClass = (EClass) eResolveProxy(oldRootEClass);
-			if (rootEClass != oldRootEClass)
-			{
+			if (rootEClass != oldRootEClass) {
 				if (eNotificationRequired()) {
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, VViewPackage.VIEW__ROOT_ECLASS,
 						oldRootEClass, rootEClass));
@@ -169,8 +184,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	 */
 	@Override
 	public EList<VContainedElement> getChildren() {
-		if (children == null)
-		{
+		if (children == null) {
 			children = new EObjectContainmentEList<VContainedElement>(VContainedElement.class, this,
 				VViewPackage.VIEW__CHILDREN);
 		}
@@ -179,32 +193,97 @@ public class VViewImpl extends VElementImpl implements VView {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 *
-	 * @generated
 	 * @since 1.3
+	 *        <!-- end-user-doc -->
+	 * @generated
 	 */
 	@Override
-	public String getEcorePath()
-	{
+	public String getEcorePath() {
 		return ecorePath;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 *
-	 * @generated
 	 * @since 1.3
+	 *        <!-- end-user-doc -->
+	 * @generated
 	 */
 	@Override
-	public void setEcorePath(String newEcorePath)
-	{
+	public void setEcorePath(String newEcorePath) {
 		final String oldEcorePath = ecorePath;
 		ecorePath = newEcorePath;
 		if (eNotificationRequired()) {
-			eNotify(new ENotificationImpl(this, Notification.SET, VViewPackage.VIEW__ECORE_PATH, oldEcorePath,
-				ecorePath));
+			eNotify(
+				new ENotificationImpl(this, Notification.SET, VViewPackage.VIEW__ECORE_PATH, oldEcorePath, ecorePath));
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.7
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public VViewModelProperties getLoadingProperties() {
+		return loadingProperties;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.7
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public NotificationChain basicSetLoadingProperties(VViewModelProperties newLoadingProperties,
+		NotificationChain msgs) {
+		final VViewModelProperties oldLoadingProperties = loadingProperties;
+		loadingProperties = newLoadingProperties;
+		if (eNotificationRequired()) {
+			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
+				VViewPackage.VIEW__LOADING_PROPERTIES, oldLoadingProperties, newLoadingProperties);
+			if (msgs == null) {
+				msgs = notification;
+			} else {
+				msgs.add(notification);
+			}
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.7
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public void setLoadingProperties(VViewModelProperties newLoadingProperties) {
+		if (newLoadingProperties != loadingProperties) {
+			NotificationChain msgs = null;
+			if (loadingProperties != null) {
+				msgs = ((InternalEObject) loadingProperties).eInverseRemove(this,
+					EOPPOSITE_FEATURE_BASE - VViewPackage.VIEW__LOADING_PROPERTIES, null, msgs);
+			}
+			if (newLoadingProperties != null) {
+				msgs = ((InternalEObject) newLoadingProperties).eInverseAdd(this,
+					EOPPOSITE_FEATURE_BASE - VViewPackage.VIEW__LOADING_PROPERTIES, null, msgs);
+			}
+			msgs = basicSetLoadingProperties(newLoadingProperties, msgs);
+			if (msgs != null) {
+				msgs.dispatch();
+			}
+		} else if (eNotificationRequired()) {
+			eNotify(new ENotificationImpl(this, Notification.SET, VViewPackage.VIEW__LOADING_PROPERTIES,
+				newLoadingProperties, newLoadingProperties));
 		}
 	}
 
@@ -216,10 +295,11 @@ public class VViewImpl extends VElementImpl implements VView {
 	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID)
-		{
+		switch (featureID) {
 		case VViewPackage.VIEW__CHILDREN:
 			return ((InternalEList<?>) getChildren()).basicRemove(otherEnd, msgs);
+		case VViewPackage.VIEW__LOADING_PROPERTIES:
+			return basicSetLoadingProperties(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -232,8 +312,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID)
-		{
+		switch (featureID) {
 		case VViewPackage.VIEW__ROOT_ECLASS:
 			if (resolve) {
 				return getRootEClass();
@@ -243,6 +322,8 @@ public class VViewImpl extends VElementImpl implements VView {
 			return getChildren();
 		case VViewPackage.VIEW__ECORE_PATH:
 			return getEcorePath();
+		case VViewPackage.VIEW__LOADING_PROPERTIES:
+			return getLoadingProperties();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -256,8 +337,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID)
-		{
+		switch (featureID) {
 		case VViewPackage.VIEW__ROOT_ECLASS:
 			setRootEClass((EClass) newValue);
 			return;
@@ -267,6 +347,9 @@ public class VViewImpl extends VElementImpl implements VView {
 			return;
 		case VViewPackage.VIEW__ECORE_PATH:
 			setEcorePath((String) newValue);
+			return;
+		case VViewPackage.VIEW__LOADING_PROPERTIES:
+			setLoadingProperties((VViewModelProperties) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -280,8 +363,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	 */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID)
-		{
+		switch (featureID) {
 		case VViewPackage.VIEW__ROOT_ECLASS:
 			setRootEClass((EClass) null);
 			return;
@@ -290,6 +372,9 @@ public class VViewImpl extends VElementImpl implements VView {
 			return;
 		case VViewPackage.VIEW__ECORE_PATH:
 			setEcorePath(ECORE_PATH_EDEFAULT);
+			return;
+		case VViewPackage.VIEW__LOADING_PROPERTIES:
+			setLoadingProperties((VViewModelProperties) null);
 			return;
 		}
 		super.eUnset(featureID);
@@ -303,14 +388,15 @@ public class VViewImpl extends VElementImpl implements VView {
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID)
-		{
+		switch (featureID) {
 		case VViewPackage.VIEW__ROOT_ECLASS:
 			return rootEClass != null;
 		case VViewPackage.VIEW__CHILDREN:
 			return children != null && !children.isEmpty();
 		case VViewPackage.VIEW__ECORE_PATH:
 			return ECORE_PATH_EDEFAULT == null ? ecorePath != null : !ECORE_PATH_EDEFAULT.equals(ecorePath);
+		case VViewPackage.VIEW__LOADING_PROPERTIES:
+			return loadingProperties != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -322,8 +408,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	 * @generated
 	 */
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		if (eIsProxy()) {
 			return super.toString();
 		}

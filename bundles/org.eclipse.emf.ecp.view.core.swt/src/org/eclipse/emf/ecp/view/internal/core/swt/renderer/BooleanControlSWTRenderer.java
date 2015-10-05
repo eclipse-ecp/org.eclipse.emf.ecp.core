@@ -24,6 +24,8 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedExcep
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
@@ -52,6 +54,24 @@ public class BooleanControlSWTRenderer extends SimpleControlSWTControlSWTRendere
 		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
 		VTViewTemplateProvider vtViewTemplateProvider) {
 		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTRenderer#getGridDescription(org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription)
+	 */
+	@Override
+	public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
+		/*
+		 * neither label, validation label nor the checkbox should grab available horizontal space, because a checkbox
+		 * can't grow
+		 */
+		final SWTGridDescription booleanControlGridDescription = super.getGridDescription(gridDescription);
+		for (final SWTGridCell gridCell : booleanControlGridDescription.getGrid()) {
+			gridCell.setHorizontalGrab(false);
+		}
+		return booleanControlGridDescription;
 	}
 
 	@Override

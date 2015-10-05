@@ -217,10 +217,10 @@ public class Preview {
 		clearViewDiagnostics(view);
 	}
 
-	/**
-	 *
-	 */
 	private void clearViewDiagnostics(VView view) {
+		if (view == null) {
+			return;
+		}
 		final TreeIterator<EObject> eAllContents = view.eAllContents();
 		while (eAllContents.hasNext()) {
 			final EObject next = eAllContents.next();
@@ -271,9 +271,16 @@ public class Preview {
 	}
 
 	/**
-	 *
+	 * Clears the data that is rendered in the preview.
 	 */
 	public void cleanSampleData() {
 		dummyData = null;
+	}
+
+	/**
+	 * @return the domain model {@link EObject} containing the data that is being rendered in the preview.
+	 */
+	public EObject getSampleData() {
+		return dummyData;
 	}
 }

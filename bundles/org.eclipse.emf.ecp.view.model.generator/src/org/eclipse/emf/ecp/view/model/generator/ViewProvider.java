@@ -13,17 +13,18 @@ package org.eclipse.emf.ecp.view.model.generator;
 
 import java.util.Collection;
 import java.util.LinkedHashSet;
-import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
 import org.eclipse.emf.ecp.view.spi.provider.IViewProvider;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -35,14 +36,8 @@ import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
  */
 public class ViewProvider implements IViewProvider {
 
-	/**
-	 *
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.provider.IViewProvider#generate(EObject, Map)
-	 */
 	@Override
-	public VView generate(EObject eObject, Map<String, Object> context) {
+	public VView provideViewModel(EObject eObject, VViewModelProperties properties) {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
 			new AdapterFactory[] {
@@ -62,6 +57,8 @@ public class ViewProvider implements IViewProvider {
 			view.getChildren().add(control);
 		}
 		composedAdapterFactory.dispose();
+		view.setRootEClass(eObject.eClass());
+		view.setLoadingProperties(EcoreUtil.copy(properties));
 		return view;
 	}
 
@@ -117,14 +114,8 @@ public class ViewProvider implements IViewProvider {
 		return featuresToAdd;
 	}
 
-	/**
-	 *
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.provider.IViewProvider#canRender(EObject, Map)
-	 */
 	@Override
-	public int canRender(EObject eObject, Map<String, Object> context) {
-		return 1;
+	public double canProvideViewModel(EObject eObject, VViewModelProperties properties) {
+		return 1d;
 	}
 }

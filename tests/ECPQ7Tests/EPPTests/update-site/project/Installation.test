@@ -19,7 +19,7 @@ with [get-window Install] {
     get-button "Add..." | click
     with [get-window "Add Repository"] {
         get-editbox -after [get-label "Name:"] | set-text ecp
-        get-editbox -after [get-label "Location:"] | set-text "http://download.eclipse.org/ecp/releases/releases_14"
+        get-editbox -after [get-label "Location:"] | set-text "http://download.eclipse.org/ecp/releases/releases_17"
         get-button OK | click
     }
 }

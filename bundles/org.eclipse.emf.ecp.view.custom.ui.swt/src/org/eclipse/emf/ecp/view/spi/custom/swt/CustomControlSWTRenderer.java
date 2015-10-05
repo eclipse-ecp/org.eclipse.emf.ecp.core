@@ -64,7 +64,6 @@ public class CustomControlSWTRenderer extends AbstractSWTRenderer<VCustomControl
 		final VCustomControl customControl = getVElement();
 		swtCustomControl = loadCustomControl(customControl);
 		if (swtCustomControl == null) {
-			// TODO
 			throw new IllegalStateException(String.format("The  %1$s/%2$s cannot be loaded!", //$NON-NLS-1$
 				customControl.getBundleName(), customControl.getClassName()));
 		}

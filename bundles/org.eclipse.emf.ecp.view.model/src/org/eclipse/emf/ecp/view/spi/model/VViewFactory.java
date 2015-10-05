@@ -17,11 +17,11 @@ import org.eclipse.emf.ecore.EFactory;
  * <!-- begin-user-doc -->
  * The <b>Factory</b> for the model.
  * It provides a create method for each non-abstract class of the model.
- * <!-- end-user-doc -->
  *
+ * @since 1.2
+ *        <!-- end-user-doc -->
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage
  * @generated
- * @since 1.2
  */
 public interface VViewFactory extends EFactory {
 	/**
@@ -62,6 +62,17 @@ public interface VViewFactory extends EFactory {
 	 * @generated
 	 */
 	VControl createControl();
+
+	/**
+	 * Returns a new object of class '<em>Model Loading Properties</em>'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.7
+	 *        <!-- end-user-doc -->
+	 * @return a new object of class '<em>Model Loading Properties</em>'.
+	 * @generated
+	 */
+	VViewModelLoadingProperties createViewModelLoadingProperties();
 
 	/**
 	 * Returns a new object of class '<em>Feature Path Domain Model Reference</em>'.

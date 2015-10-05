@@ -11,8 +11,10 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.dynamictree.model.impl;
 
-import org.eclipse.core.databinding.property.list.IListProperty;
 import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.emf.databinding.IEMFListProperty;
+import org.eclipse.emf.databinding.IEMFValueProperty;
+import org.eclipse.emf.databinding.internal.EMFValuePropertyDecorator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -20,53 +22,54 @@ import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentTreeDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
-import org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter;
-import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.DomainModelReferenceConverterEMF;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
 /**
- * A {@link DomainModelReferenceConverter} that converts a {@link DynamicContainmentTreeDomainModelReference} to an
- * {@link IListProperty IListProperty} or an {@link IValueProperty}.
+ * A {@link DomainModelReferenceConverterEMF} that converts a {@link DynamicContainmentTreeDomainModelReference} to an
+ * {@link IEMFListProperty IEMFListProperty} or an {@link IEMFValueProperty}.
  *
  * @author Lucas Koehler
  *
  */
-public class DynamicContainmentTreeDMRConverter implements DomainModelReferenceConverter {
-	private EMFFormsDatabinding emfFormsDatabinding;
-	private ServiceReference<EMFFormsDatabinding> databindingServiceReference;
+@SuppressWarnings("restriction")
+public class DynamicContainmentTreeDMRConverter implements DomainModelReferenceConverterEMF {
+	private EMFFormsDatabindingEMF emfFormsDatabinding;
+	private ServiceReference<EMFFormsDatabindingEMF> databindingServiceReference;
 
 	/**
-	 * Sets the {@link EMFFormsDatabinding}.
+	 * Sets the {@link EMFFormsDatabindingEMF}.
 	 *
 	 * @param emfFormsDatabinding the emfFormsDatabinding to set
 	 */
-	void setEMFFormsDatabinding(EMFFormsDatabinding emfFormsDatabinding) {
+	void setEMFFormsDatabinding(EMFFormsDatabindingEMF emfFormsDatabinding) {
 		this.emfFormsDatabinding = emfFormsDatabinding;
 	}
 
 	/**
-	 * Unsets the {@link EMFFormsDatabinding}.
+	 * Unsets the {@link EMFFormsDatabindingEMF}.
 	 */
 	void unsetEMFFormsDatabinding() {
 		emfFormsDatabinding = null;
 	}
 
 	/**
-	 * This method is called by the OSGI framework when this {@link DomainModelReferenceConverter} is activated. It
-	 * retrieves the {@link EMFFormsDatabinding EMF Forms databinding service}.
+	 * This method is called by the OSGI framework when this {@link DomainModelReferenceConverterEMF} is activated. It
+	 * retrieves the {@link EMFFormsDatabindingEMF EMF Forms databinding service}.
 	 *
 	 * @param bundleContext The {@link BundleContext} of this classes bundle.
 	 */
 	protected final void activate(BundleContext bundleContext) {
-		databindingServiceReference = bundleContext.getServiceReference(EMFFormsDatabinding.class);
+		databindingServiceReference = bundleContext.getServiceReference(EMFFormsDatabindingEMF.class);
 		setEMFFormsDatabinding(bundleContext.getService(databindingServiceReference));
 
 	}
 
 	/**
-	 * This method is called by the OSGI framework when this {@link DomainModelReferenceConverter} is deactivated.
-	 * It frees the {@link EMFFormsDatabinding EMF Forms databinding service}.
+	 * This method is called by the OSGI framework when this {@link DomainModelReferenceConverterEMF} is deactivated.
+	 * It frees the {@link EMFFormsDatabindingEMF EMF Forms databinding service}.
 	 *
 	 * @param bundleContext The {@link BundleContext} of this classes bundle.
 	 */
@@ -78,7 +81,7 @@ public class DynamicContainmentTreeDMRConverter implements DomainModelReferenceC
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter#isApplicable(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)
+	 * @see DomainModelReferenceConverterEMF#isApplicable(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)
 	 */
 	@Override
 	public double isApplicable(VDomainModelReference domainModelReference) {
@@ -94,18 +97,20 @@ public class DynamicContainmentTreeDMRConverter implements DomainModelReferenceC
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter#convertToValueProperty(VDomainModelReference,EObject)
+	 * @see DomainModelReferenceConverterEMF#convertToValueProperty(VDomainModelReference,EObject)
 	 */
 	@Override
-	public IValueProperty convertToValueProperty(VDomainModelReference domainModelReference, EObject object)
+	public IEMFValueProperty convertToValueProperty(VDomainModelReference domainModelReference, EObject object)
 		throws DatabindingFailedException {
-		final DynamicContainmentTreeDomainModelReference dynamicContainmentTreeReference = getAndCheckDynamicContainmentTreeDMR(domainModelReference);
+		final DynamicContainmentTreeDomainModelReference dynamicContainmentTreeReference = getAndCheckDynamicContainmentTreeDMR(
+			domainModelReference);
 
 		final int index = getIndex(dynamicContainmentTreeReference);
 
-		final EMFIndexedValuePropertyDelegator indexedProperty = getIndexedRootProperty(
+		final EMFValuePropertyDecorator indexedProperty = getIndexedRootProperty(
 			dynamicContainmentTreeReference, index, object);
-		final IValueProperty valuePropertyFromBase = emfFormsDatabinding
+
+		final IEMFValueProperty valuePropertyFromBase = emfFormsDatabinding
 			.getValueProperty(dynamicContainmentTreeReference.getPathFromBase(), object);
 
 		return indexedProperty.value(valuePropertyFromBase);
@@ -117,24 +122,25 @@ public class DynamicContainmentTreeDMRConverter implements DomainModelReferenceC
 	 * @see org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter#convertToListProperty(VDomainModelReference,EObject)
 	 */
 	@Override
-	public IListProperty convertToListProperty(VDomainModelReference domainModelReference, EObject object)
+	public IEMFListProperty convertToListProperty(VDomainModelReference domainModelReference, EObject object)
 		throws DatabindingFailedException {
-		final DynamicContainmentTreeDomainModelReference dynamicContainmentTreeReference = getAndCheckDynamicContainmentTreeDMR(domainModelReference);
+		final DynamicContainmentTreeDomainModelReference dynamicContainmentTreeReference = getAndCheckDynamicContainmentTreeDMR(
+			domainModelReference);
 
 		final int index = getIndex(dynamicContainmentTreeReference);
 
-		final EMFIndexedValuePropertyDelegator indexedProperty = getIndexedRootProperty(
+		final EMFValuePropertyDecorator indexedProperty = getIndexedRootProperty(
 			dynamicContainmentTreeReference, index, object);
-		final IListProperty listPropertyFromBase = emfFormsDatabinding
+		final IEMFListProperty listPropertyFromBase = emfFormsDatabinding
 			.getListProperty(dynamicContainmentTreeReference.getPathFromBase(), object);
 
 		return indexedProperty.list(listPropertyFromBase);
 	}
 
-	private EMFIndexedValuePropertyDelegator getIndexedRootProperty(
+	private EMFValuePropertyDecorator getIndexedRootProperty(
 		final DynamicContainmentTreeDomainModelReference dynamicContainmentTreeReference, final int index,
 		EObject object)
-		throws DatabindingFailedException, IllegalListTypeException {
+			throws DatabindingFailedException, IllegalListTypeException {
 		final IValueProperty valuePropertyFromRoot = emfFormsDatabinding
 			.getValueProperty(dynamicContainmentTreeReference.getPathFromRoot(), object);
 		final EStructuralFeature structuralFeature = (EStructuralFeature) valuePropertyFromRoot.getValueType();
@@ -142,7 +148,7 @@ public class DynamicContainmentTreeDMRConverter implements DomainModelReferenceC
 
 		final EMFIndexedValuePropertyDelegator indexedProperty = new EMFIndexedValuePropertyDelegator(
 			valuePropertyFromRoot, index);
-		return indexedProperty;
+		return new EMFValuePropertyDecorator(indexedProperty, structuralFeature);
 	}
 
 	private DynamicContainmentTreeDomainModelReference getAndCheckDynamicContainmentTreeDMR(

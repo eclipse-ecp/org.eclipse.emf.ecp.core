@@ -11,8 +11,9 @@
     language="" usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore"
     interfaceNamePattern="V{0}" classNamePattern="V{0}Impl" importOrganizing="true">
   <foreignModel>view.ecore</foreignModel>
-  <genPackages prefix="View" basePackage="org.eclipse.emf.ecp.view.spi" disposableProviderFactory="true"
-      extensibleProviderFactory="true" childCreationExtenders="true" ecorePackage="view.ecore#/">
+  <genPackages prefix="View" basePackage="org.eclipse.emf.ecp.view.spi" resource="XMI"
+      disposableProviderFactory="true" extensibleProviderFactory="true" childCreationExtenders="true"
+      ecorePackage="view.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="view.ecore#//LabelAlignment">
       <genEnumLiterals ecoreEnumLiteral="view.ecore#//LabelAlignment/Left"/>
       <genEnumLiterals ecoreEnumLiteral="view.ecore#//LabelAlignment/None"/>
@@ -32,6 +33,7 @@
     </genClasses>
     <genClasses image="false" ecoreClass="view.ecore#//Element">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Element/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Element/label"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Element/visible"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Element/enabled"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Element/readonly"/>
@@ -42,14 +44,25 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference view.ecore#//View/rootEClass"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference view.ecore#//View/children"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//View/ecorePath"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference view.ecore#//View/loadingProperties"/>
     </genClasses>
     <genClasses image="false" ecoreClass="view.ecore#//ContainedElement"/>
     <genClasses image="false" ecoreClass="view.ecore#//Container">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference view.ecore#//Container/children"/>
     </genClasses>
+    <genClasses image="false" ecoreClass="view.ecore#//ContainedContainer"/>
     <genClasses ecoreClass="view.ecore#//Control">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Control/labelAlignment"/>
       <genFeatures createChild="true" ecoreFeature="ecore:EReference view.ecore#//Control/domainModelReference"/>
     </genClasses>
+    <genClasses ecoreClass="view.ecore#//ViewModelLoadingProperties">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference view.ecore#//ViewModelLoadingProperties/inheritableProperties"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference view.ecore#//ViewModelLoadingProperties/nonInheritableProperties"/>
+    </genClasses>
+    <genClasses ecoreClass="view.ecore#//StringToObjectMapEntry">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//StringToObjectMapEntry/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//StringToObjectMapEntry/value"/>
+    </genClasses>
+    <genClasses ecoreClass="view.ecore#//ViewModelProperties"/>
   </genPackages>
 </genmodel:GenModel>

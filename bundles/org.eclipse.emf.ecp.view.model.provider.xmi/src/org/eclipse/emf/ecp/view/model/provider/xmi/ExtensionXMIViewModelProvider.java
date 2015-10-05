@@ -11,10 +11,9 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.model.provider.xmi;
 
-import java.util.Map;
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
 import org.eclipse.emf.ecp.view.spi.provider.IViewProvider;
 
 /**
@@ -25,27 +24,17 @@ import org.eclipse.emf.ecp.view.spi.provider.IViewProvider;
  */
 public class ExtensionXMIViewModelProvider implements IViewProvider {
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.provider.IViewProvider#canRender(EObject, Map)
-	 */
 	@Override
-	public int canRender(EObject eObject, Map<String, Object> context) {
-		if (ViewModelFileExtensionsManager.getInstance().hasViewModelFor(eObject, context)) {
-			return 2;
+	public double canProvideViewModel(EObject eObject, VViewModelProperties properties) {
+		if (ViewModelFileExtensionsManager.getInstance().hasViewModelFor(eObject, properties)) {
+			return 2d;
 		}
 		return NOT_APPLICABLE;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.provider.IViewProvider#generate(EObject, Map)
-	 */
 	@Override
-	public VView generate(EObject eObject, Map<String, Object> context) {
-		return ViewModelFileExtensionsManager.getInstance().createView(eObject, context);
+	public VView provideViewModel(EObject eObject, VViewModelProperties properties) {
+		return ViewModelFileExtensionsManager.getInstance().createView(eObject, properties);
 	}
 
 }

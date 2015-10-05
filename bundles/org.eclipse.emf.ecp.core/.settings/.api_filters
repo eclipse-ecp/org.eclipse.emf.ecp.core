@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.ecp.core" version="2">
+    <resource path="src/org/eclipse/emf/ecp/spi/core/DefaultProvider.java" type="org.eclipse.emf.ecp.spi.core.DefaultProvider">
+        <filter comment="SPI" id="336695337">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.spi.core.DefaultProvider"/>
+                <message_argument value="doDelete(InternalProject, Collection&lt;Object&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI" id="1143996420">
+            <message_arguments>
+                <message_argument value="changeListeners"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI" id="1143996420">
+            <message_arguments>
+                <message_argument value="doDelete(InternalProject, Collection&lt;Object&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI" id="1143996420">
+            <message_arguments>
+                <message_argument value="registerChangeListener(ProviderChangeListener)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/spi/core/InternalProvider.java" type="org.eclipse.emf.ecp.spi.core.InternalProvider">
+        <filter comment="SPI" id="1211105284">
+            <message_arguments>
+                <message_argument value="registerChangeListener(ProviderChangeListener)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/spi/core/ProviderChangeListener.java" type="org.eclipse.emf.ecp.spi.core.ProviderChangeListener">
+        <filter comment="SPI" id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.spi.core.ProviderChangeListener"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

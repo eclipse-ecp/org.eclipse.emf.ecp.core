@@ -1,17 +1,32 @@
 package org.eclipse.emf.ecp.view.group.fx;
 
+import org.eclipse.emf.ecp.view.model.internal.fx.ContainerRendererFX;
+import org.eclipse.emf.ecp.view.model.internal.fx.GridCellFX;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.group.model.VGroup;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
+import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+
 import javafx.scene.Node;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 
-import org.eclipse.emf.ecp.view.model.internal.fx.ContainerRendererFX;
-import org.eclipse.emf.ecp.view.model.internal.fx.GridCellFX;
-import org.eclipse.emf.ecp.view.spi.group.model.VGroup;
-import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
-import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
-
 public class GroupRendererFX extends ContainerRendererFX<VGroup> {
+
+	/**
+	 * Default constructor.
+	 *
+	 * @param vElement the {@link VElement} to be rendered
+	 * @param viewContext the {@link ViewModelContext} to use
+	 * @param reportService The {@link ReportService} to use
+	 */
+	public GroupRendererFX(VGroup vElement, ViewModelContext viewContext, ReportService reportService) {
+		super(vElement, viewContext, reportService);
+	}
+
 	@Override
 	protected Node renderNode(GridCellFX cell) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
@@ -27,7 +42,7 @@ public class GroupRendererFX extends ContainerRendererFX<VGroup> {
 			GridPane.setVgrow(grid.getChildren().get(0), Priority.ALWAYS);
 		}
 
-		String text = getVElement().getName();
+		String text = getVElement().getLabel();
 		if (text == null) {
 			text = "";
 		}

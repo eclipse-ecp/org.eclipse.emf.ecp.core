@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -16,10 +16,13 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emfforms.spi.common.report.ReportService;
-import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsAbstractSpreadsheetRenderer;
+import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsIdProvider;
+import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetFormatDescriptionProvider;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetRendererService;
+import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsSpreadsheetValueConverterRegistry;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -32,10 +35,13 @@ import org.osgi.service.component.annotations.Reference;
 public class EMFFormsSpreadsheetControlRendererService implements
 	EMFFormsSpreadsheetRendererService<VControl> {
 
-	private EMFFormsDatabinding emfformsDatabinding;
+	private EMFFormsDatabindingEMF emfformsDatabinding;
 	private EMFFormsLabelProvider emfformsLabelProvider;
 	private ReportService reportService;
 	private VTViewTemplateProvider vtViewTemplateProvider;
+	private EMFFormsIdProvider emfFormsIdProvider;
+	private EMFFormsSpreadsheetValueConverterRegistry converterRegistry;
+	private EMFFormsSpreadsheetFormatDescriptionProvider formatDescriptionProvider;
 
 	/**
 	 * The VTViewTemplateProvider to use.
@@ -63,7 +69,7 @@ public class EMFFormsSpreadsheetControlRendererService implements
 	 * @param emfformsDatabinding The EMFFormsDatabinding to use
 	 */
 	@Reference
-	public void setEmfformsDatabinding(EMFFormsDatabinding emfformsDatabinding) {
+	public void setEmfformsDatabinding(EMFFormsDatabindingEMF emfformsDatabinding) {
 		this.emfformsDatabinding = emfformsDatabinding;
 	}
 
@@ -75,6 +81,36 @@ public class EMFFormsSpreadsheetControlRendererService implements
 	@Reference
 	public void setEmfformsLabelProvider(EMFFormsLabelProvider emfformsLabelProvider) {
 		this.emfformsLabelProvider = emfformsLabelProvider;
+	}
+
+	/**
+	 * The EMFFormsIdProvider to use.
+	 *
+	 * @param emfFormsIdProvider the EMFFormsIdProvider to set
+	 */
+	@Reference
+	protected void setEmfFormsIdProvider(EMFFormsIdProvider emfFormsIdProvider) {
+		this.emfFormsIdProvider = emfFormsIdProvider;
+	}
+
+	/**
+	 * The EMFFormsSpreadsheetValueConverterRegistry to use.
+	 *
+	 * @param converterRegistry the converter registry
+	 */
+	@Reference
+	public void setConverterRegistry(EMFFormsSpreadsheetValueConverterRegistry converterRegistry) {
+		this.converterRegistry = converterRegistry;
+	}
+
+	/**
+	 * The EMFFormsSpreadsheetFormatDescriptionProvider to use.
+	 *
+	 * @param formatDescriptionProvider the formatDescriptionProvider
+	 */
+	@Reference
+	public void setFormatDescriptionProvider(EMFFormsSpreadsheetFormatDescriptionProvider formatDescriptionProvider) {
+		this.formatDescriptionProvider = formatDescriptionProvider;
 	}
 
 	/**
@@ -102,7 +138,7 @@ public class EMFFormsSpreadsheetControlRendererService implements
 	public EMFFormsAbstractSpreadsheetRenderer<VControl> getRendererInstance(
 		VControl vElement, ViewModelContext viewModelContext) {
 		return new EMFFormsSpreadsheetControlRenderer(emfformsDatabinding, emfformsLabelProvider, reportService,
-			vtViewTemplateProvider);
+			vtViewTemplateProvider, emfFormsIdProvider, converterRegistry, formatDescriptionProvider);
 	}
 
 }

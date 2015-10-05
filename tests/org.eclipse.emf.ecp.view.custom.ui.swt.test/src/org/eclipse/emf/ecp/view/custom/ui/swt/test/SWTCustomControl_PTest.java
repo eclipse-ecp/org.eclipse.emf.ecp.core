@@ -114,7 +114,7 @@ public class SWTCustomControl_PTest {
 		return view;
 	}
 
-	@Test(expected = IllegalStateException.class)
+	@Test
 	public void testCustomControlinViewWithoutClass() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
 		final VView view = VViewFactory.eINSTANCE.createView();
@@ -133,11 +133,9 @@ public class SWTCustomControl_PTest {
 		// setup ui
 		final Shell shell = SWTViewTestHelper.createShell();
 		SWTViewTestHelper.render(view, shell);
-		// TODO: What to expect
 		assertEquals(1, shell.getChildren().length);
 		assertTrue(Composite.class.isInstance(shell.getChildren()[0]));
 		assertEquals(0, Composite.class.cast(shell.getChildren()[0]).getChildren().length);
-		// fail("Renderer should fail!");
 	}
 
 	@Test

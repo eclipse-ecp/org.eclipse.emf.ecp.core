@@ -2,8 +2,8 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Edapt Migration for Table View Model
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.table.edapt;singleton:=true
-Bundle-Version: 1.6.1.qualifier
+Bundle-Version: 1.7.1.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: org.eclipse.emf.edapt.migration;bundle-version="[1.0.0,2.0.0)"
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emf.ecp.view.table.edapt._140to150;version="1.6.1";x-internal:="true"
+Export-Package: org.eclipse.emf.ecp.view.table.edapt._140to150;version="1.7.1";x-internal:="true"

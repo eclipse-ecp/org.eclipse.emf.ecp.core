@@ -12,8 +12,8 @@
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>4.3</module>
-		<module>4.4</module>
+		<module>previous</module>
+		<module>current</module>
 	</modules>
 
 </project>

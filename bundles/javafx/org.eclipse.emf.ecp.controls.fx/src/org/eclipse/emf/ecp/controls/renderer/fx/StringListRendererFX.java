@@ -6,6 +6,15 @@ package org.eclipse.emf.ecp.controls.renderer.fx;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecp.controls.internal.fx.Activator;
+import org.eclipse.emf.ecp.controls.internal.fx.ManyAttributesObservableList;
+import org.eclipse.emf.ecp.view.model.internal.fx.SimpleControlRendererFX;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -20,18 +29,23 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecp.controls.internal.fx.Activator;
-import org.eclipse.emf.ecp.controls.internal.fx.ManyAttributesObservableList;
-import org.eclipse.emf.ecp.view.model.internal.fx.SimpleControlRendererFX;
-import org.eclipse.emf.ecp.view.spi.model.VControl;
-
 /**
  * @author Lucas
  *
  */
 @SuppressWarnings("unchecked")
 public class StringListRendererFX extends SimpleControlRendererFX {
+
+	/**
+	 * Default constructor.
+	 *
+	 * @param vElement the {@link VElement} to be rendered
+	 * @param viewContext the {@link ViewModelContext} to use
+	 * @param reportService The {@link ReportService} to use
+	 */
+	public StringListRendererFX(VControl vElement, ViewModelContext viewContext, ReportService reportService) {
+		super(vElement, viewContext, reportService);
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -100,16 +114,16 @@ public class StringListRendererFX extends SimpleControlRendererFX {
 						textField.focusedProperty().addListener(
 							new ChangeListener<Boolean>() {
 
-								@Override
-								public void changed(
-									ObservableValue<? extends Boolean> observable,
-									Boolean oldValue, Boolean newValue) {
-									if (!newValue) {
-										commitEdit(textField.getText());
-									}
+							@Override
+							public void changed(
+								ObservableValue<? extends Boolean> observable,
+								Boolean oldValue, Boolean newValue) {
+								if (!newValue) {
+									commitEdit(textField.getText());
 								}
+							}
 
-							});
+						});
 
 						textField.setText((String) getListValue());
 						setGraphic(textField);

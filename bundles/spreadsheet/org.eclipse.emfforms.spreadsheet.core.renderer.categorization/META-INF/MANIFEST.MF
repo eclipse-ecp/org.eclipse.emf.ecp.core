@@ -5,12 +5,12 @@ Bundle-SymbolicName: org.eclipse.emfforms.spreadsheet.core.renderer.categorizati
 Bundle-Version: 1.0.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
 Export-Package: org.eclipse.emfforms.internal.spreadsheet.core.renderer.categorization;version="1.0.0";x-internal:=true
-Require-Bundle: org.eclipse.emfforms.common;bundle-version="[1.6.1,2.0.0)",
- org.eclipse.emf.ecp.view.categorization.model;bundle-version="[1.6.1,2.0.0)",
+Require-Bundle: org.eclipse.emfforms.common;bundle-version="[1.6.0,2.0.0)",
+ org.eclipse.emf.ecp.view.categorization.model;bundle-version="[1.6.0,2.0.0)",
  org.eclipse.emfforms.spreadsheet.core;bundle-version="[1.0.0,2.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Import-Package: org.eclipse.emf.ecp.view.spi.context;version="[1.6.1,2.0.0)",
- org.osgi.framework;version="[1.6.1,2.0.0)",
+Import-Package: org.eclipse.emf.ecp.view.spi.context;version="[1.6.0,2.0.0)",
+ org.osgi.framework;version="[1.6.0,2.0.0)",
  org.osgi.service.component.annotations;version="[1.2.0,2.0.0)"
 Service-Component: OSGI-INF/org.eclipse.emfforms.internal.spreadsheet.core.renderer.categorization.EMFFormsCategorizationElementRendererService.xml,
  OSGI-INF/org.eclipse.emfforms.internal.spreadsheet.core.renderer.categorization.EMFFormsCategorizationRendererService.xml,

@@ -18,6 +18,7 @@ import org.eclipse.emf.ecp.view.spi.groupedgrid.model.VRow;
 import org.eclipse.emf.ecp.view.spi.groupedgrid.model.VSpan;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VAttachment;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
@@ -141,7 +142,7 @@ public class GroupedGridSWTRenderer extends AbstractSWTRenderer<VGroupedGrid> {
 					spanned += hSpan;
 					if (org.eclipse.emf.ecp.view.spi.model.VControl.class.isInstance(child)) {
 						final org.eclipse.emf.ecp.view.spi.model.VControl control = (org.eclipse.emf.ecp.view.spi.model.VControl) child;
-						if (control.getLabelAlignment() == LabelAlignment.LEFT) {
+						if (hasLeftLabelAlignment(control)) {
 							spanned++;
 						}
 					}
@@ -196,10 +197,15 @@ public class GroupedGridSWTRenderer extends AbstractSWTRenderer<VGroupedGrid> {
 	private int getExtraColumnForLabel(org.eclipse.emf.ecp.view.spi.model.VContainedElement child) {
 		if (org.eclipse.emf.ecp.view.spi.model.VControl.class.isInstance(child)) {
 			final org.eclipse.emf.ecp.view.spi.model.VControl control = (org.eclipse.emf.ecp.view.spi.model.VControl) child;
-			return control.getLabelAlignment() == LabelAlignment.LEFT ? 1 : 0;
+			return hasLeftLabelAlignment(control) ? 1 : 0;
 		}
 		return 0;
 
+	}
+
+	private boolean hasLeftLabelAlignment(VControl control) {
+		return control.getLabelAlignment() == LabelAlignment.LEFT
+			|| control.getLabelAlignment() == LabelAlignment.DEFAULT;
 	}
 
 	private EMFFormsRendererFactory getEMFFormsRendererFactory() {

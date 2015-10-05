@@ -13,8 +13,7 @@ package org.eclipse.emfforms.core.services.databinding.featurepath;
 
 import java.util.List;
 
-import org.eclipse.core.databinding.property.list.IListProperty;
-import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.emf.databinding.IEMFListProperty;
 import org.eclipse.emf.databinding.IEMFValueProperty;
 import org.eclipse.emf.databinding.edit.EMFEditProperties;
 import org.eclipse.emf.ecore.EObject;
@@ -24,15 +23,16 @@ import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
-import org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.DomainModelReferenceConverterEMF;
 
 /**
- * An implementation of {@link DomainModelReferenceConverter} that converts {@link VFeaturePathDomainModelReference}s.
+ * An implementation of {@link DomainModelReferenceConverterEMF} that converts {@link VFeaturePathDomainModelReference}
+ * s.
  *
  * @author Lucas Koehler
  *
  */
-public class FeaturePathDomainModelReferenceConverter implements DomainModelReferenceConverter {
+public class FeaturePathDomainModelReferenceConverter implements DomainModelReferenceConverterEMF {
 
 	/**
 	 * {@inheritDoc}
@@ -56,7 +56,7 @@ public class FeaturePathDomainModelReferenceConverter implements DomainModelRefe
 	 * @see org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter#convertToValueProperty(VDomainModelReference,EObject)
 	 */
 	@Override
-	public IValueProperty convertToValueProperty(VDomainModelReference domainModelReference, EObject object)
+	public IEMFValueProperty convertToValueProperty(VDomainModelReference domainModelReference, EObject object)
 		throws DatabindingFailedException {
 		if (domainModelReference == null) {
 			throw new IllegalArgumentException("The given VDomainModelReference must not be null."); //$NON-NLS-1$
@@ -70,6 +70,10 @@ public class FeaturePathDomainModelReferenceConverter implements DomainModelRefe
 		if (featurePathReference.getDomainModelEFeature() == null) {
 			throw new DatabindingFailedException(
 				"The field domainModelEFeature of the given VFeaturePathDomainModelReference must not be null."); //$NON-NLS-1$
+		}
+		if (featurePathReference.getDomainModelEFeature().eIsProxy()) {
+			throw new DatabindingFailedException(
+				"The field domainModelEFeature of the given VFeaturePathDomainModelReference must not be a proxy."); //$NON-NLS-1$
 		}
 
 		final List<EReference> referencePath = featurePathReference.getDomainModelEReferencePath();
@@ -97,7 +101,7 @@ public class FeaturePathDomainModelReferenceConverter implements DomainModelRefe
 	 * @see org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter#convertToListProperty(VDomainModelReference,EObject)
 	 */
 	@Override
-	public IListProperty convertToListProperty(VDomainModelReference domainModelReference, EObject object)
+	public IEMFListProperty convertToListProperty(VDomainModelReference domainModelReference, EObject object)
 		throws DatabindingFailedException {
 		if (domainModelReference == null) {
 			throw new IllegalArgumentException("The given VDomainModelReference must not be null."); //$NON-NLS-1$
@@ -111,6 +115,10 @@ public class FeaturePathDomainModelReferenceConverter implements DomainModelRefe
 		if (featurePathReference.getDomainModelEFeature() == null) {
 			throw new DatabindingFailedException(
 				"The field domainModelEFeature of the given VFeaturePathDomainModelReference must not be null."); //$NON-NLS-1$
+		}
+		if (featurePathReference.getDomainModelEFeature().eIsProxy()) {
+			throw new DatabindingFailedException(
+				"The field domainModelEFeature of the given VFeaturePathDomainModelReference must not be a proxy."); //$NON-NLS-1$
 		}
 
 		final List<EReference> referencePath = featurePathReference.getDomainModelEReferencePath();

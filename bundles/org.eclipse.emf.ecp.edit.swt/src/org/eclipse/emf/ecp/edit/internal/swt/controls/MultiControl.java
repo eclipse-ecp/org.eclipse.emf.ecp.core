@@ -153,64 +153,7 @@ public abstract class MultiControl extends SWTControl {
 		sectionComposite.setBackground(parent.getBackground());
 		GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(false).spacing(0, 5).applyTo(sectionComposite);
 
-		changeListener = new IListChangeListener() {
-
-			@Override
-			public void handleListChange(ListChangeEvent event) {
-				final ListDiff diff = event.diff;
-				diff.accept(new ListDiffVisitor() {
-
-					private int widthBeforeChange = -1; // initial negative value
-
-					@Override
-					public void handleRemove(int index, Object element) {
-						updateIndicesAfterRemove(index);
-						triggerScrollbarUpdate();
-						updateTargets();
-					}
-
-					private void updateTargets() {
-						for (final WidgetWrapper widgetWrapper : widgetWrappers) {
-							widgetWrapper.widget.getDataBindingContext().updateTargets();
-						}
-					}
-
-					@Override
-					public void handleAdd(int index, Object element) {
-						if (sectionComposite.isDisposed()) {
-							return;
-						}
-						addControl();
-
-						sectionComposite.layout();
-						triggerScrollbarUpdate();
-						updateTargets();
-					}
-
-					@Override
-					public void handleMove(int oldIndex, int newIndex, Object element) {
-						updateTargets();
-					}
-
-					@Override
-					public void handleReplace(int index, Object oldElement, Object newElement) {
-						widgetWrappers.get(index).widget.getDataBindingContext().updateTargets();
-					}
-
-					private void triggerScrollbarUpdate() {
-						if (sectionComposite.isDisposed()) {
-							return;
-						}
-						final int widthAfterChange = sectionComposite.getSize().x;
-						if (widthBeforeChange != widthAfterChange) {
-							scrolledComposite
-								.setMinHeight(sectionComposite.computeSize(widthAfterChange, SWT.DEFAULT).y);
-							widthBeforeChange = widthAfterChange;
-						}
-					}
-				});
-			}
-		};
+		changeListener = new ListChangeListener(scrolledComposite);
 		model.addListChangeListener(changeListener);
 		for (int i = 0; i < model.size(); i++) {
 			addControl();
@@ -319,6 +262,77 @@ public abstract class MultiControl extends SWTControl {
 			unsetButton.setEnabled(!getControl().isReadonly());
 			unsetButton.setToolTipText(getUnsetButtonTooltip());
 			unsetButton.setImage(Activator.getImage(ICONS_UNSET_FEATURE));
+		}
+	}
+
+	/**
+	 * @author Jonas
+	 *
+	 */
+	private final class ListChangeListener implements IListChangeListener {
+		private final ScrolledComposite scrolledComposite;
+
+		/**
+		 * @param scrolledComposite
+		 */
+		private ListChangeListener(ScrolledComposite scrolledComposite) {
+			this.scrolledComposite = scrolledComposite;
+		}
+
+		@Override
+		public void handleListChange(ListChangeEvent event) {
+			final ListDiff diff = event.diff;
+			diff.accept(new ListDiffVisitor() {
+
+				private int widthBeforeChange = -1; // initial negative value
+
+				@Override
+				public void handleRemove(int index, Object element) {
+					updateIndicesAfterRemove(index);
+					triggerScrollbarUpdate();
+					updateTargets();
+				}
+
+				private void updateTargets() {
+					for (final WidgetWrapper widgetWrapper : widgetWrappers) {
+						widgetWrapper.widget.getDataBindingContext().updateTargets();
+					}
+				}
+
+				@Override
+				public void handleAdd(int index, Object element) {
+					if (sectionComposite.isDisposed()) {
+						return;
+					}
+					addControl();
+
+					sectionComposite.layout();
+					triggerScrollbarUpdate();
+					updateTargets();
+				}
+
+				@Override
+				public void handleMove(int oldIndex, int newIndex, Object element) {
+					updateTargets();
+				}
+
+				@Override
+				public void handleReplace(int index, Object oldElement, Object newElement) {
+					widgetWrappers.get(index).widget.getDataBindingContext().updateTargets();
+				}
+
+				private void triggerScrollbarUpdate() {
+					if (sectionComposite.isDisposed()) {
+						return;
+					}
+					final int widthAfterChange = sectionComposite.getSize().x;
+					if (widthBeforeChange != widthAfterChange) {
+						scrolledComposite
+							.setMinHeight(sectionComposite.computeSize(widthAfterChange, SWT.DEFAULT).y);
+						widthBeforeChange = widthAfterChange;
+					}
+				}
+			});
 		}
 	}
 

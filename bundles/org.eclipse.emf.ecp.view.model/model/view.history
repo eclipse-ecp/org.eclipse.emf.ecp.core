@@ -299,5 +299,259 @@
           featureName="value" dataValue="resolveable"/>
     </changes>
   </releases>
+  <releases date="2015-08-16T21:20:47.038+0200" label="170">
+    <changes xsi:type="history:OperationChange">
+      <changes xsi:type="history:Create" target="view.ecore#/" referenceName="eClassifiers"
+          element="view.ecore#//ViewModelProperties">
+        <changes xsi:type="history:Set" element="view.ecore#//ViewModelProperties"
+            featureName="name" dataValue="ViewModelProperties"/>
+        <changes xsi:type="history:Set" element="view.ecore#//ViewModelProperties"
+            featureName="abstract" dataValue="true" oldDataValue="false"/>
+      </changes>
+      <operation name="newClass">
+        <parameters name="ePackage">
+          <referenceValue element="view.ecore#/"/>
+        </parameters>
+        <parameters name="name">
+          <dataValue>ViewModelProperties</dataValue>
+        </parameters>
+        <parameters name="superClasses"/>
+        <parameters name="abstr">
+          <dataValue>true</dataValue>
+        </parameters>
+      </operation>
+    </changes>
+    <changes xsi:type="history:Set" element="view.ecore#//ViewModelProperties" featureName="interface"
+        dataValue="true" oldDataValue="false"/>
+    <changes xsi:type="history:OperationChange">
+      <changes xsi:type="history:Create" target="view.ecore#/" referenceName="eClassifiers"
+          element="view.ecore#//StringToObjectMapEntry">
+        <changes xsi:type="history:Set" element="view.ecore#//StringToObjectMapEntry"
+            featureName="name" dataValue="StringToObjectMapEntry"/>
+      </changes>
+      <operation name="newClass">
+        <parameters name="ePackage">
+          <referenceValue element="view.ecore#/"/>
+        </parameters>
+        <parameters name="name">
+          <dataValue>StringToObjectMapEntry</dataValue>
+        </parameters>
+        <parameters name="superClasses"/>
+        <parameters name="abstr">
+          <dataValue>false</dataValue>
+        </parameters>
+      </operation>
+    </changes>
+    <changes xsi:type="history:Set" element="view.ecore#//StringToObjectMapEntry"
+        featureName="instanceClassName" dataValue="java.util.Map$Entry"/>
+    <changes xsi:type="history:Set" element="view.ecore#//StringToObjectMapEntry"
+        featureName="instanceTypeName" dataValue="java.util.Map$Entry"/>
+    <changes xsi:type="history:OperationChange">
+      <changes xsi:type="history:Create" target="view.ecore#//StringToObjectMapEntry"
+          referenceName="eStructuralFeatures" element="view.ecore#//StringToObjectMapEntry/key">
+        <changes xsi:type="history:Set" element="view.ecore#//StringToObjectMapEntry/key"
+            featureName="name" dataValue="key"/>
+        <changes xsi:type="history:Set" element="view.ecore#//StringToObjectMapEntry/key"
+            featureName="lowerBound" dataValue="1" oldDataValue="0"/>
+        <changes xsi:type="history:Set" element="view.ecore#//StringToObjectMapEntry/key"
+            featureName="eType" referenceValue="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </changes>
+      <operation name="newAttribute">
+        <parameters name="eClass">
+          <referenceValue element="view.ecore#//StringToObjectMapEntry"/>
+        </parameters>
+        <parameters name="name">
+          <dataValue>key</dataValue>
+        </parameters>
+        <parameters name="type">
+          <referenceValue element="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </parameters>
+        <parameters name="lowerBound">
+          <dataValue>1</dataValue>
+        </parameters>
+        <parameters name="upperBound">
+          <dataValue>1</dataValue>
+        </parameters>
+        <parameters name="defaultValue">
+          <dataValue xsi:nil="true"/>
+        </parameters>
+      </operation>
+    </changes>
+    <changes xsi:type="history:OperationChange">
+      <changes xsi:type="history:Create" target="view.ecore#//StringToObjectMapEntry"
+          referenceName="eStructuralFeatures" element="view.ecore#//StringToObjectMapEntry/value">
+        <changes xsi:type="history:Set" element="view.ecore#//StringToObjectMapEntry/value"
+            featureName="name" dataValue="value"/>
+        <changes xsi:type="history:Set" element="view.ecore#//StringToObjectMapEntry/value"
+            featureName="lowerBound" dataValue="1" oldDataValue="0"/>
+        <changes xsi:type="history:Set" element="view.ecore#//StringToObjectMapEntry/value"
+            featureName="eType" referenceValue="http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+      </changes>
+      <operation name="newAttribute">
+        <parameters name="eClass">
+          <referenceValue element="view.ecore#//StringToObjectMapEntry"/>
+        </parameters>
+        <parameters name="name">
+          <dataValue>value</dataValue>
+        </parameters>
+        <parameters name="type">
+          <referenceValue element="http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+        </parameters>
+        <parameters name="lowerBound">
+          <dataValue>1</dataValue>
+        </parameters>
+        <parameters name="upperBound">
+          <dataValue>1</dataValue>
+        </parameters>
+        <parameters name="defaultValue">
+          <dataValue xsi:nil="true"/>
+        </parameters>
+      </operation>
+    </changes>
+    <changes xsi:type="history:OperationChange">
+      <changes xsi:type="history:Create" target="view.ecore#/" referenceName="eClassifiers"
+          element="view.ecore#//ViewModelLoadingProperties">
+        <changes xsi:type="history:Set" element="view.ecore#//ViewModelLoadingProperties"
+            featureName="name" dataValue="ViewModelLoadingProperties"/>
+        <changes xsi:type="history:Add" element="view.ecore#//ViewModelLoadingProperties"
+            featureName="eSuperTypes" referenceValue="view.ecore#//ViewModelProperties"/>
+      </changes>
+      <operation name="newClass">
+        <parameters name="ePackage">
+          <referenceValue element="view.ecore#/"/>
+        </parameters>
+        <parameters name="name">
+          <dataValue>ViewModelLoadingProperties</dataValue>
+        </parameters>
+        <parameters name="superClasses">
+          <referenceValue element="view.ecore#//ViewModelProperties"/>
+        </parameters>
+        <parameters name="abstr">
+          <dataValue>false</dataValue>
+        </parameters>
+      </operation>
+    </changes>
+    <changes xsi:type="history:OperationChange">
+      <changes xsi:type="history:Create" target="view.ecore#//ViewModelLoadingProperties"
+          referenceName="eStructuralFeatures" element="view.ecore#//ViewModelLoadingProperties/inheritableProperties">
+        <changes xsi:type="history:Set" element="view.ecore#//ViewModelLoadingProperties/inheritableProperties"
+            featureName="name" dataValue="inheritableProperties"/>
+        <changes xsi:type="history:Set" element="view.ecore#//ViewModelLoadingProperties/inheritableProperties"
+            featureName="upperBound" dataValue="-1" oldDataValue="1"/>
+        <changes xsi:type="history:Set" element="view.ecore#//ViewModelLoadingProperties/inheritableProperties"
+            featureName="containment" dataValue="true" oldDataValue="false"/>
+        <changes xsi:type="history:Set" element="view.ecore#//ViewModelLoadingProperties/inheritableProperties"
+            featureName="eType" referenceValue="view.ecore#//StringToObjectMapEntry"/>
+      </changes>
+      <operation name="newReference">
+        <parameters name="eClass">
+          <referenceValue element="view.ecore#//ViewModelLoadingProperties"/>
+        </parameters>
+        <parameters name="name">
+          <dataValue>inheritableProperties</dataValue>
+        </parameters>
+        <parameters name="type">
+          <referenceValue element="view.ecore#//StringToObjectMapEntry"/>
+        </parameters>
+        <parameters name="lowerBound">
+          <dataValue>0</dataValue>
+        </parameters>
+        <parameters name="upperBound">
+          <dataValue>-1</dataValue>
+        </parameters>
+        <parameters name="containment">
+          <dataValue>true</dataValue>
+        </parameters>
+        <parameters name="opposite"/>
+      </operation>
+    </changes>
+    <changes xsi:type="history:OperationChange">
+      <changes xsi:type="history:Create" target="view.ecore#//ViewModelLoadingProperties"
+          referenceName="eStructuralFeatures" element="view.ecore#//ViewModelLoadingProperties/nonInheritableProperties">
+        <changes xsi:type="history:Set" element="view.ecore#//ViewModelLoadingProperties/nonInheritableProperties"
+            featureName="name" dataValue="nonInheritableProperties"/>
+        <changes xsi:type="history:Set" element="view.ecore#//ViewModelLoadingProperties/nonInheritableProperties"
+            featureName="upperBound" dataValue="-1" oldDataValue="1"/>
+        <changes xsi:type="history:Set" element="view.ecore#//ViewModelLoadingProperties/nonInheritableProperties"
+            featureName="containment" dataValue="true" oldDataValue="false"/>
+        <changes xsi:type="history:Set" element="view.ecore#//ViewModelLoadingProperties/nonInheritableProperties"
+            featureName="eType" referenceValue="view.ecore#//StringToObjectMapEntry"/>
+      </changes>
+      <operation name="newReference">
+        <parameters name="eClass">
+          <referenceValue element="view.ecore#//ViewModelLoadingProperties"/>
+        </parameters>
+        <parameters name="name">
+          <dataValue>nonInheritableProperties</dataValue>
+        </parameters>
+        <parameters name="type">
+          <referenceValue element="view.ecore#//StringToObjectMapEntry"/>
+        </parameters>
+        <parameters name="lowerBound">
+          <dataValue>0</dataValue>
+        </parameters>
+        <parameters name="upperBound">
+          <dataValue>-1</dataValue>
+        </parameters>
+        <parameters name="containment">
+          <dataValue>true</dataValue>
+        </parameters>
+        <parameters name="opposite"/>
+      </operation>
+    </changes>
+    <changes xsi:type="history:OperationChange">
+      <changes xsi:type="history:Create" target="view.ecore#//View" referenceName="eStructuralFeatures"
+          element="view.ecore#//View/loadingProperties">
+        <changes xsi:type="history:Set" element="view.ecore#//View/loadingProperties"
+            featureName="name" dataValue="loadingProperties"/>
+        <changes xsi:type="history:Set" element="view.ecore#//View/loadingProperties"
+            featureName="lowerBound" dataValue="1" oldDataValue="0"/>
+        <changes xsi:type="history:Set" element="view.ecore#//View/loadingProperties"
+            featureName="containment" dataValue="true" oldDataValue="false"/>
+        <changes xsi:type="history:Set" element="view.ecore#//View/loadingProperties"
+            featureName="eType" referenceValue="view.ecore#//ViewModelProperties"/>
+      </changes>
+      <operation name="newReference">
+        <parameters name="eClass">
+          <referenceValue element="view.ecore#//View"/>
+        </parameters>
+        <parameters name="name">
+          <dataValue>loadingProperties</dataValue>
+        </parameters>
+        <parameters name="type">
+          <referenceValue element="view.ecore#//ViewModelProperties"/>
+        </parameters>
+        <parameters name="lowerBound">
+          <dataValue>1</dataValue>
+        </parameters>
+        <parameters name="upperBound">
+          <dataValue>1</dataValue>
+        </parameters>
+        <parameters name="containment">
+          <dataValue>true</dataValue>
+        </parameters>
+        <parameters name="opposite"/>
+      </operation>
+    </changes>
+    <changes xsi:type="history:Set" element="view.ecore#//View/loadingProperties"
+        featureName="transient" dataValue="true" oldDataValue="false"/>
+    <changes xsi:type="history:Create" target="view.ecore#//LabelAlignment" referenceName="eLiterals"
+        element="view.ecore#//LabelAlignment/Top"/>
+    <changes xsi:type="history:Set" element="view.ecore#//LabelAlignment/Top" featureName="name"
+        dataValue="Top"/>
+    <changes xsi:type="history:Set" element="view.ecore#//LabelAlignment/Top" featureName="value"
+        dataValue="2" oldDataValue="0"/>
+    <changes xsi:type="history:Create" target="view.ecore#//LabelAlignment" referenceName="eLiterals"
+        element="view.ecore#//LabelAlignment/Default"/>
+    <changes xsi:type="history:Set" element="view.ecore#//LabelAlignment/Default"
+        featureName="name" dataValue="Default"/>
+    <changes xsi:type="history:Set" element="view.ecore#//LabelAlignment/Default"
+        featureName="value" dataValue="-1" oldDataValue="0"/>
+    <changes xsi:type="history:Set" element="view.ecore#//Control/labelAlignment"
+        featureName="defaultValueLiteral" dataValue="Default" oldDataValue="Left"/>
+    <changes xsi:type="history:MigrationChange" migration="org.eclipse.emf.ecp.internal.view.model.edapt._160to170.LabelAlignmentMigration"/>
+    <changes xsi:type="history:Set" element="view.ecore#/" featureName="nsURI" dataValue="http://org/eclipse/emf/ecp/view/model/170"
+        oldDataValue="http://org/eclipse/emf/ecp/view/model"/>
+  </releases>
   <releases/>
 </history:History>

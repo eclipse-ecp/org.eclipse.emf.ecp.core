@@ -12,6 +12,7 @@
 package org.eclipse.emf.ecp.view.internal.swt;
 
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
@@ -21,6 +22,8 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
@@ -121,26 +124,25 @@ public class ECPSWTViewRendererImpl implements ECPSWTViewRenderer {
 		return swtView;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer#render(org.eclipse.swt.widgets.Composite,
-	 *      org.eclipse.emf.ecore.EObject, java.util.Map)
-	 */
+	@Deprecated
 	@Override
 	public ECPSWTView render(Composite parent, EObject domainObject, Map<String, Object> context)
 		throws ECPRendererException {
-		final VView view = ViewProviderHelper.getView(domainObject, context);
+		final VViewModelProperties properties = VViewFactory.eINSTANCE.createViewModelLoadingProperties();
+		for (final Entry<String, Object> entry : context.entrySet()) {
+			properties.addNonInheritableProperty(entry.getKey(), entry.getValue());
+		}
+		return render(parent, domainObject, properties);
+	}
+
+	@Override
+	public ECPSWTView render(Composite parent, EObject domainObject, VViewModelProperties properties)
+		throws ECPRendererException {
+		if (properties == null) {
+			properties = VViewFactory.eINSTANCE.createViewModelLoadingProperties();
+		}
+		final VView view = ViewProviderHelper.getView(domainObject, properties);
 		return render(parent, domainObject, view);
 	}
 
-	// /**
-	// * Returns the {@link SWTRendererFactory} used to obtain any SWT renderer.
-	// * Clients may override.
-	// *
-	// * @return the {@link SWTRendererFactory}
-	// */
-	// protected SWTRendererFactory createFactory() {
-	// return new SWTRendererFactoryImpl();
-	// }
 }

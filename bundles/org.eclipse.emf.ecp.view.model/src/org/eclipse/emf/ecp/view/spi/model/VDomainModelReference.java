@@ -27,18 +27,17 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
  *
  *             <p>
  *             The following features are supported:
- *             <ul>
- *             <li>{@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getChangeListener <em>Change Listener
- *             </em>}</li>
- *             </ul>
  *             </p>
+ *             <ul>
+ *             <li>{@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getChangeListener
+ *             <em>Change Listener</em>}</li>
+ *             </ul>
  *
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getDomainModelReference()
  * @model interface="true" abstract="true"
  * @generated
  */
-public interface VDomainModelReference extends EObject, ModelChangeListener
-{
+public interface VDomainModelReference extends EObject, ModelChangeListener {
 	/**
 	 * Returns the value of the '<em><b>Change Listener</b></em>' attribute list.
 	 * The list contents are of type {@link org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener}.

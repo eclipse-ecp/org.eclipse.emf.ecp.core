@@ -27,14 +27,14 @@ public class ModelQuickFixRegistry_Test {
 
 	@Test
 	public void registryTest() {
-		final String ID = "org.eclipse.emf.ecp.quickfix.test.problem_1"; //$NON-NLS-1$
+		final String id = "org.eclipse.emf.ecp.quickfix.test.problem_1"; //$NON-NLS-1$
 
 		final ModelQuickFixRegistryImpl registry = new ModelQuickFixRegistryImpl();
 
-		final DummyModelQuickFix dummyQuickFix1 = getDummyQuickFix(ID, 1);
-		final DummyModelQuickFix dummyQuickFix3 = getDummyQuickFix(ID, 2.5);
-		final DummyModelQuickFix dummyQuickFix2 = getDummyQuickFix(ID, 2);
-		final DummyModelQuickFix dummyQuickFix4 = getDummyQuickFix(ID, 4);
+		final DummyModelQuickFix dummyQuickFix1 = getDummyQuickFix(id, 1);
+		final DummyModelQuickFix dummyQuickFix3 = getDummyQuickFix(id, 2.5);
+		final DummyModelQuickFix dummyQuickFix2 = getDummyQuickFix(id, 2);
+		final DummyModelQuickFix dummyQuickFix4 = getDummyQuickFix(id, 4);
 
 		registry.registerModelQuickFix(dummyQuickFix2);
 		registry.registerModelQuickFix(dummyQuickFix3);
@@ -42,7 +42,7 @@ public class ModelQuickFixRegistry_Test {
 		registry.registerModelQuickFix(dummyQuickFix4);
 
 		final Diagnostic diagnostic = new BasicDiagnostic(
-			"org.eclipse.emf.ecp.ui.quickfix.test", 0, "test", new Object[] { ID }); //$NON-NLS-1$ //$NON-NLS-2$
+			"org.eclipse.emf.ecp.ui.quickfix.test", 0, "test", new Object[] { id }); //$NON-NLS-1$ //$NON-NLS-2$
 
 		final List<ModelQuickFix> modelQuickFixes = registry.getAllModelQuickFixes();
 		assertTrue(

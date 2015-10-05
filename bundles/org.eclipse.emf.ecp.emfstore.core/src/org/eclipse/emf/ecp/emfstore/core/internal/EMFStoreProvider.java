@@ -19,9 +19,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.Callable;
-import java.util.concurrent.CopyOnWriteArraySet;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -111,8 +109,6 @@ public final class EMFStoreProvider extends DefaultProvider {
 	 * Property constant for ServerInfoID.
 	 */
 	public static final String PROP_SERVERINFOID = "serverInfoID"; //$NON-NLS-1$
-
-	private final Set<EMFStoreProviderChangeListener> changeListeners = new CopyOnWriteArraySet<EMFStoreProviderChangeListener>();
 
 	private AdapterImpl adapter;
 
@@ -233,31 +229,14 @@ public final class EMFStoreProvider extends DefaultProvider {
 
 	}
 
-	/**
-	 * @param context
-	 */
 	private void handleCreate(final ECPContainer context) {
 		if (context instanceof InternalRepository) {
-			final ESServer serverInfo = getServerInfo((InternalRepository) context);
-			// TODO autologin?
-			// if (serverInfo.getLastUsersession() != null && !serverInfo.getLastUsersession().isLoggedIn()) {
-			// try {
-			// serverInfo.login(serverInfo.getLastUsersession().getUsername(), serverInfo.getLastUsersession()
-			// .getPassword());
-			// } catch (AccessControlException ex) {
-			// Activator.log(ex);
-			// } catch (ESException ex) {
-			// Activator.log(ex);
-			// }
-			// }
+			getServerInfo((InternalRepository) context);
 		} else if (context instanceof InternalProject) {
 			getProjectSpace((InternalProject) context);
 		}
 	}
 
-	/**
-	 * @param context
-	 */
 	private void handelDispose(ECPContainer context) {
 		if (context instanceof InternalProject) {
 			final ESLocalProject projectSpace = getProjectSpace((InternalProject) context);
@@ -276,9 +255,6 @@ public final class EMFStoreProvider extends DefaultProvider {
 
 	}
 
-	/**
-	 * @param context
-	 */
 	private void handleInit(final ECPContainer context) {
 		if (context instanceof InternalProject) {
 			final ESLocalProject localProject = getProjectSpace((InternalProject) context, true);
@@ -289,15 +265,15 @@ public final class EMFStoreProvider extends DefaultProvider {
 
 			if (isAutosave()) {
 				// TODO EMFStore how to listen to operations?
-				projectSpace.getOperationManager().addOperationObserver(new OperationObserver() {
+				ESWorkspaceProviderImpl.getObserverBus().register(new OperationObserver() {
 
 					@Override
-					public void operationUndone(AbstractOperation operation) {
+					public void operationUndone(ProjectSpace projectSpace, AbstractOperation operation) {
 						doSave((InternalProject) context);
 					}
 
 					@Override
-					public void operationExecuted(AbstractOperation operation) {
+					public void operationExecuted(ProjectSpace projectSpace, AbstractOperation operation) {
 						doSave((InternalProject) context);
 					}
 				});
@@ -308,9 +284,7 @@ public final class EMFStoreProvider extends DefaultProvider {
 				@Override
 				public void notify(Notification notification, IdEObjectCollection collection, EObject modelElement) {
 
-					for (final EMFStoreProviderChangeListener listener : changeListeners) {
-						listener.onNewNotification(notification);
-					}
+					notifyProviderChangeListeners(notification);
 
 					if (modelElement instanceof ProjectImpl) {
 						final ProjectSpaceImpl projectSpace = (ProjectSpaceImpl) modelElement.eContainer();
@@ -390,24 +364,6 @@ public final class EMFStoreProvider extends DefaultProvider {
 	@Override
 	public boolean isDirty(InternalProject project) {
 		return getProjectSpace(project).hasUnsavedChanges();
-	}
-
-	/** {@inheritDoc} */
-	@Override
-	public void delete(InternalProject project, final Collection<Object> objects) {
-		final ProjectSpace projectSpace = ((ESLocalProjectImpl) getProjectSpace(project)).toInternalAPI();
-		// TODO EMFStore how to delete eObject?
-		new EMFStoreCommand() {
-			@Override
-			protected void doRun() {
-				for (final Object object : objects) {
-					if (EObject.class.isInstance(object)) {
-						projectSpace.getProject().deleteModelElement((EObject) object);
-					}
-				}
-			}
-		}.run(false);
-
 	}
 
 	/** {@inheritDoc} */
@@ -626,21 +582,26 @@ public final class EMFStoreProvider extends DefaultProvider {
 	}
 
 	/**
-	 * Registers a new {@link EMFStoreProviderChangeListener}.
+	 * {@inheritDoc}
 	 *
-	 * @param listener the listener
+	 * @see org.eclipse.emf.ecp.spi.core.DefaultProvider#doDelete(org.eclipse.emf.ecp.spi.core.InternalProject,
+	 *      java.util.Collection)
 	 */
-	public void registerChangeListener(EMFStoreProviderChangeListener listener) {
-		changeListeners.add(listener);
-	}
+	@Override
+	public void doDelete(InternalProject project, final Collection<Object> objects) {
+		final ProjectSpace projectSpace = ((ESLocalProjectImpl) getProjectSpace(project)).toInternalAPI();
+		// TODO EMFStore how to delete eObject?
+		new EMFStoreCommand() {
+			@Override
+			protected void doRun() {
+				for (final Object object : objects) {
+					if (EObject.class.isInstance(object)) {
+						projectSpace.getProject().deleteModelElement((EObject) object);
+					}
+				}
+			}
+		}.run(false);
 
-	/**
-	 * Unregisters a new {@link EMFStoreProviderChangeListener}.
-	 *
-	 * @param listener the listener
-	 */
-	public void unregisterChangeListener(EMFStoreProviderChangeListener listener) {
-		changeListeners.remove(listener);
 	}
 
 }

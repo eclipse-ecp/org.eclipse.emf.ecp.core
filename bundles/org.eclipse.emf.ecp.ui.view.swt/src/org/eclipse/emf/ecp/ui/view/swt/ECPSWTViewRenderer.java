@@ -18,6 +18,7 @@ import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.view.internal.swt.ECPSWTViewRendererImpl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
 import org.eclipse.swt.widgets.Composite;
 
 /**
@@ -69,8 +70,16 @@ public interface ECPSWTViewRenderer {
 	ECPSWTView render(Composite parent, ViewModelContext viewModelContext) throws ECPRendererException;
 
 	/**
+	 * <p>
 	 * Creates a view with the attributes of the domain object. The layout of the view can either be describes by a
 	 * registered view model, or, if none view model is registered for the domainObject, will be the default layout.
+	 * </p>
+	 * <p>
+	 * <b>The given context map will be used to create
+	 * {@link VViewModelProperties#addNonInheritableProperty(String, Object)
+	 * non-inheritable properties}. The rendering will be delegated to
+	 * {@link #render(Composite, EObject, VViewModelProperties)}, which should be used instead of this method </b>
+	 * </p>
 	 *
 	 * @param parent the parent SWT composite to render the view on
 	 * @param domainObject The domainObject to show in the view
@@ -78,6 +87,22 @@ public interface ECPSWTViewRenderer {
 	 * @return an ECPSWTView providing an interface to the rendered view
 	 * @throws ECPRendererException if there is an exception during rendering
 	 * @since 1.4
+	 * @deprecated use {@link #render(Composite, EObject, VViewModelProperties)} instead
 	 */
+	@Deprecated
 	ECPSWTView render(Composite parent, EObject domainObject, Map<String, Object> context) throws ECPRendererException;
+
+	/**
+	 * Creates a view with the attributes of the domain object. The layout of the view can either be describes by a
+	 * registered view model, or, if none view model is registered for the domainObject, will be the default layout.
+	 *
+	 * @param parent the parent SWT composite to render the view on
+	 * @param domainObject The domainObject to show in the view
+	 * @param properties the {@link VViewModelProperties properties}. May be <code>null</code>
+	 * @return an ECPSWTView providing an interface to the rendered view
+	 * @throws ECPRendererException if there is an exception during rendering
+	 * @since 1.7
+	 */
+	ECPSWTView render(Composite parent, EObject domainObject, VViewModelProperties properties)
+		throws ECPRendererException;
 }

@@ -11,6 +11,8 @@
  */
 package org.eclipse.emf.ecp.view.spi.model.util;
 
+import java.util.Map;
+
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
@@ -25,16 +27,18 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VViewModelLoadingProperties;
+import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 
 /**
  * <!-- begin-user-doc --> The <b>Adapter Factory</b> for the model. It provides
- * an adapter <code>createXXX</code> method for each class of the model. <!--
- * end-user-doc -->
+ * an adapter <code>createXXX</code> method for each class of the model.
  *
+ * @since 1.2 <!--
+ *        end-user-doc -->
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage
  * @generated
- * @since 1.2
  */
 public class ViewAdapterFactory extends AdapterFactoryImpl {
 	/**
@@ -53,8 +57,7 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public ViewAdapterFactory() {
-		if (modelPackage == null)
-		{
+		if (modelPackage == null) {
 			modelPackage = VViewPackage.eINSTANCE;
 		}
 	}
@@ -70,12 +73,10 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 */
 	@Override
 	public boolean isFactoryForType(Object object) {
-		if (object == modelPackage)
-		{
+		if (object == modelPackage) {
 			return true;
 		}
-		if (object instanceof EObject)
-		{
+		if (object instanceof EObject) {
 			return ((EObject) object).eClass().getEPackage() == modelPackage;
 		}
 		return false;
@@ -87,71 +88,74 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 *
 	 * @generated
 	 */
-	protected ViewSwitch<Adapter> modelSwitch = new ViewSwitch<Adapter>()
-	{
+	protected ViewSwitch<Adapter> modelSwitch = new ViewSwitch<Adapter>() {
 		@Override
-		public Adapter caseDiagnostic(VDiagnostic object)
-		{
+		public Adapter caseDiagnostic(VDiagnostic object) {
 			return createDiagnosticAdapter();
 		}
 
 		@Override
-		public Adapter caseAttachment(VAttachment object)
-		{
+		public Adapter caseAttachment(VAttachment object) {
 			return createAttachmentAdapter();
 		}
 
 		@Override
-		public Adapter caseDomainModelReference(VDomainModelReference object)
-		{
+		public Adapter caseDomainModelReference(VDomainModelReference object) {
 			return createDomainModelReferenceAdapter();
 		}
 
 		@Override
-		public Adapter caseFeaturePathDomainModelReference(VFeaturePathDomainModelReference object)
-		{
+		public Adapter caseFeaturePathDomainModelReference(VFeaturePathDomainModelReference object) {
 			return createFeaturePathDomainModelReferenceAdapter();
 		}
 
 		@Override
-		public Adapter caseElement(VElement object)
-		{
+		public Adapter caseElement(VElement object) {
 			return createElementAdapter();
 		}
 
 		@Override
-		public Adapter caseView(VView object)
-		{
+		public Adapter caseView(VView object) {
 			return createViewAdapter();
 		}
 
 		@Override
-		public Adapter caseContainedElement(VContainedElement object)
-		{
+		public Adapter caseContainedElement(VContainedElement object) {
 			return createContainedElementAdapter();
 		}
 
 		@Override
-		public Adapter caseContainer(VContainer object)
-		{
+		public Adapter caseContainer(VContainer object) {
 			return createContainerAdapter();
 		}
 
 		@Override
-		public Adapter caseContainedContainer(VContainedContainer object)
-		{
+		public Adapter caseContainedContainer(VContainedContainer object) {
 			return createContainedContainerAdapter();
 		}
 
 		@Override
-		public Adapter caseControl(VControl object)
-		{
+		public Adapter caseControl(VControl object) {
 			return createControlAdapter();
 		}
 
 		@Override
-		public Adapter defaultCase(EObject object)
-		{
+		public Adapter caseViewModelLoadingProperties(VViewModelLoadingProperties object) {
+			return createViewModelLoadingPropertiesAdapter();
+		}
+
+		@Override
+		public Adapter caseStringToObjectMapEntry(Map.Entry<String, Object> object) {
+			return createStringToObjectMapEntryAdapter();
+		}
+
+		@Override
+		public Adapter caseViewModelProperties(VViewModelProperties object) {
+			return createViewModelPropertiesAdapter();
+		}
+
+		@Override
+		public Adapter defaultCase(EObject object) {
 			return createEObjectAdapter();
 		}
 	};
@@ -171,8 +175,8 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VElement
-	 * <em>Element</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VElement <em>Element</em>
+	 * }'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
@@ -182,8 +186,7 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.emf.ecp.view.spi.model.VElement
 	 * @generated
 	 */
-	public Adapter createElementAdapter()
-	{
+	public Adapter createElementAdapter() {
 		return null;
 	}
 
@@ -199,8 +202,7 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDiagnostic
 	 * @generated
 	 */
-	public Adapter createDiagnosticAdapter()
-	{
+	public Adapter createDiagnosticAdapter() {
 		return null;
 	}
 
@@ -231,8 +233,7 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.emf.ecp.view.spi.model.VContainedElement
 	 * @generated
 	 */
-	public Adapter createContainedElementAdapter()
-	{
+	public Adapter createContainedElementAdapter() {
 		return null;
 	}
 
@@ -253,6 +254,57 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '
+	 * {@link org.eclipse.emf.ecp.view.spi.model.VViewModelLoadingProperties <em>Model Loading Properties</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * 
+	 * @since 1.7
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VViewModelLoadingProperties
+	 * @generated
+	 */
+	public Adapter createViewModelLoadingPropertiesAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VViewModelProperties
+	 * <em>Model Properties</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 *
+	 * @since 1.7
+	 *        <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VViewModelProperties
+	 * @generated
+	 */
+	public Adapter createViewModelPropertiesAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>String To Object Map Entry</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 *
+	 * @since 1.7
+	 *        <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see java.util.Map.Entry
+	 * @generated
+	 */
+	public Adapter createStringToObjectMapEntryAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VContainer
 	 * <em>Container</em>}'.
 	 * <!-- begin-user-doc -->
@@ -264,8 +316,7 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.emf.ecp.view.spi.model.VContainer
 	 * @generated
 	 */
-	public Adapter createContainerAdapter()
-	{
+	public Adapter createContainerAdapter() {
 		return null;
 	}
 
@@ -275,15 +326,14 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
 	 *
+	 * @since 1.4
+	 *        <!-- end-user-doc -->
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VContainedContainer
 	 * @generated
-	 * @since 1.4
 	 */
-	public Adapter createContainedContainerAdapter()
-	{
+	public Adapter createContainedContainerAdapter() {
 		return null;
 	}
 
@@ -299,8 +349,7 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference
 	 * @generated
 	 */
-	public Adapter createDomainModelReferenceAdapter()
-	{
+	public Adapter createDomainModelReferenceAdapter() {
 		return null;
 	}
 
@@ -317,8 +366,7 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference
 	 * @generated
 	 */
-	public Adapter createFeaturePathDomainModelReferenceAdapter()
-	{
+	public Adapter createFeaturePathDomainModelReferenceAdapter() {
 		return null;
 	}
 
@@ -334,8 +382,7 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.emf.ecp.view.spi.model.VAttachment
 	 * @generated
 	 */
-	public Adapter createAttachmentAdapter()
-	{
+	public Adapter createAttachmentAdapter() {
 		return null;
 	}
 

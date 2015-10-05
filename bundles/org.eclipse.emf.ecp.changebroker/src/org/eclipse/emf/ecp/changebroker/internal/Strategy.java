@@ -14,10 +14,10 @@ package org.eclipse.emf.ecp.changebroker.internal;
 import java.util.Set;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecp.changebroker.spi.EMFObserver;
+import org.eclipse.emf.ecp.changebroker.spi.ChangeObserver;
 
 /**
- * A Strategy is a registry/ruleset which allows to identify if a notification is relevant for an {@link EMFObserver}.
+ * A Strategy is a registry/ruleset which allows to identify if a notification is relevant for an {@link ChangeObserver}.
  *
  * @author jfaltermeier
  *
@@ -25,25 +25,25 @@ import org.eclipse.emf.ecp.changebroker.spi.EMFObserver;
 public interface Strategy {
 
 	/**
-	 * Returns the {@link EMFObserver observers} which should get notified.
+	 * Returns the {@link ChangeObserver observers} which should get notified.
 	 *
 	 * @param notification the notification
 	 * @return the observers
 	 */
-	Set<EMFObserver> getObservers(Notification notification);
+	Set<ChangeObserver> getObservers(Notification notification);
 
 	/**
 	 * Returns all observers managed by this strategy.
 	 *
 	 * @return all observers
 	 */
-	Set<EMFObserver> getAllObservers();
+	Set<ChangeObserver> getAllObservers();
 
 	/**
 	 * Deregisters and observer.
 	 *
 	 * @param observer the observer
 	 */
-	void deregister(EMFObserver observer);
+	void deregister(ChangeObserver observer);
 
 }

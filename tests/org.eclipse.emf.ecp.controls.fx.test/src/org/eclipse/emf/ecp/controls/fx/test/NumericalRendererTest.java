@@ -15,8 +15,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.text.DecimalFormatSymbols;
 
-import javafx.scene.control.TextField;
-
 import org.eclipse.emf.ecp.controls.renderer.fx.NumericalRendererFX;
 import org.eclipse.emf.ecp.view.model.internal.fx.GridCellFX;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
@@ -30,6 +28,8 @@ import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.emf.emfstore.bowling.Player;
 import org.junit.Before;
 import org.junit.Test;
+
+import javafx.scene.control.TextField;
 
 /**
  * @author Lucas
@@ -52,8 +52,9 @@ public class NumericalRendererTest extends AbstractControlRendererTest {
 		final ViewModelContext viewModelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(vControl,
 			player);
 
-		renderer = new NumericalRendererFX();
-		renderer.init(vControl, viewModelContext);
+		final FXTestReportService reportService = new FXTestReportService();
+
+		renderer = new NumericalRendererFX(vControl, viewModelContext, reportService);
 	}
 
 	@Test

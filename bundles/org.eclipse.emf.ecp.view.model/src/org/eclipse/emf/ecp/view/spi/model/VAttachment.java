@@ -16,14 +16,13 @@ import org.eclipse.emf.ecore.EObject;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Attachment</b></em>'.
+ * @since 1.2
  * <!-- end-user-doc -->
  *
  *
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getAttachment()
  * @model abstract="true"
  * @generated
- * @since 1.2
  */
-public interface VAttachment extends EObject
-{
+public interface VAttachment extends EObject {
 } // Attachment

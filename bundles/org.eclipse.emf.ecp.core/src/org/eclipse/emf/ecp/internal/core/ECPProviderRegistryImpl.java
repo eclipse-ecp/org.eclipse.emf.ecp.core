@@ -37,6 +37,7 @@ import org.eclipse.emf.ecp.internal.core.util.ExtensionParser.ExtensionDescripto
 import org.eclipse.emf.ecp.spi.core.InternalProject;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.core.InternalRepository;
+import org.eclipse.emf.ecp.spi.core.ProviderChangeListener;
 import org.eclipse.emf.ecp.spi.core.util.AdapterProvider;
 import org.eclipse.emf.ecp.spi.core.util.InternalChildrenList;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -48,7 +49,7 @@ import org.eclipse.net4j.util.AdapterUtil;
  * @author Eike Stepper
  * @author Eugen Neufeld
  */
-public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, ECPObserver> implements
+public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, ECPObserver>implements
 	ECPProviderRegistry {
 
 	private final ProviderParser extensionParser = new ProviderParser();
@@ -145,7 +146,7 @@ public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvi
 	/**
 	 * @author Eike Stepper
 	 */
-	private final class ProviderDescriptor extends ExtensionDescriptor<InternalProvider> implements InternalProvider {
+	private final class ProviderDescriptor extends ExtensionDescriptor<InternalProvider>implements InternalProvider {
 		private AdapterProvider uiProvider;
 
 		public ProviderDescriptor(String name, IConfigurationElement configurationElement) {
@@ -317,6 +318,28 @@ public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvi
 		@Override
 		public boolean isThreadSafe() {
 			return getResolvedElement().isThreadSafe();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#registerChangeListener(org.eclipse.emf.ecp.spi.core.ProviderChangeListener)
+		 */
+		@Override
+		public void registerChangeListener(ProviderChangeListener listener) {
+			getResolvedElement().registerChangeListener(listener);
+
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#unregisterChangeListener(org.eclipse.emf.ecp.spi.core.ProviderChangeListener)
+		 */
+		@Override
+		public void unregisterChangeListener(ProviderChangeListener listener) {
+			getResolvedElement().unregisterChangeListener(listener);
+
 		}
 	}
 }

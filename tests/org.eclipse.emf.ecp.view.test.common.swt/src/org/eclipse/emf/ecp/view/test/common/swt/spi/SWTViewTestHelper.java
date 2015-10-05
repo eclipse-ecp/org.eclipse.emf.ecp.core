@@ -38,10 +38,10 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 
-@SuppressWarnings("restriction")
 public final class SWTViewTestHelper {
 	// private static SWTRendererFactory factory = new SWTRendererFactoryImpl();
 	private static EMFFormsRendererFactory factory;
+
 	static {
 		final BundleContext bundleContext = FrameworkUtil.getBundle(SWTViewTestHelper.class).getBundleContext();
 		final ServiceReference<EMFFormsRendererFactory> serviceReference = bundleContext
@@ -53,6 +53,10 @@ public final class SWTViewTestHelper {
 
 	}
 
+	/**
+	 * 
+	 * @return a new {@link Shell} with a {@link FillLayout}
+	 */
 	public static Shell createShell() {
 		final Display display = Display.getDefault();
 		final Shell shell = new Shell(display);
@@ -120,8 +124,7 @@ public final class SWTViewTestHelper {
 		for (final Control textControl : controlComposite.getChildren()) {
 			if (textControl instanceof Text) {
 				textFields.add((Text) textControl);
-			}
-			else if (textControl instanceof Composite) {
+			} else if (textControl instanceof Composite) {
 				textFields.addAll(getAllTextControls(textControl));
 			}
 		}

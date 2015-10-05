@@ -2,11 +2,11 @@
 <feature
       id="org.eclipse.emf.ecp.view.edapt.feature"
       label="EMF Forms IDE Tooling Edapt View Model Migration Feature"
-      version="1.6.1.qualifier"
+      version="1.7.1.qualifier"
       provider-name="Eclipse Modeling Project"
       plugin="org.eclipse.emf.ecp.view.edapt"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.6.1.qualifier">
+      license-feature-version="1.7.1.qualifier">
 
    <description>
       %description
@@ -37,6 +37,13 @@
 
    <plugin
          id="org.eclipse.emf.ecp.view.table.edapt"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.ecp.view.model.edapt"
          download-size="0"
          install-size="0"
          version="0.0.0"

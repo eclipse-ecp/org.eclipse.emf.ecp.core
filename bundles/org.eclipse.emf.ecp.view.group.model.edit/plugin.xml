@@ -20,7 +20,7 @@
 
    <extension point="org.eclipse.emf.edit.childCreationExtenders">
       <extender
-            uri="http://org/eclipse/emf/ecp/view/model"
+            uri="http://org/eclipse/emf/ecp/view/model/170"
             class="org.eclipse.emf.ecp.view.spi.group.model.provider.GroupItemProviderAdapterFactory$ViewChildCreationExtender"/>
    </extension>
 

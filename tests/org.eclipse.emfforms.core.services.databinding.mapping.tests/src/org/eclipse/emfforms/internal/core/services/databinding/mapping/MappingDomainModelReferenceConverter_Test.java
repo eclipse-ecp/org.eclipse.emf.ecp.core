@@ -38,7 +38,7 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter;
-import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -117,7 +117,7 @@ public class MappingDomainModelReferenceConverter_Test {
 
 		IEMFValueProperty targetValueProperty = EMFProperties.value(TestPackage.eINSTANCE.getA_B());
 		targetValueProperty = targetValueProperty.value(TestPackage.eINSTANCE.getB_C());
-		final EMFFormsDatabinding emfFormsDatabinding = mock(EMFFormsDatabinding.class);
+		final EMFFormsDatabindingEMF emfFormsDatabinding = mock(EMFFormsDatabindingEMF.class);
 		when(emfFormsDatabinding.getValueProperty(targetReference, validEObject)).thenReturn(targetValueProperty);
 		converter.setEMFFormsDatabinding(emfFormsDatabinding);
 
@@ -148,7 +148,7 @@ public class MappingDomainModelReferenceConverter_Test {
 		mappingReference.setDomainModelReference(targetReference);
 
 		final IEMFValueProperty targetValueProperty = EMFProperties.value(TestPackage.eINSTANCE.getA_B());
-		final EMFFormsDatabinding emfFormsDatabinding = mock(EMFFormsDatabinding.class);
+		final EMFFormsDatabindingEMF emfFormsDatabinding = mock(EMFFormsDatabindingEMF.class);
 		when(emfFormsDatabinding.getValueProperty(targetReference, validEObject)).thenReturn(targetValueProperty);
 		converter.setEMFFormsDatabinding(emfFormsDatabinding);
 
@@ -179,7 +179,7 @@ public class MappingDomainModelReferenceConverter_Test {
 		mappingReference.setDomainModelReference(targetReference);
 
 		final IEMFValueProperty targetValueProperty = EMFProperties.value(TestPackage.eINSTANCE.getA_B());
-		final EMFFormsDatabinding emfFormsDatabinding = mock(EMFFormsDatabinding.class);
+		final EMFFormsDatabindingEMF emfFormsDatabinding = mock(EMFFormsDatabindingEMF.class);
 		when(emfFormsDatabinding.getValueProperty(targetReference, validEObject)).thenReturn(targetValueProperty);
 		converter.setEMFFormsDatabinding(emfFormsDatabinding);
 
@@ -235,7 +235,7 @@ public class MappingDomainModelReferenceConverter_Test {
 
 		final IEMFValueProperty targetValueProperty = EMFProperties.value(TestPackage.eINSTANCE.getA_B());
 		final IEMFListProperty targetListProperty = targetValueProperty.list(TestPackage.eINSTANCE.getB_CList());
-		final EMFFormsDatabinding emfFormsDatabinding = mock(EMFFormsDatabinding.class);
+		final EMFFormsDatabindingEMF emfFormsDatabinding = mock(EMFFormsDatabindingEMF.class);
 		when(emfFormsDatabinding.getListProperty(targetReference, validEObject)).thenReturn(targetListProperty);
 		converter.setEMFFormsDatabinding(emfFormsDatabinding);
 
@@ -268,7 +268,7 @@ public class MappingDomainModelReferenceConverter_Test {
 
 		final IEMFValueProperty targetValueProperty = EMFProperties.value(TestPackage.eINSTANCE.getA_B());
 		final IEMFListProperty targetListProperty = targetValueProperty.list(TestPackage.eINSTANCE.getB_CList());
-		final EMFFormsDatabinding emfFormsDatabinding = mock(EMFFormsDatabinding.class);
+		final EMFFormsDatabindingEMF emfFormsDatabinding = mock(EMFFormsDatabindingEMF.class);
 		when(emfFormsDatabinding.getListProperty(targetReference, validEObject)).thenReturn(targetListProperty);
 		converter.setEMFFormsDatabinding(emfFormsDatabinding);
 
@@ -301,7 +301,7 @@ public class MappingDomainModelReferenceConverter_Test {
 
 		final IEMFValueProperty targetValueProperty = EMFProperties.value(TestPackage.eINSTANCE.getA_B());
 		final IEMFListProperty targetListProperty = targetValueProperty.list(TestPackage.eINSTANCE.getB_CList());
-		final EMFFormsDatabinding emfFormsDatabinding = mock(EMFFormsDatabinding.class);
+		final EMFFormsDatabindingEMF emfFormsDatabinding = mock(EMFFormsDatabindingEMF.class);
 		when(emfFormsDatabinding.getListProperty(targetReference, validEObject)).thenReturn(targetListProperty);
 		converter.setEMFFormsDatabinding(emfFormsDatabinding);
 

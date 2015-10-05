@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="%productName" uid="org.eclipse.emf.ecp.3x" id="org.eclipse.emf.ecp.application.e3.product" application="org.eclipse.emf.ecp.application.e3.application" version="1.6.1.qualifier" useFeatures="true" includeLaunchers="true">
+<product name="%productName" uid="org.eclipse.emf.ecp.3x" id="org.eclipse.emf.ecp.application.e3.product" application="org.eclipse.emf.ecp.application.e3.application" version="1.7.1.qualifier" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
       <image path="/org.eclipse.emf.ecp.application.e3/icons/eclipse_lg.gif"/>

@@ -83,7 +83,7 @@ public class ECPProvider_PTest extends AbstractTest {
 			}
 		} catch (final ECPProjectWithNameExistsException e) {
 			fail("Project with name already existing. Fix test setup.");
-		} catch (final Exception e) {
+		} catch (final RuntimeException e) {
 			isActuallyPossible = false;
 		}
 

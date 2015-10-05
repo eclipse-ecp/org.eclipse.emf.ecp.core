@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -14,81 +14,56 @@ package org.eclipse.emf.ecp.view.internal.provider;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.internal.ui.Activator;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
+import org.eclipse.emf.ecp.view.spi.provider.EMFFormsViewService;
 import org.eclipse.emf.ecp.view.spi.provider.IViewProvider;
 import org.eclipse.emf.ecp.view.spi.provider.reporting.NoViewProviderFoundReport;
 import org.eclipse.emf.ecp.view.spi.provider.reporting.ViewModelIsNullReport;
 import org.eclipse.emf.ecp.view.spi.provider.reporting.ViewProviderInitFailedReport;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
+import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.osgi.framework.Bundle;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
 
 /**
+ * Implementation of the {@link EMFFormsViewService} which collects all known {@link IViewProvider} and finds the best
+ * fitting view.
+ *
  * @author Eugen Neufeld
  */
-public class ViewProviderImpl {
+@Component(name = "EMFFormsViewService")
+public class ViewProviderImpl implements EMFFormsViewService {
 
 	private static final String CLASS_CANNOT_BE_RESOLVED = "%1$s cannot be loaded because bundle %2$s cannot be resolved."; //$NON-NLS-1$
 	private static final String CLASS = "class"; //$NON-NLS-1$
 	private static final String EXTENSION_POINT_ID = "org.eclipse.emf.ecp.ui.view.viewModelProviders"; //$NON-NLS-1$
-	private final Set<IViewProvider> viewProviders = new LinkedHashSet<IViewProvider>();
-	private final boolean shouldReadExtensionPointPerRequest;
+	private final Set<IViewProvider> viewProviders = new CopyOnWriteArraySet<IViewProvider>();
+	private ReportService reportService;
 
 	/**
-	 * Default Constructor.
+	 * Component activate method.
 	 */
-	public ViewProviderImpl() {
-		this(true);
+	@Activate
+	protected void activate() {
+		readViewProviders();
 	}
 
-	/**
-	 * Constructor.
-	 *
-	 * @param shouldReadExtensionPointPerRequest
-	 *            whether the view providers extension should be read on each request
-	 */
-	public ViewProviderImpl(boolean shouldReadExtensionPointPerRequest) {
-		this.shouldReadExtensionPointPerRequest = shouldReadExtensionPointPerRequest;
-	}
-
-	/**
-	 * Clears all {@link IViewProvider}s.
-	 */
-	public void clearProviders() {
-		viewProviders.clear();
-	}
-
-	/**
-	 * Adds a {@link IViewProvider}.
-	 *
-	 * @param provider
-	 *            the {@link IViewProvider} to be added
-	 */
-	public void addProvider(IViewProvider provider) {
-		viewProviders.add(provider);
-	}
-
-	private Set<IViewProvider> getViewProviders() {
-		if (viewProviders == null || viewProviders.isEmpty()) {
-			viewProviders.addAll(readViewProviders());
-		}
-		return viewProviders;
-	}
-
-	private static Set<IViewProvider> readViewProviders() {
+	private void readViewProviders() {
 		final IConfigurationElement[] controls = Platform.getExtensionRegistry()
 			.getConfigurationElementsFor(
 				EXTENSION_POINT_ID);
-
-		final Set<IViewProvider> providers = new LinkedHashSet<IViewProvider>();
 
 		for (final IConfigurationElement e : controls) {
 			try {
@@ -98,7 +73,7 @@ public class ViewProviderImpl {
 				final Constructor<? extends IViewProvider> controlConstructor = resolvedClass
 					.getConstructor();
 				final IViewProvider viewProvider = controlConstructor.newInstance();
-				providers.add(viewProvider);
+				viewProviders.add(viewProvider);
 			} catch (final ClassNotFoundException ex) {
 				report(new ViewProviderInitFailedReport(ex));
 			} catch (final NoSuchMethodException ex) {
@@ -115,12 +90,10 @@ public class ViewProviderImpl {
 				report(new ViewProviderInitFailedReport(ex));
 			}
 		}
-
-		return providers;
 	}
 
-	private static void report(AbstractReport reportEntity) {
-		Activator.getDefault().getReportService().report(reportEntity);
+	private void report(AbstractReport reportEntity) {
+		reportService.report(reportEntity);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -140,29 +113,23 @@ public class ViewProviderImpl {
 	 * IViewProviders} and searches for the best fitting. If none can be found, then null is returned.
 	 *
 	 * @param eObject the {@link EObject} to find a {@link VView} for
-	 * @param context a key-value-map from String to Object
+	 * @param properties the {@link VViewModelProperties properties}
 	 * @return a view model for the given {@link EObject} or null if no suited provider could be found
 	 */
-	public VView getView(EObject eObject, Map<String, Object> context) {
-		int highestPrio = IViewProvider.NOT_APPLICABLE;
+	@Override
+	public VView getView(EObject eObject, VViewModelProperties properties) {
+		double highestPrio = IViewProvider.NOT_APPLICABLE;
 		IViewProvider selectedProvider = null;
-		if (context == null) {
-			context = new LinkedHashMap<String, Object>();
+		if (properties == null) {
+			properties = VViewFactory.eINSTANCE.createViewModelLoadingProperties();
 		}
 
-		Set<IViewProvider> providers;
-		if (shouldReadExtensionPointPerRequest) {
-			providers = getViewProviders();
-		} else {
-			providers = viewProviders;
-		}
-
-		if (providers.isEmpty()) {
+		if (viewProviders.isEmpty()) {
 			report(new NoViewProviderFoundReport());
 		}
 
-		for (final IViewProvider viewProvider : providers) {
-			final int prio = viewProvider.canRender(eObject, context);
+		for (final IViewProvider viewProvider : viewProviders) {
+			final double prio = viewProvider.canProvideViewModel(eObject, properties);
 			if (prio > highestPrio) {
 				highestPrio = prio;
 				selectedProvider = viewProvider;
@@ -170,7 +137,7 @@ public class ViewProviderImpl {
 		}
 
 		if (selectedProvider != null) {
-			final VView view = selectedProvider.generate(eObject, context);
+			final VView view = selectedProvider.provideViewModel(eObject, properties);
 			if (view == null) {
 				report(new ViewModelIsNullReport());
 			}
@@ -179,5 +146,36 @@ public class ViewProviderImpl {
 
 		return null;
 
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.provider.EMFFormsViewService#addProvider(org.eclipse.emf.ecp.view.spi.provider.IViewProvider)
+	 */
+	@Reference(cardinality = ReferenceCardinality.MULTIPLE, policy = ReferencePolicy.DYNAMIC)
+	@Override
+	public void addProvider(IViewProvider viewProvider) {
+		viewProviders.add(viewProvider);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.provider.EMFFormsViewService#removeProvider(org.eclipse.emf.ecp.view.spi.provider.IViewProvider)
+	 */
+	@Override
+	public void removeProvider(IViewProvider viewProvider) {
+		viewProviders.remove(viewProvider);
+	}
+
+	/**
+	 * Set the ReportService.
+	 *
+	 * @param reportService The {@link ReportService}
+	 */
+	@Reference(cardinality = ReferenceCardinality.MANDATORY, policy = ReferencePolicy.STATIC)
+	protected void setReportService(ReportService reportService) {
+		this.reportService = reportService;
 	}
 }

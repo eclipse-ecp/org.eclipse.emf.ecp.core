@@ -15,6 +15,7 @@ import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * Abstract implementation of a {@link NotificationProvider}.
@@ -49,7 +50,7 @@ public abstract class AbstractNotificationProvider implements NotificationProvid
 	}
 
 	/**
-	 * Notifies all registered {@link org.eclipse.emf.ecp.changebroker.spi.EMFObserver receivers}.
+	 * Notifies all registered {@link org.eclipse.emf.ecp.changebroker.spi.ChangeObserver receivers}.
 	 *
 	 * @param notification the notification
 	 */
@@ -57,6 +58,46 @@ public abstract class AbstractNotificationProvider implements NotificationProvid
 		for (final NotificationReceiver receiver : receivers) {
 			receiver.notify(notification);
 		}
+	}
+
+	/**
+	 *
+	 * @param toBeDeleted The deleted {@link EObject}
+	 *
+	 * @since 1.7
+	 */
+	protected void notifyPreDelete(EObject toBeDeleted) {
+		for (final NotificationReceiver receiver : receivers) {
+			receiver.notifyPreDelete(toBeDeleted);
+		}
+	}
+
+	/**
+	 *
+	 * @param toBeDeleted The deleted {@link EObject}
+	 *
+	 * @since 1.7
+	 */
+	protected void notifyPostDelete(EObject toBeDeleted) {
+		for (final NotificationReceiver receiver : receivers) {
+			receiver.notifyPostDelete(toBeDeleted);
+		}
+	}
+
+	/**
+	 * @param toBeDeleted The deleted {@link EObject}
+	 * @return if the object can be deleted
+	 * @since 1.7
+	 */
+	protected boolean notifyCanDelete(EObject toBeDeleted) {
+		boolean canDelete = true;
+		for (final NotificationReceiver receiver : receivers) {
+			canDelete = receiver.canDelete(toBeDeleted);
+			if (!canDelete) {
+				break;
+			}
+		}
+		return canDelete;
 	}
 
 }

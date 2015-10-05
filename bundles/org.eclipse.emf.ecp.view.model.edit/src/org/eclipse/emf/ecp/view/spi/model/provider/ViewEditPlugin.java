@@ -18,10 +18,10 @@ import org.eclipse.emf.ecore.provider.EcoreEditPlugin;
 /**
  * This is the central singleton for the View edit plugin.
  * <!-- begin-user-doc -->
- * <!-- end-user-doc -->
  *
- * @generated
  * @since 1.2
+ *        <!-- end-user-doc -->
+ * @generated
  */
 public final class ViewEditPlugin extends EMFPlugin {
 	/**
@@ -50,8 +50,7 @@ public final class ViewEditPlugin extends EMFPlugin {
 	 * @generated
 	 */
 	public ViewEditPlugin() {
-		super(new ResourceLocator[]
-		{
+		super(new ResourceLocator[] {
 			EcoreEditPlugin.INSTANCE,
 		});
 	}

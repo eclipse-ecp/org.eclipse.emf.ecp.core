@@ -126,6 +126,8 @@ public abstract class AbstractWorkspaceHandler extends AbstractHandler {
 	 */
 	protected static void refreshDirtyState(ExecutionEvent event) throws ExecutionException {
 		final IWorkbenchWindow ww = HandlerUtil.getActiveWorkbenchWindowChecked(event);
+		// We keep the cast, otherwise we loose SRC compatibility with Luna
+		@SuppressWarnings("cast")
 		final IEvaluationService service = (IEvaluationService) ww.getService(IEvaluationService.class);
 		if (service != null) {
 			service.requestEvaluation("org.eclipse.emf.cdo.workspace.dirty"); //$NON-NLS-1$

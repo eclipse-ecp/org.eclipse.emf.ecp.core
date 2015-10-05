@@ -16,7 +16,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.model.common.ECPRendererTester;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
-import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.template.internal.tooling.Activator;
 import org.eclipse.emf.ecp.view.template.model.VTTemplatePackage;
@@ -35,17 +34,16 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedRepor
  *
  */
 public class TemplateColorHexControlTester implements ECPRendererTester {
-
+	// BEGIN COMPLEX CODE
 	@Override
 	public int isApplicable(VElement vElement, ViewModelContext viewModelContext) {
 		if (!VControl.class.isInstance(vElement)) {
 			return NOT_APPLICABLE;
 		}
-		final VDomainModelReference dmr = VControl.class.cast(vElement).getDomainModelReference();
-		if (dmr == null) {
+		final VControl control = (VControl) vElement;
+		if (control.getDomainModelReference() == null) {
 			return NOT_APPLICABLE;
 		}
-		final VControl control = (VControl) vElement;
 		IValueProperty valueProperty;
 		try {
 			valueProperty = Activator.getDefault().getEMFFormsDatabinding()
@@ -98,5 +96,5 @@ public class TemplateColorHexControlTester implements ECPRendererTester {
 
 		return NOT_APPLICABLE;
 	}
-
+	// END COMPLEX CODE
 }

@@ -13,16 +13,17 @@ package org.eclipse.emf.ecp.view.spi.custom.model.impl;
 
 import java.util.Set;
 
-import org.eclipse.core.databinding.property.list.IListProperty;
-import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.databinding.IEMFListProperty;
+import org.eclipse.emf.databinding.IEMFValueProperty;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.custom.model.ECPHardcodedReferences;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter;
-import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.DomainModelReferenceConverterEMF;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -33,32 +34,32 @@ import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * DomainModelReferenceConverter for CustomDomainModelReferences.
- * 
+ *
  * @author Eugen Neufeld
  * @since 1.6
  *
  */
-@Component
-public class CustomDMRConverter implements DomainModelReferenceConverter {
-	private EMFFormsDatabinding emfFormsDatabinding;
-	private ServiceReference<EMFFormsDatabinding> databindingServiceReference;
+@Component(service = { DomainModelReferenceConverterEMF.class, DomainModelReferenceConverter.class })
+public class CustomDMRConverter implements DomainModelReferenceConverterEMF {
+	private EMFFormsDatabindingEMF emfFormsDatabinding;
+	private ServiceReference<EMFFormsDatabindingEMF> databindingServiceReference;
 
 	/**
-	 * This method is called by the OSGI framework when this {@link DomainModelReferenceConverter} is activated. It
-	 * retrieves the {@link EMFFormsDatabinding EMF Forms databinding service}.
+	 * This method is called by the OSGI framework when this {@link DomainModelReferenceConverterEMF} is activated. It
+	 * retrieves the {@link EMFFormsDatabindingEMF EMF Forms databinding service}.
 	 *
 	 * @param bundleContext The {@link BundleContext} of this classes bundle.
 	 */
 	@Activate
 	protected final void activate(BundleContext bundleContext) {
-		databindingServiceReference = bundleContext.getServiceReference(EMFFormsDatabinding.class);
+		databindingServiceReference = bundleContext.getServiceReference(EMFFormsDatabindingEMF.class);
 		emfFormsDatabinding = bundleContext.getService(databindingServiceReference);
 
 	}
 
 	/**
-	 * This method is called by the OSGI framework when this {@link DomainModelReferenceConverter} is deactivated.
-	 * It frees the {@link EMFFormsDatabinding EMF Forms databinding service}.
+	 * This method is called by the OSGI framework when this {@link DomainModelReferenceConverterEMF} is deactivated.
+	 * It frees the {@link EMFFormsDatabindingEMF EMF Forms databinding service}.
 	 *
 	 * @param bundleContext The {@link BundleContext} of this classes bundle.
 	 */
@@ -71,7 +72,7 @@ public class CustomDMRConverter implements DomainModelReferenceConverter {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter#isApplicable(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)
+	 * @see DomainModelReferenceConverterEMF#isApplicable(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)
 	 */
 	@Override
 	public double isApplicable(VDomainModelReference domainModelReference) {
@@ -84,10 +85,11 @@ public class CustomDMRConverter implements DomainModelReferenceConverter {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter#convertToValueProperty(VDomainModelReference,EObject)
+	 * @see DomainModelReferenceConverterEMF#convertToValueProperty(VDomainModelReference,EObject)
+	 * @since 1.7
 	 */
 	@Override
-	public IValueProperty convertToValueProperty(VDomainModelReference domainModelReference, EObject object)
+	public IEMFValueProperty convertToValueProperty(VDomainModelReference domainModelReference, EObject object)
 		throws DatabindingFailedException {
 		if (domainModelReference == null) {
 			throw new IllegalArgumentException("The given VDomainModelReference must not be null."); //$NON-NLS-1$
@@ -105,20 +107,22 @@ public class CustomDMRConverter implements DomainModelReferenceConverter {
 			throw new DatabindingFailedException(
 				String
 					.format(
-						"The provided ECPHardcodedReferences from Bundle %1$s Class %2$s cannot be resolved.", tableDomainModelReference.getBundleName(), tableDomainModelReference.getClassName())); //$NON-NLS-1$
+						"The provided ECPHardcodedReferences from Bundle %1$s Class %2$s cannot be resolved.", //$NON-NLS-1$
+						tableDomainModelReference.getBundleName(), tableDomainModelReference.getClassName()));
 		}
 		final Set<VDomainModelReference> neededDomainModelReferences = customControl.getNeededDomainModelReferences();
-		if (neededDomainModelReferences.isEmpty())
-		{
+		if (neededDomainModelReferences.isEmpty()) {
 			throw new DatabindingFailedException(
 				String
 					.format(
-						"The provided ECPHardcodedReferences from Bundle %1$s Class %2$s doesn't define any DomainModelReferences.", tableDomainModelReference.getBundleName(), tableDomainModelReference.getClassName())); //$NON-NLS-1$
+						"The provided ECPHardcodedReferences from Bundle %1$s Class %2$s doesn't define any DomainModelReferences.", //$NON-NLS-1$
+						tableDomainModelReference.getBundleName(), tableDomainModelReference.getClassName()));
 		}
 		return emfFormsDatabinding.getValueProperty(neededDomainModelReferences.iterator().next(), object);
 	}
 
-	private static ECPHardcodedReferences loadObject(String bundleName, String clazz) throws DatabindingFailedException {
+	private static ECPHardcodedReferences loadObject(String bundleName, String clazz)
+		throws DatabindingFailedException {
 		final Bundle bundle = Platform.getBundle(bundleName);
 		if (bundle == null) {
 			new ClassNotFoundException(String.format(LocalizationServiceHelper.getString(
@@ -144,10 +148,11 @@ public class CustomDMRConverter implements DomainModelReferenceConverter {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter#convertToListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference,EObject)
+	 * @see DomainModelReferenceConverterEMF#convertToListProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference,EObject)
+	 * @since 1.7
 	 */
 	@Override
-	public IListProperty convertToListProperty(VDomainModelReference domainModelReference, EObject object)
+	public IEMFListProperty convertToListProperty(VDomainModelReference domainModelReference, EObject object)
 		throws DatabindingFailedException {
 		if (domainModelReference == null) {
 			throw new IllegalArgumentException("The given VDomainModelReference must not be null."); //$NON-NLS-1$
@@ -165,15 +170,16 @@ public class CustomDMRConverter implements DomainModelReferenceConverter {
 			throw new DatabindingFailedException(
 				String
 					.format(
-						"The provided ECPHardcodedReferences from Bundle %1$s Class %2$s cannot be resolved.", tableDomainModelReference.getBundleName(), tableDomainModelReference.getClassName())); //$NON-NLS-1$
+						"The provided ECPHardcodedReferences from Bundle %1$s Class %2$s cannot be resolved.", //$NON-NLS-1$
+						tableDomainModelReference.getBundleName(), tableDomainModelReference.getClassName()));
 		}
 		final Set<VDomainModelReference> neededDomainModelReferences = customControl.getNeededDomainModelReferences();
-		if (neededDomainModelReferences.isEmpty())
-		{
+		if (neededDomainModelReferences.isEmpty()) {
 			throw new DatabindingFailedException(
 				String
 					.format(
-						"The provided ECPHardcodedReferences from Bundle %1$s Class %2$s doesn't define any DomainModelReferences.", tableDomainModelReference.getBundleName(), tableDomainModelReference.getClassName())); //$NON-NLS-1$
+						"The provided ECPHardcodedReferences from Bundle %1$s Class %2$s doesn't define any DomainModelReferences.", //$NON-NLS-1$
+						tableDomainModelReference.getBundleName(), tableDomainModelReference.getClassName()));
 		}
 		return emfFormsDatabinding.getListProperty(neededDomainModelReferences.iterator().next(), object);
 	}

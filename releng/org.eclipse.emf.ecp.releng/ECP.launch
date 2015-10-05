@@ -41,7 +41,6 @@
 <setEntry value="org.eclipse.emf.ecp.view.stack.feature:default"/>
 <setEntry value="org.eclipse.emf.ecp.view.table.feature:default"/>
 <setEntry value="org.eclipse.emf.ecp.view.template.feature:default"/>
-<setEntry value="org.eclipse.emf.ecp.view.template.helper.feature:default"/>
 <setEntry value="org.eclipse.emf.ecp.view.treemasterdetail.feature:default"/>
 <setEntry value="org.eclipse.emf.ecp.view.unset.feature:default"/>
 <setEntry value="org.eclipse.emf.ecp.view.validation.feature:default"/>

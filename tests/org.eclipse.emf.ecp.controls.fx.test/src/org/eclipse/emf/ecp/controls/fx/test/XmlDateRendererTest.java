@@ -17,9 +17,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Locale;
 
-import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
-
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeConstants;
 import javax.xml.datatype.DatatypeFactory;
@@ -38,6 +35,9 @@ import org.eclipse.emf.emfstore.bowling.Referee;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 
 /**
  * @author Lucas
@@ -65,8 +65,9 @@ public class XmlDateRendererTest extends AbstractControlRendererTest {
 		final ViewModelContext viewModelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(vControl,
 			referee);
 
-		renderer = new XmlDateRendererFX();
-		renderer.init(vControl, viewModelContext);
+		final FXTestReportService reportService = new FXTestReportService();
+
+		renderer = new XmlDateRendererFX(vControl, viewModelContext, reportService);
 	}
 
 	@Test

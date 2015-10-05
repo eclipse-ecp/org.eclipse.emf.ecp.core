@@ -2,20 +2,20 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: View Model Label Rap
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.label.rap
-Bundle-Version: 1.6.1.qualifier
+Bundle-Version: 1.7.1.qualifier
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.emf.ecp.view.label.ui.swt;bundle-version="[1.5.0,2.0.0)",
  org.eclipse.emf.ecp.ui.view.swt;bundle-version="[1.5.0,2.0.0)",
  org.eclipse.emf.ecp.view.label.model;bundle-version="[1.5.0,2.0.0)",
- org.eclipse.emf.ecp.view.template.model;bundle-version="[1.6.1,2.0.0)",
- org.eclipse.emfforms.swt.core.di;bundle-version="[1.6.1,2.0.0)"
+ org.eclipse.emf.ecp.view.template.model;bundle-version="[1.6.0,2.0.0)",
+ org.eclipse.emfforms.swt.core.di;bundle-version="[1.6.0,2.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: Eclipse Modeling Project
-Import-Package: org.eclipse.emfforms.spi.common.report;version="[1.6.1,2.0.0)",
- org.eclipse.emfforms.spi.core.services.databinding;version="[1.6.1,2.0.0)",
- org.eclipse.emfforms.spi.swt.core;version="[1.6.1,2.0.0)",
+Import-Package: org.eclipse.emfforms.spi.common.report;version="1.6.0",
+ org.eclipse.emfforms.spi.core.services.databinding;version="1.6.0",
+ org.eclipse.emfforms.spi.swt.core;version="1.6.0",
  org.eclipse.swt;version="0.0.0",
  org.eclipse.swt.widgets;version="0.0.0"
-Export-Package: org.eclipse.emf.ecp.view.label.rap;version="1.6.1";x-internal:="true"
+Export-Package: org.eclipse.emf.ecp.view.label.rap;version="1.7.1";x-internal:="true"
 Service-Component: OSGI-INF/labelRAPRendererService.xml

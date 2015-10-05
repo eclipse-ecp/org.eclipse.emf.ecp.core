@@ -27,9 +27,9 @@ import java.util.concurrent.TimeUnit;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecp.changebroker.internal.ChangeBrokerImpl;
-import org.eclipse.emf.ecp.changebroker.spi.EMFObserver;
+import org.eclipse.emf.ecp.changebroker.spi.ChangeObserver;
 import org.eclipse.emf.ecp.changebroker.spi.NotificationProvider;
-import org.eclipse.emf.ecp.changebroker.spi.ReadOnlyEMFObserver;
+import org.eclipse.emf.ecp.changebroker.spi.ReadOnlyChangeObserver;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.emf.emfstore.bowling.Matchup;
@@ -62,14 +62,14 @@ public class ChangeBroker_Test {
 		final CountDownLatch latch1 = new CountDownLatch(1);
 		final CountDownLatch latch2 = new CountDownLatch(1);
 		final Matchup matchup = BowlingFactory.eINSTANCE.createMatchup();
-		broker.subscribe(new EMFObserver() {
+		broker.subscribe(new ChangeObserver() {
 
 			@Override
 			public void handleNotification(Notification notification) {
 				latch1.countDown();
 			}
 		});
-		broker.subscribe(new EMFObserver() {
+		broker.subscribe(new ChangeObserver() {
 
 			@Override
 			public void handleNotification(Notification notification) {
@@ -90,7 +90,7 @@ public class ChangeBroker_Test {
 		// setup
 		final CountDownLatch latch = new CountDownLatch(1);
 		final Matchup matchup = BowlingFactory.eINSTANCE.createMatchup();
-		broker.subscribe(new EMFObserver() {
+		broker.subscribe(new ChangeObserver() {
 
 			@Override
 			public void handleNotification(Notification notification) {
@@ -111,7 +111,7 @@ public class ChangeBroker_Test {
 		// setup
 		final CountDownLatch latch = new CountDownLatch(1);
 		final Matchup matchup = BowlingFactory.eINSTANCE.createMatchup();
-		broker.subscribe(new EMFObserver() {
+		broker.subscribe(new ChangeObserver() {
 
 			@Override
 			public void handleNotification(Notification notification) {
@@ -133,7 +133,7 @@ public class ChangeBroker_Test {
 		// setup
 		final CountDownLatch latch = new CountDownLatch(1);
 		final Matchup matchup = BowlingFactory.eINSTANCE.createMatchup();
-		broker.subscribe(new EMFObserver() {
+		broker.subscribe(new ChangeObserver() {
 
 			@Override
 			public void handleNotification(Notification notification) {
@@ -155,7 +155,7 @@ public class ChangeBroker_Test {
 		// setup
 		final CountDownLatch latch = new CountDownLatch(1);
 		final Matchup matchup = BowlingFactory.eINSTANCE.createMatchup();
-		broker.subscribe(new EMFObserver() {
+		broker.subscribe(new ChangeObserver() {
 
 			@Override
 			public void handleNotification(Notification notification) {
@@ -180,7 +180,7 @@ public class ChangeBroker_Test {
 		final CountDownLatch latch2 = new CountDownLatch(1);
 		final Matchup matchup = BowlingFactory.eINSTANCE.createMatchup();
 		tournament.getMatchups().add(matchup);
-		broker.subscribeToEClass(new EMFObserver() {
+		broker.subscribeToEClass(new ChangeObserver() {
 
 			@Override
 			public void handleNotification(Notification notification) {
@@ -208,7 +208,7 @@ public class ChangeBroker_Test {
 		final CountDownLatch latch2 = new CountDownLatch(1);
 		final Matchup matchup = BowlingFactory.eINSTANCE.createMatchup();
 		tournament.getMatchups().add(matchup);
-		broker.subscribeToTree(new EMFObserver() {
+		broker.subscribeToTree(new ChangeObserver() {
 
 			@Override
 			public void handleNotification(Notification notification) {
@@ -236,7 +236,7 @@ public class ChangeBroker_Test {
 		final CountDownLatch latch2 = new CountDownLatch(1);
 		final Matchup matchup = BowlingFactory.eINSTANCE.createMatchup();
 		tournament.getMatchups().add(matchup);
-		broker.subscribeToEClass(new EMFObserver() {
+		broker.subscribeToEClass(new ChangeObserver() {
 
 			@Override
 			public void handleNotification(Notification notification) {
@@ -245,7 +245,7 @@ public class ChangeBroker_Test {
 
 			}
 		}, BowlingPackage.eINSTANCE.getTournament());
-		broker.subscribeToEClass(new EMFObserver() {
+		broker.subscribeToEClass(new ChangeObserver() {
 
 			@Override
 			public void handleNotification(Notification notification) {
@@ -266,7 +266,7 @@ public class ChangeBroker_Test {
 	public void testIgnoreNotifactionsByCallingStopNotification() throws InterruptedException {
 		// setup
 		final CountDownLatch latch1 = new CountDownLatch(1);
-		broker.subscribeToEClass(new EMFObserver() {
+		broker.subscribeToEClass(new ChangeObserver() {
 
 			@Override
 			public void handleNotification(Notification notification) {
@@ -286,7 +286,7 @@ public class ChangeBroker_Test {
 	public void testEMFObserverContinueNotification() throws InterruptedException {
 		// setup
 		final CountDownLatch latch1 = new CountDownLatch(1);
-		broker.subscribeToEClass(new EMFObserver() {
+		broker.subscribeToEClass(new ChangeObserver() {
 
 			@Override
 			public void handleNotification(Notification notification) {
@@ -314,7 +314,7 @@ public class ChangeBroker_Test {
 		final CountDownLatch latch2 = new CountDownLatch(1);
 		final Matchup matchup = BowlingFactory.eINSTANCE.createMatchup();
 
-		broker.subscribeToFeature(new EMFObserver() {
+		broker.subscribeToFeature(new ChangeObserver() {
 
 			@Override
 			public void handleNotification(Notification notification) {
@@ -340,7 +340,7 @@ public class ChangeBroker_Test {
 		// setup
 		final CountDownLatch latch1 = new CountDownLatch(1);
 		final Matchup matchup = BowlingFactory.eINSTANCE.createMatchup();
-		final EMFObserver receiver = new EMFObserver() {
+		final ChangeObserver receiver = new ChangeObserver() {
 
 			@Override
 			public void handleNotification(Notification notification) {
@@ -362,7 +362,7 @@ public class ChangeBroker_Test {
 		// setup
 		final CountDownLatch latch1 = new CountDownLatch(1);
 		final Matchup matchup = BowlingFactory.eINSTANCE.createMatchup();
-		final EMFObserver receiver = new EMFObserver() {
+		final ChangeObserver receiver = new ChangeObserver() {
 
 			@Override
 			public void handleNotification(Notification notification) {
@@ -384,7 +384,7 @@ public class ChangeBroker_Test {
 		// setup
 		final CountDownLatch latch1 = new CountDownLatch(1);
 		final Matchup matchup = BowlingFactory.eINSTANCE.createMatchup();
-		final EMFObserver receiver = new EMFObserver() {
+		final ChangeObserver receiver = new ChangeObserver() {
 
 			@Override
 			public void handleNotification(Notification notification) {
@@ -406,7 +406,7 @@ public class ChangeBroker_Test {
 		// setup
 		final CountDownLatch latch1 = new CountDownLatch(1);
 		final Matchup matchup = BowlingFactory.eINSTANCE.createMatchup();
-		final EMFObserver receiver = new EMFObserver() {
+		final ChangeObserver receiver = new ChangeObserver() {
 
 			@Override
 			public void handleNotification(Notification notification) {
@@ -428,7 +428,7 @@ public class ChangeBroker_Test {
 		// setup
 		final CountDownLatch latch = new CountDownLatch(1);
 		final Matchup matchup = BowlingFactory.eINSTANCE.createMatchup();
-		broker.subscribe(new ReadOnlyEMFObserver() {
+		broker.subscribe(new ReadOnlyChangeObserver() {
 
 			@Override
 			public void handleNotification(Notification notification) {
@@ -453,7 +453,7 @@ public class ChangeBroker_Test {
 		final CountDownLatch latch2 = new CountDownLatch(1);
 		final Matchup matchup = BowlingFactory.eINSTANCE.createMatchup();
 		tournament.getMatchups().add(matchup);
-		broker.subscribeToEClass(new ReadOnlyEMFObserver() {
+		broker.subscribeToEClass(new ReadOnlyChangeObserver() {
 
 			@Override
 			public void handleNotification(Notification notification) {
@@ -481,7 +481,7 @@ public class ChangeBroker_Test {
 		final CountDownLatch latch2 = new CountDownLatch(1);
 		final Matchup matchup = BowlingFactory.eINSTANCE.createMatchup();
 		tournament.getMatchups().add(matchup);
-		broker.subscribeToTree(new ReadOnlyEMFObserver() {
+		broker.subscribeToTree(new ReadOnlyChangeObserver() {
 
 			@Override
 			public void handleNotification(Notification notification) {
@@ -509,7 +509,7 @@ public class ChangeBroker_Test {
 		final CountDownLatch latch2 = new CountDownLatch(1);
 		final Matchup matchup = BowlingFactory.eINSTANCE.createMatchup();
 
-		broker.subscribeToFeature(new ReadOnlyEMFObserver() {
+		broker.subscribeToFeature(new ReadOnlyChangeObserver() {
 
 			@Override
 			public void handleNotification(Notification notification) {
@@ -535,14 +535,14 @@ public class ChangeBroker_Test {
 		final CountDownLatch latch1 = new CountDownLatch(2);
 		final CountDownLatch latch2 = new CountDownLatch(2);
 
-		broker.subscribe(new EMFObserver() {
+		broker.subscribe(new ChangeObserver() {
 			@Override
 			public void handleNotification(Notification notification) {
 				tournament.getReceivesTrophy().add(Boolean.TRUE);
 				latch1.countDown();
 			}
 		});
-		broker.subscribe(new ReadOnlyEMFObserver() {
+		broker.subscribe(new ReadOnlyChangeObserver() {
 			@Override
 			public void handleNotification(Notification notification) {
 				latch2.countDown();
@@ -558,7 +558,7 @@ public class ChangeBroker_Test {
 	public void testReadOnlyObserversStillCalledWhenStopNotificationUsed() throws InterruptedException {
 		final CountDownLatch latch = new CountDownLatch(1);
 
-		broker.subscribe(new ReadOnlyEMFObserver() {
+		broker.subscribe(new ReadOnlyChangeObserver() {
 			@Override
 			public void handleNotification(Notification notification) {
 				latch.countDown();
@@ -574,7 +574,7 @@ public class ChangeBroker_Test {
 		final CountDownLatch latch = new CountDownLatch(5);
 		addEMFObserverAddingTrophies();
 		addEMFObserverAddingTrophies();
-		broker.subscribe(new ReadOnlyEMFObserver() {
+		broker.subscribe(new ReadOnlyChangeObserver() {
 			@Override
 			public void handleNotification(Notification notification) {
 				latch.countDown();
@@ -587,7 +587,7 @@ public class ChangeBroker_Test {
 	}
 
 	private void addEMFObserverAddingTrophies() {
-		broker.subscribe(new EMFObserver() {
+		broker.subscribe(new ChangeObserver() {
 			@Override
 			public void handleNotification(Notification notification) {
 				tournament.getReceivesTrophy().add(Boolean.TRUE);
@@ -604,13 +604,13 @@ public class ChangeBroker_Test {
 
 	@Test
 	public void testGetRegisteredObservers() {
-		final ReadOnlyEMFObserver obs1 = new ReadOnlyEMFObserver() {
+		final ReadOnlyChangeObserver obs1 = new ReadOnlyChangeObserver() {
 			@Override
 			public void handleNotification(Notification notification) {
 				// no op
 			}
 		};
-		final EMFObserver obs2 = new EMFObserver() {
+		final ChangeObserver obs2 = new ChangeObserver() {
 			@Override
 			public void handleNotification(Notification notification) {
 				// no op
@@ -618,7 +618,7 @@ public class ChangeBroker_Test {
 		};
 		broker.subscribe(obs1);
 		broker.subscribeToEClass(obs2, BowlingPackage.eINSTANCE.getPlayer());
-		final Set<EMFObserver> registeredObservers = broker.getRegisteredObservers();
+		final Set<ChangeObserver> registeredObservers = broker.getRegisteredObservers();
 		assertEquals(2, registeredObservers.size());
 		assertTrue(registeredObservers.contains(obs1));
 		assertTrue(registeredObservers.contains(obs2));
@@ -626,8 +626,8 @@ public class ChangeBroker_Test {
 
 	@Test
 	public void testBlockNotification() {
-		final ReadOnlyEMFObserver readOnlyEMFObserver = mock(ReadOnlyEMFObserver.class);
-		final EMFObserver emfObserver = mock(EMFObserver.class);
+		final ReadOnlyChangeObserver readOnlyEMFObserver = mock(ReadOnlyChangeObserver.class);
+		final ChangeObserver emfObserver = mock(ChangeObserver.class);
 		broker.subscribe(readOnlyEMFObserver);
 		broker.subscribe(emfObserver);
 
@@ -640,8 +640,8 @@ public class ChangeBroker_Test {
 
 	@Test
 	public void testBlockNotificationAndCallContinue() {
-		final ReadOnlyEMFObserver readOnlyEMFObserver = mock(ReadOnlyEMFObserver.class);
-		final EMFObserver emfObserver = mock(EMFObserver.class);
+		final ReadOnlyChangeObserver readOnlyEMFObserver = mock(ReadOnlyChangeObserver.class);
+		final ChangeObserver emfObserver = mock(ChangeObserver.class);
 		broker.subscribe(readOnlyEMFObserver);
 		broker.subscribe(emfObserver);
 
@@ -655,8 +655,8 @@ public class ChangeBroker_Test {
 
 	@Test
 	public void testUnBlockNotification() {
-		final ReadOnlyEMFObserver readOnlyEMFObserver = mock(ReadOnlyEMFObserver.class);
-		final EMFObserver emfObserver = mock(EMFObserver.class);
+		final ReadOnlyChangeObserver readOnlyEMFObserver = mock(ReadOnlyChangeObserver.class);
+		final ChangeObserver emfObserver = mock(ChangeObserver.class);
 		broker.subscribe(readOnlyEMFObserver);
 		broker.subscribe(emfObserver);
 
@@ -670,8 +670,8 @@ public class ChangeBroker_Test {
 
 	@Test
 	public void testMultipleBlockers() {
-		final ReadOnlyEMFObserver readOnlyEMFObserver = mock(ReadOnlyEMFObserver.class);
-		final EMFObserver emfObserver = mock(EMFObserver.class);
+		final ReadOnlyChangeObserver readOnlyEMFObserver = mock(ReadOnlyChangeObserver.class);
+		final ChangeObserver emfObserver = mock(ChangeObserver.class);
 		broker.subscribe(readOnlyEMFObserver);
 		broker.subscribe(emfObserver);
 
@@ -686,8 +686,8 @@ public class ChangeBroker_Test {
 
 	@Test
 	public void testRemoveMultipleBlockers() {
-		final ReadOnlyEMFObserver readOnlyEMFObserver = mock(ReadOnlyEMFObserver.class);
-		final EMFObserver emfObserver = mock(EMFObserver.class);
+		final ReadOnlyChangeObserver readOnlyEMFObserver = mock(ReadOnlyChangeObserver.class);
+		final ChangeObserver emfObserver = mock(ChangeObserver.class);
 		broker.subscribe(readOnlyEMFObserver);
 		broker.subscribe(emfObserver);
 
@@ -704,8 +704,8 @@ public class ChangeBroker_Test {
 	@Test
 	public void testRemovingBlockerContinuesUpdate() {
 
-		final ReadOnlyEMFObserver readOnlyEMFObserver = mock(ReadOnlyEMFObserver.class);
-		final EMFObserver emfObserver = mock(EMFObserver.class);
+		final ReadOnlyChangeObserver readOnlyEMFObserver = mock(ReadOnlyChangeObserver.class);
+		final ChangeObserver emfObserver = mock(ChangeObserver.class);
 		broker.subscribe(readOnlyEMFObserver);
 		broker.subscribe(emfObserver);
 

@@ -23,7 +23,10 @@ import org.junit.runners.Suite.SuiteClasses;
  *
  */
 @RunWith(Suite.class)
-@SuiteClasses({ DomainModelReference_Test.class, DiagnosticMessageExtractor_Test.class })
+@SuiteClasses({
+	DomainModelReference_Test.class,
+	DiagnosticMessageExtractor_Test.class,
+	DefaultViewModelProperties_Test.class })
 public class AllTests {
 	// JUnit 4 Test Suite
 }

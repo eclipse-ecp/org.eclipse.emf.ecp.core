@@ -13,15 +13,6 @@ package org.eclipse.emf.ecp.controls.renderer.fx;
 
 import java.net.URL;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
@@ -37,9 +28,20 @@ import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.view.model.internal.fx.SimpleControlRendererFX;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 
 /**
  * This renderer renders a single reference to another element.
@@ -49,17 +51,23 @@ import org.eclipse.emf.edit.domain.EditingDomain;
  */
 public class SingleReferenceRendererFX extends SimpleControlRendererFX {
 
-	private ReferenceService referenceService;
+	/**
+	 * Default constructor.
+	 *
+	 * @param vElement the {@link VElement} to be rendered
+	 * @param viewContext the {@link ViewModelContext} to use
+	 * @param reportService The {@link ReportService} to use
+	 */
+	public SingleReferenceRendererFX(VControl vElement, ViewModelContext viewContext, ReportService reportService) {
+		super(vElement, viewContext, reportService);
+		referenceService = viewContext.getService(ReferenceService.class);
+	}
+
+	private final ReferenceService referenceService;
 
 	// FIXME At the moment there is no way to remove the adapter from the last reference before "closing" this
 	// control because there isn't any dispose mechanism in the FX renderer yet.
 	private Adapter adapter;
-
-	@Override
-	public void init(final VControl control, ViewModelContext viewModelContext) {
-		super.init(control, viewModelContext);
-		referenceService = viewModelContext.getService(ReferenceService.class);
-	}
 
 	/**
 	 * {@inheritDoc}

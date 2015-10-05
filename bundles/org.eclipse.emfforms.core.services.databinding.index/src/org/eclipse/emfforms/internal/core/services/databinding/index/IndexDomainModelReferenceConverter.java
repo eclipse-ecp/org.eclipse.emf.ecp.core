@@ -13,10 +13,10 @@ package org.eclipse.emfforms.internal.core.services.databinding.index;
 
 import java.util.List;
 
-import org.eclipse.core.databinding.property.list.IListProperty;
-import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.emf.databinding.IEMFListProperty;
 import org.eclipse.emf.databinding.IEMFValueProperty;
 import org.eclipse.emf.databinding.edit.EMFEditProperties;
+import org.eclipse.emf.databinding.internal.EMFValuePropertyDecorator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -25,53 +25,54 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
-import org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter;
-import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.DomainModelReferenceConverterEMF;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
 /**
- * An implementation of {@link DomainModelReferenceConverter} that converts {@link VIndexDomainModelReference
+ * An implementation of {@link DomainModelReferenceConverterEMF} that converts {@link VIndexDomainModelReference
  * VIndexDomainModelReferences}.
  *
  * @author Lucas Koehler
  *
  */
-public class IndexDomainModelReferenceConverter implements DomainModelReferenceConverter {
-	private EMFFormsDatabinding emfFormsDatabinding;
-	private ServiceReference<EMFFormsDatabinding> databindingServiceReference;
+@SuppressWarnings("restriction")
+public class IndexDomainModelReferenceConverter implements DomainModelReferenceConverterEMF {
+	private EMFFormsDatabindingEMF emfFormsDatabinding;
+	private ServiceReference<EMFFormsDatabindingEMF> databindingServiceReference;
 
 	/**
-	 * Sets the {@link EMFFormsDatabinding}.
+	 * Sets the {@link EMFFormsDatabindingEMF}.
 	 *
 	 * @param emfFormsDatabinding the emfFormsDatabinding to set
 	 */
-	void setEMFFormsDatabinding(EMFFormsDatabinding emfFormsDatabinding) {
+	void setEMFFormsDatabinding(EMFFormsDatabindingEMF emfFormsDatabinding) {
 		this.emfFormsDatabinding = emfFormsDatabinding;
 	}
 
 	/**
-	 * Unsets the {@link EMFFormsDatabinding}.
+	 * Unsets the {@link EMFFormsDatabindingEMF}.
 	 */
 	void unsetEMFFormsDatabinding() {
 		emfFormsDatabinding = null;
 	}
 
 	/**
-	 * This method is called by the OSGI framework when this {@link DomainModelReferenceConverter} is activated. It
-	 * retrieves the {@link EMFFormsDatabinding EMF Forms databinding service}.
+	 * This method is called by the OSGI framework when this {@link DomainModelReferenceConverterEMF} is activated. It
+	 * retrieves the {@link EMFFormsDatabindingEMF EMF Forms databinding service}.
 	 *
 	 * @param bundleContext The {@link BundleContext} of this classes bundle.
 	 */
 	protected final void activate(BundleContext bundleContext) {
-		databindingServiceReference = bundleContext.getServiceReference(EMFFormsDatabinding.class);
+		databindingServiceReference = bundleContext.getServiceReference(EMFFormsDatabindingEMF.class);
 		setEMFFormsDatabinding(bundleContext.getService(databindingServiceReference));
 
 	}
 
 	/**
-	 * This method is called by the OSGI framework when this {@link DomainModelReferenceConverter} is deactivated.
-	 * It frees the {@link EMFFormsDatabinding EMF Forms databinding service}.
+	 * This method is called by the OSGI framework when this {@link DomainModelReferenceConverterEMF} is deactivated.
+	 * It frees the {@link EMFFormsDatabindingEMF EMF Forms databinding service}.
 	 *
 	 * @param bundleContext The {@link BundleContext} of this classes bundle.
 	 */
@@ -83,7 +84,7 @@ public class IndexDomainModelReferenceConverter implements DomainModelReferenceC
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter#isApplicable(VDomainModelReference)
+	 * @see DomainModelReferenceConverterEMF#isApplicable(VDomainModelReference)
 	 */
 	@Override
 	public double isApplicable(VDomainModelReference domainModelReference) {
@@ -99,10 +100,10 @@ public class IndexDomainModelReferenceConverter implements DomainModelReferenceC
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter#convertToValueProperty(VDomainModelReference,EObject)
+	 * @see DomainModelReferenceConverterEMF#convertToValueProperty(VDomainModelReference,EObject)
 	 */
 	@Override
-	public IValueProperty convertToValueProperty(VDomainModelReference domainModelReference, EObject object)
+	public IEMFValueProperty convertToValueProperty(VDomainModelReference domainModelReference, EObject object)
 		throws DatabindingFailedException {
 		if (domainModelReference == null) {
 			throw new IllegalArgumentException("The given VDomainModelReference must not be null."); //$NON-NLS-1$
@@ -114,15 +115,15 @@ public class IndexDomainModelReferenceConverter implements DomainModelReferenceC
 
 		final VIndexDomainModelReference indexReference = VIndexDomainModelReference.class.cast(domainModelReference);
 
-		IValueProperty valueProperty;
+		final IEMFValueProperty valueProperty;
 
 		if (indexReference.getPrefixDMR() != null) {
-			final IValueProperty prefixProperty = emfFormsDatabinding.getValueProperty(indexReference.getPrefixDMR(),
+			final IEMFValueProperty prefixProperty = emfFormsDatabinding.getValueProperty(indexReference.getPrefixDMR(),
 				object);
-			valueProperty = new EMFIndexedValueProperty(getEditingDomain(object), indexReference.getIndex(),
-				EStructuralFeature.class.cast(prefixProperty.getValueType()));
-		}
-		else {
+			valueProperty = new EMFValuePropertyDecorator(new EMFIndexedValuePropertyDelegator(getEditingDomain(object),
+				indexReference.getIndex(), prefixProperty, prefixProperty.getStructuralFeature()),
+				prefixProperty.getStructuralFeature());
+		} else {
 			if (indexReference.getDomainModelEFeature() == null) {
 				throw new DatabindingFailedException(
 					"The field domainModelEFeature of the given VIndexDomainModelReference must not be null."); //$NON-NLS-1$
@@ -131,20 +132,20 @@ public class IndexDomainModelReferenceConverter implements DomainModelReferenceC
 			checkListType(indexReference.getDomainModelEFeature());
 
 			final List<EReference> referencePath = indexReference.getDomainModelEReferencePath();
+			final IEMFValueProperty indexedValueProperty = new EMFValuePropertyDecorator(new EMFIndexedValueProperty(
+				getEditingDomain(object),
+				indexReference.getIndex(),
+				indexReference.getDomainModelEFeature()), indexReference.getDomainModelEFeature());
 
 			if (referencePath.isEmpty()) {
-				valueProperty = new EMFIndexedValueProperty(getEditingDomain(object), indexReference.getIndex(),
-					indexReference.getDomainModelEFeature());
+				valueProperty = indexedValueProperty;
 			} else {
 				IEMFValueProperty emfValueProperty = EMFEditProperties
 					.value(getEditingDomain(object), referencePath.get(0));
 				for (int i = 1; i < referencePath.size(); i++) {
 					emfValueProperty = emfValueProperty.value(referencePath.get(i));
 				}
-				final EMFIndexedValueProperty indexedValueProperty = new EMFIndexedValueProperty(
-					getEditingDomain(object),
-					indexReference.getIndex(),
-					indexReference.getDomainModelEFeature());
+
 				valueProperty = emfValueProperty.value(indexedValueProperty);
 			}
 		}
@@ -154,10 +155,10 @@ public class IndexDomainModelReferenceConverter implements DomainModelReferenceC
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter#convertToListProperty(VDomainModelReference,EObject)
+	 * @see DomainModelReferenceConverterEMF#convertToListProperty(VDomainModelReference,EObject)
 	 */
 	@Override
-	public IListProperty convertToListProperty(VDomainModelReference domainModelReference, EObject object)
+	public IEMFListProperty convertToListProperty(VDomainModelReference domainModelReference, EObject object)
 		throws DatabindingFailedException {
 		if (domainModelReference == null) {
 			throw new IllegalArgumentException("The given VDomainModelReference must not be null."); //$NON-NLS-1$
@@ -169,15 +170,16 @@ public class IndexDomainModelReferenceConverter implements DomainModelReferenceC
 
 		final VIndexDomainModelReference indexReference = VIndexDomainModelReference.class.cast(domainModelReference);
 
-		IValueProperty valueProperty;
+		IEMFValueProperty valueProperty;
 
 		if (indexReference.getPrefixDMR() != null) {
-			final IValueProperty prefixProperty = emfFormsDatabinding.getValueProperty(indexReference.getPrefixDMR(),
+			final IEMFValueProperty prefixProperty = emfFormsDatabinding.getValueProperty(indexReference.getPrefixDMR(),
 				object);
-			valueProperty = new EMFIndexedValueProperty(getEditingDomain(object), indexReference.getIndex(),
-				EStructuralFeature.class.cast(prefixProperty.getValueType()));
-		}
-		else {
+			valueProperty = new EMFValuePropertyDecorator(
+				new EMFIndexedValuePropertyDelegator(getEditingDomain(object), indexReference.getIndex(),
+					prefixProperty, prefixProperty.getStructuralFeature()),
+				prefixProperty.getStructuralFeature());
+		} else {
 			if (indexReference.getDomainModelEFeature() == null) {
 				throw new DatabindingFailedException(
 					"The field domainModelEFeature of the given VIndexDomainModelReference must not be null."); //$NON-NLS-1$
@@ -187,19 +189,20 @@ public class IndexDomainModelReferenceConverter implements DomainModelReferenceC
 
 			final List<EReference> referencePath = indexReference.getDomainModelEReferencePath();
 
+			final IEMFValueProperty indexedValueProperty = new EMFValuePropertyDecorator(new EMFIndexedValueProperty(
+				getEditingDomain(object),
+				indexReference.getIndex(),
+				indexReference.getDomainModelEFeature()), indexReference.getDomainModelEFeature());
+
 			if (referencePath.isEmpty()) {
-				valueProperty = new EMFIndexedValueProperty(getEditingDomain(object), indexReference.getIndex(),
-					indexReference.getDomainModelEFeature());
+				valueProperty = indexedValueProperty;
 			} else {
 				IEMFValueProperty emfValueProperty = EMFEditProperties
 					.value(getEditingDomain(object), referencePath.get(0));
 				for (int i = 1; i < referencePath.size(); i++) {
 					emfValueProperty = emfValueProperty.value(referencePath.get(i));
 				}
-				final EMFIndexedValueProperty indexedValueProperty = new EMFIndexedValueProperty(
-					getEditingDomain(object),
-					indexReference.getIndex(),
-					indexReference.getDomainModelEFeature());
+
 				valueProperty = emfValueProperty.value(indexedValueProperty);
 			}
 		}

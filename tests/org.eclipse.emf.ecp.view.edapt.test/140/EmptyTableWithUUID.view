@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="ASCII"?>
+<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model" xmi:id="_bfW9gBsWEeWtk5zWlGll4Q" xmlns:org.eclipse.emf.ecp.view.table.model="http://org/eclipse/emf/ecp/view/table/model">
+  <rootEClass href="http://org/eclipse/example/bowling#//Referee"/>
+  <children xsi:type="org.eclipse.emf.ecp.view.table.model:TableControl" xmi:id="_bfW9gRsWEeWtk5zWlGll4Q"/>
+</org.eclipse.emf.ecp.view.model:View>

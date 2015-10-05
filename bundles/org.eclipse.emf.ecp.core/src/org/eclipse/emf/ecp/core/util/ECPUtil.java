@@ -151,6 +151,10 @@ public final class ECPUtil {
 				/* Catch here, so we can still loop through the whole registry */
 				continue;
 			}
+			if (ePackage == null) {
+				/* possible! */
+				continue;
+			}
 			for (final EClassifier eClassifier : ePackage.getEClassifiers()) {
 				if (eClassifier instanceof EClass) {
 					final EClass eClass = (EClass) eClassifier;

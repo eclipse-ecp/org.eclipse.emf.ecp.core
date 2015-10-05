@@ -17,7 +17,6 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.model.internal.preview.Activator;
-import org.eclipse.emf.ecp.view.model.internal.preview.e3.views.PreviewView;
 import org.eclipse.emf.ecp.view.spi.treemasterdetail.ui.swt.MasterDetailAction;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IWorkbenchPage;
@@ -25,7 +24,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
-/** Opens the {@link PreviewView}. */
+/** Opens the {@link org.eclipse.emf.ecp.view.model.internal.preview.e3.views.PreviewView}. */
 public class OpenPreviewHandler extends MasterDetailAction {
 	/**
 	 * {@inheritDoc}
@@ -58,7 +57,8 @@ public class OpenPreviewHandler extends MasterDetailAction {
 			Activator
 				.getDefault()
 				.getLog()
-				.log(new Status(IStatus.ERROR, Activator.getDefault().getBundle().getSymbolicName(), e.getMessage(), e));
+				.log(
+					new Status(IStatus.ERROR, Activator.getDefault().getBundle().getSymbolicName(), e.getMessage(), e));
 		}
 
 	}

@@ -18,12 +18,17 @@ import java.util.concurrent.CopyOnWriteArraySet;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.changebroker.spi.ChangeBroker;
+import org.eclipse.emf.ecp.changebroker.spi.ChangeObserver;
 import org.eclipse.emf.ecp.changebroker.spi.EMFObserver;
 import org.eclipse.emf.ecp.changebroker.spi.NotificationProvider;
 import org.eclipse.emf.ecp.changebroker.spi.NotificationReceiver;
-import org.eclipse.emf.ecp.changebroker.spi.ReadOnlyEMFObserver;
+import org.eclipse.emf.ecp.changebroker.spi.PostDeleteObserver;
+import org.eclipse.emf.ecp.changebroker.spi.PreDeleteObserver;
+import org.eclipse.emf.ecp.changebroker.spi.ReadOnlyChangeObserver;
+import org.eclipse.emf.ecp.changebroker.spi.VetoableDeleteObserver;
 
 /**
  *
@@ -54,6 +59,10 @@ public class ChangeBrokerImpl implements ChangeBroker, NotificationReceiver {
 	private final ContainingEClassStrategy readOnlyContainingEClassStrategy = new ContainingEClassStrategy();
 	private final FeatureStrategy readOnlyFeatureStrategy = new FeatureStrategy();
 	private final Strategy[] readOnlyStrategies;
+
+	private final Set<PreDeleteObserver> preDeleteObserver = new CopyOnWriteArraySet<PreDeleteObserver>();
+	private final Set<PostDeleteObserver> postDeleteObserver = new CopyOnWriteArraySet<PostDeleteObserver>();
+	private final Set<VetoableDeleteObserver> vetoableDeleteObserver = new CopyOnWriteArraySet<VetoableDeleteObserver>();
 
 	/**
 	 * Default constructor.
@@ -89,13 +98,13 @@ public class ChangeBrokerImpl implements ChangeBroker, NotificationReceiver {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.changebroker.spi.EMFObserver#handleNotification(org.eclipse.emf.common.notify.Notification)
+	 * @see org.eclipse.emf.ecp.changebroker.spi.ChangeObserver#handleNotification(org.eclipse.emf.common.notify.Notification)
 	 */
 	@Override
 	public void notify(Notification notification) {
 		final boolean includeEMFObservers = startNotify(notification);
 
-		final Set<EMFObserver> observers = new LinkedHashSet<EMFObserver>();
+		final Set<ChangeObserver> observers = new LinkedHashSet<ChangeObserver>();
 		for (final Strategy strategy : readOnlyStrategies) {
 			observers.addAll(strategy.getObservers(notification));
 		}
@@ -104,7 +113,7 @@ public class ChangeBrokerImpl implements ChangeBroker, NotificationReceiver {
 				observers.addAll(strategy.getObservers(notification));
 			}
 		}
-		for (final EMFObserver observer : observers) {
+		for (final ChangeObserver observer : observers) {
 			observer.handleNotification(notification);
 		}
 
@@ -129,22 +138,33 @@ public class ChangeBrokerImpl implements ChangeBroker, NotificationReceiver {
 	 */
 	@Override
 	public void subscribe(EMFObserver observer) {
-		if (ReadOnlyEMFObserver.class.isInstance(observer)) {
-			readOnlyNoStrategy.register(observer);
-		} else {
-			noStrategy.register(observer);
+		if (ReadOnlyChangeObserver.class.isInstance(observer)) {
+			readOnlyNoStrategy.register((ChangeObserver) observer);
+		} else
+			if (ChangeObserver.class.isInstance(observer)) {
+			noStrategy.register((ChangeObserver) observer);
 		}
+		if (PreDeleteObserver.class.isInstance(observer)) {
+			preDeleteObserver.add((PreDeleteObserver) observer);
+		}
+		if (PostDeleteObserver.class.isInstance(observer)) {
+			postDeleteObserver.add((PostDeleteObserver) observer);
+		}
+		if (VetoableDeleteObserver.class.isInstance(observer)) {
+			vetoableDeleteObserver.add((VetoableDeleteObserver) observer);
+		}
+
 	}
 
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.changebroker.spi.ChangeBroker#subscribeToEClass(org.eclipse.emf.ecp.changebroker.spi.EMFObserver,
+	 * @see org.eclipse.emf.ecp.changebroker.spi.ChangeBroker#subscribeToEClass(org.eclipse.emf.ecp.changebroker.spi.ChangeObserver,
 	 *      org.eclipse.emf.ecore.EClass)
 	 */
 	@Override
-	public void subscribeToEClass(EMFObserver observer, EClass eClass) {
-		if (ReadOnlyEMFObserver.class.isInstance(observer)) {
+	public void subscribeToEClass(ChangeObserver observer, EClass eClass) {
+		if (ReadOnlyChangeObserver.class.isInstance(observer)) {
 			readOnlyEClassStrategy.register(observer, eClass);
 		} else {
 			eClassStrategy.register(observer, eClass);
@@ -154,12 +174,12 @@ public class ChangeBrokerImpl implements ChangeBroker, NotificationReceiver {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.changebroker.spi.ChangeBroker#subscribeToTree(org.eclipse.emf.ecp.changebroker.spi.EMFObserver,
+	 * @see org.eclipse.emf.ecp.changebroker.spi.ChangeBroker#subscribeToTree(org.eclipse.emf.ecp.changebroker.spi.ChangeObserver,
 	 *      org.eclipse.emf.ecore.EClass)
 	 */
 	@Override
-	public void subscribeToTree(EMFObserver observer, EClass eClass) {
-		if (ReadOnlyEMFObserver.class.isInstance(observer)) {
+	public void subscribeToTree(ChangeObserver observer, EClass eClass) {
+		if (ReadOnlyChangeObserver.class.isInstance(observer)) {
 			readOnlyContainingEClassStrategy.register(observer, eClass);
 		} else {
 			containingEClassStrategy.register(observer, eClass);
@@ -169,12 +189,12 @@ public class ChangeBrokerImpl implements ChangeBroker, NotificationReceiver {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.changebroker.spi.ChangeBroker#subscribeToFeature(org.eclipse.emf.ecp.changebroker.spi.EMFObserver,
+	 * @see org.eclipse.emf.ecp.changebroker.spi.ChangeBroker#subscribeToFeature(org.eclipse.emf.ecp.changebroker.spi.ChangeObserver,
 	 *      org.eclipse.emf.ecore.EStructuralFeature)
 	 */
 	@Override
-	public void subscribeToFeature(EMFObserver observer, EStructuralFeature feature) {
-		if (ReadOnlyEMFObserver.class.isInstance(observer)) {
+	public void subscribeToFeature(ChangeObserver observer, EStructuralFeature feature) {
+		if (ReadOnlyChangeObserver.class.isInstance(observer)) {
 			readOnlyFeatureStrategy.register(observer, feature);
 		} else {
 			featureStrategy.register(observer, feature);
@@ -189,9 +209,21 @@ public class ChangeBrokerImpl implements ChangeBroker, NotificationReceiver {
 	 */
 	@Override
 	public void unsubsribe(EMFObserver receiver) {
-		for (final Strategy strategy : strategies) {
-			strategy.deregister(receiver);
+		if (ChangeObserver.class.isInstance(receiver)) {
+			for (final Strategy strategy : strategies) {
+				strategy.deregister((ChangeObserver) receiver);
+			}
 		}
+		if (PreDeleteObserver.class.isInstance(receiver)) {
+			preDeleteObserver.remove(receiver);
+		}
+		if (PostDeleteObserver.class.isInstance(receiver)) {
+			postDeleteObserver.remove(receiver);
+		}
+		if (VetoableDeleteObserver.class.isInstance(receiver)) {
+			vetoableDeleteObserver.remove(receiver);
+		}
+
 	}
 
 	/**
@@ -228,8 +260,8 @@ public class ChangeBrokerImpl implements ChangeBroker, NotificationReceiver {
 	 *
 	 * @return all registered observers
 	 */
-	public Set<EMFObserver> getRegisteredObservers() {
-		final LinkedHashSet<EMFObserver> hashSet = new LinkedHashSet<EMFObserver>();
+	public Set<ChangeObserver> getRegisteredObservers() {
+		final LinkedHashSet<ChangeObserver> hashSet = new LinkedHashSet<ChangeObserver>();
 		for (final Strategy strategy : strategies) {
 			hashSet.addAll(strategy.getAllObservers());
 		}
@@ -260,6 +292,44 @@ public class ChangeBrokerImpl implements ChangeBroker, NotificationReceiver {
 	public void continueNotification(Object blocker) {
 		this.blocker.remove(blocker);
 		continueNotification();
+	}
+
+	/**
+	 * @param toBeDeleted The {@link EObject} to be deleted
+	 */
+	@Override
+	public void notifyPreDelete(EObject toBeDeleted) {
+		for (final PreDeleteObserver observer : preDeleteObserver) {
+			observer.preDelete(toBeDeleted);
+		}
+
+	}
+
+	/**
+	 * @param toBeDeleted The deleted {@link EObject}
+	 */
+	@Override
+	public void notifyPostDelete(EObject toBeDeleted) {
+		for (final PostDeleteObserver observer : postDeleteObserver) {
+			observer.postDelete(toBeDeleted);
+		}
+
+	}
+
+	/**
+	 * @param toBeDeleted The {@link EObject} to be deleted
+	 * @return if the element can be deleted meaning if no {@link VetoableDeleteObserver} has returned false
+	 */
+	@Override
+	public boolean canDelete(EObject toBeDeleted) {
+		boolean canDelete = true;
+		for (final VetoableDeleteObserver observer : vetoableDeleteObserver) {
+			canDelete = observer.canDelete(toBeDeleted);
+			if (!canDelete) {
+				break;
+			}
+		}
+		return canDelete;
 	}
 
 }

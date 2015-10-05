@@ -3,6 +3,7 @@
    <implementation class="org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl"/>
    <service>
       <provide interface="org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding"/>
+      <provide interface="org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF"/>
    </service>
-   <reference bind="addDomainModelReferenceConverter" cardinality="0..n" interface="org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter" name="DomainModelReferenceConverter" policy="dynamic" unbind="removeDomainModelReferenceConverter"/>
+   <reference bind="addDomainModelReferenceConverter" cardinality="0..n" interface="org.eclipse.emfforms.spi.core.services.databinding.emf.DomainModelReferenceConverterEMF" name="DomainModelReferenceConverterEMF" policy="dynamic" unbind="removeDomainModelReferenceConverter"/>
 </scr:component>

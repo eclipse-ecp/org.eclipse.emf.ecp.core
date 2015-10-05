@@ -11,14 +11,15 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.table.model;
 
-import org.eclipse.core.databinding.property.list.IListProperty;
-import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.emf.databinding.IEMFListProperty;
+import org.eclipse.emf.databinding.IEMFValueProperty;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter;
-import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.DomainModelReferenceConverterEMF;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
@@ -29,27 +30,27 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Eugen
  *
  */
-@Component
-public class TableDMRConverter implements DomainModelReferenceConverter {
-	private EMFFormsDatabinding emfFormsDatabinding;
-	private ServiceReference<EMFFormsDatabinding> databindingServiceReference;
+@Component(service = { DomainModelReferenceConverterEMF.class, DomainModelReferenceConverter.class })
+public class TableDMRConverter implements DomainModelReferenceConverterEMF {
+	private EMFFormsDatabindingEMF emfFormsDatabinding;
+	private ServiceReference<EMFFormsDatabindingEMF> databindingServiceReference;
 
 	/**
 	 * This method is called by the OSGI framework when this {@link DomainModelReferenceConverter} is activated. It
-	 * retrieves the {@link EMFFormsDatabinding EMF Forms databinding service}.
+	 * retrieves the {@link EMFFormsDatabindingEMF EMF Forms databinding service}.
 	 *
 	 * @param bundleContext The {@link BundleContext} of this classes bundle.
 	 */
 	@Activate
 	protected final void activate(BundleContext bundleContext) {
-		databindingServiceReference = bundleContext.getServiceReference(EMFFormsDatabinding.class);
+		databindingServiceReference = bundleContext.getServiceReference(EMFFormsDatabindingEMF.class);
 		emfFormsDatabinding = bundleContext.getService(databindingServiceReference);
 
 	}
 
 	/**
 	 * This method is called by the OSGI framework when this {@link DomainModelReferenceConverter} is deactivated.
-	 * It frees the {@link EMFFormsDatabinding EMF Forms databinding service}.
+	 * It frees the {@link EMFFormsDatabindingEMF EMF Forms databinding service}.
 	 *
 	 * @param bundleContext The {@link BundleContext} of this classes bundle.
 	 */
@@ -80,7 +81,7 @@ public class TableDMRConverter implements DomainModelReferenceConverter {
 	 *      EObject)
 	 */
 	@Override
-	public IValueProperty convertToValueProperty(VDomainModelReference domainModelReference, EObject object)
+	public IEMFValueProperty convertToValueProperty(VDomainModelReference domainModelReference, EObject object)
 		throws DatabindingFailedException {
 		if (domainModelReference == null) {
 			throw new IllegalArgumentException("The given VDomainModelReference must not be null."); //$NON-NLS-1$
@@ -106,7 +107,7 @@ public class TableDMRConverter implements DomainModelReferenceConverter {
 	 *      EObject)
 	 */
 	@Override
-	public IListProperty convertToListProperty(VDomainModelReference domainModelReference, EObject object)
+	public IEMFListProperty convertToListProperty(VDomainModelReference domainModelReference, EObject object)
 		throws DatabindingFailedException {
 		if (domainModelReference == null) {
 			throw new IllegalArgumentException("The given VDomainModelReference must not be null."); //$NON-NLS-1$

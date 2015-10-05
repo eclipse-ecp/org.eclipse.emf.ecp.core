@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="MakeItHappen Sample e3 Product" uid="org.eclipse.emf.ecp.makeithappen.sample.product.e3" id="org.eclipse.emf.ecp.makeithappen.application.sample.e3.product" application="org.eclipse.emf.ecp.makeithappen.application.sample.e3.application" version="1.6.1" useFeatures="false" includeLaunchers="true">
+<product name="MakeItHappen Sample e3 Product" uid="org.eclipse.emf.ecp.makeithappen.sample.product.e3" id="org.eclipse.emf.ecp.makeithappen.application.sample.e3.product" application="org.eclipse.emf.ecp.makeithappen.application.sample.e3.application" version="1.7.0" useFeatures="false" includeLaunchers="true">
 
    <configIni use="default">
    </configIni>
@@ -96,6 +96,7 @@
       <plugin id="org.eclipse.emf.ecp.view.label.model"/>
       <plugin id="org.eclipse.emf.ecp.view.label.model.edit"/>
       <plugin id="org.eclipse.emf.ecp.view.label.ui.swt"/>
+      <plugin id="org.eclipse.emf.ecp.view.migrator"/>
       <plugin id="org.eclipse.emf.ecp.view.model"/>
       <plugin id="org.eclipse.emf.ecp.view.model.common"/>
       <plugin id="org.eclipse.emf.ecp.view.model.edit"/>

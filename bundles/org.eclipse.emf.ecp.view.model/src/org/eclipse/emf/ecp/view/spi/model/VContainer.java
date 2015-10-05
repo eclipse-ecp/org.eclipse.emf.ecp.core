@@ -16,22 +16,21 @@ import org.eclipse.emf.common.util.EList;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Container</b></em>'.
+ * @since 1.2
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.spi.model.VContainer#getChildren <em>Children</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getContainer()
  * @model abstract="true"
  * @generated
- * @since 1.2
  */
-public interface VContainer extends VElement
-{
+public interface VContainer extends VElement {
 	/**
 	 * Returns the value of the '<em><b>Children</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.emf.ecp.view.spi.model.VContainedElement}.

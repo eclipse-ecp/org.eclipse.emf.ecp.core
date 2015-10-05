@@ -53,7 +53,7 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @generated
 	 */
-	String eNS_URI = "http://org/eclipse/emf/ecp/view/model"; //$NON-NLS-1$
+	String eNS_URI = "http://org/eclipse/emf/ecp/view/model/170"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace name.
@@ -211,7 +211,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -263,7 +262,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.6
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -345,7 +343,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.6
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -433,6 +430,18 @@ public interface VViewPackage extends EPackage {
 	int VIEW__ECORE_PATH = ELEMENT_FEATURE_COUNT + 2;
 
 	/**
+	 * The feature id for the '<em><b>Loading Properties</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.7
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int VIEW__LOADING_PROPERTIES = ELEMENT_FEATURE_COUNT + 3;
+
+	/**
 	 * The number of structural features of the '<em>View</em>' class.
 	 * <!-- begin-user-doc -->
 	 *
@@ -441,7 +450,7 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VIEW_FEATURE_COUNT = ELEMENT_FEATURE_COUNT + 3;
+	int VIEW_FEATURE_COUNT = ELEMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.impl.VContainedElementImpl
@@ -471,7 +480,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.6
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -565,7 +573,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.6
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -648,7 +655,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
-	 *
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VContainedContainerImpl
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getContainedContainer()
 	 * @generated
@@ -661,7 +667,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -673,7 +678,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.6
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -685,7 +689,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -697,7 +700,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -709,7 +711,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -721,7 +722,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -733,7 +733,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -745,7 +744,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -757,7 +755,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -779,7 +776,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.6
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -866,6 +862,126 @@ public interface VViewPackage extends EPackage {
 	int CONTROL_FEATURE_COUNT = CONTAINED_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.VViewModelProperties
+	 * <em>Model Properties</em>}' class.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.7
+	 *        <!-- end-user-doc -->
+	 * @see org.eclipse.emf.ecp.view.spi.model.VViewModelProperties
+	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getViewModelProperties()
+	 * @generated
+	 */
+	int VIEW_MODEL_PROPERTIES = 12;
+
+	/**
+	 * The number of structural features of the '<em>Model Properties</em>' class.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.7
+	 *        <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VIEW_MODEL_PROPERTIES_FEATURE_COUNT = 0;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.impl.VViewModelLoadingPropertiesImpl
+	 * <em>Model Loading Properties</em>}' class.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.7
+	 *        <!-- end-user-doc -->
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewModelLoadingPropertiesImpl
+	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getViewModelLoadingProperties()
+	 * @generated
+	 */
+	int VIEW_MODEL_LOADING_PROPERTIES = 10;
+
+	/**
+	 * The feature id for the '<em><b>Inheritable Properties</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.7
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int VIEW_MODEL_LOADING_PROPERTIES__INHERITABLE_PROPERTIES = VIEW_MODEL_PROPERTIES_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Non Inheritable Properties</b></em>' map.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.7
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int VIEW_MODEL_LOADING_PROPERTIES__NON_INHERITABLE_PROPERTIES = VIEW_MODEL_PROPERTIES_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>Model Loading Properties</em>' class.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.7
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int VIEW_MODEL_LOADING_PROPERTIES_FEATURE_COUNT = VIEW_MODEL_PROPERTIES_FEATURE_COUNT + 2;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.impl.VStringToObjectMapEntryImpl
+	 * <em>String To Object Map Entry</em>}' class.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.7
+	 *        <!-- end-user-doc -->
+	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VStringToObjectMapEntryImpl
+	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getStringToObjectMapEntry()
+	 * @generated
+	 */
+	int STRING_TO_OBJECT_MAP_ENTRY = 11;
+
+	/**
+	 * The feature id for the '<em><b>Key</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.7
+	 *        <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_OBJECT_MAP_ENTRY__KEY = 0;
+
+	/**
+	 * The feature id for the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.7
+	 *        <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_OBJECT_MAP_ENTRY__VALUE = 1;
+
+	/**
+	 * The number of structural features of the '<em>String To Object Map Entry</em>' class.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.7
+	 *        <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STRING_TO_OBJECT_MAP_ENTRY_FEATURE_COUNT = 2;
+
+	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.LabelAlignment <em>Label Alignment</em>}'
 	 * enum.
 	 * <!-- begin-user-doc -->
@@ -875,7 +991,7 @@ public interface VViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getLabelAlignment()
 	 * @generated
 	 */
-	int LABEL_ALIGNMENT = 10;
+	int LABEL_ALIGNMENT = 13;
 
 	/**
 	 * The meta object id for the '<em>Domain Model Reference Change Listener</em>' data type.
@@ -887,7 +1003,7 @@ public interface VViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getDomainModelReferenceChangeListener()
 	 * @generated
 	 */
-	int DOMAIN_MODEL_REFERENCE_CHANGE_LISTENER = 11;
+	int DOMAIN_MODEL_REFERENCE_CHANGE_LISTENER = 14;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.model.VElement <em>Element</em>}'.
@@ -920,7 +1036,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.6
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the meta object for the attribute '<em>Label</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VElement#getLabel()
 	 * @see #getElement()
@@ -1061,13 +1176,27 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the meta object for the attribute '<em>Ecore Path</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VView#getEcorePath()
 	 * @see #getView()
 	 * @generated
 	 */
 	EAttribute getView_EcorePath();
+
+	/**
+	 * Returns the meta object for the containment reference '
+	 * {@link org.eclipse.emf.ecp.view.spi.model.VView#getLoadingProperties <em>Loading Properties</em>}'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.7
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the containment reference '<em>Loading Properties</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VView#getLoadingProperties()
+	 * @see #getView()
+	 * @generated
+	 */
+	EReference getView_LoadingProperties();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.model.VContainedElement
@@ -1106,6 +1235,103 @@ public interface VViewPackage extends EPackage {
 	EReference getControl_DomainModelReference();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.model.VViewModelLoadingProperties
+	 * <em>Model Loading Properties</em>}'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.7
+	 *        <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Model Loading Properties</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VViewModelLoadingProperties
+	 * @generated
+	 */
+	EClass getViewModelLoadingProperties();
+
+	/**
+	 * Returns the meta object for the map '
+	 * {@link org.eclipse.emf.ecp.view.spi.model.VViewModelLoadingProperties#getInheritableProperties
+	 * <em>Inheritable Properties</em>}'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.7
+	 *        <!-- end-user-doc -->
+	 * @return the meta object for the map '<em>Inheritable Properties</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VViewModelLoadingProperties#getInheritableProperties()
+	 * @see #getViewModelLoadingProperties()
+	 * @generated
+	 */
+	EReference getViewModelLoadingProperties_InheritableProperties();
+
+	/**
+	 * Returns the meta object for the map '
+	 * {@link org.eclipse.emf.ecp.view.spi.model.VViewModelLoadingProperties#getNonInheritableProperties
+	 * <em>Non Inheritable Properties</em>}'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.7
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the map '<em>Non Inheritable Properties</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VViewModelLoadingProperties#getNonInheritableProperties()
+	 * @see #getViewModelLoadingProperties()
+	 * @generated
+	 */
+	EReference getViewModelLoadingProperties_NonInheritableProperties();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.model.VViewModelProperties
+	 * <em>Model Properties</em>}'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.7
+	 *        <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Model Properties</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VViewModelProperties
+	 * @generated
+	 */
+	EClass getViewModelProperties();
+
+	/**
+	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Object Map Entry</em>}'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.7
+	 *        <!-- end-user-doc -->
+	 * @return the meta object for class '<em>String To Object Map Entry</em>'.
+	 * @see java.util.Map.Entry
+	 * @model keyDataType="org.eclipse.emf.ecore.EString" keyRequired="true"
+	 *        valueDataType="org.eclipse.emf.ecore.EJavaObject" valueRequired="true"
+	 * @generated
+	 */
+	EClass getStringToObjectMapEntry();
+
+	/**
+	 * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.7
+	 *        <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Key</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToObjectMapEntry()
+	 * @generated
+	 */
+	EAttribute getStringToObjectMapEntry_Key();
+
+	/**
+	 * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.7
+	 *        <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Value</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getStringToObjectMapEntry()
+	 * @generated
+	 */
+	EAttribute getStringToObjectMapEntry_Value();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.model.VContainer <em>Container</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1136,7 +1362,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the meta object for class '<em>Contained Container</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VContainedContainer
 	 * @generated
@@ -1286,8 +1511,8 @@ public interface VViewPackage extends EPackage {
 	 */
 	interface Literals {
 		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl
-		 * <em>Element</em>}' class.
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl <em>Element</em>
+		 * }' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 *
@@ -1312,7 +1537,6 @@ public interface VViewPackage extends EPackage {
 		 *
 		 * @since 1.6
 		 *        <!-- end-user-doc -->
-		 *
 		 * @generated
 		 */
 		EAttribute ELEMENT__LABEL = eINSTANCE.getElement_Label();
@@ -1424,6 +1648,17 @@ public interface VViewPackage extends EPackage {
 		EAttribute VIEW__ECORE_PATH = eINSTANCE.getView_EcorePath();
 
 		/**
+		 * The meta object literal for the '<em><b>Loading Properties</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 *
+		 * @since 1.7
+		 *        <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EReference VIEW__LOADING_PROPERTIES = eINSTANCE.getView_LoadingProperties();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.model.impl.VContainedElementImpl
 		 * <em>Contained Element</em>}' class.
 		 * <!-- begin-user-doc -->
@@ -1436,8 +1671,8 @@ public interface VViewPackage extends EPackage {
 		EClass CONTAINED_ELEMENT = eINSTANCE.getContainedElement();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.model.impl.VControlImpl
-		 * <em>Control</em>}' class.
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.model.impl.VControlImpl <em>Control</em>
+		 * }' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 *
@@ -1455,6 +1690,91 @@ public interface VViewPackage extends EPackage {
 		 * @generated
 		 */
 		EReference CONTROL__DOMAIN_MODEL_REFERENCE = eINSTANCE.getControl_DomainModelReference();
+
+		/**
+		 * The meta object literal for the '
+		 * {@link org.eclipse.emf.ecp.view.spi.model.impl.VViewModelLoadingPropertiesImpl
+		 * <em>Model Loading Properties</em>}' class.
+		 * <!-- begin-user-doc -->
+		 *
+		 * @since 1.7
+		 *        <!-- end-user-doc -->
+		 *
+		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewModelLoadingPropertiesImpl
+		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getViewModelLoadingProperties()
+		 * @generated
+		 */
+		EClass VIEW_MODEL_LOADING_PROPERTIES = eINSTANCE.getViewModelLoadingProperties();
+
+		/**
+		 * The meta object literal for the '<em><b>Inheritable Properties</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 *
+		 * @since 1.7
+		 *        <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EReference VIEW_MODEL_LOADING_PROPERTIES__INHERITABLE_PROPERTIES = eINSTANCE
+			.getViewModelLoadingProperties_InheritableProperties();
+
+		/**
+		 * The meta object literal for the '<em><b>Non Inheritable Properties</b></em>' map feature.
+		 * <!-- begin-user-doc -->
+		 * 
+		 * @since 1.7
+		 *        <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EReference VIEW_MODEL_LOADING_PROPERTIES__NON_INHERITABLE_PROPERTIES = eINSTANCE
+			.getViewModelLoadingProperties_NonInheritableProperties();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.model.VViewModelProperties
+		 * <em>Model Properties</em>}' class.
+		 * <!-- begin-user-doc -->
+		 *
+		 * @since 1.7
+		 *        <!-- end-user-doc -->
+		 * @see org.eclipse.emf.ecp.view.spi.model.VViewModelProperties
+		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getViewModelProperties()
+		 * @generated
+		 */
+		EClass VIEW_MODEL_PROPERTIES = eINSTANCE.getViewModelProperties();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.model.impl.VStringToObjectMapEntryImpl
+		 * <em>String To Object Map Entry</em>}' class.
+		 * <!-- begin-user-doc -->
+		 *
+		 * @since 1.7
+		 *        <!-- end-user-doc -->
+		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VStringToObjectMapEntryImpl
+		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getStringToObjectMapEntry()
+		 * @generated
+		 */
+		EClass STRING_TO_OBJECT_MAP_ENTRY = eINSTANCE.getStringToObjectMapEntry();
+
+		/**
+		 * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 *
+		 * @since 1.7
+		 *        <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute STRING_TO_OBJECT_MAP_ENTRY__KEY = eINSTANCE.getStringToObjectMapEntry_Key();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 *
+		 * @since 1.7
+		 *        <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute STRING_TO_OBJECT_MAP_ENTRY__VALUE = eINSTANCE.getStringToObjectMapEntry_Value();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.model.impl.VContainerImpl
@@ -1484,7 +1804,6 @@ public interface VViewPackage extends EPackage {
 		 *
 		 * @since 1.4
 		 *        <!-- end-user-doc -->
-		 *
 		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VContainedContainerImpl
 		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getContainedContainer()
 		 * @generated
@@ -1518,7 +1837,6 @@ public interface VViewPackage extends EPackage {
 		 *
 		 * @since 1.3
 		 *        <!-- end-user-doc -->
-		 *
 		 * @see org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener
 		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getDomainModelReferenceChangeListener()
 		 * @generated

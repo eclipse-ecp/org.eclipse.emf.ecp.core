@@ -6,12 +6,12 @@
 	<parent>
 		<groupId>org.eclipse.emf.ecp</groupId>
 		<artifactId>ecp-parent</artifactId>
-		<version>1.6.1-SNAPSHOT</version>
+		<version>1.7.1-SNAPSHOT</version>
 		<relativePath>../../releng/org.eclipse.emf.ecp.releng/</relativePath>
 	</parent>
 	<groupId>org.eclipse.emf.ecp</groupId>
 	<artifactId>ecp-bundles-parent</artifactId>
-	<version>1.6.1-SNAPSHOT</version>
+	<version>1.7.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<modules>
@@ -57,6 +57,7 @@
 
 		<module>../../bundles/org.eclipse.emf.ecp.view.model</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.model.edit</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.model.edapt</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.model.common</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.core.swt</module>
 		<module>../../bundles/org.eclipse.emf.ecp.ui.view</module>
@@ -153,7 +154,8 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.treemasterdetail.model</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.treemasterdetail.model.edit</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.treemasterdetail.ui.swt</module>
-
+		<module>../../bundles/org.eclipse.emfforms.swt.treemasterdetail</module>
+		
 		<!-- Table Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.model</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.model.edit</module>
@@ -250,13 +252,16 @@
 		
 		<!-- Change Broker -->
 		<module>../../bundles/org.eclipse.emf.ecp.changebroker</module>
-		<module>../../bundles/org.eclipse.emf.ecp.changebroker.emfstore</module>
+		<module>../../bundles/org.eclipse.emf.ecp.changebroker.provider</module>
 		
 		<!-- Core Services -->
 		<module>../../bundles/org.eclipse.emfforms.common</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.databinding.featurepath</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.databinding.index</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.databinding.mapping</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.domainexpander.default</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.domainexpander.index</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.domainexpander.mapping</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.emfspecificservice</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.editsupport</module>
 		<module>../../bundles/org.eclipse.emfforms.swt.core</module>
@@ -276,6 +281,19 @@
 		<!-- Annotation attachement -->
 		<module>../../bundles/org.eclipse.emfforms.view.annotation.model</module>
 		<module>../../bundles/org.eclipse.emfforms.view.annotation.model.edit</module>
+		
+		<module>../../bundles/org.eclipse.emf.ecp.ui.view.linewrapper</module>
+		
+		<module>../../bundles/org.eclipse.emfforms.swt.control.multiattribute</module>
+		
+		<!-- Quick fix -->
+		<module>../../bundles/org.eclipse.emf.ecp.quickfix</module>
+		<module>../../bundles/org.eclipse.emf.ecp.quickfix.ui.e4</module>
+		
+		<!-- Control Grid -->
+		<module>../../bundles/org.eclipse.emfforms.swt.controlgrid</module>
+		<module>../../bundles/org.eclipse.emfforms.view.controlgrid.model</module>
+		<module>../../bundles/org.eclipse.emfforms.view.controlgrid.model.edit</module>
 	</modules>
 
 	<build>

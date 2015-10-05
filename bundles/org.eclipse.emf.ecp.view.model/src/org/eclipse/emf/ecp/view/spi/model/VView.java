@@ -19,21 +19,22 @@ import org.eclipse.emf.ecore.EClass;
  * A representation of the model object '<em><b>View</b></em>'.
  *
  * @noimplement This interface is not intended to be implemented by clients.
- *              <!-- end-user-doc -->
+ * @since 1.2
+ *        <!-- end-user-doc -->
  *
- *              <p>
- *              The following features are supported:
- *              <ul>
- *              <li>{@link org.eclipse.emf.ecp.view.spi.model.VView#getRootEClass <em>Root EClass</em>}</li>
- *              <li>{@link org.eclipse.emf.ecp.view.spi.model.VView#getChildren <em>Children</em>}</li>
- *              <li>{@link org.eclipse.emf.ecp.view.spi.model.VView#getEcorePath <em>Ecore Path</em>}</li>
- *              </ul>
- *              </p>
+ *        <p>
+ *        The following features are supported:
+ *        </p>
+ *        <ul>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.VView#getRootEClass <em>Root EClass</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.VView#getChildren <em>Children</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.VView#getEcorePath <em>Ecore Path</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.VView#getLoadingProperties <em>Loading Properties</em>}</li>
+ *        </ul>
  *
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getView()
  * @model
  * @generated
- * @since 1.2
  */
 public interface VView extends VElement {
 	/**
@@ -83,21 +84,20 @@ public interface VView extends VElement {
 	EList<VContainedElement> getChildren();
 
 	/**
-	 * Returns the value of the '<em><b>Ecore Path</b></em>' attribute. If the value is null, then the containing
-	 * EPackage of the rootEClass must be registered by default in the EPackage registry.
+	 * Returns the value of the '<em><b>Ecore Path</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Ecore Path</em>' attribute isn't clear, there really should be more of a description
 	 * here...
 	 * </p>
-	 * <!-- end-user-doc -->
 	 *
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * @return the value of the '<em>Ecore Path</em>' attribute.
 	 * @see #setEcorePath(String)
 	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getView_EcorePath()
 	 * @model required="true"
 	 * @generated
-	 * @since 1.3
 	 */
 	String getEcorePath();
 
@@ -105,14 +105,47 @@ public interface VView extends VElement {
 	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.spi.model.VView#getEcorePath <em>Ecore Path</em>}'
 	 * attribute.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 *
+	 * @since 1.3
+	 *        <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Ecore Path</em>' attribute.
 	 * @see #getEcorePath()
 	 * @generated
-	 * @since 1.3
 	 */
 	void setEcorePath(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Loading Properties</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Loading Properties</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 *
+	 * @since 1.7
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the value of the '<em>Loading Properties</em>' containment reference.
+	 * @see #setLoadingProperties(VViewModelProperties)
+	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getView_LoadingProperties()
+	 * @model containment="true" required="true" transient="true"
+	 * @generated
+	 */
+	VViewModelProperties getLoadingProperties();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.spi.model.VView#getLoadingProperties
+	 * <em>Loading Properties</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.7
+	 *        <!-- end-user-doc -->
+	 *
+	 * @param value the new value of the '<em>Loading Properties</em>' containment reference.
+	 * @see #getLoadingProperties()
+	 * @generated
+	 */
+	void setLoadingProperties(VViewModelProperties value);
 
 	/**
 	 * Sets the view and all its contents readonly.

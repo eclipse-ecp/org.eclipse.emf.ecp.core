@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.emfforms.swt.controlgrid.feature"
+      label="EMFForms Control Grid SWT Feature (Experimental)"
+      version="1.7.1.qualifier"
+      provider-name="Eclipse Modeling Project"
+      plugin="org.eclipse.emfforms.view.controlgrid.model"
+      license-feature="org.eclipse.emf.ecp.license.feature"
+      license-feature-version="1.7.1.qualifier">
+
+   <description>
+      %description
+   </description>
+
+   <copyright url="%copyrightURL">
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <plugin
+         id="org.eclipse.emfforms.swt.controlgrid"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emfforms.view.controlgrid.model"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emfforms.view.controlgrid.model.edit"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

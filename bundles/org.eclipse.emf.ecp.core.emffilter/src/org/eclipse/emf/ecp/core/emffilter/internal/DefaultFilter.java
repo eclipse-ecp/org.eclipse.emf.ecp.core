@@ -58,14 +58,19 @@ public class DefaultFilter implements ECPFilterProvider {
 		addSiriusModels(packages);
 		addOtherModels(packages);
 
+		addEDapt(packages);
+
 		return packages;
 	}
 
-	/**
-	 * @param packages
-	 */
+	private void addEDapt(Set<String> packages) {
+		packages.add("http://www.eclipse.org/emf/edapt/migration/0.3"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/emf/edapt/history/0.3"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/emf/edapt/declaration/0.3"); //$NON-NLS-1$
+	}
+
 	private void addViewModels(Set<String> packages) {
-		packages.add("http://org/eclipse/emf/ecp/view/model"); //$NON-NLS-1$
+		packages.add("http://org/eclipse/emf/ecp/view/model/170"); //$NON-NLS-1$
 		packages.add("http://org/eclipse/emf/ecp/view/custom/model"); //$NON-NLS-1$
 		packages.add("http://org/eclipse/emf/ecp/view/dynamictree/model"); //$NON-NLS-1$
 		packages.add("http://org/eclipse/emf/ecp/view/group/model"); //$NON-NLS-1$
@@ -101,6 +106,10 @@ public class DefaultFilter implements ECPFilterProvider {
 
 		packages.add("http://www.eclipse.org/emf/ecp/view/indexdmr/model"); //$NON-NLS-1$
 		packages.add("http://www.eclipse.org/emf/ecp/view/keyattributedmr/model"); //$NON-NLS-1$
+
+		packages.add("http://org/eclipse/emf/ecp/view/diffmerge/model"); //$NON-NLS-1$
+
+		packages.add("http://org/eclipse/emf/emfforms/view/controlgrid/model"); //$NON-NLS-1$
 
 	}
 

@@ -64,6 +64,7 @@ public class EMFIndexedValueProperty extends EMFValueProperty {
 		return list.get(index);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void doSetValue(Object source, Object value) {
 		final EObject eObject = (EObject) source;
@@ -73,8 +74,7 @@ public class EMFIndexedValueProperty extends EMFValueProperty {
 		// FIXME allow add?
 		if (index == list.size()) {
 			command = AddCommand.create(editingDomain, eObject, getFeature(), value, index);
-		}
-		else {
+		} else {
 			command = SetCommand.create(editingDomain, eObject, getFeature(), value, index);
 		}
 		editingDomain.getCommandStack().execute(command);

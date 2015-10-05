@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EObject;
  *
  *              <p>
  *              The following features are supported:
+ *              </p>
  *              <ul>
  *              <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#getName <em>Name</em>}</li>
  *              <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#getLabel <em>Label</em>}</li>
@@ -33,7 +34,6 @@ import org.eclipse.emf.ecore.EObject;
  *              <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#getDiagnostic <em>Diagnostic</em>}</li>
  *              <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#getAttachments <em>Attachments</em>}</li>
  *              </ul>
- *              </p>
  *
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getElement()
  * @model abstract="true"
@@ -78,7 +78,6 @@ public interface VElement extends EObject {
 	 *
 	 * @since 1.6
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the value of the '<em>Label</em>' attribute.
 	 * @see #setLabel(String)
 	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getElement_Label()
@@ -93,7 +92,6 @@ public interface VElement extends EObject {
 	 *
 	 * @since 1.6
 	 *        <!-- end-user-doc -->
-	 *
 	 * @param value the new value of the '<em>Label</em>' attribute.
 	 * @see #getLabel()
 	 * @generated

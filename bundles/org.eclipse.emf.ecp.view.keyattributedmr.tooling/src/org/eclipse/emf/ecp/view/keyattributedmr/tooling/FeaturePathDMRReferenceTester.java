@@ -40,6 +40,9 @@ public class FeaturePathDMRReferenceTester implements
 		}
 
 		final VControl control = (VControl) vElement;
+		if (control.getDomainModelReference() == null) {
+			return NOT_APPLICABLE;
+		}
 		IValueProperty valueProperty;
 		try {
 			valueProperty = Activator.getDefault().getEMFFormsDatabinding()

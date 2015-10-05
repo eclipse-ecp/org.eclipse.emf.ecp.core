@@ -13,7 +13,14 @@
 package org.eclipse.emf.ecp.view.model.internal.preview.e3.views;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.MultiStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -28,6 +35,7 @@ import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecp.ide.editor.view.ViewEditorPart;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.ecp.view.model.internal.preview.Activator;
+import org.eclipse.emf.ecp.view.model.internal.preview.Messages;
 import org.eclipse.emf.ecp.view.model.preview.common.Preview;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
@@ -37,6 +45,7 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.action.ToolBarManager;
+import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -77,6 +86,88 @@ import org.eclipse.ui.part.ViewPart;
 /** The {@link ViewPart} containing a rendered version a {@link VView}. */
 public class PreviewView extends ViewPart implements ISelectionListener {
 
+	/**
+	 * @author Jonas
+	 *
+	 */
+	private final class PreviewPaintListener implements PaintListener {
+		@Override
+		public void paintControl(PaintEvent e) {
+			// super.paintControl(e);
+			final Point point = container.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+			scrolledComposite.setMinSize(point);
+			container.layout(true);
+			scrolledComposite.layout(true);
+
+		}
+	}
+
+	/**
+	 * @author Jonas
+	 *
+	 */
+	private final class PreviewPartListener implements IPartListener2 {
+		@Override
+		public void partActivated(IWorkbenchPartReference partRef) {
+			if (ViewEditorPart.class.isInstance(partRef.getPart(true))) {
+				final ViewEditorPart part = (ViewEditorPart) partRef.getPart(true);
+				if (part.getView() != view) {
+					setView(part.getView());
+					sampleData = null;
+					render(view);
+				}
+				if (updateAutomatic) {
+					preView.registerForViewModelChanges();
+				}
+			}
+		}
+
+		@Override
+		public void partClosed(IWorkbenchPartReference partRef) {
+			if (PreviewView.class.isInstance(partRef.getPart(true))) {
+
+				getSite().getPage().removePartListener(this);
+			}
+
+			if (ViewEditorPart.class.isInstance(partRef.getPart(true))) {
+				if (updateAutomatic) {
+					preView.clear();
+				}
+				preView.removeView();
+				view = null;
+			}
+
+		}
+
+		@Override
+		public void partDeactivated(IWorkbenchPartReference partRef) {
+			final IWorkbenchPart part = partRef.getPart(true);
+			if (ViewEditorPart.class.isInstance(part) || PreviewView.class.isInstance(part)) {
+				removeAdapters();
+			}
+		}
+
+		@Override
+		public void partOpened(IWorkbenchPartReference partRef) {
+		}
+
+		@Override
+		public void partHidden(IWorkbenchPartReference partRef) {
+		}
+
+		@Override
+		public void partVisible(IWorkbenchPartReference partRef) {
+		}
+
+		@Override
+		public void partInputChanged(IWorkbenchPartReference partRef) {
+		}
+
+		@Override
+		public void partBroughtToTop(IWorkbenchPartReference partRef) {
+		}
+	}
+
 	private Preview preView;
 	private IPartListener2 partListener;
 	private Composite form;
@@ -93,12 +184,13 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 	private Action loadDataButton;
 	private EObject sampleData;
 	private Action cleanDataButton;
+	private Action exportDataButton;
 
 	/** The constructor. */
 	public PreviewView() {
 		super();
 		// PlatformUI.getWorkbench().getActiveWorkbenchWindow().getSelectionService()
-		//			.addSelectionListener("org.eclipse.emf.ecp.ui.ModelExplorerView", this); //$NON-NLS-1$
+		// .addSelectionListener("org.eclipse.emf.ecp.ui.ModelExplorerView", this); //$NON-NLS-1$
 	}
 
 	@Override
@@ -160,18 +252,7 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(container);
 		container.setBackground(scrolledComposite.getBackground());
 		scrolledComposite.setContent(container);
-		container.addPaintListener(new PaintListener() {
-
-			@Override
-			public void paintControl(PaintEvent e) {
-				// super.paintControl(e);
-				final Point point = container.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-				scrolledComposite.setMinSize(point);
-				container.layout(true);
-				scrolledComposite.layout(true);
-
-			}
-		});
+		container.addPaintListener(new PreviewPaintListener());
 		container.addControlListener(new ControlListener() {
 
 			@Override
@@ -211,68 +292,7 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 		}
 
 		PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getEditorReferences();
-		partListener = new IPartListener2() {
-
-			@Override
-			public void partActivated(IWorkbenchPartReference partRef) {
-				if (ViewEditorPart.class.isInstance(partRef.getPart(true))) {
-					final ViewEditorPart part = (ViewEditorPart) partRef.getPart(true);
-					if (part.getView() != view) {
-						setView(part.getView());
-						sampleData = null;
-						render(view);
-					}
-					if (updateAutomatic) {
-						preView.registerForViewModelChanges();
-					}
-				}
-			}
-
-			@Override
-			public void partClosed(IWorkbenchPartReference partRef) {
-				if (PreviewView.class.isInstance(partRef.getPart(true))) {
-
-					getSite().getPage().removePartListener(this);
-				}
-
-				if (ViewEditorPart.class.isInstance(partRef.getPart(true))) {
-					if (updateAutomatic) {
-						preView.clear();
-					}
-					preView.removeView();
-					view = null;
-				}
-
-			}
-
-			@Override
-			public void partDeactivated(IWorkbenchPartReference partRef) {
-				final IWorkbenchPart part = partRef.getPart(true);
-				if (ViewEditorPart.class.isInstance(part) || PreviewView.class.isInstance(part)) {
-					removeAdapters();
-				}
-			}
-
-			@Override
-			public void partOpened(IWorkbenchPartReference partRef) {
-			}
-
-			@Override
-			public void partHidden(IWorkbenchPartReference partRef) {
-			}
-
-			@Override
-			public void partVisible(IWorkbenchPartReference partRef) {
-			}
-
-			@Override
-			public void partInputChanged(IWorkbenchPartReference partRef) {
-			}
-
-			@Override
-			public void partBroughtToTop(IWorkbenchPartReference partRef) {
-			}
-		};
+		partListener = new PreviewPartListener();
 		getSite().getPage().addPartListener(partListener);
 
 	}
@@ -303,7 +323,7 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 		titleImage.setLayoutData(titleImageData);
 
 		final Label title = new Label(header, SWT.WRAP);
-		title.setText("View Editor Preview"); //$NON-NLS-1$
+		title.setText(Messages.PreviewView_EditorTitle);
 		titleFont = new Font(title.getDisplay(), getDefaultFontName(title), 12, SWT.BOLD);
 		title.setFont(titleFont);
 		title.setForeground(getTitleColor());
@@ -330,11 +350,86 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 	}
 
 	/**
-	 * @param toolBarManager
+	 * @param toolBarManager toolBarManager the toolbar manager to which the buttons should be added.
 	 */
 	private void addButtonsToFormToolbar(IToolBarManager toolBarManager) {
-		// toggle automatic refresh state button
 
+		addSampleDataButtons(toolBarManager);
+		toolBarManager.add(new Separator());
+		addRefreshButtons(toolBarManager);
+
+		toolBarManager.update(true);
+	}
+
+	/**
+	 * Adds the load, export and clear sample data buttons to the toolbar.
+	 *
+	 * @param toolBarManager the toolbar manager to which the buttons should be added.
+	 */
+	private void addSampleDataButtons(IToolBarManager toolBarManager) {
+		// load sample data
+		loadDataButton = new Action() {
+			@Override
+			public void run() {
+				super.run();
+				loadSampleData();
+			}
+		};
+		final String loadDataImagePath = "icons/loadData.png";//$NON-NLS-1$
+		loadDataButton.setImageDescriptor(ImageDescriptor.createFromURL(Activator.getDefault()
+			.getBundle()
+			.getResource(loadDataImagePath)));
+
+		loadDataButton.setText(Messages.PreviewView_ImportSampleDataButton);
+		loadDataButton.setEnabled(true);
+
+		// export sample data
+		exportDataButton = new Action() {
+			@Override
+			public void run() {
+				super.run();
+				exportSampleData();
+			}
+		};
+		final String exportDataImagePath = "icons/exportData.png";//$NON-NLS-1$
+		exportDataButton.setImageDescriptor(ImageDescriptor.createFromURL(Activator.getDefault()
+			.getBundle()
+			.getResource(exportDataImagePath)));
+
+		exportDataButton.setText(Messages.PreviewView_ExportSampleDataButton);
+		exportDataButton.setEnabled(true);
+
+		// clean sample data
+		cleanDataButton = new Action() {
+			@Override
+			public void run() {
+				super.run();
+				sampleData = null;
+				preView.cleanSampleData();
+				render();
+			}
+		};
+		final String cleanDataImagePath = "icons/cleanData.png";//$NON-NLS-1$
+		cleanDataButton.setImageDescriptor(ImageDescriptor.createFromURL(Activator.getDefault()
+			.getBundle()
+			.getResource(cleanDataImagePath)));
+		cleanDataButton.setText(Messages.PreviewView_ClearSampleDataButton);
+		cleanDataButton.setEnabled(true);
+
+		toolBarManager.add(cleanDataButton);
+		toolBarManager.add(loadDataButton);
+		toolBarManager.add(exportDataButton);
+
+	}
+
+	/**
+	 * Adds the automatic and manual refresh buttons to the toolbar.
+	 *
+	 * @param toolBarManager the toolbar manager to which the buttons should be added.
+	 *
+	 */
+
+	private void addRefreshButtons(IToolBarManager toolBarManager) {
 		// automatic refresh
 		automaticToggleButton = new Action("", IAction.AS_CHECK_BOX) { //$NON-NLS-1$
 			@Override
@@ -350,7 +445,7 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 			.getBundle()
 			.getResource(autoRefreshImagePath)));
 
-		automaticToggleButton.setText("Automatically refresh Preview View"); //$NON-NLS-1$
+		automaticToggleButton.setText(Messages.PreviewView_AutomaticRefresh);
 		automaticToggleButton.setEnabled(true);
 		automaticToggleButton.setChecked(false);
 
@@ -367,53 +462,64 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 			.getBundle()
 			.getResource(manualRefreshImagePath)));
 
-		manualRefreshButton.setText("Refresh Preview View"); //$NON-NLS-1$
+		manualRefreshButton.setText(Messages.PreviewView_ManualRefresh);
 		manualRefreshButton.setEnabled(true);
 
-		// load sample data
-		loadDataButton = new Action() {
-			@Override
-			public void run() {
-				super.run();
-				loadSampleData();
-			}
-		};
-		final String loadDataImagePath = "icons/loadData.png";//$NON-NLS-1$
-		loadDataButton.setImageDescriptor(ImageDescriptor.createFromURL(Activator.getDefault()
-			.getBundle()
-			.getResource(loadDataImagePath)));
-
-		loadDataButton.setText("Load Sample Data"); //$NON-NLS-1$
-		loadDataButton.setEnabled(true);
-
-		// clean sampple data
-		cleanDataButton = new Action() {
-			@Override
-			public void run() {
-				super.run();
-				sampleData = null;
-				preView.cleanSampleData();
-				render();
-			}
-		};
-		final String cleanDataImagePath = "icons/cleanData.png";//$NON-NLS-1$
-		cleanDataButton.setImageDescriptor(ImageDescriptor.createFromURL(Activator.getDefault()
-			.getBundle()
-			.getResource(cleanDataImagePath)));
-		cleanDataButton.setText("Clean Sample Data"); //$NON-NLS-1$
-		cleanDataButton.setEnabled(true);
-
-		toolBarManager.add(cleanDataButton);
-		toolBarManager.add(loadDataButton);
-		toolBarManager.add(new Separator());
 		toolBarManager.add(manualRefreshButton);
 		toolBarManager.add(automaticToggleButton);
 
-		toolBarManager.update(true);
 	}
 
 	/**
-	 *
+	 * Exports the data from the preview as an xmi file.
+	 */
+	protected void exportSampleData() {
+		if (preView == null) {
+			return;
+		}
+
+		final EObject sampleData = preView.getSampleData();
+		if (sampleData == null) {
+			return;
+		}
+
+		final FileDialog dialog = new FileDialog(parent.getShell(), SWT.SAVE);
+		dialog.setFilterExtensions(new String[] { "*.xmi" }); //$NON-NLS-1$
+		final String result = dialog.open();
+		if (result == null) {
+			return;
+		}
+		final ResourceSet rs = new ResourceSetImpl();
+		final Resource resource = rs.createResource(URI.createFileURI(result));
+		resource.getContents().add(sampleData);
+		try {
+			resource.save(null);
+		} catch (final IOException e) {
+
+			final StringWriter sw = new StringWriter();
+			e.printStackTrace(new PrintWriter(sw));
+			final String stackTrace = sw.toString();
+
+			/*
+			 * splitting stack trace into children statuses, such that each line in the message will show up on a new
+			 * line in the details section of the error dialog
+			 */
+			final List<Status> childStatuses = new ArrayList<Status>();
+			for (final String line : stackTrace.split(System.getProperty("line.separator"))) { //$NON-NLS-1$
+				childStatuses.add(new Status(IStatus.ERROR, Activator.PLUGIN_ID, line));
+			}
+			final MultiStatus status = new MultiStatus(Activator.PLUGIN_ID, IStatus.ERROR,
+				childStatuses.toArray(new Status[] {}),
+				e.getLocalizedMessage(), null);
+			ErrorDialog.openError(parent.getShell(), Messages.PreviewView_SaveErrorDialogTitle,
+				Messages.PreviewView_SaveErrorDescription, status);
+
+		}
+
+	}
+
+	/**
+	 * Loads an xmi into the preview.
 	 */
 	private void loadSampleData() {
 
@@ -448,20 +554,20 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 			} else {
 				new MessageDialog(
 					parent.getShell(),
-					"Wrong input type", //$NON-NLS-1$
+					Messages.PreviewView_WrongInputTypeError,
 					null,
-					"The loaded file contains an EObject of type " //$NON-NLS-1$
-						+ sampleData.eClass().getName()
-						+ ".\n\n Please select an input file containig an EObject with the same type as the Root EClass of the view. (" + view.getRootEClass().getName() + ")", //$NON-NLS-1$ //$NON-NLS-2$
-					MessageDialog.ERROR, new String[] { "Ok" }, 0).open(); //$NON-NLS-1$
+					String.format(Messages.PreviewView_WrongInputTypeErrorDetails,
+						sampleData.eClass().getName(),
+						view.getRootEClass().getName()),
+					MessageDialog.ERROR, new String[] { Messages.PreviewView_OK }, 0).open();
 				sampleData = null;
 			}
 		} else {
 			sampleData = null;
 			new MessageDialog(
-				parent.getShell(), "Wrong input file content", //$NON-NLS-1$
-				null, "The loaded file is incorrectly formatted.", //$NON-NLS-1$
-				MessageDialog.ERROR, new String[] { "Ok" }, 0).open(); //$NON-NLS-1$
+				parent.getShell(), Messages.PreviewView_WrongInputFileContentError,
+				null, Messages.PreviewView_WrongInputFileContentErrorDetails,
+				MessageDialog.ERROR, new String[] { Messages.PreviewView_OK }, 0).open();
 		}
 
 	}

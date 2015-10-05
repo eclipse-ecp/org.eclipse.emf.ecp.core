@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Edapt Migration for Core View Model
+Bundle-SymbolicName: org.eclipse.emf.ecp.view.model.edapt;singleton:=true
+Bundle-Version: 1.7.1.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Vendor: Eclipse Modeling Project
+Require-Bundle: org.eclipse.emf.edapt.migration;bundle-version="[1.1.0,2.0.0)"
+Export-Package: org.eclipse.emf.ecp.internal.view.model.edapt._160to170;version="1.7.1";x-internal:="true"

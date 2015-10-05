@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,10 +8,11 @@
  *
  * Contributors:
  * Edgar Mueller - initial API and implementation
+ * Eugen Neufeld - deprecated getReports and clearReports
  ******************************************************************************/
 package org.eclipse.emfforms.internal.common.report;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -32,14 +33,12 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 @Component
 public class ReportServiceImpl implements ReportService {
 
-	private final List<AbstractReport> reports;
 	private final Set<ReportServiceConsumer> consumers;
 
 	/**
 	 * Constructor.
 	 */
 	public ReportServiceImpl() {
-		reports = new ArrayList<AbstractReport>();
 		consumers = new LinkedHashSet<ReportServiceConsumer>();
 	}
 
@@ -51,28 +50,21 @@ public class ReportServiceImpl implements ReportService {
 	 */
 	@Override
 	public void report(AbstractReport reportEntity) {
-		reports.add(reportEntity);
 		for (final ReportServiceConsumer consumer : consumers) {
 			consumer.reported(reportEntity);
 		}
 	}
 
-	/**
-	 * Returns all ReportEntities.
-	 *
-	 * @return all ReportEntities
-	 */
 	@Override
+	@Deprecated
 	public List<AbstractReport> getReports() {
-		return reports;
+		return Collections.emptyList();
 	}
 
-	/**
-	 * Discards all ReportEntities.
-	 */
 	@Override
+	@Deprecated
 	public void clearReports() {
-		reports.clear();
+		// do nothing
 	}
 
 	/**

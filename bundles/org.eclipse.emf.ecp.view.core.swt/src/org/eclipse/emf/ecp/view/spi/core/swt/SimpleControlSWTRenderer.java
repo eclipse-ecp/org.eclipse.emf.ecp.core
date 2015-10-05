@@ -11,9 +11,12 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.core.swt;
 
+import java.text.MessageFormat;
+
 import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -86,10 +89,29 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#getGridDescription(SWTGridDescription)
 	 */
 	@Override
-	public final SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
+	public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
 		if (rendererGridDescription == null) {
-			rendererGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1,
-				getVElement().getLabelAlignment() == LabelAlignment.NONE ? 2 : 3, this);
+			int columns;
+			switch (getVElement().getLabelAlignment()) {
+			case DEFAULT:
+			case LEFT:
+				columns = 3;
+				break;
+			case NONE:
+				columns = 2;
+				break;
+			default:
+				getReportService().report(new AbstractReport(MessageFormat.format(
+					"Label alignment {0} is not supported by renderer {1}. Label alignment set to default.", //$NON-NLS-1$
+					getVElement().getLabelAlignment().getLiteral(), getClass().getName()), IStatus.INFO));
+				getVElement().setLabelAlignment(LabelAlignment.DEFAULT);
+				columns = 3;
+			}
+			rendererGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, columns, this);
+			for (int i = 0; i < rendererGridDescription.getGrid().size() - 1; i++) {
+				final SWTGridCell swtGridCell = rendererGridDescription.getGrid().get(i);
+				swtGridCell.setHorizontalGrab(false);
+			}
 		}
 		return rendererGridDescription;
 	}

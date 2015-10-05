@@ -99,8 +99,7 @@ public class DomainModelReferenceIterator implements Iterator<EStructuralFeature
 			}
 			if (!eReference.isMany()) {
 				child = (EObject) current.eGet(eReference);
-			}
-			else {
+			} else {
 				// EMF API
 				@SuppressWarnings("unchecked")
 				final List<EObject> children = (List<EObject>) current.eGet(eReference);
@@ -137,14 +136,12 @@ public class DomainModelReferenceIterator implements Iterator<EStructuralFeature
 		final ReferenceCounter previousCounter = references.get(currentPosition);
 		if (!previousCounter.eReference.isMany()) {
 			increaseCounter(currentPosition - 1);
-		}
-		else {
+		} else {
 			previousCounter.position++;
 			final int numElements = calculateSizeOfElementsOnPosition(currentPosition);
 			if (previousCounter.position == numElements) {
 				increaseCounter(currentPosition - 1);
-			}
-			else {
+			} else {
 				for (int j = currentPosition + 1; j < references.size(); j++) {
 					references.get(j).position = 0;
 				}
@@ -161,8 +158,7 @@ public class DomainModelReferenceIterator implements Iterator<EStructuralFeature
 
 			if (!eReference.isMany()) {
 				child = (EObject) current.eGet(eReference);
-			}
-			else {
+			} else {
 				// EMF API
 				@SuppressWarnings("unchecked")
 				final List<EObject> children = (List<EObject>) current.eGet(eReference);
@@ -191,8 +187,7 @@ public class DomainModelReferenceIterator implements Iterator<EStructuralFeature
 			}
 			if (!eReference.isMany()) {
 				child = (EObject) current.eGet(eReference);
-			}
-			else {
+			} else {
 				// EMF API
 				@SuppressWarnings("unchecked")
 				final List<EObject> children = (List<EObject>) current.eGet(eReference);

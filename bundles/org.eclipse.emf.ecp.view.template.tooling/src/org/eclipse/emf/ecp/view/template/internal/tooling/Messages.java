@@ -44,6 +44,7 @@ public final class Messages extends NLS {
 	public static String EMFFormsTemplateWizardPage_title;
 	public static String HexColorSelectionControlSWTRenderer_SelectColorBtn;
 	public static String HexColorSelectionControlSWTRenderer_UnsetColorBtn;
+	public static String TemplateModelEditorPart_initError;
 	public static String URLSelectionControlSWTRenderer_SelectExternalFileBtn;
 	public static String URLSelectionControlSWTRenderer_SelectWorkspaceFileBtn;
 	public static String URLSelectionControlSWTRenderer_UnsetText;

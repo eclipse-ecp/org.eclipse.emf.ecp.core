@@ -30,7 +30,9 @@ public class DummyModelQuickFix implements ModelQuickFix {
 	private final HashMap<String, String> labels = new HashMap<String, String>();
 
 	/**
+	 * Default constructor.
 	 *
+	 * @param problemID the problem ID
 	 */
 	public DummyModelQuickFix(String problemID) {
 		this.problemID = problemID;
@@ -62,6 +64,11 @@ public class DummyModelQuickFix implements ModelQuickFix {
 		// do nothing
 	}
 
+	/**
+	 * Sets the priority.
+	 * 
+	 * @param priority the priority
+	 */
 	public void setPriority(double priority) {
 		this.priority = priority;
 	}

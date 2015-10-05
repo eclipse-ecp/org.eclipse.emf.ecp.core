@@ -2,13 +2,13 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: EMFForms SWT Text Control with Autocomplete Tests
 Bundle-SymbolicName: org.eclipse.emfforms.swt.control.text.autocomplete.tests
-Bundle-Version: 1.6.1.qualifier
-Fragment-Host: org.eclipse.emfforms.swt.control.text.autocomplete;bundle-version="[1.6.1,2.0.0)"
+Bundle-Version: 1.7.1.qualifier
+Fragment-Host: org.eclipse.emfforms.swt.control.text.autocomplete;bundle-version="[1.6.0,2.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: Eclipse Modeling Project
 Require-Bundle: org.junit;bundle-version="[4.0.0,5.0.0)",
- org.eclipse.emfforms.core.services.databinding.testmodel;bundle-version="[1.6.1,2.0.0)",
+ org.eclipse.emfforms.core.services.databinding.testmodel;bundle-version="[1.6.0,2.0.0)",
  org.mockito.mockito-all;bundle-version="[1.9.5,2.0.0)",
- org.eclipse.emf.ecp.test.common;bundle-version="[1.6.1,2.0.0)"
-Export-Package: org.eclipse.emfforms.internal.swt.control.text.autocomplete.renderer;version="1.6.1";x-internal:="true",
- org.eclipse.emfforms.swt.control.text.autocomplete.tests;version="1.6.1";x-internal:="true"
+ org.eclipse.emf.ecp.test.common;bundle-version="[1.6.0,2.0.0)"
+Export-Package: org.eclipse.emfforms.internal.swt.control.text.autocomplete.renderer;version="1.7.1";x-internal:="true",
+ org.eclipse.emfforms.swt.control.text.autocomplete.tests;version="1.7.1";x-internal:="true"

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension-point id="cellEditor" name="SWT Multi Attribute Cell Editor" schema="schema/cellEditor.exsd"/>
+   <extension
+         point="org.eclipse.emfforms.swt.control.multiattribute.cellEditor">
+      <cellEditor
+            class="org.eclipse.emf.ecp.edit.internal.swt.table.DateCellEditor"
+            tester="org.eclipse.emfforms.internal.view.control.multiattribute.celleditor.DateCellEditorTester">
+      </cellEditor>
+      <cellEditor
+            class="org.eclipse.emf.ecp.edit.internal.swt.table.NumberCellEditor"
+            tester="org.eclipse.emfforms.internal.view.control.multiattribute.celleditor.NumberCellEditorTester">
+      </cellEditor>
+      <cellEditor
+            class="org.eclipse.emf.ecp.edit.spi.swt.table.StringCellEditor"
+            tester="org.eclipse.emfforms.internal.view.control.multiattribute.celleditor.StringCellEditorTester">
+      </cellEditor>
+      <cellEditor
+            class="org.eclipse.emf.ecp.edit.internal.swt.table.XmlDateCellEditor"
+            tester="org.eclipse.emfforms.internal.view.control.multiattribute.celleditor.XmlDateCellEditorTester">
+      </cellEditor>
+   </extension>
+
+</plugin>

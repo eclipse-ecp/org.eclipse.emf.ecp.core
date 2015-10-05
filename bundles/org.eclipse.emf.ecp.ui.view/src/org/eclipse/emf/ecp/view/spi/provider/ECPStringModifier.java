@@ -8,6 +8,7 @@
  *
  * Contributors:
  * Eugen - initial API and implementation
+ * Johannes Faltermeier - Bug 459998
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.provider;
 
@@ -17,6 +18,7 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
  * The TooltipModifier allows to manipulate a provided String.
  *
  * @author Eugen Neufeld
+ * @author Johannes Faltermeier
  * @since 1.3
  */
 public interface ECPStringModifier {
@@ -29,4 +31,14 @@ public interface ECPStringModifier {
 	 * @return the modified text
 	 */
 	String modifyString(String text, Setting setting);
+
+	/**
+	 * Returns the priority of this modifier. A lower priority means that the {@link #modifyString(String, Setting)}
+	 * method of this modifier is executed before modifiers with higher priority.
+	 *
+	 * @return the priority
+	 *
+	 * @since 1.7
+	 */
+	double getPriority();
 }

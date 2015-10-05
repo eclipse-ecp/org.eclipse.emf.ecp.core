@@ -4,31 +4,28 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import javafx.scene.Node;
-
 import org.eclipse.emf.ecp.view.model.common.AbstractRenderer;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+
+import javafx.scene.Node;
 
 public abstract class RendererFX<VELEMENT extends VElement> extends AbstractRenderer<VELEMENT> {
 
-	private Map<GridCellFX, Node> nodes;
+	private final Map<GridCellFX, Node> nodes;
 
 	/**
-	 * Initialize the renderer. This method must be called before the renderer
-	 * is used and can only be called once.
+	 * Default constructor.
 	 *
 	 * @param vElement the {@link VElement} to be rendered
 	 * @param viewContext the {@link ViewModelContext} to use
+	 * @param reportService The {@link ReportService} to use
 	 */
-	@Override
-	public void init(final VELEMENT vElement, final ViewModelContext viewContext) {
-		if (getVElement() != null) {
-			return;
-		}
-		super.init(vElement, viewContext);
+	public RendererFX(VELEMENT vElement, ViewModelContext viewContext, ReportService reportService) {
+		super(vElement, viewContext, reportService);
 		nodes = new LinkedHashMap<GridCellFX, Node>();
 	}
 

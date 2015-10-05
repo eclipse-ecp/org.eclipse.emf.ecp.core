@@ -25,6 +25,7 @@ import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emfforms.internal.view.model.localization.LocalizationViewModelService;
 
 /**
  * Spreadsheet specific implementation of the {@link ViewModelContext}.
@@ -33,11 +34,13 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
  * @author Eugen Neufeld
  * @noextend This class is not intended to be subclassed by clients.
  */
+@SuppressWarnings("restriction")
 public class EMFFormsSpreadsheetViewModelContext implements ViewModelContext {
 
 	private final VView view;
 	private final EObject domainModel;
 	private final Map<String, Object> contextValues = new LinkedHashMap<String, Object>();
+	private ViewModelContext parentContext;
 
 	/**
 	 * Default Constructor.
@@ -45,10 +48,25 @@ public class EMFFormsSpreadsheetViewModelContext implements ViewModelContext {
 	 * @param view The {@link VView}
 	 * @param domainModel The {@link EObject}
 	 */
+
 	public EMFFormsSpreadsheetViewModelContext(VView view, EObject domainModel) {
 		this.view = view;
 		this.domainModel = domainModel;
 
+		final LocalizationViewModelService vms = new LocalizationViewModelService();
+		vms.instantiate(this);
+	}
+
+	/**
+	 * Default Constructor for child contexts.
+	 *
+	 * @param view The {@link VView}
+	 * @param domainModel The {@link EObject}
+	 * @param parentContext The parent {@link ViewModelContext}
+	 */
+	public EMFFormsSpreadsheetViewModelContext(VView view, EObject domainModel, ViewModelContext parentContext) {
+		this(view, domainModel);
+		this.parentContext = parentContext;
 	}
 
 	/**
@@ -168,7 +186,13 @@ public class EMFFormsSpreadsheetViewModelContext implements ViewModelContext {
 	 */
 	@Override
 	public Object getContextValue(String key) {
-		return contextValues.get(key);
+		if (contextValues.containsKey(key)) {
+			return contextValues.get(key);
+		}
+		if (parentContext != null) {
+			return parentContext.getContextValue(key);
+		}
+		return null;
 	}
 
 	/**
@@ -191,7 +215,7 @@ public class EMFFormsSpreadsheetViewModelContext implements ViewModelContext {
 	@Override
 	public ViewModelContext getChildContext(EObject eObject, VElement parent, VView vView,
 		ViewModelService... viewModelServices) {
-		return null;
+		return new EMFFormsSpreadsheetViewModelContext(vView, eObject, this);
 	}
 
 	/**

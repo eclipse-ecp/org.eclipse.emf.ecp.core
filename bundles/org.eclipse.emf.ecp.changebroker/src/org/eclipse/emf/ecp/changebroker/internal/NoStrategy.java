@@ -15,7 +15,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecp.changebroker.spi.EMFObserver;
+import org.eclipse.emf.ecp.changebroker.spi.ChangeObserver;
 
 /**
  * @author jfaltermeier
@@ -23,14 +23,14 @@ import org.eclipse.emf.ecp.changebroker.spi.EMFObserver;
  */
 public class NoStrategy implements Strategy {
 
-	private final Set<EMFObserver> registry = new LinkedHashSet<EMFObserver>();
+	private final Set<ChangeObserver> registry = new LinkedHashSet<ChangeObserver>();
 
 	/**
 	 * Registers an observer.
 	 *
 	 * @param observer the observer
 	 */
-	public void register(EMFObserver observer) {
+	public void register(ChangeObserver observer) {
 		registry.add(observer);
 	}
 
@@ -40,18 +40,18 @@ public class NoStrategy implements Strategy {
 	 * @see org.eclipse.emf.ecp.changebroker.internal.Strategy#getObservers(org.eclipse.emf.common.notify.Notification)
 	 */
 	@Override
-	public Set<EMFObserver> getObservers(Notification notification) {
-		return new LinkedHashSet<EMFObserver>(registry);
+	public Set<ChangeObserver> getObservers(Notification notification) {
+		return new LinkedHashSet<ChangeObserver>(registry);
 	}
 
 	/**
 	 *
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.changebroker.internal.Strategy#deregister(EMFObserver)
+	 * @see org.eclipse.emf.ecp.changebroker.internal.Strategy#deregister(ChangeObserver)
 	 */
 	@Override
-	public void deregister(EMFObserver observer) {
+	public void deregister(ChangeObserver observer) {
 		registry.remove(observer);
 	}
 
@@ -61,8 +61,8 @@ public class NoStrategy implements Strategy {
 	 * @see org.eclipse.emf.ecp.changebroker.internal.Strategy#getAllObservers()
 	 */
 	@Override
-	public Set<EMFObserver> getAllObservers() {
-		return new LinkedHashSet<EMFObserver>(registry);
+	public Set<ChangeObserver> getAllObservers() {
+		return new LinkedHashSet<ChangeObserver>(registry);
 	}
 
 }

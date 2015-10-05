@@ -1,43 +1,43 @@
 <?xml version="1.0" encoding="ASCII"?>
-<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model" xmlns:org.eclipse.emf.ecp.view.table.model="http://org/eclipse/emf/ecp/view/table/model/150">
+<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/170" xmlns:org.eclipse.emf.ecp.view.table.model="http://org/eclipse/emf/ecp/view/table/model/150" xmi:id="_qzdZ0EWAEeWfKJaajyNdyA">
   <rootEClass href="http://org/eclipse/example/bowling#//Tournament"/>
-  <children xsi:type="org.eclipse.emf.ecp.view.table.model:TableControl">
-    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.table.model:TableDomainModelReference">
+  <children xsi:type="org.eclipse.emf.ecp.view.table.model:TableControl" xmi:id="_qzdZ0UWAEeWfKJaajyNdyA">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.table.model:TableDomainModelReference" xmi:id="_qzdZ0kWAEeWfKJaajyNdyA">
       <domainModelEFeature xsi:type="ecore:EReference" href="http://org/eclipse/example/bowling#//Tournament/matchups"/>
     </domainModelReference>
   </children>
-  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control type">
-    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_qzdZ00WAEeWfKJaajyNdyA" name="Control type">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_qzdZ1EWAEeWfKJaajyNdyA">
       <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/example/bowling#//Tournament/type"/>
     </domainModelReference>
   </children>
-  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control playerPoints">
-    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_qzdZ1UWAEeWfKJaajyNdyA" name="Control playerPoints">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_qzdZ1kWAEeWfKJaajyNdyA">
       <domainModelEFeature xsi:type="ecore:EReference" href="http://org/eclipse/example/bowling#//Tournament/playerPoints"/>
     </domainModelReference>
   </children>
-  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control players">
-    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_qzdZ10WAEeWfKJaajyNdyA" name="Control players">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_qzdZ2EWAEeWfKJaajyNdyA">
       <domainModelEFeature xsi:type="ecore:EReference" href="http://org/eclipse/example/bowling#//Tournament/players"/>
     </domainModelReference>
   </children>
-  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control referees">
-    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_qzdZ2UWAEeWfKJaajyNdyA" name="Control referees">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_qzdZ2kWAEeWfKJaajyNdyA">
       <domainModelEFeature xsi:type="ecore:EReference" href="http://org/eclipse/example/bowling#//Tournament/referees"/>
     </domainModelReference>
   </children>
-  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control priceMoney">
-    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_qzdZ20WAEeWfKJaajyNdyA" name="Control priceMoney">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_qzdZ3EWAEeWfKJaajyNdyA">
       <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/example/bowling#//Tournament/priceMoney"/>
     </domainModelReference>
   </children>
-  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control receivesTrophy">
-    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_qzdZ3UWAEeWfKJaajyNdyA" name="Control receivesTrophy">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_qzdZ3kWAEeWfKJaajyNdyA">
       <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/example/bowling#//Tournament/receivesTrophy"/>
     </domainModelReference>
   </children>
-  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control matchDays">
-    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_qzdZ30WAEeWfKJaajyNdyA" name="Control matchDays">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_qzdZ4EWAEeWfKJaajyNdyA">
       <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/example/bowling#//Tournament/matchDays"/>
     </domainModelReference>
   </children>

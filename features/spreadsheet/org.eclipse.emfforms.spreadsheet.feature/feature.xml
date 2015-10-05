@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipse.emfforms.spreadsheet.feature"
-      label="EMFForms Spreadsheet Feature"
+      label="EMFForms Spreadsheet Renderer (Export &amp; Import) SDK"
       version="1.0.0.qualifier"
+      provider-name="%providerName"
       plugin="org.eclipse.emfforms.spreadsheet.core"
       image="eclipse_update_120.jpg"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.6.1.qualifier">
+      license-feature-version="1.7.1.qualifier">
 
    <description>
       %description
@@ -22,13 +23,6 @@
 
    <plugin
          id="org.eclipse.emfforms.spreadsheet.core"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emfforms.spreadsheet.core.importer"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -57,6 +51,34 @@
 
    <plugin
          id="org.eclipse.emfforms.spreadsheet.core.renderer.table"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emfforms.spreadsheet.file"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emfforms.spreadsheet.stream"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emfforms.spreadsheet.core.error.model"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emfforms.spreadsheet.core.error.model.edit"
          download-size="0"
          install-size="0"
          version="0.0.0"

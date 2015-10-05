@@ -1,5 +1,6 @@
 package org.eclipse.emf.ecp.view.model.internal.fx;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -13,7 +14,11 @@ import org.eclipse.emf.ecp.view.model.common.ECPRendererTester;
 import org.eclipse.emf.ecp.view.model.common.ECPStaticRendererTester;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 public final class RendererFactoryImpl implements RendererFactory {
 
@@ -25,6 +30,7 @@ public final class RendererFactoryImpl implements RendererFactory {
 	private static final String RENDERER_TESTER = "testClass";
 
 	private final Set<ECPRendererDescription> rendererDescriptors = new LinkedHashSet<ECPRendererDescription>();
+	private ReportService reportService;
 
 	private RendererFactoryImpl() {
 		readRenderer();
@@ -40,15 +46,14 @@ public final class RendererFactoryImpl implements RendererFactory {
 				try {
 					final Class<RendererFX<VElement>> rendererClass = loadClass(configurationElement
 						.getContributor().getName(), configurationElement
-						.getAttribute("renderer"));
+							.getAttribute("renderer"));
 
 					// Get tester(s) for the current renderer.
 					final Set<ECPRendererTester> tester = new LinkedHashSet<ECPRendererTester>();
 					for (final IConfigurationElement testerExtension : configurationElement.getChildren()) {
 						if (TEST_DYNAMIC.equals(testerExtension.getName())) {
 							tester.add((ECPRendererTester) testerExtension.createExecutableExtension(RENDERER_TESTER));
-						}
-						else if (TEST_STATIC.equals(testerExtension.getName())) {
+						} else if (TEST_STATIC.equals(testerExtension.getName())) {
 
 							final int priority = Integer.parseInt(testerExtension.getAttribute(TESTER_PRIORITY));
 
@@ -113,6 +118,7 @@ public final class RendererFactoryImpl implements RendererFactory {
 	 * @param viewContext the view model context
 	 * @return the applicable renderer for the given VElement with the highest priority
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public RendererFX<VElement> getRenderer(VElement vElement, ViewModelContext viewContext) {
 		int highestPriority = -1;
@@ -132,18 +138,37 @@ public final class RendererFactoryImpl implements RendererFactory {
 			if (currentPriority > highestPriority) {
 				highestPriority = currentPriority;
 				try {
-					bestCandidate = description.getRenderer().newInstance();
+					bestCandidate = (RendererFX<VElement>) description.getRenderer().getConstructors()[0].newInstance(
+						vElement, viewContext, getReportService());
 				} catch (final InstantiationException ex) {
 					ex.printStackTrace();
 					return null;
 				} catch (final IllegalAccessException ex) {
 					ex.printStackTrace();
 					return null;
+				} catch (final IllegalArgumentException ex) {
+					ex.printStackTrace();
+					return null;
+				} catch (final InvocationTargetException ex) {
+					ex.printStackTrace();
+					return null;
+				} catch (final SecurityException ex) {
+					ex.printStackTrace();
+					return null;
 				}
 			}
 		}
 
-		bestCandidate.init(vElement, viewContext);
 		return bestCandidate;
+	}
+
+	private ReportService getReportService() {
+		if (reportService == null) {
+			final BundleContext bundleContext = FrameworkUtil.getBundle(RendererFactoryImpl.class).getBundleContext();
+			final ServiceReference<ReportService> serviceReference = bundleContext
+				.getServiceReference(ReportService.class);
+			reportService = bundleContext.getService(serviceReference);
+		}
+		return reportService;
 	}
 }

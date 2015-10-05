@@ -34,10 +34,13 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.ExtendedMetaData;
 import org.eclipse.emf.ecp.view.migrator.ViewModelMigrationException;
 import org.eclipse.emf.ecp.view.migrator.ViewModelMigrator;
+import org.eclipse.emf.ecp.view.spi.model.util.VViewResourceFactoryImpl;
+import org.eclipse.emf.edapt.common.IResourceSetFactory;
 import org.eclipse.emf.edapt.migration.MigrationException;
 import org.eclipse.emf.edapt.migration.execution.Migrator;
 import org.eclipse.emf.edapt.migration.execution.MigratorRegistry;
@@ -130,6 +133,15 @@ public class EdaptViewModelMigrator implements ViewModelMigrator {
 
 			/* Trigger the migration */
 			final Migrator migrator = new Migrator(uri, new CustomMigrationClassLoader());
+			migrator.setResourceSetFactory(new IResourceSetFactory() {
+				@Override
+				public ResourceSet createResourceSet() {
+					final ResourceSetImpl resourceSet = new ResourceSetImpl();
+					resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
+						Resource.Factory.Registry.DEFAULT_EXTENSION, new VViewResourceFactoryImpl());
+					return resourceSet;
+				}
+			});
 			final Release release = migrator.getRelease(0);
 			migrator.migrateAndSave(Collections.singletonList(resourceURI), release, null,
 				new NullProgressMonitor());
@@ -341,8 +353,8 @@ public class EdaptViewModelMigrator implements ViewModelMigrator {
 		}
 
 		@SuppressWarnings("restriction")
-		final org.eclipse.emf.edapt.history.recorder.HistoryGenerator rootGenerator =
-			new org.eclipse.emf.edapt.history.recorder.HistoryGenerator(rootPackages);
+		final org.eclipse.emf.edapt.history.recorder.HistoryGenerator rootGenerator = new org.eclipse.emf.edapt.history.recorder.HistoryGenerator(
+			rootPackages);
 		@SuppressWarnings("restriction")
 		final List<Change> rootChanges = rootGenerator.generate().getFirstRelease().getChanges();
 		release.getChanges().addAll(rootChanges);
@@ -486,7 +498,8 @@ public class EdaptViewModelMigrator implements ViewModelMigrator {
 		 *      org.xml.sax.Attributes)
 		 */
 		@Override
-		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+		public void startElement(String uri, String localName, String qName, Attributes attributes)
+			throws SAXException {
 			super.startElement(uri, localName, qName, attributes);
 			if (localName.equals("rootEClass")) { //$NON-NLS-1$
 				final String rawUri = attributes.getValue("href"); //$NON-NLS-1$

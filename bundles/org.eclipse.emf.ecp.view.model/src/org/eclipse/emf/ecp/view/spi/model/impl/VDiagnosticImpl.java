@@ -33,20 +33,19 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>VDiagnostic</b></em>'.
+ * @since 1.2
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VDiagnosticImpl#getDiagnostics <em>Diagnostics</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
- * @since 1.2
  */
 // TODO performance
-public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
-{
+public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic {
 	/**
 	 * The cached value of the '{@link #getDiagnostics() <em>Diagnostics</em>}' attribute list.
 	 * <!-- begin-user-doc -->
@@ -64,8 +63,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 	 *
 	 * @generated
 	 */
-	protected VDiagnosticImpl()
-	{
+	protected VDiagnosticImpl() {
 		super();
 	}
 
@@ -76,8 +74,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return VViewPackage.Literals.DIAGNOSTIC;
 	}
 
@@ -88,10 +85,8 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 	 * @generated
 	 */
 	@Override
-	public EList<Object> getDiagnostics()
-	{
-		if (diagnostics == null)
-		{
+	public EList<Object> getDiagnostics() {
+		if (diagnostics == null) {
 			diagnostics = new EDataTypeUniqueEList<Object>(Object.class, this, VViewPackage.DIAGNOSTIC__DIAGNOSTICS);
 		}
 		return diagnostics;
@@ -104,10 +99,8 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
-		switch (featureID)
-		{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 		case VViewPackage.DIAGNOSTIC__DIAGNOSTICS:
 			return getDiagnostics();
 		}
@@ -122,10 +115,8 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
-		switch (featureID)
-		{
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 		case VViewPackage.DIAGNOSTIC__DIAGNOSTICS:
 			getDiagnostics().clear();
 			getDiagnostics().addAll((Collection<? extends Object>) newValue);
@@ -141,10 +132,8 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
-		switch (featureID)
-		{
+	public void eUnset(int featureID) {
+		switch (featureID) {
 		case VViewPackage.DIAGNOSTIC__DIAGNOSTICS:
 			getDiagnostics().clear();
 			return;
@@ -159,10 +148,8 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
-		switch (featureID)
-		{
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 		case VViewPackage.DIAGNOSTIC__DIAGNOSTICS:
 			return diagnostics != null && !diagnostics.isEmpty();
 		}
@@ -176,8 +163,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic
 	 * @generated
 	 */
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		if (eIsProxy()) {
 			return super.toString();
 		}

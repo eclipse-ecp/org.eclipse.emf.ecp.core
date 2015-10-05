@@ -11,7 +11,6 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.swt;
 
-import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,7 +28,10 @@ import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
+import org.eclipse.emf.ecp.view.spi.model.util.ViewModelPropertiesHelper;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
@@ -171,8 +173,11 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 					return null; // possible because the only caller is null safe.
 				}
 				final EReference reference = (EReference) valueProperty.getValueType();
+				final VElement viewModel = getViewModelContext().getViewModel();
+				final VViewModelProperties properties = ViewModelPropertiesHelper
+					.getInhertitedPropertiesOrEmpty(viewModel);
 				detailView = ViewProviderHelper.getView(EcoreUtil.create(reference.getEReferenceType()),
-					Collections.<String, Object> emptyMap());
+					properties);
 			}
 			view = detailView;
 		}
@@ -215,8 +220,7 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 			label.setBackground(compositeToRenderOn.getDisplay().getSystemColor(SWT.COLOR_RED));
 			label.setText("No Detail View found."); //$NON-NLS-1$
 
-		}
-		else {
+		} else {
 			final ViewModelContext childContext = getViewModelContext().getChildContext(object, getVElement(),
 				detailView);
 

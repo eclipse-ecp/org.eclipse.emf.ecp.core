@@ -11,8 +11,6 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.swt;
 
-import java.util.Collections;
-
 import javax.inject.Inject;
 
 import org.eclipse.core.databinding.property.value.IValueProperty;
@@ -21,7 +19,10 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
+import org.eclipse.emf.ecp.view.spi.model.util.ViewModelPropertiesHelper;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
@@ -113,8 +114,11 @@ public class TableControlDetailDialogSWTRenderer extends TableControlSWTRenderer
 					return null; // possible because the only caller is null safe.
 				}
 				final EReference reference = (EReference) valueProperty.getValueType();
+				final VElement viewModel = getViewModelContext().getViewModel();
+				final VViewModelProperties properties = ViewModelPropertiesHelper
+					.getInhertitedPropertiesOrEmpty(viewModel);
 				detailView = ViewProviderHelper.getView(EcoreUtil.create(reference.getEReferenceType()),
-					Collections.<String, Object> emptyMap());
+					properties);
 			}
 			view = detailView;
 		}
@@ -132,8 +136,7 @@ public class TableControlDetailDialogSWTRenderer extends TableControlSWTRenderer
 			if (detailEditButton != null) {
 				detailEditButton.setEnabled(false);
 			}
-		}
-		else {
+		} else {
 			if (detailEditButton != null && IStructuredSelection.class.cast(event.getSelection()).size() == 1) {
 				detailEditButton.setEnabled(true);
 			}
@@ -194,14 +197,16 @@ public class TableControlDetailDialogSWTRenderer extends TableControlSWTRenderer
 			if (getTableViewer().getSelection().isEmpty()) {
 				dialog = new MessageDialog(shell, "No Table Selection", null, //$NON-NLS-1$
 					"You must select one element in order to edit it.", MessageDialog.WARNING, new String[] { //$NON-NLS-1$
-					JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
+						JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY) },
+					0);
 
 			} else if (getView() == null) {
 				dialog = new MessageDialog(
 					shell,
 					"No View Model", null, //$NON-NLS-1$
-					"Detail editing is not possible since there is no UI description for the selection.", MessageDialog.ERROR, new String[] { //$NON-NLS-1$
-					JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
+					"Detail editing is not possible since there is no UI description for the selection.", //$NON-NLS-1$
+					MessageDialog.ERROR, new String[] { JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY) },
+					0);
 			} else {
 				dialog = new DetailDialog(shell, (EObject) IStructuredSelection.class.cast(
 					getTableViewer().getSelection()).getFirstElement(), getVElement(), getView());

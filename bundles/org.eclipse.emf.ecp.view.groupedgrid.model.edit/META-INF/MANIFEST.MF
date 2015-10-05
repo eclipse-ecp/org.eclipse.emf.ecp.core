@@ -2,13 +2,13 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.groupedgrid.model.edit;singleton:=true
-Bundle-Version: 1.6.1.qualifier
+Bundle-Version: 1.7.1.qualifier
 Bundle-ClassPath: .
 Bundle-Activator: org.eclipse.emf.ecp.view.spi.groupedgrid.model.provider.GroupedGridEditPlugin$Implementation
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Export-Package: org.eclipse.emf.ecp.view.spi.groupedgrid.model.provider;version="1.6.1"
+Export-Package: org.eclipse.emf.ecp.view.spi.groupedgrid.model.provider;version="1.7.1"
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
  org.eclipse.emf.edit;visibility:=reexport;bundle-version="[2.7.0,3.0.0)",
  org.eclipse.emf.ecore;visibility:=reexport;bundle-version="[2.7.0,3.0.0)",

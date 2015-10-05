@@ -26,8 +26,8 @@ import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecp.changebroker.internal.ChangeBrokerImpl;
 import org.eclipse.emf.ecp.changebroker.spi.AbstractNotificationProvider;
-import org.eclipse.emf.ecp.changebroker.spi.EMFObserver;
-import org.eclipse.emf.ecp.changebroker.spi.ReadOnlyEMFObserver;
+import org.eclipse.emf.ecp.changebroker.spi.ChangeObserver;
+import org.eclipse.emf.ecp.changebroker.spi.ReadOnlyChangeObserver;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -39,23 +39,23 @@ import org.junit.Test;
  */
 public class Strategy_Test {
 
-	private EMFObserver emfObserver;
-	private ReadOnlyEMFObserver readOnlyEMFObserver;
+	private ChangeObserver emfObserver;
+	private ReadOnlyChangeObserver readOnlyEMFObserver;
 	private ChangeBrokerImpl broker;
-	private Set<EMFObserver> observers;
+	private Set<ChangeObserver> observers;
 	private TestNotificationProvider notificationProvider;
 
 	@Before
 	public void before() {
 		broker = new ChangeBrokerImpl();
-		observers = new LinkedHashSet<EMFObserver>();
-		emfObserver = new EMFObserver() {
+		observers = new LinkedHashSet<ChangeObserver>();
+		emfObserver = new ChangeObserver() {
 			@Override
 			public void handleNotification(Notification notification) {
 				observers.add(this);
 			}
 		};
-		readOnlyEMFObserver = new ReadOnlyEMFObserver() {
+		readOnlyEMFObserver = new ReadOnlyChangeObserver() {
 			@Override
 			public void handleNotification(Notification notification) {
 				observers.add(this);

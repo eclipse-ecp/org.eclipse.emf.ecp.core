@@ -29,7 +29,7 @@ public class EcoreHelperDefaultPackageRegistryContents_PTest {
 
 	private static final String A_ECORE_PATH = "/TestEcoreHelperProjectResources/A.ecore";
 	private static final String A_NS_URI = "a.nsuri";
-	private static final String VIEW_NS_URI = "http://org/eclipse/emf/ecp/view/model";
+	private static final String VIEW_NS_URI = "http://org/eclipse/emf/ecp/view/model/170";
 	private static final String VIEW_ECORE_PATH = "/TestEcoreHelperProjectResources/view.ecore";
 
 	@BeforeClass

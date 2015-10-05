@@ -18,7 +18,8 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({
 	ChangeBroker_Test.class,
-	Strategy_Test.class
+	Strategy_Test.class,
+	ChangeBrokerDeleteObserver_Test.class
 })
 public class AllPlainJUnitTests {
 

@@ -40,7 +40,6 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedExcep
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
-import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -70,22 +69,22 @@ import org.osgi.framework.ServiceReference;
 // APITODO no api yet
 public abstract class ExpectedValueControlRenderer extends SimpleControlSWTControlSWTRenderer {
 
-	private static final EMFFormsDatabinding emfFormsDatabinding;
-	private static final EMFFormsLabelProvider emfFormsLabelProvider;
-	private static final VTViewTemplateProvider vtViewTemplateProvider;
+	private static final EMFFormsDatabinding EMFFORMS_DATABINDING;
+	private static final EMFFormsLabelProvider EMFFORMS_LABELPROVIDER;
+	private static final VTViewTemplateProvider VIEW_TEMPLATE_PROVIDER;
 
 	static {
 		final BundleContext bundleContext = FrameworkUtil.getBundle(ExpectedValueControlRenderer.class)
 			.getBundleContext();
 		final ServiceReference<EMFFormsDatabinding> emfFormsDatabindingServiceReference = bundleContext
 			.getServiceReference(EMFFormsDatabinding.class);
-		emfFormsDatabinding = bundleContext.getService(emfFormsDatabindingServiceReference);
+		EMFFORMS_DATABINDING = bundleContext.getService(emfFormsDatabindingServiceReference);
 		final ServiceReference<EMFFormsLabelProvider> emfFormsLabelProviderServiceReference = bundleContext
 			.getServiceReference(EMFFormsLabelProvider.class);
-		emfFormsLabelProvider = bundleContext.getService(emfFormsLabelProviderServiceReference);
+		EMFFORMS_LABELPROVIDER = bundleContext.getService(emfFormsLabelProviderServiceReference);
 		final ServiceReference<VTViewTemplateProvider> vtViewTemplateProviderServiceReference = bundleContext
 			.getServiceReference(VTViewTemplateProvider.class);
-		vtViewTemplateProvider = bundleContext.getService(vtViewTemplateProviderServiceReference);
+		VIEW_TEMPLATE_PROVIDER = bundleContext.getService(vtViewTemplateProviderServiceReference);
 	}
 
 	/**
@@ -97,7 +96,8 @@ public abstract class ExpectedValueControlRenderer extends SimpleControlSWTContr
 	 */
 	public ExpectedValueControlRenderer(VControl vElement, ViewModelContext viewContext,
 		ReportService reportService) {
-		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
+		super(vElement, viewContext, reportService, EMFFORMS_DATABINDING, EMFFORMS_LABELPROVIDER,
+			VIEW_TEMPLATE_PROVIDER);
 	}
 
 	private Label text;
@@ -146,7 +146,8 @@ public abstract class ExpectedValueControlRenderer extends SimpleControlSWTContr
 		final TargetToModelUpdateStrategy targetToModelUpdateStrategy = new TargetToModelUpdateStrategy();
 		final ModelToTargetUpdateStrategy modelToTargetUpdateStrategy = new ModelToTargetUpdateStrategy();
 
-		final IObservableValue value = SWTObservables.observeText(text);
+		@SuppressWarnings("deprecation")
+		final IObservableValue value = org.eclipse.jface.databinding.swt.SWTObservables.observeText(text);
 
 		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(),
 			targetToModelUpdateStrategy, modelToTargetUpdateStrategy);
@@ -165,10 +166,17 @@ public abstract class ExpectedValueControlRenderer extends SimpleControlSWTContr
 	 */
 	protected Binding createTooltipBinding(Control text, IObservableValue modelValue,
 		DataBindingContext dataBindingContext, UpdateValueStrategy targetToModel, UpdateValueStrategy modelToTarget) {
-		final IObservableValue toolTip = SWTObservables.observeTooltipText(text);
+		@SuppressWarnings("deprecation")
+		final IObservableValue toolTip = org.eclipse.jface.databinding.swt.SWTObservables.observeTooltipText(text);
 		return dataBindingContext.bindValue(toolTip, modelValue, targetToModel, modelToTarget);
 	}
 
+	/**
+	 * Lets the user select an object and returns the selection.
+	 *
+	 * @param attribute the attribute for which an object is needed
+	 * @return the object
+	 */
 	protected Object getSelectedObject(EAttribute attribute) {
 		Object object = null;
 		// final EAttribute attribute = (EAttribute) structuralFeature;
@@ -222,8 +230,7 @@ public abstract class ExpectedValueControlRenderer extends SimpleControlSWTContr
 				if (Window.OK == enumSelectionResult) {
 					object = Enumerator.class.cast(ld.getResult()[0]).getLiteral();
 				}
-			}
-			else if (String.class.isAssignableFrom(attribuetClazz)
+			} else if (String.class.isAssignableFrom(attribuetClazz)
 				|| Number.class.isAssignableFrom(attribuetClazz)
 				|| Boolean.class.isAssignableFrom(attribuetClazz)) {
 				try {
@@ -239,12 +246,23 @@ public abstract class ExpectedValueControlRenderer extends SimpleControlSWTContr
 					if (Window.OK == inputResult) {
 						object = constructor.newInstance(id.getValue());
 					}
+					if (Boolean.class.isAssignableFrom(attribuetClazz) && !Boolean.class.cast(object)
+						&& !"false".equalsIgnoreCase(id.getValue())) { //$NON-NLS-1$
+						MessageDialog.openError(text.getShell(), "Invalid boolean value", //$NON-NLS-1$
+							"You have entered an invalid value. False has been chosen instead."); //$NON-NLS-1$
+					}
 				} catch (final IllegalArgumentException ex) {
+					openInvalidValueMessage();
 				} catch (final SecurityException ex) {
+					openInvalidValueMessage();
 				} catch (final NoSuchMethodException ex) {
+					openInvalidValueMessage();
 				} catch (final InstantiationException ex) {
+					openInvalidValueMessage();
 				} catch (final IllegalAccessException ex) {
+					openInvalidValueMessage();
 				} catch (final InvocationTargetException ex) {
+					openInvalidValueMessage();
 				}
 			} else {
 				MessageDialog.openError(text.getShell(), "Not primitive Attribute selected", //$NON-NLS-1$
@@ -254,9 +272,15 @@ public abstract class ExpectedValueControlRenderer extends SimpleControlSWTContr
 		return object;
 	}
 
+	private void openInvalidValueMessage() {
+		MessageDialog.openError(text.getShell(), "Invalid value", //$NON-NLS-1$
+			"You have entered an invalid value. The previsous value will be kept."); //$NON-NLS-1$
+	}
+
 	/**
-	 * @param shell
+	 * Called when the select value button is pressed.
 	 *
+	 * @param text the label which should be used to set the value
 	 */
 	protected abstract void onSelectButton(Label text);
 
@@ -293,16 +317,13 @@ public abstract class ExpectedValueControlRenderer extends SimpleControlSWTContr
 	 */
 	protected class ModelToTargetUpdateStrategy extends EMFUpdateValueStrategy {
 
-		public ModelToTargetUpdateStrategy() {
-		}
-
 		@Override
 		public Object convert(Object value) {
 			final Object converted = value.toString();
 			if (String.class.isInstance(converted)) {
 				IObservableValue observableValue;
 				try {
-					observableValue = emfFormsDatabinding
+					observableValue = EMFFORMS_DATABINDING
 						.getObservableValue(getVElement().getDomainModelReference(),
 							getViewModelContext().getDomainModel());
 				} catch (final DatabindingFailedException ex) {

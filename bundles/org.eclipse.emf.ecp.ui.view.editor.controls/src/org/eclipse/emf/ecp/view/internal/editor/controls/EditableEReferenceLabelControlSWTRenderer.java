@@ -80,7 +80,7 @@ public abstract class EditableEReferenceLabelControlSWTRenderer extends EReferen
 
 				/**
 				 * {@inheritDoc}
-				 * 
+				 *
 				 * @see org.eclipse.core.databinding.UpdateValueStrategy#convert(java.lang.Object)
 				 */
 				@Override
@@ -95,7 +95,7 @@ public abstract class EditableEReferenceLabelControlSWTRenderer extends EReferen
 
 					/**
 					 * {@inheritDoc}
-					 * 
+					 *
 					 * @see org.eclipse.core.databinding.UpdateValueStrategy#convert(java.lang.Object)
 					 */
 					@Override
@@ -107,7 +107,7 @@ public abstract class EditableEReferenceLabelControlSWTRenderer extends EReferen
 				});
 		} catch (final NoLabelFoundException e) {
 			// FIXME Expectation?
-			getReportService().getReports().add(new RenderingFailedReport(e));
+			getReportService().report(new RenderingFailedReport(e));
 			selectClass.setText("Link "); //$NON-NLS-1$
 			selectClass.setToolTipText("Link "); //$NON-NLS-1$
 		}
@@ -172,7 +172,8 @@ public abstract class EditableEReferenceLabelControlSWTRenderer extends EReferen
 		final MessageDialog dialog = new MessageDialog(
 			shell, "Link Value Failed", null, //$NON-NLS-1$
 			"The value could not be linked due to an exception: " + ex.getMessage(), MessageDialog.ERROR, new String[] { //$NON-NLS-1$
-			JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
+				JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY) },
+			0);
 
 		new ECPDialogExecutor(dialog) {
 			@Override

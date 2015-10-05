@@ -23,14 +23,17 @@ import org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.group.model.VGroup;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
+import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emfforms.internal.group.swt.GroupTextProperty;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Layout;
 
 /**
  * Renders a SWT group.
@@ -99,6 +102,11 @@ public class GroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 		dbc.bindValue(targetValue, modelValue);
 
 		return group;
+	}
+
+	@Override
+	protected Layout getLayout(int numControls, boolean equalWidth) {
+		return LayoutProviderHelper.getColumnLayout(numControls, equalWidth, new Point(5, 5));
 	}
 
 	/**

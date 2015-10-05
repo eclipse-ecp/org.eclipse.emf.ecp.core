@@ -82,7 +82,8 @@ public final class ControlFactoryImpl implements ECPControlFactory {
 			try {
 				final String id = e.getAttribute(CONTROL_ID);
 				final String clazz = e.getAttribute(CLASS_ATTRIBUTE);
-				final Class<? extends ECPAbstractControl> resolvedClass = loadClass(e.getContributor().getName(), clazz);
+				final Class<? extends ECPAbstractControl> resolvedClass = loadClass(e.getContributor().getName(),
+					clazz);
 				final boolean showLabel = Boolean.parseBoolean(e.getAttribute(LABEL_ATTRIBUTE));
 
 				// ECPApplicableTester tester=null;
@@ -90,8 +91,7 @@ public final class ControlFactoryImpl implements ECPControlFactory {
 				for (final IConfigurationElement testerExtension : e.getChildren()) {
 					if (TEST_DYNAMIC.equals(testerExtension.getName())) {
 						tester.add((ECPApplicableTester) testerExtension.createExecutableExtension(CONTROL_TESTER));
-					}
-					else if (TEST_STATIC.equals(testerExtension.getName())) {
+					} else if (TEST_STATIC.equals(testerExtension.getName())) {
 						final boolean singleValue = Boolean.parseBoolean(testerExtension
 							.getAttribute(TESTER_SINGLEVALUE));
 						final int priority = Integer.parseInt(testerExtension.getAttribute(TESTER_PRIORITY));

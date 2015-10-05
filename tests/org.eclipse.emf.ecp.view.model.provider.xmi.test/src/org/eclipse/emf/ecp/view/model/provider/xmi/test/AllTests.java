@@ -12,13 +12,17 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.model.provider.xmi.test;
 
-import org.eclipse.emf.ecp.view.model.provider.xmi.ViewModelFileExtensionsManager_PTest;
+import org.eclipse.emf.ecp.view.model.provider.xmi.Migration_ITest;
+import org.eclipse.emf.ecp.view.model.provider.xmi.ViewModelFileExtensionsManager_ITest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ ViewModelFileExtensionsManager_PTest.class })
+@SuiteClasses({
+	ViewModelFileExtensionsManager_ITest.class,
+	Migration_ITest.class
+})
 public class AllTests {
 
 }

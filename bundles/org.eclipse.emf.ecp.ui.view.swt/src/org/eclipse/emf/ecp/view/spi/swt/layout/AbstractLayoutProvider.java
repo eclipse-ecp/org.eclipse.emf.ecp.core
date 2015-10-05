@@ -15,6 +15,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.internal.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emfforms.spi.swt.core.layout.LayoutProvider;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.widgets.Layout;
 
 /**
  * Abstract implementation of a {@link LayoutProvider} which contributes helper methods.
@@ -35,6 +37,20 @@ public abstract class AbstractLayoutProvider implements LayoutProvider {
 	 */
 	protected static boolean isMultiLine(VDomainModelReference domainModelReference, EObject domainModel) {
 		return Activator.getDefault().getEMFFormsEditSupport().isMultiLine(domainModelReference, domainModel);
+	}
+
+	/**
+	 * Delegates to {@link #getColumnLayout(int, boolean)}.
+	 *
+	 * @param numColumns the number of columns to create
+	 * @param equalWidth whether the columns should be equal width
+	 * @param margins the margins of the layout
+	 * @return the layout to use
+	 * @since 1.7
+	 */
+	@Override
+	public Layout getColumnLayout(int numColumns, boolean equalWidth, Point margins) {
+		return getColumnLayout(numColumns, equalWidth);
 	}
 
 }

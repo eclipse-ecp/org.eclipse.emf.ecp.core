@@ -19,7 +19,7 @@ import java.util.Set;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.changebroker.spi.EMFObserver;
+import org.eclipse.emf.ecp.changebroker.spi.ChangeObserver;
 
 /**
  * @author jfaltermeier
@@ -27,17 +27,17 @@ import org.eclipse.emf.ecp.changebroker.spi.EMFObserver;
  */
 public class EClassStrategy implements Strategy {
 
-	private final Map<EClass, Set<EMFObserver>> registry = new LinkedHashMap<EClass, Set<EMFObserver>>();
-	private final Map<EMFObserver, Set<EClass>> observerToKey = new LinkedHashMap<EMFObserver, Set<EClass>>();
+	private final Map<EClass, Set<ChangeObserver>> registry = new LinkedHashMap<EClass, Set<ChangeObserver>>();
+	private final Map<ChangeObserver, Set<EClass>> observerToKey = new LinkedHashMap<ChangeObserver, Set<EClass>>();
 
 	/**
 	 * Registers an observer.
 	 * @param observer the observer
 	 * @param eClass the eclass
 	 */
-	public void register(EMFObserver observer, EClass eClass) {
+	public void register(ChangeObserver observer, EClass eClass) {
 		if (!registry.containsKey(eClass)) {
-			registry.put(eClass, new LinkedHashSet<EMFObserver>());
+			registry.put(eClass, new LinkedHashSet<ChangeObserver>());
 		}
 		registry.get(eClass).add(observer);
 
@@ -53,8 +53,8 @@ public class EClassStrategy implements Strategy {
 	 * @see org.eclipse.emf.ecp.changebroker.internal.Strategy#getObservers(org.eclipse.emf.common.notify.Notification)
 	 */
 	@Override
-	public Set<EMFObserver> getObservers(Notification notification) {
-		final Set<EMFObserver> observers = new LinkedHashSet<EMFObserver>();
+	public Set<ChangeObserver> getObservers(Notification notification) {
+		final Set<ChangeObserver> observers = new LinkedHashSet<ChangeObserver>();
 		final EClass eClass = getEClassFromNotification(notification);
 		final Set<EClass> eClassesToCheck = new LinkedHashSet<EClass>(eClass.getESuperTypes());
 		eClassesToCheck.add(eClass);
@@ -76,16 +76,16 @@ public class EClassStrategy implements Strategy {
 	 *
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.changebroker.internal.Strategy#deregister(EMFObserver)
+	 * @see org.eclipse.emf.ecp.changebroker.internal.Strategy#deregister(ChangeObserver)
 	 */
 	@Override
-	public void deregister(EMFObserver observer) {
+	public void deregister(ChangeObserver observer) {
 		final Set<EClass> keys = observerToKey.remove(observer);
 		if (keys == null) {
 			return;
 		}
 		for (final EClass eClass : keys) {
-			final Set<EMFObserver> set = registry.get(eClass);
+			final Set<ChangeObserver> set = registry.get(eClass);
 			set.remove(observer);
 			if (set.isEmpty()) {
 				registry.remove(eClass);
@@ -99,8 +99,8 @@ public class EClassStrategy implements Strategy {
 	 * @see org.eclipse.emf.ecp.changebroker.internal.Strategy#getAllObservers()
 	 */
 	@Override
-	public Set<EMFObserver> getAllObservers() {
-		return new LinkedHashSet<EMFObserver>(observerToKey.keySet());
+	public Set<ChangeObserver> getAllObservers() {
+		return new LinkedHashSet<ChangeObserver>(observerToKey.keySet());
 	}
 
 }

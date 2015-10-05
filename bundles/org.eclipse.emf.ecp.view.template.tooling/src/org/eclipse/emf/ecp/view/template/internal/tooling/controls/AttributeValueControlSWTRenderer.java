@@ -134,7 +134,7 @@ public class AttributeValueControlSWTRenderer extends SimpleControlSWTControlSWT
 		button.addSelectionListener(new SelectionAdapter() {
 			/**
 			 * {@inheritDoc}
-			 *
+			 * 
 			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
 			 */
 			@Override
@@ -142,8 +142,7 @@ public class AttributeValueControlSWTRenderer extends SimpleControlSWTControlSWT
 				super.widgetSelected(e);
 				IObservableValue observableValue;
 				try {
-					observableValue = Activator
-						.getDefault()
+					observableValue = Activator.getDefault()
 						.getEMFFormsDatabinding()
 						.getObservableValue(getVElement().getDomainModelReference(),
 							getViewModelContext().getDomainModel());

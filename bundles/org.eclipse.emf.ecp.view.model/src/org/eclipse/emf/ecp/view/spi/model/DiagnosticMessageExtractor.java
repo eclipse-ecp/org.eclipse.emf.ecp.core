@@ -40,8 +40,7 @@ public final class DiagnosticMessageExtractor {
 	 */
 
 	public static String getMessage(Diagnostic diagnostic) {
-		if (diagnostic.getSeverity() == Diagnostic.OK)
-		{
+		if (diagnostic.getSeverity() == Diagnostic.OK) {
 			return ""; //$NON-NLS-1$
 		}
 		if (diagnostic.getChildren() != null && diagnostic.getChildren().size() == 0) {
@@ -49,8 +48,7 @@ public final class DiagnosticMessageExtractor {
 		}
 		final StringBuilder sb = new StringBuilder();
 		for (final Diagnostic childDiagnostic : diagnostic.getChildren()) {
-			if (sb.length() > 0)
-			{
+			if (sb.length() > 0) {
 				sb.append("\n"); //$NON-NLS-1$
 			}
 			sb.append(childDiagnostic.getMessage());
@@ -84,8 +82,7 @@ public final class DiagnosticMessageExtractor {
 			if (diagnostic.getSeverity() == Diagnostic.OK) {
 				continue;
 			}
-			if (sb.length() > 0)
-			{
+			if (sb.length() > 0) {
 				sb.append("\n"); //$NON-NLS-1$
 			}
 			sb.append(getMessage(diagnostic));

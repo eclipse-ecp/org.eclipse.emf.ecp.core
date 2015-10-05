@@ -19,23 +19,19 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Attachment</b></em>'.
+ * @since 1.2
  * <!-- end-user-doc -->
- * <p>
- * </p>
  *
  * @generated
- * @since 1.2
  */
-public abstract class VAttachmentImpl extends EObjectImpl implements VAttachment
-{
+public abstract class VAttachmentImpl extends EObjectImpl implements VAttachment {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
-	protected VAttachmentImpl()
-	{
+	protected VAttachmentImpl() {
 		super();
 	}
 
@@ -46,8 +42,7 @@ public abstract class VAttachmentImpl extends EObjectImpl implements VAttachment
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return VViewPackage.Literals.ATTACHMENT;
 	}
 

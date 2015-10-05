@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="error" nsURI="http://eclipse.org/emfforms/spreadsheet/core/error/model"
+    nsPrefix="org.eclipse.emfforms.spreadsheet.core.error.model">
+  <eClassifiers xsi:type="ecore:EClass" name="SpreadsheetImportResult">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="errorReports" upperBound="-1"
+        eType="#//ErrorReport" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="importedEObjects" upperBound="-1"
+        eType="ecore:EClass ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="settingToSheetMap" upperBound="-1"
+        eType="#//SettingToSheetMapping"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ErrorReport">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="severity" lowerBound="1"
+        eType="#//Severity"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="message" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="emfLocation" eType="#//EMFLocation"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sheetLocation" eType="#//SheetLocation"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Severity">
+    <eLiterals name="OK"/>
+    <eLiterals name="INFO" value="1"/>
+    <eLiterals name="WARNING" value="2"/>
+    <eLiterals name="ERROR" value="4"/>
+    <eLiterals name="CANCEL" value="8"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SheetLocation">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sheet" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="column" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="row" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="columnName" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="valid" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        defaultValueLiteral="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EMFLocation">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="root" lowerBound="1" eType="ecore:EClass ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="settingLocation" eType="#//SettingLocation"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="dmrLocation" eType="#//DMRLocation"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SettingLocation">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="eObject" lowerBound="1"
+        eType="ecore:EClass ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="feature" lowerBound="1"
+        eType="ecore:EClass ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EStructuralFeature"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DMRLocation">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="domainModelReference" lowerBound="1"
+        eType="ecore:EClass ../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SettingToSheetMapping">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sheetLocation" lowerBound="1"
+        eType="#//SheetLocation" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="settingLocation" lowerBound="1"
+        eType="#//SettingLocation" containment="true"/>
+  </eClassifiers>
+</ecore:EPackage>

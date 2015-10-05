@@ -73,7 +73,7 @@ public class EMFFormsLabelProviderImpl_Test {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testGetDisplayNameVDomainModelReferenceNull() throws NoLabelFoundException {
-		labelProvider.getDisplayName(null);
+		labelProvider.getDisplayName((VDomainModelReference) null);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -87,6 +87,28 @@ public class EMFFormsLabelProviderImpl_Test {
 		labelProvider.setReportService(reportService);
 		labelProvider.getDisplayName(domainModelReference);
 		verify(reportService).report(any(DatabindingFailedReport.class));
+	}
+
+	@Test
+	public void testGetDisplayNameVDomainModelReferenceFeature()
+		throws DatabindingFailedException, NoBundleFoundException {
+		final Bundle mockedBundle = mock(Bundle.class);
+		final BundleResolver bundleResolver = mock(BundleResolver.class);
+		when(bundleResolver.getEditBundle(any(EClass.class))).thenReturn(mockedBundle);
+		labelProvider.setBundleResolver(bundleResolver);
+		final EStructuralFeature eStructuralFeature = mock(EStructuralFeature.class);
+		when(eStructuralFeature.getEContainingClass()).thenReturn(EcorePackage.eINSTANCE.getEObject());
+
+		final EMFFormsLocalizationService localizationService = mock(EMFFormsLocalizationService.class);
+		labelProvider.setEMFFormsLocalizationService(localizationService);
+
+		final String key = String.format(
+			"_UI_%1$s_%2$s_feature", EcorePackage.eINSTANCE.getEObject().getName(), eStructuralFeature.getName()); //$NON-NLS-1$
+		final String value = "My Value"; //$NON-NLS-1$
+		when(localizationService.getString(mockedBundle, key)).thenReturn(value);
+
+		final String displayName = labelProvider.getDisplayName(eStructuralFeature);
+		assertEquals(value, displayName);
 	}
 
 	@Test

@@ -19,6 +19,12 @@
                 <message_argument value="1.5.0"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Changes for 1.7.0" id="923795461">
+            <message_arguments>
+                <message_argument value="1.7.0"/>
+                <message_argument value="1.6.0"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.context.ModelChangeNotification">
         <filter comment="SPI change" id="305422471">
@@ -52,11 +58,44 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/provider/ECPStringModifier.java" type="org.eclipse.emf.ecp.view.spi.provider.ECPStringModifier">
+        <filter comment="spi 170" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.provider.ECPStringModifier"/>
+                <message_argument value="getPriority()"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/ecp/view/spi/provider/IViewProvider.java" type="org.eclipse.emf.ecp.view.spi.provider.IViewProvider">
+        <filter comment="spi 170" id="388161617">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.provider.IViewProvider"/>
+                <message_argument value="NOT_APPLICABLE"/>
+            </message_arguments>
+        </filter>
+        <filter comment="spi 170" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.provider.IViewProvider"/>
+                <message_argument value="NOT_APPLICABLE"/>
+                <message_argument value="-1"/>
+            </message_arguments>
+        </filter>
+        <filter comment="spi 170" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.provider.IViewProvider"/>
+                <message_argument value="canProvideViewModel(EObject, VViewModelProperties)"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI Change (1.4)" id="403804204">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.provider.IViewProvider"/>
                 <message_argument value="canRender(EObject, Map&lt;String,Object&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.7.0" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.provider.IViewProvider"/>
+                <message_argument value="canRender(EObject, VViewModelProperties)"/>
             </message_arguments>
         </filter>
         <filter comment="SPI Change (1.4)" id="403804204">
@@ -65,16 +104,40 @@
                 <message_argument value="generate(EObject, Map&lt;String,Object&gt;)"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change 1.7.0" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.provider.IViewProvider"/>
+                <message_argument value="generate(EObject, VViewModelProperties)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="spi change" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.provider.IViewProvider"/>
+                <message_argument value="provideViewModel(EObject, VViewModelProperties)"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI Change (1.4)" id="405901410">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.provider.IViewProvider"/>
                 <message_argument value="canRender(EObject)"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change 1.7.0" id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.provider.IViewProvider"/>
+                <message_argument value="canRender(EObject, Map&lt;String,Object&gt;)"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI Change (1.4)" id="405901410">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.provider.IViewProvider"/>
                 <message_argument value="generate(EObject)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.7.0" id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.provider.IViewProvider"/>
+                <message_argument value="generate(EObject, Map&lt;String,Object&gt;)"/>
             </message_arguments>
         </filter>
         <filter comment="SPI Change (1.4)" id="1211105284">
@@ -93,6 +156,12 @@
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper"/>
                 <message_argument value="getView(EObject)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.7.0" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper"/>
+                <message_argument value="getView(EObject, Map&lt;String,Object&gt;)"/>
             </message_arguments>
         </filter>
         <filter comment="SPI Change (1.4)" id="1143996420">

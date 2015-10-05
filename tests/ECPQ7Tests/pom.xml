@@ -8,22 +8,26 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<ci4rcptt-runner-version>1.5.5</ci4rcptt-runner-version>
-		<ci4rcptt-maven-version>1.5.5</ci4rcptt-maven-version>
-		<currentBuild>https://hudson.eclipse.org/ecp/job/ecp-develop/lastSuccessfulBuild/artifact/releng/org.eclipse.emf.ecp.repository/target</currentBuild>
+		<rcptt-runner-version>2.0.1</rcptt-runner-version>
+		<rcptt-maven-version>2.0.1</rcptt-maven-version>
+		<build_job>ecp-relaeseBranch-signed</build_job>
+		<currentBuild>https://hudson.eclipse.org/ecp/job/${build_job}/lastSuccessfulBuild/artifact/releng/</currentBuild>
 	</properties> 
 	
 
 	<pluginRepositories>
 		<pluginRepository>
-		  <id>xored_releases</id>
-		  <name>Xored Maven repository</name>
-		  <url>http://maven.xored.com/nexus/content/repositories/ci4rcptt-releases/</url>
+		  <id>rcptt-releases</id>
+		  <name>RCPTT Maven repository</name>
+		  <url>https://repo.eclipse.org/content/repositories/rcptt-releases/</url>
 		</pluginRepository>
 		<pluginRepository>
-		  <id>xored_snapshot</id>
-		  <name>Xored Maven repository</name>
-		  <url>http://maven.xored.com/nexus/content/repositories/ci4rcptt-snapshots/</url>
+		  <snapshots>
+			<updatePolicy>always</updatePolicy>
+		  </snapshots>
+		  <id>rcptt-snapshots</id>
+		  <name>RCPTT Maven repository</name>
+		  <url>https://repo.eclipse.org/content/repositories/rcptt-snapshots/</url>
 		</pluginRepository>
 		
 	</pluginRepositories>

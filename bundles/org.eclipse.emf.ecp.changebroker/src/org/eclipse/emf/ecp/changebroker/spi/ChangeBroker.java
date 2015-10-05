@@ -17,17 +17,17 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
  * <p>
- * A Change Broker maintains sets of {@link EMFObserver observers}. Based on incoming notifications it forwards the
+ * A Change Broker maintains sets of {@link ChangeObserver observers}. Based on incoming notifications it forwards the
  * notification to the observers based on strategies.
  * </p>
  * <p>
- * There are two kinds of observers: regular {@link EMFObserver EMFObservers} and {@link ReadOnlyEMFObserver
+ * There are two kinds of observers: regular {@link ChangeObserver EMFObservers} and {@link ReadOnlyChangeObserver
  * ReadOnlyEMFObservers}.
  * </p>
  * <p>
  * EMFObservers may change the EMF model and therefore trigger further notifications. To prevent circular updates
  * between EMFObservers, notifications that arrive while the
- * {@link EMFObserver#handleNotification(org.eclipse.emf.common.notify.Notification) handleNotification} method is
+ * {@link ChangeObserver#handleNotification(org.eclipse.emf.common.notify.Notification) handleNotification} method is
  * called, will not be forwarded to non ReadOnlyEMFObservers.
  * </p>
  * <p>
@@ -41,63 +41,71 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 public interface ChangeBroker {
 
 	/**
-	 * Adds an {@link EMFObserver} that will receive all notifications. Does nothing if already registered.
+	 * Adds an {@link ChangeObserver} that will receive all notifications. Does nothing if already registered.
 	 *
 	 * @param observer the observer
+	 * @since 1.7
 	 */
 	void subscribe(EMFObserver observer);
 
 	/**
-	 * Adds an {@link EMFObserver} that will receive notifications of notifiers with the given EClass. Does nothing if
+	 * Adds an {@link ChangeObserver} that will receive notifications of notifiers with the given EClass. Does nothing
+	 * if
 	 * already registered.
 	 *
 	 * @param observer the observer
 	 * @param eClass the required EClass of the notifier
+	 * @since 1.7
 	 */
-	void subscribeToEClass(EMFObserver observer, EClass eClass);
+	void subscribeToEClass(ChangeObserver observer, EClass eClass);
 
 	/**
-	 * Adds an {@link EMFObserver} that will receive notifications of notifiers with the given EClass or which are
+	 * Adds an {@link ChangeObserver} that will receive notifications of notifiers with the given EClass or which are
 	 * contained (either direct or indirect) in an EObject of the given EClass. Does nothing if
 	 * already registered.
 	 *
 	 * @param observer the observer
 	 * @param eClass the required EClass of the notifier or of one of its parents
 	 */
-	void subscribeToTree(EMFObserver observer, EClass eClass);
+	void subscribeToTree(ChangeObserver observer, EClass eClass);
 
 	/**
-	 * Adds an {@link EMFObserver} that will receive notifications when the given EStructuralFeautre is effected. Does
+	 * Adds an {@link ChangeObserver} that will receive notifications when the given EStructuralFeautre is effected.
+	 * Does
 	 * nothing if
 	 * already registered.
 	 *
 	 * @param observer the observer
 	 * @param feature the feature to receive changes for
+	 * @since 1.7
 	 */
-	void subscribeToFeature(EMFObserver observer, EStructuralFeature feature);
+	void subscribeToFeature(ChangeObserver observer, EStructuralFeature feature);
 
 	/**
 	 * Removes an observer. Does nothing if receiver is not registered.
 	 *
 	 * @param observer the receiver
+	 * @since 1.7
 	 */
 	void unsubsribe(EMFObserver observer);
 
 	/**
-	 * Stops notifying all {@link EMFObserver EMFObservers}. {@link ReadOnlyEMFObserver ReadOnlyEMFObservers} will still
+	 * Stops notifying all {@link ChangeObserver ChangeObserver}. {@link ReadOnlyChangeObserver ReadOnlyEMFObservers} will
+	 * still
 	 * be notified.
 	 */
 	void stopNotification();
 
 	/**
-	 * Notifying the {@link EMFObserver EMFObservers} is started again if {@link #stopNotification()} was called
+	 * Notifying the {@link ChangeObserver ChangeObserver} is started again if {@link #stopNotification()} was called
 	 * beforehand. Has no effect if the notification process has been {@link #stopNotification(Object) blocked} or if
 	 * {@link #stopNotification()} wasn't called before.
 	 */
 	void continueNotification();
 
 	/**
-	 * Stops notifying all {@link EMFObserver EMFObservers}. {@link ReadOnlyEMFObserver ReadOnlyEMFObservers} will still
+	 * Stops notifying all {@link ChangeObserver ChangeObserver}. {@link ReadOnlyChangeObserver ReadOnlyEMFObservers} will
+	 * still
 	 * be notified. The notifications will we blocked until {@link #continueNotification(Object)} has been called with
 	 * <b>all</b> blocking elements. Using the same blocker multiple times has no effect.
 	 *

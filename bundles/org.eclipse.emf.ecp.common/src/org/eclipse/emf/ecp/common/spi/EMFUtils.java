@@ -11,11 +11,9 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.common.spi;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
@@ -36,7 +34,8 @@ public final class EMFUtils {
 	}
 
 	/**
-	 * This method looks through all known {@link EPackage}s to find all subclasses for the provided super class.
+	 * This method looks through all known {@link EPackage}s to find all concrete subclasses for the provided super
+	 * class (abstract classes and interfaces will be ignored).
 	 *
 	 * @param superClass
 	 *            - the class for which to get the subclasses
@@ -44,12 +43,7 @@ public final class EMFUtils {
 	 */
 	public static Collection<EClass> getSubClasses(EClass superClass) {
 		final Collection<EClass> classes = new HashSet<EClass>();
-
-		// avoid ConcurrentModificationException while iterating over the registry's key set
-		final List<String> keySet = new ArrayList<String>(Registry.INSTANCE.keySet());
-		for (final String nsURI : keySet)
-		{
-			final EPackage ePackage = Registry.INSTANCE.getEPackage(nsURI);
+		for (final EPackage ePackage : getAllRegisteredEPackages()) {
 			for (final EClassifier eClassifier : ePackage.getEClassifiers()) {
 				if (eClassifier instanceof EClass) {
 					final EClass eClass = (EClass) eClassifier;
@@ -72,6 +66,13 @@ public final class EMFUtils {
 		final Set<String> namespaceURIs = new LinkedHashSet<String>(Registry.INSTANCE.keySet());
 		for (final String nsURI : namespaceURIs) {
 			final EPackage ePackage = Registry.INSTANCE.getEPackage(nsURI);
+			if (ePackage == null) {
+				/*
+				 * this case is actually possible! we should only collect non null
+				 * epackages
+				 */
+				continue;
+			}
 			ePackages.add(ePackage);
 		}
 		return ePackages;

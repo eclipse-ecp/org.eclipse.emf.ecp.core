@@ -8,6 +8,10 @@ import java.util.Date;
 
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emfforms.spi.common.report.ReportService;
 
 /**
  * A JavaFX renderer for {@link java.util.Date}.
@@ -16,6 +20,17 @@ import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
  *
  */
 public class DateRendererFX extends AbstractDateRendererFX {
+
+	/**
+	 * Default constructor.
+	 *
+	 * @param vElement the {@link VElement} to be rendered
+	 * @param viewContext the {@link ViewModelContext} to use
+	 * @param reportService The {@link ReportService} to use
+	 */
+	public DateRendererFX(VControl vElement, ViewModelContext viewContext, ReportService reportService) {
+		super(vElement, viewContext, reportService);
+	}
 
 	/**
 	 * {@inheritDoc}

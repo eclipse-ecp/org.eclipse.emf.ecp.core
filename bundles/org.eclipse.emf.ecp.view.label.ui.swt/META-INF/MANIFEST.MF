@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: View Model Label UI SWT
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.label.ui.swt
-Bundle-Version: 1.6.1.qualifier
+Bundle-Version: 1.7.1.qualifier
 Bundle-Vendor: Eclipse Modeling Project
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.emf.ecp.view.label.model;bundle-version="[1.5.0,2.0.0)",
@@ -11,14 +11,14 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.emf.ecp.view.template.model;bundle-version="[1.5.0,2.0.0)",
  org.eclipse.emf.databinding;bundle-version="[1.3.0,2.0.0)",
  org.eclipse.emf.databinding.edit;bundle-version="[1.2.0,2.0.0)",
- org.eclipse.emfforms.swt.core;bundle-version="[1.6.1,2.0.0)",
- org.eclipse.emfforms.swt.core.di;bundle-version="[1.6.1,2.0.0)"
+ org.eclipse.emfforms.swt.core;bundle-version="[1.6.0,2.0.0)",
+ org.eclipse.emfforms.swt.core.di;bundle-version="[1.6.0,2.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
-Export-Package: org.eclipse.emf.ecp.view.internal.label.swt;version="1.6.1";x-internal:="true",
- org.eclipse.emf.ecp.view.spi.label.swt;version="1.6.1"
-Import-Package: org.eclipse.emfforms.spi.common.report;version="[1.6.1,2.0.0)",
- org.eclipse.emfforms.spi.core.services.databinding;version="[1.6.1,2.0.0)",
+Export-Package: org.eclipse.emf.ecp.view.internal.label.swt;version="1.7.1";x-internal:="true",
+ org.eclipse.emf.ecp.view.spi.label.swt;version="1.7.1"
+Import-Package: org.eclipse.emfforms.spi.common.report;version="1.6.0",
+ org.eclipse.emfforms.spi.core.services.databinding;version="1.6.0",
  org.eclipse.jface.databinding.swt;version="0.0.0",
  org.eclipse.jface.layout;version="0.0.0",
  org.eclipse.swt;version="0.0.0",

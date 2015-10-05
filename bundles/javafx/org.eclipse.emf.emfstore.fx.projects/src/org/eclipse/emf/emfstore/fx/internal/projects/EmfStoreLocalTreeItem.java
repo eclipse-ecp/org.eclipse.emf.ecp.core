@@ -3,13 +3,6 @@ package org.eclipse.emf.emfstore.fx.internal.projects;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.MultipleSelectionModel;
-import javafx.scene.control.SelectionModel;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.EObject;
@@ -23,6 +16,14 @@ import org.eclipse.emf.emfstore.internal.client.model.impl.api.ESLocalProjectImp
 import org.eclipse.emf.emfstore.internal.client.model.impl.api.ESWorkspaceImpl;
 import org.eclipse.emf.emfstore.internal.common.model.IdEObjectCollection;
 import org.eclipse.emf.emfstore.internal.common.model.util.IdEObjectCollectionChangeObserver;
+import org.eclipse.fx.emf.edit.ui.AdapterFactoryTreeItem;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.MultipleSelectionModel;
+import javafx.scene.control.SelectionModel;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
 
 class EmfStoreLocalTreeItem extends TreeItem<Object> {
 
@@ -225,7 +226,7 @@ class EmfStoreLocalTreeItem extends TreeItem<Object> {
 		childTreeItems.clear();
 		for (final Object child : selectedValue.getModelElements()) {
 			final AdapterFactoryTreeItem treeItem = new AdapterFactoryTreeItem(child,
-				view, projectsView.adapterFactory);
+				projectsView.adapterFactory);
 
 			childTreeItems.add(treeItem);
 			// updateTree(child, treeItem, expandedItems, selectedItems,

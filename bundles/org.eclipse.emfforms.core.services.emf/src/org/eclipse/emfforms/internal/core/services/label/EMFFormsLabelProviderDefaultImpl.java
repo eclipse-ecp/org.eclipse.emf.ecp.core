@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.common.spi.asserts.Assert;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
@@ -69,6 +70,28 @@ public class EMFFormsLabelProviderDefaultImpl implements EMFFormsLabelProvider {
 	}
 
 	/**
+	 * Returns the display name of the {@link EStructuralFeature}.
+	 *
+	 * @param structuralFeature The {@link EStructuralFeature}
+	 * @return The localized feature name
+	 */
+	public String getDisplayName(EStructuralFeature structuralFeature) {
+		final EClass eContainingClass = structuralFeature.getEContainingClass();
+		if (eContainingClass.isAbstract() || eContainingClass.isInterface()) {
+			return getFallbackLabel(structuralFeature);
+		}
+		final EObject tempInstance = EcoreUtil.create(eContainingClass);
+		final IItemPropertyDescriptor itemPropertyDescriptor = emfSpecificService.getIItemPropertyDescriptor(
+			tempInstance, structuralFeature);
+		if (itemPropertyDescriptor == null) {
+			reportMissingPropertyDescriptor(tempInstance, structuralFeature);
+			return getFallbackLabel(structuralFeature);
+		}
+
+		return itemPropertyDescriptor.getDisplayName(tempInstance);
+	}
+
+	/**
 	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider#getDisplayName(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)
@@ -85,15 +108,8 @@ public class EMFFormsLabelProviderDefaultImpl implements EMFFormsLabelProvider {
 			return getConstantObservableValue(ex.getMessage());
 		}
 		final EStructuralFeature structuralFeature = (EStructuralFeature) valueProperty.getValueType();
-		final EClass eContainingClass = structuralFeature.getEContainingClass();
-		if (eContainingClass.isAbstract() || eContainingClass.isInterface()) {
-			return getConstantObservableValue(getFallbackLabel(structuralFeature));
-		}
-		final EObject tempInstance = EcoreUtil.create(eContainingClass);
-		final IItemPropertyDescriptor itemPropertyDescriptor = emfSpecificService.getIItemPropertyDescriptor(
-			tempInstance, structuralFeature);
 
-		return getConstantObservableValue(itemPropertyDescriptor.getDisplayName(tempInstance));
+		return getConstantObservableValue(getDisplayName(structuralFeature));
 	}
 
 	/**
@@ -140,6 +156,10 @@ public class EMFFormsLabelProviderDefaultImpl implements EMFFormsLabelProvider {
 		observableValue.dispose();
 		final IItemPropertyDescriptor itemPropertyDescriptor = emfSpecificService.getIItemPropertyDescriptor(value,
 			structuralFeature);
+		if (itemPropertyDescriptor == null) {
+			reportMissingPropertyDescriptor(value, structuralFeature);
+			return getConstantObservableValue(getFallbackLabel(structuralFeature));
+		}
 
 		return getConstantObservableValue(itemPropertyDescriptor.getDisplayName(value));
 	}
@@ -168,6 +188,10 @@ public class EMFFormsLabelProviderDefaultImpl implements EMFFormsLabelProvider {
 		final EObject tempInstance = EcoreUtil.create(eContainingClass);
 		final IItemPropertyDescriptor itemPropertyDescriptor = emfSpecificService.getIItemPropertyDescriptor(
 			tempInstance, structuralFeature);
+		if (itemPropertyDescriptor == null) {
+			reportMissingPropertyDescriptor(tempInstance, structuralFeature);
+			return getConstantObservableValue(getFallbackLabel(structuralFeature));
+		}
 
 		return getConstantObservableValue(itemPropertyDescriptor.getDescription(tempInstance));
 	}
@@ -198,12 +222,22 @@ public class EMFFormsLabelProviderDefaultImpl implements EMFFormsLabelProvider {
 
 		final IItemPropertyDescriptor itemPropertyDescriptor = emfSpecificService.getIItemPropertyDescriptor(value,
 			structuralFeature);
+		if (itemPropertyDescriptor == null) {
+			reportMissingPropertyDescriptor(value, structuralFeature);
+			return getConstantObservableValue(getFallbackLabel(structuralFeature));
+		}
 
 		return getConstantObservableValue(itemPropertyDescriptor.getDescription(value));
 	}
 
 	private IObservableValue getConstantObservableValue(String value) {
 		return Observables.constantObservableValue(value, String.class);
+	}
+
+	private void reportMissingPropertyDescriptor(final EObject value, final EStructuralFeature structuralFeature) {
+		reportService.report(
+			new AbstractReport(String.format("No IItemPropertyDescriptor for feature %2$s in EClass %1$s found.", //$NON-NLS-1$
+				value.eClass().getName(), structuralFeature.getName())));
 	}
 
 }

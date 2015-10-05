@@ -21,23 +21,22 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>VDiagnostic</b></em>'.
+ * @since 1.2
+ * @noimplement This interface is not intended to be implemented by clients.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.spi.model.VDiagnostic#getDiagnostics <em>Diagnostics</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getDiagnostic()
  * @model
  * @generated
- * @since 1.2
- * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface VDiagnostic extends EObject
-{
+public interface VDiagnostic extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Diagnostics</b></em>' attribute list.
 	 * The list contents are of type {@link java.lang.Object}.

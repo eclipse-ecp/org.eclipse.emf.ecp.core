@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.emf.ecp.target.e4.fx.feature"
       label="EMF Forms FX Target Feature"
-      version="1.6.0.qualifier"
+      version="1.7.0.qualifier"
       provider-name="Eclipse Modeling Project">
 
    <description url="http://www.example.com/description">
@@ -103,13 +103,6 @@
 
    <plugin
          id="org.eclipse.fx.ui.workbench.renderers.base"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="javax.annotation"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -238,21 +231,6 @@
          download-size="0"
          install-size="0"
          version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="com.ibm.icu"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.fx.osgi"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"
          unpack="false"/>
 
    <plugin
@@ -444,13 +422,6 @@
 
    <plugin
          id="org.eclipse.emf.ecp.view.rule"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.fx.javafx"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -833,13 +804,6 @@
 
    <plugin
          id="org.eclipse.equinox.security"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="javax.xml"
          download-size="0"
          install-size="0"
          version="0.0.0"

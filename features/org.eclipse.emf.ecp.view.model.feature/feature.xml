@@ -2,12 +2,12 @@
 <feature
       id="org.eclipse.emf.ecp.viewmodel.feature"
       label="EMF Forms Core Model"
-      version="1.6.1.qualifier"
+      version="1.7.1.qualifier"
       provider-name="Eclipse Modeling Project"
       plugin="org.eclipse.emf.ecp.view.model"
       image="eclipse_update_120.jpg"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.6.1.qualifier">
+      license-feature-version="1.7.1.qualifier">
 
    <description>
       %description
@@ -222,6 +222,20 @@
 
    <plugin
          id="org.eclipse.emfforms.swt.core.di.extension"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.ecp.ui.view.linewrapper"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.ecp.view.migrator"
          download-size="0"
          install-size="0"
          version="0.0.0"

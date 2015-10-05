@@ -31,6 +31,7 @@ public class NavigatorRoot implements IAdaptable, IPersistableElement, IElementF
 	}
 
 	/** {@inheritDoc} */
+	@SuppressWarnings("unchecked")
 	@Override
 	public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter) {
 		if (adapter == IPersistableElement.class) {
