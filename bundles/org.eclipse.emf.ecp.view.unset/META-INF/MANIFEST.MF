@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: View Model Unset Service
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.unset;singleton:=true
-Bundle-Version: 1.7.1.qualifier
+Bundle-Version: 1.7.2.qualifier
 Bundle-Vendor: Eclipse Modeling Project
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: org.eclipse.emf.ecp.view.context;bundle-version="[1.5.0,2.0.0)",
@@ -11,7 +11,7 @@ Require-Bundle: org.eclipse.emf.ecp.view.context;bundle-version="[1.5.0,2.0.0)",
  org.eclipse.emf.ecp.view.model;bundle-version="[1.5.0,2.0.0)",
  org.eclipse.core.runtime;bundle-version="[3.8.0,4.0.0)",
  org.eclipse.emfforms.core.services;bundle-version="[1.6.0,2.0.0)"
-Export-Package: org.eclipse.emf.ecp.view.internal.unset;version="1.7.1";x-friends:="org.eclipse.emf.ecp.view.unset.test"
+Export-Package: org.eclipse.emf.ecp.view.internal.unset;version="1.7.2";x-friends:="org.eclipse.emf.ecp.view.unset.test"
 Bundle-Activator: org.eclipse.emf.ecp.view.internal.unset.Activator
 Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.emfforms.spi.common.report;version="[1.6.0,2.0.0)"

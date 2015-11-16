@@ -2,11 +2,11 @@
 <feature
       id="org.eclipse.emfforms.swt.control.multiattribute.feature"
       label="EMFForms SWT Control for Multi EAttribtues"
-      version="1.7.1.qualifier"
+      version="1.7.2.qualifier"
       provider-name="%providerName"
       plugin="org.eclipse.emfforms.swt.control.multiattribute"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.7.1.qualifier">
+      license-feature-version="1.7.2.qualifier">
 
    <description>
       %description

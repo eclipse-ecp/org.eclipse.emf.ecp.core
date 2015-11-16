@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.eclipse.emf.ecp</groupId>
 		<artifactId>ecp-tests-parent</artifactId>
-		<version>1.7.1-SNAPSHOT</version>
+		<version>1.7.2-SNAPSHOT</version>
 		<relativePath>../../releng/org.eclipse.emf.ecp.releng.tests/</relativePath>
 	</parent>
 	<artifactId>org.eclipse.emfforms.core.services.databinding.index.tests</artifactId>
@@ -27,5 +27,5 @@
 		</plugins>
 	</build>
 	<groupId>org.eclipse.emfforms</groupId>
-	<version>1.7.1-SNAPSHOT</version>
+	<version>1.7.2-SNAPSHOT</version>
 </project>

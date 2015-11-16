@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: EMFForms Core Service EMF Tests
 Bundle-SymbolicName: org.eclipse.emfforms.core.services.emf.tests
-Bundle-Version: 1.7.1.qualifier
+Bundle-Version: 1.7.2.qualifier
 Fragment-Host: org.eclipse.emfforms.core.services.emf;bundle-version="[1.6.0,2.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: Eclipse Modeling Project
@@ -11,6 +11,6 @@ Require-Bundle: org.junit;bundle-version="[4.11.0,5.0.0)",
  org.eclipse.emf.ecp.test.common;bundle-version="[1.6.0,2.0.0)",
  org.eclipse.emfforms.core.services.databinding.testmodel;bundle-version="[1.6.0,2.0.0)",
  org.eclipse.emf.databinding;bundle-version="[1.3.0,2.0.0)"
-Export-Package: org.eclipse.emfforms.core.services.emf.tests;version="1.7.1";x-internal:="true",
- org.eclipse.emfforms.internal.core.services.databinding;version="1.7.1";x-internal:="true",
- org.eclipse.emfforms.internal.core.services.label;version="1.7.1";x-internal:="true"
+Export-Package: org.eclipse.emfforms.core.services.emf.tests;version="1.7.2";x-internal:="true",
+ org.eclipse.emfforms.internal.core.services.databinding;version="1.7.2";x-internal:="true",
+ org.eclipse.emfforms.internal.core.services.label;version="1.7.2";x-internal:="true"

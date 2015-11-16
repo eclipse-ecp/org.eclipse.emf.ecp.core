@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Mapping DMR Expander
 Bundle-SymbolicName: org.eclipse.emfforms.core.services.domainexpander.mapping
-Bundle-Version: 1.7.1.qualifier
+Bundle-Version: 1.7.2.qualifier
 Bundle-Vendor: Eclipse Modeling Project
 Require-Bundle: org.eclipse.emfforms.core.services;bundle-version="[1.6.0,2.0.0)",
  org.eclipse.emf.ecp.view.mappingdmr.model;bundle-version="[1.6.0,2.0.0)",
@@ -11,4 +11,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Service-Component: OSGI-INF/EMFFormsMappingDMRExpander.xml
 Import-Package: org.osgi.service.component.annotations;version="0.0.0"
 Bundle-ActivationPolicy: lazy
-Export-Package: org.eclipse.emfforms.internal.core.services.domainexpander.mapping;version="1.7.1";x-internal:="true"
+Export-Package: org.eclipse.emfforms.internal.core.services.domainexpander.mapping;version="1.7.2";x-internal:="true"

@@ -2,15 +2,15 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: MPI UI View
 Bundle-SymbolicName: org.eclipse.emf.ecp.ui.view;singleton:=true
-Bundle-Version: 1.7.1.qualifier
+Bundle-Version: 1.7.2.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.view.internal.ui.Activator
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emf.ecp.ui.view;version="1.7.1",
- org.eclipse.emf.ecp.view.internal.provider;version="1.7.1";x-friends:="org.eclipse.emf.ecp.view.context.test",
- org.eclipse.emf.ecp.view.internal.ui;version="1.7.1";x-friends:="org.eclipse.emf.ecp.view.table.ui.swt",
- org.eclipse.emf.ecp.view.spi.provider;version="1.7.1",
- org.eclipse.emf.ecp.view.spi.provider.reporting;version="1.7.1",
- org.eclipse.emf.ecp.view.spi.renderer;version="1.7.1"
+Export-Package: org.eclipse.emf.ecp.ui.view;version="1.7.2",
+ org.eclipse.emf.ecp.view.internal.provider;version="1.7.2";x-friends:="org.eclipse.emf.ecp.view.context.test",
+ org.eclipse.emf.ecp.view.internal.ui;version="1.7.2";x-friends:="org.eclipse.emf.ecp.view.table.ui.swt",
+ org.eclipse.emf.ecp.view.spi.provider;version="1.7.2",
+ org.eclipse.emf.ecp.view.spi.provider.reporting;version="1.7.2",
+ org.eclipse.emf.ecp.view.spi.renderer;version="1.7.2"
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.emf.ecp.view.model;bundle-version="[1.5.0,2.0.0)";visibility:=reexport,
  org.eclipse.emf.ecp.view.context;bundle-version="[1.5.0,2.0.0)";visibility:=reexport,

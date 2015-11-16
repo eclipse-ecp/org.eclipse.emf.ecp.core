@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: View Model Group UI SWT
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.group.ui.swt;singleton:=true
-Bundle-Version: 1.7.1.qualifier
+Bundle-Version: 1.7.2.qualifier
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
  org.eclipse.emf.ecp.view.group.model;bundle-version="[1.5.0,2.0.0)",
  org.eclipse.emf.ecp.ui.view.swt;bundle-version="[1.5.0,2.0.0)",
@@ -19,11 +19,12 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.eclipse.emfforms.spi.common.report;version="1.6.0",
  org.eclipse.emfforms.spi.core.services.databinding;version="1.6.0",
  org.eclipse.jface.databinding.swt;version="0.0.0",
+ javax.inject;version="1.0.0",
  org.eclipse.jface.layout;version="0.0.0",
  org.eclipse.swt;version="0.0.0",
  org.eclipse.swt.graphics;version="0.0.0",
  org.eclipse.swt.widgets;version="0.0.0"
-Export-Package: org.eclipse.emf.ecp.view.spi.group.swt;version="1.7.1",
- org.eclipse.emfforms.internal.group.swt;version="1.7.1";x-internal:="true"
+Export-Package: org.eclipse.emf.ecp.view.spi.group.swt;version="1.7.2",
+ org.eclipse.emfforms.internal.group.swt;version="1.7.2";x-internal:="true"
 Bundle-Vendor: Eclipse Modeling Project
 Service-Component: OSGI-INF/groupRendererService.xml

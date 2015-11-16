@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: XMI View Model Provider
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.model.provider.xmi;singleton:=true
-Bundle-Version: 1.7.1.qualifier
+Bundle-Version: 1.7.2.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.internal.view.model.provider.xmi.Activator
 Bundle-Vendor: Eclipse Modeling Project
 Require-Bundle: org.eclipse.core.runtime;bundle-version="3.8.0",
@@ -13,6 +13,6 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="3.8.0",
  org.eclipse.emf.ecp.view.migrator;bundle-version="[1.7.0,2.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
-Export-Package: org.eclipse.emf.ecp.internal.view.model.provider.xmi;version="1.7.1";x-internal:="true",
- org.eclipse.emf.ecp.view.model.provider.xmi;version="1.7.1";x-friends:="org.eclipse.emf.ecp.ui.view.editor.controls"
+Export-Package: org.eclipse.emf.ecp.internal.view.model.provider.xmi;version="1.7.2";x-internal:="true",
+ org.eclipse.emf.ecp.view.model.provider.xmi;version="1.7.2";x-friends:="org.eclipse.emf.ecp.ui.view.editor.controls"
 Import-Package: org.eclipse.emfforms.spi.common.report;version="[1.6.0,2.0.0)"
