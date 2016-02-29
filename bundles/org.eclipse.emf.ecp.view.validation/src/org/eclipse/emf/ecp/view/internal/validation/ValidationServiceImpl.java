@@ -11,6 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.validation;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -27,6 +28,7 @@ import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
@@ -59,8 +61,13 @@ import org.eclipse.emf.ecp.view.spi.validation.ValidationService;
 import org.eclipse.emf.ecp.view.spi.validation.ViewValidationListener;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
+import org.eclipse.emfforms.spi.core.services.controlmapper.EMFFormsSettingToControlMapper;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
+import org.eclipse.emfforms.spi.core.services.mappingprovider.EMFFormsMappingProviderManager;
+import org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener;
+import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext;
 
 /**
  * Validation service that, once instantiated, synchronizes the validation result of a model element with its
@@ -69,7 +76,7 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedRepor
  * @author Eugen Neufeld
  *
  */
-public class ValidationServiceImpl implements ValidationService {
+public class ValidationServiceImpl implements ValidationService, EMFFormsContextListener {
 
 	/**
 	 * The {@link ValidationDomainModelChangeListener} for the view model.
@@ -103,7 +110,7 @@ public class ValidationServiceImpl implements ValidationService {
 						return;
 					}
 					final EObject observed = (EObject) ((IObserving) observableValue).getObserved();
-					validate(observed);
+					// validate(observed);
 					// TODO: add test case fo this
 					final Set<EObject> eObjectsToValidate = new LinkedHashSet<EObject>();
 					eObjectsToValidate.add(observed);
@@ -137,37 +144,35 @@ public class ValidationServiceImpl implements ValidationService {
 
 		@Override
 		public void notifyAdd(Notifier notifier) {
-			if (VControl.class.isInstance(notifier)) {
-				final VDomainModelReference domainModelReference = VControl.class.cast(notifier)
-					.getDomainModelReference();
+			if (VDomainModelReference.class.isInstance(notifier)
+				&& !VDomainModelReference.class.isInstance(EObject.class.cast(notifier).eContainer())) {
+				final VDomainModelReference domainModelReference = VDomainModelReference.class.cast(notifier);
 				if (domainModelReference == null) {
 					return;
 				}
 
-				IObservableValue observableValue;
-				try {
-					observableValue = Activator.getDefault().getEMFFormsDatabinding()
-						.getObservableValue(domainModelReference, context.getDomainModel());
-				} catch (final DatabindingFailedException ex) {
-					Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
-					return;
-				}
-				final EObject observed = (EObject) ((IObserving) observableValue).getObserved();
-				validate(observed);
 				final Set<EObject> eObjectsToValidate = new LinkedHashSet<EObject>();
-				eObjectsToValidate.add(observed);
-				final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
-				if (EReference.class.isInstance(structuralFeature)) {
-					if (structuralFeature.isMany()) {
-						@SuppressWarnings("unchecked")
-						final List<EObject> list = (List<EObject>) observableValue.getValue();
-						eObjectsToValidate.addAll(list);
-					} else {
-						eObjectsToValidate.add((EObject) observableValue.getValue());
+				if (VControl.class.isInstance(domainModelReference.eContainer())) {
+					final Set<UniqueSetting> settings = mappingProviderManager.getAllSettingsFor(domainModelReference,
+						context.getDomainModel());
+					for (final UniqueSetting setting : settings) {
+						eObjectsToValidate.add(setting.getEObject());
 					}
+				} else {
+					IObservableValue observableValue;
+					try {
+						observableValue = Activator.getDefault().getEMFFormsDatabinding()
+							.getObservableValue(domainModelReference, context.getDomainModel());
+					} catch (final DatabindingFailedException ex) {
+						Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+						return;
+					}
+					final EObject observed = (EObject) ((IObserving) observableValue).getObserved();
+					observableValue.dispose();
+					eObjectsToValidate.add(observed);
 				}
 				validate(eObjectsToValidate);
-				observableValue.dispose();
+
 			}
 		}
 
@@ -243,6 +248,9 @@ public class ValidationServiceImpl implements ValidationService {
 
 		@Override
 		public void notifyAdd(Notifier notifier) {
+			if (notifier == context.getDomainModel()) {
+				validate(getAllEObjects(context.getDomainModel()));
+			}
 		}
 
 		@Override
@@ -268,6 +276,8 @@ public class ValidationServiceImpl implements ValidationService {
 	@Override
 	public void instantiate(ViewModelContext context) {
 		this.context = context;
+		mappingProviderManager = context.getService(EMFFormsMappingProviderManager.class);
+		controlMapper = context.getService(EMFFormsSettingToControlMapper.class);
 		final VElement renderable = context.getViewModel();
 
 		if (renderable == null) {
@@ -284,15 +294,15 @@ public class ValidationServiceImpl implements ValidationService {
 
 		domainChangeListener = new ValidationDomainModelChangeListener();
 		viewChangeListener = new ViewModelChangeListener();
-
 		context.registerDomainChangeListener(domainChangeListener);
 		context.registerViewChangeListener(viewChangeListener);
-
-		validate(getAllEObjects(domainModel));
+		context.registerEMFFormsContextListener(this);
+		// validate(getAllEObjects(domainModel));
 	}
 
 	private void cleanControlDiagnostics(EObject parent, EReference parentReference, EObject removedEObject) {
-		final Set<VElement> controls = context.getControlsFor(UniqueSetting.createSetting(parent, parentReference));
+		final Set<VElement> controls = controlMapper
+			.getControlsFor(UniqueSetting.createSetting(parent, parentReference));
 		if (controls == null) {
 			return;
 		}
@@ -404,6 +414,9 @@ public class ValidationServiceImpl implements ValidationService {
 	}
 
 	private void processValidationQueue() {
+		if (!initialized) {
+			return;
+		}
 		// prohibit reentry in recursion
 		if (validationRunning) {
 			return;
@@ -435,7 +448,7 @@ public class ValidationServiceImpl implements ValidationService {
 	private void update() {
 		final Map<VElement, VDiagnostic> controlDiagnosticMap = new LinkedHashMap<VElement, VDiagnostic>();
 		for (final UniqueSetting uniqueSetting : currentUpdates.keySet()) {
-			final Set<VElement> controls = context.getControlsFor(uniqueSetting);
+			final Set<VElement> controls = controlMapper.getControlsFor(uniqueSetting);
 			if (controls == null) {
 				continue;
 			}
@@ -548,6 +561,15 @@ public class ValidationServiceImpl implements ValidationService {
 				&& EStructuralFeature.class.isInstance(diagnostic.getData().get(1))) {
 				final InternalEObject internalEObject = (InternalEObject) diagnostic.getData().get(0);
 				final EStructuralFeature eStructuralFeature = (EStructuralFeature) diagnostic.getData().get(1);
+				if (!internalEObject.eClass().getEAllStructuralFeatures().contains(eStructuralFeature)) {
+					Activator.getDefault().getReportService()
+						.report(new AbstractReport(
+							MessageFormat.format(
+								"No Setting can be created for Diagnostic {0} since the EObject's EClass does not contain the Feature.", //$NON-NLS-1$
+								diagnostic),
+							IStatus.INFO));
+					return;
+				}
 				final Setting setting = internalEObject.eSetting(eStructuralFeature);
 				final UniqueSetting uniqueSetting = UniqueSetting.createSetting(setting);
 				if (!currentUpdates.containsKey(uniqueSetting)) {
@@ -556,8 +578,7 @@ public class ValidationServiceImpl implements ValidationService {
 				currentUpdates.get(uniqueSetting).getDiagnostics().add(diagnostic);
 			}
 
-		}
-		else {
+		} else {
 			for (final Diagnostic childDiagnostic : diagnostic.getChildren()) {
 				analyzeDiagnostic(childDiagnostic);
 			}
@@ -674,6 +695,9 @@ public class ValidationServiceImpl implements ValidationService {
 	}
 
 	private final Set<ViewValidationListener> validationListeners = new LinkedHashSet<ViewValidationListener>();
+	private EMFFormsMappingProviderManager mappingProviderManager;
+	private EMFFormsSettingToControlMapper controlMapper;
+	private boolean initialized;
 
 	/**
 	 * {@inheritDoc}
@@ -715,6 +739,50 @@ public class ValidationServiceImpl implements ValidationService {
 	 */
 	@Override
 	public void childViewModelContextAdded(ViewModelContext childContext) {
+		// do nothing
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener#childContextAdded(org.eclipse.emf.ecp.view.spi.model.VElement,
+	 *      org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext)
+	 */
+	@Override
+	public void childContextAdded(VElement parentElement, EMFFormsViewContext childContext) {
+		// TODO Auto-generated method stub
+
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener#childContextDisposed(org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext)
+	 */
+	@Override
+	public void childContextDisposed(EMFFormsViewContext childContext) {
+		// TODO Auto-generated method stub
+
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener#contextInitialised()
+	 */
+	@Override
+	public void contextInitialised() {
+		initialized = true;
+		validate(getAllEObjects(context.getDomainModel()));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener#contextDispose()
+	 */
+	@Override
+	public void contextDispose() {
 		// do nothing
 	}
 

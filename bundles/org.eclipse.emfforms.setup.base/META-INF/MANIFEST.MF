@@ -1,0 +1,35 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: EMFForms Base Dependencies
+Bundle-SymbolicName: org.eclipse.emfforms.setup.base
+Bundle-Version: 1.8.0.qualifier
+Require-Bundle: org.eclipse.emfforms.common;bundle-version="[1.8.0,1.9.0)",
+ org.eclipse.emfforms.core.services;bundle-version="[1.8.0,1.9.0)",
+ org.eclipse.emfforms.core.services.databinding.featurepath;bundle-version="[1.8.0,1.9.0)",
+ org.eclipse.emfforms.core.services.databinding.index;bundle-version="[1.8.0,1.9.0)",
+ org.eclipse.emfforms.core.services.databinding.mapping;bundle-version="[1.8.0,1.9.0)",
+ org.eclipse.emfforms.core.services.domainexpander.default;bundle-version="[1.8.0,1.9.0)",
+ org.eclipse.emfforms.core.services.domainexpander.index;bundle-version="[1.8.0,1.9.0)",
+ org.eclipse.emfforms.core.services.domainexpander.mapping;bundle-version="[1.8.0,1.9.0)",
+ org.eclipse.emfforms.core.services.domainexpander.table;bundle-version="[1.8.0,1.9.0)",
+ org.eclipse.emfforms.core.services.editsupport;bundle-version="[1.8.0,1.9.0)",
+ org.eclipse.emfforms.core.services.emf;bundle-version="[1.8.0,1.9.0)",
+ org.eclipse.emfforms.core.services.emfspecificservice;bundle-version="[1.8.0,1.9.0)",
+ org.eclipse.emfforms.core.services.legacy;bundle-version="[1.8.0,1.9.0)",
+ org.eclipse.emfforms.core.services.locale.default;bundle-version="[1.8.0,1.9.0)",
+ org.eclipse.emfforms.core.services.mappingprovider.default;bundle-version="[1.8.0,1.9.0)",
+ org.eclipse.emfforms.core.services.mappingprovider.table;bundle-version="[1.8.0,1.9.0)",
+ org.eclipse.emfforms.core.services.structuralchange;bundle-version="[1.8.0,1.9.0)",
+ org.eclipse.emfforms.core.services.structuralchange.default;bundle-version="[1.8.0,1.9.0)",
+ org.eclipse.emfforms.core.services.structuralchange.table;bundle-version="[1.8.0,1.9.0)",
+ org.eclipse.emfforms.localization;bundle-version="[1.8.0,1.9.0)",
+ org.eclipse.emfforms.swt.core;bundle-version="[1.8.0,1.9.0)",
+ org.eclipse.emfforms.swt.core.di;bundle-version="[1.8.0,1.9.0)",
+ org.eclipse.emfforms.swt.core.di.extension;bundle-version="[1.8.0,1.9.0)",
+ org.eclipse.emfforms.swt.core.plugin;bundle-version="[1.8.0,1.9.0)",
+ org.eclipse.emfforms.swt.table;bundle-version="[1.8.0,1.9.0)",
+ org.eclipse.emfforms.swt.treemasterdetail;bundle-version="[1.8.0,1.9.0)",
+ org.eclipse.emfforms.view.model.localization;bundle-version="[1.8.0,1.9.0)",
+ org.eclipse.emfforms.core.services.structuralchange.index;bundle-version="[1.8.0,1.9.0)",
+ org.eclipse.emfforms.core.services.structuralchange.mapping;bundle-version="[1.8.0,1.9.0)"
+Bundle-Vendor: Eclipse Modeling Project

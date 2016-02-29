@@ -13,10 +13,15 @@ package org.eclipse.emf.ecp.view.spi.custom.model.impl;
 
 import java.util.Set;
 
+import org.eclipse.core.databinding.observable.IObserving;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.databinding.IEMFListProperty;
 import org.eclipse.emf.databinding.IEMFValueProperty;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecp.view.spi.custom.model.ECPHardcodedReferences;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
@@ -101,6 +106,10 @@ public class CustomDMRConverter implements DomainModelReferenceConverterEMF {
 
 		final VCustomDomainModelReference tableDomainModelReference = VCustomDomainModelReference.class
 			.cast(domainModelReference);
+		if (!tableDomainModelReference.getDomainModelReferences().isEmpty()) {
+			return emfFormsDatabinding
+				.getValueProperty(tableDomainModelReference.getDomainModelReferences().iterator().next(), object);
+		}
 		final ECPHardcodedReferences customControl = loadObject(tableDomainModelReference.getBundleName(),
 			tableDomainModelReference.getClassName());
 		if (customControl == null) {
@@ -182,6 +191,23 @@ public class CustomDMRConverter implements DomainModelReferenceConverterEMF {
 						tableDomainModelReference.getBundleName(), tableDomainModelReference.getClassName()));
 		}
 		return emfFormsDatabinding.getListProperty(neededDomainModelReferences.iterator().next(), object);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.core.services.databinding.emf.DomainModelReferenceConverterEMF#getSetting(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference,
+	 *      org.eclipse.emf.ecore.EObject)
+	 * @since 1.8
+	 */
+	@Override
+	public Setting getSetting(VDomainModelReference domainModelReference, EObject object)
+		throws DatabindingFailedException {
+		final IEMFValueProperty valueProperty = convertToValueProperty(domainModelReference, object);
+		final IObservableValue observableValue = valueProperty.observe(object);
+		final EObject eObject = (EObject) IObserving.class.cast(observableValue).getObserved();
+		final EStructuralFeature eStructuralFeature = valueProperty.getStructuralFeature();
+		return InternalEObject.class.cast(eObject).eSetting(eStructuralFeature);
 	}
 
 }

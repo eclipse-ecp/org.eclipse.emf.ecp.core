@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.emf.ecp.ui.view.tooltipModifier">
+      <modifier
+            class="org.eclipse.emf.ecp.internal.ui.view.linewrapper.ECPStringLineWrapper">
+      </modifier>
+   </extension>
+</plugin>

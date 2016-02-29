@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,6 +13,8 @@ package org.eclipse.emfforms.internal.core.services.databinding.mapping;
 
 import java.util.List;
 
+import org.eclipse.core.databinding.observable.IObserving;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.databinding.IEMFListProperty;
 import org.eclipse.emf.databinding.IEMFValueProperty;
 import org.eclipse.emf.databinding.edit.EMFEditProperties;
@@ -21,6 +23,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
@@ -236,5 +240,25 @@ public class MappingDomainModelReferenceConverter implements DomainModelReferenc
 
 	private EditingDomain getEditingDomain(EObject object) throws DatabindingFailedException {
 		return AdapterFactoryEditingDomain.getEditingDomainFor(object);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.core.services.databinding.emf.DomainModelReferenceConverterEMF#getSetting(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference,
+	 *      org.eclipse.emf.ecore.EObject)
+	 */
+	@Override
+	public Setting getSetting(VDomainModelReference domainModelReference, EObject object)
+		throws DatabindingFailedException {
+		final IEMFValueProperty valueProperty = convertToValueProperty(domainModelReference, object);
+		final IObservableValue observableValue = valueProperty.observe(object);
+		final EObject eObject = (EObject) IObserving.class.cast(observableValue).getObserved();
+		final EStructuralFeature eStructuralFeature = valueProperty.getStructuralFeature();
+		if (eStructuralFeature.getEType() == null) {
+			throw new DatabindingFailedException(
+				String.format("The eType of the feature %1$s is null.", eStructuralFeature.getName())); //$NON-NLS-1$
+		}
+		return InternalEObject.class.cast(eObject).eSetting(eStructuralFeature);
 	}
 }

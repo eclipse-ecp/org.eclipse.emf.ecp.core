@@ -33,6 +33,7 @@ import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalLayout;
 import org.eclipse.emf.ecp.view.spi.viewproxy.model.VViewProxy;
 import org.eclipse.emf.ecp.view.spi.viewproxy.model.VViewproxyFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
+import org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -179,7 +180,9 @@ public class ResolverViewService_PTest {
 		 * {@inheritDoc}
 		 *
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecore.EStructuralFeature.Setting)
+		 * @deprecated
 		 */
+		@Deprecated
 		@Override
 		public Set<VControl> getControlsFor(Setting setting) {
 			return null;
@@ -189,7 +192,9 @@ public class ResolverViewService_PTest {
 		 * {@inheritDoc}
 		 *
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecp.common.spi.UniqueSetting)
+		 * @deprecated
 		 */
+		@Deprecated
 		@Override
 		public Set<VElement> getControlsFor(org.eclipse.emf.ecp.common.spi.UniqueSetting setting) {
 			return null;
@@ -259,6 +264,28 @@ public class ResolverViewService_PTest {
 		 */
 		@Override
 		public void removeContextUser(Object user) {
+			// TODO Auto-generated method stub
+
+		}
+
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext#registerEMFFormsContextListener(org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener)
+		 */
+		@Override
+		public void registerEMFFormsContextListener(EMFFormsContextListener contextListener) {
+			// TODO Auto-generated method stub
+
+		}
+
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext#unregisterEMFFormsContextListener(org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener)
+		 */
+		@Override
+		public void unregisterEMFFormsContextListener(EMFFormsContextListener contextListener) {
 			// TODO Auto-generated method stub
 
 		}

@@ -23,7 +23,9 @@ import org.eclipse.emf.databinding.EMFProperties;
 import org.eclipse.emf.databinding.IEMFListProperty;
 import org.eclipse.emf.databinding.IEMFValueProperty;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -34,6 +36,11 @@ import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A;
+import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B;
+import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C;
+import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D;
+import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestFactory;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter;
@@ -354,5 +361,154 @@ public class IndexDomainModelReferenceConverter_Test {
 	public void testConvertToListPropertyNoFeature() throws DatabindingFailedException {
 		final VIndexDomainModelReference indexReference = VIndexdmrFactory.eINSTANCE.createIndexDomainModelReference();
 		converter.convertToListProperty(indexReference, validEObject);
+	}
+
+	@Test
+	public void testGetSetting() throws DatabindingFailedException {
+		final VIndexDomainModelReference indexDMR = VIndexdmrFactory.eINSTANCE.createIndexDomainModelReference();
+		indexDMR.getDomainModelEReferencePath().add(TestPackage.eINSTANCE.getA_B());
+		indexDMR.setDomainModelEFeature(TestPackage.eINSTANCE.getB_CList());
+		indexDMR.setIndex(0);
+
+		final VFeaturePathDomainModelReference targetDMR = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		targetDMR.setDomainModelEFeature(TestPackage.eINSTANCE.getD_X());
+		targetDMR.getDomainModelEReferencePath().add(TestPackage.eINSTANCE.getC_D());
+		indexDMR.setTargetDMR(targetDMR);
+
+		final A a = TestFactory.eINSTANCE.createA();
+		final B b = TestFactory.eINSTANCE.createB();
+		final C c = TestFactory.eINSTANCE.createC();
+		final D d = TestFactory.eINSTANCE.createD();
+
+		final String expected = "My Value"; //$NON-NLS-1$
+
+		a.setB(b);
+		b.getCList().add(c);
+		c.setD(d);
+		d.setX(expected);
+
+		final EMFFormsDatabindingEMF emfFormsDatabinding = mock(EMFFormsDatabindingEMF.class);
+		when(emfFormsDatabinding.getSetting(targetDMR, c))
+			.thenReturn(InternalEObject.class.cast(d).eSetting(TestPackage.eINSTANCE.getD_X()));
+		converter.setEMFFormsDatabinding(emfFormsDatabinding);
+
+		final Setting setting = converter.getSetting(indexDMR, a);
+
+		// Check value.
+		assertEquals(expected, setting.get(true));
+	}
+
+	@Test
+	public void testGetSettingPrefixDMR() throws DatabindingFailedException {
+		final VIndexDomainModelReference indexDMR = VIndexdmrFactory.eINSTANCE.createIndexDomainModelReference();
+		indexDMR.setIndex(0);
+
+		final VFeaturePathDomainModelReference prefixDMR = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		prefixDMR.getDomainModelEReferencePath().add(TestPackage.eINSTANCE.getA_B());
+		prefixDMR.setDomainModelEFeature(TestPackage.eINSTANCE.getB_CList());
+		indexDMR.setPrefixDMR(prefixDMR);
+
+		final VFeaturePathDomainModelReference targetDMR = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		targetDMR.setDomainModelEFeature(TestPackage.eINSTANCE.getD_X());
+		targetDMR.getDomainModelEReferencePath().add(TestPackage.eINSTANCE.getC_D());
+		indexDMR.setTargetDMR(targetDMR);
+
+		final A a = TestFactory.eINSTANCE.createA();
+		final B b = TestFactory.eINSTANCE.createB();
+		final C c = TestFactory.eINSTANCE.createC();
+		final D d = TestFactory.eINSTANCE.createD();
+
+		final String expected = "My Value"; //$NON-NLS-1$
+
+		a.setB(b);
+		b.getCList().add(c);
+		c.setD(d);
+		d.setX(expected);
+
+		final EMFFormsDatabindingEMF emfFormsDatabinding = mock(EMFFormsDatabindingEMF.class);
+		when(emfFormsDatabinding.getSetting(prefixDMR, a))
+			.thenReturn(InternalEObject.class.cast(b).eSetting(TestPackage.eINSTANCE.getB_CList()));
+		when(emfFormsDatabinding.getSetting(targetDMR, c))
+			.thenReturn(InternalEObject.class.cast(d).eSetting(TestPackage.eINSTANCE.getD_X()));
+		converter.setEMFFormsDatabinding(emfFormsDatabinding);
+
+		final Setting setting = converter.getSetting(indexDMR, a);
+
+		// Check value.
+		assertEquals(expected, setting.get(true));
+	}
+
+	@Test
+	public void testGetSettingNoReferencePath() throws DatabindingFailedException {
+		final VIndexDomainModelReference indexDMR = VIndexdmrFactory.eINSTANCE.createIndexDomainModelReference();
+		indexDMR.setDomainModelEFeature(TestPackage.eINSTANCE.getB_CList());
+		indexDMR.setIndex(0);
+
+		final VFeaturePathDomainModelReference targetDMR = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		targetDMR.setDomainModelEFeature(TestPackage.eINSTANCE.getD_X());
+		targetDMR.getDomainModelEReferencePath().add(TestPackage.eINSTANCE.getC_D());
+		indexDMR.setTargetDMR(targetDMR);
+
+		final B b = TestFactory.eINSTANCE.createB();
+		final C c = TestFactory.eINSTANCE.createC();
+		final D d = TestFactory.eINSTANCE.createD();
+
+		final String expected = "My Value"; //$NON-NLS-1$
+
+		b.getCList().add(c);
+		c.setD(d);
+		d.setX(expected);
+
+		final EMFFormsDatabindingEMF emfFormsDatabinding = mock(EMFFormsDatabindingEMF.class);
+		when(emfFormsDatabinding.getSetting(targetDMR, c))
+			.thenReturn(InternalEObject.class.cast(d).eSetting(TestPackage.eINSTANCE.getD_X()));
+		converter.setEMFFormsDatabinding(emfFormsDatabinding);
+
+		final Setting setting = converter.getSetting(indexDMR, b);
+
+		// Check value.
+		assertEquals(expected, setting.get(true));
+	}
+
+	@Test(expected = IllegalListTypeException.class)
+	public void testGetSettingWrongListType() throws DatabindingFailedException {
+		final VIndexDomainModelReference indexDMR = VIndexdmrFactory.eINSTANCE.createIndexDomainModelReference();
+		indexDMR.setDomainModelEFeature(TestPackage.eINSTANCE.getD_YList());
+		indexDMR.setIndex(0);
+
+		final VFeaturePathDomainModelReference targetDMR = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		targetDMR.setDomainModelEFeature(TestPackage.eINSTANCE.getD_X());
+		indexDMR.setTargetDMR(targetDMR);
+
+		final D d = TestFactory.eINSTANCE.createD();
+
+		final EMFFormsDatabindingEMF emfFormsDatabinding = mock(EMFFormsDatabindingEMF.class);
+		when(emfFormsDatabinding.getSetting(targetDMR, d))
+			.thenReturn(InternalEObject.class.cast(d).eSetting(TestPackage.eINSTANCE.getD_YList()));
+		converter.setEMFFormsDatabinding(emfFormsDatabinding);
+
+		converter.getSetting(indexDMR, d);
+
+	}
+
+	@Test(expected = DatabindingFailedException.class)
+	public void testGetSettingNoFeature() throws DatabindingFailedException {
+		final VIndexDomainModelReference indexDMR = VIndexdmrFactory.eINSTANCE.createIndexDomainModelReference();
+		converter.getSetting(indexDMR, validEObject);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testGetSettingNull() throws DatabindingFailedException {
+		converter.getSetting(null, validEObject);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testGetSettingWrongReferenceType() throws DatabindingFailedException {
+		converter.getSetting(mock(VDomainModelReference.class), validEObject);
 	}
 }

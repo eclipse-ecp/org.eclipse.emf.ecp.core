@@ -89,7 +89,7 @@ public final class Helper {
 		Map<EClass, EReference> childParentReferenceMap) {
 		for (final EReference eReference : parent.getEAllContainments()) {
 			if (eReference.getEReferenceType() != parent
-				&& childParentReferenceMap.get(eReference.getEReferenceType()) != eReference) {
+				&& childParentReferenceMap.get(eReference.getEReferenceType()) == null) {
 				childParentReferenceMap.put(eReference.getEReferenceType(), eReference);
 				getReferenceMap(eReference.getEReferenceType(), childParentReferenceMap);
 			}
@@ -162,9 +162,8 @@ public final class Helper {
 			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
 		final AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
 			composedAdapterFactory);
-		final IItemPropertyDescriptor propertyDescriptor =
-			adapterFactoryItemDelegator
-				.getPropertyDescriptor(EcoreUtil.create(featureToCheck.getEContainingClass()), featureToCheck);
+		final IItemPropertyDescriptor propertyDescriptor = adapterFactoryItemDelegator
+			.getPropertyDescriptor(EcoreUtil.create(featureToCheck.getEContainingClass()), featureToCheck);
 
 		composedAdapterFactory.dispose();
 		return propertyDescriptor != null;
@@ -195,9 +194,8 @@ public final class Helper {
 		final AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
 			composedAdapterFactory);
 
-		final IItemPropertyDescriptor propertyDescriptor =
-			adapterFactoryItemDelegator
-				.getPropertyDescriptor(EcoreUtil.create(eClassToCheck), featureToCheck);
+		final IItemPropertyDescriptor propertyDescriptor = adapterFactoryItemDelegator
+			.getPropertyDescriptor(EcoreUtil.create(eClassToCheck), featureToCheck);
 
 		composedAdapterFactory.dispose();
 		return propertyDescriptor != null;

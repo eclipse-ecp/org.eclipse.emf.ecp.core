@@ -33,6 +33,8 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -80,7 +82,7 @@ public class SingleReferenceRendererFX extends SimpleControlRendererFX {
 		final HBox hBox = new HBox();
 		final Hyperlink link = new Hyperlink();
 		final ImageView linkImage = new ImageView();
-		final IObservableValue modelValue = getModelObservable(control.getDomainModelReference().getIterator().next());
+		final IObservableValue modelValue = getModelObservable();
 
 		control.eAdapters().add(new AdapterImpl() {
 			@Override
@@ -170,7 +172,7 @@ public class SingleReferenceRendererFX extends SimpleControlRendererFX {
 			@Override
 			public void handle(ActionEvent event) {
 				removeAdapterFromReferencedEObject();
-				final Setting setting = getVElement().getDomainModelReference().getIterator().next();
+				final Setting setting = getSetting();
 				final EditingDomain ed = getEditingDomain(setting);
 				final EReference reference = (EReference) setting.getEStructuralFeature();
 				final Command removeCommand = SetCommand.create(ed, setting.getEObject(),
@@ -186,7 +188,7 @@ public class SingleReferenceRendererFX extends SimpleControlRendererFX {
 			@Override
 			public void handle(ActionEvent event) {
 				removeAdapterFromReferencedEObject();
-				final Setting setting = getVElement().getDomainModelReference().getIterator().next();
+				final Setting setting = getSetting();
 				final EReference reference = (EReference) setting.getEStructuralFeature();
 				referenceService.addExistingModelElements(setting.getEObject(), reference);
 				final EObject newElement = (EObject) setting.get(true);
@@ -202,7 +204,7 @@ public class SingleReferenceRendererFX extends SimpleControlRendererFX {
 			@Override
 			public void handle(ActionEvent event) {
 				removeAdapterFromReferencedEObject();
-				final Setting setting = getVElement().getDomainModelReference().getIterator().next();
+				final Setting setting = getSetting();
 				final EReference reference = (EReference) setting.getEStructuralFeature();
 				referenceService.addNewModelElements(setting.getEObject(), reference);
 				final EObject newElement = (EObject) setting.get(true);
@@ -241,7 +243,7 @@ public class SingleReferenceRendererFX extends SimpleControlRendererFX {
 	 * @return the currently referenced EObject.
 	 */
 	private EObject getReferencedEObject() {
-		return EObject.class.cast(getVElement().getDomainModelReference().getIterator().next().get(true));
+		return (EObject) getSetting().get(true);
 	}
 
 	/**
@@ -251,6 +253,15 @@ public class SingleReferenceRendererFX extends SimpleControlRendererFX {
 		final EObject currentReference = getReferencedEObject();
 		if (currentReference != null) {
 			currentReference.eAdapters().remove(adapter);
+		}
+	}
+
+	private Setting getSetting() {
+		try {
+			return getViewModelContext().getService(EMFFormsDatabindingEMF.class)
+				.getSetting(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
+		} catch (final DatabindingFailedException ex) {
+			throw new IllegalStateException(ex);
 		}
 	}
 }

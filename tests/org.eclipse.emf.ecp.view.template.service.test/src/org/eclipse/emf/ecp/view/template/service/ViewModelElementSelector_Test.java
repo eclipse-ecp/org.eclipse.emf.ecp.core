@@ -86,7 +86,7 @@ public class ViewModelElementSelector_Test {
 		when(label.eGet(VLabelPackage.Literals.LABEL__STYLE)).thenReturn(VLabelStyle.H0);
 		final double specificity = viewModelElementSelector.isApplicable(
 			label, mock(ViewModelContext.class));
-		assertEquals(5, specificity, 0d);
+		assertEquals(6, specificity, 0d);
 	}
 
 	@Test

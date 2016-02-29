@@ -28,8 +28,7 @@ public class BooleanRendererFX extends SimpleControlRendererFX {
 		final VControl control = getVElement();
 		final CheckBox checkBox = new CheckBox();
 		final IObservableValue targetValue = getTargetObservable(checkBox, "selected");
-		final IObservableValue modelValue = getModelObservable(control
-			.getDomainModelReference().getIterator().next());
+		final IObservableValue modelValue = getModelObservable();
 		bindModelToTarget(targetValue, modelValue, null,
 			null);
 		return checkBox;

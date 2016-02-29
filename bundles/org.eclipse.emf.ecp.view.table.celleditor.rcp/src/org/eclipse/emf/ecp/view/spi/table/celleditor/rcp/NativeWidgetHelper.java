@@ -197,7 +197,7 @@ public final class NativeWidgetHelper {
 	 * @author jfaltermeier
 	 *
 	 */
-	public static enum CheckBoxState {
+	public enum CheckBoxState {
 		/**
 		 * The enabled, visible, checked state.
 		 */

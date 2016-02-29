@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecp.test.common.DefaultRealm;
 import org.eclipse.emf.ecp.view.dynamictree.model.DomainIntermediate;
 import org.eclipse.emf.ecp.view.dynamictree.model.DomainRoot;
 import org.eclipse.emf.ecp.view.dynamictree.model.DynamicContainmentItem;
@@ -52,9 +53,11 @@ public class DynamicContainmentTree_PTest {
 	private static final String ELEMENT_CONTAINER_ID = "111";
 	private static final String ELEMENT_ID = "222";
 
+	private DefaultRealm realm;
+
 	@Before
 	public void setUp() throws Exception {
-
+		realm = new DefaultRealm();
 		root = ModelFactory.eINSTANCE.createDomainRoot();
 		final DomainIntermediate intermediate = ModelFactory.eINSTANCE.createDomainIntermediate();
 		root.setIntermediate(intermediate);
@@ -97,7 +100,7 @@ public class DynamicContainmentTree_PTest {
 
 	@After
 	public void tearDown() throws Exception {
-
+		realm.dispose();
 	}
 
 	private VFeaturePathDomainModelReference createFeaturePathDomainModelReference(
@@ -111,8 +114,8 @@ public class DynamicContainmentTree_PTest {
 
 	private DynamicContainmentTreeDomainModelReference createDynamicContainmentTreeDomainModelReferences(
 		EStructuralFeature base, EStructuralFeature rootFeature, EReference... toRoot) {
-		final DynamicContainmentTreeDomainModelReference reference =
-			ModelFactory.eINSTANCE.createDynamicContainmentTreeDomainModelReference();
+		final DynamicContainmentTreeDomainModelReference reference = ModelFactory.eINSTANCE
+			.createDynamicContainmentTreeDomainModelReference();
 		final VFeaturePathDomainModelReference rootRef = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
 		final VFeaturePathDomainModelReference baseRef = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
 		rootRef.getDomainModelEReferencePath().addAll(Arrays.asList(toRoot));

@@ -55,7 +55,7 @@ public final class ECPTooltipModifierHelper {
 			}
 		});
 
-	private static Set<ECPStringModifier> getStringModifiers() {
+	private static synchronized Set<ECPStringModifier> getStringModifiers() {
 		if (stringModifiers == null || stringModifiers.isEmpty()) {
 			readStringModifiers();
 		}

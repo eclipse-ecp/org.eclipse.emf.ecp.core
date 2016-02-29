@@ -94,12 +94,17 @@ public class ModelQuickFixRegistryImpl implements ModelQuickFixRegistry {
 		return registeredQuickFixes;
 	}
 
-	/** Util class for pairs of objects. */
-	private class Pair<X, Y> {
-		private final X x;
-		private final Y y;
+	/**
+	 * Util class for pairs of objects.
+	 *
+	 * @param <FIRSTTYPE> The type of the first object
+	 * @param <SECONDTYPE> The type of the second object
+	 */
+	private class Pair<FIRSTTYPE, SECONDTYPE> {
+		private final FIRSTTYPE x;
+		private final SECONDTYPE y;
 
-		Pair(X x, Y y) {
+		Pair(FIRSTTYPE x, SECONDTYPE y) {
 			this.x = x;
 			this.y = y;
 		}

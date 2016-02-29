@@ -11,12 +11,11 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
- * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.keyattribute.test.example.Child#getIntermediateTarget <em>Intermediate Target
- * </em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.keyattribute.test.example.Child#getKey <em>Key</em>}</li>
- * </ul>
  * </p>
+ * <ul>
+ *   <li>{@link org.eclipse.emf.ecp.view.keyattribute.test.example.Child#getIntermediateTarget <em>Intermediate Target</em>}</li>
+ *   <li>{@link org.eclipse.emf.ecp.view.keyattribute.test.example.Child#getKey <em>Key</em>}</li>
+ * </ul>
  *
  * @see org.eclipse.emf.ecp.view.keyattribute.test.example.ExamplePackage#getChild()
  * @model
@@ -31,7 +30,6 @@ public interface Child extends EObject {
 	 * more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
 	 * @return the value of the '<em>Intermediate Target</em>' containment reference.
 	 * @see #setIntermediateTarget(IntermediateTarget)
 	 * @see org.eclipse.emf.ecp.view.keyattribute.test.example.ExamplePackage#getChild_IntermediateTarget()
@@ -41,11 +39,9 @@ public interface Child extends EObject {
 	IntermediateTarget getIntermediateTarget();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.keyattribute.test.example.Child#getIntermediateTarget
-	 * <em>Intermediate Target</em>}' containment reference.
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.keyattribute.test.example.Child#getIntermediateTarget <em>Intermediate Target</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
 	 * @param value the new value of the '<em>Intermediate Target</em>' containment reference.
 	 * @see #getIntermediateTarget()
 	 * @generated
@@ -60,7 +56,6 @@ public interface Child extends EObject {
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
 	 * @return the value of the '<em>Key</em>' containment reference.
 	 * @see #setKey(KeyContainer)
 	 * @see org.eclipse.emf.ecp.view.keyattribute.test.example.ExamplePackage#getChild_Key()
@@ -70,11 +65,9 @@ public interface Child extends EObject {
 	KeyContainer getKey();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.keyattribute.test.example.Child#getKey <em>Key</em>}'
-	 * containment reference.
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.keyattribute.test.example.Child#getKey <em>Key</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
 	 * @param value the new value of the '<em>Key</em>' containment reference.
 	 * @see #getKey()
 	 * @generated

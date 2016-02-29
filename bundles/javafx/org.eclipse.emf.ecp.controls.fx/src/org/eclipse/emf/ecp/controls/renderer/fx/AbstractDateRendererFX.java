@@ -53,8 +53,7 @@ public abstract class AbstractDateRendererFX extends SimpleControlRendererFX {
 		final DatePicker picker = new DatePicker();
 		picker.setEditable(!control.isReadonly());
 		final IObservableValue targetValue = getTargetObservable(picker, "value"); //$NON-NLS-1$
-		final IObservableValue modelValue = getModelObservable(control
-			.getDomainModelReference().getIterator().next());
+		final IObservableValue modelValue = getModelObservable();
 		bindModelToTarget(targetValue, modelValue, getTargetToModelStrategy(),
 			getModelToTargetStrategy());
 

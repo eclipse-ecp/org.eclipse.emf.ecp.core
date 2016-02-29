@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.workspace.internal.ui;
 import java.io.IOException;
 import java.util.HashSet;
 
-import org.eclipse.core.internal.resources.File;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IStatus;
@@ -82,22 +82,23 @@ public class NewWorkspaceProjectComposite extends Composite {
 				@Override
 				public IStatus validate(Object[] selection) {
 					if (selection.length == 1) {
-						if (selection[0] instanceof File) {
-							final File file = (File) selection[0];
+						if (selection[0] instanceof IFile) {
+							final IFile file = (IFile) selection[0];
 							if (file.getType() == IResource.FILE) {
 								return new Status(IStatus.OK, Activator.PLUGIN_ID, IStatus.OK, null, null);
 							}
 						}
 					}
-					return new Status(IStatus.ERROR, Activator.PLUGIN_ID, IStatus.ERROR, Messages.NewWorkspaceProjectComposite_PLEASE_SELECT_FILE,
+					return new Status(IStatus.ERROR, Activator.PLUGIN_ID, IStatus.ERROR,
+						Messages.NewWorkspaceProjectComposite_PLEASE_SELECT_FILE,
 						null);
 				}
 			});
 			dialog.setTitle(Messages.NewWorkspaceProjectComposite_SELECT_XMI);
 
 			if (dialog.open() == Window.OK) {
-				if (dialog.getFirstResult() instanceof File) {
-					final File file = (File) dialog.getFirstResult();
+				if (dialog.getFirstResult() instanceof IFile) {
+					final IFile file = (IFile) dialog.getFirstResult();
 					final ResourceSet resourceSet = new ResourceSetImpl();
 					final Resource resource = resourceSet.createResource(URI.createPlatformResourceURI(file
 						.getFullPath()
@@ -107,7 +108,8 @@ public class NewWorkspaceProjectComposite extends Composite {
 						importFileText.setText(URI.createPlatformResourceURI(file.getFullPath().toString(), true)
 							.toString());
 					} catch (final IOException ex) {
-						MessageDialog.openError(getShell(), Messages.NewWorkspaceProjectComposite_ERROR, Messages.NewWorkspaceProjectComposite_ERROR_PARSINGXMIFILE);
+						MessageDialog.openError(getShell(), Messages.NewWorkspaceProjectComposite_ERROR,
+							Messages.NewWorkspaceProjectComposite_ERROR_PARSINGXMIFILE);
 					}
 				}
 			}
@@ -245,7 +247,8 @@ public class NewWorkspaceProjectComposite extends Composite {
 						resource.load(null);
 						importFileText.setText(URI.createFileURI(path).toString());
 					} catch (final IOException ex) {
-						MessageDialog.openError(getShell(), Messages.NewWorkspaceProjectComposite_ERROR, Messages.NewWorkspaceProjectComposite_ERROR_PARSINGXMIFILE);
+						MessageDialog.openError(getShell(), Messages.NewWorkspaceProjectComposite_ERROR,
+							Messages.NewWorkspaceProjectComposite_ERROR_PARSINGXMIFILE);
 					}
 
 				}
@@ -346,8 +349,11 @@ public class NewWorkspaceProjectComposite extends Composite {
 		final SelectionComposite helper = CompositeFactory.getSelectModelClassComposite(new HashSet<EPackage>(),
 			ECPUtil.getAllRegisteredEPackages(), new HashSet<EClass>());
 
-		final SelectModelElementWizard wizard = new SelectModelElementWizard(Messages.NewWorkspaceProjectComposite_CHOOSE_ROOT_CLASS, Messages.NewWorkspaceProjectComposite_CHOOSE_ROOT_CLASS,
-			Messages.NewWorkspaceProjectComposite_CHOOSE_ROOT_CLASS, Messages.NewWorkspaceProjectComposite_SELECT_ROOT_CLASS_DESCRIPTION);
+		final SelectModelElementWizard wizard = new SelectModelElementWizard(
+			Messages.NewWorkspaceProjectComposite_CHOOSE_ROOT_CLASS,
+			Messages.NewWorkspaceProjectComposite_CHOOSE_ROOT_CLASS,
+			Messages.NewWorkspaceProjectComposite_CHOOSE_ROOT_CLASS,
+			Messages.NewWorkspaceProjectComposite_SELECT_ROOT_CLASS_DESCRIPTION);
 		wizard.setCompositeProvider(helper);
 
 		final WizardDialog wd = new WizardDialog(composite.getShell(), wizard);

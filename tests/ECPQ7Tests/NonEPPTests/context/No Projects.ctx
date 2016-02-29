@@ -1,17 +1,18 @@
---- Q7 testcase ---
+--- RCPTT testcase ---
 Format-Version: 1.0
-Q7-vendor: www.xored.com/q7
-Context-Type: com.xored.q7.ecl.context
+Context-Type: org.eclipse.rcptt.ctx.ecl
 Element-Name: No Projects
 Element-Type: context
 Element-Version: 2.0
 Id: _f3qEUVpSEeKcnaHGSt8OwA
-Save-Time: 1/9/13 7:27 PM
+Runtime-Version: 1.5.4.201412181238
+Save-Time: 11/23/15 2:33 PM
 
 ------=_.ecl.context-718f04b4-ed39-33e3-af62-0995e4561998
 Content-Type: text/ecl
 Entry-Name: .ecl.context
 
+invoke-static -pluginId org.eclipse.emf.ecp.view.model.provider.xmi -className org.eclipse.emf.ecp.view.model.provider.xmi.ViewModelFileExtensionsManager -methodName dispose
 get-view "Model Repositories" | click
 with [get-view "Model Explorer"] {
 	click

@@ -229,7 +229,7 @@ public class BooleanCellEditor extends CellEditor implements ECPCellEditor {
 
 		private final ICellEditorListener listener;
 
-		public BooleanCellEditorObservableValue() {
+		BooleanCellEditorObservableValue() {
 			listener = new ICellEditorListener() {
 
 				@Override
@@ -296,7 +296,7 @@ public class BooleanCellEditor extends CellEditor implements ECPCellEditor {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getMinWidth()
 	 */
 	@Override

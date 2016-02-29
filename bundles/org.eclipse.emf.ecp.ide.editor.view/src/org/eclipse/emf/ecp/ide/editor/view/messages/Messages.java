@@ -35,6 +35,11 @@ public class Messages extends NLS {
 	public static String ViewEditorPart_ViewCannotBeDisplayed;
 	public static String ViewEditorPart_Warning;
 	public static String ViewEditorPart_Yes;
+	public static String MigrationDialog_Title;
+	public static String MigrationDialog_Description;
+	public static String WorkspaceMigrationDialog_Title;
+	public static String WorkspaceMigrationDialog_Description;
+
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);

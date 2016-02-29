@@ -20,6 +20,7 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.test.common.DefaultRealm;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VView;
@@ -30,6 +31,7 @@ import org.eclipse.emf.ecp.view.validation.test.model.Library;
 import org.eclipse.emf.ecp.view.validation.test.model.TestFactory;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
 import org.eclipse.emf.ecp.view.validation.test.model.Writer;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -46,9 +48,17 @@ public class DynamicDMR_PTest {
 	private VView view;
 	private EObject domain;
 
+	private DefaultRealm defaultRealm;
+
 	@Before
 	public void before() {
+		defaultRealm = new DefaultRealm();
 		view = VViewFactory.eINSTANCE.createView();
+	}
+
+	@After
+	public void tearDown() {
+		defaultRealm.dispose();
 	}
 
 	@Test
@@ -219,8 +229,7 @@ public class DynamicDMR_PTest {
 			assertNull(control.getDiagnostic());
 		} else if (control.getDiagnostic() != null) {
 			assertEquals(severity, control.getDiagnostic().getHighestSeverity());
-		}
-		else {
+		} else {
 			assertEquals(Diagnostic.OK, severity);
 		}
 		// assertEquals(enablement, control.isEnabled());

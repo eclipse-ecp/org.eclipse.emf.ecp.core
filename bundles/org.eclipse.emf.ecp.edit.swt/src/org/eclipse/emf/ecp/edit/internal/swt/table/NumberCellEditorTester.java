@@ -33,7 +33,7 @@ public class NumberCellEditorTester implements ECPCellEditorTester {
 	 */
 	@Override
 	public int isApplicable(EObject eObject, EStructuralFeature feature, ViewModelContext viewModelContext) {
-		if (EAttribute.class.isInstance(feature)) {
+		if (EAttribute.class.isInstance(feature) && !feature.isMany()) {
 			final Class<?> instanceClass = ((EAttribute) feature).getEAttributeType().getInstanceClass();
 			if (instanceClass == null) {
 				return NOT_APPLICABLE;
@@ -46,17 +46,13 @@ public class NumberCellEditorTester implements ECPCellEditorTester {
 			if (instanceClass.isPrimitive()) {
 				if (int.class.equals(instanceClass)) {
 					return 1;
-				}
-				else if (float.class.equals(instanceClass)) {
+				} else if (float.class.equals(instanceClass)) {
 					return 1;
-				}
-				else if (long.class.equals(instanceClass)) {
+				} else if (long.class.equals(instanceClass)) {
 					return 1;
-				}
-				else if (double.class.equals(instanceClass)) {
+				} else if (double.class.equals(instanceClass)) {
 					return 1;
-				}
-				else if (short.class.equals(instanceClass)) {
+				} else if (short.class.equals(instanceClass)) {
 					return 1;
 				}
 			}

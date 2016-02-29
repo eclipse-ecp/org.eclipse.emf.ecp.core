@@ -6,7 +6,7 @@
          id="application"
          point="org.eclipse.core.runtime.applications">
       <application
-            icon="icons/bricks.png">
+            icon="icons/logo_256.png">
          <run
                class="org.eclipse.emf.ecp.makeithappen.application.sample.e3.Application">
          </run>
@@ -17,7 +17,7 @@
       <perspective
             class="org.eclipse.emf.ecp.makeithappen.application.sample.e3.Perspective"
             fixed="true"
-            icon="icons/bricks.png"
+            icon="icons/logo_256.png"
             id="TestApp.perspective"
             name="Perspective">
       </perspective>
@@ -26,7 +26,7 @@
          point="org.eclipse.ui.views">
       <view
             class="org.eclipse.emf.ecp.makeithappen.application.sample.e3.View"
-            icon="icons/bricks.png"
+            icon="icons/logo_256.png"
             id="TestApp.view"
             name="View">
       </view>
@@ -43,7 +43,7 @@
          </property>
          <property
                name="windowImages"
-               value="icons/bricks.png">
+               value="icons/logo_256.png">
          </property>
       </product>
    </extension>

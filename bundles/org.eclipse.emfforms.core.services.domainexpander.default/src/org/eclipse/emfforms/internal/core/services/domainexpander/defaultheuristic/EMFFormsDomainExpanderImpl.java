@@ -11,8 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emfforms.internal.core.services.domainexpander.defaultheuristic;
 
-import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.common.spi.asserts.Assert;
@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
  */
 @Component(name = "EMFFormsDomainExpanderImpl")
 public class EMFFormsDomainExpanderImpl implements EMFFormsDomainExpander {
-	private final Set<EMFFormsDMRExpander> emfFormsDMRExpanders = new LinkedHashSet<EMFFormsDMRExpander>();
+	private final Set<EMFFormsDMRExpander> emfFormsDMRExpanders = new CopyOnWriteArraySet<EMFFormsDMRExpander>();
 
 	/**
 	 * Called by the framework to add an {@link EMFFormsDMRExpander} to the set of DMR expanders.

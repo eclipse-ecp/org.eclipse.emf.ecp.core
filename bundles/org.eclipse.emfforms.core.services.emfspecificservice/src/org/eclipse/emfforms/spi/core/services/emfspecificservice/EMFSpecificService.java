@@ -28,7 +28,6 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
  * @author Lucas Koehler
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
- * @noreference This method is not intended to be referenced by clients.
  */
 public interface EMFSpecificService {
 	// /**

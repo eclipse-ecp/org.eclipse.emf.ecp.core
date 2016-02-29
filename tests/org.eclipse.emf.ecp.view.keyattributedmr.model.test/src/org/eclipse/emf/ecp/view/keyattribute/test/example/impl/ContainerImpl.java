@@ -20,10 +20,10 @@ import org.eclipse.emf.ecp.view.keyattribute.test.example.ExamplePackage;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
- * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.keyattribute.test.example.impl.ContainerImpl#getChildren <em>Children</em>}</li>
- * </ul>
  * </p>
+ * <ul>
+ *   <li>{@link org.eclipse.emf.ecp.view.keyattribute.test.example.impl.ContainerImpl#getChildren <em>Children</em>}</li>
+ * </ul>
  *
  * @generated
  */
@@ -33,7 +33,6 @@ public class ContainerImpl extends MinimalEObjectImpl.Container implements
 	 * The cached value of the '{@link #getChildren() <em>Children</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
 	 * @see #getChildren()
 	 * @generated
 	 * @ordered
@@ -43,7 +42,6 @@ public class ContainerImpl extends MinimalEObjectImpl.Container implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	protected ContainerImpl() {
@@ -53,7 +51,6 @@ public class ContainerImpl extends MinimalEObjectImpl.Container implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
@@ -64,7 +61,6 @@ public class ContainerImpl extends MinimalEObjectImpl.Container implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
@@ -78,14 +74,13 @@ public class ContainerImpl extends MinimalEObjectImpl.Container implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-		case ExamplePackage.CONTAINER__CHILDREN:
-			return ((InternalEList<?>) getChildren()).basicRemove(otherEnd, msgs);
+			case ExamplePackage.CONTAINER__CHILDREN:
+				return ((InternalEList<?>)getChildren()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -93,14 +88,13 @@ public class ContainerImpl extends MinimalEObjectImpl.Container implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case ExamplePackage.CONTAINER__CHILDREN:
-			return getChildren();
+			case ExamplePackage.CONTAINER__CHILDREN:
+				return getChildren();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -108,17 +102,16 @@ public class ContainerImpl extends MinimalEObjectImpl.Container implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case ExamplePackage.CONTAINER__CHILDREN:
-			getChildren().clear();
-			getChildren().addAll((Collection<? extends Child>) newValue);
-			return;
+			case ExamplePackage.CONTAINER__CHILDREN:
+				getChildren().clear();
+				getChildren().addAll((Collection<? extends Child>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -126,15 +119,14 @@ public class ContainerImpl extends MinimalEObjectImpl.Container implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case ExamplePackage.CONTAINER__CHILDREN:
-			getChildren().clear();
-			return;
+			case ExamplePackage.CONTAINER__CHILDREN:
+				getChildren().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -142,14 +134,13 @@ public class ContainerImpl extends MinimalEObjectImpl.Container implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case ExamplePackage.CONTAINER__CHILDREN:
-			return children != null && !children.isEmpty();
+			case ExamplePackage.CONTAINER__CHILDREN:
+				return children != null && !children.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="ECP RCP" sequenceNumber="251">
+<?pde version="3.8"?><target name="ECP RCP" sequenceNumber="252">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.equinox.sdk.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.platform.ide" version="0.0.0"/>
-<repository location="http://download.eclipse.org/eclipse/updates/4.5milestones/S-4.5M6-201503200800/"/>
+<repository location="http://download.eclipse.org/eclipse/updates/4.5/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.emf.emfstore.client.transaction.feature.feature.group" version="0.0.0"/>
@@ -14,7 +14,7 @@
 <unit id="org.eclipse.emf.emfstore.example.feature.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.emf.emfstore.client.ui.feature.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.emf.emfstore.ecore.feature.feature.group" version="0.0.0"/>
-<repository location="http://download.eclipse.org/emfstore/releases_16"/>
+<repository location="http://download.eclipse.org/emfstore/releases_17"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.jdt.feature.group" version="0.0.0"/>
@@ -43,11 +43,11 @@
 <unit id="org.h2" version="0.0.0"/>
 <unit id="javax.validation" version="0.0.0"/>
 <unit id="javax.validation.source" version="0.0.0"/>
-<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/S20140917154621/repository/"/>
+<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20151221205849/repository/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.emf.edapt.runtime.feature.feature.group" version="0.0.0"/>
-<repository location="http://download.eclipse.org/edapt/releases/10x/100"/>
+<repository location="http://download.eclipse.org/edapt/releases/11x"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.hamcrest.core.source" version="0.0.0"/>

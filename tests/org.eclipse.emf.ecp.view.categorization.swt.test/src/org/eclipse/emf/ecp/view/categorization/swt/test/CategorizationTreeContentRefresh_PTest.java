@@ -30,6 +30,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.RuleFactory;
 import org.eclipse.emf.ecp.view.spi.rule.model.ShowRule;
+import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.emf.emfstore.bowling.Player;
@@ -44,11 +45,13 @@ import org.eclipse.swt.widgets.Tree;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Eugen Neufeld
  *
  */
+@RunWith(DatabindingClassRunner.class)
 public class CategorizationTreeContentRefresh_PTest {
 
 	private static final String EXPECTED_NAME = "test"; //$NON-NLS-1$

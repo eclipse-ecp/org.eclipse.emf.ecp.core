@@ -79,16 +79,12 @@ public class Roundtrip_ITest {
 		final VViewModelProperties properties = VViewFactory.eINSTANCE.createViewModelLoadingProperties();
 		properties.addNonInheritableProperty("root", true); //$NON-NLS-1$
 		properties.addNonInheritableProperty("detail", true); //$NON-NLS-1$
-		final Map<EObject, Map<String, String>> additionalInformation = new LinkedHashMap<EObject, Map<String, String>>();
 		final Map<String, String> keyValueMap = new LinkedHashMap<String, String>();
 		keyValueMap.put("MyColumn1", "MyValue1"); //$NON-NLS-1$ //$NON-NLS-2$
 		final Map<String, String> keyValueMap2 = new LinkedHashMap<String, String>();
 		keyValueMap2.put("MyColumn2", "MyValue2"); //$NON-NLS-1$ //$NON-NLS-2$
-		additionalInformation.put(user, keyValueMap);
-		additionalInformation.put(user2, keyValueMap2);
 
-		final Workbook wb = viewRenderer.render(Arrays.asList(user, user2),
-			user, properties, additionalInformation);
+		final Workbook wb = viewRenderer.render(Arrays.asList(user, user2), user, properties);
 
 		final File targetFile = new File("export.xls"); //$NON-NLS-1$
 		saveWorkbook(wb, targetFile.getAbsolutePath());
@@ -164,7 +160,7 @@ public class Roundtrip_ITest {
 				}
 			});
 
-		final Workbook wb = viewRenderer.render(Collections.singleton(domainModel), null, null, null);
+		final Workbook wb = viewRenderer.render(Collections.singleton(domainModel), null, null);
 
 		final File targetFile = new File("export.xls"); //$NON-NLS-1$
 		saveWorkbook(wb, targetFile.getAbsolutePath());
@@ -214,7 +210,7 @@ public class Roundtrip_ITest {
 				}
 			});
 
-		final Workbook wb = viewRenderer.render(Arrays.asList(domainModel1, domainModel2), null, null, null);
+		final Workbook wb = viewRenderer.render(Arrays.asList(domainModel1, domainModel2), null, null);
 
 		final File targetFile = new File("export.xls"); //$NON-NLS-1$
 		saveWorkbook(wb, targetFile.getAbsolutePath());

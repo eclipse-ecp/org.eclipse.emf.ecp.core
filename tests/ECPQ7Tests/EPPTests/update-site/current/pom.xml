@@ -13,6 +13,6 @@
 
 	<properties>
     <eclipse-name>mars</eclipse-name>
-	<eclipse-sr>R</eclipse-sr>
+	<eclipse-sr>1</eclipse-sr>
   </properties>
 </project>

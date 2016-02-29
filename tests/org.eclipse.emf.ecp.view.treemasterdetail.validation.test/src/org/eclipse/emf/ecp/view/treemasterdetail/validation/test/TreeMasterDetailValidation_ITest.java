@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.view.treemasterdetail.validation.test;
 import static org.junit.Assert.assertEquals;
 
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.ecp.test.common.DefaultRealm;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VView;
@@ -24,6 +25,8 @@ import org.eclipse.emf.ecp.view.treemasterdetail.validation.test.TestTMD.ChildLe
 import org.eclipse.emf.ecp.view.treemasterdetail.validation.test.TestTMD.ChildLevel2;
 import org.eclipse.emf.ecp.view.treemasterdetail.validation.test.TestTMD.Root;
 import org.eclipse.emf.ecp.view.treemasterdetail.validation.test.TestTMD.TestTMDFactory;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -35,6 +38,18 @@ import org.junit.Test;
 public class TreeMasterDetailValidation_ITest {
 
 	private static final String VALID_NAME = "test"; //$NON-NLS-1$
+
+	private DefaultRealm defaultRealm;
+
+	@Before
+	public void setup() {
+		defaultRealm = new DefaultRealm();
+	}
+
+	@After
+	public void tearDown() {
+		defaultRealm.dispose();
+	}
 
 	@Test
 	public void testInvalidRoot() {

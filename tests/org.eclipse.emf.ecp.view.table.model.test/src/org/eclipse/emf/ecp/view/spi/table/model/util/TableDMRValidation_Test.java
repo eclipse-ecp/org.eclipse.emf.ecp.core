@@ -152,7 +152,8 @@ public class TableDMRValidation_Test {
 	}
 
 	private DiagnosticInfo controlDMRWarning() {
-		return new DiagnosticInfo(Diagnostic.WARNING, control, VViewPackage.eINSTANCE.getControl_DomainModelReference());
+		return new DiagnosticInfo(Diagnostic.WARNING, control,
+			VViewPackage.eINSTANCE.getControl_DomainModelReference());
 	}
 
 	private DiagnosticInfo tableDMR() {
@@ -432,7 +433,7 @@ public class TableDMRValidation_Test {
 		private final EObject object;
 		private final EStructuralFeature feature;
 
-		public DiagnosticInfo(int severity, EObject object, EStructuralFeature feature) {
+		DiagnosticInfo(int severity, EObject object, EStructuralFeature feature) {
 			this.severity = severity;
 			this.object = object;
 			this.feature = feature;

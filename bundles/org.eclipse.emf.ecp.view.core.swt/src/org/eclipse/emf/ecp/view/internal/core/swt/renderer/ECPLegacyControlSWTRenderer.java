@@ -36,7 +36,6 @@ import org.osgi.framework.ServiceReference;
  * @author Eugen Neufeld
  *
  */
-@SuppressWarnings("restriction")
 @Deprecated
 public class ECPLegacyControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 

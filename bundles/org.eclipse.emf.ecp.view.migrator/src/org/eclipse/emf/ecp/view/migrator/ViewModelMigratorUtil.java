@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -16,7 +16,13 @@ import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.InvalidRegistryObjectException;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.ecp.spi.view.migrator.string.StringViewModelMigrator;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
+import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author Lucas Koehler
@@ -28,17 +34,13 @@ public final class ViewModelMigratorUtil {
 	private static final String MIGRATOR_CLASS = "class"; //$NON-NLS-1$
 	private static final String MIGRATOR_PRIORITY = "priority"; //$NON-NLS-1$
 
+	private static ViewModelMigrator migrator;
+
 	private ViewModelMigratorUtil() {
 
 	}
 
-	/**
-	 *
-	 * @return the view model migrator with the highest priority, <code>null</code> if no migrator was registered to the
-	 *         extension point.
-	 */
-	public static ViewModelMigrator getViewModelMigrator() {
-
+	private static void readExtensionPoint() {
 		final IExtensionPoint extensionPoint = Platform.getExtensionRegistry()
 			.getExtensionPoint(MIGRATOR_EXTENSION);
 		int topPriority = 0;
@@ -52,27 +54,58 @@ public final class ViewModelMigratorUtil {
 					if (priority > topPriority) {
 						final Class<ViewModelMigrator> migratorClass = loadClass(configurationElement
 							.getContributor().getName(), configurationElement
-							.getAttribute(MIGRATOR_CLASS));
+								.getAttribute(MIGRATOR_CLASS));
 						topClass = migratorClass;
 						topPriority = priority;
 					}
 				} catch (final ClassNotFoundException ex) {
-					ex.printStackTrace();
+					log(ex);
 				} catch (final InvalidRegistryObjectException ex) {
-					ex.printStackTrace();
+					log(ex);
 				}
 			}
 		}
 		if (topClass != null) {
 			try {
-				return topClass.newInstance();
+				migrator = topClass.newInstance();
 			} catch (final InstantiationException ex) {
-				ex.printStackTrace();
+				log(ex);
 			} catch (final IllegalAccessException ex) {
-				ex.printStackTrace();
+				log(ex);
 			}
 		}
-		return null;
+	}
+
+	/**
+	 * @return the view model migrator with the highest priority, <code>null</code> if no migrator was registered to the
+	 *         extension point.
+	 * @since 1.8.0
+	 */
+	public static ViewModelMigrator getViewModelMigrator() {
+		if (migrator == null) {
+			readExtensionPoint();
+		}
+		return migrator;
+	}
+
+	/**
+	 *
+	 * @return the view model migrator with the highest priority if it also supports migrating string based view models.
+	 * @since 1.8
+	 */
+	public static StringViewModelMigrator getStringViewModelMigrator() {
+		if (!StringViewModelMigrator.class.isInstance(getViewModelMigrator())) {
+			return null;
+		}
+		return StringViewModelMigrator.class.cast(getViewModelMigrator());
+	}
+
+	/**
+	 * @return the view model workspace migrator
+	 * @since 1.8
+	 */
+	public static ViewModelWorkspaceMigrator getViewModelWorkspaceMigrator() {
+		return getService(ViewModelWorkspaceMigrator.class);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -83,6 +116,25 @@ public final class ViewModelMigratorUtil {
 			throw new ClassNotFoundException(clazz + bundleName);
 		}
 		return (Class<T>) bundle.loadClass(clazz);
+	}
 
+	private static void log(Throwable throwable) {
+		final ReportService reportService = getService(ReportService.class);
+		if (reportService == null) {
+			return;
+		}
+		reportService.report(new AbstractReport(throwable));
+	}
+
+	private static <T> T getService(Class<T> serviceClass) {
+		final Bundle bundle = FrameworkUtil.getBundle(ViewModelMigratorUtil.class);
+		final BundleContext bundleContext = bundle.getBundleContext();
+		final ServiceReference<T> serviceReference = bundleContext.getServiceReference(serviceClass);
+		if (serviceReference == null) {
+			return null;
+		}
+		final T service = bundleContext.getService(serviceReference);
+		bundleContext.ungetService(serviceReference);
+		return service;
 	}
 }

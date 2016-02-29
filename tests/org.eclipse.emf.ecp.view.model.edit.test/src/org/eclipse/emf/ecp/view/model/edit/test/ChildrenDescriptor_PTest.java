@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -29,7 +29,8 @@ public class ChildrenDescriptor_PTest {
 	 * These are the counts for the core model only
 	 * If a model elements is moved out, the respective test can be removed here
 	 */
-	private static final int RENDERABLE_CHILD_COUNT = 0;
+	private static final int DEAFULT_ATTACHMENTS = 1;
+	private static final int RENDERABLE_CHILD_COUNT = 0 + DEAFULT_ATTACHMENTS;
 	// control
 	private static final int NUMBER_OF_COMPOSITES = 1;
 

@@ -11,6 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.section.swt;
 
+import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -24,6 +25,7 @@ import org.eclipse.emf.ecp.view.spi.section.model.VSection;
 import org.eclipse.emf.ecp.view.spi.section.model.VSectionedArea;
 import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.swt.core.AbstractAdditionalSWTRenderer;
 import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
@@ -79,9 +81,12 @@ public class SectionedAreaSWTRenderer extends
 	@Override
 	protected Control renderControl(SWTGridCell gridCell, Composite parent)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		if (gridCell.getColumn() != 0) {
+		final VSection child = getVElement().getRoot();
+
+		if (!checkPreconditions(gridCell, parent, child)) {
 			return null;
 		}
+
 		final Composite columnComposite = new Composite(parent, SWT.NONE);
 		columnComposite.setData(CUSTOM_VARIANT, CUSTOM_VARIANT_VALUE);
 		columnComposite.setBackground(parent.getBackground());
@@ -89,7 +94,7 @@ public class SectionedAreaSWTRenderer extends
 		SWTGridDescription maximalGridDescription = null;
 		SWTGridDescription rowGridDescription = null;
 		SWTGridDescription controlGridDescription = null;
-		final VSection child = getVElement().getRoot();
+
 		try {
 			rootRenderer = AbstractSectionSWTRenderer.class.cast(getEMFFormsRendererFactory()
 				.getRendererInstance(child, getViewModelContext()));
@@ -150,6 +155,19 @@ public class SectionedAreaSWTRenderer extends
 		}
 
 		return columnComposite;
+	}
+
+	private boolean checkPreconditions(SWTGridCell gridCell, Composite parent, final VSection root) {
+		if (gridCell.getColumn() != 0) {
+			getReportService().report(new AbstractReport(
+				MessageFormat.format("Unexpected column in SectionedAreaSWTRenderer: {0}", gridCell.getColumn()))); //$NON-NLS-1$
+			return false;
+		}
+		if (root == null) {
+			getReportService().report(new AbstractReport("A SectionedArea requires a root section")); //$NON-NLS-1$
+			return false;
+		}
+		return true;
 	}
 
 	private void setLayoutDataForControl(SWTGridCell gridCell,

@@ -328,4 +328,66 @@ public class ViewModelFileExtensionsManager_ITest {
 		assertEquals("value", foundView.getLoadingProperties().get("b"));
 		assertEquals(VIEWNAME + "2", foundView.getName());
 	}
+
+	@Test
+	public void testCreateViewModelHigherPrioFittingProperties2() {
+		final VView view = VViewFactory.eINSTANCE.createView();
+		view.setRootEClass(eClass1);
+		view.setName(VIEWNAME);
+		final Map<String, String> filter1 = new LinkedHashMap<String, String>();
+		filter1.put("a", "value");
+		filter1.put("b", "value");
+
+		final ExtensionDescription extensionDescription1 = new ExtensionDescription(filter1, "");
+		manager.registerView(view, extensionDescription1);
+
+		final Map<String, String> filter2 = new LinkedHashMap<String, String>();
+		filter2.put("z", "value");
+
+		final ExtensionDescription extensionDescription2 = new ExtensionDescription(filter2, "");
+		manager.registerView(view, extensionDescription2);
+
+		final EObject eObject = EcoreUtil.create(eClass1);
+
+		final VViewModelLoadingProperties properties = VViewFactory.eINSTANCE.createViewModelLoadingProperties();
+		properties.addInheritableProperty("a", "value");
+		properties.addInheritableProperty("b", "value");
+
+		final VView foundView = manager.createView(eObject, properties);
+		assertNotNull(foundView);
+		assertNotNull(foundView.getLoadingProperties());
+		assertEquals("value", foundView.getLoadingProperties().get("a"));
+		assertEquals("value", foundView.getLoadingProperties().get("b"));
+	}
+
+	@Test
+	public void testCreateViewModelHigherPrioFittingProperties3() {
+		final VView view = VViewFactory.eINSTANCE.createView();
+		view.setRootEClass(eClass1);
+		view.setName(VIEWNAME);
+		final Map<String, String> filter1 = new LinkedHashMap<String, String>();
+		filter1.put("z", "value");
+
+		final ExtensionDescription extensionDescription1 = new ExtensionDescription(filter1, "");
+		manager.registerView(view, extensionDescription1);
+
+		final Map<String, String> filter2 = new LinkedHashMap<String, String>();
+		filter2.put("a", "value");
+		filter2.put("b", "value");
+
+		final ExtensionDescription extensionDescription2 = new ExtensionDescription(filter2, "");
+		manager.registerView(view, extensionDescription2);
+
+		final EObject eObject = EcoreUtil.create(eClass1);
+
+		final VViewModelLoadingProperties properties = VViewFactory.eINSTANCE.createViewModelLoadingProperties();
+		properties.addInheritableProperty("a", "value");
+		properties.addInheritableProperty("b", "value");
+
+		final VView foundView = manager.createView(eObject, properties);
+		assertNotNull(foundView);
+		assertNotNull(foundView.getLoadingProperties());
+		assertEquals("value", foundView.getLoadingProperties().get("a"));
+		assertEquals("value", foundView.getLoadingProperties().get("b"));
+	}
 }

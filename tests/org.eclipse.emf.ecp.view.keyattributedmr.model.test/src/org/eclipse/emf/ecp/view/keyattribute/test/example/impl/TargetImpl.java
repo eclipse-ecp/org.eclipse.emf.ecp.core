@@ -15,10 +15,10 @@ import org.eclipse.emf.ecp.view.keyattribute.test.example.Target;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
- * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.keyattribute.test.example.impl.TargetImpl#getName <em>Name</em>}</li>
- * </ul>
  * </p>
+ * <ul>
+ *   <li>{@link org.eclipse.emf.ecp.view.keyattribute.test.example.impl.TargetImpl#getName <em>Name</em>}</li>
+ * </ul>
  *
  * @generated
  */
@@ -27,7 +27,6 @@ public class TargetImpl extends MinimalEObjectImpl.Container implements Target {
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
 	 * @see #getName()
 	 * @generated
 	 * @ordered
@@ -38,7 +37,6 @@ public class TargetImpl extends MinimalEObjectImpl.Container implements Target {
 	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
 	 * @see #getName()
 	 * @generated
 	 * @ordered
@@ -48,7 +46,6 @@ public class TargetImpl extends MinimalEObjectImpl.Container implements Target {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	protected TargetImpl() {
@@ -58,7 +55,6 @@ public class TargetImpl extends MinimalEObjectImpl.Container implements Target {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
@@ -69,7 +65,6 @@ public class TargetImpl extends MinimalEObjectImpl.Container implements Target {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
@@ -80,29 +75,26 @@ public class TargetImpl extends MinimalEObjectImpl.Container implements Target {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
 	public void setName(String newName) {
-		final String oldName = name;
+		String oldName = name;
 		name = newName;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ExamplePackage.TARGET__NAME, oldName, name));
-		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case ExamplePackage.TARGET__NAME:
-			return getName();
+			case ExamplePackage.TARGET__NAME:
+				return getName();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -110,15 +102,14 @@ public class TargetImpl extends MinimalEObjectImpl.Container implements Target {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case ExamplePackage.TARGET__NAME:
-			setName((String) newValue);
-			return;
+			case ExamplePackage.TARGET__NAME:
+				setName((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -126,15 +117,14 @@ public class TargetImpl extends MinimalEObjectImpl.Container implements Target {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case ExamplePackage.TARGET__NAME:
-			setName(NAME_EDEFAULT);
-			return;
+			case ExamplePackage.TARGET__NAME:
+				setName(NAME_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -142,14 +132,13 @@ public class TargetImpl extends MinimalEObjectImpl.Container implements Target {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case ExamplePackage.TARGET__NAME:
-			return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+			case ExamplePackage.TARGET__NAME:
+				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -157,17 +146,14 @@ public class TargetImpl extends MinimalEObjectImpl.Container implements Target {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) {
-			return super.toString();
-		}
+		if (eIsProxy()) return super.toString();
 
-		final StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (name: ");
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (name: "); //$NON-NLS-1$
 		result.append(name);
 		result.append(')');
 		return result.toString();

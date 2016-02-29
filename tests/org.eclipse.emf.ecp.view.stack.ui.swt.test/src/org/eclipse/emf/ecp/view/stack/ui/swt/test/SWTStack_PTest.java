@@ -89,6 +89,13 @@ public class SWTStack_PTest {
 				textFound = true;
 				break;
 			}
+			if (control instanceof Composite) {
+				final Control textComposite = Composite.class.cast(control).getChildren()[0];
+				if (textComposite instanceof org.eclipse.swt.widgets.Text) {
+					textFound = true;
+					break;
+				}
+			}
 		}
 		if (textFound) {
 			return;

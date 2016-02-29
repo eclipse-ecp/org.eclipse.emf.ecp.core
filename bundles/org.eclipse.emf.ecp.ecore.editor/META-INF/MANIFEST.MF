@@ -2,25 +2,21 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ECP ECore Editor
 Bundle-SymbolicName: org.eclipse.emf.ecp.ecore.editor;singleton:=true
-Bundle-Version: 1.7.2.qualifier
+Bundle-Version: 1.8.0.qualifier
+Bundle-Vendor: Eclipse Modeling Project
+Export-Package: org.eclipse.emf.ecp.ecore.editor;version="1.2.0";x-friends:="org.eclipse.emf.ecp.ecore.editor.test,org.eclipse.emf.ecp.ecore.editor.ui",
+ org.eclipse.emf.ecp.ecore.editor.factory;version="1.2.0";x-friends:="org.eclipse.emf.ecp.ecore.editor.test,org.eclipse.emf.ecp.ecore.editor.ui",
+ org.eclipse.emf.ecp.ecore.editor.internal;version="1.2.0";x-internal:=true,
+ org.eclipse.emf.ecp.ecore.editor.util;version="1.2.0";x-friends:="org.eclipse.emf.ecp.ecore.editor.test,org.eclipse.emf.ecp.ecore.editor.ui"
+Require-Bundle: org.eclipse.core.runtime;bundle-version="3.9.0",
+ org.eclipse.core.resources;bundle-version="[3.4.0,4.0.0)",
+ org.eclipse.ui;bundle-version="[3.8.0,4.0.0)",
+ org.eclipse.emf.ecore.edit;bundle-version="2.8.0",
+ org.eclipse.emf.converter;bundle-version="2.6.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Import-Package: org.eclipse.emf.codegen.ecore.genmodel;version="0.0.0",
  org.eclipse.emf.ecore.presentation;version="0.0.0",
  org.eclipse.emf.importer;version="0.0.0",
  org.eclipse.emf.importer.ecore;version="0.0.0",
  org.eclipse.jface.wizard;version="0.0.0"
-Require-Bundle: org.eclipse.core.runtime;bundle-version="3.9.0",
- org.eclipse.core.resources;bundle-version="[3.4.0,4.0.0)",
- org.eclipse.ui;bundle-version="[3.8.0,4.0.0)",
- org.eclipse.emf.ecore.edit;bundle-version="2.8.0",
- org.eclipse.emf.converter;bundle-version="2.6.0"
-Export-Package: org.eclipse.emf.ecp.ecore.editor;version="1.2.0";x-fri
- ends:="org.eclipse.emf.ecp.ecore.editor.test,org.eclipse.emf.ecp.ecor
- e.editor.ui",org.eclipse.emf.ecp.ecore.editor.factory;version="1.2.0"
- ;x-friends:="org.eclipse.emf.ecp.ecore.editor.test,org.eclipse.emf.ec
- p.ecore.editor.ui",org.eclipse.emf.ecp.ecore.editor.internal;version=
- "1.2.0";x-internal:=true,org.eclipse.emf.ecp.ecore.editor.util;versio
- n="1.2.0";x-friends:="org.eclipse.emf.ecp.ecore.editor.test,org.eclip
- se.emf.ecp.ecore.editor.ui"
-Bundle-Vendor: Eclipse Modeling Project
 Bundle-ActivationPolicy: lazy

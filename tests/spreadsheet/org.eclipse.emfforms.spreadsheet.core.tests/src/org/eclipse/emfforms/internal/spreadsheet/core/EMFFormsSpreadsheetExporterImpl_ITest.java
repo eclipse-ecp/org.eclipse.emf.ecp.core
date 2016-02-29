@@ -18,8 +18,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 
@@ -67,28 +65,6 @@ public class EMFFormsSpreadsheetExporterImpl_ITest {
 	}
 
 	@Test
-	public void testRenderAdditional() throws DatatypeConfigurationException, IOException {
-		final EMFFormsSpreadsheetExporter viewRenderer = new EMFFormsSpreadsheetExporterImpl(new ViewProvider() {
-			@Override
-			public VView getViewModel(EObject viewEobject, VViewModelProperties properties) {
-				return getView();
-			}
-		});
-		final User user = getDomainModel();
-		final User user2 = getDomainModel();
-		final Map<EObject, Map<String, String>> additionalInformation = new LinkedHashMap<EObject, Map<String, String>>();
-		final Map<String, String> mapping1 = new LinkedHashMap<String, String>();
-		mapping1.put("Header", "Value1"); //$NON-NLS-1$//$NON-NLS-2$
-		additionalInformation.put(user, mapping1);
-		final Map<String, String> mapping2 = new LinkedHashMap<String, String>();
-		mapping2.put("Header", "Value2"); //$NON-NLS-1$//$NON-NLS-2$
-		additionalInformation.put(user2, mapping2);
-		final Workbook wb = viewRenderer.render(Arrays.asList(user, user2), null,
-			null, additionalInformation);
-		assertEquals(4, wb.getSheetAt(0).getLastRowNum());
-	}
-
-	@Test
 	public void testRenderTemplate() throws DatatypeConfigurationException, IOException {
 		final EMFFormsSpreadsheetExporter viewRenderer = new EMFFormsSpreadsheetExporterImpl(new ViewProvider() {
 			@Override
@@ -96,7 +72,7 @@ public class EMFFormsSpreadsheetExporterImpl_ITest {
 				return getView();
 			}
 		});
-		final Workbook wb = viewRenderer.render(null, null, null, null);
+		final Workbook wb = viewRenderer.render(null, null, null);
 		assertEquals(2, wb.getSheetAt(0).getLastRowNum());
 	}
 
@@ -110,7 +86,7 @@ public class EMFFormsSpreadsheetExporterImpl_ITest {
 		});
 		final User user = getDomainModel();
 		final User user2 = getDomainModel();
-		final Workbook wb = viewRenderer.render(Arrays.asList(user, user2), null, null, null);
+		final Workbook wb = viewRenderer.render(Arrays.asList(user, user2), null, null);
 		assertEquals(4, wb.getSheetAt(0).getLastRowNum());
 	}
 
@@ -124,7 +100,7 @@ public class EMFFormsSpreadsheetExporterImpl_ITest {
 		});
 		final User user = getDomainModel();
 		final Task task = TaskFactory.eINSTANCE.createTask();
-		final Workbook wb = viewRenderer.render(Arrays.asList(user, task), null, null, null);
+		final Workbook wb = viewRenderer.render(Arrays.asList(user, task), null, null);
 		assertEquals(3, wb.getSheetAt(0).getLastRowNum());
 	}
 
@@ -137,7 +113,7 @@ public class EMFFormsSpreadsheetExporterImpl_ITest {
 			}
 		});
 		final User user = getDomainModel();
-		final Workbook wb = viewRenderer.render(Collections.singleton(user), null, null, null);
+		final Workbook wb = viewRenderer.render(Collections.singleton(user), null, null);
 		final Sheet sheet = wb.getSheetAt(0);
 		final Row row = sheet.getRow(3);
 		assertEquals(11, row.getLastCellNum());

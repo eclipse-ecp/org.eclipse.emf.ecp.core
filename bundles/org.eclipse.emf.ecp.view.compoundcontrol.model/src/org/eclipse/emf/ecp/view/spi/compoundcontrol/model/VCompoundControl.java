@@ -12,7 +12,6 @@
 package org.eclipse.emf.ecp.view.spi.compoundcontrol.model;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 
 /**
@@ -22,17 +21,16 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.spi.compoundcontrol.model.VCompoundControl#getControls <em>Controls</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.ecp.view.spi.compoundcontrol.model.VCompoundcontrolPackage#getCompoundControl()
  * @model
  * @generated
  */
-public interface VCompoundControl extends VContainedElement
-{
+public interface VCompoundControl extends VControl {
 	/**
 	 * Returns the value of the '<em><b>Controls</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.emf.ecp.view.spi.model.VControl}.

@@ -36,15 +36,13 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
  *
  * @since 1.2
  *        <!-- end-user-doc -->
- *
  * @generated
  */
 public class FeaturePathDomainModelReferenceItemProvider
 	extends ItemProviderAdapter
 	implements
 	IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider,
-	IItemPropertySource
-{
+	IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -52,8 +50,7 @@ public class FeaturePathDomainModelReferenceItemProvider
 	 *
 	 * @generated
 	 */
-	public FeaturePathDomainModelReferenceItemProvider(AdapterFactory adapterFactory)
-	{
+	public FeaturePathDomainModelReferenceItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -65,10 +62,8 @@ public class FeaturePathDomainModelReferenceItemProvider
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object)
-	{
-		if (itemPropertyDescriptors == null)
-		{
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addDomainModelEFeaturePropertyDescriptor(object);
@@ -83,16 +78,14 @@ public class FeaturePathDomainModelReferenceItemProvider
 	 *
 	 * @generated
 	 */
-	protected void addDomainModelEFeaturePropertyDescriptor(Object object)
-	{
+	protected void addDomainModelEFeaturePropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_FeaturePathDomainModelReference_domainModelEFeature_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_FeaturePathDomainModelReference_domainModelEFeature_feature", "_UI_FeaturePathDomainModelReference_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+					"_UI_FeaturePathDomainModelReference_domainModelEFeature_feature", //$NON-NLS-1$
+					"_UI_FeaturePathDomainModelReference_type"), //$NON-NLS-1$
 				VViewPackage.Literals.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE,
 				true,
 				false,
@@ -110,24 +103,25 @@ public class FeaturePathDomainModelReferenceItemProvider
 	 * @generated
 	 */
 	@Override
-	public Object getImage(Object object)
-	{
+	public Object getImage(Object object) {
 		return overlayImage(object, getResourceLocator().getImage("full/obj16/FeaturePathDomainModelReference")); //$NON-NLS-1$
 	}
 
 	/**
 	 * This returns the label text for the adapted class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @param object the object instance for which the label is fetched
+	 *
+	 * @return the label
+	 *         <!-- begin-user-doc -->
+	 *         <!-- end-user-doc -->
 	 *
 	 * @generated NOT
 	 */
 	@Override
-	public String getText(Object object)
-	{
+	public String getText(Object object) {
 		final VFeaturePathDomainModelReference dmr = (VFeaturePathDomainModelReference) object;
-		if (dmr == null || dmr.getDomainModelEFeature() == null)
-		{
+		if (dmr == null || dmr.getDomainModelEFeature() == null) {
 			return getString("_UI_FeaturePathDomainModelReference_type"); //$NON-NLS-1$
 		}
 		return dmr.getDomainModelEFeature().getName();
@@ -142,8 +136,7 @@ public class FeaturePathDomainModelReferenceItemProvider
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(Notification notification)
-	{
+	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 		super.notifyChanged(notification);
 	}
@@ -157,8 +150,7 @@ public class FeaturePathDomainModelReferenceItemProvider
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
-	{
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 	}
 
@@ -170,8 +162,7 @@ public class FeaturePathDomainModelReferenceItemProvider
 	 * @generated
 	 */
 	@Override
-	public ResourceLocator getResourceLocator()
-	{
+	public ResourceLocator getResourceLocator() {
 		return ((IChildCreationExtender) adapterFactory).getResourceLocator();
 	}
 

@@ -23,7 +23,7 @@ import org.junit.runners.Suite.SuiteClasses;
 	ValidationProvider_PTest.class,
 	SubstitutionLabel_PTest.class,
 	TableValidation_PTest.class,
-	ValidationPerformance_Test.class,
+	ValidationPerformance_ITest.class,
 	DynamicDMR_PTest.class
 })
 public class AllTests {

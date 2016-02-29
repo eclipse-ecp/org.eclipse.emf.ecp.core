@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -12,7 +12,6 @@
 package org.eclipse.emf.ecp.view.internal.context;
 
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -21,12 +20,10 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CopyOnWriteArraySet;
 
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IExtensionRegistry;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.command.BasicCommandStack;
+import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.TreeIterator;
@@ -39,12 +36,12 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.common.spi.UniqueSetting;
+import org.eclipse.emf.ecp.view.spi.context.EMFFormsLegacyServicesManager;
 import org.eclipse.emf.ecp.view.spi.context.GlobalViewModelService;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextDisposeListener;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelServiceNotAvailableReport;
-import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeAddRemoveListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
@@ -52,9 +49,23 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
-import org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.emfforms.common.Optional;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.controlmapper.EMFFormsSettingToControlMapper;
+import org.eclipse.emfforms.spi.core.services.domainexpander.EMFFormsDomainExpander;
+import org.eclipse.emfforms.spi.core.services.domainexpander.EMFFormsExpandingFailedException;
+import org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener;
+import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServiceManager;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceEvent;
+import org.osgi.framework.ServiceListener;
+import org.osgi.framework.ServiceReference;
 
 /**
  * The Class ViewModelContextImpl.
@@ -85,6 +96,8 @@ public class ViewModelContextImpl implements ViewModelContext {
 	/** The view model content adapter. */
 	private EContentAdapter viewModelContentAdapter;
 
+	private final Set<EMFFormsContextListener> contextListeners = new CopyOnWriteArraySet<EMFFormsContextListener>();
+
 	/** The view services. */
 	private final SortedSet<ViewModelService> viewServices = new TreeSet<ViewModelService>(
 		new Comparator<ViewModelService>() {
@@ -114,13 +127,6 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 */
 	private boolean isDisposing;
 
-	/**
-	 * A mapping between settings and controls.
-	 */
-	private final Map<UniqueSetting, Set<VControl>> settingToControlMap = new LinkedHashMap<UniqueSetting, Set<VControl>>();
-
-	private final Map<VControl, DomainModelReferenceChangeListener> controlChangeListener = new LinkedHashMap<VControl, DomainModelReferenceChangeListener>();
-
 	private Resource resource;
 
 	private final Map<EObject, Set<ViewModelContext>> childContexts = new LinkedHashMap<EObject, Set<ViewModelContext>>();
@@ -129,6 +135,13 @@ public class ViewModelContextImpl implements ViewModelContext {
 	private ViewModelContext parentContext;
 
 	private final Set<ViewModelContextDisposeListener> disposeListeners = new LinkedHashSet<ViewModelContextDisposeListener>();
+
+	// TODO replace with eclipse context?!
+	private final Map<Class<?>, Object> serviceMap = new LinkedHashMap<Class<?>, Object>();
+
+	private final Map<ServiceReference<?>, Class<?>> usedOSGiServices = new LinkedHashMap<ServiceReference<?>, Class<?>>();
+
+	private ServiceListener serviceListener;
 
 	/**
 	 * Instantiates a new view model context impl.
@@ -177,11 +190,13 @@ public class ViewModelContextImpl implements ViewModelContext {
 	}
 
 	/**
-	 * Instantiates a new view model context impl.
+	 * Instantiates a new view model context impl with a parent context.
 	 *
 	 * @param view the view
 	 * @param domainObject the domain object
 	 * @param modelServices an array of services to use in the {@link ViewModelContext}
+	 * @param parent The parent {@link ViewModelContext}
+	 * @param parentVElement The parent {@link VElement}
 	 */
 	public ViewModelContextImpl(VElement view, EObject domainObject, ViewModelContext parent,
 		VElement parentVElement,
@@ -196,30 +211,122 @@ public class ViewModelContextImpl implements ViewModelContext {
 	}
 
 	/**
+	 * Resolve all domain model references for a given resolvable and a given domain model root.
+	 *
+	 * @param resolvable The EObject to resolve all {@link VDomainModelReference domain model references} of.
+	 * @param domainModelRoot the domain model used for the resolving.
+	 * @throws EMFFormsExpandingFailedException If the domain expansion fails.
+	 */
+	private void resolveDomainReferences(EObject resolvable, EObject domainModelRoot) {
+		// Get domain expander service
+		final EMFFormsDomainExpander domainExpander = getService(EMFFormsDomainExpander.class);
+		if (domainExpander == null) {
+			return;
+		}
+		expandAndInitDMR(domainModelRoot, domainExpander, resolvable);
+		// Iterate over all domain model references of the given EObject.
+		final TreeIterator<EObject> eAllContents = resolvable.eAllContents();
+		while (eAllContents.hasNext()) {
+			final EObject eObject = eAllContents.next();
+			expandAndInitDMR(domainModelRoot, domainExpander, eObject);
+		}
+	}
+
+	private void expandAndInitDMR(EObject domainModelRoot, final EMFFormsDomainExpander domainExpander,
+		final EObject eObject) {
+		if (VDomainModelReference.class.isInstance(eObject)
+			&& !VDomainModelReference.class.isInstance(eObject.eContainer())) {
+			final VDomainModelReference domainModelReference = VDomainModelReference.class.cast(eObject);
+			// FIXME remove
+			domainModelReference.init(domainModelRoot);
+			try {
+				domainExpander.prepareDomainObject(domainModelReference, domainModelRoot);
+			} catch (final EMFFormsExpandingFailedException ex) {
+				Activator.getInstance().getReportService().report(new AbstractReport(ex));
+			}
+		}
+	}
+
+	/**
 	 * Instantiate.
 	 */
 	private void instantiate() {
 
 		addResourceIfNecessary();
 
-		ViewModelUtil.resolveDomainReferences(getViewModel(), getDomainModel());
+		resolveDomainReferences(getViewModel(), getDomainModel());
+		loadImmediateServices();
 
 		viewModelContentAdapter = new ViewModelContentAdapter();
-
-		view.eAdapters().add(viewModelContentAdapter);
 
 		if (parentContext == null) {
 			domainModelContentAdapter = new DomainModelContentAdapter();
 			domainObject.eAdapters().add(domainModelContentAdapter);
 		}
-
-		createSettingToControlMapping();
-		readAbstractViewServices();
+		view.eAdapters().add(viewModelContentAdapter);
 
 		for (final ViewModelService viewService : viewServices) {
-			if (!GlobalViewModelService.class.isInstance(viewService) || parentContext == null) {
-				viewService.instantiate(this);
+			viewService.instantiate(this);
+		}
+
+		for (final EMFFormsContextListener contextListener : contextListeners) {
+			contextListener.contextInitialised();
+		}
+	}
+
+	private void loadImmediateServices() {
+		final Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		if (bundle != null) {
+			final BundleContext bundleContext = bundle.getBundleContext();
+			final ServiceReference<EMFFormsLegacyServicesManager> serviceReferenceLegacy = bundleContext
+				.getServiceReference(EMFFormsLegacyServicesManager.class);
+			if (serviceReferenceLegacy != null) {
+				final EMFFormsLegacyServicesManager legacyServicesFactory = bundleContext
+					.getService(serviceReferenceLegacy);
+				legacyServicesFactory.instantiate();
+				bundleContext.ungetService(serviceReferenceLegacy);
 			}
+
+			servicesManager = getService(EMFFormsViewServiceManager.class);
+
+			for (final Class<?> localImmediateService : servicesManager.getAllLocalImmediateServiceTypes()) {
+				final Optional<?> service = servicesManager.createLocalImmediateService(localImmediateService, this);
+				if (!service.isPresent()) {
+					// error case?
+					continue;
+				}
+				serviceMap.put(localImmediateService, service.get());
+
+			}
+
+			if (parentContext == null) {
+				for (final Class<?> globalImmediateService : servicesManager.getAllGlobalImmediateServiceTypes()) {
+					final Optional<?> service = servicesManager.createGlobalImmediateService(globalImmediateService,
+						this);
+					if (!service.isPresent()) {
+						// error case?
+						continue;
+					}
+					final Object serviceObject = service.get();
+					serviceMap.put(globalImmediateService, serviceObject);
+
+				}
+			}
+
+			serviceListener = new ServiceListener() {
+
+				@Override
+				public void serviceChanged(ServiceEvent event) {
+					if (event.getType() == ServiceEvent.UNREGISTERING &&
+						usedOSGiServices.containsKey(event.getServiceReference())) {
+						final Class<?> remove = usedOSGiServices.remove(event.getServiceReference());
+						serviceMap.remove(remove);
+					}
+				}
+			};
+			bundleContext.addServiceListener(serviceListener);
+
 		}
 	}
 
@@ -229,8 +336,11 @@ public class ViewModelContextImpl implements ViewModelContext {
 		}
 		final EObject rootObject = EcoreUtil.getRootContainer(domainObject);
 		final ResourceSet rs = new ResourceSetImpl();
+		final ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
+			new ReflectiveItemProviderAdapterFactory(),
+			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
 		final AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(
-			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE),
+			adapterFactory,
 			new BasicCommandStack(), rs);
 		rs.eAdapters().add(new AdapterFactoryEditingDomain.EditingDomainProvider(domain));
 		resource = rs.createResource(URI.createURI("VIRTAUAL_URI")); //$NON-NLS-1$
@@ -239,263 +349,28 @@ public class ViewModelContextImpl implements ViewModelContext {
 		}
 	}
 
-	private void createSettingToControlMapping() {
-		checkAndUpdateSettingToControlMapping(view);
-
-		final TreeIterator<EObject> eAllContents = view.eAllContents();
-		while (eAllContents.hasNext()) {
-			final EObject eObject = eAllContents.next();
-			checkAndUpdateSettingToControlMapping(eObject);
-		}
-	}
-
-	private void checkAndUpdateSettingToControlMapping(EObject eObject) {
-		if (VControl.class.isInstance(eObject)) {
-			final VControl vControl = (VControl) eObject;
-			if (vControl.getDomainModelReference() == null) {
-				return;
-			}
-
-			updateControlMapping(vControl);
-
-			final DomainModelReferenceChangeListener changeListener = new DomainModelReferenceChangeListener() {
-
-				@Override
-				public void notifyChange() {
-					updateControlMapping(vControl);
-				}
-			};
-			controlChangeListener.put(vControl, changeListener);
-
-			vControl.getDomainModelReference().getChangeListener().add(changeListener);
-			registerDomainChangeListener(vControl.getDomainModelReference());
-		}
-	}
-
-	private void updateControlMapping(VControl vControl) {
-		// delete old mapping
-		for (final UniqueSetting setting : settingToControlMap.keySet()) {
-			settingToControlMap.get(setting).remove(vControl);
-		}
-
-		final Iterator<Setting> iterator = vControl.getDomainModelReference().getIterator();
-		while (iterator.hasNext()) {
-			final Setting setting = iterator.next();
-			if (setting == null) {
-				continue;
-			}
-			final UniqueSetting uniqueSetting = UniqueSetting.createSetting(setting);
-			if (!settingToControlMap.containsKey(uniqueSetting)) {
-				settingToControlMap.put(uniqueSetting, new LinkedHashSet<VControl>());
-			}
-			settingToControlMap.get(uniqueSetting).add(vControl);
-		}
-
-		// IObservableValue observableValue;
-		// try {
-		// observableValue = Activator.getInstance().getEMFFormsDatabinding()
-		// .getObservableValue(vControl.getDomainModelReference(), getDomainModel());
-		// } catch (final DatabindingFailedException ex) {
-		// Activator.getInstance().getReportService().report(new DatabindingFailedReport(ex));
-		// return;
-		// }
-		// final IObserving observing = (IObserving) observableValue;
-		// final EObject eObject = (EObject) observing.getObserved();
-		// final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
-		// observableValue.dispose();
-		// final UniqueSetting uniqueSetting = UniqueSetting.createSetting(eObject, structuralFeature);
-		// if (!settingToControlMap.containsKey(uniqueSetting)) {
-		// settingToControlMap.put(uniqueSetting, new LinkedHashSet<VControl>());
-		// }
-		// settingToControlMap.get(uniqueSetting).add(vControl);
-	}
-
-	private void vControlRemoved(VControl vControl) {
-		if (vControl.getDomainModelReference() == null) {
-			return;
-		}
-
-		final Iterator<Setting> iterator = vControl.getDomainModelReference().getIterator();
-		while (iterator.hasNext()) {
-			final Setting next = iterator.next();
-			final UniqueSetting uniqueSetting = UniqueSetting.createSetting(next);
-			if (settingToControlMap.containsKey(uniqueSetting)) {
-				settingToControlMap.get(uniqueSetting).remove(vControl);
-				if (settingToControlMap.get(uniqueSetting).size() == 0) {
-					settingToControlMap.remove(uniqueSetting);
-				}
-			}
-		}
-
-		// IObservableValue observableValue;
-		// try {
-		// observableValue = Activator.getInstance().getEMFFormsDatabinding()
-		// .getObservableValue(vControl.getDomainModelReference(), getDomainModel());
-		// } catch (final DatabindingFailedException ex) {
-		// Activator.getInstance().getReportService().report(new DatabindingFailedReport(ex));
-		// return;
-		// }
-		// final IObserving observing = (IObserving) observableValue;
-		// final EObject eObject = (EObject) observing.getObserved();
-		// final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
-		// observableValue.dispose();
-		// final UniqueSetting uniqueSetting = UniqueSetting.createSetting(eObject, structuralFeature);
-		// if (settingToControlMap.containsKey(uniqueSetting)) {
-		// settingToControlMap.get(uniqueSetting).remove(vControl);
-		// if (settingToControlMap.get(uniqueSetting).size() == 0) {
-		// settingToControlMap.remove(uniqueSetting);
-		// }
-		// }
-
-		vControl.getDomainModelReference().getChangeListener().remove(controlChangeListener.get(vControl));
-		controlChangeListener.remove(vControl);
-		unregisterDomainChangeListener(vControl.getDomainModelReference());
-	}
-
-	private void vControlAdded(VControl vControl) {
-		if (vControl.getDomainModelReference() == null) {
-			return;
-		}
-
-		// IObservableValue observableValue;
-		// try {
-		// observableValue = Activator.getInstance().getEMFFormsDatabinding()
-		// .getObservableValue(vControl.getDomainModelReference(), getDomainModel());
-		// } catch (final DatabindingFailedException ex) {
-		// Activator.getInstance().getReportService().report(new DatabindingFailedReport(ex));
-		// return;
-		// }
-		// final IObserving observing = (IObserving) observableValue;
-		// final EObject eObject = (EObject) observing.getObserved();
-		// final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
-		// observableValue.dispose();
-		// final UniqueSetting uniqueSetting = UniqueSetting.createSetting(eObject, structuralFeature);
-		// if (!settingToControlMap.containsKey(uniqueSetting)) {
-		// settingToControlMap.put(uniqueSetting, new LinkedHashSet<VControl>());
-		// }
-		// settingToControlMap.get(uniqueSetting).add(vControl);
-
-		final Iterator<Setting> iterator = vControl.getDomainModelReference().getIterator();
-		while (iterator.hasNext()) {
-			final Setting next = iterator.next();
-			if (next == null) {
-				continue;
-			}
-			final UniqueSetting uniqueSetting = UniqueSetting.createSetting(next);
-			if (!settingToControlMap.containsKey(uniqueSetting)) {
-				settingToControlMap.put(uniqueSetting, new LinkedHashSet<VControl>());
-			}
-			settingToControlMap.get(uniqueSetting).add(vControl);
-		}
-	}
-
-	// private void eObjectRemoved(EObject eObject) {
-	// for (final EStructuralFeature eStructuralFeature : eObject.eClass().getEAllStructuralFeatures()) {
-	// final Setting setting = InternalEObject.class.cast(eObject).eSetting(eStructuralFeature);
-	// final UniqueSetting uniqueSetting = UniqueSetting.createSetting(setting);
-	// if (settingToControlMap.containsKey(uniqueSetting)) {
-	// settingToControlMap.remove(uniqueSetting);
-	// }
-	// }
-	// }
-	//
-	// private void eObjectAdded(EObject eObject) {
-	// final InternalEObject internalParent = InternalEObject.class.cast(eObject.eContainer());
-	// if (internalParent == null) {
-	// return;
-	// }
-	// // FIXME how to add??
-	// // TODO hack:
-	// for (final EReference eReference : internalParent.eClass().getEAllContainments()) {
-	// if (eReference.getEReferenceType().isInstance(eObject)) {
-	// final Setting setting = internalParent.eSetting(eReference);
-	// final UniqueSetting uniqueSetting = UniqueSetting.createSetting(setting);
-	// final Set<VControl> controls = settingToControlMap.get(uniqueSetting);
-	// if (controls == null) {
-	// continue;
-	// }
-	// final Set<VControl> iterateControls = new LinkedHashSet<VControl>(controls);
-	// for (final VControl control : iterateControls) {
-	// vControlAdded(control);
-	// }
-	//
-	// }
-	// }
-	//
-	// }
-
 	/**
 	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecore.EStructuralFeature.Setting)
+	 * @deprecated
 	 */
+	@Deprecated
 	@Override
 	public Set<VControl> getControlsFor(Setting setting) {
-		return settingToControlMap.get(UniqueSetting.createSetting(setting));
+		return getService(EMFFormsSettingToControlMapper.class).getControlsFor(setting);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecp.common.spi.UniqueSetting)
-	 *
+	 * @deprecated
 	 */
+	@Deprecated
 	@Override
 	public Set<VElement> getControlsFor(UniqueSetting setting) {
-		final Set<VElement> elements = new LinkedHashSet<VElement>();
-		final Set<VControl> currentControls = settingToControlMap.get(setting);
-		if (currentControls != null) {
-			for (final VElement control : currentControls) {
-				if (!control.isEnabled() || !control.isVisible() || control.isReadonly()) {
-					continue;
-				}
-				elements.add(control);
-			}
-		}
-		for (final ViewModelContext childContext : childContextUsers.keySet()) {
-			final Set<VElement> childControls = childContext.getControlsFor(setting);
-			boolean validControls = false;
-			if (childControls == null) {
-				continue;
-			}
-			for (final VElement element : childControls) {
-				validControls |= element.isVisible() && !element.isReadonly() && element.isEnabled();
-			}
-			if (validControls) {
-				elements.add(childContextUsers.get(childContext));
-				elements.addAll(childControls);
-			}
-		}
-		// TODO change expactation
-		if (elements.isEmpty()) {
-			return null;
-		}
-		return elements;
-	}
-
-	/**
-	 * Read abstract view services.
-	 */
-	private void readAbstractViewServices() {
-
-		final IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
-		if (extensionRegistry == null) {
-			return;
-		}
-		final IConfigurationElement[] controls = extensionRegistry
-			.getConfigurationElementsFor("org.eclipse.emf.ecp.view.context.viewServices"); //$NON-NLS-1$
-		for (final IConfigurationElement e : controls) {
-			try {
-
-				final ViewModelService viewService = (ViewModelService) e.createExecutableExtension("class"); //$NON-NLS-1$
-				if (!GlobalViewModelService.class.isInstance(viewService) || parentContext == null) {
-					viewServices.add(viewService);
-				}
-
-			} catch (final CoreException e1) {
-				Activator.log(e1);
-			}
-		}
+		return getService(EMFFormsSettingToControlMapper.class).getControlsFor(setting);
 	}
 
 	/**
@@ -533,6 +408,9 @@ public class ViewModelContextImpl implements ViewModelContext {
 			return;
 		}
 		isDisposing = true;
+		for (final ViewModelContextDisposeListener listener : disposeListeners) {
+			listener.contextDisposed(this);
+		}
 		if (resource != null) {
 			resource.getContents().remove(domainObject);
 		}
@@ -547,15 +425,10 @@ public class ViewModelContextImpl implements ViewModelContext {
 			viewService.dispose();
 		}
 		viewServices.clear();
-		settingToControlMap.clear();
 
-		for (final VControl vControl : controlChangeListener.keySet()) {
-			if (vControl.getDomainModelReference() != null) {
-				vControl.getDomainModelReference().getChangeListener().remove(controlChangeListener.get(vControl));
-			}
-			unregisterDomainChangeListener(vControl.getDomainModelReference());
+		for (final EMFFormsContextListener contextListener : contextListeners) {
+			contextListener.contextDispose();
 		}
-		controlChangeListener.clear();
 
 		final Set<ViewModelContext> toDispose = new LinkedHashSet<ViewModelContext>(childContextUsers.keySet());
 		for (final ViewModelContext vmc : toDispose) {
@@ -563,12 +436,31 @@ public class ViewModelContextImpl implements ViewModelContext {
 		}
 		childContextUsers.clear();
 		childContexts.clear();
+
+		releaseOSGiServices();
+		serviceMap.clear();
+
+		final Bundle bundle = FrameworkUtil.getBundle(getClass());
+		if (bundle != null) {
+			final BundleContext bundleContext = bundle.getBundleContext();
+			bundleContext.removeServiceListener(serviceListener);
+			serviceListener = null;
+		}
+
 		isDisposing = false;
 		isDisposed = true;
 
-		for (final ViewModelContextDisposeListener listener : disposeListeners) {
-			listener.contextDisposed(this);
+	}
+
+	private void releaseOSGiServices() {
+		final Bundle bundle = FrameworkUtil.getBundle(getClass());
+		if (bundle != null) {
+			final BundleContext bundleContext = bundle.getBundleContext();
+			for (final ServiceReference<?> serviceReference : usedOSGiServices.keySet()) {
+				bundleContext.ungetService(serviceReference);
+			}
 		}
+		usedOSGiServices.clear();
 	}
 
 	@Override
@@ -662,20 +554,58 @@ public class ViewModelContextImpl implements ViewModelContext {
 	@Override
 	@SuppressWarnings("unchecked")
 	public <T> T getService(Class<T> serviceType) {
+		// legacy stuff
 		for (final ViewModelService service : viewServices) {
 			if (serviceType.isInstance(service)) {
 				return (T) service;
+			}
+		}
+
+		if (serviceMap.containsKey(serviceType)) {
+			return (T) serviceMap.get(serviceType);
+		} else if (servicesManager != null) {
+			final Optional<T> lazyService = servicesManager.createLocalLazyService(serviceType, this);
+			if (lazyService.isPresent()) {
+				final T t = lazyService.get();
+				serviceMap.put(serviceType, t);
+				return t;
+			}
+		}
+		if (servicesManager != null && parentContext == null) {
+			final Optional<T> lazyService = servicesManager.createGlobalLazyService(serviceType, this);
+			if (lazyService.isPresent()) {
+				final T t = lazyService.get();
+				serviceMap.put(serviceType, t);
+				return t;
 			}
 		}
 		if (parentContext != null) {
 			return parentContext.getService(serviceType);
 		}
 
-		Activator.getInstance()
-			.getReportService()
-			.report(new ViewModelServiceNotAvailableReport(serviceType));
-
+		final Bundle bundle = FrameworkUtil.getBundle(getClass());
+		if (bundle != null) {
+			final BundleContext bundleContext = bundle.getBundleContext();
+			final ServiceReference<T> serviceReference = bundleContext.getServiceReference(serviceType);
+			if (serviceReference != null) {
+				usedOSGiServices.put(serviceReference, serviceType);
+				final T service = bundleContext.getService(serviceReference);
+				serviceMap.put(serviceType, service);
+				return service;
+			}
+		}
+		report(new ViewModelServiceNotAvailableReport(serviceType));
 		return null;
+	}
+
+	private void report(AbstractReport report) {
+		final Activator activator = Activator.getInstance();
+		if (activator != null) {
+			final ReportService reportService = activator.getReportService();
+			if (reportService != null) {
+				reportService.report(report);
+			}
+		}
 	}
 
 	/**
@@ -693,19 +623,8 @@ public class ViewModelContextImpl implements ViewModelContext {
 			if (isDisposed) {
 				return;
 			}
-			// // delegate to parent context
-			// if (parentContext != null) {
-			// parentContext.viewModelContentAdapter.notifyChanged(notification);
-			// return;
-			// }
 			if (notification.isTouch()) {
 				return;
-			}
-			// FIXME possible side effects?
-			if (notification.getEventType() == Notification.ADD) {
-				if (VControl.class.isInstance(notification.getNewValue())) {
-					checkAndUpdateSettingToControlMapping(VControl.class.cast(notification.getNewValue()));
-				}
 			}
 			final ModelChangeNotification modelChangeNotification = new ModelChangeNotification(notification);
 			for (final ModelChangeListener modelChangeListener : viewModelChangeListener) {
@@ -720,38 +639,11 @@ public class ViewModelContextImpl implements ViewModelContext {
 			if (isDisposing || isDisposed) {
 				return;
 			}
-			if (VElement.class.isInstance(notifier)) {
-				ViewModelUtil.resolveDomainReferences(
-					(VElement) notifier,
-					getDomainModel());
-			}
-			if (VControl.class.isInstance(notifier)) {
-				vControlAdded((VControl) notifier);
-			}
-			if (VDomainModelReference.class.isInstance(notifier)) {
-				final VControl control = findControl(VDomainModelReference.class.cast(notifier));
-				if (control != null) {
-					updateControlMapping(control);
-				}
-
-			}
 			for (final ModelChangeListener modelChangeListener : viewModelChangeListener) {
 				if (ModelChangeAddRemoveListener.class.isInstance(modelChangeListener)) {
 					ModelChangeAddRemoveListener.class.cast(modelChangeListener).notifyAdd(notifier);
 				}
 			}
-		}
-
-		/**
-		 * @param cast
-		 * @return
-		 */
-		private VControl findControl(VDomainModelReference dmr) {
-			EObject parent = dmr.eContainer();
-			while (!VControl.class.isInstance(parent) && parent != null) {
-				parent = parent.eContainer();
-			}
-			return (VControl) parent;
 		}
 
 		@Override
@@ -763,9 +655,6 @@ public class ViewModelContextImpl implements ViewModelContext {
 			}
 			if (VElement.class.isInstance(notifier)) {
 				VElement.class.cast(notifier).setDiagnostic(null);
-			}
-			if (VControl.class.isInstance(notifier)) {
-				vControlRemoved((VControl) notifier);
 			}
 			for (final ModelChangeListener modelChangeListener : viewModelChangeListener) {
 				if (ModelChangeAddRemoveListener.class.isInstance(modelChangeListener)) {
@@ -803,9 +692,6 @@ public class ViewModelContextImpl implements ViewModelContext {
 			if (isDisposing) {
 				return;
 			}
-			// if (EObject.class.isInstance(notifier)) {
-			// eObjectAdded((EObject) notifier);
-			// }
 			for (final ModelChangeListener modelChangeListener : domainModelChangeListener) {
 				if (ModelChangeAddRemoveListener.class.isInstance(modelChangeListener)) {
 					ModelChangeAddRemoveListener.class.cast(modelChangeListener).notifyAdd(notifier);
@@ -820,9 +706,6 @@ public class ViewModelContextImpl implements ViewModelContext {
 			if (isDisposing) {
 				return;
 			}
-			// if (EObject.class.isInstance(notifier)) {
-			// eObjectRemoved((EObject) notifier);
-			// }
 			for (final ModelChangeListener modelChangeListener : domainModelChangeListener) {
 				if (ModelChangeAddRemoveListener.class.isInstance(modelChangeListener)) {
 					ModelChangeAddRemoveListener.class.cast(modelChangeListener).notifyRemove(notifier);
@@ -833,6 +716,8 @@ public class ViewModelContextImpl implements ViewModelContext {
 	}
 
 	private final Set<Object> users = new LinkedHashSet<Object>();
+
+	private EMFFormsViewServiceManager servicesManager;
 
 	/**
 	 * Inner method for registering context users (not {@link ViewModelService}).
@@ -889,20 +774,22 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	private void addChildContext(VElement vElement, EObject eObject, ViewModelContext childContext) {
 
-		// childContext.addContextUser(this);
-
 		if (!childContexts.containsKey(eObject)) {
 			childContexts.put(eObject, new LinkedHashSet<ViewModelContext>());
 		}
 		childContexts.get(eObject).add(childContext);
 		childContextUsers.put(childContext, vElement);
 
+		for (final EMFFormsContextListener contextListener : contextListeners) {
+			contextListener.childContextAdded(vElement, childContext);
+		}
 		// notify all global View model services
 		for (final ViewModelService viewModelService : viewServices) {
 			if (GlobalViewModelService.class.isInstance(viewModelService)) {
 				GlobalViewModelService.class.cast(viewModelService).childViewModelContextAdded(childContext);
 			}
 		}
+
 	}
 
 	private void removeChildContext(EObject eObject) {
@@ -912,6 +799,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 				childContextUsers.remove(removedContext);
 			}
 		}
+
 	}
 
 	@Override
@@ -933,6 +821,9 @@ public class ViewModelContextImpl implements ViewModelContext {
 			@Override
 			public void contextDisposed(ViewModelContext viewModelContext) {
 				removeChildContext(eObject);
+				for (final EMFFormsContextListener contextListener : contextListeners) {
+					contextListener.childContextDisposed(childContext);
+				}
 			}
 		});
 		addChildContext(parent, eObject, childContext);
@@ -947,5 +838,15 @@ public class ViewModelContextImpl implements ViewModelContext {
 	@Override
 	public void registerDisposeListener(ViewModelContextDisposeListener listener) {
 		disposeListeners.add(listener);
+	}
+
+	@Override
+	public void registerEMFFormsContextListener(EMFFormsContextListener contextListener) {
+		contextListeners.add(contextListener);
+	}
+
+	@Override
+	public void unregisterEMFFormsContextListener(EMFFormsContextListener contextListener) {
+		contextListeners.remove(contextListener);
 	}
 }

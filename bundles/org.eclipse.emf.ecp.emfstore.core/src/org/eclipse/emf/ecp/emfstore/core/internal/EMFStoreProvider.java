@@ -363,7 +363,11 @@ public final class EMFStoreProvider extends DefaultProvider {
 	/** {@inheritDoc} */
 	@Override
 	public boolean isDirty(InternalProject project) {
-		return getProjectSpace(project).hasUnsavedChanges();
+		final ESLocalProject projectSpace = getProjectSpace(project);
+		if (projectSpace != null) {
+			return projectSpace.hasUnsavedChanges();
+		}
+		return false;
 	}
 
 	/** {@inheritDoc} */

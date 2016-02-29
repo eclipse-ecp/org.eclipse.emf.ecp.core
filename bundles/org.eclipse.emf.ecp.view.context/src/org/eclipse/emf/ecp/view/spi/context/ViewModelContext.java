@@ -20,6 +20,7 @@ import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext;
 
 /**
  * The Interface ViewModelContext.
@@ -28,7 +29,7 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
  * @since 1.2
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface ViewModelContext {
+public interface ViewModelContext extends EMFFormsViewContext {
 
 	/**
 	 * Register domain change listener.
@@ -36,6 +37,7 @@ public interface ViewModelContext {
 	 * @param modelChangeListener the model change listener
 	 * @since 1.3
 	 */
+	@Override
 	void registerDomainChangeListener(ModelChangeListener modelChangeListener);
 
 	/**
@@ -44,6 +46,7 @@ public interface ViewModelContext {
 	 * @param modelChangeListener the model change listener
 	 * @since 1.3
 	 */
+	@Override
 	void unregisterDomainChangeListener(ModelChangeListener modelChangeListener);
 
 	/**
@@ -51,6 +54,7 @@ public interface ViewModelContext {
 	 *
 	 * @return the view model
 	 */
+	@Override
 	VElement getViewModel();
 
 	/**
@@ -58,6 +62,7 @@ public interface ViewModelContext {
 	 *
 	 * @return the domain model
 	 */
+	@Override
 	EObject getDomainModel();
 
 	/**
@@ -66,6 +71,7 @@ public interface ViewModelContext {
 	 * @param modelChangeListener the model change listener
 	 * @since 1.3
 	 */
+	@Override
 	void registerViewChangeListener(ModelChangeListener modelChangeListener);
 
 	/**
@@ -74,6 +80,7 @@ public interface ViewModelContext {
 	 * @param modelChangeListener the model change listener
 	 * @since 1.3
 	 */
+	@Override
 	void unregisterViewChangeListener(ModelChangeListener modelChangeListener);
 
 	/**
@@ -103,6 +110,7 @@ public interface ViewModelContext {
 	 *            the type of the service to be retrieved
 	 * @return the service
 	 */
+	@Override
 	<T> T getService(Class<T> serviceType);
 
 	/**
@@ -112,7 +120,10 @@ public interface ViewModelContext {
 	 * @param setting the {@link Setting} to search controls for
 	 * @return the Set of all controls associated with the provided setting or null if no controls can be found
 	 * @since 1.3
+	 * @deprecated please use {@link org.eclipse.emfforms.spi.core.services.controlmapper.EMFFormsSettingToControlMapper#getControlsFor(Setting)
+	 *             EMFFormsSettingToControlMapper#getControlsFor(Setting)}
 	 */
+	@Deprecated
 	Set<VControl> getControlsFor(Setting setting);
 
 	/**
@@ -121,7 +132,10 @@ public interface ViewModelContext {
 	 * @param setting the {@link UniqueSetting} to search controls for
 	 * @return the Set of all controls associated with the provided setting or null if no controls can be found
 	 * @since 1.5
+	 * @deprecated please use {@link org.eclipse.emfforms.spi.core.services.controlmapper.EMFFormsSettingToControlMapper#getControlsFor(UniqueSetting)
+	 *             EMFFormsSettingToControlMapper#getControlsFor(UniqueSetting)}
 	 */
+	@Deprecated
 	Set<VElement> getControlsFor(UniqueSetting setting);
 
 	/**

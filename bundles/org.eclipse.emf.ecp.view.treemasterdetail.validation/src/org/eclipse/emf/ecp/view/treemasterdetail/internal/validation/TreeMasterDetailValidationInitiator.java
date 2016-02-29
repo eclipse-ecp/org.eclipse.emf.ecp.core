@@ -34,6 +34,8 @@ import org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.internal.RootObject;
 import org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.internal.TreeMasterDetailSelectionManipulatorHelper;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
+import org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener;
+import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext;
 
 /**
  * The TreeMasterDatailValidationInitiator searches for {@link VTreeMasterDetail} VElements and registers the necessary
@@ -44,7 +46,7 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
  */
 @SuppressWarnings("restriction")
 public class TreeMasterDetailValidationInitiator implements
-	GlobalViewModelService {
+	GlobalViewModelService, EMFFormsContextListener {
 
 	/**
 	 * @author Eugen Neufeld
@@ -188,7 +190,7 @@ public class TreeMasterDetailValidationInitiator implements
 	public void instantiate(final ViewModelContext context) {
 		context.registerDomainChangeListener(new TreeMasterDetailValidationInitiatorDomainChangeListener(context));
 		checkForTreeMasterDetail(context);
-
+		context.registerEMFFormsContextListener(this);
 	}
 
 	private void checkForTreeMasterDetail(ViewModelContext context) {
@@ -290,6 +292,49 @@ public class TreeMasterDetailValidationInitiator implements
 	@Override
 	public void childViewModelContextAdded(ViewModelContext childContext) {
 		checkForTreeMasterDetail(childContext);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener#childContextAdded(org.eclipse.emf.ecp.view.spi.model.VElement,
+	 *      org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext)
+	 */
+	@Override
+	public void childContextAdded(VElement parentElement, EMFFormsViewContext childContext) {
+		if (ViewModelContext.class.isInstance(childContext)) {
+			checkForTreeMasterDetail(ViewModelContext.class.cast(childContext));
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener#childContextDisposed(org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext)
+	 */
+	@Override
+	public void childContextDisposed(EMFFormsViewContext childContext) {
+		// intentionally left empty
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener#contextInitialised()
+	 */
+	@Override
+	public void contextInitialised() {
+		// intentionally left empty
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener#contextDispose()
+	 */
+	@Override
+	public void contextDispose() {
+		// intentionally left empty
 	}
 
 }

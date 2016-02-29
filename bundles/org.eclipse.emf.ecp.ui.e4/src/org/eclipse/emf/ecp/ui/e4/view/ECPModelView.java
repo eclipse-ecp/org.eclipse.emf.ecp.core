@@ -55,6 +55,9 @@ import org.eclipse.swt.widgets.Composite;
  */
 public class ECPModelView {
 
+	/**
+	 * Constant for the setting whether the model explorer is linked with the editor.
+	 */
 	public static final String P_LINK_WITH_EDITOR = "linkWithEditor"; //$NON-NLS-1$
 	private static final String POPUPMENU_NAVIGATOR = "org.eclipse.emf.ecp.e4.application.popupmenu.navigator"; //$NON-NLS-1$
 	private TreeViewer modelExplorerTree;
@@ -103,8 +106,7 @@ public class ECPModelView {
 						if (!project.isOpen()) {
 							project.open();
 						}
-					}
-					else if (firstElement instanceof EObject) {
+					} else if (firstElement instanceof EObject) {
 						final ECPContainer context = ECPUtil.getModelContext(contentProvider,
 							structuredSelection.toArray());
 						ECPHandlerHelper.openModelElement(firstElement, (ECPProject) context);
@@ -125,8 +127,7 @@ public class ECPModelView {
 							selectionService
 								.setSelection(structuredSelection.getFirstElement());
 							activateCorrectPart(structuredSelection.getFirstElement());
-						}
-						else {
+						} else {
 							selectionService
 								.setSelection(structuredSelection.toList());
 						}
@@ -153,6 +154,11 @@ public class ECPModelView {
 		partService.showPart(partToHighlite, PartState.ACTIVATE);
 	}
 
+	/**
+	 * Sets the currently active part. Used to update the selection in case the model explorer is linked to editors.
+	 * 
+	 * @param part the active {@link MPart}
+	 */
 	@Inject
 	public void setActivePart(@Named(IServiceConstants.ACTIVE_PART) @Optional MPart part) {
 		if (modelExplorerTree == null) {

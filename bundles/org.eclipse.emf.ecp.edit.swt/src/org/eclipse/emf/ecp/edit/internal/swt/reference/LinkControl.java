@@ -32,7 +32,7 @@ import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
-import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
@@ -210,7 +210,7 @@ public class LinkControl extends SingleControl {
 	@Override
 	public Binding bindValue() {
 
-		final IObservableValue value = SWTObservables.observeText(hyperlink);
+		final IObservableValue value = WidgetProperties.text().observe(hyperlink);
 		getDataBindingContext().bindValue(value, getModelValue(), createValueExtractingUpdateStrategy(),
 			new UpdateValueStrategy() {
 				@Override
@@ -220,7 +220,7 @@ public class LinkControl extends SingleControl {
 				}
 			});
 
-		final IObservableValue tooltipValue = SWTObservables.observeTooltipText(hyperlink);
+		final IObservableValue tooltipValue = WidgetProperties.tooltipText().observe(hyperlink);
 		getDataBindingContext().bindValue(tooltipValue, getModelValue(),
 			createValueExtractingUpdateStrategy(),
 			new UpdateValueStrategy() {
@@ -230,7 +230,7 @@ public class LinkControl extends SingleControl {
 				}
 			});
 
-		final IObservableValue imageValue = SWTObservables.observeImage(imageHyperlink);
+		final IObservableValue imageValue = WidgetProperties.image().observe(imageHyperlink);
 		getDataBindingContext().bindValue(imageValue, getModelValue(),
 			new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER),
 			new UpdateValueStrategy() {
@@ -240,7 +240,7 @@ public class LinkControl extends SingleControl {
 				}
 			});
 
-		final IObservableValue deleteButtonEnablement = SWTObservables.observeEnabled(getDeleteButton());
+		final IObservableValue deleteButtonEnablement = WidgetProperties.enabled().observe(getDeleteButton());
 		getDataBindingContext().bindValue(deleteButtonEnablement, getModelValue(),
 			createValueExtractingUpdateStrategy(),
 			new UpdateValueStrategy() {

@@ -21,6 +21,7 @@ import java.util.List;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.test.common.DefaultRealm;
 import org.eclipse.emf.ecp.view.internal.validation.ValidationNotification;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
@@ -44,6 +45,8 @@ import org.junit.Test;
  */
 public class ValidationProvider_PTest {
 
+	private DefaultRealm defaultRealm;
+
 	private VControl control;
 	private Computer computer;
 	private ValidationService validationService;
@@ -53,6 +56,7 @@ public class ValidationProvider_PTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
+		defaultRealm = new DefaultRealm();
 		final VView view = VViewFactory.eINSTANCE.createView();
 		view.setRootEClass(TestPackage.eINSTANCE.getComputer());
 
@@ -80,6 +84,7 @@ public class ValidationProvider_PTest {
 	 */
 	@After
 	public void tearDown() throws Exception {
+		defaultRealm.dispose();
 	}
 
 	@Test

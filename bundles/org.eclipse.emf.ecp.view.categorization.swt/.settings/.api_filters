@@ -35,6 +35,12 @@
                 <message_argument value="AbstractSWTTabRenderer()"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change 180" id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.swt.AbstractSWTTabRenderer"/>
+                <message_argument value="AbstractSWTTabRenderer(VELEMENT, ViewModelContext, ReportService, EMFFormsRendererFactory)"/>
+            </message_arguments>
+        </filter>
         <filter comment="EMFForms 1.6 SPI Change" id="338792546">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.swt.AbstractSWTTabRenderer"/>
@@ -55,6 +61,12 @@
                 <message_argument value="CategorizationElementTabbedSWTRenderer()"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change 180" id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.swt.CategorizationElementTabbedSWTRenderer"/>
+                <message_argument value="CategorizationElementTabbedSWTRenderer(VCategorizationElement, ViewModelContext, ReportService, EMFFormsRendererFactory)"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/ecp/view/spi/categorization/swt/CompositeCategoryJFaceTreeRenderer.java" type="org.eclipse.emf.ecp.view.spi.categorization.swt.CompositeCategoryJFaceTreeRenderer">
         <filter comment="SPI Change in 1.6" id="338722907">
@@ -69,6 +81,12 @@
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.swt.CompositeCategorySWTTabRenderer"/>
                 <message_argument value="CompositeCategorySWTTabRenderer()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 180" id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.swt.CompositeCategorySWTTabRenderer"/>
+                <message_argument value="CompositeCategorySWTTabRenderer(VCategorization, ViewModelContext, ReportService, EMFFormsRendererFactory)"/>
             </message_arguments>
         </filter>
     </resource>

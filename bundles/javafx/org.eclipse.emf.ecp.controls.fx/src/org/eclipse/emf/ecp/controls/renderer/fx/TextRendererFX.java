@@ -49,8 +49,7 @@ public class TextRendererFX extends SimpleControlRendererFX {
 		final TextField text = new TextField();
 		text.setEditable(!control.isReadonly());
 		final IObservableValue targetValue = getTargetObservable(text, "text"); //$NON-NLS-1$
-		final IObservableValue modelValue = getModelObservable(control
-			.getDomainModelReference().getIterator().next());
+		final IObservableValue modelValue = getModelObservable();
 		final Binding binding = bindModelToTarget(targetValue, modelValue, getTargetToModelStrategy(control),
 			getModelToTargetStrategy(control));
 

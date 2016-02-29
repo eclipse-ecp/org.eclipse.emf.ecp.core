@@ -30,9 +30,17 @@ import org.eclipse.ui.dialogs.ListDialog;
  * @author Eugen Neufeld
  *
  */
-public class ValueSelectionHelper {
+public abstract class ValueSelectionHelper {
 
-	public static Object getValueSelectionDialog(Shell shell, EStructuralFeature structuralFeature) {
+	/**
+	 * Opens a dialog to select a possible value for a given {@link EStructuralFeature}.
+	 * If the feature is a enum or boolean, it will show suggestions, otherwise, it will accept Strings.
+	 * 
+	 * @param shell The {@link Shell} to open the dialog on
+	 * @param structuralFeature The {@link EStructuralFeature} to select possible values for
+	 * @return The selected value as an {@link Object}
+	 */
+	public static Object openValueSelectionDialog(Shell shell, EStructuralFeature structuralFeature) {
 		if (structuralFeature == null) {
 			return null;
 		}

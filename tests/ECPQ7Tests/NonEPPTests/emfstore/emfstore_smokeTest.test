@@ -1,0 +1,126 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _mY5uUKEgEeKX8e34E6tWIg,_rr2EEFpSEeKcnaHGSt8OwA,_f3qEUVpSEeKcnaHGSt8OwA,_IuFcgFpZEeKcnaHGSt8OwA,_YQj0cT-VEeK-yuKsz0Lang
+Element-Name: emfstore_smokeTest
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _yPbVEGswEeWukfCGOpNfzw
+Runtime-Version: 2.0.1.201508250612
+Save-Time: 10/5/15 9:50 AM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+// login
+with [get-view "Model Repositories" | get-tree | get-item "Local EMFStore"] {
+	verify-error { get-menu Logout }
+	verify-error { get-menu "Manage Users\\/Groups..." }
+    get-property "getData().getType()" | equals Repository | verify-true
+	get-menu Login | click
+}
+get-window "Progress Information" | get-window "Authentication required" | get-label "Log in to Localhost Server" 
+    | get-property caption | equals "Log in to Localhost Server" | verify-true
+try { 
+	with [get-window "Progress Information" | get-window "Authentication required"] {
+	    get-combo -after [get-label Username] | set-text super
+	    get-editbox -after [get-label Password] | set-text super
+	    get-button | click
+	    get-button OK | click
+	}
+} -catch {}
+get-view "Model Repositories" | get-tree | select "Local EMFStore"
+with [get-view "Model Repositories" | get-tree] {
+    get-menu Logout | get-property enablement | equals true | verify-true
+    get-menu "Manage Users\\/Groups..." | get-property enablement | equals true | verify-true
+}
+
+// share project
+get-view "Model Explorer" | get-tree | select TestProject | get-menu Share | click
+with [get-window "ECPRepository Wizard"] {
+    get-button "Select existing repository" | click
+    get-button "Next >" | click
+    get-table | select "Local EMFStore"
+    get-button Finish | click
+}
+get-window "Share succeeded" | get-button OK | click
+with [get-view "Model Repositories" | get-tree] {
+    get-item "Local EMFStore" | get-property "getItemCount()" | equals 1 | verify-true
+    get-item "Local EMFStore/TestProject" | get-property caption | equals TestProject | verify-true
+}
+
+// commit project
+with [get-view "Model Explorer" | get-tree] {
+    select "TestProject \\[trunk, Version 0\\]/Tournament Pro/Matchup" | get-menu Game | click
+    select "TestProject \\[trunk, Version 0\\]" | get-menu Commit | click
+}
+get-window Commit | get-editbox -after [get-label "Log message:"] | set-text Test1
+with [get-window Commit] {
+    get-label "Commit your local changes of project \"TestProject\" to the server" | get-property caption 
+        | equals "Commit your local changes of project \"TestProject\" to the server" | verify-true
+}
+get-window Commit | get-button OK | click
+get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 1\\]"
+with [get-view "Model Repositories" | get-tree] {
+    select "Local EMFStore" | click -default
+    select "Local EMFStore" | get-menu Properties | click
+}
+get-view "Model Explorer" | get-tree | get-menu Commit | get-property enablement | equals false | verify-true
+get-window "Repository Properties" | get-button OK | click
+
+// revert project
+get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version .\\]"
+get-view "Model Explorer" | get-tree | get-menu "Revert All Operations" | get-property enablement | equals false 
+    | verify-true
+get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version .\\]/League America" | double-click
+get-editor "League America" | get-editbox -after [get-label Name] | set-text America2
+get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version .\\]/League Europe" | double-click
+get-editor "League Europe" | get-editbox -after [get-label Name] | set-text Europe2
+get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version .\\]"
+get-view "Model Explorer" | get-tree | get-menu "Revert All Operations" | get-property enablement | equals true 
+    | verify-true
+get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version .\\]" | get-menu "Revert All Operations" | click
+get-window Confirmation | get-label "Do you really want to revert all your changes on project TestProject?" 
+    | get-property caption | equals "Do you really want to revert all your changes on project TestProject?" 
+    | verify-true
+get-window Confirmation | get-button Yes | click
+get-window Revert | get-button OK | click
+with [get-view "Model Explorer" | get-tree] {
+    get-item "TestProject \\[trunk, Version .\\]/League America" | get-property caption | equals "League America" | verify-true
+    get-item "TestProject \\[trunk, Version .\\]/League Europe" | get-property caption | equals "League Europe" | verify-true
+}
+get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version .\\]"
+get-view "Model Explorer" | get-tree | get-menu "Revert All Operations" | get-property enablement | equals false 
+    | verify-true
+with [get-view "Model Explorer" | get-tree] {
+    select "TestProject \\[trunk, Version .\\]/League America" | double-click
+    select "TestProject \\[trunk, Version .\\]/League America/Player Maximilian"
+}
+get-editor "League America" | get-editbox -after [get-label Name] | set-text America3
+get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version .\\]/League Europe" | key-type ESC -times 2
+get-editor "League Europe" | get-editbox -after [get-label Name] | set-text Europe3
+get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version .\\]" | get-menu "Revert All Operations" | click
+get-window Confirmation | get-button No | click
+with [get-view "Model Explorer" | get-tree] {
+    get-item "TestProject \\[trunk, Version .\\]/League America3" | get-property caption | equals "League America3" | verify-true
+    get-item "TestProject \\[trunk, Version .\\]/League Europe3" | get-property caption | equals "League Europe3" | verify-true
+}
+
+// delete project
+// this showed up as "todo: not implemented" when I started merging the tests into a smoke test. but it works?
+get-view "Model Repositories" | get-tree | select "Local EMFStore/TestProject" | get-menu "Delete on server" | click
+get-window Confirmation | get-label "Do you really want to delete the remote project TestProject?" | get-property caption 
+    | equals "Do you really want to delete the remote project TestProject?" | verify-true
+get-window Confirmation | get-button Yes | click
+get-view "Model Repositories" | get-tree | get-item "Local EMFStore" | get-property childCount | equals 0 | verify-true
+get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 1\\]"
+
+// log out
+with [get-view "Model Repositories" | get-tree] {
+	select "Local EMFStore" | get-menu Logout | click
+	verify-error { get-menu Logout }
+	verify-error { get-menu "Manage Users\\/Groups..." }
+}
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

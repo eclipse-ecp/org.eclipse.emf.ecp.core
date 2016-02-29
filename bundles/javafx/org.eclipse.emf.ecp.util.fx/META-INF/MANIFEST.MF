@@ -2,8 +2,8 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: FX Util
 Bundle-SymbolicName: org.eclipse.emf.ecp.util.fx
-Bundle-Version: 1.7.0.qualifier
+Bundle-Version: 1.8.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Export-Package: org.eclipse.emf.ecp.util.fx;version="1.7.0"
+Export-Package: org.eclipse.emf.ecp.util.fx;version="1.8.0"
 Require-Bundle: org.eclipse.emf.edit
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

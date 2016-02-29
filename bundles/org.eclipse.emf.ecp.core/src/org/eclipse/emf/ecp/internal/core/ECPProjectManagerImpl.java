@@ -31,6 +31,7 @@ import org.eclipse.emf.ecp.core.util.ECPProjectAware;
 import org.eclipse.emf.ecp.core.util.ECPProperties;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.core.util.observer.ECPObserver;
+import org.eclipse.emf.ecp.core.util.observer.ECPObserverBus;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectContentChangedObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectContentTouchedObserver;
 import org.eclipse.emf.ecp.core.util.observer.ECPProjectOpenClosedObserver;
@@ -50,8 +51,8 @@ import org.eclipse.net4j.util.AdapterUtil;
  * @author Eike Stepper
  * @author Eugen Neufeld
  */
-public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject, ECPObserver> implements
-ECPProjectManager, ECPRepositoriesChangedObserver {
+public final class ECPProjectManagerImpl extends PropertiesStore<InternalProject, ECPObserver>implements
+	ECPProjectManager, ECPRepositoriesChangedObserver {
 
 	private static final String PROJECT_FOLDERNAME = "projects"; //$NON-NLS-1$
 
@@ -59,6 +60,8 @@ ECPProjectManager, ECPRepositoriesChangedObserver {
 	 * This variable defines whether the projects where already initialized. Default value is false.
 	 */
 	private boolean initializedProjects;
+
+	private ECPObserverBus ecpObserverBus;
 
 	/**
 	 * Should not be called directly, use service instead.
@@ -70,7 +73,6 @@ ECPProjectManager, ECPRepositoriesChangedObserver {
 	/**
 	 * @param sessionId Will be appended to the folder name so that there are different folders for each session
 	 */
-
 	public ECPProjectManagerImpl(String sessionId) {
 		initializeFolder(sessionId);
 	}
@@ -81,9 +83,18 @@ ECPProjectManager, ECPRepositoriesChangedObserver {
 		setFolder(new File(stateLocation, PROJECT_FOLDERNAME));
 		String finalFolderName = PROJECT_FOLDERNAME;
 		if (sessionId != null) {
-			finalFolderName += "-" + sessionId;
+			finalFolderName += "-" + sessionId; //$NON-NLS-1$
 		}
 		setFolder(new File(stateLocation, finalFolderName));
+	}
+
+	/**
+	 * Bindes the ECPObserverBus.
+	 *
+	 * @param ecpObserverBus the bus
+	 */
+	public void setECPObserverBus(ECPObserverBus ecpObserverBus) {
+		this.ecpObserverBus = ecpObserverBus;
 	}
 
 	/** {@inheritDoc} */
@@ -209,7 +220,7 @@ ECPProjectManager, ECPRepositoriesChangedObserver {
 		}
 
 		try {
-			ECPUtil.getECPObserverBus().notify(ECPProjectOpenClosedObserver.class).projectChanged(project, opened);
+			ecpObserverBus.notify(ECPProjectOpenClosedObserver.class).projectChanged(project, opened);
 		} catch (final RuntimeException ex) {
 			Activator.log(ex);
 		}
@@ -226,20 +237,21 @@ ECPProjectManager, ECPRepositoriesChangedObserver {
 	 */
 	public void notifyObjectsChanged(ECPProject project, Collection<Object> objects, boolean structural) {
 
-		final Collection<Object> affected = ECPUtil.getECPObserverBus().notify(ECPProjectContentChangedObserver.class)
+		final Collection<Object> affected = ecpObserverBus.notify(ECPProjectContentChangedObserver.class)
 			.objectsChanged(project, objects);
 		final Set<Object> toUpdate = new HashSet<Object>(objects);
 		if (affected != null) {
 			toUpdate.addAll(affected);
 		}
-		ECPUtil.getECPObserverBus().notify(ECPProjectContentTouchedObserver.class)
+		ecpObserverBus.notify(ECPProjectContentTouchedObserver.class)
 			.contentTouched(project, toUpdate, structural);
 
 	}
 
 	/** {@inheritDoc} */
 	@Override
-	public void repositoriesChanged(Collection<ECPRepository> oldRepositories, Collection<ECPRepository> newRepositories) {
+	public void repositoriesChanged(Collection<ECPRepository> oldRepositories,
+		Collection<ECPRepository> newRepositories) {
 		final Set<ECPRepository> addedRepositories = InternalUtil.getAddedElements(oldRepositories, newRepositories);
 		final Collection<InternalProject> projects = getElements();
 
@@ -261,12 +273,12 @@ ECPProjectManager, ECPRepositoriesChangedObserver {
 	@Override
 	protected void doActivate() throws Exception {
 		super.doActivate();
-		ECPUtil.getECPObserverBus().register(this);
+		ecpObserverBus.register(this);
 	}
 
 	@Override
 	protected void doDeactivate() throws Exception {
-		ECPUtil.getECPObserverBus().unregister(this);
+		ecpObserverBus.unregister(this);
 		super.doDeactivate();
 	}
 
@@ -283,7 +295,7 @@ ECPProjectManager, ECPRepositoriesChangedObserver {
 	@Override
 	protected void notifyObservers(Collection<InternalProject> oldElements, Collection<InternalProject> newElements)
 		throws Exception {
-		ECPUtil.getECPObserverBus().notify(ECPProjectsChangedObserver.class)
+		ecpObserverBus.notify(ECPProjectsChangedObserver.class)
 			.projectsChanged((Collection) oldElements, (Collection) newElements);
 	}
 

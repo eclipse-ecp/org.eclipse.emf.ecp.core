@@ -30,7 +30,7 @@ import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
 import org.eclipse.emf.emfstore.bowling.Player;
-import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.DisplayRealm;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Display;
@@ -95,7 +95,7 @@ public class ModifyNavigatorTest extends SWTBotTestCase {
 
 	@Test
 	public void test() throws ECPRendererException, InterruptedException {
-		Realm.runWithDefault(SWTObservables.getRealm(display), new TestRunnable());
+		Realm.runWithDefault(DisplayRealm.getRealm(display), new TestRunnable());
 	}
 
 	protected static Player createPlayer(String name) {

@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- * jfaltermeier - initial API and implementation
+ * Johannes Faltermeier - initial API and implementation
  ******************************************************************************/
 package org.eclipse.emfforms.internal.swt.treemasterdetail.defaultprovider;
 
@@ -23,10 +23,13 @@ import org.eclipse.swt.dnd.DropTargetListener;
 import org.eclipse.swt.dnd.Transfer;
 
 /**
- * @author jfaltermeier
+ * Default implementation of a {@link DNDProvider}. This will support local transfers for copy, move and link operations
+ * in an EMF environment.
+ *
+ * @author Johannes Faltermeier
  *
  */
-public final class DefaultDNDProvider implements DNDProvider {
+public class DefaultDNDProvider implements DNDProvider {
 	@Override
 	public int getDragOperations() {
 		return getDNDOperations();
@@ -57,11 +60,21 @@ public final class DefaultDNDProvider implements DNDProvider {
 		return new EditingDomainViewerDropAdapter(editingDomain, treeViewer);
 	}
 
-	private int getDNDOperations() {
+	/**
+	 * The drag&drop operations which will be returned by {@link #getDragOperations()} and {@link #getDragOperations()}.
+	 *
+	 * @return the operation bits
+	 */
+	protected int getDNDOperations() {
 		return DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK;
 	}
 
-	private Transfer[] getDNDTransferTypes() {
+	/**
+	 * The transfers which will be returned {@link #getDragTransferTypes()} and {@link #getDropTransferTypes()}.
+	 *
+	 * @return the transfer types
+	 */
+	protected Transfer[] getDNDTransferTypes() {
 		return new Transfer[] { LocalTransfer.getInstance() };
 	}
 

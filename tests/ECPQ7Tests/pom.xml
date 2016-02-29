@@ -10,7 +10,7 @@
 	<properties>
 		<rcptt-runner-version>2.0.1</rcptt-runner-version>
 		<rcptt-maven-version>2.0.1</rcptt-maven-version>
-		<build_job>ecp-relaeseBranch-signed</build_job>
+		<build_job>ecp-develop-nightly</build_job>
 		<currentBuild>https://hudson.eclipse.org/ecp/job/${build_job}/lastSuccessfulBuild/artifact/releng/</currentBuild>
 	</properties> 
 	

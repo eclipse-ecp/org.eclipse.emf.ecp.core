@@ -40,6 +40,13 @@
                 <message_argument value="7"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change 180" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.compoundcontrol.model.VCompoundcontrolPackage"/>
+                <message_argument value="COMPOUND_CONTROL_FEATURE_COUNT"/>
+                <message_argument value="8"/>
+            </message_arguments>
+        </filter>
         <filter comment="Changes due to new label field in 1.6" id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.compoundcontrol.model.VCompoundcontrolPackage"/>
@@ -52,6 +59,13 @@
                 <message_argument value="org.eclipse.emf.ecp.view.spi.compoundcontrol.model.VCompoundcontrolPackage"/>
                 <message_argument value="COMPOUND_CONTROL__CONTROLS"/>
                 <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.8.0" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.compoundcontrol.model.VCompoundcontrolPackage"/>
+                <message_argument value="COMPOUND_CONTROL__CONTROLS"/>
+                <message_argument value="7"/>
             </message_arguments>
         </filter>
         <filter comment="Changes due to new label field in 1.6" id="388194388">
@@ -80,6 +94,24 @@
                 <message_argument value="org.eclipse.emf.ecp.view.spi.compoundcontrol.model.VCompoundcontrolPackage"/>
                 <message_argument value="COMPOUND_CONTROL__VISIBLE"/>
                 <message_argument value="1"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 180" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.compoundcontrol.model.VCompoundcontrolPackage"/>
+                <message_argument value="COMPOUND_CONTROL__DOMAIN_MODEL_REFERENCE"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 180" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.compoundcontrol.model.VCompoundcontrolPackage"/>
+                <message_argument value="COMPOUND_CONTROL__LABEL"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 180" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.compoundcontrol.model.VCompoundcontrolPackage"/>
+                <message_argument value="COMPOUND_CONTROL__LABEL_ALIGNMENT"/>
             </message_arguments>
         </filter>
     </resource>

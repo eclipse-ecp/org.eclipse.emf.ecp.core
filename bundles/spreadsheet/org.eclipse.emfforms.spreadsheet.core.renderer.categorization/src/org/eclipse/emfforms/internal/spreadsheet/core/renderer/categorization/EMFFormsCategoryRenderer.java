@@ -15,7 +15,10 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.WorkbookUtil;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.model.VAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.emfforms.spi.view.annotation.model.VAnnotation;
+import org.eclipse.emf.emfforms.spi.view.annotation.model.VAnnotationFactory;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsAbstractSpreadsheetRenderer;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsNoRendererException;
@@ -30,6 +33,7 @@ import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetReport;
  */
 public class EMFFormsCategoryRenderer extends EMFFormsAbstractSpreadsheetRenderer<VCategory> {
 
+	private static final String SHEET_NAME_KEY = "SheetNameKey"; //$NON-NLS-1$
 	private final EMFFormsSpreadsheetRendererFactory rendererFactory;
 	private final ReportService reportService;
 
@@ -59,7 +63,7 @@ public class EMFFormsCategoryRenderer extends EMFFormsAbstractSpreadsheetRendere
 		try {
 			final EMFFormsAbstractSpreadsheetRenderer<VElement> renderer = rendererFactory.getRendererInstance(
 				vElement.getComposite(), viewModelContext);
-			final String sheetName = WorkbookUtil.createSafeSheetName(vElement.getLabel());
+			final String sheetName = getSheetName(workbook, vElement);
 
 			numberRenderedColumns += renderer.render(workbook, vElement.getComposite(), viewModelContext,
 				new EMFFormsSpreadsheetRenderTarget(sheetName, renderTarget.getRow(), 0));
@@ -68,6 +72,22 @@ public class EMFFormsCategoryRenderer extends EMFFormsAbstractSpreadsheetRendere
 		}
 
 		return numberRenderedColumns;
+	}
+
+	private String getSheetName(Workbook workbook, VCategory vElement) {
+		for (final VAttachment vAttachment : vElement.getAttachments()) {
+			if (VAnnotation.class.isInstance(vAttachment)
+				&& SHEET_NAME_KEY.equals(VAnnotation.class.cast(vAttachment).getKey())) {
+				return VAnnotation.class.cast(vAttachment).getValue();
+			}
+		}
+		final VAnnotation annotation = VAnnotationFactory.eINSTANCE.createAnnotation();
+		annotation.setKey(SHEET_NAME_KEY);
+		final String sheetName = WorkbookUtil
+			.createSafeSheetName(workbook.getNumberOfSheets() + 1 + " " + vElement.getLabel()); //$NON-NLS-1$
+		annotation.setValue(sheetName);
+		vElement.getAttachments().add(annotation);
+		return annotation.getValue();
 	}
 
 }

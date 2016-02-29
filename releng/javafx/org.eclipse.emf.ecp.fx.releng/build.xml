@@ -8,8 +8,8 @@
 				<file name="${java.home}\..\lib\ant-javafx.jar" />
 				<file name="${java.home}\..\jre\lib\jfxrt.jar" />
 				<file name="${java.home}\lib\ant-jfxrt.jar" />
-				<file name="${java.home}\..\jdk1.7.0_51\lib\ant-javafx.jar" />
-				<file name="${java.home}\lib\jfxrt.jar" />
+				<file name="C:\Program Files\Java\jdk1.8.0_60\lib\ant-javafx.jar" />
+				<file name="C:\Program Files\Java\jdk1.8.0_60\lib\jfxrt.jar" />
 			</filelist>
 		</path>
 
@@ -30,7 +30,9 @@
 		<fx:application id="fxApplication" name="ECP e4 FX Demo" mainClass="org.eclipse.equinox.launcher.Main" toolkit="swing" />
 
 		<fx:deploy embedJNLP="false" extension="false" includeDT="false" offlineAllowed="true" outdir="${basedir}/deploy" outfile="fix-ide" nativeBundles="all" updatemode="background" verbose="true">
-
+			<fx:platform basedir="C:\Program Files\Java\jdk1.8.0_60">
+				<fx:property name="org.osgi.framework.bundle.parent" value="ext"/>
+			</fx:platform>
 			<fx:info title="ECP e4 FX Demo" vendor="Eclipse Modeling Project" />
 			<fx:application refid="fxApplication" />
 			<fx:resources refid="appRes" />

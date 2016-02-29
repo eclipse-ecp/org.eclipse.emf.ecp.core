@@ -11,7 +11,11 @@
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.treemasterdetail;
 
+import java.util.Collection;
+
 import org.eclipse.emfforms.internal.swt.treemasterdetail.DefaultTreeMasterDetailCustomization;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.actions.MasterDetailAction;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateElementCallback;
 import org.eclipse.jface.viewers.IBaseLabelProvider;
 import org.eclipse.jface.viewers.IContentProvider;
 import org.eclipse.jface.viewers.ViewerFilter;
@@ -159,6 +163,46 @@ public final class TreeMasterDetailSWTBuilder {
 	 */
 	public TreeMasterDetailSWTBuilder customizeMenu(MenuProvider menu) {
 		behaviour.setMenu(menu);
+		return this;
+	}
+
+	/**
+	 * Use this method to customize the {@link org.eclipse.swt.widgets.Menu Menu} which is shown when an element in the
+	 * tree is right-clicked. Use this method to add additional menu entries.
+	 *
+	 * @param rightClickActions the additional right click actions which will be shown in the context menu
+	 * @return self
+	 * @since 1.8
+	 */
+	public TreeMasterDetailSWTBuilder customizeMenuItems(Collection<MasterDetailAction> rightClickActions) {
+		behaviour.customizeMenu(rightClickActions);
+		return this;
+	}
+
+	/**
+	 * Use this method to customize the {@link org.eclipse.swt.widgets.Menu Menu} which is shown when an element in the
+	 * tree is right-clicked. Use this method to influence the way new children are created.
+	 *
+	 * @param createElementCallback a callback which gets notified when a new child is created. this allows to veto the
+	 *            creation or to change the object to be added
+	 * @return self
+	 * @since 1.8
+	 */
+	public TreeMasterDetailSWTBuilder customizeCildCreation(CreateElementCallback createElementCallback) {
+		behaviour.customizeMenu(createElementCallback);
+		return this;
+	}
+
+	/**
+	 * Use this method to customize the {@link org.eclipse.swt.widgets.Menu Menu} which is shown when an element in the
+	 * tree is right-clicked. Use this method to change the way elements are deleted.
+	 *
+	 * @param deleteActionBuilder the delete action which will be added to the context menu
+	 * @return self
+	 * @since 1.8
+	 */
+	public TreeMasterDetailSWTBuilder customizeDelete(DeleteActionBuilder deleteActionBuilder) {
+		behaviour.customizeMenu(deleteActionBuilder);
 		return this;
 	}
 

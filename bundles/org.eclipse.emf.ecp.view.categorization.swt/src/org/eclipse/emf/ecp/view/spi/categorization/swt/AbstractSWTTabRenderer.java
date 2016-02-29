@@ -11,6 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.categorization.swt;
 
+import java.util.Set;
+
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -25,6 +27,9 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.model.reporting.StatusReport;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
+import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
+import org.eclipse.emf.ecp.view.template.style.tab.model.VTTabStyleProperty;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
@@ -33,7 +38,7 @@ import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
-import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
@@ -51,6 +56,7 @@ import org.eclipse.swt.widgets.Control;
 public abstract class AbstractSWTTabRenderer<VELEMENT extends VElement> extends AbstractSWTRenderer<VELEMENT> {
 	private final EMFFormsRendererFactory emfFormsRendererFactory;
 	private final EMFDataBindingContext dataBindingContext;
+	private final VTViewTemplateProvider viewTemplateProvider;
 
 	private EMFFormsRendererFactory getEMFFormsRendererFactory() {
 		return emfFormsRendererFactory;
@@ -63,13 +69,29 @@ public abstract class AbstractSWTTabRenderer<VELEMENT extends VElement> extends 
 	 * @param viewContext the view context
 	 * @param reportService the {@link ReportService}
 	 * @param emfFormsRendererFactory The {@link EMFFormsRendererFactory}
-	 * @since 1.6
+	 * @param viewTemplateProvider the {@link VTViewTemplateProvider}
+	 * @since 1.8
 	 */
-	public AbstractSWTTabRenderer(VELEMENT vElement, ViewModelContext viewContext, ReportService reportService,
-		EMFFormsRendererFactory emfFormsRendererFactory) {
+	public AbstractSWTTabRenderer(
+		VELEMENT vElement,
+		ViewModelContext viewContext,
+		ReportService reportService,
+		EMFFormsRendererFactory emfFormsRendererFactory,
+		VTViewTemplateProvider viewTemplateProvider) {
 		super(vElement, viewContext, reportService);
 		this.emfFormsRendererFactory = emfFormsRendererFactory;
+		this.viewTemplateProvider = viewTemplateProvider;
 		dataBindingContext = new EMFDataBindingContext();
+	}
+
+	/**
+	 * Returns the view template provider.
+	 *
+	 * @return the {@link VTViewTemplateProvider}
+	 * @since 1.8
+	 */
+	protected final VTViewTemplateProvider getViewTemplateProvider() {
+		return viewTemplateProvider;
 	}
 
 	@Override
@@ -80,7 +102,7 @@ public abstract class AbstractSWTTabRenderer<VELEMENT extends VElement> extends 
 	@Override
 	protected Control renderControl(SWTGridCell cell, Composite parent)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		final CTabFolder folder = new CTabFolder(parent, SWT.BOTTOM);
+		final CTabFolder folder = new CTabFolder(parent, getTabFolderStyle());
 		folder.setBackground(parent.getBackground());
 		final EList<VAbstractCategorization> categorizations = getCategorizations();
 		for (final VAbstractCategorization categorization : categorizations) {
@@ -90,7 +112,7 @@ public abstract class AbstractSWTTabRenderer<VELEMENT extends VElement> extends 
 			final IObservableValue modelValue = EMFEditObservables.observeValue(
 				AdapterFactoryEditingDomain.getEditingDomainFor(categorization), categorization,
 				VViewPackage.eINSTANCE.getElement_Label());
-			final IObservableValue targetValue = SWTObservables.observeText(item);
+			final IObservableValue targetValue = WidgetProperties.text().observe(item);
 			dataBindingContext.bindValue(targetValue, modelValue);
 
 			AbstractSWTRenderer<VElement> renderer;
@@ -123,6 +145,33 @@ public abstract class AbstractSWTTabRenderer<VELEMENT extends VElement> extends 
 			folder.setSelection(0);
 		}
 		return folder;
+	}
+
+	private int getTabFolderStyle() {
+		if (getViewTemplateProvider() == null) {
+			return getDefaultFolderStyle();
+		}
+		final Set<VTStyleProperty> styleProperties = getViewTemplateProvider()
+			.getStyleProperties(getVElement(), getViewModelContext());
+		for (final VTStyleProperty styleProperty : styleProperties) {
+			if (!VTTabStyleProperty.class.isInstance(styleProperty)) {
+				continue;
+			}
+			final VTTabStyleProperty style = VTTabStyleProperty.class.cast(styleProperty);
+			switch (style.getType()) {
+			case BOTTOM:
+				return SWT.BOTTOM;
+			case TOP:
+				return SWT.TOP;
+			default:
+				return getDefaultFolderStyle();
+			}
+		}
+		return getDefaultFolderStyle();
+	}
+
+	private int getDefaultFolderStyle() {
+		return SWT.BOTTOM;
 	}
 
 	/**

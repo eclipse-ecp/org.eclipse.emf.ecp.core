@@ -29,6 +29,9 @@ import org.eclipse.emfforms.internal.group.swt.GroupTextProperty;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
+import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
@@ -62,6 +65,7 @@ public class GroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 
 	private static final String CONTROL_GROUP = "org_eclipse_emf_ecp_ui_control_group"; //$NON-NLS-1$
 	private final EMFDataBindingContext dbc;
+	private SWTGridDescription rendererGridDescription;
 
 	/**
 	 * {@inheritDoc}
@@ -107,6 +111,17 @@ public class GroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 	@Override
 	protected Layout getLayout(int numControls, boolean equalWidth) {
 		return LayoutProviderHelper.getColumnLayout(numControls, equalWidth, new Point(5, 5));
+	}
+
+	@Override
+	public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
+		if (rendererGridDescription == null) {
+			rendererGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 1, this);
+			final SWTGridCell swtGridCell = rendererGridDescription.getGrid().get(0);
+			swtGridCell.setVerticalFill(false);
+			swtGridCell.setVerticalGrab(false);
+		}
+		return rendererGridDescription;
 	}
 
 	/**

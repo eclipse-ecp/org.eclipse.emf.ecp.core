@@ -11,16 +11,14 @@
 
 	<groupId>org.eclipse.emf.ecp.fx</groupId>
 	<artifactId>ecp-fx-parent</artifactId>
-	<version>1.7.0-SNAPSHOT</version>
+	<version>1.8.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<properties>
 		<tycho-version>0.21.0</tycho-version>
-		<junit-version>4.8.1</junit-version>
+		<junit-version>4.11</junit-version>
 		<mockito-version>1.8.4</mockito-version>
 		<platform-version>4.4</platform-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<cbi-jdt-repo.url>https://repo.eclipse.org/content/repositories/eclipse-staging/</cbi-jdt-repo.url>
-		<cbi-jdt-version>3.11.0.v20140917-1904</cbi-jdt-version>
 	</properties>
 
 	<modules>
@@ -35,13 +33,19 @@
 		<module>../org.eclipse.emf.ecp.repository.fx</module>
 	</modules>
 
-	<!-- <repositories> <repository> <id>efxclipse-repo</id> <layout>p2</layout> 
-		<url>http://download.eclipse.org/efxclipse/runtime-nightly/site</url> </repository> 
-		<repository> <id>efxclipse-addons</id> <layout>p2</layout> <url>http://downloads.efxclipse.bestsolution.at/p2-repos/addons/nightly/site/</url> 
-		</repository> <repository> <id>ecp</id> <layout>p2</layout> <url>https://hudson.eclipse.org/ecp/job/emf-emfclient-integration/lastSuccessfulBuild/artifact/releng/org.eclipse.emf.ecp.repository/target/repository/</url> 
-		</repository> <repository> <id>emfstore</id> <layout>p2</layout> <url>http://download.eclipse.org/emf-store/releases_13</url> 
-		</repository> <repository> <id>luna</id> <url>http://download.eclipse.org/releases/luna</url> 
-		<layout>p2</layout> </repository> </repositories> -->
+	<repositories>
+		<repository>
+			<id>efxclipse-repo</id>
+			<layout>p2</layout>
+			<url>http://download.eclipse.org/efxclipse/runtime-nightly/site</url>
+		</repository>
+		<repository>
+			<id>efxclipse-addons</id>
+			<layout>p2</layout>
+			<url>http://downloads.efxclipse.org/efxclipse.bestsolution.at/p2-repos/addons/nightly/site/</url>
+		</repository>
+
+	</repositories>
 
 	<pluginRepositories>
 		<pluginRepository>
@@ -51,27 +55,13 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</pluginRepository>
-		<pluginRepository>
-			<id>cbi-jdt</id>
-			<url>${cbi-jdt-repo.url}</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</pluginRepository>
+		
 	</pluginRepositories>
 
 	<build>
 
 		<!-- build plugins -->
 		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
-			</plugin>
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-maven-plugin</artifactId>
@@ -83,6 +73,8 @@
 				<artifactId>target-platform-configuration</artifactId>
 				<version>${tycho-version}</version>
 				<configuration>
+					<resolver>p2</resolver>
+					<pomDependencies>consider</pomDependencies>
 					<target>
 						<artifact>
 							<groupId>org.eclipse.emf.ecp.fx</groupId>
@@ -97,6 +89,7 @@
 							<arch>noenv</arch>
 						</environment>
 					</environments>
+
 				</configuration>
 			</plugin>
 			<!-- <plugin> <groupId>org.eclipse.tycho</groupId> <artifactId>target-platform-configuration</artifactId> 
@@ -109,39 +102,29 @@
 				<os>linux</os> <ws>gtk</ws> <arch>x86_64</arch> </environment> <environment> 
 				<os>macosx</os> <ws>cocoa</ws> <arch>x86_64</arch> </environment> </environments> 
 				</configuration> </plugin> -->
-			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>tycho-compiler-plugin</artifactId>
-				<version>${tycho-version}</version>
-				<configuration>
-					<!-- <useJDK>BREE</useJDK> -->
-					<encoding>UTF-8</encoding>
-					<source>1.8</source>
-					<target>1.8</target>
-					<extraClasspathElements>
-						<extraClasspathElement>
-							<groupId>javafx</groupId>
-							<artifactId>javafx.mvn</artifactId>
-							<version>2.2.0-SNAPSHOT</version>
-							<systemPath>${java.home}/lib/jfxrt.jar</systemPath>
-							<scope>system</scope>
-						</extraClasspathElement>
-					</extraClasspathElements>
-				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>org.eclipse.jdt</groupId>
-						<artifactId>org.eclipse.jdt.core</artifactId>
-						<version>${cbi-jdt-version}</version>
-					</dependency>
-				</dependencies>
-			</plugin>
 		</plugins>
 
 
 		<!-- defines the default settings for the used plugins -->
 		<pluginManagement>
 			<plugins>
+				<plugin>
+					<groupId>org.eclipse.tycho</groupId>
+					<artifactId>tycho-compiler-plugin</artifactId>
+					<version>${tycho-version}</version>
+					<configuration>
+						<encoding>UTF-8</encoding>
+						<source>1.7</source>
+						<target>1.7</target>
+						<extraClasspathElements>
+							<extraClasspathElement>
+								<groupId>javafx</groupId>
+								<artifactId>javafx.mvn</artifactId>
+								<version>2.2.0-SNAPSHOT</version>
+							</extraClasspathElement>
+						</extraClasspathElements>
+					</configuration>
+				</plugin>
 				<plugin>
 					<groupId>org.eclipse.tycho</groupId>
 					<artifactId>tycho-source-plugin</artifactId>
@@ -156,13 +139,15 @@
 					</executions>
 				</plugin>
 				<plugin>
-					<groupId>org.eclipse.tycho</groupId>
-					<artifactId>tycho-packaging-plugin</artifactId>
-					<version>${tycho-version}</version>
-					<configuration>
-						<archiveSite>true</archiveSite>
-					</configuration>
-				</plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-packaging-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<archive>
+						<addMavenDescriptor>false</addMavenDescriptor>
+					</archive>
+				</configuration>
+			</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>

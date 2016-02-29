@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,7 +8,7 @@
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
- *******************************************************************************/
+ ******************************************************************************/
 package org.eclipse.emf.ecp.controls.fx.util;
 
 import java.math.BigDecimal;
@@ -20,30 +20,42 @@ import java.util.Locale;
 import org.eclipse.emf.ecp.controls.internal.fx.Activator;
 
 /**
+ * Helper for numerical values.
+ *
  * @author Eugen Neufeld
  *
  */
 public class NumericalHelper {
 
-	private static final String regexInt = "^[-+]?[0-9]*$";
-	private static final String regexFloat = "^[-+]?[0-9]*\\.?[0-9]*([eE][-+]?[0-9]+)?$";
+	private static final String REGEX_INT = "^[-+]?[0-9]*$"; //$NON-NLS-1$
+	private static final String REGEX_FLOAT = "^[-+]?[0-9]*\\.?[0-9]*([eE][-+]?[0-9]+)?$"; //$NON-NLS-1$
 
+	private NumericalHelper() {
+	}
+
+	/**
+	 * Return a regular expression for a given locale and class.
+	 *
+	 * @param locale The Locale
+	 * @param instanceClass The Class to return the expression for
+	 * @return the regular expression
+	 */
 	public static String getValidRegularExpression(Locale locale,
 		Class<?> instanceClass) {
 		if (instanceClass.isPrimitive()) {
 			try {
 				if (Double.class
 					.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
-					return regexFloat;
+					return REGEX_FLOAT;
 				} else if (Integer.class
 					.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
-					return regexInt;
+					return REGEX_INT;
 				} else if (Long.class
 					.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
-					return regexInt;
+					return REGEX_INT;
 				} else if (Float.class
 					.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
-					return regexFloat;
+					return REGEX_FLOAT;
 				}
 			} catch (final IllegalArgumentException ex) {
 				Activator.logException(ex);
@@ -55,22 +67,29 @@ public class NumericalHelper {
 				Activator.logException(ex);
 			}
 		} else if (BigDecimal.class.isAssignableFrom(instanceClass)) {
-			return regexFloat;
+			return REGEX_FLOAT;
 		} else if (Double.class.isAssignableFrom(instanceClass)) {
-			return regexFloat;
+			return REGEX_FLOAT;
 		} else if (BigInteger.class.isAssignableFrom(instanceClass)) {
-			return regexInt;
+			return REGEX_INT;
 		} else if (Integer.class.isAssignableFrom(instanceClass)) {
-			return regexInt;
+			return REGEX_INT;
 		} else if (Long.class.isAssignableFrom(instanceClass)) {
-			return regexInt;
+			return REGEX_INT;
 		} else if (Float.class.isAssignableFrom(instanceClass)) {
-			return regexFloat;
+			return REGEX_FLOAT;
 		}
-		return ".*";
+		return ".*"; //$NON-NLS-1$
 
 	}
 
+	/**
+	 * Creates a decimal format for a given locale and class.
+	 *
+	 * @param locale The locale to create the format for
+	 * @param instanceClass The Class to create the format for
+	 * @return the decimal format
+	 */
 	public static DecimalFormat setupFormat(Locale locale,
 		Class<?> instanceClass) {
 
@@ -103,7 +122,10 @@ public class NumericalHelper {
 	}
 
 	/**
-	 * @return
+	 * Returns the default value for a type.
+	 *
+	 * @param instanceClass the type to get the value for
+	 * @return The default value
 	 */
 	public static Number getDefaultValue(Class<?> instanceClass) {
 		if (instanceClass.isPrimitive()) {
@@ -143,6 +165,12 @@ public class NumericalHelper {
 		return null;
 	}
 
+	/**
+	 * Whether a give type is a float or a double.
+	 *
+	 * @param instanceClass The type to check
+	 * @return true if the given type is a float or a double false otherwise
+	 */
 	public static boolean isDouble(Class<?> instanceClass) {
 		if (instanceClass.isPrimitive()) {
 			try {
@@ -170,6 +198,12 @@ public class NumericalHelper {
 		return false;
 	}
 
+	/**
+	 * Whether a give type is a long or an int.
+	 *
+	 * @param instanceClass The type to check
+	 * @return true if the given type is a long or an int false otherwise
+	 */
 	public static boolean isInteger(Class<?> instanceClass) {
 		if (instanceClass.isPrimitive()) {
 			try {
@@ -198,8 +232,11 @@ public class NumericalHelper {
 	}
 
 	/**
-	 * @param number
-	 * @return
+	 * Converts a Number to the given type.
+	 * 
+	 * @param number the number to convert
+	 * @param instanceClass the type to convert to
+	 * @return the converted value
 	 */
 	public static Object numberToInstanceClass(Number number,
 		Class<?> instanceClass) {

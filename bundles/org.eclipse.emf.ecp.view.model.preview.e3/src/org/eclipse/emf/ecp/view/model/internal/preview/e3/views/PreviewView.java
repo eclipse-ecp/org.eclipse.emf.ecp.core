@@ -8,6 +8,7 @@
  *
  * Contributors:
  * Alexandra Buzila- initial API and implementation
+ * Clemens Elflein - changed for new ViewModelEditor
  ******************************************************************************/
 
 package org.eclipse.emf.ecp.view.model.internal.preview.e3.views;
@@ -40,6 +41,7 @@ import org.eclipse.emf.ecp.view.model.preview.common.Preview;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emfforms.internal.editor.viewmodel.ViewModelEditor;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
@@ -103,7 +105,7 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 	}
 
 	/**
-	 * @author Jonas
+	 * @author Clemens Elflein
 	 *
 	 */
 	private final class PreviewPartListener implements IPartListener2 {
@@ -111,6 +113,17 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 		public void partActivated(IWorkbenchPartReference partRef) {
 			if (ViewEditorPart.class.isInstance(partRef.getPart(true))) {
 				final ViewEditorPart part = (ViewEditorPart) partRef.getPart(true);
+				if (part.getView() != view) {
+					setView(part.getView());
+					sampleData = null;
+					render(view);
+				}
+				if (updateAutomatic) {
+					preView.registerForViewModelChanges();
+				}
+			} else if (NEW_EDITOR_CONSTANT
+				.equals(partRef.getPart(true) != null ? partRef.getPart(true).getClass().getName() : "")) {
+				final ViewModelEditor part = (ViewModelEditor) partRef.getPart(true);
 				if (part.getView() != view) {
 					setView(part.getView());
 					sampleData = null;
@@ -135,6 +148,13 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 				}
 				preView.removeView();
 				view = null;
+			} else if (NEW_EDITOR_CONSTANT
+				.equals(partRef.getPart(true) != null ? partRef.getPart(true).getClass().getName() : "")) {
+				if (updateAutomatic) {
+					preView.clear();
+				}
+				preView.removeView();
+				view = null;
 			}
 
 		}
@@ -143,6 +163,10 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 		public void partDeactivated(IWorkbenchPartReference partRef) {
 			final IWorkbenchPart part = partRef.getPart(true);
 			if (ViewEditorPart.class.isInstance(part) || PreviewView.class.isInstance(part)) {
+				removeAdapters();
+			} else if (NEW_EDITOR_CONSTANT
+				.equals(partRef.getPart(true) != null ? partRef.getPart(true).getClass().getName() : "")
+				|| PreviewView.class.isInstance(part)) {
 				removeAdapters();
 			}
 		}
@@ -167,6 +191,12 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 		public void partBroughtToTop(IWorkbenchPartReference partRef) {
 		}
 	}
+
+	/**
+	 * The qualified name of the new editor. Currently needed to keep an optional dependency on the new editor.
+	 * TODO remove again
+	 */
+	private static final String NEW_EDITOR_CONSTANT = "org.eclipse.emfforms.internal.editor.viewmodel.ViewModelEditor";//$NON-NLS-1$
 
 	private Preview preView;
 	private IPartListener2 partListener;
@@ -217,38 +247,17 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 		form.setLayout(GridLayoutFactory.fillDefaults().create());
 
 		/* The header */
-		final Composite headerComposite = new Composite(form, SWT.FILL);
-		final GridLayout headerLayout = GridLayoutFactory.fillDefaults().create();
-		headerComposite.setLayout(headerLayout);
-		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, false).applyTo(headerComposite);
-		headerBgColor = new Color(parent.getDisplay(), new RGB(220, 240, 247));
-		headerComposite.setBackground(headerBgColor);
-
-		final Composite header = getPageHeader(headerComposite);
-		final ToolBar toolBar = new ToolBar(header, SWT.FLAT | SWT.RIGHT);
-		final FormData formData = new FormData();
-		formData.right = new FormAttachment(100, 0);
-		toolBar.setLayoutData(formData);
-		toolBar.layout();
-		final ToolBarManager toolBarManager = new ToolBarManager(toolBar);
-		addButtonsToFormToolbar(toolBarManager);
-		header.layout();
+		createHeader(parent);
 
 		/* The body */
-		scrolledComposite = new ScrolledComposite(form, SWT.V_SCROLL | SWT.H_SCROLL);
-		scrolledComposite.setShowFocusedControl(true);
-		scrolledComposite.setExpandVertical(true);
-		scrolledComposite.setExpandHorizontal(true);
-		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(scrolledComposite);
-		scrolledComposite.setLayout(GridLayoutFactory.fillDefaults().create());
-		scrolledComposite.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
+		createBody(parent);
 
+		/* The container */
 		container = new Composite(scrolledComposite, SWT.FILL);
 		final GridLayout containerLayout = GridLayoutFactory.fillDefaults().create();
 		containerLayout.marginLeft = 10;
 		containerLayout.marginRight = 10;
 		container.setLayout(containerLayout);
-
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(container);
 		container.setBackground(scrolledComposite.getBackground());
 		scrolledComposite.setContent(container);
@@ -287,6 +296,10 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 					final ViewEditorPart viewPart = (ViewEditorPart) part;
 					setView(viewPart.getView());
 					render(view);
+				} else if (NEW_EDITOR_CONSTANT.equals(part != null ? part.getClass().getName() : "")) {
+					final ViewModelEditor viewPart = (ViewModelEditor) part;
+					setView(viewPart.getView());
+					render(view);
 				}
 			}
 		}
@@ -294,7 +307,35 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 		PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getEditorReferences();
 		partListener = new PreviewPartListener();
 		getSite().getPage().addPartListener(partListener);
+	}
 
+	private void createBody(Composite parent) {
+		scrolledComposite = new ScrolledComposite(form, SWT.V_SCROLL | SWT.H_SCROLL);
+		scrolledComposite.setShowFocusedControl(true);
+		scrolledComposite.setExpandVertical(true);
+		scrolledComposite.setExpandHorizontal(true);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(scrolledComposite);
+		scrolledComposite.setLayout(GridLayoutFactory.fillDefaults().create());
+		scrolledComposite.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
+	}
+
+	private void createHeader(Composite parent) {
+		final Composite headerComposite = new Composite(form, SWT.FILL);
+		final GridLayout headerLayout = GridLayoutFactory.fillDefaults().create();
+		headerComposite.setLayout(headerLayout);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, false).applyTo(headerComposite);
+		headerBgColor = new Color(parent.getDisplay(), new RGB(220, 240, 247));
+		headerComposite.setBackground(headerBgColor);
+
+		final Composite header = getPageHeader(headerComposite);
+		final ToolBar toolBar = new ToolBar(header, SWT.FLAT | SWT.RIGHT);
+		final FormData formData = new FormData();
+		formData.right = new FormAttachment(100, 0);
+		toolBar.setLayoutData(formData);
+		toolBar.layout();
+		final ToolBarManager toolBarManager = new ToolBarManager(toolBar);
+		addButtonsToFormToolbar(toolBarManager);
+		header.layout();
 	}
 
 	/**

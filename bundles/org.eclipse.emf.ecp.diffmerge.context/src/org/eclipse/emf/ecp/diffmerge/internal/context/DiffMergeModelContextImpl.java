@@ -128,6 +128,7 @@ public class DiffMergeModelContextImpl extends ViewModelContextImpl implements
 		readAlreadyMerged(mergedReferences);
 	}
 
+	@SuppressWarnings("deprecation")
 	private void readAlreadyMerged(Set<VDomainModelReference> mergedReferences) {
 		for (final VDomainModelReference domainModelReference : mergedReferences) {
 			IObservableValue observableValue;

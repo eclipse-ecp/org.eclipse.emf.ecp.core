@@ -49,6 +49,7 @@ public class ECPLayoutProvider extends AbstractLayoutProvider {
 	public Object getLayoutData(SWTGridCell gridCell, SWTGridDescription controlGridDescription,
 		SWTGridDescription currentRowGridDescription, SWTGridDescription fullGridDescription, VElement vElement,
 		EObject domainModel, Control control) {
+
 		if (VControl.class.isInstance(vElement)) {
 			// last column of control
 			if (gridCell.getColumn() + gridCell.getHorizontalSpan() == controlGridDescription.getColumns()) {
@@ -59,11 +60,14 @@ public class ECPLayoutProvider extends AbstractLayoutProvider {
 			} else if (controlGridDescription.getColumns() == 3 && gridCell.getColumn() == 1) {
 				return getValidationGridData();
 			} else if (controlGridDescription.getColumns() == 2 && gridCell.getColumn() == 0) {
+				if ("org_eclipse_emf_ecp_control_label".equals(control.getData("org.eclipse.rap.rwt.customVariant"))) { //$NON-NLS-1$ //$NON-NLS-2$
+					return getLabelGridData();
+				}
 				return getValidationGridData();
 			}
 		}
-		// we have some kind of container -> render with necessary span
 
+		// we have some kind of container -> render with necessary span
 		return GridDataFactory
 			.fillDefaults()
 			.align(gridCell.isHorizontalFill() ? SWT.FILL : SWT.BEGINNING,

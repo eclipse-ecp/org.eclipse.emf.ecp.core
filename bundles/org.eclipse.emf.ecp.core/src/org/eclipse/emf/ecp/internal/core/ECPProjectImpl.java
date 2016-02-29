@@ -215,6 +215,10 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 
 		out.writeInt(filteredEPackages.size());
 		for (final EPackage ePackage : filteredEPackages) {
+			if (ePackage == null) {
+				Activator.log("There was a null EPackage in the list of filteredEPackages!"); //$NON-NLS-1$
+				continue;
+			}
 			out.writeUTF(ePackage.getNsURI());
 		}
 		out.writeInt(filteredEClasses.size());

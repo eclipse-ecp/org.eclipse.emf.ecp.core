@@ -79,7 +79,7 @@ public class Categorization_PTest {
 		}
 
 		Composite controlComposite = (Composite) control;
-		if (Text.class.isInstance(controlComposite.getChildren()[2])) {
+		if (Text.class.isInstance(Composite.class.cast(controlComposite.getChildren()[2]).getChildren()[0])) {
 			return true;
 		}
 		controlComposite = (Composite) controlComposite.getChildren()[2];

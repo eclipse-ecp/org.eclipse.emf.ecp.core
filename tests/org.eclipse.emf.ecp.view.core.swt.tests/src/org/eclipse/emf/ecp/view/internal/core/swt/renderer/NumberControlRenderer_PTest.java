@@ -47,6 +47,7 @@ import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 import org.junit.After;
@@ -68,7 +69,7 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest {
 		final EMFFormsLocalizationService localizationService = mock(EMFFormsLocalizationService.class);
 		when(
 			localizationService.getString(NumberControlSWTRenderer.class, MessageKeys.NumericalControl_FormatNumerical))
-			.thenReturn("#");
+				.thenReturn("#");
 		when(
 			localizationService.getString(NumberControlSWTRenderer.class,
 				MessageKeys.NumericalControl_FormatNumericalDecimal)).thenReturn("#.#");
@@ -152,13 +153,14 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest {
 	}
 
 	private void assertControl(Control render) {
-		assertTrue(Text.class.isInstance(render));
-		assertEquals(SWT.RIGHT, Text.class.cast(render).getStyle()
+		final Control textRender = Composite.class.cast(render).getChildren()[0];
+		assertTrue(Text.class.isInstance(textRender));
+		assertEquals(SWT.RIGHT, Text.class.cast(textRender).getStyle()
 			& SWT.RIGHT);
-		assertEquals(SWT.RIGHT, Text.class.cast(render).getStyle()
+		assertEquals(SWT.RIGHT, Text.class.cast(textRender).getStyle()
 			& SWT.RIGHT);
 
-		assertEquals("org_eclipse_emf_ecp_control_numerical", Text.class.cast(render).getData(CUSTOM_VARIANT));
+		assertEquals("org_eclipse_emf_ecp_control_numerical", Text.class.cast(textRender).getData(CUSTOM_VARIANT));
 	}
 
 	@Override
@@ -234,7 +236,7 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest {
 			Properties.selfValue(mockedObservable.getValueType()));
 
 		final Control renderControl = renderControl(new SWTGridCell(0, 2, renderer));
-		final Text text = (Text) renderControl;
+		final Text text = (Text) Composite.class.cast(renderControl).getChildren()[0];
 		return text;
 	}
 

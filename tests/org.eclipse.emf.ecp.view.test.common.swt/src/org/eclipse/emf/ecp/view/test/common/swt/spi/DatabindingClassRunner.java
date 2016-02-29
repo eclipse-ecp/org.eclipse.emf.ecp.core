@@ -13,7 +13,7 @@
 package org.eclipse.emf.ecp.view.test.common.swt.spi;
 
 import org.eclipse.core.databinding.observable.Realm;
-import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.DisplayRealm;
 import org.eclipse.swt.widgets.Display;
 import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.BlockJUnit4ClassRunner;
@@ -38,7 +38,7 @@ public class DatabindingClassRunner extends BlockJUnit4ClassRunner {
 	@Override
 	public void run(final RunNotifier notifier) {
 		final Display display = Display.getDefault();
-		Realm.runWithDefault(SWTObservables.getRealm(display), new Runnable() {
+		Realm.runWithDefault(DisplayRealm.getRealm(display), new Runnable() {
 			@Override
 			public void run() {
 				DatabindingClassRunner.super.run(notifier);

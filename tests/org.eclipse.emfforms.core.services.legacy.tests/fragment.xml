@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<fragment>
+   <extension
+         point="org.eclipse.emf.ecp.view.context.viewServices">
+      <viewService
+            class="org.eclipse.emfforms.internal.core.services.legacy.TestLocalViewModelService">
+      </viewService>
+      <viewService
+            class="org.eclipse.emfforms.internal.core.services.legacy.TestGlobalViewModelService">
+      </viewService>
+      <viewService
+            class="org.eclipse.emfforms.internal.core.services.legacy.TestGlobalViewModelService2">
+      </viewService>
+      <viewService
+            class="org.eclipse.emfforms.internal.core.services.legacy.TestLocalViewModelService2">
+      </viewService>
+      <viewService
+            class="org.eclipse.emfforms.internal.core.services.legacy.TestViewModelService2">
+      </viewService>
+   </extension>
+
+</fragment>

@@ -296,7 +296,8 @@ public class ControlsSWTBot_PTest extends ECPCommonSWTBotTest {
 		UIThreadRunnable.syncExec(new VoidResult() {
 			@Override
 			public void run() {
-				final SWTBotButton button = bot.button(getFirstButtonIndex(myIndex));
+				final int index = getFirstButtonIndex(myIndex);
+				final SWTBotButton button = bot.button(index + 2);
 				button.click();
 				bot.label("Matchup*").setFocus();
 			}

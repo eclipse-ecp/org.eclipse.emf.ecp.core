@@ -29,7 +29,7 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emfforms.spi.common.locale.EMFFormsLocaleProvider;
 import org.eclipse.emfforms.spi.common.report.ReportService;
-import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsCellStyleConstants;
 import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsConverterException;
 import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsSpreadsheetValueConverter;
@@ -49,7 +49,7 @@ public class EMFFormsSpreadsheetMultiAttributeConverter implements EMFFormsSprea
 
 	private static final String SEPARATOR = " "; //$NON-NLS-1$
 
-	private EMFFormsDatabinding databinding;
+	private EMFFormsDatabindingEMF databinding;
 	private ReportService reportService;
 
 	private EMFFormsLocaleProvider localeProvider;
@@ -60,7 +60,7 @@ public class EMFFormsSpreadsheetMultiAttributeConverter implements EMFFormsSprea
 	 * @param databinding the service
 	 */
 	@Reference(cardinality = ReferenceCardinality.MANDATORY)
-	public void setDatabinding(EMFFormsDatabinding databinding) {
+	public void setDatabinding(EMFFormsDatabindingEMF databinding) {
 		this.databinding = databinding;
 	}
 
@@ -146,7 +146,16 @@ public class EMFFormsSpreadsheetMultiAttributeConverter implements EMFFormsSprea
 	 */
 	@Override
 	public Object getCellValue(Cell cell, EStructuralFeature eStructuralFeature) throws EMFFormsConverterException {
-		String string = cell.getStringCellValue();
+		String string;
+		try {
+			string = cell.getStringCellValue();
+		} catch (final IllegalStateException e) {
+			throw new EMFFormsConverterException(
+				String.format("Cell value of column %1$s in row %2$s on sheet %3$s must be a string.", //$NON-NLS-1$
+					cell.getColumnIndex() + 1, cell.getRowIndex() + 1, cell.getSheet().getSheetName()),
+				e);
+		}
+
 		if (string == null || string.length() == 0) {
 			return Collections.emptyList();
 		}

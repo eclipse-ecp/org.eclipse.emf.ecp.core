@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -19,9 +19,11 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.emf.ecp.view.spi.model.DateTimeDisplayType;
 import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
@@ -88,6 +90,8 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 			return createViewModelLoadingProperties();
 		case VViewPackage.STRING_TO_OBJECT_MAP_ENTRY:
 			return (EObject) createStringToObjectMapEntry();
+		case VViewPackage.DATE_TIME_DISPLAY_ATTACHMENT:
+			return createDateTimeDisplayAttachment();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -104,6 +108,8 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 		switch (eDataType.getClassifierID()) {
 		case VViewPackage.LABEL_ALIGNMENT:
 			return createLabelAlignmentFromString(eDataType, initialValue);
+		case VViewPackage.DATE_TIME_DISPLAY_TYPE:
+			return createDateTimeDisplayTypeFromString(eDataType, initialValue);
 		case VViewPackage.DOMAIN_MODEL_REFERENCE_CHANGE_LISTENER:
 			return createDomainModelReferenceChangeListenerFromString(eDataType, initialValue);
 		default:
@@ -122,6 +128,8 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 		switch (eDataType.getClassifierID()) {
 		case VViewPackage.LABEL_ALIGNMENT:
 			return convertLabelAlignmentToString(eDataType, instanceValue);
+		case VViewPackage.DATE_TIME_DISPLAY_TYPE:
+			return convertDateTimeDisplayTypeToString(eDataType, instanceValue);
 		case VViewPackage.DOMAIN_MODEL_REFERENCE_CHANGE_LISTENER:
 			return convertDomainModelReferenceChangeListenerToString(eDataType, instanceValue);
 		default:
@@ -190,6 +198,20 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 1.8
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public VDateTimeDisplayAttachment createDateTimeDisplayAttachment() {
+		final VDateTimeDisplayAttachmentImpl dateTimeDisplayAttachment = new VDateTimeDisplayAttachmentImpl();
+		return dateTimeDisplayAttachment;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
 	 * @generated
@@ -210,6 +232,35 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 * @generated
 	 */
 	public String convertLabelAlignmentToString(EDataType eDataType, Object instanceValue) {
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.8
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public DateTimeDisplayType createDateTimeDisplayTypeFromString(EDataType eDataType, String initialValue) {
+		final DateTimeDisplayType result = DateTimeDisplayType.get(initialValue);
+		if (result == null) {
+			throw new IllegalArgumentException(
+				"The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		}
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.8
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public String convertDateTimeDisplayTypeToString(EDataType eDataType, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 

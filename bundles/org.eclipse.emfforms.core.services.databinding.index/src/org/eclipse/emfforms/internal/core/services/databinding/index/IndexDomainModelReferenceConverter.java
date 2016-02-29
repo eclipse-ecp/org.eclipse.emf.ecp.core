@@ -13,6 +13,7 @@ package org.eclipse.emfforms.internal.core.services.databinding.index;
 
 import java.util.List;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.databinding.IEMFListProperty;
 import org.eclipse.emf.databinding.IEMFValueProperty;
 import org.eclipse.emf.databinding.edit.EMFEditProperties;
@@ -20,6 +21,7 @@ import org.eclipse.emf.databinding.internal.EMFValuePropertyDecorator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
@@ -66,6 +68,10 @@ public class IndexDomainModelReferenceConverter implements DomainModelReferenceC
 	 */
 	protected final void activate(BundleContext bundleContext) {
 		databindingServiceReference = bundleContext.getServiceReference(EMFFormsDatabindingEMF.class);
+		if (databindingServiceReference == null) {
+			throw new IllegalStateException(
+				"The org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF Service is not available!"); //$NON-NLS-1$
+		}
 		setEMFFormsDatabinding(bundleContext.getService(databindingServiceReference));
 
 	}
@@ -229,5 +235,53 @@ public class IndexDomainModelReferenceConverter implements DomainModelReferenceC
 
 	private EditingDomain getEditingDomain(EObject object) throws DatabindingFailedException {
 		return AdapterFactoryEditingDomain.getEditingDomainFor(object);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.core.services.databinding.emf.DomainModelReferenceConverterEMF#getSetting(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference,
+	 *      org.eclipse.emf.ecore.EObject)
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public Setting getSetting(VDomainModelReference domainModelReference, EObject object)
+		throws DatabindingFailedException {
+		if (domainModelReference == null) {
+			throw new IllegalArgumentException("The given VDomainModelReference must not be null."); //$NON-NLS-1$
+		}
+		if (!VIndexDomainModelReference.class.isInstance(domainModelReference)) {
+			throw new IllegalArgumentException(
+				"DomainModelReference must be an instance of VIndexDomainModelReference."); //$NON-NLS-1$
+		}
+		final VIndexDomainModelReference indexDMR = VIndexDomainModelReference.class
+			.cast(domainModelReference);
+
+		EList<EObject> eList;
+		if (indexDMR.getPrefixDMR() == null) {
+			if (indexDMR.getDomainModelEFeature() == null) {
+				throw new DatabindingFailedException(
+					"The field domainModelEFeature of the given VIndexDomainModelReference must not be null."); //$NON-NLS-1$
+			}
+			checkListType(indexDMR.getDomainModelEFeature());
+
+			EObject currentObject = object;
+			for (final EReference eReference : indexDMR.getDomainModelEReferencePath()) {
+				currentObject = (EObject) currentObject.eGet(eReference);
+				if (currentObject == null) {
+					throw new DatabindingFailedException("The path is not fully resolved."); //$NON-NLS-1$
+				}
+			}
+			eList = (EList<EObject>) currentObject.eGet(indexDMR.getDomainModelEFeature());
+		} else {
+			final Setting setting = emfFormsDatabinding.getSetting(indexDMR.getPrefixDMR(), object);
+			eList = (EList<EObject>) setting.get(true);
+		}
+		if (eList.isEmpty()) {
+			throw new DatabindingFailedException(
+				"The list used by the index dmr mustr must not be empty."); //$NON-NLS-1$
+		}
+		final EObject eObject = eList.get(indexDMR.getIndex());
+		return emfFormsDatabinding.getSetting(indexDMR.getTargetDMR(), eObject);
 	}
 }

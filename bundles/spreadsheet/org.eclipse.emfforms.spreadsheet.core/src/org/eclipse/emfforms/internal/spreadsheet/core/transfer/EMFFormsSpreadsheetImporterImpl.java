@@ -15,33 +15,39 @@ import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Comment;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.util.WorkbookUtil;
-import org.eclipse.core.databinding.observable.IObserving;
-import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter.ReadableInputStream;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecp.spi.view.migrator.string.StringViewModelMigrator;
+import org.eclipse.emf.ecp.spi.view.migrator.string.StringViewModelMigratorUtil;
+import org.eclipse.emf.ecp.view.migrator.ViewModelMigrationException;
+import org.eclipse.emf.ecp.view.migrator.ViewModelMigratorUtil;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emfforms.internal.spreadsheet.core.transfer.EMFFormsSpreadsheetImporterImpl.MigrationInformation.State;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
-import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsIdProvider;
 import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsConverterException;
@@ -63,7 +69,7 @@ import org.osgi.framework.ServiceReference;
  */
 public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImporter {
 
-	private static final String ADDITIONAL_INFORMATION = WorkbookUtil.createSafeSheetName("AdditionalInformation"); //$NON-NLS-1$
+	private static final String IGNORE_SHEET = "Ignore Sheet"; //$NON-NLS-1$
 
 	@Override
 	public SpreadsheetImportResult importSpreadsheet(Workbook workbook, EClass eClass) {
@@ -73,15 +79,17 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 	private SpreadsheetImportResult readData(Workbook workbook, EClass eClass) {
 		final SpreadsheetImportResult result = ErrorFactory.eINSTANCE.createSpreadsheetImportResult();
 		final ResourceSet rs = new ResourceSetImpl();
+		final MigrationInformation information = new MigrationInformation();
 		final AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(
 			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE),
 			new BasicCommandStack(), rs);
 		rs.eAdapters().add(new AdapterFactoryEditingDomain.EditingDomainProvider(domain));
 		final Resource resource = rs.createResource(URI.createURI("VIRTUAL_URI")); //$NON-NLS-1$
 
-		final List<EObject> importedEObjects = new ArrayList<EObject>();
-
 		final Map<String, Map<Integer, Integer>> mapIdToSheetIdWithRowId = parseIds(workbook, result);
+		final Map<String, VDomainModelReference> sheetColumnToDMRMap = new LinkedHashMap<String, VDomainModelReference>();
+		final Map<VDomainModelReference, EMFFormsSpreadsheetValueConverter> converter = new LinkedHashMap<VDomainModelReference, EMFFormsSpreadsheetValueConverter>();
+		final List<EObject> importedEObjects = new ArrayList<EObject>(mapIdToSheetIdWithRowId.size());
 		for (final String eObjectId : mapIdToSheetIdWithRowId.keySet()) {
 			final Map<Integer, Integer> sheetIdToRowId = mapIdToSheetIdWithRowId.get(eObjectId);
 			final EObject eObject = EcoreUtil.create(eClass);
@@ -90,11 +98,11 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 				final Sheet sheet = workbook.getSheetAt(sheetId);
 				final Row labelRow = sheet.getRow(0);
 				final Row row = sheet.getRow(sheetIdToRowId.get(sheetId));
-				extractRowInformation(labelRow, row, eObject, result, sheet.getSheetName());
+				extractRowInformation(labelRow, row, eObject, result, sheet.getSheetName(), sheetId,
+					sheetColumnToDMRMap, converter, information);
 			}
 			importedEObjects.add(eObject);
 		}
-
 		result.getImportedEObjects().addAll(importedEObjects);
 		return result;
 	}
@@ -104,61 +112,36 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 	 */
 	// BEGIN COMPLEX CODE
 	private void extractRowInformation(final Row dmrRow, final Row eObjectRow, final EObject eObject,
-		SpreadsheetImportResult errorReports, String sheetname) {
-		for (int columnId = 1; columnId < eObjectRow.getLastCellNum(); columnId++) {
-			/* get dmr comment */
+		SpreadsheetImportResult errorReports, String sheetname, int sheetId,
+		Map<String, VDomainModelReference> sheetColumnToDMRMap,
+		Map<VDomainModelReference, EMFFormsSpreadsheetValueConverter> converterMap,
+		MigrationInformation information) {
+		for (int columnId = 1; columnId < dmrRow.getLastCellNum(); columnId++) {
+			final String sheetColId = sheetId + "_" + columnId; //$NON-NLS-1$
 			final Cell cell = dmrRow.getCell(columnId);
-			if (cell == null) {
-				errorReports.reportError(
-					Severity.ERROR, LocalizationServiceHelper.getString(getClass(), "ImportError_LabelCellDeleted"), //$NON-NLS-1$
-					ErrorFactory.eINSTANCE.createEMFLocation(eObject),
-					ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0, "NO CELL")); //$NON-NLS-1$
+			if (!sheetColumnToDMRMap.containsKey(sheetColId)) {
+				final VDomainModelReference dmr = getDomainModelReference(cell, errorReports, eObject, sheetname,
+					columnId, information);
+				sheetColumnToDMRMap.put(sheetColId, dmr);
+			}
+			final VDomainModelReference dmr = sheetColumnToDMRMap.get(sheetColId);
+			if (dmr == null) {
 				continue;
 			}
-			final Comment cellComment = cell.getCellComment();
-			if (cellComment == null) {
-				errorReports.reportError(
-					Severity.ERROR, LocalizationServiceHelper.getString(getClass(), "ImportError_CommentDeleted"), //$NON-NLS-1$
-					ErrorFactory.eINSTANCE.createEMFLocation(eObject),
-					ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0, cell.getStringCellValue()));
-				continue;
-			}
-			final String serializedDMR = cellComment.getString().getString();
-			if (serializedDMR == null || serializedDMR.isEmpty()) {
-				errorReports.reportError(
-					Severity.ERROR, LocalizationServiceHelper.getString(getClass(), "ImportError_CommentEmpty"), //$NON-NLS-1$
-					ErrorFactory.eINSTANCE.createEMFLocation(eObject),
-					ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0, cell.getStringCellValue()));
-				continue;
-			}
-
-			/* deserialize dmr */
-			VDomainModelReference dmr;
-			try {
-				dmr = deserializeDMR(serializedDMR);
-			} catch (final IOException ex1) {
-				errorReports.reportError(
-					Severity.ERROR,
-					LocalizationServiceHelper.getString(getClass(), "ImportError_DMRDeserializationFailed"), //$NON-NLS-1$
-					ErrorFactory.eINSTANCE.createEMFLocation(eObject),
-					ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0, cell.getStringCellValue()));
-				continue;
-			}
-
 			/* resolve dmr */
 			if (!resolveDMR(dmr, eObject)) {
 				errorReports.reportError(
 					Severity.ERROR, LocalizationServiceHelper.getString(getClass(), "ImportError_DMRResolvementFailed"), //$NON-NLS-1$
 					ErrorFactory.eINSTANCE.createEMFLocation(eObject,
 						ErrorFactory.eINSTANCE.createDMRLocation(dmr)),
-					ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0, cell.getStringCellValue()));
+					ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0, getStringCellValue(cell)));
 				continue;
 			}
 
 			/* initiate databinding */
-			IObservableValue observableValue;
+			Setting setting;
 			try {
-				observableValue = getObservableValue(dmr, eObject);
+				setting = getSetting(dmr, eObject);
 			} catch (final DatabindingFailedException ex) {
 				errorReports.reportError(
 					Severity.ERROR,
@@ -166,24 +149,27 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 						MessageFormat.format("ImportError_DatabindingFailed", ex.getMessage())), //$NON-NLS-1$
 					ErrorFactory.eINSTANCE.createEMFLocation(eObject,
 						ErrorFactory.eINSTANCE.createDMRLocation(dmr)),
-					ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0, cell.getStringCellValue()));
+					ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0, getStringCellValue(cell)));
 				continue;
 			}
 
 			/* access value converter */
-			EMFFormsSpreadsheetValueConverter converter;
-			try {
-				converter = getValueConverter(dmr, eObject);
-			} catch (final EMFFormsConverterException ex) {
-				errorReports.reportError(
-					Severity.ERROR, LocalizationServiceHelper.getString(getClass(), "ImportError_NoValueConverter"), //$NON-NLS-1$
-					ErrorFactory.eINSTANCE.createEMFLocation(eObject,
-						ErrorFactory.eINSTANCE.createDMRLocation(dmr)),
-					ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0, cell.getStringCellValue()));
-				continue;
+			if (!converterMap.containsKey(dmr)) {
+				try {
+					final EMFFormsSpreadsheetValueConverter converter = getValueConverter(dmr, eObject);
+					converterMap.put(dmr, converter);
+				} catch (final EMFFormsConverterException ex) {
+					errorReports.reportError(
+						Severity.ERROR, LocalizationServiceHelper.getString(getClass(), "ImportError_NoValueConverter"), //$NON-NLS-1$
+						ErrorFactory.eINSTANCE.createEMFLocation(eObject,
+							ErrorFactory.eINSTANCE.createDMRLocation(dmr)),
+						ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0, getStringCellValue(cell)));
+					continue;
+				}
 			}
+			final EMFFormsSpreadsheetValueConverter converter = converterMap.get(dmr);
 
-			final EStructuralFeature feature = EStructuralFeature.class.cast(observableValue.getValueType());
+			final EStructuralFeature feature = setting.getEStructuralFeature();
 
 			/* access cell with value */
 			Cell rowCell;
@@ -195,6 +181,11 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 
 			if (rowCell == null) {
 				/* no error -> unsettable feature */
+				errorReports.getSettingToSheetMap()
+					.add(ErrorFactory.eINSTANCE.createSettingToSheetMapping(
+						createSettingLocation(setting),
+						ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, eObjectRow.getRowNum(),
+							getStringCellValue(cell))));
 				continue;
 			}
 
@@ -207,11 +198,12 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 					Severity.ERROR,
 					MessageFormat.format(
 						LocalizationServiceHelper.getString(getClass(), "ImportError_ValueConversionFailed"), //$NON-NLS-1$
-						ex.getMessage()), ErrorFactory.eINSTANCE.createEMFLocation(eObject,
-						createSettingLocation(observableValue, feature),
+						ex.getMessage()),
+					ErrorFactory.eINSTANCE.createEMFLocation(eObject,
+						createSettingLocation(setting),
 						ErrorFactory.eINSTANCE.createDMRLocation(dmr)),
 					ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, eObjectRow.getRowNum(),
-						cell.getStringCellValue()));
+						getStringCellValue(cell)));
 				continue;
 			}
 
@@ -222,23 +214,65 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 						Severity.ERROR,
 						LocalizationServiceHelper.getString(getClass(), "ImportError_InvalidType"), //$NON-NLS-1$
 						ErrorFactory.eINSTANCE.createEMFLocation(eObject,
-							createSettingLocation(observableValue, feature),
+							createSettingLocation(setting),
 							ErrorFactory.eINSTANCE.createDMRLocation(dmr)),
 						ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, eObjectRow.getRowNum(),
-							cell.getStringCellValue()));
+							getStringCellValue(cell)));
 					continue;
 				}
 			}
 
 			/* set value */
-			observableValue.setValue(convertedValue);
+			setting.set(convertedValue);
 
 			errorReports.getSettingToSheetMap()
 				.add(ErrorFactory.eINSTANCE.createSettingToSheetMapping(
-					createSettingLocation(observableValue, feature),
+					createSettingLocation(setting),
 					ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, eObjectRow.getRowNum(),
-						cell.getStringCellValue())));
+						getStringCellValue(cell))));
 		}
+	}
+
+	private VDomainModelReference getDomainModelReference(Cell cell, SpreadsheetImportResult errorReports,
+		EObject eObject, String sheetname, int columnId, MigrationInformation information) {
+		/* get dmr comment */
+		if (cell == null) {
+			errorReports.reportError(
+				Severity.ERROR, LocalizationServiceHelper.getString(getClass(), "ImportError_LabelCellDeleted"), //$NON-NLS-1$
+				ErrorFactory.eINSTANCE.createEMFLocation(eObject),
+				ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0, "NO CELL")); //$NON-NLS-1$
+			return null;
+		}
+		final Comment cellComment = cell.getCellComment();
+		if (cellComment == null) {
+			errorReports.reportError(
+				Severity.ERROR, LocalizationServiceHelper.getString(getClass(), "ImportError_CommentDeleted"), //$NON-NLS-1$
+				ErrorFactory.eINSTANCE.createEMFLocation(eObject),
+				ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0, getStringCellValue(cell)));
+			return null;
+		}
+		final String serializedDMR = cellComment.getString().getString();
+		if (serializedDMR == null || serializedDMR.isEmpty()) {
+			errorReports.reportError(
+				Severity.ERROR, LocalizationServiceHelper.getString(getClass(), "ImportError_CommentEmpty"), //$NON-NLS-1$
+				ErrorFactory.eINSTANCE.createEMFLocation(eObject),
+				ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0, getStringCellValue(cell)));
+			return null;
+		}
+
+		/* deserialize dmr */
+
+		try {
+			return deserializeDMR(serializedDMR, information);
+		} catch (final IOException ex1) {
+			errorReports.reportError(
+				Severity.ERROR,
+				LocalizationServiceHelper.getString(getClass(), "ImportError_DMRDeserializationFailed"), //$NON-NLS-1$
+				ErrorFactory.eINSTANCE.createEMFLocation(eObject),
+				ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0, getStringCellValue(cell)));
+			return null;
+		}
+
 	}
 
 	// END COMPLEX CODE
@@ -298,9 +332,8 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 		return null;
 	}
 
-	private SettingLocation createSettingLocation(IObservableValue observableValue, EStructuralFeature feature) {
-		final EObject eObject = EObject.class.cast(IObserving.class.cast(observableValue).getObserved());
-		return ErrorFactory.eINSTANCE.createSettingLocation(eObject, feature);
+	private SettingLocation createSettingLocation(Setting setting) {
+		return ErrorFactory.eINSTANCE.createSettingLocation(setting.getEObject(), setting.getEStructuralFeature());
 	}
 
 	@SuppressWarnings("deprecation")
@@ -316,22 +349,41 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 
 		for (int sheetId = 0; sheetId < workbook.getNumberOfSheets(); sheetId++) {
 			final Sheet sheet = workbook.getSheetAt(sheetId);
-			if (ADDITIONAL_INFORMATION.equals(sheet.getSheetName())) {
+			final Row labelRow = sheet.getRow(0);
+			if (labelRow == null) {
+				errorReports.reportError(
+					Severity.ERROR, MessageFormat.format(
+						LocalizationServiceHelper.getString(getClass(), "ImportError_SheetEmpty"), //$NON-NLS-1$
+						sheet.getSheetName()),
+					ErrorFactory.eINSTANCE.createSheetLocation(workbook.getSheetName(sheetId), 0, 0, "NO CELL")); //$NON-NLS-1$
 				continue;
 			}
-			final Row labelRow = sheet.getRow(0);
-			if (!EMFFormsIdProvider.ID_COLUMN.equals(labelRow.getCell(0).getStringCellValue())) {
+			final Cell idColumnLabelCell = labelRow.getCell(0, Row.CREATE_NULL_AS_BLANK);
+			final Comment cellComment = idColumnLabelCell.getCellComment();
+			if (cellComment != null && cellComment.getString() != null
+				&& IGNORE_SHEET.equals(cellComment.getString().getString())) {
+				continue;
+			}
+			final String idColumnLabel = getStringCellValue(idColumnLabelCell);
+			if (!EMFFormsIdProvider.ID_COLUMN.equals(idColumnLabel)) {
 				/* ID Column is missing. We have to ignore this sheet */
 				errorReports.reportError(
-					Severity.ERROR,
-					LocalizationServiceHelper.getString(getClass(), String.format("ImportError_FirstColumnWrong", //$NON-NLS-1$
-						EMFFormsIdProvider.ID_COLUMN, labelRow.getCell(0).getStringCellValue())),
+					Severity.ERROR, MessageFormat.format(
+						LocalizationServiceHelper.getString(getClass(), "ImportError_FirstColumnWrong"), //$NON-NLS-1$
+						EMFFormsIdProvider.ID_COLUMN, idColumnLabel),
 					ErrorFactory.eINSTANCE.createSheetLocation(workbook.getSheetName(sheetId), 0, 0, "NO CELL")); //$NON-NLS-1$
 				continue;
 			}
 			for (int rowId = 3; rowId <= sheet.getLastRowNum(); rowId++) {
 				final Row row = sheet.getRow(rowId);
-				final String eObjectId = row.getCell(0, Row.CREATE_NULL_AS_BLANK).getStringCellValue();
+				if (row == null) {
+					errorReports.reportError(
+						Severity.INFO, LocalizationServiceHelper.getString(getClass(), "ImportError_EmptyRow"), //$NON-NLS-1$
+						ErrorFactory.eINSTANCE.createSheetLocation(workbook.getSheetName(sheetId), 0, rowId,
+							EMFFormsIdProvider.ID_COLUMN));
+					continue;
+				}
+				final String eObjectId = getStringCellValue(row.getCell(0, Row.CREATE_NULL_AS_BLANK));
 				if (eObjectId == null || eObjectId.isEmpty()) {
 					/* EObject id deleted */
 					errorReports.reportError(
@@ -359,13 +411,13 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 		return result;
 	}
 
-	private IObservableValue getObservableValue(VDomainModelReference dmr, EObject eObject)
+	private Setting getSetting(VDomainModelReference dmr, EObject eObject)
 		throws DatabindingFailedException {
 		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
-		final ServiceReference<EMFFormsDatabinding> serviceReference = bundleContext
-			.getServiceReference(EMFFormsDatabinding.class);
-		final EMFFormsDatabinding emfFormsDatabinding = bundleContext.getService(serviceReference);
-		return emfFormsDatabinding.getObservableValue(dmr, eObject);
+		final ServiceReference<EMFFormsDatabindingEMF> serviceReference = bundleContext
+			.getServiceReference(EMFFormsDatabindingEMF.class);
+		final EMFFormsDatabindingEMF emfFormsDatabinding = bundleContext.getService(serviceReference);
+		return emfFormsDatabinding.getSetting(dmr, eObject);
 	}
 
 	private EMFFormsSpreadsheetValueConverter getValueConverter(VDomainModelReference dmr, EObject eObject)
@@ -378,12 +430,126 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 		return emfFormsDatabinding.getConverter(eObject, dmr);
 	}
 
-	private VDomainModelReference deserializeDMR(String serializedDMR) throws IOException {
+	private VDomainModelReference deserializeDMR(String serializedDMR, MigrationInformation information)
+		throws IOException {
+		if (ViewModelMigratorUtil.getStringViewModelMigrator() != null) {
+			try {
+				serializedDMR = migrateIfNeeded(serializedDMR, information);
+			} catch (final ViewModelMigrationException ex) {
+				throw new IOException(ex);
+			}
+		}
 		final ResourceSet rs = new ResourceSetImpl();
 		final Resource resource = rs.createResource(URI.createURI("VIRTAUAL_URI")); //$NON-NLS-1$
 
 		final ReadableInputStream is = new ReadableInputStream(serializedDMR, "UTF-8"); //$NON-NLS-1$
 		resource.load(is, null);
 		return (VDomainModelReference) resource.getContents().get(0);
+	}
+
+	private String migrateIfNeeded(String serializedDMR, MigrationInformation information)
+		throws ViewModelMigrationException {
+		final List<String> namespaceURIs = StringViewModelMigratorUtil.getNamespaceURIs(serializedDMR);
+
+		final MigrationInformation.State migrationState = information.isMigrationNeeded(namespaceURIs);
+
+		if (migrationState == State.ok) {
+			return serializedDMR;
+		}
+
+		final StringViewModelMigrator migrator = ViewModelMigratorUtil.getStringViewModelMigrator();
+
+		if (migrationState == State.unknown) {
+			if (migrator.checkMigration(serializedDMR)) {
+				information.noMigrationNeeded(namespaceURIs);
+				return serializedDMR;
+			}
+			information.migrationNeeded(namespaceURIs);
+		}
+
+		return migrator.performMigration(serializedDMR);
+	}
+
+	private String getStringCellValue(Cell cell) {
+		try {
+			return cell.getStringCellValue();
+		} catch (final IllegalArgumentException ex) {
+			throw new IllegalStateException(
+				String.format("Cell value of column %1$s in row %2$s on sheet %3$s must be a string.", //$NON-NLS-1$
+					cell.getColumnIndex() + 1, cell.getRowIndex() + 1, cell.getSheet().getSheetName()),
+				ex);
+		}
+	}
+
+	/**
+	 * Helper class which caches the required information of the migration state for the used NS-URIs.
+	 *
+	 * @author Johannes Faltermeier
+	 *
+	 */
+	static class MigrationInformation {
+		private final Set<Set<String>> migrationNeeded = new LinkedHashSet<Set<String>>();
+		private final Set<Set<String>> noMigrationNeeded = new LinkedHashSet<Set<String>>();
+
+		/**
+		 * Whether a migration is needed for the given uris.
+		 *
+		 * @param namespaceURIs the uris
+		 * @return the state
+		 */
+		State isMigrationNeeded(List<String> namespaceURIs) {
+			final Set<String> set = new LinkedHashSet<String>(namespaceURIs);
+			if (noMigrationNeeded.contains(set)) {
+				return State.ok;
+			}
+			if (migrationNeeded.contains(set)) {
+				return State.migrate;
+			}
+			return State.unknown;
+		}
+
+		/**
+		 * Updates the cached migration information.
+		 *
+		 * @param namespaceURIs the given set of nsuris for which a migration is required
+		 */
+		void migrationNeeded(List<String> namespaceURIs) {
+			final Set<String> set = Collections.unmodifiableSet(new LinkedHashSet<String>(namespaceURIs));
+			migrationNeeded.add(set);
+		}
+
+		/**
+		 * Updates the cached migration information.
+		 *
+		 * @param namespaceURIs the given set of nsuris for which no migration is required
+		 */
+		void noMigrationNeeded(List<String> namespaceURIs) {
+			final Set<String> set = Collections.unmodifiableSet(new LinkedHashSet<String>(namespaceURIs));
+			noMigrationNeeded.add(set);
+		}
+
+		/**
+		 * Migration state.
+		 *
+		 * @author Johannes Faltermeier
+		 *
+		 */
+		enum State {
+			/**
+			 * Based on the cached information a migration is needed.
+			 */
+			migrate,
+
+			/**
+			 * Based on the cached information no migration is needed.
+			 */
+			ok,
+
+			/**
+			 * No cached information about the migration state.
+			 */
+			unknown
+		}
+
 	}
 }

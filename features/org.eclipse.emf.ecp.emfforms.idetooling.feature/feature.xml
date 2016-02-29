@@ -2,10 +2,10 @@
 <feature
       id="org.eclipse.emf.ecp.emfforms.idetooling.feature"
       label="EMF Forms IDE Tooling"
-      version="1.7.2.qualifier"
+      version="1.8.0.qualifier"
       provider-name="Eclipse Modeling Project"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.7.2.qualifier">
+      license-feature-version="1.8.0.qualifier">
 
    <description>
       %description
@@ -94,6 +94,13 @@
 
    <plugin
          id="org.eclipse.emf.ecp.view.template.tooling"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emfforms.editor"
          download-size="0"
          install-size="0"
          version="0.0.0"

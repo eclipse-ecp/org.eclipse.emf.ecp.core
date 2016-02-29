@@ -46,8 +46,7 @@ public final class HorizontalEditPlugin extends EMFPlugin {
 	 * @generated
 	 */
 	public HorizontalEditPlugin() {
-		super(new ResourceLocator[]
-		{
+		super(new ResourceLocator[] {
 			EcoreEditPlugin.INSTANCE,
 			ViewEditPlugin.INSTANCE,
 		});

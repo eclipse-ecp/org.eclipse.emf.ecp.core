@@ -1,0 +1,142 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _mY5uUKEgEeKX8e34E6tWIg,_rr2EEFpSEeKcnaHGSt8OwA,_f3qEUVpSEeKcnaHGSt8OwA,_WoYXsKEnEeKX8e34E6tWIg
+Element-Name: file_smokeTest
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _5aZdcGkAEeWJxJo1q_dr_g
+Runtime-Version: 2.0.1.201508250612
+Save-Time: 10/5/15 9:12 AM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+// create file project, verify correct tree, delete
+get-view "Model Explorer" | get-tree | get-property itemCount | equals 0 | verify-true
+get-view "Model Explorer" | get-tree | get-menu "Create new project" | click
+with [get-window "Create Project"] {
+    get-combo -after [get-label "Provider:"] | select "Eclipse Workspace (Experimental)"
+    get-editbox -after [get-label "Project Name:"] | set-text TestProject_Generated
+	set-dialog-result File "platform:/resource/TestProject_Generated.xmi"
+    get-button "Browse File System ..." | click
+    get-button -after [get-label "Root Class:"] | click
+    get-window "Choose Root Class" | try { get-tree | select "League" } -catch { get-tree | select "bowling/League" } | double-click
+    get-editbox -after [get-label "Filename:"] | get-property "getText()" 
+        | contains "file:/" | verify-true
+    get-editbox -after [get-label "Root Class:"] | get-property text 
+        | equals "http://org/eclipse/example/bowling/League" | verify-true
+	get-button Finish | click
+}
+with [get-view "Model Explorer" | get-tree] {
+    get-property itemCount | equals 1 | verify-true
+    get-property "getItems().TreeItem[0].getText()" | equals TestProject_Generated | verify-true
+    get-item TestProject_Generated | get-property childCount | equals 1 | verify-true
+    get-item TestProject_Generated | get-property "getItems().TreeItem[0].getText()" | equals League | verify-true
+    select TestProject_Generated | get-menu Delete | click 
+	get-window Delete | get-button OK | click
+	get-property itemCount | equals 0 | verify-true
+}
+
+// create workspace project, verify correct tree, delete
+get-view "Model Explorer" | get-tree | get-menu "Create new project" | click
+with [get-window "Create Project"] {
+    get-combo -after [get-label "Provider:"] | select "Eclipse Workspace (Experimental)"
+    get-editbox -after [get-label "Project Name:"] | set-text TestProject_Generated2
+    get-button "Create empty project" | get-property selected | equals true | verify-true
+    get-button "Import existing XMI-File" | get-property selected | equals false | verify-true
+    get-button "Browse Workspace ..." | click
+    with [get-window "New XMI File"] {
+        get-button "Create New Project ..." | click
+        with [get-window "New Project"] {
+            get-editbox -after [get-label "Project name:"] | set-text TestProject_Generated2
+            get-button Finish | click
+        }
+        get-tree | select TestProject_Generated2
+        get-editbox -after [get-label "File name:"] | set-text "testProject_Generated2.xmi"
+        get-button Finish | click
+    }
+    get-editbox -after [get-label "Filename:"] | get-property text | equals "platform:/resource/TestProject_Generated2/testProject_Generated2.xmi" | verify-true
+    get-button Finish | get-property enablement | equals false | verify-true
+    get-button -after [get-label "Root Class:"] | click
+    get-window "Choose Root Class" | try { get-tree | select "League" } -catch { get-tree | select "bowling/League" } | double-click
+	get-button Finish | get-property enablement | equals true | verify-true
+	get-window "Create Project" | get-button Finish | click
+}	
+with [get-view "Model Explorer" | get-tree] {
+    get-property itemCount | equals 1 | verify-true
+    get-property "getItems().TreeItem[0].getText()" | equals TestProject_Generated2 | verify-true
+    get-item TestProject_Generated2 | get-property childCount | equals 1 | verify-true
+    get-item TestProject_Generated2 | get-property "getItems().TreeItem[0].getText()" | equals League | verify-true
+    select TestProject_Generated2 | get-menu Delete | click 
+	get-window Delete | get-button OK | click
+}
+
+// import project from workspace
+with [get-view "Model Explorer" | get-tree] {
+	get-property itemCount | equals 0 | verify-true
+	get-menu "Create new project" | click
+
+	with [get-window "Create Project"] {
+	    get-combo -after [get-label "Provider:"] | select "Eclipse Workspace (Experimental)"
+	    get-button "Import existing XMI-File" | click
+	    get-button "Browse Workspace ..." | click
+	    get-window "Select XMI" | get-tree | select "TestProject/testProject.xmi" | double-click
+	    get-editbox -after [get-label "Project Name:"] | set-text TestProject
+	    get-button Finish | click
+	}
+	
+	get-property itemCount | equals 1 | verify-true
+	get-item "TestProject/Tournament Pro" | get-property childCount | equals 3 | verify-true
+}
+
+// undo last command
+// currently fails
+/*get-view "Model Explorer" | get-tree | select "TestProject/Tournament Pro/Matchup/Game" | double-click
+with [get-editor Game] {
+    get-button "Add Entry" | click
+    get-editbox -after [get-label Frames] | set-text 5
+    get-button "Add Entry" | click
+    get-editbox -after [get-label Frames] -index 1 | set-text 5
+    get-editbox -after [get-label Frames] | set-text 4
+    get-editbox -after [get-label Frames] -index 1 | click-text 2
+    get-button "Add Entry" | click
+    get-editbox -after [get-label Frames] -index 2 | set-text 3
+    get-editbox -after [get-label Frames] -index 1 | click-text 1
+}
+get-view "Model Explorer" | get-tree | select TestProject
+with [get-editor Game] {
+    get-control Any -index 56 | get-property "getChildren().length" | equals 3 | verify-true
+    get-editbox -after [get-label Frames] | get-property text | equals 4 | verify-true
+    get-editbox -after [get-label Frames] -index 1 | get-property text | equals 5 | verify-true
+    get-editbox -after [get-label Frames] -index 2 | get-property text | equals 3 | verify-true
+}
+with [get-view "Model Explorer" | get-tree] {
+    select TestProject | get-menu "Undo Last Command" | click
+    select TestProject | get-menu "Undo Last Command" | click
+}
+with [get-editor Game] {
+    get-control Any -index 56 | get-property "getChildren().length" | equals 2 | verify-true
+    get-editbox -after [get-label Frames] | get-property text | equals 4 | verify-true
+    get-editbox -after [get-label Frames] -index 1 | get-property text | equals 5 | verify-true
+}
+try { try { get-button "Save Project" | click} - catch { wait 500 | get-button "Save Project" | click }} -catch{try { get-button "Save Project" | click} - catch { wait 500 | get-button "Save Project" | click }}
+get-view "Model Explorer" | get-tree | get-item "TestProject/Tournament Pro" | get-item Matchup -index 2 
+    | get-property childCount | equals 1 | verify-true
+get-view "Model Explorer" | get-tree | select [get-item "TestProject/Tournament Pro" | get-item Matchup -index 2] 
+    | get-menu Game | click
+
+get-view "Model Explorer" | get-tree | get-item "TestProject/Tournament Pro" | get-item Matchup -index 2 
+    | get-property childCount | equals 2 | verify-true
+get-view "Model Explorer" | get-tree | select TestProject | get-menu "Undo Last Command" | click
+get-view "Model Explorer" | get-tree | get-item "TestProject/Tournament Pro" | get-item Matchup -index 2 
+    | get-property childCount | equals 1 | verify-true*/
+
+// delete project
+get-view "Model Explorer" | get-tree | get-property itemCount | equals 1 | verify-true
+get-view "Model Explorer" | get-tree | select TestProject | get-menu Delete | click
+get-window Delete | get-button OK | click
+get-view "Model Explorer" | get-tree | get-property itemCount | equals 0 | verify-true
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

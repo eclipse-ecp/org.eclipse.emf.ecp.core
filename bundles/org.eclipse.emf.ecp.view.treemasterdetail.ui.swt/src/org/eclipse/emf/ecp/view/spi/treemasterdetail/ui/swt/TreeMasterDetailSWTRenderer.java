@@ -200,7 +200,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 			if (treeViewer.getSelection() instanceof IStructuredSelection) {
 				final IStructuredSelection selection = (IStructuredSelection) treeViewer.getSelection();
 
-				if (selection.size() == 1) {
+				if (selection.size() == 1 && EObject.class.isInstance(selection.getFirstElement())) {
 					final EObject eObject = (EObject) selection.getFirstElement();
 					final EditingDomain domain = AdapterFactoryEditingDomain.getEditingDomainFor(eObject);
 					if (domain == null) {
@@ -393,11 +393,10 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 			@Override
 			public void notifyChange(ModelChangeNotification notification) {
 				// expand the tree if elements are added to the tree and the root isn't already expanded
-				if (notification.getNotifier().equals(((RootObject) treeViewer.getInput()).getRoot())
-					&& !treeViewer.getExpandedState(((RootObject) treeViewer.getInput()).getRoot())
-					&& (notification.getRawNotification().getEventType() == Notification.ADD
-						|| notification.getRawNotification().getEventType() == Notification.ADD_MANY)) {
-					treeViewer.expandToLevel(2);
+				if (notification.getRawNotification().getEventType() == Notification.ADD
+					|| notification.getRawNotification().getEventType() == Notification.ADD_MANY) {
+					final EObject notifier = notification.getNotifier();
+					treeViewer.expandToLevel(notifier, 1);
 				}
 			}
 		};
@@ -965,6 +964,9 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		@Override
 		public Image getImage(Object object) {
 			final Image image = super.getImage(object);
+			if (!EObject.class.isInstance(object)) {
+				return image;
+			}
 			return getValidationOverlay(image, (EObject) object);
 		}
 

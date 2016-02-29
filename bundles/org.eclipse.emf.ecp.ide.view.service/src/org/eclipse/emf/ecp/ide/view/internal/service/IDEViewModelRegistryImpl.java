@@ -21,6 +21,7 @@ import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecp.ide.view.service.IDEViewModelRegistry;
 import org.eclipse.emf.ecp.ide.view.service.ViewModelEditorCallback;
 import org.eclipse.emf.ecp.internal.ide.util.EcoreHelper;
@@ -42,8 +43,25 @@ public class IDEViewModelRegistryImpl implements IDEViewModelRegistry {
 
 	private final Map<String, IResourceChangeListener> resourceChangeListeners = new LinkedHashMap<String, IResourceChangeListener>();
 
+	private final Map<String, Set<String>> viewToRelatedEcorePaths = new LinkedHashMap<String, Set<String>>();
+
 	@Override
 	public void register(String ecorePath, VView viewModel) {
+
+		final Set<String> otherRelatedWorkspaceURIs = EcoreHelper
+			.getOtherRelatedWorkspacePaths(viewModel.getEcorePath());
+		final Set<String> otherRelatedWorkspacePaths = new LinkedHashSet<String>();
+		for (final String uri : otherRelatedWorkspaceURIs) {
+			final URI platformURI = URI.createURI(uri);
+			final StringBuilder builder = new StringBuilder();
+			for (int i = 1; i < platformURI.segmentCount(); i++) {
+				builder.append("/"); //$NON-NLS-1$
+				builder.append(URI.createURI(uri).segment(i));
+			}
+			otherRelatedWorkspacePaths.add(builder.toString());
+		}
+		viewToRelatedEcorePaths.put(ecorePath, otherRelatedWorkspacePaths);
+
 		if (!ecoreViewMapping.containsKey(ecorePath) || ecoreViewMapping.get(ecorePath).isEmpty()) {
 			if (ecoreViewMapping.get(ecorePath) == null) {
 				ecoreViewMapping.put(ecorePath, new LinkedHashSet<VView>());
@@ -65,17 +83,22 @@ public class IDEViewModelRegistryImpl implements IDEViewModelRegistry {
 						delta = delta.getAffectedChildren()[0];
 					}
 					for (final VView view : ecoreViewMapping.get(ecorePath)) {
-						final String ecorePath = view.getEcorePath();
-						if (ecorePath == null) {
-							return;
+						final Set<String> ecorePathsToCheck = new LinkedHashSet<String>();
+						if (view.getEcorePath() != null) {
+							ecorePathsToCheck.add(view.getEcorePath());
 						}
-						if (delta.getResource().getFullPath().toString().contains(ecorePath)) {
-							final ViewModelEditorCallback viewModelEditorCallback = viewModelViewModelEditorMapping
-								.get(view);
-							if (viewModelEditorCallback == null) {
-								continue;
+						if (viewToRelatedEcorePaths.containsKey(ecorePath)) {
+							ecorePathsToCheck.addAll(viewToRelatedEcorePaths.get(ecorePath));
+						}
+						for (final String path : ecorePathsToCheck) {
+							if (delta.getResource().getFullPath().toString().contains(path)) {
+								final ViewModelEditorCallback viewModelEditorCallback = viewModelViewModelEditorMapping
+									.get(view);
+								if (viewModelEditorCallback == null) {
+									continue;
+								}
+								viewModelEditorCallback.signalEcoreOutOfSync();
 							}
-							viewModelEditorCallback.signalEcoreOutOfSync();
 						}
 					}
 				}
@@ -89,13 +112,13 @@ public class IDEViewModelRegistryImpl implements IDEViewModelRegistry {
 	public void unregister(String registeredEcorePath, VView viewModel) {
 		if (ecoreViewMapping.containsKey(registeredEcorePath)) {
 			ecoreViewMapping.get(registeredEcorePath).remove(viewModel);
-			if (ecoreViewMapping.get(registeredEcorePath).size() == 0)
-			{
+			if (ecoreViewMapping.get(registeredEcorePath).size() == 0) {
 				final IResourceChangeListener listener = resourceChangeListeners.get(registeredEcorePath);
 				if (listener != null) {
 					ResourcesPlugin.getWorkspace().removeResourceChangeListener(listener);
 					resourceChangeListeners.remove(registeredEcorePath);
 				}
+				viewToRelatedEcorePaths.remove(registeredEcorePath);
 			}
 		}
 	}

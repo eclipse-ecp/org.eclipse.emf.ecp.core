@@ -6,17 +6,17 @@
 	<parent>
 		<groupId>org.eclipse.emf.ecp</groupId>
 		<artifactId>ecp-features-parent</artifactId>
-		<version>1.7.2-SNAPSHOT</version>
+		<version>1.8.0-SNAPSHOT</version>
 		<relativePath>../../releng/org.eclipse.emf.ecp.releng.features/</relativePath>
 	</parent>
 	<groupId>org.eclipse.emf.ecp</groupId>
 	<artifactId>org.eclipse.emf.ecp.site.target.feature</artifactId>
-	<version>1.7.2-SNAPSHOT</version>
+	<version>1.8.0-SNAPSHOT</version>
 	<packaging>eclipse-repository</packaging>
 	
 	<!-- see http://www.codetrails.com/blog/maven-tycho-how-to-configure-your-repos-mirror-and-statistics-uris -->
 	<properties>
-		<p2MirrorsURL>http://www.eclipse.org/downloads/download.php?file=/ecp/releases/releases_15/150&amp;format=xml</p2MirrorsURL>
+		<p2MirrorsURL>http://www.eclipse.org/downloads/download.php?file=/ecp/releases/releases_17&amp;format=xml</p2MirrorsURL>
 		<p2StatsURL>http://download.eclipse.org/stats/ecp</p2StatsURL>
 		<!-- At the moment, this list of features needs to be maintained manually. -->
 		<statsTrackedArtifacts>org.eclipse.emf.ecp.emfforms.runtime.feature,org.eclipse.emf.ecp.emfforms.sdk.feature,org.eclipse.emf.ecp.sdk.feature,org.eclipse.emf.ecp.sdk.e4.feature,org.eclipse.emf.ecp.rap.sdk.feature</statsTrackedArtifacts>

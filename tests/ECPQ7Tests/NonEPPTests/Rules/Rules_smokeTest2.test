@@ -1,0 +1,94 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _mY5uUKEgEeKX8e34E6tWIg,_rr2EEFpSEeKcnaHGSt8OwA,_IuFcgFpZEeKcnaHGSt8OwA,_f3qEUVpSEeKcnaHGSt8OwA,_fQ0PgDsqEeOHj9Cw0T_k4Q,_ElgmoHlIEeO9Ja8zvRhhOQ
+Element-Name: Rules_smokeTest2
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _2Ozl0HlSEeOByOq_5szdNw
+Runtime-Version: 1.5.4.201412181238
+Save-Time: 11/21/15 12:35 AM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+// or enable rule
+
+with [get-view "Model Explorer" | get-tree] {
+    select "Project/View/Control dateOfBirth" | get-menu "Enable Rule" | click
+    select "Project/View/Control dateOfBirth/Enable Rule false" | get-menu "Or Condition" | click
+    select "Project/View/Control dateOfBirth/Enable Rule false/Or Condition" | get-menu "Leaf Condition" | click
+    select "Project/View/Control dateOfBirth/Enable Rule false/Or Condition/Leaf Condition" 
+        | get-menu "Feature Path Domain Model Reference (Default)" | click
+}
+get-editor "Feature Path Domain Model Refe[...]" | get-button "Link Domain Model EFeature" | click
+with [get-window "Select a EStructuralFeature"] {
+    get-tree | select "name : EString"
+    get-button OK | click
+}
+get-editor "name" | close
+get-editor "Leaf Condition" | get-button "Select Object" | click
+with [get-window "Insert the value"] {
+    get-editbox 
+        -after [get-label "The value must be parseable by the String class. For a double value please use the #.# format. For boolean values \'true\' or \'false\'."] 
+        | set-text test
+    get-button OK | click
+}
+get-editor "Leaf Condition test" | close
+get-editor "Or Condition" | close
+get-editor "Enable Rule false" | close
+get-editor Player | close
+get-editor View | close
+with [get-view "Model Explorer" | get-tree] {
+    select "Project/View/Control dateOfBirth/Enable Rule false/Or Condition" | get-menu "Leaf Condition" | click
+    select "Project/View/Control dateOfBirth/Enable Rule false/Or Condition/Leaf Condition" 
+        | get-menu "Feature Path Domain Model Reference (Default)" | click
+}
+get-editor "Feature Path Domain Model Refe[...]" | get-button "Link Domain Model EFeature" | click
+with [get-window "Select a EStructuralFeature"] {
+    get-tree | select "isProfessional : EBoolean"
+    get-button OK | click
+}
+get-editor "isProfessional" | close
+get-editor "Leaf Condition" | get-button "Select Object" | click
+with [get-window "Insert the value"] {
+    get-editbox 
+        -after [get-label "The value must be parseable by the Boolean class. For a double value please use the #.# format. For boolean values \'true\' or \'false\'."] 
+        | set-text true
+    get-button OK | click
+}
+with [get-view "Model Explorer"] {
+    try {
+		get-tree | select "Project"
+    	get-button "Save Project" | click
+    } -catch {
+    	wait 1000
+    	try {
+    		get-tree | select "Project/View"
+    		get-button "Save Project" | click
+    	} -catch {
+    		wait 1000
+    		get-tree | select "Project"
+    		get-button "Save Project" | click
+    	}
+    }
+}
+get-editor "Leaf Condition true" | close
+get-view "Model Explorer" | get-tree | select "Model/Player" | double-click
+with [get-editor Player] {
+    get-label "No date set! Click to set date." | get-property enablement | equals false | verify-true
+    get-button -after [get-label "No date set! Click to set date."] | get-property enablement | equals false | verify-true
+	get-button -after [get-label "Is Professional"] | check
+    get-label "No date set! Click to set date." | get-property enablement | equals true | verify-true
+    get-button -after [get-label "No date set! Click to set date."] | get-property enablement | equals true | verify-true
+    get-button -after [get-label "Is Professional"] | uncheck
+    get-editbox -after [get-label Name] | set-text test
+    get-label "No date set! Click to set date." | get-property enablement | equals true | verify-true
+    get-button -after [get-label "No date set! Click to set date."] | get-property enablement | equals true | verify-true
+	get-button -after [get-label "Is Professional"] | check
+    get-label "No date set! Click to set date." | get-property enablement | equals true | verify-true
+    get-button -after [get-label "No date set! Click to set date."] | get-property enablement | equals true | verify-true
+}
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

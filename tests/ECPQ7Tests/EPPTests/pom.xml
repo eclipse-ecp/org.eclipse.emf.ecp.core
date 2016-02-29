@@ -35,12 +35,9 @@
 						<version>${rcptt-maven-version}</version>
 						<extensions>true</extensions>
 						<configuration>
-								<runner>
-									<version>${rcptt-runner-version}</version>
-									<vmArgs>
-										  <vmArg>-connectTimeout 600</vmArg>
-									</vmArgs>
-								</runner>
+							<runner>
+				                <version>${rcptt-runner-version}</version>
+				            </runner>
 							<aut>
 								
 								<explicit>${eclipse-product}</explicit>

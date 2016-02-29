@@ -130,8 +130,10 @@ public class Preview {
 		try {
 			clear();
 			final EClass myPreviewEClass = view.getRootEClass();
-
 			if (dummyData == null || dummyData.eClass() != myPreviewEClass) {
+				if (myPreviewEClass == null || myPreviewEClass.eIsProxy()) {
+					return;
+				}
 				dummyData = EcoreUtil.create(myPreviewEClass);
 				final ResourceSet resourceSet = new ResourceSetImpl();
 				final AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(

@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecp.view.spi.compoundcontrol.model.VCompoundControl;
 import org.eclipse.emf.ecp.view.spi.compoundcontrol.model.VCompoundcontrolPackage;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
-import org.eclipse.emf.ecp.view.spi.model.impl.VContainedElementImpl;
+import org.eclipse.emf.ecp.view.spi.model.impl.VControlImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -30,16 +30,15 @@ import org.eclipse.emf.ecp.view.spi.model.impl.VContainedElementImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
- * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.compoundcontrol.model.impl.VCompoundControlImpl#getControls <em>Controls
- * </em>}</li>
- * </ul>
  * </p>
+ * <ul>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.compoundcontrol.model.impl.VCompoundControlImpl#getControls <em>Controls</em>
+ * }</li>
+ * </ul>
  *
  * @generated
  */
-public class VCompoundControlImpl extends VContainedElementImpl implements VCompoundControl
-{
+public class VCompoundControlImpl extends VControlImpl implements VCompoundControl {
 	/**
 	 * The cached value of the '{@link #getControls() <em>Controls</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
@@ -57,8 +56,7 @@ public class VCompoundControlImpl extends VContainedElementImpl implements VComp
 	 *
 	 * @generated
 	 */
-	protected VCompoundControlImpl()
-	{
+	protected VCompoundControlImpl() {
 		super();
 	}
 
@@ -69,8 +67,7 @@ public class VCompoundControlImpl extends VContainedElementImpl implements VComp
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return VCompoundcontrolPackage.Literals.COMPOUND_CONTROL;
 	}
 
@@ -81,10 +78,8 @@ public class VCompoundControlImpl extends VContainedElementImpl implements VComp
 	 * @generated
 	 */
 	@Override
-	public EList<VControl> getControls()
-	{
-		if (controls == null)
-		{
+	public EList<VControl> getControls() {
+		if (controls == null) {
 			controls = new EObjectContainmentEList<VControl>(VControl.class, this,
 				VCompoundcontrolPackage.COMPOUND_CONTROL__CONTROLS);
 		}
@@ -98,10 +93,8 @@ public class VCompoundControlImpl extends VContainedElementImpl implements VComp
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-	{
-		switch (featureID)
-		{
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
 		case VCompoundcontrolPackage.COMPOUND_CONTROL__CONTROLS:
 			return ((InternalEList<?>) getControls()).basicRemove(otherEnd, msgs);
 		}
@@ -115,10 +108,8 @@ public class VCompoundControlImpl extends VContainedElementImpl implements VComp
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
-		switch (featureID)
-		{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 		case VCompoundcontrolPackage.COMPOUND_CONTROL__CONTROLS:
 			return getControls();
 		}
@@ -133,10 +124,8 @@ public class VCompoundControlImpl extends VContainedElementImpl implements VComp
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
-		switch (featureID)
-		{
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 		case VCompoundcontrolPackage.COMPOUND_CONTROL__CONTROLS:
 			getControls().clear();
 			getControls().addAll((Collection<? extends VControl>) newValue);
@@ -152,10 +141,8 @@ public class VCompoundControlImpl extends VContainedElementImpl implements VComp
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
-		switch (featureID)
-		{
+	public void eUnset(int featureID) {
+		switch (featureID) {
 		case VCompoundcontrolPackage.COMPOUND_CONTROL__CONTROLS:
 			getControls().clear();
 			return;
@@ -170,10 +157,8 @@ public class VCompoundControlImpl extends VContainedElementImpl implements VComp
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
-		switch (featureID)
-		{
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 		case VCompoundcontrolPackage.COMPOUND_CONTROL__CONTROLS:
 			return controls != null && !controls.isEmpty();
 		}

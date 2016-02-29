@@ -13,9 +13,11 @@ package org.eclipse.emf.ecp.view.template.service;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
@@ -153,7 +155,24 @@ public class ViewTemplateProviderImpl implements VTViewTemplateProvider {
 				properties.put(styleProperty, specificity);
 			}
 		}
-		return properties.keySet();
+
+		/* returned properties should by ordered by specificity */
+		final Set<VTStyleProperty> treeSet = new TreeSet<VTStyleProperty>(new Comparator<VTStyleProperty>() {
+			@Override
+			public int compare(VTStyleProperty o1, VTStyleProperty o2) {
+				final Double specificity1 = properties.get(o1);
+				final Double specificity2 = properties.get(o2);
+
+				/* higher value comes before lower value */
+				final int result = specificity2.compareTo(specificity1);
+				if (result != 0) {
+					return result;
+				}
+				return o1.toString().compareTo(o2.toString());
+			}
+		});
+		treeSet.addAll(properties.keySet());
+		return treeSet;
 	}
 
 	private VTStyleProperty getSavedStyleProperty(VTStyleProperty style, Set<VTStyleProperty> properties) {

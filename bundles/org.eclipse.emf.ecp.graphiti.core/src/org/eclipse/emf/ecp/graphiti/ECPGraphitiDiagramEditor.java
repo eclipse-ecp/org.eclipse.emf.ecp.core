@@ -20,11 +20,14 @@ import org.eclipse.ui.PartInitException;
 
 public abstract class ECPGraphitiDiagramEditor extends DiagramEditor {
 
+	/**
+	 * Default constructor.
+	 */
 	public ECPGraphitiDiagramEditor() {
 		super();
 	}
 
-	protected GraphitiDiagramEditorInput input;
+	private GraphitiDiagramEditorInput input;
 
 	@Override
 	public void init(IEditorSite site, IEditorInput input)

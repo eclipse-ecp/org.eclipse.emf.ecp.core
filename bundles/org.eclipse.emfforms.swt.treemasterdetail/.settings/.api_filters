@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emfforms.swt.treemasterdetail" version="2">
+    <resource path="META-INF/MANIFEST.MF">
+        <filter comment="SPI Change 1.8.0" id="923795461">
+            <message_arguments>
+                <message_argument value="1.8.0"/>
+                <message_argument value="1.7.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateChildActionWithAccelerator">
+        <filter comment="SPI change 1.8.0" id="305324134">
+            <message_arguments>
+                <message_argument value="org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateChildActionWithAccelerator"/>
+                <message_argument value="org.eclipse.emfforms.swt.treemasterdetail_1.8.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emfforms.spi.swt.treemasterdetail.util.MasterDetailAction">
+        <filter comment="SPI change" id="305324134">
+            <message_arguments>
+                <message_argument value="org.eclipse.emfforms.spi.swt.treemasterdetail.util.MasterDetailAction"/>
+                <message_argument value="org.eclipse.emfforms.swt.treemasterdetail_1.8.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emfforms.spi.swt.treemasterdetail.util.TreeMasterDetailRenderer">
+        <filter comment="SPI change 1.8.0" id="305324134">
+            <message_arguments>
+                <message_argument value="org.eclipse.emfforms.spi.swt.treemasterdetail.util.TreeMasterDetailRenderer"/>
+                <message_argument value="org.eclipse.emfforms.swt.treemasterdetail_1.8.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emfforms/spi/swt/treemasterdetail/TreeMasterDetailMenuListener.java" type="org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailMenuListener">
+        <filter comment="SPI Change 1.8.0" id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailMenuListener"/>
+                <message_argument value="TreeMasterDetailMenuListener(ChildrenDescriptorCollector, MenuManager, TreeViewer, EditingDomain, Collection&lt;MasterDetailAction&gt;, CreateElementCallback)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emfforms/spi/swt/treemasterdetail/util/CreateChildAction.java" type="org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateChildAction">
+        <filter comment="This is SPI" id="576720909">
+            <message_arguments>
+                <message_argument value="StaticSelectionCommandAction"/>
+                <message_argument value="CreateChildAction"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

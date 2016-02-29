@@ -5,12 +5,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.eclipse.emf.ecp</groupId>
 	<artifactId>ecp-tests-parent</artifactId>
-	<version>1.7.2-SNAPSHOT</version>
+	<version>1.8.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<parent>
 		<groupId>org.eclipse.emf.ecp</groupId>
 		<artifactId>ecp-parent</artifactId>
-		<version>1.7.2-SNAPSHOT</version>
+		<version>1.8.0-SNAPSHOT</version>
 		<relativePath>../../releng/org.eclipse.emf.ecp.releng/</relativePath>
 	</parent>
 	<profiles>
@@ -83,6 +83,7 @@
 		<module>../../tests/org.eclipse.emf.ecp.ui.view.swt.test</module>
 		
 		<module>../../tests/org.eclipse.emf.ecp.view.categorization.swt.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.context.tests</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.custom.ui.swt.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.group.ui.swt.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.horizontal.ui.swt.test</module>
@@ -143,6 +144,8 @@
 		<module>../../tests/org.eclipse.emfforms.swt.core.di.extension.tests</module>
 		<module>../../tests/org.eclipse.emfforms.common.tests</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.emf.tests</module>
+		<module>../../tests/org.eclipse.emfforms.core.services.tests</module>
+		<module>../../tests/org.eclipse.emfforms.core.services.legacy.tests</module>
 		
 		<!-- Localization Bundle -->
 		<module>../../tests/org.eclipse.emfforms.localization.tests</module>
@@ -155,6 +158,10 @@
 		<module>../../tests/org.eclipse.emf.ecp.view.template.service.test</module>
 		
 		<module>../../tests/org.eclipse.emf.ecp.quickfix.test</module>
+		
+		<module>../../tests/org.eclipse.emf.ecp.view.compoundcontrol.swt.test</module>
+		
+		<module>../../tests/org.eclipse.emfforms.swt.controlgrid.test</module>
 	</modules>
 	
 	<build>

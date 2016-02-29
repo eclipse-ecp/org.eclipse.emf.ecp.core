@@ -35,7 +35,7 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedExcep
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
-import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.ILabelProvider;
@@ -104,10 +104,10 @@ public class URLSelectionControlSWTRenderer extends SimpleControlSWTControlSWTRe
 	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
 		final Composite composite = Composite.class.cast(control);
 		final Control childControl = composite.getChildren()[0];
-		final IObservableValue value = SWTObservables.observeText(childControl);
+		final IObservableValue value = WidgetProperties.text().observe(childControl);
 		final Binding binding = getDataBindingContext().bindValue(value, getModelValue());
 
-		final IObservableValue toolTip = SWTObservables.observeTooltipText(childControl);
+		final IObservableValue toolTip = WidgetProperties.tooltipText().observe(childControl);
 		final Binding tooltipBinding = getDataBindingContext().bindValue(toolTip, getModelValue());
 		return new Binding[] { binding, tooltipBinding };
 	}

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:history="http://www.eclipse.org/emf/edapt/history/0.3">
+  <releases date="2015-09-16T17:53:39.587+0200" label="170">
+    <changes xsi:type="history:CompositeChange">
+      <changes xsi:type="history:Create" element="controlgrid.ecore#/">
+        <changes xsi:type="history:Set" element="controlgrid.ecore#/" featureName="name"
+            dataValue="controlgrid"/>
+        <changes xsi:type="history:Set" element="controlgrid.ecore#/" featureName="nsURI"
+            dataValue="http://org/eclipse/emf/emfforms/view/controlgrid/model"/>
+        <changes xsi:type="history:Set" element="controlgrid.ecore#/" featureName="nsPrefix"
+            dataValue="org.eclipse.emfforms.view.controlgrid.model"/>
+      </changes>
+      <changes xsi:type="history:Create" target="controlgrid.ecore#/" referenceName="eClassifiers"
+          element="controlgrid.ecore#//ControlGrid">
+        <changes xsi:type="history:Set" element="controlgrid.ecore#//ControlGrid"
+            featureName="name" dataValue="ControlGrid"/>
+        <changes xsi:type="history:Add" element="controlgrid.ecore#//ControlGrid"
+            featureName="eSuperTypes" referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//ContainedElement"/>
+      </changes>
+      <changes xsi:type="history:Create" target="controlgrid.ecore#/" referenceName="eClassifiers"
+          element="controlgrid.ecore#//ControlGridRow">
+        <changes xsi:type="history:Set" element="controlgrid.ecore#//ControlGridRow"
+            featureName="name" dataValue="ControlGridRow"/>
+      </changes>
+      <changes xsi:type="history:Create" target="controlgrid.ecore#//ControlGrid"
+          referenceName="eStructuralFeatures" element="controlgrid.ecore#//ControlGrid/rows">
+        <changes xsi:type="history:Set" element="controlgrid.ecore#//ControlGrid/rows"
+            featureName="name" dataValue="rows"/>
+        <changes xsi:type="history:Set" element="controlgrid.ecore#//ControlGrid/rows"
+            featureName="upperBound" dataValue="-1" oldDataValue="1"/>
+        <changes xsi:type="history:Set" element="controlgrid.ecore#//ControlGrid/rows"
+            featureName="containment" dataValue="true" oldDataValue="false"/>
+        <changes xsi:type="history:Set" element="controlgrid.ecore#//ControlGrid/rows"
+            featureName="eType" referenceValue="controlgrid.ecore#//ControlGridRow"/>
+      </changes>
+      <changes xsi:type="history:Create" target="controlgrid.ecore#/" referenceName="eClassifiers"
+          element="controlgrid.ecore#//ControlGridCell">
+        <changes xsi:type="history:Set" element="controlgrid.ecore#//ControlGridCell"
+            featureName="name" dataValue="ControlGridCell"/>
+      </changes>
+      <changes xsi:type="history:Create" target="controlgrid.ecore#//ControlGridRow"
+          referenceName="eStructuralFeatures" element="controlgrid.ecore#//ControlGridRow/cells">
+        <changes xsi:type="history:Set" element="controlgrid.ecore#//ControlGridRow/cells"
+            featureName="name" dataValue="cells"/>
+        <changes xsi:type="history:Set" element="controlgrid.ecore#//ControlGridRow/cells"
+            featureName="upperBound" dataValue="-1" oldDataValue="1"/>
+        <changes xsi:type="history:Set" element="controlgrid.ecore#//ControlGridRow/cells"
+            featureName="containment" dataValue="true" oldDataValue="false"/>
+        <changes xsi:type="history:Set" element="controlgrid.ecore#//ControlGridRow/cells"
+            featureName="eType" referenceValue="controlgrid.ecore#//ControlGridCell"/>
+      </changes>
+      <changes xsi:type="history:Create" target="controlgrid.ecore#//ControlGridCell"
+          referenceName="eStructuralFeatures" element="controlgrid.ecore#//ControlGridCell/control">
+        <changes xsi:type="history:Set" element="controlgrid.ecore#//ControlGridCell/control"
+            featureName="name" dataValue="control"/>
+        <changes xsi:type="history:Set" element="controlgrid.ecore#//ControlGridCell/control"
+            featureName="containment" dataValue="true" oldDataValue="false"/>
+        <changes xsi:type="history:Set" element="controlgrid.ecore#//ControlGridCell/control"
+            featureName="eType" referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//Control"/>
+      </changes>
+    </changes>
+  </releases>
+  <releases/>
+</history:History>

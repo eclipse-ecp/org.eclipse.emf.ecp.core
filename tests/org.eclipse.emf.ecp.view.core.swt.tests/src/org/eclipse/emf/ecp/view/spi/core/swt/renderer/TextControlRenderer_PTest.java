@@ -41,6 +41,7 @@ import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 import org.junit.After;
@@ -129,11 +130,12 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 	}
 
 	private void assertControl(Control render) {
-		assertTrue(Text.class.isInstance(render));
-		assertEquals(SWT.LEFT, Text.class.cast(render).getStyle()
+		final Control textRender = Composite.class.cast(render).getChildren()[0];
+		assertTrue(Text.class.isInstance(textRender));
+		assertEquals(SWT.LEFT, Text.class.cast(textRender).getStyle()
 			& SWT.LEFT);
 
-		assertEquals("org_eclipse_emf_ecp_control_string", Text.class.cast(render).getData(CUSTOM_VARIANT));
+		assertEquals("org_eclipse_emf_ecp_control_string", Text.class.cast(textRender).getData(CUSTOM_VARIANT));
 	}
 
 	@Override
@@ -205,7 +207,7 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 			mockedObservable, new ObservingWritableValue(mockedObservable));
 
 		final Control renderControl = renderControl(new SWTGridCell(0, 2, renderer));
-		final Text text = (Text) renderControl;
+		final Text text = (Text) Composite.class.cast(renderControl).getChildren()[0];
 		return text;
 	}
 
@@ -238,9 +240,10 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 			mockedObservableValue);
 
 		final Control renderControl = renderControl(new SWTGridCell(0, 2, renderer));
-		assertTrue(Text.class.isInstance(renderControl));
+		final Control textRender = Composite.class.cast(renderControl).getChildren()[0];
+		assertTrue(Text.class.isInstance(textRender));
 
-		final Text text = (Text) renderControl;
+		final Text text = (Text) textRender;
 		assertEquals(testDisplayName.getValue(), text.getMessage());
 	}
 }

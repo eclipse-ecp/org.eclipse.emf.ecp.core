@@ -76,6 +76,7 @@
             id="org.eclipse.emf.ecp.makeithappen.wizards.rap.j2ee.ExampleApplicationWizard"
             name="Make it happen: sample J2EE RAP application">
       </wizard>
+      <!-- Enable when fx was tested
       <wizard
             category="org.eclipse.ui.Examples/org.eclipse.emf.ecp.makeithappen.wizards.EMFForms"
             class="org.eclipse.emf.ecp.makeithappen.internal.wizards.MakeItHappenWizard"
@@ -83,6 +84,7 @@
             id="org.eclipse.emf.ecp.makeithappen.wizards.fx.ExampleApplicationWizard"
             name="Make it happen: sample JavaFX application">
       </wizard>
+      -->
    </extension>
    <extension
          point="org.eclipse.emf.common.ui.examples">
@@ -261,6 +263,7 @@
                name="org.eclipse.emf.ecp.makeithappen.model.edit">
          </projectDescriptor>
       </example>
+      <!-- Enable when fx was tested
       <example
             id="org.eclipse.emf.ecp.makeithappen.wizards.fx.ExampleApplication"
             pageImage="icons/emf_forms_logo_56x48.png"
@@ -286,6 +289,7 @@
                name="org.eclipse.emf.ecp.makeithappen.model.edit">
          </projectDescriptor>
       </example>
+      -->
    </extension>
 
 </plugin>

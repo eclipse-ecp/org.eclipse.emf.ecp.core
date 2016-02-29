@@ -29,7 +29,7 @@ import org.eclipse.emf.ecp.view.internal.treemasterdetail.ui.swt.Activator;
 public final class TreeMasterDetailSelectionManipulatorHelper {
 
 	private static TreeMasterDetailSelectionManipulator manipulator;
-	private static boolean readExtensions;
+	private static boolean initialized;
 
 	private TreeMasterDetailSelectionManipulatorHelper() {
 	}
@@ -41,11 +41,19 @@ public final class TreeMasterDetailSelectionManipulatorHelper {
 	 * @return the manipulated Object
 	 */
 	public static Object manipulateSelection(Object object) {
-		final IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
-		if (extensionRegistry == null) {
-			return object;
+		checkInitState();
+		if (manipulator != null) {
+			return manipulator.manipulateSelection(object);
 		}
-		if (!readExtensions) {
+		return object;
+	}
+
+	private static synchronized void checkInitState() {
+		if (!initialized) {
+			final IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
+			if (extensionRegistry == null) {
+				return;
+			}
 			final IConfigurationElement[] controls = extensionRegistry
 				.getConfigurationElementsFor("org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.selectionManipulator"); //$NON-NLS-1$
 			for (final IConfigurationElement e : controls) {
@@ -56,11 +64,7 @@ public final class TreeMasterDetailSelectionManipulatorHelper {
 						.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e1.getMessage(), e1));
 				}
 			}
-			readExtensions = true;
+			initialized = true;
 		}
-		if (manipulator != null) {
-			return manipulator.manipulateSelection(object);
-		}
-		return object;
 	}
 }

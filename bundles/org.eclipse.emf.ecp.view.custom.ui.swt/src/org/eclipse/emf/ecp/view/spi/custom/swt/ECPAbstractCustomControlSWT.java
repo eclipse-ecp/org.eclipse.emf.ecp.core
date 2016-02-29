@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
+ * Stefan Dirix - Add ControlProcessorService
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.custom.swt;
 
@@ -67,7 +68,7 @@ import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
-import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ViewerSupport;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.swt.SWT;
@@ -357,7 +358,7 @@ public abstract class ECPAbstractCustomControlSWT {
 
 			try {
 				viewModelDBC.bindValue(
-					SWTObservables.observeText(label),
+					WidgetProperties.text().observe(label),
 					Activator
 						.getDefault()
 						.getEMFFormsLabelProvider()
@@ -382,7 +383,7 @@ public abstract class ECPAbstractCustomControlSWT {
 
 					});
 				viewModelDBC.bindValue(
-					SWTObservables.observeTooltipText(label),
+					WidgetProperties.tooltipText().observe(label),
 					Activator
 						.getDefault()
 						.getEMFFormsLabelProvider()
@@ -824,5 +825,24 @@ public abstract class ECPAbstractCustomControlSWT {
 	 */
 	protected final SWTGridDescription createSimpleGrid(int rows, int columns) {
 		return GridDescriptionFactory.INSTANCE.createSimpleGrid(rows, columns, null);
+	}
+
+	/**
+	 * <p>
+	 * Indicates if the given custom control takes the responsibility to call a possibly existing
+	 * {@link org.eclipse.emfforms.spi.swt.core.EMFFormsControlProcessorService EMFFormsControlProcessorService} itself.
+	 * </p>
+	 * <p>
+	 * The default implementation returns {@code false}.
+	 * </p>
+	 *
+	 * @return
+	 *         {@code true} if the custom control can handle the
+	 *         {@link org.eclipse.emfforms.spi.swt.core.EMFFormsControlProcessorService EMFFormsControlProcessorService}
+	 *         itself, {@code false} otherwise.
+	 * @since 1.8
+	 */
+	protected boolean canHandleControlProcessor() {
+		return false;
 	}
 }

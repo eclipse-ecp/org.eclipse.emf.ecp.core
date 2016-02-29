@@ -2,12 +2,12 @@
 <feature
       id="org.eclipse.emf.ecp.view.horizontal.feature"
       label="EMF Forms Horizontal Model"
-      version="1.7.2.qualifier"
+      version="1.8.0.qualifier"
       provider-name="Eclipse Modeling Project"
       plugin="org.eclipse.emf.ecp.view.horizontal.model"
       image="eclipse_update_120.jpg"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.7.2.qualifier">
+      license-feature-version="1.8.0.qualifier">
 
    <description>
       %description

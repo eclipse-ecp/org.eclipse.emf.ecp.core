@@ -31,7 +31,7 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedExcep
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
-import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
@@ -95,7 +95,7 @@ public class HexColorSelectionControlSWTRenderer extends SimpleControlSWTControl
 	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
 		final Composite composite = Composite.class.cast(control);
 		final Control childControl = composite.getChildren()[0];
-		final IObservableValue value = SWTObservables.observeBackground(childControl);
+		final IObservableValue value = WidgetProperties.background().observe(childControl);
 		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(),
 			new UpdateValueStrategy() {
 				@Override
@@ -120,7 +120,7 @@ public class HexColorSelectionControlSWTRenderer extends SimpleControlSWTControl
 				}
 
 			});
-		final IObservableValue textValue = SWTObservables.observeTooltipText(childControl);
+		final IObservableValue textValue = WidgetProperties.tooltipText().observe(childControl);
 		final Binding textBinding = getDataBindingContext().bindValue(textValue, getModelValue());
 		return new Binding[] { binding, textBinding };
 	}

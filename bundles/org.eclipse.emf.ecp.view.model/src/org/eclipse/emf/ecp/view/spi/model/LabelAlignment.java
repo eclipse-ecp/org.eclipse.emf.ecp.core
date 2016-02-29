@@ -24,7 +24,6 @@ import org.eclipse.emf.common.util.Enumerator;
  *
  * @since 1.2
  *        <!-- end-user-doc -->
- *
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getLabelAlignment()
  * @model
  * @generated
@@ -36,7 +35,6 @@ public enum LabelAlignment implements Enumerator {
 	 *
 	 * @since 1.7
 	 *        <!-- end-user-doc -->
-	 *
 	 * @see #DEFAULT_VALUE
 	 * @generated
 	 * @ordered
@@ -60,7 +58,6 @@ public enum LabelAlignment implements Enumerator {
 	 *
 	 * @since 1.7
 	 *        <!-- end-user-doc -->
-	 *
 	 * @see #TOP_VALUE
 	 * @generated
 	 * @ordered
@@ -88,7 +85,6 @@ public enum LabelAlignment implements Enumerator {
 	 *
 	 * @since 1.7
 	 *        <!-- end-user-doc -->
-	 *
 	 * @see #DEFAULT
 	 * @model name="Default"
 	 * @generated
@@ -119,10 +115,9 @@ public enum LabelAlignment implements Enumerator {
 	 * If the meaning of '<em><b>Top</b></em>' literal object isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
-	 * 
+	 *
 	 * @since 1.7
 	 *        <!-- end-user-doc -->
-	 *
 	 * @see #TOP
 	 * @model name="Top"
 	 * @generated

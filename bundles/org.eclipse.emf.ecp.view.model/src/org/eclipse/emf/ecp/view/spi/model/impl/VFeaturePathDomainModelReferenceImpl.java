@@ -184,7 +184,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @return the domain model reference path
 	 *         <!-- end-user-doc -->
 	 *
@@ -549,6 +549,9 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	 */
 	@Override
 	public void notifyChange(ModelChangeNotification notification) {
+		if (rootEObject == null) {
+			return;
+		}
 		if (notification.getRawNotification().isTouch()) {
 			return;
 		}

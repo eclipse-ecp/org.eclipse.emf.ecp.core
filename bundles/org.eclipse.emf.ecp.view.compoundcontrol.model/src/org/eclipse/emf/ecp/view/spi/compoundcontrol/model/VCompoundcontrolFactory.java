@@ -22,8 +22,7 @@ import org.eclipse.emf.ecore.EFactory;
  * @see org.eclipse.emf.ecp.view.spi.compoundcontrol.model.VCompoundcontrolPackage
  * @generated
  */
-public interface VCompoundcontrolFactory extends EFactory
-{
+public interface VCompoundcontrolFactory extends EFactory {
 	/**
 	 * The singleton instance of the factory.
 	 * <!-- begin-user-doc -->

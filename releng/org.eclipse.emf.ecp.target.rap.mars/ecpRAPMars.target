@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="ECP RAP" sequenceNumber="260">
+<?pde version="3.8"?><target name="ECP RAP" sequenceNumber="261">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.swtbot.forms.feature.group" version="0.0.0"/>
@@ -17,18 +17,18 @@
 <unit id="org.h2.source" version="0.0.0"/>
 <unit id="org.apache.log4j.source" version="0.0.0"/>
 <unit id="org.apache.log4j" version="0.0.0"/>
-<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/S20140917154621/repository/"/>
+<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20151221205849/repository/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.equinox.sdk.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.platform.ide" version="0.0.0"/>
-<repository location="http://download.eclipse.org/eclipse/updates/4.5milestones/"/>
+<repository location="http://download.eclipse.org/eclipse/updates/4.5"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.emf.ecp.rap.sdk.feature.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.emf.ecp.rap.util.feature.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.emf.ecp.emfforms.sdk.feature.feature.group" version="0.0.0"/>
-<repository location="http://download.eclipse.org/ecp/releases/releases_16"/>
+<repository location="http://download.eclipse.org/ecp/releases/releases_18"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.rap.fileupload.feature.feature.group" version="0.0.0"/>
@@ -54,7 +54,7 @@
 <unit id="org.eclipse.emf.emfstore.example.feature.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.emf.emfstore.client.ui.feature.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.emf.emfstore.ecore.feature.feature.group" version="0.0.0"/>
-<repository location="http://download.eclipse.org/emfstore/releases_16"/>
+<repository location="http://download.eclipse.org/emfstore/releases_17"/>
 </location>
 </locations>
 </target>

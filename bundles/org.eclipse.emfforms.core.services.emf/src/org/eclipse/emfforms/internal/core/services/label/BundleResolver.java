@@ -28,12 +28,12 @@ public interface BundleResolver {
 	 * @author Eugen Neufeld
 	 *
 	 */
-	public static class NoBundleFoundException extends Exception {
+	class NoBundleFoundException extends Exception {
 		private static final long serialVersionUID = 1L;
 
 		/**
 		 * Default Constructor.
-		 * 
+		 *
 		 * @param eClass The EClass to log for.
 		 */
 		public NoBundleFoundException(EClass eClass) {

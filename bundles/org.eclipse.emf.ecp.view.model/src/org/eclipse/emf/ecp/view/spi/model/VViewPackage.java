@@ -1,5 +1,6 @@
+// CHECKSTYLE.OFF: FileLength|RegexpHeader
 /**
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -30,6 +31,7 @@ import org.eclipse.emf.ecore.EReference;
  * </ul>
  *
  * @noimplement This interface is not intended to be implemented by clients.
+ * @noextend This interface is not intended to be extended by clients.
  * @since 1.2
  *        <!-- end-user-doc -->
  * @see org.eclipse.emf.ecp.view.spi.model.VViewFactory
@@ -435,7 +437,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.7
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -892,7 +893,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.7
 	 *        <!-- end-user-doc -->
-	 *
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewModelLoadingPropertiesImpl
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getViewModelLoadingProperties()
 	 * @generated
@@ -905,7 +905,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.7
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -917,7 +916,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.7
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -929,7 +927,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.7
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -982,6 +979,44 @@ public interface VViewPackage extends EPackage {
 	int STRING_TO_OBJECT_MAP_ENTRY_FEATURE_COUNT = 2;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.impl.VDateTimeDisplayAttachmentImpl
+	 * <em>Date Time Display Attachment</em>}' class.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.8
+	 *        <!-- end-user-doc -->
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VDateTimeDisplayAttachmentImpl
+	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getDateTimeDisplayAttachment()
+	 * @generated
+	 */
+	int DATE_TIME_DISPLAY_ATTACHMENT = 13;
+
+	/**
+	 * The feature id for the '<em><b>Display Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.8
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int DATE_TIME_DISPLAY_ATTACHMENT__DISPLAY_TYPE = ATTACHMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Date Time Display Attachment</em>' class.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.8
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int DATE_TIME_DISPLAY_ATTACHMENT_FEATURE_COUNT = ATTACHMENT_FEATURE_COUNT + 1;
+
+	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.LabelAlignment <em>Label Alignment</em>}'
 	 * enum.
 	 * <!-- begin-user-doc -->
@@ -991,7 +1026,21 @@ public interface VViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getLabelAlignment()
 	 * @generated
 	 */
-	int LABEL_ALIGNMENT = 13;
+	int LABEL_ALIGNMENT = 14;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.DateTimeDisplayType
+	 * <em>Date Time Display Type</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.8
+	 *        <!-- end-user-doc -->
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.model.DateTimeDisplayType
+	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getDateTimeDisplayType()
+	 * @generated
+	 */
+	int DATE_TIME_DISPLAY_TYPE = 15;
 
 	/**
 	 * The meta object id for the '<em>Domain Model Reference Change Listener</em>' data type.
@@ -1003,7 +1052,7 @@ public interface VViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getDomainModelReferenceChangeListener()
 	 * @generated
 	 */
-	int DOMAIN_MODEL_REFERENCE_CHANGE_LISTENER = 14;
+	int DOMAIN_MODEL_REFERENCE_CHANGE_LISTENER = 16;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.model.VElement <em>Element</em>}'.
@@ -1190,7 +1239,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.7
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the meta object for the containment reference '<em>Loading Properties</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VView#getLoadingProperties()
 	 * @see #getView()
@@ -1270,7 +1318,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.7
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the meta object for the map '<em>Non Inheritable Properties</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VViewModelLoadingProperties#getNonInheritableProperties()
 	 * @see #getViewModelLoadingProperties()
@@ -1290,6 +1337,35 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getViewModelProperties();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment
+	 * <em>Date Time Display Attachment</em>}'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.8
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the meta object for class '<em>Date Time Display Attachment</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment
+	 * @generated
+	 */
+	EClass getDateTimeDisplayAttachment();
+
+	/**
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment#getDisplayType <em>Display Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.8
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the attribute '<em>Display Type</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment#getDisplayType()
+	 * @see #getDateTimeDisplayAttachment()
+	 * @generated
+	 */
+	EAttribute getDateTimeDisplayAttachment_DisplayType();
 
 	/**
 	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Object Map Entry</em>}'.
@@ -1392,6 +1468,20 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 */
 	EEnum getLabelAlignment();
+
+	/**
+	 * Returns the meta object for enum '{@link org.eclipse.emf.ecp.view.spi.model.DateTimeDisplayType
+	 * <em>Date Time Display Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.8
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the meta object for enum '<em>Date Time Display Type</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.model.DateTimeDisplayType
+	 * @generated
+	 */
+	EEnum getDateTimeDisplayType();
 
 	/**
 	 * Returns the meta object for data type '
@@ -1506,7 +1596,8 @@ public interface VViewPackage extends EPackage {
 	 * </ul>
 	 *
 	 * @noimplement This interface is not intended to be implemented by clients.
-	 *              <!-- end-user-doc -->
+	 * @noextend This interface is not intended to be extended by clients.
+	 *           <!-- end-user-doc -->
 	 * @generated
 	 */
 	interface Literals {
@@ -1653,7 +1744,6 @@ public interface VViewPackage extends EPackage {
 		 *
 		 * @since 1.7
 		 *        <!-- end-user-doc -->
-		 *
 		 * @generated
 		 */
 		EReference VIEW__LOADING_PROPERTIES = eINSTANCE.getView_LoadingProperties();
@@ -1699,7 +1789,6 @@ public interface VViewPackage extends EPackage {
 		 *
 		 * @since 1.7
 		 *        <!-- end-user-doc -->
-		 *
 		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewModelLoadingPropertiesImpl
 		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getViewModelLoadingProperties()
 		 * @generated
@@ -1712,7 +1801,6 @@ public interface VViewPackage extends EPackage {
 		 *
 		 * @since 1.7
 		 *        <!-- end-user-doc -->
-		 *
 		 * @generated
 		 */
 		EReference VIEW_MODEL_LOADING_PROPERTIES__INHERITABLE_PROPERTIES = eINSTANCE
@@ -1721,10 +1809,9 @@ public interface VViewPackage extends EPackage {
 		/**
 		 * The meta object literal for the '<em><b>Non Inheritable Properties</b></em>' map feature.
 		 * <!-- begin-user-doc -->
-		 * 
+		 *
 		 * @since 1.7
 		 *        <!-- end-user-doc -->
-		 *
 		 * @generated
 		 */
 		EReference VIEW_MODEL_LOADING_PROPERTIES__NON_INHERITABLE_PROPERTIES = eINSTANCE
@@ -1742,6 +1829,32 @@ public interface VViewPackage extends EPackage {
 		 * @generated
 		 */
 		EClass VIEW_MODEL_PROPERTIES = eINSTANCE.getViewModelProperties();
+
+		/**
+		 * The meta object literal for the '
+		 * {@link org.eclipse.emf.ecp.view.spi.model.impl.VDateTimeDisplayAttachmentImpl
+		 * <em>Date Time Display Attachment</em>}' class.
+		 * <!-- begin-user-doc -->
+		 *
+		 * @since 1.8
+		 *        <!-- end-user-doc -->
+		 *
+		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VDateTimeDisplayAttachmentImpl
+		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getDateTimeDisplayAttachment()
+		 * @generated
+		 */
+		EClass DATE_TIME_DISPLAY_ATTACHMENT = eINSTANCE.getDateTimeDisplayAttachment();
+
+		/**
+		 * The meta object literal for the '<em><b>Display Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 *
+		 * @since 1.8
+		 *        <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EAttribute DATE_TIME_DISPLAY_ATTACHMENT__DISPLAY_TYPE = eINSTANCE.getDateTimeDisplayAttachment_DisplayType();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.model.impl.VStringToObjectMapEntryImpl
@@ -1830,6 +1943,20 @@ public interface VViewPackage extends EPackage {
 		 * @generated
 		 */
 		EEnum LABEL_ALIGNMENT = eINSTANCE.getLabelAlignment();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.model.DateTimeDisplayType
+		 * <em>Date Time Display Type</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 *
+		 * @since 1.8
+		 *        <!-- end-user-doc -->
+		 *
+		 * @see org.eclipse.emf.ecp.view.spi.model.DateTimeDisplayType
+		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getDateTimeDisplayType()
+		 * @generated
+		 */
+		EEnum DATE_TIME_DISPLAY_TYPE = eINSTANCE.getDateTimeDisplayType();
 
 		/**
 		 * The meta object literal for the '<em>Domain Model Reference Change Listener</em>' data type.

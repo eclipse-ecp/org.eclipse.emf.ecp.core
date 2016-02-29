@@ -30,9 +30,9 @@ import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.makeithappen.model.task.TaskPackage;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
@@ -40,7 +40,7 @@ import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.emfforms.spi.common.locale.EMFFormsLocaleProvider;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
-import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsCellStyleConstants;
 import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsConverterException;
 import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsSpreadsheetValueConverter;
@@ -50,7 +50,7 @@ import org.junit.Test;
 public class EMFFormsSpreadsheetMultiAttributeConverter_Test {
 
 	private ReportService reportService;
-	private EMFFormsDatabinding databinding;
+	private EMFFormsDatabindingEMF databinding;
 	private EMFFormsSpreadsheetMultiAttributeConverter converter;
 	private EObject domainObject;
 	private VDomainModelReference dmr;
@@ -61,7 +61,7 @@ public class EMFFormsSpreadsheetMultiAttributeConverter_Test {
 	public void before() {
 		converter = new EMFFormsSpreadsheetMultiAttributeConverter();
 		reportService = mock(ReportService.class);
-		databinding = mock(EMFFormsDatabinding.class);
+		databinding = mock(EMFFormsDatabindingEMF.class);
 		domainObject = mock(EObject.class);
 		dmr = mock(VDomainModelReference.class);
 
@@ -81,7 +81,7 @@ public class EMFFormsSpreadsheetMultiAttributeConverter_Test {
 
 	@Test
 	public void testApplicableNoFeature() throws DatabindingFailedException {
-		when(databinding.getValueProperty(any(VDomainModelReference.class), any(EObject.class)))
+		when(databinding.getSetting(any(VDomainModelReference.class), any(EObject.class)))
 			.thenThrow(new DatabindingFailedException("")); //$NON-NLS-1$
 		converter.setDatabinding(databinding);
 		converter.setReportService(reportService);
@@ -90,10 +90,10 @@ public class EMFFormsSpreadsheetMultiAttributeConverter_Test {
 
 	@Test
 	public void testApplicableNoEAttribute() throws DatabindingFailedException {
-		final IValueProperty property = mock(IValueProperty.class);
-		when(property.getValueType()).thenReturn(TaskPackage.eINSTANCE.getUser_Tasks());
-		when(databinding.getValueProperty(any(VDomainModelReference.class), any(EObject.class)))
-			.thenReturn(property);
+		final Setting setting = mock(Setting.class);
+		when(setting.getEStructuralFeature()).thenReturn(TaskPackage.eINSTANCE.getUser_Tasks());
+		when(databinding.getSetting(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(setting);
 		converter.setDatabinding(databinding);
 		converter.setReportService(reportService);
 		assertEquals(EMFFormsSpreadsheetValueConverter.NOT_APPLICABLE, converter.isApplicable(domainObject, dmr), 0d);
@@ -101,10 +101,10 @@ public class EMFFormsSpreadsheetMultiAttributeConverter_Test {
 
 	@Test
 	public void testApplicableSingleEAttribute() throws DatabindingFailedException {
-		final IValueProperty property = mock(IValueProperty.class);
-		when(property.getValueType()).thenReturn(TaskPackage.eINSTANCE.getUser_Active());
-		when(databinding.getValueProperty(any(VDomainModelReference.class), any(EObject.class)))
-			.thenReturn(property);
+		final Setting setting = mock(Setting.class);
+		when(setting.getEStructuralFeature()).thenReturn(TaskPackage.eINSTANCE.getUser_Active());
+		when(databinding.getSetting(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(setting);
 		converter.setDatabinding(databinding);
 		converter.setReportService(reportService);
 		assertEquals(EMFFormsSpreadsheetValueConverter.NOT_APPLICABLE, converter.isApplicable(domainObject, dmr), 0d);
@@ -112,10 +112,10 @@ public class EMFFormsSpreadsheetMultiAttributeConverter_Test {
 
 	@Test
 	public void testApplicableMultiEAttribute() throws DatabindingFailedException {
-		final IValueProperty property = mock(IValueProperty.class);
-		when(property.getValueType()).thenReturn(BowlingPackage.eINSTANCE.getPlayer_EMails());
-		when(databinding.getValueProperty(any(VDomainModelReference.class), any(EObject.class)))
-			.thenReturn(property);
+		final Setting setting = mock(Setting.class);
+		when(setting.getEStructuralFeature()).thenReturn(BowlingPackage.eINSTANCE.getPlayer_EMails());
+		when(databinding.getSetting(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(setting);
 		converter.setDatabinding(databinding);
 		converter.setReportService(reportService);
 		assertEquals(0d, converter.isApplicable(domainObject, dmr), 0d);

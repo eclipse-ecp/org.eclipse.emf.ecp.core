@@ -27,6 +27,8 @@ import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
+import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
@@ -42,8 +44,9 @@ import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsControlProcessorService;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
-import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
@@ -146,6 +149,78 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 			getVElement().getDomainModelReference().getChangeListener().add(domainModelReferenceChangeListener);
 		}
 		applyEnable();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#render(org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell,
+	 *      org.eclipse.swt.widgets.Composite)
+	 */
+	@Override
+	public Control render(SWTGridCell cell, Composite parent)
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		final Control control = super.render(cell, parent);
+
+		if (control == null) {
+			return null;
+		}
+
+		if (!canHandleControlProcessor()) {
+			defaultHandleControlProcessorForCell(control, cell);
+		}
+
+		return control;
+	}
+
+	/**
+	 * <p>
+	 * Indicates if the given Control SWT renderer takes the responsibility to call a possibly existing
+	 * {@link EMFFormsControlProcessorService} itself.
+	 * </p>
+	 * <p>
+	 * The default implementation returns {@code false}.
+	 * </p>
+	 *
+	 * @return
+	 *         {@code true} if the Control SWT renderer can handle the {@link EMFFormsControlProcessorService} itself,
+	 *         {@code false} otherwise.
+	 * @since 1.8
+	 */
+	protected boolean canHandleControlProcessor() {
+		return false;
+	}
+
+	/**
+	 * This method is called by {link {@link #render(SWTGridCell, Composite)} for each
+	 * {@code control} and {@code cell} if {@link #canHandleControlProcessor()} returns {@code false}. The default
+	 * implementation forwards to {@link #defaultHandleControlProcessor(Control)} if the cell's column is {@code 2}.
+	 *
+	 * @param control
+	 *            The {@link Control} which is to be processed by the {@link EMFFormsControlProcessorService}.
+	 * @param cell
+	 *            The {@link SWTGridCell} for the given {@code control}.
+	 * @since 1.8
+	 */
+	protected void defaultHandleControlProcessorForCell(Control control, SWTGridCell cell) {
+		if (cell.getColumn() == 2) {
+			defaultHandleControlProcessor(control);
+		}
+	}
+
+	/**
+	 * Calls a possibly existing {@link EMFFormsControlProcessorService} for the given {@code control}.
+	 *
+	 * @param control
+	 *            The {@link Control} which is to be processed by the {@link EMFFormsControlProcessorService}.
+	 * @since 1.8
+	 */
+	protected void defaultHandleControlProcessor(Control control) {
+		if (getViewModelContext().hasService(EMFFormsControlProcessorService.class)) {
+			final EMFFormsControlProcessorService service = getViewModelContext()
+				.getService(EMFFormsControlProcessorService.class);
+			service.process(control, getVElement(), getViewModelContext());
+		}
 	}
 
 	@Override
@@ -267,7 +342,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 
 			final EObject rootObject = getViewModelContext().getDomainModel();
 			try {
-				final IObservableValue textObservable = SWTObservables.observeText(label);
+				final IObservableValue textObservable = WidgetProperties.text().observe(label);
 				final IObservableValue displayNameObservable = labelProvider.getDisplayName(domainModelReference,
 					rootObject);
 				viewModelDBC.bindValue(textObservable, displayNameObservable, null, new UpdateValueStrategy() {
@@ -290,7 +365,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 					}
 
 				});
-				final IObservableValue tooltipObservable = SWTObservables.observeTooltipText(label);
+				final IObservableValue tooltipObservable = WidgetProperties.tooltipText().observe(label);
 				final IObservableValue descriptionObservable = labelProvider.getDescription(domainModelReference,
 					rootObject);
 				viewModelDBC.bindValue(tooltipObservable, descriptionObservable);

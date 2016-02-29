@@ -1,0 +1,267 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _D4Pj4C3lEeSwhO5Nwx0hPg,_Iu0EsS36EeSYRYqCbC6LMQ
+Element-Name: ViewEditor_smoke
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _foqG8GzgEeWQGtcwdcx-qw
+Runtime-Version: 2.0.1.201508250612
+Save-Time: 10/7/15 1:24 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+// preparation
+
+get-view "EMF Forms Preview" | get-button "Automatically refresh Preview View" | click
+
+// bool control 
+
+get-view "Project Explorer" | get-tree | select "org.eclipse.emf.ecp.makeithappen.model.viewmodel/viewmodels/Task.view" 
+    | double-click
+with [get-editor "Task.view"] {
+    with [get-tree] {
+        select View | get-menu Control | click
+        select "View/Control"
+    }
+    get-button "Create and link new Domain Model Reference" | click
+}
+with [get-window "New Reference Element"] {
+    get-tree | select "model/FeaturePathDomainModelReference"
+    get-button "Next >" | click
+    get-button "Link Domain Model EFeature" | click
+    with [get-window "Select a EStructuralFeature"] {
+        get-tree | select "done : EBoolean"
+        get-button OK | click
+    }
+    get-button Finish | click
+}
+with [get-view "EMF Forms Preview" | get-control Any -after [get-label "View Editor Preview"] -index 9] {
+    get-property backgroundColor | equals "#FFFFFF" | verify-true
+
+    get-property "getChildren().length" | equals 3 | verify-true
+    get-property "getChildren().Control[0].getClassName()" | equals "org.eclipse.swt.widgets.Label" | verify-true
+    get-property "getChildren().Control[0].getText()" | equals Done | verify-true
+    get-property "getChildren().Control[0].getStyle()" | contains "NO_FOCUS" | verify-true
+    get-property "getChildren().Control[0].getStyle()" | contains "LEFT_TO_RIGHT" | verify-true
+    get-property "getChildren().Control[0].getStyle()" | contains "LEAD" | verify-true
+    get-property "getChildren().Control[1].getClassName()" | equals "org.eclipse.swt.widgets.Label" | verify-true
+    get-property "getChildren().Control[1].getText()" | equals "" | verify-true
+    get-property "getChildren().Control[1].getStyle()" | contains "NO_FOCUS" | verify-true
+    get-property "getChildren().Control[1].getStyle()" | contains "LEFT_TO_RIGHT" | verify-true
+    get-property "getChildren().Control[1].getStyle()" | contains "LEAD" | verify-true
+    get-property "getChildren().Control[2].getClassName()" | equals "org.eclipse.swt.widgets.Button" | verify-true
+    get-property "getChildren().Control[2].getText()" | equals "" | verify-true
+    get-property "getChildren().Control[2].getStyle()" | contains "CHECK" | verify-true
+    get-property "getChildren().Control[2].getStyle()" | contains "LEFT_TO_RIGHT" | verify-true
+    get-property "getChildren().Control[2].getStyle()" | contains "LEAD" | verify-true
+}
+
+// multiref control
+
+get-view "Project Explorer" | get-tree | select "org.eclipse.emf.ecp.makeithappen.model.viewmodel/viewmodels/User.view" 
+    | select "org.eclipse.emf.ecp.makeithappen.model.viewmodel/viewmodels/User.view" | double-click
+get-editor "User.view" | get-tree | select View | get-menu Control | click
+
+with [get-editor "User.view"] {
+    get-tree | select "View/Control"
+    get-button "Create and link new Domain Model Reference" | click
+}
+with [get-window "New Reference Element"] {
+    get-tree | select "model/FeaturePathDomainModelReference"
+    get-button "Next >" | click
+    get-button "Link Domain Model EFeature" | click
+  	with [get-window "Select a EStructuralFeature"] {
+    get-tree | select "tasks : Task"
+    get-button OK | click
+}
+    get-button Finish | click
+}
+
+with [get-view "EMF Forms Preview" | get-control Any -after [get-label "View Editor Preview"] -index 7] {
+    get-property "getChildren().length" | equals 1 | verify-true
+    get-property "getChildren().Control[0].getChildren().length" | equals 1 | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getClassName()" 
+        | equals "org.eclipse.swt.widgets.Label" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getText()" 
+        | equals "" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[1].getClassName()" 
+        | equals "org.eclipse.swt.widgets.Label" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[1].getText()" 
+        | equals "" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[2].getClassName()" 
+        | equals "org.eclipse.swt.widgets.Composite" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[2].getChildren().length" 
+        | equals 3 | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[2].getChildren().Control[0].getClassName()" 
+        | equals "org.eclipse.swt.widgets.Button" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[2].getChildren().Control[0].getText()" 
+        | equals "" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[2].getChildren().Control[0].getToolTipText()" 
+        | equals Link | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[2].getChildren().Control[0].getStyle()" 
+        | contains "PUSH" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[2].getChildren().Control[0].getStyle()" 
+        | contains "LEFT_TO_RIGHT" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[2].getChildren().Control[0].getStyle()" 
+        | contains "CENTER" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[2].getChildren().Control[1].getClassName()" 
+        | equals "org.eclipse.swt.widgets.Button" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[2].getChildren().Control[1].getText()" 
+        | equals "" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[2].getChildren().Control[1].getToolTipText()" 
+        | equals "Create and link" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[2].getChildren().Control[1].getStyle()" 
+        | contains "PUSH" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[2].getChildren().Control[1].getStyle()" 
+        | contains "LEFT_TO_RIGHT" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[2].getChildren().Control[1].getStyle()" 
+        | contains "CENTER" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[2].getChildren().Control[2].getClassName()" 
+        | equals "org.eclipse.swt.widgets.Button" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[2].getChildren().Control[2].getText()" 
+        | equals "" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[2].getChildren().Control[2].getToolTipText()" 
+        | equals Delete | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[2].getChildren().Control[2].getStyle()" 
+        | contains "PUSH" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[2].getChildren().Control[2].getStyle()" 
+        | contains "LEFT_TO_RIGHT" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[2].getChildren().Control[2].getStyle()" 
+        | contains "CENTER" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[1].getChildren().length" 
+        | equals 1 | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[1].getChildren().Control[0].getClassName()" 
+        | equals "org.eclipse.swt.widgets.Table" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[1].getChildren().Control[0].getColumns().TableColumn[0].getClassName()" 
+        | equals "org.eclipse.swt.widgets.TableColumn" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[1].getChildren().Control[0].getColumns().TableColumn[0].getToolTipText()" 
+        | equals "The Tasks feature of type Task" | verify-true
+    get-property "getChildren().Control[0].getChildren().Control[0].getChildren().Control[0].getChildren().Control[1].getChildren().Control[0].getColumns().TableColumn[0].getText()" 
+        | equals Tasks | verify-true
+}
+
+// string control
+
+
+get-view "Project Explorer" | get-tree | select "org.eclipse.emf.ecp.makeithappen.model.viewmodel/viewmodels/User.view" 
+    | select "org.eclipse.emf.ecp.makeithappen.model.viewmodel/viewmodels/User.view" | double-click
+get-editor "User.view" | get-tree | select View/Control | get-menu Delete | click
+get-editor "User.view" | get-tree | select View | get-menu Control | click
+
+with [get-editor "User.view"] {
+    get-tree | select "View/Control"
+    get-button "Create and link new Domain Model Reference" | click
+}
+with [get-window "New Reference Element"] {
+    get-tree | select "model/FeaturePathDomainModelReference"
+    get-button "Next >" | click
+    get-button "Link Domain Model EFeature" | click
+with [get-window "Select a EStructuralFeature"] {
+    get-tree | select "tasks : Task" | select "firstName : EString"
+    get-button OK | click
+}
+    get-button Finish | click
+}
+
+with [get-view "EMF Forms Preview" | get-control Any -after [get-label "View Editor Preview"] -index 9] {
+    get-property "getChildren().length" | equals 3 | verify-true
+    get-property "getChildren().Control[0].getClassName()" | equals "org.eclipse.swt.widgets.Label" | verify-true
+    get-property "getChildren().Control[0].getText()" | equals "First Name" | verify-true
+    get-property "getChildren().Control[0].getStyle()" | contains "NO_FOCUS" | verify-true
+    get-property "getChildren().Control[0].getStyle()" | contains "LEFT_TO_RIGHT" | verify-true
+    get-property "getChildren().Control[0].getStyle()" | contains "LEAD" | verify-true
+    get-property "getChildren().Control[1].getClassName()" | equals "org.eclipse.swt.widgets.Label" | verify-true
+    get-property "getChildren().Control[1].getText()" | equals "" | verify-true
+    get-property "getChildren().Control[1].getStyle()" | contains "NO_FOCUS" | verify-true
+    get-property "getChildren().Control[1].getStyle()" | contains "LEFT_TO_RIGHT" | verify-true
+    get-property "getChildren().Control[1].getStyle()" | contains "LEAD" | verify-true
+    get-property "getChildren().Control[2].getClassName()" | equals "org.eclipse.swt.widgets.Text" | verify-true
+    get-property "getChildren().Control[2].getMessage()" | equals "First Name" | verify-true
+    get-property "getChildren().Control[2].getStyle()" | contains "SINGLE" | verify-true
+    get-property "getChildren().Control[2].getStyle()" | contains "BORDER" | verify-true
+    get-property "getChildren().Control[2].getStyle()" | contains "LEFT_TO_RIGHT" | verify-true
+    get-property "getChildren().Control[2].getStyle()" | contains "LEFT" | verify-true
+    get-property "getChildren().Control[2].toString()" | equals "Text {}" | verify-true
+}
+
+// label
+
+get-view "Project Explorer" | get-tree | select "org.eclipse.emf.ecp.makeithappen.model.viewmodel/viewmodels/User.view" 
+    | select "org.eclipse.emf.ecp.makeithappen.model.viewmodel/viewmodels/User.view" | double-click
+with [get-editor "User.view" | get-tree] {
+    select View | get-menu Label | click
+    select "View/Label"
+}
+with [get-editor "User.view"] {
+    get-editbox -after [get-label Name] | set-text "This is a label"
+    get-tree | select "View"
+	get-tree | select View/Control | get-menu Delete | click
+}
+with [get-view "EMF Forms Preview"] {
+    with [get-control Any -after [get-label "View Editor Preview"] -index 9] {
+        get-property "getChildren().Control[0].getClassName()" | equals "org.eclipse.swt.widgets.Label" | verify-true
+        get-property "getChildren().Control[0].getText()" | equals "This is a label" | verify-true
+        get-property "getChildren().Control[0].getAlignment()" | equals 16384 | verify-true
+        get-property "getChildren().Control[0].getStyle()" | contains "NO_FOCUS" | verify-true
+        get-property "getChildren().Control[0].getStyle()" | contains "LEFT_TO_RIGHT" | verify-true
+        get-property "getChildren().Control[0].getStyle()" | contains "LEAD" | verify-true
+    }
+    with [get-label "This is a label"] {
+        get-property backgroundColor | equals "#FFFFFF" | verify-true
+        get-property foregroundColor | equals "#000000" | verify-true
+        get-property "getFont().getFontData().FontData[0].height" | equals "9.75" | verify-true
+    }
+}
+
+with [get-editor "User.view"] {
+    get-tree | select "View/Label This is a label"
+    get-combo -after [get-label Style] | select H3
+}
+
+
+with [get-view "EMF Forms Preview" | get-label "This is a label"] {
+    get-property caption | equals "This is a label" | verify-true
+    get-property backgroundColor | equals "#FFFFFF" | verify-true
+    get-property foregroundColor | equals "#000000" | verify-true
+    get-property "getFont().getFontData().FontData[0].getStyle()" | equals 3 | verify-true
+    get-property "getFont().getFontData().FontData[0].getHeight()" | equals 10 | verify-true
+    get-property "getStyle()" | contains "NO_FOCUS" | verify-true
+    get-property "getStyle()" | contains "LEFT_TO_RIGHT" | verify-true
+    get-property "getStyle()" | contains "LEAD" | verify-true
+}
+with [get-editor "User.view" | get-combo -after [get-label Style]] {
+    select H7
+    select H9
+}
+with [get-view "EMF Forms Preview" | get-label "This is a label"] {
+    get-property className | equals "org.eclipse.swt.widgets.Label" | verify-true
+    get-property caption | equals "This is a label" | verify-true
+    get-property backgroundColor | equals "#FFFFFF" | verify-true
+    get-property foregroundColor | equals "#000000" | verify-true
+    get-property "getFont().getFontData().FontData[0].getStyle()" | equals 2 | verify-true
+    get-property "getFont().getFontData().FontData[0].getHeight()" | equals 14 | verify-true
+    get-property "getStyle()" | contains "NO_FOCUS" | verify-true
+    get-property "getStyle()" | contains "LEFT_TO_RIGHT" | verify-true
+    get-property "getStyle()" | contains "LEAD" | verify-true
+}
+get-editor "User.view" | get-combo -after [get-label Style] | select Separator
+with [get-view "EMF Forms Preview" | get-label -after [get-label "View Editor Preview"]] {
+    get-property className | equals "org.eclipse.swt.widgets.Label" | verify-true
+    get-property caption | equals "" | verify-true
+    get-property backgroundColor | equals "#FFFFFF" | verify-true
+    get-property foregroundColor | equals "#000000" | verify-true
+    get-property "getFont().getFontData().FontData[0].getStyle()" | equals 0 | verify-true
+    get-property "getFont().getFontData().FontData[0].getHeight()" | equals 9 | verify-true
+    get-property "getStyle()" | contains "SEPARATOR" | verify-true
+    get-property "getStyle()" | contains "SHADOW_OUT" | verify-true
+    get-property "getStyle()" | contains "NO_FOCUS" | verify-true
+    get-property "getStyle()" | contains "LEFT_TO_RIGHT" | verify-true
+    get-property "getStyle()" | contains "HORIZONTAL" | verify-true
+    get-property "toString()" | contains "Label {}" | verify-true
+}
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

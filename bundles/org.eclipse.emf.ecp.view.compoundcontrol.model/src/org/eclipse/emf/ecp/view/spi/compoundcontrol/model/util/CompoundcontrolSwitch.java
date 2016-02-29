@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.util.Switch;
 import org.eclipse.emf.ecp.view.spi.compoundcontrol.model.VCompoundControl;
 import org.eclipse.emf.ecp.view.spi.compoundcontrol.model.VCompoundcontrolPackage;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 
 /**
@@ -33,8 +34,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  * @see org.eclipse.emf.ecp.view.spi.compoundcontrol.model.VCompoundcontrolPackage
  * @generated
  */
-public class CompoundcontrolSwitch<T> extends Switch<T>
-{
+public class CompoundcontrolSwitch<T> extends Switch<T> {
 	/**
 	 * The cached model package
 	 * <!-- begin-user-doc -->
@@ -51,10 +51,8 @@ public class CompoundcontrolSwitch<T> extends Switch<T>
 	 *
 	 * @generated
 	 */
-	public CompoundcontrolSwitch()
-	{
-		if (modelPackage == null)
-		{
+	public CompoundcontrolSwitch() {
+		if (modelPackage == null) {
 			modelPackage = VCompoundcontrolPackage.eINSTANCE;
 		}
 	}
@@ -64,13 +62,12 @@ public class CompoundcontrolSwitch<T> extends Switch<T>
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
-	 * @parameter ePackage the package in question.
+	 * @param ePackage the package in question.
 	 * @return whether this is a switch for the given package.
 	 * @generated
 	 */
 	@Override
-	protected boolean isSwitchFor(EPackage ePackage)
-	{
+	protected boolean isSwitchFor(EPackage ePackage) {
 		return ePackage == modelPackage;
 	}
 
@@ -84,13 +81,14 @@ public class CompoundcontrolSwitch<T> extends Switch<T>
 	 * @generated
 	 */
 	@Override
-	protected T doSwitch(int classifierID, EObject theEObject)
-	{
-		switch (classifierID)
-		{
+	protected T doSwitch(int classifierID, EObject theEObject) {
+		switch (classifierID) {
 		case VCompoundcontrolPackage.COMPOUND_CONTROL: {
 			final VCompoundControl compoundControl = (VCompoundControl) theEObject;
 			T result = caseCompoundControl(compoundControl);
+			if (result == null) {
+				result = caseControl(compoundControl);
+			}
 			if (result == null) {
 				result = caseContainedElement(compoundControl);
 			}
@@ -119,8 +117,7 @@ public class CompoundcontrolSwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseCompoundControl(VCompoundControl object)
-	{
+	public T caseCompoundControl(VCompoundControl object) {
 		return null;
 	}
 
@@ -136,8 +133,7 @@ public class CompoundcontrolSwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseElement(VElement object)
-	{
+	public T caseElement(VElement object) {
 		return null;
 	}
 
@@ -153,8 +149,25 @@ public class CompoundcontrolSwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseContainedElement(VContainedElement object)
-	{
+	public T caseContainedElement(VContainedElement object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Control</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * 
+	 * @since 1.8
+	 *        <!-- end-user-doc -->
+	 *
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Control</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseControl(VControl object) {
 		return null;
 	}
 
@@ -171,8 +184,7 @@ public class CompoundcontrolSwitch<T> extends Switch<T>
 	 * @generated
 	 */
 	@Override
-	public T defaultCase(EObject object)
-	{
+	public T defaultCase(EObject object) {
 		return null;
 	}
 

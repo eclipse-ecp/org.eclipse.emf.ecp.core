@@ -2,20 +2,20 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Projects
 Bundle-SymbolicName: org.eclipse.emf.emfstore.fx.projects;singleton:=true
-Bundle-Version: 1.7.0.qualifier
+Bundle-Version: 1.8.0.qualifier
 Bundle-Activator: org.eclipse.emf.emfstore.fx.internal.projects.Activator
+Bundle-Vendor: Eclipse Modeling Project
+Export-Package: org.eclipse.emf.emfstore.fx.internal.projects;version="1.8.0";x-internal:=true
+Require-Bundle: org.eclipse.emf.emfstore.client;bundle-version="[1.3.0,2.0.0]",
+ org.eclipse.fx.emf.edit.ui;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emf.edit,
+ org.eclipse.emf.ecore,
+ org.eclipse.emf.ecp.util.fx;bundle-version="[1.8.0,1.9.0)",
+ org.eclipse.e4.ui.workbench,
+ org.eclipse.emf.ecp.util.e4.fx;bundle-version="[1.8.0,1.9.0)",
+ org.eclipse.fx.ui.controls;bundle-version="[2.0.0,3.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: javax.annotation;version="1.1.0",
  javax.inject;version="1.0.0",
  org.osgi.framework;version="1.3.0"
 Bundle-ActivationPolicy: lazy
-Require-Bundle: org.eclipse.emf.emfstore.client;bundle-version="[1.3.0,2.0.0]",
- org.eclipse.fx.emf.edit.ui;bundle-version="[2.0.0,3.0.0)",
- org.eclipse.emf.edit,
- org.eclipse.emf.ecore,
- org.eclipse.emf.ecp.util.fx;bundle-version="[1.3.0,2.0.0]",
- org.eclipse.e4.ui.workbench,
- org.eclipse.emf.ecp.util.e4.fx;bundle-version="[1.3.0,2.0.0]",
- org.eclipse.fx.ui.controls;bundle-version="[2.0.0,3.0.0)"
-Export-Package: org.eclipse.emf.emfstore.fx.internal.projects;version="1.7.0";x-internal:="true"
-Bundle-Vendor: Eclipse Modeling Project

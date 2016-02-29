@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -21,8 +21,10 @@ import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.dialogs.WizardNewFileCreationPage;
@@ -132,8 +134,7 @@ public class ViewModelWizardNewFileCreationPage extends
 					setPageComplete(true);
 				}
 			}
-		}
-		else {
+		} else {
 			setPageComplete(false);
 		}
 
@@ -158,6 +159,7 @@ public class ViewModelWizardNewFileCreationPage extends
 	@Override
 	protected boolean validatePage() {
 		if (super.validatePage()) {
+			// validate extension
 			final String extension = new Path(getFileName()).getFileExtension();
 			if (extension == null || !FILE_EXTENSIONS.contains(extension)) {
 				final String key = FILE_EXTENSIONS.size() > 1 ? "_WARN_FilenameExtensions" //$NON-NLS-1$
@@ -166,9 +168,23 @@ public class ViewModelWizardNewFileCreationPage extends
 					new Object[] { FORMATTED_FILE_EXTENSIONS }));
 				return false;
 			}
+			// validate selected project
+			checkProjectNature();
+
 			return true;
 		}
 		return false;
+	}
+
+	private void checkProjectNature() {
+		final IProject project = getModelFile().getProject();
+		try {
+			if (!project.hasNature("org.eclipse.pde.PluginNature")) { //$NON-NLS-1$
+				setMessage(ViewEditorPlugin.INSTANCE.getString("_WARN_PluginProject"), IMessageProvider.WARNING); //$NON-NLS-1$
+			}
+		} catch (final CoreException ex) {
+			// do nothing
+		}
 	}
 
 	/**
@@ -177,6 +193,9 @@ public class ViewModelWizardNewFileCreationPage extends
 	 * @generated
 	 */
 	public IFile getModelFile() {
+		if (getContainerFullPath() == null || getFileName() == null) {
+			return null;
+		}
 		return ResourcesPlugin.getWorkspace().getRoot()
 			.getFile(getContainerFullPath().append(getFileName()));
 	}

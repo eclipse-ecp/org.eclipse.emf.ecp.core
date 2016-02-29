@@ -24,11 +24,11 @@ class BundleKeyWrapper {
 
 	/**
 	 * The default constructor.
-	 * 
+	 *
 	 * @param key The Key
 	 * @param bundle The Bundle
 	 */
-	public BundleKeyWrapper(String key, Bundle bundle) {
+	BundleKeyWrapper(String key, Bundle bundle) {
 		super();
 		this.key = key;
 		this.bundle = bundle;
@@ -36,7 +36,7 @@ class BundleKeyWrapper {
 
 	/**
 	 * The Key.
-	 * 
+	 *
 	 * @return The key
 	 */
 	public String getKey() {
@@ -45,7 +45,7 @@ class BundleKeyWrapper {
 
 	/**
 	 * The Bundle.
-	 * 
+	 *
 	 * @return The bundle
 	 */
 	public Bundle getBundle() {

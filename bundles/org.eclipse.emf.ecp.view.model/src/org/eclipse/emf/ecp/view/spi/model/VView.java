@@ -124,7 +124,6 @@ public interface VView extends VElement {
 	 *
 	 * @since 1.7
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the value of the '<em>Loading Properties</em>' containment reference.
 	 * @see #setLoadingProperties(VViewModelProperties)
 	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getView_LoadingProperties()
@@ -140,7 +139,6 @@ public interface VView extends VElement {
 	 *
 	 * @since 1.7
 	 *        <!-- end-user-doc -->
-	 *
 	 * @param value the new value of the '<em>Loading Properties</em>' containment reference.
 	 * @see #getLoadingProperties()
 	 * @generated

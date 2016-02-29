@@ -41,23 +41,23 @@ public class KeyAttributeDMR_Test {
 
 		// child1
 		final KeyContainer keyContainer1 = ExampleFactory.eINSTANCE.createKeyContainer();
-		keyContainer1.setKey("key1");
+		keyContainer1.setKey("key1"); //$NON-NLS-1$
 		child1.setKey(keyContainer1);
 		final IntermediateTarget intermediateTarget1 = ExampleFactory.eINSTANCE.createIntermediateTarget();
 		child1.setIntermediateTarget(intermediateTarget1);
 		final Target target1 = ExampleFactory.eINSTANCE.createTarget();
 		intermediateTarget1.setTarget(target1);
-		target1.setName("name1");
+		target1.setName("name1"); //$NON-NLS-1$
 
 		// child2
 		final KeyContainer keyContainer2 = ExampleFactory.eINSTANCE.createKeyContainer();
-		keyContainer2.setKey("key2");
+		keyContainer2.setKey("key2"); //$NON-NLS-1$
 		child2.setKey(keyContainer2);
 		final IntermediateTarget intermediateTarget2 = ExampleFactory.eINSTANCE.createIntermediateTarget();
 		child2.setIntermediateTarget(intermediateTarget2);
 		final Target target2 = ExampleFactory.eINSTANCE.createTarget();
 		intermediateTarget2.setTarget(target2);
-		target2.setName("name2");
+		target2.setName("name2"); //$NON-NLS-1$
 
 		// Set DMR
 		final VKeyAttributeDomainModelReference dmr = VKeyattributedmrFactory.eINSTANCE
@@ -72,7 +72,7 @@ public class KeyAttributeDMR_Test {
 		keyDMR.setDomainModelEFeature(ExamplePackage.eINSTANCE.getKeyContainer_Key());
 
 		dmr.setKeyDMR(keyDMR);
-		dmr.setKeyValue("key2");
+		dmr.setKeyValue("key2"); //$NON-NLS-1$
 
 		final VFeaturePathDomainModelReference valueDMR = VViewFactory.eINSTANCE
 			.createFeaturePathDomainModelReference();
@@ -83,7 +83,7 @@ public class KeyAttributeDMR_Test {
 
 		assertTrue(dmr.init(root));
 
-		assertEquals("name2", dmr.getIterator().next().get(true));
+		assertEquals("name2", dmr.getIterator().next().get(true)); //$NON-NLS-1$
 	}
 
 	@Test
@@ -108,7 +108,7 @@ public class KeyAttributeDMR_Test {
 		keyDMR.setDomainModelEFeature(ExamplePackage.eINSTANCE.getKeyContainer_Key());
 
 		dmr.setKeyDMR(keyDMR);
-		dmr.setKeyValue("key");
+		dmr.setKeyValue("key"); //$NON-NLS-1$
 
 		final VFeaturePathDomainModelReference valueDMR = VViewFactory.eINSTANCE
 			.createFeaturePathDomainModelReference();
@@ -121,6 +121,6 @@ public class KeyAttributeDMR_Test {
 
 		assertEquals(1, container.getChildren().size());
 		final Child child = container.getChildren().get(0);
-		assertEquals("key", child.getKey().getKey());
+		assertEquals("key", child.getKey().getKey()); //$NON-NLS-1$
 	}
 }

@@ -44,6 +44,8 @@ import org.eclipse.emf.ecp.view.spi.rule.model.EnableRule;
 import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.Rule;
 import org.eclipse.emf.ecp.view.spi.rule.model.ShowRule;
+import org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener;
+import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext;
 
 /**
  * Rule service that, once instantiated, maintains and synchronizes
@@ -52,7 +54,7 @@ import org.eclipse.emf.ecp.view.spi.rule.model.ShowRule;
  * @author emueller
  * @author jfaltermeier
  */
-public class RuleService implements ViewModelService {
+public class RuleService implements ViewModelService, EMFFormsContextListener {
 
 	private static final String DOMAIN_MODEL_NULL_EXCEPTION = "Domain model must not be null."; //$NON-NLS-1$
 	private static final String VIEW_MODEL_NULL_EXCEPTION = "View model must not be null."; //$NON-NLS-1$
@@ -79,53 +81,7 @@ public class RuleService implements ViewModelService {
 		this.context = context;
 		enableRuleRegistry = new RuleRegistry<EnableRule>(context);
 		showRuleRegistry = new RuleRegistry<ShowRule>(context);
-		final VElement view = context.getViewModel();
-		domainChangeListener = new ModelChangeAddRemoveListener() {
-
-			@Override
-			public void notifyChange(ModelChangeNotification notification) {
-				if (notification.getStructuralFeature() == null) {
-					return;
-				}
-				// add && reference && !containment
-				final Setting setting = ((InternalEObject) notification.getNotifier()).eSetting(notification
-					.getStructuralFeature());
-				evalShow(UniqueSetting.createSetting(setting));
-				evalEnable(UniqueSetting.createSetting(setting));
-			}
-
-			@Override
-			public void notifyAdd(Notifier notifier) {
-				// no op
-			}
-
-			@Override
-			public void notifyRemove(Notifier notifier) {
-				// no op
-			}
-		};
-		context.registerDomainChangeListener(domainChangeListener);
-		viewChangeListener = new RuleServiceViewChangeListener(context);
-		context.registerViewChangeListener(viewChangeListener);
-
-		if (view == null) {
-			throw new IllegalStateException(VIEW_MODEL_NULL_EXCEPTION);
-		}
-
-		final EObject domainModel = context.getDomainModel();
-
-		if (domainModel == null) {
-			throw new IllegalStateException(DOMAIN_MODEL_NULL_EXCEPTION);
-		}
-
-		final Set<UniqueSetting> enableSettings = init(enableRuleRegistry, EnableRule.class, view, domainModel);
-		final Set<UniqueSetting> showSettings = init(showRuleRegistry, ShowRule.class, view, domainModel);
-		for (final UniqueSetting setting : enableSettings) {
-			evalEnable(setting);
-		}
-		for (final UniqueSetting setting : showSettings) {
-			evalShow(setting);
-		}
+		context.registerEMFFormsContextListener(this);
 	}
 
 	private static void resetToVisible(VElement renderable) {
@@ -253,8 +209,7 @@ public class RuleService implements ViewModelService {
 				result = rule.getCondition().evaluateChangedValues(possibleValues);
 			} else if (!isDryRun) {
 				result = rule.getCondition().evaluate();
-			}
-			else {
+			} else {
 				updateMap = false;
 			}
 			final boolean isOposite = isDisableRule(rule) || isHideRule(rule);
@@ -303,8 +258,7 @@ public class RuleService implements ViewModelService {
 				} else {
 					hasChanged &= !newValue.equals(actualValue);
 				}
-			}
-			else {
+			} else {
 				// EMF API
 				@SuppressWarnings("unchecked")
 				final List<Object> objects = (List<Object>) actualValue;
@@ -514,8 +468,8 @@ public class RuleService implements ViewModelService {
 					return;
 				}
 				final Rule rule = Rule.class.cast(parent);
-				final VElement renderable = VElement.class.isInstance(rule.eContainer()) ?
-					VElement.class.cast(rule.eContainer()) : null;
+				final VElement renderable = VElement.class.isInstance(rule.eContainer())
+					? VElement.class.cast(rule.eContainer()) : null;
 
 				if (renderable == null) {
 					return;
@@ -556,8 +510,7 @@ public class RuleService implements ViewModelService {
 				}
 				if (LeafCondition.class.isInstance(rule.getCondition())) {
 					evalNewRules(LeafCondition.class.cast(rule.getCondition()));
-				}
-				else {
+				} else {
 					final TreeIterator<EObject> eAllContents = rule.getCondition().eAllContents();
 					while (eAllContents.hasNext()) {
 						final EObject eObject = eAllContents.next();
@@ -567,8 +520,7 @@ public class RuleService implements ViewModelService {
 					}
 				}
 
-			}
-			else if (EnableRule.class.isInstance(notifier)) {
+			} else if (EnableRule.class.isInstance(notifier)) {
 				final Set<UniqueSetting> register = register(enableRuleRegistry, EnableRule.class,
 					context.getDomainModel(),
 					EnableRule.class.cast(notifier).eContainer());
@@ -577,8 +529,7 @@ public class RuleService implements ViewModelService {
 					evalEnable(setting);
 				}
 
-			}
-			else if (ShowRule.class.isInstance(notifier)) {
+			} else if (ShowRule.class.isInstance(notifier)) {
 				final Set<UniqueSetting> register = register(showRuleRegistry, ShowRule.class,
 					context.getDomainModel(), ShowRule.class.cast(notifier)
 						.eContainer());
@@ -628,5 +579,92 @@ public class RuleService implements ViewModelService {
 
 			}
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener#childContextAdded(org.eclipse.emf.ecp.view.spi.model.VElement,
+	 *      org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext)
+	 */
+	@Override
+	public void childContextAdded(VElement parentElement, EMFFormsViewContext childContext) {
+		// do nothing
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener#childContextDisposed(org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext)
+	 */
+	@Override
+	public void childContextDisposed(EMFFormsViewContext childContext) {
+		// do nothing
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener#contextInitialised()
+	 */
+	@Override
+	public void contextInitialised() {
+		final VElement view = context.getViewModel();
+		domainChangeListener = new ModelChangeAddRemoveListener() {
+
+			@Override
+			public void notifyChange(ModelChangeNotification notification) {
+				if (notification.getStructuralFeature() == null) {
+					return;
+				}
+				// add && reference && !containment
+				final Setting setting = ((InternalEObject) notification.getNotifier()).eSetting(notification
+					.getStructuralFeature());
+				evalShow(UniqueSetting.createSetting(setting));
+				evalEnable(UniqueSetting.createSetting(setting));
+			}
+
+			@Override
+			public void notifyAdd(Notifier notifier) {
+				// no op
+			}
+
+			@Override
+			public void notifyRemove(Notifier notifier) {
+				// no op
+			}
+		};
+		context.registerDomainChangeListener(domainChangeListener);
+		viewChangeListener = new RuleServiceViewChangeListener(context);
+		context.registerViewChangeListener(viewChangeListener);
+
+		if (view == null) {
+			throw new IllegalStateException(VIEW_MODEL_NULL_EXCEPTION);
+		}
+
+		final EObject domainModel = context.getDomainModel();
+
+		if (domainModel == null) {
+			throw new IllegalStateException(DOMAIN_MODEL_NULL_EXCEPTION);
+		}
+
+		final Set<UniqueSetting> enableSettings = init(enableRuleRegistry, EnableRule.class, view, domainModel);
+		final Set<UniqueSetting> showSettings = init(showRuleRegistry, ShowRule.class, view, domainModel);
+		for (final UniqueSetting setting : enableSettings) {
+			evalEnable(setting);
+		}
+		for (final UniqueSetting setting : showSettings) {
+			evalShow(setting);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener#contextDispose()
+	 */
+	@Override
+	public void contextDispose() {
+		// do nothing
 	}
 }

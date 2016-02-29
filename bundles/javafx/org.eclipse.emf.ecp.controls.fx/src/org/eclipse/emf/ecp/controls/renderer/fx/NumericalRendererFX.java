@@ -6,6 +6,7 @@ import java.util.Locale;
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.controls.fx.util.ECPNumericalFieldToModelUpdateValueStrategy;
 import org.eclipse.emf.ecp.controls.fx.util.NumericalHelper;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
@@ -71,8 +72,7 @@ public class NumericalRendererFX extends TextRendererFX {
 	}
 
 	private Class<?> getInstanceClass(VControl control) {
-		return control.getDomainModelReference()
-			.getEStructuralFeatureIterator().next().getEType()
+		return ((EStructuralFeature) getModelObservable().getValueType()).getEType()
 			.getInstanceClass();
 	}
 }

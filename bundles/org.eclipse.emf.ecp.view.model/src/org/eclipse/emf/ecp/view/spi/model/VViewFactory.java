@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -19,7 +19,8 @@ import org.eclipse.emf.ecore.EFactory;
  * It provides a create method for each non-abstract class of the model.
  *
  * @since 1.2
- *        <!-- end-user-doc -->
+ * @noimplement This interface is not intended to be implemented by clients.
+ *              <!-- end-user-doc -->
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage
  * @generated
  */
@@ -73,6 +74,18 @@ public interface VViewFactory extends EFactory {
 	 * @generated
 	 */
 	VViewModelLoadingProperties createViewModelLoadingProperties();
+
+	/**
+	 * Returns a new object of class '<em>Date Time Display Attachment</em>'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.8
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return a new object of class '<em>Date Time Display Attachment</em>'.
+	 * @generated
+	 */
+	VDateTimeDisplayAttachment createDateTimeDisplayAttachment();
 
 	/**
 	 * Returns a new object of class '<em>Feature Path Domain Model Reference</em>'.

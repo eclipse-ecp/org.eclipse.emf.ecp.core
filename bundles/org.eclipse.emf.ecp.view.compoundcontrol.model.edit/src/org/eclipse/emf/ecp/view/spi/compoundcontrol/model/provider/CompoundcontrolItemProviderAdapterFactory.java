@@ -20,11 +20,13 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.view.spi.compoundcontrol.model.VCompoundControl;
 import org.eclipse.emf.ecp.view.spi.compoundcontrol.model.VCompoundcontrolFactory;
 import org.eclipse.emf.ecp.view.spi.compoundcontrol.model.VCompoundcontrolPackage;
 import org.eclipse.emf.ecp.view.spi.compoundcontrol.model.util.CompoundcontrolAdapterFactory;
 import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewSwitch;
 import org.eclipse.emf.edit.command.CommandParameter;
@@ -123,8 +125,7 @@ public class CompoundcontrolItemProviderAdapterFactory extends
 	 */
 	@Override
 	public Adapter createCompoundControlAdapter() {
-		if (compoundControlItemProvider == null)
-		{
+		if (compoundControlItemProvider == null) {
 			compoundControlItemProvider = new CompoundControlItemProvider(this);
 		}
 
@@ -182,11 +183,9 @@ public class CompoundcontrolItemProviderAdapterFactory extends
 	 */
 	@Override
 	public Object adapt(Object object, Object type) {
-		if (isFactoryForType(type))
-		{
+		if (isFactoryForType(type)) {
 			final Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter))
-			{
+			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter)) {
 				return adapter;
 			}
 		}
@@ -257,8 +256,7 @@ public class CompoundcontrolItemProviderAdapterFactory extends
 	public void fireNotifyChanged(Notification notification) {
 		changeNotifier.fireNotifyChanged(notification);
 
-		if (parentAdapterFactory != null)
-		{
+		if (parentAdapterFactory != null) {
 			parentAdapterFactory.fireNotifyChanged(notification);
 		}
 	}
@@ -322,37 +320,49 @@ public class CompoundcontrolItemProviderAdapterFactory extends
 			}
 
 			/**
-			 * <!-- begin-user-doc --> <!-- end-user-doc -->
+			 * <!-- begin-user-doc -->
+			 * View case.
 			 *
-			 * @generated
+			 * @param object object
+			 * @return object
+			 *         <!-- end-user-doc -->
+			 *
+			 * @generated NOT
 			 */
 			@Override
 			public Object caseView(VView object) {
-				newChildDescriptors.add
-					(createChildParameter
-					(VViewPackage.Literals.VIEW__CHILDREN,
-						VCompoundcontrolFactory.eINSTANCE.createCompoundControl()));
+				newChildDescriptors.add(createChildParameter(VViewPackage.Literals.VIEW__CHILDREN,
+					createCompoundControlWithDummyDMR()));
 
 				return null;
 			}
 
 			/**
-			 * <!-- begin-user-doc --> <!-- end-user-doc -->
+			 * <!-- begin-user-doc -->
+			 * Container case.
+			 * 
+			 * @param object object
+			 * @return object
+			 *         <!-- end-user-doc -->
 			 *
-			 * @generated
+			 * @generated NOT
 			 */
 			@Override
 			public Object caseContainer(VContainer object) {
-				newChildDescriptors.add
-					(createChildParameter
-					(VViewPackage.Literals.CONTAINER__CHILDREN,
-						VCompoundcontrolFactory.eINSTANCE.createCompoundControl()));
+				newChildDescriptors.add(createChildParameter(VViewPackage.Literals.CONTAINER__CHILDREN,
+					createCompoundControlWithDummyDMR()));
 
 				return null;
 			}
 
+			private VCompoundControl createCompoundControlWithDummyDMR() {
+				final VCompoundControl compoundControl = VCompoundcontrolFactory.eINSTANCE.createCompoundControl();
+				compoundControl.setDomainModelReference(VViewFactory.eINSTANCE.createFeaturePathDomainModelReference());
+				return compoundControl;
+			}
+
 			/**
-			 * <!-- begin-user-doc --> <!-- end-user-doc -->
+			 * <!-- begin-user-doc -->. <!-- end-user-doc -->
 			 *
 			 * @generated
 			 */

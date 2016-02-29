@@ -4,4 +4,5 @@
    <service>
       <provide interface="org.eclipse.emf.ecp.core.ECPProjectManager"/>
    </service>
+   <reference bind="setECPObserverBus" cardinality="1..1" interface="org.eclipse.emf.ecp.core.util.observer.ECPObserverBus" name="ECPObserverBus" policy="static"/>
 </scr:component>

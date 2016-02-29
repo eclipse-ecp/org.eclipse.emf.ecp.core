@@ -20,7 +20,12 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.swt.graphics.Image;
 
 /**
+ * <p>
  * A common super interface for all CellEditors contributed to ECP.
+ * </p>
+ * <p>
+ * See the {@link ECPCellEditorComparator} interface for an optional extension to the {@link ECPCellEditor}.
+ * </p>
  *
  * @author Eugen Neufeld
  * @since 1.5
@@ -49,6 +54,11 @@ public interface ECPCellEditor {
 	 */
 	void instantiate(EStructuralFeature feature, ViewModelContext viewModelContext);
 
+	/**
+	 * The SWT style bits.
+	 *
+	 * @return the style
+	 */
 	int getStyle();
 
 	/**

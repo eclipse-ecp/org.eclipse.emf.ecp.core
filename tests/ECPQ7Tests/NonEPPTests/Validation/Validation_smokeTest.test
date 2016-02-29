@@ -1,0 +1,182 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _mY5uUKEgEeKX8e34E6tWIg,_rr2EEFpSEeKcnaHGSt8OwA,_IuFcgFpZEeKcnaHGSt8OwA,_f3qEUVpSEeKcnaHGSt8OwA,_YQj0cT-VEeK-yuKsz0Lang
+Element-Name: Validation_smokeTest
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _lnMCYGtVEeWukfCGOpNfzw
+Runtime-Version: 2.0.1.201508250612
+Save-Time: 10/7/15 3:10 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+// height validation
+get-view "Model Explorer" | get-tree | get-menu "Create new project" | click
+with [get-window "Create Project"] {
+    get-editbox -after [get-label "Project Name:"] | set-text Project
+    get-button Finish | click
+}
+get-view "Model Explorer" | get-tree | select Project | get-menu "New Model Element" | click
+with [get-window "Add new model element"] {
+    try { get-tree | select "Player" } -catch { get-tree | select "bowling/Player" }
+    get-button Finish | click
+}
+with [get-editor Player] {
+ 	get-button "Add Entry" | click
+    get-editbox -after [get-label "EMails*"] | set-text "john@smith.com"
+    get-editbox -after [get-label Height] | click-text 1
+    get-editbox -after [get-label Height] | set-text 15
+    get-editbox -after [get-label Name] | click-text
+}
+
+with [get-editor Player] {
+    get-editbox -after [get-label Height] | get-property backgroundColor | equals "#FF0000" | verify-true
+    get-label -after [get-label Height] | get-property "getImage().getBounds().toString()" | equals "Rectangle {0, 0, 16, 17}" | verify-true
+    get-label -after [get-label Height] | get-property "getToolTipText()" 
+    | contains "Height seems too big." | verify-true
+}
+
+//get-view "Model Explorer" | get-tree | get-item "Project/Player" | get-property "image.decorations[0].path" 
+//    | contains "icons/error_decorate.png" | verify-true
+//
+//get-view "Model Explorer" | get-tree | get-item Project | get-property "image.decorations[0].path" 
+//    | contains "icons/error_decorate.png" | verify-true
+
+ 
+with [get-editor Player] {
+    get-editbox -after [get-label Height] | set-text 6
+    get-editbox -after [get-label Name] | click-text
+}
+get-editor Player | get-editbox -after [get-label Height] | get-property backgroundColor | equals "#FFFFFF" 
+    | verify-true
+ 
+
+try {
+    get-view "Model Explorer" | get-tree | get-item "Project/Player" | get-property "image.decorations[0].path" 
+    | contains "icons/error_decorate.png" | verify-false
+} -catch {
+	get-editor Player | get-editbox -after [get-label Height] | get-property backgroundColor | equals "#FFFFFF" 
+		| verify-true
+}
+
+// cleanup
+get-view "Model Explorer" | get-tree | select Project | get-menu "Delete" | click
+get-window "Delete" | get-button "OK" | click
+
+// upper bound validation
+get-view "Model Explorer" | get-tree | get-menu "Create new project" | click
+with [get-window "Create Project"] {
+    get-editbox -after [get-label "Project Name:"] | set-text Project
+    get-button Finish | click
+}
+get-view "Model Explorer" | get-tree | select Project | get-menu "New Model Element" | click
+get-window "Add new model element" | try { get-tree | select "Matchup" } -catch { get-tree | select "bowling/Matchup" } | double-click
+
+with [get-editor Matchup | get-label -after [get-label Games]] {
+    get-property "getImage().getBounds().toString()" | equals "Rectangle {0, 0, 16, 17}" | verify-true
+    get-property "getToolTipText()" | contains "with 0 values must have at least 2 values" | verify-true
+}    
+
+get-editor Matchup | get-button "Add an instance of Game" | click
+with [get-editor Matchup | get-label -after [get-label Games]] {
+    get-property "getImage().getBounds().toString()" | equals "Rectangle {0, 0, 16, 17}" | verify-true
+    get-property "getToolTipText()" | contains "with 1 values must have at least 2 values" | verify-true
+}
+get-editor Matchup | get-button "Add an instance of Game" | click
+with [get-editor Matchup] {
+    get-label -after [get-label Games] | get-property "getToolTipText()" | equals "" | verify-true
+    get-button "Add an instance of Game" | get-property enablement | equals false | verify-true
+}
+
+// validation decorator
+
+
+get-view "Model Explorer" | get-tree | select "TestProject/Tournament Pro/Matchup"
+
+with [get-view "Model Explorer" | get-tree] {
+
+    get-item TestProject | get-property [get-by-os -macosx "getImage().getImageData().data.byte[993]" -win "getImage().getImageData().transparentPixel" -linux "getImage().getImageData().data.byte[746]"]  | equals [get-by-os -macosx "-74" -win "-1" -linux "127"] | verify-true
+    get-item "TestProject/Tournament Pro" | get-property [get-by-os -macosx "getImage().getImageData().data.byte[993]" -win "getImage().getImageData().transparentPixel" -linux "getImage().getImageData().data.byte[746]"] | equals [get-by-os -macosx "-74" -win "-1" -linux "68"] 
+        | verify-true
+    get-item "TestProject/Tournament Pro/Matchup" | get-property [get-by-os -macosx "getImage().getImageData().data.byte[993]" -win "getImage().getImageData().transparentPixel" -linux "getImage().getImageData().data.byte[746]"] 
+        | equals [get-by-os -macosx "-74" -win "-1" -linux "68"] | verify-true
+}
+
+get-view "Model Explorer" | get-tree | select "TestProject/Tournament Pro/Matchup" | get-menu Game | click
+with [get-view "Model Explorer" | get-tree] {
+    get-item TestProject | get-property [get-by-os -macosx "getImage().getImageData().data.byte[993]" -win "getImage().getImageData().transparentPixel" -linux "getImage().getImageData().data.byte[746]"] | equals [get-by-os -macosx "0" -win "53" -linux "-59"] | verify-true
+    get-item "TestProject/Tournament Pro/Matchup" | get-property [get-by-os -macosx "getImage().getImageData().data.byte[993]" -win "getImage().getImageData().transparentPixel" -linux "getImage().getImageData().data.byte[746]"] | equals [get-by-os -macosx "0" -win "9" -linux "0"] 
+        | verify-true
+}
+get-view "Model Explorer" | get-tree | select TestProject | get-menu "New Model Element" | click
+with [get-window "Add new model element"] {
+    try { get-tree | select "Matchup" } -catch { get-tree | select "bowling/Matchup" }
+    get-button Finish | click
+}
+with [get-view "Model Explorer" | get-tree] {
+    get-item "TestProject/Matchup" | get-property [get-by-os -macosx "getImage().getImageData().data.byte[993]" -win "getImage().getImageData().transparentPixel" -linux "getImage().getImageData().data.byte[746]"] | equals [get-by-os -macosx "-74" -win "-1" -linux "68"] 
+        | verify-true
+    get-item TestProject | get-property [get-by-os -macosx "getImage().getImageData().data.byte[993]" -win "getImage().getImageData().transparentPixel" -linux "getImage().getImageData().data.byte[746]"] | equals [get-by-os -macosx "-74" -win "-1" -linux "127"] | verify-true
+}
+get-view "Model Explorer" | get-tree | select TestProject | get-menu "New Model Element" | click
+with [get-window "Add new model element"] {
+    try { get-tree | select "Tournament" } -catch { get-tree | select "bowling/Tournament" }
+    get-button Finish | click
+}
+with [get-view "Model Explorer" | get-tree] {
+    select [get-item TestProject | get-item "Tournament Pro" -index 1] | get-menu Matchup | click
+    select [get-item TestProject | get-item "Tournament Pro" -index 1] | get-menu Matchup | click
+    select [get-item TestProject | get-item "Tournament Pro" -index 1 | get-item Matchup] | get-menu Game | click
+    select [get-item TestProject | get-item "Tournament Pro" -index 1 | get-item Matchup -index 1] | get-menu Game 
+        | click
+}
+with [get-view "Model Explorer" | get-tree] {
+    get-item TestProject | get-item "Tournament Pro" -index 1 | get-property [get-by-os -macosx "getImage().getImageData().data.byte[993]" -win "getImage().getImageData().transparentPixel" -linux "getImage().getImageData().data.byte[746]"] 
+        | equals [get-by-os -macosx "-74" -win "-1" -linux "68"] | verify-true
+    get-item TestProject | get-item "Tournament Pro" -index 1 | get-item Matchup 
+        | get-property [get-by-os -macosx "getImage().getImageData().data.byte[993]" -win "getImage().getImageData().transparentPixel" -linux "getImage().getImageData().data.byte[746]"] | equals [get-by-os -macosx "-74" -win "-1" -linux "68"] | verify-true
+    get-item TestProject | get-item "Tournament Pro" -index 1 | get-item Matchup -index 1 
+        | get-property [get-by-os -macosx "getImage().getImageData().data.byte[993]" -win "getImage().getImageData().transparentPixel" -linux "getImage().getImageData().data.byte[746]"] | equals [get-by-os -macosx "-74" -win "-1" -linux "68"] | verify-true
+}
+get-view "Model Explorer" | get-tree | select [get-item TestProject | get-item "Tournament Pro" -index 1 
+    | get-item Matchup -index 1] | get-menu Game | click
+with [get-view "Model Explorer" | get-tree] {
+    get-item TestProject | get-item "Tournament Pro" -index 1 | get-item Matchup -index 1 
+        | get-property [get-by-os -macosx "getImage().getImageData().data.byte[993]" -win "getImage().getImageData().transparentPixel" -linux "getImage().getImageData().data.byte[746]"] | equals [get-by-os -macosx "0" -win "9" -linux "0"] | verify-true
+    get-item TestProject | get-item "Tournament Pro" -index 1 | get-property [get-by-os -macosx "getImage().getImageData().data.byte[993]" -win "getImage().getImageData().transparentPixel" -linux "getImage().getImageData().data.byte[746]"] 
+        | equals [get-by-os -macosx "-74" -win "-1" -linux "68"] | verify-true
+}
+get-view "Model Explorer" | get-tree | select [get-item TestProject | get-item "Tournament Pro" -index 1 
+    | get-item Matchup] | get-menu Game | click
+get-view "Model Explorer" | get-tree | get-item TestProject | get-item "Tournament Pro" -index 1 
+    | get-property [get-by-os -macosx "getImage().getImageData().data.byte[993]" -win "getImage().getImageData().transparentPixel" -linux "getImage().getImageData().data.byte[746]"] | equals [get-by-os -macosx "0" -win "9" -linux "0"] | verify-true
+get-view "Model Explorer" | get-tree | select "TestProject/Matchup" | get-menu "Delete Model Element" | click
+get-view "Model Explorer" | get-tree | get-item TestProject | get-property [get-by-os -macosx "getImage().getImageData().data.byte[993]" -win "getImage().getImageData().transparentPixel" -linux "getImage().getImageData().data.byte[746]"] 
+    | equals [get-by-os -macosx "0" -win "53" -linux "-59"] | verify-true
+get-view "Model Explorer" | get-tree | select [get-item TestProject | get-item "Tournament Pro" -index 1 
+    | get-item "Matchup/Game"] | get-menu "Delete Model Element" | click
+with [get-view "Model Explorer" | get-tree] {
+    get-item TestProject | get-property [get-by-os -macosx "getImage().getImageData().data.byte[993]" -win "getImage().getImageData().transparentPixel" -linux "getImage().getImageData().data.byte[746]"] | equals [get-by-os -macosx "-74" -win "-1" -linux "127"] | verify-true
+    get-item TestProject | get-item "Tournament Pro" -index 1 | get-property [get-by-os -macosx "getImage().getImageData().data.byte[993]" -win "getImage().getImageData().transparentPixel" -linux "getImage().getImageData().data.byte[746]"] 
+        | equals [get-by-os -macosx "-74" -win "-1" -linux "68"] | verify-true
+    get-item TestProject | get-item "Tournament Pro" -index 1 | get-item Matchup 
+        | get-property [get-by-os -macosx "getImage().getImageData().data.byte[993]" -win "getImage().getImageData().transparentPixel" -linux "getImage().getImageData().data.byte[746]"] | equals [get-by-os -macosx "-74" -win "-1" -linux "68"] | verify-true
+}
+
+get-view "Model Explorer" | get-tree | select [get-item TestProject | get-item "Tournament Pro" -index 1 
+    | get-item Matchup] | get-menu "Delete Model Element" | click
+get-view "Model Explorer" | get-tree | get-item TestProject | get-property [get-by-os -macosx "getImage().getImageData().data.byte[993]" -win "getImage().getImageData().transparentPixel" -linux "getImage().getImageData().data.byte[746]"] 
+    | equals [get-by-os -macosx "0" -win "53" -linux "-59"] | verify-true
+get-view "Model Explorer" | get-tree | select [get-item TestProject | get-item "Tournament Pro" -index 1 
+    | get-item Matchup | get-item Game -index 1] | get-menu "Delete Model Element" | click
+get-view "Model Explorer" | get-tree | get-item TestProject | get-property [get-by-os -macosx "getImage().getImageData().data.byte[993]" -win "getImage().getImageData().transparentPixel" -linux "getImage().getImageData().data.byte[746]"] 
+    | equals [get-by-os -macosx "-74" -win "-1" -linux "127"] | verify-true
+get-view "Model Explorer" | get-tree | select [get-item TestProject | get-item "Tournament Pro" -index 1] 
+    | get-menu "Delete Model Element" | click
+get-view "Model Explorer" | get-tree | get-item TestProject | get-property [get-by-os -macosx "getImage().getImageData().data.byte[993]" -win "getImage().getImageData().transparentPixel" -linux "getImage().getImageData().data.byte[746]"] 
+    | equals [get-by-os -macosx "0" -win "53" -linux "-59"] | verify-true
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

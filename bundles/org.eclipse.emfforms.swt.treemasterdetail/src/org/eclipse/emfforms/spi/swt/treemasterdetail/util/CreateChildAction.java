@@ -89,6 +89,7 @@ public class CreateChildAction extends StaticSelectionCommandAction {
 		boolean callbackResult = true;
 
 		if (createElementCallback != null) {
+			/* ask callback after command execution so that callback can navigate to parent */
 			callbackResult = createElementCallback.beforeCreateElement(newObject);
 		}
 

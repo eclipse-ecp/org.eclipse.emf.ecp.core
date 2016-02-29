@@ -12,9 +12,11 @@
 
 package org.eclipse.emf.ecp.view.model.internal.preview;
 
+import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
 /**
  * The activator class controls the plug-in life cycle.
@@ -26,6 +28,8 @@ public class Activator extends AbstractUIPlugin {
 
 	/** The shared instance. */
 	private static Activator plugin;
+
+	private ServiceReference<ReportService> reportServiceReference;
 
 	/**
 	 * The constructor.
@@ -71,5 +75,18 @@ public class Activator extends AbstractUIPlugin {
 	 */
 	public static ImageDescriptor getImageDescriptor(String path) {
 		return imageDescriptorFromPlugin(PLUGIN_ID, path);
+	}
+
+	/**
+	 * Returns the {@link ReportService}.
+	 *
+	 * @return the {@link ReportService}
+	 */
+	public ReportService getReportService() {
+		if (reportServiceReference == null) {
+			reportServiceReference = plugin.getBundle().getBundleContext()
+				.getServiceReference(ReportService.class);
+		}
+		return plugin.getBundle().getBundleContext().getService(reportServiceReference);
 	}
 }

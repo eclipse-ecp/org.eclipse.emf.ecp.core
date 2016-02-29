@@ -4,14 +4,14 @@ Bundle-Name: EMFForms Spreadsheet File Wrapper
 Bundle-SymbolicName: org.eclipse.emfforms.spreadsheet.file
 Bundle-Version: 1.0.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Bundle-ActivationPolicy: lazy
-Require-Bundle: org.eclipse.emf.ecp.view.model;bundle-version="[1.6.0,2.0.0)",
- org.eclipse.emfforms.spreadsheet.core;bundle-version="[1.0.0,2.0.0)",
- org.eclipse.emfforms.spreadsheet.core.error.model;bundle-version="[1.0.0,2.0.0)"
 Export-Package: org.eclipse.emfforms.internal.spreadsheet.file;version="1.0.0";x-internal:=true,
  org.eclipse.emfforms.internal.spreadsheet.file.messages;version="1.0.0";x-internal:=true,
  org.eclipse.emfforms.spi.spreadsheet.file;version="1.0.0"
-Import-Package: org.eclipse.emfforms.spi.common.report;version="1.6.0",
+Require-Bundle: org.eclipse.emf.ecp.view.model;bundle-version="[1.8.0,1.9.0)",
+ org.eclipse.emfforms.spreadsheet.core;bundle-version="[1.0.0,2.0.0)",
+ org.eclipse.emfforms.spreadsheet.core.error.model;bundle-version="[1.0.0,2.0.0)"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Import-Package: org.eclipse.emfforms.spi.common.report;version="[1.8.0,1.9.0)",
  org.eclipse.osgi.util;version="1.1.0",
  org.osgi.framework;version="[1.2.0,2.0.0)"
+Bundle-ActivationPolicy: lazy

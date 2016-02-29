@@ -66,9 +66,9 @@ public class BasicUISessionProvider extends ESAbstractSessionProvider {
 
 	/**
 	 * Extracted from {@link #provideUsersession(ServerInfo)} in order to allow overwriting. This method logs in a given
-	 * serverInfo.
+	 * server.
 	 *
-	 * @param serverInfo given serverInfo
+	 * @param server given server
 	 * @return Usersession
 	 * @throws ESException in case of an exception
 	 */

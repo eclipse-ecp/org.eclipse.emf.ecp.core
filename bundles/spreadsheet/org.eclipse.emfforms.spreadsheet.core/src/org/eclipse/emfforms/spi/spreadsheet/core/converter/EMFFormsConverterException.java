@@ -39,4 +39,14 @@ public class EMFFormsConverterException extends Exception {
 	public EMFFormsConverterException(Throwable throwable) {
 		super(throwable);
 	}
+
+	/**
+	 * Constructs a new {@link EMFFormsConverterException}.
+	 *
+	 * @param message The message of the exception
+	 * @param throwable The Throwable that caused this exception
+	 */
+	public EMFFormsConverterException(String message, Throwable throwable) {
+		super(message, throwable);
+	}
 }

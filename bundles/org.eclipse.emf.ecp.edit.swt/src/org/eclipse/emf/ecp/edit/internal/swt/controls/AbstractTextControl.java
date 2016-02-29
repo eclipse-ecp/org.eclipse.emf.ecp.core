@@ -26,6 +26,7 @@ import org.eclipse.emf.ecp.view.template.style.textControlEnablement.model.VTTex
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
@@ -177,7 +178,7 @@ public abstract class AbstractTextControl extends SingleControl {
 	 * @return the created {@link Binding}
 	 */
 	protected Binding createTooltipBinding(UpdateValueStrategy targetToModel, UpdateValueStrategy modelToTarget) {
-		final IObservableValue toolTip = SWTObservables.observeTooltipText(text);
+		final IObservableValue toolTip = WidgetProperties.tooltipText().observe(text);
 		return getDataBindingContext().bindValue(toolTip, getModelValue(),
 			targetToModel,
 			modelToTarget);

@@ -31,7 +31,7 @@ public class NewXMIFileWizard extends Wizard {
 	 * Instantiates a new new xmi file wizard.
 	 */
 	public NewXMIFileWizard() {
-		setWindowTitle("New XMI File");
+		setWindowTitle(Messages.NewXMIFileWizard_NewXMIFile);
 		final ImageDescriptor desc = IDEWorkbenchPlugin.getIDEImageDescriptor("wizban/newfile_wiz.png");//$NON-NLS-1$
 		setDefaultPageImageDescriptor(desc);
 	}

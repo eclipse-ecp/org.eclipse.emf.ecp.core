@@ -2,18 +2,18 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: View Model Grouped Grid UI SWT
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.groupedgrid.ui.swt;singleton:=true
-Bundle-Version: 1.7.2.qualifier
+Bundle-Version: 1.8.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
+Export-Package: org.eclipse.emf.ecp.view.spi.groupedgrid.swt;version="1.8.0"
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
- org.eclipse.emf.ecp.ui.view.swt;bundle-version="[1.5.0,2.0.0)",
- org.eclipse.emf.ecp.view.groupedgrid.model;bundle-version="[1.5.0,2.0.0)",
- org.eclipse.emf.ecp.edit.swt;bundle-version="[1.5.0,2.0.0)",
- org.eclipse.emfforms.swt.core;bundle-version="[1.6.0,2.0.0)"
+ org.eclipse.emf.ecp.ui.view.swt;bundle-version="[1.8.0,1.9.0)",
+ org.eclipse.emf.ecp.view.groupedgrid.model;bundle-version="[1.8.0,1.9.0)",
+ org.eclipse.emf.ecp.edit.swt;bundle-version="[1.8.0,1.9.0)",
+ org.eclipse.emfforms.swt.core;bundle-version="[1.8.0,1.9.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Bundle-ActivationPolicy: lazy
-Export-Package: org.eclipse.emf.ecp.view.spi.groupedgrid.swt;version="1.7.2"
-Import-Package: org.eclipse.emfforms.spi.common.report;version="1.6.0",
+Import-Package: org.eclipse.emfforms.spi.common.report;version="[1.8.0,1.9.0)",
  org.eclipse.jface.layout;version="0.0.0",
  org.eclipse.swt;version="0.0.0",
  org.eclipse.swt.layout;version="0.0.0",
  org.eclipse.swt.widgets;version="0.0.0"
+Bundle-ActivationPolicy: lazy

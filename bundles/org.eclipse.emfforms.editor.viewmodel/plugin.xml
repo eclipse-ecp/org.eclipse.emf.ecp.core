@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.editors">
+  <editor
+        class="org.eclipse.emfforms.internal.editor.viewmodel.ViewModelEditor"
+        default="true"
+        extensions="view"
+        icon="icons/GenModelModelFile.gif"
+        id="Viewmodel Editor"
+        name="Viewmodel Editor">
+  </editor>
+   </extension>
+   
+</plugin>

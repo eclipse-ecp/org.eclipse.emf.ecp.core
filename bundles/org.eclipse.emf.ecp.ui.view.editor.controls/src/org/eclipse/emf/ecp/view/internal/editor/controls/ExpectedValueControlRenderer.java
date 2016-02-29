@@ -147,7 +147,7 @@ public abstract class ExpectedValueControlRenderer extends SimpleControlSWTContr
 		final ModelToTargetUpdateStrategy modelToTargetUpdateStrategy = new ModelToTargetUpdateStrategy();
 
 		@SuppressWarnings("deprecation")
-		final IObservableValue value = org.eclipse.jface.databinding.swt.SWTObservables.observeText(text);
+		final IObservableValue value = org.eclipse.jface.databinding.swt.WidgetProperties.text().observe(text);
 
 		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(),
 			targetToModelUpdateStrategy, modelToTargetUpdateStrategy);
@@ -167,7 +167,7 @@ public abstract class ExpectedValueControlRenderer extends SimpleControlSWTContr
 	protected Binding createTooltipBinding(Control text, IObservableValue modelValue,
 		DataBindingContext dataBindingContext, UpdateValueStrategy targetToModel, UpdateValueStrategy modelToTarget) {
 		@SuppressWarnings("deprecation")
-		final IObservableValue toolTip = org.eclipse.jface.databinding.swt.SWTObservables.observeTooltipText(text);
+		final IObservableValue toolTip = org.eclipse.jface.databinding.swt.WidgetProperties.tooltipText().observe(text);
 		return dataBindingContext.bindValue(toolTip, modelValue, targetToModel, modelToTarget);
 	}
 

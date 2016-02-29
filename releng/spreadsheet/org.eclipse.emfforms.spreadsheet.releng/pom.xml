@@ -9,8 +9,8 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<tycho-version>0.22.0</tycho-version>
-		<tycho-extras-version>0.22.0</tycho-extras-version>
+		<tycho-version>0.23.0</tycho-version>
+		<tycho-extras-version>0.23.0</tycho-extras-version>
 		<javadoc-version>2.9</javadoc-version>
 		<javadoc-title>EMFForms Spreadsheet 1.0.0 API</javadoc-title>
 		<maven.antrun.plugin.version>1.7</maven.antrun.plugin.version>
@@ -19,6 +19,7 @@
 		<jarsigner-version>1.1.0</jarsigner-version>
 		<mav-surefire-version>2.16</mav-surefire-version>
 		<junit-version>4.11</junit-version>
+		<checkstyle-version>6.11.2</checkstyle-version>
 		
 		<!-- Properties to enable jacoco code coverage analysis with sonar -->
 		<sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
@@ -209,6 +210,13 @@
 						<phase>verify</phase>
 					</execution>
 				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>com.puppycrawl.tools</groupId>
+						<artifactId>checkstyle</artifactId>
+						<version>${checkstyle-version}</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 
 			<!-- enable source bundle generation -->

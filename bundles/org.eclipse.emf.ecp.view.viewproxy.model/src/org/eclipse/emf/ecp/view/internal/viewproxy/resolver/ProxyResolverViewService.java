@@ -97,6 +97,12 @@ public class ProxyResolverViewService implements ViewModelService {
 		final VView view = resolveView(proxy);
 		final EStructuralFeature eContainingFeature = proxy.eContainingFeature();
 		final EObject eContainer = proxy.eContainer();
+		final Object objectContainer = eContainer.eGet(eContainingFeature);
+		int index = -1;
+		if (eContainingFeature.isMany()) {
+			final List<?> objectList = (List<?>) objectContainer;
+			index = objectList.indexOf(proxy);
+		}
 		EcoreUtil.remove(eContainer, eContainingFeature, proxy);
 		if (view == null) {
 			return;
@@ -110,7 +116,7 @@ public class ProxyResolverViewService implements ViewModelService {
 			// EMF API
 			@SuppressWarnings("unchecked")
 			final List<EObject> list = (List<EObject>) eContainer.eGet(eContainingFeature);
-			list.add(layout);
+			list.add(index, layout);
 		} else {
 			eContainer.eSet(eContainingFeature, layout);
 		}

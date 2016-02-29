@@ -98,9 +98,15 @@
       <plugin id="org.eclipse.emfforms.common"/>
       <plugin id="org.eclipse.emfforms.core.services"/>
       <plugin id="org.eclipse.emfforms.core.services.databinding.featurepath"/>
+      <plugin id="org.eclipse.emfforms.core.services.domainexpander.default"/>
+      <plugin id="org.eclipse.emfforms.core.services.editsupport"/>
       <plugin id="org.eclipse.emfforms.core.services.emf"/>
       <plugin id="org.eclipse.emfforms.core.services.emfspecificservice"/>
+      <plugin id="org.eclipse.emfforms.core.services.legacy"/>
       <plugin id="org.eclipse.emfforms.core.services.locale.default"/>
+      <plugin id="org.eclipse.emfforms.core.services.mappingprovider.default"/>
+      <plugin id="org.eclipse.emfforms.core.services.structuralchange"/>
+      <plugin id="org.eclipse.emfforms.core.services.structuralchange.default"/>
       <plugin id="org.eclipse.emfforms.localization"/>
       <plugin id="org.eclipse.emfforms.view.model.localization"/>
       <plugin id="org.eclipse.equinox.app"/>

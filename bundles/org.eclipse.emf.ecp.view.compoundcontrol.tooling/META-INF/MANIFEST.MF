@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Compound Control Tooling
+Bundle-SymbolicName: org.eclipse.emf.ecp.view.compoundcontrol.tooling;singleton:=true
+Bundle-Version: 1.8.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Vendor: Eclipse Modeling Project

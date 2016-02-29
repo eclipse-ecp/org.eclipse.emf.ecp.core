@@ -15,7 +15,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Collection;
-import java.util.Map;
 
 import org.apache.poi.ss.usermodel.Workbook;
 import org.eclipse.emf.ecore.EObject;
@@ -38,9 +37,8 @@ public class EMFFormsSpreadsheetFileExporterImpl implements EMFFormsSpreadsheetF
 
 	@Override
 	public void render(File file, Collection<EObject> domainObjects, EObject viewEobject,
-		VViewModelProperties properties, Map<EObject, Map<String, String>> additionalInformation) {
-		final Workbook workbook = EMFFormsSpreadsheetExporter.INSTANCE.render(domainObjects, viewEobject, properties,
-			additionalInformation);
+		VViewModelProperties properties) {
+		final Workbook workbook = EMFFormsSpreadsheetExporter.INSTANCE.render(domainObjects, viewEobject, properties);
 
 		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
 		final ServiceReference<ReportService> serviceReference = bundleContext.getServiceReference(ReportService.class);

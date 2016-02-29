@@ -101,7 +101,6 @@ public class VViewImpl extends VElementImpl implements VView {
 	 *
 	 * @since 1.7
 	 *        <!-- end-user-doc -->
-	 *
 	 * @see #getLoadingProperties()
 	 * @generated
 	 * @ordered
@@ -225,7 +224,6 @@ public class VViewImpl extends VElementImpl implements VView {
 	 *
 	 * @since 1.7
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
@@ -238,7 +236,6 @@ public class VViewImpl extends VElementImpl implements VView {
 	 *
 	 * @since 1.7
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	public NotificationChain basicSetLoadingProperties(VViewModelProperties newLoadingProperties,
@@ -262,7 +259,6 @@ public class VViewImpl extends VElementImpl implements VView {
 	 *
 	 * @since 1.7
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override

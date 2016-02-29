@@ -17,6 +17,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
+import javax.xml.datatype.DatatypeConstants;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -49,6 +50,7 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
 @Component(name = "EMFFormsSpreadsheetSingleAttributeConverter")
 public class EMFFormsSpreadsheetSingleAttributeConverter implements EMFFormsSpreadsheetValueConverter {
 
+	private static final int DOUBLE_PRECISION = 16;
 	private EMFFormsDatabindingEMF databinding;
 	private ReportService reportService;
 
@@ -117,14 +119,15 @@ public class EMFFormsSpreadsheetSingleAttributeConverter implements EMFFormsSpre
 		} else if (isByte(attributeType.getInstanceClass()) ||
 			isShort(attributeType.getInstanceClass()) ||
 			isInteger(attributeType.getInstanceClass()) ||
-			isLong(attributeType.getInstanceClass()) ||
-			isFloat(attributeType.getInstanceClass()) ||
-			isDouble(attributeType.getInstanceClass())) {
+			isLong(attributeType.getInstanceClass())) {
 			cell.setCellValue(Number.class.cast(value).doubleValue());
+		} else if (isFloat(attributeType.getInstanceClass()) ||
+			isDouble(attributeType.getInstanceClass())) {
+			writeFloatDouble(cell, value, viewModelContext, eAttribute);
 		} else if (isBigInteger(attributeType.getInstanceClass())) {
 			writeBigInteger(cell, value, viewModelContext);
 		} else if (isBigDecimal(attributeType.getInstanceClass())) {
-			writeBigDecimal(cell, value, viewModelContext);
+			writeBigDecimal(cell, value, viewModelContext, eAttribute);
 		} else if (isDate(attributeType.getInstanceClass())) {
 			cell.setCellValue(DateUtil.getExcelDate(Date.class.cast(value)));
 			cell.setCellStyle((CellStyle) viewModelContext.getContextValue(EMFFormsCellStyleConstants.DATE));
@@ -139,14 +142,27 @@ public class EMFFormsSpreadsheetSingleAttributeConverter implements EMFFormsSpre
 		}
 	}
 
-	private void writeBigDecimal(Cell cell, Object value, ViewModelContext viewModelContext) {
+	private void writeFloatDouble(Cell cell, Object value, ViewModelContext viewModelContext,
+		final EAttribute eAttribute) {
+		cell.setCellValue(Number.class.cast(value).doubleValue());
+		final String format = NumberFormatHelper.getNumberFormat(eAttribute);
+		if (format != null) {
+			cell.setCellStyle((CellStyle) viewModelContext.getContextValue(format));
+		}
+	}
+
+	private void writeBigDecimal(Cell cell, Object value, ViewModelContext viewModelContext, EAttribute eAttribute) {
 		final BigDecimal bigDecimal = BigDecimal.class.cast(value);
-		if (bigDecimal.compareTo(BigDecimal.valueOf(Double.MAX_VALUE)) > 0
-			|| bigDecimal.compareTo(BigDecimal.valueOf(Double.MIN_VALUE)) < 0) {
+		if (Double.isInfinite(bigDecimal.doubleValue())
+			|| bigDecimal.precision() > DOUBLE_PRECISION) {
 			cell.setCellValue(bigDecimal.toString());
 			cell.setCellStyle((CellStyle) viewModelContext.getContextValue(EMFFormsCellStyleConstants.TEXT));
 		} else {
 			cell.setCellValue(bigDecimal.doubleValue());
+			final String format = NumberFormatHelper.getNumberFormat(eAttribute);
+			if (format != null) {
+				cell.setCellStyle((CellStyle) viewModelContext.getContextValue(format));
+			}
 		}
 	}
 
@@ -183,9 +199,15 @@ public class EMFFormsSpreadsheetSingleAttributeConverter implements EMFFormsSpre
 		try {
 			return readCellValue(cell, attributeType);
 		} catch (final IllegalStateException e) {
-			throw new EMFFormsConverterException(e);
+			throw new EMFFormsConverterException(
+				String.format("Cell value of column %1$s in row %2$s on sheet %3$s must be a string.", //$NON-NLS-1$
+					cell.getColumnIndex() + 1, cell.getRowIndex() + 1, cell.getSheet().getSheetName()),
+				e);
 		} catch (final NumberFormatException e) {
-			throw new EMFFormsConverterException(e);
+			throw new EMFFormsConverterException(
+				String.format("Cell value of column %1$s in row %2$s on sheet %3$s is not a valid number.", //$NON-NLS-1$
+					cell.getColumnIndex() + 1, cell.getRowIndex() + 1, cell.getSheet().getSheetName()),
+				e);
 		}
 	}
 
@@ -209,10 +231,10 @@ public class EMFFormsSpreadsheetSingleAttributeConverter implements EMFFormsSpre
 			return new BigInteger(cell.getStringCellValue());
 		} else if (isBigDecimal(attributeType.getInstanceClass())) {
 			if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
-				return BigDecimal.valueOf(cell.getNumericCellValue());
+				return BigDecimal.valueOf(cell.getNumericCellValue()).stripTrailingZeros();
 			}
 			final String value = cell.getStringCellValue();
-			return new BigDecimal(value);
+			return new BigDecimal(value).stripTrailingZeros();
 		} else if (isBoolean(attributeType.getInstanceClass())) {
 			return cell.getBooleanCellValue();
 		} else if (isDate(attributeType.getInstanceClass())) {
@@ -222,7 +244,13 @@ public class EMFFormsSpreadsheetSingleAttributeConverter implements EMFFormsSpre
 			if (targetCal == null) {
 				return null;
 			}
-			return new XMLCalendar(targetCal.getTime(), XMLCalendar.DATE);
+			final XMLGregorianCalendar cal = new XMLCalendar(targetCal.getTime(), XMLCalendar.DATE);
+			cal.setTimezone(DatatypeConstants.FIELD_UNDEFINED);
+			cal.setHour(DatatypeConstants.FIELD_UNDEFINED);
+			cal.setMinute(DatatypeConstants.FIELD_UNDEFINED);
+			cal.setSecond(DatatypeConstants.FIELD_UNDEFINED);
+			cal.setMillisecond(DatatypeConstants.FIELD_UNDEFINED);
+			return cal;
 		} else {
 			return EcoreUtil.createFromString(attributeType, cell.getStringCellValue());
 		}

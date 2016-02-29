@@ -13,26 +13,30 @@ package org.eclipse.emfforms.internal.spreadsheet.core.transfer;
 
 import java.util.Collection;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Queue;
+import java.util.Set;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.BuiltinFormats;
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.DataFormat;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.util.WorkbookUtil;
+import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emfforms.internal.spreadsheet.core.EMFFormsSpreadsheetViewModelContext;
+import org.eclipse.emfforms.internal.spreadsheet.core.converter.NumberFormatHelper;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsAbstractSpreadsheetRenderer;
-import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsIdProvider;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsNoRendererException;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetRenderTarget;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetRendererFactory;
@@ -51,7 +55,6 @@ import org.osgi.framework.ServiceReference;
 public class EMFFormsSpreadsheetExporterImpl implements EMFFormsSpreadsheetExporter {
 
 	private final ReportService reportService;
-	private final EMFFormsIdProvider idProvider;
 	private final ViewProvider viewProvider;
 
 	/**
@@ -76,16 +79,13 @@ public class EMFFormsSpreadsheetExporterImpl implements EMFFormsSpreadsheetExpor
 		final ServiceReference<ReportService> reportServiceReference = bundleContext
 			.getServiceReference(ReportService.class);
 		reportService = bundleContext.getService(reportServiceReference);
-		final ServiceReference<EMFFormsIdProvider> idProviderServiceReference = bundleContext
-			.getServiceReference(EMFFormsIdProvider.class);
-		idProvider = bundleContext.getService(idProviderServiceReference);
 		this.viewProvider = viewProvider;
 
 	}
 
 	@Override
 	public Workbook render(final Collection<? extends EObject> domainObjects, EObject viewEobject,
-		VViewModelProperties properties, Map<EObject, Map<String, String>> additionalInformation) {
+		VViewModelProperties properties) {
 		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
 		final ServiceReference<EMFFormsSpreadsheetRendererFactory> serviceReference = bundleContext
 			.getServiceReference(EMFFormsSpreadsheetRendererFactory.class);
@@ -102,24 +102,22 @@ public class EMFFormsSpreadsheetExporterImpl implements EMFFormsSpreadsheetExpor
 			return workbook;
 		}
 
-		final CellStyle cellStyle = workbook.createCellStyle();
-		cellStyle.setLocked(true);
-		final CellStyle cellStyle2 = workbook.createCellStyle();
-		cellStyle2.setLocked(true);
-		cellStyle2.setWrapText(true);
-		final CellStyle cellStyle3 = workbook.createCellStyle();
-		cellStyle3.setDataFormat((short) BuiltinFormats.getBuiltinFormat("text")); //$NON-NLS-1$
-		final CellStyle cellStyle4 = workbook.createCellStyle();
-		cellStyle4.setDataFormat((short) BuiltinFormats.getBuiltinFormat("m/d/yy")); //$NON-NLS-1$
-
+		// analyze and retrieve
+		final Set<String> retrievedFormats = retrieveAllFormats(viewModel.getRootEClass());
+		final Map<String, CellStyle> keyStyleMap = new LinkedHashMap<String, CellStyle>(retrievedFormats.size());
+		addDefaultCellStyles(workbook, keyStyleMap);
+		prepareNumberCellStyles(workbook, retrievedFormats, keyStyleMap);
 		if (domainObjects == null) {
 			try {
 				final ViewModelContext viewModelContext = new EMFFormsSpreadsheetViewModelContext(viewModel, null);
+				prepareViewContext(keyStyleMap, viewModelContext);
+
 				final EMFFormsAbstractSpreadsheetRenderer<VElement> renderer = emfFormsSpreadsheetRendererFactory
 					.getRendererInstance(
 						viewModelContext.getViewModel(), viewModelContext);
 				renderer.render(workbook, viewModelContext.getViewModel(), viewModelContext,
 					new EMFFormsSpreadsheetRenderTarget("root", 0, 0)); //$NON-NLS-1$
+				viewModelContext.dispose();
 			} catch (final EMFFormsNoRendererException ex) {
 				reportService.report(new EMFFormsSpreadsheetReport(ex, EMFFormsSpreadsheetReport.ERROR));
 			}
@@ -139,65 +137,81 @@ public class EMFFormsSpreadsheetExporterImpl implements EMFFormsSpreadsheetExpor
 				try {
 					final ViewModelContext viewModelContext = new EMFFormsSpreadsheetViewModelContext(viewModel,
 						domainObject);
-					viewModelContext.putContextValue(EMFFormsCellStyleConstants.LOCKED, cellStyle);
-					viewModelContext.putContextValue(EMFFormsCellStyleConstants.LOCKED_AND_WRAPPED, cellStyle2);
-					viewModelContext.putContextValue(EMFFormsCellStyleConstants.TEXT, cellStyle3);
-					viewModelContext.putContextValue(EMFFormsCellStyleConstants.DATE, cellStyle4);
+					prepareViewContext(keyStyleMap, viewModelContext);
 					final EMFFormsAbstractSpreadsheetRenderer<VElement> renderer = emfFormsSpreadsheetRendererFactory
 						.getRendererInstance(
 							viewModelContext.getViewModel(), viewModelContext);
 					renderer.render(workbook, viewModelContext.getViewModel(), viewModelContext,
 						new EMFFormsSpreadsheetRenderTarget("root", //$NON-NLS-1$
 							i++, 0));
+					viewModelContext.dispose();
 				} catch (final EMFFormsNoRendererException ex) {
 					reportService.report(new EMFFormsSpreadsheetReport(ex, EMFFormsSpreadsheetReport.ERROR));
 				}
 			}
-			writeAdditionalInfo(workbook, additionalInformation);
 		}
 		return workbook;
 	}
 
-	private void writeAdditionalInfo(Workbook workbook, Map<EObject, Map<String, String>> additionalInformation) {
-		if (additionalInformation == null) {
+	private void addDefaultCellStyles(Workbook workbook, Map<String, CellStyle> keyStyleMap) {
+		final CellStyle cellStyle = workbook.createCellStyle();
+		cellStyle.setLocked(true);
+		keyStyleMap.put(EMFFormsCellStyleConstants.LOCKED, cellStyle);
+		final CellStyle cellStyle2 = workbook.createCellStyle();
+		cellStyle2.setLocked(true);
+		cellStyle2.setWrapText(true);
+		keyStyleMap.put(EMFFormsCellStyleConstants.LOCKED_AND_WRAPPED, cellStyle2);
+		final CellStyle cellStyle3 = workbook.createCellStyle();
+		cellStyle3.setDataFormat((short) BuiltinFormats.getBuiltinFormat("text")); //$NON-NLS-1$
+		keyStyleMap.put(EMFFormsCellStyleConstants.TEXT, cellStyle3);
+		final CellStyle cellStyle4 = workbook.createCellStyle();
+		cellStyle4.setDataFormat((short) BuiltinFormats.getBuiltinFormat("m/d/yy")); //$NON-NLS-1$
+		keyStyleMap.put(EMFFormsCellStyleConstants.DATE, cellStyle4);
+	}
+
+	private void prepareNumberCellStyles(Workbook workbook, Set<String> retrievedFormats,
+		Map<String, CellStyle> keyStyleMap) {
+		final DataFormat dataFormat = workbook.createDataFormat();
+		for (final String format : retrievedFormats) {
+			final CellStyle cellStyleNumberFormat = workbook.createCellStyle();
+			cellStyleNumberFormat.setDataFormat(dataFormat.getFormat(format));
+			keyStyleMap.put(format, cellStyleNumberFormat);
+		}
+	}
+
+	private void prepareViewContext(Map<String, CellStyle> formatStyleMap, ViewModelContext viewModelContext) {
+		for (final String key : formatStyleMap.keySet()) {
+			viewModelContext.putContextValue(key, formatStyleMap.get(key));
+		}
+	}
+
+	private Set<String> retrieveAllFormats(EClass eClass) {
+		final Set<String> formats = new LinkedHashSet<String>();
+		final Set<EClass> checkedClasses = new LinkedHashSet<EClass>();
+		final Queue<EClass> uncheckedClasses = new LinkedList<EClass>();
+		uncheckedClasses.add(eClass);
+		while (!uncheckedClasses.isEmpty()) {
+			retrieveAllFormats(uncheckedClasses.poll(), formats, checkedClasses, uncheckedClasses);
+		}
+		return formats;
+	}
+
+	private void retrieveAllFormats(EClass eClass, Set<String> formats, Set<EClass> checkedClasses,
+		Queue<EClass> uncheckedClasses) {
+		if (checkedClasses.contains(eClass)) {
 			return;
 		}
-		final String sheetName = WorkbookUtil.createSafeSheetName("AdditionalInformation"); //$NON-NLS-1$
-		Sheet sheet = workbook.getSheet(sheetName);
-		if (sheet == null) {
-			sheet = workbook.createSheet(sheetName);
+		for (final EReference eReference : eClass.getEAllReferences()) {
+			uncheckedClasses.offer(eReference.getEReferenceType());
 		}
-		final Row titleRow = sheet.createRow(0);
-		final Cell idCell = titleRow.getCell(0, Row.CREATE_NULL_AS_BLANK);
-		idCell.setCellValue(EMFFormsIdProvider.ID_COLUMN);
-		final CellStyle readOnly = workbook.getCellStyleAt((short) (workbook.getNumCellStyles() - 2));
-		idCell.setCellStyle(readOnly);
-
-		final Map<String, Integer> keyColumnMap = new LinkedHashMap<String, Integer>();
-		int column = 1;
-		int row = 1;
-		for (final EObject eObject : additionalInformation.keySet()) {
-			final Row valueRow = sheet.createRow(row++);
-			// set id
-			valueRow.getCell(0, Row.CREATE_NULL_AS_BLANK).setCellValue(idProvider.getId(eObject));
-
-			// write key - values
-			final Map<String, String> keyValueMap = additionalInformation.get(eObject);
-			for (final String key : keyValueMap.keySet()) {
-				if (!keyColumnMap.containsKey(key)) {
-					keyColumnMap.put(key, column);
-					column++;
-				}
-				final Cell keyCell = titleRow.getCell(keyColumnMap.get(key), Row.CREATE_NULL_AS_BLANK);
-				keyCell.setCellValue(key);
-				keyCell.setCellStyle(readOnly);
-
-				final Cell valueCell = valueRow.getCell(keyColumnMap.get(key), Row.CREATE_NULL_AS_BLANK);
-				valueCell.setCellValue(keyValueMap.get(key));
-				valueCell.setCellStyle(readOnly);
-
+		for (final EAttribute eAttribute : eClass.getEAllAttributes()) {
+			final String format = NumberFormatHelper.getNumberFormat(eAttribute);
+			if (format == null) {
+				continue;
 			}
+			formats.add(format);
 		}
+		checkedClasses.add(eClass);
 	}
 
 	/**

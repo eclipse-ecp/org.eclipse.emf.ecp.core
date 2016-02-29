@@ -14,6 +14,7 @@ package org.eclipse.emfforms.spi.core.services.databinding.emf;
 import org.eclipse.emf.databinding.IEMFListProperty;
 import org.eclipse.emf.databinding.IEMFValueProperty;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter;
@@ -48,4 +49,15 @@ public interface DomainModelReferenceConverterEMF extends DomainModelReferenceCo
 	IEMFListProperty convertToListProperty(VDomainModelReference domainModelReference, EObject object)
 		throws DatabindingFailedException;
 
+	/**
+	 * Retrieve the Setting which is described by the provided {@link VDomainModelReference} and the provided
+	 * {@link EObject}.
+	 *
+	 * @param domainModelReference The {@link VDomainModelReference} to use to retrieve the setting
+	 * @param object The {@link EObject} to use to retrieve the setting
+	 * @return The Setting being described by the {@link VDomainModelReference}
+	 * @throws DatabindingFailedException if the databinding could not be executed successfully.
+	 * @since 1.8
+	 */
+	Setting getSetting(VDomainModelReference domainModelReference, EObject object) throws DatabindingFailedException;
 }

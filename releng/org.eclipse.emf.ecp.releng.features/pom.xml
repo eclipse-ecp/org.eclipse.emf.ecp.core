@@ -6,12 +6,12 @@
 	<parent>
 		<groupId>org.eclipse.emf.ecp</groupId>
 		<artifactId>ecp-parent</artifactId>
-		<version>1.7.2-SNAPSHOT</version>
+		<version>1.8.0-SNAPSHOT</version>
 		<relativePath>../../releng/org.eclipse.emf.ecp.releng/</relativePath>
 	</parent>
 	<groupId>org.eclipse.emf.ecp</groupId>
 	<artifactId>ecp-features-parent</artifactId>
-	<version>1.7.2-SNAPSHOT</version>
+	<version>1.8.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<modules>
@@ -26,6 +26,7 @@
 		<module>../../features/org.eclipse.emf.ecp.view.model.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.ecore.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.ecore.editor.feature</module>
+		<module>../../features/org.eclipse.emfforms.editor.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.model.editor.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.model.controls.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.examplemodel.ui.feature</module>
@@ -90,6 +91,8 @@
 		<module>../../features/org.eclipse.emfforms.swt.control.multiattribute.feature</module>
 		
 		<module>../../features/org.eclipse.emfforms.swt.controlgrid.feature</module>
+		
+		<module>../../features/org.eclipse.emf.ecp.emf2web.feature</module>
 	</modules>
 
 	<!-- Parent used for features. This POM contains all build steps for code signing. -->

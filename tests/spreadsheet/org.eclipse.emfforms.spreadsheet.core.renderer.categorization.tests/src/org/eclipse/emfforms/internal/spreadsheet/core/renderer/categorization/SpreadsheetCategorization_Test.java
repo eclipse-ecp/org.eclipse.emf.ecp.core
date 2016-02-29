@@ -138,7 +138,9 @@ public class SpreadsheetCategorization_Test {
 					if (0 != target.getRow()) {
 						return false;
 					}
-					final String expected = WorkbookUtil.createSafeSheetName(vElement.getLabel());
+
+					final String expected = WorkbookUtil
+						.createSafeSheetName(workbook.getNumberOfSheets() + 1 + " " + vElement.getLabel()); //$NON-NLS-1$
 					if (!expected.equals(target.getSheetName())) {
 						return false;
 					}

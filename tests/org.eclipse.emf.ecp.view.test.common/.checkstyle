@@ -4,7 +4,10 @@
   <local-check-config name="ESMCheckstyle" location="/org.eclipse.emf.ecp.releng/checkstyle/esmCheckstyle.xml" type="project" description="">
     <additional-data name="protect-config-file" value="false"/>
   </local-check-config>
-  <fileset name="Java Files" enabled="true" check-config-name="ESMCheckstyle" local="true">
+  <local-check-config name="ESM Tests" location="/org.eclipse.emf.ecp.releng/checkstyle/esmCheckstyleTest.xml" type="project" description="">
+    <additional-data name="protect-config-file" value="false"/>
+  </local-check-config>
+  <fileset name="Java Files" enabled="true" check-config-name="ESM Tests" local="true">
     <file-match-pattern match-pattern=".java" include-pattern="true"/>
   </fileset>
 </fileset-config>

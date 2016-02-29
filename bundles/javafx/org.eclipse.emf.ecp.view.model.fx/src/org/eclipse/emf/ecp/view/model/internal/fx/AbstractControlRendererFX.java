@@ -3,6 +3,7 @@ package org.eclipse.emf.ecp.view.model.internal.fx;
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
+import org.eclipse.core.databinding.observable.Observables;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.IValueChangeListener;
 import org.eclipse.core.databinding.observable.value.ValueChangeEvent;
@@ -10,9 +11,6 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
-import org.eclipse.emf.databinding.EObjectObservableValue;
-import org.eclipse.emf.databinding.edit.EMFEditObservables;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
@@ -29,6 +27,10 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.fx.core.databinding.JFXBeanProperties;
 
 import javafx.scene.Node;
@@ -119,18 +121,18 @@ public abstract class AbstractControlRendererFX extends RendererFX<VControl> {
 		return JFXBeanProperties.value(property).observe(source);
 	}
 
-	protected IObservableValue getModelObservable(Setting setting) {
-		return new EObjectObservableValue(setting.getEObject(),
-			setting.getEStructuralFeature()) {
+	protected IObservableValue getModelObservable() {
+		if (modelValue == null) {
+			try {
+				modelValue = getViewModelContext().getService(EMFFormsDatabinding.class)
+					.getObservableValue(getVElement().getDomainModelReference(),
+						getViewModelContext().getDomainModel());
 
-			@Override
-			public Object getValueType() {
-				// TODO Auto-generated method stub
-				return ((EStructuralFeature) super.getValueType()).getEType()
-					.getInstanceClass();
+			} catch (final DatabindingFailedException ex) {
+				return Observables.constantObservableValue(ex.getMessage(), String.class);
 			}
-
-		};
+		}
+		return modelValue;
 	}
 
 	protected Binding bindModelToTarget(IObservableValue target,
@@ -168,19 +170,19 @@ public abstract class AbstractControlRendererFX extends RendererFX<VControl> {
 		}
 	}
 
-	/**
-	 * Returns an {@link IObservableValue} based on the provided {@link Setting}.
-	 *
-	 * @param setting the {@link Setting} to get the {@link IObservableValue} for
-	 * @return the {@link IObservableValue}
-	 */
-	protected final IObservableValue getModelValue(final Setting setting) {
-		if (modelValue == null) {
-			modelValue = EMFEditObservables.observeValue(getEditingDomain(setting),
-				setting.getEObject(), setting.getEStructuralFeature());
-		}
-		return modelValue;
-	}
+	// /**
+	// * Returns an {@link IObservableValue} based on the provided {@link Setting}.
+	// *
+	// * @param setting the {@link Setting} to get the {@link IObservableValue} for
+	// * @return the {@link IObservableValue}
+	// */
+	// protected final IObservableValue getModelValue(final Setting setting) {
+	// if (modelValue == null) {
+	// modelValue = EMFEditObservables.observeValue(getEditingDomain(setting),
+	// setting.getEObject(), setting.getEStructuralFeature());
+	// }
+	// return modelValue;
+	// }
 
 	/**
 	 * Returns the {@link EditingDomain} for the provided {@link Setting}.
@@ -202,21 +204,19 @@ public abstract class AbstractControlRendererFX extends RendererFX<VControl> {
 	protected Label createLabel() throws NoPropertyDescriptorFoundExeption {
 		Label label = null;
 
-		final Setting setting = getVElement().getDomainModelReference().getIterator().next();
-		if (setting == null) {
-			return null;
-		}
-		final IItemPropertyDescriptor itemPropertyDescriptor = getItemPropertyDescriptor(setting);
-
-		if (itemPropertyDescriptor == null) {
-			throw new NoPropertyDescriptorFoundExeption(setting.getEObject(), setting.getEStructuralFeature());
-		}
-
 		if (getVElement().getLabelAlignment() == LabelAlignment.LEFT
 			|| getVElement().getLabelAlignment() == LabelAlignment.DEFAULT) {
 			label = new Label();
-			label.setText(itemPropertyDescriptor.getDisplayName(setting
-				.getEObject()));
+
+			try {
+				final IObservableValue model = getViewModelContext().getService(EMFFormsLabelProvider.class)
+					.getDisplayName(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
+
+				bindModelToTarget(getTargetObservable(label, "text"), model, null, null);
+			} catch (final NoLabelFoundException ex) {
+				ex.printStackTrace();
+				label.setText(ex.getMessage());
+			}
 
 		}
 

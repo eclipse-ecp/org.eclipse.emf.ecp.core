@@ -15,7 +15,6 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -40,8 +39,6 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emfforms.spi.common.report.ReportService;
-import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
-import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
@@ -138,20 +135,7 @@ public class ControlRootEClassControlChangeableSWTRenderer extends ControlRootEC
 			final Object selection = dialog.getFirstResult();
 			if (EClass.class.isInstance(selection)) {
 				final EClass selectedFeature = (EClass) selection;
-				final VView view;
-				final IObservableValue observableValue;
-				try {
-					observableValue = Activator
-						.getDefault()
-						.getEMFFormsDatabinding()
-						.getObservableValue(getVElement().getDomainModelReference(),
-							getViewModelContext().getDomainModel());
-				} catch (final DatabindingFailedException ex) {
-					Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
-					return;
-				}
-				view = (VView) observableValue.getValue();
-				observableValue.dispose();
+				final VView view = (VView) getViewModelContext().getDomainModel();
 
 				if (view.getRootEClass() != null) {
 					getViewModelRegistry().unregister(
@@ -161,46 +145,52 @@ public class ControlRootEClassControlChangeableSWTRenderer extends ControlRootEC
 				view.setRootEClass(selectedFeature);
 				getViewModelRegistry().register(view.getRootEClass().eResource().getURI().toString(), view);
 
-				final ResourceSet resourceSet = new ResourceSetImpl();
-				final Map<String, Object> map =
-					resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();
-				map.put("*", new XMIResourceFactoryImpl()); //$NON-NLS-1$
-
-				final ResourceSet rs = selectedFeature.eContainer().eResource().getResourceSet();
-				URI uri = null;
-				for (final Resource r : rs.getResources()) {
-					if (r.getURI().isPlatform()) {
-						uri = r.getURI();
-					}
-				}
-
-				final Resource ecore = resourceSet.getResource(uri, true);
-
-				if (ecore == null) {
-					return;
-				}
-				// put the file in the registry
-				final EList<EObject> contents = ecore.getContents();
-				if (contents.size() != 1) {
-					return;
-				}
-
-				final EObject object = contents.get(0);
-				if (!(object instanceof EPackage)) {
-					return;
-				}
-
-				// Update the VView-EClass mapping
-				final IDEViewModelRegistryImpl registry = (IDEViewModelRegistryImpl) getViewModelRegistry();
-				if (registry == null) {
-					return;
-				}
-
-				view.setEcorePath(ecore.getURI().toPlatformString(true));
-
+				final ResourceSet rs = selectedFeature.eResource().getResourceSet();
+				// we have a ResourceSet if the eclass was loaded from a workspace model
+				loadWorkspaceEcore(view, rs);
 			}
 		}
 		labelProvider.dispose();
+	}
+
+	private void loadWorkspaceEcore(final VView view, final ResourceSet rs) {
+		if (rs == null) {
+			return;
+		}
+		URI uri = null;
+		for (final Resource r : rs.getResources()) {
+			if (r.getURI().isPlatform()) {
+				uri = r.getURI();
+			}
+		}
+
+		final ResourceSet resourceSet = new ResourceSetImpl();
+		final Map<String, Object> map = resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap();
+		map.put("*", new XMIResourceFactoryImpl()); //$NON-NLS-1$
+		final Resource ecore = resourceSet.getResource(uri, true);
+
+		if (ecore == null) {
+			return;
+		}
+		// put the file in the registry
+		final EList<EObject> contents = ecore.getContents();
+		if (contents.size() != 1) {
+			return;
+		}
+
+		final EObject object = contents.get(0);
+		if (!(object instanceof EPackage)) {
+			return;
+		}
+
+		// Update the VView-EClass mapping
+		final IDEViewModelRegistryImpl registry = (IDEViewModelRegistryImpl) getViewModelRegistry();
+		if (registry == null) {
+			return;
+		}
+
+		view.setEcorePath(ecore.getURI().toPlatformString(true));
+
 	}
 
 	private IDEViewModelRegistry getViewModelRegistry() {

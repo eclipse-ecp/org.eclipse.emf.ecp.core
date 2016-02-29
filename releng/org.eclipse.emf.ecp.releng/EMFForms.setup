@@ -287,7 +287,7 @@
       name="EMFForms"
       version="1.6.0"
       location="${installation.location/baseline}"
-      remoteURI="https://www.eclipse.org/downloads/download.php?file=/ecp/releases/releases_target_16/160_RC3/160_RC3.zip&amp;r=1"/>
+      remoteURI="https://www.eclipse.org/downloads/download.php?file=/ecp/releases/releases_target_17/170/170.zip&amp;r=1"/>
   <stream name="develop"/>
   <logicalProjectContainer
       xsi:type="setup:ProjectCatalog"

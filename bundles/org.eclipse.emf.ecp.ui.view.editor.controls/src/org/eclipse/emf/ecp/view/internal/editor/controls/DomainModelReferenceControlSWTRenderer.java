@@ -58,7 +58,7 @@ import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -145,7 +145,7 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
 
 		final Binding[] bindings = new Binding[2];
-		final IObservableValue value = SWTObservables.observeText(setLabel);
+		final IObservableValue value = WidgetProperties.text().observe(setLabel);
 
 		bindings[0] = getDataBindingContext().bindValue(value, getModelValue(), new UpdateValueStrategy() {
 
@@ -159,17 +159,16 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 				}
 			}
 		}, new UpdateValueStrategy() {// model to target
-				@Override
-				public Object convert(Object value) {
-					updateChangeListener((EObject) value);
-					return getText(value);
-				}
-			});
+			@Override
+			public Object convert(Object value) {
+				updateChangeListener((EObject) value);
+				return getText(value);
+			}
+		});
 
-		final IObservableValue imageValue = SWTObservables.observeImage(imageLabel);
+		final IObservableValue imageValue = WidgetProperties.image().observe(imageLabel);
 		bindings[1] = getDataBindingContext().bindValue(imageValue, getModelValue(),
-			new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER)
-			, new UpdateValueStrategy() {
+			new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER), new UpdateValueStrategy() {
 				@Override
 				public Object convert(Object value) {
 					return getImage(value);
@@ -187,8 +186,7 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 	// TODO this whole method is ugly as it has to many dependencies, the generating of the text should be delegated to
 	// some service
 	private Object getText(Object object) {
-		VFeaturePathDomainModelReference modelReference =
-			(VFeaturePathDomainModelReference) object;
+		VFeaturePathDomainModelReference modelReference = (VFeaturePathDomainModelReference) object;
 		if (VTableDomainModelReference.class.isInstance(modelReference)) {
 			VTableDomainModelReference tableRef = VTableDomainModelReference.class.cast(modelReference);
 			while (tableRef.getDomainModelReference() != null
@@ -350,7 +348,8 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 
 		final Button setBtn = createButtonForAction(new NewReferenceAction(getEditingDomain(eObject), eObject,
 			structuralFeature, emfFormsEditSupport, emfFormsLabelProvider, null, getReportService(), getVElement()
-				.getDomainModelReference(), getViewModelContext().getDomainModel()), composite); // getViewModelContext().getService(ReferenceService.class)
+				.getDomainModelReference(),
+			getViewModelContext().getDomainModel()), composite); // getViewModelContext().getService(ReferenceService.class)
 		setBtn.addSelectionListener(new SelectionAdapterExtension(setLabel, getModelValue(), getViewModelContext(),
 			getDataBindingContext(), structuralFeature));
 

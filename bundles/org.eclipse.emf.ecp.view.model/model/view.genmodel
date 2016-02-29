@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
-    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.&#xD;&#xA;&#xD;&#xA;All rights reserved. This program and the accompanying materials&#xD;&#xA;are made available under the terms of the Eclipse Public License v1.0&#xD;&#xA;which accompanies this distribution, and is available at&#xD;&#xA;http://www.eclipse.org/legal/epl-v10.html&#xD;&#xA;&#xD;&#xA;Contributors:&#xD;&#xA;Eugen Neufeld - initial API and implementation"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.&#xD;&#xA;&#xD;&#xA;All rights reserved. This program and the accompanying materials&#xD;&#xA;are made available under the terms of the Eclipse Public License v1.0&#xD;&#xA;which accompanies this distribution, and is available at&#xD;&#xA;http://www.eclipse.org/legal/epl-v10.html&#xD;&#xA;&#xD;&#xA;Contributors:&#xD;&#xA;Eugen Neufeld - initial API and implementation"
     modelDirectory="/org.eclipse.emf.ecp.view.model/src" editDirectory="/org.eclipse.emf.ecp.view.model.edit/src"
     editorDirectory="/org.eclipse.emf.ecp.view.model.editor/src" modelPluginID="org.eclipse.emf.ecp.view.model"
     modelName="View" editPluginClass="org.eclipse.emf.ecp.view.spi.model.provider.ViewEditPlugin"
@@ -15,8 +15,15 @@
       disposableProviderFactory="true" extensibleProviderFactory="true" childCreationExtenders="true"
       ecorePackage="view.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="view.ecore#//LabelAlignment">
+      <genEnumLiterals ecoreEnumLiteral="view.ecore#//LabelAlignment/Default"/>
       <genEnumLiterals ecoreEnumLiteral="view.ecore#//LabelAlignment/Left"/>
+      <genEnumLiterals ecoreEnumLiteral="view.ecore#//LabelAlignment/Top"/>
       <genEnumLiterals ecoreEnumLiteral="view.ecore#//LabelAlignment/None"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="view.ecore#//DateTimeDisplayType">
+      <genEnumLiterals ecoreEnumLiteral="view.ecore#//DateTimeDisplayType/TimeAndDate"/>
+      <genEnumLiterals ecoreEnumLiteral="view.ecore#//DateTimeDisplayType/TimeOnly"/>
+      <genEnumLiterals ecoreEnumLiteral="view.ecore#//DateTimeDisplayType/DateOnly"/>
     </genEnums>
     <genDataTypes ecoreDataType="view.ecore#//DomainModelReferenceChangeListener"/>
     <genClasses ecoreClass="view.ecore#//Diagnostic">
@@ -64,5 +71,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//StringToObjectMapEntry/value"/>
     </genClasses>
     <genClasses ecoreClass="view.ecore#//ViewModelProperties"/>
+    <genClasses ecoreClass="view.ecore#//DateTimeDisplayAttachment">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//DateTimeDisplayAttachment/displayType"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

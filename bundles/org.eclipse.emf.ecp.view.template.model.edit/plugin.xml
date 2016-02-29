@@ -204,4 +204,23 @@
             uri="http://org/eclipse/emf/ecp/view/template/model"
             class="org.eclipse.emf.ecp.view.template.style.background.model.provider.BackgroundItemProviderAdapterFactory$TemplateChildCreationExtender"/>
    </extension>
+   <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
+      <!-- @generated tabStyle -->
+      <factory
+            uri="http://www.eclipse.org/emf/ecp/view/template/style/tab/model"
+            class="org.eclipse.emf.ecp.view.template.style.tab.model.provider.TabItemProviderAdapterFactory"
+            supportedTypes=
+              "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
+               org.eclipse.emf.edit.provider.IStructuredItemContentProvider
+               org.eclipse.emf.edit.provider.ITreeItemContentProvider
+               org.eclipse.emf.edit.provider.IItemLabelProvider
+               org.eclipse.emf.edit.provider.IItemPropertySource"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.edit.childCreationExtenders">
+      <!-- @generated tabStyle -->
+      <extender
+            uri="http://org/eclipse/emf/ecp/view/template/model"
+            class="org.eclipse.emf.ecp.view.template.style.tab.model.provider.TabItemProviderAdapterFactory$TemplateChildCreationExtender"/>
+   </extension>
 </plugin>

@@ -18,15 +18,18 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -65,7 +68,7 @@ public final class ViewModelFileExtensionsManager {
 	private static final String FILE_EXTENSION = "org.eclipse.emf.ecp.view.model.provider.xmi.file"; //$NON-NLS-1$
 	private static final String FILEPATH_ATTRIBUTE = "filePath"; //$NON-NLS-1$
 
-	private final Map<EClass, Map<VView, ExtensionDescription>> map = new LinkedHashMap<EClass, Map<VView, ExtensionDescription>>();
+	private final Map<EClass, Map<VView, Set<ExtensionDescription>>> map = new LinkedHashMap<EClass, Map<VView, Set<ExtensionDescription>>>();
 	private static File viewModelFolder;
 
 	private ViewModelFileExtensionsManager() {
@@ -76,7 +79,7 @@ public final class ViewModelFileExtensionsManager {
 	/**
 	 * @return the iNSTANCE
 	 */
-	public static ViewModelFileExtensionsManager getInstance() {
+	public static synchronized ViewModelFileExtensionsManager getInstance() {
 		if (instance == null) {
 			instance = new ViewModelFileExtensionsManager();
 			instance.init();
@@ -88,7 +91,13 @@ public final class ViewModelFileExtensionsManager {
 		final Map<URI, List<ExtensionDescription>> extensionURIS = getExtensionURIS();
 		for (final URI uri : extensionURIS.keySet()) {
 			final Resource resource = loadResource(uri);
-			final EObject eObject = resource.getContents().get(0);
+			final EList<EObject> contents = resource.getContents();
+
+			if (contents.size() == 0) {
+				continue;
+			}
+
+			final EObject eObject = contents.get(0);
 			if (!(eObject instanceof VView)) {
 				final ReportService reportService = Activator.getReportService();
 				if (reportService != null) {
@@ -123,10 +132,13 @@ public final class ViewModelFileExtensionsManager {
 	 */
 	void registerView(final VView view, final ExtensionDescription extensionDescription) {
 		if (!map.containsKey(view.getRootEClass())) {
-			map.put(view.getRootEClass(), new LinkedHashMap<VView, ExtensionDescription>());
+			map.put(view.getRootEClass(), new LinkedHashMap<VView, Set<ExtensionDescription>>());
 		}
-
-		map.get(view.getRootEClass()).put(view, extensionDescription);
+		final Map<VView, Set<ExtensionDescription>> viewDescriptionMap = map.get(view.getRootEClass());
+		if (!viewDescriptionMap.containsKey(view)) {
+			viewDescriptionMap.put(view, new LinkedHashSet<ViewModelFileExtensionsManager.ExtensionDescription>());
+		}
+		viewDescriptionMap.get(view).add(extensionDescription);
 	}
 
 	/**
@@ -310,7 +322,7 @@ public final class ViewModelFileExtensionsManager {
 	 * @return a view model for the given eObject
 	 */
 	public VView createView(EObject eObject, VViewModelProperties properties) {
-		final List<VView> bestFitting = findBestFittingViews(eObject, properties);
+		final Map<VView, ExtensionDescription> bestFitting = findBestFittingViews(eObject, properties);
 
 		if (bestFitting.isEmpty()) {
 			final ReportService reportService = Activator.getReportService();
@@ -331,10 +343,10 @@ public final class ViewModelFileExtensionsManager {
 			}
 		}
 
-		final VView fittingView = bestFitting.get(0);
+		final Entry<VView, ExtensionDescription> entry = bestFitting.entrySet().iterator().next();
 
-		final VView copiedView = EcoreUtil.copy(fittingView);
-		final String bundleId = map.get(fittingView.getRootEClass()).get(fittingView).getBundleId();
+		final VView copiedView = EcoreUtil.copy(entry.getKey());
+		final String bundleId = entry.getValue().getBundleId();
 		copiedView.eAdapters().add(new LocalizationAdapter() {
 
 			@Override
@@ -349,47 +361,101 @@ public final class ViewModelFileExtensionsManager {
 
 	private static final int FILTER_NOT_MATCHED = Integer.MIN_VALUE;
 
-	private List<VView> findBestFittingViews(EObject eObject, final VViewModelProperties properties) {
-		final Map<VView, ExtensionDescription> viewMap = map.get(eObject.eClass());
-		if (viewMap == null) {
-			return Collections.emptyList();
+	private Map<VView, ExtensionDescription> findBestFittingViews(EObject eObject,
+		final VViewModelProperties properties) {
+		final Map<VView, Set<ExtensionDescription>> viewMap = new LinkedHashMap<VView, Set<ExtensionDescription>>();
+		final Set<EClass> allEClass = new LinkedHashSet<EClass>();
+		allEClass.add(eObject.eClass());
+		allEClass.addAll(eObject.eClass().getEAllSuperTypes());
+		for (final EClass eClass : allEClass) {
+			final Map<VView, Set<ExtensionDescription>> classMap = map.get(eClass);
+			if (classMap != null) {
+				viewMap.putAll(classMap);
+			}
 		}
-		final List<VView> bestFitting = new ArrayList<VView>();
+
+		final Map<VView, ExtensionDescription> bestFitting = new LinkedHashMap<VView, ViewModelFileExtensionsManager.ExtensionDescription>();
 		int maxNumberFittingKeyValues = -1;
 		VViewModelProperties propertiesToCheck = properties;
 		if (propertiesToCheck == null) {
 			propertiesToCheck = VViewFactory.eINSTANCE.createViewModelLoadingProperties();
 		}
 		for (final VView view : viewMap.keySet()) {
-			final Map<String, String> viewFilter = viewMap.get(view).getKeyValuPairs();
-			int currentFittingKeyValues = 0;
-			for (final String viewFilterKey : viewFilter.keySet()) {
-				if (propertiesToCheck.containsKey(viewFilterKey)) {
-					final Object contextValue = propertiesToCheck.get(viewFilterKey);
-					final String viewFilterValue = viewFilter.get(viewFilterKey);
-					if (contextValue.toString().equalsIgnoreCase(viewFilterValue)) {
-						currentFittingKeyValues++;
+			for (final ExtensionDescription description : viewMap.get(view)) {
+				int currentFittingKeyValues = 0;
+				final Map<String, String> viewFilter = description.getKeyValuPairs();
+				for (final String viewFilterKey : viewFilter.keySet()) {
+					if (propertiesToCheck.containsKey(viewFilterKey)) {
+						final Object contextValue = propertiesToCheck.get(viewFilterKey);
+						final String viewFilterValue = viewFilter.get(viewFilterKey);
+						if (contextValue.toString().equalsIgnoreCase(viewFilterValue)) {
+							currentFittingKeyValues++;
+						} else {
+							currentFittingKeyValues = FILTER_NOT_MATCHED;
+							break;
+						}
 					} else {
 						currentFittingKeyValues = FILTER_NOT_MATCHED;
 						break;
 					}
-				} else {
-					currentFittingKeyValues = FILTER_NOT_MATCHED;
-					break;
+				}
+				if (currentFittingKeyValues == FILTER_NOT_MATCHED) {
+					continue;
+				}
+				if (currentFittingKeyValues > maxNumberFittingKeyValues) {
+					maxNumberFittingKeyValues = currentFittingKeyValues;
+					bestFitting.clear();
+					bestFitting.put(view, description);
+				} else if (currentFittingKeyValues == maxNumberFittingKeyValues) {
+					bestFitting.put(view, description);
 				}
 			}
-			if (currentFittingKeyValues == FILTER_NOT_MATCHED) {
-				continue;
-			}
-			if (currentFittingKeyValues > maxNumberFittingKeyValues) {
-				maxNumberFittingKeyValues = currentFittingKeyValues;
-				bestFitting.clear();
-				bestFitting.add(view);
-			} else if (currentFittingKeyValues == maxNumberFittingKeyValues) {
-				bestFitting.add(view);
-			}
 		}
-		return bestFitting;
+		return getViewMap(bestFitting, eObject.eClass());
+	}
+
+	private Map<VView, ExtensionDescription> getViewMap(Map<VView, ExtensionDescription> fullMap, EClass viewModelFor) {
+		final Map<VView, ExtensionDescription> viewMap = new LinkedHashMap<VView, ExtensionDescription>();
+
+		final Set<EClass> checkedEClasses = new LinkedHashSet<EClass>();
+		Set<EClass> eClassesToGetViewModelsFor = new LinkedHashSet<EClass>();
+		eClassesToGetViewModelsFor.add(viewModelFor);
+
+		while (!eClassesToGetViewModelsFor.isEmpty()) {
+			/* loop over all current eClasses and add view models for the current eClass to the map */
+			for (final EClass eClass : eClassesToGetViewModelsFor) {
+				final Map<VView, ExtensionDescription> classMap = new LinkedHashMap<VView, ExtensionDescription>();
+				for (final VView vView : fullMap.keySet()) {
+					if (eClass == vView.getRootEClass()) {
+						classMap.put(vView, fullMap.get(vView));
+					}
+				}
+				viewMap.putAll(classMap);
+				checkedEClasses.add(eClass);
+			}
+
+			/* if we found some views we are ready to return the map */
+			if (!viewMap.isEmpty()) {
+				eClassesToGetViewModelsFor.clear();
+				break;
+			}
+
+			/*
+			 * otherwise we will look at the direct super types of the eClasses we examined in this iteration. be
+			 * careful to avoid checking the same EClass multiple times
+			 */
+			final Set<EClass> superTypes = new LinkedHashSet<EClass>();
+			for (final EClass eClass : eClassesToGetViewModelsFor) {
+				for (final EClass superType : eClass.getESuperTypes()) {
+					if (checkedEClasses.contains(superType)) {
+						continue;
+					}
+					superTypes.add(superType);
+				}
+			}
+			eClassesToGetViewModelsFor = superTypes;
+		}
+		return viewMap;
 	}
 
 	/**
@@ -431,6 +497,45 @@ public final class ViewModelFileExtensionsManager {
 		String getBundleId() {
 			return bundleId;
 		}
+
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + (bundleId == null ? 0 : bundleId.hashCode());
+			result = prime * result + (keyValuPairs == null ? 0 : keyValuPairs.hashCode());
+			return result;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj) {
+				return true;
+			}
+			if (obj == null) {
+				return false;
+			}
+			if (getClass() != obj.getClass()) {
+				return false;
+			}
+			final ExtensionDescription other = (ExtensionDescription) obj;
+			if (bundleId == null) {
+				if (other.bundleId != null) {
+					return false;
+				}
+			} else if (!bundleId.equals(other.bundleId)) {
+				return false;
+			}
+			if (keyValuPairs == null) {
+				if (other.keyValuPairs != null) {
+					return false;
+				}
+			} else if (!keyValuPairs.equals(other.keyValuPairs)) {
+				return false;
+			}
+			return true;
+		}
+
 	}
 
 }

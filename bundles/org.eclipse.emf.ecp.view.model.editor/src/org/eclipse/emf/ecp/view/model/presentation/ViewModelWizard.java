@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -282,7 +282,9 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 			if (i < fileCreationPages.size() - 1) {
 				return fileCreationPages.get(i + 1);
 			}
-			return contributeToFileExtensionPage;
+			if (viewModelContainerIsPluginProject()) {
+				return contributeToFileExtensionPage;
+			}
 		}
 
 		return null;
@@ -366,11 +368,41 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 	public boolean canFinish() {
 		if (selectEClassPage != null) {
 			final List<EClass> selectedClasses = selectEClassPage.getSelectedEClasses();
-			return selectedClasses != null && !selectedClasses.isEmpty()
-				&& contributeToFileExtensionPage.isPageComplete();
-
+			if (selectedClasses == null || selectedClasses.isEmpty()) {
+				return false;
+			}
+			if (fileCreationPages == null || fileCreationPages.isEmpty()) {
+				return false;
+			}
+			for (final ViewModelWizardNewFileCreationPage page : fileCreationPages) {
+				if (page.getModelFile() == null) {
+					return false;
+				}
+			}
+			if (viewModelContainerIsPluginProject() && !contributeToFileExtensionPage.isPageComplete()) {
+				return false;
+			}
+			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * Checks whether the project where the view model will be created is a plugin project.
+	 *
+	 * @return true if the container project is a plugin project
+	 */
+	private boolean viewModelContainerIsPluginProject() {
+		if (fileCreationPages == null || fileCreationPages.isEmpty()) {
+			return false;
+		}
+		// all view models are created in the same project
+		final ViewModelWizardNewFileCreationPage page = fileCreationPages.get(0);
+		if (page.getModelFile() == null || page.getModelFile().getProject() == null) {
+			return false;
+		}
+		final IProject project = page.getModelFile().getProject();
+		return isPluginProject(project);
 	}
 
 	/**
@@ -450,7 +482,9 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 	}
 
 	/**
-	 * @param modelFile
+	 * Adds the folder where the view model is created to the project's build.properties file.
+	 *
+	 * @param modelFile the view model IFile
 	 */
 	protected void addToBuildProperties(IFile modelFile) {
 		final IProject project = modelFile.getProject();
@@ -465,6 +499,9 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 		final String includes = "bin.includes"; //$NON-NLS-1$
 		final IFile buildFile = project.getFile("build.properties"); //$NON-NLS-1$
 		try {
+			if (!buildFile.exists()) {
+				return;
+			}
 			final BufferedReader in = new BufferedReader(new InputStreamReader(buildFile.getContents()));
 			String line = null;
 			final StringBuffer contents = new StringBuffer();
@@ -520,11 +557,18 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 	}
 
 	/**
-	 * @param modelFile
+	 * Contributes the view model via the "..provider.xmi" extension point. If the project doesn't have a plugin.xml
+	 * file,
+	 * one will be created.
+	 *
+	 * @param modelFile the view model IFile
 	 */
 	protected void addContribution(IFile modelFile) {
 
 		final IProject project = modelFile.getProject();
+		if (!isPluginProject(project)) {
+			return;
+		}
 
 		final boolean isFragmentProject = isFragmentProject(project);
 		final String contributionFileName = isFragmentProject ? "fragment.xml" : "plugin.xml"; //$NON-NLS-1$ //$NON-NLS-2$
@@ -582,6 +626,21 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 			ViewEditorPlugin.INSTANCE.log(new Status(IStatus.ERROR, PLUGIN_ID, e.getMessage(), e));
 		} catch (final IOException e) {
 			ViewEditorPlugin.INSTANCE.log(new Status(IStatus.ERROR, PLUGIN_ID, e.getMessage(), e));
+		}
+	}
+
+	/**
+	 * Checks whether the project is a plugin project.
+	 * s
+	 * @param project the project to checks
+	 * @return true if the project has the plugin nature
+	 */
+	private boolean isPluginProject(IProject project) {
+		try {
+			return project.hasNature("org.eclipse.pde.PluginNature"); //$NON-NLS-1$
+		} catch (final CoreException ex) {
+			// not interested in handling the exception
+			return false;
 		}
 	}
 

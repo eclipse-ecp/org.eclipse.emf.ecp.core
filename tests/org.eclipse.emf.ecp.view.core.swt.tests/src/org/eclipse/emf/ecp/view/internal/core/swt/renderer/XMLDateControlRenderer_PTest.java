@@ -145,9 +145,10 @@ public class XMLDateControlRenderer_PTest extends AbstractControl_PTest {
 		assertTrue(Composite.class.isInstance(render));
 		final Composite top = Composite.class.cast(render);
 		assertEquals(2, top.getChildren().length);
-		assertTrue(Text.class.isInstance(top.getChildren()[0]));
+		final Control textRender = Composite.class.cast(top.getChildren()[0]).getChildren()[0];
+		assertTrue(Text.class.isInstance(textRender));
 		assertTrue(Button.class.isInstance(top.getChildren()[1]));
-		final Text text = Text.class.cast(top.getChildren()[0]);
+		final Text text = Text.class.cast(textRender);
 		assertEquals(SWT.LEFT, text.getStyle() & SWT.LEFT);
 		assertEquals("org_eclipse_emf_ecp_control_xmldate", text.getData(CUSTOM_VARIANT));
 	}
@@ -227,7 +228,7 @@ public class XMLDateControlRenderer_PTest extends AbstractControl_PTest {
 
 		final Control renderControl = renderControl(new SWTGridCell(0, 2, renderer));
 		final Composite composite = (Composite) renderControl;
-		final Text text = (Text) composite.getChildren()[0];
+		final Text text = (Text) Composite.class.cast(composite.getChildren()[0]).getChildren()[0];
 		return text;
 	}
 

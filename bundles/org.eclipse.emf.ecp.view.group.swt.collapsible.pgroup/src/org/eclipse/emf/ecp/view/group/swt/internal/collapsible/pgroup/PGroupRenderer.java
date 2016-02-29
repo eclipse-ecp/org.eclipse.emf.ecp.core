@@ -24,6 +24,7 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
+import org.eclipse.emfforms.spi.swt.core.layout.EMFFormsSWTLayoutUtil;
 import org.eclipse.nebula.widgets.pgroup.PGroup;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ExpandEvent;
@@ -74,13 +75,13 @@ public class PGroupRenderer extends ContainerSWTRenderer<VGroup> {
 
 			@Override
 			public void itemCollapsed(ExpandEvent e) {
-				parent.layout(true, true);
+				EMFFormsSWTLayoutUtil.adjustParentSize(group);
 				getVElement().setCollapsed(true);
 			}
 
 			@Override
 			public void itemExpanded(ExpandEvent e) {
-				parent.layout(true, true);
+				EMFFormsSWTLayoutUtil.adjustParentSize(group);
 				getVElement().setCollapsed(false);
 			}
 

@@ -14,8 +14,10 @@ package org.eclipse.emf.ecp.ide.editor.view;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.EventObject;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
@@ -53,6 +55,7 @@ import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.migrator.ViewModelMigrationException;
 import org.eclipse.emf.ecp.view.migrator.ViewModelMigrator;
 import org.eclipse.emf.ecp.view.migrator.ViewModelMigratorUtil;
+import org.eclipse.emf.ecp.view.migrator.ViewModelWorkspaceMigrator;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VView;
@@ -78,6 +81,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ElementTreeSelectionDialog;
 import org.eclipse.ui.dialogs.ISelectionStatusValidator;
+import org.eclipse.ui.dialogs.ListSelectionDialog;
 import org.eclipse.ui.model.BaseWorkbenchContentProvider;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
 import org.eclipse.ui.part.EditorPart;
@@ -242,12 +246,22 @@ public class ViewEditorPart extends EditorPart implements
 			final boolean migrate = MessageDialog.openQuestion(shell, Messages.ViewEditorPart_MigrationTitle,
 				Messages.ViewEditorPart_MigrationQuestion);
 			if (migrate) {
+				final boolean migrateWorkspace = MessageDialog.openQuestion(shell,
+					Messages.WorkspaceMigrationDialog_Title,
+					Messages.WorkspaceMigrationDialog_Description);
+				final List<URI> toMigrate = new ArrayList<URI>();
+				if (migrateWorkspace) {
+					toMigrate.addAll(getWorkspaceURIsToMigrate(resourceURI));
+				}
+				toMigrate.add(resourceURI);
 				final IRunnableWithProgress runnable = new IRunnableWithProgress() {
 					@Override
 					public void run(IProgressMonitor monitor)
 						throws InvocationTargetException {
 						try {
-							migrator.performMigration(resourceURI);
+							for (final URI uri : toMigrate) {
+								migrator.performMigration(uri);
+							}
 						} catch (final ViewModelMigrationException ex) {
 							throw new InvocationTargetException(ex);
 						}
@@ -281,6 +295,42 @@ public class ViewEditorPart extends EditorPart implements
 
 			}
 		}
+	}
+
+	/**
+	 * @param resourceURI the resource URI for which the migration dialog was opened. This URI will be removed from the
+	 *            list of workspace URI in need of migration, which will be presented to the user.
+	 */
+	private List<URI> getWorkspaceURIsToMigrate(URI resourceURI) {
+		final List<URI> uris = new ArrayList<URI>();
+
+		final ViewModelWorkspaceMigrator workspaceMigrator = ViewModelMigratorUtil
+			.getViewModelWorkspaceMigrator();
+		if (workspaceMigrator == null) {
+			return uris;
+		}
+		try {
+			final ArrayList<URI> urIsToMigrate = workspaceMigrator.getURIsToMigrate();
+			urIsToMigrate.remove(resourceURI);
+			if (urIsToMigrate.size() > 0) {
+				final Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+				final ListSelectionDialog migrationDialog = MigrationDialogHelper
+					.getViewModelListMigrationDialog(shell,
+						urIsToMigrate);
+
+				if (migrationDialog.open() == Window.OK) {
+					final Object[] selectedURIs = migrationDialog.getResult();
+					if (selectedURIs != null) {
+						for (final Object selectedUri : selectedURIs) {
+							uris.add((URI) selectedUri);
+						}
+					}
+				}
+			}
+		} catch (final CoreException ex) {
+			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, ex.getMessage(), ex));
+		}
+		return uris;
 	}
 
 	private boolean checkIfMigrationIsNeeded(Shell shell, final URI resourceURI, final ViewModelMigrator migrator) {
@@ -419,8 +469,12 @@ public class ViewEditorPart extends EditorPart implements
 	@Override
 	public void dispose() {
 		final VView view = getView();
-		Activator.getViewModelRegistry().unregisterViewModelEditor(view, this);
-		getSite().getPage().removePartListener(partListener);
+		if (view != null) {
+			Activator.getViewModelRegistry().unregisterViewModelEditor(view, this);
+		}
+		if (partListener != null) {
+			getSite().getPage().removePartListener(partListener);
+		}
 		super.dispose();
 	}
 
@@ -428,11 +482,20 @@ public class ViewEditorPart extends EditorPart implements
 	 * @return the VView object
 	 */
 	public VView getView() {
+		if (resource == null || resource.getContents().isEmpty()) {
+			return null;
+		}
 		final EObject eObject = resource.getContents().get(0);
+		if (!VView.class.isInstance(eObject)) {
+			return null;
+		}
 		return (VView) eObject;
 	}
 
 	private String getEcorePath() {
+		if (resource == null || resource.getContents().isEmpty()) {
+			return null;
+		}
 		final EObject eObject = resource.getContents().get(0);
 		if (VView.class.isInstance(eObject)) {
 			return VView.class.cast(eObject).getEcorePath();
@@ -467,7 +530,7 @@ public class ViewEditorPart extends EditorPart implements
 		 * @param migrator the migrator
 		 * @param resourceURI the resource uri to check
 		 */
-		public CheckMigrationRunnable(ViewModelMigrator migrator, URI resourceURI) {
+		CheckMigrationRunnable(ViewModelMigrator migrator, URI resourceURI) {
 			this.migrator = migrator;
 			this.resourceURI = resourceURI;
 		}
@@ -566,7 +629,7 @@ public class ViewEditorPart extends EditorPart implements
 
 				if ((view.getEcorePath() == null
 					|| ResourcesPlugin.getWorkspace().getRoot().findMember(view.getEcorePath()) == null)
-					&& view.getRootEClass().eIsProxy()) {
+					&& view.getRootEClass() != null && view.getRootEClass().eIsProxy()) {
 
 					final String selectedECorePath = selectEcoreFromWorkspace();
 					if (selectedECorePath != null) {

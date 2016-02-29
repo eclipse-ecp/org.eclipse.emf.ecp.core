@@ -6,12 +6,12 @@
 	<parent>
 		<groupId>org.eclipse.emf.ecp</groupId>
 		<artifactId>ecp-parent</artifactId>
-		<version>1.7.2-SNAPSHOT</version>
+		<version>1.8.0-SNAPSHOT</version>
 		<relativePath>../../releng/org.eclipse.emf.ecp.releng/</relativePath>
 	</parent>
 	<groupId>org.eclipse.emf.ecp</groupId>
 	<artifactId>ecp-bundles-parent</artifactId>
-	<version>1.7.2-SNAPSHOT</version>
+	<version>1.8.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<modules>
@@ -163,6 +163,7 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.columnservice</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.edapt</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.celleditor.rcp</module>
+		<module>../../bundles/org.eclipse.emfforms.swt.table</module>
 		
 		<!--  Stack Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.stack.model</module>
@@ -222,6 +223,7 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.compoundcontrol.model</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.compoundcontrol.model.edit</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.compoundcontrol.swt</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.compoundcontrol.tooling</module>
 		
 		<!--  Section -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.section.model</module>
@@ -245,6 +247,7 @@
 		<!-- Migration -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.migrator</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.edapt</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.workspace.migrator</module>
 
 		<!-- Initial Validation -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.validation</module>
@@ -262,8 +265,16 @@
 		<module>../../bundles/org.eclipse.emfforms.core.services.domainexpander.default</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.domainexpander.index</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.domainexpander.mapping</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.domainexpander.table</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.emfspecificservice</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.editsupport</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.mappingprovider.default</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.mappingprovider.table</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.structuralchange</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.structuralchange.default</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.structuralchange.index</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.structuralchange.mapping</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.structuralchange.table</module>
 		<module>../../bundles/org.eclipse.emfforms.swt.core</module>
 		<module>../../bundles/org.eclipse.emfforms.swt.core.di</module>
 		<module>../../bundles/org.eclipse.emfforms.swt.core.di.extension</module>
@@ -271,6 +282,7 @@
 		<module>../../bundles/org.eclipse.emfforms.core.services</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.emf</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.locale.default</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.legacy</module>
 		
 		<!-- Localization Services -->
 		<module>../../bundles/org.eclipse.emfforms.localization</module>
@@ -294,6 +306,22 @@
 		<module>../../bundles/org.eclipse.emfforms.swt.controlgrid</module>
 		<module>../../bundles/org.eclipse.emfforms.view.controlgrid.model</module>
 		<module>../../bundles/org.eclipse.emfforms.view.controlgrid.model.edit</module>
+
+		<!-- EMF Forms Editor -->
+		<module>../../bundles/org.eclipse.emfforms.editor</module>
+		<module>../../bundles/org.eclipse.emfforms.editor.ecore</module>
+		<module>../../bundles/org.eclipse.emfforms.editor.genmodel</module>
+		<module>../../bundles/org.eclipse.emfforms.editor.viewmodel</module>
+		
+		<!-- EMF2Web -->
+		<module>../../bundles/org.eclipse.emf.ecp.emf2web</module>
+		<module>../../bundles/org.eclipse.emf.ecp.emf2web.json</module>
+		<module>../../bundles/org.eclipse.emf.ecp.emf2web.ui</module>
+		<module>../../bundles/org.eclipse.emf.ecp.emf2web.ui.json</module>
+
+		<!-- Helper -->
+		<module>../../bundles/org.eclipse.emfforms.setup.base</module>
+		
 	</modules>
 
 	<build>
@@ -311,8 +339,27 @@
 					</execution>
 				</executions>
 			</plugin>
+			
+			
+			<plugin>
+				<groupId>org.eclipse.xtend</groupId>
+				<artifactId>xtend-maven-plugin</artifactId>
+				<version>2.7.3</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+						<!-- optionally you can configure a different target folder -->
+						<configuration>
+							<outputDirectory>${basedir}/xtend-gen</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
+	
 	<profiles>
 		<!-- 2. -->
 		<profile>

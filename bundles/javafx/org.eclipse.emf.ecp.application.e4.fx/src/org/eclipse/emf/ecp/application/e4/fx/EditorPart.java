@@ -14,8 +14,6 @@ package org.eclipse.emf.ecp.application.e4.fx;
 
 import java.net.URL;
 
-import javafx.scene.layout.BorderPane;
-
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.inject.Inject;
@@ -40,12 +38,13 @@ import org.eclipse.emf.emfstore.client.ESLocalProject;
 import org.eclipse.emf.emfstore.client.ESWorkspaceProvider;
 import org.eclipse.emf.emfstore.fx.util.EmfStoreUtil;
 
+import javafx.scene.layout.BorderPane;
+
 /**
  * @author Eugen Neufeld
  * @author Lucas Koehler
  *
  */
-@SuppressWarnings("restriction")
 public class EditorPart {
 	/**
 	 * Key to set the input of the editor into the {@link org.eclipse.e4.core.contexts.IEclipseContext}.
@@ -58,6 +57,12 @@ public class EditorPart {
 	private EObject modelElement;
 	private Adapter adapter;
 
+	/**
+	 * Constructor.
+	 *
+	 * @param parent The parent BoderPane
+	 * @param mPart The MPart
+	 */
 	@Inject
 	public EditorPart(BorderPane parent, MPart mPart) {
 		this.parent = parent;
@@ -68,11 +73,19 @@ public class EditorPart {
 		}
 	}
 
+	/**
+	 * Called after construction.
+	 */
 	@PostConstruct
 	public void postConstruct() {
 
 	}
 
+	/**
+	 * Called when selection changes.
+	 *
+	 * @param person The EObject to display
+	 */
 	@Inject
 	void setSelection(
 		@Optional @Named(INPUT) EObject person) {
@@ -83,7 +96,8 @@ public class EditorPart {
 				/*
 				 * (non-Javadoc)
 				 * @see
-				 * org.eclipse.emf.common.notify.impl.AdapterImpl#notifyChanged(org.eclipse.emf.common.notify.Notification
+				 * org.eclipse.emf.common.notify.impl.AdapterImpl#notifyChanged(org.eclipse.emf.common.notify.
+				 * Notification
 				 * )
 				 */
 				@Override
@@ -177,6 +191,9 @@ public class EditorPart {
 		part.setIconURI(iconUri);
 	}
 
+	/**
+	 * Called when the focus changes.
+	 */
 	@Focus
 	public void onFocus() {
 		// TODO Your code here

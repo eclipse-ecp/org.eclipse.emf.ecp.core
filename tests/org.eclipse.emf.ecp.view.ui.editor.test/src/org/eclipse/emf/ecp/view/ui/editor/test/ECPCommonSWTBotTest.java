@@ -14,13 +14,16 @@ package org.eclipse.emf.ecp.view.ui.editor.test;
 import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
+import org.eclipse.emf.ecp.ui.view.swt.DefaultReferenceService;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.test.common.spi.GCCollectable;
-import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.DisplayRealm;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
@@ -65,7 +68,7 @@ public abstract class ECPCommonSWTBotTest extends SWTBotTestCase {
 	@Test
 	public void test() throws ECPRendererException,
 		InterruptedException {
-		Realm.runWithDefault(SWTObservables.getRealm(display), new TestRunnable());
+		Realm.runWithDefault(DisplayRealm.getRealm(display), new TestRunnable());
 	}
 
 	public abstract EObject createDomainObject();
@@ -116,8 +119,9 @@ public abstract class ECPCommonSWTBotTest extends SWTBotTestCase {
 							final EObject domainObject = createDomainObject();
 							memBefore = usedMemory();
 
-							final ECPSWTView swtView = ECPSWTViewRenderer.INSTANCE.render(shell, domainObject,
-								createView());
+							final ViewModelContext viewContext = ViewModelContextFactory.INSTANCE
+								.createViewModelContext(createView(), domainObject, new DefaultReferenceService());
+							final ECPSWTView swtView = ECPSWTViewRenderer.INSTANCE.render(shell, viewContext);
 							swtViewCollectable = new GCCollectable(swtView);
 							final Composite composite = (Composite) swtView.getSWTControl();
 							final GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);

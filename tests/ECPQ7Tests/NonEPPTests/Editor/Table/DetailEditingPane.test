@@ -1,14 +1,13 @@
---- Q7 testcase ---
+--- RCPTT testcase ---
 Format-Version: 1.0
-Q7-vendor: www.xored.com/q7
 Contexts: _mY5uUKEgEeKX8e34E6tWIg,_rr2EEFpSEeKcnaHGSt8OwA,_IuFcgFpZEeKcnaHGSt8OwA,_f3qEUVpSEeKcnaHGSt8OwA,_fQ0PgDsqEeOHj9Cw0T_k4Q
 Element-Name: DetailEditingPane
 Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _50-KoCeuEeSaN-fwc2C_0w
-Q7-Runtime-Version: 1.3.12.201406140846
-Save-Time: 8/19/14 5:12 PM
+Runtime-Version: 1.5.4.201412181238
+Save-Time: 11/23/15 2:54 PM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -23,24 +22,52 @@ try {
 	}
 	with [get-view "Model Explorer" | get-tree] {
 	    select "Project/View" | get-menu TableControl | click
-	    select "Project/View/TableControl" | get-menu "Generate Columns" | click
 	}
-	get-window "Cannot generate Columns" | get-button OK | click
 	get-editor TableControl | get-button "Create and link new Domain Model Reference" | click
+	with [get-window "Configure TableDomainModelReference"] {
+	    get-button "Create and link new Domain Model Reference" | click
+	    with [get-window "New Reference Element"] {
+	        get-tree | select "model/FeaturePathDomainModelReference"
+	        get-button "Next >" | click
+	        get-button "Link Domain Model EFeature" | click
+	        with [get-window "Select a EStructuralFeature"] {
+	            get-tree | select "fanMerchandise : Merchandise"
+	            get-button OK | click
+	        }
+	        get-button Finish | click
+	    }
+	    get-button Finish | click
+	}
+	get-editor TableControl | get-button Add | click
 	with [get-window "New Reference Element"] {
+	    get-tree | select "model/FeaturePathDomainModelReference"
+	    get-button "Next >" | click
 	    get-button "Link Domain Model EFeature" | click
 	    with [get-window "Select a EStructuralFeature"] {
-	        get-tree | select "fanMerchandise : Merchandise"
+	        get-tree | select "name : EString"
 	        get-button OK | click
 	    }
 	    get-button Finish | click
 	}
-	get-view "Model Explorer" | get-tree | select "Project/View/TableControl" | get-menu "Generate Columns" | click
-	with [get-window -class WizardDialog] {
-	    with [get-table] {
-	        get-item "name : EString" | check
-	        get-item "price : EBigDecimal" | check
-	        get-item "serialNumber : EBigInteger" | check
+	get-editor TableControl | get-button Add | click
+	with [get-window "New Reference Element"] {
+	    get-tree | select "model/FeaturePathDomainModelReference"
+	    get-button "Next >" | click
+	    get-button "Link Domain Model EFeature" | click
+	    with [get-window "Select a EStructuralFeature"] {
+	        get-tree | select "price : EBigDecimal"
+	        get-button OK | click
+	    }
+	    get-button Finish | click
+	}
+	get-editor TableControl | get-button Add | click
+	with [get-window "New Reference Element"] {
+	    get-tree | select "model/FeaturePathDomainModelReference"
+	    get-button "Next >" | click
+	    get-button "Link Domain Model EFeature" | click
+	    with [get-window "Select a EStructuralFeature"] {
+	        get-tree | select "serialNumber : EBigInteger"
+	        get-button OK | click
 	    }
 	    get-button Finish | click
 	}
@@ -94,11 +121,8 @@ try {
 	get-editor Fan | get-editbox -after [get-label Name] | get-property text | equals merch1 | verify-true
 	get-editor Fan | get-table | select [get-item "" -index 1]
 	get-editor Fan | get-editbox -after [get-label Name] | get-property text | equals "" | verify-true
-	get-editor Fan | get-table | select [get-item merch1 -column Name] [get-item "" -index 1]
-	get-editor Fan | get-control Any -after [get-label "Fan [Fan]"] -index 20 | get-property "getChildren().length" 
-	    | equals 0 | verify-true
 	get-editor Fan | get-table | select merch1 -column Name
-	get-editor Fan | get-control Any -after [get-label "Fan [Fan]"] -index 21 | get-property "getChildren().length" 
+	get-editor Fan | get-control Any -after [get-label "Fan Merchandise"] -index 14 | get-property "getChildren().length" 
 	    | equals 9 | verify-true
 	with [get-editor Fan] {
 	    with [get-table] {
@@ -109,7 +133,7 @@ try {
 	    get-button "Remove the selected Merchandise" | click
 	}
 	get-window "Delete?" | get-button Yes | click
-	get-editor Fan | get-control Any -after [get-label "Fan [Fan]"] -index 19 | get-property "getChildren().length" 
+	get-editor Fan | get-control Any -after [get-label "Fan Merchandise"] -index 11 | get-property "getChildren().length" 
 	    | equals 0 | verify-true
 	get-editor Fan | close
 	get-view "Model Explorer" | get-tree | select "Project/View/TableControl" | get-menu View | click
@@ -128,11 +152,11 @@ try {
 	with [get-view "Model Explorer"] {
 	    get-tree | select "Project/View/TableControl"
 	    get-button "Save Project" | click
-	    get-tree | select "test/Fan" | double-click
 	}
+	invoke-static -pluginId org.eclipse.emf.ecp.view.model.provider.xmi -className org.eclipse.emf.ecp.view.model.provider.xmi.ViewModelFileExtensionsManager -methodName dispose
+	get-view "Model Explorer" | get-tree | select "test/Fan" | double-click
 	get-editor Fan | get-table | select merch1 -column Name
-	get-editor Fan | get-control Any -after [get-label "Fan [Fan]"] -index 20 | get-property "getChildren().length" 
-	    | equals 3 | verify-true
+	get-editor Fan | get-control Any -after [get-label "Fan Merchandise"] -index 13 | get-property "getChildren().length" | equals 3 | verify-true
 	get-editor Fan | get-editbox -after [get-label Name] | set-text merc1
 	get-editor Fan | get-table | get-item merc1 -column Name | get-property "columns[1]" | equals merc1 | verify-true
 } -finally {

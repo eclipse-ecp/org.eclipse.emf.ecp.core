@@ -26,6 +26,7 @@ import org.eclipse.emf.databinding.IEMFValueProperty;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -36,6 +37,11 @@ import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emfforms.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter;
+import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A;
+import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B;
+import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C;
+import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D;
+import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestFactory;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter;
@@ -317,5 +323,73 @@ public class FeaturePathDomainModelReferenceConverter_Test {
 	@Test(expected = IllegalArgumentException.class)
 	public void testConvertToListPropertyWrongReferenceType() throws DatabindingFailedException {
 		converter.convertToListProperty(mock(VDomainModelReference.class), validEObject);
+	}
+
+	@Test
+	public void testGetSetting() throws DatabindingFailedException {
+		final VFeaturePathDomainModelReference pathReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		// create reference path to the attribute
+		final LinkedList<EReference> referencePath = new LinkedList<EReference>();
+		referencePath.add(TestPackage.eINSTANCE.getA_B());
+		referencePath.add(TestPackage.eINSTANCE.getB_C());
+		referencePath.add(TestPackage.eINSTANCE.getC_D());
+
+		final EStructuralFeature feature = TestPackage.eINSTANCE.getD_X();
+
+		pathReference.getDomainModelEReferencePath().addAll(referencePath);
+		pathReference.setDomainModelEFeature(feature);
+
+		final A a = TestFactory.eINSTANCE.createA();
+		final B b = TestFactory.eINSTANCE.createB();
+		final C c = TestFactory.eINSTANCE.createC();
+		final D d = TestFactory.eINSTANCE.createD();
+
+		final String expected = "My Value"; //$NON-NLS-1$
+
+		a.setB(b);
+		b.setC(c);
+		c.setD(d);
+		d.setX(expected);
+
+		final Setting setting = converter.getSetting(pathReference, a);
+
+		// Check value.
+		assertEquals(expected, setting.get(true));
+	}
+
+	@Test
+	public void testGetSettingNoReferencePath() throws DatabindingFailedException {
+		final VFeaturePathDomainModelReference pathReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+
+		final EStructuralFeature feature = TestPackage.eINSTANCE.getD_X();
+		pathReference.setDomainModelEFeature(feature);
+
+		final D d = TestFactory.eINSTANCE.createD();
+		final String expected = "My Value"; //$NON-NLS-1$
+		d.setX(expected);
+
+		final Setting setting = converter.getSetting(pathReference, d);
+
+		// Check value.
+		assertEquals(expected, setting.get(true));
+	}
+
+	@Test(expected = DatabindingFailedException.class)
+	public void testGetSettingNoFeature() throws DatabindingFailedException {
+		final VFeaturePathDomainModelReference pathReference = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		converter.getSetting(pathReference, validEObject);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testGetSettingNull() throws DatabindingFailedException {
+		converter.getSetting(null, validEObject);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testGetSettingWrongReferenceType() throws DatabindingFailedException {
+		converter.getSetting(mock(VDomainModelReference.class), validEObject);
 	}
 }

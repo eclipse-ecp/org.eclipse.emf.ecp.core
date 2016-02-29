@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.view.internal.table.model;
 import org.eclipse.emf.databinding.IEMFListProperty;
 import org.eclipse.emf.databinding.IEMFValueProperty;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
@@ -27,7 +28,9 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 
 /**
- * @author Eugen
+ * This is the DomainModelReferenceConverterEMF for {@link VTableDomainModelReference}.
+ * 
+ * @author Eugen Neufeld
  *
  */
 @Component(service = { DomainModelReferenceConverterEMF.class, DomainModelReferenceConverter.class })
@@ -124,6 +127,32 @@ public class TableDMRConverter implements DomainModelReferenceConverterEMF {
 				"The field domainModelReference of the given VTableDomainModelReference must not be null."); //$NON-NLS-1$
 		}
 		return emfFormsDatabinding.getListProperty(tableDomainModelReference.getDomainModelReference(), object);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.core.services.databinding.emf.DomainModelReferenceConverterEMF#getSetting(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference,
+	 *      org.eclipse.emf.ecore.EObject)
+	 */
+	@Override
+	public Setting getSetting(VDomainModelReference domainModelReference, EObject object)
+		throws DatabindingFailedException {
+		if (domainModelReference == null) {
+			throw new IllegalArgumentException("The given VDomainModelReference must not be null."); //$NON-NLS-1$
+		}
+		if (!VTableDomainModelReference.class.isInstance(domainModelReference)) {
+			throw new IllegalArgumentException(
+				"DomainModelReference must be an instance of VTableDomainModelReference."); //$NON-NLS-1$
+		}
+
+		final VTableDomainModelReference tableDomainModelReference = VTableDomainModelReference.class
+			.cast(domainModelReference);
+		if (tableDomainModelReference.getDomainModelReference() == null) {
+			throw new DatabindingFailedException(
+				"The field domainModelReference of the given VTableDomainModelReference must not be null."); //$NON-NLS-1$
+		}
+		return emfFormsDatabinding.getSetting(tableDomainModelReference.getDomainModelReference(), object);
 	}
 
 }

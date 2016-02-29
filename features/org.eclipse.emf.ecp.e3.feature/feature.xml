@@ -2,12 +2,12 @@
 <feature
       id="org.eclipse.emf.ecp.e3.feature"
       label="ECP 3.x UI Integration"
-      version="1.7.2.qualifier"
+      version="1.8.0.qualifier"
       provider-name="Eclipse Modeling Project"
       plugin="org.eclipse.emf.ecp.ui.e3"
       image="eclipse_update_120.jpg"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.7.2.qualifier">
+      license-feature-version="1.8.0.qualifier">
 
    <description>
       Integration of the EMF Client Platform UI into the Eclipse 3.x workbench, including views and perspectives.

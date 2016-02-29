@@ -46,10 +46,13 @@ import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
-import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
@@ -103,7 +106,9 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 
 	@Override
 	protected Control createSWTControl(Composite parent) {
-		final Text text = new Text(parent, getTextWidgetStyle());
+		final Composite composite = new Composite(parent, SWT.NONE);
+		GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(true).applyTo(composite);
+		final Text text = new Text(composite, getTextWidgetStyle());
 		text.setData(CUSTOM_VARIANT, getTextVariantID());
 		text.setMessage(getTextMessage());
 		text.addFocusListener(new FocusListener() {
@@ -116,7 +121,14 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 				text.selectAll();
 			}
 		});
-		return text;
+		final GridDataFactory gdf = GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
+			.grab(true, true).span(1, 1);
+		final EMFFormsEditSupport editSupport = getEMFFormsEditSupport();
+		if (editSupport.isMultiLine(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel())) {
+			gdf.hint(50, 200);// set x hint to enable wrapping
+		}
+		gdf.applyTo(text);
+		return composite;
 	}
 
 	/**
@@ -149,7 +161,8 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	 */
 	protected Binding bindValue(Control text, IObservableValue modelValue, DataBindingContext dataBindingContext,
 		UpdateValueStrategy targetToModel, UpdateValueStrategy modelToTarget) {
-		final IObservableValue value = SWTObservables.observeText(text, SWT.FocusOut);
+		final IObservableValue value = WidgetProperties.text(SWT.FocusOut)
+			.observe(Composite.class.cast(text).getChildren()[0]);
 		final Binding binding = dataBindingContext.bindValue(value, modelValue, targetToModel, modelToTarget);
 		return binding;
 	}
@@ -166,7 +179,7 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	 */
 	protected Binding createTooltipBinding(Control text, IObservableValue modelValue,
 		DataBindingContext dataBindingContext, UpdateValueStrategy targetToModel, UpdateValueStrategy modelToTarget) {
-		final IObservableValue toolTip = SWTObservables.observeTooltipText(text);
+		final IObservableValue toolTip = WidgetProperties.tooltipText().observe(text);
 		return dataBindingContext.bindValue(toolTip, modelValue, targetToModel, modelToTarget);
 	}
 
@@ -235,11 +248,18 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 				// if (!setting.isSet()) {
 				// return;
 				// }
-				controlToUnset = Composite.class.cast(Composite.class.cast(control).getChildren()[0]).getChildren()[0];
+				controlToUnset = Composite.class
+					.cast(Composite.class.cast(Composite.class.cast(control).getChildren()[0]).getChildren()[0])
+					.getChildren()[0];
 			}
 			Text.class.cast(controlToUnset).setEditable(enabled);
 		} else {
-			super.setControlEnabled(gridCell, control, enabled);
+			if (getVElement().getLabelAlignment() == LabelAlignment.NONE && gridCell.getColumn() == 1
+				|| hasLeftLabelAlignment() && gridCell.getColumn() == 2) {
+				super.setControlEnabled(gridCell, Composite.class.cast(control).getChildren()[0], enabled);
+			} else {
+				super.setControlEnabled(gridCell, control, enabled);
+			}
 		}
 	}
 
@@ -282,13 +302,6 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	 *
 	 */
 	class EMFUpdateConvertValueStrategy extends EMFUpdateValueStrategy {
-
-		/**
-		 * Constructor.
-		 */
-		public EMFUpdateConvertValueStrategy() {
-			super();
-		}
 
 		/*
 		 * (non-Javadoc)
@@ -402,7 +415,11 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	@Override
 	protected String getUnsetText() {
 		return LocalizationServiceHelper
-			.getString(getClass(), MessageKeys.StringControl_NoTextSetClickToSetText);
+			.getString(TextControlSWTRenderer.class, MessageKeys.StringControl_NoTextSetClickToSetText);
 	}
 
+	@Override
+	protected void setValidationColor(Control control, Color validationColor) {
+		super.setValidationColor(Composite.class.cast(control).getChildren()[0], validationColor);
+	}
 }

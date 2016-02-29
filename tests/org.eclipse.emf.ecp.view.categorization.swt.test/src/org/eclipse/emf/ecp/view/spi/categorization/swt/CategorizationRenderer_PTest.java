@@ -26,6 +26,8 @@ import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
+import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
@@ -37,11 +39,13 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Eugen
  *
  */
+@RunWith(DatabindingClassRunner.class)
 public class CategorizationRenderer_PTest {
 
 	/**
@@ -89,8 +93,9 @@ public class CategorizationRenderer_PTest {
 		final EList<VAbstractCategorization> categorizations = new BasicEList<VAbstractCategorization>();
 		when(categorizationElement.getCategorizations()).thenReturn(categorizations);
 		final ViewModelContext vmc = mock(ViewModelContext.class);
+		final VTViewTemplateProvider viewTemplateProvider = mock(VTViewTemplateProvider.class);
 		final CategorizationElementTabbedSWTRenderer categorizatrionElementRenderer = new CategorizationElementTabbedSWTRenderer(
-			categorizationElement, vmc, reportService, emfFormsRendererFactory);
+			categorizationElement, vmc, reportService, emfFormsRendererFactory, viewTemplateProvider);
 		categorizatrionElementRenderer.init();
 		final Control render = categorizatrionElementRenderer.render(gridCell, shell);
 		assertTrue(CTabFolder.class.isInstance(render));
@@ -143,8 +148,9 @@ public class CategorizationRenderer_PTest {
 		when(categorization.getCategorizations()).thenReturn(new BasicEList<VAbstractCategorization>());
 		when(categorizationElement.getCategorizations()).thenReturn(categorizations);
 		final ViewModelContext vmc = mock(ViewModelContext.class);
+		final VTViewTemplateProvider viewTemplateProvider = mock(VTViewTemplateProvider.class);
 		final CompositeCategorySWTTabRenderer categorizatrionElementRenderer = new CompositeCategorySWTTabRenderer(
-			categorization, vmc, reportService, emfFormsRendererFactory);
+			categorization, vmc, reportService, emfFormsRendererFactory, viewTemplateProvider);
 		categorizatrionElementRenderer.init();
 		final Control render = categorizatrionElementRenderer.render(gridCell, shell);
 		assertTrue(CTabFolder.class.isInstance(render));

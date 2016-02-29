@@ -23,6 +23,7 @@ import org.eclipse.emf.databinding.IEMFObservable;
 import org.eclipse.emf.databinding.IEMFValueProperty;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter;
@@ -216,5 +217,25 @@ public class EMFFormsDatabindingImpl implements EMFFormsDatabindingEMF {
 		}
 		throw new DatabindingFailedException(
 			String.format("The IObservableList class %1$s is not supported!", observableList.getClass().getName())); //$NON-NLS-1$
+	}
+
+	@Override
+	public Setting getSetting(VDomainModelReference domainModelReference, EObject object)
+		throws DatabindingFailedException {
+		if (object == null) {
+			throw new IllegalArgumentException("The given EObject must not be null."); //$NON-NLS-1$
+		}
+		final DomainModelReferenceConverterEMF bestConverter = getBestDomainModelReferenceConverter(
+			domainModelReference);
+
+		if (bestConverter != null) {
+			return bestConverter.getSetting(domainModelReference, object);
+		}
+
+		throw new DatabindingFailedException(
+			String
+				.format(
+					"No applicable DomainModelReferenceConverter could be found for %1$s .", //$NON-NLS-1$
+					domainModelReference.eClass().getName()));
 	}
 }

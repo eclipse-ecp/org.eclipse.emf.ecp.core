@@ -22,7 +22,7 @@ import org.eclipse.emf.ecp.view.spi.compoundcontrol.model.VCompoundcontrolPackag
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VElementUtil;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
-import org.eclipse.emf.ecp.view.spi.model.provider.ContainedElementItemProvider;
+import org.eclipse.emf.ecp.view.spi.model.provider.ControlItemProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
@@ -33,7 +33,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  *
  * @generated
  */
-public class CompoundControlItemProvider extends ContainedElementItemProvider {
+public class CompoundControlItemProvider extends ControlItemProvider {
 	/**
 	 * This constructs an instance from a factory and a notifier. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
@@ -52,8 +52,7 @@ public class CompoundControlItemProvider extends ContainedElementItemProvider {
 	 */
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (itemPropertyDescriptors == null)
-		{
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 		}
@@ -71,8 +70,7 @@ public class CompoundControlItemProvider extends ContainedElementItemProvider {
 	@Override
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(
 		Object object) {
-		if (childrenFeatures == null)
-		{
+		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(VCompoundcontrolPackage.Literals.COMPOUND_CONTROL__CONTROLS);
 		}
@@ -106,8 +104,11 @@ public class CompoundControlItemProvider extends ContainedElementItemProvider {
 
 	/**
 	 * This returns the label text for the adapted class.
-	 * <!-- begin-user-doc
-	 * --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc-->
+	 *
+	 * @param object object
+	 * @return string
+	 *         <!-- end-user-doc -->
 	 *
 	 * @generated NOT
 	 */
@@ -117,9 +118,8 @@ public class CompoundControlItemProvider extends ContainedElementItemProvider {
 		if (label == null) {
 			label = VElementUtil.getCleanName(VElement.class.cast(object));
 		}
-		return label == null || label.length() == 0 ?
-			getString("_UI_CompoundControl_type") : //$NON-NLS-1$
-			getString("_UI_CompoundControl_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+		return label == null || label.length() == 0 ? getString("_UI_CompoundControl_type") //$NON-NLS-1$
+			: getString("_UI_CompoundControl_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -134,8 +134,7 @@ public class CompoundControlItemProvider extends ContainedElementItemProvider {
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(VCompoundControl.class))
-		{
+		switch (notification.getFeatureID(VCompoundControl.class)) {
 		case VCompoundcontrolPackage.COMPOUND_CONTROL__CONTROLS:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;
@@ -145,20 +144,22 @@ public class CompoundControlItemProvider extends ContainedElementItemProvider {
 
 	/**
 	 * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s
-	 * describing the children that can be created under this object. <!--
-	 * begin-user-doc --> <!-- end-user-doc -->
+	 * describing the children that can be created under this object.
+	 * <!--begin-user-doc -->
+	 * 
+	 * @param newChildDescriptors newChildDescriptors
+	 * @param object object
+	 *            <!-- end-user-doc -->
 	 *
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	protected void collectNewChildDescriptors(
 		Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
-		newChildDescriptors.add
-			(createChildParameter
-			(VCompoundcontrolPackage.Literals.COMPOUND_CONTROL__CONTROLS,
-				VViewFactory.eINSTANCE.createControl()));
+		newChildDescriptors.add(createChildParameter(VCompoundcontrolPackage.Literals.COMPOUND_CONTROL__CONTROLS,
+			VViewFactory.eINSTANCE.createControl()));
 	}
 
 }

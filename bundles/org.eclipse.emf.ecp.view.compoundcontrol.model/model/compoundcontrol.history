@@ -33,5 +33,23 @@
       </changes>
     </changes>
   </releases>
-  <releases/>
+  <releases>
+    <changes xsi:type="history:OperationChange">
+      <changes xsi:type="history:Remove" element="compoundcontrol.ecore#//CompoundControl"
+          featureName="eSuperTypes" referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//ContainedElement"/>
+      <changes xsi:type="history:Add" element="compoundcontrol.ecore#//CompoundControl"
+          featureName="eSuperTypes" referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//Control"/>
+      <operation name="specializeSuperType">
+        <parameters name="eClass">
+          <referenceValue element="compoundcontrol.ecore#//CompoundControl"/>
+        </parameters>
+        <parameters name="toReplace">
+          <referenceValue element="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//ContainedElement"/>
+        </parameters>
+        <parameters name="replaceBy">
+          <referenceValue element="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//Control"/>
+        </parameters>
+      </operation>
+    </changes>
+  </releases>
 </history:History>

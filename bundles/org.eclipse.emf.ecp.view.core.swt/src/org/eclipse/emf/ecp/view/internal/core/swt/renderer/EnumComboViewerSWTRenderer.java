@@ -32,7 +32,7 @@ import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
-import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ViewersObservables;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
@@ -75,7 +75,7 @@ public class EnumComboViewerSWTRenderer extends SimpleControlJFaceViewerSWTRende
 		final Binding binding = getDataBindingContext().bindValue(ViewersObservables.observeSingleSelection(viewer),
 			getModelValue());
 		final Binding tooltipBinding = getDataBindingContext().bindValue(
-			SWTObservables.observeTooltipText(viewer.getControl()),
+			WidgetProperties.tooltipText().observe(viewer.getControl()),
 			getModelValue());
 		return new Binding[] { binding, tooltipBinding };
 	}

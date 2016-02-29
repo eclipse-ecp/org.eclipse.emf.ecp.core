@@ -42,10 +42,11 @@ public class NewXMIFileWizardPage extends WizardNewFileCreationPage {
 	 * Instantiates a new new XMI file wizard page.
 	 */
 	public NewXMIFileWizardPage() {
-		super("Create XMI File", new StructuredSelection(ResourcesPlugin.getWorkspace().getRoot()));
-		setTitle("Create new XMI File");
-		setDescription("Select the root Container and provide a name, you may also create a new project.");
-		setFileName("*.xmi");
+		super(Messages.NewXMIFileWizardPage_CreateNewXMIFile,
+			new StructuredSelection(ResourcesPlugin.getWorkspace().getRoot()));
+		setTitle(Messages.NewXMIFileWizardPage_CreateNewXMIFile);
+		setDescription(Messages.NewXMIFileWizardPage_SelectRootContainer);
+		setFileName("*.xmi"); //$NON-NLS-1$
 	}
 
 	/*
@@ -69,7 +70,7 @@ public class NewXMIFileWizardPage extends WizardNewFileCreationPage {
 
 		try {
 
-			final Field field = ContainerSelectionGroup.class.getDeclaredField("treeViewer");
+			final Field field = ContainerSelectionGroup.class.getDeclaredField("treeViewer"); //$NON-NLS-1$
 			field.setAccessible(true);
 			memTreeViewer = (TreeViewer) field.get(csg);
 
@@ -89,7 +90,7 @@ public class NewXMIFileWizardPage extends WizardNewFileCreationPage {
 
 		final Button btnCreateNewProject = new Button(parent, SWT.NONE);
 		btnCreateNewProject.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-		btnCreateNewProject.setText("Create New Project ...");
+		btnCreateNewProject.setText(Messages.NewXMIFileWizardPage_CreateNewProject);
 
 		btnCreateNewProject.addSelectionListener(new SelectionAdapter() {
 			@Override

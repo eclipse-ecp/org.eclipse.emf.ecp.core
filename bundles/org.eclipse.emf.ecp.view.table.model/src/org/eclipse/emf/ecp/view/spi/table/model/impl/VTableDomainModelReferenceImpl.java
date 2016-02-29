@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.ecp.view.spi.table.model.impl;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -33,12 +34,15 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.emf.ecp.view.internal.table.model.Activator;
+import org.eclipse.emf.ecp.view.internal.table.model.Messages;
 import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceImpl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
 
 /**
  * <!-- begin-user-doc -->
@@ -57,6 +61,7 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
  *
  * @generated
  */
+@SuppressWarnings("deprecation")
 public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelReferenceImpl implements
 	VTableDomainModelReference
 {
@@ -459,11 +464,13 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 			feature = getDomainModelEFeature();
 		} else {
 			result = getDomainModelReference().init(domainModel);
-			final Setting dmrSetting = getDomainModelReference().getIterator().next();
-			if (dmrSetting != null) {
-				lastResolvedEObject = dmrSetting.getEObject();
-				feature = dmrSetting.getEStructuralFeature();
-				leftReferences = new ArrayList<EReference>();
+			if (getDomainModelReference().getIterator().hasNext()) {
+				final Setting dmrSetting = getDomainModelReference().getIterator().next();
+				if (dmrSetting != null) {
+					lastResolvedEObject = dmrSetting.getEObject();
+					feature = dmrSetting.getEStructuralFeature();
+					leftReferences = new ArrayList<EReference>();
+				}
 			}
 		}
 		resolvedColumns.clear();
@@ -476,6 +483,12 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 		}
 		@SuppressWarnings("unchecked")
 		final List<EObject> eObjects = (List<EObject>) lastResolvedEObject.eGet(feature);
+		if (eObjects == null) {
+			Activator.getDefault().getReportService().report(
+				new AbstractReport(MessageFormat.format(Messages.VTableDomainModelReferenceImpl_SingleValuedFeature,
+					feature.getName(), lastResolvedEObject.getClass().getName())));
+			return false;
+		}
 		for (final EObject eObject : eObjects) {
 			for (final VDomainModelReference columnReference : getColumnDomainModelReferences()) {
 				final VDomainModelReference copy = EcoreUtil.copy(columnReference);

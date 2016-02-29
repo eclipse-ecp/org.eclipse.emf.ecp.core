@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -22,6 +22,7 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedContainer;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
@@ -155,6 +156,11 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 		}
 
 		@Override
+		public Adapter caseDateTimeDisplayAttachment(VDateTimeDisplayAttachment object) {
+			return createDateTimeDisplayAttachmentAdapter();
+		}
+
+		@Override
 		public Adapter defaultCase(EObject object) {
 			return createEObjectAdapter();
 		}
@@ -259,10 +265,9 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * 
+	 *
 	 * @since 1.7
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VViewModelLoadingProperties
 	 * @generated
@@ -285,6 +290,24 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createViewModelPropertiesAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '
+	 * {@link org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment <em>Date Time Display Attachment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * 
+	 * @since 1.8
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment
+	 * @generated
+	 */
+	public Adapter createDateTimeDisplayAttachmentAdapter() {
 		return null;
 	}
 

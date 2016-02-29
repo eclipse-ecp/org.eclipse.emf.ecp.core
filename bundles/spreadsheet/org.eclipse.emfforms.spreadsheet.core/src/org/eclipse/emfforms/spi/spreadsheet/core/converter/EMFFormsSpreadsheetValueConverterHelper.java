@@ -11,13 +11,12 @@
  ******************************************************************************/
 package org.eclipse.emfforms.spi.spreadsheet.core.converter;
 
-import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
-import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetReport;
 
 /**
@@ -43,11 +42,9 @@ public final class EMFFormsSpreadsheetValueConverterHelper {
 	 * @return the feature or <code>null</code>
 	 */
 	public static EStructuralFeature getFeature(EObject domain,
-		VDomainModelReference domainModelReference, EMFFormsDatabinding databinding, ReportService reportService) {
+		VDomainModelReference domainModelReference, EMFFormsDatabindingEMF databinding, ReportService reportService) {
 		try {
-			final IValueProperty valueProperty = databinding.getValueProperty(domainModelReference, domain);
-			final Object valueType = valueProperty.getValueType();
-			return EStructuralFeature.class.cast(valueType);
+			return databinding.getSetting(domainModelReference, domain).getEStructuralFeature();
 		} catch (final DatabindingFailedException ex) {
 			reportService.report(new EMFFormsSpreadsheetReport(ex, EMFFormsSpreadsheetReport.ERROR));
 		} catch (final ClassCastException ex) {

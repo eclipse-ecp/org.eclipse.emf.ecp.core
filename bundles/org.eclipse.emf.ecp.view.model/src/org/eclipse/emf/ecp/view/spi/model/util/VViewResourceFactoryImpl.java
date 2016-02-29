@@ -18,10 +18,9 @@ import org.eclipse.emf.ecore.resource.impl.ResourceFactoryImpl;
 /**
  * <!-- begin-user-doc -->
  * The <b>Resource Factory</b> associated with the package.
- * 
+ *
  * @since 1.7
  *        <!-- end-user-doc -->
- *
  * @see org.eclipse.emf.ecp.view.spi.model.util.VViewResourceImpl
  * @generated
  */

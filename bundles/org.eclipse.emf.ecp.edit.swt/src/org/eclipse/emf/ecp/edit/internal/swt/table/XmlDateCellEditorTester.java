@@ -35,7 +35,7 @@ public class XmlDateCellEditorTester implements ECPCellEditorTester {
 	 */
 	@Override
 	public int isApplicable(EObject eObject, EStructuralFeature feature, ViewModelContext viewModelContext) {
-		if (EAttribute.class.isInstance(feature)) {
+		if (EAttribute.class.isInstance(feature) && !feature.isMany()) {
 			final Class<?> instanceClass = ((EAttribute) feature).getEAttributeType().getInstanceClass();
 			if (instanceClass == null) {
 				return NOT_APPLICABLE;

@@ -3,6 +3,7 @@ package org.eclipse.emf.ecp.controls.renderer.fx;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.model.internal.fx.SimpleControlRendererFX;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -32,14 +33,12 @@ public class EnumRendererFX extends SimpleControlRendererFX {
 	protected Node createControl() {
 		final VControl control = getVElement();
 		final ChoiceBox choiceBox = new ChoiceBox();
-		choiceBox.setItems(FXCollections.observableArrayList(control
-			.getDomainModelReference().getEStructuralFeatureIterator()
-			.next().getEType().getInstanceClass().getEnumConstants()));
+		choiceBox.setItems(FXCollections.observableArrayList(EStructuralFeature.class
+			.cast(getModelObservable().getValueType()).getEType().getInstanceClass().getEnumConstants()));
 		choiceBox.setMaxWidth(Double.MAX_VALUE);
 
 		final IObservableValue targetValue = getTargetObservable(choiceBox, "value");
-		final IObservableValue modelValue = getModelObservable(control
-			.getDomainModelReference().getIterator().next());
+		final IObservableValue modelValue = getModelObservable();
 		bindModelToTarget(targetValue, modelValue, null,
 			null);
 

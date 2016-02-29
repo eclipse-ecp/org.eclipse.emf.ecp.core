@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -47,8 +47,8 @@ public class ChildrenDescriptorExtension_PTest {
 	 * Needs to be adapted after refactoring
 	 * These are the counts for a fully integrated model with all elements
 	 */
-	// showrule, enablerule, span
-	private static final int ATTACHMENT_CHILD_COUNT = 3;
+	// showrule, enablerule, span, datetimedisplay
+	private static final int ATTACHMENT_CHILD_COUNT = 4;
 	private static final int RENDERABLE_CHILD_COUNT = 0 + ATTACHMENT_CHILD_COUNT;
 	private static final int COMPOSITE_CHILD_COUNT = RENDERABLE_CHILD_COUNT;
 	private static final int ABSTRACTCATEGORIZATION_CHILD_COUNT = RENDERABLE_CHILD_COUNT + 1;
@@ -279,7 +279,7 @@ public class ChildrenDescriptorExtension_PTest {
 	public void testCompoundControlDescriptors() {
 		final int size = getChildrenSize(VCompoundcontrolPackage.eINSTANCE.getCompoundControl());
 		// +1 because of vcontrol TODO table and custom control is missing
-		assertEquals(ATTACHMENT_CHILD_COUNT + 1, size);
+		assertEquals(ATTACHMENT_CHILD_COUNT + DOMAINMODELREFERENCE_COUNT + 1, size);
 	}
 
 	@Test

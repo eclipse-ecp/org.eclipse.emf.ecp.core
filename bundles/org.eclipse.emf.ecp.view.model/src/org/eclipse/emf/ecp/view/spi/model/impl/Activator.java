@@ -52,9 +52,9 @@ public class Activator extends Plugin {
 	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
+		plugin = this;
 		final LogConsumer logConsumer = new LogConsumer();
 		registerLogConsumerService = context.registerService(ReportServiceConsumer.class, logConsumer, null);
-		plugin = this;
 	}
 
 	@Override

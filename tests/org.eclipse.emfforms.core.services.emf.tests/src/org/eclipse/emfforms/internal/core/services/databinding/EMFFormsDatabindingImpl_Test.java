@@ -29,6 +29,7 @@ import org.eclipse.emf.databinding.internal.EMFListPropertyDecorator;
 import org.eclipse.emf.databinding.internal.EMFValuePropertyDecorator;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.test.common.DefaultRealm;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
@@ -449,5 +450,76 @@ public class EMFFormsDatabindingImpl_Test {
 		databindingService.addDomainModelReferenceConverter(converter1);
 		databindingService.removeDomainModelReferenceConverter(converter1);
 		databindingService.getValueProperty(reference, mock(EObject.class));
+	}
+
+	@Test(expected = DatabindingFailedException.class)
+	public void testGetSettingNoApplicableConverter() throws DatabindingFailedException {
+		final VDomainModelReference modelReference = mock(VDomainModelReference.class);
+		final EClass eClass = mock(EClass.class);
+		when(eClass.getName()).thenReturn("test"); //$NON-NLS-1$
+		when(modelReference.eClass()).thenReturn(eClass);
+		databindingService.getSetting(modelReference, mock(EObject.class));
+	}
+
+	@Test
+	public void testGetSettingPropertyOneApplicable() throws DatabindingFailedException {
+		final VDomainModelReference reference = mock(VDomainModelReference.class);
+		final DomainModelReferenceConverterEMF converter1 = mock(DomainModelReferenceConverterEMF.class);
+		final DomainModelReferenceConverterEMF converter2 = mock(DomainModelReferenceConverterEMF.class);
+		final Setting expectedSetting = mock(Setting.class);
+
+		when(converter1.isApplicable(reference)).thenReturn(0d);
+		when(converter1.getSetting(same(reference), any(EObject.class))).thenReturn(expectedSetting);
+		when(converter2.isApplicable(reference)).thenReturn(DomainModelReferenceConverter.NOT_APPLICABLE);
+		when(converter2.convertToValueProperty(same(reference), any(EObject.class))).thenReturn(
+			mock(IEMFValueProperty.class));
+
+		databindingService.addDomainModelReferenceConverter(converter1);
+		databindingService.addDomainModelReferenceConverter(converter2);
+		final Setting setting = databindingService.getSetting(reference, mock(EObject.class));
+		assertEquals(expectedSetting, setting);
+	}
+
+	@Test
+	public void testGetSettingPropertyTwoApplicable() throws DatabindingFailedException {
+		final VDomainModelReference reference = mock(VFeaturePathDomainModelReference.class);
+		final DomainModelReferenceConverterEMF converter1 = mock(DomainModelReferenceConverterEMF.class);
+		final DomainModelReferenceConverterEMF converter2 = mock(DomainModelReferenceConverterEMF.class);
+		final Setting expectedSetting = mock(Setting.class);
+
+		when(converter1.isApplicable(reference)).thenReturn(5d);
+		when(converter1.getSetting(same(reference), any(EObject.class))).thenReturn(expectedSetting);
+		when(converter2.isApplicable(reference)).thenReturn(1d);
+		when(converter2.convertToValueProperty(same(reference), any(EObject.class))).thenReturn(
+			mock(EMFValuePropertyDecorator.class));
+
+		databindingService.addDomainModelReferenceConverter(converter1);
+		databindingService.addDomainModelReferenceConverter(converter2);
+		final Setting setting = databindingService.getSetting(reference, mock(EObject.class));
+		assertEquals(expectedSetting, setting);
+	}
+
+	@Test
+	public void testGetSettingPropertyAllConsidered() throws DatabindingFailedException {
+		final VDomainModelReference reference = mock(VDomainModelReference.class);
+
+		final DomainModelReferenceConverterEMF converter1 = mock(DomainModelReferenceConverterEMF.class);
+		final DomainModelReferenceConverterEMF converter2 = mock(DomainModelReferenceConverterEMF.class);
+		final DomainModelReferenceConverterEMF converter3 = mock(DomainModelReferenceConverterEMF.class);
+
+		databindingService.addDomainModelReferenceConverter(converter1);
+		databindingService.addDomainModelReferenceConverter(converter2);
+		databindingService.addDomainModelReferenceConverter(converter3);
+
+		databindingService.getSetting(reference, mock(EObject.class));
+
+		verify(converter1).isApplicable(reference);
+		verify(converter2).isApplicable(reference);
+		verify(converter3).isApplicable(reference);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testGetSettingPropertyNull() throws DatabindingFailedException {
+		databindingService.getSetting(null, mock(EObject.class));
 	}
 }

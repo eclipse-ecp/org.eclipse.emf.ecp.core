@@ -31,7 +31,7 @@ import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
 import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
-import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -56,7 +56,8 @@ public class SWTCategorizationRenderer extends AbstractSWTRenderer<VCategorizati
 	 * @since 1.6
 	 */
 	@Inject
-	public SWTCategorizationRenderer(VCategorization vElement, ViewModelContext viewContext, ReportService reportService) {
+	public SWTCategorizationRenderer(VCategorization vElement, ViewModelContext viewContext,
+		ReportService reportService) {
 		super(vElement, viewContext, reportService);
 		dataBindingContext = new EMFDataBindingContext();
 	}
@@ -117,7 +118,7 @@ public class SWTCategorizationRenderer extends AbstractSWTRenderer<VCategorizati
 		final IObservableValue modelValue = EMFEditObservables.observeValue(
 			AdapterFactoryEditingDomain.getEditingDomainFor(getVElement()), getVElement(),
 			VViewPackage.eINSTANCE.getElement_Label());
-		final IObservableValue targetValue = SWTObservables.observeText(headingLbl);
+		final IObservableValue targetValue = WidgetProperties.text().observe(headingLbl);
 		dataBindingContext.bindValue(targetValue, modelValue);
 
 		whatToDoLbl.setText(LocalizationServiceHelper.getString(getClass(), MessageKeys.Categorization_Selection));

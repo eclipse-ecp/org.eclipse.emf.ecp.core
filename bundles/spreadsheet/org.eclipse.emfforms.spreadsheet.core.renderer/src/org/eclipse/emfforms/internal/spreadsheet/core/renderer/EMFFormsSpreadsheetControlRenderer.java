@@ -27,8 +27,8 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter.WriteableOutputStream;
@@ -54,6 +54,7 @@ import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsIdProvider;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetFormatDescriptionProvider;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetRenderTarget;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetReport;
+import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsCellStyleConstants;
 import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsConverterException;
 import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsSpreadsheetValueConverter;
 import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsSpreadsheetValueConverterRegistry;
@@ -130,8 +131,9 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 			formatRow = sheet.createRow(2);
 		}
 
-		final CellStyle readOnly = workbook.getCellStyleAt((short) (workbook.getNumCellStyles() - 2));
-		final CellStyle readOnlyWrap = workbook.getCellStyleAt((short) (workbook.getNumCellStyles() - 1));
+		final CellStyle readOnly = (CellStyle) viewModelContext.getContextValue(EMFFormsCellStyleConstants.LOCKED);
+		final CellStyle readOnlyWrap = (CellStyle) viewModelContext
+			.getContextValue(EMFFormsCellStyleConstants.LOCKED_AND_WRAPPED);
 
 		final Cell idCell = labelRow.getCell(0, Row.CREATE_NULL_AS_BLANK);
 		idCell.setCellValue(EMFFormsIdProvider.ID_COLUMN);
@@ -139,7 +141,7 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 
 		final Cell labelCell = labelRow.getCell(renderTarget.getColumn() + 1,
 			Row.CREATE_NULL_AS_BLANK);
-		labelCell.setCellStyle(readOnly);
+		labelCell.setCellStyle(readOnlyWrap);
 
 		final Cell descriptionCell = descriptionRow.getCell(renderTarget.getColumn() + 1,
 			Row.CREATE_NULL_AS_BLANK);
@@ -192,6 +194,11 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 		return 0;
 	}
 
+	@SuppressWarnings("deprecation")
+	private void resolveDMR(ViewModelContext viewModelContext, VDomainModelReference dmrToResolve) {
+		dmrToResolve.init(viewModelContext.getDomainModel());
+	}
+
 	private void writeValue(ViewModelContext viewModelContext, EMFFormsSpreadsheetRenderTarget renderTarget,
 		Sheet sheet, VDomainModelReference dmrToResolve) throws DatabindingFailedException, EMFFormsConverterException {
 		Row valueRow = sheet.getRow(renderTarget.getRow() + 3);
@@ -203,26 +210,25 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 
 		/* init dmr */
 		resolveDMR(viewModelContext, dmrToResolve);
-		final IObservableValue observableValue = emfformsDatabinding
-			.getObservableValue(dmrToResolve, viewModelContext.getDomainModel());
-		final EObject eObject = emfformsDatabinding.extractObserved(observableValue);
-		final EStructuralFeature feature = emfformsDatabinding.extractFeature(observableValue);
+
+		final Setting setting = emfformsDatabinding.getSetting(dmrToResolve, viewModelContext.getDomainModel());
+
 		/* only create new cells for non-unsettable features and unsettable feature which are set */
 		/*
 		 * if the eObject is null, this means that the dmr could not be resolved correctly. in this case we want
 		 * to create an empty cell
 		 */
-		if (eObject == null || !feature.isUnsettable() || feature.isUnsettable() && eObject.eIsSet(feature)) {
-			final Object value = observableValue.getValue();
+		if (setting.getEObject() == null || !setting.getEStructuralFeature().isUnsettable()
+			|| setting.getEStructuralFeature().isUnsettable() && setting.isSet()) {
+			final Object value = setting.get(true);
 			final EMFFormsSpreadsheetValueConverter converter = converterRegistry
 				.getConverter(viewModelContext.getDomainModel(), dmrToResolve);
 
 			final Cell valueCell = valueRow.getCell(renderTarget.getColumn() + 1,
 				Row.CREATE_NULL_AS_BLANK);
-			converter.setCellValue(valueCell, value, feature, viewModelContext);
+			converter.setCellValue(valueCell, value, setting.getEStructuralFeature(), viewModelContext);
 
 		}
-		observableValue.dispose();
 	}
 
 	private void writeLabel(VControl vControl, ViewModelContext viewModelContext, final Cell labelCell,
@@ -268,11 +274,6 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 			format = formatDescriptionProvider.getFormatDescription(structuralFeature);
 		}
 		formatCell.setCellValue(format);
-	}
-
-	@SuppressWarnings("deprecation")
-	private void resolveDMR(ViewModelContext viewModelContext, VDomainModelReference dmrToResolve) {
-		dmrToResolve.init(viewModelContext.getDomainModel());
 	}
 
 	private static void setupSheetFormat(final Sheet sheet) {
@@ -323,10 +324,8 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 		final ResourceSet rs = new ResourceSetImpl();
 		final Resource resource = rs.createResource(URI.createURI("VIRTAUAL_URI")); //$NON-NLS-1$
 		resource.getContents().add(EcoreUtil.copy(domainModelReference));
-
 		final StringWriter sw = new StringWriter();
 		final WriteableOutputStream os = new WriteableOutputStream(sw, "UTF-8"); //$NON-NLS-1$
-
 		resource.save(os, null);
 		final String value = sw.getBuffer().toString();
 		return value;

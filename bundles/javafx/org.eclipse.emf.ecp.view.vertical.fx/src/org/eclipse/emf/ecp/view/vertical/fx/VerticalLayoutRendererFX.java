@@ -32,7 +32,6 @@ public class VerticalLayoutRendererFX extends ContainerRendererFX<VVerticalLayou
 		if (cell.getColumn() != 0) {
 			return null;
 		}
-		;
 
 		return renderGrid();
 	}

@@ -3,5 +3,5 @@ Bundle-ManifestVersion: 2
 Bundle-Name: ECP Products
 Bundle-SymbolicName: org.eclipse.emf.ecp.products
 Bundle-Version: 1.2.0.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: Eclipse Modeling Project
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

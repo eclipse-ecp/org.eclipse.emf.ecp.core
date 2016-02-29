@@ -32,8 +32,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * @model kind="package"
  * @generated
  */
-public interface VCompoundcontrolPackage extends EPackage
-{
+public interface VCompoundcontrolPackage extends EPackage {
 	/**
 	 * The package name.
 	 * <!-- begin-user-doc -->
@@ -91,7 +90,19 @@ public interface VCompoundcontrolPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int COMPOUND_CONTROL__NAME = VViewPackage.CONTAINED_ELEMENT__NAME;
+	int COMPOUND_CONTROL__NAME = VViewPackage.CONTROL__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.8
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOUND_CONTROL__LABEL = VViewPackage.CONTROL__LABEL;
 
 	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
@@ -101,7 +112,7 @@ public interface VCompoundcontrolPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int COMPOUND_CONTROL__VISIBLE = VViewPackage.CONTAINED_ELEMENT__VISIBLE;
+	int COMPOUND_CONTROL__VISIBLE = VViewPackage.CONTROL__VISIBLE;
 
 	/**
 	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
@@ -111,7 +122,7 @@ public interface VCompoundcontrolPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int COMPOUND_CONTROL__ENABLED = VViewPackage.CONTAINED_ELEMENT__ENABLED;
+	int COMPOUND_CONTROL__ENABLED = VViewPackage.CONTROL__ENABLED;
 
 	/**
 	 * The feature id for the '<em><b>Readonly</b></em>' attribute.
@@ -121,7 +132,7 @@ public interface VCompoundcontrolPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int COMPOUND_CONTROL__READONLY = VViewPackage.CONTAINED_ELEMENT__READONLY;
+	int COMPOUND_CONTROL__READONLY = VViewPackage.CONTROL__READONLY;
 
 	/**
 	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
@@ -131,7 +142,7 @@ public interface VCompoundcontrolPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int COMPOUND_CONTROL__DIAGNOSTIC = VViewPackage.CONTAINED_ELEMENT__DIAGNOSTIC;
+	int COMPOUND_CONTROL__DIAGNOSTIC = VViewPackage.CONTROL__DIAGNOSTIC;
 
 	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
@@ -141,7 +152,31 @@ public interface VCompoundcontrolPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int COMPOUND_CONTROL__ATTACHMENTS = VViewPackage.CONTAINED_ELEMENT__ATTACHMENTS;
+	int COMPOUND_CONTROL__ATTACHMENTS = VViewPackage.CONTROL__ATTACHMENTS;
+
+	/**
+	 * The feature id for the '<em><b>Label Alignment</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 1.8
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOUND_CONTROL__LABEL_ALIGNMENT = VViewPackage.CONTROL__LABEL_ALIGNMENT;
+
+	/**
+	 * The feature id for the '<em><b>Domain Model Reference</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.8
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int COMPOUND_CONTROL__DOMAIN_MODEL_REFERENCE = VViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE;
 
 	/**
 	 * The feature id for the '<em><b>Controls</b></em>' containment reference list.
@@ -151,7 +186,7 @@ public interface VCompoundcontrolPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int COMPOUND_CONTROL__CONTROLS = VViewPackage.CONTAINED_ELEMENT_FEATURE_COUNT + 0;
+	int COMPOUND_CONTROL__CONTROLS = VViewPackage.CONTROL_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Compound Control</em>' class.
@@ -161,7 +196,7 @@ public interface VCompoundcontrolPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int COMPOUND_CONTROL_FEATURE_COUNT = VViewPackage.CONTAINED_ELEMENT_FEATURE_COUNT + 1;
+	int COMPOUND_CONTROL_FEATURE_COUNT = VViewPackage.CONTROL_FEATURE_COUNT + 1;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.compoundcontrol.model.VCompoundControl
@@ -211,12 +246,11 @@ public interface VCompoundcontrolPackage extends EPackage
 	 *
 	 * @generated
 	 */
-	interface Literals
-	{
+	interface Literals {
 		/**
 		 * The meta object literal for the '
-		 * {@link org.eclipse.emf.ecp.view.spi.compoundcontrol.model.impl.VCompoundControlImpl
-		 * <em>Compound Control</em>}' class.
+		 * {@link org.eclipse.emf.ecp.view.spi.compoundcontrol.model.impl.VCompoundControlImpl <em>Compound Control</em>
+		 * }' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 *

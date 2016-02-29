@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -16,11 +16,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.makeithappen.model.task.TaskPackage;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
-import org.eclipse.emf.ecp.ui.view.swt.DefaultReferenceService;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
-import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.rap.rwt.application.AbstractEntryPoint;
@@ -31,6 +27,8 @@ import org.eclipse.swt.widgets.Composite;
  * Entry Point for a standalone RAP Application.
  */
 public class MakeItHappenEntryPoint extends AbstractEntryPoint {
+
+	private static final long serialVersionUID = 1L;
 
 	private EObject getDummyEObject() {
 		// Replace this with your own model EClass to test the application with a custom model
@@ -56,10 +54,7 @@ public class MakeItHappenEntryPoint extends AbstractEntryPoint {
 			content.setLayout(GridLayoutFactory.fillDefaults().margins(10, 10).create());
 			content.setLayoutData(GridDataFactory.fillDefaults().create());
 
-			final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(
-				ViewProviderHelper.getView(dummyObject, null), dummyObject, new DefaultReferenceService());
-
-			ECPSWTViewRenderer.INSTANCE.render(content, vmc);
+			ECPSWTViewRenderer.INSTANCE.render(content, dummyObject);
 
 			content.layout();
 

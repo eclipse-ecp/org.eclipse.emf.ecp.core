@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emfforms.spi.common.report.ReportService;
-import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetReport;
 import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsCellStyleConstants;
 import org.eclipse.emfforms.spi.spreadsheet.core.converter.EMFFormsConverterException;
@@ -46,7 +46,7 @@ public class EMFFormsSpreadsheetMultiReferenceConverter implements EMFFormsSprea
 
 	private static final String SEPARATOR = "\n\n\n"; //$NON-NLS-1$
 
-	private EMFFormsDatabinding databinding;
+	private EMFFormsDatabindingEMF databinding;
 	private ReportService reportService;
 
 	/**
@@ -55,7 +55,7 @@ public class EMFFormsSpreadsheetMultiReferenceConverter implements EMFFormsSprea
 	 * @param databinding the service
 	 */
 	@Reference(cardinality = ReferenceCardinality.MANDATORY)
-	public void setDatabinding(EMFFormsDatabinding databinding) {
+	public void setDatabinding(EMFFormsDatabindingEMF databinding) {
 		this.databinding = databinding;
 	}
 

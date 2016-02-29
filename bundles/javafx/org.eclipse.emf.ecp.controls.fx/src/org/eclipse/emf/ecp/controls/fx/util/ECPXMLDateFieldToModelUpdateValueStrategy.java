@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ * Eugen Neufeld - initial API and implementation
+ ******************************************************************************/
 package org.eclipse.emf.ecp.controls.fx.util;
 
 import java.text.DateFormat;
@@ -11,28 +22,27 @@ import javax.xml.datatype.DatatypeConstants;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import org.eclipse.core.databinding.conversion.Converter;
 import org.eclipse.core.databinding.conversion.IConverter;
 
+/**
+ * ECPTextFieldToModelUpdateValueStrategy for xml dates.
+ *
+ * @author Eugen Neufeld
+ *
+ */
 public class ECPXMLDateFieldToModelUpdateValueStrategy extends
 	ECPTextFieldToModelUpdateValueStrategy {
-
+	/**
+	 * Default constructor.
+	 */
 	public ECPXMLDateFieldToModelUpdateValueStrategy() {
 		final IConverter converter = getConverter();
 		setConverter(converter);
 	}
 
 	private IConverter getConverter() {
-		return new IConverter() {
-
-			@Override
-			public Object getToType() {
-				return XMLGregorianCalendar.class;
-			}
-
-			@Override
-			public Object getFromType() {
-				return String.class;
-			}
+		return new Converter(String.class, XMLGregorianCalendar.class) {
 
 			@Override
 			public Object convert(Object value) {

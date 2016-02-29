@@ -83,4 +83,10 @@
             location="toolbar">
       </MasterDetailAction>
    </extension>
+   <extension
+         point="org.eclipse.emfforms.editor.toolbarActions">
+      <action
+            toolbarAction="org.eclipse.emf.ecp.view.model.internal.preview.actions.OpenPreviewHandler">
+      </action>
+   </extension>
  </plugin>

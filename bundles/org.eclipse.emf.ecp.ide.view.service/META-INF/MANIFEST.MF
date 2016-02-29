@@ -2,15 +2,20 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: IDE ViewModel Service
 Bundle-SymbolicName: org.eclipse.emf.ecp.ide.view.service
-Bundle-Version: 1.7.2.qualifier
-Bundle-Vendor: Eclipse Modeling Project
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Bundle-ActivationPolicy: lazy
-Require-Bundle: org.eclipse.emf.ecp.view.model;bundle-version="[1.5.0,2.0.0)",
- org.eclipse.core.resources;bundle-version="[3.7.0,4.0.0)",
- org.eclipse.emf.ecp.ide.util;bundle-version="[1.5.0,2.0.0)",
- org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)"
-Export-Package: org.eclipse.emf.ecp.ide.view.internal.service;version="1.7.2";x-friends:="org.eclipse.emf.ecp.ui.view.editor.controls",
- org.eclipse.emf.ecp.ide.view.service;version="1.7.2";x-friends:="org.eclipse.emf.ecp.ide.editor.view,  org.eclipse.emf.ecp.ide.editor.view.control,  org.eclipse.emf.ecp.ui.view.editor.controls,  org.eclipse.emf.ecp.view.model.editor,  org.eclipse.emf.ecp.view.model.project.installer"
-Service-Component: OSGI-INF/ideviewmdoelregistry.xml
+Bundle-Version: 1.8.0.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.ide.view.service.Activator
+Bundle-Vendor: Eclipse Modeling Project
+Export-Package: org.eclipse.emf.ecp.ide.view.internal.service;version="1.8.0";x-friends:="org.eclipse.emf.ecp.ui.view.editor.controls",
+ org.eclipse.emf.ecp.ide.view.service;version="1.8.0";
+  x-friends:="org.eclipse.emf.ecp.ide.editor.view,
+   org.eclipse.emf.ecp.ide.editor.view.control,
+   org.eclipse.emf.ecp.ui.view.editor.controls,
+   org.eclipse.emf.ecp.view.model.editor,
+   org.eclipse.emf.ecp.view.model.project.installer"
+Require-Bundle: org.eclipse.emf.ecp.view.model;bundle-version="[1.8.0,1.9.0)",
+ org.eclipse.core.resources;bundle-version="[3.7.0,4.0.0)",
+ org.eclipse.emf.ecp.ide.util;bundle-version="[1.8.0,1.9.0)",
+ org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Service-Component: OSGI-INF/ideviewmdoelregistry.xml
+Bundle-ActivationPolicy: lazy

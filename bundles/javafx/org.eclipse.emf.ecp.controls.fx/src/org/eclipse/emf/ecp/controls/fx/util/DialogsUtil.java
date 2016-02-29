@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- * Lucas - initial API and implementation
+ * Lucas Koehler - initial API and implementation
  ******************************************************************************/
 package org.eclipse.emf.ecp.controls.fx.util;
 
@@ -34,6 +34,8 @@ import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
 /**
+ * FIXME comment.
+ *
  * @author Lucas Koehler
  *
  */
@@ -60,13 +62,13 @@ public final class DialogsUtil {
 		final GridPane gridPane = new GridPane();
 		gridPane.getStyleClass().add("vertical"); //$NON-NLS-1$
 
-		final ObservableList<Object> listItems = FXCollections.observableArrayList(modelElements);
-		final ListView<Object> listView = new ListView<>(listItems);
+		final ObservableList<T> listItems = FXCollections.observableArrayList(modelElements);
+		final ListView<T> listView = new ListView<>(listItems);
 		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
 			new AdapterFactory[] {
 				new ReflectiveItemProviderAdapterFactory(),
 				new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
-		listView.setCellFactory(new AdapterFactoryListCellFactory(composedAdapterFactory));
+		listView.setCellFactory(new AdapterFactoryListCellFactory<T>(composedAdapterFactory));
 		listView.setMaxHeight(Double.MAX_VALUE);
 		listView.setMaxWidth(Double.MAX_VALUE);
 

@@ -27,7 +27,7 @@ class BundleKeyResultWrapper {
 	 * @param bundleKeyWrapper The BundleKeyWrapper
 	 * @param result The result
 	 */
-	public BundleKeyResultWrapper(BundleKeyWrapper bundleKeyWrapper, String result) {
+	BundleKeyResultWrapper(BundleKeyWrapper bundleKeyWrapper, String result) {
 		super();
 		this.bundleKeyWrapper = bundleKeyWrapper;
 		this.result = result;

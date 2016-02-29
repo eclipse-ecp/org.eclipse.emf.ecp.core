@@ -49,6 +49,7 @@ import org.eclipse.emf.emfstore.bowling.BowlingFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.emf.emfstore.bowling.Fan;
 import org.eclipse.emf.emfstore.bowling.Merchandise;
+import org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -1591,6 +1592,28 @@ public class UnsetService_PTest {
 			ViewModelService... viewModelServices) {
 			// TODO Auto-generated method stub
 			return null;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext#registerEMFFormsContextListener(org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener)
+		 */
+		@Override
+		public void registerEMFFormsContextListener(EMFFormsContextListener contextListener) {
+			// TODO Auto-generated method stub
+
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext#unregisterEMFFormsContextListener(org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener)
+		 */
+		@Override
+		public void unregisterEMFFormsContextListener(EMFFormsContextListener contextListener) {
+			// TODO Auto-generated method stub
+
 		}
 
 	}

@@ -22,10 +22,8 @@ import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.model.VContainedContainer;
 import org.eclipse.emf.ecp.view.spi.model.VView;
-import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewSwitch;
-import org.eclipse.emf.ecp.view.treemasterdetail.model.VTreeMasterDetail;
 import org.eclipse.emf.ecp.view.treemasterdetail.model.VTreeMasterDetailFactory;
 import org.eclipse.emf.ecp.view.treemasterdetail.model.VTreeMasterDetailPackage;
 import org.eclipse.emf.ecp.view.treemasterdetail.model.util.TreeMasterDetailAdapterFactory;
@@ -126,8 +124,7 @@ public class TreeMasterDetailItemProviderAdapterFactory extends
 	 */
 	@Override
 	public Adapter createTreeMasterDetailAdapter() {
-		if (treeMasterDetailItemProvider == null)
-		{
+		if (treeMasterDetailItemProvider == null) {
 			treeMasterDetailItemProvider = new TreeMasterDetailItemProvider(this);
 		}
 
@@ -185,11 +182,9 @@ public class TreeMasterDetailItemProviderAdapterFactory extends
 	 */
 	@Override
 	public Object adapt(Object object, Object type) {
-		if (isFactoryForType(type))
-		{
+		if (isFactoryForType(type)) {
 			final Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter))
-			{
+			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter)) {
 				return adapter;
 			}
 		}
@@ -260,8 +255,7 @@ public class TreeMasterDetailItemProviderAdapterFactory extends
 	public void fireNotifyChanged(Notification notification) {
 		changeNotifier.fireNotifyChanged(notification);
 
-		if (parentAdapterFactory != null)
-		{
+		if (parentAdapterFactory != null) {
 			parentAdapterFactory.fireNotifyChanged(notification);
 		}
 	}
@@ -331,35 +325,9 @@ public class TreeMasterDetailItemProviderAdapterFactory extends
 			 */
 			@Override
 			public Object caseView(VView object) {
-				newChildDescriptors.add
-					(createChildParameter
-					(VViewPackage.Literals.VIEW__CHILDREN,
-						getMasterDetail(object)));
+				newChildDescriptors.add(createChildParameter(VViewPackage.Literals.VIEW__CHILDREN,
+					VTreeMasterDetailFactory.eINSTANCE.createTreeMasterDetail()));
 
-				return null;
-			}
-
-			private VTreeMasterDetail getMasterDetail(VView view) {
-				final VTreeMasterDetail createTreeMasterDetail = VTreeMasterDetailFactory.eINSTANCE
-					.createTreeMasterDetail();
-
-				if (view != null) {
-					final VView createView = VViewFactory.eINSTANCE.createView();
-					createView.setRootEClass(view.getRootEClass());
-					createTreeMasterDetail.setDetailView(createView);
-				}
-
-				return createTreeMasterDetail;
-
-			}
-
-			private VView getView(VContainedContainer object) {
-				final EObject eContainer = object.eContainer();
-				if (eContainer instanceof VView) {
-					return (VView) eContainer;
-				} else if (eContainer instanceof VContainedContainer) {
-					return getView((VContainedContainer) eContainer);
-				}
 				return null;
 			}
 
@@ -371,10 +339,8 @@ public class TreeMasterDetailItemProviderAdapterFactory extends
 			 */
 			@Override
 			public Object caseContainedContainer(VContainedContainer object) {
-				newChildDescriptors.add
-					(createChildParameter
-					(VViewPackage.Literals.CONTAINER__CHILDREN,
-						getMasterDetail(getView(object))));
+				newChildDescriptors.add(createChildParameter(VViewPackage.Literals.CONTAINER__CHILDREN,
+					VTreeMasterDetailFactory.eINSTANCE.createTreeMasterDetail()));
 
 				return null;
 			}

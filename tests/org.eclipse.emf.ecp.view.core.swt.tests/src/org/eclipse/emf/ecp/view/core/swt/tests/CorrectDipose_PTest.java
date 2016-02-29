@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ * EclipseSource Muenchen GmbH - initial API and implementation
+ ******************************************************************************/
 package org.eclipse.emf.ecp.view.core.swt.tests;
 
 import static org.junit.Assert.assertEquals;
@@ -34,6 +45,7 @@ public class CorrectDipose_PTest {
 		domain = BowlingFactory.eINSTANCE.createPlayer();
 	}
 
+	@SuppressWarnings("deprecation")
 	@Test
 	public void rendererRemovesListenerTest() {
 		final VControl vControl = VViewFactory.eINSTANCE.createControl();
@@ -48,7 +60,7 @@ public class CorrectDipose_PTest {
 			fail(e.getMessage());
 		}
 		// 1 for the control and 1 for the ViewModelContext
-		assertEquals(2, vdmr.getChangeListener().size());
+		assertEquals(1, vdmr.getChangeListener().size());
 		shell.dispose();
 
 		assertEquals(0, vdmr.getChangeListener().size());

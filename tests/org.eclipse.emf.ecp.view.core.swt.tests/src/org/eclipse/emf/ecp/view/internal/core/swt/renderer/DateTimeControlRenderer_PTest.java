@@ -27,15 +27,22 @@ import org.eclipse.core.databinding.observable.Diffs;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.IValueChangeListener;
 import org.eclipse.core.databinding.observable.value.ValueChangeEvent;
+import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.test.common.DefaultRealm;
+import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.view.core.swt.test.model.SimpleTestObject;
 import org.eclipse.emf.ecp.view.core.swt.test.model.TestFactory;
 import org.eclipse.emf.ecp.view.core.swt.test.model.TestPackage;
 import org.eclipse.emf.ecp.view.internal.core.swt.MessageKeys;
+import org.eclipse.emf.ecp.view.spi.model.DateTimeDisplayType;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
+import org.eclipse.emf.ecp.view.spi.model.VAttachment;
+import org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
@@ -65,6 +72,12 @@ import org.mockito.stubbing.Answer;
 public class DateTimeControlRenderer_PTest extends AbstractControl_PTest {
 
 	private DefaultRealm realm;
+	private static final String NOTIME = "No time set! Click to set time.";
+	private static final String NODATE = "No date set! Click to set date.";
+	private static final String CLEANDATE = "Clean Date";
+	private static final String SELECTDATE = "Select Date";
+	private static final String CLEANTIME = "Clean Time";
+	private static final String SELECTTIME = "Select Time";
 
 	@Before
 	public void before() throws DatabindingFailedException {
@@ -77,7 +90,29 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest {
 		final ImageRegistryService imageRegistryService = mock(ImageRegistryService.class);
 		when(
 			localizationService.getString(DateTimeControlSWTRenderer.class,
-				MessageKeys.DateTimeControl_NoDateSetClickToSetDate)).thenReturn("Unset");
+				MessageKeys.DateTimeControl_NoDateSetClickToSetDate))
+					.thenReturn(NODATE);
+		when(
+			localizationService.getString(DateTimeControlSWTRenderer.class,
+				MessageKeys.DateTimeControlSWTRenderer_CleanDate))
+					.thenReturn(CLEANDATE);
+		when(
+			localizationService.getString(DateTimeControlSWTRenderer.class,
+				MessageKeys.DateTimeControlSWTRenderer_SelectData))
+					.thenReturn(SELECTDATE);
+		when(
+			localizationService.getString(DateTimeControlSWTRenderer.class,
+				MessageKeys.DateTimeControl_NoTimeSetClickToSetTime))
+					.thenReturn(NOTIME);
+		when(
+			localizationService.getString(DateTimeControlSWTRenderer.class,
+				MessageKeys.DateTimeControlSWTRenderer_CleanTime))
+					.thenReturn(CLEANTIME);
+		when(
+			localizationService.getString(DateTimeControlSWTRenderer.class,
+				MessageKeys.DateTimeControlSWTRenderer_SelectTime))
+					.thenReturn(SELECTTIME);
+
 		setup();
 		renderer = new DateTimeControlSWTRenderer(vControl, context, reportService, databindingService, labelProvider,
 			templateProvider, localizationService, imageRegistryService);
@@ -103,7 +138,7 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest {
 		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			mockedObservableValue);
 		final Control render = renderControl(new SWTGridCell(0, 1, renderer));
-		assertControl(render);
+		assertControl(render, true, true);
 	}
 
 	@Test
@@ -118,11 +153,12 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest {
 		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			mockedObservableValue);
 		final Control render = renderControl(new SWTGridCell(0, 2, renderer));
-
-		assertControl(render);
+		assertControl(render, true, true);
 	}
 
-	private void assertControl(Control render) {
+	private void assertControl(Control render, boolean dateWidgetVisible, boolean timeWidgetVisible) {
+		// making the shell visible, so that the visibility of controls can be checked
+		shell.setVisible(true);
 		assertTrue(Composite.class.isInstance(render));
 		final Composite top = Composite.class.cast(render);
 		assertEquals(2, top.getChildren().length);
@@ -136,8 +172,26 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest {
 		final Composite dateTime = Composite.class.cast(stack.getChildren()[0]);
 		assertEquals(3, dateTime.getChildren().length);
 		assertTrue(DateTime.class.isInstance(dateTime.getChildren()[0]));
+		assertEquals(dateWidgetVisible, dateTime.getChildren()[0].isVisible());
 		assertTrue(DateTime.class.isInstance(dateTime.getChildren()[1]));
+		assertEquals(timeWidgetVisible, dateTime.getChildren()[1].isVisible());
 		assertTrue(Button.class.isInstance(dateTime.getChildren()[2]));
+	}
+
+	private Label getUnsetLabel(Control render) {
+		final Composite composite = Composite.class.cast(render);
+		return Label.class.cast(((Composite) composite.getChildren()[0]).getChildren()[1]);
+	}
+
+	private Button getUnsetButton(Control render) {
+		final Composite composite = Composite.class.cast(render);
+		final Composite dateTimeComposite = (Composite) ((Composite) composite.getChildren()[0]).getChildren()[0];
+		return Button.class.cast(dateTimeComposite.getChildren()[2]);
+	}
+
+	private Button getSetButton(Control render) {
+		final Composite composite = Composite.class.cast(render);
+		return Button.class.cast(composite.getChildren()[1]);
 	}
 
 	@Override
@@ -309,14 +363,108 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest {
 	/**
 	 * Tests whether the {@link EMFFormsLabelProvider} is used to get the labels of the control.
 	 *
-	 * @throws NoRendererFoundException
-	 * @throws NoPropertyDescriptorFoundExeption
+	 * @throws ECPRendererException
 	 * @throws DatabindingFailedException
 	 * @throws NoLabelFoundException
 	 */
 	@Test
-	public void testLabelServiceUsage() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
-		DatabindingFailedException, NoLabelFoundException {
+	public void testLabelServiceUsage() throws ECPRendererException, DatabindingFailedException, NoLabelFoundException {
 		labelServiceUsage();
+	}
+
+	/**
+	 * Tests the date control with a TIME_AND_DATE {@link VDateTimeDisplayAttachment}.
+	 * The control should behave the same way as the default one (with no VDateTimeDisplayAttachment set).
+	 */
+	@Test
+	public void testDateTimeDisplayAttachmentDateAndTime()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException {
+
+		setMockDateTimeDisplayAttachment(DateTimeDisplayType.TIME_AND_DATE);
+
+		final TestObservableValue mockedObservableValue = mock(TestObservableValue.class);
+		when(mockedObservableValue.getRealm()).thenReturn(realm);
+		final EObject mockedEObject = mock(EObject.class);
+		when(mockedEObject.eIsSet(any(EStructuralFeature.class))).thenReturn(true);
+		when(mockedObservableValue.getObserved()).thenReturn(mockedEObject);
+		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+			mockedObservableValue);
+
+		final Control render = renderControl(new SWTGridCell(0, 2, renderer));
+		assertControl(render, true, true);
+
+		final Button setButton = getSetButton(render);
+		assertEquals(SELECTDATE, setButton.getToolTipText());
+		final Label unsetLabel = getUnsetLabel(render);
+		assertEquals(NODATE, unsetLabel.getText());
+		final Button unsetButton = getUnsetButton(render);
+		assertEquals(CLEANDATE, unsetButton.getToolTipText());
+	}
+
+	/**
+	 * Tests the date control with a DATE_ONLY {@link VDateTimeDisplayAttachment}.
+	 * The control should have only the date widget visible.
+	 */
+	@Test
+	public void testDateTimeDisplayAttachmentDateOnly()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException {
+
+		setMockDateTimeDisplayAttachment(DateTimeDisplayType.DATE_ONLY);
+
+		final TestObservableValue mockedObservableValue = mock(TestObservableValue.class);
+		when(mockedObservableValue.getRealm()).thenReturn(realm);
+		final EObject mockedEObject = mock(EObject.class);
+		when(mockedEObject.eIsSet(any(EStructuralFeature.class))).thenReturn(true);
+		when(mockedObservableValue.getObserved()).thenReturn(mockedEObject);
+		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+			mockedObservableValue);
+
+		final Control render = renderControl(new SWTGridCell(0, 2, renderer));
+		assertControl(render, true, false);
+
+		final Button setButton = getSetButton(render);
+		assertEquals(SELECTDATE, setButton.getToolTipText());
+		final Label unsetLabel = getUnsetLabel(render);
+		assertEquals(NODATE, unsetLabel.getText());
+		final Button unsetButton = getUnsetButton(render);
+		assertEquals(CLEANDATE, unsetButton.getToolTipText());
+
+	}
+
+	/**
+	 * Tests the date control with a DATE_ONLY {@link VDateTimeDisplayAttachment}.
+	 * The control should have only the time widget visible.
+	 */
+	@Test
+	public void testDateTimeDisplayAttachmentTimeOnly()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException {
+
+		setMockDateTimeDisplayAttachment(DateTimeDisplayType.TIME_ONLY);
+
+		final TestObservableValue mockedObservableValue = mock(TestObservableValue.class);
+		when(mockedObservableValue.getRealm()).thenReturn(realm);
+		final EObject mockedEObject = mock(EObject.class);
+		when(mockedEObject.eIsSet(any(EStructuralFeature.class))).thenReturn(true);
+		when(mockedObservableValue.getObserved()).thenReturn(mockedEObject);
+		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+			mockedObservableValue);
+
+		final Control render = renderControl(new SWTGridCell(0, 2, renderer));
+		assertControl(render, false, true);
+
+		final Button setButton = getSetButton(render);
+		assertEquals(SELECTTIME, setButton.getToolTipText());
+		final Label unsetLabel = getUnsetLabel(render);
+		assertEquals(NOTIME, unsetLabel.getText());
+		final Button unsetButton = getUnsetButton(render);
+		assertEquals(CLEANTIME, unsetButton.getToolTipText());
+	}
+
+	private void setMockDateTimeDisplayAttachment(DateTimeDisplayType displayType) {
+		final EList<VAttachment> attachments = new BasicEList<VAttachment>();
+		final VDateTimeDisplayAttachment displayAttachment = VViewFactory.eINSTANCE.createDateTimeDisplayAttachment();
+		displayAttachment.setDisplayType(displayType);
+		attachments.add(displayAttachment);
+		Mockito.when(vControl.getAttachments()).thenReturn(attachments);
 	}
 }

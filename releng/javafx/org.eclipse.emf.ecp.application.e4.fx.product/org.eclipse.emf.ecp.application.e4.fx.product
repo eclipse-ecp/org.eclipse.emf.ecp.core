@@ -7,18 +7,30 @@
    </configIni>
 
    <launcherArgs>
-      <programArgs>-nosplash</programArgs>
-      <vmArgs>-Dosgi.framework.extensions=org.eclipse.fx.osgi</vmArgs>
+      <programArgs>-nosplash
+      </programArgs>
+      <vmArgs>-Dorg.osgi.framework.bundle.parent=ext
+      </vmArgs>
    </launcherArgs>
 
    <windowImages/>
+
+   <launcher>
+      <solaris/>
+      <win useIco="false">
+         <bmp/>
+      </win>
+   </launcher>
+
+   <vm>
+   </vm>
 
    <plugins>
    </plugins>
 
    <features>
-      <feature id="org.eclipse.emf.ecp.application.e4.fx.feature" version="1.7.0.qualifier"/>
-      <feature id="org.eclipse.emf.ecp.view.sdk.fx.feature" version="1.7.0.qualifier"/>
+      <feature id="org.eclipse.emf.ecp.application.e4.fx.feature" version="1.8.0.qualifier"/>
+      <feature id="org.eclipse.emf.ecp.view.sdk.fx.feature" version="1.8.0.qualifier"/>
    </features>
 
    <configurations>

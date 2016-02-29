@@ -25,7 +25,7 @@ import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
-import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -76,21 +76,22 @@ public abstract class EditableEReferenceLabelControlSWTRenderer extends EReferen
 			final IObservableValue tooltip = labelProvider.getDescription(getVElement().getDomainModelReference(),
 				getViewModelContext().getDomainModel());
 
-			viewModelDBC.bindValue(SWTObservables.observeText(selectClass), labelText, null, new UpdateValueStrategy() {
+			viewModelDBC.bindValue(WidgetProperties.text().observe(selectClass), labelText, null,
+				new UpdateValueStrategy() {
 
-				/**
-				 * {@inheritDoc}
-				 *
-				 * @see org.eclipse.core.databinding.UpdateValueStrategy#convert(java.lang.Object)
-				 */
-				@Override
-				public Object convert(Object value) {
-					final String result = (String) super.convert(value);
-					return "Link " + result; //$NON-NLS-1$
-				}
+					/**
+					 * {@inheritDoc}
+					 *
+					 * @see org.eclipse.core.databinding.UpdateValueStrategy#convert(java.lang.Object)
+					 */
+					@Override
+					public Object convert(Object value) {
+						final String result = (String) super.convert(value);
+						return "Link " + result; //$NON-NLS-1$
+					}
 
-			});
-			viewModelDBC.bindValue(SWTObservables.observeTooltipText(selectClass), tooltip, null,
+				});
+			viewModelDBC.bindValue(WidgetProperties.tooltipText().observe(selectClass), tooltip, null,
 				new UpdateValueStrategy() {
 
 					/**

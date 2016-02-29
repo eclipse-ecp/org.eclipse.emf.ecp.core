@@ -31,8 +31,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  * @since 1.2
  */
-public class ContainerItemProvider extends ElementItemProvider
-{
+public class ContainerItemProvider extends ElementItemProvider {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -40,8 +39,7 @@ public class ContainerItemProvider extends ElementItemProvider
 	 *
 	 * @generated
 	 */
-	public ContainerItemProvider(AdapterFactory adapterFactory)
-	{
+	public ContainerItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -53,10 +51,8 @@ public class ContainerItemProvider extends ElementItemProvider
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object)
-	{
-		if (itemPropertyDescriptors == null)
-		{
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 		}
@@ -73,10 +69,8 @@ public class ContainerItemProvider extends ElementItemProvider
 	 * @generated
 	 */
 	@Override
-	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object)
-	{
-		if (childrenFeatures == null)
-		{
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
+		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(VViewPackage.Literals.CONTAINER__CHILDREN);
 		}
@@ -90,8 +84,7 @@ public class ContainerItemProvider extends ElementItemProvider
 	 * @generated
 	 */
 	@Override
-	protected EStructuralFeature getChildFeature(Object object, Object child)
-	{
+	protected EStructuralFeature getChildFeature(Object object, Object child) {
 		// Check the type of the specified child object and return the proper feature to use for
 		// adding (see {@link AddCommand}) it as a child.
 
@@ -106,12 +99,10 @@ public class ContainerItemProvider extends ElementItemProvider
 	 * @generated
 	 */
 	@Override
-	public String getText(Object object)
-	{
+	public String getText(Object object) {
 		final String label = ((VContainer) object).getName();
-		return label == null || label.length() == 0 ?
-			getString("_UI_Container_type") : //$NON-NLS-1$
-			getString("_UI_Container_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+		return label == null || label.length() == 0 ? getString("_UI_Container_type") //$NON-NLS-1$
+			: getString("_UI_Container_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -123,12 +114,10 @@ public class ContainerItemProvider extends ElementItemProvider
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(Notification notification)
-	{
+	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(VContainer.class))
-		{
+		switch (notification.getFeatureID(VContainer.class)) {
 		case VViewPackage.CONTAINER__CHILDREN:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;
@@ -145,14 +134,11 @@ public class ContainerItemProvider extends ElementItemProvider
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
-	{
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
-		newChildDescriptors.add
-			(createChildParameter
-			(VViewPackage.Literals.CONTAINER__CHILDREN,
-				VViewFactory.eINSTANCE.createControl()));
+		newChildDescriptors.add(createChildParameter(VViewPackage.Literals.CONTAINER__CHILDREN,
+			VViewFactory.eINSTANCE.createControl()));
 	}
 
 }

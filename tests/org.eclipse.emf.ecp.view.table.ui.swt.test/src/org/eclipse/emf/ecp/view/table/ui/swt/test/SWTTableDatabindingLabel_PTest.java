@@ -25,12 +25,15 @@ import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.list.WritableList;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.emf.databinding.IEMFValueProperty;
 import org.eclipse.emf.databinding.internal.EMFValueProperty;
+import org.eclipse.emf.databinding.internal.EMFValuePropertyDecorator;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecp.view.internal.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
@@ -47,7 +50,7 @@ import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
-import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
@@ -77,7 +80,7 @@ public class SWTTableDatabindingLabel_PTest {
 	private static final IObservableValue DESCRIPTION = Observables.constantObservableValue("description");
 	private static final IObservableValue DESCRIPTION_COLUMNS = Observables
 		.constantObservableValue("description-columns");
-	private EMFFormsDatabinding databindingService;
+	private EMFFormsDatabindingEMF databindingService;
 	private TableControlSWTRenderer renderer;
 	private Shell shell;
 	private EClass domainModel;
@@ -95,7 +98,7 @@ public class SWTTableDatabindingLabel_PTest {
 	 */
 	@Before
 	public void setUp() throws DatabindingFailedException, NoLabelFoundException {
-		databindingService = mock(EMFFormsDatabinding.class);
+		databindingService = mock(EMFFormsDatabindingEMF.class);
 		labelProvider = mock(EMFFormsLabelProvider.class);
 
 		when(labelProvider.getDescription(any(VDomainModelReference.class))).thenReturn(DESCRIPTION_COLUMNS);
@@ -110,7 +113,8 @@ public class SWTTableDatabindingLabel_PTest {
 		domainModel = EcoreFactory.eINSTANCE.createEClass();
 		final EStructuralFeature eStructuralFeature = EcorePackage.eINSTANCE.getEClass_ESuperTypes();
 
-		final VTableDomainModelReference tableDomainModelReference = createTableDomainModelReference(eStructuralFeature);
+		final VTableDomainModelReference tableDomainModelReference = createTableDomainModelReference(
+			eStructuralFeature);
 		vTableControl = VTableFactory.eINSTANCE.createTableControl();
 		vTableControl.setDomainModelReference(tableDomainModelReference);
 
@@ -147,13 +151,18 @@ public class SWTTableDatabindingLabel_PTest {
 	@Test
 	public void testLabelServiceUsage() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
 		DatabindingFailedException {
-		final IValueProperty columnValueProperty = new EMFValueProperty(EcorePackage.eINSTANCE.getEClass_Abstract());
+		final IEMFValueProperty columnValueProperty = new EMFValuePropertyDecorator(
+			new EMFValueProperty(EcorePackage.eINSTANCE.getEClass_Abstract()),
+			EcorePackage.eINSTANCE.getEClass_Abstract());
 		final VDomainModelReference columnDMR = ((VTableDomainModelReference) vTableControl.getDomainModelReference())
 			.getColumnDomainModelReferences().get(0);
 		when(databindingService.getValueProperty(columnDMR, domainModel)).thenReturn(columnValueProperty);
 
-		final Control renderedControl = renderer.render(new SWTGridCell(0, 0, renderer), shell);
-		final Composite composite = (Composite) renderedControl;
+		when(databindingService.getSetting(vTableControl.getDomainModelReference(), domainModel)).thenReturn(
+			InternalEObject.class.cast(domainModel).eSetting(EcorePackage.eINSTANCE.getEClass_ESuperTypes()));
+
+		final Composite renderedControl = (Composite) renderer.render(new SWTGridCell(0, 0, renderer), shell);
+		final Composite composite = (Composite) renderedControl.getChildren()[0];
 		final Composite titleComposite = (Composite) composite.getChildren()[0];
 		final Label titleLabel = (Label) titleComposite.getChildren()[0];
 
@@ -277,10 +286,15 @@ public class SWTTableDatabindingLabel_PTest {
 		throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 
-		final IValueProperty columnValueProperty = new EMFValueProperty(EcorePackage.eINSTANCE.getEClass_Abstract());
+		final IEMFValueProperty columnValueProperty = new EMFValuePropertyDecorator(
+			new EMFValueProperty(EcorePackage.eINSTANCE.getEClass_Abstract()),
+			EcorePackage.eINSTANCE.getEClass_Abstract());
 		final VDomainModelReference columnDMR = ((VTableDomainModelReference) vTableControl.getDomainModelReference())
 			.getColumnDomainModelReferences().get(0);
 		when(databindingService.getValueProperty(columnDMR, domainModel)).thenReturn(columnValueProperty);
+
+		when(databindingService.getSetting(vTableControl.getDomainModelReference(), domainModel)).thenReturn(
+			InternalEObject.class.cast(domainModel).eSetting(EcorePackage.eINSTANCE.getEClass_ESuperTypes()));
 
 		when(databindingService.getObservableList(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			mockedObservableList);
@@ -294,6 +308,7 @@ public class SWTTableDatabindingLabel_PTest {
 
 	private Control getTable(Control render) {
 		Composite composite = (Composite) render;
+		composite = (Composite) composite.getChildren()[0];
 		composite = (Composite) composite.getChildren()[1];
 		return composite.getChildren()[0];
 	}

@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.compoundcontrol.model.VCompoundControl;
 import org.eclipse.emf.ecp.view.spi.compoundcontrol.model.VCompoundcontrolPackage;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 
 /**
@@ -29,8 +30,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  * @see org.eclipse.emf.ecp.view.spi.compoundcontrol.model.VCompoundcontrolPackage
  * @generated
  */
-public class CompoundcontrolAdapterFactory extends AdapterFactoryImpl
-{
+public class CompoundcontrolAdapterFactory extends AdapterFactoryImpl {
 	/**
 	 * The cached model package.
 	 * <!-- begin-user-doc -->
@@ -47,10 +47,8 @@ public class CompoundcontrolAdapterFactory extends AdapterFactoryImpl
 	 *
 	 * @generated
 	 */
-	public CompoundcontrolAdapterFactory()
-	{
-		if (modelPackage == null)
-		{
+	public CompoundcontrolAdapterFactory() {
+		if (modelPackage == null) {
 			modelPackage = VCompoundcontrolPackage.eINSTANCE;
 		}
 	}
@@ -66,14 +64,11 @@ public class CompoundcontrolAdapterFactory extends AdapterFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public boolean isFactoryForType(Object object)
-	{
-		if (object == modelPackage)
-		{
+	public boolean isFactoryForType(Object object) {
+		if (object == modelPackage) {
 			return true;
 		}
-		if (object instanceof EObject)
-		{
+		if (object instanceof EObject) {
 			return ((EObject) object).eClass().getEPackage() == modelPackage;
 		}
 		return false;
@@ -86,33 +81,32 @@ public class CompoundcontrolAdapterFactory extends AdapterFactoryImpl
 	 *
 	 * @generated
 	 */
-	protected CompoundcontrolSwitch<Adapter> modelSwitch =
-		new CompoundcontrolSwitch<Adapter>()
-		{
-			@Override
-			public Adapter caseCompoundControl(VCompoundControl object)
-			{
-				return createCompoundControlAdapter();
-			}
+	protected CompoundcontrolSwitch<Adapter> modelSwitch = new CompoundcontrolSwitch<Adapter>() {
+		@Override
+		public Adapter caseCompoundControl(VCompoundControl object) {
+			return createCompoundControlAdapter();
+		}
 
-			@Override
-			public Adapter caseElement(VElement object)
-			{
-				return createElementAdapter();
-			}
+		@Override
+		public Adapter caseElement(VElement object) {
+			return createElementAdapter();
+		}
 
-			@Override
-			public Adapter caseContainedElement(VContainedElement object)
-			{
-				return createContainedElementAdapter();
-			}
+		@Override
+		public Adapter caseContainedElement(VContainedElement object) {
+			return createContainedElementAdapter();
+		}
 
-			@Override
-			public Adapter defaultCase(EObject object)
-			{
-				return createEObjectAdapter();
-			}
-		};
+		@Override
+		public Adapter caseControl(VControl object) {
+			return createControlAdapter();
+		}
+
+		@Override
+		public Adapter defaultCase(EObject object) {
+			return createEObjectAdapter();
+		}
+	};
 
 	/**
 	 * Creates an adapter for the <code>target</code>.
@@ -124,8 +118,7 @@ public class CompoundcontrolAdapterFactory extends AdapterFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public Adapter createAdapter(Notifier target)
-	{
+	public Adapter createAdapter(Notifier target) {
 		return modelSwitch.doSwitch((EObject) target);
 	}
 
@@ -141,14 +134,13 @@ public class CompoundcontrolAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.spi.compoundcontrol.model.VCompoundControl
 	 * @generated
 	 */
-	public Adapter createCompoundControlAdapter()
-	{
+	public Adapter createCompoundControlAdapter() {
 		return null;
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VElement
-	 * <em>Element</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VElement <em>Element</em>
+	 * }'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
@@ -158,8 +150,7 @@ public class CompoundcontrolAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.spi.model.VElement
 	 * @generated
 	 */
-	public Adapter createElementAdapter()
-	{
+	public Adapter createElementAdapter() {
 		return null;
 	}
 
@@ -175,8 +166,25 @@ public class CompoundcontrolAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.spi.model.VContainedElement
 	 * @generated
 	 */
-	public Adapter createContainedElementAdapter()
-	{
+	public Adapter createContainedElementAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VControl <em>Control</em>
+	 * }'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * 
+	 * @since 1.8
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VControl
+	 * @generated
+	 */
+	public Adapter createControlAdapter() {
 		return null;
 	}
 
@@ -189,8 +197,7 @@ public class CompoundcontrolAdapterFactory extends AdapterFactoryImpl
 	 * @return the new adapter.
 	 * @generated
 	 */
-	public Adapter createEObjectAdapter()
-	{
+	public Adapter createEObjectAdapter() {
 		return null;
 	}
 

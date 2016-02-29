@@ -5,20 +5,22 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.eclipse.emf.ecp</groupId>
 	<artifactId>ecp-parent</artifactId>
-	<version>1.7.2-SNAPSHOT</version>
+	<version>1.8.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<properties>
-		<tycho-version>0.22.0</tycho-version>
-		<tycho-extras-version>0.22.0</tycho-extras-version>
+		<tycho-version>0.23.0</tycho-version>
+		<tycho-extras-version>0.23.0</tycho-extras-version>
 		<javadoc-version>2.9</javadoc-version>
-		<javadoc-title>EMF Client Platform 1.7.2 API</javadoc-title>
+		<ecp-version>1.8.0</ecp-version>
+		<javadoc-title>EMF Client Platform ${ecp-version} API</javadoc-title>
 		<maven.antrun.plugin.version>1.7</maven.antrun.plugin.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<tycho.scmUrl>scm:git:git://git.eclipse.org/gitroot/emfclient/org.eclipse.emf.ecp.core.git</tycho.scmUrl>
 		<jarsigner-version>1.1.0</jarsigner-version>
 		<mav-surefire-version>2.16</mav-surefire-version>
 		<junit-version>4.11</junit-version>
+		<checkstyle-version>6.11.2</checkstyle-version>
 		
 		<!-- Properties to enable jacoco code coverage analysis with sonar -->
 		<sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
@@ -174,12 +176,12 @@
 						<artifact>
 							<groupId>org.eclipse.emf.ecp</groupId>
 							<artifactId>${target-rcp}</artifactId>
-							<version>${project.version}</version>
+							<version>${ecp-version}-SNAPSHOT</version>
 						</artifact>
 						<artifact>
 							<groupId>org.eclipse.emf.ecp</groupId>
 							<artifactId>${target-rap}</artifactId>
-							<version>${project.version}</version>
+							<version>${ecp-version}-SNAPSHOT</version>
 						</artifact>
 					</target>
 				</configuration>
@@ -227,6 +229,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
 				<version>2.11</version>
+				<!-- https://maven.apache.org/plugins/maven-checkstyle-plugin/history.html -->
 				<configuration>
 					<configLocation>http://download.eclipse.org/ecp/config/esmCheckstyle.xml</configLocation>
 
@@ -242,6 +245,13 @@
 						<phase>verify</phase>
 					</execution>
 				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>com.puppycrawl.tools</groupId>
+						<artifactId>checkstyle</artifactId>
+						<version>${checkstyle-version}</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 
 			<!-- enable source bundle generation -->
@@ -275,6 +285,18 @@
 						</goals>
 					</execution>
 				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-compiler-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<useProjectSettings>true</useProjectSettings>
+					<logEnabled>true</logEnabled>
+					<logDirectory>${project.build.directory}/logfiles</logDirectory>
+					<log>xml</log>
+				</configuration>
 			</plugin>
 		</plugins>
 		

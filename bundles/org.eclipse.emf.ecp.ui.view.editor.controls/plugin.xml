@@ -280,6 +280,12 @@
                testClass="org.eclipse.emf.ecp.view.internal.editor.controls.TableDetailViewControlSWTRendererTester">
          </dynamicTest>
       </renderer>
+      <renderer
+            renderer="org.eclipse.emf.ecp.view.internal.editor.controls.LinkFeatureControlRenderer">
+         <dynamicTest
+               testClass="org.eclipse.emf.ecp.view.internal.editor.controls.LinkFeatureControlRendererTester">
+         </dynamicTest>
+      </renderer>
    </extension>
 
 </plugin>

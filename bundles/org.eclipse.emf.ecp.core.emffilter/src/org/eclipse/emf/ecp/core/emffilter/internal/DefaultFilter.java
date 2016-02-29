@@ -92,6 +92,7 @@ public class DefaultFilter implements ECPFilterProvider {
 		packages.add("http://www.eclipse.org/emf/ecp/view/template/selector/viewmodelelement/model"); //$NON-NLS-1$
 		packages.add("http://www.eclipse.org/emf/ecp/view/template/style/table/validation/model"); //$NON-NLS-1$
 		packages.add("http://www.eclipse.org/emf/ecp/view/template/style/background/model"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/emf/ecp/view/template/style/tab/model"); //$NON-NLS-1$
 
 		packages.add("http://org/eclipse/emf/ecp/view/treemasterview/model"); //$NON-NLS-1$
 
@@ -204,6 +205,9 @@ public class DefaultFilter implements ECPFilterProvider {
 		packages.add("http://eclipse.org/rcptt/reporting/core"); //$NON-NLS-1$
 		packages.add("http://eclipse.org/rcptt/verifications/time"); //$NON-NLS-1$
 		packages.add("http://eclipse.org/rcptt/verifications/tree"); //$NON-NLS-1$
+
+		packages.add("http://eclipse.org/rcptt/tesla/nebula"); //$NON-NLS-1$
+		packages.add("http://eclipse.org/rcptt/tesla/nebula/ecl"); //$NON-NLS-1$
 	}
 
 	private void addGraphitiModels(Set<String> packages) {

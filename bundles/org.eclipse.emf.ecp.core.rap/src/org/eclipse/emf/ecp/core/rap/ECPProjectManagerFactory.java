@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.emf.ecp.core.ECPProjectManager;
+import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.core.ECPProjectManagerImpl;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.osgi.framework.Bundle;
@@ -31,7 +32,7 @@ import org.osgi.framework.ServiceRegistration;
  *
  */
 public class ECPProjectManagerFactory implements
-ServiceFactory<ECPProjectManager> {
+	ServiceFactory<ECPProjectManager> {
 
 	/**
 	 * The session provider used to retrieve the current session.
@@ -40,8 +41,7 @@ ServiceFactory<ECPProjectManager> {
 	/**
 	 * a map of sessions to services.
 	 */
-	private final Map<String, ECPProjectManager> sessionRegistry =
-		new HashMap<String, ECPProjectManager>();
+	private final Map<String, ECPProjectManagerImpl> sessionRegistry = new HashMap<String, ECPProjectManagerImpl>();
 
 	/**
 	 * default constructor.
@@ -65,14 +65,10 @@ ServiceFactory<ECPProjectManager> {
 	 */
 	private SessionProvider getSessionProvider() {
 		if (sessionProvider == null) {
-			final BundleContext bundleContext =
-				FrameworkUtil.getBundle(getClass()).
-					getBundleContext();
-			final ServiceReference<SessionProvider> serviceReference =
-				bundleContext.
-				getServiceReference(SessionProvider.class);
-			sessionProvider = bundleContext.
-				getService(serviceReference);
+			final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
+			final ServiceReference<SessionProvider> serviceReference = bundleContext
+				.getServiceReference(SessionProvider.class);
+			sessionProvider = bundleContext.getService(serviceReference);
 		}
 		return sessionProvider;
 	}
@@ -90,12 +86,13 @@ ServiceFactory<ECPProjectManager> {
 	@Override
 	public ECPProjectManager getService(Bundle bundle,
 		ServiceRegistration<ECPProjectManager> registration) {
-		ECPProjectManager ecpProjectManager;
+		ECPProjectManagerImpl ecpProjectManager;
 		final String sessionId = getSessionProvider().getSessionId();
 		if (sessionRegistry.containsKey(sessionId)) {
 			ecpProjectManager = sessionRegistry.get(sessionId);
 		} else {
 			ecpProjectManager = new ECPProjectManagerImpl(sessionId);
+			ecpProjectManager.setECPObserverBus(ECPUtil.getECPObserverBus());
 			sessionRegistry.put(sessionId, ecpProjectManager);
 			((Lifecycle) ecpProjectManager).activate();
 

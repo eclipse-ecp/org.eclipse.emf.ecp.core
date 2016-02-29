@@ -11,18 +11,19 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.core.swt.tests;
 
+import org.eclipse.emf.ecp.view.internal.core.swt.renderer.ViewRenderer_PTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 /**
  * Test Suite for OSGi Tests.
- * 
+ *
  * @author Eugen Neufeld
  *
  */
 @RunWith(Suite.class)
-@SuiteClasses({ CorrectDipose_PTest.class, DynamicDMR_PTest.class })
+@SuiteClasses({ CorrectDipose_PTest.class, DynamicDMR_PTest.class, ViewRenderer_PTest.class })
 public class AllPluginTests {
 
 }

@@ -27,8 +27,7 @@ import org.eclipse.emf.ecp.view.spi.compoundcontrol.model.VCompoundcontrolPackag
  *
  * @generated
  */
-public class VCompoundcontrolFactoryImpl extends EFactoryImpl implements VCompoundcontrolFactory
-{
+public class VCompoundcontrolFactoryImpl extends EFactoryImpl implements VCompoundcontrolFactory {
 	/**
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
@@ -36,18 +35,14 @@ public class VCompoundcontrolFactoryImpl extends EFactoryImpl implements VCompou
 	 *
 	 * @generated
 	 */
-	public static VCompoundcontrolFactory init()
-	{
-		try
-		{
+	public static VCompoundcontrolFactory init() {
+		try {
 			final VCompoundcontrolFactory theCompoundcontrolFactory = (VCompoundcontrolFactory) EPackage.Registry.INSTANCE
 				.getEFactory(VCompoundcontrolPackage.eNS_URI);
-			if (theCompoundcontrolFactory != null)
-			{
+			if (theCompoundcontrolFactory != null) {
 				return theCompoundcontrolFactory;
 			}
-		} catch (final Exception exception)
-		{
+		} catch (final Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new VCompoundcontrolFactoryImpl();
@@ -60,8 +55,7 @@ public class VCompoundcontrolFactoryImpl extends EFactoryImpl implements VCompou
 	 *
 	 * @generated
 	 */
-	public VCompoundcontrolFactoryImpl()
-	{
+	public VCompoundcontrolFactoryImpl() {
 		super();
 	}
 
@@ -72,10 +66,8 @@ public class VCompoundcontrolFactoryImpl extends EFactoryImpl implements VCompou
 	 * @generated
 	 */
 	@Override
-	public EObject create(EClass eClass)
-	{
-		switch (eClass.getClassifierID())
-		{
+	public EObject create(EClass eClass) {
+		switch (eClass.getClassifierID()) {
 		case VCompoundcontrolPackage.COMPOUND_CONTROL:
 			return createCompoundControl();
 		default:
@@ -90,8 +82,7 @@ public class VCompoundcontrolFactoryImpl extends EFactoryImpl implements VCompou
 	 * @generated
 	 */
 	@Override
-	public VCompoundControl createCompoundControl()
-	{
+	public VCompoundControl createCompoundControl() {
 		final VCompoundControlImpl compoundControl = new VCompoundControlImpl();
 		return compoundControl;
 	}
@@ -103,8 +94,7 @@ public class VCompoundcontrolFactoryImpl extends EFactoryImpl implements VCompou
 	 * @generated
 	 */
 	@Override
-	public VCompoundcontrolPackage getCompoundcontrolPackage()
-	{
+	public VCompoundcontrolPackage getCompoundcontrolPackage() {
 		return (VCompoundcontrolPackage) getEPackage();
 	}
 
@@ -116,8 +106,7 @@ public class VCompoundcontrolFactoryImpl extends EFactoryImpl implements VCompou
 	 * @generated
 	 */
 	@Deprecated
-	public static VCompoundcontrolPackage getPackage()
-	{
+	public static VCompoundcontrolPackage getPackage() {
 		return VCompoundcontrolPackage.eINSTANCE;
 	}
 

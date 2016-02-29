@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * Eugen - initial API and implementation
+ * Stefan Dirix - add ControlProcessorService
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.custom.swt;
 
@@ -20,6 +21,7 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
+import org.eclipse.emfforms.spi.swt.core.EMFFormsControlProcessorService;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.swt.graphics.Image;
@@ -143,6 +145,28 @@ public class CustomControlSWTRenderer extends AbstractSWTRenderer<VCustomControl
 	}
 
 	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#render(org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell,
+	 *      org.eclipse.swt.widgets.Composite)
+	 */
+	@Override
+	public Control render(SWTGridCell cell, Composite parent)
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		final Control control = super.render(cell, parent);
+
+		if (control == null) {
+			return null;
+		}
+
+		if (!canHandleControlProcessor()) {
+			defaultHandleControlProcessor(control);
+		}
+
+		return control;
+	}
+
+	/**
 	 *
 	 * {@inheritDoc}
 	 *
@@ -153,6 +177,35 @@ public class CustomControlSWTRenderer extends AbstractSWTRenderer<VCustomControl
 	protected Control renderControl(SWTGridCell cell, Composite parent) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		return swtCustomControl.renderControl(cell, parent);
+	}
+
+	/**
+	 * Indicates whether the {@link ECPAbstractCustomControlSWT} can handle a possibly existing
+	 * {@link org.eclipse.emfforms.spi.swt.core.EMFFormsControlProcessorService EMFFormsControlProcessorService}
+	 * itself.
+	 *
+	 * @return {@code true} if the {@link ECPAbstractCustomControlSWT} can handle a possibly existing
+	 *         {@link org.eclipse.emfforms.spi.swt.core.EMFFormsControlProcessorService EMFFormsControlProcessorService}
+	 *         itself, {@code false} otherwise.
+	 * @since 1.8
+	 */
+	protected boolean canHandleControlProcessor() {
+		return swtCustomControl.canHandleControlProcessor();
+	}
+
+	/**
+	 * Calls a possibly existing {@link EMFFormsControlProcessorService} for the given {@code control}.
+	 *
+	 * @param control
+	 *            The {@link Control} which is to be processed by the {@link EMFFormsControlProcessorService}.
+	 * @since 1.8
+	 */
+	protected void defaultHandleControlProcessor(Control control) {
+		if (getViewModelContext().hasService(EMFFormsControlProcessorService.class)) {
+			final EMFFormsControlProcessorService service = getViewModelContext()
+				.getService(EMFFormsControlProcessorService.class);
+			service.process(control, getVElement(), getViewModelContext());
+		}
 	}
 
 	@Override

@@ -42,7 +42,7 @@ import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
-import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
@@ -151,8 +151,9 @@ public class LabelSWTRenderer extends AbstractSWTRenderer<VLabel> {
 		if (getVElement().getDomainModelReference() != null) {
 			try {
 				final IObservableValue observableValue = emfFormsDatabinding
-					.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
-				final ISWTObservableValue observeText = SWTObservables.observeText(label);
+					.getObservableValue(getVElement().getDomainModelReference(),
+						getViewModelContext().getDomainModel());
+				final ISWTObservableValue observeText = WidgetProperties.text().observe(label);
 				final Binding binding = getDataBindingContext().bindValue(observeText, observableValue);
 
 				label.addDisposeListener(new DisposeListener() {
@@ -169,7 +170,7 @@ public class LabelSWTRenderer extends AbstractSWTRenderer<VLabel> {
 			final IObservableValue modelValue = EMFEditObservables.observeValue(
 				AdapterFactoryEditingDomain.getEditingDomainFor(getVElement()), getVElement(),
 				VViewPackage.eINSTANCE.getElement_Label());
-			final IObservableValue targetValue = SWTObservables.observeText(label);
+			final IObservableValue targetValue = WidgetProperties.text().observe(label);
 
 			dbc.bindValue(targetValue, modelValue);
 		}

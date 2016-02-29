@@ -126,6 +126,10 @@ public final class Activator extends Plugin {
 		ECPProjectManager ecpProjectManager = null;
 		final ServiceReference<ECPProjectManager> serviceRef = instance.getBundle().getBundleContext()
 			.getServiceReference(ECPProjectManager.class);
+		if (serviceRef == null) {
+			throw new IllegalStateException(
+				"ECPProjectManager service could not be retrieved. Please check your product configuration!"); //$NON-NLS-1$
+		}
 		ecpProjectManager = instance.getBundle().getBundleContext().getService(serviceRef);
 		// because we are using a service factory for the RAP implementation we must unget
 		// the service so that the service factory is called again on each call. otherwise

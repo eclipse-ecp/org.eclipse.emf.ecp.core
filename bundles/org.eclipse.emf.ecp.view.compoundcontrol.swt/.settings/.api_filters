@@ -15,6 +15,12 @@
                 <message_argument value="CompoundControlSWTRenderer()"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI change 1.7.0" id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.compoundcontrol.swt.CompoundControlSWTRenderer"/>
+                <message_argument value="CompoundControlSWTRenderer(VCompoundControl, ViewModelContext, ReportService)"/>
+            </message_arguments>
+        </filter>
         <filter comment="EMFForms 1.6 SPI Change" id="338792546">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.compoundcontrol.swt.CompoundControlSWTRenderer"/>

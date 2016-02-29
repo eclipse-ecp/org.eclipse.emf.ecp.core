@@ -21,13 +21,16 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
+import org.eclipse.emfforms.spi.swt.core.layout.EMFFormsSWTLayoutUtil;
 import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
+import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ExpandEvent;
 import org.eclipse.swt.events.ExpandListener;
-import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -82,33 +85,31 @@ public class CollapsableGroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 	@Override
 	protected Control renderControl(SWTGridCell gridCell, final Composite parent) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
-		final ExpandBar bar = new ExpandBar(parent, SWT.NONE);
+		final CollapsableGroupExpandBar bar = new CollapsableGroupExpandBar(parent, SWT.NONE);
 		bar.setBackground(parent.getBackground());
 
 		// First item
 		final Composite composite = new Composite(bar, SWT.NONE);
-		final FillLayout fillLayout = new FillLayout();
-		fillLayout.marginHeight = MARGIN;
-		fillLayout.marginWidth = MARGIN;
-		composite.setLayout(fillLayout);
+		GridLayoutFactory.fillDefaults().margins(MARGIN, MARGIN).applyTo(composite);
 		final ExpandItem item0 = new ExpandItem(bar, SWT.NONE, 0);
-		String text = getVElement().getName();
-		if (text == null) {
-			text = ""; //$NON-NLS-1$
-		}
+		final String text = getVElement().getLabel() != null ? getVElement().getLabel() : ""; //$NON-NLS-1$
 		item0.setText(text);
-		super.renderControl(gridCell, composite);
+		final Control containerControl = super.renderControl(gridCell, composite);
+		GridDataFactory.fillDefaults().grab(true, false)
+			.minSize(containerControl.computeSize(SWT.DEFAULT, SWT.DEFAULT).x, SWT.DEFAULT).applyTo(containerControl);
 		final int height = computeHeight(composite);
 		item0.setHeight(height);
 		item0.setControl(composite);
+		bar.setItemComposite(composite);
 		bar.addExpandListener(new ExpandListener() {
 
 			@Override
 			public void itemCollapsed(ExpandEvent e) {
-				item0.setHeight(item0.getHeaderHeight());
+				final int headerHeight = item0.getHeaderHeight();
+				item0.setHeight(headerHeight);
 				final Object layoutData = bar.getLayoutData();
-				updateLayoutData(layoutData, item0.getHeaderHeight() + 2 * MARGIN);
-				parent.layout(true, true);
+				updateLayoutData(layoutData, headerHeight + 2 * MARGIN);
+				EMFFormsSWTLayoutUtil.adjustParentSize(bar);
 				getVElement().setCollapsed(true);
 				postCollapsed();
 			}
@@ -119,7 +120,7 @@ public class CollapsableGroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 				final Object layoutData = bar.getLayoutData();
 				updateLayoutData(layoutData, computeHeight(composite) + item0.getHeaderHeight()
 					+ 2 * MARGIN);
-				parent.layout(true, true);
+				EMFFormsSWTLayoutUtil.adjustParentSize(bar);
 				getVElement().setCollapsed(false);
 				postExpanded();
 			}
@@ -155,5 +156,50 @@ public class CollapsableGroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 	private int computeHeight(Composite composite) {
 		// XXX +1 because last pixel gets cut off on windows 7 64
 		return composite.computeSize(SWT.DEFAULT, SWT.DEFAULT).y + 1;
+	}
+
+	/**
+	 * {@link ExpandBar} which takes its item content size into account when computing the size.
+	 *
+	 * @author Johannes Faltermeier
+	 *
+	 */
+	private static final class CollapsableGroupExpandBar extends ExpandBar {
+
+		private Composite itemComposite;
+
+		CollapsableGroupExpandBar(Composite parent, int style) {
+			super(parent, style);
+		}
+
+		@Override
+		public Point computeSize(int wHint, int hHint, boolean changed) {
+			return computeSizeForBar(wHint, hHint, changed);
+		}
+
+		@Override
+		protected void checkSubclass() {
+			/*
+			 * we have to override expandbar because the size computation does not take the items control size into
+			 * account. For our use case we need this to enable parent scrolled composites to set the min size
+			 * correctely.
+			 */
+		}
+
+		void setItemComposite(Composite itemComposite) {
+			this.itemComposite = itemComposite;
+		}
+
+		private Point computeSizeForBar(int wHint, int hHint, boolean changed) {
+			final Point sizeComputedByBar = super.computeSize(wHint, hHint, changed);
+			if (itemComposite != null) {
+				final Point itemSize = itemComposite.computeSize(wHint, hHint, changed);
+				if (itemSize.x > sizeComputedByBar.x) {
+					/* else might be true if the expandbar has a really long group text */
+					sizeComputedByBar.x = itemSize.x;
+				}
+			}
+			return sizeComputedByBar;
+		}
 	}
 }

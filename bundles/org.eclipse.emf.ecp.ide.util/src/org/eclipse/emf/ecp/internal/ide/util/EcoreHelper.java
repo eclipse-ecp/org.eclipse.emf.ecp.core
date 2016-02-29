@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -106,6 +106,12 @@ public final class EcoreHelper {
 			}
 			final EObject eObject = physicalResource.getContents().get(0);
 			EcoreUtil.resolveAll(eObject);
+			if (!EPackage.class.isInstance(eObject)) {
+				Activator.log(
+					IStatus.ERROR,
+					String.format("The EObject is not contained in an EPackage: %1$s", eObject)); //$NON-NLS-1$
+				return;
+			}
 			final EPackage ePackage = EPackage.class.cast(eObject);
 
 			if (isContainedInPackageRegistry(ePackage.getNsURI())) {
@@ -114,12 +120,14 @@ public final class EcoreHelper {
 						IStatus.INFO,
 						String.format(
 							"Tooling Registered Packages don't contain package with URI %1$s.", ePackage.getNsURI())); //$NON-NLS-1$
+					registerSubpackages(ePackage);
 					continue;
 				}
 				final EPackage registeredPackage = EPackage.Registry.INSTANCE.getEPackage(ePackage.getNsURI());
 				if (EcoreUtil.equals(ePackage, registeredPackage)) {
 					Activator.log(IStatus.INFO,
 						String.format("Another package with same URI is already registered: %1$s.", registeredPackage)); //$NON-NLS-1$
+					registerSubpackages(ePackage);
 					continue;
 				}
 			}
@@ -147,6 +155,9 @@ public final class EcoreHelper {
 	 */
 	private static void registerSubpackages(EPackage ePackage) {
 		for (final EPackage subpackage : ePackage.getESubpackages()) {
+			if (EPackage.Registry.INSTANCE.containsKey(subpackage.getNsURI())) {
+				continue;
+			}
 			EPackage.Registry.INSTANCE.put(subpackage.getNsURI(), subpackage);
 			Activator.log(IStatus.INFO,
 				String.format("Register subpackage %1$s of package %2$s.", subpackage.getNsURI(), ePackage.getNsURI())); //$NON-NLS-1$
@@ -158,41 +169,70 @@ public final class EcoreHelper {
 	 * Determines the dependent EPackages present in the user's workspace for this ecore path.
 	 *
 	 * @param ecorePath
-	 * @return
 	 * @throws IOException
 	 */
-	private static URI determineWorkspaceDepedencies(String ecorePath) throws IOException {
-		final ResourceSet physicalResourceSet = new ResourceSetImpl();
-		initResourceSet(physicalResourceSet, false);
-		final URI uri = URI.createPlatformResourceURI(ecorePath, false);
-		final Resource tempResource = physicalResourceSet.createResource(uri);
-		tempResource.load(null);
-		// resolve the proxies
-		int tempSize = physicalResourceSet.getResources().size();
-		EcoreUtil.resolveAll(physicalResourceSet);
-		while (tempSize != physicalResourceSet.getResources().size()) {
-			EcoreUtil.resolveAll(physicalResourceSet);
-			tempSize = physicalResourceSet.getResources().size();
-		}
-		for (final Resource physicalResource : physicalResourceSet.getResources()) {
-			if (physicalResource.getContents().size() == 0) {
-				continue;
-			}
-			if (!physicalResource.getURI().isPlatformResource()) {
-				continue;
-			}
+	private static void determineWorkspaceDepedencies(String ecorePath) throws IOException {
+		for (final String relatedURI : getOtherRelatedWorkspacePaths(ecorePath)) {
 			if (ECOREPATH_TO_WORKSPACEURIS.get(ecorePath) == null) {
 				ECOREPATH_TO_WORKSPACEURIS.put(ecorePath, new HashSet<String>());
 			}
-			ECOREPATH_TO_WORKSPACEURIS.get(ecorePath).add(physicalResource.getURI().toString());
+			ECOREPATH_TO_WORKSPACEURIS.get(ecorePath).add(relatedURI);
 			Activator
 				.log(
 					IStatus.INFO,
 					String
 						.format(
-							"Resolved ecorePath %1$s to workspace path %2$s.", ecorePath, physicalResource.getURI().toString())); //$NON-NLS-1$
+							"Resolved ecorePath %1$s to workspace path %2$s.", ecorePath, //$NON-NLS-1$
+							relatedURI));
 		}
-		return uri;
+	}
+
+	/**
+	 * <p>
+	 * Returns the path for all ecores for which
+	 * <p>
+	 * <p>
+	 * a) the given ecore is dependent on.
+	 * </p>
+	 * <p>
+	 * b) the uri is a platform resource URI, meaning the ecore is available in the workspace.
+	 * </p>
+	 *
+	 * @param ecorePath the path
+	 * @return the ecore nsuris
+	 */
+	public static Set<String> getOtherRelatedWorkspacePaths(String ecorePath) {
+		final Set<String> result = new LinkedHashSet<String>();
+		if (ecorePath == null) {
+			return result;
+		}
+		try {
+			final ResourceSet physicalResourceSet = new ResourceSetImpl();
+			initResourceSet(physicalResourceSet, false);
+			final URI uri = URI.createPlatformResourceURI(ecorePath, false);
+			final Resource tempResource = physicalResourceSet.createResource(uri);
+			tempResource.load(null);
+			// resolve the proxies
+			int tempSize = physicalResourceSet.getResources().size();
+			EcoreUtil.resolveAll(physicalResourceSet);
+			while (tempSize != physicalResourceSet.getResources().size()) {
+				EcoreUtil.resolveAll(physicalResourceSet);
+				tempSize = physicalResourceSet.getResources().size();
+			}
+			for (final Resource physicalResource : physicalResourceSet.getResources()) {
+				if (physicalResource.getContents().size() == 0) {
+					continue;
+				}
+				if (!physicalResource.getURI().isPlatformResource()) {
+					continue;
+				}
+				result.add(physicalResource.getURI().toString());
+			}
+		} catch (final IOException ex) {
+			Activator.log(IStatus.INFO,
+				String.format("Error while loading %1$s.", ecorePath)); //$NON-NLS-1$
+		}
+		return result;
 	}
 
 	private static boolean isContainedInPackageRegistry(String nsURI) {

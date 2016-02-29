@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.core.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.eclipse.emf.ecp.core.ECPProject;
@@ -69,25 +70,36 @@ public class ECPProvider_PTest extends AbstractTest {
 	// }
 
 	@Test
-	public void hasUnsharedProjectSupportTest() {
+	public void ifUnsharedProjectSupportTest() {
 		final boolean hasUnsharedProjectSupport = getProvider().hasCreateProjectWithoutRepositorySupport();
-		boolean isActuallyPossible = false;
-
+		if (!hasUnsharedProjectSupport) {
+			return;
+		}
+		// try to create an offline project;
 		try {
-			// try to create an offline project;
 			final ECPProject project = getProjectManager().createProject(getProvider(), "test");
-			if (project == null && !getProjectManager().getProjects().contains(project)) {
-				isActuallyPossible = false;
-			} else {
-				isActuallyPossible = true;
-			}
+			assertNotNull(project);
+			assertTrue(getProjectManager().getProjects().contains(project));
 		} catch (final ECPProjectWithNameExistsException e) {
 			fail("Project with name already existing. Fix test setup.");
-		} catch (final RuntimeException e) {
-			isActuallyPossible = false;
 		}
 
-		assertEquals(hasUnsharedProjectSupport, isActuallyPossible);
+	}
+
+	@Test(expected = RuntimeException.class)
+	public void ifNotUnsharedProjectSupportTest() {
+		final boolean hasUnsharedProjectSupport = getProvider().hasCreateProjectWithoutRepositorySupport();
+		if (hasUnsharedProjectSupport) {
+			throw new RuntimeException();
+		}
+		try {
+			// try to create an offline project;
+			getProjectManager().createProject(getProvider(), "test");
+
+		} catch (final ECPProjectWithNameExistsException e) {
+			fail("Project with name already existing. Fix test setup.");
+		}
+
 	}
 
 	@Test

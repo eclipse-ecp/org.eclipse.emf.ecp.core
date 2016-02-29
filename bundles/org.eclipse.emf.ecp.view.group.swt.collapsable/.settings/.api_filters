@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.ecp.view.group.swt.collapsable" version="2">
+    <resource path="src/org/eclipse/emf/ecp/view/group/swt/internal/collapsable/CollapsableGroupSWTRenderer.java" type="org.eclipse.emf.ecp.view.group.swt.internal.collapsable.CollapsableGroupSWTRenderer$CollapsableGroupExpandBar">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="ExpandBar"/>
+                <message_argument value="CollapsableGroupExpandBar"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

@@ -17,8 +17,6 @@ package org.eclipse.emfforms.spi.swt.treemasterdetail;
  * @author Johannes Faltermeier
  *
  */
-public interface TreeMasterDetailSWTCustomization extends DetailCompositeBuilder, TreeViewerBuilder,
-	ContentProviderProvider, DNDProvider, InitialSelectionProvider, TreeWidthProvider, LabelProviderProvider,
-	ViewerFilterProvider, MenuProvider, ViewModelServiceProvider {
-
+public interface TreeMasterDetailSWTCustomization
+	extends DetailCompositeBuilder, TreeWidthProvider, ViewModelServiceProvider, TreeViewerCustomization {
 }

@@ -32,6 +32,7 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.emf.emfstore.bowling.Player;
@@ -47,11 +48,13 @@ import org.eclipse.swt.widgets.TreeItem;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Eugen Neufeld
  *
  */
+@RunWith(DatabindingClassRunner.class)
 public class CategorizationTreeRefresh_PTest {
 
 	private static Image idCategorization;
@@ -148,8 +151,7 @@ public class CategorizationTreeRefresh_PTest {
 	private boolean checkData(TreeItem item) {
 		if (item.getData() == categorization) {
 			return Arrays.equals(idCategorization.getImageData().data, item.getImage().getImageData().data);
-		}
-		else if (item.getData() == category1 || item.getData() == category2) {
+		} else if (item.getData() == category1 || item.getData() == category2) {
 			return Arrays.equals(idCategory.getImageData().data, item.getImage().getImageData().data);
 		}
 		return false;

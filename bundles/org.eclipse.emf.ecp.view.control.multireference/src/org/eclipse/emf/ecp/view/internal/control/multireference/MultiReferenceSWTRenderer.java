@@ -52,7 +52,7 @@ import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
-import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -155,11 +155,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 
 		createLabelProvider();
 
-		final Composite controlComposite = new Composite(composite, SWT.NONE);
-		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL)
-			.hint(1, 300)
-			.applyTo(controlComposite);
-		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(controlComposite);
+		final Composite controlComposite = createControlComposite(composite);
 		try {
 			createContent(controlComposite);
 		} catch (final DatabindingFailedException ex) {
@@ -168,6 +164,40 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		}
 
 		return composite;
+	}
+
+	/**
+	 * Creates the composite which will be the parent for the table.
+	 *
+	 * @param composite
+	 *            the parent composite
+	 * @return the table composite
+	 */
+	protected Composite createControlComposite(final Composite composite) {
+		final Composite controlComposite = new Composite(composite, SWT.NONE);
+		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL)
+			.hint(1, getTableHeightHint())
+			.applyTo(controlComposite);
+		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(controlComposite);
+		return controlComposite;
+	}
+
+	/**
+	 * Returns the height for the table that will be created.
+	 *
+	 * @return the height hint
+	 */
+	protected int getTableHeightHint() {
+		return 300;
+	}
+
+	/**
+	 * Gives access to the tableViewer used to display the attributes.
+	 *
+	 * @return the viewer
+	 */
+	protected TableViewer getTableViewer() {
+		return tableViewer;
 	}
 
 	/**
@@ -234,7 +264,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		final Button btnAddExisting = new Button(buttonComposite, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(btnAddExisting);
 		btnAddExisting.setImage(getImage("icons/link.png")); //$NON-NLS-1$
-		btnAddExisting.setToolTipText(LocalizationServiceHelper.getString(getClass(),
+		btnAddExisting.setToolTipText(LocalizationServiceHelper.getString(MultiReferenceSWTRenderer.class,
 			MessageKeys.MultiReferenceSWTRenderer_addExistingTooltip));
 		btnAddExisting.addSelectionListener(new SelectionAdapter() {
 
@@ -254,7 +284,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		final Button btnAddNew = new Button(buttonComposite, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(btnAddNew);
 		btnAddNew.setImage(getImage("icons/link_add.png")); //$NON-NLS-1$
-		btnAddNew.setToolTipText(LocalizationServiceHelper.getString(getClass(),
+		btnAddNew.setToolTipText(LocalizationServiceHelper.getString(MultiReferenceSWTRenderer.class,
 			MessageKeys.MultiReferenceSWTRenderer_addNewTooltip));
 		btnAddNew.addSelectionListener(new SelectionAdapter() {
 
@@ -274,7 +304,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		final Button btnDelete = new Button(buttonComposite, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(btnDelete);
 		btnDelete.setImage(getImage("icons/unset_reference.png")); //$NON-NLS-1$
-		btnDelete.setToolTipText(LocalizationServiceHelper.getString(getClass(),
+		btnDelete.setToolTipText(LocalizationServiceHelper.getString(MultiReferenceSWTRenderer.class,
 			MessageKeys.MultiReferenceSWTRenderer_deleteTooltip));
 		btnDelete.addSelectionListener(new SelectionAdapter() {
 
@@ -298,8 +328,15 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 
 	}
 
-	private Image getImage(String path) {
-		return imageRegistryService.getImage(FrameworkUtil.getBundle(getClass()), path);
+	/**
+	 * Returns an {@link Image} from the image registry.
+	 *
+	 * @param path
+	 *            the path to the image
+	 * @return the image
+	 */
+	protected Image getImage(String path) {
+		return imageRegistryService.getImage(FrameworkUtil.getBundle(MultiReferenceSWTRenderer.class), path);
 	}
 
 	private void createContent(Composite composite) throws DatabindingFailedException {
@@ -338,8 +375,8 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 			.setStyle(SWT.NONE)
 			.build(tableViewer);
 
-		final IObservableValue textObservableValue = SWTObservables.observeText(column.getColumn());
-		final IObservableValue tooltipObservableValue = SWTObservables.observeTooltipText(column.getColumn());
+		final IObservableValue textObservableValue = WidgetProperties.text().observe(column.getColumn());
+		final IObservableValue tooltipObservableValue = WidgetProperties.tooltipText().observe(column.getColumn());
 		try {
 			viewModelDBC.bindValue(textObservableValue,
 				labelService.getDisplayName(getVElement().getDomainModelReference(), getViewModelContext()

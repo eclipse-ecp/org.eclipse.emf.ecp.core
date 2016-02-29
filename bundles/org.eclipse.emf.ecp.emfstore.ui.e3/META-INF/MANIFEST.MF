@@ -2,18 +2,21 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ECP EMFStore E3
 Bundle-SymbolicName: org.eclipse.emf.ecp.emfstore.ui.e3;singleton:=true
-Bundle-Version: 1.7.2.qualifier
+Bundle-Version: 1.8.0.qualifier
+Bundle-Activator: org.eclipse.emf.ecp.emfstore.internal.ui.e3.Activator
 Bundle-Vendor: Eclipse Modeling Project
-Require-Bundle: org.eclipse.emf.ecp.core;bundle-version="[1.5.0,2.0.0)",
- org.eclipse.emf.ecp.emfstore.core;bundle-version="[1.5.0,2.0.0)",
- org.eclipse.emf.ecp.emfstore.ui;bundle-version="[1.5.0,2.0.0)",
+Export-Package: org.eclipse.emf.ecp.emfstore.internal.ui.decorator;version="1.8.0";x-internal:=true,
+ org.eclipse.emf.ecp.emfstore.internal.ui.e3;version="1.8.0";x-internal:=true,
+ org.eclipse.emf.ecp.emfstore.internal.ui.handler;version="1.8.0";x-internal:=true;uses:="org.eclipse.core.commands"
+Require-Bundle: org.eclipse.emf.ecp.core;bundle-version="[1.8.0,1.9.0)",
+ org.eclipse.emf.ecp.emfstore.core;bundle-version="[1.8.0,1.9.0)",
+ org.eclipse.emf.ecp.emfstore.ui;bundle-version="[1.8.0,1.9.0)",
  org.eclipse.emf.emfstore.client;bundle-version="[1.3.0,2.0.0)",
  org.eclipse.emf.emfstore.client.ui;bundle-version="[1.3.0,2.0.0)",
- org.eclipse.emf.ecp.ui;bundle-version="[1.5.0,2.0.0)",
- org.eclipse.emf.ecp.common;bundle-version="[1.5.0,2.0.0)",
+ org.eclipse.emf.ecp.ui;bundle-version="[1.8.0,1.9.0)",
+ org.eclipse.emf.ecp.common;bundle-version="[1.8.0,1.9.0)",
  org.eclipse.core.expressions;bundle-version="[3.4.0,4.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.core.commands;version="0.0.0",
  org.eclipse.jface.action;version="0.0.0",
  org.eclipse.jface.dialogs;version="0.0.0",
@@ -30,7 +33,4 @@ Import-Package: org.eclipse.core.commands;version="0.0.0",
  org.eclipse.ui.dialogs;ui.workbench=split;version="0.0.0",
  org.eclipse.ui.handlers;version="0.0.0",
  org.eclipse.ui.plugin;version="0.0.0"
-Export-Package: org.eclipse.emf.ecp.emfstore.internal.ui.decorator;version="1.7.2";x-internal:="true",
- org.eclipse.emf.ecp.emfstore.internal.ui.e3;version="1.7.2";x-internal:="true",
- org.eclipse.emf.ecp.emfstore.internal.ui.handler;version="1.7.2";uses:="org.eclipse.core.commands";x-internal:="true"
-Bundle-Activator: org.eclipse.emf.ecp.emfstore.internal.ui.e3.Activator
+Bundle-ActivationPolicy: lazy

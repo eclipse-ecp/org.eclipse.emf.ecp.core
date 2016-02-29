@@ -11,10 +11,10 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
- * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.keyattribute.test.example.KeyContainer#getKey <em>Key</em>}</li>
- * </ul>
  * </p>
+ * <ul>
+ *   <li>{@link org.eclipse.emf.ecp.view.keyattribute.test.example.KeyContainer#getKey <em>Key</em>}</li>
+ * </ul>
  *
  * @see org.eclipse.emf.ecp.view.keyattribute.test.example.ExamplePackage#getKeyContainer()
  * @model
@@ -28,7 +28,6 @@ public interface KeyContainer extends EObject {
 	 * If the meaning of the '<em>Key</em>' attribute isn't clear, there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
 	 * @return the value of the '<em>Key</em>' attribute.
 	 * @see #setKey(String)
 	 * @see org.eclipse.emf.ecp.view.keyattribute.test.example.ExamplePackage#getKeyContainer_Key()
@@ -38,11 +37,9 @@ public interface KeyContainer extends EObject {
 	String getKey();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.keyattribute.test.example.KeyContainer#getKey
-	 * <em>Key</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.keyattribute.test.example.KeyContainer#getKey <em>Key</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
 	 * @param value the new value of the '<em>Key</em>' attribute.
 	 * @see #getKey()
 	 * @generated

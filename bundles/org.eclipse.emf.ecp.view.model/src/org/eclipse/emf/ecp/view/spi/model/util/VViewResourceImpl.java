@@ -17,10 +17,9 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 /**
  * <!-- begin-user-doc -->
  * The <b>Resource </b> associated with the package.
- * 
+ *
  * @since 1.7
  *        <!-- end-user-doc -->
- *
  * @see org.eclipse.emf.ecp.view.spi.model.util.VViewResourceFactoryImpl
  * @generated
  */

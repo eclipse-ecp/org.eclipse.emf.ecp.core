@@ -7,7 +7,7 @@
       plugin="org.eclipse.emfforms.spreadsheet.core"
       image="eclipse_update_120.jpg"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.7.2.qualifier">
+      license-feature-version="1.8.0.qualifier">
 
    <description>
       %description
@@ -20,6 +20,10 @@
    <license url="%licenseURL">
       %license
    </license>
+
+   <requires>
+      <import feature="org.eclipse.emfforms.view.annotation.feature" version="1.8.0" match="compatible"/>
+   </requires>
 
    <plugin
          id="org.eclipse.emfforms.spreadsheet.core"

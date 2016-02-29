@@ -54,7 +54,7 @@ public final class SWTViewTestHelper {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return a new {@link Shell} with a {@link FillLayout}
 	 */
 	public static Shell createShell() {
@@ -109,13 +109,10 @@ public final class SWTViewTestHelper {
 	public static boolean checkIfThereIsATextControl(Control control) {
 		if (Text.class.isInstance(control)) {
 			return true;
+		} else if (Composite.class.isInstance(control)) {
+			return checkIfThereIsATextControl(Composite.class.cast(control).getChildren()[0]);
 		}
-		Composite controlComposite = (Composite) control;
-		controlComposite = (Composite) controlComposite.getChildren()[0];
-		// controlComposite = (Composite) controlComposite.getChildren()[0];
-		final Control textControl = controlComposite.getChildren()[0];
-
-		return textControl instanceof Text;
+		return false;
 	}
 
 	public static List<Text> getAllTextControls(Control control) {

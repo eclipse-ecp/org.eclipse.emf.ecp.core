@@ -18,6 +18,7 @@ import java.util.Set;
 
 import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
@@ -34,6 +35,8 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
+import org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener;
+import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext;
 
 /**
  * Unset service that, once instantiated, synchronizes the visible state of a
@@ -43,7 +46,7 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedRepor
  * @author jfaltermeier
  *
  */
-public class UnsetService implements ViewModelService {
+public class UnsetService implements ViewModelService, EMFFormsContextListener {
 
 	private static final String DOMAIN_MODEL_NULL_EXCEPTION = "Domain model must not be null."; //$NON-NLS-1$
 	private static final String VIEW_MODEL_NULL_EXCEPTION = "View model must not be null."; //$NON-NLS-1$
@@ -77,46 +80,7 @@ public class UnsetService implements ViewModelService {
 	@Override
 	public void instantiate(ViewModelContext context) {
 		this.context = context;
-
-		viewChangeListener = new ModelChangeAddRemoveListener() {
-			@Override
-			public void notifyChange(ModelChangeNotification notification) {
-				if (notification.getStructuralFeature() == VViewPackage.eINSTANCE.getElement_Visible()) {
-					final EObject notifier = notification.getNotifier();
-					final Notification rawNotification = notification.getRawNotification();
-					if (rawNotification.getNewBooleanValue()) {
-						// isVisible set to true
-						show((VElement) notifier);
-						return;
-					}
-					// isVisible set to false
-					hide((VElement) notifier);
-
-				}
-			}
-
-			@Override
-			public void notifyAdd(Notifier notifier) {
-			}
-
-			@Override
-			public void notifyRemove(Notifier notifier) {
-			}
-		};
-		context.registerViewChangeListener(viewChangeListener);
-
-		final VElement view = context.getViewModel();
-		if (view == null) {
-			throw new IllegalStateException(VIEW_MODEL_NULL_EXCEPTION);
-		}
-
-		final EObject domainModel = context.getDomainModel();
-		if (domainModel == null) {
-			throw new IllegalStateException(DOMAIN_MODEL_NULL_EXCEPTION);
-		}
-
-		initMaps(view, false);
-		unsetInitialHiddenControls();
+		this.context.registerEMFFormsContextListener(this);
 	}
 
 	private void initMaps(VElement view, boolean parentInvisible) {
@@ -152,7 +116,8 @@ public class UnsetService implements ViewModelService {
 	private void addControlToMap(VControl control) {
 		if (control.getDomainModelReference() == null) {
 			Activator.getDefault().getReportService().report(
-				new AbstractReport(String.format("The provided control [%1$s] has no defined DMR.", control), 1)); //$NON-NLS-1$
+				new AbstractReport(String.format("The provided control [%1$s] has no defined DMR.", control), //$NON-NLS-1$
+					IStatus.INFO));
 			return;
 		}
 		IObservableValue observableValue;
@@ -311,7 +276,7 @@ public class UnsetService implements ViewModelService {
 		 * @param feature
 		 *            the feature to wrap
 		 */
-		public FeatureWrapper(EStructuralFeature feature) {
+		FeatureWrapper(EStructuralFeature feature) {
 			this.feature = feature;
 		}
 
@@ -325,6 +290,86 @@ public class UnsetService implements ViewModelService {
 			return feature.equals(featureToCompare);
 		}
 
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener#childContextAdded(org.eclipse.emf.ecp.view.spi.model.VElement,
+	 *      org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext)
+	 */
+	@Override
+	public void childContextAdded(VElement parentElement, EMFFormsViewContext childContext) {
+		// intentionally left empty
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener#childContextDisposed(org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext)
+	 */
+	@Override
+	public void childContextDisposed(EMFFormsViewContext childContext) {
+		// intentionally left empty
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener#contextInitialised()
+	 */
+	@Override
+	public void contextInitialised() {
+
+		viewChangeListener = new ModelChangeAddRemoveListener() {
+			@Override
+			public void notifyChange(ModelChangeNotification notification) {
+				if (notification.getStructuralFeature() == VViewPackage.eINSTANCE.getElement_Visible()) {
+					final EObject notifier = notification.getNotifier();
+					final Notification rawNotification = notification.getRawNotification();
+					if (rawNotification.getNewBooleanValue()) {
+						// isVisible set to true
+						show((VElement) notifier);
+						return;
+					}
+					// isVisible set to false
+					hide((VElement) notifier);
+
+				}
+			}
+
+			@Override
+			public void notifyAdd(Notifier notifier) {
+			}
+
+			@Override
+			public void notifyRemove(Notifier notifier) {
+			}
+		};
+		context.registerViewChangeListener(viewChangeListener);
+
+		final VElement view = context.getViewModel();
+		if (view == null) {
+			throw new IllegalStateException(VIEW_MODEL_NULL_EXCEPTION);
+		}
+
+		final EObject domainModel = context.getDomainModel();
+		if (domainModel == null) {
+			throw new IllegalStateException(DOMAIN_MODEL_NULL_EXCEPTION);
+		}
+
+		initMaps(view, false);
+		unsetInitialHiddenControls();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener#contextDispose()
+	 */
+	@Override
+	public void contextDispose() {
+		// intentionally left empty
 	}
 
 }

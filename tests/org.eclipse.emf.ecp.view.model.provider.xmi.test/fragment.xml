@@ -5,6 +5,10 @@
          point="org.eclipse.emf.ecp.view.model.provider.xmi.file">
       <file
             filePath="viewmodel.view">
+         <filter
+               key="b"
+               value="y">
+         </filter>
       </file>
       <file
             filePath="viewmodel.view">

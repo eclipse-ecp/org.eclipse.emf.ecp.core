@@ -32,7 +32,6 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  *
  * @since 1.2
  *        <!-- end-user-doc -->
- *
  * @generated
  */
 public class ControlItemProvider extends ContainedElementItemProvider {
@@ -56,8 +55,7 @@ public class ControlItemProvider extends ContainedElementItemProvider {
 	 */
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (itemPropertyDescriptors == null)
-		{
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addLabelAlignmentPropertyDescriptor(object);
@@ -73,15 +71,13 @@ public class ControlItemProvider extends ContainedElementItemProvider {
 	 *
 	 * @generated
 	 */
-	protected void addLabelAlignmentPropertyDescriptor(Object object)
-	{
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+	protected void addLabelAlignmentPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_Control_labelAlignment_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_Control_labelAlignment_feature", "_UI_Control_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				getString("_UI_PropertyDescriptor_description", "_UI_Control_labelAlignment_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_Control_type"), //$NON-NLS-1$
 				VViewPackage.Literals.CONTROL__LABEL_ALIGNMENT,
 				true,
 				false,
@@ -97,19 +93,15 @@ public class ControlItemProvider extends ContainedElementItemProvider {
 	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
-	protected void addDomainModelReferencePropertyDescriptor(Object object)
-	{
+	protected void addDomainModelReferencePropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_Control_domainModelReference_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_Control_domainModelReference_feature", "_UI_Control_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				getString("_UI_PropertyDescriptor_description", "_UI_Control_domainModelReference_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_Control_type"), //$NON-NLS-1$
 				VViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCE,
 				true,
 				false,
@@ -161,8 +153,7 @@ public class ControlItemProvider extends ContainedElementItemProvider {
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(VControl.class))
-		{
+		switch (notification.getFeatureID(VControl.class)) {
 		case VViewPackage.CONTROL__LABEL_ALIGNMENT:
 		case VViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
@@ -183,10 +174,8 @@ public class ControlItemProvider extends ContainedElementItemProvider {
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
-		newChildDescriptors.add
-			(createChildParameter
-			(VViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCE,
-				VViewFactory.eINSTANCE.createFeaturePathDomainModelReference()));
+		newChildDescriptors.add(createChildParameter(VViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCE,
+			VViewFactory.eINSTANCE.createFeaturePathDomainModelReference()));
 	}
 
 }

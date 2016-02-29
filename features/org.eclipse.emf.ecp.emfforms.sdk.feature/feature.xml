@@ -2,10 +2,10 @@
 <feature
       id="org.eclipse.emf.ecp.emfforms.sdk.feature"
       label="EMF Forms SDK"
-      version="1.7.2.qualifier"
+      version="1.8.0.qualifier"
       provider-name="%providerName"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.7.2.qualifier">
+      license-feature-version="1.8.0.qualifier">
 
    <description>
       %description
@@ -99,7 +99,6 @@
          id="org.eclipse.emf.ecp.view.model.editor.feature.source"
          version="0.0.0"/>
 
-
    <includes
          id="org.eclipse.emf.ecp.workspace.feature.source"
          version="0.0.0"/>
@@ -107,5 +106,12 @@
    <includes
          id="org.eclipse.emf.ecp.view.edapt.feature"
          version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.emfforms.setup.base"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
 
 </feature>

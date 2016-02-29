@@ -442,7 +442,7 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 
 		private final IObservableList list;
 
-		public DownButtonSelectionAdapter(IObservableList list) {
+		DownButtonSelectionAdapter(IObservableList list) {
 			this.list = list;
 		}
 
@@ -473,7 +473,7 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 
 		private final IObservableList list;
 
-		public UpButtonSelectionAdapter(IObservableList list) {
+		UpButtonSelectionAdapter(IObservableList list) {
 			this.list = list;
 		}
 
@@ -505,7 +505,7 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 
 		private final IObservableList list;
 
-		public RemoveButtonSelectionAdapter(IObservableList list) {
+		RemoveButtonSelectionAdapter(IObservableList list) {
 			this.list = list;
 		}
 
@@ -535,7 +535,7 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 
 		private final IObservableList list;
 
-		public AddButtonSelectionAdapter(IObservableList list) {
+		AddButtonSelectionAdapter(IObservableList list) {
 			this.list = list;
 		}
 
@@ -585,7 +585,7 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 
 		private final IObservableList valueProperty;
 
-		public ECPListEditingSupport(ColumnViewer viewer, CellEditor cellEditor, VControl control,
+		ECPListEditingSupport(ColumnViewer viewer, CellEditor cellEditor, VControl control,
 			VDomainModelReference domainModelReference, IObservableList valueProperty) {
 			super(viewer);
 			this.cellEditor = cellEditor;

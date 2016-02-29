@@ -23,6 +23,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.internal.core.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.provider.ECPTooltipModifierHelper;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
@@ -59,6 +61,116 @@ import org.eclipse.swt.widgets.Label;
  */
 public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRenderer<VControl> {
 
+	/**
+	 * {@link ModelChangeListener} which will sync the top-control to the unset state.
+	 *
+	 * @author Johannes Faltermeier
+	 *
+	 */
+	private static final class UnsetModelChangeListener implements ModelChangeListener {
+		private final EObject eObject;
+		private final Button unsetButton;
+		private final EStructuralFeature structuralFeature;
+		private final Control createUnsetLabel;
+		private final Composite controlComposite;
+		private final StackLayout sl;
+		private final Control baseControl;
+
+		private UnsetModelChangeListener(EObject eObject, Button unsetButton, EStructuralFeature structuralFeature,
+			Control createUnsetLabel, Composite controlComposite, StackLayout sl, Control baseControl) {
+			this.eObject = eObject;
+			this.unsetButton = unsetButton;
+			this.structuralFeature = structuralFeature;
+			this.createUnsetLabel = createUnsetLabel;
+			this.controlComposite = controlComposite;
+			this.sl = sl;
+			this.baseControl = baseControl;
+		}
+
+		@Override
+		public void notifyChange(ModelChangeNotification notification) {
+			if (eObject.eIsSet(structuralFeature)) {
+				if (sl.topControl == baseControl) {
+					return;
+				}
+				sl.topControl = baseControl;
+				unsetButton.setImage(Activator.getImage(ICONS_UNSET_FEATURE));
+				controlComposite.layout(true);
+			} else {
+				if (sl.topControl == createUnsetLabel) {
+					return;
+				}
+				sl.topControl = createUnsetLabel;
+				unsetButton.setImage(Activator.getImage(ICONS_SET_FEATURE));
+				controlComposite.layout(true);
+			}
+		}
+	}
+
+	/**
+	 * @author Jonas
+	 *
+	 */
+	private final class UnsetSelectionAdapter extends SelectionAdapter {
+		private final StackLayout sl;
+		private final Button unsetButton;
+		private final Control createUnsetLabel;
+		private final Control baseControl;
+		private final Composite controlComposite;
+
+		/**
+		 * @param sl
+		 * @param unsetButton
+		 * @param createUnsetLabel
+		 * @param baseControl
+		 * @param controlComposite
+		 */
+		private UnsetSelectionAdapter(StackLayout sl, Button unsetButton, Control createUnsetLabel, Control baseControl,
+			Composite controlComposite) {
+			this.sl = sl;
+			this.unsetButton = unsetButton;
+			this.createUnsetLabel = createUnsetLabel;
+			this.baseControl = baseControl;
+			this.controlComposite = controlComposite;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+		 */
+		@Override
+		public void widgetSelected(SelectionEvent e) {
+			super.widgetSelected(e);
+			IObservableValue observableValue;
+			try {
+				observableValue = getEMFFormsDatabinding()
+					.getObservableValue(getVElement().getDomainModelReference(),
+						getViewModelContext().getDomainModel());
+			} catch (final DatabindingFailedException ex) {
+				getReportService().report(new DatabindingFailedReport(ex));
+				return;
+			}
+			final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+			final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
+			observableValue.dispose();
+			Object value = null;
+			if (!eObject.eIsSet(structuralFeature)) {
+				sl.topControl = baseControl;
+				unsetButton.setImage(Activator.getImage(ICONS_UNSET_FEATURE));
+				value = structuralFeature.getDefaultValue();
+			} else {
+				sl.topControl = createUnsetLabel;
+				unsetButton.setImage(Activator.getImage(ICONS_SET_FEATURE));
+				value = SetCommand.UNSET_VALUE;
+			}
+			final EditingDomain editingDomain = getEditingDomain(eObject);
+			editingDomain.getCommandStack().execute(
+				SetCommand.create(editingDomain, eObject, structuralFeature, value));
+			controlComposite.layout();
+		}
+	}
+
 	private static final String ICONS_UNSET_REFERENCE = "icons/unset_reference.png"; //$NON-NLS-1$
 	private static final String ICONS_UNSET_FEATURE = "icons/unset_feature.png"; //$NON-NLS-1$
 	private static final String ICONS_SET_REFERENCE = "icons/set_reference.png"; //$NON-NLS-1$
@@ -82,6 +194,7 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 	}
 
 	private SWTGridDescription rendererGridDescription;
+	private UnsetModelChangeListener unsetModelChangeListener;
 
 	/**
 	 * {@inheritDoc}
@@ -174,50 +287,15 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false).applyTo(composite);
 		final Composite controlComposite = new Composite(composite, SWT.NONE);
 		controlComposite.setBackground(parent.getBackground());
-		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).applyTo(controlComposite);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, false).applyTo(controlComposite);
 		final StackLayout sl = new StackLayout();
 		controlComposite.setLayout(sl);
 		final Control baseControl = createControl(controlComposite);
 		final Control createUnsetLabel = createUnsetLabel(controlComposite);
 		final Button unsetButton = new Button(composite, SWT.PUSH);
 		GridDataFactory.fillDefaults().align(SWT.CENTER, SWT.CENTER).grab(false, false).applyTo(unsetButton);
-		unsetButton.addSelectionListener(new SelectionAdapter() {
-			/**
-			 * {@inheritDoc}
-			 *
-			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
-			 */
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				super.widgetSelected(e);
-				IObservableValue observableValue;
-				try {
-					observableValue = getEMFFormsDatabinding()
-						.getObservableValue(getVElement().getDomainModelReference(),
-							getViewModelContext().getDomainModel());
-				} catch (final DatabindingFailedException ex) {
-					getReportService().report(new DatabindingFailedReport(ex));
-					return;
-				}
-				final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
-				final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
-				observableValue.dispose();
-				Object value = null;
-				if (!eObject.eIsSet(structuralFeature)) {
-					sl.topControl = baseControl;
-					unsetButton.setImage(Activator.getImage(ICONS_UNSET_FEATURE));
-					value = structuralFeature.getDefaultValue();
-				} else {
-					sl.topControl = createUnsetLabel;
-					unsetButton.setImage(Activator.getImage(ICONS_SET_FEATURE));
-					value = SetCommand.UNSET_VALUE;
-				}
-				final EditingDomain editingDomain = getEditingDomain(eObject);
-				editingDomain.getCommandStack().execute(
-					SetCommand.create(editingDomain, eObject, structuralFeature, value));
-				controlComposite.layout();
-			}
-		});
+		unsetButton.addSelectionListener(
+			new UnsetSelectionAdapter(sl, unsetButton, createUnsetLabel, baseControl, controlComposite));
 
 		final EStructuralFeature structuralFeature = (EStructuralFeature) getModelValue().getValueType();
 		final EObject eObject = (EObject) ((IObserving) getModelValue()).getObserved();
@@ -228,15 +306,21 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 			sl.topControl = createUnsetLabel;
 			unsetButton.setImage(Activator.getImage(ICONS_SET_FEATURE));
 		}
-
+		/* There is no UNSET databinding trigger available */
+		unsetModelChangeListener = new UnsetModelChangeListener(eObject, unsetButton,
+			structuralFeature, createUnsetLabel, controlComposite, sl, baseControl);
+		getViewModelContext().registerDomainChangeListener(unsetModelChangeListener);
 		return composite;
 	}
 
 	private Control createUnsetLabel(Composite parent) {
-		final Label unsetLabel = new Label(parent, SWT.NONE);
+		final Composite composite = new Composite(parent, SWT.NONE);
+		GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(true).applyTo(composite);
+		final Label unsetLabel = new Label(composite, SWT.NONE);
 		unsetLabel.setBackground(parent.getBackground());
 		unsetLabel.setText(getUnsetText());
-		return unsetLabel;
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, true).applyTo(unsetLabel);
+		return composite;
 	}
 
 	/**
@@ -345,6 +429,10 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 	@Override
 	protected void dispose() {
 		rendererGridDescription = null;
+		if (unsetModelChangeListener != null) {
+			getViewModelContext().unregisterDomainChangeListener(unsetModelChangeListener);
+			unsetModelChangeListener = null;
+		}
 		super.dispose();
 	}
 }

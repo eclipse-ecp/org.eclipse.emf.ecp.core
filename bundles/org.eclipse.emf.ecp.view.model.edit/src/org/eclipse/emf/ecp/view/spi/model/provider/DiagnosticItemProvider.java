@@ -43,8 +43,7 @@ public class DiagnosticItemProvider
 	extends ItemProviderAdapter
 	implements
 	IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider,
-	IItemPropertySource
-{
+	IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -52,8 +51,7 @@ public class DiagnosticItemProvider
 	 *
 	 * @generated
 	 */
-	public DiagnosticItemProvider(AdapterFactory adapterFactory)
-	{
+	public DiagnosticItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -65,10 +63,8 @@ public class DiagnosticItemProvider
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object)
-	{
-		if (itemPropertyDescriptors == null)
-		{
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addDiagnosticsPropertyDescriptor(object);
@@ -83,15 +79,13 @@ public class DiagnosticItemProvider
 	 *
 	 * @generated
 	 */
-	protected void addDiagnosticsPropertyDescriptor(Object object)
-	{
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+	protected void addDiagnosticsPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_Diagnostic_diagnostics_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_Diagnostic_diagnostics_feature", "_UI_Diagnostic_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				getString("_UI_PropertyDescriptor_description", "_UI_Diagnostic_diagnostics_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_Diagnostic_type"), //$NON-NLS-1$
 				VViewPackage.Literals.DIAGNOSTIC__DIAGNOSTICS,
 				true,
 				false,
@@ -109,8 +103,7 @@ public class DiagnosticItemProvider
 	 * @generated
 	 */
 	@Override
-	public Object getImage(Object object)
-	{
+	public Object getImage(Object object) {
 		return overlayImage(object, getResourceLocator().getImage("full/obj16/Diagnostic")); //$NON-NLS-1$
 	}
 
@@ -122,8 +115,7 @@ public class DiagnosticItemProvider
 	 * @generated
 	 */
 	@Override
-	public String getText(Object object)
-	{
+	public String getText(Object object) {
 		return getString("_UI_Diagnostic_type"); //$NON-NLS-1$
 	}
 
@@ -136,12 +128,10 @@ public class DiagnosticItemProvider
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(Notification notification)
-	{
+	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(VDiagnostic.class))
-		{
+		switch (notification.getFeatureID(VDiagnostic.class)) {
 		case VViewPackage.DIAGNOSTIC__DIAGNOSTICS:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
@@ -158,8 +148,7 @@ public class DiagnosticItemProvider
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
-	{
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 	}
 
@@ -171,8 +160,7 @@ public class DiagnosticItemProvider
 	 * @generated
 	 */
 	@Override
-	public ResourceLocator getResourceLocator()
-	{
+	public ResourceLocator getResourceLocator() {
 		return ((IChildCreationExtender) adapterFactory).getResourceLocator();
 	}
 

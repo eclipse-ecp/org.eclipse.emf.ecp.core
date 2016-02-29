@@ -19,6 +19,11 @@ import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.ui.e4.editor.ECPE4Editor;
 import org.eclipse.emf.ecp.ui.e4.util.EPartServiceHelper;
 import org.eclipse.emf.ecp.ui.util.ECPModelElementOpener;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * Opens a model element in {@link ECPE4Editor}.
@@ -57,6 +62,16 @@ public class E4ModelElementOpener implements ECPModelElementOpener {
 		}
 
 		final MPart part = partService.createPart(partId);
+		if (part == null) {
+			final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
+			final ServiceReference<ReportService> serviceReference = bundleContext
+				.getServiceReference(ReportService.class);
+			final ReportService reportService = bundleContext.getService(serviceReference);
+			reportService
+				.report(new AbstractReport("There is no partdescription with the id " + partId + " available!")); //$NON-NLS-1$ //$NON-NLS-2$
+			bundleContext.ungetService(serviceReference);
+			return;
+		}
 		partService.showPart(part, PartState.ACTIVATE);
 		part.getContext().set(ECPProject.class, ecpProject);
 		part.getContext().set(ECPE4Editor.INPUT, modelElement);

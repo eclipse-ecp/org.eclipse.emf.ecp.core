@@ -11,6 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.editor.controls;
 
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 
@@ -25,7 +26,18 @@ public class RootEClassControlECPTester extends ControlRootEClassControl2SWTRend
 		if (VViewPackage.eINSTANCE.getView_RootEClass() != feature) {
 			return NOT_APPLICABLE;
 		}
-		return 3;
+		boolean allowChange = Boolean.FALSE;
+		final String[] commandLineArgs = Platform.getCommandLineArgs();
+		for (int i = 0; i < commandLineArgs.length; i++) {
+			final String arg = commandLineArgs[i];
+			if ("-changeableClass".equalsIgnoreCase(arg)) { //$NON-NLS-1$
+				allowChange = Boolean.TRUE;
+			}
+		}
+		if (allowChange) {
+			return 4;
+		}
+		return NOT_APPLICABLE;
 	}
 
 }

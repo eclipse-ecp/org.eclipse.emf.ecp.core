@@ -9,9 +9,11 @@
       <file
             filePath="viewmodel/group.view">
       </file>
+      <!--
       <file
             filePath="viewmodel/control.view">
       </file>
+      -->
       <file
             filePath="viewmodel/TableControl.view">
       </file>

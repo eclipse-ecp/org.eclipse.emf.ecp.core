@@ -15,17 +15,14 @@ package org.eclipse.emfforms.spi.swt.treemasterdetail;
 import java.util.Collection;
 import java.util.List;
 
-import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.common.spi.ChildrenDescriptorCollector;
 import org.eclipse.emf.edit.command.CommandParameter;
-import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emfforms.internal.swt.treemasterdetail.helpers.EcoreHelpers;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.actions.MasterDetailAction;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateChildAction;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateElementCallback;
-import org.eclipse.emfforms.spi.swt.treemasterdetail.util.MasterDetailAction;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -50,6 +47,7 @@ public class TreeMasterDetailMenuListener implements IMenuListener {
 	private final TreeViewer treeViewer;
 	private final EditingDomain editingDomain;
 	private final CreateElementCallback createElementCallback;
+	private final DeleteActionBuilder deleteActionBuilder;
 
 	/**
 	 * Default constructor.
@@ -60,6 +58,8 @@ public class TreeMasterDetailMenuListener implements IMenuListener {
 	 * @param editingDomain the editing domain
 	 * @param rightClickActions the right click actions to show
 	 * @param createElementCallback the create element callback
+	 * @param deleteActionBuilder the delete action builder
+	 * @since 1.8
 	 */
 	public TreeMasterDetailMenuListener(
 		ChildrenDescriptorCollector childrenDescriptorCollector,
@@ -67,7 +67,8 @@ public class TreeMasterDetailMenuListener implements IMenuListener {
 		TreeViewer treeViewer,
 		EditingDomain editingDomain,
 		Collection<MasterDetailAction> rightClickActions,
-		CreateElementCallback createElementCallback) {
+		CreateElementCallback createElementCallback,
+		DeleteActionBuilder deleteActionBuilder) {
 
 		this.childrenDescriptorCollector = childrenDescriptorCollector;
 		this.menuMgr = menuMgr;
@@ -75,6 +76,7 @@ public class TreeMasterDetailMenuListener implements IMenuListener {
 		this.editingDomain = editingDomain;
 		this.rightClickActions = rightClickActions;
 		this.createElementCallback = createElementCallback;
+		this.deleteActionBuilder = deleteActionBuilder;
 	}
 
 	@Override
@@ -136,15 +138,14 @@ public class TreeMasterDetailMenuListener implements IMenuListener {
 		final EObject eObject) {
 		for (final Object descriptor : descriptors) {
 
-			final CommandParameter cp = (CommandParameter) descriptor;
 			if (!CommandParameter.class.isInstance(descriptor)) {
 				continue;
 			}
+			final CommandParameter cp = (CommandParameter) descriptor;
 			if (cp.getEReference() == null) {
 				continue;
 			}
-			if (EcoreHelpers.isGenericFeature(cp.getFeature())) {
-				// This ensures, that we won't show any generic features anymore
+			if (filterDescriptor(cp)) {
 				continue;
 			}
 			if (!cp.getEReference().isMany() && eObject.eIsSet(cp.getEStructuralFeature())) {
@@ -160,6 +161,17 @@ public class TreeMasterDetailMenuListener implements IMenuListener {
 	}
 
 	/**
+	 * Allows to prevent adding a create child action for the given {@link CommandParameter}.
+	 *
+	 * @param cp the descriptor
+	 * @return <code>true</code> if action should be filtered (=not created), <code>false</code> otherwise
+	 * @since 1.8
+	 */
+	protected boolean filterDescriptor(CommandParameter cp) {
+		return false;
+	}
+
+	/**
 	 * Adds the delete action to context menu.
 	 *
 	 * @param editingDomain the editing domain
@@ -168,29 +180,7 @@ public class TreeMasterDetailMenuListener implements IMenuListener {
 	 */
 	private void addDeleteActionToContextMenu(final EditingDomain editingDomain, final IMenuManager manager,
 		final IStructuredSelection selection) {
-
-		// Create the RemovEommand and check, if it can be executed.
-		// If it can't, don't create a menu item
-		final Command removeCommand = RemoveCommand.create(editingDomain, selection.toList());
-
-		if (!removeCommand.canExecute()) {
-			return;
-		}
-
-		final Action deleteAction = new Action() {
-			@Override
-			public void run() {
-				super.run();
-				editingDomain.getCommandStack().execute(removeCommand);
-				// TODO
-				// treeViewer.setSelection(new StructuredSelection(input));
-			}
-		};
-
-		final String deleteImagePath = "icons/delete.png";//$NON-NLS-1$
-		deleteAction.setImageDescriptor(ImageDescriptor
-			.createFromURL(FrameworkUtil.getBundle(TreeMasterDetailComposite.class).getResource(deleteImagePath)));
-		deleteAction.setText("Delete"); //$NON-NLS-1$
+		final Action deleteAction = deleteActionBuilder.createDeleteAction(selection, editingDomain);
 		manager.add(deleteAction);
 	}
 }

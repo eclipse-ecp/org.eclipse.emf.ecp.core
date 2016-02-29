@@ -72,6 +72,7 @@ import org.eclipse.emf.emfstore.bowling.Merchandise;
 import org.eclipse.emf.emfstore.bowling.Player;
 import org.eclipse.emf.emfstore.bowling.impl.FanImpl;
 import org.eclipse.emf.emfstore.bowling.impl.LeagueImpl;
+import org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -174,7 +175,9 @@ public class RuleService_PTest extends CommonRuleTest {
 		 * {@inheritDoc}
 		 *
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecore.EStructuralFeature.Setting)
+		 * @deprecated
 		 */
+		@Deprecated
 		@Override
 		public Set<VControl> getControlsFor(Setting setting) {
 			return null;
@@ -184,7 +187,9 @@ public class RuleService_PTest extends CommonRuleTest {
 		 * {@inheritDoc}
 		 *
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecp.common.spi.UniqueSetting)
+		 * @deprecated
 		 */
+		@Deprecated
 		@Override
 		public Set<VElement> getControlsFor(UniqueSetting setting) {
 			return null;
@@ -220,7 +225,6 @@ public class RuleService_PTest extends CommonRuleTest {
 		@Override
 		public ViewModelContext getChildContext(EObject eObject, VElement parent, VView vView,
 			ViewModelService... viewModelServices) {
-			// TODO Auto-generated method stub
 			return null;
 		}
 
@@ -231,8 +235,6 @@ public class RuleService_PTest extends CommonRuleTest {
 		 */
 		@Override
 		public void registerDisposeListener(ViewModelContextDisposeListener listener) {
-			// TODO Auto-generated method stub
-
 		}
 
 		/**
@@ -242,8 +244,6 @@ public class RuleService_PTest extends CommonRuleTest {
 		 */
 		@Override
 		public void addContextUser(Object user) {
-			// TODO Auto-generated method stub
-
 		}
 
 		/**
@@ -253,8 +253,24 @@ public class RuleService_PTest extends CommonRuleTest {
 		 */
 		@Override
 		public void removeContextUser(Object user) {
-			// TODO Auto-generated method stub
+		}
 
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext#registerEMFFormsContextListener(org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener)
+		 */
+		@Override
+		public void registerEMFFormsContextListener(EMFFormsContextListener contextListener) {
+		}
+
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext#unregisterEMFFormsContextListener(org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener)
+		 */
+		@Override
+		public void unregisterEMFFormsContextListener(EMFFormsContextListener contextListener) {
 		}
 
 	}
@@ -396,6 +412,7 @@ public class RuleService_PTest extends CommonRuleTest {
 			}
 		};
 		ruleService.instantiate(contextStub);
+		ruleService.contextInitialised();
 		assertTrue(contextStub.hasRegisteredViewListener);
 		assertTrue(contextStub.hasRegisteredDomainListener);
 	}
@@ -405,6 +422,7 @@ public class RuleService_PTest extends CommonRuleTest {
 		final RuleService ruleService = new RuleService();
 		final ViewModelContextStub contextStub = new ViewModelContextStub();
 		ruleService.instantiate(contextStub);
+		ruleService.contextInitialised();
 	}
 
 	@Test(expected = IllegalStateException.class)
@@ -412,6 +430,7 @@ public class RuleService_PTest extends CommonRuleTest {
 		final RuleService ruleService = new RuleService();
 		final ViewModelContextStub contextStub = new ViewModelContextStub();
 		ruleService.instantiate(contextStub);
+		ruleService.contextInitialised();
 	}
 
 	@Test
@@ -424,6 +443,7 @@ public class RuleService_PTest extends CommonRuleTest {
 			}
 		};
 		ruleService.instantiate(contextStub);
+		ruleService.contextInitialised();
 		assertTrue(contextStub.hasRegisteredViewListener);
 		assertTrue(contextStub.hasRegisteredDomainListener);
 		ruleService.dispose();
@@ -2364,13 +2384,16 @@ public class RuleService_PTest extends CommonRuleTest {
 		addLeagueShowRule(parentColumn, true);
 		setLeagueToRight();
 		final RuleService ruleService = instantiateRuleService();
+		ruleService.contextInitialised();
 
 		final Map<VElement, Boolean> disabledRenderables = ruleService.getDisabledRenderables(
 			createSettingsMapping(((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-				"League_Wrong"), UniqueSetting.createSetting(league, BowlingPackage.eINSTANCE.getLeague_Name()));
+				"League_Wrong"),
+			UniqueSetting.createSetting(league, BowlingPackage.eINSTANCE.getLeague_Name()));
 		final Map<VElement, Boolean> hiddenRenderables = ruleService.getHiddenRenderables(
 			createSettingsMapping(((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-				"League_Wrong"), UniqueSetting.createSetting(league, BowlingPackage.eINSTANCE.getLeague_Name()));
+				"League_Wrong"),
+			UniqueSetting.createSetting(league, BowlingPackage.eINSTANCE.getLeague_Name()));
 
 		assertEquals(3, hiddenRenderables.size());
 		assertTrue(hiddenRenderables.containsKey(parentColumn));
@@ -2393,10 +2416,12 @@ public class RuleService_PTest extends CommonRuleTest {
 
 		final Map<VElement, Boolean> disabledRenderables = ruleService.getDisabledRenderables(
 			createSettingsMapping(((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-				"League"), UniqueSetting.createSetting(league, BowlingPackage.eINSTANCE.getLeague_Name()));
+				"League"),
+			UniqueSetting.createSetting(league, BowlingPackage.eINSTANCE.getLeague_Name()));
 		final Map<VElement, Boolean> hiddenRenderables = ruleService.getHiddenRenderables(
 			createSettingsMapping(((LeagueImpl) league).eSetting(BowlingPackage.eINSTANCE.getLeague_Name()),
-				"League"), UniqueSetting.createSetting(league, BowlingPackage.eINSTANCE.getLeague_Name()));
+				"League"),
+			UniqueSetting.createSetting(league, BowlingPackage.eINSTANCE.getLeague_Name()));
 
 		assertEquals(0, disabledRenderables.size());
 		assertEquals(0, hiddenRenderables.size());

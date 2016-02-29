@@ -173,8 +173,13 @@ public class IndexdmrValidator extends EObjectValidator {
 	@Override
 	protected boolean validate_MultiplicityConforms(EObject eObject, EStructuralFeature eStructuralFeature,
 		DiagnosticChain diagnostics, Map<Object, Object> context) {
+		/*
+		 * we can ignore the multiplicity of indexdmr & featurepath domain model efeature, because only one of them must
+		 * be fulfilled. the actual check if one of them is fulfilled happens in the resolvable check
+		 */
 		if (eStructuralFeature == VViewPackage.eINSTANCE.getFeaturePathDomainModelReference_DomainModelEFeature()) {
-			/* we only extend feature path dmr for legacy reasons. the efeature bound can be ignored */
+			return true;
+		} else if (eStructuralFeature == VIndexdmrPackage.eINSTANCE.getIndexDomainModelReference_PrefixDMR()) {
 			return true;
 		}
 		return super.validate_MultiplicityConforms(eObject, eStructuralFeature, diagnostics, context);

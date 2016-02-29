@@ -97,4 +97,12 @@
             genModel="model/backgroundStyle.genmodel"/>
    </extension>
 
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated tabStyle -->
+      <package
+            uri="http://www.eclipse.org/emf/ecp/view/template/style/tab/model"
+            class="org.eclipse.emf.ecp.view.template.style.tab.model.VTTabPackage"
+            genModel="model/tabStyle.genmodel"/>
+   </extension>
+
 </plugin>

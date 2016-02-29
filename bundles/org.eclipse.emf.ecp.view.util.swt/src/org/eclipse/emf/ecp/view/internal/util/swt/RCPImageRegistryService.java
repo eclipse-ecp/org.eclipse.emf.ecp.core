@@ -27,17 +27,13 @@ import org.osgi.framework.Bundle;
  */
 public class RCPImageRegistryService implements ImageRegistryService {
 
-	private final ImageRegistry registry;
-
-	/**
-	 * The default constructor.
-	 */
-	public RCPImageRegistryService() {
-		registry = new ImageRegistry();
-	}
+	private ImageRegistry registry;
 
 	@Override
 	public Image getImage(Bundle bundle, String path) {
+		if (registry == null) {
+			registry = new ImageRegistry();
+		}
 		Image image = registry.get(path);
 		if (image == null) {
 			final URL url = bundle.getResource(path);
@@ -52,6 +48,9 @@ public class RCPImageRegistryService implements ImageRegistryService {
 
 	@Override
 	public Image getImage(URL url) {
+		if (registry == null) {
+			registry = new ImageRegistry();
+		}
 		Image image = registry.get(url.toString());
 		if (image == null) {
 			image = ImageDescriptor.createFromURL(url).createImage();

@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
+import org.eclipse.emf.ecp.view.spi.model.DateTimeDisplayType;
 import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VAttachment;
@@ -31,6 +32,7 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedContainer;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
@@ -111,6 +113,14 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 *
 	 * @generated
 	 */
+	private EClass dateTimeDisplayAttachmentEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
 	private EClass stringToObjectMapEntryEClass = null;
 
 	/**
@@ -136,6 +146,14 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * @generated
 	 */
 	private EEnum labelAlignmentEEnum = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	private EEnum dateTimeDisplayTypeEEnum = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -494,6 +512,32 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 1.8
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EClass getDateTimeDisplayAttachment() {
+		return dateTimeDisplayAttachmentEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 1.8
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EAttribute getDateTimeDisplayAttachment_DisplayType() {
+		return (EAttribute) dateTimeDisplayAttachmentEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
 	 *
 	 * @since 1.7
 	 *        <!-- end-user-doc -->
@@ -583,6 +627,19 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	@Override
 	public EEnum getLabelAlignment() {
 		return labelAlignmentEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 1.8
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EEnum getDateTimeDisplayType() {
+		return dateTimeDisplayTypeEEnum;
 	}
 
 	/**
@@ -747,8 +804,12 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 		viewModelPropertiesEClass = createEClass(VIEW_MODEL_PROPERTIES);
 
+		dateTimeDisplayAttachmentEClass = createEClass(DATE_TIME_DISPLAY_ATTACHMENT);
+		createEAttribute(dateTimeDisplayAttachmentEClass, DATE_TIME_DISPLAY_ATTACHMENT__DISPLAY_TYPE);
+
 		// Create enums
 		labelAlignmentEEnum = createEEnum(LABEL_ALIGNMENT);
+		dateTimeDisplayTypeEEnum = createEEnum(DATE_TIME_DISPLAY_TYPE);
 
 		// Create data types
 		domainModelReferenceChangeListenerEDataType = createEDataType(DOMAIN_MODEL_REFERENCE_CHANGE_LISTENER);
@@ -796,6 +857,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 		containedContainerEClass.getESuperTypes().add(getContainer());
 		controlEClass.getESuperTypes().add(getContainedElement());
 		viewModelLoadingPropertiesEClass.getESuperTypes().add(getViewModelProperties());
+		dateTimeDisplayAttachmentEClass.getESuperTypes().add(getAttachment());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(diagnosticEClass, VDiagnostic.class, "Diagnostic", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
@@ -895,12 +957,23 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 		initEClass(viewModelPropertiesEClass, VViewModelProperties.class, "ViewModelProperties", IS_ABSTRACT, //$NON-NLS-1$
 			IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
+		initEClass(dateTimeDisplayAttachmentEClass, VDateTimeDisplayAttachment.class, "DateTimeDisplayAttachment", //$NON-NLS-1$
+			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getDateTimeDisplayAttachment_DisplayType(), getDateTimeDisplayType(), "displayType", null, //$NON-NLS-1$
+			0, 1, VDateTimeDisplayAttachment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
+			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
 		// Initialize enums and add enum literals
 		initEEnum(labelAlignmentEEnum, LabelAlignment.class, "LabelAlignment"); //$NON-NLS-1$
 		addEEnumLiteral(labelAlignmentEEnum, LabelAlignment.DEFAULT);
 		addEEnumLiteral(labelAlignmentEEnum, LabelAlignment.LEFT);
 		addEEnumLiteral(labelAlignmentEEnum, LabelAlignment.TOP);
 		addEEnumLiteral(labelAlignmentEEnum, LabelAlignment.NONE);
+
+		initEEnum(dateTimeDisplayTypeEEnum, DateTimeDisplayType.class, "DateTimeDisplayType"); //$NON-NLS-1$
+		addEEnumLiteral(dateTimeDisplayTypeEEnum, DateTimeDisplayType.TIME_AND_DATE);
+		addEEnumLiteral(dateTimeDisplayTypeEEnum, DateTimeDisplayType.TIME_ONLY);
+		addEEnumLiteral(dateTimeDisplayTypeEEnum, DateTimeDisplayType.DATE_ONLY);
 
 		// Initialize data types
 		initEDataType(domainModelReferenceChangeListenerEDataType, DomainModelReferenceChangeListener.class,

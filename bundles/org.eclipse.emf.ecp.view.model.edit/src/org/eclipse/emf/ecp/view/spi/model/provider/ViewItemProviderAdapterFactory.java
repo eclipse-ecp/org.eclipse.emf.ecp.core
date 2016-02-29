@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -233,6 +233,34 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 
 	/**
 	 * This keeps track of the one adapter used for all
+	 * {@link org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment} instances.
+	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 1.8
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected DateTimeDisplayAttachmentItemProvider dateTimeDisplayAttachmentItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public Adapter createDateTimeDisplayAttachmentAdapter() {
+		if (dateTimeDisplayAttachmentItemProvider == null) {
+			dateTimeDisplayAttachmentItemProvider = new DateTimeDisplayAttachmentItemProvider(this);
+		}
+
+		return dateTimeDisplayAttachmentItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all
 	 * {@link org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -420,6 +448,9 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 		}
 		if (stringToObjectMapEntryItemProvider != null) {
 			stringToObjectMapEntryItemProvider.dispose();
+		}
+		if (dateTimeDisplayAttachmentItemProvider != null) {
+			dateTimeDisplayAttachmentItemProvider.dispose();
 		}
 	}
 

@@ -38,6 +38,8 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
+import org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener;
+import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext;
 
 /**
  * The TableValidationInitiator searches for Tables with an Editing Panel, and creates the necessary ViewModelContexts.
@@ -45,7 +47,7 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedRepor
  * @author Eugen Neufeld
  *
  */
-public class TableValidationInitiator implements GlobalViewModelService {
+public class TableValidationInitiator implements GlobalViewModelService, EMFFormsContextListener {
 
 	/**
 	 * A Mapping Class for tables.
@@ -60,7 +62,7 @@ public class TableValidationInitiator implements GlobalViewModelService {
 		 * @param control The {@link VTableControl}
 		 * @param context The {@link ViewModelContext}
 		 */
-		public TableContextMapping(VTableControl control, ViewModelContext context) {
+		TableContextMapping(VTableControl control, ViewModelContext context) {
 			this.control = control;
 			this.context = context;
 		}
@@ -98,6 +100,7 @@ public class TableValidationInitiator implements GlobalViewModelService {
 			}
 		});
 		checkForTables(context);
+		context.registerEMFFormsContextListener(this);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -201,6 +204,49 @@ public class TableValidationInitiator implements GlobalViewModelService {
 	@Override
 	public void childViewModelContextAdded(ViewModelContext childContext) {
 		checkForTables(childContext);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener#childContextAdded(org.eclipse.emf.ecp.view.spi.model.VElement,
+	 *      org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext)
+	 */
+	@Override
+	public void childContextAdded(VElement parentElement, EMFFormsViewContext childContext) {
+		if (ViewModelContext.class.isInstance(childContext)) {
+			checkForTables(ViewModelContext.class.cast(childContext));
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener#childContextDisposed(org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext)
+	 */
+	@Override
+	public void childContextDisposed(EMFFormsViewContext childContext) {
+		// intentionally left empty
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener#contextInitialised()
+	 */
+	@Override
+	public void contextInitialised() {
+		// intentionally left empty
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener#contextDispose()
+	 */
+	@Override
+	public void contextDispose() {
+		// intentionally left empty
 	}
 
 }

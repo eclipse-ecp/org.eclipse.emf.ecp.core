@@ -48,6 +48,119 @@ import org.eclipse.swt.widgets.Text;
  */
 public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 
+	/**
+	 * @author Jonas
+	 *
+	 */
+	private final class TargetToModelStrategy extends EMFUpdateValueStrategy {
+		private final DataBindingContext databindingContext;
+
+		/**
+		 * @param databindingContext
+		 */
+		private TargetToModelStrategy(DataBindingContext databindingContext) {
+			this.databindingContext = databindingContext;
+		}
+
+		@Override
+		public Object convert(final Object value) {
+			final DecimalFormat format = NumericalHelper.setupFormat(getLocale(),
+				getInstanceClass());
+			try {
+				Number number = null;
+				if (value == null) {
+					number = NumericalHelper.getDefaultValue(getInstanceClass());
+				} else {
+					final ParsePosition pp = new ParsePosition(0);
+					number = format.parse((String) value, pp);
+					if (pp.getErrorIndex() != -1 || pp.getIndex() != ((String) value).length()) {
+						return revertToOldValue(value);
+					}
+					if (NumericalHelper.isInteger(getInstanceClass())) {
+						boolean maxValue = false;
+						final Class<?> instanceClass = getInstanceClass();
+						String formatedValue = ""; //$NON-NLS-1$
+						try {
+							if (Integer.class.isAssignableFrom(instanceClass)
+								|| Integer.class.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
+								if (Integer.MAX_VALUE == number.intValue()) {
+									maxValue = true;
+									formatedValue = format.format(Integer.MAX_VALUE);
+								}
+							} else if (Long.class.isAssignableFrom(instanceClass)
+								|| Long.class.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
+								if (Long.MAX_VALUE == number.longValue()) {
+									maxValue = true;
+									formatedValue = format.format(Long.MAX_VALUE);
+								}
+							}
+						} catch (final IllegalArgumentException ex) {
+							Activator.logException(ex);
+						} catch (final SecurityException ex) {
+							Activator.logException(ex);
+						} catch (final IllegalAccessException ex) {
+							Activator.logException(ex);
+						} catch (final NoSuchFieldException ex) {
+							Activator.logException(ex);
+						}
+
+						if (maxValue) {
+							getText().setText(formatedValue);
+							return NumericalHelper.numberToInstanceClass(number, getInstanceClass());
+						}
+					}
+				}
+				String formatedNumber = ""; //$NON-NLS-1$
+				if (number != null) {
+					formatedNumber = format.format(number);
+				}
+				// if (number.toString().contains("E")
+				// || ((String) value).matches("0*" + formatedNumber + "\\"
+				// + format.getDecimalFormatSymbols().getDecimalSeparator() + "?0*")) {
+				//
+				// }
+				// return revertToOldValue(value);
+				getText().setText(formatedNumber);
+				if (formatedNumber.length() == 0) {
+					return null;
+				}
+				return NumericalHelper.numberToInstanceClass(format.parse(formatedNumber), getInstanceClass());
+			} catch (final ParseException ex) {
+				return revertToOldValue(value);
+			}
+		}
+
+		private Object revertToOldValue(final Object value) {
+
+			if (eStructuralFeature.getDefaultValue() == null && (value == null || value.equals(""))) { //$NON-NLS-1$
+				return null;
+			}
+
+			final Object result = null;
+
+			final MessageDialog messageDialog = new MessageDialog(text.getShell(),
+				LocalizationServiceHelper.getString(getClass(), TableMessageKeys.NumberCellEditor_InvalidNumber),
+				null, LocalizationServiceHelper.getString(getClass(),
+					TableMessageKeys.NumberCellEditor_NumberYouEnteredIsInvalid),
+				MessageDialog.ERROR,
+				new String[] { JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
+
+			new ECPDialogExecutor(messageDialog) {
+				@Override
+				public void handleResult(int codeResult) {
+
+				}
+			}.execute();
+
+			databindingContext.updateTargets();
+
+			if (eStructuralFeature.isUnsettable()) {
+				return SetCommand.UNSET_VALUE;
+			}
+			return result;
+		}
+	}
+
 	private EStructuralFeature eStructuralFeature;
 	private ViewModelContext viewModelContext;
 	private ViewLocaleService localeService;
@@ -147,106 +260,7 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 	 */
 	@Override
 	public UpdateValueStrategy getTargetToModelStrategy(final DataBindingContext databindingContext) {
-		return new EMFUpdateValueStrategy() {
-
-			@Override
-			public Object convert(final Object value) {
-				final DecimalFormat format = NumericalHelper.setupFormat(getLocale(),
-					getInstanceClass());
-				try {
-					Number number = null;
-					if (value == null) {
-						number = NumericalHelper.getDefaultValue(getInstanceClass());
-					} else {
-						final ParsePosition pp = new ParsePosition(0);
-						number = format.parse((String) value, pp);
-						if (pp.getErrorIndex() != -1 || pp.getIndex() != ((String) value).length()) {
-							return revertToOldValue(value);
-						}
-						if (NumericalHelper.isInteger(getInstanceClass())) {
-							boolean maxValue = false;
-							final Class<?> instanceClass = getInstanceClass();
-							String formatedValue = ""; //$NON-NLS-1$
-							try {
-								if (Integer.class.isAssignableFrom(instanceClass)
-									|| Integer.class.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
-									if (Integer.MAX_VALUE == number.intValue()) {
-										maxValue = true;
-										formatedValue = format.format(Integer.MAX_VALUE);
-									}
-								} else if (Long.class.isAssignableFrom(instanceClass)
-									|| Long.class.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
-									if (Long.MAX_VALUE == number.longValue()) {
-										maxValue = true;
-										formatedValue = format.format(Long.MAX_VALUE);
-									}
-								}
-							} catch (final IllegalArgumentException ex) {
-								Activator.logException(ex);
-							} catch (final SecurityException ex) {
-								Activator.logException(ex);
-							} catch (final IllegalAccessException ex) {
-								Activator.logException(ex);
-							} catch (final NoSuchFieldException ex) {
-								Activator.logException(ex);
-							}
-
-							if (maxValue) {
-								getText().setText(formatedValue);
-								return NumericalHelper.numberToInstanceClass(number, getInstanceClass());
-							}
-						}
-					}
-					String formatedNumber = ""; //$NON-NLS-1$
-					if (number != null) {
-						formatedNumber = format.format(number);
-					}
-					// if (number.toString().contains("E")
-					// || ((String) value).matches("0*" + formatedNumber + "\\"
-					// + format.getDecimalFormatSymbols().getDecimalSeparator() + "?0*")) {
-					//
-					// }
-					// return revertToOldValue(value);
-					getText().setText(formatedNumber);
-					if (formatedNumber.length() == 0) {
-						return null;
-					}
-					return NumericalHelper.numberToInstanceClass(format.parse(formatedNumber), getInstanceClass());
-				} catch (final ParseException ex) {
-					return revertToOldValue(value);
-				}
-			}
-
-			private Object revertToOldValue(final Object value) {
-
-				if (eStructuralFeature.getDefaultValue() == null && (value == null || value.equals(""))) { //$NON-NLS-1$
-					return null;
-				}
-
-				final Object result = null;
-
-				final MessageDialog messageDialog = new MessageDialog(text.getShell(),
-					LocalizationServiceHelper.getString(getClass(), TableMessageKeys.NumberCellEditor_InvalidNumber),
-					null, LocalizationServiceHelper.getString(getClass(),
-						TableMessageKeys.NumberCellEditor_NumberYouEnteredIsInvalid),
-					MessageDialog.ERROR,
-					new String[] { JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
-
-				new ECPDialogExecutor(messageDialog) {
-					@Override
-					public void handleResult(int codeResult) {
-
-					}
-				}.execute();
-
-				databindingContext.updateTargets();
-
-				if (eStructuralFeature.isUnsettable()) {
-					return SetCommand.UNSET_VALUE;
-				}
-				return result;
-			}
-		};
+		return new TargetToModelStrategy(databindingContext);
 	}
 
 	/**

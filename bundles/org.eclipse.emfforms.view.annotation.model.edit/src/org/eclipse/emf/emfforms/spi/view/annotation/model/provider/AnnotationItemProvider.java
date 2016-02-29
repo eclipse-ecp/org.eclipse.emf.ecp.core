@@ -114,8 +114,9 @@ public class AnnotationItemProvider extends AttachmentItemProvider {
 	public String getText(Object object) {
 		// begin of custom code
 		final VAnnotation annotation = VAnnotation.class.cast(object);
-		final String key = annotation.getKey() == null ? "null" : annotation.getKey(); //$NON-NLS-1$
-		final String value = annotation.getValue() == null ? "null" : annotation.getValue(); //$NON-NLS-1$
+		final String key = annotation.getKey() != null ? "\"" + annotation.getKey() + "\"" : annotation.getKey(); //$NON-NLS-1$ //$NON-NLS-2$
+		final String value = annotation.getValue() != null ? "\"" + annotation.getValue() + "\"" //$NON-NLS-1$ //$NON-NLS-2$
+			: annotation.getValue();
 		return getString("_UI_Annotation_label", new String[] { key, value }); //$NON-NLS-1$
 	}
 	// end of custom code

@@ -70,7 +70,7 @@ public class EMFFormsSpreadsheetTableControlRenderer_ITest {
 			});
 		final EObject domainModel = getDomainModel();
 		final EObject domainModel2 = getDomainModel();
-		final Workbook workbook = viewRenderer.render(Arrays.asList(domainModel, domainModel2), null, null, null);
+		final Workbook workbook = viewRenderer.render(Arrays.asList(domainModel, domainModel2), null, null);
 
 		final Sheet sheet = workbook.getSheet("root"); //$NON-NLS-1$
 		assertEquals(4, sheet.getLastRowNum()); // the rows 0,1,2 are fix and then 3,4 are added
@@ -99,7 +99,7 @@ public class EMFFormsSpreadsheetTableControlRenderer_ITest {
 			});
 		final EObject domainModel = getDomainModel();
 		final EObject domainModel2 = getDomainModel();
-		final Workbook workbook = viewRenderer.render(Arrays.asList(domainModel, domainModel2), null, null, null);
+		final Workbook workbook = viewRenderer.render(Arrays.asList(domainModel, domainModel2), null, null);
 
 		final Sheet sheet = workbook.getSheet("root"); //$NON-NLS-1$
 		assertEquals(4, sheet.getLastRowNum()); // the rows 0,1,2 are fix and then 3,4 are added

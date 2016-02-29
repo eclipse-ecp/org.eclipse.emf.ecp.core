@@ -40,7 +40,7 @@ import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
-import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -69,22 +69,35 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 	 *
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
-	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
+	 * @param emfFormsDatabinding The {@link EMFFormsDatabindingEMF}
 	 * @param emfFormsLabelProvider The {@link EMFFormsLabelProvider}
 	 * @param reportService The {@link ReportService}
 	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
 	 * @param imageRegistryService The {@link ImageRegistryService}
 	 * @param emfFormsEditSupport The {@link EMFFormsEditSupport}
-	 * @since 1.6
+	 * @since 1.8
 	 */
+	// BEGIN COMPLEX CODE
 	@Inject
-	public TableControlDetailPanelRenderer(VTableControl vElement, ViewModelContext viewContext,
+	public TableControlDetailPanelRenderer(
+		VTableControl vElement,
+		ViewModelContext viewContext,
 		ReportService reportService,
-		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
-		VTViewTemplateProvider vtViewTemplateProvider, ImageRegistryService imageRegistryService,
+		EMFFormsDatabindingEMF emfFormsDatabinding,
+		EMFFormsLabelProvider emfFormsLabelProvider,
+		VTViewTemplateProvider vtViewTemplateProvider,
+		ImageRegistryService imageRegistryService,
 		EMFFormsEditSupport emfFormsEditSupport) {
-		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider,
-			imageRegistryService, emfFormsEditSupport);
+		// END COMPLEX CODE
+		super(
+			vElement,
+			viewContext,
+			reportService,
+			emfFormsDatabinding,
+			emfFormsLabelProvider,
+			vtViewTemplateProvider,
+			imageRegistryService,
+			emfFormsEditSupport);
 	}
 
 	private ECPSWTView ecpView;

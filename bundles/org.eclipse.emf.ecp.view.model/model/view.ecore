@@ -79,4 +79,12 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ViewModelProperties" abstract="true"
       interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="DateTimeDisplayAttachment" eSuperTypes="#//Attachment">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="displayType" eType="#//DateTimeDisplayType"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="DateTimeDisplayType">
+    <eLiterals name="TimeAndDate" literal="TimeAndDate"/>
+    <eLiterals name="TimeOnly" value="1"/>
+    <eLiterals name="DateOnly" value="2"/>
+  </eClassifiers>
 </ecore:EPackage>

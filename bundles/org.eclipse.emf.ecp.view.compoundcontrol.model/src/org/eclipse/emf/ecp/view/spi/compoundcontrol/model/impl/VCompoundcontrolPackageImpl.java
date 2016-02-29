@@ -27,8 +27,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  *
  * @generated
  */
-public class VCompoundcontrolPackageImpl extends EPackageImpl implements VCompoundcontrolPackage
-{
+public class VCompoundcontrolPackageImpl extends EPackageImpl implements VCompoundcontrolPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -51,8 +50,7 @@ public class VCompoundcontrolPackageImpl extends EPackageImpl implements VCompou
 	 * @see #init()
 	 * @generated
 	 */
-	private VCompoundcontrolPackageImpl()
-	{
+	private VCompoundcontrolPackageImpl() {
 		super(eNS_URI, VCompoundcontrolFactory.eINSTANCE);
 	}
 
@@ -77,8 +75,7 @@ public class VCompoundcontrolPackageImpl extends EPackageImpl implements VCompou
 	 * @see #initializePackageContents()
 	 * @generated
 	 */
-	public static VCompoundcontrolPackage init()
-	{
+	public static VCompoundcontrolPackage init() {
 		if (isInited) {
 			return (VCompoundcontrolPackage) EPackage.Registry.INSTANCE.getEPackage(VCompoundcontrolPackage.eNS_URI);
 		}
@@ -86,7 +83,7 @@ public class VCompoundcontrolPackageImpl extends EPackageImpl implements VCompou
 		// Obtain or create and register package
 		final VCompoundcontrolPackageImpl theCompoundcontrolPackage = (VCompoundcontrolPackageImpl) (EPackage.Registry.INSTANCE
 			.get(eNS_URI) instanceof VCompoundcontrolPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
-			: new VCompoundcontrolPackageImpl());
+				: new VCompoundcontrolPackageImpl());
 
 		isInited = true;
 
@@ -114,8 +111,7 @@ public class VCompoundcontrolPackageImpl extends EPackageImpl implements VCompou
 	 * @generated
 	 */
 	@Override
-	public EClass getCompoundControl()
-	{
+	public EClass getCompoundControl() {
 		return compoundControlEClass;
 	}
 
@@ -126,8 +122,7 @@ public class VCompoundcontrolPackageImpl extends EPackageImpl implements VCompou
 	 * @generated
 	 */
 	@Override
-	public EReference getCompoundControl_Controls()
-	{
+	public EReference getCompoundControl_Controls() {
 		return (EReference) compoundControlEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -138,8 +133,7 @@ public class VCompoundcontrolPackageImpl extends EPackageImpl implements VCompou
 	 * @generated
 	 */
 	@Override
-	public VCompoundcontrolFactory getCompoundcontrolFactory()
-	{
+	public VCompoundcontrolFactory getCompoundcontrolFactory() {
 		return (VCompoundcontrolFactory) getEFactoryInstance();
 	}
 
@@ -159,8 +153,7 @@ public class VCompoundcontrolPackageImpl extends EPackageImpl implements VCompou
 	 *
 	 * @generated
 	 */
-	public void createPackageContents()
-	{
+	public void createPackageContents() {
 		if (isCreated) {
 			return;
 		}
@@ -187,8 +180,7 @@ public class VCompoundcontrolPackageImpl extends EPackageImpl implements VCompou
 	 *
 	 * @generated
 	 */
-	public void initializePackageContents()
-	{
+	public void initializePackageContents() {
 		if (isInitialized) {
 			return;
 		}
@@ -207,16 +199,14 @@ public class VCompoundcontrolPackageImpl extends EPackageImpl implements VCompou
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		compoundControlEClass.getESuperTypes().add(theViewPackage.getContainedElement());
+		compoundControlEClass.getESuperTypes().add(theViewPackage.getControl());
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(compoundControlEClass, VCompoundControl.class,
-			"CompoundControl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-			getCompoundControl_Controls(),
-			theViewPackage.getControl(),
-			null,
-			"controls", null, 1, -1, VCompoundControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEClass(compoundControlEClass, VCompoundControl.class, "CompoundControl", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
+			IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getCompoundControl_Controls(), theViewPackage.getControl(), null, "controls", null, 1, -1, //$NON-NLS-1$
+			VCompoundControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

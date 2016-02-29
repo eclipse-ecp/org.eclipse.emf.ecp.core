@@ -22,28 +22,27 @@ import org.eclipse.jface.viewers.Viewer;
 /**
  * @author Eike Stepper
  */
-public class RefreshViewerAction extends Action
-{
+public class RefreshViewerAction extends Action {
 	private final Viewer viewer;
 
-	public RefreshViewerAction(Viewer viewer)
-	{
+	/**
+	 * Action to refresh a viewer.
+	 *
+	 * @param viewer the {@link Viewer} to be refreshed.
+	 */
+	public RefreshViewerAction(Viewer viewer) {
 		super(Messages.RefreshViewerAction_Title, Activator.getImageDescriptor("icons/refresh.gif")); //$NON-NLS-1$
 		setToolTipText(Messages.RefreshViewerAction_Tooltip);
 		this.viewer = viewer;
 	}
 
 	@Override
-	public void run()
-	{
-		try
-		{
-			if (viewer instanceof StructuredViewer)
-			{
+	public void run() {
+		try {
+			if (viewer instanceof StructuredViewer) {
 				final StructuredViewer structuredViewer = (StructuredViewer) viewer;
 				final IContentProvider contentProvider = structuredViewer.getContentProvider();
-				if (contentProvider instanceof TreeContentProvider)
-				{
+				if (contentProvider instanceof TreeContentProvider) {
 					final TreeContentProvider<?> treeContentProvider = (TreeContentProvider<?>) contentProvider;
 					treeContentProvider.refreshViewer();
 					return;
@@ -51,8 +50,7 @@ public class RefreshViewerAction extends Action
 			}
 
 			viewer.refresh();
-		} catch (final Exception ex)
-		{
+		} catch (final Exception ex) {
 			Activator.log(ex);
 		}
 	}

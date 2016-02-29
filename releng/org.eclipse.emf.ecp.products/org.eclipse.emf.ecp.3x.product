@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="%productName" uid="org.eclipse.emf.ecp.3x" id="org.eclipse.emf.ecp.application.e3.product" application="org.eclipse.emf.ecp.application.e3.application" version="1.7.2.qualifier" useFeatures="true" includeLaunchers="true">
+<product name="%productName" uid="org.eclipse.emf.ecp.3x" id="org.eclipse.emf.ecp.application.e3.product" application="org.eclipse.emf.ecp.application.e3.application" version="1.8.0.qualifier" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
       <image path="/org.eclipse.emf.ecp.application.e3/icons/eclipse_lg.gif"/>
@@ -58,6 +58,12 @@
       <feature id="org.eclipse.emf.ecp.demo.e3.feature"/>
       <feature id="org.eclipse.emf.ecp.view.model.controls.feature"/>
       <feature id="org.eclipse.emf.ecp.test.model.feature"/>
+      <feature id="org.eclipse.emf.emfstore.client.feature"/>
+      <feature id="org.eclipse.emf.emfstore.client.ui.feature"/>
+      <feature id="org.eclipse.emf.emfstore.common.feature"/>
+      <feature id="org.eclipse.emf.emfstore.ecore.feature"/>
+      <feature id="org.eclipse.emf.emfstore.server.feature"/>
+      <feature id="org.eclipse.emf.ecp.emfforms.idetooling.feature"/>
    </features>
 
    <configurations>

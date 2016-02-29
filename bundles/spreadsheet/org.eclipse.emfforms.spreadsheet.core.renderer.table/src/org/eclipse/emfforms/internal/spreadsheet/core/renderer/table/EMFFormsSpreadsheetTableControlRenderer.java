@@ -12,9 +12,10 @@
 package org.eclipse.emfforms.internal.spreadsheet.core.renderer.table;
 
 import org.apache.poi.ss.usermodel.Workbook;
-import org.eclipse.core.databinding.observable.list.IObservableList;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference;
@@ -123,28 +124,18 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 
 				dmrToResolve = exportTableParent.getIndexDMRToResolve();
 			}
+			// TODO remove asap
+			dmrToResolve.init(viewModelContext.getDomainModel());
 
-			final IObservableList observableList = emfformsDatabinding.getObservableList(
+			final Setting tableSetting = emfformsDatabinding.getSetting(
 				dmrToResolve, viewModelContext.getDomainModel());
-
+			@SuppressWarnings("unchecked")
+			final EList<EObject> tableEntries = (EList<EObject>) tableSetting.get(true);
 			final VTableDomainModelReference tableDomainModelReference = (VTableDomainModelReference) vElement
 				.getDomainModelReference();
 
-			for (int i = 0; i < 3; i++) {
-				String prefixName = (String) emfformsLabelProvider.getDisplayName(
-					tableDomainModelReference.getDomainModelReference())
-					.getValue();
-				if (prefixName == null || prefixName.length() == 0) {
-					try {
-						prefixName = emfformsDatabinding.getValueProperty(
-							tableDomainModelReference.getDomainModelReference(),
-							viewModelContext.getDomainModel()).getStructuralFeature()
-							.getName();
-					} catch (final DatabindingFailedException ex) {
-						reportService
-							.report(new EMFFormsSpreadsheetReport(ex, EMFFormsSpreadsheetReport.ERROR));
-					}
-				}
+			for (int i = 0; i < getNumberOfExportElements(vElement, tableSetting); i++) {
+				final String prefixName = getPrefixName(tableSetting, tableDomainModelReference, i);
 
 				final VIndexDomainModelReference indexDMR = VIndexdmrFactory.eINSTANCE
 					.createIndexDomainModelReference();
@@ -169,7 +160,7 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 
 					vControl.setDomainModelReference(EcoreUtil.copy(domainModelReference));
 					final ViewModelContext subViewModelContext = viewModelContext.getChildContext(
-						viewModelContext.getDomainModel(), vElement, (VView) viewModelContext.getViewModel());
+						viewModelContext.getDomainModel(), vElement, null);
 					subViewModelContext.putContextValue(EMFFormsExportTableParent.EXPORT_TABLE_PARENT, tableParent);
 
 					numColumns += controlRenderer.render(workbook, vControl, subViewModelContext,
@@ -180,7 +171,8 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 				}
 
 				if (vElement.getDetailEditing() != DetailEditing.NONE) {
-					final EObject tableEntry = getTableEntry(observableList, i);
+					final EObject tableEntry = getTableEntry(tableEntries, i,
+						(EReference) tableSetting.getEStructuralFeature());
 					final VView viewModel = getView(vElement, tableEntry, viewModelContext);
 					if (viewModel == null) {
 						continue;
@@ -214,12 +206,35 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 		return numColumns;
 	}
 
-	private EObject getTableEntry(final IObservableList observableList, int currentColumn) {
+	/**
+	 * Returns the number of entries that should be exported.
+	 *
+	 * @param tableControl The VTableControl being exported
+	 * @param tableSetting The Setting of the table being exported
+	 * @return The number of entries to export
+	 */
+	protected int getNumberOfExportElements(VTableControl tableControl, Setting tableSetting) {
+		return 3;
+	}
+
+	private String getPrefixName(final Setting tableSetting, final VTableDomainModelReference tableDomainModelReference,
+		int index) throws NoLabelFoundException {
+		String prefixName = (String) emfformsLabelProvider.getDisplayName(
+			tableDomainModelReference.getDomainModelReference())
+			.getValue();
+		if (prefixName == null || prefixName.length() == 0) {
+			prefixName = tableSetting.getEStructuralFeature()
+				.getName();
+		}
+		return index + 1 + "_" + prefixName; //$NON-NLS-1$
+	}
+
+	private EObject getTableEntry(EList<EObject> tableEntries, int currentColumn, EReference tableEntryReference) {
 		EObject tableEntry;
-		if (observableList.size() > currentColumn) {
-			tableEntry = (EObject) observableList.get(currentColumn);
+		if (tableEntries.size() > currentColumn) {
+			tableEntry = tableEntries.get(currentColumn);
 		} else {
-			tableEntry = EcoreUtil.create(EReference.class.cast(observableList.getElementType())
+			tableEntry = EcoreUtil.create(tableEntryReference
 				.getEReferenceType());
 		}
 		return tableEntry;

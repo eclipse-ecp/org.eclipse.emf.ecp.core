@@ -2,10 +2,10 @@
 <feature
       id="org.eclipse.emf.ecp.sdk.feature"
       label="ECP SDK 3.x"
-      version="1.7.2.qualifier"
+      version="1.8.0.qualifier"
       provider-name="Eclipse Modeling Project"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.7.2.qualifier">
+      license-feature-version="1.8.0.qualifier">
 
    <description>
       %description

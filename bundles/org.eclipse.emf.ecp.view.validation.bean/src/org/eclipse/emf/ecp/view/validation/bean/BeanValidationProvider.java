@@ -1,11 +1,11 @@
 /*******************************************************************************
  * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  ******************************************************************************/
@@ -55,21 +55,21 @@ public abstract class BeanValidationProvider implements ValidationProvider {
 
 	private void instantiateValidator(InputStream[] inputStreams) {
 		Configuration<?> configure = Validation.byDefaultProvider().configure();
-		List<InputStream> allInputStreams = new ArrayList<InputStream>(
-				Arrays.asList(inputStreams));
+		final List<InputStream> allInputStreams = new ArrayList<InputStream>(
+			Arrays.asList(inputStreams));
 		allInputStreams.addAll(readExtensionPoints());
-		for (InputStream is : allInputStreams) {
+		for (final InputStream is : allInputStreams) {
 			configure = configure.addMapping(is);
 		}
-		ValidatorFactory validatorFactory = configure.buildValidatorFactory();
-		MessageInterpolator interpolator = getMessageInterpolator(validatorFactory
-				.getMessageInterpolator());
+		final ValidatorFactory validatorFactory = configure.buildValidatorFactory();
+		final MessageInterpolator interpolator = getMessageInterpolator(validatorFactory
+			.getMessageInterpolator());
 		validatorContext = validatorFactory.usingContext().messageInterpolator(
-				interpolator);
-		for (InputStream is : allInputStreams) {
+			interpolator);
+		for (final InputStream is : allInputStreams) {
 			try {
 				is.close();
-			} catch (IOException e) {
+			} catch (final IOException e) {
 				Activator.log(e);
 			}
 		}
@@ -77,20 +77,20 @@ public abstract class BeanValidationProvider implements ValidationProvider {
 
 	private Collection<InputStream> readExtensionPoints() {
 		final IExtensionRegistry extensionRegistry = Platform
-				.getExtensionRegistry();
+			.getExtensionRegistry();
 		if (extensionRegistry == null) {
 			return Collections.emptyList();
 		}
-		List<InputStream> inputStreams = new ArrayList<InputStream>();
+		final List<InputStream> inputStreams = new ArrayList<InputStream>();
 		final IConfigurationElement[] controls = extensionRegistry
-				.getConfigurationElementsFor("org.eclipse.emf.ecp.view.validation.bean.violations"); //$NON-NLS-1$
+			.getConfigurationElementsFor("org.eclipse.emf.ecp.view.validation.bean.violations"); //$NON-NLS-1$
 		for (final IConfigurationElement e : controls) {
 			try {
-				String xmlViolationPath = e.getAttribute("xml");
+				final String xmlViolationPath = e.getAttribute("xml"); //$NON-NLS-1$
 				final Bundle bundle = Platform.getBundle(e.getContributor()
-						.getName());
+					.getName());
 				inputStreams.add(bundle.getResource(xmlViolationPath)
-						.openStream());
+					.openStream());
 			} catch (final IOException e1) {
 				Activator.log(e1);
 			}
@@ -100,31 +100,31 @@ public abstract class BeanValidationProvider implements ValidationProvider {
 
 	@Override
 	public List<Diagnostic> validate(EObject eObject) {
-		Validator validator = validatorContext.getValidator();
-		List<Diagnostic> diagnostics = new ArrayList<Diagnostic>();
-		Set<ConstraintViolation<EObject>> validationResult = validator
-				.validate(eObject);
-		for (ConstraintViolation<EObject> violation : validationResult) {
+		final Validator validator = validatorContext.getValidator();
+		final List<Diagnostic> diagnostics = new ArrayList<Diagnostic>();
+		final Set<ConstraintViolation<EObject>> validationResult = validator
+			.validate(eObject);
+		for (final ConstraintViolation<EObject> violation : validationResult) {
 			Node lastNode = null;
-			Iterator<Node> pathIterator = violation.getPropertyPath()
-					.iterator();
+			final Iterator<Node> pathIterator = violation.getPropertyPath()
+				.iterator();
 			while (pathIterator.hasNext()) {
 				lastNode = pathIterator.next();
 			}
-			EObject leafBean = (EObject) violation.getLeafBean();
-			EStructuralFeature eStructuralFeature = leafBean.eClass()
-					.getEStructuralFeature(lastNode.getName());
-			int severity = getSeverity(violation);
+			final EObject leafBean = (EObject) violation.getLeafBean();
+			final EStructuralFeature eStructuralFeature = leafBean.eClass()
+				.getEStructuralFeature(lastNode.getName());
+			final int severity = getSeverity(violation);
 			final BasicDiagnostic diagnostic = new BasicDiagnostic(severity,
-					"Bean Validation", 0, violation.getMessage(), new Object[] {
-							violation.getLeafBean(), eStructuralFeature });
+				"Bean Validation", 0, violation.getMessage(), new Object[] { //$NON-NLS-1$
+					violation.getLeafBean(), eStructuralFeature });
 			diagnostics.add(diagnostic);
 		}
 		return diagnostics;
 	}
 
 	protected abstract MessageInterpolator getMessageInterpolator(
-			MessageInterpolator messageInterpolator);
+		MessageInterpolator messageInterpolator);
 
 	protected abstract int getSeverity(ConstraintViolation<EObject> violation);
 

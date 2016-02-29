@@ -125,7 +125,7 @@ public abstract class AbstractControl_PTest {
 
 	protected ViewModelContext context;
 	protected VControl vControl;
-	private Shell shell;
+	protected Shell shell;
 
 	protected void setup() throws DatabindingFailedException {
 		vControl = Mockito.mock(VControl.class);

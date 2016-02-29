@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EObjectValidator;
+import org.eclipse.emf.ecp.view.spi.model.DateTimeDisplayType;
 import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VAttachment;
@@ -32,6 +33,7 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedContainer;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
@@ -154,8 +156,12 @@ public class ViewValidator extends EObjectValidator {
 			return validateStringToObjectMapEntry((Map.Entry<?, ?>) value, diagnostics, context);
 		case VViewPackage.VIEW_MODEL_PROPERTIES:
 			return validateViewModelProperties((VViewModelProperties) value, diagnostics, context);
+		case VViewPackage.DATE_TIME_DISPLAY_ATTACHMENT:
+			return validateDateTimeDisplayAttachment((VDateTimeDisplayAttachment) value, diagnostics, context);
 		case VViewPackage.LABEL_ALIGNMENT:
 			return validateLabelAlignment((LabelAlignment) value, diagnostics, context);
+		case VViewPackage.DATE_TIME_DISPLAY_TYPE:
+			return validateDateTimeDisplayType((DateTimeDisplayType) value, diagnostics, context);
 		case VViewPackage.DOMAIN_MODEL_REFERENCE_CHANGE_LISTENER:
 			return validateDomainModelReferenceChangeListener((DomainModelReferenceChangeListener) value, diagnostics,
 				context);
@@ -448,7 +454,6 @@ public class ViewValidator extends EObjectValidator {
 	 *
 	 * @since 1.7
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	public boolean validateViewModelLoadingProperties(VViewModelLoadingProperties viewModelLoadingProperties,
@@ -482,11 +487,37 @@ public class ViewValidator extends EObjectValidator {
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 1.8
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public boolean validateDateTimeDisplayAttachment(VDateTimeDisplayAttachment dateTimeDisplayAttachment,
+		DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(dateTimeDisplayAttachment, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
 	public boolean validateLabelAlignment(LabelAlignment labelAlignment, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
+		return true;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 1.8
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public boolean validateDateTimeDisplayType(DateTimeDisplayType dateTimeDisplayType, DiagnosticChain diagnostics,
 		Map<Object, Object> context) {
 		return true;
 	}

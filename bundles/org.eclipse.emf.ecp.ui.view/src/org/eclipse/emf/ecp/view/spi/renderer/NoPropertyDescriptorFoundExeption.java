@@ -16,7 +16,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 
 /**
- * Exception indicating, that an {@link org.eclipse.emf.edit.provider.ItemPropertyDescriptor ItemPropertyDescriptor}
+ * Exception indicating, that an ItemPropertyDescriptor
  * could not be found for an {@link EObject} and its {@link EStructuralFeature}.
  *
  * @author Eugen Neufeld
@@ -35,12 +35,11 @@ public class NoPropertyDescriptorFoundExeption extends ECPRendererException {
 
 	/**
 	 * Constructor for an {@link Exception} which indicates, that no
-	 * {@link org.eclipse.emf.edit.provider.ItemPropertyDescriptor ItemPropertyDescriptor} was found.
+	 * ItemPropertyDescriptor was found.
 	 *
-	 * @param modelElement the {@link EObject} the {@link org.eclipse.emf.edit.provider.ItemPropertyDescriptor
-	 *            ItemPropertyDescriptor} was not found for
+	 * @param modelElement the {@link EObject} the ItemPropertyDescriptor was not found for
 	 * @param targetFeature the {@link EStructuralFeature} the
-	 *            {@link org.eclipse.emf.edit.provider.ItemPropertyDescriptor ItemPropertyDescriptor} was not found for
+	 *            ItemPropertyDescriptor was not found for
 	 */
 	public NoPropertyDescriptorFoundExeption(EObject modelElement,
 		EStructuralFeature targetFeature) {
@@ -50,8 +49,7 @@ public class NoPropertyDescriptorFoundExeption extends ECPRendererException {
 	}
 
 	/**
-	 * The {@link EObject} which has a missing {@link org.eclipse.emf.edit.provider.ItemPropertyDescriptor
-	 * ItemPropertyDescriptor}.
+	 * The {@link EObject} which has a missing ItemPropertyDescriptor.
 	 *
 	 * @return the {@link EObject}
 	 */
@@ -60,8 +58,7 @@ public class NoPropertyDescriptorFoundExeption extends ECPRendererException {
 	}
 
 	/**
-	 * The {@link EStructuralFeature} which misses a {@link org.eclipse.emf.edit.provider.ItemPropertyDescriptor
-	 * ItemPropertyDescriptor}.
+	 * The {@link EStructuralFeature} which misses a ItemPropertyDescriptor.
 	 *
 	 * @return the {@link EStructuralFeature}
 	 */
