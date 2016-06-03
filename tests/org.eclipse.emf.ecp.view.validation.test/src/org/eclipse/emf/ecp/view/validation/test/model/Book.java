@@ -23,12 +23,12 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Book#getTitle <em>Title</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Book#getPages <em>Pages</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Book#getWriters <em>Writers</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.ecp.view.validation.test.model.TestPackage#getBook()
  * @model

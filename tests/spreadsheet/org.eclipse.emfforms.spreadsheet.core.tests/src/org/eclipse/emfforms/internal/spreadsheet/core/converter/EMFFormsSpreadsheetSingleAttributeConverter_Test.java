@@ -648,8 +648,21 @@ public class EMFFormsSpreadsheetSingleAttributeConverter_Test {
 	}
 
 	@Test
-	public void testGetCellValueStringErrorIllegalStateException() {
+	public void testGetCellValueStringFromNumber() {
 		final Double cellValue = 1.1;
+		cell.setCellValue(cellValue);
+		final EAttribute eAttribute = EcoreFactory.eINSTANCE.createEAttribute();
+		eAttribute.setEType(EcorePackage.eINSTANCE.getEString());
+		try {
+			converter.getCellValue(cell, eAttribute);
+		} catch (final EMFFormsConverterException ex) {
+			fail(ex.getMessage());
+		}
+	}
+
+	@Test
+	public void testGetCellValueStringErrorIllegalStateException() {
+		final Boolean cellValue = Boolean.FALSE;
 		cell.setCellValue(cellValue);
 		final EAttribute eAttribute = EcoreFactory.eINSTANCE.createEAttribute();
 		eAttribute.setEType(EcorePackage.eINSTANCE.getEString());

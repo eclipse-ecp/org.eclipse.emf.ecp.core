@@ -32,5 +32,10 @@
     <genClasses ecoreClass="table.ecore#//ReadOnlyColumnConfiguration">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference table.ecore#//ReadOnlyColumnConfiguration/columnDomainReferences"/>
     </genClasses>
+    <genClasses ecoreClass="table.ecore#//WidthConfiguration">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference table.ecore#//WidthConfiguration/columnDomainReference"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute table.ecore#//WidthConfiguration/weight"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute table.ecore#//WidthConfiguration/minWidth"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

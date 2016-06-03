@@ -11,6 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.section.swt;
 
+import javax.inject.Inject;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.section.model.VSection;
@@ -38,6 +40,7 @@ public class SectionLeafSWTRenderer extends AbstractSectionSWTRenderer {
 	 * @param reportService the {@link ReportService}
 	 * @since 1.6
 	 */
+	@Inject
 	public SectionLeafSWTRenderer(VSection vElement, ViewModelContext viewContext, ReportService reportService) {
 		super(vElement, viewContext, reportService);
 	}

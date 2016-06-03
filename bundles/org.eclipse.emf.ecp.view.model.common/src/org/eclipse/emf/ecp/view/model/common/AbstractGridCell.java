@@ -30,6 +30,32 @@ public abstract class AbstractGridCell<RENDERER extends AbstractRenderer<?>> {
 	private boolean verticalFill = true;
 	private boolean horizontalGrab = true;
 	private boolean horizontalFill = true;
+	private Alignment horizontalAlignment = Alignment.BEGINNING;
+	private Alignment verticalAlignment = Alignment.CENTER;
+
+	/**
+	 * Either horizontal or vertical alignment within the cell.
+	 * For filling the complete horizontal or vertical space, use {@link AbstractGridCell#setHorizontalFill(boolean)} or
+	 * {@link AbstractGridCell#setVerticalFill(boolean)} respectively.
+	 *
+	 * @author Martin Fleck
+	 * @since 1.9
+	 *
+	 */
+	public enum Alignment {
+		/**
+		 * Align cell at the horizontal (left) or vertical (top) beginning.
+		 */
+		BEGINNING,
+		/**
+		 * Align cell at the horizontal or vertical center.
+		 */
+		CENTER,
+		/**
+		 * Align cell at the horizontal (right) or vertical (bottom) end.
+		 */
+		END
+	}
 
 	/**
 	 * Default constructor to create a grid cell.
@@ -165,6 +191,48 @@ public abstract class AbstractGridCell<RENDERER extends AbstractRenderer<?>> {
 	 */
 	public void setHorizontalFill(boolean horizontalFill) {
 		this.horizontalFill = horizontalFill;
+	}
+
+	/**
+	 * Returns the horizontal alignment of the control that is used if horizontal fill is set to false. Default is
+	 * {@link Alignment#BEGINNING}.
+	 *
+	 * @return the horizontalAlignment
+	 * @since 1.9
+	 */
+	public Alignment getHorizontalAlignment() {
+		return horizontalAlignment;
+	}
+
+	/**
+	 * Set the horizontal alignment. This alignment is only considered if horizontal fill is set to false.
+	 *
+	 * @param horizontalAlignment the horizontalAlignment to set
+	 * @since 1.9
+	 */
+	public void setHorizontalAlignment(Alignment horizontalAlignment) {
+		this.horizontalAlignment = horizontalAlignment;
+	}
+
+	/**
+	 * Returns the vertical alignment of the control that is used if vertical fill is set to false. Default is
+	 * {@link Alignment#CENTER}.
+	 *
+	 * @return the verticalAlignment
+	 * @since 1.9
+	 */
+	public Alignment getVerticalAlignment() {
+		return verticalAlignment;
+	}
+
+	/**
+	 * Set the vertical alignment. This alignment is only considered if vertical fill is set to false.
+	 *
+	 * @param verticalAlignment the verticalAlignment to set
+	 * @since 1.9
+	 */
+	public void setVerticalAlignment(Alignment verticalAlignment) {
+		this.verticalAlignment = verticalAlignment;
 	}
 
 	/**

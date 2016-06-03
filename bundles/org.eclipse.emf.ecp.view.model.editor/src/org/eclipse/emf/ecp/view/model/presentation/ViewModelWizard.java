@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -70,6 +70,7 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 	private static final String MANIFEST_PATH = "META-INF/MANIFEST.MF"; //$NON-NLS-1$
 	private static final String PLUGIN_ID = "org.eclipse.emf.ecp.view.model.presentation"; //$NON-NLS-1$
 	private Object selectedContainer;
+	private List<EClass> selectedEClasses;
 	private List<ViewModelWizardNewFileCreationPage> fileCreationPages;
 
 	/**
@@ -85,8 +86,6 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 			selectEcorePage.setSelectedContainer(null);
 		}
 	}
-
-	private List<EClass> selectedEClasses;
 
 	/**
 	 * The supported extensions for created files. <!-- begin-user-doc --> <!--
@@ -220,14 +219,8 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 
 		contributeToFileExtensionPage = new IncludeViewModelProviderXmiFileExtensionPage(PLUGIN_ID);
 		addPage(contributeToFileExtensionPage);
-
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.jface.wizard.Wizard#getStartingPage()
-	 */
 	@Override
 	public IWizardPage getStartingPage() {
 		if (selectedContainer == null) {
@@ -241,14 +234,8 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 		return selectEClassPage;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.jface.wizard.Wizard#getNextPage(org.eclipse.jface.wizard.IWizardPage)
-	 */
 	@Override
 	public IWizardPage getNextPage(IWizardPage page) {
-
 		if (page == selectEcorePage) {
 			selectedEClasses = null;
 			selectedContainer = selectEcorePage.getSelectedContainer();
@@ -282,17 +269,26 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 			if (i < fileCreationPages.size() - 1) {
 				return fileCreationPages.get(i + 1);
 			}
-			if (viewModelContainerIsPluginProject()) {
+			if (shouldShowFileExtensionPage()) {
 				return contributeToFileExtensionPage;
 			}
 		}
-
 		return null;
 	}
 
 	/**
-	 * @return
+	 * @return <code>true</code> if at least one of the locations in which the viewmodels are created is a Plugin
+	 *         Project
 	 */
+	private boolean shouldShowFileExtensionPage() {
+		for (final ViewModelWizardNewFileCreationPage page : fileCreationPages) {
+			if (viewModelContainerIsPluginProject(page)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private EPackage getEPackage() {
 		EPackage ePackage = null;
 		if (EPackage.class.isInstance(selectedContainer)) {
@@ -304,27 +300,20 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 
 			final Resource resource = resourceSet.getResource(uri, true);
 			if (resource != null) {
-
 				final EList<EObject> contents = resource.getContents();
 				if (contents.size() != 1) {
 					return null;
 				}
-
 				final EObject object = contents.get(0);
 				if (!(object instanceof EPackage)) {
 					return null;
 				}
-
 				ePackage = (EPackage) object;
 			}
 		}
 		return ePackage;
-
 	}
 
-	/**
-	 * @return
-	 */
 	private ViewModelWizardNewFileCreationPage getNewFileCreationPage() {
 		// Create page, set title and the initial model file name.
 		final ViewModelWizardNewFileCreationPage newFileCreationPage = new ViewModelWizardNewFileCreationPage(
@@ -341,29 +330,16 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 		return newFileCreationPage;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.jface.wizard.Wizard#getPreviousPage(org.eclipse.jface.wizard.IWizardPage)
-	 */
 	@Override
 	public IWizardPage getPreviousPage(IWizardPage page) {
-
 		if (page == selectEClassPage) {
 			return selectEcorePage;
 		} else if (ViewModelWizardNewFileCreationPage.class.isInstance(page)) {
 			return selectEClassPage;
 		}
-
 		return null;
-
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.jface.wizard.Wizard#canFinish()
-	 */
 	@Override
 	public boolean canFinish() {
 		if (selectEClassPage != null) {
@@ -379,9 +355,6 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 					return false;
 				}
 			}
-			if (viewModelContainerIsPluginProject() && !contributeToFileExtensionPage.isPageComplete()) {
-				return false;
-			}
 			return true;
 		}
 		return false;
@@ -392,12 +365,10 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 	 *
 	 * @return true if the container project is a plugin project
 	 */
-	private boolean viewModelContainerIsPluginProject() {
+	private boolean viewModelContainerIsPluginProject(ViewModelWizardNewFileCreationPage page) {
 		if (fileCreationPages == null || fileCreationPages.isEmpty()) {
 			return false;
 		}
-		// all view models are created in the same project
-		final ViewModelWizardNewFileCreationPage page = fileCreationPages.get(0);
 		if (page.getModelFile() == null || page.getModelFile().getProject() == null) {
 			return false;
 		}
@@ -414,13 +385,11 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 	@Override
 	public boolean performFinish() {
 		try {
-
 			// Do the work within an operation.
 			final WorkspaceModifyOperation operation = new WorkspaceModifyOperation() {
 				@Override
 				protected void execute(IProgressMonitor progressMonitor) {
 					try {
-
 						final boolean generateViewModelControls = selectEClassPage
 							.isGenerateViewModelOptionSelected();
 
@@ -440,12 +409,10 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 							if (generateViewModelControls) {
 								ControlGenerator.generateAllControls(view);
 							}
-
 							// contribute to ..provider.xmi.file extension point
 							if (contributeToFileExtensionPage.isContributeToExtensionOptionSelected()) {
 								addContribution(modelFile);
 							}
-
 							// add containing folder to the build.properties file
 							addToBuildProperties(modelFile);
 
@@ -472,7 +439,7 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 	}
 
 	/**
-	 * @return
+	 * @return the Ecore container
 	 */
 	protected IFile getSelectedEcore() {
 		if (IFile.class.isInstance(selectedContainer)) {
@@ -553,7 +520,6 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 		} catch (final IOException e) {
 			ViewEditorPlugin.INSTANCE.log(new Status(IStatus.ERROR, PLUGIN_ID, e.getMessage(), e));
 		}
-
 	}
 
 	/**
@@ -564,15 +530,12 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 	 * @param modelFile the view model IFile
 	 */
 	protected void addContribution(IFile modelFile) {
-
 		final IProject project = modelFile.getProject();
 		if (!isPluginProject(project)) {
 			return;
 		}
-
 		final boolean isFragmentProject = isFragmentProject(project);
 		final String contributionFileName = isFragmentProject ? "fragment.xml" : "plugin.xml"; //$NON-NLS-1$ //$NON-NLS-2$
-
 		final IFile pluginFile = project.getFile(contributionFileName);
 		try {
 			if (!pluginFile.exists()) {
@@ -593,7 +556,6 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 					if (end != -1) {
 						final String filePathAttribute = "<file filePath=\"" //$NON-NLS-1$
 							+ modelFile.getProjectRelativePath().toString() + "\"/>"; //$NON-NLS-1$
-
 						line = line.substring(0, end)
 							+ ">\n" + filePathAttribute + "\n</extension>\n" + line.substring(end + 2, line.length()); //$NON-NLS-1$ //$NON-NLS-2$
 					} else {
@@ -611,7 +573,6 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 						+ modelFile.getProjectRelativePath().toString()
 						+ "\"/>\n</extension>\n" + line.substring(end); //$NON-NLS-1$
 				}
-
 				contents.append(line + "\n"); //$NON-NLS-1$
 			}
 			in.close();
@@ -631,7 +592,7 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 
 	/**
 	 * Checks whether the project is a plugin project.
-	 * s
+	 *
 	 * @param project the project to checks
 	 * @return true if the project has the plugin nature
 	 */
@@ -670,7 +631,6 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 	 * @return the {@link IDEViewModelRegistry}
 	 */
 	public static IDEViewModelRegistry getViewModelRegistry() {
-
 		final ServiceReference<IDEViewModelRegistry> serviceReference = ViewEditorPlugin.getPlugin().getBundle()
 			.getBundleContext()
 			.getServiceReference(IDEViewModelRegistry.class);
@@ -686,5 +646,4 @@ public class ViewModelWizard extends Wizard implements INewWizard {
 	public void setWorkbench(IWorkbench workbench) {
 		this.workbench = workbench;
 	}
-
 }

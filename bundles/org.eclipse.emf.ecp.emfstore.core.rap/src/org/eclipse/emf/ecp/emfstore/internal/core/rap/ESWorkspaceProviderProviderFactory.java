@@ -14,6 +14,8 @@ package org.eclipse.emf.ecp.emfstore.internal.core.rap;
 import org.eclipse.emf.ecp.core.rap.SessionProvider;
 import org.eclipse.emf.ecp.emfstore.core.internal.ESWorkspaceProviderProvider;
 import org.eclipse.emf.ecp.emfstore.core.internal.ESWorkspaceProviderProviderImpl;
+import org.eclipse.rap.rwt.service.UISessionEvent;
+import org.eclipse.rap.rwt.service.UISessionListener;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
@@ -27,7 +29,8 @@ import org.osgi.framework.ServiceRegistration;
  * @author neilmack
  *
  */
-public class ESWorkspaceProviderProviderFactory implements ServiceFactory<ESWorkspaceProviderProvider> {
+public class ESWorkspaceProviderProviderFactory implements
+	ServiceFactory<ESWorkspaceProviderProvider>, UISessionListener {
 
 	/**
 	 * The session provider used to retrieve the current session.
@@ -56,10 +59,9 @@ public class ESWorkspaceProviderProviderFactory implements ServiceFactory<ESWork
 	 */
 	private SessionProvider getSessionProvider() {
 		if (sessionProvider == null) {
-			final BundleContext bundleContext =
-				FrameworkUtil.getBundle(getClass()).getBundleContext();
-			final ServiceReference<SessionProvider> serviceReference =
-				bundleContext.getServiceReference(SessionProvider.class);
+			final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
+			final ServiceReference<SessionProvider> serviceReference = bundleContext
+				.getServiceReference(SessionProvider.class);
 			sessionProvider = bundleContext.getService(serviceReference);
 		}
 		return sessionProvider;
@@ -80,9 +82,8 @@ public class ESWorkspaceProviderProviderFactory implements ServiceFactory<ESWork
 		final ServiceRegistration<ESWorkspaceProviderProvider> registration) {
 		ESWorkspaceProviderProvider esWorkspaceProviderProvider;
 		final String sessionId = getSessionProvider().getSessionId();
-
-		esWorkspaceProviderProvider =
-			new ESWorkspaceProviderProviderImpl(sessionId);
+		getSessionProvider().registerListenerWithSession(this);
+		esWorkspaceProviderProvider = new ESWorkspaceProviderProviderImpl(sessionId);
 		return esWorkspaceProviderProvider;
 	}
 
@@ -91,6 +92,21 @@ public class ESWorkspaceProviderProviderFactory implements ServiceFactory<ESWork
 		final ServiceRegistration<ESWorkspaceProviderProvider> registration,
 		final ESWorkspaceProviderProvider service) {
 		// TODO Auto-generated method stub
+
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.rap.rwt.service.UISessionListener#beforeDestroy(org.eclipse.rap.rwt.service.UISessionEvent)
+	 */
+	@Override
+	public void beforeDestroy(UISessionEvent event) {
+		// TODO Auto-generated method stub
+		ESWorkspaceProviderProviderImpl esWorkspaceProviderProvider;
+		final String sessionId = getSessionProvider().getSessionId();
+		esWorkspaceProviderProvider = new ESWorkspaceProviderProviderImpl(sessionId);
+		esWorkspaceProviderProvider.removeESWorkspaceProviderInstance();
 
 	}
 

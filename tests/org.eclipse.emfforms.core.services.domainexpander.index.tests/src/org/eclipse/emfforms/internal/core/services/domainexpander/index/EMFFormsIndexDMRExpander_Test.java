@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -124,7 +124,51 @@ public class EMFFormsIndexDMRExpander_Test {
 	 * @throws DatabindingFailedException
 	 */
 	@Test
-	public void testPrepareDomainObjectWithPrefixDMR() throws EMFFormsExpandingFailedException,
+	public void testPrepareDomainObjectWithPrefixDMRIndex0() throws EMFFormsExpandingFailedException,
+		DatabindingFailedException {
+		/*
+		 * Note: Testing in JUnit tests is afaik only possible without using domain model e reference paths because
+		 * they get expanded by the EMFFormsDomainExpander that has to be mocked in a JUnit test.
+		 */
+
+		final VIndexDomainModelReference indexDMR = VIndexdmrFactory.eINSTANCE.createIndexDomainModelReference();
+		final VFeaturePathDomainModelReference prefixDMR = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		prefixDMR.setDomainModelEFeature(TestPackage.eINSTANCE.getB_CList());
+		final VFeaturePathDomainModelReference targetDMR = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		targetDMR.setDomainModelEFeature(TestPackage.eINSTANCE.getD_X());
+
+		indexDMR.setPrefixDMR(prefixDMR);
+		indexDMR.setTargetDMR(targetDMR);
+		indexDMR.setIndex(0);
+
+		final B domainObject = TestFactory.eINSTANCE.createB();
+
+		final IValueProperty valueProperty = mock(IValueProperty.class);
+		when(valueProperty.getValueType()).thenReturn(TestPackage.eINSTANCE.getB_CList());
+		when(valueProperty.getValue(domainObject)).thenReturn(domainObject.getCList());
+
+		when(databindingService.getValueProperty(any(VDomainModelReference.class), same(domainObject))).thenReturn(
+			valueProperty);
+
+		assertTrue(domainObject.getCList().size() == 0);
+
+		indexDMRExpander.prepareDomainObject(indexDMR, domainObject);
+		assertTrue(domainObject.getCList().size() == 1);
+		assertNotNull(domainObject.getCList().get(0));
+	}
+
+	/**
+	 * Test method for
+	 * {@link org.eclipse.emfforms.internal.core.services.domainexpander.index.EMFFormsIndexDMRExpander#prepareDomainObject(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EObject)}
+	 * .
+	 *
+	 * @throws EMFFormsExpandingFailedException
+	 * @throws DatabindingFailedException
+	 */
+	@Test
+	public void testPrepareDomainObjectWithPrefixDMRIndex1() throws EMFFormsExpandingFailedException,
 		DatabindingFailedException {
 		/*
 		 * Note: Testing in JUnit tests is afaik only possible without using domain model e reference paths because
@@ -240,7 +284,52 @@ public class EMFFormsIndexDMRExpander_Test {
 	 * @throws DatabindingFailedException
 	 */
 	@Test
-	public void testPrepareDomainObjectWithoutPrefixDMR() throws EMFFormsExpandingFailedException,
+	public void testPrepareDomainObjectWithoutPrefixDMRIndex0() throws EMFFormsExpandingFailedException,
+		DatabindingFailedException {
+		/*
+		 * Note: Testing in JUnit tests is afaik know only possible without using domain model e reference paths because
+		 * they get expanded by the EMFFormsDomainExpander that has to be mocked in a JUnit test.
+		 */
+
+		final VIndexDomainModelReference indexDMR = VIndexdmrFactory.eINSTANCE.createIndexDomainModelReference();
+		// indexDMR.getDomainModelEReferencePath().add(TestPackage.eINSTANCE.getA_B());
+		indexDMR.setDomainModelEFeature(TestPackage.eINSTANCE.getB_CList());
+		final VFeaturePathDomainModelReference targetDMR = VViewFactory.eINSTANCE
+			.createFeaturePathDomainModelReference();
+		// targetDMR.getDomainModelEReferencePath().add(TestPackage.eINSTANCE.getC_D());
+		targetDMR.setDomainModelEFeature(TestPackage.eINSTANCE.getD_X());
+
+		indexDMR.setTargetDMR(targetDMR);
+		indexDMR.setIndex(0);
+
+		final B domainObject = TestFactory.eINSTANCE.createB();
+
+		final IValueProperty valueProperty = mock(IValueProperty.class);
+		when(valueProperty.getValueType()).thenReturn(TestPackage.eINSTANCE.getB_CList());
+		when(valueProperty.getValue(domainObject)).thenReturn(domainObject.getCList());
+
+		when(databindingService.getValueProperty(any(VDomainModelReference.class), same(domainObject))).thenReturn(
+			valueProperty);
+
+		assertTrue(domainObject.getCList().size() == 0);
+
+		indexDMRExpander.prepareDomainObject(indexDMR, domainObject);
+		// assertNotNull(domainObject.getB());
+		assertTrue(domainObject.getCList().size() == 1);
+		assertNotNull(domainObject.getCList().get(0));
+		// assertNotNull(domainObject.getCList().get(1).getD());
+	}
+
+	/**
+	 * Test method for
+	 * {@link org.eclipse.emfforms.internal.core.services.domainexpander.index.EMFFormsIndexDMRExpander#prepareDomainObject(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EObject)}
+	 * .
+	 *
+	 * @throws EMFFormsExpandingFailedException
+	 * @throws DatabindingFailedException
+	 */
+	@Test
+	public void testPrepareDomainObjectWithoutPrefixDMRIndex1() throws EMFFormsExpandingFailedException,
 		DatabindingFailedException {
 		/*
 		 * Note: Testing in JUnit tests is afaik know only possible without using domain model e reference paths because
@@ -266,6 +355,8 @@ public class EMFFormsIndexDMRExpander_Test {
 
 		when(databindingService.getValueProperty(any(VDomainModelReference.class), same(domainObject))).thenReturn(
 			valueProperty);
+
+		assertTrue(domainObject.getCList().size() == 0);
 
 		indexDMRExpander.prepareDomainObject(indexDMR, domainObject);
 		// assertNotNull(domainObject.getB());

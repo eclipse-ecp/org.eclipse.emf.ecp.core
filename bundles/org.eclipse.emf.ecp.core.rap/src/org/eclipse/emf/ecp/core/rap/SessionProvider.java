@@ -11,6 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.core.rap;
 
+import org.eclipse.rap.rwt.service.UISessionListener;
+
 /**
  * This class provides the current session ID.
  *
@@ -24,5 +26,12 @@ public interface SessionProvider {
 	 * @return the current sessions ID
 	 */
 	String getSessionId();
+
+	/**
+	 * registers a listener to the current RAP UI session.
+	 *
+	 * @param listener The UISessionListener to register
+	 */
+	void registerListenerWithSession(UISessionListener listener);
 
 }

@@ -17,6 +17,8 @@ import java.util.Map;
 import org.eclipse.emf.ecp.core.ECPRepositoryManager;
 import org.eclipse.emf.ecp.internal.core.ECPRepositoryManagerImpl;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
+import org.eclipse.rap.rwt.service.UISessionEvent;
+import org.eclipse.rap.rwt.service.UISessionListener;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
@@ -31,7 +33,7 @@ import org.osgi.framework.ServiceRegistration;
  *
  */
 public class ECPRepositoryManagerFactory implements
-	ServiceFactory<ECPRepositoryManager> {
+	ServiceFactory<ECPRepositoryManager>, UISessionListener {
 
 	/**
 	 * The session provider used to retrieve the current session.
@@ -40,8 +42,7 @@ public class ECPRepositoryManagerFactory implements
 	/**
 	 * a map of sessions to services.
 	 */
-	private final Map<String, ECPRepositoryManager> sessionRegistry =
-		new HashMap<String, ECPRepositoryManager>();
+	private final Map<String, ECPRepositoryManager> sessionRegistry = new HashMap<String, ECPRepositoryManager>();
 
 	/**
 	 * default constructor.
@@ -65,10 +66,9 @@ public class ECPRepositoryManagerFactory implements
 	 */
 	private SessionProvider getSessionProvider() {
 		if (sessionProvider == null) {
-			final BundleContext bundleContext =
-				FrameworkUtil.getBundle(getClass()).getBundleContext();
-			final ServiceReference<SessionProvider> serviceReference =
-				bundleContext.getServiceReference(SessionProvider.class);
+			final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
+			final ServiceReference<SessionProvider> serviceReference = bundleContext
+				.getServiceReference(SessionProvider.class);
 			sessionProvider = bundleContext.getService(serviceReference);
 		}
 		return sessionProvider;
@@ -89,6 +89,7 @@ public class ECPRepositoryManagerFactory implements
 		final ServiceRegistration<ECPRepositoryManager> registration) {
 		ECPRepositoryManager ecpRepositoryManager;
 		final String sessionId = getSessionProvider().getSessionId();
+		getSessionProvider().registerListenerWithSession(this);
 		if (sessionRegistry.containsKey(sessionId)) {
 			ecpRepositoryManager = sessionRegistry.get(sessionId);
 		} else {
@@ -110,6 +111,17 @@ public class ECPRepositoryManagerFactory implements
 	public void ungetService(final Bundle bundle,
 		final ServiceRegistration<ECPRepositoryManager> registration,
 		final ECPRepositoryManager service) {
+
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.rap.rwt.service.UISessionListener#beforeDestroy(org.eclipse.rap.rwt.service.UISessionEvent)
+	 */
+	@Override
+	public void beforeDestroy(UISessionEvent event) {
+		sessionRegistry.remove(event.getUISession().toString());
 
 	}
 

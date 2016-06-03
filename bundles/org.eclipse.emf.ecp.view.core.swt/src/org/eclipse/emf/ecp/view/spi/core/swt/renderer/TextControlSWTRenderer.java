@@ -29,6 +29,9 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
 import org.eclipse.emf.ecp.view.spi.provider.ECPTooltipModifierHelper;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
@@ -46,6 +49,7 @@ import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
+import org.eclipse.emfforms.swt.core.EMFFormsSWTConstants;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -161,10 +165,35 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	 */
 	protected Binding bindValue(Control text, IObservableValue modelValue, DataBindingContext dataBindingContext,
 		UpdateValueStrategy targetToModel, UpdateValueStrategy modelToTarget) {
-		final IObservableValue value = WidgetProperties.text(SWT.FocusOut)
-			.observe(Composite.class.cast(text).getChildren()[0]);
+		final Control controlToObserve = Composite.class.cast(text).getChildren()[0];
+		final boolean useOnModifyDatabinding = useOnModifyDatabinding();
+		final IObservableValue value;
+		if (useOnModifyDatabinding) {
+			value = WidgetProperties.text(SWT.Modify).observeDelayed(250, controlToObserve);
+		} else {
+			value = WidgetProperties.text(SWT.FocusOut).observe(controlToObserve);
+		}
 		final Binding binding = dataBindingContext.bindValue(value, modelValue, targetToModel, modelToTarget);
 		return binding;
+	}
+
+	/**
+	 * Whether {@link SWT#Modify} or {@link SWT#FocusOut} shall be used as the target databinding trigger.
+	 *
+	 * @return <code>true</code> if Modify should be used, <code>false</code> otherwise
+	 * @since 1.9
+	 */
+	protected final boolean useOnModifyDatabinding() {
+		final VElement viewCandidate = getViewModelContext().getViewModel();
+		if (!VView.class.isInstance(viewCandidate)) {
+			return false;
+		}
+		final VViewModelProperties properties = VView.class.cast(viewCandidate).getLoadingProperties();
+		if (properties == null) {
+			return false;
+		}
+		return EMFFormsSWTConstants.USE_ON_MODIFY_DATABINDING_VALUE
+			.equalsIgnoreCase((String) properties.get(EMFFormsSWTConstants.USE_ON_MODIFY_DATABINDING_KEY));
 	}
 
 	/**
@@ -272,7 +301,7 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 			getReportService().report(new RenderingFailedReport(ex));
 			return false;
 		}
-		final EStructuralFeature feature = (EStructuralFeature) valueProperty;
+		final EStructuralFeature feature = (EStructuralFeature) valueProperty.getValueType();
 		final boolean unsettable = feature.isUnsettable();
 		return unsettable;
 	}

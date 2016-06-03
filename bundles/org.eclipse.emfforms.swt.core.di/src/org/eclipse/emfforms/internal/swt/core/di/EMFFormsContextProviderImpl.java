@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -66,8 +66,9 @@ public class EMFFormsContextProviderImpl implements EMFFormsContextProvider {
 	@Override
 	public IEclipseContext getContext() {
 		if (eclipseContext == null) {
-			eclipseContext = EclipseContextFactory.getServiceContext(FrameworkUtil.getBundle(
-				EMFFormsContextProviderImpl.class).getBundleContext());
+			final IEclipseContext originalServiceContext = EclipseContextFactory
+				.getServiceContext(FrameworkUtil.getBundle(EMFFormsContextProviderImpl.class).getBundleContext());
+			eclipseContext = originalServiceContext.createChild();
 		}
 		return eclipseContext;
 	}
@@ -79,7 +80,7 @@ public class EMFFormsContextProviderImpl implements EMFFormsContextProvider {
 	 */
 	@Override
 	public void setContext(IEclipseContext eclipseContext) {
-		this.eclipseContext = eclipseContext;
+		this.eclipseContext = eclipseContext.createChild();
 	}
 
 }

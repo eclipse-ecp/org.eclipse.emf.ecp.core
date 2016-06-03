@@ -224,7 +224,7 @@ public abstract class AbstractTextControl extends SingleControl {
 		/**
 		 * Constructor.
 		 */
-		public EMFUpdateConvertValueStrategy() {
+		EMFUpdateConvertValueStrategy() {
 			super();
 		}
 

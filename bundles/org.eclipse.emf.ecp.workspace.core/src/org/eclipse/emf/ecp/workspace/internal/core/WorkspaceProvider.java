@@ -300,7 +300,7 @@ public class WorkspaceProvider extends DefaultProvider {
 		private final InternalProject project;
 		private final WorkspaceProvider provider;
 
-		public WorkspaceProjectObserver(InternalProject project, WorkspaceProvider provider) {
+		WorkspaceProjectObserver(InternalProject project, WorkspaceProvider provider) {
 			this.project = project;
 			this.provider = provider;
 		}

@@ -32,15 +32,19 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/ecp/view/spi/stack/model/VStackPackage.java">
-        <filter comment="Changes due to new label field in 1.6" id="0"/>
-    </resource>
     <resource path="src/org/eclipse/emf/ecp/view/spi/stack/model/VStackPackage.java" type="org.eclipse.emf.ecp.view.spi.stack.model.VStackPackage">
         <filter comment="Changes due to new label field in 1.6" id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.stack.model.VStackPackage"/>
                 <message_argument value="STACK_ITEM_FEATURE_COUNT"/>
                 <message_argument value="8"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.stack.model.VStackPackage"/>
+                <message_argument value="STACK_ITEM_FEATURE_COUNT"/>
+                <message_argument value="9"/>
             </message_arguments>
         </filter>
         <filter comment="Changes due to new label field in 1.6" id="388194388">
@@ -55,6 +59,13 @@
                 <message_argument value="org.eclipse.emf.ecp.view.spi.stack.model.VStackPackage"/>
                 <message_argument value="STACK_ITEM__CHILDREN"/>
                 <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.stack.model.VStackPackage"/>
+                <message_argument value="STACK_ITEM__CHILDREN"/>
+                <message_argument value="7"/>
             </message_arguments>
         </filter>
         <filter comment="Changes due to new label field in 1.6" id="388194388">
@@ -85,11 +96,25 @@
                 <message_argument value="7"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.stack.model.VStackPackage"/>
+                <message_argument value="STACK_ITEM__VALUE"/>
+                <message_argument value="8"/>
+            </message_arguments>
+        </filter>
         <filter comment="Changes due to new label field in 1.6" id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.stack.model.VStackPackage"/>
                 <message_argument value="STACK_ITEM__VISIBLE"/>
                 <message_argument value="1"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.stack.model.VStackPackage"/>
+                <message_argument value="STACK_LAYOUT_FEATURE_COUNT"/>
+                <message_argument value="10"/>
             </message_arguments>
         </filter>
         <filter comment="Changes due to new label field in 1.6" id="388194388">
@@ -120,6 +145,13 @@
                 <message_argument value="6"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.stack.model.VStackPackage"/>
+                <message_argument value="STACK_LAYOUT__DOMAIN_MODEL_REFERENCE"/>
+                <message_argument value="7"/>
+            </message_arguments>
+        </filter>
         <filter comment="Changes due to new label field in 1.6" id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.stack.model.VStackPackage"/>
@@ -141,11 +173,25 @@
                 <message_argument value="7"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.stack.model.VStackPackage"/>
+                <message_argument value="STACK_LAYOUT__STACK_ITEMS"/>
+                <message_argument value="8"/>
+            </message_arguments>
+        </filter>
         <filter comment="Changes due to new label field in 1.6" id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.stack.model.VStackPackage"/>
                 <message_argument value="STACK_LAYOUT__TOP_ELEMENT"/>
                 <message_argument value="8"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.stack.model.VStackPackage"/>
+                <message_argument value="STACK_LAYOUT__TOP_ELEMENT"/>
+                <message_argument value="9"/>
             </message_arguments>
         </filter>
         <filter comment="Changes due to new label field in 1.6" id="388194388">

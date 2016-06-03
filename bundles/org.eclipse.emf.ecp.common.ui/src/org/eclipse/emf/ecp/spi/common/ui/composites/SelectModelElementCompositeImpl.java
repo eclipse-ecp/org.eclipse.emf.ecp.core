@@ -95,8 +95,7 @@ public class SelectModelElementCompositeImpl extends AbstractFilteredSelectionCo
 		TableViewer lv;
 		if (multiSelection) {
 			lv = new TableViewer(composite);
-		}
-		else {
+		} else {
 			lv = new TableViewer(composite, SWT.SINGLE);
 		}
 		lv.setLabelProvider(getLabelProvider());
@@ -123,7 +122,7 @@ public class SelectModelElementCompositeImpl extends AbstractFilteredSelectionCo
 		private static final String WILDCARD = "*"; //$NON-NLS-1$
 		private final ILabelProvider labelProvider;
 
-		public ModelElementViewerFilter(ILabelProvider labelProvider) {
+		ModelElementViewerFilter(ILabelProvider labelProvider) {
 			this.labelProvider = labelProvider;
 		}
 

@@ -33,17 +33,16 @@ import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestP
  * until a non-null result is returned,
  * which is the result of the switch.
  * <!-- end-user-doc -->
- *
+ * 
  * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage
  * @generated
  */
-public class TestSwitch<T> extends Switch<T>
-{
+public class TestSwitch<T> extends Switch<T> {
 	/**
 	 * The cached model package
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected static TestPackage modelPackage;
@@ -52,13 +51,11 @@ public class TestSwitch<T> extends Switch<T>
 	 * Creates an instance of the switch.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	public TestSwitch()
-	{
-		if (modelPackage == null)
-		{
+	public TestSwitch() {
+		if (modelPackage == null) {
 			modelPackage = TestPackage.eINSTANCE;
 		}
 	}
@@ -67,14 +64,13 @@ public class TestSwitch<T> extends Switch<T>
 	 * Checks whether this is a switch for the given package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
-	 * @parameter ePackage the package in question.
+	 * 
+	 * @param ePackage the package in question.
 	 * @return whether this is a switch for the given package.
 	 * @generated
 	 */
 	@Override
-	protected boolean isSwitchFor(EPackage ePackage)
-	{
+	protected boolean isSwitchFor(EPackage ePackage) {
 		return ePackage == modelPackage;
 	}
 
@@ -83,63 +79,55 @@ public class TestSwitch<T> extends Switch<T>
 	 * result.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the first non-null result returned by a <code>caseXXX</code> call.
 	 * @generated
 	 */
 	@Override
-	protected T doSwitch(int classifierID, EObject theEObject)
-	{
-		switch (classifierID)
-		{
+	protected T doSwitch(int classifierID, EObject theEObject) {
+		switch (classifierID) {
 		case TestPackage.A: {
-			final A a = (A) theEObject;
+			A a = (A) theEObject;
 			T result = caseA(a);
-			if (result == null) {
+			if (result == null)
 				result = defaultCase(theEObject);
-			}
 			return result;
 		}
 		case TestPackage.B: {
-			final B b = (B) theEObject;
+			B b = (B) theEObject;
 			T result = caseB(b);
-			if (result == null) {
+			if (result == null)
 				result = defaultCase(theEObject);
-			}
 			return result;
 		}
 		case TestPackage.C: {
-			final C c = (C) theEObject;
+			C c = (C) theEObject;
 			T result = caseC(c);
-			if (result == null) {
+			if (result == null)
 				result = defaultCase(theEObject);
-			}
 			return result;
 		}
 		case TestPackage.D: {
-			final D d = (D) theEObject;
+			D d = (D) theEObject;
 			T result = caseD(d);
-			if (result == null) {
+			if (result == null)
 				result = defaultCase(theEObject);
-			}
 			return result;
 		}
 		case TestPackage.ECLASS_TO_ESTRING_MAP: {
 			@SuppressWarnings("unchecked")
-			final Map.Entry<EClass, String> eClassToEStringMap = (Map.Entry<EClass, String>) theEObject;
+			Map.Entry<EClass, String> eClassToEStringMap = (Map.Entry<EClass, String>) theEObject;
 			T result = caseEClassToEStringMap(eClassToEStringMap);
-			if (result == null) {
+			if (result == null)
 				result = defaultCase(theEObject);
-			}
 			return result;
 		}
 		case TestPackage.ECLASS_TO_AMAP: {
 			@SuppressWarnings("unchecked")
-			final Map.Entry<EClass, A> eClassToAMap = (Map.Entry<EClass, A>) theEObject;
+			Map.Entry<EClass, A> eClassToAMap = (Map.Entry<EClass, A>) theEObject;
 			T result = caseEClassToAMap(eClassToAMap);
-			if (result == null) {
+			if (result == null)
 				result = defaultCase(theEObject);
-			}
 			return result;
 		}
 		default:
@@ -153,14 +141,13 @@ public class TestSwitch<T> extends Switch<T>
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>A</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseA(A object)
-	{
+	public T caseA(A object) {
 		return null;
 	}
 
@@ -170,14 +157,13 @@ public class TestSwitch<T> extends Switch<T>
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>B</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseB(B object)
-	{
+	public T caseB(B object) {
 		return null;
 	}
 
@@ -187,14 +173,13 @@ public class TestSwitch<T> extends Switch<T>
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>C</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseC(C object)
-	{
+	public T caseC(C object) {
 		return null;
 	}
 
@@ -204,14 +189,13 @@ public class TestSwitch<T> extends Switch<T>
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>D</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseD(D object)
-	{
+	public T caseD(D object) {
 		return null;
 	}
 
@@ -221,14 +205,13 @@ public class TestSwitch<T> extends Switch<T>
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>EClass To EString Map</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseEClassToEStringMap(Map.Entry<EClass, String> object)
-	{
+	public T caseEClassToEStringMap(Map.Entry<EClass, String> object) {
 		return null;
 	}
 
@@ -238,14 +221,13 @@ public class TestSwitch<T> extends Switch<T>
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>EClass To AMap</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseEClassToAMap(Map.Entry<EClass, A> object)
-	{
+	public T caseEClassToAMap(Map.Entry<EClass, A> object) {
 		return null;
 	}
 
@@ -255,15 +237,14 @@ public class TestSwitch<T> extends Switch<T>
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch, but this is the last case anyway.
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>EObject</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject)
 	 * @generated
 	 */
 	@Override
-	public T defaultCase(EObject object)
-	{
+	public T defaultCase(EObject object) {
 		return null;
 	}
 

@@ -50,6 +50,7 @@ import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.emf.emfstore.bowling.Fan;
 import org.eclipse.emf.emfstore.bowling.Merchandise;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener;
+import org.eclipse.emfforms.spi.core.services.view.RootDomainModelChangeListener;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -1307,19 +1308,6 @@ public class UnsetService_PTest {
 		assertFalse(fan.eIsSet(fanNameFeature));
 	}
 
-	/**
-	 * Test if exception occurs when control has no setting.
-	 */
-	@Test
-	public void testControlWithoutSetting() {
-		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
-			.createFeaturePathDomainModelReference();
-		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getMerchandise_Name());
-		final VControl control = addControlToView(domainModelReference);
-		assertFalse(control.getDomainModelReference().getIterator().hasNext());
-		unsetService();
-	}
-
 	@Test
 	public void testTable() {
 		final Merchandise merc = BowlingFactory.eINSTANCE.createMerchandise();
@@ -1506,10 +1494,11 @@ public class UnsetService_PTest {
 		 * {@inheritDoc}
 		 *
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(org.eclipse.emf.ecore.EStructuralFeature.Setting)
+		 * @deprecated
 		 */
+		@Deprecated
 		@Override
 		public Set<VControl> getControlsFor(Setting setting) {
-			// TODO Auto-generated method stub
 			return null;
 		}
 
@@ -1517,10 +1506,11 @@ public class UnsetService_PTest {
 		 * {@inheritDoc}
 		 *
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getControlsFor(UniqueSetting)
+		 * @deprecated
 		 */
+		@Deprecated
 		@Override
 		public Set<VElement> getControlsFor(UniqueSetting setting) {
-			// TODO Auto-generated method stub
 			return null;
 		}
 
@@ -1531,7 +1521,6 @@ public class UnsetService_PTest {
 		 */
 		@Override
 		public Object getContextValue(String key) {
-			// TODO Auto-generated method stub
 			return null;
 		}
 
@@ -1543,8 +1532,6 @@ public class UnsetService_PTest {
 		 */
 		@Override
 		public void putContextValue(String key, Object value) {
-			// TODO Auto-generated method stub
-
 		}
 
 		/**
@@ -1554,8 +1541,6 @@ public class UnsetService_PTest {
 		 */
 		@Override
 		public void registerDisposeListener(ViewModelContextDisposeListener listener) {
-			// TODO Auto-generated method stub
-
 		}
 
 		/**
@@ -1565,8 +1550,6 @@ public class UnsetService_PTest {
 		 */
 		@Override
 		public void addContextUser(Object user) {
-			// TODO Auto-generated method stub
-
 		}
 
 		/**
@@ -1576,8 +1559,6 @@ public class UnsetService_PTest {
 		 */
 		@Override
 		public void removeContextUser(Object user) {
-			// TODO Auto-generated method stub
-
 		}
 
 		/**
@@ -1590,6 +1571,35 @@ public class UnsetService_PTest {
 		@Override
 		public ViewModelContext getChildContext(EObject eObject, VElement parent, VView vView,
 			ViewModelService... viewModelServices) {
+			return null;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext#registerEMFFormsContextListener(org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener)
+		 */
+		@Override
+		public void registerEMFFormsContextListener(EMFFormsContextListener contextListener) {
+			contextListener.contextInitialised();
+		}
+
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext#unregisterEMFFormsContextListener(org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener)
+		 */
+		@Override
+		public void unregisterEMFFormsContextListener(EMFFormsContextListener contextListener) {
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getParentContext()
+		 */
+		@Override
+		public ViewModelContext getParentContext() {
 			// TODO Auto-generated method stub
 			return null;
 		}
@@ -1597,10 +1607,21 @@ public class UnsetService_PTest {
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext#registerEMFFormsContextListener(org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener)
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getParentVElement()
 		 */
 		@Override
-		public void registerEMFFormsContextListener(EMFFormsContextListener contextListener) {
+		public VElement getParentVElement() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext#changeDomainModel(org.eclipse.emf.ecore.EObject)
+		 */
+		@Override
+		public void changeDomainModel(EObject newDomainModel) {
 			// TODO Auto-generated method stub
 
 		}
@@ -1608,10 +1629,22 @@ public class UnsetService_PTest {
 		/**
 		 * {@inheritDoc}
 		 * 
-		 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext#unregisterEMFFormsContextListener(org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener)
+		 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext#registerRootDomainModelChangeListener(org.eclipse.emfforms.spi.core.services.view.RootDomainModelChangeListener)
 		 */
 		@Override
-		public void unregisterEMFFormsContextListener(EMFFormsContextListener contextListener) {
+		public void registerRootDomainModelChangeListener(RootDomainModelChangeListener rootDomainModelChangeListener) {
+			// TODO Auto-generated method stub
+
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext#unregisterRootDomainModelChangeListener(org.eclipse.emfforms.spi.core.services.view.RootDomainModelChangeListener)
+		 */
+		@Override
+		public void unregisterRootDomainModelChangeListener(
+			RootDomainModelChangeListener rootDomainModelChangeListener) {
 			// TODO Auto-generated method stub
 
 		}

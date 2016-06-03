@@ -193,5 +193,97 @@
     <changes xsi:type="history:Set" element="table.ecore#/" featureName="nsURI" dataValue="http://org/eclipse/emf/ecp/view/table/model/150"
         oldDataValue="http://org/eclipse/emf/ecp/view/table/model"/>
   </releases>
-  <releases/>
+  <releases>
+    <changes xsi:type="history:OperationChange">
+      <changes xsi:type="history:Create" target="table.ecore#/" referenceName="eClassifiers"
+          element="table.ecore#//WidthConfiguration">
+        <changes xsi:type="history:Set" element="table.ecore#//WidthConfiguration"
+            featureName="name" dataValue="WidthConfiguration"/>
+        <changes xsi:type="history:Add" element="table.ecore#//WidthConfiguration"
+            featureName="eSuperTypes" referenceValue="table.ecore#//TableColumnConfiguration"/>
+      </changes>
+      <operation name="newClass">
+        <parameters name="ePackage">
+          <referenceValue element="table.ecore#/"/>
+        </parameters>
+        <parameters name="name">
+          <dataValue>WidthConfiguration</dataValue>
+        </parameters>
+        <parameters name="superClasses">
+          <referenceValue element="table.ecore#//TableColumnConfiguration"/>
+        </parameters>
+        <parameters name="abstr">
+          <dataValue>false</dataValue>
+        </parameters>
+      </operation>
+    </changes>
+    <changes xsi:type="history:OperationChange">
+      <changes xsi:type="history:Create" target="table.ecore#//WidthConfiguration"
+          referenceName="eStructuralFeatures" element="table.ecore#//WidthConfiguration/columnDomainReference">
+        <changes xsi:type="history:Set" element="table.ecore#//WidthConfiguration/columnDomainReference"
+            featureName="name" dataValue="columnDomainReference"/>
+        <changes xsi:type="history:Set" element="table.ecore#//WidthConfiguration/columnDomainReference"
+            featureName="lowerBound" dataValue="1" oldDataValue="0"/>
+        <changes xsi:type="history:Set" element="table.ecore#//WidthConfiguration/columnDomainReference"
+            featureName="eType" referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"/>
+      </changes>
+      <operation name="newReference">
+        <parameters name="eClass">
+          <referenceValue element="table.ecore#//WidthConfiguration"/>
+        </parameters>
+        <parameters name="name">
+          <dataValue>columnDomainReference</dataValue>
+        </parameters>
+        <parameters name="type">
+          <referenceValue element="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"/>
+        </parameters>
+        <parameters name="lowerBound">
+          <dataValue>1</dataValue>
+        </parameters>
+        <parameters name="upperBound">
+          <dataValue>1</dataValue>
+        </parameters>
+        <parameters name="containment">
+          <dataValue>false</dataValue>
+        </parameters>
+        <parameters name="opposite"/>
+      </operation>
+    </changes>
+    <changes xsi:type="history:OperationChange">
+      <changes xsi:type="history:Create" target="table.ecore#//WidthConfiguration"
+          referenceName="eStructuralFeatures" element="table.ecore#//WidthConfiguration/weight">
+        <changes xsi:type="history:Set" element="table.ecore#//WidthConfiguration/weight"
+            featureName="name" dataValue="weight"/>
+        <changes xsi:type="history:Set" element="table.ecore#//WidthConfiguration/weight"
+            featureName="lowerBound" dataValue="1" oldDataValue="0"/>
+        <changes xsi:type="history:Set" element="table.ecore#//WidthConfiguration/weight"
+            featureName="defaultValueLiteral" dataValue="100"/>
+        <changes xsi:type="history:Set" element="table.ecore#//WidthConfiguration/weight"
+            featureName="eType" referenceValue="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </changes>
+      <operation name="newAttribute">
+        <parameters name="eClass">
+          <referenceValue element="table.ecore#//WidthConfiguration"/>
+        </parameters>
+        <parameters name="name">
+          <dataValue>weight</dataValue>
+        </parameters>
+        <parameters name="type">
+          <referenceValue element="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+        </parameters>
+        <parameters name="lowerBound">
+          <dataValue>1</dataValue>
+        </parameters>
+        <parameters name="upperBound">
+          <dataValue>1</dataValue>
+        </parameters>
+        <parameters name="defaultValue">
+          <dataValue>100</dataValue>
+        </parameters>
+      </operation>
+    </changes>
+    <changes xsi:type="history:Set" element="table.ecore#//WidthConfiguration/weight"
+        featureName="eType" referenceValue="http://www.eclipse.org/emf/2002/Ecore#//EInt"
+        oldReferenceValue="http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </releases>
 </history:History>

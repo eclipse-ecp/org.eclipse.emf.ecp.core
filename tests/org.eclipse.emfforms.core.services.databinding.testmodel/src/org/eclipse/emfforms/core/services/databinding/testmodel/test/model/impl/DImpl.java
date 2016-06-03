@@ -28,21 +28,21 @@ import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestP
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.DImpl#getX <em>X</em>}</li>
- * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.DImpl#getYList <em>YList</em>}</li>
+ * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.DImpl#getYList <em>YList</em>}
+ * </li>
  * </ul>
- * </p>
  *
  * @generated
  */
-public class DImpl extends MinimalEObjectImpl.Container implements D
-{
+public class DImpl extends MinimalEObjectImpl.Container implements D {
 	/**
 	 * The default value of the '{@link #getX() <em>X</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getX()
 	 * @generated
 	 * @ordered
@@ -53,7 +53,7 @@ public class DImpl extends MinimalEObjectImpl.Container implements D
 	 * The cached value of the '{@link #getX() <em>X</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getX()
 	 * @generated
 	 * @ordered
@@ -64,7 +64,7 @@ public class DImpl extends MinimalEObjectImpl.Container implements D
 	 * The cached value of the '{@link #getYList() <em>YList</em>}' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getYList()
 	 * @generated
 	 * @ordered
@@ -74,65 +74,58 @@ public class DImpl extends MinimalEObjectImpl.Container implements D
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	protected DImpl()
-	{
+	protected DImpl() {
 		super();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return TestPackage.Literals.D;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public String getX()
-	{
+	public String getX() {
 		return x;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public void setX(String newX)
-	{
-		final String oldX = x;
+	public void setX(String newX) {
+		String oldX = x;
 		x = newX;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.D__X, oldX, x));
-		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public EList<Integer> getYList()
-	{
-		if (yList == null)
-		{
+	public EList<Integer> getYList() {
+		if (yList == null) {
 			yList = new EDataTypeUniqueEList<Integer>(Integer.class, this, TestPackage.D__YLIST);
 		}
 		return yList;
@@ -141,14 +134,12 @@ public class DImpl extends MinimalEObjectImpl.Container implements D
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
-		switch (featureID)
-		{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 		case TestPackage.D__X:
 			return getX();
 		case TestPackage.D__YLIST:
@@ -160,15 +151,13 @@ public class DImpl extends MinimalEObjectImpl.Container implements D
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
-		switch (featureID)
-		{
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 		case TestPackage.D__X:
 			setX((String) newValue);
 			return;
@@ -183,14 +172,12 @@ public class DImpl extends MinimalEObjectImpl.Container implements D
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
-		switch (featureID)
-		{
+	public void eUnset(int featureID) {
+		switch (featureID) {
 		case TestPackage.D__X:
 			setX(X_EDEFAULT);
 			return;
@@ -204,14 +191,12 @@ public class DImpl extends MinimalEObjectImpl.Container implements D
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
-		switch (featureID)
-		{
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 		case TestPackage.D__X:
 			return X_EDEFAULT == null ? x != null : !X_EDEFAULT.equals(x);
 		case TestPackage.D__YLIST:
@@ -223,17 +208,15 @@ public class DImpl extends MinimalEObjectImpl.Container implements D
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public String toString()
-	{
-		if (eIsProxy()) {
+	public String toString() {
+		if (eIsProxy())
 			return super.toString();
-		}
 
-		final StringBuffer result = new StringBuffer(super.toString());
+		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (x: "); //$NON-NLS-1$
 		result.append(x);
 		result.append(", yList: "); //$NON-NLS-1$

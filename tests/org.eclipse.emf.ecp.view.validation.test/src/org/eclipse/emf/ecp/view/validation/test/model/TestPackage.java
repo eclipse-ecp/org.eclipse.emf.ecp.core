@@ -132,8 +132,8 @@ public interface TestPackage extends EPackage {
 	int LIBRARY_FEATURE_COUNT = 4;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.validation.test.model.impl.WriterImpl
-	 * <em>Writer</em>}' class.
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.validation.test.model.impl.WriterImpl <em>Writer</em>
+	 * }' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -812,8 +812,125 @@ public interface TestPackage extends EPackage {
 	int TABLE_WITHOUT_MULTIPLICITY_CONCRETE_FEATURE_COUNT = 1;
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.validation.test.model.Library
-	 * <em>Library</em>}'.
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.validation.test.model.impl.ReferencerImpl
+	 * <em>Referencer</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.ReferencerImpl
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TestPackageImpl#getReferencer()
+	 * @generated
+	 */
+	int REFERENCER = 18;
+
+	/**
+	 * The feature id for the '<em><b>Referenced Content</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int REFERENCER__REFERENCED_CONTENT = 0;
+
+	/**
+	 * The number of structural features of the '<em>Referencer</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int REFERENCER_FEATURE_COUNT = 1;
+
+	/**
+	 * The meta object id for the '
+	 * {@link org.eclipse.emf.ecp.view.validation.test.model.impl.CrossReferenceContainerImpl
+	 * <em>Cross Reference Container</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.CrossReferenceContainerImpl
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TestPackageImpl#getCrossReferenceContainer()
+	 * @generated
+	 */
+	int CROSS_REFERENCE_CONTAINER = 19;
+
+	/**
+	 * The feature id for the '<em><b>Contents</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int CROSS_REFERENCE_CONTAINER__CONTENTS = 0;
+
+	/**
+	 * The feature id for the '<em><b>Single Content</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int CROSS_REFERENCE_CONTAINER__SINGLE_CONTENT = 1;
+
+	/**
+	 * The number of structural features of the '<em>Cross Reference Container</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int CROSS_REFERENCE_CONTAINER_FEATURE_COUNT = 2;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.validation.test.model.impl.CrossReferenceContentImpl
+	 * <em>Cross Reference Content</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.CrossReferenceContentImpl
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TestPackageImpl#getCrossReferenceContent()
+	 * @generated
+	 */
+	int CROSS_REFERENCE_CONTENT = 20;
+
+	/**
+	 * The feature id for the '<em><b>Parent</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int CROSS_REFERENCE_CONTENT__PARENT = 0;
+
+	/**
+	 * The feature id for the '<em><b>Single Parent</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int CROSS_REFERENCE_CONTENT__SINGLE_PARENT = 1;
+
+	/**
+	 * The number of structural features of the '<em>Cross Reference Content</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int CROSS_REFERENCE_CONTENT_FEATURE_COUNT = 2;
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.validation.test.model.Library <em>Library</em>
+	 * }'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -1079,8 +1196,8 @@ public interface TestPackage extends EPackage {
 	EReference getComputer_Mainboard();
 
 	/**
-	 * Returns the meta object for the attribute '
-	 * {@link org.eclipse.emf.ecp.view.validation.test.model.Computer#getName <em>Name</em>}'.
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.validation.test.model.Computer#getName
+	 * <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -1180,8 +1297,8 @@ public interface TestPackage extends EPackage {
 	EReference getContainer_Contents();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.validation.test.model.Content
-	 * <em>Content</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.validation.test.model.Content <em>Content</em>
+	 * }'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -1333,8 +1450,7 @@ public interface TestPackage extends EPackage {
 	EAttribute getTableContentWithValidation_Weight();
 
 	/**
-	 * Returns the meta object for class '
-	 * {@link org.eclipse.emf.ecp.view.validation.test.model.TableWithoutMultiplicity
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.validation.test.model.TableWithoutMultiplicity
 	 * <em>Table Without Multiplicity</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1476,6 +1592,110 @@ public interface TestPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getTableWithoutMultiplicityConcrete_Content();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.validation.test.model.Referencer
+	 * <em>Referencer</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for class '<em>Referencer</em>'.
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.Referencer
+	 * @generated
+	 */
+	EClass getReferencer();
+
+	/**
+	 * Returns the meta object for the reference '
+	 * {@link org.eclipse.emf.ecp.view.validation.test.model.Referencer#getReferencedContent <em>Referenced Content</em>
+	 * }'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the reference '<em>Referenced Content</em>'.
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.Referencer#getReferencedContent()
+	 * @see #getReferencer()
+	 * @generated
+	 */
+	EReference getReferencer_ReferencedContent();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContainer
+	 * <em>Cross Reference Container</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for class '<em>Cross Reference Container</em>'.
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContainer
+	 * @generated
+	 */
+	EClass getCrossReferenceContainer();
+
+	/**
+	 * Returns the meta object for the containment reference list '
+	 * {@link org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContainer#getContents <em>Contents</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the containment reference list '<em>Contents</em>'.
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContainer#getContents()
+	 * @see #getCrossReferenceContainer()
+	 * @generated
+	 */
+	EReference getCrossReferenceContainer_Contents();
+
+	/**
+	 * Returns the meta object for the containment reference '
+	 * {@link org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContainer#getSingleContent
+	 * <em>Single Content</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the containment reference '<em>Single Content</em>'.
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContainer#getSingleContent()
+	 * @see #getCrossReferenceContainer()
+	 * @generated
+	 */
+	EReference getCrossReferenceContainer_SingleContent();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContent
+	 * <em>Cross Reference Content</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for class '<em>Cross Reference Content</em>'.
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContent
+	 * @generated
+	 */
+	EClass getCrossReferenceContent();
+
+	/**
+	 * Returns the meta object for the container reference '
+	 * {@link org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContent#getParent <em>Parent</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the container reference '<em>Parent</em>'.
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContent#getParent()
+	 * @see #getCrossReferenceContent()
+	 * @generated
+	 */
+	EReference getCrossReferenceContent_Parent();
+
+	/**
+	 * Returns the meta object for the container reference '
+	 * {@link org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContent#getSingleParent
+	 * <em>Single Parent</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the container reference '<em>Single Parent</em>'.
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContent#getSingleParent()
+	 * @see #getCrossReferenceContent()
+	 * @generated
+	 */
+	EReference getCrossReferenceContent_SingleParent();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -2031,6 +2251,89 @@ public interface TestPackage extends EPackage {
 		 */
 		EReference TABLE_WITHOUT_MULTIPLICITY_CONCRETE__CONTENT = eINSTANCE
 			.getTableWithoutMultiplicityConcrete_Content();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.validation.test.model.impl.ReferencerImpl
+		 * <em>Referencer</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.ReferencerImpl
+		 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TestPackageImpl#getReferencer()
+		 * @generated
+		 */
+		EClass REFERENCER = eINSTANCE.getReferencer();
+
+		/**
+		 * The meta object literal for the '<em><b>Referenced Content</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EReference REFERENCER__REFERENCED_CONTENT = eINSTANCE.getReferencer_ReferencedContent();
+
+		/**
+		 * The meta object literal for the '
+		 * {@link org.eclipse.emf.ecp.view.validation.test.model.impl.CrossReferenceContainerImpl
+		 * <em>Cross Reference Container</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.CrossReferenceContainerImpl
+		 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TestPackageImpl#getCrossReferenceContainer()
+		 * @generated
+		 */
+		EClass CROSS_REFERENCE_CONTAINER = eINSTANCE.getCrossReferenceContainer();
+
+		/**
+		 * The meta object literal for the '<em><b>Contents</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EReference CROSS_REFERENCE_CONTAINER__CONTENTS = eINSTANCE.getCrossReferenceContainer_Contents();
+
+		/**
+		 * The meta object literal for the '<em><b>Single Content</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EReference CROSS_REFERENCE_CONTAINER__SINGLE_CONTENT = eINSTANCE.getCrossReferenceContainer_SingleContent();
+
+		/**
+		 * The meta object literal for the '
+		 * {@link org.eclipse.emf.ecp.view.validation.test.model.impl.CrossReferenceContentImpl
+		 * <em>Cross Reference Content</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.CrossReferenceContentImpl
+		 * @see org.eclipse.emf.ecp.view.validation.test.model.impl.TestPackageImpl#getCrossReferenceContent()
+		 * @generated
+		 */
+		EClass CROSS_REFERENCE_CONTENT = eINSTANCE.getCrossReferenceContent();
+
+		/**
+		 * The meta object literal for the '<em><b>Parent</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EReference CROSS_REFERENCE_CONTENT__PARENT = eINSTANCE.getCrossReferenceContent_Parent();
+
+		/**
+		 * The meta object literal for the '<em><b>Single Parent</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EReference CROSS_REFERENCE_CONTENT__SINGLE_PARENT = eINSTANCE.getCrossReferenceContent_SingleParent();
 
 	}
 

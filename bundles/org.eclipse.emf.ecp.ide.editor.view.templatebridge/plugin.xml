@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.masterDetailActions">
+      <MasterDetailAction
+            command="org.eclipse.emf.ecp.internal.ide.editor.view.templatebridge.actions.OpenTemplateEditorAction"
+            imagePath="icons/template.gif"
+            label="Style in Template Editor"
+            location="menu">
+      </MasterDetailAction>
+   </extension>
+
+</plugin>

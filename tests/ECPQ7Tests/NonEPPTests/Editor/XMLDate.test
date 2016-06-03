@@ -7,7 +7,7 @@ Element-Version: 3.0
 External-Reference: 
 Id: _GYZaMHlAEeO9Ja8zvRhhOQ
 Runtime-Version: 1.5.4.201412181238
-Save-Time: 11/20/15 4:22 PM
+Save-Time: 4/14/16 4:49 PM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -28,24 +28,24 @@ with [get-window -from "XMLDateControlSWTRenderer$SelectionAdapterExtension.widg
 with [get-editor "Referee 2013-12-01" | get-editbox -after [get-label "Date Of Birth"]] {
     set-text "15/4/2012"
 }
-get-window "Invalid Number" | get-button OK | click
+get-window "Invalid Date" | get-button OK | click
 with [get-editor "Referee 2013-12-01" | get-editbox -after [get-label "Date Of Birth"]] {
     set-text "Jan, 05,2012"
 }
-get-window "Invalid Number" | get-button OK | click
+get-window "Invalid Date" | get-button OK | click
 with [get-editor "Referee 2013-12-01" | get-editbox -after [get-label "Date Of Birth"]] {
     set-text "Jan 1, 2013"
 }
 get-editor "Referee 2013-01-01" | get-editbox -after [get-label "Date Of Birth"] | set-text "Jans 1, 2013"
-get-window "Invalid Number" | get-label "The Number you have entered is invalid. The value will be unset." 
-    | get-property caption | equals "The Number you have entered is invalid. The value will be unset." | verify-true
-get-window "Invalid Number" | get-button OK | click
+get-window "Invalid Date" | get-label "The Date you have entered is invalid. The value will be unset." 
+    | get-property caption | equals "The Date you have entered is invalid. The value will be unset." | verify-true
+get-window "Invalid Date" | get-button OK | click
 get-editor "Referee 2013-01-01" | get-editbox -after [get-label "Date Of Birth"] | get-property text 
     | equals "Jan 1, 2013" | verify-true
 get-editor "Referee 2013-01-01" | get-editbox -after [get-label "Date Of Birth"] | set-text "5.3.1954"
-get-window "Invalid Number" | get-label "The Number you have entered is invalid. The value will be unset." 
-    | get-property caption | equals "The Number you have entered is invalid. The value will be unset." | verify-true
-get-window "Invalid Number" | get-button OK | click
+get-window "Invalid Date" | get-label "The Date you have entered is invalid. The value will be unset." 
+    | get-property caption | equals "The Date you have entered is invalid. The value will be unset." | verify-true
+get-window "Invalid Date" | get-button OK | click
 get-editor "Referee 2013-01-01" | get-editbox -after [get-label "Date Of Birth"] | get-property text 
     | equals "Jan 1, 2013" | verify-true
 get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]" | get-menu Commit | click

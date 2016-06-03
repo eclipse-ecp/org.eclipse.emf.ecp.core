@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/org.eclipse.emf.ecp.demo.e4.fx.feature_1.8.0.qualifier.jar" id="org.eclipse.emf.ecp.demo.e4.fx.feature" version="1.8.0.qualifier">
+   <feature url="features/org.eclipse.emf.ecp.demo.e4.fx.feature_1.9.0.qualifier.jar" id="org.eclipse.emf.ecp.demo.e4.fx.feature" version="1.9.0.qualifier">
       <category name="org.eclipse.emf.ecp.fx"/>
    </feature>
-   <feature url="features/org.eclipse.emf.ecp.view.sdk.fx.feature_1.8.0.qualifier.jar" id="org.eclipse.emf.ecp.view.sdk.fx.feature" version="1.8.0.qualifier">
+   <feature url="features/org.eclipse.emf.ecp.view.sdk.fx.feature_1.9.0.qualifier.jar" id="org.eclipse.emf.ecp.view.sdk.fx.feature" version="1.9.0.qualifier">
       <category name="org.eclipse.emf.ecp.fx"/>
    </feature>
    <category-def name="org.eclipse.emf.ecp.fx" label="EMFForms JavaFX Rendering"/>

@@ -21,10 +21,24 @@
                 <message_argument value="getGridDescription(SWTGridDescription)"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change 1.9.0" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.swt.AbstractJFaceTreeRenderer"/>
+                <message_argument value="getTreeLabelProvider(AdapterFactory)"/>
+            </message_arguments>
+        </filter>
         <filter comment="EMFForms 1.6 SPI Change" id="338792546">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.swt.AbstractJFaceTreeRenderer"/>
                 <message_argument value="renderControl(SWTGridCell, Composite)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/categorization/swt/AbstractJFaceTreeRenderer.java" type="org.eclipse.emf.ecp.view.spi.categorization.swt.AbstractJFaceTreeRenderer$TreeTableLabelProvider">
+        <filter comment="SPI Change 1.9.0" id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.categorization.swt.AbstractJFaceTreeRenderer.TreeTableLabelProvider"/>
+                <message_argument value="TreeTableLabelProvider(AbstractJFaceTreeRenderer, AdapterFactory)"/>
             </message_arguments>
         </filter>
     </resource>

@@ -123,6 +123,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	 *        <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Deprecated
 	@Override
 	public EList<DomainModelReferenceChangeListener> getChangeListener() {
 		if (changeListener == null) {
@@ -413,6 +414,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	 *
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getIterator()
 	 */
+	@Deprecated
 	@Override
 	public Iterator<Setting> getIterator() {
 		if (lastResolvedEObject == null || leftReferences == null) {
@@ -428,6 +430,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	 *
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getEStructuralFeatureIterator()
 	 */
+	@Deprecated
 	@Override
 	public Iterator<EStructuralFeature> getEStructuralFeatureIterator() {
 		return new Iterator<EStructuralFeature>() {
@@ -464,6 +467,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#init(org.eclipse.emf.ecore.EObject)
 	 * @since 1.3
 	 */
+	@Deprecated
 	@Override
 	public boolean init(final EObject object) {
 		rootEObject = object;
@@ -477,6 +481,7 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getFullPathIterator()
 	 * @since 1.3
 	 */
+	@Deprecated
 	@Override
 	public Iterator<SettingPath> getFullPathIterator() {
 		return new Iterator<SettingPath>() {

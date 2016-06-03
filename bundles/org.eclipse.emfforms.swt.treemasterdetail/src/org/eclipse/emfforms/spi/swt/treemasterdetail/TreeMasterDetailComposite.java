@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -15,6 +15,7 @@ package org.eclipse.emfforms.spi.swt.treemasterdetail;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
+import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
@@ -29,6 +30,7 @@ import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.RootObject;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.resource.FontDescriptor;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -50,6 +52,7 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Sash;
+import org.eclipse.swt.widgets.Shell;
 
 /**
  * The Class MasterDetailRenderer.
@@ -86,7 +89,28 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 	/** The detail panel. */
 	private Composite detailPanel;
 
+	/** The currently rendered ECPSWTView. */
+	private ECPSWTView renderedView;
+	private final Shell limbo;
+
 	private final TreeMasterDetailSWTCustomization customization;
+	private TreeMasterDetailCache cache = new TreeMasterDetailCache() {
+
+		@Override
+		public boolean isChached(EObject selection) {
+			return false;
+		}
+
+		@Override
+		public ECPSWTView getCachedView(EObject selection) {
+			return null;
+		}
+
+		@Override
+		public void cache(ECPSWTView ecpView) {
+			ecpView.dispose();
+		}
+	};
 
 	/** The CreateElementCallback to allow modifications to the newly created element. */
 
@@ -120,6 +144,9 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 			editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(input);
 		}
 		this.customization = customization;
+		limbo = new Shell(Display.getCurrent(), SWT.NONE);
+		// Place the limbo shell 'off screen'
+		limbo.setLocation(0, 10000);
 		renderControl(customization);
 	}
 
@@ -202,43 +229,63 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 	// selection modification required as well as adjusting the loading properties
 	private void updateDetailPanel() {
 		// Create a new detail panel in the scrollable composite. Disposes any old panels.
-		createDetailPanel();
+		// createDetailPanel();
+		// TODO create detail panel at the right location
 
 		// Get the selected object, if it is an EObject, render the details using EMF Forms
 		final Object selectedObject = treeViewer.getSelection() != null ? ((StructuredSelection) treeViewer
 			.getSelection()).getFirstElement() : null;
+
 		if (selectedObject instanceof EObject) {
 			final EObject eObject = EObject.class.cast(selectedObject);
-			// Check, if the selected object would be rendered using a TreeMasterDetail. If so, render the provided
-			// detail view.
-			final VView view = ViewProviderHelper.getView((EObject) selectedObject, context);
-			if (view.getChildren().size() > 0 && view.getChildren().get(0) instanceof VTreeMasterDetail) {
-				// Yes, we need to render this node differently
-				final VTreeMasterDetail vTreeMasterDetail = (VTreeMasterDetail) view.getChildren().get(0);
-				try {
-					ECPSWTViewRenderer.INSTANCE.render(detailPanel, (EObject) selectedObject,
-						vTreeMasterDetail.getDetailView());
-					detailPanel.layout(true, true);
-				} catch (final ECPRendererException e) {
-				}
-
-			} else {
-				// No, everything is fine
-				try {
-					final VView view2 = ViewProviderHelper.getView(eObject, context);
-					final ViewModelContext modelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(view2,
-						eObject, customization.getViewModelServices(view2, eObject));
-					ECPSWTViewRenderer.INSTANCE.render(detailPanel, modelContext);
-					detailPanel.layout(true, true);
-				} catch (final ECPRendererException e) {
-				}
+			if (renderedView != null) {
+				renderedView.getSWTControl().setParent(limbo);
+				cache.cache(renderedView);
 			}
-			// After rendering the Forms, compute the size of the form. So the scroll container knows when to scroll
-			if (ScrolledComposite.class.isInstance(detailComposite)) {
-				ScrolledComposite.class.cast(detailComposite)
-					.setMinSize(detailPanel.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+			createDetailPanel();
+			if (cache.isChached(eObject)) {
+				renderedView = cache.getCachedView(eObject);
+				renderedView.getSWTControl().setParent(detailPanel);
+				renderedView.getViewModelContext().changeDomainModel(eObject);
+			} else {
+				// Check, if the selected object would be rendered using a TreeMasterDetail. If so, render the provided
+				// detail view.
+				final VView view = ViewProviderHelper.getView((EObject) selectedObject, context);
+				if (view.getChildren().size() > 0 && view.getChildren().get(0) instanceof VTreeMasterDetail) {
+					// Yes, we need to render this node differently
+					final VTreeMasterDetail vTreeMasterDetail = (VTreeMasterDetail) view.getChildren().get(0);
+					try {
+						renderedView = ECPSWTViewRenderer.INSTANCE.render(detailPanel, (EObject) selectedObject,
+							vTreeMasterDetail.getDetailView());
+						detailPanel.layout(true, true);
+					} catch (final ECPRendererException e) {
+					}
+
+				} else {
+					// No, everything is fine
+					try {
+						final VView view2 = ViewProviderHelper.getView(eObject, context);
+						final ViewModelContext modelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(
+							view2, eObject, customization.getViewModelServices(view2, eObject));
+						renderedView = ECPSWTViewRenderer.INSTANCE.render(detailPanel, modelContext);
+						detailPanel.layout(true, true);
+					} catch (final ECPRendererException e) {
+					}
+				}
+				// After rendering the Forms, compute the size of the form. So the scroll container knows when to scroll
+				if (ScrolledComposite.class.isInstance(detailComposite)) {
+					ScrolledComposite.class.cast(detailComposite)
+						.setMinSize(detailPanel.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+				}
 			}
 		} else {
+			if (renderedView != null) {
+				renderedView.getSWTControl().setParent(limbo);
+				cache.cache(renderedView);
+				/* set renderedView to null so that it is not offered to the cache further times */
+				renderedView = null;
+			}
+			createDetailPanel();
 			final Label hint = new Label(detailPanel, SWT.CENTER);
 			final FontDescriptor boldDescriptor = FontDescriptor.createFrom(hint.getFont()).setHeight(18)
 				.setStyle(SWT.BOLD);
@@ -287,6 +334,7 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 
 	@Override
 	public void dispose() {
+		limbo.dispose();
 		customization.dispose();
 		super.dispose();
 	}
@@ -307,8 +355,9 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 	 * Sets the selection.
 	 *
 	 * @param structuredSelection the new selection
+	 * @since 1.9
 	 */
-	public void setSelection(StructuredSelection structuredSelection) {
+	public void setSelection(ISelection structuredSelection) {
 		treeViewer.setSelection(structuredSelection);
 	}
 
@@ -338,5 +387,17 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 	 */
 	public void setInput(Object input) {
 		treeViewer.setInput(input);
+	}
+
+	/**
+	 * Allows to override the default cache implementation by the provided one.
+	 *
+	 * @param cache The {@link TreeMasterDetailCache} to use.
+	 * @since 1.9
+	 */
+	public void setCache(TreeMasterDetailCache cache) {
+		if (cache != null) {
+			this.cache = cache;
+		}
 	}
 }

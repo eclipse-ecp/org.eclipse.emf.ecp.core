@@ -67,6 +67,7 @@ public class EmailControlSWTRendererService implements EMFFormsDIRendererService
 		if (control.getDomainModelReference() == null) {
 			return NOT_APPLICABLE;
 		}
+		@SuppressWarnings("rawtypes")
 		IValueProperty valueProperty;
 		try {
 			valueProperty = databindingService.getValueProperty(control.getDomainModelReference(),

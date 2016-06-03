@@ -21,18 +21,17 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B#getC <em>C</em>}</li>
  * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B#getCList <em>CList</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage#getB()
  * @model
  * @generated
  */
-public interface B extends EObject
-{
+public interface B extends EObject {
 	/**
 	 * Returns the value of the '<em><b>C</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
@@ -41,7 +40,7 @@ public interface B extends EObject
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the value of the '<em>C</em>' containment reference.
 	 * @see #setC(C)
 	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage#getB_C()
@@ -55,7 +54,7 @@ public interface B extends EObject
 	 * <em>C</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param value the new value of the '<em>C</em>' containment reference.
 	 * @see #getC()
 	 * @generated
@@ -71,7 +70,7 @@ public interface B extends EObject
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the value of the '<em>CList</em>' reference list.
 	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage#getB_CList()
 	 * @model

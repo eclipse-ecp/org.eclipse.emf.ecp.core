@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="ASCII"?>
+<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model" name="Foo" ecorePath="/org.eclipse.emf.ecp.view.edapt.test/model/EdaptTestModel.ecore">
+  <rootEClass href="http://eclipse.org/emf/ecp/view/edapt/test/model/model#//Foo"/>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control bar">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
+      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://eclipse.org/emf/ecp/view/edapt/test/model/model#//Foo/bar"/>
+    </domainModelReference>
+  </children>
+</org.eclipse.emf.ecp.view.model:View>

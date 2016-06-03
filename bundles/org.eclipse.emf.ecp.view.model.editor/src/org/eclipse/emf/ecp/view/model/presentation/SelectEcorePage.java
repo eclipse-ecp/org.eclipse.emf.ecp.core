@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- * Alexandra - initial API and implementation
+ * Alexandra Buzila - initial API and implementation
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.model.presentation;
 
@@ -42,34 +42,31 @@ import org.eclipse.ui.model.BaseWorkbenchContentProvider;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
 
 /**
- * @author Alexandra
- *
+ * Wizard page for selecting an Ecore.
  */
 public class SelectEcorePage extends WizardPage {
 	private Text text1;
 	private Composite container;
 	private Button browseWorkspaceBtn;
-	private final String plugin_ID;
-	protected Object selectedContainer;
+	private final String pluginId;
 	private Button browsePackageRegistryBtn;
+	/** The container of the EClass. It can either be an IFile or an EPackage. */
+	private Object selectedContainer;
 
 	/**
-	 * @return the container of the EClass. It can either be an IFile or an EPackage.
+	 * Creates a new Ecore selection wizard page.
+	 *
+	 * @param pageName the name of the page
 	 */
-	public Object getSelectedContainer() {
-		return selectedContainer;
-	}
-
-	public SelectEcorePage(String pluginID) {
+	public SelectEcorePage(String pageName) {
 		super("Select Model"); //$NON-NLS-1$
 		setTitle("Select Model"); //$NON-NLS-1$
 		setDescription("Select a model file for the new View Model"); //$NON-NLS-1$
-		plugin_ID = pluginID;
+		pluginId = pageName;
 	}
 
 	@Override
 	public void createControl(Composite parent) {
-
 		container = new Composite(parent, SWT.NONE);
 		final GridLayout layout = new GridLayout();
 		container.setLayout(layout);
@@ -98,28 +95,7 @@ public class SelectEcorePage extends WizardPage {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				final ElementTreeSelectionDialog dialog = new ElementTreeSelectionDialog(Display.getDefault()
-					.getActiveShell(), new WorkbenchLabelProvider(), new BaseWorkbenchContentProvider());
-				dialog.setInput(ResourcesPlugin.getWorkspace().getRoot());
-				dialog.setAllowMultiple(false);
-				dialog.setValidator(new ISelectionStatusValidator() {
-
-					@Override
-					public IStatus validate(Object[] selection) {
-						if (selection.length == 1) {
-							if (selection[0] instanceof IFile) {
-								final IFile file = (IFile) selection[0];
-
-								if (file.getFileExtension().equals("ecore")) { //$NON-NLS-1$
-									return new Status(IStatus.OK, plugin_ID, IStatus.OK, null, null);
-								}
-							}
-						}
-						return new Status(IStatus.ERROR, plugin_ID, IStatus.ERROR, "Please Select a Model file", //$NON-NLS-1$
-							null);
-					}
-				});
-				dialog.setTitle("Select Model"); //$NON-NLS-1$
+				final ElementTreeSelectionDialog dialog = getWorkspaceEcoreSelectionDialog();
 
 				if (dialog.open() == Window.OK) {
 					// get Ecore
@@ -132,9 +108,8 @@ public class SelectEcorePage extends WizardPage {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
+				// do nothing
 			}
-
 		});
 
 		browsePackageRegistryBtn = new Button(btnsComposite, SWT.PUSH);
@@ -143,19 +118,7 @@ public class SelectEcorePage extends WizardPage {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-
-				final ElementListSelectionDialog selectRegisteredPackageDialog = new ElementListSelectionDialog(
-					getShell(), new LabelProvider() {
-					@Override
-					public Image getImage(Object element) {
-						return ExtendedImageRegistry.getInstance().getImage(
-							EcoreEditPlugin.INSTANCE.getImage("full/obj16/EPackage")); //$NON-NLS-1$
-					}
-				});
-				selectRegisteredPackageDialog.setMultipleSelection(false);
-				selectRegisteredPackageDialog.setTitle("Package Selection"); //$NON-NLS-1$
-				selectRegisteredPackageDialog.setMessage("Select a package:"); //$NON-NLS-1$
-				selectRegisteredPackageDialog.setElements(EcoreHelper.getDefaultPackageRegistryContents());
+				final ElementListSelectionDialog selectRegisteredPackageDialog = getPackageSelectionDialog();
 				selectRegisteredPackageDialog.open();
 				final Object[] result = selectRegisteredPackageDialog.getResult();
 				if (result == null) {
@@ -169,8 +132,7 @@ public class SelectEcorePage extends WizardPage {
 
 			@Override
 			public void widgetDefaultSelected(SelectionEvent e) {
-				// TODO Auto-generated method stub
-
+				// do nothing
 			}
 		});
 
@@ -178,6 +140,51 @@ public class SelectEcorePage extends WizardPage {
 		setPageComplete(false);
 	}
 
+	private ElementListSelectionDialog getPackageSelectionDialog() {
+		final ElementListSelectionDialog dialog = new ElementListSelectionDialog(getShell(), new LabelProvider() {
+			@Override
+			public Image getImage(Object element) {
+				return ExtendedImageRegistry.getInstance()
+					.getImage(EcoreEditPlugin.INSTANCE.getImage("full/obj16/EPackage")); //$NON-NLS-1$
+			}
+		});
+		dialog.setMultipleSelection(false);
+		dialog.setTitle("Package Selection"); //$NON-NLS-1$
+		dialog.setMessage("Select a package:"); //$NON-NLS-1$
+		dialog.setElements(EcoreHelper.getDefaultPackageRegistryContents());
+		return dialog;
+	}
+
+	private ElementTreeSelectionDialog getWorkspaceEcoreSelectionDialog() {
+		final ElementTreeSelectionDialog dialog = new ElementTreeSelectionDialog(Display.getDefault()
+			.getActiveShell(), new WorkbenchLabelProvider(), new BaseWorkbenchContentProvider());
+		dialog.setInput(ResourcesPlugin.getWorkspace().getRoot());
+		dialog.setAllowMultiple(false);
+		dialog.setValidator(new ISelectionStatusValidator() {
+
+			@Override
+			public IStatus validate(Object[] selection) {
+				if (selection.length == 1) {
+					if (selection[0] instanceof IFile) {
+						final IFile file = (IFile) selection[0];
+						if (file.getFileExtension().equals("ecore")) { //$NON-NLS-1$
+							return new Status(IStatus.OK, pluginId, IStatus.OK, null, null);
+						}
+					}
+				}
+				return new Status(IStatus.ERROR, pluginId, IStatus.ERROR, "Please Select a Model file", //$NON-NLS-1$
+					null);
+			}
+		});
+		dialog.setTitle("Select Model"); //$NON-NLS-1$
+		return dialog;
+	}
+
+	/**
+	 * Returns the path of the selected Ecore as specified in the text field of the page.
+	 *
+	 * @return the path as a String
+	 */
 	public String getText1() {
 		return text1.getText();
 	}
@@ -196,12 +203,21 @@ public class SelectEcorePage extends WizardPage {
 	}
 
 	/**
-	 * @param object
+	 * Sets the selected Ecore container.
+	 *
+	 * @param object the container
 	 */
 	public void setSelectedContainer(Object object) {
 		selectedContainer = object;
 		setPageComplete(object != null);
 		text1.setText(getContainerName());
+	}
+
+	/**
+	 * @return the container of the EClass. It can either be an IFile or an EPackage.
+	 */
+	public Object getSelectedContainer() {
+		return selectedContainer;
 	}
 
 	/**

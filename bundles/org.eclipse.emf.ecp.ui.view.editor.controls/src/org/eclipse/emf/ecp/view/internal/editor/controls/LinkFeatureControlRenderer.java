@@ -13,6 +13,8 @@ package org.eclipse.emf.ecp.view.internal.editor.controls;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.runtime.IStatus;
@@ -48,6 +50,7 @@ public class LinkFeatureControlRenderer extends EditableEReferenceLabelControlSW
 	 * @param viewContext the view context
 	 * @param reportService the {@link ReportService}
 	 */
+	@Inject
 	public LinkFeatureControlRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService) {
 		super(vElement, viewContext, reportService);
 	}

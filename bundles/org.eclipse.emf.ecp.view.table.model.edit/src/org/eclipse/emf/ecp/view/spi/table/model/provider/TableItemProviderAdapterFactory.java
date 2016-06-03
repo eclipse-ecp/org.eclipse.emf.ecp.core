@@ -128,8 +128,7 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	 */
 	@Override
 	public Adapter createTableControlAdapter() {
-		if (tableControlItemProvider == null)
-		{
+		if (tableControlItemProvider == null) {
 			tableControlItemProvider = new TableControlItemProvider(this);
 		}
 
@@ -154,10 +153,8 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	 * @generated
 	 */
 	@Override
-	public Adapter createTableDomainModelReferenceAdapter()
-	{
-		if (tableDomainModelReferenceItemProvider == null)
-		{
+	public Adapter createTableDomainModelReferenceAdapter() {
+		if (tableDomainModelReferenceItemProvider == null) {
 			tableDomainModelReferenceItemProvider = new TableDomainModelReferenceItemProvider(this);
 		}
 
@@ -182,14 +179,39 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	 * @generated
 	 */
 	@Override
-	public Adapter createReadOnlyColumnConfigurationAdapter()
-	{
-		if (readOnlyColumnConfigurationItemProvider == null)
-		{
+	public Adapter createReadOnlyColumnConfigurationAdapter() {
+		if (readOnlyColumnConfigurationItemProvider == null) {
 			readOnlyColumnConfigurationItemProvider = new ReadOnlyColumnConfigurationItemProvider(this);
 		}
 
 		return readOnlyColumnConfigurationItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all
+	 * {@link org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration} instances.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.9
+	 *        <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected WidthConfigurationItemProvider widthConfigurationItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public Adapter createWidthConfigurationAdapter() {
+		if (widthConfigurationItemProvider == null) {
+			widthConfigurationItemProvider = new WidthConfigurationItemProvider(this);
+		}
+
+		return widthConfigurationItemProvider;
 	}
 
 	/**
@@ -247,11 +269,9 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	 */
 	@Override
 	public Object adapt(Object object, Object type) {
-		if (isFactoryForType(type))
-		{
+		if (isFactoryForType(type)) {
 			final Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter))
-			{
+			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter)) {
 				return adapter;
 			}
 		}
@@ -326,8 +346,7 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	public void fireNotifyChanged(Notification notification) {
 		changeNotifier.fireNotifyChanged(notification);
 
-		if (parentAdapterFactory != null)
-		{
+		if (parentAdapterFactory != null) {
 			parentAdapterFactory.fireNotifyChanged(notification);
 		}
 	}
@@ -349,6 +368,9 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 		}
 		if (readOnlyColumnConfigurationItemProvider != null) {
 			readOnlyColumnConfigurationItemProvider.dispose();
+		}
+		if (widthConfigurationItemProvider != null) {
+			widthConfigurationItemProvider.dispose();
 		}
 	}
 
@@ -406,10 +428,8 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 			 */
 			@Override
 			public Object caseView(VView object) {
-				newChildDescriptors.add
-					(createChildParameter
-					(VViewPackage.Literals.VIEW__CHILDREN,
-						VTableFactory.eINSTANCE.createTableControl()));
+				newChildDescriptors.add(createChildParameter(VViewPackage.Literals.VIEW__CHILDREN,
+					VTableFactory.eINSTANCE.createTableControl()));
 
 				return null;
 			}
@@ -421,12 +441,9 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 			 * @generated
 			 */
 			@Override
-			public Object caseContainer(VContainer object)
-			{
-				newChildDescriptors.add
-					(createChildParameter
-					(VViewPackage.Literals.CONTAINER__CHILDREN,
-						VTableFactory.eINSTANCE.createTableControl()));
+			public Object caseContainer(VContainer object) {
+				newChildDescriptors.add(createChildParameter(VViewPackage.Literals.CONTAINER__CHILDREN,
+					VTableFactory.eINSTANCE.createTableControl()));
 
 				return null;
 			}
@@ -438,12 +455,9 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 			 * @generated
 			 */
 			@Override
-			public Object caseControl(VControl object)
-			{
-				newChildDescriptors.add
-					(createChildParameter
-					(VViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCE,
-						VTableFactory.eINSTANCE.createTableDomainModelReference()));
+			public Object caseControl(VControl object) {
+				newChildDescriptors.add(createChildParameter(VViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCE,
+					VTableFactory.eINSTANCE.createTableDomainModelReference()));
 
 				return null;
 			}

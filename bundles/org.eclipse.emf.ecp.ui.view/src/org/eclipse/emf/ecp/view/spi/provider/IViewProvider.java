@@ -18,7 +18,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
 
 /**
  * This interface defines a generic way to provide a {@link VView}. First the can render method is called. The provider
- * with the highest priority is then asked to {@link #generate(EObject, VViewModelProperties)} a {@link VView}.
+ * with the highest priority is then asked to {@link #provideViewModel(EObject, VViewModelProperties)} a {@link VView}.
  *
  * @author Eugen Neufeld
  * @since 1.2

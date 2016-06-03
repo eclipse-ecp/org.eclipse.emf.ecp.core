@@ -13,7 +13,6 @@ package org.eclipse.emf.ecp.ui.views;
 
 import org.eclipse.emf.ecp.ui.actions.RefreshViewerAction;
 import org.eclipse.emf.ecp.ui.e3.Messages;
-import org.eclipse.emf.ecp.ui.platform.Activator;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -45,8 +44,7 @@ import org.eclipse.ui.part.ViewPart;
  * @author Eike Stepper
  * @author Eugen Neufeld
  */
-public abstract class TreeView extends ViewPart implements ISelectionProvider, ISetSelectionTarget
-{
+public abstract class TreeView extends ViewPart implements ISelectionProvider, ISetSelectionTarget {
 	/**
 	 * ID for the separator in the context menu of the {@link TreeView} to add global contributions to (placed on top).
 	 */
@@ -63,8 +61,7 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
 	 *
 	 * @param id the ID of the Tree View, used to identify the {@link TreeView}
 	 */
-	public TreeView(String id)
-	{
+	public TreeView(String id) {
 		this.id = id;
 	}
 
@@ -73,8 +70,7 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
 	 *
 	 * @return the id as a {@link String}
 	 */
-	public final String getID()
-	{
+	public final String getID() {
 		return id;
 	}
 
@@ -83,8 +79,7 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
 	 *
 	 * @return a {@link TreeViewer}
 	 */
-	public final TreeViewer getViewer()
-	{
+	public final TreeViewer getViewer() {
 		return viewer;
 	}
 
@@ -93,60 +88,42 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
 	 *
 	 * @return an {@link Action}
 	 */
-	public final Action getRefreshAction()
-	{
+	public final Action getRefreshAction() {
 		return refreshAction;
 	}
 
 	@Override
-	public void init(IViewSite site) throws PartInitException
-	{
+	public void init(IViewSite site) throws PartInitException {
 		super.init(site);
 		site.setSelectionProvider(this);
 	}
 
 	@Override
-	public final void createPartControl(Composite parent)
-	{
-		try
-		{
-			viewer = createViewer(parent);
-			if (viewer == null)
-			{
-				throw new IllegalStateException(Messages.TreeView_Exception_ViewerNotCreated);
-			}
-
-			refreshAction = new RefreshViewerAction(viewer);
-
-			hookContextMenu();
-			hookDoubleClickAction();
-			contributeToActionBars();
-		} catch (final RuntimeException ex)
-		{
-			Activator.log(ex);
-			throw ex;
-		} catch (final Error ex)
-		{
-			Activator.log(ex);
-			throw ex;
+	public final void createPartControl(Composite parent) {
+		viewer = createViewer(parent);
+		if (viewer == null) {
+			throw new IllegalStateException(Messages.TreeView_Exception_ViewerNotCreated);
 		}
+
+		refreshAction = new RefreshViewerAction(viewer);
+
+		hookContextMenu();
+		hookDoubleClickAction();
+		contributeToActionBars();
+
 	}
 
 	@Override
-	public void setFocus()
-	{
-		if (viewer != null)
-		{
+	public void setFocus() {
+		if (viewer != null) {
 			viewer.getControl().setFocus();
 		}
 	}
 
 	/** {@inheritDoc} */
 	@Override
-	public IStructuredSelection getSelection()
-	{
-		if (viewer != null)
-		{
+	public IStructuredSelection getSelection() {
+		if (viewer != null) {
 			return (IStructuredSelection) viewer.getSelection();
 		}
 
@@ -155,40 +132,32 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
 
 	/** {@inheritDoc} */
 	@Override
-	public void setSelection(ISelection selection)
-	{
-		if (viewer != null)
-		{
+	public void setSelection(ISelection selection) {
+		if (viewer != null) {
 			viewer.setSelection(selection);
 		}
 	}
 
 	/** {@inheritDoc} */
 	@Override
-	public void addSelectionChangedListener(ISelectionChangedListener listener)
-	{
-		if (viewer != null)
-		{
+	public void addSelectionChangedListener(ISelectionChangedListener listener) {
+		if (viewer != null) {
 			viewer.addSelectionChangedListener(listener);
 		}
 	}
 
 	/** {@inheritDoc} */
 	@Override
-	public void removeSelectionChangedListener(ISelectionChangedListener listener)
-	{
-		if (viewer != null)
-		{
+	public void removeSelectionChangedListener(ISelectionChangedListener listener) {
+		if (viewer != null) {
 			viewer.removeSelectionChangedListener(listener);
 		}
 	}
 
 	/** {@inheritDoc} */
 	@Override
-	public void selectReveal(ISelection selection)
-	{
-		if (viewer != null)
-		{
+	public void selectReveal(ISelection selection) {
+		if (viewer != null) {
 			viewer.setSelection(selection, true);
 		}
 	}
@@ -198,8 +167,7 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
 	 *
 	 * @param message the message as a String
 	 */
-	protected void showMessage(String message)
-	{
+	protected void showMessage(String message) {
 		MessageDialog.openInformation(viewer.getControl().getShell(), getTitle(), message);
 	}
 
@@ -208,8 +176,7 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
 	 *
 	 * @return the label decorator to be used by the TreeView
 	 */
-	protected ILabelDecorator createLabelDecorator()
-	{
+	protected ILabelDecorator createLabelDecorator() {
 		return PlatformUI.getWorkbench().getDecoratorManager().getLabelDecorator();
 	}
 
@@ -226,8 +193,7 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
 	 *
 	 * @param manager the {@link IMenuManager} to be filled.
 	 */
-	protected void fillLocalPullDown(IMenuManager manager)
-	{
+	protected void fillLocalPullDown(IMenuManager manager) {
 		manager.add(new Separator());
 		manager.add(refreshAction);
 	}
@@ -237,8 +203,7 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
 	 *
 	 * @param manager the {@link IToolBarManager} to be filled.
 	 */
-	protected void fillLocalToolBar(IToolBarManager manager)
-	{
+	protected void fillLocalToolBar(IToolBarManager manager) {
 		manager.add(refreshAction);
 		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 
@@ -249,8 +214,7 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
 	 *
 	 * @param manager the {@link IMenuManager} to be filled.
 	 */
-	protected void fillContextMenu(IMenuManager manager)
-	{
+	protected void fillContextMenu(IMenuManager manager) {
 		manager.add(new Separator(GLOBAL_ADDITIONS));
 		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 		manager.add(new Separator());
@@ -262,38 +226,30 @@ public abstract class TreeView extends ViewPart implements ISelectionProvider, I
 	 *
 	 * @param event the {@link DoubleClickEvent}
 	 */
-	protected void doubleClicked(DoubleClickEvent event)
-	{
+	protected void doubleClicked(DoubleClickEvent event) {
 	}
 
-	private void contributeToActionBars()
-	{
+	private void contributeToActionBars() {
 		final IActionBars bars = getViewSite().getActionBars();
 		// fillLocalPullDown(bars.getMenuManager());
 		fillLocalToolBar(bars.getToolBarManager());
 	}
 
-	private void hookDoubleClickAction()
-	{
-		viewer.addDoubleClickListener(new IDoubleClickListener()
-		{
+	private void hookDoubleClickAction() {
+		viewer.addDoubleClickListener(new IDoubleClickListener() {
 			@Override
-			public void doubleClick(DoubleClickEvent event)
-			{
+			public void doubleClick(DoubleClickEvent event) {
 				TreeView.this.doubleClicked(event);
 			}
 		});
 	}
 
-	private void hookContextMenu()
-	{
+	private void hookContextMenu() {
 		final MenuManager manager = new MenuManager("#PopupMenu"); //$NON-NLS-1$
 		manager.setRemoveAllWhenShown(true);
-		manager.addMenuListener(new IMenuListener()
-		{
+		manager.addMenuListener(new IMenuListener() {
 			@Override
-			public void menuAboutToShow(IMenuManager manager)
-			{
+			public void menuAboutToShow(IMenuManager manager) {
 				TreeView.this.fillContextMenu(manager);
 			}
 		});

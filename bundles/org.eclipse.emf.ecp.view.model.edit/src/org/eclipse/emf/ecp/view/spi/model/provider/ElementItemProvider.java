@@ -75,6 +75,7 @@ public class ElementItemProvider
 			addVisiblePropertyDescriptor(object);
 			addEnabledPropertyDescriptor(object);
 			addReadonlyPropertyDescriptor(object);
+			addUuidPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -186,6 +187,30 @@ public class ElementItemProvider
 				false,
 				false,
 				ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+				null,
+				null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Uuid feature.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.9
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected void addUuidPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_Element_uuid_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_Element_uuid_feature", "_UI_Element_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				VViewPackage.Literals.ELEMENT__UUID,
+				true,
+				false,
+				false,
+				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
 				null,
 				null));
 	}

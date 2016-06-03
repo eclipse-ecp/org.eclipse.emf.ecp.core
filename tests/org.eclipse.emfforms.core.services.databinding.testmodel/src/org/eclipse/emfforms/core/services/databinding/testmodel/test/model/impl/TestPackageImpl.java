@@ -28,8 +28,7 @@ import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestP
  *
  * @generated
  */
-public class TestPackageImpl extends EPackageImpl implements TestPackage
-{
+public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -92,8 +91,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage
 	 * @see #init()
 	 * @generated
 	 */
-	private TestPackageImpl()
-	{
+	private TestPackageImpl() {
 		super(eNS_URI, TestFactory.eINSTANCE);
 	}
 
@@ -109,8 +107,9 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
 	 *
 	 * <p>
-	 * This method is used to initialize {@link TestPackage#eINSTANCE} when that field is accessed. Clients should not
-	 * invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc -->
+	 * This method is used to initialize {@link TestPackage#eINSTANCE} when that field is accessed.
+	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
 	 * @see #eNS_URI
@@ -118,16 +117,14 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage
 	 * @see #initializePackageContents()
 	 * @generated
 	 */
-	public static TestPackage init()
-	{
+	public static TestPackage init() {
 		if (isInited) {
 			return (TestPackage) EPackage.Registry.INSTANCE.getEPackage(TestPackage.eNS_URI);
 		}
 
 		// Obtain or create and register package
-		final TestPackageImpl theTestPackage = (TestPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof TestPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI)
-			: new TestPackageImpl());
+		final TestPackageImpl theTestPackage = (TestPackageImpl) (EPackage.Registry.INSTANCE
+			.get(eNS_URI) instanceof TestPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new TestPackageImpl());
 
 		isInited = true;
 
@@ -152,8 +149,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage
 	 * @generated
 	 */
 	@Override
-	public EClass getA()
-	{
+	public EClass getA() {
 		return aEClass;
 	}
 
@@ -164,8 +160,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage
 	 * @generated
 	 */
 	@Override
-	public EReference getA_B()
-	{
+	public EReference getA_B() {
 		return (EReference) aEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -176,8 +171,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage
 	 * @generated
 	 */
 	@Override
-	public EClass getB()
-	{
+	public EClass getB() {
 		return bEClass;
 	}
 
@@ -188,8 +182,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage
 	 * @generated
 	 */
 	@Override
-	public EReference getB_C()
-	{
+	public EReference getB_C() {
 		return (EReference) bEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -200,8 +193,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage
 	 * @generated
 	 */
 	@Override
-	public EReference getB_CList()
-	{
+	public EReference getB_CList() {
 		return (EReference) bEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -212,8 +204,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage
 	 * @generated
 	 */
 	@Override
-	public EClass getC()
-	{
+	public EClass getC() {
 		return cEClass;
 	}
 
@@ -224,8 +215,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage
 	 * @generated
 	 */
 	@Override
-	public EReference getC_D()
-	{
+	public EReference getC_D() {
 		return (EReference) cEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -236,8 +226,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage
 	 * @generated
 	 */
 	@Override
-	public EReference getC_EClassToString()
-	{
+	public EReference getC_EClassToString() {
 		return (EReference) cEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -248,8 +237,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage
 	 * @generated
 	 */
 	@Override
-	public EReference getC_EClassToA()
-	{
+	public EReference getC_EClassToA() {
 		return (EReference) cEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -260,8 +248,18 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage
 	 * @generated
 	 */
 	@Override
-	public EClass getD()
-	{
+	public EReference getC_A() {
+		return (EReference) cEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EClass getD() {
 		return dEClass;
 	}
 
@@ -272,8 +270,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage
 	 * @generated
 	 */
 	@Override
-	public EAttribute getD_X()
-	{
+	public EAttribute getD_X() {
 		return (EAttribute) dEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -284,8 +281,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage
 	 * @generated
 	 */
 	@Override
-	public EAttribute getD_YList()
-	{
+	public EAttribute getD_YList() {
 		return (EAttribute) dEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -296,8 +292,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage
 	 * @generated
 	 */
 	@Override
-	public EClass getEClassToEStringMap()
-	{
+	public EClass getEClassToEStringMap() {
 		return eClassToEStringMapEClass;
 	}
 
@@ -308,8 +303,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage
 	 * @generated
 	 */
 	@Override
-	public EReference getEClassToEStringMap_Key()
-	{
+	public EReference getEClassToEStringMap_Key() {
 		return (EReference) eClassToEStringMapEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -320,8 +314,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage
 	 * @generated
 	 */
 	@Override
-	public EAttribute getEClassToEStringMap_Value()
-	{
+	public EAttribute getEClassToEStringMap_Value() {
 		return (EAttribute) eClassToEStringMapEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -332,8 +325,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage
 	 * @generated
 	 */
 	@Override
-	public EClass getEClassToAMap()
-	{
+	public EClass getEClassToAMap() {
 		return eClassToAMapEClass;
 	}
 
@@ -344,8 +336,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage
 	 * @generated
 	 */
 	@Override
-	public EReference getEClassToAMap_Key()
-	{
+	public EReference getEClassToAMap_Key() {
 		return (EReference) eClassToAMapEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -356,8 +347,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage
 	 * @generated
 	 */
 	@Override
-	public EReference getEClassToAMap_Value()
-	{
+	public EReference getEClassToAMap_Value() {
 		return (EReference) eClassToAMapEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -368,8 +358,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage
 	 * @generated
 	 */
 	@Override
-	public TestFactory getTestFactory()
-	{
+	public TestFactory getTestFactory() {
 		return (TestFactory) getEFactoryInstance();
 	}
 
@@ -389,8 +378,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage
 	 *
 	 * @generated
 	 */
-	public void createPackageContents()
-	{
+	public void createPackageContents() {
 		if (isCreated) {
 			return;
 		}
@@ -408,6 +396,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage
 		createEReference(cEClass, C__D);
 		createEReference(cEClass, C__ECLASS_TO_STRING);
 		createEReference(cEClass, C__ECLASS_TO_A);
+		createEReference(cEClass, C__A);
 
 		dEClass = createEClass(D);
 		createEAttribute(dEClass, D__X);
@@ -438,8 +427,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage
 	 *
 	 * @generated
 	 */
-	public void initializePackageContents()
-	{
+	public void initializePackageContents() {
 		if (isInitialized) {
 			return;
 		}
@@ -457,80 +445,61 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage
 		// Add supertypes to classes
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(aEClass, org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A.class,
-			"A", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-			getA_B(),
-			getB(),
-			null,
-			"b", null, 0, 1, org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEClass(aEClass, org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A.class, "A", //$NON-NLS-1$
+			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getA_B(), getB(), null, "b", null, 0, 1, //$NON-NLS-1$
+			org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A.class, !IS_TRANSIENT, !IS_VOLATILE,
+			IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(bEClass, org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B.class,
-			"B", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-			getB_C(),
-			getC(),
-			null,
-			"c", null, 0, 1, org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-			getB_CList(),
-			getC(),
-			null,
-			"cList", null, 0, -1, org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEClass(bEClass, org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B.class, "B", //$NON-NLS-1$
+			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getB_C(), getC(), null, "c", null, 0, 1, //$NON-NLS-1$
+			org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B.class, !IS_TRANSIENT, !IS_VOLATILE,
+			IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getB_CList(), getC(), null, "cList", null, 0, -1, //$NON-NLS-1$
+			org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B.class, !IS_TRANSIENT, !IS_VOLATILE,
+			IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(cEClass, org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C.class,
-			"C", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-			getC_D(),
-			getD(),
-			null,
-			"d", null, 0, 1, org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-			getC_EClassToString(),
-			getEClassToEStringMap(),
-			null,
-			"eClassToString", null, 0, -1, org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-			getC_EClassToA(),
-			getEClassToAMap(),
-			null,
-			"eClassToA", null, 0, -1, org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEClass(cEClass, org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C.class, "C", //$NON-NLS-1$
+			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getC_D(), getD(), null, "d", null, 0, 1, //$NON-NLS-1$
+			org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C.class, !IS_TRANSIENT, !IS_VOLATILE,
+			IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getC_EClassToString(), getEClassToEStringMap(), null, "eClassToString", null, 0, -1, //$NON-NLS-1$
+			org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C.class, !IS_TRANSIENT, !IS_VOLATILE,
+			IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getC_EClassToA(), getEClassToAMap(), null, "eClassToA", null, 0, -1, //$NON-NLS-1$
+			org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C.class, !IS_TRANSIENT, !IS_VOLATILE,
+			IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getC_A(), getA(), null, "a", null, 0, 1, //$NON-NLS-1$
+			org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C.class, !IS_TRANSIENT, !IS_VOLATILE,
+			IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(dEClass, org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D.class,
-			"D", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(
-			getD_X(),
-			ecorePackage.getEString(),
-			"x", null, 0, 1, org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(
-			getD_YList(),
-			ecorePackage.getEInt(),
-			"yList", null, 0, -1, org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEClass(dEClass, org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D.class, "D", //$NON-NLS-1$
+			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getD_X(), ecorePackage.getEString(), "x", null, 0, 1, //$NON-NLS-1$
+			org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D.class, !IS_TRANSIENT, !IS_VOLATILE,
+			IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getD_YList(), ecorePackage.getEInt(), "yList", null, 0, -1, //$NON-NLS-1$
+			org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D.class, !IS_TRANSIENT, !IS_VOLATILE,
+			IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(eClassToEStringMapEClass, Map.Entry.class,
-			"EClassToEStringMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-			getEClassToEStringMap_Key(),
-			ecorePackage.getEClass(),
-			null,
-			"key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(
-			getEClassToEStringMap_Value(),
-			ecorePackage.getEString(),
-			"value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEClass(eClassToEStringMapEClass, Map.Entry.class, "EClassToEStringMap", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
+			!IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getEClassToEStringMap_Key(), ecorePackage.getEClass(), null, "key", null, 0, 1, Map.Entry.class, //$NON-NLS-1$
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
+		initEAttribute(getEClassToEStringMap_Value(), ecorePackage.getEString(), "value", null, 0, 1, Map.Entry.class, //$NON-NLS-1$
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(eClassToAMapEClass, Map.Entry.class,
-			"EClassToAMap", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-			getEClassToAMap_Key(),
-			ecorePackage.getEClass(),
-			null,
-			"key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-			getEClassToAMap_Value(),
-			getA(),
-			null,
-			"value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEClass(eClassToAMapEClass, Map.Entry.class, "EClassToAMap", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
+			!IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getEClassToAMap_Key(), ecorePackage.getEClass(), null, "key", null, 0, 1, Map.Entry.class, //$NON-NLS-1$
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
+		initEReference(getEClassToAMap_Value(), getA(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, //$NON-NLS-1$
+			!IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+			IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

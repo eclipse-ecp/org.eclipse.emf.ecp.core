@@ -24,13 +24,13 @@ import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
- * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.ContentImpl#getUniqueAttribute <em>Unique Attribute
- * </em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.ContentImpl#getSecondAttribute <em>Second Attribute
- * </em>}</li>
- * </ul>
  * </p>
+ * <ul>
+ * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.ContentImpl#getUniqueAttribute
+ * <em>Unique Attribute</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.ContentImpl#getSecondAttribute
+ * <em>Second Attribute</em>}</li>
+ * </ul>
  *
  * @generated
  */
@@ -219,11 +219,11 @@ public class ContentImpl extends EObjectImpl implements Content {
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case TestPackage.CONTENT__UNIQUE_ATTRIBUTE:
-			return UNIQUE_ATTRIBUTE_EDEFAULT == null ? uniqueAttribute != null : !UNIQUE_ATTRIBUTE_EDEFAULT
-				.equals(uniqueAttribute);
+			return UNIQUE_ATTRIBUTE_EDEFAULT == null ? uniqueAttribute != null
+				: !UNIQUE_ATTRIBUTE_EDEFAULT.equals(uniqueAttribute);
 		case TestPackage.CONTENT__SECOND_ATTRIBUTE:
-			return SECOND_ATTRIBUTE_EDEFAULT == null ? secondAttribute != null : !SECOND_ATTRIBUTE_EDEFAULT
-				.equals(secondAttribute);
+			return SECOND_ATTRIBUTE_EDEFAULT == null ? secondAttribute != null
+				: !SECOND_ATTRIBUTE_EDEFAULT.equals(secondAttribute);
 		}
 		return super.eIsSet(featureID);
 	}

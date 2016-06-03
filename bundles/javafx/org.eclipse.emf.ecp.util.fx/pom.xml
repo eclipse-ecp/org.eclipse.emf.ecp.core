@@ -9,8 +9,8 @@
 		<groupId>org.eclipse.emf.ecp.fx</groupId>
 		<artifactId>ecp-fx-bundles-parent</artifactId>
 		<relativePath>../../../releng/javafx/org.eclipse.emf.ecp.fx.releng.bundles/pom.xml</relativePath>
-		<version>1.8.0-SNAPSHOT</version>
+		<version>1.9.0-SNAPSHOT</version>
 	</parent>
 
-	<version>1.8.0-SNAPSHOT</version>
+	<version>1.9.0-SNAPSHOT</version>
 </project>

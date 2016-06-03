@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * Clemens Elflein - initial API and implementation
+ * Martin Fleck - bug 487101
  ******************************************************************************/
 package org.eclipse.emfforms.internal.editor.ecore.referenceservices;
 
@@ -23,6 +24,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecp.internal.edit.ECPControlHelper;
 import org.eclipse.emf.ecp.ui.view.swt.DefaultReferenceService;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.edit.command.SetCommand;
@@ -39,6 +41,7 @@ import org.eclipse.ui.dialogs.ListDialog;
 /**
  * The ReferenceService provides all widgets with Ecore specific references.
  */
+@SuppressWarnings("restriction")
 public class EcoreReferenceService extends DefaultReferenceService {
 
 	private ViewModelContext context;
@@ -52,12 +55,26 @@ public class EcoreReferenceService extends DefaultReferenceService {
 	}
 
 	private EObject getExistingSuperTypeFor(EReference eReference) {
-		final List<EClass> classes = ResourceSetHelpers.findAllOfTypeInResourceSet(
-			context.getDomainModel(), EClass.class, false);
+		final EClass domainClass = EClass.class.cast(context.getDomainModel());
 
-		// Substract already present SuperTypes from the List
+		final List<EClass> classes = ResourceSetHelpers.findAllOfTypeInResourceSet(
+			domainClass, EClass.class, false);
+
+		// Subtract already present SuperTypes from the List
 		// The cast is fine, as we know that the eReference must be manyValued.
-		classes.removeAll((List<?>) context.getDomainModel().eGet(eReference));
+		classes.removeAll((List<?>) domainClass.eGet(eReference));
+
+		// Subtract domain model from the List to avoid self-inheritance
+		classes.remove(domainClass);
+
+		// Subtract sub-types from List to avoid circular inheritance
+		final List<EClass> subTypes = new ArrayList<EClass>();
+		for (final EClass eClass : classes) {
+			if (domainClass.isSuperTypeOf(eClass)) {
+				subTypes.add(eClass);
+			}
+		}
+		classes.removeAll(subTypes);
 
 		return select(
 			classes,
@@ -204,13 +221,7 @@ public class EcoreReferenceService extends DefaultReferenceService {
 		if (!eReference.isMany()) {
 			context.getDomainModel().eSet(eReference, eObject);
 		} else {
-			@SuppressWarnings("unchecked")
-			// This cast is OK as we know, that the eReference is many-valued.
-			final List<Object> objects = (List<Object>) context.getDomainModel()
-				.eGet(eReference);
-			final List<Object> newValues = new ArrayList<Object>(objects);
-			newValues.add(eObject);
-			context.getDomainModel().eSet(eReference, newValues);
+			ECPControlHelper.addModelElementInReference(context.getDomainModel(), eObject, eReference, editingDomain);
 		}
 	}
 
@@ -236,7 +247,6 @@ public class EcoreReferenceService extends DefaultReferenceService {
 		super.addNewModelElements(eObject, eReference);
 	}
 
-	@SuppressWarnings("restriction")
 	private void handleEOpposite(EObject eObject, EReference eReference) {
 		/* get the container for the existing reference. this will be the type for the newly created reference */
 		final EReference existingReference = EReference.class.cast(eObject);
@@ -252,11 +262,11 @@ public class EcoreReferenceService extends DefaultReferenceService {
 		final EClass containerType = existingReference.getEReferenceType();
 
 		/* add new reference to model */
-		org.eclipse.emf.ecp.internal.edit.ECPControlHelper.addModelElementInReference(containerType, newReference,
+		ECPControlHelper.addModelElementInReference(containerType, newReference,
 			EcorePackage.eINSTANCE.getEClass_EStructuralFeatures(), editingDomain);
 
 		/* set eopposite */
-		org.eclipse.emf.ecp.internal.edit.ECPControlHelper.addModelElementInReference(eObject, newReference,
+		ECPControlHelper.addModelElementInReference(eObject, newReference,
 			eReference, editingDomain);
 	}
 }

@@ -34,6 +34,9 @@ import org.eclipse.swt.widgets.Control;
  */
 public abstract class SimpleControlJFaceViewerSWTRenderer extends SimpleControlSWTRenderer {
 
+	private Binding[] bindings;
+	private Viewer viewer;
+
 	/**
 	 * Default constructor.
 	 *
@@ -61,22 +64,39 @@ public abstract class SimpleControlJFaceViewerSWTRenderer extends SimpleControlS
 	 */
 	@Override
 	protected final Control createControl(Composite parent) throws DatabindingFailedException {
-		final Viewer viewer = createJFaceViewer(parent);
-		final Binding[] bindings = createBindings(viewer);
+		viewer = createJFaceViewer(parent);
+		bindings = createBindings(viewer);
 
 		viewer.getControl().addDisposeListener(new DisposeListener() {
 
 			@Override
 			public void widgetDisposed(DisposeEvent e) {
-				if (bindings != null) {
-					for (final Binding binding : bindings) {
-						binding.dispose();
-					}
-				}
-
+				disposeBindings();
 			}
 		});
 		return viewer.getControl();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer#rootDomainModelChanged()
+	 */
+	@Override
+	protected void rootDomainModelChanged() throws DatabindingFailedException {
+		disposeBindings();
+		bindings = createBindings(viewer);
+	}
+
+	/**
+	 * Disposes all bindings of this renderer.
+	 */
+	private void disposeBindings() {
+		if (bindings != null) {
+			for (final Binding binding : bindings) {
+				binding.dispose();
+			}
+		}
 	}
 
 	/**

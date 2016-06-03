@@ -25,6 +25,7 @@ import org.eclipse.emf.ecp.view.spi.treemasterdetail.ui.swt.MasterDetailAction;
 import org.eclipse.emfforms.spi.editor.IToolbarAction;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
@@ -79,7 +80,7 @@ public class OpenPreviewHandler extends MasterDetailAction implements IToolbarAc
 	}
 
 	@Override
-	public Action getAction(final Object currentObject) {
+	public Action getAction(final Object currentObject, ISelectionProvider selectionProvider) {
 		final Action previewAction = new Action("Open Preview") {
 			@Override
 			public void run() {

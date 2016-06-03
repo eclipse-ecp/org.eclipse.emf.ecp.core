@@ -2,11 +2,11 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ECP Common
 Bundle-SymbolicName: org.eclipse.emf.ecp.common
-Bundle-Version: 1.8.0.qualifier
+Bundle-Version: 1.9.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emf.ecp.common.spi;version="1.8.0",
- org.eclipse.emf.ecp.common.spi.asserts;version="1.8.0",
- org.eclipse.emf.ecp.common.spi.cachetree;version="1.8.0"
+Export-Package: org.eclipse.emf.ecp.common.spi;version="1.9.0",
+ org.eclipse.emf.ecp.common.spi.asserts;version="1.9.0",
+ org.eclipse.emf.ecp.common.spi.cachetree;version="1.9.0"
 Require-Bundle: org.eclipse.emf.ecore;bundle-version="[2.8.0,3.0.0)",
  org.eclipse.emf.edit;bundle-version="[2.8.0,3.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6

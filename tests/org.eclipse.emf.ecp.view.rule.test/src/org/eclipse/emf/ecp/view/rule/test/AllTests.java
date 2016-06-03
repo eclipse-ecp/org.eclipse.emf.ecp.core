@@ -19,7 +19,7 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses({
 	RuleServiceGC_PTest.class,
 	RuleService_PTest.class,
-	ConditionEvaluator_Test.class,
+	ConditionEvaluator_PTest.class,
 	DynamicRuleService_PTest.class,
 	RuleRegistry_PTest.class
 })

@@ -15,6 +15,7 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.common.spi.UniqueSetting;
 import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
@@ -37,21 +38,26 @@ public final class ConditionEvaluationUtil {
 	 * Whether the leaf condition evaluates objects of the given possible new values.
 	 *
 	 * @param condition the condition
+	 * @param domainModel The root domain object of the given {@link LeafCondition}
 	 * @param possibleNewValues the new value map
 	 * @return <code>true</code> if setting part of condition, <code>false</code> otherwise
+	 * @since 1.9
 	 */
-	public static boolean isLeafConditionForSetting(LeafCondition condition, Map<Setting, Object> possibleNewValues) {
+	public static boolean isLeafConditionForSetting(LeafCondition condition, EObject domainModel,
+		Map<Setting, Object> possibleNewValues) {
 		final Set<UniqueSetting> newValueSettings = new LinkedHashSet<UniqueSetting>();
 		for (final Setting setting : possibleNewValues.keySet()) {
 			newValueSettings.add(UniqueSetting.createSetting(setting));
 		}
-		final LeafConditionSettingIterator iterator = new LeafConditionSettingIterator(condition, true);
+		final LeafConditionSettingIterator iterator = new LeafConditionSettingIterator(condition, domainModel, true);
 		while (iterator.hasNext()) {
 			final UniqueSetting next = UniqueSetting.createSetting(iterator.next());
 			if (newValueSettings.contains(next)) {
+				iterator.dispose();
 				return true;
 			}
 		}
+		iterator.dispose();
 		return false;
 	}
 

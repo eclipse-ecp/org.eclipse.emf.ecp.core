@@ -20,8 +20,6 @@ import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Table Content</b></em>'.
  * <!-- end-user-doc -->
- * <p>
- * </p>
  *
  * @generated
  */

@@ -5,14 +5,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.eclipse.emf.ecp</groupId>
 	<artifactId>ecp-parent</artifactId>
-	<version>1.8.0-SNAPSHOT</version>
+	<version>1.9.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<properties>
-		<tycho-version>0.23.0</tycho-version>
-		<tycho-extras-version>0.23.0</tycho-extras-version>
-		<javadoc-version>2.9</javadoc-version>
-		<ecp-version>1.8.0</ecp-version>
+		<tycho-version>0.25.0</tycho-version>
+		<tycho-extras-version>0.25.0</tycho-extras-version>
+		<javadoc-version>2.10.3</javadoc-version>
+		<ecp-version>1.9.0</ecp-version>
 		<javadoc-title>EMF Client Platform ${ecp-version} API</javadoc-title>
 		<maven.antrun.plugin.version>1.7</maven.antrun.plugin.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -33,23 +33,6 @@
 	</properties>
 
 	<profiles>
-		<!-- Profile for changing the used targets to mars p2 repositories -->
-		<profile>
-			<id>mars</id>
-			<activation>
-				<property>
-					<name>mars</name>
-				</property>
-			</activation>
-			<properties>
-				<target-rcp>ecpMars</target-rcp>
-				<target-rap>ecpRAPMars</target-rap>
-			</properties>
-			<modules>
-				<module>../../releng/org.eclipse.emf.ecp.target.rcp.mars</module>
-				<module>../../releng/org.eclipse.emf.ecp.target.rap.mars</module>
-			</modules>
-		</profile>
 		
 		<!-- Profile for adding aggregate sites to the built p2 repositry -->
 		<profile>
@@ -220,8 +203,9 @@
 				<configuration>
 					<doctitle>${javadoc-title}</doctitle>
 					<show>protected</show>
-					<show>public</show>
 					<nohelp>true</nohelp>
+					<failOnError>false</failOnError>
+					<excludePackageNames>*.test:*.tests:org.eclipse.emf.edit.ui.*:org.eclipse.emf.ecp.makeithappen.*:car</excludePackageNames>
 				</configuration>
 			</plugin>
 			<!-- to disable use -Dcheckstyle.skip -->

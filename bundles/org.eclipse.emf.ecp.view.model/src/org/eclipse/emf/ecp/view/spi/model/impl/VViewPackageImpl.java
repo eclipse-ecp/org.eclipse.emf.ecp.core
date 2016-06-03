@@ -355,6 +355,19 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 	/**
 	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.9
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EAttribute getElement_Uuid() {
+		return (EAttribute) elementEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
 	 * @generated
@@ -512,10 +525,9 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.8
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
@@ -525,10 +537,9 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.8
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
@@ -631,10 +642,9 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.8
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
@@ -776,6 +786,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 		createEAttribute(elementEClass, ELEMENT__READONLY);
 		createEReference(elementEClass, ELEMENT__DIAGNOSTIC);
 		createEReference(elementEClass, ELEMENT__ATTACHMENTS);
+		createEAttribute(elementEClass, ELEMENT__UUID);
 
 		viewEClass = createEClass(VIEW);
 		createEReference(viewEClass, VIEW__ROOT_ECLASS);
@@ -903,6 +914,8 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 		initEReference(getElement_Attachments(), getAttachment(), null, "attachments", null, 0, -1, VElement.class, //$NON-NLS-1$
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
+		initEAttribute(getElement_Uuid(), theEcorePackage.getEString(), "uuid", null, 0, 1, VElement.class, //$NON-NLS-1$
+			IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(viewEClass, VView.class, "View", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getView_RootEClass(), theEcorePackage.getEClass(), null, "rootEClass", null, 1, 1, VView.class, //$NON-NLS-1$

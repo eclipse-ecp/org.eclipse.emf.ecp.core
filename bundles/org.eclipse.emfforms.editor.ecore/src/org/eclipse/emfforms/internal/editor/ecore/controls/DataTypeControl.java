@@ -22,6 +22,8 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlJFaceViewerSWTRenderer;
@@ -85,6 +87,10 @@ public class DataTypeControl extends SimpleControlJFaceViewerSWTRenderer {
 		} else if (getViewModelContext().getDomainModel() instanceof EReference) {
 			type = EClass.class;
 			includeEcorePackage = false;
+		} else if (getViewModelContext().getDomainModel() instanceof EOperation) {
+			includeEcorePackage = true;
+		} else if (getViewModelContext().getDomainModel() instanceof EParameter) {
+			includeEcorePackage = true;
 		}
 
 		final List<?> classifiers = ResourceSetHelpers.findAllOfTypeInResourceSet(

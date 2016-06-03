@@ -2,14 +2,14 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ECP Validation View
 Bundle-SymbolicName: org.eclipse.emf.ecp.ui.validation;singleton:=true
-Bundle-Version: 1.8.0.qualifier
+Bundle-Version: 1.9.0.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.internal.ui.validation.Activator
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emf.ecp.internal.ui.validation;version="1.8.0";x-friends:="org.eclipse.emf.ecp.ui.validation.e4",
- org.eclipse.emf.ecp.ui.validation;version="1.8.0";x-friends:="org.eclipse.emf.ecp.ui.validation.e4"
+Export-Package: org.eclipse.emf.ecp.internal.ui.validation;version="1.9.0";x-friends:="org.eclipse.emf.ecp.ui.validation.e4",
+ org.eclipse.emf.ecp.ui.validation;version="1.9.0";x-friends:="org.eclipse.emf.ecp.ui.validation.e4"
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.emf.edit;bundle-version="[2.8.0,3.0.0)",
- org.eclipse.emf.ecp.ui.view.swt;bundle-version="[1.8.0,1.9.0)"
+ org.eclipse.emf.ecp.ui.view.swt;bundle-version="[1.9.0,2.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Service-Component: OSGI-INF/component.xml
 Bundle-ActivationPolicy: lazy

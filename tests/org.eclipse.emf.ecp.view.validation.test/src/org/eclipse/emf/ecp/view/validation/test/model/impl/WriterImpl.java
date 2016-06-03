@@ -40,6 +40,7 @@ import org.eclipse.emf.ecp.view.validation.test.model.util.TestValidator;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.WriterImpl#getFirstName <em>First Name</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.WriterImpl#getLastName <em>Last Name</em>}</li>
@@ -49,7 +50,6 @@ import org.eclipse.emf.ecp.view.validation.test.model.util.TestValidator;
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.WriterImpl#isPseudonym <em>Pseudonym</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.WriterImpl#getLibrary <em>Library</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
@@ -218,8 +218,8 @@ public class WriterImpl extends EObjectImpl implements Writer {
 		final String oldFirstName = firstName;
 		firstName = newFirstName;
 		if (eNotificationRequired()) {
-			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.WRITER__FIRST_NAME, oldFirstName,
-				firstName));
+			eNotify(
+				new ENotificationImpl(this, Notification.SET, TestPackage.WRITER__FIRST_NAME, oldFirstName, firstName));
 		}
 	}
 
@@ -245,7 +245,8 @@ public class WriterImpl extends EObjectImpl implements Writer {
 		final String oldLastName = lastName;
 		lastName = newLastName;
 		if (eNotificationRequired()) {
-			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.WRITER__LAST_NAME, oldLastName, lastName));
+			eNotify(
+				new ENotificationImpl(this, Notification.SET, TestPackage.WRITER__LAST_NAME, oldLastName, lastName));
 		}
 	}
 
@@ -297,8 +298,8 @@ public class WriterImpl extends EObjectImpl implements Writer {
 		final Date oldBirthDate = birthDate;
 		birthDate = newBirthDate;
 		if (eNotificationRequired()) {
-			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.WRITER__BIRTH_DATE, oldBirthDate,
-				birthDate));
+			eNotify(
+				new ENotificationImpl(this, Notification.SET, TestPackage.WRITER__BIRTH_DATE, oldBirthDate, birthDate));
 		}
 	}
 
@@ -339,8 +340,8 @@ public class WriterImpl extends EObjectImpl implements Writer {
 		final boolean oldPseudonym = pseudonym;
 		pseudonym = newPseudonym;
 		if (eNotificationRequired()) {
-			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.WRITER__PSEUDONYM, oldPseudonym,
-				pseudonym));
+			eNotify(
+				new ENotificationImpl(this, Notification.SET, TestPackage.WRITER__PSEUDONYM, oldPseudonym, pseudonym));
 		}
 	}
 
@@ -377,8 +378,8 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	 */
 	@Override
 	public void setLibrary(Library newLibrary) {
-		if (newLibrary != eInternalContainer() || eContainerFeatureID() != TestPackage.WRITER__LIBRARY
-			&& newLibrary != null) {
+		if (newLibrary != eInternalContainer()
+			|| eContainerFeatureID() != TestPackage.WRITER__LIBRARY && newLibrary != null) {
 			if (EcoreUtil.isAncestor(this, newLibrary)) {
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			}
@@ -394,8 +395,7 @@ public class WriterImpl extends EObjectImpl implements Writer {
 			if (msgs != null) {
 				msgs.dispatch();
 			}
-		}
-		else if (eNotificationRequired()) {
+		} else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.WRITER__LIBRARY, newLibrary, newLibrary));
 		}
 	}
@@ -414,15 +414,13 @@ public class WriterImpl extends EObjectImpl implements Writer {
 		// || getLastName() != null && getLastName().equals("Offensive")
 		) {
 			if (chain != null) {
-				chain.add
-					(new BasicDiagnostic
-					(Diagnostic.CANCEL,
-						TestValidator.DIAGNOSTIC_SOURCE,
-						TestValidator.WRITER__VALIDATE,
-						"Name is too offensive to even validate.",
-						new Object[] { this, TestPackage.eINSTANCE.getWriter_FirstName()
-						// ,TestPackage.eINSTANCE.getWriter_LastName()
-						}));
+				chain.add(new BasicDiagnostic(Diagnostic.CANCEL,
+					TestValidator.DIAGNOSTIC_SOURCE,
+					TestValidator.WRITER__VALIDATE,
+					"Name is too offensive to even validate.",
+					new Object[] { this, TestPackage.eINSTANCE.getWriter_FirstName()
+					// ,TestPackage.eINSTANCE.getWriter_LastName()
+					}));
 			}
 			valid = false;
 		}
@@ -432,15 +430,13 @@ public class WriterImpl extends EObjectImpl implements Writer {
 		// || getLastName() == null || getLastName().equals("")
 		) {
 			if (chain != null) {
-				chain.add
-					(new BasicDiagnostic
-					(Diagnostic.ERROR,
-						TestValidator.DIAGNOSTIC_SOURCE,
-						TestValidator.WRITER__VALIDATE,
-						"Writers need to have a first name",
-						new Object[] { this, TestPackage.eINSTANCE.getWriter_FirstName()
-						// , TestPackage.eINSTANCE.getWriter_LastName()
-						}));
+				chain.add(new BasicDiagnostic(Diagnostic.ERROR,
+					TestValidator.DIAGNOSTIC_SOURCE,
+					TestValidator.WRITER__VALIDATE,
+					"Writers need to have a first name",
+					new Object[] { this, TestPackage.eINSTANCE.getWriter_FirstName()
+					// , TestPackage.eINSTANCE.getWriter_LastName()
+					}));
 			}
 			valid = false;
 		}
@@ -449,15 +445,13 @@ public class WriterImpl extends EObjectImpl implements Writer {
 		// else if (getFirstName() != null && getLastName() != null && getLastName().equals(getFirstName())) {
 		else if (getFirstName() != null && getFirstName().equals("H")) {
 			if (chain != null) {
-				chain.add
-					(new BasicDiagnostic
-					(Diagnostic.WARNING,
-						TestValidator.DIAGNOSTIC_SOURCE,
-						TestValidator.WRITER__VALIDATE,
-						"First name is the same as last name",
-						new Object[] { this, TestPackage.eINSTANCE.getWriter_FirstName()
-						// , TestPackage.eINSTANCE.getWriter_LastName()
-						}));
+				chain.add(new BasicDiagnostic(Diagnostic.WARNING,
+					TestValidator.DIAGNOSTIC_SOURCE,
+					TestValidator.WRITER__VALIDATE,
+					"First name is the same as last name",
+					new Object[] { this, TestPackage.eINSTANCE.getWriter_FirstName()
+					// , TestPackage.eINSTANCE.getWriter_LastName()
+					}));
 			}
 			valid = false;
 		}
@@ -466,29 +460,25 @@ public class WriterImpl extends EObjectImpl implements Writer {
 		// else if (getFirstName().length() == 1 || getLastName().length() == 1) {
 		else if (getFirstName().equals("Ha")) {
 			if (chain != null) {
-				chain.add
-					(new BasicDiagnostic
-					(Diagnostic.INFO,
-						TestValidator.DIAGNOSTIC_SOURCE,
-						TestValidator.WRITER__VALIDATE,
-						"First or last name is very short. Is this correct?",
-						new Object[] { this, TestPackage.eINSTANCE.getWriter_FirstName()
-						// , TestPackage.eINSTANCE.getWriter_LastName()
-						}));
+				chain.add(new BasicDiagnostic(Diagnostic.INFO,
+					TestValidator.DIAGNOSTIC_SOURCE,
+					TestValidator.WRITER__VALIDATE,
+					"First or last name is very short. Is this correct?",
+					new Object[] { this, TestPackage.eINSTANCE.getWriter_FirstName()
+					// , TestPackage.eINSTANCE.getWriter_LastName()
+					}));
 			}
 			valid = false;
 		}
 
 		if (getLastName() != null && getLastName().equals("foo")) {
 			if (chain != null) {
-				chain.add
-					(new BasicDiagnostic
-					(Diagnostic.ERROR,
-						TestValidator.DIAGNOSTIC_SOURCE,
-						TestValidator.WRITER__VALIDATE,
-						"Last name must not be 'foo'.",
-						new Object[] { this, TestPackage.eINSTANCE.getWriter_LastName()
-						}));
+				chain.add(new BasicDiagnostic(Diagnostic.ERROR,
+					TestValidator.DIAGNOSTIC_SOURCE,
+					TestValidator.WRITER__VALIDATE,
+					"Last name must not be 'foo'.",
+					new Object[] { this, TestPackage.eINSTANCE.getWriter_LastName()
+					}));
 			}
 			valid = false;
 		}

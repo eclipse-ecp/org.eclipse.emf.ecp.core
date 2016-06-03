@@ -32,15 +32,19 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/ecp/view/spi/viewproxy/model/VViewproxyPackage.java">
-        <filter comment="Changes due to new label field in 1.6" id="0"/>
-    </resource>
     <resource path="src/org/eclipse/emf/ecp/view/spi/viewproxy/model/VViewproxyPackage.java" type="org.eclipse.emf.ecp.view.spi.viewproxy.model.VViewproxyPackage">
         <filter comment="Changes due to new label field in 1.6" id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.viewproxy.model.VViewproxyPackage"/>
                 <message_argument value="VIEW_PROXY_FEATURE_COUNT"/>
                 <message_argument value="7"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.viewproxy.model.VViewproxyPackage"/>
+                <message_argument value="VIEW_PROXY_FEATURE_COUNT"/>
+                <message_argument value="8"/>
             </message_arguments>
         </filter>
         <filter comment="Changes due to new label field in 1.6" id="388194388">
@@ -69,6 +73,13 @@
                 <message_argument value="org.eclipse.emf.ecp.view.spi.viewproxy.model.VViewproxyPackage"/>
                 <message_argument value="VIEW_PROXY__ID"/>
                 <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.viewproxy.model.VViewproxyPackage"/>
+                <message_argument value="VIEW_PROXY__ID"/>
+                <message_argument value="7"/>
             </message_arguments>
         </filter>
         <filter comment="Changes due to new label field in 1.6" id="388194388">

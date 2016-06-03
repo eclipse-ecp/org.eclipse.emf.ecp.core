@@ -16,7 +16,9 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -39,6 +41,7 @@ public class ViewProvider implements IViewProvider {
 	@Override
 	public VView provideViewModel(EObject eObject, VViewModelProperties properties) {
 		final VView view = VViewFactory.eINSTANCE.createView();
+		view.setUuid(generateId(eObject.eClass(), null));
 		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
 			new AdapterFactory[] {
 				new ReflectiveItemProviderAdapterFactory(),
@@ -54,6 +57,7 @@ public class ViewProvider implements IViewProvider {
 			modelReference.setDomainModelEFeature(feature);
 			control.setDomainModelReference(modelReference);
 			control.setReadonly(isReadOnly(delegator, eObject, feature));
+			control.setUuid(generateId(eObject.eClass(), feature));
 			view.getChildren().add(control);
 		}
 		composedAdapterFactory.dispose();
@@ -112,6 +116,23 @@ public class ViewProvider implements IViewProvider {
 
 		}
 		return featuresToAdd;
+	}
+
+	// TODO this is not unique, because of the use of hashCode, but maybe good enough?
+	private static String generateId(EClass eClass, EStructuralFeature feature) {
+		final StringBuilder stringBuilder = new StringBuilder();
+		final EPackage ePackage = eClass.getEPackage();
+		if (ePackage != null) {
+			/* might be null with dynamic emf */
+			stringBuilder.append(ePackage.getNsURI());
+		}
+		stringBuilder.append("#"); //$NON-NLS-1$
+		stringBuilder.append(eClass.getName());
+		if (feature != null) {
+			stringBuilder.append("#"); //$NON-NLS-1$
+			stringBuilder.append(feature.getName());
+		}
+		return String.valueOf(stringBuilder.toString().hashCode());
 	}
 
 	@Override

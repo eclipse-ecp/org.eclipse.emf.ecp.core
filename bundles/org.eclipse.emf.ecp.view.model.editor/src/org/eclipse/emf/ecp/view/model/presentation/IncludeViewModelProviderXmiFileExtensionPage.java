@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -18,8 +18,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
 /**
- * @author Alexandra Buzila
- *
+ * Wizard page allowing the selection of whether a contribution to the view model extension point should be made.
  */
 public class IncludeViewModelProviderXmiFileExtensionPage extends WizardPage {
 
@@ -27,19 +26,18 @@ public class IncludeViewModelProviderXmiFileExtensionPage extends WizardPage {
 	private Button addExtensionChkBox;
 
 	/**
-	 * @param pageName
+	 * Creates a new wizard page with the given name.
+	 *
+	 * @param pageName the name of the page
 	 */
-	protected IncludeViewModelProviderXmiFileExtensionPage(String pluginID) {
-		super(pluginID);
-		setTitle("Add Extension"); //$NON-NLS-1$
-		setDescription("Register view model with EMFForms via extension."); //$NON-NLS-1$
+	protected IncludeViewModelProviderXmiFileExtensionPage(String pageName) {
+		super(pageName);
+		setTitle(ViewEditorPlugin.INSTANCE
+			.getString("_UI_IncludeViewModelProviderXmiFileExtensionPage_title")); //$NON-NLS-1$
+		setDescription(ViewEditorPlugin.INSTANCE
+			.getString("_UI_IncludeViewModelProviderXmiFileExtensionPage_description")); //$NON-NLS-1$
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt.widgets.Composite)
-	 */
 	@Override
 	public void createControl(Composite parent) {
 		container = new Composite(parent, SWT.NONE);
@@ -55,6 +53,11 @@ public class IncludeViewModelProviderXmiFileExtensionPage extends WizardPage {
 		setPageComplete(false);
 	}
 
+	/**
+	 * Returns <code>true</code> if the option to contribute the view model to the extension point is selected.
+	 *
+	 * @return whether the contribution to the extension point was selected
+	 */
 	public boolean isContributeToExtensionOptionSelected() {
 		return addExtensionChkBox.getSelection();
 	}
@@ -67,6 +70,5 @@ public class IncludeViewModelProviderXmiFileExtensionPage extends WizardPage {
 		} else {
 			setPageComplete(false);
 		}
-
 	}
 }

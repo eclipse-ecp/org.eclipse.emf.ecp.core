@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -33,16 +33,20 @@ public interface Condition extends EObject {
 	/**
 	 * Evaluates the given condition.
 	 *
+	 * @param domainModel The root domain object of this condition.
 	 * @return {@code true}, if the condition matches, {@code false} otherwise
+	 * @since 1.9
 	 */
-	boolean evaluate();
+	boolean evaluate(EObject domainModel);
 
 	/**
 	 * Evaluates the given condition.
 	 *
+	 * @param domainModel The root domain object of this condition.
 	 * @param possibleNewValues
 	 *            the new value that should be compared against the expected value of the condition
 	 * @return {@code true}, if the condition matches, {@code false} otherwise
+	 * @since 1.9
 	 */
-	boolean evaluateChangedValues(Map<Setting, Object> possibleNewValues);
+	boolean evaluateChangedValues(EObject domainModel, Map<Setting, Object> possibleNewValues);
 } // Condition

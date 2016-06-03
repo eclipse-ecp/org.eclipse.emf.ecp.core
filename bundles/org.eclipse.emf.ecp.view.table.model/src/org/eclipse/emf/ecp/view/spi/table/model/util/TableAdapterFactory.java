@@ -25,6 +25,7 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTableColumnConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
+import org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration;
 
 /**
  * <!-- begin-user-doc -->
@@ -53,8 +54,7 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public TableAdapterFactory() {
-		if (modelPackage == null)
-		{
+		if (modelPackage == null) {
 			modelPackage = VTablePackage.eINSTANCE;
 		}
 	}
@@ -71,12 +71,10 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 	 */
 	@Override
 	public boolean isFactoryForType(Object object) {
-		if (object == modelPackage)
-		{
+		if (object == modelPackage) {
 			return true;
 		}
-		if (object instanceof EObject)
-		{
+		if (object instanceof EObject) {
 			return ((EObject) object).eClass().getEPackage() == modelPackage;
 		}
 		return false;
@@ -89,69 +87,62 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 	 *
 	 * @generated
 	 */
-	protected TableSwitch<Adapter> modelSwitch =
-		new TableSwitch<Adapter>()
-		{
-			@Override
-			public Adapter caseTableControl(VTableControl object)
-			{
-				return createTableControlAdapter();
-			}
+	protected TableSwitch<Adapter> modelSwitch = new TableSwitch<Adapter>() {
+		@Override
+		public Adapter caseTableControl(VTableControl object) {
+			return createTableControlAdapter();
+		}
 
-			@Override
-			public Adapter caseTableColumnConfiguration(VTableColumnConfiguration object)
-			{
-				return createTableColumnConfigurationAdapter();
-			}
+		@Override
+		public Adapter caseTableColumnConfiguration(VTableColumnConfiguration object) {
+			return createTableColumnConfigurationAdapter();
+		}
 
-			@Override
-			public Adapter caseTableDomainModelReference(VTableDomainModelReference object)
-			{
-				return createTableDomainModelReferenceAdapter();
-			}
+		@Override
+		public Adapter caseTableDomainModelReference(VTableDomainModelReference object) {
+			return createTableDomainModelReferenceAdapter();
+		}
 
-			@Override
-			public Adapter caseReadOnlyColumnConfiguration(VReadOnlyColumnConfiguration object)
-			{
-				return createReadOnlyColumnConfigurationAdapter();
-			}
+		@Override
+		public Adapter caseReadOnlyColumnConfiguration(VReadOnlyColumnConfiguration object) {
+			return createReadOnlyColumnConfigurationAdapter();
+		}
 
-			@Override
-			public Adapter caseElement(VElement object)
-			{
-				return createElementAdapter();
-			}
+		@Override
+		public Adapter caseWidthConfiguration(VWidthConfiguration object) {
+			return createWidthConfigurationAdapter();
+		}
 
-			@Override
-			public Adapter caseContainedElement(VContainedElement object)
-			{
-				return createContainedElementAdapter();
-			}
+		@Override
+		public Adapter caseElement(VElement object) {
+			return createElementAdapter();
+		}
 
-			@Override
-			public Adapter caseControl(VControl object)
-			{
-				return createControlAdapter();
-			}
+		@Override
+		public Adapter caseContainedElement(VContainedElement object) {
+			return createContainedElementAdapter();
+		}
 
-			@Override
-			public Adapter caseDomainModelReference(VDomainModelReference object)
-			{
-				return createDomainModelReferenceAdapter();
-			}
+		@Override
+		public Adapter caseControl(VControl object) {
+			return createControlAdapter();
+		}
 
-			@Override
-			public Adapter caseFeaturePathDomainModelReference(VFeaturePathDomainModelReference object)
-			{
-				return createFeaturePathDomainModelReferenceAdapter();
-			}
+		@Override
+		public Adapter caseDomainModelReference(VDomainModelReference object) {
+			return createDomainModelReferenceAdapter();
+		}
 
-			@Override
-			public Adapter defaultCase(EObject object)
-			{
-				return createEObjectAdapter();
-			}
-		};
+		@Override
+		public Adapter caseFeaturePathDomainModelReference(VFeaturePathDomainModelReference object) {
+			return createFeaturePathDomainModelReferenceAdapter();
+		}
+
+		@Override
+		public Adapter defaultCase(EObject object) {
+			return createEObjectAdapter();
+		}
+	};
 
 	/**
 	 * Creates an adapter for the <code>target</code>.
@@ -195,8 +186,7 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTableColumnConfiguration
 	 * @generated
 	 */
-	public Adapter createTableColumnConfigurationAdapter()
-	{
+	public Adapter createTableColumnConfigurationAdapter() {
 		return null;
 	}
 
@@ -212,8 +202,7 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference
 	 * @generated
 	 */
-	public Adapter createTableDomainModelReferenceAdapter()
-	{
+	public Adapter createTableDomainModelReferenceAdapter() {
 		return null;
 	}
 
@@ -230,14 +219,30 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.VReadOnlyColumnConfiguration
 	 * @generated
 	 */
-	public Adapter createReadOnlyColumnConfigurationAdapter()
-	{
+	public Adapter createReadOnlyColumnConfigurationAdapter() {
 		return null;
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VElement
-	 * <em>Element</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration
+	 * <em>Width Configuration</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 *
+	 * @since 1.9
+	 *        <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration
+	 * @generated
+	 */
+	public Adapter createWidthConfigurationAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VElement <em>Element</em>
+	 * }'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
@@ -247,8 +252,7 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.emf.ecp.view.spi.model.VElement
 	 * @generated
 	 */
-	public Adapter createElementAdapter()
-	{
+	public Adapter createElementAdapter() {
 		return null;
 	}
 
@@ -264,14 +268,13 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.emf.ecp.view.spi.model.VContainedElement
 	 * @generated
 	 */
-	public Adapter createContainedElementAdapter()
-	{
+	public Adapter createContainedElementAdapter() {
 		return null;
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VControl
-	 * <em>Control</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VControl <em>Control</em>
+	 * }'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
@@ -281,8 +284,7 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.emf.ecp.view.spi.model.VControl
 	 * @generated
 	 */
-	public Adapter createControlAdapter()
-	{
+	public Adapter createControlAdapter() {
 		return null;
 	}
 
@@ -298,8 +300,7 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference
 	 * @generated
 	 */
-	public Adapter createDomainModelReferenceAdapter()
-	{
+	public Adapter createDomainModelReferenceAdapter() {
 		return null;
 	}
 
@@ -316,8 +317,7 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference
 	 * @generated
 	 */
-	public Adapter createFeaturePathDomainModelReferenceAdapter()
-	{
+	public Adapter createFeaturePathDomainModelReferenceAdapter() {
 		return null;
 	}
 

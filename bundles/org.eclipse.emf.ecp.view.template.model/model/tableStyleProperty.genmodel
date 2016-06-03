@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.&#xD;&#xA;&#xD;&#xA;All rights reserved. This program and the accompanying materials&#xD;&#xA;are made available under the terms of the Eclipse Public License v1.0&#xD;&#xA;which accompanies this distribution, and is available at&#xD;&#xA;http://www.eclipse.org/legal/epl-v10.html&#xD;&#xA;&#xD;&#xA;Contributors:&#xD;&#xA;EclipseSource Munich - initial API and implementation"
+    modelDirectory="/org.eclipse.emf.ecp.view.template.model/src" modelPluginID="org.eclipse.emf.ecp.view.template.model"
+    modelName="TabStyle" nonNLSMarkers="true" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    commentFormatting="true" importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0"
+    copyrightFields="false" usedGenPackages="template.genmodel#//template" interfaceNamePattern="VT{0}"
+    classNamePattern="VT{0}Impl" operationReflection="true" importOrganizing="true">
+  <foreignModel>tableStyleProperty.ecore</foreignModel>
+  <genPackages prefix="TableStyleProperty" basePackage="org.eclipse.emf.ecp.view.template.style"
+      disposableProviderFactory="true" interfacePackageSuffix="model" metaDataPackageSuffix="model"
+      classPackageSuffix="model.impl" utilityPackageSuffix="model.util" providerPackageSuffix="model.provider"
+      presentationPackageSuffix="model.presentation" testsPackageSuffix="model.tests"
+      extensibleProviderFactory="true" childCreationExtenders="true" ecorePackage="tableStyleProperty.ecore#/">
+    <genClasses ecoreClass="tableStyleProperty.ecore#//TableStyleProperty">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tableStyleProperty.ecore#//TableStyleProperty/minimumHeight"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tableStyleProperty.ecore#//TableStyleProperty/maximumHeight"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

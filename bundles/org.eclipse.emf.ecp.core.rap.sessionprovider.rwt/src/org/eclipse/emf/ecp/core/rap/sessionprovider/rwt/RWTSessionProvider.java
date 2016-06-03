@@ -13,6 +13,8 @@ package org.eclipse.emf.ecp.core.rap.sessionprovider.rwt;
 
 import org.eclipse.emf.ecp.core.rap.SessionProvider;
 import org.eclipse.rap.rwt.RWT;
+import org.eclipse.rap.rwt.service.UISession;
+import org.eclipse.rap.rwt.service.UISessionListener;
 
 /**
  * This class provides the current session ID.
@@ -31,6 +33,18 @@ public class RWTSessionProvider implements SessionProvider {
 	public final String getSessionId() {
 		final String sessionId = RWT.getUISession().toString();
 		return sessionId;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.core.rap.SessionProvider#registerListenerWithSession(org.eclipse.rap.rwt.service.UISessionListener)
+	 */
+	@Override
+	public void registerListenerWithSession(UISessionListener listener) {
+		final UISession uiSession = RWT.getUISession();
+		uiSession.addUISessionListener(listener);
+
 	}
 
 }

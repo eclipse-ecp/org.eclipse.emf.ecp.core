@@ -17,6 +17,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
+import org.eclipse.emfforms.spi.core.services.domainexpander.EMFFormsDomainExpander;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsAbstractSpreadsheetRenderer;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsIdProvider;
@@ -42,6 +43,7 @@ public class EMFFormsSpreadsheetControlRendererService implements
 	private EMFFormsIdProvider emfFormsIdProvider;
 	private EMFFormsSpreadsheetValueConverterRegistry converterRegistry;
 	private EMFFormsSpreadsheetFormatDescriptionProvider formatDescriptionProvider;
+	private EMFFormsDomainExpander domainExpander;
 
 	/**
 	 * The VTViewTemplateProvider to use.
@@ -114,6 +116,16 @@ public class EMFFormsSpreadsheetControlRendererService implements
 	}
 
 	/**
+	 * The EMFFormsDomainExpander to use.
+	 *
+	 * @param domainExpander the EMFFormsDomainExpander
+	 */
+	@Reference
+	public void setEMFFormsDomainExpander(EMFFormsDomainExpander domainExpander) {
+		this.domainExpander = domainExpander;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetRendererService#isApplicable(org.eclipse.emf.ecp.view.spi.model.VElement,
@@ -138,7 +150,7 @@ public class EMFFormsSpreadsheetControlRendererService implements
 	public EMFFormsAbstractSpreadsheetRenderer<VControl> getRendererInstance(
 		VControl vElement, ViewModelContext viewModelContext) {
 		return new EMFFormsSpreadsheetControlRenderer(emfformsDatabinding, emfformsLabelProvider, reportService,
-			vtViewTemplateProvider, emfFormsIdProvider, converterRegistry, formatDescriptionProvider);
+			vtViewTemplateProvider, emfFormsIdProvider, converterRegistry, formatDescriptionProvider, domainExpander);
 	}
 
 }

@@ -17,6 +17,8 @@ import java.util.Map;
 import org.eclipse.emf.ecp.core.ECPProviderRegistry;
 import org.eclipse.emf.ecp.internal.core.ECPProviderRegistryImpl;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
+import org.eclipse.rap.rwt.service.UISessionEvent;
+import org.eclipse.rap.rwt.service.UISessionListener;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
@@ -31,7 +33,7 @@ import org.osgi.framework.ServiceRegistration;
  *
  */
 public class ECPProviderRegistryFactory implements
-ServiceFactory<ECPProviderRegistry> {
+	ServiceFactory<ECPProviderRegistry>, UISessionListener {
 
 	/**
 	 * The session provider used to retrieve the current session.
@@ -40,8 +42,7 @@ ServiceFactory<ECPProviderRegistry> {
 	/**
 	 * a map of sessions to services.
 	 */
-	private final Map<String, ECPProviderRegistry> sessionRegistry =
-		new HashMap<String, ECPProviderRegistry>();
+	private final Map<String, ECPProviderRegistry> sessionRegistry = new HashMap<String, ECPProviderRegistry>();
 
 	/**
 	 * default constructor.
@@ -88,6 +89,8 @@ ServiceFactory<ECPProviderRegistry> {
 
 		ECPProviderRegistry ecpProviderRegistry;
 		final String sessionId = getSessionProvider().getSessionId();
+		getSessionProvider().registerListenerWithSession(this);
+
 		if (sessionRegistry.containsKey(sessionId)) {
 			ecpProviderRegistry = sessionRegistry.get(sessionId);
 		} else {
@@ -112,6 +115,17 @@ ServiceFactory<ECPProviderRegistry> {
 		ServiceRegistration<ECPProviderRegistry> registration,
 		ECPProviderRegistry service) {
 		// TODO Auto-generated method stub
+
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.rap.rwt.service.UISessionListener#beforeDestroy(org.eclipse.rap.rwt.service.UISessionEvent)
+	 */
+	@Override
+	public void beforeDestroy(UISessionEvent event) {
+		sessionRegistry.remove(event.getUISession().toString());
 
 	}
 

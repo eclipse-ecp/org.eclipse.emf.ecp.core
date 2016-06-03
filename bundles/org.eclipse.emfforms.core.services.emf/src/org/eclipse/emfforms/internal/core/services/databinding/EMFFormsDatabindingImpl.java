@@ -15,6 +15,7 @@ package org.eclipse.emfforms.internal.core.services.databinding;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import org.eclipse.core.databinding.observable.Realm;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.list.IListProperty;
@@ -57,7 +58,14 @@ public class EMFFormsDatabindingImpl implements EMFFormsDatabindingEMF {
 		}
 
 		final IEMFValueProperty valueProperty = getValueProperty(domainModelReference, object);
-		return valueProperty.observe(object);
+		final Realm realm = Realm.getDefault();
+		if (realm != null) {
+			return valueProperty.observe(object);
+		}
+		final DefaultRealm dr = new DefaultRealm();
+		final IObservableValue observableValue = valueProperty.observe(object);
+		dr.dispose();
+		return observableValue;
 	}
 
 	/**
@@ -117,7 +125,14 @@ public class EMFFormsDatabindingImpl implements EMFFormsDatabindingEMF {
 		}
 
 		final IListProperty listProperty = getListProperty(domainModelReference, object);
-		return listProperty.observe(object);
+		final Realm realm = Realm.getDefault();
+		if (realm != null) {
+			return listProperty.observe(object);
+		}
+		final DefaultRealm dr = new DefaultRealm();
+		final IObservableList observableList = listProperty.observe(object);
+		dr.dispose();
+		return observableList;
 	}
 
 	/**
@@ -229,7 +244,14 @@ public class EMFFormsDatabindingImpl implements EMFFormsDatabindingEMF {
 			domainModelReference);
 
 		if (bestConverter != null) {
-			return bestConverter.getSetting(domainModelReference, object);
+			final Realm realm = Realm.getDefault();
+			if (realm != null) {
+				return bestConverter.getSetting(domainModelReference, object);
+			}
+			final DefaultRealm dr = new DefaultRealm();
+			final Setting setting = bestConverter.getSetting(domainModelReference, object);
+			dr.dispose();
+			return setting;
 		}
 
 		throw new DatabindingFailedException(

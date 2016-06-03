@@ -28,6 +28,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
 public class NumberControlRendererTester implements ECPRendererTester {
 
 	private static Set<NumberTester> testers = new LinkedHashSet<NumberControlRendererTester.NumberTester>();
+
 	static {
 		testers.add(new NumberTester(Integer.class));
 		testers.add(new NumberTester(Long.class));
@@ -65,7 +66,7 @@ public class NumberControlRendererTester implements ECPRendererTester {
 	private static class NumberTester extends SimpleControlRendererTester {
 		private final Class<?> clazz;
 
-		public NumberTester(Class<?> clazz) {
+		NumberTester(Class<?> clazz) {
 			this.clazz = clazz;
 		}
 

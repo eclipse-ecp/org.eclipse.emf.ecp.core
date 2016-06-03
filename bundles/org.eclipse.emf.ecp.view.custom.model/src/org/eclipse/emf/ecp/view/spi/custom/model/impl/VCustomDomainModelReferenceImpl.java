@@ -66,8 +66,7 @@ import org.osgi.framework.Bundle;
  *
  * @generated
  */
-public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCustomDomainModelReference
-{
+public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCustomDomainModelReference {
 	/**
 	 * The cached value of the '{@link #getChangeListener() <em>Change Listener</em>}' attribute list.
 	 * <!-- begin-user-doc -->
@@ -163,8 +162,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	 *
 	 * @generated
 	 */
-	protected VCustomDomainModelReferenceImpl()
-	{
+	protected VCustomDomainModelReferenceImpl() {
 		super();
 	}
 
@@ -175,8 +173,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return VCustomPackage.Literals.CUSTOM_DOMAIN_MODEL_REFERENCE;
 	}
 
@@ -186,11 +183,10 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	 *
 	 * @generated
 	 */
+	@Deprecated
 	@Override
-	public EList<DomainModelReferenceChangeListener> getChangeListener()
-	{
-		if (changeListener == null)
-		{
+	public EList<DomainModelReferenceChangeListener> getChangeListener() {
+		if (changeListener == null) {
 			changeListener = new EDataTypeUniqueEList<DomainModelReferenceChangeListener>(
 				DomainModelReferenceChangeListener.class, this,
 				VCustomPackage.CUSTOM_DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER);
@@ -205,10 +201,8 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	 * @generated
 	 */
 	@Override
-	public EList<VDomainModelReference> getDomainModelReferences()
-	{
-		if (domainModelReferences == null)
-		{
+	public EList<VDomainModelReference> getDomainModelReferences() {
+		if (domainModelReferences == null) {
 			domainModelReferences = new EObjectContainmentEList<VDomainModelReference>(VDomainModelReference.class,
 				this, VCustomPackage.CUSTOM_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCES);
 		}
@@ -222,8 +216,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	 * @generated
 	 */
 	@Override
-	public String getBundleName()
-	{
+	public String getBundleName() {
 		return bundleName;
 	}
 
@@ -234,8 +227,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	 * @generated
 	 */
 	@Override
-	public void setBundleName(String newBundleName)
-	{
+	public void setBundleName(String newBundleName) {
 		final String oldBundleName = bundleName;
 		bundleName = newBundleName;
 		if (eNotificationRequired()) {
@@ -251,8 +243,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	 * @generated
 	 */
 	@Override
-	public String getClassName()
-	{
+	public String getClassName() {
 		return className;
 	}
 
@@ -263,8 +254,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	 * @generated
 	 */
 	@Override
-	public void setClassName(String newClassName)
-	{
+	public void setClassName(String newClassName) {
 		final String oldClassName = className;
 		className = newClassName;
 		if (eNotificationRequired()) {
@@ -280,8 +270,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	 * @generated
 	 */
 	@Override
-	public boolean isControlChecked()
-	{
+	public boolean isControlChecked() {
 		return controlChecked;
 	}
 
@@ -292,8 +281,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	 * @generated
 	 */
 	@Override
-	public void setControlChecked(boolean newControlChecked)
-	{
+	public void setControlChecked(boolean newControlChecked) {
 		final boolean oldControlChecked = controlChecked;
 		controlChecked = newControlChecked;
 		if (eNotificationRequired()) {
@@ -309,10 +297,8 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-	{
-		switch (featureID)
-		{
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
 		case VCustomPackage.CUSTOM_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCES:
 			return ((InternalEList<?>) getDomainModelReferences()).basicRemove(otherEnd, msgs);
 		}
@@ -326,10 +312,8 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
-		switch (featureID)
-		{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 		case VCustomPackage.CUSTOM_DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER:
 			return getChangeListener();
 		case VCustomPackage.CUSTOM_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCES:
@@ -352,10 +336,8 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
-		switch (featureID)
-		{
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 		case VCustomPackage.CUSTOM_DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER:
 			getChangeListener().clear();
 			getChangeListener().addAll((Collection<? extends DomainModelReferenceChangeListener>) newValue);
@@ -384,10 +366,8 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
-		switch (featureID)
-		{
+	public void eUnset(int featureID) {
+		switch (featureID) {
 		case VCustomPackage.CUSTOM_DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER:
 			getChangeListener().clear();
 			return;
@@ -414,10 +394,8 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
-		switch (featureID)
-		{
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 		case VCustomPackage.CUSTOM_DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER:
 			return changeListener != null && !changeListener.isEmpty();
 		case VCustomPackage.CUSTOM_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCES:
@@ -439,8 +417,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	 * @generated
 	 */
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		if (eIsProxy()) {
 			return super.toString();
 		}
@@ -483,6 +460,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 		return result;
 	}
 
+	@Deprecated
 	@Override
 	public boolean init(EObject object) {
 		return resolve(object);
@@ -517,6 +495,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getIterator()
 	 * @generated NOT
 	 */
+	@Deprecated
 	@Override
 	public Iterator<Setting> getIterator() {
 		return new ExistingIteratorIterator<EStructuralFeature.Setting>() {
@@ -533,6 +512,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getEStructuralFeatureIterator()
 	 * @generated NOT
 	 */
+	@Deprecated
 	@Override
 	public Iterator<EStructuralFeature> getEStructuralFeatureIterator() {
 		return new ExistingIteratorIterator<EStructuralFeature>() {
@@ -555,7 +535,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 
 		private final Stack<Iterator<T>> subIterators = new Stack<Iterator<T>>();
 
-		public ExistingIteratorIterator() {
+		ExistingIteratorIterator() {
 			for (int i = getDomainModelReferences().size() - 1; i >= 0; i--) {
 				final VDomainModelReference vDomainModelReference = getDomainModelReferences().get(i);
 				final Iterator<T> subIterator = getSubIterator(vDomainModelReference);
@@ -593,6 +573,7 @@ public class VCustomDomainModelReferenceImpl extends EObjectImpl implements VCus
 	 *
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getFullPathIterator()
 	 */
+	@Deprecated
 	@Override
 	public Iterator<SettingPath> getFullPathIterator() {
 		return new ExistingIteratorIterator<SettingPath>() {

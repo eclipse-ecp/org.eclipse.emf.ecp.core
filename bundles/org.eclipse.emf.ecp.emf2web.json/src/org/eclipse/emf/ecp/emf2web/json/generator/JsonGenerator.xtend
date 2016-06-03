@@ -18,6 +18,7 @@ import java.util.Collection
 import com.google.gson.JsonArray
 import com.google.gson.GsonBuilder
 import org.eclipse.emf.ecp.emf2web.generator.Generator
+import org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl
 
 /**
  * @author Stefan Dirix
@@ -59,7 +60,8 @@ abstract class JsonGenerator implements Generator{
 	}
 	
 	protected def dispatch with(JsonObject jsonObject, String propertyName, Collection<? extends EObject> collection) {
-		val jsonElements = collection.map [ item |
+		val filteredElements=collection.filter[item|!VCustomControl.isInstance(item)]
+		val jsonElements = filteredElements.map [ item |
 			createJsonElement(item)
 		]
 		val jsonArray = new JsonArray()

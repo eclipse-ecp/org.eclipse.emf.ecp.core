@@ -22,6 +22,7 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
@@ -85,5 +86,15 @@ public class DIControlSWTRenderer extends AbstractControlSWTRenderer<VControl> {
 		SWTContextUtil.setAbstractSWTRendererObjects(childContext, getVElement(), getViewModelContext(), parent);
 		childContext.set(SWTGridCell.class, cell);
 		return (Control) DIRendererUtil.render(pojo, getVElement(), getViewModelContext());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer#rootDomainModelChanged()
+	 */
+	@Override
+	protected void rootDomainModelChanged() throws DatabindingFailedException {
+		// Do nothing
 	}
 }

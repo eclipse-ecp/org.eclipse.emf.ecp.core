@@ -40,8 +40,7 @@ public class ReadOnlyColumnConfigurationItemProvider
 	extends ItemProviderAdapter
 	implements
 	IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider,
-	IItemPropertySource
-{
+	IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -49,8 +48,7 @@ public class ReadOnlyColumnConfigurationItemProvider
 	 *
 	 * @generated
 	 */
-	public ReadOnlyColumnConfigurationItemProvider(AdapterFactory adapterFactory)
-	{
+	public ReadOnlyColumnConfigurationItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -62,10 +60,8 @@ public class ReadOnlyColumnConfigurationItemProvider
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object)
-	{
-		if (itemPropertyDescriptors == null)
-		{
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addColumnDomainReferencesPropertyDescriptor(object);
@@ -80,16 +76,14 @@ public class ReadOnlyColumnConfigurationItemProvider
 	 *
 	 * @generated
 	 */
-	protected void addColumnDomainReferencesPropertyDescriptor(Object object)
-	{
+	protected void addColumnDomainReferencesPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_ReadOnlyColumnConfiguration_columnDomainReferences_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_ReadOnlyColumnConfiguration_columnDomainReferences_feature", "_UI_ReadOnlyColumnConfiguration_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+					"_UI_ReadOnlyColumnConfiguration_columnDomainReferences_feature", //$NON-NLS-1$
+					"_UI_ReadOnlyColumnConfiguration_type"), //$NON-NLS-1$
 				VTablePackage.Literals.READ_ONLY_COLUMN_CONFIGURATION__COLUMN_DOMAIN_REFERENCES,
 				true,
 				false,
@@ -107,8 +101,7 @@ public class ReadOnlyColumnConfigurationItemProvider
 	 * @generated
 	 */
 	@Override
-	public Object getImage(Object object)
-	{
+	public Object getImage(Object object) {
 		return overlayImage(object, getResourceLocator().getImage("full/obj16/ReadOnlyColumnConfiguration")); //$NON-NLS-1$
 	}
 
@@ -120,8 +113,7 @@ public class ReadOnlyColumnConfigurationItemProvider
 	 * @generated
 	 */
 	@Override
-	public String getText(Object object)
-	{
+	public String getText(Object object) {
 		return getString("_UI_ReadOnlyColumnConfiguration_type"); //$NON-NLS-1$
 	}
 
@@ -134,8 +126,7 @@ public class ReadOnlyColumnConfigurationItemProvider
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(Notification notification)
-	{
+	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 		super.notifyChanged(notification);
 	}
@@ -149,8 +140,7 @@ public class ReadOnlyColumnConfigurationItemProvider
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
-	{
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 	}
 
@@ -162,8 +152,7 @@ public class ReadOnlyColumnConfigurationItemProvider
 	 * @generated
 	 */
 	@Override
-	public ResourceLocator getResourceLocator()
-	{
+	public ResourceLocator getResourceLocator() {
 		return ((IChildCreationExtender) adapterFactory).getResourceLocator();
 	}
 

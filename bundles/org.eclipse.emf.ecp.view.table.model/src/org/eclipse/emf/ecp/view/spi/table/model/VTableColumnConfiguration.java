@@ -23,7 +23,6 @@ import org.eclipse.emf.ecore.EObject;
  * @model interface="true" abstract="true"
  * @generated
  */
-public interface VTableColumnConfiguration extends EObject
-{
+public interface VTableColumnConfiguration extends EObject {
 
 } // VTableColumnConfiguration

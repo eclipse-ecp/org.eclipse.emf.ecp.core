@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -189,67 +189,112 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	 */
 	private class ValidationDomainModelChangeListener implements ModelChangeAddRemoveListener {
 
-		@SuppressWarnings("unchecked")
 		@Override
 		public void notifyChange(ModelChangeNotification notification) {
 			if (ValidationNotification.class.isInstance(notification.getRawNotification())) {
 				validate(notification.getNotifier());
 				return;
 			}
-			final Notification rawNotification = notification.getRawNotification();
-			switch (rawNotification.getEventType()) {
-			// FIXME: move add, remove to add/remove instead of doing here
-			case Notification.ADD:
-				final Set<EObject> toValidate = new LinkedHashSet<EObject>();
-				toValidate.add(notification.getNotifier());
-				// in case of not containment references
-				if (EReference.class.isInstance(notification.getStructuralFeature())) {
-					toValidate.addAll(getAllEObjects((EObject) notification.getRawNotification().getNewValue()));
-				}
-				validate(toValidate);
-				break;
-			case Notification.ADD_MANY:
-				validate(notification.getNotifier());
-				// in case of not containment references
-				if (EReference.class.isInstance(notification.getStructuralFeature())) {
-					validate((Collection<EObject>) notification.getRawNotification().getNewValue());
-				}
-				break;
-			case Notification.REMOVE:
-				if (EReference.class.isInstance(rawNotification.getFeature())) {
-					cleanControlDiagnostics(EObject.class.cast(notification.getNotifier()),
-						EReference.class.cast(rawNotification.getFeature()),
-						EObject.class.cast(rawNotification.getOldValue()));
-				}
 
-				//$FALL-THROUGH$
-			case Notification.REMOVE_MANY:
-				// TODO JF since we now have an indexed dmr, this should clean diagnostics, too, doesn't it?
-				validate(getAllEObjects(notification.getNotifier()));
-				break;
-			case Notification.REMOVING_ADAPTER:
-				break;
-			default:
-				validate(notification.getNotifier());
-				if (EReference.class.isInstance(notification.getStructuralFeature())) {
-					if (notification.getRawNotification().getNewValue() != null) {
-						final Object newValue = notification.getRawNotification().getNewValue();
-						/*
-						 * unset on a list has a boolean as a new value. therefore we need to check if new value is an
-						 * EObject
-						 */
-						if (EObject.class.isInstance(newValue)) {
-							validate((EObject) newValue);
-						}
+			if (isIgnore(notification)) {
+				return;
+			}
+
+			final Notification rawNotification = notification.getRawNotification();
+			final int eventType = rawNotification.getEventType();
+
+			// Special cases
+			if (eventType == Notification.ADD || eventType == Notification.ADD_MANY) {
+				handleAdd(notification);
+				return;
+			} else if (eventType == Notification.REMOVE || eventType == Notification.REMOVE_MANY) {
+				handleRemove(notification);
+				return;
+			}
+
+			// Default case
+			validate(notification.getNotifier());
+			if (EReference.class.isInstance(notification.getStructuralFeature())) {
+				if (notification.getRawNotification().getNewValue() != null) {
+					final Object newValue = notification.getRawNotification().getNewValue();
+					/*
+					 * unset on a list has a boolean as a new value. therefore we need to check if new value is an
+					 * EObject
+					 */
+					if (EObject.class.isInstance(newValue)) {
+						validate((EObject) newValue);
 					}
 				}
 			}
 		}
 
+		/**
+		 * Indicates whether the given {@link ModelChangeNotification} should be ignored.
+		 *
+		 * @param notification the {@link ModelChangeNotification} to check.
+		 * @return {@code true} if the given notification should be ignored, {@code false} otherwise.
+		 */
+		private boolean isIgnore(ModelChangeNotification notification) {
+			final int eventType = notification.getRawNotification().getEventType();
+			if (eventType == Notification.REMOVING_ADAPTER) {
+				return true;
+			}
+			if (eventType == Notification.SET) {
+				if (EReference.class.isInstance(notification.getStructuralFeature())) {
+					final EReference eReference = EReference.class.cast(notification.getStructuralFeature());
+					if (eReference.isContainer() && notification.getRawNotification().getNewValue() == null) {
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+
+		/**
+		 * Handles the case when the given {@link ModelChangeNotification} originates from an ADD.
+		 *
+		 * @param notification
+		 *            the {@link ModelChangeNotification} to handle.
+		 */
+		@SuppressWarnings("unchecked")
+		private void handleAdd(ModelChangeNotification notification) {
+			final Set<EObject> toValidate = new LinkedHashSet<EObject>();
+			toValidate.add(notification.getNotifier());
+
+			// in case of not containment references
+			if (EReference.class.isInstance(notification.getStructuralFeature())) {
+				if (Notification.ADD == notification.getRawNotification().getEventType()) {
+					toValidate.addAll(getAllEObjects((EObject) notification.getRawNotification().getNewValue()));
+				} else {
+					toValidate.addAll((Collection<EObject>) notification.getRawNotification().getNewValue());
+				}
+
+			}
+			validate(toValidate);
+		}
+
+		/**
+		 * Handles the case when the given {@link ModelChangeNotification} originates from a REMOVE.
+		 *
+		 * @param notification
+		 *            the {@link ModelChangeNotification} to handle.
+		 */
+		private void handleRemove(ModelChangeNotification notification) {
+			final Notification rawNotification = notification.getRawNotification();
+			if (rawNotification.getEventType() == Notification.REMOVE
+				&& EReference.class.isInstance(rawNotification.getFeature())) {
+				cleanControlDiagnostics(EObject.class.cast(notification.getNotifier()),
+					EReference.class.cast(rawNotification.getFeature()),
+					EObject.class.cast(rawNotification.getOldValue()));
+			}
+			// TODO JF since we now have an indexed dmr, this should clean diagnostics, too, doesn't it?
+			validate(notification.getNotifier());
+		}
+
 		@Override
 		public void notifyAdd(Notifier notifier) {
 			if (notifier == context.getDomainModel()) {
-				validate(getAllEObjects(context.getDomainModel()));
+				validate(getAllEObjectsToValidate());
 			}
 		}
 
@@ -319,7 +364,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 				if (diagnostic.getData().size() < 1) {
 					continue;
 				}
-				if (removedEObject.equals(diagnostic.getData().get(0))) {
+				if (removedEObject.equals(getFirstInternalEObject(diagnostic.getData()))) {
 					diagnosticsToRemove.add(diagnostic);
 				}
 			}
@@ -351,6 +396,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	 */
 	@Override
 	public void dispose() {
+		context.unregisterEMFFormsContextListener(this);
 		context.unregisterDomainChangeListener(domainChangeListener);
 		context.unregisterViewChangeListener(viewChangeListener);
 	}
@@ -379,6 +425,14 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 			result.add(iterator.next());
 		}
 		return result;
+	}
+
+	private Collection<EObject> getAllEObjectsToValidate() {
+		return getAllEObjectsToValidate(controlMapper);
+	}
+
+	private static Collection<EObject> getAllEObjectsToValidate(EMFFormsSettingToControlMapper controlMapper) {
+		return controlMapper.getEObjectsWithSettings();
 	}
 
 	/**
@@ -470,19 +524,20 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 
 				for (final Object diagnosticObject : control.getDiagnostic().getDiagnostics()) {
 					final Diagnostic diagnostic = Diagnostic.class.cast(diagnosticObject);
-					if (diagnostic.getData().size() < 2 || !EObject.class.isInstance(diagnostic.getData().get(0))
-						|| !EStructuralFeature.class.isInstance(diagnostic.getData().get(1))) {
+					if (diagnostic.getData().size() < 2) {
 						continue;
 					}
-					final EObject diagnosticEobject = EObject.class.cast(diagnostic.getData().get(0));
-
+					final EObject diagnosticEobject = getFirstInternalEObject(diagnostic.getData());
+					final EStructuralFeature eStructuralFeature = getFirstEStructuralFeature(diagnostic.getData());
+					if (diagnosticEobject == null || eStructuralFeature == null) {
+						continue;
+					}
 					// TODO performance
 					if (!isObjectStillValid(diagnosticEobject)) {
 						continue;
 					}
 					final UniqueSetting uniqueSetting2 = UniqueSetting.createSetting(
-						diagnosticEobject,
-						EStructuralFeature.class.cast(diagnostic.getData().get(1)));
+						diagnosticEobject, eStructuralFeature);
 					if (!currentUpdates.containsKey(uniqueSetting2)) {
 						controlDiagnosticMap.get(control).getDiagnostics().add(diagnosticObject);
 					}
@@ -496,12 +551,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	}
 
 	private boolean isObjectStillValid(EObject diagnosticEobject) {
-		EObject toCheck = diagnosticEobject;
-		while (toCheck != null && toCheck != context.getDomainModel()) {
-			toCheck = toCheck.eContainer();
-		}
-
-		return toCheck == context.getDomainModel();
+		return controlMapper.hasControlsFor(diagnosticEobject);
 	}
 
 	private void updateAndPropagate(Map<VElement, VDiagnostic> controlDiagnosticMap) {
@@ -557,32 +607,52 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 
 	private void analyzeDiagnostic(Diagnostic diagnostic) {
 		if (diagnostic.getData().size() > 1) {
-			if (InternalEObject.class.isInstance(diagnostic.getData().get(0))
-				&& EStructuralFeature.class.isInstance(diagnostic.getData().get(1))) {
-				final InternalEObject internalEObject = (InternalEObject) diagnostic.getData().get(0);
-				final EStructuralFeature eStructuralFeature = (EStructuralFeature) diagnostic.getData().get(1);
-				if (!internalEObject.eClass().getEAllStructuralFeatures().contains(eStructuralFeature)) {
-					Activator.getDefault().getReportService()
-						.report(new AbstractReport(
-							MessageFormat.format(
-								"No Setting can be created for Diagnostic {0} since the EObject's EClass does not contain the Feature.", //$NON-NLS-1$
-								diagnostic),
-							IStatus.INFO));
-					return;
-				}
-				final Setting setting = internalEObject.eSetting(eStructuralFeature);
-				final UniqueSetting uniqueSetting = UniqueSetting.createSetting(setting);
-				if (!currentUpdates.containsKey(uniqueSetting)) {
-					currentUpdates.put(uniqueSetting, VViewFactory.eINSTANCE.createDiagnostic());
-				}
-				currentUpdates.get(uniqueSetting).getDiagnostics().add(diagnostic);
+
+			final InternalEObject internalEObject = getFirstInternalEObject(diagnostic.getData());
+			final EStructuralFeature eStructuralFeature = getFirstEStructuralFeature(diagnostic.getData());
+			if (internalEObject == null || eStructuralFeature == null) {
+				return;
 			}
+			if (!internalEObject.eClass().getEAllStructuralFeatures().contains(eStructuralFeature)) {
+				Activator.getDefault().getReportService()
+					.report(new AbstractReport(
+						MessageFormat.format(
+							"No Setting can be created for Diagnostic {0} since the EObject's EClass does not contain the Feature.", //$NON-NLS-1$
+							diagnostic),
+						IStatus.INFO));
+				return;
+			}
+			final Setting setting = internalEObject.eSetting(eStructuralFeature);
+			final UniqueSetting uniqueSetting = UniqueSetting.createSetting(setting);
+			if (!currentUpdates.containsKey(uniqueSetting)) {
+				currentUpdates.put(uniqueSetting, VViewFactory.eINSTANCE.createDiagnostic());
+			}
+			currentUpdates.get(uniqueSetting).getDiagnostics().add(diagnostic);
 
 		} else {
 			for (final Diagnostic childDiagnostic : diagnostic.getChildren()) {
 				analyzeDiagnostic(childDiagnostic);
 			}
 		}
+	}
+
+	private EStructuralFeature getFirstEStructuralFeature(List<?> data) {
+		// Exclude first object for cases when we validate an EStructuralFeature.
+		for (final Object object : data.subList(1, data.size())) {
+			if (EStructuralFeature.class.isInstance(object)) {
+				return EStructuralFeature.class.cast(object);
+			}
+		}
+		return null;
+	}
+
+	private InternalEObject getFirstInternalEObject(List<?> data) {
+		for (final Object object : data) {
+			if (InternalEObject.class.isInstance(object)) {
+				return InternalEObject.class.cast(object);
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -612,15 +682,15 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 		final Map<EStructuralFeature, DiagnosticChain> diagnosticMap = new LinkedHashMap<EStructuralFeature, DiagnosticChain>();
 		for (final Diagnostic child : diagnostics.getChildren()) {
 			if (DiagnosticChain.class.isInstance(child) && checkDiagnosticData(child)) {
-				diagnosticMap.put((EStructuralFeature) child.getData().get(1), (DiagnosticChain) child);
+				diagnosticMap.put(getFirstEStructuralFeature(child.getData()), (DiagnosticChain) child);
 			}
 		}
 
 		for (final ValidationProvider validationProvider : validationProviders) {
 			final List<Diagnostic> additionValidation = validationProvider.validate(object);
 			for (final Diagnostic additionDiagnostic : additionValidation) {
-				if (diagnosticMap.containsKey(additionDiagnostic.getData().get(1))) {
-					diagnosticMap.get(additionDiagnostic.getData().get(1)).add(additionDiagnostic);
+				if (diagnosticMap.containsKey(getFirstEStructuralFeature(additionDiagnostic.getData()))) {
+					diagnosticMap.get(getFirstEStructuralFeature(additionDiagnostic.getData())).add(additionDiagnostic);
 				} else {
 					diagnostics.add(additionDiagnostic);
 				}
@@ -635,10 +705,10 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 		if (data.size() < 2) {
 			return false;
 		}
-		if (!EObject.class.isInstance(data.get(0))) {
+		if (getFirstInternalEObject(data) == null) {
 			return false;
 		}
-		if (!EStructuralFeature.class.isInstance(data.get(1))) {
+		if (getFirstEStructuralFeature(data) == null) {
 			return false;
 		}
 		return true;
@@ -665,7 +735,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	public void addValidationProvider(ValidationProvider validationProvider, boolean revalidate) {
 		validationProviders.add(validationProvider);
 		if (revalidate) {
-			validate(getAllEObjects(context.getDomainModel()));
+			validate(getAllEObjectsToValidate());
 		}
 	}
 
@@ -690,7 +760,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	public void removeValidationProvider(ValidationProvider validationProvider, boolean revalidate) {
 		validationProviders.remove(validationProvider);
 		if (revalidate) {
-			validate(getAllEObjects(context.getDomainModel()));
+			validate(getAllEObjectsToValidate());
 		}
 	}
 
@@ -750,8 +820,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	 */
 	@Override
 	public void childContextAdded(VElement parentElement, EMFFormsViewContext childContext) {
-		// TODO Auto-generated method stub
-
+		validate(getAllEObjectsToValidate());
 	}
 
 	/**
@@ -773,7 +842,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	@Override
 	public void contextInitialised() {
 		initialized = true;
-		validate(getAllEObjects(context.getDomainModel()));
+		validate(getAllEObjectsToValidate());
 	}
 
 	/**

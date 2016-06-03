@@ -23,9 +23,11 @@ import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 /**
  * The action to allow adding of attribute values to multi attribute controls.
  *
+ * @deprecated This was only used by the AttributeMultiControl and is thus not needed anymore
  * @author Eugen Neufeld
  *
  */
+@Deprecated
 public class AddAttributeAction extends ECPSWTAction {
 
 	/**

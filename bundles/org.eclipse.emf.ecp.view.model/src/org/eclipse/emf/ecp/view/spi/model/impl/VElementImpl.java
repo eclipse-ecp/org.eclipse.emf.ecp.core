@@ -31,7 +31,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Renderable</b></em>'.
  *
- * @since 1.2
+ * @since 1.8
  *        <!-- end-user-doc -->
  *        <p>
  *        The following features are implemented:
@@ -44,6 +44,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl#isReadonly <em>Readonly</em>}</li>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl#getDiagnostic <em>Diagnostic</em>}</li>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl#getAttachments <em>Attachments</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl#getUuid <em>Uuid</em>}</li>
  *        </ul>
  *
  * @generated
@@ -182,6 +183,32 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 	 * @ordered
 	 */
 	protected EList<VAttachment> attachments;
+
+	/**
+	 * The default value of the '{@link #getUuid() <em>Uuid</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.9
+	 *        <!-- end-user-doc -->
+	 *
+	 * @see #getUuid()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String UUID_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getUuid() <em>Uuid</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.9
+	 *        <!-- end-user-doc -->
+	 *
+	 * @see #getUuid()
+	 * @generated
+	 * @ordered
+	 */
+	protected String uuid = UUID_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -414,6 +441,36 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 
 	/**
 	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.9
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public String getUuid() {
+		return uuid;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.9
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public void setUuid(String newUuid) {
+		final String oldUuid = uuid;
+		uuid = newUuid;
+		if (eNotificationRequired()) {
+			eNotify(new ENotificationImpl(this, Notification.SET, VViewPackage.ELEMENT__UUID, oldUuid, uuid));
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
 	 * @generated
@@ -452,6 +509,8 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 			return getDiagnostic();
 		case VViewPackage.ELEMENT__ATTACHMENTS:
 			return getAttachments();
+		case VViewPackage.ELEMENT__UUID:
+			return getUuid();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -488,6 +547,9 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 			getAttachments().clear();
 			getAttachments().addAll((Collection<? extends VAttachment>) newValue);
 			return;
+		case VViewPackage.ELEMENT__UUID:
+			setUuid((String) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -522,6 +584,9 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 		case VViewPackage.ELEMENT__ATTACHMENTS:
 			getAttachments().clear();
 			return;
+		case VViewPackage.ELEMENT__UUID:
+			setUuid(UUID_EDEFAULT);
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -549,6 +614,8 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 			return diagnostic != null;
 		case VViewPackage.ELEMENT__ATTACHMENTS:
 			return attachments != null && !attachments.isEmpty();
+		case VViewPackage.ELEMENT__UUID:
+			return UUID_EDEFAULT == null ? uuid != null : !UUID_EDEFAULT.equals(uuid);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -576,6 +643,8 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 		result.append(enabled);
 		result.append(", readonly: "); //$NON-NLS-1$
 		result.append(readonly);
+		result.append(", uuid: "); //$NON-NLS-1$
+		result.append(uuid);
 		result.append(')');
 		return result.toString();
 	}

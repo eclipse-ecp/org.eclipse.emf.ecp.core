@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,15 +11,22 @@
  ******************************************************************************/
 package org.eclipse.emfforms.internal.editor.ecore;
 
-import java.util.Collections;
+import java.util.List;
 
+import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.common.spi.ChildrenDescriptorCollector;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
+import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
+import org.eclipse.emfforms.internal.editor.ecore.actions.CreateNewInstanceAction;
 import org.eclipse.emfforms.internal.editor.ecore.helpers.EcoreHelpers;
 import org.eclipse.emfforms.internal.swt.treemasterdetail.DefaultTreeMasterDetailCustomization;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.MenuProvider;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.ViewModelServiceProvider;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.actions.ActionCollector;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.actions.MasterDetailAction;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateElementCallback;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.RootObject;
@@ -41,19 +48,34 @@ public class EcoreEditorTMDCustomization extends DefaultTreeMasterDetailCustomiz
 	 * Constructs a new {@link EcoreEditorTMDCustomization}.
 	 *
 	 * @param createElementCallback the {@link CreateElementCallback}
+	 * @param notifier The Notifier to create the customization for
 	 */
-	public EcoreEditorTMDCustomization(final CreateElementCallback createElementCallback) {
+	public EcoreEditorTMDCustomization(final CreateElementCallback createElementCallback, Notifier notifier) {
 		setMenu(new MenuProvider() {
 			@Override
 			public Menu getMenu(TreeViewer treeViewer, EditingDomain editingDomain) {
 				final MenuManager menuMgr = new MenuManager();
+				final List<MasterDetailAction> masterDetailActions = ActionCollector.newList()
+					.addCutAction(editingDomain).addCopyAction(editingDomain).addPasteAction(editingDomain)
+					.add(new CreateNewInstanceAction()).getList();
+
 				menuMgr.setRemoveAllWhenShown(true);
 				menuMgr.addMenuListener(new EcoreEditorMenuListener(new ChildrenDescriptorCollector(), menuMgr,
-					treeViewer, editingDomain, Collections.<MasterDetailAction> emptyList(), createElementCallback));
+					treeViewer, editingDomain, masterDetailActions, createElementCallback));
 				final Menu menu = menuMgr.createContextMenu(treeViewer.getControl());
 				return menu;
 			}
 		});
+
+		setViewModelServices(new ViewModelServiceProvider() {
+
+			@Override
+			public ViewModelService[] getViewModelServices(VView view, EObject eObject) {
+				return new ViewModelService[] { new GroupExpansionViewModelService() };
+			}
+		});
+
+		setLabelDecorator(new EcoreValidationLabelDecoratorProvider(notifier));
 	}
 
 	@Override

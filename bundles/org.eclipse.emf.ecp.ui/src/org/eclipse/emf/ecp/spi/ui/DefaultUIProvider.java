@@ -70,9 +70,9 @@ import org.eclipse.swt.widgets.Text;
  */
 public class DefaultUIProvider extends Element implements UIProvider {
 
-	private static final Image PROJECT_OPEN = Activator.getImage("icons/project_open.gif"); //$NON-NLS-1$
-	private static final Image PROJECT_CLOSED = Activator.getImage("icons/project_closed.gif"); //$NON-NLS-1$
-	private static final Image REPOSITORY = Activator.getImage("icons/repository.gif"); //$NON-NLS-1$
+	private static final String PROJECT_OPEN_ICON = "icons/project_open.gif"; //$NON-NLS-1$
+	private static final String PROJECT_CLOSED_ICON = "icons/project_closed.gif"; //$NON-NLS-1$
+	private static final String REPOSITORY_ICON = "icons/repository.gif"; //$NON-NLS-1$
 	private static final String UNKNOWN_PACKAGE_ICON = "icons/EPackageUnknown.gif"; //$NON-NLS-1$
 	private static final String EPACKAGE_ICON = "icons/EPackage.gif"; //$NON-NLS-1$
 
@@ -208,11 +208,11 @@ public class DefaultUIProvider extends Element implements UIProvider {
 	public Image getImage(Object element) {
 		if (element instanceof ECPProject) {
 			final ECPProject project = (ECPProject) element;
-			return project.isOpen() ? PROJECT_OPEN : PROJECT_CLOSED;
+			return project.isOpen() ? Activator.getImage(PROJECT_OPEN_ICON) : Activator.getImage(PROJECT_CLOSED_ICON);
 		}
 
 		if (element instanceof ECPRepository) {
-			return REPOSITORY;
+			return Activator.getImage(REPOSITORY_ICON);
 		}
 
 		return UIProvider.EMF_LABEL_PROVIDER.getImage(element);

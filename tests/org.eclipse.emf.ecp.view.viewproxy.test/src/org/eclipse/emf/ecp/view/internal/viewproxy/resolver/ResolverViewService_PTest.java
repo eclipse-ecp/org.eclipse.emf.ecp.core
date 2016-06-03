@@ -34,6 +34,7 @@ import org.eclipse.emf.ecp.view.spi.viewproxy.model.VViewProxy;
 import org.eclipse.emf.ecp.view.spi.viewproxy.model.VViewproxyFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener;
+import org.eclipse.emfforms.spi.core.services.view.RootDomainModelChangeListener;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -286,6 +287,62 @@ public class ResolverViewService_PTest {
 		 */
 		@Override
 		public void unregisterEMFFormsContextListener(EMFFormsContextListener contextListener) {
+			// TODO Auto-generated method stub
+
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getParentContext()
+		 */
+		@Override
+		public ViewModelContext getParentContext() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext#changeDomainModel(org.eclipse.emf.ecore.EObject)
+		 */
+		@Override
+		public void changeDomainModel(EObject newDomainModel) {
+			// TODO Auto-generated method stub
+
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getParentVElement()
+		 */
+		@Override
+		public VElement getParentVElement() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext#registerRootDomainModelChangeListener(org.eclipse.emfforms.spi.core.services.view.RootDomainModelChangeListener)
+		 */
+		@Override
+		public void registerRootDomainModelChangeListener(RootDomainModelChangeListener rootDomainModelChangeListener) {
+			// TODO Auto-generated method stub
+
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * 
+		 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext#unregisterRootDomainModelChangeListener(org.eclipse.emfforms.spi.core.services.view.RootDomainModelChangeListener)
+		 */
+		@Override
+		public void unregisterRootDomainModelChangeListener(
+			RootDomainModelChangeListener rootDomainModelChangeListener) {
 			// TODO Auto-generated method stub
 
 		}

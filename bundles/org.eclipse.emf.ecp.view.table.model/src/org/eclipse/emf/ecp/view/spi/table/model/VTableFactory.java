@@ -22,8 +22,7 @@ import org.eclipse.emf.ecore.EFactory;
  * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage
  * @generated
  */
-public interface VTableFactory extends EFactory
-{
+public interface VTableFactory extends EFactory {
 	/**
 	 * The singleton instance of the factory.
 	 * <!-- begin-user-doc -->
@@ -62,6 +61,17 @@ public interface VTableFactory extends EFactory
 	 * @generated
 	 */
 	VReadOnlyColumnConfiguration createReadOnlyColumnConfiguration();
+
+	/**
+	 * Returns a new object of class '<em>Width Configuration</em>'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.9
+	 *        <!-- end-user-doc -->
+	 * @return a new object of class '<em>Width Configuration</em>'.
+	 * @generated
+	 */
+	VWidthConfiguration createWidthConfiguration();
 
 	/**
 	 * Returns the package supported by this factory.

@@ -43,6 +43,7 @@ import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
+import org.eclipse.emfforms.spi.swt.core.SWTDataElementIdHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
@@ -71,6 +72,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.swt.widgets.Widget;
 
 /**
  * Abstract class for a tree renderer.
@@ -151,6 +153,7 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 			}
 			final Control render = renderer.render(cell, parent);
 			renderer.finalizeRendering(parent);
+			SWTDataElementIdHelper.setElementIdDataWithSubId(render, getVElement(), "vcategory", getViewModelContext()); //$NON-NLS-1$
 			return render;
 
 		}
@@ -165,6 +168,8 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 
 			initTreeViewer(treeViewer);
 			Composite.class.cast(detailPane).layout();
+			SWTDataElementIdHelper.setElementIdDataWithSubId(treeViewer.getControl(), getVElement(), "tree", //$NON-NLS-1$
+				getViewModelContext());
 			return treeViewer.getControl();
 		}
 
@@ -179,6 +184,9 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 
 		initTreeViewer(treeViewer);
 		sashForm.setWeights(new int[] { 1, 3 });
+		SWTDataElementIdHelper.setElementIdDataWithSubId(treeViewer.getControl(), getVElement(), "tree", //$NON-NLS-1$
+			getViewModelContext());
+		SWTDataElementIdHelper.setElementIdDataWithSubId(sashForm, getVElement(), "sash", getViewModelContext()); //$NON-NLS-1$
 		return sashForm;
 	}
 
@@ -275,7 +283,7 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 
 		};
 
-		final TreeTableLabelProvider treeTableLabelProvider = getTreeLabelProvider(adapterFactory);
+		final TreeTableLabelProvider treeTableLabelProvider = getTreeLabelProvider(treeViewer, adapterFactory);
 		treeViewer.getTree().addDisposeListener(new DisposeListener() {
 
 			@Override
@@ -300,11 +308,13 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 	/**
 	 * The TreeTableLabel provider.
 	 *
+	 * @param treeViewer the {@link TreeViewer}
 	 * @param adapterFactory the {@link AdapterFactory} to use
 	 * @return the created {@link TreeTableLabelProvider}
+	 * @since 1.9
 	 */
-	protected TreeTableLabelProvider getTreeLabelProvider(AdapterFactory adapterFactory) {
-		return new TreeTableLabelProvider(adapterFactory);
+	protected TreeTableLabelProvider getTreeLabelProvider(TreeViewer treeViewer, AdapterFactory adapterFactory) {
+		return new TreeTableLabelProvider(adapterFactory, treeViewer);
 	}
 
 	/**
@@ -502,7 +512,8 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 				// we have a VCategory-> thus only one element in the grid
 				final Control render = renderer.render(
 					renderer.getGridDescription(GridDescriptionFactory.INSTANCE.createEmptyGridDescription()).getGrid()
-						.get(0), childComposite);
+						.get(0),
+					childComposite);
 				renderer.finalizeRendering(childComposite);
 				GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true)
 					.minSize(SWT.DEFAULT, 200)
@@ -526,23 +537,50 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 	 */
 	protected class TreeTableLabelProvider extends AdapterFactoryLabelProvider implements ITableItemLabelProvider {
 
+		private final TreeViewer treeViewer;
+
 		/**
 		 * Instantiates a new tree table label provider.
 		 *
 		 * @param adapterFactory the adapter factory
+		 * @param treeViewer the tree viewer
+		 * @since 1.9
 		 */
-		public TreeTableLabelProvider(AdapterFactory adapterFactory) {
+		public TreeTableLabelProvider(AdapterFactory adapterFactory, TreeViewer treeViewer) {
 			super(adapterFactory);
+			this.treeViewer = treeViewer;
 		}
 
 		@Override
 		public String getColumnText(Object object, int columnIndex) {
-
+			adjustItemData(object);
 			String text = super.getColumnText(object, columnIndex);
 			if (columnIndex == 0 && VCategorizableElement.class.isInstance(object)) {
 				text = super.getColumnText(((VCategorizableElement) object).getLabelObject(), columnIndex);
 			}
 			return text;
+		}
+
+		// XXX is there a better way to get informed when there are new TreeItems and to access the TreeItems?
+		// the problem is double-edged:
+		// 1. the content-provider is responsible for updating the tree, but we cannot listen to it
+		// 2. TreeItems might be removed/recreated without being able to listen for this
+		// the workaround is to plug in to the label provider. when a treeitem is created/changed it needs a display
+		// text, so we can access the treeitem and should be called on all relevant changes
+		private void adjustItemData(Object object) {
+			if (!VElement.class.isInstance(object)) {
+				return;
+			}
+			final Widget widget = treeViewer.testFindItem(object);
+			if (widget == null) {
+				return;
+			}
+			if (widget.getData(SWTDataElementIdHelper.ELEMENT_ID_KEY) != null) {
+				/* already set */
+				return;
+			}
+			final VElement element = VElement.class.cast(object);
+			SWTDataElementIdHelper.setElementIdDataWithSubId(widget, element, "treeItem", getViewModelContext()); //$NON-NLS-1$
 		}
 
 		/**
@@ -552,6 +590,7 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 		 */
 		@Override
 		public String getText(Object object) {
+			adjustItemData(object);
 			String text;
 			if (VCategorizableElement.class.isInstance(object)) {
 				text = super.getText(((VCategorizableElement) object).getLabelObject());

@@ -2,12 +2,12 @@
 <feature
       id="org.eclipse.emf.ecp.emfstore.feature"
       label="ECP EMFStore Integration"
-      version="1.8.0.qualifier"
+      version="1.9.0.qualifier"
       provider-name="%providerName"
       plugin="org.eclipse.emf.ecp.emfstore.core"
       image="eclipse_update_120.jpg"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.8.0.qualifier">
+      license-feature-version="1.9.0.qualifier">
 
    <description>
       %description

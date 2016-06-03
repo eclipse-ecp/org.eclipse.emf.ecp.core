@@ -35,7 +35,7 @@ public abstract class ValueSelectionHelper {
 	/**
 	 * Opens a dialog to select a possible value for a given {@link EStructuralFeature}.
 	 * If the feature is a enum or boolean, it will show suggestions, otherwise, it will accept Strings.
-	 * 
+	 *
 	 * @param shell The {@link Shell} to open the dialog on
 	 * @param structuralFeature The {@link EStructuralFeature} to select possible values for
 	 * @return The selected value as an {@link Object}
@@ -51,34 +51,11 @@ public abstract class ValueSelectionHelper {
 		final EAttribute attribute = (EAttribute) structuralFeature;
 		Class<?> attribuetClazz = attribute.getEAttributeType().getInstanceClass();
 		if (attribuetClazz.isPrimitive()) {
-			if (int.class.isAssignableFrom(attribuetClazz)) {
-				attribuetClazz = Integer.class;
-			} else if (long.class.isAssignableFrom(attribuetClazz)) {
-				attribuetClazz = Long.class;
-			} else if (float.class.isAssignableFrom(attribuetClazz)) {
-				attribuetClazz = Float.class;
-			} else if (double.class.isAssignableFrom(attribuetClazz)) {
-				attribuetClazz = Double.class;
-			} else if (boolean.class.isAssignableFrom(attribuetClazz)) {
-				attribuetClazz = Boolean.class;
-			} else if (char.class.isAssignableFrom(attribuetClazz)) {
-				attribuetClazz = Character.class;
-			}
+			attribuetClazz = getPrimitiveClass(attribuetClazz);
 		}
 		Object object = null;
 		if (Enum.class.isAssignableFrom(attribuetClazz)) {
-			final Object[] enumValues = attribuetClazz.getEnumConstants();
-			final ListDialog ld = new ListDialog(shell);
-			ld.setLabelProvider(new LabelProvider());
-			ld.setContentProvider(ArrayContentProvider.getInstance());
-			ld.setInput(enumValues);
-			ld.setInitialSelections(new Object[] { enumValues[0] });
-			ld.setMessage("Please select the enum value to set."); //$NON-NLS-1$
-			ld.setTitle("Select a value"); //$NON-NLS-1$
-			final int enumSelectionResult = ld.open();
-			if (Window.OK == enumSelectionResult) {
-				object = ld.getResult()[0];
-			}
+			object = openEnumDialog(shell, attribuetClazz);
 		} else if (String.class.isAssignableFrom(attribuetClazz)
 			|| Number.class.isAssignableFrom(attribuetClazz) || Boolean.class.isAssignableFrom(attribuetClazz)) {
 			try {
@@ -108,5 +85,38 @@ public abstract class ValueSelectionHelper {
 				"The selected attribute has a not primitive type. We can't provide you support for it!"); //$NON-NLS-1$
 		}
 		return object;
+	}
+
+	private static Object openEnumDialog(Shell shell, Class<?> attribuetClazz) {
+		final Object[] enumValues = attribuetClazz.getEnumConstants();
+		final ListDialog ld = new ListDialog(shell);
+		ld.setLabelProvider(new LabelProvider());
+		ld.setContentProvider(ArrayContentProvider.getInstance());
+		ld.setInput(enumValues);
+		ld.setInitialSelections(new Object[] { enumValues[0] });
+		ld.setMessage("Please select the enum value to set."); //$NON-NLS-1$
+		ld.setTitle("Select a value"); //$NON-NLS-1$
+		final int enumSelectionResult = ld.open();
+		if (Window.OK == enumSelectionResult) {
+			return ld.getResult()[0];
+		}
+		return null;
+	}
+
+	private static Class<?> getPrimitiveClass(Class<?> attribuetClazz) {
+		if (int.class.isAssignableFrom(attribuetClazz)) {
+			attribuetClazz = Integer.class;
+		} else if (long.class.isAssignableFrom(attribuetClazz)) {
+			attribuetClazz = Long.class;
+		} else if (float.class.isAssignableFrom(attribuetClazz)) {
+			attribuetClazz = Float.class;
+		} else if (double.class.isAssignableFrom(attribuetClazz)) {
+			attribuetClazz = Double.class;
+		} else if (boolean.class.isAssignableFrom(attribuetClazz)) {
+			attribuetClazz = Boolean.class;
+		} else if (char.class.isAssignableFrom(attribuetClazz)) {
+			attribuetClazz = Character.class;
+		}
+		return attribuetClazz;
 	}
 }

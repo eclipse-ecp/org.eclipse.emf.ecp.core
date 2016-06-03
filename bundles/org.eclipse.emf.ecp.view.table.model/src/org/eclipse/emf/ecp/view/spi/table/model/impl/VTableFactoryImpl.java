@@ -23,6 +23,7 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
 import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
+import org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration;
 
 /**
  * <!-- begin-user-doc -->
@@ -31,8 +32,7 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
  *
  * @generated
  */
-public class VTableFactoryImpl extends EFactoryImpl implements VTableFactory
-{
+public class VTableFactoryImpl extends EFactoryImpl implements VTableFactory {
 	/**
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
@@ -40,18 +40,14 @@ public class VTableFactoryImpl extends EFactoryImpl implements VTableFactory
 	 *
 	 * @generated
 	 */
-	public static VTableFactory init()
-	{
-		try
-		{
+	public static VTableFactory init() {
+		try {
 			final VTableFactory theTableFactory = (VTableFactory) EPackage.Registry.INSTANCE
 				.getEFactory(VTablePackage.eNS_URI);
-			if (theTableFactory != null)
-			{
+			if (theTableFactory != null) {
 				return theTableFactory;
 			}
-		} catch (final Exception exception)
-		{
+		} catch (final Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new VTableFactoryImpl();
@@ -64,8 +60,7 @@ public class VTableFactoryImpl extends EFactoryImpl implements VTableFactory
 	 *
 	 * @generated
 	 */
-	public VTableFactoryImpl()
-	{
+	public VTableFactoryImpl() {
 		super();
 	}
 
@@ -76,16 +71,16 @@ public class VTableFactoryImpl extends EFactoryImpl implements VTableFactory
 	 * @generated
 	 */
 	@Override
-	public EObject create(EClass eClass)
-	{
-		switch (eClass.getClassifierID())
-		{
+	public EObject create(EClass eClass) {
+		switch (eClass.getClassifierID()) {
 		case VTablePackage.TABLE_CONTROL:
 			return createTableControl();
 		case VTablePackage.TABLE_DOMAIN_MODEL_REFERENCE:
 			return createTableDomainModelReference();
 		case VTablePackage.READ_ONLY_COLUMN_CONFIGURATION:
 			return createReadOnlyColumnConfiguration();
+		case VTablePackage.WIDTH_CONFIGURATION:
+			return createWidthConfiguration();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -98,10 +93,8 @@ public class VTableFactoryImpl extends EFactoryImpl implements VTableFactory
 	 * @generated
 	 */
 	@Override
-	public Object createFromString(EDataType eDataType, String initialValue)
-	{
-		switch (eDataType.getClassifierID())
-		{
+	public Object createFromString(EDataType eDataType, String initialValue) {
+		switch (eDataType.getClassifierID()) {
 		case VTablePackage.DETAIL_EDITING:
 			return createDetailEditingFromString(eDataType, initialValue);
 		default:
@@ -116,10 +109,8 @@ public class VTableFactoryImpl extends EFactoryImpl implements VTableFactory
 	 * @generated
 	 */
 	@Override
-	public String convertToString(EDataType eDataType, Object instanceValue)
-	{
-		switch (eDataType.getClassifierID())
-		{
+	public String convertToString(EDataType eDataType, Object instanceValue) {
+		switch (eDataType.getClassifierID()) {
 		case VTablePackage.DETAIL_EDITING:
 			return convertDetailEditingToString(eDataType, instanceValue);
 		default:
@@ -134,8 +125,7 @@ public class VTableFactoryImpl extends EFactoryImpl implements VTableFactory
 	 * @generated
 	 */
 	@Override
-	public VTableControl createTableControl()
-	{
+	public VTableControl createTableControl() {
 		final VTableControlImpl tableControl = new VTableControlImpl();
 		return tableControl;
 	}
@@ -147,8 +137,7 @@ public class VTableFactoryImpl extends EFactoryImpl implements VTableFactory
 	 * @generated
 	 */
 	@Override
-	public VTableDomainModelReference createTableDomainModelReference()
-	{
+	public VTableDomainModelReference createTableDomainModelReference() {
 		final VTableDomainModelReferenceImpl tableDomainModelReference = new VTableDomainModelReferenceImpl();
 		return tableDomainModelReference;
 	}
@@ -160,10 +149,22 @@ public class VTableFactoryImpl extends EFactoryImpl implements VTableFactory
 	 * @generated
 	 */
 	@Override
-	public VReadOnlyColumnConfiguration createReadOnlyColumnConfiguration()
-	{
+	public VReadOnlyColumnConfiguration createReadOnlyColumnConfiguration() {
 		final VReadOnlyColumnConfigurationImpl readOnlyColumnConfiguration = new VReadOnlyColumnConfigurationImpl();
 		return readOnlyColumnConfiguration;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.9
+	 *        <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public VWidthConfiguration createWidthConfiguration() {
+		final VWidthConfigurationImpl widthConfiguration = new VWidthConfigurationImpl();
+		return widthConfiguration;
 	}
 
 	/**
@@ -172,11 +173,9 @@ public class VTableFactoryImpl extends EFactoryImpl implements VTableFactory
 	 *
 	 * @generated
 	 */
-	public DetailEditing createDetailEditingFromString(EDataType eDataType, String initialValue)
-	{
+	public DetailEditing createDetailEditingFromString(EDataType eDataType, String initialValue) {
 		final DetailEditing result = DetailEditing.get(initialValue);
-		if (result == null)
-		{
+		if (result == null) {
 			throw new IllegalArgumentException(
 				"The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		}
@@ -189,8 +188,7 @@ public class VTableFactoryImpl extends EFactoryImpl implements VTableFactory
 	 *
 	 * @generated
 	 */
-	public String convertDetailEditingToString(EDataType eDataType, Object instanceValue)
-	{
+	public String convertDetailEditingToString(EDataType eDataType, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 
@@ -201,8 +199,7 @@ public class VTableFactoryImpl extends EFactoryImpl implements VTableFactory
 	 * @generated
 	 */
 	@Override
-	public VTablePackage getTablePackage()
-	{
+	public VTablePackage getTablePackage() {
 		return (VTablePackage) getEPackage();
 	}
 
@@ -214,8 +211,7 @@ public class VTableFactoryImpl extends EFactoryImpl implements VTableFactory
 	 * @generated
 	 */
 	@Deprecated
-	public static VTablePackage getPackage()
-	{
+	public static VTablePackage getPackage() {
 		return VTablePackage.eINSTANCE;
 	}
 

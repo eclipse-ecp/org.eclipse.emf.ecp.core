@@ -20,5 +20,5 @@ package org.eclipse.emfforms.spi.swt.treemasterdetail;
  *
  */
 public interface TreeViewerCustomization extends TreeViewerBuilder, ContentProviderProvider, DNDProvider,
-	InitialSelectionProvider, LabelProviderProvider, ViewerFilterProvider, MenuProvider {
+	InitialSelectionProvider, LabelProviderProvider, ViewerFilterProvider, MenuProvider, LabelDecoratorProvider {
 }

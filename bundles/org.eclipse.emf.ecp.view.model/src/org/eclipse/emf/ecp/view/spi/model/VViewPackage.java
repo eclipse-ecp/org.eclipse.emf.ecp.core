@@ -320,6 +320,18 @@ public interface VViewPackage extends EPackage {
 	int ELEMENT__ATTACHMENTS = 6;
 
 	/**
+	 * The feature id for the '<em><b>Uuid</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.9
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int ELEMENT__UUID = 7;
+
+	/**
 	 * The number of structural features of the '<em>Element</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -327,7 +339,7 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ELEMENT_FEATURE_COUNT = 7;
+	int ELEMENT_FEATURE_COUNT = 8;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -399,6 +411,18 @@ public interface VViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int VIEW__ATTACHMENTS = ELEMENT__ATTACHMENTS;
+
+	/**
+	 * The feature id for the '<em><b>Uuid</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.9
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int VIEW__UUID = ELEMENT__UUID;
 
 	/**
 	 * The feature id for the '<em><b>Root EClass</b></em>' reference.
@@ -537,6 +561,18 @@ public interface VViewPackage extends EPackage {
 	int CONTAINED_ELEMENT__ATTACHMENTS = ELEMENT__ATTACHMENTS;
 
 	/**
+	 * The feature id for the '<em><b>Uuid</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.9
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int CONTAINED_ELEMENT__UUID = ELEMENT__UUID;
+
+	/**
 	 * The number of structural features of the '<em>Contained Element</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -628,6 +664,18 @@ public interface VViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int CONTAINER__ATTACHMENTS = ELEMENT__ATTACHMENTS;
+
+	/**
+	 * The feature id for the '<em><b>Uuid</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.9
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int CONTAINER__UUID = ELEMENT__UUID;
 
 	/**
 	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -740,6 +788,18 @@ public interface VViewPackage extends EPackage {
 	int CONTAINED_CONTAINER__ATTACHMENTS = CONTAINED_ELEMENT__ATTACHMENTS;
 
 	/**
+	 * The feature id for the '<em><b>Uuid</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.9
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int CONTAINED_CONTAINER__UUID = CONTAINED_ELEMENT__UUID;
+
+	/**
 	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 *
@@ -831,6 +891,18 @@ public interface VViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int CONTROL__ATTACHMENTS = CONTAINED_ELEMENT__ATTACHMENTS;
+
+	/**
+	 * The feature id for the '<em><b>Uuid</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.9
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int CONTROL__UUID = CONTAINED_ELEMENT__UUID;
 
 	/**
 	 * The feature id for the '<em><b>Label Alignment</b></em>' attribute.
@@ -985,7 +1057,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.8
 	 *        <!-- end-user-doc -->
-	 *
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VDateTimeDisplayAttachmentImpl
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getDateTimeDisplayAttachment()
 	 * @generated
@@ -998,7 +1069,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.8
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -1010,7 +1080,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.8
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -1035,7 +1104,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.8
 	 *        <!-- end-user-doc -->
-	 *
 	 * @see org.eclipse.emf.ecp.view.spi.model.DateTimeDisplayType
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getDateTimeDisplayType()
 	 * @generated
@@ -1156,6 +1224,21 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getElement_Attachments();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.spi.model.VElement#getUuid
+	 * <em>Uuid</em>}'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.9
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the attribute '<em>Uuid</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VElement#getUuid()
+	 * @see #getElement()
+	 * @generated
+	 */
+	EAttribute getElement_Uuid();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.model.VDiagnostic <em>Diagnostic</em>}'.
@@ -1345,7 +1428,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.8
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the meta object for class '<em>Date Time Display Attachment</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment
 	 * @generated
@@ -1359,7 +1441,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.8
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the meta object for the attribute '<em>Display Type</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment#getDisplayType()
 	 * @see #getDateTimeDisplayAttachment()
@@ -1476,7 +1557,6 @@ public interface VViewPackage extends EPackage {
 	 *
 	 * @since 1.8
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the meta object for enum '<em>Date Time Display Type</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.model.DateTimeDisplayType
 	 * @generated
@@ -1678,6 +1758,17 @@ public interface VViewPackage extends EPackage {
 		EReference ELEMENT__ATTACHMENTS = eINSTANCE.getElement_Attachments();
 
 		/**
+		 * The meta object literal for the '<em><b>Uuid</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 *
+		 * @since 1.9
+		 *        <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EAttribute ELEMENT__UUID = eINSTANCE.getElement_Uuid();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.model.impl.VDiagnosticImpl
 		 * <em>Diagnostic</em>}' class.
 		 * <!-- begin-user-doc -->
@@ -1838,7 +1929,6 @@ public interface VViewPackage extends EPackage {
 		 *
 		 * @since 1.8
 		 *        <!-- end-user-doc -->
-		 *
 		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VDateTimeDisplayAttachmentImpl
 		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getDateTimeDisplayAttachment()
 		 * @generated
@@ -1851,7 +1941,6 @@ public interface VViewPackage extends EPackage {
 		 *
 		 * @since 1.8
 		 *        <!-- end-user-doc -->
-		 *
 		 * @generated
 		 */
 		EAttribute DATE_TIME_DISPLAY_ATTACHMENT__DISPLAY_TYPE = eINSTANCE.getDateTimeDisplayAttachment_DisplayType();
@@ -1951,7 +2040,6 @@ public interface VViewPackage extends EPackage {
 		 *
 		 * @since 1.8
 		 *        <!-- end-user-doc -->
-		 *
 		 * @see org.eclipse.emf.ecp.view.spi.model.DateTimeDisplayType
 		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getDateTimeDisplayType()
 		 * @generated

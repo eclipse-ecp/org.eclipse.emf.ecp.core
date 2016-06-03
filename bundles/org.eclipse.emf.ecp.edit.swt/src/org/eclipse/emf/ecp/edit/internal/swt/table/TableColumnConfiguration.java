@@ -16,9 +16,11 @@ import org.eclipse.emf.ecore.EAttribute;
 /**
  * The table column configuration defines whether a column is visible and what attribute should be bound to the column.
  *
+ * @deprecated This is used only in the deprecated TableControl and the TableControlConfiguration
  * @author Eugen Neufeld
  *
  */
+@Deprecated
 public class TableColumnConfiguration {
 	private final boolean readOnly;
 	private final EAttribute columnAttribute;

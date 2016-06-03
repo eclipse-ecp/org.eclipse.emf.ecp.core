@@ -11,7 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emfforms.internal.swt.control.text.autocomplete.renderer;
 
-import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -69,10 +69,9 @@ public class AutocompleteTextControlSWTRendererService implements EMFFormsDIRend
 				return NOT_APPLICABLE;
 			}
 
-			final IObservableValue modelValue = databinding.getObservableValue(control.getDomainModelReference(),
+			final IValueProperty valueProperty = databinding.getValueProperty(control.getDomainModelReference(),
 				viewModelContext.getDomainModel());
-			final EStructuralFeature feature = EStructuralFeature.class.cast(modelValue.getValueType());
-			modelValue.dispose();
+			final EStructuralFeature feature = EStructuralFeature.class.cast(valueProperty.getValueType());
 
 			if (feature.isMany()) {
 				return NOT_APPLICABLE;

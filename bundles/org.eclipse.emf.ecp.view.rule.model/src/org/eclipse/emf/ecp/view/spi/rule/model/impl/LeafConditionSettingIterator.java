@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.view.spi.rule.model.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -28,6 +29,13 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * Iterator that returns all settings of the condition's {@link LeafCondition#getDomainModelReference()} and
@@ -51,13 +59,26 @@ public class LeafConditionSettingIterator implements Iterator<Setting> {
 	private final List<Setting> nonValueRelSettings = new LinkedList<EStructuralFeature.Setting>();
 	private final LeafCondition condition;
 
+	private BundleContext bundleContext;
+	private EMFFormsDatabindingEMF databinding;
+	private ServiceReference<EMFFormsDatabindingEMF> databindingServiceReference;
+	private ReportService reportService;
+	private ServiceReference<ReportService> reportServiceReference;
+
+	private boolean isDisposed;
+
 	/**
 	 * Constructs a new {@link LeafConditionSettingIterator}.
 	 *
 	 * @param condition the leaf condition
+	 * @param domainModel The root domain object of the given {@link LeafCondition}
 	 * @param includeNonValueRelatedSettings whether to include non value related settings
+	 * @since 1.9
 	 */
-	public LeafConditionSettingIterator(LeafCondition condition, boolean includeNonValueRelatedSettings) {
+	public LeafConditionSettingIterator(LeafCondition condition, EObject domainModel,
+		boolean includeNonValueRelatedSettings) {
+		isDisposed = false;
+
 		this.condition = condition;
 		dmrs = new LinkedHashSet<VDomainModelReference>();
 		this.includeNonValueRelatedSettings = includeNonValueRelatedSettings;
@@ -67,9 +88,54 @@ public class LeafConditionSettingIterator implements Iterator<Setting> {
 			expectedStackSize = expectedStackSize + 1;
 		}
 		iterators = new Stack<Iterator<Setting>>();
+
+		try {
+			final Setting setting = getDatabinding().getSetting(condition.getDomainModelReference(), domainModel);
+			final Iterator<Setting> iterator = Collections.singleton(setting).iterator();
+			iterators.push(iterator);
+		} catch (final DatabindingFailedException ex) {
+			getReportService().report(new AbstractReport(ex,
+				String.format("Could not get the setting iterator for DMR: %s and domain model: %s", //$NON-NLS-1$
+					condition.getDomainModelReference(), domainModel)));
+		}
+
 		// TODO: remove after segments are introduced.
-		iterators.push(condition.getDomainModelReference().getIterator());
+		// iterators.push(condition.getDomainModelReference().getIterator());
+
 		organizeStack();
+	}
+
+	/**
+	 * @return The {@link EMFFormsDatabindingEMF} service.
+	 *
+	 */
+	private EMFFormsDatabindingEMF getDatabinding() {
+		if (databinding == null) {
+			databindingServiceReference = getBundleContext().getServiceReference(EMFFormsDatabindingEMF.class);
+			databinding = getBundleContext().getService(databindingServiceReference);
+		}
+		return databinding;
+	}
+
+	/**
+	 * @return The {@link ReportService}
+	 */
+	private ReportService getReportService() {
+		if (reportService == null) {
+			reportServiceReference = getBundleContext().getServiceReference(ReportService.class);
+			reportService = getBundleContext().getService(reportServiceReference);
+		}
+		return reportService;
+	}
+
+	/**
+	 * @return The {@link BundleContext} for this class
+	 */
+	private BundleContext getBundleContext() {
+		if (bundleContext == null) {
+			bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
+		}
+		return bundleContext;
 	}
 
 	private void organizeStack() {
@@ -115,11 +181,26 @@ public class LeafConditionSettingIterator implements Iterator<Setting> {
 
 		if (domainIterator.hasNext()) {
 			final EObject nextDomain = domainIterator.next();
+
+			try {
+				final Setting setting = getDatabinding().getSetting(condition.getValueDomainModelReference(),
+					nextDomain);
+				final Iterator<Setting> iterator = Collections.singleton(setting).iterator();
+				iterators.push(iterator);
+			} catch (final DatabindingFailedException ex) {
+				getReportService().report(new AbstractReport(ex,
+					String.format("Could not get the setting iterator for DMR: %s and domain model: %s", //$NON-NLS-1$
+						condition.getValueDomainModelReference(), nextDomain)));
+			}
+
 			final VDomainModelReference valueDMR = EcoreUtil.copy(condition.getValueDomainModelReference());
-			valueDMR.init(nextDomain);
-			dmrs.add(valueDMR);
 			// TODO: remove after segments are introduced.
-			iterators.push(valueDMR.getIterator());
+			// valueDMR.init(nextDomain);
+
+			dmrs.add(valueDMR);
+
+			// TODO: remove after segments are introduced.
+			// iterators.push(valueDMR.getIterator());
 			organizeStack();
 			return;
 		}
@@ -199,6 +280,36 @@ public class LeafConditionSettingIterator implements Iterator<Setting> {
 	 */
 	public Set<VDomainModelReference> getUsedValueDomainModelReferences() {
 		return dmrs;
+	}
+
+	/**
+	 * Disposes this {@link LeafConditionSettingIterator}.
+	 * 
+	 * @since 1.9
+	 */
+	public void dispose() {
+		if (isDisposed) {
+			return;
+		}
+		isDisposed = true;
+
+		if (databindingServiceReference != null) {
+			databinding = null;
+			getBundleContext().ungetService(databindingServiceReference);
+		}
+		if (reportServiceReference != null) {
+			reportService = null;
+			getBundleContext().ungetService(reportServiceReference);
+		}
+
+	}
+
+	/**
+	 * @return <code>true</code> if this {@link LeafConditionSettingIterator} is disposed, <code>false</code> otherwise
+	 * @since 1.9
+	 */
+	public boolean isDisposed() {
+		return isDisposed;
 	}
 
 }

@@ -11,21 +11,28 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.emf2web.util;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
+
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
-import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.emf2web.Activator;
-import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
-import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
 /**
  * An abstract implementation of {@link ReferenceHelper} using {@link EMFFormsDatabinding}.
@@ -36,22 +43,11 @@ import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 public abstract class AbstractReferenceHelper implements ReferenceHelper {
 
 	private final EMFFormsDatabinding dataBinding;
-	private final ComposedAdapterFactory composedAdapterFactory;
-	private final AdapterFactoryItemDelegator adapterFactoryItemDelegator;
 
 	/**
 	 * Constructor.
 	 */
 	public AbstractReferenceHelper() {
-		composedAdapterFactory = new ComposedAdapterFactory(
-			new AdapterFactory[] {
-				new CustomReflectiveItemProviderAdapterFactory(),
-				new ComposedAdapterFactory(
-					ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
-
-		adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(
-			composedAdapterFactory);
-
 		dataBinding = Activator.getDefault().getEMFFormsDatabinding();
 	}
 
@@ -86,6 +82,8 @@ public abstract class AbstractReferenceHelper implements ReferenceHelper {
 		Activator.getDefault().getReportService().report(new DatabindingFailedReport(exception));
 	}
 
+	private static final String DISPLAY_NAME = "_UI_%1$s_%2$s_feature"; //$NON-NLS-1$
+
 	/**
 	 * {@inheritDoc}
 	 *
@@ -93,19 +91,68 @@ public abstract class AbstractReferenceHelper implements ReferenceHelper {
 	 */
 	@Override
 	public String getLabel(VDomainModelReference reference) {
-		final EStructuralFeature feature = getEStructuralFeature(reference);
-		if (feature == null) {
-			return null;
+		final String path = getEcorePath();
+		if (path == null) {
+			try {
+				final BundleContext bundleContext = Activator.getDefault().getBundleContext();
+				final ServiceReference<EMFFormsLabelProvider> serviceReference = bundleContext
+					.getServiceReference(EMFFormsLabelProvider.class);
+				final EMFFormsLabelProvider labelProvider = bundleContext.getService(serviceReference);
+				final IObservableValue observableValue = labelProvider.getDisplayName(reference);
+				final String result = (String) observableValue.getValue();
+				observableValue.dispose();
+				bundleContext.ungetService(serviceReference);
+				return result;
+			} catch (final NoLabelFoundException ex) {
+				Activator.getDefault().getReportService().report(new AbstractReport(ex));
+				return ""; //$NON-NLS-1$
+			}
 		}
-		final EClass eClass = feature.getEContainingClass();
+		// try to find edit bundle
+		final String firstPath = path.split("/")[1]; //$NON-NLS-1$
+		final String editPath = firstPath + ".edit/plugin.properties"; //$NON-NLS-1$
+		final IResource member = ResourcesPlugin.getWorkspace().getRoot().findMember(editPath);
+		if (member.exists()) {
+			final File file = member.getLocation().toFile();
+			final Properties p = new Properties();
+			FileInputStream fis = null;
+			try {
+				fis = new FileInputStream(file);
+				p.load(fis);
+			} catch (final FileNotFoundException ex) {
+				Activator.getDefault().getReportService().report(new AbstractReport(ex));
+			} catch (final IOException ex) {
+				Activator.getDefault().getReportService().report(new AbstractReport(ex));
+			} finally {
+				if (fis != null) {
+					try {
+						fis.close();
+					} catch (final IOException ex) {
+						Activator.getDefault().getReportService().report(new AbstractReport(ex));
+					}
+				}
+			}
 
-		final EObject object = EcoreUtil.create(eClass);
-		final IItemPropertyDescriptor descriptor = adapterFactoryItemDelegator
-			.getPropertyDescriptor(object, feature);
-		if (descriptor != null) {
-			return descriptor.getDisplayName(object);
+			final EStructuralFeature feature = getEStructuralFeature(reference);
+			if (feature == null) {
+				return null;
+			}
+			final EClass eClass = feature.getEContainingClass();
+			final String key = String.format(DISPLAY_NAME, eClass.getName(), feature.getName());
+			final String result = p.getProperty(key);
+			if (result == null) {
+				return feature.getName();
+			}
+			return result;
 		}
+		final EStructuralFeature feature = getEStructuralFeature(reference);
 		return feature.getName();
 	}
 
+	/**
+	 * Return the ecore path of the current view model.
+	 *
+	 * @return The path to the ecore of the current view
+	 */
+	protected abstract String getEcorePath();
 }

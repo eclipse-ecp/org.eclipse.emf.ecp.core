@@ -136,7 +136,7 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 
 		try {
 			ECPUtil.getECPObserverBus().notify(ECPRepositoryContentChangedObserver.class)
-			.contentChanged(repository, objects);
+				.contentChanged(repository, objects);
 		} catch (final Exception ex) {
 			Activator.log(ex);
 		}
@@ -178,7 +178,7 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 	protected void notifyObservers(Collection<InternalRepository> oldRepositories,
 		Collection<InternalRepository> newRepositories) throws Exception {
 		ECPUtil.getECPObserverBus().notify(ECPRepositoriesChangedObserver.class)
-		.repositoriesChanged((Collection) oldRepositories, (Collection) newRepositories);
+			.repositoriesChanged((Collection) oldRepositories, (Collection) newRepositories);
 	}
 
 	@Override
@@ -201,7 +201,7 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 	private final class RepositoryParser extends ExtensionParser<InternalRepository> {
 		private static final String EXTENSION_POINT_NAME = "repositories";
 
-		public RepositoryParser() {
+		RepositoryParser() {
 			super(ECPRepositoryManagerImpl.this, Activator.PLUGIN_ID, EXTENSION_POINT_NAME);
 		}
 
@@ -218,7 +218,7 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 	 * @author Eike Stepper
 	 */
 	private final class RepositoryDescriptor extends ExtensionDescriptor<InternalRepository> implements
-	InternalRepository {
+		InternalRepository {
 		private final Set<String> declaredPropertyKeys;
 		private final ECPProperties properties = new Properties() {
 			@Override
@@ -251,7 +251,7 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 			}
 		};
 
-		public RepositoryDescriptor(String name, IConfigurationElement configurationElement) {
+		RepositoryDescriptor(String name, IConfigurationElement configurationElement) {
 			super(ECPRepositoryManagerImpl.this, name, TYPE, configurationElement);
 			for (final IConfigurationElement property : configurationElement.getChildren("property")) {
 				final String key = property.getAttribute("key");

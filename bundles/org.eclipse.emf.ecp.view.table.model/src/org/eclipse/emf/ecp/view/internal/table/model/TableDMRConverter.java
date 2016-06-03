@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * This is the DomainModelReferenceConverterEMF for {@link VTableDomainModelReference}.
- * 
+ *
  * @author Eugen Neufeld
  *
  */

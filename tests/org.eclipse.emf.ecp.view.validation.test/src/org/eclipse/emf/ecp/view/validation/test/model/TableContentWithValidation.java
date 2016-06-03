@@ -18,11 +18,11 @@ package org.eclipse.emf.ecp.view.validation.test.model;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.TableContentWithValidation#getName <em>Name</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.TableContentWithValidation#getWeight <em>Weight</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.ecp.view.validation.test.model.TestPackage#getTableContentWithValidation()
  * @model
@@ -75,9 +75,8 @@ public interface TableContentWithValidation extends TableContent {
 	int getWeight();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.emf.ecp.view.validation.test.model.TableContentWithValidation#getWeight <em>Weight</em>}'
-	 * attribute.
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.validation.test.model.TableContentWithValidation#getWeight
+	 * <em>Weight</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *

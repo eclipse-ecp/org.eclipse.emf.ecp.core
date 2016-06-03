@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -14,6 +14,8 @@ package org.eclipse.emf.ecp.view.internal.editor.controls;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+
+import javax.inject.Inject;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -35,10 +37,13 @@ import org.eclipse.emf.ecp.ide.view.service.IDEViewModelRegistry;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
@@ -62,14 +67,85 @@ import org.osgi.framework.ServiceReference;
 public class ControlRootEClassControlChangeableSWTRenderer extends ControlRootEClassControl2SWTRenderer {
 
 	/**
+	 * @author jonas
+	 *
+	 */
+	private final class EClassContentProvider implements ITreeContentProvider {
+		@Override
+		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void dispose() {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public boolean hasChildren(Object element) {
+			if (EPackage.class.isInstance(element)) {
+				return true;
+			}
+			if (Descriptor.class.isInstance(element)) {
+				final Descriptor descriptor = (Descriptor) element;
+				descriptor.getEPackage();
+				return true;
+			}
+			return false;
+		}
+
+		@Override
+		public Object getParent(Object element) {
+			if (EClass.class.isInstance(element)) {
+				return ((EClass) element).eContainer();
+			}
+			return null;
+		}
+
+		@Override
+		public Object[] getElements(Object inputElement) {
+			return getChildren(inputElement);
+		}
+
+		@Override
+		public Object[] getChildren(Object parentElement) {
+			if (EPackage.class.isInstance(parentElement)) {
+				final EPackage ePackage = (EPackage) parentElement;
+				final Set<EClass> result = new LinkedHashSet<EClass>();
+				for (final EClassifier classifier : ePackage.getEClassifiers()) {
+					if (EClass.class.isInstance(classifier)) {
+						result.add((EClass) classifier);
+					}
+				}
+				return result.toArray();
+			}
+			if (Descriptor.class.isInstance(parentElement)) {
+				return getChildren(((Descriptor) parentElement).getEPackage());
+			}
+			if (Registry.class.isInstance(parentElement)) {
+				return ((Registry) parentElement).values().toArray();
+			}
+			return null;
+		}
+	}
+
+	/**
+	 * Default constructor.
+	 *
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
-	 * @param reportService the {@link ReportService}
+	 * @param reportService The {@link ReportService}
+	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
+	 * @param emfFormsLabelProvider The {@link EMFFormsLabelProvider}
+	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
 	 */
+	@Inject
 	public ControlRootEClassControlChangeableSWTRenderer(VControl vElement, ViewModelContext viewContext,
-		ReportService reportService) {
-		super(vElement, viewContext, reportService);
-		// TODO Auto-generated constructor stub
+		ReportService reportService, EMFFormsDatabinding emfFormsDatabinding,
+		EMFFormsLabelProvider emfFormsLabelProvider, VTViewTemplateProvider vtViewTemplateProvider) {
+		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
 	}
 
 	/**
@@ -203,67 +279,7 @@ public class ControlRootEClassControlChangeableSWTRenderer extends ControlRootEC
 	}
 
 	private ITreeContentProvider getContentProvider() {
-		return new ITreeContentProvider() {
-
-			@Override
-			public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void dispose() {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public boolean hasChildren(Object element) {
-				if (EPackage.class.isInstance(element)) {
-					return true;
-				}
-				if (Descriptor.class.isInstance(element)) {
-					final Descriptor descriptor = (Descriptor) element;
-					descriptor.getEPackage();
-					return true;
-				}
-				return false;
-			}
-
-			@Override
-			public Object getParent(Object element) {
-				if (EClass.class.isInstance(element)) {
-					return ((EClass) element).eContainer();
-				}
-				return null;
-			}
-
-			@Override
-			public Object[] getElements(Object inputElement) {
-				return getChildren(inputElement);
-			}
-
-			@Override
-			public Object[] getChildren(Object parentElement) {
-				if (EPackage.class.isInstance(parentElement)) {
-					final EPackage ePackage = (EPackage) parentElement;
-					final Set<EClass> result = new LinkedHashSet<EClass>();
-					for (final EClassifier classifier : ePackage.getEClassifiers()) {
-						if (EClass.class.isInstance(classifier)) {
-							result.add((EClass) classifier);
-						}
-					}
-					return result.toArray();
-				}
-				if (Descriptor.class.isInstance(parentElement)) {
-					return getChildren(((Descriptor) parentElement).getEPackage());
-				}
-				if (Registry.class.isInstance(parentElement)) {
-					return ((Registry) parentElement).values().toArray();
-				}
-				return null;
-			}
-		};
+		return new EClassContentProvider();
 	}
 
 	/**

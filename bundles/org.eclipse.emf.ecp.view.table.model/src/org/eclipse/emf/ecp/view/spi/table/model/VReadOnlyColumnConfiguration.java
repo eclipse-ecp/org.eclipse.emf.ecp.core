@@ -21,18 +21,17 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
  *
  * <p>
  * The following features are supported:
- * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VReadOnlyColumnConfiguration#getColumnDomainReferences <em>Column
- * Domain References</em>}</li>
- * </ul>
  * </p>
+ * <ul>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VReadOnlyColumnConfiguration#getColumnDomainReferences
+ * <em>Column Domain References</em>}</li>
+ * </ul>
  *
  * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage#getReadOnlyColumnConfiguration()
  * @model
  * @generated
  */
-public interface VReadOnlyColumnConfiguration extends VTableColumnConfiguration
-{
+public interface VReadOnlyColumnConfiguration extends VTableColumnConfiguration {
 	/**
 	 * Returns the value of the '<em><b>Column Domain References</b></em>' reference list.
 	 * The list contents are of type {@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference}.

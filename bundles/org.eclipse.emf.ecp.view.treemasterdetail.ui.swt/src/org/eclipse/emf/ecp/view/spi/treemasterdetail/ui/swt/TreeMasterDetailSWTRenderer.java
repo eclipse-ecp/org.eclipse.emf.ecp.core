@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
@@ -121,6 +123,7 @@ import org.osgi.framework.FrameworkUtil;
  * @since 1.5
  *
  */
+@SuppressWarnings("deprecation")
 public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMasterDetail> {
 
 	/**
@@ -131,6 +134,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 	 * @param reportService the ReportService to use
 	 * @since 1.6
 	 */
+	@Inject
 	public TreeMasterDetailSWTRenderer(final VTreeMasterDetail vElement, final ViewModelContext viewContext,
 		ReportService reportService) {
 		super(vElement, viewContext, reportService);
@@ -834,7 +838,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		private Composite childComposite;
 		private ReferenceService referenceService;
 
-		public TreeMasterViewSelectionListener() {
+		TreeMasterViewSelectionListener() {
 			// TODO refactor
 			if (getViewModelContext().hasService(ReferenceService.class)) {
 				referenceService = getViewModelContext().getService(ReferenceService.class);
@@ -957,7 +961,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 	 */
 	private class TreeMasterDetailLabelProvider extends AdapterFactoryLabelProvider {
 
-		public TreeMasterDetailLabelProvider(AdapterFactory adapterFactory) {
+		TreeMasterDetailLabelProvider(AdapterFactory adapterFactory) {
 			super(adapterFactory);
 		}
 
@@ -1018,11 +1022,18 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		});
 	}
 
+	/**
+	 * reference service for the detail pane of a tree master detail view.
+	 * It delegates calls to a root reference service, but opens new element in the detail pane.
+	 *
+	 * @author Jonas
+	 *
+	 */
 	private class TreeMasterDetailReferenceService implements ReferenceService {
 
 		private final ReferenceService delegate;
 
-		public TreeMasterDetailReferenceService(ReferenceService delegate) {
+		TreeMasterDetailReferenceService(ReferenceService delegate) {
 			this.delegate = delegate;
 		}
 

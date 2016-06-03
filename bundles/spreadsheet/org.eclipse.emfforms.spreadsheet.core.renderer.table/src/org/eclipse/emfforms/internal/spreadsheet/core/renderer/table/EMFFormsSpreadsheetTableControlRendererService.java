@@ -17,6 +17,7 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
+import org.eclipse.emfforms.spi.core.services.domainexpander.EMFFormsDomainExpander;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsAbstractSpreadsheetRenderer;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsIdProvider;
@@ -48,6 +49,7 @@ public class EMFFormsSpreadsheetTableControlRendererService implements
 	private EMFFormsIdProvider emfFormsIdProvider;
 	private EMFFormsSpreadsheetValueConverterRegistry converterRegistry;
 	private EMFFormsSpreadsheetFormatDescriptionProvider formatDescriptionProvider;
+	private EMFFormsDomainExpander domainExpander;
 
 	/**
 	 * The VTViewTemplateProvider to use.
@@ -119,6 +121,16 @@ public class EMFFormsSpreadsheetTableControlRendererService implements
 		this.formatDescriptionProvider = formatDescriptionProvider;
 	}
 
+	/**
+	 * The EMFFormsDomainExpander to use.
+	 *
+	 * @param domainExpander the EMFFormsDomainExpander
+	 */
+	@Reference
+	public void setEMFFormsDomainExpander(EMFFormsDomainExpander domainExpander) {
+		this.domainExpander = domainExpander;
+	}
+
 	private ServiceReference<EMFFormsSpreadsheetRendererFactory> serviceReference;
 
 	/**
@@ -170,7 +182,7 @@ public class EMFFormsSpreadsheetTableControlRendererService implements
 		VTableControl vElement, ViewModelContext viewModelContext) {
 		return new EMFFormsSpreadsheetTableControlRenderer(emfformsDatabinding, emfformsLabelProvider, reportService,
 			emfformsSpreadsheetRendererFactory, vtViewTemplateProvider, emfFormsIdProvider, converterRegistry,
-			formatDescriptionProvider);
+			formatDescriptionProvider, domainExpander);
 	}
 
 }

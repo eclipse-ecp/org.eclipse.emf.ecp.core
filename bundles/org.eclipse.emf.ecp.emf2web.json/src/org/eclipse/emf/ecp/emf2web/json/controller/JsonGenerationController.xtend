@@ -21,6 +21,7 @@ import org.eclipse.emf.ecp.emf2web.json.util.ReferenceHelperImpl
 import org.eclipse.emf.ecp.view.spi.model.VView
 import org.eclipse.emf.ecp.emf2web.json.generator.seed.SeedWrapper
 import org.eclipse.emf.ecp.emf2web.controller.GenerationController
+import org.eclipse.emf.ecp.view.spi.model.VElement
 
 /**
  * @author Stefan Dirix <sdirix@eclipsesource.com>
@@ -32,9 +33,11 @@ class JsonGenerationController implements GenerationController {
 		val result = new LinkedList<GenerationInfo>
 
 		val modelGenerator = new EcoreJsonGenerator
-		val formsGenerator = new FormsJsonGenerator(new ReferenceHelperImpl)
+		val helper=new ReferenceHelperImpl
+		val formsGenerator = new FormsJsonGenerator(helper)
 
 		for (view : views) {
+			helper.setEcorePath(view.ecorePath)
 			val eClass = view.rootEClass
 			val schemaIdentifier = eClass.name
 
@@ -43,6 +46,15 @@ class JsonGenerationController implements GenerationController {
 				schemaIdentifier + "Model.json", new SeedWrapper())
 			schemaInfo.generatedString = schemaFile
 			result.add(schemaInfo)
+
+			//internationalize view
+			val allContents = view.eAllContents
+			while (allContents.hasNext) {
+				val next = allContents.next
+				if (VElement.isInstance(next)) {
+					VElement.cast(next).label = VElement.cast(next).name
+				}
+			}
 
 			val controllerFile = formsGenerator.generate(view)
 			val controllerInfo = new GenerationInfo(GenerationInfo.VIEW_TYPE, null, view,

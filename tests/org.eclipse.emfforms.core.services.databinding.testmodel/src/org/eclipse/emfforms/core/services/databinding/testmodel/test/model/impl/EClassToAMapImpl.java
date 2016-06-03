@@ -28,23 +28,22 @@ import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestP
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
- * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.EClassToAMapImpl#getTypedKey <em>
- * Key</em>}</li>
+ * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.EClassToAMapImpl#getTypedKey
+ * <em>Key</em>}</li>
  * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.EClassToAMapImpl#getTypedValue
  * <em>Value</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
-public class EClassToAMapImpl extends MinimalEObjectImpl.Container implements BasicEMap.Entry<EClass, A>
-{
+public class EClassToAMapImpl extends MinimalEObjectImpl.Container implements BasicEMap.Entry<EClass, A> {
 	/**
 	 * The cached value of the '{@link #getTypedKey() <em>Key</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getTypedKey()
 	 * @generated
 	 * @ordered
@@ -55,7 +54,7 @@ public class EClassToAMapImpl extends MinimalEObjectImpl.Container implements Ba
 	 * The cached value of the '{@link #getTypedValue() <em>Value</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getTypedValue()
 	 * @generated
 	 * @ordered
@@ -65,44 +64,38 @@ public class EClassToAMapImpl extends MinimalEObjectImpl.Container implements Ba
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	protected EClassToAMapImpl()
-	{
+	protected EClassToAMapImpl() {
 		super();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return TestPackage.Literals.ECLASS_TO_AMAP;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	public EClass getTypedKey()
-	{
-		if (key != null && key.eIsProxy())
-		{
-			final InternalEObject oldKey = (InternalEObject) key;
+	public EClass getTypedKey() {
+		if (key != null && key.eIsProxy()) {
+			InternalEObject oldKey = (InternalEObject) key;
 			key = (EClass) eResolveProxy(oldKey);
-			if (key != oldKey)
-			{
-				if (eNotificationRequired()) {
+			if (key != oldKey) {
+				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, TestPackage.ECLASS_TO_AMAP__KEY, oldKey,
 						key));
-				}
 			}
 		}
 		return key;
@@ -111,47 +104,40 @@ public class EClassToAMapImpl extends MinimalEObjectImpl.Container implements Ba
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	public EClass basicGetTypedKey()
-	{
+	public EClass basicGetTypedKey() {
 		return key;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	public void setTypedKey(EClass newKey)
-	{
-		final EClass oldKey = key;
+	public void setTypedKey(EClass newKey) {
+		EClass oldKey = key;
 		key = newKey;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.ECLASS_TO_AMAP__KEY, oldKey, key));
-		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	public A getTypedValue()
-	{
-		if (value != null && value.eIsProxy())
-		{
-			final InternalEObject oldValue = (InternalEObject) value;
+	public A getTypedValue() {
+		if (value != null && value.eIsProxy()) {
+			InternalEObject oldValue = (InternalEObject) value;
 			value = (A) eResolveProxy(oldValue);
-			if (value != oldValue)
-			{
-				if (eNotificationRequired()) {
+			if (value != oldValue) {
+				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, TestPackage.ECLASS_TO_AMAP__VALUE,
 						oldValue, value));
-				}
 			}
 		}
 		return value;
@@ -160,49 +146,42 @@ public class EClassToAMapImpl extends MinimalEObjectImpl.Container implements Ba
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	public A basicGetTypedValue()
-	{
+	public A basicGetTypedValue() {
 		return value;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	public void setTypedValue(A newValue)
-	{
-		final A oldValue = value;
+	public void setTypedValue(A newValue) {
+		A oldValue = value;
 		value = newValue;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.ECLASS_TO_AMAP__VALUE, oldValue, value));
-		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
-		switch (featureID)
-		{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 		case TestPackage.ECLASS_TO_AMAP__KEY:
-			if (resolve) {
+			if (resolve)
 				return getTypedKey();
-			}
 			return basicGetTypedKey();
 		case TestPackage.ECLASS_TO_AMAP__VALUE:
-			if (resolve) {
+			if (resolve)
 				return getTypedValue();
-			}
 			return basicGetTypedValue();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -211,14 +190,12 @@ public class EClassToAMapImpl extends MinimalEObjectImpl.Container implements Ba
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
-		switch (featureID)
-		{
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 		case TestPackage.ECLASS_TO_AMAP__KEY:
 			setTypedKey((EClass) newValue);
 			return;
@@ -232,14 +209,12 @@ public class EClassToAMapImpl extends MinimalEObjectImpl.Container implements Ba
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
-		switch (featureID)
-		{
+	public void eUnset(int featureID) {
+		switch (featureID) {
 		case TestPackage.ECLASS_TO_AMAP__KEY:
 			setTypedKey((EClass) null);
 			return;
@@ -253,14 +228,12 @@ public class EClassToAMapImpl extends MinimalEObjectImpl.Container implements Ba
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
-		switch (featureID)
-		{
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 		case TestPackage.ECLASS_TO_AMAP__KEY:
 			return key != null;
 		case TestPackage.ECLASS_TO_AMAP__VALUE:
@@ -272,7 +245,7 @@ public class EClassToAMapImpl extends MinimalEObjectImpl.Container implements Ba
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected int hash = -1;
@@ -280,16 +253,14 @@ public class EClassToAMapImpl extends MinimalEObjectImpl.Container implements Ba
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public int getHash()
-	{
-		if (hash == -1)
-		{
-			final Object theKey = getKey();
-			hash = theKey == null ? 0 : theKey.hashCode();
+	public int getHash() {
+		if (hash == -1) {
+			Object theKey = getKey();
+			hash = (theKey == null ? 0 : theKey.hashCode());
 		}
 		return hash;
 	}
@@ -297,61 +268,56 @@ public class EClassToAMapImpl extends MinimalEObjectImpl.Container implements Ba
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public void setHash(int hash)
-	{
+	public void setHash(int hash) {
 		this.hash = hash;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public EClass getKey()
-	{
+	public EClass getKey() {
 		return getTypedKey();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public void setKey(EClass key)
-	{
+	public void setKey(EClass key) {
 		setTypedKey(key);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public A getValue()
-	{
+	public A getValue() {
 		return getTypedValue();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public A setValue(A value)
-	{
-		final A oldValue = getValue();
+	public A setValue(A value) {
+		A oldValue = getValue();
 		setTypedValue(value);
 		return oldValue;
 	}
@@ -359,13 +325,12 @@ public class EClassToAMapImpl extends MinimalEObjectImpl.Container implements Ba
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
-	public EMap<EClass, A> getEMap()
-	{
-		final EObject container = eContainer();
+	public EMap<EClass, A> getEMap() {
+		EObject container = eContainer();
 		return container == null ? null : (EMap<EClass, A>) container.eGet(eContainmentFeature());
 	}
 

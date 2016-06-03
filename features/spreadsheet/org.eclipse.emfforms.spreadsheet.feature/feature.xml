@@ -7,7 +7,7 @@
       plugin="org.eclipse.emfforms.spreadsheet.core"
       image="eclipse_update_120.jpg"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.8.0.qualifier">
+      license-feature-version="1.9.0.qualifier">
 
    <description>
       %description

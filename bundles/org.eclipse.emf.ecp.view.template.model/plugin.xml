@@ -105,4 +105,12 @@
             genModel="model/tabStyle.genmodel"/>
    </extension>
 
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated tableStyleProperty -->
+      <package
+            uri="http://www.eclipse.org/emf/ecp/view/template/style/table/model"
+            class="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage"
+            genModel="model/tableStyleProperty.genmodel"/>
+   </extension>
+
 </plugin>

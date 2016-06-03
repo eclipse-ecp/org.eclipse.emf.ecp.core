@@ -90,6 +90,13 @@
                 <message_argument value="10"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage"/>
+                <message_argument value="CUSTOM_CONTROL_FEATURE_COUNT"/>
+                <message_argument value="11"/>
+            </message_arguments>
+        </filter>
         <filter comment="Changes due to new label field in 1.6" id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage"/>
@@ -102,6 +109,20 @@
                 <message_argument value="org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage"/>
                 <message_argument value="CUSTOM_CONTROL__BUNDLE_NAME"/>
                 <message_argument value="8"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage"/>
+                <message_argument value="CUSTOM_CONTROL__BUNDLE_NAME"/>
+                <message_argument value="9"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage"/>
+                <message_argument value="CUSTOM_CONTROL__CLASS_NAME"/>
+                <message_argument value="10"/>
             </message_arguments>
         </filter>
         <filter comment="Changes due to new label field in 1.6" id="388194388">
@@ -125,6 +146,13 @@
                 <message_argument value="7"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage"/>
+                <message_argument value="CUSTOM_CONTROL__DOMAIN_MODEL_REFERENCE"/>
+                <message_argument value="8"/>
+            </message_arguments>
+        </filter>
         <filter comment="Changes due to new label field in 1.6" id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage"/>
@@ -137,6 +165,13 @@
                 <message_argument value="org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage"/>
                 <message_argument value="CUSTOM_CONTROL__LABEL_ALIGNMENT"/>
                 <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.custom.model.VCustomPackage"/>
+                <message_argument value="CUSTOM_CONTROL__LABEL_ALIGNMENT"/>
+                <message_argument value="7"/>
             </message_arguments>
         </filter>
         <filter comment="Changes due to new label field in 1.6" id="388194388">

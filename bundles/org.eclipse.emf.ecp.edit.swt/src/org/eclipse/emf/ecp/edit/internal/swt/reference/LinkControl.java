@@ -51,9 +51,11 @@ import org.eclipse.swt.widgets.Link;
  * This class defines a Control which is used for displaying {@link org.eclipse.emf.ecore.EStructuralFeature
  * EStructuralFeature}s which have a reference.
  *
+ * @deprecated Use LinkControlSWTRenderer instead
  * @author Eugen Neufeld
  *
  */
+@Deprecated
 public class LinkControl extends SingleControl {
 
 	private Composite linkComposite;

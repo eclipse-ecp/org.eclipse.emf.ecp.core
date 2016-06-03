@@ -43,6 +43,7 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTableColumnConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
+import org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
@@ -53,12 +54,10 @@ import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
  *
  * @since 1.5
  *        <!-- end-user-doc -->
- *
  * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage
  * @generated
  */
-public class TableValidator extends EObjectValidator
-{
+public class TableValidator extends EObjectValidator {
 	/**
 	 * The cached model package
 	 * <!-- begin-user-doc -->
@@ -123,6 +122,7 @@ public class TableValidator extends EObjectValidator
 	 * <!-- end-user-doc -->
 	 *
 	 * @generated NOT
+	 * @param emfFormsDatabinding An {@link EMFFormsDatabinding}
 	 */
 	TableValidator(EMFFormsDatabinding emfFormsDatabinding) {
 		this();
@@ -136,8 +136,7 @@ public class TableValidator extends EObjectValidator
 	 *
 	 * @generated
 	 */
-	public TableValidator()
-	{
+	public TableValidator() {
 		super();
 		viewValidator = ViewValidator.INSTANCE;
 	}
@@ -150,8 +149,7 @@ public class TableValidator extends EObjectValidator
 	 * @generated
 	 */
 	@Override
-	protected EPackage getEPackage()
-	{
+	protected EPackage getEPackage() {
 		return VTablePackage.eINSTANCE;
 	}
 
@@ -163,10 +161,9 @@ public class TableValidator extends EObjectValidator
 	 * @generated
 	 */
 	@Override
-	protected boolean validate(int classifierID, Object value, DiagnosticChain diagnostics, Map<Object, Object> context)
-	{
-		switch (classifierID)
-		{
+	protected boolean validate(int classifierID, Object value, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
+		switch (classifierID) {
 		case VTablePackage.TABLE_CONTROL:
 			return validateTableControl((VTableControl) value, diagnostics, context);
 		case VTablePackage.TABLE_COLUMN_CONFIGURATION:
@@ -175,6 +172,8 @@ public class TableValidator extends EObjectValidator
 			return validateTableDomainModelReference((VTableDomainModelReference) value, diagnostics, context);
 		case VTablePackage.READ_ONLY_COLUMN_CONFIGURATION:
 			return validateReadOnlyColumnConfiguration((VReadOnlyColumnConfiguration) value, diagnostics, context);
+		case VTablePackage.WIDTH_CONFIGURATION:
+			return validateWidthConfiguration((VWidthConfiguration) value, diagnostics, context);
 		case VTablePackage.DETAIL_EDITING:
 			return validateDetailEditing((DetailEditing) value, diagnostics, context);
 		default:
@@ -189,8 +188,7 @@ public class TableValidator extends EObjectValidator
 	 * @generated
 	 */
 	public boolean validateTableControl(VTableControl tableControl, DiagnosticChain diagnostics,
-		Map<Object, Object> context)
-	{
+		Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(tableControl, diagnostics, context);
 	}
 
@@ -201,8 +199,7 @@ public class TableValidator extends EObjectValidator
 	 * @generated
 	 */
 	public boolean validateTableColumnConfiguration(VTableColumnConfiguration tableColumnConfiguration,
-		DiagnosticChain diagnostics, Map<Object, Object> context)
-	{
+		DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(tableColumnConfiguration, diagnostics, context);
 	}
 
@@ -213,8 +210,7 @@ public class TableValidator extends EObjectValidator
 	 * @generated
 	 */
 	public boolean validateTableDomainModelReference(VTableDomainModelReference tableDomainModelReference,
-		DiagnosticChain diagnostics, Map<Object, Object> context)
-	{
+		DiagnosticChain diagnostics, Map<Object, Object> context) {
 		if (!validate_NoCircularContainment(tableDomainModelReference, diagnostics, context)) {
 			return false;
 		}
@@ -259,12 +255,10 @@ public class TableValidator extends EObjectValidator
 	// BEGIN COMPLEX CODE
 	@Override
 	public boolean validate_EveryMultiplicityConforms(EObject eObject, DiagnosticChain diagnostics,
-		Map<Object, Object> context)
-	{
+		Map<Object, Object> context) {
 		boolean result = true;
 		final EClass eClass = eObject.eClass();
-		for (int i = 0, size = eClass.getFeatureCount(); i < size; ++i)
-		{
+		for (int i = 0, size = eClass.getFeatureCount(); i < size; ++i) {
 			// begin custom
 			if (VTableDomainModelReference.class.isInstance(eObject)
 				&& eClass.getEStructuralFeature(i) == VViewPackage.eINSTANCE
@@ -273,8 +267,7 @@ public class TableValidator extends EObjectValidator
 			}
 			// end custom
 			result &= validate_MultiplicityConforms(eObject, eClass.getEStructuralFeature(i), diagnostics, context);
-			if (!result && diagnostics == null)
-			{
+			if (!result && diagnostics == null) {
 				return false;
 			}
 		}
@@ -430,9 +423,20 @@ public class TableValidator extends EObjectValidator
 	 * @generated
 	 */
 	public boolean validateReadOnlyColumnConfiguration(VReadOnlyColumnConfiguration readOnlyColumnConfiguration,
-		DiagnosticChain diagnostics, Map<Object, Object> context)
-	{
+		DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(readOnlyColumnConfiguration, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.9
+	 *        <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateWidthConfiguration(VWidthConfiguration widthConfiguration, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(widthConfiguration, diagnostics, context);
 	}
 
 	/**
@@ -442,8 +446,7 @@ public class TableValidator extends EObjectValidator
 	 * @generated
 	 */
 	public boolean validateDetailEditing(DetailEditing detailEditing, DiagnosticChain diagnostics,
-		Map<Object, Object> context)
-	{
+		Map<Object, Object> context) {
 		return true;
 	}
 
@@ -455,8 +458,7 @@ public class TableValidator extends EObjectValidator
 	 * @generated
 	 */
 	@Override
-	public ResourceLocator getResourceLocator()
-	{
+	public ResourceLocator getResourceLocator() {
 		// TODO
 		// Specialize this to return a resource locator for messages specific to this validator.
 		// Ensure that you remove @generated or mark it @generated NOT
@@ -468,8 +470,7 @@ public class TableValidator extends EObjectValidator
 
 		// avoid ConcurrentModificationException while iterating over the registry's key set
 		final List<String> keySet = new ArrayList<String>(org.eclipse.emf.ecore.EPackage.Registry.INSTANCE.keySet());
-		for (final String nsURI : keySet)
-		{
+		for (final String nsURI : keySet) {
 			final EPackage ePackage = org.eclipse.emf.ecore.EPackage.Registry.INSTANCE.getEPackage(nsURI);
 			for (final EClassifier eClassifier : ePackage.getEClassifiers()) {
 				if (eClassifier instanceof EClass) {

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -18,7 +18,6 @@ import java.util.Set;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -38,7 +37,6 @@ import org.osgi.framework.ServiceReference;
  * @author Lucas Koehler
  *
  */
-@SuppressWarnings("deprecation")
 public class ViewModelListener implements ModelChangeListener {
 
 	private boolean isDisposed;
@@ -127,11 +125,6 @@ public class ViewModelListener implements ModelChangeListener {
 				// reportService.report(new AbstractReport(ex,
 				// "The DMR " + reference + " could not be re-resolved!")); //$NON-NLS-1$//$NON-NLS-2$
 				// }
-
-				// Needed for RuleRegistry and StackItemViewService to receive their needed notifications
-				for (final DomainModelReferenceChangeListener listener : reference.getChangeListener()) {
-					listener.notifyChange();
-				}
 			}
 		}
 	}

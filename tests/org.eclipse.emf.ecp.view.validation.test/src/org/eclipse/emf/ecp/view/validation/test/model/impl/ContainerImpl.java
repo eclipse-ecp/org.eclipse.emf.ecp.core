@@ -30,10 +30,10 @@ import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.ContainerImpl#getContents <em>Contents</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

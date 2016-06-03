@@ -18,10 +18,13 @@ import org.eclipse.emf.ecp.view.validation.test.model.Book;
 import org.eclipse.emf.ecp.view.validation.test.model.Computer;
 import org.eclipse.emf.ecp.view.validation.test.model.Container;
 import org.eclipse.emf.ecp.view.validation.test.model.Content;
+import org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContainer;
+import org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContent;
 import org.eclipse.emf.ecp.view.validation.test.model.Librarian;
 import org.eclipse.emf.ecp.view.validation.test.model.Library;
 import org.eclipse.emf.ecp.view.validation.test.model.Mainboard;
 import org.eclipse.emf.ecp.view.validation.test.model.PowerBlock;
+import org.eclipse.emf.ecp.view.validation.test.model.Referencer;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContent;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild2;
@@ -76,7 +79,7 @@ public class TestSwitch<T> extends Switch<T> {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
-	 * @parameter ePackage the package in question.
+	 * @param ePackage the package in question.
 	 * @return whether this is a switch for the given package.
 	 * @generated
 	 */
@@ -248,6 +251,30 @@ public class TestSwitch<T> extends Switch<T> {
 		case TestPackage.TABLE_WITHOUT_MULTIPLICITY_CONCRETE: {
 			final TableWithoutMultiplicityConcrete tableWithoutMultiplicityConcrete = (TableWithoutMultiplicityConcrete) theEObject;
 			T result = caseTableWithoutMultiplicityConcrete(tableWithoutMultiplicityConcrete);
+			if (result == null) {
+				result = defaultCase(theEObject);
+			}
+			return result;
+		}
+		case TestPackage.REFERENCER: {
+			final Referencer referencer = (Referencer) theEObject;
+			T result = caseReferencer(referencer);
+			if (result == null) {
+				result = defaultCase(theEObject);
+			}
+			return result;
+		}
+		case TestPackage.CROSS_REFERENCE_CONTAINER: {
+			final CrossReferenceContainer crossReferenceContainer = (CrossReferenceContainer) theEObject;
+			T result = caseCrossReferenceContainer(crossReferenceContainer);
+			if (result == null) {
+				result = defaultCase(theEObject);
+			}
+			return result;
+		}
+		case TestPackage.CROSS_REFERENCE_CONTENT: {
+			final CrossReferenceContent crossReferenceContent = (CrossReferenceContent) theEObject;
+			T result = caseCrossReferenceContent(crossReferenceContent);
 			if (result == null) {
 				result = defaultCase(theEObject);
 			}
@@ -543,6 +570,54 @@ public class TestSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseTableWithoutMultiplicityConcrete(TableWithoutMultiplicityConcrete object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Referencer</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 *
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Referencer</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseReferencer(Referencer object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Cross Reference Container</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 *
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Cross Reference Container</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseCrossReferenceContainer(CrossReferenceContainer object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Cross Reference Content</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 *
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Cross Reference Content</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseCrossReferenceContent(CrossReferenceContent object) {
 		return null;
 	}
 

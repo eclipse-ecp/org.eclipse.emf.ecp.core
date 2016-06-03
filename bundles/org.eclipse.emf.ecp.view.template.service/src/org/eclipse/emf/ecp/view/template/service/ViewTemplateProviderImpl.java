@@ -29,13 +29,20 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.util.ViewModelUtil;
 import org.eclipse.emf.ecp.view.template.model.VTStyle;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.model.VTStyleSelector;
 import org.eclipse.emf.ecp.view.template.model.VTTemplatePackage;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplate;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
+import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
 
 /**
  * Implementation of the VTViewTemplateProvider.
@@ -43,22 +50,43 @@ import org.osgi.framework.BundleContext;
  * @author Eugen Neufeld
  *
  */
+@Component(name = "viewTemplate", service = VTViewTemplateProvider.class)
 public class ViewTemplateProviderImpl implements VTViewTemplateProvider {
 
 	private VTViewTemplate registeredTemplate;
+
+	private ReportService reportService;
+
+	/**
+	 * Sets the report service.
+	 *
+	 * @param reportService the {@link ReportService}
+	 */
+	@Reference(cardinality = ReferenceCardinality.MANDATORY, unbind = "-")
+	public void setReportService(ReportService reportService) {
+		this.reportService = reportService;
+	}
 
 	/**
 	 * Startup method for osgi service.
 	 *
 	 * @param bundleContext the {@link BundleContext}
 	 */
+	@Activate
 	protected void startup(BundleContext bundleContext) {
 
 		// load from extension
 		final IConfigurationElement[] controls = Platform.getExtensionRegistry().getConfigurationElementsFor(
 			"org.eclipse.emf.ecp.view.template"); //$NON-NLS-1$
-		if (controls.length != 1) {
+		if (controls.length == 0) {
 			return;
+		}
+		if (controls.length > 1) {
+			if (ViewModelUtil.isDebugMode()) {
+				throw new IllegalArgumentException("Multiple template models found. Only one is supported."); //$NON-NLS-1$
+			}
+			reportService.report(new AbstractReport(
+				"Multiple template models have been found. Only one of them will be used. Fix your project setup.")); //$NON-NLS-1$
 		}
 		final IConfigurationElement e = controls[0];
 		final String xmiResource = e.getAttribute("xmi"); //$NON-NLS-1$

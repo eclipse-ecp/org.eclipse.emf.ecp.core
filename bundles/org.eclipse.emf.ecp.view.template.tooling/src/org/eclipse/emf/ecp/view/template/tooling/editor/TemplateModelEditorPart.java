@@ -12,41 +12,26 @@
 package org.eclipse.emf.ecp.view.template.tooling.editor;
 
 import java.io.IOException;
-import java.util.EventObject;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.emf.common.command.BasicCommandStack;
-import org.eclipse.emf.common.command.CommandStackListener;
-import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecp.edit.spi.EMFDeleteServiceImpl;
 import org.eclipse.emf.ecp.internal.ide.util.EcoreHelper;
-import org.eclipse.emf.ecp.ui.view.ECPRendererException;
-import org.eclipse.emf.ecp.ui.view.swt.DefaultReferenceService;
-import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
-import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
-import org.eclipse.emf.ecp.view.spi.model.VView;
-import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
-import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emf.ecp.view.template.internal.tooling.Activator;
 import org.eclipse.emf.ecp.view.template.internal.tooling.Messages;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplate;
-import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.swt.SWT;
+import org.eclipse.emfforms.spi.editor.GenericEditor;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailComposite;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateElementCallback;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.util.RootObject;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IEditorInput;
-import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.part.EditorPart;
 import org.eclipse.ui.part.FileEditorInput;
 
 /**
@@ -56,70 +41,25 @@ import org.eclipse.ui.part.FileEditorInput;
  *
  */
 @SuppressWarnings("restriction")
-public class TemplateModelEditorPart extends EditorPart {
+public class TemplateModelEditorPart extends GenericEditor {
 
 	private VTViewTemplate template;
-	private BasicCommandStack basicCommandStack;
-	private Composite parent;
-	private Resource resource;
-
-	@Override
-	public void doSave(IProgressMonitor monitor) {
-		try {
-			resource.save(null);
-			basicCommandStack.saveIsDone();
-			firePropertyChange(IEditorPart.PROP_DIRTY);
-		} catch (final IOException e) {
-			Activator.log(e);
-		}
-	}
-
-	@Override
-	public void doSaveAs() {
-		// do nothing
-	}
-
-	private ResourceSet createResourceSet() {
-		final ResourceSet resourceSet = new ResourceSetImpl();
-
-		final AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(
-			new ComposedAdapterFactory(new AdapterFactory[] {
-				new CustomReflectiveItemProviderAdapterFactory(),
-				new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) }),
-			basicCommandStack, resourceSet);
-		resourceSet.eAdapters().add(
-			new AdapterFactoryEditingDomain.EditingDomainProvider(domain));
-		return resourceSet;
-	}
+	private TreeMasterDetailComposite treeMasterDetail;
 
 	@Override
 	public void init(IEditorSite site, IEditorInput input) throws PartInitException {
-		super.setSite(site);
-		super.setInput(input);
+		super.init(site, input);
 		super.setPartName(input.getName());
-
-		basicCommandStack = new BasicCommandStack();
-		basicCommandStack.addCommandStackListener(new CommandStackListener() {
-			@Override
-			public void commandStackChanged(final EventObject event) {
-				parent.getDisplay().asyncExec(new Runnable() {
-					@Override
-					public void run() {
-						firePropertyChange(IEditorPart.PROP_DIRTY);
-					}
-				});
-			}
-		});
 
 		final FileEditorInput fei = (FileEditorInput) getEditorInput();
 
-		final ResourceSet resourceSet = createResourceSet();
+		final ResourceSet resourceSet = new ResourceSetImpl();
 		try {
-			resource = resourceSet.createResource(URI.createURI(fei.getURI().toURL().toExternalForm()));
+			final Resource resource = resourceSet.createResource(URI.createURI(fei.getURI().toURL().toExternalForm()));
 			resource.load(null);
 			final EList<EObject> resourceContents = resource.getContents();
 			if (resourceContents.size() > 0 && VTViewTemplate.class.isInstance(resourceContents.get(0))) {
-				template = (VTViewTemplate) resourceContents.get(0);
+				final VTViewTemplate template = (VTViewTemplate) resourceContents.get(0);
 				for (final String ecorePath : template.getReferencedEcores()) {
 					EcoreHelper.registerEcore(ecorePath);
 				}
@@ -135,6 +75,20 @@ public class TemplateModelEditorPart extends EditorPart {
 	}
 
 	@Override
+	protected Object modifyEditorInput(ResourceSet resourceSet) {
+		/* this access is save, otherwise we would have thrown a part init exception in init */
+		template = VTViewTemplate.class.cast(resourceSet.getResources().get(0).getContents().get(0));
+		return new RootObject(template);
+	}
+
+	@Override
+	protected TreeMasterDetailComposite createTreeMasterDetail(Composite composite, Object editorInput,
+		CreateElementCallback createElementCallback) {
+		treeMasterDetail = super.createTreeMasterDetail(composite, editorInput, createElementCallback);
+		return treeMasterDetail;
+	}
+
+	@Override
 	public void dispose() {
 		if (template != null) {
 			for (final String ecorePath : template.getReferencedEcores()) {
@@ -144,33 +98,24 @@ public class TemplateModelEditorPart extends EditorPart {
 		super.dispose();
 	}
 
-	@Override
-	public boolean isDirty() {
-		return basicCommandStack.isSaveNeeded();
+	/**
+	 * Gives access to the template model which is the input of the editor.
+	 *
+	 * @return the {@link VTViewTemplate}
+	 */
+	public VTViewTemplate getTemplate() {
+		return template;
 	}
 
-	@Override
-	public boolean isSaveAsAllowed() {
-		return false;
-	}
-
-	@Override
-	public void createPartControl(Composite parent) {
-		this.parent = parent;
-		parent.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
-		final VView view = ViewProviderHelper.getView(template, null);
-		final ViewModelContext viewContext = ViewModelContextFactory.INSTANCE.createViewModelContext(view,
-			template, new DefaultReferenceService(), new EMFDeleteServiceImpl());
-		try {
-			ECPSWTViewRenderer.INSTANCE.render(parent, viewContext);
-		} catch (final ECPRendererException ex) {
-			Activator.getDefault().getReportService().report(new RenderingFailedReport(ex));
-		}
-	}
-
-	@Override
-	public void setFocus() {
-		// do nothing
+	/**
+	 * The given element will be revealed in the tree of the editor.
+	 *
+	 * @param objectToReveal the object to reveal
+	 */
+	public void reveal(EObject objectToReveal) {
+		treeMasterDetail.getSelectionProvider().refresh();
+		treeMasterDetail.getSelectionProvider().reveal(objectToReveal);
+		treeMasterDetail.setSelection(new StructuredSelection(objectToReveal));
 	}
 
 }

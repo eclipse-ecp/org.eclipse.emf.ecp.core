@@ -226,26 +226,37 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(compositeToRenderOn);
 
 		final EObject object = (EObject) selection.getFirstElement();
+		renderSelectedObject(compositeToRenderOn, object);
+		border.layout(true, true);
+		final Point point = detailPanel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+		scrolledComposite.setMinHeight(point.y);
+	}
+
+	/**
+	 * Called in order to render the selectedObject onto the created detail pane.
+	 * 
+	 * @param composite The {@link Composite} to render on
+	 * @param eObject The selected {@link EObject} to render
+	 * @since 1.9
+	 */
+	protected void renderSelectedObject(final Composite composite, final EObject eObject) {
 		final VView detailView = getView();
 		if (detailView == null) {
 
-			final Label label = new Label(compositeToRenderOn, SWT.NONE);
-			label.setBackground(compositeToRenderOn.getDisplay().getSystemColor(SWT.COLOR_RED));
+			final Label label = new Label(composite, SWT.NONE);
+			label.setBackground(composite.getDisplay().getSystemColor(SWT.COLOR_RED));
 			label.setText("No Detail View found."); //$NON-NLS-1$
 
 		} else {
-			final ViewModelContext childContext = getViewModelContext().getChildContext(object, getVElement(),
+			final ViewModelContext childContext = getViewModelContext().getChildContext(eObject, getVElement(),
 				detailView);
 
 			try {
-				ecpView = ECPSWTViewRenderer.INSTANCE.render(compositeToRenderOn, childContext);
+				ecpView = ECPSWTViewRenderer.INSTANCE.render(composite, childContext);
 			} catch (final ECPRendererException ex) {
 				getReportService().report(new RenderingFailedReport(ex));
 			}
 		}
-		border.layout(true, true);
-		final Point point = detailPanel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-		scrolledComposite.setMinHeight(point.y);
 	}
 
 	/**

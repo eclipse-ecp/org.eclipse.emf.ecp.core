@@ -12,12 +12,12 @@
 <feature
       id="org.eclipse.emf.ecp.feature"
       label="ECP Core"
-      version="1.8.0.qualifier"
+      version="1.9.0.qualifier"
       provider-name="Eclipse Modeling Project"
       plugin="org.eclipse.emf.ecp.core"
       image="eclipse_update_120.jpg"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.8.0.qualifier">
+      license-feature-version="1.9.0.qualifier">
 
    <description>
       The core platform containing the model workspace, the navigator, the editor and the repository browser.
@@ -71,7 +71,6 @@
          download-size="0"
          install-size="0"
          version="0.0.0"
-         fragment="true"
          unpack="false"/>
 
 </feature>

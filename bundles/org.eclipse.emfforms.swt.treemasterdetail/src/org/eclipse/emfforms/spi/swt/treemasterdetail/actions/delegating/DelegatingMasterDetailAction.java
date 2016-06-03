@@ -86,7 +86,11 @@ public abstract class DelegatingMasterDetailAction extends KeybindedMasterDetail
 
 	@Override
 	public void execute(EObject object) {
-		// no op
+		final IStructuredSelection selection = new StructuredSelection(object);
+		delegatedAction.selectionChanged(selection);
+		if (delegatedAction.isEnabled()) {
+			delegatedAction.run();
+		}
 	}
 
 	@Override

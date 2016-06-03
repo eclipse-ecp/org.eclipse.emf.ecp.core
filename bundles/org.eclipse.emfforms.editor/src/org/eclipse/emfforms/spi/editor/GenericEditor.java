@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -38,19 +38,30 @@ import org.eclipse.emf.common.command.CommandStackListener;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecp.common.spi.ChildrenDescriptorCollector;
 import org.eclipse.emf.ecp.view.spi.model.reporting.StatusReport;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
-import org.eclipse.emf.edit.ui.action.EditingDomainActionBarContributor;
 import org.eclipse.emfforms.internal.editor.Activator;
 import org.eclipse.emfforms.internal.editor.toolbaractions.LoadEcoreAction;
 import org.eclipse.emfforms.internal.editor.ui.EditorToolBar;
+import org.eclipse.emfforms.internal.swt.treemasterdetail.defaultprovider.DefaultDeleteActionBuilder;
 import org.eclipse.emfforms.spi.editor.helpers.ResourceSetHelpers;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.MenuProvider;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailComposite;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailMenuListener;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailSWTFactory;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.actions.ActionCollector;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.actions.MasterDetailAction;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateElementCallback;
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.ISelectionProvider;
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
@@ -59,6 +70,7 @@ import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IPartListener;
@@ -252,7 +264,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider 
 	@Override
 	public void createPartControl(Composite parent) {
 		// Load the resource from the provided input and display the editor
-		loadResource();
+		resourceSet = loadResource(getEditorInput());
 		parent.setBackground(new Color(Display.getCurrent(), 255, 255, 255));
 		parent.setBackgroundMode(SWT.INHERIT_FORCE);
 
@@ -262,13 +274,6 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider 
 		// We need to set the selectionProvider for the editor, so that the EditingDomainActionBarContributor
 		// knows the currently selected object to copy/paste
 		getEditorSite().setSelectionProvider(rootView.getSelectionProvider());
-
-		// The EditingDomainActionBarContributor hooks undo/redo/copy/cut/paste actions to the
-		// editor's actionbar and enables all these actions.
-		final EditingDomainActionBarContributor actionBarProvider = new EditingDomainActionBarContributor();
-		actionBarProvider.init(getEditorSite().getActionBars());
-		actionBarProvider.setActiveEditor(this);
-		actionBarProvider.activate();
 	}
 
 	private TreeMasterDetailComposite createRootView(Composite parent, String editorTitle, Object editorInput,
@@ -305,10 +310,26 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider 
 	 * @return the {@link TreeMasterDetailComposite}
 	 */
 	protected TreeMasterDetailComposite createTreeMasterDetail(final Composite composite,
-		Object editorInput, CreateElementCallback createElementCallback) {
+		Object editorInput, final CreateElementCallback createElementCallback) {
 		final TreeMasterDetailComposite treeMasterDetail = TreeMasterDetailSWTFactory
 			.fillDefaults(composite, SWT.NONE, editorInput)
 			.customizeCildCreation(createElementCallback)
+			.customizeMenu(new MenuProvider() {
+				@Override
+				public Menu getMenu(TreeViewer treeViewer, EditingDomain editingDomain) {
+					final MenuManager menuMgr = new MenuManager();
+					menuMgr.setRemoveAllWhenShown(true);
+					final List<MasterDetailAction> masterDetailActions = ActionCollector.newList()
+						.addCutAction(editingDomain).addCopyAction(editingDomain).addPasteAction(editingDomain)
+						.getList();
+					menuMgr.addMenuListener(new TreeMasterDetailMenuListener(new ChildrenDescriptorCollector(), menuMgr,
+						treeViewer, editingDomain, masterDetailActions, createElementCallback,
+						new DefaultDeleteActionBuilder()));
+					final Menu menu = menuMgr.createContextMenu(treeViewer.getControl());
+					return menu;
+
+				}
+			})
 			.create();
 		return treeMasterDetail;
 	}
@@ -324,16 +345,16 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider 
 	}
 
 	/**
-	 * Loads the Resource from the EditorInput and sets the EcoreEditor.resource
-	 * field.
+	 * Creates a resource set and loads all required resources for the editor input.
+	 *
+	 * @param editorInput the editor input
+	 * @return the resource set
 	 */
-	private void loadResource() {
-		final FileEditorInput fei = (FileEditorInput) getEditorInput();
-
-		resourceSet = ResourceSetHelpers.loadResourceSetWithProxies(
+	protected ResourceSet loadResource(IEditorInput editorInput) {
+		final FileEditorInput fei = (FileEditorInput) editorInput;
+		return ResourceSetHelpers.loadResourceSetWithProxies(
 			URI.createPlatformResourceURI(fei.getFile().getFullPath().toOSString(), false),
 			commandStack);
-
 	}
 
 	/*
@@ -406,6 +427,35 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider 
 	private List<Action> readToolbarActions() {
 		final List<Action> result = new LinkedList<Action>();
 
+		final ISelectionProvider selectionProvider = new ISelectionProvider() {
+
+			@Override
+			public void setSelection(ISelection selection) {
+				if (rootView == null) {
+					return;
+				}
+				rootView.getSelectionProvider().setSelection(selection);
+			}
+
+			@Override
+			public void removeSelectionChangedListener(ISelectionChangedListener listener) {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public ISelection getSelection() {
+				if (rootView == null) {
+					return new StructuredSelection();
+				}
+				return rootView.getSelectionProvider().getSelection();
+			}
+
+			@Override
+			public void addSelectionChangedListener(ISelectionChangedListener listener) {
+				throw new UnsupportedOperationException();
+			}
+		};
+
 		final IExtensionRegistry registry = Platform.getExtensionRegistry();
 		if (registry == null) {
 			return result;
@@ -421,7 +471,7 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider 
 						continue;
 					}
 
-					result.add(action.getAction(resourceSet));
+					result.add(action.getAction(resourceSet, selectionProvider));
 				}
 			}
 		} catch (final CoreException ex) {

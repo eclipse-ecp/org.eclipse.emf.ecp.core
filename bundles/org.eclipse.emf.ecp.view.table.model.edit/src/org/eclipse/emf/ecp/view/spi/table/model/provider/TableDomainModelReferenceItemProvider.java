@@ -35,8 +35,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class TableDomainModelReferenceItemProvider
-	extends FeaturePathDomainModelReferenceItemProvider
-{
+	extends FeaturePathDomainModelReferenceItemProvider {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -44,8 +43,7 @@ public class TableDomainModelReferenceItemProvider
 	 *
 	 * @generated
 	 */
-	public TableDomainModelReferenceItemProvider(AdapterFactory adapterFactory)
-	{
+	public TableDomainModelReferenceItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -57,10 +55,8 @@ public class TableDomainModelReferenceItemProvider
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object)
-	{
-		if (itemPropertyDescriptors == null)
-		{
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addColumnDomainModelReferencesPropertyDescriptor(object);
@@ -76,16 +72,14 @@ public class TableDomainModelReferenceItemProvider
 	 *
 	 * @generated
 	 */
-	protected void addColumnDomainModelReferencesPropertyDescriptor(Object object)
-	{
+	protected void addColumnDomainModelReferencesPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_TableDomainModelReference_columnDomainModelReferences_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_TableDomainModelReference_columnDomainModelReferences_feature", "_UI_TableDomainModelReference_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+					"_UI_TableDomainModelReference_columnDomainModelReferences_feature", //$NON-NLS-1$
+					"_UI_TableDomainModelReference_type"), //$NON-NLS-1$
 				VTablePackage.Literals.TABLE_DOMAIN_MODEL_REFERENCE__COLUMN_DOMAIN_MODEL_REFERENCES,
 				true,
 				false,
@@ -98,22 +92,18 @@ public class TableDomainModelReferenceItemProvider
 	/**
 	 * This adds a property descriptor for the Domain Model Reference feature.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.5
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
-	protected void addDomainModelReferencePropertyDescriptor(Object object)
-	{
+	protected void addDomainModelReferencePropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_TableDomainModelReference_domainModelReference_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_TableDomainModelReference_domainModelReference_feature", "_UI_TableDomainModelReference_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+					"_UI_TableDomainModelReference_domainModelReference_feature", "_UI_TableDomainModelReference_type"), //$NON-NLS-1$ //$NON-NLS-2$
 				VTablePackage.Literals.TABLE_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE,
 				true,
 				false,
@@ -133,10 +123,8 @@ public class TableDomainModelReferenceItemProvider
 	 * @generated
 	 */
 	@Override
-	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object)
-	{
-		if (childrenFeatures == null)
-		{
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
+		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(VTablePackage.Literals.TABLE_DOMAIN_MODEL_REFERENCE__COLUMN_DOMAIN_MODEL_REFERENCES);
 		}
@@ -150,8 +138,7 @@ public class TableDomainModelReferenceItemProvider
 	 * @generated
 	 */
 	@Override
-	protected EStructuralFeature getChildFeature(Object object, Object child)
-	{
+	protected EStructuralFeature getChildFeature(Object object, Object child) {
 		// Check the type of the specified child object and return the proper feature to use for
 		// adding (see {@link AddCommand}) it as a child.
 
@@ -166,8 +153,7 @@ public class TableDomainModelReferenceItemProvider
 	 * @generated
 	 */
 	@Override
-	public Object getImage(Object object)
-	{
+	public Object getImage(Object object) {
 		return overlayImage(object, getResourceLocator().getImage("full/obj16/TableDomainModelReference")); //$NON-NLS-1$
 	}
 
@@ -179,8 +165,7 @@ public class TableDomainModelReferenceItemProvider
 	 * @generated
 	 */
 	@Override
-	public String getText(Object object)
-	{
+	public String getText(Object object) {
 		return getString("_UI_TableDomainModelReference_type"); //$NON-NLS-1$
 	}
 
@@ -193,12 +178,10 @@ public class TableDomainModelReferenceItemProvider
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(Notification notification)
-	{
+	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(VTableDomainModelReference.class))
-		{
+		switch (notification.getFeatureID(VTableDomainModelReference.class)) {
 		case VTablePackage.TABLE_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
@@ -218,18 +201,15 @@ public class TableDomainModelReferenceItemProvider
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
-	{
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
-		newChildDescriptors.add
-			(createChildParameter
-			(VTablePackage.Literals.TABLE_DOMAIN_MODEL_REFERENCE__COLUMN_DOMAIN_MODEL_REFERENCES,
+		newChildDescriptors.add(
+			createChildParameter(VTablePackage.Literals.TABLE_DOMAIN_MODEL_REFERENCE__COLUMN_DOMAIN_MODEL_REFERENCES,
 				VTableFactory.eINSTANCE.createTableDomainModelReference()));
 
-		newChildDescriptors.add
-			(createChildParameter
-			(VTablePackage.Literals.TABLE_DOMAIN_MODEL_REFERENCE__COLUMN_DOMAIN_MODEL_REFERENCES,
+		newChildDescriptors.add(
+			createChildParameter(VTablePackage.Literals.TABLE_DOMAIN_MODEL_REFERENCE__COLUMN_DOMAIN_MODEL_REFERENCES,
 				VViewFactory.eINSTANCE.createFeaturePathDomainModelReference()));
 	}
 

@@ -318,36 +318,6 @@ public class ControlGridSWTRenderer_ITest {
 		assertEquals(12, GridLayout.class.cast(layout).numColumns);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testRenderInvalidCell1() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		final SWTGridCell swtGridCell = mock(SWTGridCell.class);
-		when(swtGridCell.getColumn()).thenReturn(1);
-		when(swtGridCell.getRow()).thenReturn(0);
-		final ControlGridSWTRenderer renderer = createRenderer();
-		renderer.init();
-		renderer.render(swtGridCell, shell);
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void testRenderInvalidCell2() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		final SWTGridCell swtGridCell = mock(SWTGridCell.class);
-		when(swtGridCell.getColumn()).thenReturn(1);
-		when(swtGridCell.getRow()).thenReturn(1);
-		final ControlGridSWTRenderer renderer = createRenderer();
-		renderer.init();
-		renderer.render(swtGridCell, shell);
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void testRenderInvalidCell3() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		final SWTGridCell swtGridCell = mock(SWTGridCell.class);
-		when(swtGridCell.getColumn()).thenReturn(0);
-		when(swtGridCell.getRow()).thenReturn(1);
-		final ControlGridSWTRenderer renderer = createRenderer();
-		renderer.init();
-		renderer.render(swtGridCell, shell);
-	}
-
 	@Test
 	public void testRenderEmptyRow() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		final SWTGridCell swtGridCell = mock(SWTGridCell.class);

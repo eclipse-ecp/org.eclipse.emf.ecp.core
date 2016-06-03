@@ -61,7 +61,7 @@ public class EditorToolBar extends Composite {
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, false).applyTo(this);
 
 		// Create the Icon on the Left
-		final Label titleImage = new Label(this, SWT.FILL);
+		final Label titleImage = new Label(this, SWT.NONE);
 		final ImageDescriptor imageDescriptor = ImageDescriptor.createFromURL(Activator.getDefault().getBundle()
 			.getResource("icons/view.png"));
 		titleImage.setImage(new Image(parent.getDisplay(), imageDescriptor.getImageData()));
@@ -74,7 +74,7 @@ public class EditorToolBar extends Composite {
 
 		// Create the label for the Title Text
 		final Label title = new Label(this, SWT.WRAP);
-		final FontDescriptor boldDescriptor = FontDescriptor.createFrom(title.getFont()).setHeight(12)
+		final FontDescriptor boldDescriptor = FontDescriptor.createFrom(title.getFont()).setHeight(13)
 			.setStyle(SWT.BOLD);
 		final Font boldFont = boldDescriptor.createFont(title.getDisplay());
 		title.setForeground(new Color(parent.getDisplay(), 25, 76, 127));

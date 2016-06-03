@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="ECP RCP" sequenceNumber="260">
+<?pde version="3.8"?><target name="ECP RCP" sequenceNumber="263">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.swtbot.forms.feature.group" version="0.0.0"/>
@@ -7,15 +7,12 @@
 <unit id="org.eclipse.swtbot.eclipse.gef.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.swtbot.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.swtbot.eclipse.test.junit.feature.group" version="0.0.0"/>
-<unit id="org.hamcrest.core" version="0.0.0"/>
-<unit id="org.hamcrest.library" version="0.0.0"/>
-<unit id="org.hamcrest.library.source" version="0.0.0"/>
 <repository location="http://download.eclipse.org/technology/swtbot/releases/latest/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.equinox.sdk.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.platform.ide" version="0.0.0"/>
-<repository location="http://download.eclipse.org/eclipse/updates/4.5"/>
+<repository location="http://download.eclipse.org/eclipse/updates/4.6milestones"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.emf.emfstore.client.transaction.feature.feature.group" version="0.0.0"/>
@@ -25,7 +22,7 @@
 <unit id="org.eclipse.emf.emfstore.example.feature.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.emf.emfstore.client.ui.feature.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.emf.emfstore.ecore.feature.feature.group" version="0.0.0"/>
-<repository location="http://download.eclipse.org/emfstore/releases_17"/>
+<repository location="http://download.eclipse.org/emfstore/releases_18"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.jdt.feature.group" version="0.0.0"/>
@@ -40,11 +37,11 @@
 <unit id="org.eclipse.pde.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.ocl.all.sdk.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.xtend.sdk.feature.group" version="0.0.0"/>
-<repository location="http://download.eclipse.org/releases/mars"/>
+<repository location="http://download.eclipse.org/releases/neon"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
-<unit id="org.mockito.mockito-all" version="0.0.0"/>
-<repository location="http://build.eclipse.org/rt/rap/base-platforms/2.3/extra-dependencies/"/>
+<unit id="org.mockito.mockito-core-hamcrest-modified" version="0.0.0"/>
+<repository location="http://build.eclipse.org/rt/rap/base-platforms/3.1/extra-dependencies/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="javax.validation" version="0.0.0"/>
@@ -61,12 +58,15 @@
 <unit id="com.google.gson" version="0.0.0"/>
 <unit id="com.google.guava" version="0.0.0"/>
 <unit id="com.google.guava.source" version="0.0.0"/>
-<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20151221205849/repository/"/>
+<unit id="org.hamcrest.core" version="0.0.0"/>
+<unit id="org.hamcrest.library" version="0.0.0"/>
+<unit id="org.hamcrest.library.source" version="0.0.0"/>
+<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20160221192158/repository/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.emf.edapt.runtime.feature.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.emf.edapt.runtime.feature.source.feature.group" version="0.0.0"/>
-<repository location="http://download.eclipse.org/edapt/releases/11x"/>
+<repository location="http://download.eclipse.org/edapt/releases/12x"/>
 </location>
 </locations>
 </target>

@@ -35,4 +35,12 @@
     <eLiterals name="WithDialog" value="1" literal="WithDialog"/>
     <eLiterals name="WithPanel" value="2"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WidthConfiguration" eSuperTypes="#//TableColumnConfiguration">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="columnDomainReference"
+        lowerBound="1" eType="ecore:EClass ../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="weight" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="minWidth" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
 </ecore:EPackage>

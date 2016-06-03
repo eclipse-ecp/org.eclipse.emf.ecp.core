@@ -6,12 +6,12 @@
 	<parent>
 		<groupId>org.eclipse.emf.ecp</groupId>
 		<artifactId>ecp-parent</artifactId>
-		<version>1.8.0-SNAPSHOT</version>
+		<version>1.9.0-SNAPSHOT</version>
 		<relativePath>../../releng/org.eclipse.emf.ecp.releng/</relativePath>
 	</parent>
 	<groupId>org.eclipse.emf.ecp</groupId>
 	<artifactId>ecp-bundles-parent</artifactId>
-	<version>1.8.0-SNAPSHOT</version>
+	<version>1.9.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<modules>
@@ -102,6 +102,7 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.categorization.model</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.categorization.model.edit</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.categorization.swt</module>
+		<module>../../bundles/org.eclipse.emfforms.swt.categorization.expandbar</module>
 
 		<!-- Custom Control Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.custom.model</module>
@@ -155,6 +156,7 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.treemasterdetail.model.edit</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.treemasterdetail.ui.swt</module>
 		<module>../../bundles/org.eclipse.emfforms.swt.treemasterdetail</module>
+		<module>../../bundles/org.eclipse.emfforms.swt.treemasterdetail.decorator.validation.default</module>
 		
 		<!-- Table Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.model</module>
@@ -164,6 +166,7 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.edapt</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.celleditor.rcp</module>
 		<module>../../bundles/org.eclipse.emfforms.swt.table</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.table.ui.swt.persistedstate</module>
 		
 		<!--  Stack Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.stack.model</module>
@@ -179,9 +182,9 @@
 
 		<!-- IDE -->
 		<module>../../bundles/org.eclipse.emf.ecp.ide.editor.view</module>
-		<module>../../bundles/org.eclipse.emf.ecp.ide.editor.view.control</module>
 		<module>../../bundles/org.eclipse.emf.ecp.ide.editor.viewmodel</module>
 		<module>../../bundles/org.eclipse.emf.ecp.ide.view.service</module>
+		<module>../../bundles/org.eclipse.emf.ecp.ide.editor.view.templatebridge</module>
 
 		<!-- RAP -->
 		<module>../../bundles/org.eclipse.emf.ecp.rap.util</module>
@@ -261,9 +264,11 @@
 		<module>../../bundles/org.eclipse.emfforms.common</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.databinding.featurepath</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.databinding.index</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.databinding.keyattribute</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.databinding.mapping</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.domainexpander.default</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.domainexpander.index</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.domainexpander.keyattribute</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.domainexpander.mapping</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.domainexpander.table</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.emfspecificservice</module>
@@ -273,6 +278,7 @@
 		<module>../../bundles/org.eclipse.emfforms.core.services.structuralchange</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.structuralchange.default</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.structuralchange.index</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.structuralchange.keyattribute</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.structuralchange.mapping</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.structuralchange.table</module>
 		<module>../../bundles/org.eclipse.emfforms.swt.core</module>

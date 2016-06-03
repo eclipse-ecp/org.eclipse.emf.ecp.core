@@ -25,7 +25,6 @@ import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
-import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
@@ -59,19 +58,14 @@ public class BooleanControlSWTRenderer extends SimpleControlSWTControlSWTRendere
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTRenderer#getGridDescription(org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription)
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTRenderer#createControlCell(int)
 	 */
 	@Override
-	public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
-		/*
-		 * neither label, validation label nor the checkbox should grab available horizontal space, because a checkbox
-		 * can't grow
-		 */
-		final SWTGridDescription booleanControlGridDescription = super.getGridDescription(gridDescription);
-		for (final SWTGridCell gridCell : booleanControlGridDescription.getGrid()) {
-			gridCell.setHorizontalGrab(false);
-		}
-		return booleanControlGridDescription;
+	protected SWTGridCell createControlCell(int column) {
+		// checkbox button representing Boolean value can not grow
+		final SWTGridCell booleanControlCell = super.createControlCell(column);
+		booleanControlCell.setHorizontalGrab(false);
+		return booleanControlCell;
 	}
 
 	@Override

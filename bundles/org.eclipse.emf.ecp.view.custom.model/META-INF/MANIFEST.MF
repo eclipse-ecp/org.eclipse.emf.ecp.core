@@ -2,31 +2,34 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.custom.model;singleton:=true
-Bundle-Version: 1.8.0.qualifier
+Bundle-Version: 1.9.0.qualifier
 Bundle-ClassPath: .
 Bundle-Activator: org.eclipse.emf.ecp.view.spi.custom.model.impl.Activator
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Export-Package: org.eclipse.emf.ecp.view.spi.custom.model;version="1.8.0",
- org.eclipse.emf.ecp.view.spi.custom.model.impl;version="1.8.0",
- org.eclipse.emf.ecp.view.spi.custom.model.util;version="1.8.0"
+Export-Package: org.eclipse.emf.ecp.view.spi.custom.model;version="1.9.0",
+ org.eclipse.emf.ecp.view.spi.custom.model.impl;version="1.9.0",
+ org.eclipse.emf.ecp.view.spi.custom.model.util;version="1.9.0"
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
  org.eclipse.emf.ecore;bundle-version="[2.7.0,3.0.0)";visibility:=reexport,
- org.eclipse.emf.ecp.view.model;bundle-version="[1.8.0,1.9.0)";visibility:=reexport,
- org.eclipse.emf.ecp.edit;bundle-version="[1.8.0,1.9.0)",
- org.eclipse.emfforms.localization;bundle-version="[1.8.0,1.9.0)"
+ org.eclipse.emf.ecp.view.model;bundle-version="[1.9.0,2.0.0)";visibility:=reexport,
+ org.eclipse.emf.ecp.edit;bundle-version="[1.9.0,2.0.0)",
+ org.eclipse.emfforms.localization;bundle-version="[1.9.0,2.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Service-Component: OSGI-INF/EMFFormsCustomDMRExpander.xml,
  OSGI-INF/org.eclipse.emf.ecp.view.spi.custom.model.impl.CustomDMRConverter.xml,
+ OSGI-INF/org.eclipse.emf.ecp.view.spi.custom.model.impl.CustomDMRMappingProvider.xml,
  OSGI-INF/org.eclipse.emf.ecp.view.spi.custom.model.impl.StructuralChangeCustomDMRTester.xml
 Import-Package: org.eclipse.core.databinding.property.list;version="0.0.0",
  org.eclipse.core.databinding.property.value;version="0.0.0",
  org.eclipse.emf.databinding;version="0.0.0",
- org.eclipse.emf.ecp.common.spi.asserts;version="1.8.0",
- org.eclipse.emfforms.spi.common.report;version="1.8.0",
- org.eclipse.emfforms.spi.core.services.databinding;version="[1.8.0,1.9.0)",
- org.eclipse.emfforms.spi.core.services.databinding.emf;version="[1.8.0,1.9.0)",
- org.eclipse.emfforms.spi.core.services.domainexpander;version="1.8.0",
- org.eclipse.emfforms.spi.core.services.structuralchange;version="1.8.0",
+ org.eclipse.emf.ecp.common.spi;version="[1.9.0,2.0.0)",
+ org.eclipse.emf.ecp.common.spi.asserts;version="[1.9.0,2.0.0)",
+ org.eclipse.emfforms.spi.common.report;version="[1.9.0,2.0.0)",
+ org.eclipse.emfforms.spi.core.services.databinding;version="[1.9.0,2.0.0)",
+ org.eclipse.emfforms.spi.core.services.databinding.emf;version="[1.9.0,2.0.0)",
+ org.eclipse.emfforms.spi.core.services.domainexpander;version="[1.9.0,2.0.0)",
+ org.eclipse.emfforms.spi.core.services.mappingprovider;version="[1.9.0,2.0.0)",
+ org.eclipse.emfforms.spi.core.services.structuralchange;version="[1.9.0,2.0.0)",
  org.osgi.service.component.annotations;version="[1.2.0,2.0.0)";resolution:=optional

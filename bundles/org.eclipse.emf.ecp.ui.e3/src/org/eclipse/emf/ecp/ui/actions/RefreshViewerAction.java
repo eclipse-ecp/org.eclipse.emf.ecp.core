@@ -38,20 +38,16 @@ public class RefreshViewerAction extends Action {
 
 	@Override
 	public void run() {
-		try {
-			if (viewer instanceof StructuredViewer) {
-				final StructuredViewer structuredViewer = (StructuredViewer) viewer;
-				final IContentProvider contentProvider = structuredViewer.getContentProvider();
-				if (contentProvider instanceof TreeContentProvider) {
-					final TreeContentProvider<?> treeContentProvider = (TreeContentProvider<?>) contentProvider;
-					treeContentProvider.refreshViewer();
-					return;
-				}
+		if (viewer instanceof StructuredViewer) {
+			final StructuredViewer structuredViewer = (StructuredViewer) viewer;
+			final IContentProvider contentProvider = structuredViewer.getContentProvider();
+			if (contentProvider instanceof TreeContentProvider) {
+				final TreeContentProvider<?> treeContentProvider = (TreeContentProvider<?>) contentProvider;
+				treeContentProvider.refreshViewer();
+				return;
 			}
-
-			viewer.refresh();
-		} catch (final Exception ex) {
-			Activator.log(ex);
 		}
+
+		viewer.refresh();
 	}
 }

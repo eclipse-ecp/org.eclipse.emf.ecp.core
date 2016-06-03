@@ -40,6 +40,13 @@
                 <message_argument value="7"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalPackage"/>
+                <message_argument value="HORIZONTAL_LAYOUT_FEATURE_COUNT"/>
+                <message_argument value="8"/>
+            </message_arguments>
+        </filter>
         <filter comment="Changes due to new label field in 1.6" id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalPackage"/>
@@ -52,6 +59,13 @@
                 <message_argument value="org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalPackage"/>
                 <message_argument value="HORIZONTAL_LAYOUT__CHILDREN"/>
                 <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalPackage"/>
+                <message_argument value="HORIZONTAL_LAYOUT__CHILDREN"/>
+                <message_argument value="7"/>
             </message_arguments>
         </filter>
         <filter comment="Changes due to new label field in 1.6" id="388194388">

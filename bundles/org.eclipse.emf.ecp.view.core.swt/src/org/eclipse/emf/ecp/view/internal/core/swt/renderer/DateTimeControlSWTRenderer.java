@@ -22,6 +22,8 @@ import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.DateAndTimeObservableValue;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -38,6 +40,7 @@ import org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.edit.command.SetCommand;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
@@ -72,6 +75,30 @@ import org.osgi.framework.FrameworkUtil;
  *
  */
 public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
+
+	/**
+	 * ModelToTarget Strategy that handles also null values of dates.
+	 *
+	 * @author Eugen Neufeld
+	 *
+	 */
+	private class DateModelToTargetUpdateStrategy extends UpdateValueStrategy {
+		DateModelToTargetUpdateStrategy() {
+			super();
+		}
+
+		DateModelToTargetUpdateStrategy(int policy) {
+			super(policy);
+		}
+
+		@Override
+		protected IStatus doSet(IObservableValue observableValue, Object value) {
+			if (value == null) {
+				return Status.OK_STATUS;
+			}
+			return super.doSet(observableValue, value);
+		}
+	};
 
 	private final EMFFormsLocalizationService localizationService;
 
@@ -121,13 +148,11 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 
 	@Override
 	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
-		ISWTObservableValue dateObserver = WidgetProperties.selection().observe(dateWidget);
-		ISWTObservableValue timeObserver = WidgetProperties.selection().observe(timeWidget);
+		final ISWTObservableValue dateObserver = WidgetProperties.selection().observe(dateWidget);
+		final ISWTObservableValue timeObserver = WidgetProperties.selection().observe(timeWidget);
 		final IObservableValue target = new DateAndTimeObservableValue(dateObserver, timeObserver);
-		final Binding binding = getDataBindingContext().bindValue(target, getModelValue());
-
-		setBtn.addSelectionListener(new SetBtnSelectionAdapterExtension(setBtn, getModelValue(),
-			getViewModelContext()));
+		final Binding binding = getDataBindingContext().bindValue(target, getModelValue(), null,
+			new DateModelToTargetUpdateStrategy());
 
 		domainModelChangeListener = new ModelChangeListener() {
 			@Override
@@ -207,6 +232,11 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 
 		createSetButton();
 
+		updateStack();
+		return composite;
+	}
+
+	private void updateStack() throws DatabindingFailedException {
 		final IObservableValue observableValue = getEMFFormsDatabinding()
 			.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
@@ -217,7 +247,6 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 		} else {
 			stackLayout.topControl = unsetLabel;
 		}
-		return composite;
 	}
 
 	private void createSetButton() {
@@ -230,7 +259,7 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 		final String tooltip = getDateTimeDisplayType() == DateTimeDisplayType.TIME_ONLY
 			? MessageKeys.DateTimeControlSWTRenderer_SelectTime : MessageKeys.DateTimeControlSWTRenderer_SelectData;
 		setBtn.setToolTipText(getLocalizedString(tooltip));
-
+		setBtn.addSelectionListener(new SetBtnSelectionAdapterExtension(setBtn));
 	}
 
 	private void createDateTimeWidgets(DateTimeDisplayType dateTimeDisplayType) {
@@ -287,19 +316,14 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 	private class SetBtnSelectionAdapterExtension extends SelectionAdapter {
 
 		private final Button btn;
-		private final IObservableValue modelValue;
-		private final ViewModelContext viewModelContext;
 
 		/**
 		 * @param btn
 		 * @param modelValue
 		 * @param viewModelContext
 		 */
-		SetBtnSelectionAdapterExtension(Button btn,
-			IObservableValue modelValue, ViewModelContext viewModelContext) {
+		SetBtnSelectionAdapterExtension(Button btn) {
 			this.btn = btn;
-			this.modelValue = modelValue;
-			this.viewModelContext = viewModelContext;
 		}
 
 		@Override
@@ -316,16 +340,26 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 				dialog.dispose();
 				return;
 			}
+			final IObservableValue modelValue;
+			try {
+				modelValue = getModelValue();
+			} catch (final DatabindingFailedException ex) {
+				getReportService().report(new AbstractReport(ex));
+				return;
+			}
 			dialog = new Shell(btn.getShell(), SWT.NONE);
 			dialog.setLayout(new GridLayout(1, false));
 			final DateTime calendar = new DateTime(dialog, SWT.CALENDAR | SWT.BORDER);
 			final IObservableValue calendarObserver = WidgetProperties.selection().observe(calendar);
 			final UpdateValueStrategy modelToTarget = new UpdateValueStrategy(UpdateValueStrategy.POLICY_UPDATE);
-			final UpdateValueStrategy targetToModel = new UpdateValueStrategy(UpdateValueStrategy.POLICY_UPDATE);
 
 			final Binding binding = getDataBindingContext().bindValue(calendarObserver, modelValue, modelToTarget,
-				targetToModel);
-			final Calendar defaultCalendar = Calendar.getInstance(getLocale(viewModelContext));
+				new DateModelToTargetUpdateStrategy(UpdateValueStrategy.POLICY_UPDATE));
+			final Calendar defaultCalendar = Calendar.getInstance(getLocale(getViewModelContext()));
+			final Date date = (Date) modelValue.getValue();
+			if (date != null) {
+				defaultCalendar.setTime(date);
+			}
 			calendar.setDate(defaultCalendar.get(Calendar.YEAR), defaultCalendar.get(Calendar.MONTH),
 				defaultCalendar.get(Calendar.DAY_OF_MONTH));
 
@@ -430,5 +464,17 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 			}
 		}
 		return DateTimeDisplayType.TIME_AND_DATE;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer#rootDomainModelChanged()
+	 */
+	@Override
+	protected void rootDomainModelChanged() throws DatabindingFailedException {
+		super.rootDomainModelChanged();
+		updateStack();
+		stackComposite.layout();
 	}
 }

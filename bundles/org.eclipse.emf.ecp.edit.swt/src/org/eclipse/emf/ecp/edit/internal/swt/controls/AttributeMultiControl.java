@@ -22,9 +22,11 @@ import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
  * This class defines a Control which is used for displaying {@link org.eclipse.emf.ecore.EStructuralFeature}s which
  * have a multi attribute.
  *
+ * @deprecated use MultiAttributeSWTRenderer instead
  * @author Eugen Neufeld
  *
  */
+@Deprecated
 public class AttributeMultiControl extends MultiControl {
 
 	@Override

@@ -156,6 +156,8 @@ public class EMFFormsTableDMRExpander implements EMFFormsDMRExpander {
 				getEMFFormsDomainExpander().prepareDomainObject(columnDMR, currentTableDomainObject);
 			}
 		}
+
+		observableList.dispose();
 	}
 
 	/**

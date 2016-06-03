@@ -89,7 +89,7 @@ public abstract class EMFFormsAbstractLegacyServiceFactory<T extends ViewModelSe
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public T createService(EMFFormsViewContext emfFormsViewContext) {
+	public T createService(final EMFFormsViewContext emfFormsViewContext) {
 		try {
 			final ViewModelService vms = type.newInstance();
 			if (ViewModelContext.class.isInstance(emfFormsViewContext)) {
@@ -104,6 +104,7 @@ public abstract class EMFFormsAbstractLegacyServiceFactory<T extends ViewModelSe
 					@Override
 					public void contextDispose() {
 						vms.dispose();
+						emfFormsViewContext.unregisterEMFFormsContextListener(this);
 					}
 
 					@Override

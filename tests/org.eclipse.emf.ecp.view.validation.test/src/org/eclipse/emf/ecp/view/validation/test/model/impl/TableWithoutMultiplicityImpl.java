@@ -30,11 +30,11 @@ import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
- * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.TableWithoutMultiplicityImpl#getContent <em>Content
- * </em>}</li>
- * </ul>
  * </p>
+ * <ul>
+ * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.TableWithoutMultiplicityImpl#getContent
+ * <em>Content</em>}</li>
+ * </ul>
  *
  * @generated
  */

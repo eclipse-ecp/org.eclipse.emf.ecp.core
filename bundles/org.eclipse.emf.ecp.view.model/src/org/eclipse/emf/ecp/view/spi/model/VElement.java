@@ -33,6 +33,7 @@ import org.eclipse.emf.ecore.EObject;
  *              <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#isReadonly <em>Readonly</em>}</li>
  *              <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#getDiagnostic <em>Diagnostic</em>}</li>
  *              <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#getAttachments <em>Attachments</em>}</li>
+ *              <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#getUuid <em>Uuid</em>}</li>
  *              </ul>
  *
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getElement()
@@ -231,4 +232,36 @@ public interface VElement extends EObject {
 	 * @generated
 	 */
 	EList<VAttachment> getAttachments();
+
+	/**
+	 * Returns the value of the '<em><b>Uuid</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Uuid</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 *
+	 * @since 1.9
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the value of the '<em>Uuid</em>' attribute.
+	 * @see #setUuid(String)
+	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getElement_Uuid()
+	 * @model transient="true"
+	 * @generated
+	 */
+	String getUuid();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.spi.model.VElement#getUuid <em>Uuid</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.9
+	 *        <!-- end-user-doc -->
+	 *
+	 * @param value the new value of the '<em>Uuid</em>' attribute.
+	 * @see #getUuid()
+	 * @generated
+	 */
+	void setUuid(String value);
 } // Renderable

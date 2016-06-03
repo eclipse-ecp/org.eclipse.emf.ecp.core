@@ -34,22 +34,22 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
- * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableControlImpl#isAddRemoveDisabled <em>Add Remove
- * Disabled</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableControlImpl#getColumnConfigurations <em>Column
- * Configurations</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableControlImpl#getDetailEditing <em>Detail Editing</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableControlImpl#getDetailView <em>Detail View</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableControlImpl#isEnableDetailEditingDialog <em>Enable
- * Detail Editing Dialog</em>}</li>
- * </ul>
  * </p>
+ * <ul>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableControlImpl#isAddRemoveDisabled
+ * <em>Add Remove Disabled</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableControlImpl#getColumnConfigurations
+ * <em>Column Configurations</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableControlImpl#getDetailEditing <em>Detail Editing</em>}
+ * </li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableControlImpl#getDetailView <em>Detail View</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableControlImpl#isEnableDetailEditingDialog
+ * <em>Enable Detail Editing Dialog</em>}</li>
+ * </ul>
  *
  * @generated
  */
-public class VTableControlImpl extends VControlImpl implements VTableControl
-{
+public class VTableControlImpl extends VControlImpl implements VTableControl {
 	/**
 	 * The default value of the '{@link #isAddRemoveDisabled() <em>Add Remove Disabled</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -146,8 +146,7 @@ public class VTableControlImpl extends VControlImpl implements VTableControl
 	 *
 	 * @generated
 	 */
-	protected VTableControlImpl()
-	{
+	protected VTableControlImpl() {
 		super();
 	}
 
@@ -158,8 +157,7 @@ public class VTableControlImpl extends VControlImpl implements VTableControl
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return VTablePackage.Literals.TABLE_CONTROL;
 	}
 
@@ -170,8 +168,7 @@ public class VTableControlImpl extends VControlImpl implements VTableControl
 	 * @generated
 	 */
 	@Override
-	public boolean isAddRemoveDisabled()
-	{
+	public boolean isAddRemoveDisabled() {
 		return addRemoveDisabled;
 	}
 
@@ -182,8 +179,7 @@ public class VTableControlImpl extends VControlImpl implements VTableControl
 	 * @generated
 	 */
 	@Override
-	public void setAddRemoveDisabled(boolean newAddRemoveDisabled)
-	{
+	public void setAddRemoveDisabled(boolean newAddRemoveDisabled) {
 		final boolean oldAddRemoveDisabled = addRemoveDisabled;
 		addRemoveDisabled = newAddRemoveDisabled;
 		if (eNotificationRequired()) {
@@ -199,10 +195,8 @@ public class VTableControlImpl extends VControlImpl implements VTableControl
 	 * @generated
 	 */
 	@Override
-	public EList<VTableColumnConfiguration> getColumnConfigurations()
-	{
-		if (columnConfigurations == null)
-		{
+	public EList<VTableColumnConfiguration> getColumnConfigurations() {
+		if (columnConfigurations == null) {
 			columnConfigurations = new EObjectContainmentEList<VTableColumnConfiguration>(
 				VTableColumnConfiguration.class, this, VTablePackage.TABLE_CONTROL__COLUMN_CONFIGURATIONS);
 		}
@@ -216,8 +210,7 @@ public class VTableControlImpl extends VControlImpl implements VTableControl
 	 * @generated
 	 */
 	@Override
-	public DetailEditing getDetailEditing()
-	{
+	public DetailEditing getDetailEditing() {
 		return detailEditing;
 	}
 
@@ -228,8 +221,7 @@ public class VTableControlImpl extends VControlImpl implements VTableControl
 	 * @generated
 	 */
 	@Override
-	public void setDetailEditing(DetailEditing newDetailEditing)
-	{
+	public void setDetailEditing(DetailEditing newDetailEditing) {
 		final DetailEditing oldDetailEditing = detailEditing;
 		detailEditing = newDetailEditing == null ? DETAIL_EDITING_EDEFAULT : newDetailEditing;
 		if (eNotificationRequired()) {
@@ -245,8 +237,7 @@ public class VTableControlImpl extends VControlImpl implements VTableControl
 	 * @generated
 	 */
 	@Override
-	public VView getDetailView()
-	{
+	public VView getDetailView() {
 		return detailView;
 	}
 
@@ -256,12 +247,10 @@ public class VTableControlImpl extends VControlImpl implements VTableControl
 	 *
 	 * @generated
 	 */
-	public NotificationChain basicSetDetailView(VView newDetailView, NotificationChain msgs)
-	{
+	public NotificationChain basicSetDetailView(VView newDetailView, NotificationChain msgs) {
 		final VView oldDetailView = detailView;
 		detailView = newDetailView;
-		if (eNotificationRequired())
-		{
+		if (eNotificationRequired()) {
 			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
 				VTablePackage.TABLE_CONTROL__DETAIL_VIEW, oldDetailView, newDetailView);
 			if (msgs == null) {
@@ -280,25 +269,22 @@ public class VTableControlImpl extends VControlImpl implements VTableControl
 	 * @generated
 	 */
 	@Override
-	public void setDetailView(VView newDetailView)
-	{
-		if (newDetailView != detailView)
-		{
+	public void setDetailView(VView newDetailView) {
+		if (newDetailView != detailView) {
 			NotificationChain msgs = null;
 			if (detailView != null) {
-				msgs = ((InternalEObject) detailView).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
-					- VTablePackage.TABLE_CONTROL__DETAIL_VIEW, null, msgs);
+				msgs = ((InternalEObject) detailView).eInverseRemove(this,
+					EOPPOSITE_FEATURE_BASE - VTablePackage.TABLE_CONTROL__DETAIL_VIEW, null, msgs);
 			}
 			if (newDetailView != null) {
-				msgs = ((InternalEObject) newDetailView).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
-					- VTablePackage.TABLE_CONTROL__DETAIL_VIEW, null, msgs);
+				msgs = ((InternalEObject) newDetailView).eInverseAdd(this,
+					EOPPOSITE_FEATURE_BASE - VTablePackage.TABLE_CONTROL__DETAIL_VIEW, null, msgs);
 			}
 			msgs = basicSetDetailView(newDetailView, msgs);
 			if (msgs != null) {
 				msgs.dispatch();
 			}
-		}
-		else if (eNotificationRequired()) {
+		} else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, VTablePackage.TABLE_CONTROL__DETAIL_VIEW,
 				newDetailView, newDetailView));
 		}
@@ -308,13 +294,12 @@ public class VTableControlImpl extends VControlImpl implements VTableControl
 	 * <!-- begin-user-doc -->
 	 *
 	 * @deprecated
-	 *             <!-- end-user-doc -->
+	 * 			<!-- end-user-doc -->
 	 * @generated
 	 */
 	@Deprecated
 	@Override
-	public boolean isEnableDetailEditingDialog()
-	{
+	public boolean isEnableDetailEditingDialog() {
 		return enableDetailEditingDialog;
 	}
 
@@ -322,19 +307,18 @@ public class VTableControlImpl extends VControlImpl implements VTableControl
 	 * <!-- begin-user-doc -->
 	 *
 	 * @deprecated
-	 *             <!-- end-user-doc -->
+	 * 			<!-- end-user-doc -->
 	 * @generated
 	 */
 	@Deprecated
 	@Override
-	public void setEnableDetailEditingDialog(boolean newEnableDetailEditingDialog)
-	{
+	public void setEnableDetailEditingDialog(boolean newEnableDetailEditingDialog) {
 		final boolean oldEnableDetailEditingDialog = enableDetailEditingDialog;
 		enableDetailEditingDialog = newEnableDetailEditingDialog;
 		if (eNotificationRequired()) {
-			eNotify(new ENotificationImpl(this, Notification.SET,
-				VTablePackage.TABLE_CONTROL__ENABLE_DETAIL_EDITING_DIALOG, oldEnableDetailEditingDialog,
-				enableDetailEditingDialog));
+			eNotify(
+				new ENotificationImpl(this, Notification.SET, VTablePackage.TABLE_CONTROL__ENABLE_DETAIL_EDITING_DIALOG,
+					oldEnableDetailEditingDialog, enableDetailEditingDialog));
 		}
 	}
 
@@ -345,10 +329,8 @@ public class VTableControlImpl extends VControlImpl implements VTableControl
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-	{
-		switch (featureID)
-		{
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
 		case VTablePackage.TABLE_CONTROL__COLUMN_CONFIGURATIONS:
 			return ((InternalEList<?>) getColumnConfigurations()).basicRemove(otherEnd, msgs);
 		case VTablePackage.TABLE_CONTROL__DETAIL_VIEW:
@@ -364,10 +346,8 @@ public class VTableControlImpl extends VControlImpl implements VTableControl
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
-		switch (featureID)
-		{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 		case VTablePackage.TABLE_CONTROL__ADD_REMOVE_DISABLED:
 			return isAddRemoveDisabled();
 		case VTablePackage.TABLE_CONTROL__COLUMN_CONFIGURATIONS:
@@ -390,10 +370,8 @@ public class VTableControlImpl extends VControlImpl implements VTableControl
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
-		switch (featureID)
-		{
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 		case VTablePackage.TABLE_CONTROL__ADD_REMOVE_DISABLED:
 			setAddRemoveDisabled((Boolean) newValue);
 			return;
@@ -421,10 +399,8 @@ public class VTableControlImpl extends VControlImpl implements VTableControl
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
-		switch (featureID)
-		{
+	public void eUnset(int featureID) {
+		switch (featureID) {
 		case VTablePackage.TABLE_CONTROL__ADD_REMOVE_DISABLED:
 			setAddRemoveDisabled(ADD_REMOVE_DISABLED_EDEFAULT);
 			return;
@@ -451,10 +427,8 @@ public class VTableControlImpl extends VControlImpl implements VTableControl
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
-		switch (featureID)
-		{
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 		case VTablePackage.TABLE_CONTROL__ADD_REMOVE_DISABLED:
 			return addRemoveDisabled != ADD_REMOVE_DISABLED_EDEFAULT;
 		case VTablePackage.TABLE_CONTROL__COLUMN_CONFIGURATIONS:
@@ -476,8 +450,7 @@ public class VTableControlImpl extends VControlImpl implements VTableControl
 	 * @generated
 	 */
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		if (eIsProxy()) {
 			return super.toString();
 		}

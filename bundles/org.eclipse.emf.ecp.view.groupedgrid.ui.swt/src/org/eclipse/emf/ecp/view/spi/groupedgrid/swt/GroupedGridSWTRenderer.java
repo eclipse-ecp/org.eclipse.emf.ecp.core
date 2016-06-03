@@ -11,6 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.groupedgrid.swt;
 
+import javax.inject.Inject;
+
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.groupedgrid.model.VGroup;
 import org.eclipse.emf.ecp.view.spi.groupedgrid.model.VGroupedGrid;
@@ -54,6 +56,7 @@ public class GroupedGridSWTRenderer extends AbstractSWTRenderer<VGroupedGrid> {
 	 * @param viewContext The view model context
 	 * @param reportService the ReportService to use
 	 */
+	@Inject
 	public GroupedGridSWTRenderer(final VGroupedGrid vElement, final ViewModelContext viewContext,
 		ReportService reportService) {
 		super(vElement, viewContext, reportService);

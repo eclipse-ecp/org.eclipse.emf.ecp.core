@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -100,19 +100,11 @@ public final class EcoreHelper {
 		}
 		final ResourceSetImpl virtualResourceSet = new ResourceSetImpl();
 		for (final Resource physicalResource : physicalResourceSet.getResources()) {
-			// check for physical uri
-			if (physicalResource.getContents().size() == 0) {
+			final EPackage ePackage = getEPackage(physicalResource);
+			if (ePackage == null) {
 				continue;
 			}
-			final EObject eObject = physicalResource.getContents().get(0);
-			EcoreUtil.resolveAll(eObject);
-			if (!EPackage.class.isInstance(eObject)) {
-				Activator.log(
-					IStatus.ERROR,
-					String.format("The EObject is not contained in an EPackage: %1$s", eObject)); //$NON-NLS-1$
-				return;
-			}
-			final EPackage ePackage = EPackage.class.cast(eObject);
+			EcoreUtil.resolveAll(ePackage);
 
 			if (isContainedInPackageRegistry(ePackage.getNsURI())) {
 				if (!ALL_NSURIS_REGISTERED_BY_TOOLING.contains(ePackage.getNsURI())) {
@@ -133,6 +125,22 @@ public final class EcoreHelper {
 			}
 			updateRegistryAndLocalCache(ePackage, physicalResource, virtualResourceSet);
 		}
+
+	}
+
+	/**
+	 * Returns the first {@link EPackage} contained in the resource, as returned by {@link Resource#getContents()}.
+	 *
+	 * @param resource the container resource
+	 * @return the first {@link EPackage} contained in the resource or <code>null</code> if no EPackage can be found
+	 */
+	private static EPackage getEPackage(Resource resource) {
+		for (final EObject eObject : resource.getContents()) {
+			if (eObject instanceof EPackage) {
+				return (EPackage) eObject;
+			}
+		}
+		return null;
 	}
 
 	private static void updateRegistryAndLocalCache(EPackage ePackage,

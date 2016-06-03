@@ -23,7 +23,7 @@ import org.eclipse.swt.widgets.Composite;
 public final class DefaultTreeViewerBuilder implements TreeViewerBuilder {
 	@Override
 	public TreeViewer createTree(Composite parent) {
-		final TreeViewer treeViewer = new TreeViewer(parent, SWT.BORDER);
+		final TreeViewer treeViewer = new TreeViewer(parent, SWT.MULTI | SWT.BORDER);
 		treeViewer.setAutoExpandLevel(3);
 		return treeViewer;
 		// TODO JF compatible with RAP??

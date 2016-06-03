@@ -17,8 +17,9 @@ import org.eclipse.swt.widgets.Control;
 
 /**
  * @author Alexandra Buzila
- *
+ * @deprecated use the GenericEditor instead
  */
+@Deprecated
 public abstract class ContextMenuViewModelService implements ViewModelService {
 
 	private Control parentControl;
@@ -41,6 +42,11 @@ public abstract class ContextMenuViewModelService implements ViewModelService {
 		return parentControl;
 	}
 
+	/**
+	 * Implement to register the context menu to the parent control.
+	 * 
+	 * @return true if registration was successful
+	 */
 	public abstract boolean registerContextMenu();
 
 }

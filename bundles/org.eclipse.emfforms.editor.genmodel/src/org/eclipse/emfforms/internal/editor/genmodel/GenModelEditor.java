@@ -8,24 +8,36 @@
  *
  * Contributors:
  * Clemens Elflein - initial API and implementation
+ * Johannes Faltermeier - reconcile genmodel
  ******************************************************************************/
 package org.eclipse.emfforms.internal.editor.genmodel;
 
+import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emfforms.spi.editor.GenericEditor;
 
 /**
  * The Genmodel Editor.
  *
  * @author Clemens Elflein
+ * @author Johannes Faltermeier
  */
 public class GenModelEditor extends GenericEditor {
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.ui.part.WorkbenchPart#getTitle()
-	 */
+
 	@Override
 	public String getEditorTitle() {
 		return "Genmodel Editor";
+	}
+
+	@Override
+	protected Object modifyEditorInput(ResourceSet resourceSet) {
+		final Resource resource = resourceSet.getResources().get(0);
+		if (!resource.getContents().isEmpty() && resource.getContents().get(0) instanceof GenModel) {
+			final GenModel genModel = (GenModel) resource.getContents().get(0);
+			genModel.reconcile();
+			genModel.setCanGenerate(true);
+		}
+		return super.modifyEditorInput(resourceSet);
 	}
 }

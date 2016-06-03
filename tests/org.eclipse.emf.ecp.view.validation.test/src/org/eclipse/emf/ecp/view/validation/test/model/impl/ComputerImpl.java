@@ -28,12 +28,12 @@ import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.ComputerImpl#getMainboard <em>Mainboard</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.ComputerImpl#getName <em>Name</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.ComputerImpl#getPowerBlock <em>Power Block</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
@@ -146,19 +146,18 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 		if (newMainboard != mainboard) {
 			NotificationChain msgs = null;
 			if (mainboard != null) {
-				msgs = ((InternalEObject) mainboard).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
-					- TestPackage.COMPUTER__MAINBOARD, null, msgs);
+				msgs = ((InternalEObject) mainboard).eInverseRemove(this,
+					EOPPOSITE_FEATURE_BASE - TestPackage.COMPUTER__MAINBOARD, null, msgs);
 			}
 			if (newMainboard != null) {
-				msgs = ((InternalEObject) newMainboard).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
-					- TestPackage.COMPUTER__MAINBOARD, null, msgs);
+				msgs = ((InternalEObject) newMainboard).eInverseAdd(this,
+					EOPPOSITE_FEATURE_BASE - TestPackage.COMPUTER__MAINBOARD, null, msgs);
 			}
 			msgs = basicSetMainboard(newMainboard, msgs);
 			if (msgs != null) {
 				msgs.dispatch();
 			}
-		}
-		else if (eNotificationRequired()) {
+		} else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.COMPUTER__MAINBOARD, newMainboard,
 				newMainboard));
 		}
@@ -233,19 +232,18 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 		if (newPowerBlock != powerBlock) {
 			NotificationChain msgs = null;
 			if (powerBlock != null) {
-				msgs = ((InternalEObject) powerBlock).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
-					- TestPackage.COMPUTER__POWER_BLOCK, null, msgs);
+				msgs = ((InternalEObject) powerBlock).eInverseRemove(this,
+					EOPPOSITE_FEATURE_BASE - TestPackage.COMPUTER__POWER_BLOCK, null, msgs);
 			}
 			if (newPowerBlock != null) {
-				msgs = ((InternalEObject) newPowerBlock).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
-					- TestPackage.COMPUTER__POWER_BLOCK, null, msgs);
+				msgs = ((InternalEObject) newPowerBlock).eInverseAdd(this,
+					EOPPOSITE_FEATURE_BASE - TestPackage.COMPUTER__POWER_BLOCK, null, msgs);
 			}
 			msgs = basicSetPowerBlock(newPowerBlock, msgs);
 			if (msgs != null) {
 				msgs.dispatch();
 			}
-		}
-		else if (eNotificationRequired()) {
+		} else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.COMPUTER__POWER_BLOCK, newPowerBlock,
 				newPowerBlock));
 		}

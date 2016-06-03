@@ -29,7 +29,7 @@ import org.junit.Test;
  * @author Alexandra Buzila
  *
  */
-@SuppressWarnings("restriction")
+@SuppressWarnings({ "restriction", "deprecation" })
 public class TreeMasterDetailContextMenuViewModelService_PTest {
 
 	private VView view;

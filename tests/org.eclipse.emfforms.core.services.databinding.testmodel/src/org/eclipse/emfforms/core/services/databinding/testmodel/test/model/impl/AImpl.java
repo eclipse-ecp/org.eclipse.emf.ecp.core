@@ -27,20 +27,19 @@ import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestP
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.AImpl#getB <em>B</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
-public class AImpl extends MinimalEObjectImpl.Container implements A
-{
+public class AImpl extends MinimalEObjectImpl.Container implements A {
 	/**
 	 * The cached value of the '{@link #getB() <em>B</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getB()
 	 * @generated
 	 * @ordered
@@ -50,57 +49,51 @@ public class AImpl extends MinimalEObjectImpl.Container implements A
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	protected AImpl()
-	{
+	protected AImpl() {
 		super();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return TestPackage.Literals.A;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public B getB()
-	{
+	public B getB() {
 		return b;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	public NotificationChain basicSetB(B newB, NotificationChain msgs)
-	{
-		final B oldB = b;
+	public NotificationChain basicSetB(B newB, NotificationChain msgs) {
+		B oldB = b;
 		b = newB;
-		if (eNotificationRequired())
-		{
-			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TestPackage.A__B,
-				oldB, newB);
-			if (msgs == null) {
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TestPackage.A__B, oldB,
+				newB);
+			if (msgs == null)
 				msgs = notification;
-			} else {
+			else
 				msgs.add(notification);
-			}
 		}
 		return msgs;
 	}
@@ -108,44 +101,35 @@ public class AImpl extends MinimalEObjectImpl.Container implements A
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public void setB(B newB)
-	{
-		if (newB != b)
-		{
+	public void setB(B newB) {
+		if (newB != b) {
 			NotificationChain msgs = null;
-			if (b != null) {
-				msgs = ((InternalEObject) b)
-					.eInverseRemove(this, EOPPOSITE_FEATURE_BASE - TestPackage.A__B, null, msgs);
-			}
-			if (newB != null) {
-				msgs = ((InternalEObject) newB)
-					.eInverseAdd(this, EOPPOSITE_FEATURE_BASE - TestPackage.A__B, null, msgs);
-			}
+			if (b != null)
+				msgs = ((InternalEObject) b).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - TestPackage.A__B, null,
+					msgs);
+			if (newB != null)
+				msgs = ((InternalEObject) newB).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - TestPackage.A__B, null,
+					msgs);
 			msgs = basicSetB(newB, msgs);
-			if (msgs != null) {
+			if (msgs != null)
 				msgs.dispatch();
-			}
-		}
-		else if (eNotificationRequired()) {
+		} else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.A__B, newB, newB));
-		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-	{
-		switch (featureID)
-		{
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
 		case TestPackage.A__B:
 			return basicSetB(null, msgs);
 		}
@@ -155,14 +139,12 @@ public class AImpl extends MinimalEObjectImpl.Container implements A
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
-		switch (featureID)
-		{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 		case TestPackage.A__B:
 			return getB();
 		}
@@ -172,14 +154,12 @@ public class AImpl extends MinimalEObjectImpl.Container implements A
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
-		switch (featureID)
-		{
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 		case TestPackage.A__B:
 			setB((B) newValue);
 			return;
@@ -190,14 +170,12 @@ public class AImpl extends MinimalEObjectImpl.Container implements A
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
-		switch (featureID)
-		{
+	public void eUnset(int featureID) {
+		switch (featureID) {
 		case TestPackage.A__B:
 			setB((B) null);
 			return;
@@ -208,14 +186,12 @@ public class AImpl extends MinimalEObjectImpl.Container implements A
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
-		switch (featureID)
-		{
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 		case TestPackage.A__B:
 			return b != null;
 		}

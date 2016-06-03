@@ -26,9 +26,11 @@ import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
  * This class defines a Control which is used for displaying {@link org.eclipse.emf.ecore.EStructuralFeature}s which
  * have a multi reference.
  *
+ * @deprecated Use the new MultiReferenceSWTRenderer instead
  * @author Eugen Neufeld
  *
  */
+@Deprecated
 public class ReferenceMultiControl extends MultiControl {
 
 	@Override

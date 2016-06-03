@@ -11,6 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emfforms.internal.core.services.controlmapper;
 
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -95,6 +96,8 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 	private final EMFFormsViewContext viewModelContext;
 	private final ViewModelListener viewModelListener;
 
+	private final Map<EObject, Set<UniqueSetting>> eObjectToMappedSettings = new LinkedHashMap<EObject, Set<UniqueSetting>>();
+
 	/**
 	 * A mapping between settings and controls.
 	 */
@@ -161,8 +164,17 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 			return;
 		}
 		// delete old mapping
+		final Set<UniqueSetting> keysWithEmptySets = new LinkedHashSet<UniqueSetting>();
 		for (final UniqueSetting setting : settingToControlMap.keySet()) {
-			settingToControlMap.get(setting).remove(vControl);
+			final Set<VControl> controlSet = settingToControlMap.get(setting);
+			controlSet.remove(vControl);
+			if (controlSet.isEmpty()) {
+				keysWithEmptySets.add(setting);
+			}
+		}
+		for (final UniqueSetting setting : keysWithEmptySets) {
+			settingToControlMap.remove(setting);
+			handleRemoveForEObjectMapping(setting);
 		}
 		// update mapping
 		final Set<UniqueSetting> map = mappingManager.getAllSettingsFor(vControl.getDomainModelReference(),
@@ -170,8 +182,24 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 		for (final UniqueSetting setting : map) {
 			if (!settingToControlMap.containsKey(setting)) {
 				settingToControlMap.put(setting, new LinkedHashSet<VControl>());
+				handleAddForEObjectMapping(setting);
 			}
 			settingToControlMap.get(setting).add(vControl);
+		}
+	}
+
+	private void handleAddForEObjectMapping(UniqueSetting setting) {
+		if (!eObjectToMappedSettings.containsKey(setting.getEObject())) {
+			eObjectToMappedSettings.put(setting.getEObject(), new LinkedHashSet<UniqueSetting>());
+		}
+		eObjectToMappedSettings.get(setting.getEObject()).add(setting);
+	}
+
+	private void handleRemoveForEObjectMapping(UniqueSetting setting) {
+		final Set<UniqueSetting> settings = eObjectToMappedSettings.get(setting.getEObject());
+		settings.remove(setting);
+		if (settings.isEmpty()) {
+			eObjectToMappedSettings.remove(setting.getEObject());
 		}
 	}
 
@@ -191,6 +219,7 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 				settingToControlMap.get(setting).remove(vControl);
 				if (settingToControlMap.get(setting).size() == 0) {
 					settingToControlMap.remove(setting);
+					handleRemoveForEObjectMapping(setting);
 				}
 			}
 		}
@@ -275,8 +304,38 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 	 */
 	@Override
 	public void contextDispose() {
+		viewModelContext.unregisterEMFFormsContextListener(this);
 		viewModelListener.dispose();
 		settingToControlMap.clear();
 		childMappers.clear();
+	}
+
+	@Override
+	public boolean hasControlsFor(EObject eObject) {
+		if (eObjectToMappedSettings.containsKey(eObject)) {
+			return true;
+		}
+
+		for (final VElement parentElement : childMappers.keySet()) {
+			for (final EMFFormsSettingToControlMapper childMapper : childMappers.get(parentElement)) {
+				if (childMapper.hasControlsFor(eObject)) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	@Override
+	public Collection<EObject> getEObjectsWithSettings() {
+		final Set<EObject> result = new LinkedHashSet<EObject>();
+		result.addAll(eObjectToMappedSettings.keySet());
+		for (final VElement parentElement : childMappers.keySet()) {
+			for (final EMFFormsSettingToControlMapper childMapper : childMappers.get(parentElement)) {
+				result.addAll(childMapper.getEObjectsWithSettings());
+			}
+		}
+		return result;
 	}
 }

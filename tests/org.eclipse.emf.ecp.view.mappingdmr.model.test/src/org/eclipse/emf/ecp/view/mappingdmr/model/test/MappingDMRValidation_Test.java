@@ -382,7 +382,7 @@ public class MappingDMRValidation_Test {
 		private final EObject object;
 		private final EStructuralFeature feature;
 
-		public DiagnosticInfo(int severity, EObject object, EStructuralFeature feature) {
+		DiagnosticInfo(int severity, EObject object, EStructuralFeature feature) {
 			this.severity = severity;
 			this.object = object;
 			this.feature = feature;

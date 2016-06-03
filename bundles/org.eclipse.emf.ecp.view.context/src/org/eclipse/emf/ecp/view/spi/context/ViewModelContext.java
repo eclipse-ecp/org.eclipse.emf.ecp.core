@@ -120,7 +120,8 @@ public interface ViewModelContext extends EMFFormsViewContext {
 	 * @param setting the {@link Setting} to search controls for
 	 * @return the Set of all controls associated with the provided setting or null if no controls can be found
 	 * @since 1.3
-	 * @deprecated please use {@link org.eclipse.emfforms.spi.core.services.controlmapper.EMFFormsSettingToControlMapper#getControlsFor(Setting)
+	 * @deprecated please use
+	 *             {@link org.eclipse.emfforms.spi.core.services.controlmapper.EMFFormsSettingToControlMapper#getControlsFor(Setting)
 	 *             EMFFormsSettingToControlMapper#getControlsFor(Setting)}
 	 */
 	@Deprecated
@@ -132,7 +133,8 @@ public interface ViewModelContext extends EMFFormsViewContext {
 	 * @param setting the {@link UniqueSetting} to search controls for
 	 * @return the Set of all controls associated with the provided setting or null if no controls can be found
 	 * @since 1.5
-	 * @deprecated please use {@link org.eclipse.emfforms.spi.core.services.controlmapper.EMFFormsSettingToControlMapper#getControlsFor(UniqueSetting)
+	 * @deprecated please use
+	 *             {@link org.eclipse.emfforms.spi.core.services.controlmapper.EMFFormsSettingToControlMapper#getControlsFor(UniqueSetting)
 	 *             EMFFormsSettingToControlMapper#getControlsFor(UniqueSetting)}
 	 */
 	@Deprecated
@@ -169,6 +171,23 @@ public interface ViewModelContext extends EMFFormsViewContext {
 	 */
 	ViewModelContext getChildContext(EObject eObject, VElement parent, VView vView,
 		ViewModelService... viewModelServices);
+
+	/**
+	 * This returns the parent context. This may be <code>null</code> for the topmost context.
+	 *
+	 * @return the parent
+	 * @since 1.9
+	 */
+	ViewModelContext getParentContext();
+
+	/**
+	 * If this context has a {@link #getParentContext() parent context} this method will return the parent VElement
+	 * which requested the creation of this context. Otherwise this method will return <code>null</code>.
+	 *
+	 * @return the parent
+	 * @since 1.9
+	 */
+	VElement getParentVElement();
 
 	/**
 	 * Allows to register a dispose listener.

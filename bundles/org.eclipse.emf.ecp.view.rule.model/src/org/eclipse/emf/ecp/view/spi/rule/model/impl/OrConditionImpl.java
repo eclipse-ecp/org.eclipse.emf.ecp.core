@@ -17,6 +17,7 @@ import java.util.Map;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
@@ -36,7 +37,8 @@ import org.eclipse.emf.ecp.view.spi.rule.model.util.ConditionEvaluationUtil;
  *        <p>
  *        The following features are implemented:
  *        <ul>
- *        <li>{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.OrConditionImpl#getConditions <em>Conditions</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.OrConditionImpl#getConditions <em>Conditions</em>}
+ *        </li>
  *        </ul>
  *        </p>
  *
@@ -83,8 +85,7 @@ public class OrConditionImpl extends ConditionImpl implements OrCondition {
 	 */
 	@Override
 	public EList<Condition> getConditions() {
-		if (conditions == null)
-		{
+		if (conditions == null) {
 			conditions = new EObjectContainmentEList<Condition>(Condition.class, this,
 				RulePackage.OR_CONDITION__CONDITIONS);
 		}
@@ -100,8 +101,7 @@ public class OrConditionImpl extends ConditionImpl implements OrCondition {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 		int featureID, NotificationChain msgs) {
-		switch (featureID)
-		{
+		switch (featureID) {
 		case RulePackage.OR_CONDITION__CONDITIONS:
 			return ((InternalEList<?>) getConditions()).basicRemove(otherEnd, msgs);
 		}
@@ -116,8 +116,7 @@ public class OrConditionImpl extends ConditionImpl implements OrCondition {
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID)
-		{
+		switch (featureID) {
 		case RulePackage.OR_CONDITION__CONDITIONS:
 			return getConditions();
 		}
@@ -133,8 +132,7 @@ public class OrConditionImpl extends ConditionImpl implements OrCondition {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID)
-		{
+		switch (featureID) {
 		case RulePackage.OR_CONDITION__CONDITIONS:
 			getConditions().clear();
 			getConditions().addAll((Collection<? extends Condition>) newValue);
@@ -151,8 +149,7 @@ public class OrConditionImpl extends ConditionImpl implements OrCondition {
 	 */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID)
-		{
+		switch (featureID) {
 		case RulePackage.OR_CONDITION__CONDITIONS:
 			getConditions().clear();
 			return;
@@ -168,8 +165,7 @@ public class OrConditionImpl extends ConditionImpl implements OrCondition {
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID)
-		{
+		switch (featureID) {
 		case RulePackage.OR_CONDITION__CONDITIONS:
 			return conditions != null && !conditions.isEmpty();
 		}
@@ -179,13 +175,14 @@ public class OrConditionImpl extends ConditionImpl implements OrCondition {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.rule.model.Condition#evaluate()
+	 * @see org.eclipse.emf.ecp.view.spi.rule.model.Condition#evaluate(org.eclipse.emf.ecore.EObject)
+	 * @since 1.9
 	 */
 	@Override
-	public boolean evaluate() {
+	public boolean evaluate(EObject domainModel) {
 		boolean result = false;
 		for (final Condition innerCondition : getConditions()) {
-			result |= innerCondition.evaluate();
+			result |= innerCondition.evaluate(domainModel);
 		}
 		return result;
 	}
@@ -193,21 +190,23 @@ public class OrConditionImpl extends ConditionImpl implements OrCondition {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.rule.model.Condition#evaluateChangedValues(java.util.Map)
+	 * @see org.eclipse.emf.ecp.view.spi.rule.model.Condition#evaluateChangedValues(org.eclipse.emf.ecore.EObject,
+	 *      java.util.Map)
+	 * @since 1.9
 	 */
 	@Override
-	public boolean evaluateChangedValues(Map<Setting, Object> possibleNewValues) {
+	public boolean evaluateChangedValues(EObject domainModel, Map<Setting, Object> possibleNewValues) {
 		boolean result = false;
 		for (final Condition innerCondition : getConditions()) {
 			if (LeafCondition.class.isInstance(innerCondition)) {
 				if (ConditionEvaluationUtil.isLeafConditionForSetting(LeafCondition.class.cast(innerCondition),
-					possibleNewValues)) {
-					result |= innerCondition.evaluateChangedValues(possibleNewValues);
+					domainModel, possibleNewValues)) {
+					result |= innerCondition.evaluateChangedValues(domainModel, possibleNewValues);
 				} else {
-					result |= innerCondition.evaluate();
+					result |= innerCondition.evaluate(domainModel);
 				}
 			} else {
-				result |= innerCondition.evaluateChangedValues(possibleNewValues);
+				result |= innerCondition.evaluateChangedValues(domainModel, possibleNewValues);
 			}
 		}
 		return result;

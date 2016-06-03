@@ -27,16 +27,15 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VReadOnlyColumnConfigurationImpl#getColumnDomainReferences
  * <em>Column Domain References</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
-public class VReadOnlyColumnConfigurationImpl extends EObjectImpl implements VReadOnlyColumnConfiguration
-{
+public class VReadOnlyColumnConfigurationImpl extends EObjectImpl implements VReadOnlyColumnConfiguration {
 	/**
 	 * The cached value of the '{@link #getColumnDomainReferences() <em>Column Domain References</em>}' reference list.
 	 * <!-- begin-user-doc -->
@@ -54,8 +53,7 @@ public class VReadOnlyColumnConfigurationImpl extends EObjectImpl implements VRe
 	 *
 	 * @generated
 	 */
-	protected VReadOnlyColumnConfigurationImpl()
-	{
+	protected VReadOnlyColumnConfigurationImpl() {
 		super();
 	}
 
@@ -66,8 +64,7 @@ public class VReadOnlyColumnConfigurationImpl extends EObjectImpl implements VRe
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return VTablePackage.Literals.READ_ONLY_COLUMN_CONFIGURATION;
 	}
 
@@ -78,12 +75,10 @@ public class VReadOnlyColumnConfigurationImpl extends EObjectImpl implements VRe
 	 * @generated
 	 */
 	@Override
-	public EList<VDomainModelReference> getColumnDomainReferences()
-	{
-		if (columnDomainReferences == null)
-		{
-			columnDomainReferences = new EObjectResolvingEList<VDomainModelReference>(VDomainModelReference.class,
-				this, VTablePackage.READ_ONLY_COLUMN_CONFIGURATION__COLUMN_DOMAIN_REFERENCES);
+	public EList<VDomainModelReference> getColumnDomainReferences() {
+		if (columnDomainReferences == null) {
+			columnDomainReferences = new EObjectResolvingEList<VDomainModelReference>(VDomainModelReference.class, this,
+				VTablePackage.READ_ONLY_COLUMN_CONFIGURATION__COLUMN_DOMAIN_REFERENCES);
 		}
 		return columnDomainReferences;
 	}
@@ -95,10 +90,8 @@ public class VReadOnlyColumnConfigurationImpl extends EObjectImpl implements VRe
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
-		switch (featureID)
-		{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 		case VTablePackage.READ_ONLY_COLUMN_CONFIGURATION__COLUMN_DOMAIN_REFERENCES:
 			return getColumnDomainReferences();
 		}
@@ -113,10 +106,8 @@ public class VReadOnlyColumnConfigurationImpl extends EObjectImpl implements VRe
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
-		switch (featureID)
-		{
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 		case VTablePackage.READ_ONLY_COLUMN_CONFIGURATION__COLUMN_DOMAIN_REFERENCES:
 			getColumnDomainReferences().clear();
 			getColumnDomainReferences().addAll((Collection<? extends VDomainModelReference>) newValue);
@@ -132,10 +123,8 @@ public class VReadOnlyColumnConfigurationImpl extends EObjectImpl implements VRe
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
-		switch (featureID)
-		{
+	public void eUnset(int featureID) {
+		switch (featureID) {
 		case VTablePackage.READ_ONLY_COLUMN_CONFIGURATION__COLUMN_DOMAIN_REFERENCES:
 			getColumnDomainReferences().clear();
 			return;
@@ -150,10 +139,8 @@ public class VReadOnlyColumnConfigurationImpl extends EObjectImpl implements VRe
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
-		switch (featureID)
-		{
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 		case VTablePackage.READ_ONLY_COLUMN_CONFIGURATION__COLUMN_DOMAIN_REFERENCES:
 			return columnDomainReferences != null && !columnDomainReferences.isEmpty();
 		}

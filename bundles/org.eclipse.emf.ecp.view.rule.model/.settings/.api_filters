@@ -13,6 +13,12 @@
                 <message_argument value="1.5.0"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change for 1.9.0" id="923795461">
+            <message_arguments>
+                <message_argument value="1.9.0"/>
+                <message_argument value="1.8.0"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport">
         <filter comment="SPI Change in 1.6" id="305422471">
@@ -38,6 +44,32 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/rule/model/Condition.java" type="org.eclipse.emf.ecp.view.spi.rule.model.Condition">
+        <filter comment="SPI Change for 1.9.0" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.rule.model.Condition"/>
+                <message_argument value="evaluate(EObject)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change for 1.9.0" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.rule.model.Condition"/>
+                <message_argument value="evaluateChangedValues(EObject, Map&lt;EStructuralFeature.Setting,Object&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change for 1.9.0" id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.rule.model.Condition"/>
+                <message_argument value="evaluate()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change for 1.9.0" id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.rule.model.Condition"/>
+                <message_argument value="evaluateChangedValues(Map&lt;EStructuralFeature.Setting,Object&gt;)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/ecp/view/spi/rule/model/RulePackage.java" type="org.eclipse.emf.ecp.view.spi.rule.model.RulePackage">
         <filter comment="SPI model regenerated" id="388194388">
             <message_arguments>
@@ -58,6 +90,88 @@
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.rule.model.RulePackage.Literals"/>
                 <message_argument value="LEAF_CONDITION__VALUE_DOMAIN_MODEL_REFERENCE"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/rule/model/impl/AndConditionImpl.java" type="org.eclipse.emf.ecp.view.spi.rule.model.impl.AndConditionImpl">
+        <filter comment="SPI Change for 1.9.0" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.rule.model.impl.AndConditionImpl"/>
+                <message_argument value="evaluate()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change for 1.9.0" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.rule.model.impl.AndConditionImpl"/>
+                <message_argument value="evaluate()"/>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.rule.model.impl.AndConditionImpl"/>
+                <message_argument value="evaluateChangedValues(Map&lt;EStructuralFeature.Setting,Object&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change for 1.9.0" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.rule.model.impl.AndConditionImpl"/>
+                <message_argument value="evaluateChangedValues(Map&lt;EStructuralFeature.Setting,Object&gt;)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/rule/model/impl/LeafConditionImpl.java" type="org.eclipse.emf.ecp.view.spi.rule.model.impl.LeafConditionImpl">
+        <filter comment="SPI Change for 1.9.0" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.rule.model.impl.LeafConditionImpl"/>
+                <message_argument value="evaluate()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change for 1.9.0" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.rule.model.impl.LeafConditionImpl"/>
+                <message_argument value="evaluate()"/>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.rule.model.impl.LeafConditionImpl"/>
+                <message_argument value="evaluateChangedValues(Map&lt;EStructuralFeature.Setting,Object&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change for 1.9.0" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.rule.model.impl.LeafConditionImpl"/>
+                <message_argument value="evaluateChangedValues(Map&lt;EStructuralFeature.Setting,Object&gt;)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/rule/model/impl/LeafConditionSettingIterator.java" type="org.eclipse.emf.ecp.view.spi.rule.model.impl.LeafConditionSettingIterator">
+        <filter comment="SPI Change for 1.9.0" id="338722907">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.rule.model.impl.LeafConditionSettingIterator"/>
+                <message_argument value="LeafConditionSettingIterator(LeafCondition, boolean)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/rule/model/impl/OrConditionImpl.java" type="org.eclipse.emf.ecp.view.spi.rule.model.impl.OrConditionImpl">
+        <filter comment="SPI Change for 1.9.0" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.rule.model.impl.OrConditionImpl"/>
+                <message_argument value="evaluate()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change for 1.9.0" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.rule.model.impl.OrConditionImpl"/>
+                <message_argument value="evaluate()"/>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.rule.model.impl.OrConditionImpl"/>
+                <message_argument value="evaluateChangedValues(Map&lt;EStructuralFeature.Setting,Object&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change for 1.9.0" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.rule.model.impl.OrConditionImpl"/>
+                <message_argument value="evaluateChangedValues(Map&lt;EStructuralFeature.Setting,Object&gt;)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/rule/model/util/ConditionEvaluationUtil.java" type="org.eclipse.emf.ecp.view.spi.rule.model.util.ConditionEvaluationUtil">
+        <filter comment="SPI Change for 1.9.0" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.rule.model.util.ConditionEvaluationUtil"/>
+                <message_argument value="isLeafConditionForSetting(LeafCondition, Map&lt;EStructuralFeature.Setting,Object&gt;)"/>
             </message_arguments>
         </filter>
     </resource>

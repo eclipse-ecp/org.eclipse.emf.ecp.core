@@ -15,6 +15,7 @@
         eType="#//EClassToEStringMap" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="eClassToA" upperBound="-1"
         eType="#//EClassToAMap" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="a" eType="#//A"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="D">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

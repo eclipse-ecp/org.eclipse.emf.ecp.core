@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+ Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
+ 
+ All rights reserved. This program and the accompanying materials
+ are made available under the terms of the Eclipse Public License v1.0
+ which accompanies this distribution, and is available at
+ http://www.eclipse.org/legal/epl-v10.html
+ 
+ Contributors:
+-->
+
+<fragment>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated EdaptTestModel -->
+      <package
+            uri="http://eclipse.org/emf/ecp/view/edapt/test/model/model"
+            class="org.eclipse.emf.ecp.view.edapt.test.model.ModelPackage"
+            genModel="model/EdaptTestModel.genmodel"/>
+   </extension>
+
+</fragment>

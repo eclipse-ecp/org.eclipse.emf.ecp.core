@@ -13,6 +13,7 @@
 package org.eclipse.emfforms.spi.editor;
 
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.viewers.ISelectionProvider;
 
 /**
  * The Interface IToolbarAction allows the creation of ToolBar actions for the Generic Editor.
@@ -23,9 +24,10 @@ public interface IToolbarAction {
 	 * Returns the action to add to the toolbar.
 	 *
 	 * @param currentObject the currently edited object of the editor
+	 * @param selectionProvider the selection provider
 	 * @return the action
 	 */
-	Action getAction(Object currentObject);
+	Action getAction(Object currentObject, ISelectionProvider selectionProvider);
 
 	/**
 	 * @param object the currently edited object of the editor

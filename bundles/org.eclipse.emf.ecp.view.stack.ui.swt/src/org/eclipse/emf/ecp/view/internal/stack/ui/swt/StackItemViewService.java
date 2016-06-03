@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -27,7 +27,6 @@ import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
-import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
@@ -36,6 +35,7 @@ import org.eclipse.emf.ecp.view.spi.stack.model.VStackItem;
 import org.eclipse.emf.ecp.view.spi.stack.model.VStackLayout;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
+import org.eclipse.emfforms.spi.core.services.structuralchange.EMFFormsStructuralChangeTester;
 
 /**
  * {@link ViewModelService} evaluating changes on the {@link VDomainModelReference} of the {@link VStackLayout} based on
@@ -48,12 +48,12 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedRepor
 public class StackItemViewService implements ViewModelService {
 
 	private ModelChangeListener domainListener;
+	private ModelChangeListener stackItemsDomainListener;
 	private ViewModelContext context;
 	private VElement viewModel;
 	private EObject domain;
 
 	private Map<EObject, Map<EStructuralFeature, Set<VStackLayout>>> registry;
-	private Set<StackItemDomainModelReferenceChangeListener> changeListener;
 
 	/**
 	 * {@inheritDoc}
@@ -67,7 +67,6 @@ public class StackItemViewService implements ViewModelService {
 		domain = context.getDomainModel();
 
 		registry = new LinkedHashMap<EObject, Map<EStructuralFeature, Set<VStackLayout>>>();
-		changeListener = new LinkedHashSet<StackItemDomainModelReferenceChangeListener>();
 
 		initRegistry(viewModel);
 		evaluateRegistry();
@@ -86,20 +85,21 @@ public class StackItemViewService implements ViewModelService {
 			}
 		}
 
+		final Map<VStackLayout, Setting> stackToSetting = new LinkedHashMap<VStackLayout, Setting>();
 		for (final VStackLayout stack : stacks) {
 			final VDomainModelReference dmr = stack.getDomainModelReference();
 			if (dmr == null) {
 				continue;
 			}
-			dmr.init(domain);
 			final Setting setting = addToRegistry(stack, dmr);
 			if (setting == null) {
 				// TODO JF how to handle?
 				return;
 			}
-			dmr.getChangeListener().add(createDMRChangeListener(stack, setting));
-			context.registerDomainChangeListener(dmr);
+			stackToSetting.put(stack, setting);
 		}
+		stackItemsDomainListener = new StackItemsModelChangeListener(stackToSetting);
+		context.registerDomainChangeListener(stackItemsDomainListener);
 	}
 
 	private Setting addToRegistry(VStackLayout stack, VDomainModelReference dmr) {
@@ -187,13 +187,6 @@ public class StackItemViewService implements ViewModelService {
 		return new StackDomainChangeListener();
 	}
 
-	private DomainModelReferenceChangeListener createDMRChangeListener(VStackLayout stack, Setting oldSetting) {
-		final StackItemDomainModelReferenceChangeListener listener = new StackItemDomainModelReferenceChangeListener(
-			stack, oldSetting);
-		changeListener.add(listener);
-		return listener;
-	}
-
 	/**
 	 * {@inheritDoc}
 	 *
@@ -207,11 +200,8 @@ public class StackItemViewService implements ViewModelService {
 		registry.clear();
 		registry = null;
 
-		for (final StackItemDomainModelReferenceChangeListener listener : changeListener) {
-			listener.dispose();
-		}
-		changeListener.clear();
-		changeListener = null;
+		context.unregisterDomainChangeListener(stackItemsDomainListener);
+		stackItemsDomainListener = null;
 
 		context.unregisterDomainChangeListener(domainListener);
 		domainListener = null;
@@ -229,41 +219,46 @@ public class StackItemViewService implements ViewModelService {
 	}
 
 	/**
-	 * {@link DomainModelReferenceChangeListener} that updates the registry and reevaluates affected
-	 * {@link VStackLayout VStackLayouts}.
+	 * {@link ModelChangeListener} that updates the registry and reevaluates affected {@link VStackLayout VStackLayouts}
+	 * when the domain model is changed.
 	 *
-	 * @author jfaltermeier
+	 * @author Lucas Koehler
 	 *
 	 */
-	private class StackItemDomainModelReferenceChangeListener implements DomainModelReferenceChangeListener {
-
-		private Setting setting;
-		private final VStackLayout stack;
+	private class StackItemsModelChangeListener implements ModelChangeListener {
+		private final Map<VStackLayout, Setting> stackToSetting;
 
 		/**
-		 * Constructs a new {@link StackItemDomainModelReferenceChangeListener}.
+		 * Constructs a new {@link StackItemsModelChangeListener}.
 		 *
-		 * @param stack the affected {@link VStackLayout}.
-		 * @param oldSetting the current registered {@link Setting}.
+		 * @param stackToSetting The map of stacks to their current registered settings
 		 */
-		public StackItemDomainModelReferenceChangeListener(VStackLayout stack, Setting oldSetting) {
-			this.stack = stack;
-			setting = oldSetting;
+		StackItemsModelChangeListener(Map<VStackLayout, Setting> stackToSetting) {
+			this.stackToSetting = stackToSetting;
 		}
 
 		/**
 		 * {@inheritDoc}
 		 *
-		 * @see org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener#notifyChange()
+		 * @see org.eclipse.emf.ecp.view.spi.model.ModelChangeListener#notifyChange(org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification)
 		 */
 		@Override
-		public void notifyChange() {
-			removeOutdatedEntriesFromRegistry();
-			addCurrentEntriesToRegistry();
-			evaluate(setting.getEObject(), setting.getEStructuralFeature());
+		public void notifyChange(ModelChangeNotification notification) {
+			final EMFFormsStructuralChangeTester tester = context.getService(EMFFormsStructuralChangeTester.class);
+			for (final VStackLayout stack : stackToSetting.keySet()) {
+				if (tester.isStructureChanged(stack.getDomainModelReference(), context.getDomainModel(),
+					notification)) {
+					removeOutdatedEntriesFromRegistry(stack);
+					addCurrentEntriesToRegistry(stack);
+					final Setting setting = stackToSetting.get(stack);
+					evaluate(setting.getEObject(), setting.getEStructuralFeature());
+				}
+			}
+
 		}
 
-		private void removeOutdatedEntriesFromRegistry() {
+		private void removeOutdatedEntriesFromRegistry(VStackLayout stack) {
+			final Setting setting = stackToSetting.get(stack);
 			final Map<EStructuralFeature, Set<VStackLayout>> featureToStackMap = registry.get(setting.getEObject());
 			final Set<VStackLayout> stacks = featureToStackMap.get(setting.getEStructuralFeature());
 			stacks.remove(stack);
@@ -277,16 +272,11 @@ public class StackItemViewService implements ViewModelService {
 			registry.remove(setting.getEObject());
 		}
 
-		private void addCurrentEntriesToRegistry() {
+		private void addCurrentEntriesToRegistry(VStackLayout stack) {
 			// TODO setting may be null. see TODOs above
-			setting = addToRegistry(stack, stack.getDomainModelReference());
+			final Setting setting = addToRegistry(stack, stack.getDomainModelReference());
+			stackToSetting.put(stack, setting);
 		}
-
-		public void dispose() {
-			stack.getDomainModelReference().getChangeListener().remove(this);
-			context.unregisterDomainChangeListener(stack.getDomainModelReference());
-		}
-
 	}
 
 	/**

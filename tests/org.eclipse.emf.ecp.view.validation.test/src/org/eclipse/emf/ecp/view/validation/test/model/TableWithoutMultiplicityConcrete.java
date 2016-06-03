@@ -22,11 +22,11 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
- * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.TableWithoutMultiplicityConcrete#getContent <em>Content
- * </em>}</li>
- * </ul>
  * </p>
+ * <ul>
+ * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.TableWithoutMultiplicityConcrete#getContent
+ * <em>Content</em>}</li>
+ * </ul>
  *
  * @see org.eclipse.emf.ecp.view.validation.test.model.TestPackage#getTableWithoutMultiplicityConcrete()
  * @model

@@ -49,7 +49,7 @@ public interface ECPObserverCall {
 	 * @author wesendon
 	 *
 	 */
-	public class Result {
+	class Result {
 
 		private final ECPObserver observer;
 		private final Method method;
@@ -147,6 +147,7 @@ public interface ECPObserverCall {
 		}
 
 		private static final Map<String, Object> DEFAULTPRIMITIVEVALUES = new HashMap<String, Object>();
+
 		static {
 			DEFAULTPRIMITIVEVALUES.put("int", new Integer(0)); //$NON-NLS-1$
 			DEFAULTPRIMITIVEVALUES.put("boolean", new Boolean(false)); //$NON-NLS-1$

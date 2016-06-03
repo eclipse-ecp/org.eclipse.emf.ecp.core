@@ -26,10 +26,10 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
 /**
  * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.spi.model.VContainedContainer} object.
  * <!-- begin-user-doc -->
+ * @since 1.4
  * <!-- end-user-doc -->
  *
  * @generated
- * @since 1.4
  */
 public class ContainedContainerItemProvider
 	extends ContainedElementItemProvider {

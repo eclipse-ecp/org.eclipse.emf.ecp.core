@@ -28,6 +28,7 @@ import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor;
 import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.edit.command.SetCommand;
+import org.eclipse.emfforms.spi.common.locale.EMFFormsLocaleProvider;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.CellEditorProperties;
@@ -163,7 +164,9 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 
 	private EStructuralFeature eStructuralFeature;
 	private ViewModelContext viewModelContext;
+	@Deprecated
 	private ViewLocaleService localeService;
+	private EMFFormsLocaleProvider localeProvider;
 
 	/**
 	 * The constructor which only takes a parent composite.
@@ -208,6 +211,7 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 		this.viewModelContext = viewModelContext;
 		getControl().setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_edit_cellEditor_numberical"); //$NON-NLS-1$
 		localeService = viewModelContext.getService(ViewLocaleService.class);
+		localeProvider = viewModelContext.getService(EMFFormsLocaleProvider.class);
 	}
 
 	/**
@@ -237,6 +241,9 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 	private Locale getLocale() {
 		if (localeService != null) {
 			return localeService.getLocale();
+		}
+		if (localeProvider != null) {
+			return localeProvider.getLocale();
 		}
 		return Locale.getDefault();
 	}

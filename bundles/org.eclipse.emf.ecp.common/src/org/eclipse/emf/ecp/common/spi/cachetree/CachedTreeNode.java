@@ -140,4 +140,14 @@ public abstract class CachedTreeNode<T> {
 	public void setParent(Object parent) {
 		this.parent = parent;
 	}
+
+	/**
+	 * Returns the internal representation of the child value cache.
+	 *
+	 * @return the cache
+	 * @since 1.9
+	 */
+	protected final Map<Object, T> getCache() {
+		return cache;
+	}
 }

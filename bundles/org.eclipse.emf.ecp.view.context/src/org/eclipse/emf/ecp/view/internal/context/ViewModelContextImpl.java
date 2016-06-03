@@ -60,6 +60,7 @@ import org.eclipse.emfforms.spi.core.services.domainexpander.EMFFormsDomainExpan
 import org.eclipse.emfforms.spi.core.services.domainexpander.EMFFormsExpandingFailedException;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewServiceManager;
+import org.eclipse.emfforms.spi.core.services.view.RootDomainModelChangeListener;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
@@ -76,19 +77,24 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	private static final String MODEL_CHANGE_LISTENER_MUST_NOT_BE_NULL = "ModelChangeAddRemoveListener must not be null."; //$NON-NLS-1$
 
+	private static final String ROOT_DOMAIN_MODEL_CHANGE_LISTENER_MUST_NOT_BE_NULL = "RootDomainModelChangeListener must not be null."; //$NON-NLS-1$
+
 	private static final String THE_VIEW_MODEL_CONTEXT_WAS_ALREADY_DISPOSED = "The ViewModelContext was already disposed."; //$NON-NLS-1$
 
 	/** The view. */
 	private final VElement view;
 
 	/** The domain object. */
-	private final EObject domainObject;
+	private EObject domainObject;
 
 	/** The view model change listener. Needs to be thread safe. */
 	private final List<ModelChangeListener> viewModelChangeListener = new CopyOnWriteArrayList<ModelChangeListener>();
 
 	/** The domain model change listener. Needs to be thread safe. */
 	private final List<ModelChangeListener> domainModelChangeListener = new CopyOnWriteArrayList<ModelChangeListener>();
+
+	/** The root domain model change listeners. Needs to be thread safe. */
+	private final List<RootDomainModelChangeListener> rootDomainModelChangeListeners = new CopyOnWriteArrayList<RootDomainModelChangeListener>();
 
 	/** The domain model content adapter. */
 	private EContentAdapter domainModelContentAdapter;
@@ -143,6 +149,8 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	private ServiceListener serviceListener;
 
+	private VElement parentVElement;
+
 	/**
 	 * Instantiates a new view model context impl.
 	 *
@@ -169,6 +177,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 		this.view = view;
 		this.domainObject = domainObject;
 		parentContext = parent;
+		this.parentVElement = parentVElement;
 		instantiate();
 	}
 
@@ -207,6 +216,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 		for (final ViewModelService vms : modelServices) {
 			viewServices.add(vms);
 		}
+		this.parentVElement = parentVElement;
 		instantiate();
 	}
 
@@ -237,8 +247,6 @@ public class ViewModelContextImpl implements ViewModelContext {
 		if (VDomainModelReference.class.isInstance(eObject)
 			&& !VDomainModelReference.class.isInstance(eObject.eContainer())) {
 			final VDomainModelReference domainModelReference = VDomainModelReference.class.cast(eObject);
-			// FIXME remove
-			domainModelReference.init(domainModelRoot);
 			try {
 				domainExpander.prepareDomainObject(domainModelReference, domainModelRoot);
 			} catch (final EMFFormsExpandingFailedException ex) {
@@ -411,41 +419,9 @@ public class ViewModelContextImpl implements ViewModelContext {
 		for (final ViewModelContextDisposeListener listener : disposeListeners) {
 			listener.contextDisposed(this);
 		}
-		if (resource != null) {
-			resource.getContents().remove(domainObject);
-		}
-
-		view.eAdapters().remove(viewModelContentAdapter);
-		domainObject.eAdapters().remove(domainModelContentAdapter);
-
+		innerDispose();
 		viewModelChangeListener.clear();
-		domainModelChangeListener.clear();
-
-		for (final ViewModelService viewService : viewServices) {
-			viewService.dispose();
-		}
-		viewServices.clear();
-
-		for (final EMFFormsContextListener contextListener : contextListeners) {
-			contextListener.contextDispose();
-		}
-
-		final Set<ViewModelContext> toDispose = new LinkedHashSet<ViewModelContext>(childContextUsers.keySet());
-		for (final ViewModelContext vmc : toDispose) {
-			vmc.dispose();
-		}
-		childContextUsers.clear();
-		childContexts.clear();
-
-		releaseOSGiServices();
-		serviceMap.clear();
-
-		final Bundle bundle = FrameworkUtil.getBundle(getClass());
-		if (bundle != null) {
-			final BundleContext bundleContext = bundle.getBundleContext();
-			bundleContext.removeServiceListener(serviceListener);
-			serviceListener = null;
-		}
+		rootDomainModelChangeListeners.clear();
 
 		isDisposing = false;
 		isDisposed = true;
@@ -830,6 +806,16 @@ public class ViewModelContextImpl implements ViewModelContext {
 		return childContext;
 	}
 
+	@Override
+	public ViewModelContext getParentContext() {
+		return parentContext;
+	}
+
+	@Override
+	public VElement getParentVElement() {
+		return parentVElement;
+	}
+
 	/**
 	 * {@inheritDoc}
 	 *
@@ -848,5 +834,96 @@ public class ViewModelContextImpl implements ViewModelContext {
 	@Override
 	public void unregisterEMFFormsContextListener(EMFFormsContextListener contextListener) {
 		contextListeners.remove(contextListener);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext#changeDomainModel(org.eclipse.emf.ecore.EObject)
+	 */
+	@Override
+	public void changeDomainModel(EObject newDomainModel) {
+		if (isDisposed) {
+			throw new IllegalStateException(THE_VIEW_MODEL_CONTEXT_WAS_ALREADY_DISPOSED);
+		}
+
+		// =============
+		// DISPOSE CODE
+		innerDispose();
+
+		// =======================
+
+		domainObject = newDomainModel;
+
+		// re-instantiate
+		instantiate();
+
+		for (final RootDomainModelChangeListener listener : rootDomainModelChangeListeners) {
+			listener.notifyChange();
+		}
+	}
+
+	private void innerDispose() {
+		if (resource != null) {
+			resource.getContents().remove(domainObject);
+		}
+
+		view.eAdapters().remove(viewModelContentAdapter);
+		domainObject.eAdapters().remove(domainModelContentAdapter);
+
+		domainModelChangeListener.clear();
+
+		for (final ViewModelService viewService : viewServices) {
+			viewService.dispose();
+		}
+		viewServices.clear();
+
+		for (final EMFFormsContextListener contextListener : contextListeners) {
+			contextListener.contextDispose();
+		}
+
+		// TODO Child context disposing necessary?
+		final Set<ViewModelContext> toDispose = new LinkedHashSet<ViewModelContext>(childContextUsers.keySet());
+		for (final ViewModelContext vmc : toDispose) {
+			vmc.dispose();
+		}
+		childContextUsers.clear();
+		childContexts.clear();
+
+		releaseOSGiServices();
+		serviceMap.clear();
+
+		final Bundle bundle = FrameworkUtil.getBundle(getClass());
+		if (bundle != null) {
+			final BundleContext bundleContext = bundle.getBundleContext();
+			bundleContext.removeServiceListener(serviceListener);
+			serviceListener = null;
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext#registerRootDomainModelChangeListener(org.eclipse.emfforms.spi.core.services.view.RootDomainModelChangeListener)
+	 */
+	@Override
+	public void registerRootDomainModelChangeListener(RootDomainModelChangeListener rootDomainModelChangeListener) {
+		if (isDisposed) {
+			throw new IllegalStateException(THE_VIEW_MODEL_CONTEXT_WAS_ALREADY_DISPOSED);
+		}
+		if (rootDomainModelChangeListener == null) {
+			throw new IllegalArgumentException(ROOT_DOMAIN_MODEL_CHANGE_LISTENER_MUST_NOT_BE_NULL);
+		}
+		rootDomainModelChangeListeners.add(rootDomainModelChangeListener);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext#unregisterRootDomainModelChangeListener(org.eclipse.emfforms.spi.core.services.view.RootDomainModelChangeListener)
+	 */
+	@Override
+	public void unregisterRootDomainModelChangeListener(RootDomainModelChangeListener rootDomainModelChangeListener) {
+		rootDomainModelChangeListeners.remove(rootDomainModelChangeListener);
 	}
 }

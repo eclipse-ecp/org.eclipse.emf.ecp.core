@@ -101,7 +101,7 @@ public class EMFFormsSpreadsheetSingleAttributeConverter implements EMFFormsSpre
 	@Override
 	public void setCellValue(Cell cell, Object value, EStructuralFeature eStructuralFeature,
 		ViewModelContext viewModelContext)
-			throws EMFFormsConverterException {
+		throws EMFFormsConverterException {
 		if (value == null) {
 			return;
 		}
@@ -225,35 +225,50 @@ public class EMFFormsSpreadsheetSingleAttributeConverter implements EMFFormsSpre
 		} else if (isDouble(attributeType.getInstanceClass())) {
 			return cell.getNumericCellValue();
 		} else if (isBigInteger(attributeType.getInstanceClass())) {
-			if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
-				return BigInteger.valueOf((long) cell.getNumericCellValue());
-			}
-			return new BigInteger(cell.getStringCellValue());
+			return convertCellToBigInteger(cell);
 		} else if (isBigDecimal(attributeType.getInstanceClass())) {
-			if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
-				return BigDecimal.valueOf(cell.getNumericCellValue()).stripTrailingZeros();
-			}
-			final String value = cell.getStringCellValue();
-			return new BigDecimal(value).stripTrailingZeros();
+			return convertCellToBigDecimal(cell);
 		} else if (isBoolean(attributeType.getInstanceClass())) {
 			return cell.getBooleanCellValue();
 		} else if (isDate(attributeType.getInstanceClass())) {
 			return DateUtil.getJavaDate(cell.getNumericCellValue());
 		} else if (isXMLDate(attributeType.getInstanceClass())) {
-			final Calendar targetCal = DateUtil.getJavaCalendarUTC(cell.getNumericCellValue(), false);
-			if (targetCal == null) {
-				return null;
-			}
-			final XMLGregorianCalendar cal = new XMLCalendar(targetCal.getTime(), XMLCalendar.DATE);
-			cal.setTimezone(DatatypeConstants.FIELD_UNDEFINED);
-			cal.setHour(DatatypeConstants.FIELD_UNDEFINED);
-			cal.setMinute(DatatypeConstants.FIELD_UNDEFINED);
-			cal.setSecond(DatatypeConstants.FIELD_UNDEFINED);
-			cal.setMillisecond(DatatypeConstants.FIELD_UNDEFINED);
-			return cal;
+			return convertCellToXMLDate(cell);
 		} else {
+			if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+				cell.setCellType(Cell.CELL_TYPE_STRING);
+			}
 			return EcoreUtil.createFromString(attributeType, cell.getStringCellValue());
 		}
+	}
+
+	private XMLGregorianCalendar convertCellToXMLDate(Cell cell) {
+		final Calendar targetCal = DateUtil.getJavaCalendarUTC(cell.getNumericCellValue(), false);
+		if (targetCal == null) {
+			return null;
+		}
+		final XMLGregorianCalendar cal = new XMLCalendar(targetCal.getTime(), XMLCalendar.DATE);
+		cal.setTimezone(DatatypeConstants.FIELD_UNDEFINED);
+		cal.setHour(DatatypeConstants.FIELD_UNDEFINED);
+		cal.setMinute(DatatypeConstants.FIELD_UNDEFINED);
+		cal.setSecond(DatatypeConstants.FIELD_UNDEFINED);
+		cal.setMillisecond(DatatypeConstants.FIELD_UNDEFINED);
+		return cal;
+	}
+
+	private BigDecimal convertCellToBigDecimal(Cell cell) {
+		if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+			return BigDecimal.valueOf(cell.getNumericCellValue()).stripTrailingZeros();
+		}
+		final String value = cell.getStringCellValue();
+		return new BigDecimal(value).stripTrailingZeros();
+	}
+
+	private BigInteger convertCellToBigInteger(Cell cell) {
+		if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+			return BigInteger.valueOf((long) cell.getNumericCellValue());
+		}
+		return new BigInteger(cell.getStringCellValue());
 	}
 
 	private static boolean isXMLDate(final Class<?> clazz) {

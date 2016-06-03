@@ -223,4 +223,23 @@
             uri="http://org/eclipse/emf/ecp/view/template/model"
             class="org.eclipse.emf.ecp.view.template.style.tab.model.provider.TabItemProviderAdapterFactory$TemplateChildCreationExtender"/>
    </extension>
+   <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
+      <!-- @generated tableStyleProperty -->
+      <factory
+            uri="http://www.eclipse.org/emf/ecp/view/template/style/table/model"
+            class="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.provider.TableStylePropertyItemProviderAdapterFactory"
+            supportedTypes=
+              "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
+               org.eclipse.emf.edit.provider.IStructuredItemContentProvider
+               org.eclipse.emf.edit.provider.ITreeItemContentProvider
+               org.eclipse.emf.edit.provider.IItemLabelProvider
+               org.eclipse.emf.edit.provider.IItemPropertySource"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.edit.childCreationExtenders">
+      <!-- @generated tableStyleProperty -->
+      <extender
+            uri="http://org/eclipse/emf/ecp/view/template/model"
+            class="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.provider.TableStylePropertyItemProviderAdapterFactory$TemplateChildCreationExtender"/>
+   </extension>
 </plugin>

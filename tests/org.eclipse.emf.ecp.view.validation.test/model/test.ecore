@@ -124,4 +124,19 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="content" upperBound="-1"
         eType="#//TableContentWithInnerChild" containment="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Referencer">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="referencedContent" eType="#//Computer"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CrossReferenceContainer">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="contents" upperBound="-1"
+        eType="#//CrossReferenceContent" containment="true" eOpposite="#//CrossReferenceContent/parent"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="singleContent" eType="#//CrossReferenceContent"
+        containment="true" eOpposite="#//CrossReferenceContent/singleParent"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CrossReferenceContent">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parent" eType="#//CrossReferenceContainer"
+        eOpposite="#//CrossReferenceContainer/contents"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="singleParent" eType="#//CrossReferenceContainer"
+        eOpposite="#//CrossReferenceContainer/singleContent"/>
+  </eClassifiers>
 </ecore:EPackage>

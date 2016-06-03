@@ -31,21 +31,21 @@ import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestP
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.BImpl#getC <em>C</em>}</li>
- * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.BImpl#getCList <em>CList</em>}</li>
+ * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.BImpl#getCList <em>CList</em>}
+ * </li>
  * </ul>
- * </p>
  *
  * @generated
  */
-public class BImpl extends MinimalEObjectImpl.Container implements B
-{
+public class BImpl extends MinimalEObjectImpl.Container implements B {
 	/**
 	 * The cached value of the '{@link #getC() <em>C</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getC()
 	 * @generated
 	 * @ordered
@@ -56,7 +56,7 @@ public class BImpl extends MinimalEObjectImpl.Container implements B
 	 * The cached value of the '{@link #getCList() <em>CList</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getCList()
 	 * @generated
 	 * @ordered
@@ -66,57 +66,51 @@ public class BImpl extends MinimalEObjectImpl.Container implements B
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	protected BImpl()
-	{
+	protected BImpl() {
 		super();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return TestPackage.Literals.B;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public C getC()
-	{
+	public C getC() {
 		return c;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	public NotificationChain basicSetC(C newC, NotificationChain msgs)
-	{
-		final C oldC = c;
+	public NotificationChain basicSetC(C newC, NotificationChain msgs) {
+		C oldC = c;
 		c = newC;
-		if (eNotificationRequired())
-		{
-			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TestPackage.B__C,
-				oldC, newC);
-			if (msgs == null) {
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TestPackage.B__C, oldC,
+				newC);
+			if (msgs == null)
 				msgs = notification;
-			} else {
+			else
 				msgs.add(notification);
-			}
 		}
 		return msgs;
 	}
@@ -124,44 +118,35 @@ public class BImpl extends MinimalEObjectImpl.Container implements B
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public void setC(C newC)
-	{
-		if (newC != c)
-		{
+	public void setC(C newC) {
+		if (newC != c) {
 			NotificationChain msgs = null;
-			if (c != null) {
-				msgs = ((InternalEObject) c)
-					.eInverseRemove(this, EOPPOSITE_FEATURE_BASE - TestPackage.B__C, null, msgs);
-			}
-			if (newC != null) {
-				msgs = ((InternalEObject) newC)
-					.eInverseAdd(this, EOPPOSITE_FEATURE_BASE - TestPackage.B__C, null, msgs);
-			}
+			if (c != null)
+				msgs = ((InternalEObject) c).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - TestPackage.B__C, null,
+					msgs);
+			if (newC != null)
+				msgs = ((InternalEObject) newC).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - TestPackage.B__C, null,
+					msgs);
 			msgs = basicSetC(newC, msgs);
-			if (msgs != null) {
+			if (msgs != null)
 				msgs.dispatch();
-			}
-		}
-		else if (eNotificationRequired()) {
+		} else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.B__C, newC, newC));
-		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public EList<C> getCList()
-	{
-		if (cList == null)
-		{
+	public EList<C> getCList() {
+		if (cList == null) {
 			cList = new EObjectResolvingEList<C>(C.class, this, TestPackage.B__CLIST);
 		}
 		return cList;
@@ -170,14 +155,12 @@ public class BImpl extends MinimalEObjectImpl.Container implements B
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-	{
-		switch (featureID)
-		{
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
 		case TestPackage.B__C:
 			return basicSetC(null, msgs);
 		}
@@ -187,14 +170,12 @@ public class BImpl extends MinimalEObjectImpl.Container implements B
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
-		switch (featureID)
-		{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 		case TestPackage.B__C:
 			return getC();
 		case TestPackage.B__CLIST:
@@ -206,15 +187,13 @@ public class BImpl extends MinimalEObjectImpl.Container implements B
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
-		switch (featureID)
-		{
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 		case TestPackage.B__C:
 			setC((C) newValue);
 			return;
@@ -229,14 +208,12 @@ public class BImpl extends MinimalEObjectImpl.Container implements B
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
-		switch (featureID)
-		{
+	public void eUnset(int featureID) {
+		switch (featureID) {
 		case TestPackage.B__C:
 			setC((C) null);
 			return;
@@ -250,14 +227,12 @@ public class BImpl extends MinimalEObjectImpl.Container implements B
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
-		switch (featureID)
-		{
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 		case TestPackage.B__C:
 			return c != null;
 		case TestPackage.B__CLIST:

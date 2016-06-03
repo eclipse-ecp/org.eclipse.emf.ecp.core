@@ -208,14 +208,7 @@ public class MappingDomainModelReferenceConverter implements DomainModelReferenc
 	 * @throws IllegalMapTypeException if the structural feature doesn't reference a proper map.
 	 */
 	private void checkMapType(EStructuralFeature structuralFeature) throws IllegalMapTypeException {
-		if (!structuralFeature.getEType().getInstanceClassName().equals("java.util.Map$Entry")) { //$NON-NLS-1$
-			throw new IllegalMapTypeException(
-				"The VMappingDomainModelReference's domainModelEFeature must reference a map."); //$NON-NLS-1$
-		}
-		if (structuralFeature.getLowerBound() != 0 || structuralFeature.getUpperBound() != -1) {
-			throw new IllegalMapTypeException(
-				"The VMappingDomainModelReference's domainModelEFeature must reference a map."); //$NON-NLS-1$
-		}
+		checkStructuralFeature(structuralFeature);
 
 		final EClass eClass = (EClass) structuralFeature.getEType();
 		final EStructuralFeature keyFeature = eClass.getEStructuralFeature("key"); //$NON-NLS-1$
@@ -235,6 +228,31 @@ public class MappingDomainModelReferenceConverter implements DomainModelReferenc
 		if (!EClass.class.isAssignableFrom(((EReference) keyFeature).getEReferenceType().getInstanceClass())) {
 			throw new IllegalMapTypeException(
 				"The keys of the map referenced by the VMappingDomainModelReference's domainModelEFeature must be referenced EClasses."); //$NON-NLS-1$
+		}
+	}
+
+	/**
+	 * Checks basic required properties of the given {@link EStructuralFeature}.
+	 * 
+	 * @param structuralFeature The {@link EStructuralFeature} to check
+	 * @throws IllegalMapTypeException if something's wrong with the feature
+	 */
+	private void checkStructuralFeature(EStructuralFeature structuralFeature) throws IllegalMapTypeException {
+		if (structuralFeature.getEType() == null) {
+			throw new IllegalMapTypeException(
+				"The EType of the VMappingDomainModelReference's domainModelEFeature was null."); //$NON-NLS-1$
+		}
+		if (structuralFeature.getEType().getInstanceClassName() == null) {
+			throw new IllegalMapTypeException(
+				"The InstanceClassName of the VMappingDomainModelReference's domainModelEFeature's EType was null."); //$NON-NLS-1$
+		}
+		if (!structuralFeature.getEType().getInstanceClassName().equals("java.util.Map$Entry")) { //$NON-NLS-1$
+			throw new IllegalMapTypeException(
+				"The VMappingDomainModelReference's domainModelEFeature must reference a map."); //$NON-NLS-1$
+		}
+		if (structuralFeature.getLowerBound() != 0 || structuralFeature.getUpperBound() != -1) {
+			throw new IllegalMapTypeException(
+				"The VMappingDomainModelReference's domainModelEFeature must reference a map."); //$NON-NLS-1$
 		}
 	}
 

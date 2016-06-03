@@ -47,13 +47,12 @@ public class VDiagnosticHelper_Test {
 		final BasicDiagnostic diagnostics = Diagnostician.INSTANCE.createDefaultDiagnostic(object);
 
 		@SuppressWarnings("serial")
-		final Map<Object, Object> context =
-			new LinkedHashMap<Object, Object>() {
-				{
-					put(EValidator.SubstitutionLabelProvider.class, Diagnostician.INSTANCE);
-					put(EValidator.class, validator);
-				}
-			};
+		final Map<Object, Object> context = new LinkedHashMap<Object, Object>() {
+			{
+				put(EValidator.SubstitutionLabelProvider.class, Diagnostician.INSTANCE);
+				put(EValidator.class, validator);
+			}
+		};
 
 		validator.validate(object, diagnostics, context);
 

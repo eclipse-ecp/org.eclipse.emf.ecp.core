@@ -27,8 +27,7 @@ import org.eclipse.emf.common.util.Enumerator;
  * @model
  * @generated
  */
-public enum DetailEditing implements Enumerator
-{
+public enum DetailEditing implements Enumerator {
 	/**
 	 * The '<em><b>None</b></em>' literal object.
 	 * <!-- begin-user-doc -->
@@ -117,13 +116,11 @@ public enum DetailEditing implements Enumerator
 	 *
 	 * @generated
 	 */
-	private static final DetailEditing[] VALUES_ARRAY =
-		new DetailEditing[]
-		{
-			NONE,
-			WITH_DIALOG,
-			WITH_PANEL,
-		};
+	private static final DetailEditing[] VALUES_ARRAY = new DetailEditing[] {
+		NONE,
+		WITH_DIALOG,
+		WITH_PANEL,
+	};
 
 	/**
 	 * A public read-only list of all the '<em><b>Detail Editing</b></em>' enumerators.
@@ -139,15 +136,14 @@ public enum DetailEditing implements Enumerator
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
+	 * @param literal the literal.
+	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
-	public static DetailEditing get(String literal)
-	{
-		for (int i = 0; i < VALUES_ARRAY.length; ++i)
-		{
+	public static DetailEditing get(String literal) {
+		for (int i = 0; i < VALUES_ARRAY.length; ++i) {
 			final DetailEditing result = VALUES_ARRAY[i];
-			if (result.toString().equals(literal))
-			{
+			if (result.toString().equals(literal)) {
 				return result;
 			}
 		}
@@ -159,15 +155,14 @@ public enum DetailEditing implements Enumerator
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
+	 * @param name the name.
+	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
-	public static DetailEditing getByName(String name)
-	{
-		for (int i = 0; i < VALUES_ARRAY.length; ++i)
-		{
+	public static DetailEditing getByName(String name) {
+		for (int i = 0; i < VALUES_ARRAY.length; ++i) {
 			final DetailEditing result = VALUES_ARRAY[i];
-			if (result.getName().equals(name))
-			{
+			if (result.getName().equals(name)) {
 				return result;
 			}
 		}
@@ -179,12 +174,12 @@ public enum DetailEditing implements Enumerator
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
+	 * @param value the integer value.
+	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
-	public static DetailEditing get(int value)
-	{
-		switch (value)
-		{
+	public static DetailEditing get(int value) {
+		switch (value) {
 		case NONE_VALUE:
 			return NONE;
 		case WITH_DIALOG_VALUE:
@@ -226,8 +221,7 @@ public enum DetailEditing implements Enumerator
 	 *
 	 * @generated
 	 */
-	private DetailEditing(int value, String name, String literal)
-	{
+	private DetailEditing(int value, String name, String literal) {
 		this.value = value;
 		this.name = name;
 		this.literal = literal;
@@ -240,8 +234,7 @@ public enum DetailEditing implements Enumerator
 	 * @generated
 	 */
 	@Override
-	public int getValue()
-	{
+	public int getValue() {
 		return value;
 	}
 
@@ -252,8 +245,7 @@ public enum DetailEditing implements Enumerator
 	 * @generated
 	 */
 	@Override
-	public String getName()
-	{
+	public String getName() {
 		return name;
 	}
 
@@ -264,8 +256,7 @@ public enum DetailEditing implements Enumerator
 	 * @generated
 	 */
 	@Override
-	public String getLiteral()
-	{
+	public String getLiteral() {
 		return literal;
 	}
 
@@ -277,8 +268,7 @@ public enum DetailEditing implements Enumerator
 	 * @generated
 	 */
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return literal;
 	}
 

@@ -33,12 +33,12 @@ import org.eclipse.emf.ecp.view.validation.test.model.util.TestValidator;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.BookImpl#getTitle <em>Title</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.BookImpl#getPages <em>Pages</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.BookImpl#getWriters <em>Writers</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
@@ -213,7 +213,8 @@ public class BookImpl extends EObjectImpl implements Book {
 		writers = newWriters;
 		if (eNotificationRequired()) {
 			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
-				TestPackage.BOOK__WRITERS, oldWriters, newWriters);
+				TestPackage.BOOK__WRITERS,
+				oldWriters, newWriters);
 			if (msgs == null) {
 				msgs = notification;
 			} else {
@@ -243,8 +244,7 @@ public class BookImpl extends EObjectImpl implements Book {
 			if (msgs != null) {
 				msgs.dispatch();
 			}
-		}
-		else if (eNotificationRequired()) {
+		} else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.BOOK__WRITERS, newWriters, newWriters));
 		}
 	}
@@ -264,13 +264,11 @@ public class BookImpl extends EObjectImpl implements Book {
 		// cancel if name is offensive
 		if (getTitle() != null && getTitle().equals("Offensive")) {
 			if (chain != null) {
-				chain.add
-					(new BasicDiagnostic
-					(Diagnostic.CANCEL,
-						TestValidator.DIAGNOSTIC_SOURCE,
-						TestValidator.BOOK__VALIDATE,
-						"Title is too offensive to validate",
-						new Object[] { this, TestPackage.eINSTANCE.getBook_Title() }));
+				chain.add(new BasicDiagnostic(Diagnostic.CANCEL,
+					TestValidator.DIAGNOSTIC_SOURCE,
+					TestValidator.BOOK__VALIDATE,
+					"Title is too offensive to validate",
+					new Object[] { this, TestPackage.eINSTANCE.getBook_Title() }));
 			}
 			wasSuccesful = false;
 		}
@@ -278,13 +276,11 @@ public class BookImpl extends EObjectImpl implements Book {
 		// error when no title
 		if (getTitle() == null || getTitle().equals("")) {
 			if (chain != null) {
-				chain.add
-					(new BasicDiagnostic
-					(Diagnostic.ERROR,
-						TestValidator.DIAGNOSTIC_SOURCE,
-						TestValidator.BOOK__VALIDATE,
-						"Books need to have a title",
-						new Object[] { this, TestPackage.eINSTANCE.getBook_Title() }));
+				chain.add(new BasicDiagnostic(Diagnostic.ERROR,
+					TestValidator.DIAGNOSTIC_SOURCE,
+					TestValidator.BOOK__VALIDATE,
+					"Books need to have a title",
+					new Object[] { this, TestPackage.eINSTANCE.getBook_Title() }));
 			}
 			wasSuccesful = false;
 		}
@@ -292,13 +288,11 @@ public class BookImpl extends EObjectImpl implements Book {
 		// warning title equals warning
 		if (getTitle() != null && getTitle().equals("Warning")) {
 			if (chain != null) {
-				chain.add
-					(new BasicDiagnostic
-					(Diagnostic.WARNING,
-						TestValidator.DIAGNOSTIC_SOURCE,
-						TestValidator.BOOK__VALIDATE,
-						"Title says warning",
-						new Object[] { this, TestPackage.eINSTANCE.getBook_Title() }));
+				chain.add(new BasicDiagnostic(Diagnostic.WARNING,
+					TestValidator.DIAGNOSTIC_SOURCE,
+					TestValidator.BOOK__VALIDATE,
+					"Title says warning",
+					new Object[] { this, TestPackage.eINSTANCE.getBook_Title() }));
 			}
 			wasSuccesful = false;
 		}
@@ -306,13 +300,11 @@ public class BookImpl extends EObjectImpl implements Book {
 		// warning when no writer
 		if (getWriters() == null) {
 			if (chain != null) {
-				chain.add
-					(new BasicDiagnostic
-					(Diagnostic.WARNING,
-						TestValidator.DIAGNOSTIC_SOURCE,
-						TestValidator.BOOK__VALIDATE,
-						"Warning: A book without a writer?",
-						new Object[] { this, TestPackage.eINSTANCE.getBook_Writers() }));
+				chain.add(new BasicDiagnostic(Diagnostic.WARNING,
+					TestValidator.DIAGNOSTIC_SOURCE,
+					TestValidator.BOOK__VALIDATE,
+					"Warning: A book without a writer?",
+					new Object[] { this, TestPackage.eINSTANCE.getBook_Writers() }));
 			}
 			wasSuccesful = false;
 		}
@@ -320,13 +312,11 @@ public class BookImpl extends EObjectImpl implements Book {
 		// info when title short
 		if (getTitle() != null && getTitle().length() == 1) {
 			if (chain != null) {
-				chain.add
-					(new BasicDiagnostic
-					(Diagnostic.INFO,
-						TestValidator.DIAGNOSTIC_SOURCE,
-						TestValidator.BOOK__VALIDATE,
-						"Very short title.",
-						new Object[] { this, TestPackage.eINSTANCE.getBook_Title() }));
+				chain.add(new BasicDiagnostic(Diagnostic.INFO,
+					TestValidator.DIAGNOSTIC_SOURCE,
+					TestValidator.BOOK__VALIDATE,
+					"Very short title.",
+					new Object[] { this, TestPackage.eINSTANCE.getBook_Title() }));
 			}
 			wasSuccesful = false;
 		}

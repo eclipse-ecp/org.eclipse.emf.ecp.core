@@ -28,7 +28,8 @@ import org.eclipse.emf.ecore.EObject;
 public interface VViewModelProperties extends EObject {
 
 	/**
-	 * Creates new {@link VViewModelProperties properties} which inherit the {@link #getInheritableProperties()
+	 * Creates new {@link VViewModelProperties properties} which inherit the
+	 * {@link #addInheritableProperty(String, Object)
 	 * inheritable properties} of this object.
 	 *
 	 * @return the new properties

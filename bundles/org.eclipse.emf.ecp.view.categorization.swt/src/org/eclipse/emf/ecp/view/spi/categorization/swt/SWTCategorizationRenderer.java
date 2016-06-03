@@ -28,6 +28,7 @@ import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
+import org.eclipse.emfforms.spi.swt.core.SWTDataElementIdHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
@@ -122,6 +123,8 @@ public class SWTCategorizationRenderer extends AbstractSWTRenderer<VCategorizati
 		dataBindingContext.bindValue(targetValue, modelValue);
 
 		whatToDoLbl.setText(LocalizationServiceHelper.getString(getClass(), MessageKeys.Categorization_Selection));
+		SWTDataElementIdHelper.setElementIdDataWithSubId(categoryComposite, getVElement(), "category", //$NON-NLS-1$
+			getViewModelContext());
 		return categoryComposite;
 	}
 

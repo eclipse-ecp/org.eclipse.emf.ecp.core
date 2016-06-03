@@ -380,8 +380,7 @@ public class ECPAbstractCustomControlSWT_PTest {
 	@Test
 	public void testInit() {
 		customControl.init(controlModel,
-			ViewModelContextFactory.INSTANCE.createViewModelContext(controlModel, domainObject)
-			);
+			ViewModelContextFactory.INSTANCE.createViewModelContext(controlModel, domainObject));
 	}
 
 	/**
@@ -498,7 +497,7 @@ public class ECPAbstractCustomControlSWT_PTest {
 		final ComposedAdapterFactory caf = new ComposedAdapterFactory(
 			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		final AdapterFactoryItemDelegator afid = new AdapterFactoryItemDelegator(caf);
-		final Setting setting = feature.getIterator().next();
+		final Setting setting = Activator.getDefault().getEMFFormsDatabinding().getSetting(feature, domainObject);
 		final IItemPropertyDescriptor propertyDescriptor = afid.getPropertyDescriptor(setting.getEObject(),
 			setting.getEStructuralFeature());
 		final String description = propertyDescriptor.getDescription(null);
@@ -524,7 +523,7 @@ public class ECPAbstractCustomControlSWT_PTest {
 		final ComposedAdapterFactory caf = new ComposedAdapterFactory(
 			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
 		final AdapterFactoryItemDelegator afid = new AdapterFactoryItemDelegator(caf);
-		final Setting setting = feature.getIterator().next();
+		final Setting setting = Activator.getDefault().getEMFFormsDatabinding().getSetting(feature, domainObject);
 		final IItemPropertyDescriptor propertyDescriptor = afid.getPropertyDescriptor(setting.getEObject(),
 			setting.getEStructuralFeature());
 		final String displayName = propertyDescriptor.getDisplayName(null);

@@ -116,6 +116,7 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	 *
 	 * @generated
 	 */
+	@Deprecated
 	@Override
 	public EList<DomainModelReferenceChangeListener> getChangeListener() {
 		if (changeListener == null) {
@@ -181,8 +182,7 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 			if (msgs != null) {
 				msgs.dispatch();
 			}
-		}
-		else if (eNotificationRequired()) {
+		} else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_ROOT, newPathFromRoot,
 				newPathFromRoot));
@@ -244,8 +244,7 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 			if (msgs != null) {
 				msgs.dispatch();
 			}
-		}
-		else if (eNotificationRequired()) {
+		} else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				ModelPackage.DYNAMIC_CONTAINMENT_TREE_DOMAIN_MODEL_REFERENCE__PATH_FROM_BASE, newPathFromBase,
 				newPathFromBase));
@@ -380,6 +379,7 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	 *
 	 * @generated NOT
 	 */
+	@Deprecated
 	@Override
 	@SuppressWarnings("unchecked")
 	public boolean init(EObject eObject) {
@@ -405,6 +405,7 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	 *
 	 * @generated NOT
 	 */
+	@Deprecated
 	@Override
 	public Iterator<Setting> getIterator() {
 		return getPathFromBase().getIterator();
@@ -418,6 +419,7 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	 *
 	 * @generated NOT
 	 */
+	@Deprecated
 	@Override
 	public Iterator<EStructuralFeature> getEStructuralFeatureIterator() {
 		return getPathFromBase().getEStructuralFeatureIterator();
@@ -445,9 +447,9 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	 *
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getFullPathIterator()
 	 */
+	@Deprecated
 	@Override
 	public Iterator<SettingPath> getFullPathIterator() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -458,8 +460,6 @@ public class DynamicContainmentTreeDomainModelReferenceImpl extends EObjectImpl 
 	 */
 	@Override
 	public void notifyChange(ModelChangeNotification notification) {
-		// TODO Auto-generated method stub
-
 	}
 
 } // DynamicContainmentTreeDomainModelReferenceImpl

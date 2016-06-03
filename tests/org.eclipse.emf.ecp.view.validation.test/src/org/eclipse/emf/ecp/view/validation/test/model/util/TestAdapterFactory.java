@@ -19,10 +19,13 @@ import org.eclipse.emf.ecp.view.validation.test.model.Book;
 import org.eclipse.emf.ecp.view.validation.test.model.Computer;
 import org.eclipse.emf.ecp.view.validation.test.model.Container;
 import org.eclipse.emf.ecp.view.validation.test.model.Content;
+import org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContainer;
+import org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContent;
 import org.eclipse.emf.ecp.view.validation.test.model.Librarian;
 import org.eclipse.emf.ecp.view.validation.test.model.Library;
 import org.eclipse.emf.ecp.view.validation.test.model.Mainboard;
 import org.eclipse.emf.ecp.view.validation.test.model.PowerBlock;
+import org.eclipse.emf.ecp.view.validation.test.model.Referencer;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContent;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild2;
@@ -95,103 +98,117 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	 *
 	 * @generated
 	 */
-	protected TestSwitch<Adapter> modelSwitch =
-		new TestSwitch<Adapter>() {
-			@Override
-			public Adapter caseLibrary(Library object) {
-				return createLibraryAdapter();
-			}
+	protected TestSwitch<Adapter> modelSwitch = new TestSwitch<Adapter>() {
+		@Override
+		public Adapter caseLibrary(Library object) {
+			return createLibraryAdapter();
+		}
 
-			@Override
-			public Adapter caseWriter(Writer object) {
-				return createWriterAdapter();
-			}
+		@Override
+		public Adapter caseWriter(Writer object) {
+			return createWriterAdapter();
+		}
 
-			@Override
-			public Adapter caseBook(Book object) {
-				return createBookAdapter();
-			}
+		@Override
+		public Adapter caseBook(Book object) {
+			return createBookAdapter();
+		}
 
-			@Override
-			public Adapter caseLibrarian(Librarian object) {
-				return createLibrarianAdapter();
-			}
+		@Override
+		public Adapter caseLibrarian(Librarian object) {
+			return createLibrarianAdapter();
+		}
 
-			@Override
-			public Adapter caseComputer(Computer object) {
-				return createComputerAdapter();
-			}
+		@Override
+		public Adapter caseComputer(Computer object) {
+			return createComputerAdapter();
+		}
 
-			@Override
-			public Adapter caseMainboard(Mainboard object) {
-				return createMainboardAdapter();
-			}
+		@Override
+		public Adapter caseMainboard(Mainboard object) {
+			return createMainboardAdapter();
+		}
 
-			@Override
-			public Adapter casePowerBlock(PowerBlock object) {
-				return createPowerBlockAdapter();
-			}
+		@Override
+		public Adapter casePowerBlock(PowerBlock object) {
+			return createPowerBlockAdapter();
+		}
 
-			@Override
-			public Adapter caseContainer(Container object) {
-				return createContainerAdapter();
-			}
+		@Override
+		public Adapter caseContainer(Container object) {
+			return createContainerAdapter();
+		}
 
-			@Override
-			public Adapter caseContent(Content object) {
-				return createContentAdapter();
-			}
+		@Override
+		public Adapter caseContent(Content object) {
+			return createContentAdapter();
+		}
 
-			@Override
-			public Adapter caseTableWithMultiplicity(TableWithMultiplicity object) {
-				return createTableWithMultiplicityAdapter();
-			}
+		@Override
+		public Adapter caseTableWithMultiplicity(TableWithMultiplicity object) {
+			return createTableWithMultiplicityAdapter();
+		}
 
-			@Override
-			public Adapter caseTableContent(TableContent object) {
-				return createTableContentAdapter();
-			}
+		@Override
+		public Adapter caseTableContent(TableContent object) {
+			return createTableContentAdapter();
+		}
 
-			@Override
-			public Adapter caseTableContentWithoutValidation(TableContentWithoutValidation object) {
-				return createTableContentWithoutValidationAdapter();
-			}
+		@Override
+		public Adapter caseTableContentWithoutValidation(TableContentWithoutValidation object) {
+			return createTableContentWithoutValidationAdapter();
+		}
 
-			@Override
-			public Adapter caseTableContentWithValidation(TableContentWithValidation object) {
-				return createTableContentWithValidationAdapter();
-			}
+		@Override
+		public Adapter caseTableContentWithValidation(TableContentWithValidation object) {
+			return createTableContentWithValidationAdapter();
+		}
 
-			@Override
-			public Adapter caseTableWithoutMultiplicity(TableWithoutMultiplicity object) {
-				return createTableWithoutMultiplicityAdapter();
-			}
+		@Override
+		public Adapter caseTableWithoutMultiplicity(TableWithoutMultiplicity object) {
+			return createTableWithoutMultiplicityAdapter();
+		}
 
-			@Override
-			public Adapter caseTableWithUnique(TableWithUnique object) {
-				return createTableWithUniqueAdapter();
-			}
+		@Override
+		public Adapter caseTableWithUnique(TableWithUnique object) {
+			return createTableWithUniqueAdapter();
+		}
 
-			@Override
-			public Adapter caseTableContentWithInnerChild2(TableContentWithInnerChild2 object) {
-				return createTableContentWithInnerChild2Adapter();
-			}
+		@Override
+		public Adapter caseTableContentWithInnerChild2(TableContentWithInnerChild2 object) {
+			return createTableContentWithInnerChild2Adapter();
+		}
 
-			@Override
-			public Adapter caseTableContentWithInnerChild(TableContentWithInnerChild object) {
-				return createTableContentWithInnerChildAdapter();
-			}
+		@Override
+		public Adapter caseTableContentWithInnerChild(TableContentWithInnerChild object) {
+			return createTableContentWithInnerChildAdapter();
+		}
 
-			@Override
-			public Adapter caseTableWithoutMultiplicityConcrete(TableWithoutMultiplicityConcrete object) {
-				return createTableWithoutMultiplicityConcreteAdapter();
-			}
+		@Override
+		public Adapter caseTableWithoutMultiplicityConcrete(TableWithoutMultiplicityConcrete object) {
+			return createTableWithoutMultiplicityConcreteAdapter();
+		}
 
-			@Override
-			public Adapter defaultCase(EObject object) {
-				return createEObjectAdapter();
-			}
-		};
+		@Override
+		public Adapter caseReferencer(Referencer object) {
+			return createReferencerAdapter();
+		}
+
+		@Override
+		public Adapter caseCrossReferenceContainer(CrossReferenceContainer object) {
+			return createCrossReferenceContainerAdapter();
+		}
+
+		@Override
+		public Adapter caseCrossReferenceContent(CrossReferenceContent object) {
+			return createCrossReferenceContentAdapter();
+		}
+
+		@Override
+		public Adapter defaultCase(EObject object) {
+			return createEObjectAdapter();
+		}
+	};
 
 	/**
 	 * Creates an adapter for the <code>target</code>.
@@ -498,6 +515,55 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createTableWithoutMultiplicityConcreteAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.validation.test.model.Referencer
+	 * <em>Referencer</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.Referencer
+	 * @generated
+	 */
+	public Adapter createReferencerAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '
+	 * {@link org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContainer <em>Cross Reference Container</em>}
+	 * '.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContainer
+	 * @generated
+	 */
+	public Adapter createCrossReferenceContainerAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '
+	 * {@link org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContent <em>Cross Reference Content</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContent
+	 * @generated
+	 */
+	public Adapter createCrossReferenceContentAdapter() {
 		return null;
 	}
 

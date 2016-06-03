@@ -32,12 +32,14 @@ public class LabelAlignmentMigration extends CustomMigration {
 
 	@Override
 	public void migrateAfter(Model model, Metamodel metamodel) throws MigrationException {
-		final EAttribute eAttribute = metamodel.getEAttribute("model.Control.labelAlignment"); //$NON-NLS-1$
+		final EAttribute eAttribute = metamodel
+			.getEAttribute("http://org/eclipse/emf/ecp/view/model/170.Control.labelAlignment"); //$NON-NLS-1$
 		final EEnum eenum = EEnum.class.cast(eAttribute.getEAttributeType());
 		final EEnumLiteral left = eenum.getEEnumLiteral("Left"); //$NON-NLS-1$
 		final EEnumLiteral def = eenum.getEEnumLiteral("Default"); //$NON-NLS-1$
 
-		final EList<Instance> allControlsIncludingSubclasses = model.getAllInstances("model.Control"); //$NON-NLS-1$
+		final EList<Instance> allControlsIncludingSubclasses = model
+			.getAllInstances("http://org/eclipse/emf/ecp/view/model/170.Control"); //$NON-NLS-1$
 		for (final Instance control : allControlsIncludingSubclasses) {
 			final Object object = control.get(eAttribute);
 			if (def.getInstance() == object) {

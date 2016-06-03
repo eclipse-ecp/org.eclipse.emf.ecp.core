@@ -36,6 +36,8 @@ import org.eclipse.emfforms.internal.spreadsheet.core.renderer.EMFFormsSpreadshe
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
+import org.eclipse.emfforms.spi.core.services.domainexpander.EMFFormsDomainExpander;
+import org.eclipse.emfforms.spi.core.services.domainexpander.EMFFormsExpandingFailedException;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsAbstractSpreadsheetRenderer;
@@ -64,6 +66,7 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 	private final EMFFormsIdProvider emfFormsIdProvider;
 	private final EMFFormsSpreadsheetValueConverterRegistry converterRegistry;
 	private final EMFFormsSpreadsheetFormatDescriptionProvider formatDescriptionProvider;
+	private final EMFFormsDomainExpander domainExpander;
 
 	/**
 	 * Default constructor.
@@ -76,6 +79,7 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 	 * @param emfFormsIdProvider The {@link EMFFormsIdProvider}
 	 * @param converterRegistry The {@link EMFFormsSpreadsheetValueConverterRegistry}
 	 * @param formatDescriptionProvider The {@link EMFFormsSpreadsheetFormatDescriptionProvider}
+	 * @param domainExpander the {@link EMFFormsDomainExpander}
 	 */
 	// BEGIN COMPLEX CODE
 	public EMFFormsSpreadsheetTableControlRenderer(
@@ -86,7 +90,8 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 		VTViewTemplateProvider vtViewTemplateProvider,
 		EMFFormsIdProvider emfFormsIdProvider,
 		EMFFormsSpreadsheetValueConverterRegistry converterRegistry,
-		EMFFormsSpreadsheetFormatDescriptionProvider formatDescriptionProvider) {
+		EMFFormsSpreadsheetFormatDescriptionProvider formatDescriptionProvider,
+		EMFFormsDomainExpander domainExpander) {
 		this.emfformsDatabinding = emfformsDatabinding;
 		this.emfformsLabelProvider = emfformsLabelProvider;
 		this.reportService = reportService;
@@ -95,6 +100,7 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 		this.emfFormsIdProvider = emfFormsIdProvider;
 		this.converterRegistry = converterRegistry;
 		this.formatDescriptionProvider = formatDescriptionProvider;
+		this.domainExpander = domainExpander;
 	}
 	// END COMPLEX CODE
 
@@ -105,13 +111,13 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 	 *      org.eclipse.emf.ecp.view.spi.model.VElement, org.eclipse.emf.ecp.view.spi.context.ViewModelContext,
 	 *      org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetRenderTarget)
 	 */
-
+	// BEGIN COMPLEX CODE
 	@Override
 	public int render(Workbook workbook, VTableControl vElement, final ViewModelContext viewModelContext,
 		EMFFormsSpreadsheetRenderTarget eMFFormsSpreadsheetRenderTarget) {
 		final EMFFormsSpreadsheetControlRenderer controlRenderer = new EMFFormsSpreadsheetControlRenderer(
 			emfformsDatabinding, emfformsLabelProvider, reportService, vtViewTemplateProvider, emfFormsIdProvider,
-			converterRegistry, formatDescriptionProvider);
+			converterRegistry, formatDescriptionProvider, domainExpander);
 		int numColumns = 0;
 		try {
 			final EMFFormsExportTableParent exportTableParent = (EMFFormsExportTableParent) viewModelContext
@@ -124,8 +130,13 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 
 				dmrToResolve = exportTableParent.getIndexDMRToResolve();
 			}
-			// TODO remove asap
-			dmrToResolve.init(viewModelContext.getDomainModel());
+
+			try {
+				domainExpander.prepareDomainObject(dmrToResolve, viewModelContext.getDomainModel());
+			} catch (final EMFFormsExpandingFailedException ex) {
+				reportService.report(new EMFFormsSpreadsheetReport(ex, EMFFormsSpreadsheetReport.ERROR));
+				return numColumns;
+			}
 
 			final Setting tableSetting = emfformsDatabinding.getSetting(
 				dmrToResolve, viewModelContext.getDomainModel());
@@ -206,6 +217,7 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 		return numColumns;
 	}
 
+	// END COMPLEX CODE
 	/**
 	 * Returns the number of entries that should be exported.
 	 *

@@ -18,12 +18,10 @@ import static org.mockito.Matchers.notNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.util.Collections;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
@@ -74,8 +72,6 @@ public class ViewTemplateService_Test {
 		final VControl vElement = mock(VControl.class);
 		final VDomainModelReference dmr = mock(VDomainModelReference.class);
 		when(vElement.getDomainModelReference()).thenReturn(dmr);
-		final Setting setting = mock(Setting.class);
-		when(dmr.getIterator()).thenReturn(Collections.singleton(setting).iterator());
 		final ViewModelContext viewModelContext = mock(ViewModelContext.class);
 		final Set<VTStyleProperty> styleProperties = templateProvider.getStyleProperties(vElement, viewModelContext);
 
@@ -93,8 +89,6 @@ public class ViewTemplateService_Test {
 		final VControl vElement = mock(VControl.class);
 		final VDomainModelReference dmr = mock(VDomainModelReference.class);
 		when(vElement.getDomainModelReference()).thenReturn(dmr);
-		final Setting setting = mock(Setting.class);
-		when(dmr.getIterator()).thenReturn(Collections.singleton(setting).iterator());
 		final ViewModelContext viewModelContext = mock(ViewModelContext.class);
 		final Set<VTStyleProperty> styleProperties = templateProvider.getStyleProperties(vElement, viewModelContext);
 
@@ -116,8 +110,6 @@ public class ViewTemplateService_Test {
 		final VControl vElement = mock(VControl.class);
 		final VDomainModelReference dmr = mock(VDomainModelReference.class);
 		when(vElement.getDomainModelReference()).thenReturn(dmr);
-		final Setting setting = mock(Setting.class);
-		when(dmr.getIterator()).thenReturn(Collections.singleton(setting).iterator());
 		final ViewModelContext viewModelContext = mock(ViewModelContext.class);
 		final Set<VTStyleProperty> styleProperties = templateProvider.getStyleProperties(vElement, viewModelContext);
 
@@ -165,8 +157,6 @@ public class ViewTemplateService_Test {
 		final VControl vElement = mock(VControl.class);
 		final VDomainModelReference dmr = mock(VDomainModelReference.class);
 		when(vElement.getDomainModelReference()).thenReturn(dmr);
-		final Setting setting = mock(Setting.class);
-		when(dmr.getIterator()).thenReturn(Collections.singleton(setting).iterator());
 		final ViewModelContext viewModelContext = mock(ViewModelContext.class);
 		final Set<VTStyleProperty> styleProperties = templateProvider.getStyleProperties(vElement, viewModelContext);
 

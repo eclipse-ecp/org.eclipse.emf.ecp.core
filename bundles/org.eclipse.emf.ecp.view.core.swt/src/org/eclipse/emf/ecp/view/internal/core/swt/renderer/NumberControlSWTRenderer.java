@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -21,6 +21,7 @@ import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.NumericalHelper;
 import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
@@ -74,11 +75,13 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 	 * @param localeProvider The {@link EMFFormsLocaleProvider}
 	 */
 	@Inject
+	// CHECKSTYLE.OFF: ParameterNumber
 	public NumberControlSWTRenderer(VControl vElement, ViewModelContext viewContext,
 		ReportService reportService,
 		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
 		VTViewTemplateProvider vtViewTemplateProvider, EMFFormsEditSupport emfFormsEditSupport,
 		EMFFormsLocalizationService localizationService, EMFFormsLocaleProvider localeProvider) {
+		// CHECKSTYLE.ON: ParameterNumber
 		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider,
 			emfFormsEditSupport);
 		this.localizationService = localizationService;
@@ -134,12 +137,10 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 		final NumericalModelToTargetUpdateStrategy modelToTargetStrategy = new NumericalModelToTargetUpdateStrategy(
 			getInstanceClass(structuralFeature), getViewModelContext(), false);
 		final Binding binding = bindValue(control, getModelValue(), getDataBindingContext(),
-			targetToModelStrategy,
-			modelToTargetStrategy);
+			targetToModelStrategy, modelToTargetStrategy);
 		final Binding tooltipBinding = createTooltipBinding(control, getModelValue(), getDataBindingContext(),
 			targetToModelStrategy,
-			new NumericalModelToTargetUpdateStrategy(
-				getInstanceClass(structuralFeature), getViewModelContext(), true));
+			new NumericalModelToTargetUpdateStrategy(getInstanceClass(structuralFeature), getViewModelContext(), true));
 
 		emfFormsLocaleChangeListener = new EMFFormsLocaleChangeListener() {
 
@@ -172,7 +173,7 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 		private final Class<?> instanceClass;
 		private final ViewModelContext viewModelContext;
 
-		public NumericalModelToTargetUpdateStrategy(Class<?> instanceClass, ViewModelContext viewModelContext,
+		NumericalModelToTargetUpdateStrategy(Class<?> instanceClass, ViewModelContext viewModelContext,
 			boolean tooltip) {
 			super(tooltip);
 			this.instanceClass = instanceClass;
@@ -183,7 +184,7 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 		@Override
 		public Object convertValue(Object value) {
 			if (value == null) {
-				return "";
+				return ""; //$NON-NLS-1$
 			}
 			final DecimalFormat format = NumericalHelper.setupFormat(localeProvider.getLocale(),
 				instanceClass);
@@ -205,7 +206,7 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 		private final EStructuralFeature eStructuralFeature;
 		private final DataBindingContext dataBindingContext;
 
-		public NumericalTargetToModelUpdateStrategy(EStructuralFeature eStructuralFeature,
+		NumericalTargetToModelUpdateStrategy(EStructuralFeature eStructuralFeature,
 			ViewModelContext viewModelContext, IObservableValue modelValue, DataBindingContext dataBindingContext,
 			Text text) {
 			super(eStructuralFeature.isUnsettable());
@@ -214,7 +215,6 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 			this.modelValue = modelValue;
 			this.dataBindingContext = dataBindingContext;
 			this.text = text;
-
 		}
 
 		private DecimalFormat getFormat() {
@@ -233,41 +233,17 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 					final ParsePosition pp = new ParsePosition(0);
 					number = format.parse((String) value, pp);
 					if (pp.getErrorIndex() != -1 || pp.getIndex() != ((String) value).length()) {
-						return revertToOldValue(value);
+						return getOldValue(value);
 					}
 					if (NumericalHelper.isInteger(getInstanceClass(eStructuralFeature))) {
 						boolean maxValue = false;
 						boolean minValue = false;
 						final Class<?> instanceClass = getInstanceClass(eStructuralFeature);
-						String formatedValue = ""; //$NON-NLS-1$
 						try {
-							if (Integer.class.isAssignableFrom(instanceClass)
-								|| Integer.class.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
-								if (number.doubleValue() >= Integer.MAX_VALUE) {
-									maxValue = true;
-									formatedValue = format.format(Integer.MAX_VALUE);
-								} else if (number.doubleValue() <= Integer.MIN_VALUE) {
-									minValue = true;
-									formatedValue = format.format(Integer.MIN_VALUE);
-								}
-							} else if (Long.class.isAssignableFrom(instanceClass)
-								|| Long.class.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
-								if (number.doubleValue() >= Long.MAX_VALUE) {
-									maxValue = true;
-									formatedValue = format.format(Long.MAX_VALUE);
-								} else if (number.doubleValue() <= Long.MIN_VALUE) {
-									minValue = true;
-									formatedValue = format.format(Long.MIN_VALUE);
-								}
-							} else if (Short.class.isAssignableFrom(instanceClass)
-								|| Short.class.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
-								if (number.doubleValue() >= Short.MAX_VALUE) {
-									maxValue = true;
-									formatedValue = format.format(Short.MAX_VALUE);
-								} else if (number.doubleValue() <= Short.MIN_VALUE) {
-									minValue = true;
-									formatedValue = format.format(Short.MIN_VALUE);
-								}
+							if (number.doubleValue() >= getInstanceMaxValue(instanceClass)) {
+								maxValue = true;
+							} else if (number.doubleValue() <= getInstanceMinValue(instanceClass)) {
+								minValue = true;
 							}
 						} catch (final IllegalArgumentException ex) {
 							Activator.logException(ex);
@@ -280,7 +256,6 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 						}
 
 						if (maxValue || minValue) {
-							text.setText(formatedValue);
 							return NumericalHelper.numberToInstanceClass(number, getInstanceClass(eStructuralFeature));
 						}
 					}
@@ -289,23 +264,64 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 				if (number != null) {
 					formatedNumber = format.format(number);
 				}
-				text.setText(formatedNumber);
 				if (formatedNumber.length() == 0) {
 					return null;
 				}
 				return NumericalHelper.numberToInstanceClass(format.parse(formatedNumber),
 					getInstanceClass(eStructuralFeature));
 			} catch (final ParseException ex) {
-				return revertToOldValue(value);
+				return getOldValue(value);
 			}
 		}
 
-		private Object revertToOldValue(final Object value) {
+		private double getInstanceMinValue(Class<?> instanceClass)
+			throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException {
+			if (Integer.class.isAssignableFrom(instanceClass)
+				|| Integer.class.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
+				return Integer.MIN_VALUE;
+			}
+			if (Long.class.isAssignableFrom(instanceClass)
+				|| Long.class.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
+				return Long.MIN_VALUE;
+			}
+			if (Short.class.isAssignableFrom(instanceClass)
+				|| Short.class.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
+				return Short.MIN_VALUE;
+			}
 
+			return Double.NaN;
+		}
+
+		private double getInstanceMaxValue(Class<?> instanceClass)
+			throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException {
+			if (Integer.class.isAssignableFrom(instanceClass)
+				|| Integer.class.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
+				return Integer.MAX_VALUE;
+			}
+			if (Long.class.isAssignableFrom(instanceClass)
+				|| Long.class.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
+				return Long.MAX_VALUE;
+			}
+			if (Short.class.isAssignableFrom(instanceClass)
+				|| Short.class.getField("TYPE").get(null).equals(instanceClass)) { //$NON-NLS-1$
+				return Short.MAX_VALUE;
+			}
+
+			return Double.NaN;
+		}
+
+		@Override
+		protected IStatus doSet(IObservableValue observableValue, Object value) {
+			final IStatus status = super.doSet(observableValue, value);
+			// update targets after a model change triggered by the target to model databinding
+			dataBindingContext.updateTargets();
+			return status;
+		}
+
+		private Object getOldValue(final Object value) {
 			if (eStructuralFeature.getDefaultValue() == null && (value == null || value.equals(""))) { //$NON-NLS-1$
 				return null;
 			}
-
 			final Object result = modelValue.getValue();
 
 			final MessageDialog messageDialog = new MessageDialog(text.getShell(),
@@ -320,12 +336,6 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 
 				}
 			}.execute();
-
-			// if (result == null) {
-			// text.setText(""); //$NON-NLS-1$
-			// } else {
-			dataBindingContext.updateTargets();
-			// }
 
 			if (eStructuralFeature.isUnsettable() && result == null) {
 				// showUnsetLabel();

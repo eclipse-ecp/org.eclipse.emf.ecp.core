@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.&#xD;&#xA;&#xD;&#xA;All rights reserved. This program and the accompanying materials&#xD;&#xA;are made available under the terms of the Eclipse Public License v1.0&#xD;&#xA;which accompanies this distribution, and is available at&#xD;&#xA;http://www.eclipse.org/legal/epl-v10.html&#xD;&#xA;&#xD;&#xA;Contributors:"
+    modelDirectory="/org.eclipse.emf.ecp.view.edapt.test/src" modelPluginID="org.eclipse.emf.ecp.view.edapt.test"
+    modelName="EdaptTestModel" nonNLSMarkers="true" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="6.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>EdaptTestModel.ecore</foreignModel>
+  <genPackages prefix="Model" basePackage="org.eclipse.emf.ecp.view.edapt.test" disposableProviderFactory="true"
+      ecorePackage="EdaptTestModel.ecore#/">
+    <genClasses ecoreClass="EdaptTestModel.ecore#//Foo">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EdaptTestModel.ecore#//Foo/bar"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

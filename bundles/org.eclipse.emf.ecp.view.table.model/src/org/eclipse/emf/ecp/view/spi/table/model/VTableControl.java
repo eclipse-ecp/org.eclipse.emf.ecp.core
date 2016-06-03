@@ -22,23 +22,23 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#isAddRemoveDisabled <em>Add Remove Disabled</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#getColumnConfigurations <em>Column Configurations
- * </em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#isAddRemoveDisabled <em>Add Remove Disabled</em>}
+ * </li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#getColumnConfigurations
+ * <em>Column Configurations</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#getDetailEditing <em>Detail Editing</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#getDetailView <em>Detail View</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#isEnableDetailEditingDialog <em>Enable Detail
- * Editing Dialog</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#isEnableDetailEditingDialog
+ * <em>Enable Detail Editing Dialog</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage#getTableControl()
  * @model
  * @generated
  */
-public interface VTableControl extends VControl
-{
+public interface VTableControl extends VControl {
 	/**
 	 * Returns the value of the '<em><b>Add Remove Disabled</b></em>' attribute.
 	 * The default value is <code>"false"</code>.
@@ -158,7 +158,7 @@ public interface VTableControl extends VControl
 	 * </p>
 	 *
 	 * @deprecated
-	 *             <!-- end-user-doc -->
+	 * 			<!-- end-user-doc -->
 	 * @return the value of the '<em>Enable Detail Editing Dialog</em>' attribute.
 	 * @see #setEnableDetailEditingDialog(boolean)
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage#getTableControl_EnableDetailEditingDialog()
@@ -174,7 +174,7 @@ public interface VTableControl extends VControl
 	 * <!-- begin-user-doc -->
 	 *
 	 * @deprecated
-	 *             <!-- end-user-doc -->
+	 * 			<!-- end-user-doc -->
 	 * @param value the new value of the '<em>Enable Detail Editing Dialog</em>' attribute.
 	 * @see #isEnableDetailEditingDialog()
 	 * @generated

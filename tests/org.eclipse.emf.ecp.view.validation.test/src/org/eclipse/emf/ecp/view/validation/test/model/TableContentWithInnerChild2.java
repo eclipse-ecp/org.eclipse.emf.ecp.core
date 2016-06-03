@@ -19,11 +19,11 @@ package org.eclipse.emf.ecp.view.validation.test.model;
  *
  * <p>
  * The following features are supported:
- * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild2#getInnerChild <em>Inner Child
- * </em>}</li>
- * </ul>
  * </p>
+ * <ul>
+ * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild2#getInnerChild
+ * <em>Inner Child</em>}</li>
+ * </ul>
  *
  * @see org.eclipse.emf.ecp.view.validation.test.model.TestPackage#getTableContentWithInnerChild2()
  * @model

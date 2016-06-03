@@ -553,5 +553,134 @@
     <changes xsi:type="history:Set" element="view.ecore#/" featureName="nsURI" dataValue="http://org/eclipse/emf/ecp/view/model/170"
         oldDataValue="http://org/eclipse/emf/ecp/view/model"/>
   </releases>
-  <releases/>
+  <releases>
+    <changes xsi:type="history:OperationChange">
+      <changes xsi:type="history:Create" target="view.ecore#/" referenceName="eClassifiers"
+          element="view.ecore#//DateTimeDisplayType">
+        <changes xsi:type="history:Set" element="view.ecore#//DateTimeDisplayType"
+            featureName="name" dataValue="DateTimeDisplayType"/>
+      </changes>
+      <changes xsi:type="history:Create" target="view.ecore#//DateTimeDisplayType"
+          referenceName="eLiterals" element="view.ecore#//DateTimeDisplayType/TimeAndDate">
+        <changes xsi:type="history:Set" element="view.ecore#//DateTimeDisplayType/TimeAndDate"
+            featureName="name" dataValue="TimeAndDate"/>
+        <changes xsi:type="history:Set" element="view.ecore#//DateTimeDisplayType/TimeAndDate"
+            featureName="literal" dataValue="TimeAndDate"/>
+      </changes>
+      <changes xsi:type="history:Create" target="view.ecore#//DateTimeDisplayType"
+          referenceName="eLiterals" element="view.ecore#//DateTimeDisplayType/TimeOnly">
+        <changes xsi:type="history:Set" element="view.ecore#//DateTimeDisplayType/TimeOnly"
+            featureName="name" dataValue="TimeOnly"/>
+        <changes xsi:type="history:Set" element="view.ecore#//DateTimeDisplayType/TimeOnly"
+            featureName="literal" dataValue="TimeOnly"/>
+        <changes xsi:type="history:Set" element="view.ecore#//DateTimeDisplayType/TimeOnly"
+            featureName="value" dataValue="1" oldDataValue="0"/>
+      </changes>
+      <changes xsi:type="history:Create" target="view.ecore#//DateTimeDisplayType"
+          referenceName="eLiterals" element="view.ecore#//DateTimeDisplayType/DateOnly">
+        <changes xsi:type="history:Set" element="view.ecore#//DateTimeDisplayType/DateOnly"
+            featureName="name" dataValue="DateOnly"/>
+        <changes xsi:type="history:Set" element="view.ecore#//DateTimeDisplayType/DateOnly"
+            featureName="literal" dataValue="DateOnly"/>
+        <changes xsi:type="history:Set" element="view.ecore#//DateTimeDisplayType/DateOnly"
+            featureName="value" dataValue="2" oldDataValue="0"/>
+      </changes>
+      <operation name="createEnumeration">
+        <parameters name="ePackage">
+          <referenceValue element="view.ecore#/"/>
+        </parameters>
+        <parameters name="name">
+          <dataValue>DateTimeDisplayType</dataValue>
+        </parameters>
+        <parameters name="literals">
+          <dataValue>TimeAndDate</dataValue>
+          <dataValue>TimeOnly</dataValue>
+          <dataValue>DateOnly</dataValue>
+        </parameters>
+      </operation>
+    </changes>
+    <changes xsi:type="history:OperationChange">
+      <changes xsi:type="history:Create" target="view.ecore#/" referenceName="eClassifiers"
+          element="view.ecore#//DateTimeDisplayAttachment">
+        <changes xsi:type="history:Set" element="view.ecore#//DateTimeDisplayAttachment"
+            featureName="name" dataValue="DateTimeDisplayAttachment"/>
+        <changes xsi:type="history:Add" element="view.ecore#//DateTimeDisplayAttachment"
+            featureName="eSuperTypes" referenceValue="view.ecore#//Attachment"/>
+      </changes>
+      <operation name="newClass">
+        <parameters name="ePackage">
+          <referenceValue element="view.ecore#/"/>
+        </parameters>
+        <parameters name="name">
+          <dataValue>DateTimeDisplayAttachment</dataValue>
+        </parameters>
+        <parameters name="superClasses">
+          <referenceValue element="view.ecore#//Attachment"/>
+        </parameters>
+        <parameters name="abstr">
+          <dataValue>false</dataValue>
+        </parameters>
+      </operation>
+    </changes>
+    <changes xsi:type="history:OperationChange">
+      <changes xsi:type="history:Create" target="view.ecore#//DateTimeDisplayAttachment"
+          referenceName="eStructuralFeatures" element="view.ecore#//DateTimeDisplayAttachment/displayType">
+        <changes xsi:type="history:Set" element="view.ecore#//DateTimeDisplayAttachment/displayType"
+            featureName="name" dataValue="displayType"/>
+        <changes xsi:type="history:Set" element="view.ecore#//DateTimeDisplayAttachment/displayType"
+            featureName="eType" referenceValue="view.ecore#//DateTimeDisplayType"/>
+      </changes>
+      <operation name="newAttribute">
+        <parameters name="eClass">
+          <referenceValue element="view.ecore#//DateTimeDisplayAttachment"/>
+        </parameters>
+        <parameters name="name">
+          <dataValue>displayType</dataValue>
+        </parameters>
+        <parameters name="type">
+          <referenceValue element="view.ecore#//DateTimeDisplayType"/>
+        </parameters>
+        <parameters name="lowerBound">
+          <dataValue>0</dataValue>
+        </parameters>
+        <parameters name="upperBound">
+          <dataValue>1</dataValue>
+        </parameters>
+        <parameters name="defaultValue">
+          <dataValue xsi:nil="true"/>
+        </parameters>
+      </operation>
+    </changes>
+    <changes xsi:type="history:OperationChange">
+      <changes xsi:type="history:Create" target="view.ecore#//Element" referenceName="eStructuralFeatures"
+          element="view.ecore#//Element/uuid">
+        <changes xsi:type="history:Set" element="view.ecore#//Element/uuid" featureName="name"
+            dataValue="uuid"/>
+        <changes xsi:type="history:Set" element="view.ecore#//Element/uuid" featureName="eType"
+            referenceValue="../../org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+      </changes>
+      <operation name="newAttribute">
+        <parameters name="eClass">
+          <referenceValue element="view.ecore#//Element"/>
+        </parameters>
+        <parameters name="name">
+          <dataValue>uuid</dataValue>
+        </parameters>
+        <parameters name="type">
+          <referenceValue element="../../org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+        </parameters>
+        <parameters name="lowerBound">
+          <dataValue>0</dataValue>
+        </parameters>
+        <parameters name="upperBound">
+          <dataValue>1</dataValue>
+        </parameters>
+        <parameters name="defaultValue">
+          <dataValue xsi:nil="true"/>
+        </parameters>
+      </operation>
+    </changes>
+    <changes xsi:type="history:Set" element="view.ecore#//Element/uuid" featureName="transient"
+        dataValue="true" oldDataValue="false"/>
+  </releases>
 </history:History>

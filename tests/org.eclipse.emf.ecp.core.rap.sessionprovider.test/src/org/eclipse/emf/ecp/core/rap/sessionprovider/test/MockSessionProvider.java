@@ -12,6 +12,7 @@
 package org.eclipse.emf.ecp.core.rap.sessionprovider.test;
 
 import org.eclipse.emf.ecp.core.rap.SessionProvider;
+import org.eclipse.rap.rwt.service.UISessionListener;
 
 /**
  * This s a mock session provider for testing, it does not
@@ -85,6 +86,16 @@ public class MockSessionProvider implements SessionProvider {
 		}
 		return (++sessionId) + ""; //$NON-NLS-1$
 
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.core.rap.SessionProvider#registerListenerWithSession(UISessionListener)
+	 */
+	@Override
+	public void registerListenerWithSession(UISessionListener listener) {
+		// do nothing since this is the Mock inplementation.
 	}
 
 }

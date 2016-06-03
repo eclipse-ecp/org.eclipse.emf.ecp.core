@@ -57,4 +57,13 @@ public class ESWorkspaceProviderProviderImpl implements ESWorkspaceProviderProvi
 
 	}
 
+	/**
+	 *
+	 */
+	public void removeESWorkspaceProviderInstance() {
+
+		ESWorkspaceProviderImpl.removeInstance(token);
+
+	}
+
 }

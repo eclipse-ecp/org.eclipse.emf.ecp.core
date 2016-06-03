@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -46,7 +46,7 @@ public class EMFIndexedValueProperty_Test {
 	 * Test method for {@link EMFIndexedValueProperty#doGetValue(java.lang.Object)} .
 	 */
 	@Test
-	public void testDoGetValueNull() {
+	public void testDoGetValueNoChildrenIndex0() {
 		final EMFIndexedValueProperty indexedValueProperty = new EMFIndexedValueProperty(null, 0,
 			TestPackage.eINSTANCE.getB_CList());
 		final B b = TestFactory.eINSTANCE.createB();
@@ -57,7 +57,47 @@ public class EMFIndexedValueProperty_Test {
 	 * Test method for {@link EMFIndexedValueProperty#doGetValue(java.lang.Object)} .
 	 */
 	@Test
-	public void testDoGetValue() {
+	public void testDoGetValueNullNoChildrenIndex1() {
+		final EMFIndexedValueProperty indexedValueProperty = new EMFIndexedValueProperty(null, 1,
+			TestPackage.eINSTANCE.getB_CList());
+		final B b = TestFactory.eINSTANCE.createB();
+		assertNull(indexedValueProperty.doGetValue(b));
+	}
+
+	/**
+	 * Test method for {@link EMFIndexedValueProperty#doGetValue(java.lang.Object)} .
+	 */
+	@Test
+	public void testDoGetValueNullOneChildIndex1() {
+		final EMFIndexedValueProperty indexedValueProperty = new EMFIndexedValueProperty(null, 1,
+			TestPackage.eINSTANCE.getB_CList());
+		final B b = TestFactory.eINSTANCE.createB();
+		final C c0 = TestFactory.eINSTANCE.createC();
+		b.getCList().add(c0);
+		assertNull(indexedValueProperty.doGetValue(b));
+	}
+
+	/**
+	 * Test method for {@link EMFIndexedValueProperty#doGetValue(java.lang.Object)} .
+	 */
+	@Test
+	public void testDoGetValueIndex0() {
+		final EMFIndexedValueProperty indexedValueProperty = new EMFIndexedValueProperty(null, 0,
+			TestPackage.eINSTANCE.getB_CList());
+		final B b = TestFactory.eINSTANCE.createB();
+		final C c1 = TestFactory.eINSTANCE.createC();
+		final C c2 = TestFactory.eINSTANCE.createC();
+		b.getCList().add(c1);
+		b.getCList().add(c2);
+
+		assertEquals(c1, indexedValueProperty.doGetValue(b));
+	}
+
+	/**
+	 * Test method for {@link EMFIndexedValueProperty#doGetValue(java.lang.Object)} .
+	 */
+	@Test
+	public void testDoGetValueIndex1() {
 		final EMFIndexedValueProperty indexedValueProperty = new EMFIndexedValueProperty(null, 1,
 			TestPackage.eINSTANCE.getB_CList());
 		final B b = TestFactory.eINSTANCE.createB();

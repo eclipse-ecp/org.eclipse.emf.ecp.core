@@ -139,7 +139,8 @@ public class ValidationServiceGC_PTest extends CommonValidationTest {
 		final GCCollectable controlCollectable = new GCCollectable(
 			VVerticalLayout.class.cast(
 				VVerticalLayout.class.cast(view.getChildren().get(0))
-					.getChildren().get(0)).getChildren()
+					.getChildren().get(0))
+				.getChildren()
 				.get(0));
 
 		view.getChildren().remove(0);

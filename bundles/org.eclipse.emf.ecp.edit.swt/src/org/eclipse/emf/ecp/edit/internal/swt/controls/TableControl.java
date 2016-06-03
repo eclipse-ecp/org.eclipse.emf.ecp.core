@@ -758,7 +758,7 @@ public class TableControl extends SWTControl {
 		private static final int NONE = 0;
 		private int direction = NONE;
 
-		public ECPTableViewerComparator() {
+		ECPTableViewerComparator() {
 			propertyIndex = 0;
 			direction = NONE;
 		}
@@ -1022,7 +1022,7 @@ public class TableControl extends SWTControl {
 		/**
 		 * @param viewer
 		 */
-		public ECPTableEditingSupport(ColumnViewer viewer, CellEditor cellEditor, EStructuralFeature feature) {
+		ECPTableEditingSupport(ColumnViewer viewer, CellEditor cellEditor, EStructuralFeature feature) {
 			super(viewer);
 			this.cellEditor = cellEditor;
 			cellFeature = feature;

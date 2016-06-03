@@ -50,8 +50,7 @@ public final class TableEditPlugin extends EMFPlugin {
 	 * @generated
 	 */
 	public TableEditPlugin() {
-		super(new ResourceLocator[]
-		{
+		super(new ResourceLocator[] {
 			EcoreEditPlugin.INSTANCE,
 			ViewEditPlugin.INSTANCE,
 		});

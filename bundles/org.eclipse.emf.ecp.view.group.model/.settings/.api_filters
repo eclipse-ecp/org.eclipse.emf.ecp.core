@@ -106,15 +106,19 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/ecp/view/spi/group/model/VGroupPackage.java">
-        <filter comment="Changes due to new label field in 1.6" id="0"/>
-    </resource>
     <resource path="src/org/eclipse/emf/ecp/view/spi/group/model/VGroupPackage.java" type="org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage">
         <filter comment="Changes due to new label field in 1.6" id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage"/>
                 <message_argument value="GROUP_FEATURE_COUNT"/>
                 <message_argument value="10"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage"/>
+                <message_argument value="GROUP_FEATURE_COUNT"/>
+                <message_argument value="11"/>
             </message_arguments>
         </filter>
         <filter comment="This is SPI" id="388194388">
@@ -152,6 +156,20 @@
                 <message_argument value="6"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage"/>
+                <message_argument value="GROUP__CHILDREN"/>
+                <message_argument value="7"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage"/>
+                <message_argument value="GROUP__COLLAPSED"/>
+                <message_argument value="10"/>
+            </message_arguments>
+        </filter>
         <filter comment="Changes due to new label field in 1.6" id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage"/>
@@ -180,11 +198,25 @@
                 <message_argument value="7"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage"/>
+                <message_argument value="GROUP__GROUP_TYPE"/>
+                <message_argument value="8"/>
+            </message_arguments>
+        </filter>
         <filter comment="Changes due to new label field in 1.6" id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage"/>
                 <message_argument value="GROUP__LABEL_ALIGNMENT"/>
                 <message_argument value="8"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage"/>
+                <message_argument value="GROUP__LABEL_ALIGNMENT"/>
+                <message_argument value="9"/>
             </message_arguments>
         </filter>
         <filter comment="Changes due to new label field in 1.6" id="388194388">

@@ -18,6 +18,7 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({
 	ValidationServiceGC_PTest.class,
+	ValidationService_PTest.class,
 	ViewValidation_PTest.class,
 	VDiagnosticHelper_Test.class,
 	ValidationProvider_PTest.class,

@@ -49,7 +49,7 @@ import org.eclipse.net4j.util.AdapterUtil;
  * @author Eike Stepper
  * @author Eugen Neufeld
  */
-public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, ECPObserver>implements
+public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvider, ECPObserver> implements
 	ECPProviderRegistry {
 
 	private final ProviderParser extensionParser = new ProviderParser();
@@ -61,7 +61,12 @@ public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvi
 
 	}
 
-	/** {@inheritDoc} **/
+	/**
+	 * Gets a provider from an adaptabel object.
+	 * 
+	 * @param adaptable the adaptabel Object
+	 * @return The {@link InternalProvider}
+	 */
 	public InternalProvider getProvider(Object adaptable) {
 		if (adaptable instanceof ECPProviderAware) {
 			final ECPProviderAware providerAware = (ECPProviderAware) adaptable;
@@ -130,7 +135,7 @@ public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvi
 	private final class ProviderParser extends ExtensionParser<InternalProvider> {
 		private static final String EXTENSION_POINT_NAME = "providers"; //$NON-NLS-1$
 
-		public ProviderParser() {
+		ProviderParser() {
 			super(ECPProviderRegistryImpl.this, Activator.PLUGIN_ID, EXTENSION_POINT_NAME);
 		}
 
@@ -146,10 +151,10 @@ public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvi
 	/**
 	 * @author Eike Stepper
 	 */
-	private final class ProviderDescriptor extends ExtensionDescriptor<InternalProvider>implements InternalProvider {
+	private final class ProviderDescriptor extends ExtensionDescriptor<InternalProvider> implements InternalProvider {
 		private AdapterProvider uiProvider;
 
-		public ProviderDescriptor(String name, IConfigurationElement configurationElement) {
+		ProviderDescriptor(String name, IConfigurationElement configurationElement) {
 			super(ECPProviderRegistryImpl.this, name, TYPE, configurationElement);
 		}
 
@@ -322,7 +327,7 @@ public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvi
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#registerChangeListener(org.eclipse.emf.ecp.spi.core.ProviderChangeListener)
 		 */
 		@Override
@@ -333,7 +338,7 @@ public final class ECPProviderRegistryImpl extends ElementRegistry<InternalProvi
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.spi.core.InternalProvider#unregisterChangeListener(org.eclipse.emf.ecp.spi.core.ProviderChangeListener)
 		 */
 		@Override

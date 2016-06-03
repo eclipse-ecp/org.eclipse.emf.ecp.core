@@ -27,6 +27,7 @@ import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestP
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  * <li>
  * {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.EClassToEStringMapImpl#getTypedKey
@@ -35,17 +36,15 @@ import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestP
  * {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.EClassToEStringMapImpl#getTypedValue
  * <em>Value</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
-public class EClassToEStringMapImpl extends MinimalEObjectImpl.Container implements BasicEMap.Entry<EClass, String>
-{
+public class EClassToEStringMapImpl extends MinimalEObjectImpl.Container implements BasicEMap.Entry<EClass, String> {
 	/**
 	 * The cached value of the '{@link #getTypedKey() <em>Key</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getTypedKey()
 	 * @generated
 	 * @ordered
@@ -56,7 +55,7 @@ public class EClassToEStringMapImpl extends MinimalEObjectImpl.Container impleme
 	 * The default value of the '{@link #getTypedValue() <em>Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getTypedValue()
 	 * @generated
 	 * @ordered
@@ -67,7 +66,7 @@ public class EClassToEStringMapImpl extends MinimalEObjectImpl.Container impleme
 	 * The cached value of the '{@link #getTypedValue() <em>Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getTypedValue()
 	 * @generated
 	 * @ordered
@@ -77,44 +76,38 @@ public class EClassToEStringMapImpl extends MinimalEObjectImpl.Container impleme
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	protected EClassToEStringMapImpl()
-	{
+	protected EClassToEStringMapImpl() {
 		super();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return TestPackage.Literals.ECLASS_TO_ESTRING_MAP;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	public EClass getTypedKey()
-	{
-		if (key != null && key.eIsProxy())
-		{
-			final InternalEObject oldKey = (InternalEObject) key;
+	public EClass getTypedKey() {
+		if (key != null && key.eIsProxy()) {
+			InternalEObject oldKey = (InternalEObject) key;
 			key = (EClass) eResolveProxy(oldKey);
-			if (key != oldKey)
-			{
-				if (eNotificationRequired()) {
+			if (key != oldKey) {
+				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, TestPackage.ECLASS_TO_ESTRING_MAP__KEY,
 						oldKey, key));
-				}
 			}
 		}
 		return key;
@@ -123,71 +116,62 @@ public class EClassToEStringMapImpl extends MinimalEObjectImpl.Container impleme
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	public EClass basicGetTypedKey()
-	{
+	public EClass basicGetTypedKey() {
 		return key;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	public void setTypedKey(EClass newKey)
-	{
-		final EClass oldKey = key;
+	public void setTypedKey(EClass newKey) {
+		EClass oldKey = key;
 		key = newKey;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.ECLASS_TO_ESTRING_MAP__KEY, oldKey, key));
-		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	public String getTypedValue()
-	{
+	public String getTypedValue() {
 		return value;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	public void setTypedValue(String newValue)
-	{
-		final String oldValue = value;
+	public void setTypedValue(String newValue) {
+		String oldValue = value;
 		value = newValue;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.ECLASS_TO_ESTRING_MAP__VALUE, oldValue,
 				value));
-		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
-		switch (featureID)
-		{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 		case TestPackage.ECLASS_TO_ESTRING_MAP__KEY:
-			if (resolve) {
+			if (resolve)
 				return getTypedKey();
-			}
 			return basicGetTypedKey();
 		case TestPackage.ECLASS_TO_ESTRING_MAP__VALUE:
 			return getTypedValue();
@@ -198,14 +182,12 @@ public class EClassToEStringMapImpl extends MinimalEObjectImpl.Container impleme
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
-		switch (featureID)
-		{
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 		case TestPackage.ECLASS_TO_ESTRING_MAP__KEY:
 			setTypedKey((EClass) newValue);
 			return;
@@ -219,14 +201,12 @@ public class EClassToEStringMapImpl extends MinimalEObjectImpl.Container impleme
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
-		switch (featureID)
-		{
+	public void eUnset(int featureID) {
+		switch (featureID) {
 		case TestPackage.ECLASS_TO_ESTRING_MAP__KEY:
 			setTypedKey((EClass) null);
 			return;
@@ -240,14 +220,12 @@ public class EClassToEStringMapImpl extends MinimalEObjectImpl.Container impleme
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
-		switch (featureID)
-		{
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 		case TestPackage.ECLASS_TO_ESTRING_MAP__KEY:
 			return key != null;
 		case TestPackage.ECLASS_TO_ESTRING_MAP__VALUE:
@@ -259,17 +237,15 @@ public class EClassToEStringMapImpl extends MinimalEObjectImpl.Container impleme
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public String toString()
-	{
-		if (eIsProxy()) {
+	public String toString() {
+		if (eIsProxy())
 			return super.toString();
-		}
 
-		final StringBuffer result = new StringBuffer(super.toString());
+		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (value: "); //$NON-NLS-1$
 		result.append(value);
 		result.append(')');
@@ -279,7 +255,7 @@ public class EClassToEStringMapImpl extends MinimalEObjectImpl.Container impleme
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected int hash = -1;
@@ -287,16 +263,14 @@ public class EClassToEStringMapImpl extends MinimalEObjectImpl.Container impleme
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public int getHash()
-	{
-		if (hash == -1)
-		{
-			final Object theKey = getKey();
-			hash = theKey == null ? 0 : theKey.hashCode();
+	public int getHash() {
+		if (hash == -1) {
+			Object theKey = getKey();
+			hash = (theKey == null ? 0 : theKey.hashCode());
 		}
 		return hash;
 	}
@@ -304,61 +278,56 @@ public class EClassToEStringMapImpl extends MinimalEObjectImpl.Container impleme
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public void setHash(int hash)
-	{
+	public void setHash(int hash) {
 		this.hash = hash;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public EClass getKey()
-	{
+	public EClass getKey() {
 		return getTypedKey();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public void setKey(EClass key)
-	{
+	public void setKey(EClass key) {
 		setTypedKey(key);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public String getValue()
-	{
+	public String getValue() {
 		return getTypedValue();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public String setValue(String value)
-	{
-		final String oldValue = getValue();
+	public String setValue(String value) {
+		String oldValue = getValue();
 		setTypedValue(value);
 		return oldValue;
 	}
@@ -366,13 +335,12 @@ public class EClassToEStringMapImpl extends MinimalEObjectImpl.Container impleme
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
-	public EMap<EClass, String> getEMap()
-	{
-		final EObject container = eContainer();
+	public EMap<EClass, String> getEMap() {
+		EObject container = eContainer();
 		return container == null ? null : (EMap<EClass, String>) container.eGet(eContainmentFeature());
 	}
 

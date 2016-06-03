@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
-    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.&#xD;&#xA;&#xD;&#xA;All rights reserved. This program and the accompanying materials&#xD;&#xA;are made available under the terms of the Eclipse Public License v1.0&#xD;&#xA;which accompanies this distribution, and is available at&#xD;&#xA;http://www.eclipse.org/legal/epl-v10.html&#xD;&#xA;&#xD;&#xA;Contributors:&#xD;&#xA;Lucas Koehler - initial API and implementation"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.&#xD;&#xA;&#xD;&#xA;All rights reserved. This program and the accompanying materials&#xD;&#xA;are made available under the terms of the Eclipse Public License v1.0&#xD;&#xA;which accompanies this distribution, and is available at&#xD;&#xA;http://www.eclipse.org/legal/epl-v10.html&#xD;&#xA;&#xD;&#xA;Contributors:&#xD;&#xA;Lucas Koehler - initial API and implementation"
     modelDirectory="/org.eclipse.emfforms.core.services.databinding.testmodel/src"
     editDirectory="/org.eclipse.emfforms.core.services.databinding.testmodel.edit/src"
     editorDirectory="/org.eclipse.emfforms.core.services.databinding.testmodel.editor/src"
@@ -23,12 +23,25 @@
     </genClasses>
     <genClasses ecoreClass="test.ecore#//B">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference test.ecore#//B/c"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference test.ecore#//B/cList"/>
     </genClasses>
     <genClasses ecoreClass="test.ecore#//C">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference test.ecore#//C/d"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference test.ecore#//C/eClassToString"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference test.ecore#//C/eClassToA"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference test.ecore#//C/a"/>
     </genClasses>
     <genClasses ecoreClass="test.ecore#//D">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//D/x"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//D/yList"/>
+    </genClasses>
+    <genClasses ecoreClass="test.ecore#//EClassToEStringMap">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference test.ecore#//EClassToEStringMap/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//EClassToEStringMap/value"/>
+    </genClasses>
+    <genClasses ecoreClass="test.ecore#//EClassToAMap">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference test.ecore#//EClassToAMap/key"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference test.ecore#//EClassToAMap/value"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

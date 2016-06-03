@@ -12,7 +12,6 @@
 package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 
 import org.eclipse.core.databinding.property.value.IValueProperty;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
@@ -54,22 +53,16 @@ public class LinkControlSWTRendererService implements EMFFormsDIRendererService<
 			return NOT_APPLICABLE;
 		}
 		final EStructuralFeature eStructuralFeature = EStructuralFeature.class.cast(valueProperty.getValueType());
+		if (eStructuralFeature == null) {
+			return NOT_APPLICABLE;
+		}
 		if (eStructuralFeature.isMany()) {
 			return NOT_APPLICABLE;
 		}
 		if (!EReference.class.isInstance(eStructuralFeature)) {
 			return NOT_APPLICABLE;
 		}
-		final EReference eReference = EReference.class.cast(eStructuralFeature);
-
-		final Class<?> instanceClass = eReference.getEReferenceType().getInstanceClass();
-		if (instanceClass == null) {
-			return NOT_APPLICABLE;
-		}
-		if (EObject.class.isAssignableFrom(instanceClass)) {
-			return 2d;
-		}
-		return NOT_APPLICABLE;
+		return 2d;
 	}
 
 	/**

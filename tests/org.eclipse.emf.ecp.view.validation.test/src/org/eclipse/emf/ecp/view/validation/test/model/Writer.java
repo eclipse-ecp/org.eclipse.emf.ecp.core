@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Writer#getFirstName <em>First Name</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Writer#getLastName <em>Last Name</em>}</li>
@@ -34,7 +35,6 @@ import org.eclipse.emf.ecore.EObject;
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Writer#isPseudonym <em>Pseudonym</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Writer#getLibrary <em>Library</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.ecp.view.validation.test.model.TestPackage#getWriter()
  * @model
@@ -209,8 +209,8 @@ public interface Writer extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Library</b></em>' container reference.
-	 * It is bidirectional and its opposite is '
-	 * {@link org.eclipse.emf.ecp.view.validation.test.model.Library#getWriters <em>Writers</em>}'.
+	 * It is bidirectional and its opposite is '{@link org.eclipse.emf.ecp.view.validation.test.model.Library#getWriters
+	 * <em>Writers</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Library</em>' container reference isn't clear, there really should be more of a

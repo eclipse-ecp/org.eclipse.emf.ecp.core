@@ -134,7 +134,6 @@ public class DomainModelReferenceSelector_PTest {
 			.getENamedElement_Name()));
 		settings.add(InternalEObject.class.cast(eClass).eSetting(EcorePackage.eINSTANCE
 			.getEClass_Abstract()));
-		when(controlDomainModelReference.getIterator()).thenReturn(settings.iterator());
 
 		final ViewModelContext viewModelContext = mock(ViewModelContext.class);
 		when(viewModelContext.getDomainModel()).thenReturn(eClass);
@@ -190,8 +189,6 @@ public class DomainModelReferenceSelector_PTest {
 
 		settings.add(InternalEObject.class.cast(EcoreFactory.eINSTANCE.createEClass()).eSetting(EcorePackage.eINSTANCE
 			.getENamedElement_Name()));
-
-		when(controlDomainModelReference.getIterator()).thenReturn(settings.iterator());
 
 		final ViewModelContext viewModelContext = mock(ViewModelContext.class);
 		when(viewModelContext.getDomainModel()).thenReturn(EcoreFactory.eINSTANCE.createEClass());

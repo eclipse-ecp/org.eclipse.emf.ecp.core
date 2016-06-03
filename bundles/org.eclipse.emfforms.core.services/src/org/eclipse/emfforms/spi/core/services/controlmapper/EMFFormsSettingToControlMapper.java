@@ -11,6 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emfforms.spi.core.services.controlmapper;
 
+import java.util.Collection;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
@@ -73,5 +74,23 @@ public interface EMFFormsSettingToControlMapper {
 	 * @param eObject The {@link EObject}
 	 */
 	void checkAndUpdateSettingToControlMapping(EObject eObject);
+
+	/**
+	 * Checks whether any feature of this EObject has a registered control.
+	 *
+	 * @param eObject the EObject to check
+	 * @return <code>true</code> if there is at least one control for any feature of the given EObject,
+	 *         <code>false</code> otherwise
+	 * @since 1.9
+	 */
+	boolean hasControlsFor(EObject eObject);
+
+	/**
+	 * Returns a collection of all EObjects which have a mapped setting.
+	 *
+	 * @return the EObjects
+	 * @since 1.9
+	 */
+	Collection<EObject> getEObjectsWithSettings();
 
 }

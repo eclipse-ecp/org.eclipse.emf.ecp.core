@@ -33,6 +33,9 @@ import org.eclipse.swt.widgets.Control;
  */
 public abstract class SimpleControlSWTControlSWTRenderer extends SimpleControlSWTRenderer {
 
+	private Binding[] bindings;
+	private Control control;
+
 	/**
 	 * Default constructor.
 	 *
@@ -60,25 +63,43 @@ public abstract class SimpleControlSWTControlSWTRenderer extends SimpleControlSW
 	 */
 	@Override
 	protected final Control createControl(Composite parent) throws DatabindingFailedException {
-		final Control control = createSWTControl(parent);
+		control = createSWTControl(parent);
 		if (control == null) {
 			return null;
 		}
-		final Binding[] bindings = createBindings(control);
+		bindings = createBindings(control);
 
 		control.addDisposeListener(new DisposeListener() {
 			@Override
 			public void widgetDisposed(DisposeEvent e) {
-				if (bindings != null) {
-					for (final Binding binding : bindings) {
-						binding.dispose();
-					}
-				}
+				disposeBindings();
 
 			}
 		});
 
 		return control;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer#rootDomainModelChanged()
+	 */
+	@Override
+	protected void rootDomainModelChanged() throws DatabindingFailedException {
+		disposeBindings();
+		bindings = createBindings(control);
+	}
+
+	/**
+	 * Disposes all bindings of this renderer.
+	 */
+	private void disposeBindings() {
+		if (bindings != null) {
+			for (final Binding binding : bindings) {
+				binding.dispose();
+			}
+		}
 	}
 
 	/**

@@ -22,7 +22,6 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.internal.swt.util.OverlayImageDescriptor;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.edit.spi.util.ECPModelElementChangeListener;
 import org.eclipse.emf.ecp.view.internal.core.swt.MessageKeys;
@@ -46,7 +45,6 @@ import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
@@ -313,37 +311,14 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	}
 
 	private Image getNewReferenceButtonImage() {
-		final Image image = getImage(getViewModelContext().getDomainModel());
-		if (image != null) {
-			final Image addOverlay = imageRegistryService.getImage(FrameworkUtil.getBundle(getClass()),
-				"icons/add_overlay.png"); //$NON-NLS-1$
-
-			final OverlayImageDescriptor imageDescriptor = new OverlayImageDescriptor(image,
-				ImageDescriptor.createFromImage(addOverlay),
-				OverlayImageDescriptor.LOWER_RIGHT);
-			return imageDescriptor.createImage();
-		}
-		// fallback
 		return imageRegistryService.getImage(FrameworkUtil.getBundle(getClass()), "icons/set_reference.png"); //$NON-NLS-1$
 	}
 
 	private Image getAddReferenceButtonImage() {
-		final Image image = getImage(getViewModelContext().getDomainModel());
-		if (image != null) {
-			final Image overlay = imageRegistryService.getImage(FrameworkUtil.getBundle(getClass()),
-				"icons/link_overlay.png"); //$NON-NLS-1$
-
-			final OverlayImageDescriptor imageDescriptor = new OverlayImageDescriptor(image,
-				ImageDescriptor.createFromImage(overlay),
-				OverlayImageDescriptor.LOWER_RIGHT);
-			return imageDescriptor.createImage();
-		}
-		// fallback
 		return imageRegistryService.getImage(FrameworkUtil.getBundle(getClass()), "icons/reference.png"); //$NON-NLS-1$
 	}
 
 	private void createHyperlink() throws DatabindingFailedException {
-
 		imageHyperlink = new Label(linkComposite, SWT.NONE);
 		imageHyperlink.setBackground(linkComposite.getBackground());
 

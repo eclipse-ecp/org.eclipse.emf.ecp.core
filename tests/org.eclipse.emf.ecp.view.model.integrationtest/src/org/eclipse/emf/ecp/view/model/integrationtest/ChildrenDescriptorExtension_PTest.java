@@ -76,7 +76,7 @@ public class ChildrenDescriptorExtension_PTest {
 		- NUMBER_OF_EXTERNAL_COMPOSITES + 2 + 1;
 
 	private static final int CONTROL_CHILD_COUNT = COMPOSITE_CHILD_COUNT + DOMAINMODELREFERENCE_COUNT;
-	private static final int TABLECONTROL_CHILD_COUNT = CONTROL_CHILD_COUNT + 2;
+	private static final int TABLECONTROL_CHILD_COUNT = CONTROL_CHILD_COUNT + 3;
 	private static final int ACTION_CHILD_COUNT = 0;
 	private static final int GROUPEDGRID_CHILD_COUNT = RENDERABLE_CHILD_COUNT + 1;
 	private static final int GRIDEDGROUP_CHILD_COUNT = 1;

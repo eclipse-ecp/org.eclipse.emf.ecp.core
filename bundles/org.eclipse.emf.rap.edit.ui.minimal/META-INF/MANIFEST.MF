@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Minimal RAP EMF Edit UI
 Bundle-SymbolicName: org.eclipse.emf.rap.edit.ui.minimal
-Bundle-Version: 1.8.0.qualifier
+Bundle-Version: 1.9.0.qualifier
 Bundle-Activator: org.eclipse.emf.edit.ui.provider.Activator
 Bundle-Vendor: Eclipse Modeling Project
 Export-Package: org.eclipse.emf.edit.ui.dnd;version="2.10.0",

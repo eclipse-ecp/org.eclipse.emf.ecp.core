@@ -9,8 +9,8 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<tycho-version>0.23.0</tycho-version>
-		<tycho-extras-version>0.23.0</tycho-extras-version>
+		<tycho-version>0.25.0</tycho-version>
+		<tycho-extras-version>0.25.0</tycho-extras-version>
 		<javadoc-version>2.9</javadoc-version>
 		<javadoc-title>EMFForms Spreadsheet 1.0.0 API</javadoc-title>
 		<maven.antrun.plugin.version>1.7</maven.antrun.plugin.version>

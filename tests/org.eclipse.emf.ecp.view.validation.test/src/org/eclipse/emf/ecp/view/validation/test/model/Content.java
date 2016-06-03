@@ -20,11 +20,11 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Content#getUniqueAttribute <em>Unique Attribute</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Content#getSecondAttribute <em>Second Attribute</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.ecp.view.validation.test.model.TestPackage#getContent()
  * @model

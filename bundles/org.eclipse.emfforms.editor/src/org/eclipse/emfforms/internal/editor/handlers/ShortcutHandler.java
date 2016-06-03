@@ -16,11 +16,10 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.command.RemoveCommand;
+import org.eclipse.emf.edit.command.DeleteCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.internal.editor.ui.CreateNewChildDialog;
-import org.eclipse.emfforms.spi.editor.GenericEditor;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -44,39 +43,36 @@ public class ShortcutHandler extends AbstractHandler {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final IEditorPart editor = HandlerUtil.getActiveEditor(event);
-		if (editor instanceof GenericEditor) {
-			final GenericEditor eEditor = (GenericEditor) editor;
-			final StructuredSelection sSelection = (StructuredSelection) HandlerUtil.getCurrentSelection(event);
-			if (sSelection == null) {
-				return null;
-			}
+		final StructuredSelection sSelection = (StructuredSelection) HandlerUtil.getCurrentSelection(event);
+		if (sSelection == null) {
+			return null;
+		}
 
-			final Object selection = sSelection.getFirstElement();
+		final Object selection = sSelection.getFirstElement();
 
-			// We only create or delete elements for EObjects
-			if (!(selection instanceof EObject)) {
-				return null;
-			}
+		// We only create or delete elements for EObjects
+		if (!(selection instanceof EObject)) {
+			return null;
+		}
 
-			final String commandName = event.getCommand().getId();
-			final EObject currentSelection = (EObject) selection;
+		final String commandName = event.getCommand().getId();
+		final EObject currentSelection = (EObject) selection;
 
-			final EditingDomain editingDomain = AdapterFactoryEditingDomain
-				.getEditingDomainFor(currentSelection);
+		final EditingDomain editingDomain = AdapterFactoryEditingDomain
+			.getEditingDomainFor(currentSelection);
 
-			if (getDeleteCmdName().equals(commandName)) {
-				editingDomain.getCommandStack().execute(
-					RemoveCommand.create(editingDomain, currentSelection));
-			} else if (getNewChildCmdName().equals(commandName)) {
-				createNewElementDialog(editingDomain, eEditor.getEditorSite().getSelectionProvider(), currentSelection,
-					"Create Child").open();
-			} else if (getNewSiblingCmdName().equals(commandName)) {
-				// Get Parent of current Selection and show the dialog for it
-				final EObject parent = currentSelection.eContainer();
-				final EditingDomain parentEditingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(parent);
-				createNewElementDialog(parentEditingDomain, eEditor.getEditorSite().getSelectionProvider(), parent,
-					"Create Sibling").open();
-			}
+		if (getDeleteCmdName().equals(commandName)) {
+			editingDomain.getCommandStack().execute(
+				DeleteCommand.create(editingDomain, sSelection.toList()));
+		} else if (getNewChildCmdName().equals(commandName)) {
+			createNewElementDialog(editingDomain, editor.getEditorSite().getSelectionProvider(), currentSelection,
+				"Create Child").open();
+		} else if (getNewSiblingCmdName().equals(commandName)) {
+			// Get Parent of current Selection and show the dialog for it
+			final EObject parent = currentSelection.eContainer();
+			final EditingDomain parentEditingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(parent);
+			createNewElementDialog(parentEditingDomain, editor.getEditorSite().getSelectionProvider(), parent,
+				"Create Sibling").open();
 		}
 
 		return null;

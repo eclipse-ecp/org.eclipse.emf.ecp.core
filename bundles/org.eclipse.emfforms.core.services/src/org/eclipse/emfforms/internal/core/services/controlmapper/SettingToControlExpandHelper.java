@@ -61,7 +61,7 @@ public final class SettingToControlExpandHelper {
 		if (VDomainModelReference.class.isInstance(eObject)
 			&& !VDomainModelReference.class.isInstance(eObject.eContainer())) {
 			final VDomainModelReference domainModelReference = VDomainModelReference.class.cast(eObject);
-			// FIXME remove
+			// FIXME remove as soon as all users have moved
 			domainModelReference.init(domainModelRoot);
 			try {
 				domainExpander.prepareDomainObject(domainModelReference, domainModelRoot);

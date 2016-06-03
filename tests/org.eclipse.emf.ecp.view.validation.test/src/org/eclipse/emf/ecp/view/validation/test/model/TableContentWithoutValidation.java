@@ -18,11 +18,12 @@ package org.eclipse.emf.ecp.view.validation.test.model;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.TableContentWithoutValidation#getName <em>Name</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.TableContentWithoutValidation#getWeight <em>Weight</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.TableContentWithoutValidation#getWeight <em>Weight</em>}
+ * </li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.ecp.view.validation.test.model.TestPackage#getTableContentWithoutValidation()
  * @model

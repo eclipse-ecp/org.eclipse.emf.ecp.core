@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.internal;
 import org.eclipse.emf.ecore.EObject;
 
 /**
- * This is needed in order to show the root element in the tree.
+ * An wrapper for any EObject to allow displaying a tree which shows the EObject as a root element in the tree.
  *
  * @author Anas Chakfeh
  * @since 1.5
@@ -25,7 +25,7 @@ public class RootObject {
 	private final EObject modelElement;
 
 	/**
-	 * @param modelElement
+	 * @param modelElement The element to be shown in the tree as a root element.
 	 */
 	public RootObject(EObject modelElement) {
 		this.modelElement = modelElement;

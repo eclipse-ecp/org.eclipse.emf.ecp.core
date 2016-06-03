@@ -13,11 +13,14 @@ package org.eclipse.emfforms.spi.swt.treemasterdetail;
 
 import java.util.Collection;
 
+import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.internal.swt.treemasterdetail.DefaultTreeMasterDetailCustomization;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.actions.MasterDetailAction;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateElementCallback;
 import org.eclipse.jface.viewers.IBaseLabelProvider;
 import org.eclipse.jface.viewers.IContentProvider;
+import org.eclipse.jface.viewers.ILabelDecorator;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.widgets.Composite;
 
@@ -148,6 +151,42 @@ public final class TreeMasterDetailSWTBuilder {
 			@Override
 			public IBaseLabelProvider getLabelProvider() {
 				return provider;
+			}
+		});
+		return this;
+	}
+
+	/**
+	 * Use this method to add a {@link ILabelDecorator} for decorating the labels of the label provider. The default
+	 * implementation does not use a decorator.
+	 *
+	 * @param provider the {@link LabelDecoratorProvider} which will be used to create the decorator
+	 * @return self
+	 * @since 1.9
+	 */
+	public TreeMasterDetailSWTBuilder customizeLabelDecorator(LabelDecoratorProvider provider) {
+		behaviour.setLabelDecorator(provider);
+		return this;
+	}
+
+	/**
+	 * Use this method to add a {@link ILabelDecorator} for decorating the labels of the label provider. The default
+	 * implementation does not use a decorator.
+	 *
+	 * @param decorator the decorator instance to be used
+	 * @return self
+	 * @since 1.9
+	 */
+	public TreeMasterDetailSWTBuilder customizeLabelDecorator(final ILabelDecorator decorator) {
+		behaviour.setLabelDecorator(new LabelDecoratorProvider() {
+			@Override
+			public Optional<ILabelDecorator> getLabelDecorator(TreeViewer viewer) {
+				return Optional.of(decorator);
+			}
+
+			@Override
+			public void dispose() {
+				/* no op */
 			}
 		});
 		return this;

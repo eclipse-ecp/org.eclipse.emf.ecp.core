@@ -22,20 +22,19 @@ import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
  *
  * <p>
  * The following features are supported:
- * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference#getColumnDomainModelReferences <em>
- * Column Domain Model References</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference#getDomainModelReference <em>Domain
- * Model Reference</em>}</li>
- * </ul>
  * </p>
+ * <ul>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference#getColumnDomainModelReferences
+ * <em>Column Domain Model References</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference#getDomainModelReference
+ * <em>Domain Model Reference</em>}</li>
+ * </ul>
  *
  * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage#getTableDomainModelReference()
- * @model
+ * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='resolveable'"
  * @generated
  */
-public interface VTableDomainModelReference extends VFeaturePathDomainModelReference
-{
+public interface VTableDomainModelReference extends VFeaturePathDomainModelReference {
 
 	/**
 	 * Returns the value of the '<em><b>Column Domain Model References</b></em>' containment reference list.
@@ -61,10 +60,9 @@ public interface VTableDomainModelReference extends VFeaturePathDomainModelRefer
 	 * If the meaning of the '<em>Domain Model Reference</em>' containment reference isn't clear, there really should be
 	 * more of a description here...
 	 * </p>
-	 * 
+	 *
 	 * @since 1.5
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the value of the '<em>Domain Model Reference</em>' containment reference.
 	 * @see #setDomainModelReference(VDomainModelReference)
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage#getTableDomainModelReference_DomainModelReference()
@@ -78,10 +76,9 @@ public interface VTableDomainModelReference extends VFeaturePathDomainModelRefer
 	 * {@link org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference#getDomainModelReference
 	 * <em>Domain Model Reference</em>}' containment reference.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.5
 	 *        <!-- end-user-doc -->
-	 *
 	 * @param value the new value of the '<em>Domain Model Reference</em>' containment reference.
 	 * @see #getDomainModelReference()
 	 * @generated

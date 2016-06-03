@@ -75,6 +75,10 @@ public class CreateChildAction extends StaticSelectionCommandAction {
 		final EReference reference = descriptor.getEReference();
 
 		final EObject newObject = descriptor.getEValue();
+
+		if (createElementCallback != null) {
+			createElementCallback.initElement(parent, reference, newObject);
+		}
 		// Add the element, so that it is contained in the ResourceSet.
 
 		final Command addCommand;
@@ -99,6 +103,9 @@ public class CreateChildAction extends StaticSelectionCommandAction {
 				((Viewer) selectionProvider).refresh();
 			}
 			selectionProvider.setSelection(new StructuredSelection(newObject));
+			if (createElementCallback != null) {
+				createElementCallback.afterCreateElement(newObject);
+			}
 		} else {
 			// If the callback says "cancel" undo the addCommand.
 			addCommand.undo();

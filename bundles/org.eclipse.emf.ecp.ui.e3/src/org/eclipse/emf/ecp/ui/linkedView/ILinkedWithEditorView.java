@@ -17,6 +17,11 @@ import org.eclipse.ui.IViewSite;
 
 public interface ILinkedWithEditorView {
 
+	/**
+	 * Called to tell the view, that a certain {@link IEditorPart} has been activated.
+	 * 
+	 * @param activatedEditor The activated {@link IEditorPart}
+	 */
 	void editorActivated(IEditorPart activatedEditor);
 
 	IViewSite getViewSite();

@@ -27,13 +27,13 @@ import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
- * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.TableContentWithInnerChildImpl#getInnerChild <em>Inner
- * Child</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.TableContentWithInnerChildImpl#getStuff <em>Stuff
- * </em>}</li>
- * </ul>
  * </p>
+ * <ul>
+ * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.TableContentWithInnerChildImpl#getInnerChild
+ * <em>Inner Child</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.TableContentWithInnerChildImpl#getStuff <em>Stuff</em>
+ * }</li>
+ * </ul>
  *
  * @generated
  */
@@ -134,19 +134,18 @@ public class TableContentWithInnerChildImpl extends TableContentImpl implements 
 		if (newInnerChild != innerChild) {
 			NotificationChain msgs = null;
 			if (innerChild != null) {
-				msgs = ((InternalEObject) innerChild).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
-					- TestPackage.TABLE_CONTENT_WITH_INNER_CHILD__INNER_CHILD, null, msgs);
+				msgs = ((InternalEObject) innerChild).eInverseRemove(this,
+					EOPPOSITE_FEATURE_BASE - TestPackage.TABLE_CONTENT_WITH_INNER_CHILD__INNER_CHILD, null, msgs);
 			}
 			if (newInnerChild != null) {
-				msgs = ((InternalEObject) newInnerChild).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
-					- TestPackage.TABLE_CONTENT_WITH_INNER_CHILD__INNER_CHILD, null, msgs);
+				msgs = ((InternalEObject) newInnerChild).eInverseAdd(this,
+					EOPPOSITE_FEATURE_BASE - TestPackage.TABLE_CONTENT_WITH_INNER_CHILD__INNER_CHILD, null, msgs);
 			}
 			msgs = basicSetInnerChild(newInnerChild, msgs);
 			if (msgs != null) {
 				msgs.dispatch();
 			}
-		}
-		else if (eNotificationRequired()) {
+		} else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				TestPackage.TABLE_CONTENT_WITH_INNER_CHILD__INNER_CHILD, newInnerChild, newInnerChild));
 		}

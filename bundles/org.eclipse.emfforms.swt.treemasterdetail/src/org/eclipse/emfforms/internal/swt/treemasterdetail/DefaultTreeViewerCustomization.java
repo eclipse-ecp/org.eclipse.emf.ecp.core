@@ -20,6 +20,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.internal.swt.treemasterdetail.defaultprovider.DefaultDNDProvider;
 import org.eclipse.emfforms.internal.swt.treemasterdetail.defaultprovider.DefaultMenuProvider;
 import org.eclipse.emfforms.internal.swt.treemasterdetail.defaultprovider.DefaultTreeViewerBuilder;
@@ -28,6 +29,7 @@ import org.eclipse.emfforms.spi.swt.treemasterdetail.ContentProviderProvider;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.DNDProvider;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.DeleteActionBuilder;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.InitialSelectionProvider;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.LabelDecoratorProvider;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.LabelProviderProvider;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.MenuProvider;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeViewerBuilder;
@@ -38,6 +40,7 @@ import org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateElementCallback;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.RootObject;
 import org.eclipse.jface.viewers.IBaseLabelProvider;
 import org.eclipse.jface.viewers.IContentProvider;
+import org.eclipse.jface.viewers.ILabelDecorator;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.dnd.DragSourceListener;
@@ -59,6 +62,7 @@ public class DefaultTreeViewerCustomization implements TreeViewerCustomization {
 	private InitialSelectionProvider selection;
 	private MenuProvider menu;
 	private LabelProviderProvider labelProvider;
+	private LabelDecoratorProvider decorator;
 	private DNDProvider dnd;
 	private ContentProviderProvider contentProvider;
 	private ComposedAdapterFactory adapterFactory;
@@ -75,6 +79,7 @@ public class DefaultTreeViewerCustomization implements TreeViewerCustomization {
 		labelProvider = new DefaultLabelProviderProvider();
 		dnd = new DefaultDNDProvider();
 		contentProvider = new DefaultContentProviderProvider();
+		decorator = new DefaultLabelDecoratorProvider();
 	}
 
 	/**
@@ -170,6 +175,11 @@ public class DefaultTreeViewerCustomization implements TreeViewerCustomization {
 	}
 
 	@Override
+	public Optional<ILabelDecorator> getLabelDecorator(TreeViewer viewer) {
+		return decorator.getLabelDecorator(viewer);
+	}
+
+	@Override
 	public ViewerFilter[] getViewerFilters() {
 		return filters.getViewerFilters();
 	}
@@ -186,6 +196,7 @@ public class DefaultTreeViewerCustomization implements TreeViewerCustomization {
 
 	@Override
 	public void dispose() {
+		decorator.dispose();
 		contentProvider.dispose();
 		labelProvider.dispose();
 		if (adapterFactoryContentProvider != null) {
@@ -221,6 +232,15 @@ public class DefaultTreeViewerCustomization implements TreeViewerCustomization {
 	 */
 	public void setLabelProvider(LabelProviderProvider labelProvider) {
 		this.labelProvider = labelProvider;
+	}
+
+	/**
+	 * Sets the label decorator provider.
+	 *
+	 * @param decorator the provider
+	 */
+	public void setLabelDecorator(LabelDecoratorProvider decorator) {
+		this.decorator = decorator;
 	}
 
 	/**
@@ -296,6 +316,25 @@ public class DefaultTreeViewerCustomization implements TreeViewerCustomization {
 	 */
 	public void setViewerFilters(ViewerFilterProvider filters) {
 		this.filters = filters;
+	}
+
+	/**
+	 * Provides no decorator.
+	 *
+	 * @author Johannes Faltermeier
+	 *
+	 */
+	private static final class DefaultLabelDecoratorProvider implements LabelDecoratorProvider {
+		@Override
+		public Optional<ILabelDecorator> getLabelDecorator(TreeViewer viewer) {
+			return Optional.empty();
+		}
+
+		@Override
+		public void dispose() {
+			/* no op */
+
+		}
 	}
 
 	/**

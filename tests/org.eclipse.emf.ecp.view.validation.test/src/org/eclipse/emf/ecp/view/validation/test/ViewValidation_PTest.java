@@ -16,6 +16,7 @@ import static org.junit.Assert.assertNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -23,6 +24,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.test.common.DefaultRealm;
@@ -46,6 +48,7 @@ import org.eclipse.emf.ecp.view.validation.test.model.Content;
 import org.eclipse.emf.ecp.view.validation.test.model.Library;
 import org.eclipse.emf.ecp.view.validation.test.model.Mainboard;
 import org.eclipse.emf.ecp.view.validation.test.model.PowerBlock;
+import org.eclipse.emf.ecp.view.validation.test.model.Referencer;
 import org.eclipse.emf.ecp.view.validation.test.model.TestFactory;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
 import org.eclipse.emf.ecp.view.validation.test.model.Writer;
@@ -1503,6 +1506,112 @@ public class ViewValidation_PTest extends CommonValidationTest {
 		assertEquals("Severity of control must be Error", Diagnostic.ERROR, tableControl.getDiagnostic()
 			.getHighestSeverity());
 
+	}
+
+	@Test
+	public void testNonContainmentReferenceInitialValidationOK() {
+		/* setup model */
+		final Referencer referencer = TestFactory.eINSTANCE.createReferencer();
+		final Computer computer = TestFactory.eINSTANCE.createComputer();
+		referencer.setReferencedContent(computer);
+		computer.setName("Raspberry Pi");
+
+		/* setup view */
+		final VView view = VViewFactory.eINSTANCE.createView();
+		final VControl control = VViewFactory.eINSTANCE.createControl();
+		view.getChildren().add(control);
+		control.setDomainModelReference(TestPackage.eINSTANCE.getComputer_Name(),
+			Collections.singleton(TestPackage.eINSTANCE.getReferencer_ReferencedContent()));
+
+		/* act */
+		ViewModelContextFactory.INSTANCE.createViewModelContext(view, referencer);
+
+		/* assert */
+		assertEquals("Severity of control must be ok", Diagnostic.OK, control.getDiagnostic().getHighestSeverity());
+	}
+
+	@Test
+	public void testNonContainmentReferenceInitialValidationError() {
+		/* setup model */
+		final Referencer referencer = TestFactory.eINSTANCE.createReferencer();
+		final Computer computer = TestFactory.eINSTANCE.createComputer();
+		referencer.setReferencedContent(computer);
+		computer.setName(null);
+
+		/* setup view */
+		final VView view = VViewFactory.eINSTANCE.createView();
+		final VControl control = VViewFactory.eINSTANCE.createControl();
+		view.getChildren().add(control);
+		control.setDomainModelReference(TestPackage.eINSTANCE.getComputer_Name(),
+			Collections.singleton(TestPackage.eINSTANCE.getReferencer_ReferencedContent()));
+
+		/* act */
+		ViewModelContextFactory.INSTANCE.createViewModelContext(view, referencer);
+
+		/* assert */
+		assertEquals("Severity of control must be error", Diagnostic.ERROR,
+			control.getDiagnostic().getHighestSeverity());
+	}
+
+	@Test
+	public void testNonContainmentReferenceValidationOnChangeOK() {
+		/* setup model */
+		final Referencer referencer = TestFactory.eINSTANCE.createReferencer();
+		final Computer computer = TestFactory.eINSTANCE.createComputer();
+		referencer.setReferencedContent(computer);
+		computer.setName(null);
+
+		/* setup view */
+		final VView view = VViewFactory.eINSTANCE.createView();
+		final VControl control = VViewFactory.eINSTANCE.createControl();
+		view.getChildren().add(control);
+		control.setDomainModelReference(TestPackage.eINSTANCE.getComputer_Name(),
+			Collections.singleton(TestPackage.eINSTANCE.getReferencer_ReferencedContent()));
+
+		/* setup validation service */
+		final ViewModelContext context = ViewModelContextFactory.INSTANCE.createViewModelContext(view, referencer);
+
+		/* act */
+		computer.setName("Raspberry Pi");
+		/*
+		 * auto revalidate does not work with our model, since we have a non-containment and made no adjustments to the
+		 * model impl. this _is_ expected
+		 */
+		context.getService(ValidationService.class).validate(Collections.<EObject> singleton(computer));
+
+		/* assert */
+		assertEquals("Severity of control must be ok", Diagnostic.OK, control.getDiagnostic().getHighestSeverity());
+	}
+
+	@Test
+	public void testNonContainmentReferenceValidationOnChangeError() {
+		/* setup model */
+		final Referencer referencer = TestFactory.eINSTANCE.createReferencer();
+		final Computer computer = TestFactory.eINSTANCE.createComputer();
+		referencer.setReferencedContent(computer);
+		computer.setName("Raspberry Pi");
+
+		/* setup view */
+		final VView view = VViewFactory.eINSTANCE.createView();
+		final VControl control = VViewFactory.eINSTANCE.createControl();
+		view.getChildren().add(control);
+		control.setDomainModelReference(TestPackage.eINSTANCE.getComputer_Name(),
+			Collections.singleton(TestPackage.eINSTANCE.getReferencer_ReferencedContent()));
+
+		/* setup validation service */
+		final ViewModelContext context = ViewModelContextFactory.INSTANCE.createViewModelContext(view, referencer);
+
+		/* act */
+		computer.setName(null);
+		/*
+		 * auto revalidate does not work with our model, since we have a non-containment and made no adjustments to the
+		 * model impl. this _is_ expected
+		 */
+		context.getService(ValidationService.class).validate(Collections.<EObject> singleton(computer));
+
+		/* assert */
+		assertEquals("Severity of control must be error", Diagnostic.ERROR,
+			control.getDiagnostic().getHighestSeverity());
 	}
 
 	@Test

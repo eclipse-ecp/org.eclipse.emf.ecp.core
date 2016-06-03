@@ -17,9 +17,11 @@ import java.util.List;
 /**
  * Description for table configurations.
  *
+ * @deprecated Used in the deprecated TableControl
  * @author Eugen Neufeld
  *
  */
+@Deprecated
 public class TableControlConfiguration {
 
 	private boolean addRemoveDisabled;

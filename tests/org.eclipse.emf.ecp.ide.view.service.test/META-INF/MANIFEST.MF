@@ -2,12 +2,12 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: IDEViewModelRegistry Test
 Bundle-SymbolicName: org.eclipse.emf.ecp.ide.view.service.test;singleton:=true
-Bundle-Version: 1.8.0.qualifier
+Bundle-Version: 1.9.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emf.ecp.ide.view.service.test;version="1.8.0";x-internal:=true
-Require-Bundle: org.eclipse.emf.ecp.ide.view.service;bundle-version="[1.8.0,1.9.0)",
+Export-Package: org.eclipse.emf.ecp.ide.view.service.test;version="1.9.0";x-internal:=true
+Require-Bundle: org.eclipse.emf.ecp.ide.view.service;bundle-version="[1.9.0,2.0.0)",
  org.junit;bundle-version="[4.0.0,5.0.0)",
- org.eclipse.emf.ecp.view.model;bundle-version="[1.8.0,1.9.0)",
+ org.eclipse.emf.ecp.view.model;bundle-version="[1.9.0,2.0.0)",
  org.eclipse.core.resources;bundle-version="[3.0.0,4.0.0)",
  org.eclipse.emf.edit;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.emf.ecore.xmi;bundle-version="[2.0.0,3.0.0)",

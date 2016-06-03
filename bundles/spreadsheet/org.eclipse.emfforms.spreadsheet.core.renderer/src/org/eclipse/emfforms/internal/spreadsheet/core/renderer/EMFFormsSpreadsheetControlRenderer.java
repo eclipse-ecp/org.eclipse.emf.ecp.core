@@ -27,6 +27,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -46,6 +47,8 @@ import org.eclipse.emf.ecp.view.template.style.mandatory.model.VTMandatoryStyleP
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
+import org.eclipse.emfforms.spi.core.services.domainexpander.EMFFormsDomainExpander;
+import org.eclipse.emfforms.spi.core.services.domainexpander.EMFFormsExpandingFailedException;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsAbstractSpreadsheetRenderer;
@@ -74,6 +77,7 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 	private final EMFFormsIdProvider idProvider;
 	private final EMFFormsSpreadsheetValueConverterRegistry converterRegistry;
 	private final EMFFormsSpreadsheetFormatDescriptionProvider formatDescriptionProvider;
+	private final EMFFormsDomainExpander domainExpander;
 
 	/**
 	 * Default constructor.
@@ -85,7 +89,9 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 	 * @param idProvider The {@link EMFFormsIdProvider}
 	 * @param converterRegistry The {@link EMFFormsSpreadsheetValueConverterRegistry}
 	 * @param formatDescriptionProvider The {@link EMFFormsSpreadsheetFormatDescriptionProvider}
+	 * @param domainExpander The {@link EMFFormsDomainExpander}
 	 */
+	// BEGIN COMPLEX CODE
 	public EMFFormsSpreadsheetControlRenderer(
 		EMFFormsDatabindingEMF emfformsDatabinding,
 		EMFFormsLabelProvider emfformsLabelProvider,
@@ -93,7 +99,8 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 		VTViewTemplateProvider vtViewTemplateProvider,
 		EMFFormsIdProvider idProvider,
 		EMFFormsSpreadsheetValueConverterRegistry converterRegistry,
-		EMFFormsSpreadsheetFormatDescriptionProvider formatDescriptionProvider) {
+		EMFFormsSpreadsheetFormatDescriptionProvider formatDescriptionProvider,
+		EMFFormsDomainExpander domainExpander) {
 		this.emfformsDatabinding = emfformsDatabinding;
 		this.emfformsLabelProvider = emfformsLabelProvider;
 		this.reportService = reportService;
@@ -101,8 +108,10 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 		this.idProvider = idProvider;
 		this.converterRegistry = converterRegistry;
 		this.formatDescriptionProvider = formatDescriptionProvider;
+		this.domainExpander = domainExpander;
 	}
 
+	// END COMPLEX CODE
 	/**
 	 * {@inheritDoc}
 	 *
@@ -194,11 +203,6 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 		return 0;
 	}
 
-	@SuppressWarnings("deprecation")
-	private void resolveDMR(ViewModelContext viewModelContext, VDomainModelReference dmrToResolve) {
-		dmrToResolve.init(viewModelContext.getDomainModel());
-	}
-
 	private void writeValue(ViewModelContext viewModelContext, EMFFormsSpreadsheetRenderTarget renderTarget,
 		Sheet sheet, VDomainModelReference dmrToResolve) throws DatabindingFailedException, EMFFormsConverterException {
 		Row valueRow = sheet.getRow(renderTarget.getRow() + 3);
@@ -208,9 +212,12 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 		valueRow.getCell(0, Row.CREATE_NULL_AS_BLANK)
 			.setCellValue(idProvider.getId(viewModelContext.getDomainModel()));
 
-		/* init dmr */
-		resolveDMR(viewModelContext, dmrToResolve);
-
+		try {
+			expandDMR(dmrToResolve, viewModelContext.getDomainModel());
+		} catch (final EMFFormsExpandingFailedException ex) {
+			reportService.report(new EMFFormsSpreadsheetReport(ex, EMFFormsSpreadsheetReport.ERROR));
+			return;
+		}
 		final Setting setting = emfformsDatabinding.getSetting(dmrToResolve, viewModelContext.getDomainModel());
 
 		/* only create new cells for non-unsettable features and unsettable feature which are set */
@@ -229,6 +236,11 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 			converter.setCellValue(valueCell, value, setting.getEStructuralFeature(), viewModelContext);
 
 		}
+	}
+
+	private void expandDMR(VDomainModelReference dmrToResolve, EObject domainModel)
+		throws EMFFormsExpandingFailedException {
+		domainExpander.prepareDomainObject(dmrToResolve, domainModel);
 	}
 
 	private void writeLabel(VControl vControl, ViewModelContext viewModelContext, final Cell labelCell,

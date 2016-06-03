@@ -29,30 +29,24 @@ import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestP
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Factory</b>.
  * <!-- end-user-doc -->
- *
+ * 
  * @generated
  */
-public class TestFactoryImpl extends EFactoryImpl implements TestFactory
-{
+public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	/**
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	public static TestFactory init()
-	{
-		try
-		{
-			final TestFactory theTestFactory = (TestFactory) EPackage.Registry.INSTANCE
-				.getEFactory(TestPackage.eNS_URI);
-			if (theTestFactory != null)
-			{
+	public static TestFactory init() {
+		try {
+			TestFactory theTestFactory = (TestFactory) EPackage.Registry.INSTANCE.getEFactory(TestPackage.eNS_URI);
+			if (theTestFactory != null) {
 				return theTestFactory;
 			}
-		} catch (final Exception exception)
-		{
+		} catch (Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new TestFactoryImpl();
@@ -62,25 +56,22 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory
 	 * Creates an instance of the factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	public TestFactoryImpl()
-	{
+	public TestFactoryImpl() {
 		super();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public EObject create(EClass eClass)
-	{
-		switch (eClass.getClassifierID())
-		{
+	public EObject create(EClass eClass) {
+		switch (eClass.getClassifierID()) {
 		case TestPackage.A:
 			return createA();
 		case TestPackage.B:
@@ -101,101 +92,93 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public A createA()
-	{
-		final AImpl a = new AImpl();
+	public A createA() {
+		AImpl a = new AImpl();
 		return a;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public B createB()
-	{
-		final BImpl b = new BImpl();
+	public B createB() {
+		BImpl b = new BImpl();
 		return b;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public C createC()
-	{
-		final CImpl c = new CImpl();
+	public C createC() {
+		CImpl c = new CImpl();
 		return c;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public D createD()
-	{
-		final DImpl d = new DImpl();
+	public D createD() {
+		DImpl d = new DImpl();
 		return d;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	public Map.Entry<EClass, String> createEClassToEStringMap()
-	{
-		final EClassToEStringMapImpl eClassToEStringMap = new EClassToEStringMapImpl();
+	public Map.Entry<EClass, String> createEClassToEStringMap() {
+		EClassToEStringMapImpl eClassToEStringMap = new EClassToEStringMapImpl();
 		return eClassToEStringMap;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	public Map.Entry<EClass, A> createEClassToAMap()
-	{
-		final EClassToAMapImpl eClassToAMap = new EClassToAMapImpl();
+	public Map.Entry<EClass, A> createEClassToAMap() {
+		EClassToAMapImpl eClassToAMap = new EClassToAMapImpl();
 		return eClassToAMap;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public TestPackage getTestPackage()
-	{
+	public TestPackage getTestPackage() {
 		return (TestPackage) getEPackage();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @deprecated
 	 * @generated
 	 */
 	@Deprecated
-	public static TestPackage getPackage()
-	{
+	public static TestPackage getPackage() {
 		return TestPackage.eINSTANCE;
 	}
 

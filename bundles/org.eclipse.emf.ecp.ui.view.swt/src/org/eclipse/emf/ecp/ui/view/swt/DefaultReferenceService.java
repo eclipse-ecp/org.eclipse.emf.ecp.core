@@ -52,7 +52,7 @@ import org.eclipse.swt.widgets.Shell;
 
 /**
  * The DefaultReferenceService provides a sample implementation for the ReferenceService.
- * 
+ *
  * @author Eugen Neufeld
  * @noextend This class is not intended to be subclassed by clients.
  * @since 1.4
@@ -225,7 +225,7 @@ public class DefaultReferenceService implements ReferenceService {
 		 * @param activeShell
 		 * @param eObject
 		 */
-		public CustomDialog(Shell activeShell, EObject eObject) {
+		CustomDialog(Shell activeShell, EObject eObject) {
 			super(activeShell);
 			this.eObject = eObject;
 		}

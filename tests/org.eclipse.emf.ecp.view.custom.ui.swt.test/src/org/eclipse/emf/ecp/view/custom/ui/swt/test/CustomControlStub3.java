@@ -19,6 +19,8 @@ import org.eclipse.emf.databinding.EMFProperties;
 import org.eclipse.emf.ecp.view.spi.custom.model.ECPCustomControlChangeListener;
 import org.eclipse.emf.ecp.view.spi.custom.model.ECPHardcodedReferences;
 import org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT;
+import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexdmrFactory;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
@@ -66,14 +68,16 @@ public class CustomControlStub3 extends ECPAbstractCustomControlSWT implements E
 				.createFeaturePathDomainModelReference();
 			playersReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getLeague_Players());
 
-			final VFeaturePathDomainModelReference nameReference = VViewFactory.eINSTANCE
-				.createFeaturePathDomainModelReference();
+			final VIndexDomainModelReference nameReference = VIndexdmrFactory.eINSTANCE
+				.createIndexDomainModelReference();
 			nameReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Name());
+			nameReference.setIndex(0);
 			nameReference.getDomainModelEReferencePath().add(BowlingPackage.eINSTANCE.getLeague_Players());
 
-			final VFeaturePathDomainModelReference dateReference = VViewFactory.eINSTANCE
-				.createFeaturePathDomainModelReference();
+			final VIndexDomainModelReference dateReference = VIndexdmrFactory.eINSTANCE
+				.createIndexDomainModelReference();
 			dateReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_DateOfBirth());
+			nameReference.setIndex(0);
 			dateReference.getDomainModelEReferencePath().add(BowlingPackage.eINSTANCE.getLeague_Players());
 
 			features.add(playersReference);

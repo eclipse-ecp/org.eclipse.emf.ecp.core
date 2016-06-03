@@ -23,13 +23,13 @@ import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
- * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.TableContentWithoutValidationImpl#getName <em>Name
- * </em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.TableContentWithoutValidationImpl#getWeight <em>Weight
- * </em>}</li>
- * </ul>
  * </p>
+ * <ul>
+ * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.TableContentWithoutValidationImpl#getName
+ * <em>Name</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.TableContentWithoutValidationImpl#getWeight
+ * <em>Weight</em>}</li>
+ * </ul>
  *
  * @generated
  */

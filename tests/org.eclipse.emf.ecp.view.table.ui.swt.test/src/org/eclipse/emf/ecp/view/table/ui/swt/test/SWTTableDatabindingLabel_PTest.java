@@ -30,6 +30,7 @@ import org.eclipse.emf.databinding.internal.EMFValueProperty;
 import org.eclipse.emf.databinding.internal.EMFValuePropertyDecorator;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
@@ -64,6 +65,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Matchers;
 
 /**
  * JUnit tests for {@link TableControlSWTRenderer} testing the data binding of the table.
@@ -158,6 +160,15 @@ public class SWTTableDatabindingLabel_PTest {
 			.getColumnDomainModelReferences().get(0);
 		when(databindingService.getValueProperty(columnDMR, domainModel)).thenReturn(columnValueProperty);
 
+		final EReference eReference = mock(EReference.class);
+		final EClass eClass = EcorePackage.eINSTANCE.getEClass();
+		when(eReference.getEReferenceType()).thenReturn(eClass);
+
+		final WritableList mockedObservableList = new WritableList(createInitialList(), eReference);
+
+		when(databindingService.getObservableList(Matchers.eq(vTableControl.getDomainModelReference()),
+			any(EObject.class)))
+				.thenReturn(mockedObservableList);
 		when(databindingService.getSetting(vTableControl.getDomainModelReference(), domainModel)).thenReturn(
 			InternalEObject.class.cast(domainModel).eSetting(EcorePackage.eINSTANCE.getEClass_ESuperTypes()));
 
@@ -188,7 +199,11 @@ public class SWTTableDatabindingLabel_PTest {
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final List<EClass> initialList = createInitialList();
 
-		final WritableList mockedObservableList = new WritableList(initialList, EClass.class);
+		final EReference eReference = mock(EReference.class);
+		final EClass eClass = EcorePackage.eINSTANCE.getEClass();
+		when(eReference.getEReferenceType()).thenReturn(eClass);
+
+		final WritableList mockedObservableList = new WritableList(initialList, eReference);
 
 		final Table table = setUpDatabindingTests(mockedObservableList, initialList.get(0), initialList.get(1));
 
@@ -207,7 +222,11 @@ public class SWTTableDatabindingLabel_PTest {
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final List<EClass> initialList = createInitialList();
 
-		final WritableList mockedObservableList = new WritableList(initialList, EClass.class);
+		final EReference eReference = mock(EReference.class);
+		final EClass eClass = EcorePackage.eINSTANCE.getEClass();
+		when(eReference.getEReferenceType()).thenReturn(eClass);
+
+		final WritableList mockedObservableList = new WritableList(initialList, eReference);
 
 		final Table table = setUpDatabindingTests(mockedObservableList, initialList.get(0), initialList.get(1));
 
@@ -229,8 +248,10 @@ public class SWTTableDatabindingLabel_PTest {
 	public void testDatabindingServiceUsageRemoveFromModel() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final List<EClass> initialList = createInitialList();
-
-		final WritableList mockedObservableList = new WritableList(initialList, EClass.class);
+		final EReference eReference = mock(EReference.class);
+		final EClass eClass = EcorePackage.eINSTANCE.getEClass();
+		when(eReference.getEReferenceType()).thenReturn(eClass);
+		final WritableList mockedObservableList = new WritableList(initialList, eReference);
 
 		final Table table = setUpDatabindingTests(mockedObservableList, initialList.get(0), initialList.get(1));
 
@@ -250,8 +271,10 @@ public class SWTTableDatabindingLabel_PTest {
 	public void testDatabindingServiceUsageChangeModel() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final List<EClass> initialList = createInitialList();
-
-		final WritableList mockedObservableList = new WritableList(initialList, EClass.class);
+		final EReference eReference = mock(EReference.class);
+		final EClass eClass = EcorePackage.eINSTANCE.getEClass();
+		when(eReference.getEReferenceType()).thenReturn(eClass);
+		final WritableList mockedObservableList = new WritableList(initialList, eReference);
 
 		final Table table = setUpDatabindingTests(mockedObservableList, initialList.get(0), initialList.get(1));
 

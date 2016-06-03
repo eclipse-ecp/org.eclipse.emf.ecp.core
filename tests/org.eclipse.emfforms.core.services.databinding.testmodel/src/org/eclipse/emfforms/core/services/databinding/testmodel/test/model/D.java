@@ -21,18 +21,17 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D#getX <em>X</em>}</li>
  * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D#getYList <em>YList</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage#getD()
  * @model
  * @generated
  */
-public interface D extends EObject
-{
+public interface D extends EObject {
 	/**
 	 * Returns the value of the '<em><b>X</b></em>' attribute.
 	 * <!-- begin-user-doc -->
@@ -40,7 +39,7 @@ public interface D extends EObject
 	 * If the meaning of the '<em>X</em>' attribute isn't clear, there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the value of the '<em>X</em>' attribute.
 	 * @see #setX(String)
 	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage#getD_X()
@@ -54,7 +53,7 @@ public interface D extends EObject
 	 * <em>X</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param value the new value of the '<em>X</em>' attribute.
 	 * @see #getX()
 	 * @generated
@@ -70,7 +69,7 @@ public interface D extends EObject
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the value of the '<em>YList</em>' attribute list.
 	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage#getD_YList()
 	 * @model

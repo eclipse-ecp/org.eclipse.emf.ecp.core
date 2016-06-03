@@ -40,13 +40,13 @@ import org.eclipse.emf.ecp.view.validation.test.model.util.TestValidator;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.LibraryImpl#getName <em>Name</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.LibraryImpl#getWriters <em>Writers</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.LibraryImpl#getBooks <em>Books</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.LibraryImpl#getLibrarian <em>Librarian</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
@@ -225,19 +225,18 @@ public class LibraryImpl extends EObjectImpl implements Library {
 		if (newLibrarian != librarian) {
 			NotificationChain msgs = null;
 			if (librarian != null) {
-				msgs = ((InternalEObject) librarian).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
-					- TestPackage.LIBRARY__LIBRARIAN, null, msgs);
+				msgs = ((InternalEObject) librarian).eInverseRemove(this,
+					EOPPOSITE_FEATURE_BASE - TestPackage.LIBRARY__LIBRARIAN, null, msgs);
 			}
 			if (newLibrarian != null) {
-				msgs = ((InternalEObject) newLibrarian).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
-					- TestPackage.LIBRARY__LIBRARIAN, null, msgs);
+				msgs = ((InternalEObject) newLibrarian).eInverseAdd(this,
+					EOPPOSITE_FEATURE_BASE - TestPackage.LIBRARY__LIBRARIAN, null, msgs);
 			}
 			msgs = basicSetLibrarian(newLibrarian, msgs);
 			if (msgs != null) {
 				msgs.dispatch();
 			}
-		}
-		else if (eNotificationRequired()) {
+		} else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.LIBRARY__LIBRARIAN, newLibrarian,
 				newLibrarian));
 		}
@@ -253,14 +252,12 @@ public class LibraryImpl extends EObjectImpl implements Library {
 	public boolean validate(DiagnosticChain diagnostic, Map<Object, Object> context) {
 		if (getName() != null && getName().equals("warning")) {
 			if (diagnostic != null) {
-				diagnostic.add
-					(new BasicDiagnostic
-					(Diagnostic.WARNING,
-						TestValidator.DIAGNOSTIC_SOURCE,
-						TestValidator.LIBRARY__VALIDATE,
-						"Name is warning.",
-						new Object[] { this, TestPackage.eINSTANCE.getLibrary_Name()
-						}));
+				diagnostic.add(new BasicDiagnostic(Diagnostic.WARNING,
+					TestValidator.DIAGNOSTIC_SOURCE,
+					TestValidator.LIBRARY__VALIDATE,
+					"Name is warning.",
+					new Object[] { this, TestPackage.eINSTANCE.getLibrary_Name()
+					}));
 			}
 			return false;
 		}

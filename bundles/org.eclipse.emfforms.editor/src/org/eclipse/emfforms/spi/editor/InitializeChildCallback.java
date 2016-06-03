@@ -12,6 +12,7 @@
 package org.eclipse.emfforms.spi.editor;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
@@ -29,12 +30,11 @@ import org.eclipse.swt.widgets.Display;
  */
 public class InitializeChildCallback implements CreateElementCallback {
 
-	/**
-	 *
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateElementCallback#beforeCreateElement(java.lang.Object)
-	 */
+	@Override
+	public void initElement(EObject parent, EReference reference, EObject newObject) {
+		/* no op */
+	}
+
 	@Override
 	public boolean beforeCreateElement(Object newElement) {
 		// We won't disturb creation of non EObjects
@@ -55,6 +55,11 @@ public class InitializeChildCallback implements CreateElementCallback {
 		}
 
 		return result == Window.OK;
+	}
+
+	@Override
+	public void afterCreateElement(Object newElement) {
+		/* no op */
 	}
 
 }

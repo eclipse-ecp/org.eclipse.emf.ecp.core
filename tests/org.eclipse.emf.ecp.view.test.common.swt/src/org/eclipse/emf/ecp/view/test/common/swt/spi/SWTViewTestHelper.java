@@ -64,6 +64,17 @@ public final class SWTViewTestHelper {
 		return shell;
 	}
 
+	/**
+	 * Renders the given {@link VElement} on the given {@link Shell} and uses the given {@link EObject} as an input.
+	 *
+	 * @param renderable the {@link VElement} to be rendered
+	 * @param input The input {@link EObject} (domain model instance)
+	 * @param shell The {@link Shell} to render on
+	 * @return the rendered {@link Control}
+	 * @throws NoRendererFoundException If a required sub renderer is not found
+	 * @throws NoPropertyDescriptorFoundExeption If no PropertyDescriptor was found for the domain model instance
+	 * @throws EMFFormsNoRendererException If the renderer for the given {@link VElement} is not found
+	 */
 	public static Control render(VElement renderable, EObject input, Shell shell) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
 		final ViewModelContext viewContext = ViewModelContextFactory.INSTANCE.createViewModelContext(renderable, input);
@@ -82,6 +93,17 @@ public final class SWTViewTestHelper {
 
 	}
 
+	/**
+	 * Renders the given {@link VElement} on the given {@link Shell}. The method will create a dummy domain model object
+	 * as an input.
+	 *
+	 * @param renderable the {@link VElement} to be rendered
+	 * @param shell The {@link Shell} to render on
+	 * @return the rendered {@link Control}
+	 * @throws NoRendererFoundException If a required sub renderer is not found
+	 * @throws NoPropertyDescriptorFoundExeption If no PropertyDescriptor was found for the domain model instance
+	 * @throws EMFFormsNoRendererException If the renderer for the given {@link VElement} is not found
+	 */
 	public static Control render(VElement renderable, Shell shell) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
 		return render(renderable, VViewFactory.eINSTANCE.createView(), shell);

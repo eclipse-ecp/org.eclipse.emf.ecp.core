@@ -11,6 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emfforms.internal.editor.ecore;
 
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emfforms.spi.editor.GenericEditor;
 import org.eclipse.emfforms.spi.editor.InitializeChildCallback;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailComposite;
@@ -40,7 +41,7 @@ public class EcoreEditor extends GenericEditor {
 	protected TreeMasterDetailComposite createTreeMasterDetail(Composite composite, Object editorInput,
 		CreateElementCallback createElementCallback) {
 		return TreeMasterDetailSWTFactory.createTreeMasterDetail(composite, SWT.NONE, editorInput,
-			new EcoreEditorTMDCustomization(createElementCallback));
+			new EcoreEditorTMDCustomization(createElementCallback, (Notifier) editorInput));
 	}
 
 	@Override

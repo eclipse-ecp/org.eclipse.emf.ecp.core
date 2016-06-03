@@ -20,17 +20,16 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A#getB <em>B</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage#getA()
  * @model
  * @generated
  */
-public interface A extends EObject
-{
+public interface A extends EObject {
 	/**
 	 * Returns the value of the '<em><b>B</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
@@ -39,7 +38,7 @@ public interface A extends EObject
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the value of the '<em>B</em>' containment reference.
 	 * @see #setB(B)
 	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage#getA_B()
@@ -53,7 +52,7 @@ public interface A extends EObject
 	 * <em>B</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param value the new value of the '<em>B</em>' containment reference.
 	 * @see #getB()
 	 * @generated

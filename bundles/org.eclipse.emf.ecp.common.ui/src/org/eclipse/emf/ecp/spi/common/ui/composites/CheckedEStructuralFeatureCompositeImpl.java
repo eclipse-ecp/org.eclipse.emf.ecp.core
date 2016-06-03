@@ -153,7 +153,7 @@ public class CheckedEStructuralFeatureCompositeImpl extends SelectModelElementCo
 	 */
 	private class FilteredViewerContentProvider implements IStructuredContentProvider, ICheckStateProvider {
 
-		public FilteredViewerContentProvider(CheckboxTableViewer viewer) {
+		FilteredViewerContentProvider(CheckboxTableViewer viewer) {
 			viewer.addCheckStateListener(new ICheckStateListener() {
 				@Override
 				public void checkStateChanged(CheckStateChangedEvent event) {

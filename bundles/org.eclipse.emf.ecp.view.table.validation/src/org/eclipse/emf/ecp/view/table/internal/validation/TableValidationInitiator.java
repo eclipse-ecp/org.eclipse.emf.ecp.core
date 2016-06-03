@@ -189,6 +189,7 @@ public class TableValidationInitiator implements GlobalViewModelService, EMFForm
 
 	@Override
 	public void dispose() {
+		context.unregisterEMFFormsContextListener(this);
 	}
 
 	@Override

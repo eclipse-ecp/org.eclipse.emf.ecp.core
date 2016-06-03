@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -77,6 +77,20 @@ public class TreeMasterDetailMenuListener implements IMenuListener {
 		this.rightClickActions = rightClickActions;
 		this.createElementCallback = createElementCallback;
 		this.deleteActionBuilder = deleteActionBuilder;
+		initializeRightClickActions();
+	}
+
+	/**
+	 * The rightClickActions need to be initialized in order for the key bindings to work, even if the context menu was
+	 * not yet shown.
+	 */
+	private void initializeRightClickActions() {
+		if (rightClickActions == null) {
+			return;
+		}
+		for (final MasterDetailAction action : rightClickActions) {
+			action.setTreeViewer(treeViewer);
+		}
 	}
 
 	@Override

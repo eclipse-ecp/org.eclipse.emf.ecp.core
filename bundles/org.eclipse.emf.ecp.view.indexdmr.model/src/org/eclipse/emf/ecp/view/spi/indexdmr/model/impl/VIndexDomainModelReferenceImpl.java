@@ -40,7 +40,8 @@ import org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceI
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.impl.VIndexDomainModelReferenceImpl#getPrefixDMR <em>Prefix
  * DMR</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.impl.VIndexDomainModelReferenceImpl#getIndex <em>Index</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.impl.VIndexDomainModelReferenceImpl#getIndex <em>Index</em>}
+ * </li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.impl.VIndexDomainModelReferenceImpl#getTargetDMR <em>Target
  * DMR</em>}</li>
  * </ul>
@@ -49,8 +50,7 @@ import org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceI
  * @generated
  */
 public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelReferenceImpl implements
-	VIndexDomainModelReference
-{
+	VIndexDomainModelReference {
 	/**
 	 * The cached value of the '{@link #getPrefixDMR() <em>Prefix DMR</em>}' containment reference.
 	 * <!-- begin-user-doc -->
@@ -101,8 +101,7 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	 *
 	 * @generated
 	 */
-	protected VIndexDomainModelReferenceImpl()
-	{
+	protected VIndexDomainModelReferenceImpl() {
 		super();
 	}
 
@@ -113,8 +112,7 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return VIndexdmrPackage.Literals.INDEX_DOMAIN_MODEL_REFERENCE;
 	}
 
@@ -125,8 +123,7 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	 * @generated
 	 */
 	@Override
-	public VDomainModelReference getPrefixDMR()
-	{
+	public VDomainModelReference getPrefixDMR() {
 		return prefixDMR;
 	}
 
@@ -136,12 +133,10 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	 *
 	 * @generated
 	 */
-	public NotificationChain basicSetPrefixDMR(VDomainModelReference newPrefixDMR, NotificationChain msgs)
-	{
+	public NotificationChain basicSetPrefixDMR(VDomainModelReference newPrefixDMR, NotificationChain msgs) {
 		final VDomainModelReference oldPrefixDMR = prefixDMR;
 		prefixDMR = newPrefixDMR;
-		if (eNotificationRequired())
-		{
+		if (eNotificationRequired()) {
 			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
 				VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE__PREFIX_DMR, oldPrefixDMR, newPrefixDMR);
 			if (msgs == null) {
@@ -160,10 +155,8 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	 * @generated
 	 */
 	@Override
-	public void setPrefixDMR(VDomainModelReference newPrefixDMR)
-	{
-		if (newPrefixDMR != prefixDMR)
-		{
+	public void setPrefixDMR(VDomainModelReference newPrefixDMR) {
+		if (newPrefixDMR != prefixDMR) {
 			NotificationChain msgs = null;
 			if (prefixDMR != null) {
 				msgs = ((InternalEObject) prefixDMR).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
@@ -177,8 +170,7 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 			if (msgs != null) {
 				msgs.dispatch();
 			}
-		}
-		else if (eNotificationRequired()) {
+		} else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE__PREFIX_DMR, newPrefixDMR, newPrefixDMR));
 		}
@@ -191,8 +183,7 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	 * @generated
 	 */
 	@Override
-	public VDomainModelReference getTargetDMR()
-	{
+	public VDomainModelReference getTargetDMR() {
 		return targetDMR;
 	}
 
@@ -202,12 +193,10 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	 *
 	 * @generated
 	 */
-	public NotificationChain basicSetTargetDMR(VDomainModelReference newTargetDMR, NotificationChain msgs)
-	{
+	public NotificationChain basicSetTargetDMR(VDomainModelReference newTargetDMR, NotificationChain msgs) {
 		final VDomainModelReference oldTargetDMR = targetDMR;
 		targetDMR = newTargetDMR;
-		if (eNotificationRequired())
-		{
+		if (eNotificationRequired()) {
 			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
 				VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE__TARGET_DMR, oldTargetDMR, newTargetDMR);
 			if (msgs == null) {
@@ -226,10 +215,8 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	 * @generated
 	 */
 	@Override
-	public void setTargetDMR(VDomainModelReference newTargetDMR)
-	{
-		if (newTargetDMR != targetDMR)
-		{
+	public void setTargetDMR(VDomainModelReference newTargetDMR) {
+		if (newTargetDMR != targetDMR) {
 			NotificationChain msgs = null;
 			if (targetDMR != null) {
 				msgs = ((InternalEObject) targetDMR).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
@@ -243,8 +230,7 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 			if (msgs != null) {
 				msgs.dispatch();
 			}
-		}
-		else if (eNotificationRequired()) {
+		} else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE__TARGET_DMR, newTargetDMR, newTargetDMR));
 		}
@@ -257,8 +243,7 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	 * @generated
 	 */
 	@Override
-	public int getIndex()
-	{
+	public int getIndex() {
 		return index;
 	}
 
@@ -269,8 +254,7 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	 * @generated
 	 */
 	@Override
-	public void setIndex(int newIndex)
-	{
+	public void setIndex(int newIndex) {
 		final int oldIndex = index;
 		index = newIndex;
 		if (eNotificationRequired()) {
@@ -286,10 +270,8 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-	{
-		switch (featureID)
-		{
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
 		case VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE__PREFIX_DMR:
 			return basicSetPrefixDMR(null, msgs);
 		case VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE__TARGET_DMR:
@@ -305,10 +287,8 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
-		switch (featureID)
-		{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 		case VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE__PREFIX_DMR:
 			return getPrefixDMR();
 		case VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE__INDEX:
@@ -326,10 +306,8 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	 * @generated
 	 */
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
-		switch (featureID)
-		{
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 		case VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE__PREFIX_DMR:
 			setPrefixDMR((VDomainModelReference) newValue);
 			return;
@@ -350,10 +328,8 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
-		switch (featureID)
-		{
+	public void eUnset(int featureID) {
+		switch (featureID) {
 		case VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE__PREFIX_DMR:
 			setPrefixDMR((VDomainModelReference) null);
 			return;
@@ -374,10 +350,8 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
-		switch (featureID)
-		{
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 		case VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE__PREFIX_DMR:
 			return prefixDMR != null;
 		case VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE__INDEX:
@@ -395,8 +369,7 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	 * @generated
 	 */
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		if (eIsProxy()) {
 			return super.toString();
 		}
@@ -413,6 +386,8 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	 *
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceImpl#init(org.eclipse.emf.ecore.EObject)
 	 */
+	@SuppressWarnings("unchecked")
+	@Deprecated
 	@Override
 	public boolean init(EObject eObject) {
 		if (getTargetDMR() == null) {
@@ -443,14 +418,12 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 			EReference eReference;
 			if (getPrefixDMR() == null) {
 				eReference = (EReference) getDomainModelEFeature();
-			}
-			else {
+			} else {
 				eReference = (EReference) getPrefixDMR().getEStructuralFeatureIterator().next();
 			}
 			foundChild = EcoreUtil.create(eReference.getEReferenceType());
 			list.add(foundChild);
-		}
-		else {
+		} else {
 			foundChild = list.get(getIndex());
 		}
 
@@ -458,6 +431,7 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 		return init && valueDMR;
 	}
 
+	@Deprecated
 	@Override
 	public Iterator<Setting> getIterator() {
 		if (getTargetDMR() == null) {
@@ -467,6 +441,7 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 		return getTargetDMR().getIterator();
 	}
 
+	@Deprecated
 	@Override
 	public Iterator<EStructuralFeature> getEStructuralFeatureIterator() {
 		if (getTargetDMR() == null) {

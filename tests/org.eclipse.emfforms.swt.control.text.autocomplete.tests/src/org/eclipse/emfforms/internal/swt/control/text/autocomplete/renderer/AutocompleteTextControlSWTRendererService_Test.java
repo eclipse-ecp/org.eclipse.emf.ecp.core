@@ -19,6 +19,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import org.eclipse.emf.databinding.EMFObservables;
+import org.eclipse.emf.databinding.EMFProperties;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EcoreFactory;
@@ -29,7 +30,6 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
-import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestFactory;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage;
@@ -51,7 +51,6 @@ public class AutocompleteTextControlSWTRendererService_Test {
 	private AutocompleteTextControlSWTRendererService rendererService;
 	private ViewModelContext viewModelContext;
 	private D domainModel;
-	private A domainModel2;
 	private VControl control;
 	private EMFFormsDatabinding emfFormsDatabinding;
 
@@ -60,7 +59,6 @@ public class AutocompleteTextControlSWTRendererService_Test {
 		defaultRealm = new DefaultRealm();
 
 		domainModel = TestFactory.eINSTANCE.createD();
-		domainModel2 = TestFactory.eINSTANCE.createA();
 
 		control = VViewFactory.eINSTANCE.createControl();
 		control.setDomainModelReference(TestPackage.eINSTANCE.getD_X());
@@ -158,7 +156,7 @@ public class AutocompleteTextControlSWTRendererService_Test {
 	@Test
 	public void testIsApplicableDataBindingFailed() throws DatabindingFailedException {
 		emfFormsDatabinding = mock(EMFFormsDatabinding.class);
-		when(emfFormsDatabinding.getObservableValue(control.getDomainModelReference(), domainModel))
+		when(emfFormsDatabinding.getValueProperty(control.getDomainModelReference(), domainModel))
 			.thenThrow(new DatabindingFailedException("")); //$NON-NLS-1$
 		rendererService.setDatabinding(emfFormsDatabinding);
 		assertEquals(EMFFormsDIRendererService.NOT_APPLICABLE, rendererService.isApplicable(control, viewModelContext),
@@ -166,7 +164,12 @@ public class AutocompleteTextControlSWTRendererService_Test {
 	}
 
 	@Test
-	public void testIsApplicableNoAnnotation() {
+	public void testIsApplicableNoAnnotation() throws DatabindingFailedException {
+		emfFormsDatabinding = mock(EMFFormsDatabinding.class);
+		when(emfFormsDatabinding.getValueProperty(control.getDomainModelReference(), domainModel))
+			.thenReturn(EMFProperties.value(TestPackage.eINSTANCE.getD_X()));
+		rendererService.setDatabinding(emfFormsDatabinding);
+
 		assertEquals(EMFFormsDIRendererService.NOT_APPLICABLE, rendererService.isApplicable(control, viewModelContext),
 			0d);
 	}
@@ -174,8 +177,8 @@ public class AutocompleteTextControlSWTRendererService_Test {
 	@Test
 	public void testIsApplicableMulti() throws DatabindingFailedException {
 		emfFormsDatabinding = mock(EMFFormsDatabinding.class);
-		when(emfFormsDatabinding.getObservableValue(control.getDomainModelReference(), domainModel))
-			.thenReturn(EMFObservables.observeValue(domainModel, TestPackage.eINSTANCE.getD_YList()));
+		when(emfFormsDatabinding.getValueProperty(control.getDomainModelReference(), domainModel))
+			.thenReturn(EMFProperties.value(TestPackage.eINSTANCE.getD_YList()));
 		rendererService.setDatabinding(emfFormsDatabinding);
 
 		assertEquals(EMFFormsDIRendererService.NOT_APPLICABLE, rendererService.isApplicable(control, viewModelContext),
@@ -185,8 +188,8 @@ public class AutocompleteTextControlSWTRendererService_Test {
 	@Test
 	public void testIsApplicableEReference() throws DatabindingFailedException {
 		emfFormsDatabinding = mock(EMFFormsDatabinding.class);
-		when(emfFormsDatabinding.getObservableValue(control.getDomainModelReference(), domainModel))
-			.thenReturn(EMFObservables.observeValue(domainModel2, TestPackage.eINSTANCE.getA_B()));
+		when(emfFormsDatabinding.getValueProperty(control.getDomainModelReference(), domainModel))
+			.thenReturn(EMFProperties.value(TestPackage.eINSTANCE.getA_B()));
 		rendererService.setDatabinding(emfFormsDatabinding);
 
 		assertEquals(EMFFormsDIRendererService.NOT_APPLICABLE, rendererService.isApplicable(control, viewModelContext),
@@ -198,9 +201,9 @@ public class AutocompleteTextControlSWTRendererService_Test {
 	public void testIsApplicableNoString() throws DatabindingFailedException {
 
 		emfFormsDatabinding = mock(EMFFormsDatabinding.class);
-		when(emfFormsDatabinding.getObservableValue(control.getDomainModelReference(), domainModel))
+		when(emfFormsDatabinding.getValueProperty(control.getDomainModelReference(), domainModel))
 			.thenReturn(
-				EMFObservables.observeValue(TestPackage.eINSTANCE.getD_X(), EcorePackage.eINSTANCE.getEAttribute_ID()));
+				EMFProperties.value(EcorePackage.eINSTANCE.getEAttribute_ID()));
 		rendererService.setDatabinding(emfFormsDatabinding);
 
 		assertEquals(EMFFormsDIRendererService.NOT_APPLICABLE, rendererService.isApplicable(control, viewModelContext),
@@ -217,9 +220,9 @@ public class AutocompleteTextControlSWTRendererService_Test {
 		attributeSpy.getEAnnotations().add(annotation);
 
 		emfFormsDatabinding = mock(EMFFormsDatabinding.class);
-		when(emfFormsDatabinding.getObservableValue(control.getDomainModelReference(), domainModel))
+		when(emfFormsDatabinding.getValueProperty(control.getDomainModelReference(), domainModel))
 			.thenReturn(
-				EMFObservables.observeValue(domainModel, attributeSpy));
+				EMFProperties.value(attributeSpy));
 		rendererService.setDatabinding(emfFormsDatabinding);
 
 		assertEquals(3d, rendererService.isApplicable(control, viewModelContext), 0d);

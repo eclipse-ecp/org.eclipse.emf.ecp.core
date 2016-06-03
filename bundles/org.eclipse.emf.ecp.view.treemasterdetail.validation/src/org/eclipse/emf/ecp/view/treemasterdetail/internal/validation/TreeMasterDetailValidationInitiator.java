@@ -69,7 +69,7 @@ public class TreeMasterDetailValidationInitiator implements
 				return;
 			}
 			for (final TreeContextMapping treeContextEntry : new LinkedHashSet<TreeContextMapping>(mapping.keySet())) {
-				if (!mapping.get(treeContextEntry).contains(manipulateSelection(notification.getNotifier()))) {
+				if (!mapping.get(treeContextEntry).contains(notification.getNotifier())) {
 					return;
 				}
 				final Set<Object> children = getAllChildren(notification.getNotifier(),
@@ -79,12 +79,12 @@ public class TreeMasterDetailValidationInitiator implements
 				}
 				children.removeAll(mapping.get(treeContextEntry));
 				for (final Object child : children) {
-					final EObject addedObject = (EObject) manipulateSelection(child);
-					mapping.get(treeContextEntry).add(addedObject);
+					mapping.get(treeContextEntry).add(child);
 					final VElement viewModel = context.getViewModel();
 					final VViewModelProperties properties = ViewModelPropertiesHelper
 						.getInhertitedPropertiesOrEmpty(viewModel);
 					properties.addNonInheritableProperty(DETAIL_KEY, true);
+					final EObject addedObject = (EObject) manipulateSelection(child);
 					final ViewModelContext childContext = treeContextEntry.context.getChildContext(addedObject,
 						treeContextEntry.control, ViewProviderHelper.getView(addedObject, properties));
 					childContext.addContextUser(this);
@@ -167,6 +167,7 @@ public class TreeMasterDetailValidationInitiator implements
 	private ComposedAdapterFactory adapterFactory;
 
 	private AdapterFactoryContentProvider adapterFactoryContentProvider;
+	private ViewModelContext context;
 
 	/**
 	 * Constructor of the Initiator.
@@ -188,6 +189,7 @@ public class TreeMasterDetailValidationInitiator implements
 
 	@Override
 	public void instantiate(final ViewModelContext context) {
+		this.context = context;
 		context.registerDomainChangeListener(new TreeMasterDetailValidationInitiatorDomainChangeListener(context));
 		checkForTreeMasterDetail(context);
 		context.registerEMFFormsContextListener(this);
@@ -215,15 +217,15 @@ public class TreeMasterDetailValidationInitiator implements
 			final VElement viewModel = viewModelContext.getViewModel();
 			final VViewModelProperties properties = ViewModelPropertiesHelper.getInhertitedPropertiesOrEmpty(viewModel);
 			properties.addNonInheritableProperty(DETAIL_KEY, true);
-			final EObject manipulateSelection = (EObject) manipulateSelection(object);
 			final TreeContextMapping entry = new TreeContextMapping();
 			entry.context = viewModelContext;
 			entry.control = treeMasterDetail;
 			if (!mapping.containsKey(entry)) {
 				mapping.put(entry, new LinkedHashSet<Object>());
 			}
-			mapping.get(entry).add(manipulateSelection);
+			mapping.get(entry).add(object);
 
+			final EObject manipulateSelection = (EObject) manipulateSelection(object);
 			final VView view = ViewProviderHelper.getView(manipulateSelection, properties);
 
 			final ViewModelContext childContext = viewModelContext.getChildContext(manipulateSelection,
@@ -237,15 +239,15 @@ public class TreeMasterDetailValidationInitiator implements
 		final VViewModelProperties properties = ViewModelPropertiesHelper.getInhertitedPropertiesOrEmpty(viewModel);
 		properties.addNonInheritableProperty(DETAIL_KEY, true);
 		properties.addNonInheritableProperty(ROOT_KEY, true);
-		final Object manipulateSelection = manipulateSelection(viewModelContext.getDomainModel());
 		final TreeContextMapping entry = new TreeContextMapping();
 		entry.context = viewModelContext;
 		entry.control = treeMasterDetail;
 		if (!mapping.containsKey(entry)) {
 			mapping.put(entry, new LinkedHashSet<Object>());
 		}
-		mapping.get(entry).add(manipulateSelection);
+		mapping.get(entry).add(viewModelContext.getDomainModel());
 
+		final Object manipulateSelection = manipulateSelection(viewModelContext.getDomainModel());
 		VView view = treeMasterDetail.getDetailView();
 		if (view == null || view.getChildren().isEmpty()) {
 			view = ViewProviderHelper.getView((EObject) manipulateSelection, properties);
@@ -259,11 +261,11 @@ public class TreeMasterDetailValidationInitiator implements
 		final Set<Object> allChildren = new LinkedHashSet<Object>();
 		final Object[] children = adapterFactoryContentProvider.getChildren(parent);
 		for (final Object object : children) {
-			final Object manipulatedSelection = manipulateSelection(object);
-			if (!EObject.class.isInstance(manipulatedSelection)) {
+			// final Object manipulatedSelection = manipulateSelection(object);
+			if (!EObject.class.isInstance(object)) {
 				continue;
 			}
-			allChildren.add(manipulatedSelection);
+			allChildren.add(object);
 			allChildren.addAll(getAllChildren(object, adapterFactoryContentProvider));
 		}
 		return allChildren;
@@ -275,6 +277,7 @@ public class TreeMasterDetailValidationInitiator implements
 
 	@Override
 	public void dispose() {
+		context.unregisterEMFFormsContextListener(this);
 		adapterFactoryContentProvider.dispose();
 		adapterFactory.dispose();
 	}

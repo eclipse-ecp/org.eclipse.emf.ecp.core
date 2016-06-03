@@ -46,19 +46,22 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
 	 *
 	 * @author Eike Stepper
 	 */
-	public enum LifecycleEvent {
+	enum LifecycleEvent {
 		/**
 		 * Called on create.
 		 */
-		CREATE, /**
-				 * Called on initialization.
-				 */
-		INIT, /**
-				 * Called on disposal.
-				 */
-		DISPOSE, /**
-					 * Called when removed.
-					 */
+		CREATE,
+		/**
+		 * Called on initialization.
+		 */
+		INIT,
+		/**
+		 * Called on disposal.
+		 */
+		DISPOSE,
+		/**
+		 * Called when removed.
+		 */
 		REMOVE;
 	}
 

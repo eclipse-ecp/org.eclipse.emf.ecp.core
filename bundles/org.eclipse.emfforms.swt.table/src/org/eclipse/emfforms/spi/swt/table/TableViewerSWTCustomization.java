@@ -63,6 +63,11 @@ public interface TableViewerSWTCustomization
 	interface ColumnDescription {
 
 		/**
+		 * Constant indicating that {@link #getWeight()} has no value.
+		 */
+		int NO_WEIGHT = -1;
+
+		/**
 		 * <code>true</code> if resizeable, <code>false</code> otherwise.
 		 *
 		 * @return whether the column is resizeable

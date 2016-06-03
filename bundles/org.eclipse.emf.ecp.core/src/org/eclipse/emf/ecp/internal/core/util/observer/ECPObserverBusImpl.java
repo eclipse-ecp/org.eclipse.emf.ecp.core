@@ -233,7 +233,7 @@ public class ECPObserverBusImpl implements ECPObserverBus {
 		private List<ECPObserverCall.Result> lastResults;
 		private final boolean prioritized;
 
-		public ProxyHandler(Class<ECPObserver> clazz, boolean prioritized) {
+		ProxyHandler(Class<ECPObserver> clazz, boolean prioritized) {
 			this.clazz = clazz;
 			this.prioritized = prioritized;
 			lastResults = new ArrayList<ECPObserverCall.Result>();
@@ -283,7 +283,8 @@ public class ECPObserverBusImpl implements ECPObserverBus {
 
 		}
 
-		private List<ECPObserverCall.Result> notifiyObservers(List<ECPObserver> observers, Method method, Object[] args) {
+		private List<ECPObserverCall.Result> notifiyObservers(List<ECPObserver> observers, Method method,
+			Object[] args) {
 			final List<ECPObserverCall.Result> results = new ArrayList<ECPObserverCall.Result>(observers.size());
 			for (final ECPObserver observer : observers) {
 				try {

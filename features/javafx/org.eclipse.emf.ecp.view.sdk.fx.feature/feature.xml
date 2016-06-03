@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.emf.ecp.view.sdk.fx.feature"
       label="EMFForms JavaFX SDK Feature"
-      version="1.8.0.qualifier"
+      version="1.9.0.qualifier"
       provider-name="Eclipse Modeling Project">
 
    <description url="http://www.example.com/description">

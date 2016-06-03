@@ -30,11 +30,7 @@ class SeedWrapper implements SchemaWrapper {
 			'use strict';
 			
 			var app = angular.module('jsonforms-seed');
-			app.factory('SchemaService', function() {
-			    return {
-			        schema: «model»
-			    }
-			});
+			app.value('Schema', «model» );
 		'''
 	}
 
@@ -43,11 +39,7 @@ class SeedWrapper implements SchemaWrapper {
 			'use strict';
 			
 			var app = angular.module('jsonforms-seed');
-			app.service('UISchemaService', function() {
-			
-			    this.uiSchema = «view»;
-			
-			});
+			app.value('UISchema', «view» );
 		'''
 	}
 

@@ -52,6 +52,7 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedExcep
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
+import org.eclipse.emfforms.spi.swt.core.SWTDataElementIdHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
@@ -116,6 +117,11 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 
 	private final EMFDataBindingContext viewModelDBC;
 	private Label validationIcon;
+	private AddButtonSelectionAdapter addButtonSelectionAdapter;
+	private RemoveButtonSelectionAdapter removeButtonSelectionAdapter;
+	private UpButtonSelectionAdapter upButtonSelectionAdapter;
+	private DownButtonSelectionAdapter downButtonSelectionAdapter;
+	private ECPListEditingSupport observableSupport;
 
 	/**
 	 * Default constructor.
@@ -277,6 +283,8 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 			}
 		});
 
+		SWTDataElementIdHelper.setElementIdDataForVControl(composite, getVElement(), getViewModelContext());
+
 		return composite;
 	}
 
@@ -292,14 +300,16 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 		if (addButton == null) {
 			return;
 		}
-		addButton.addSelectionListener(new AddButtonSelectionAdapter(list));
+		addButtonSelectionAdapter = new AddButtonSelectionAdapter(list);
+		addButton.addSelectionListener(addButtonSelectionAdapter);
 	}
 
 	private void initRemoveButton(Button removeButton, IObservableList list) {
 		if (removeButton == null) {
 			return;
 		}
-		removeButton.addSelectionListener(new RemoveButtonSelectionAdapter(list));
+		removeButtonSelectionAdapter = new RemoveButtonSelectionAdapter(list);
+		removeButton.addSelectionListener(removeButtonSelectionAdapter);
 	}
 
 	private void createUpDownButtons(Composite composite, IObservableList list) {
@@ -309,11 +319,13 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 		final Button upB = new Button(composite, SWT.PUSH);
 		upB.setImage(up);
 		upB.setEnabled(!getVElement().isReadonly());
-		upB.addSelectionListener(new UpButtonSelectionAdapter(list));
+		upButtonSelectionAdapter = new UpButtonSelectionAdapter(list);
+		upB.addSelectionListener(upButtonSelectionAdapter);
 		final Button downB = new Button(composite, SWT.PUSH);
 		downB.setImage(down);
 		downB.setEnabled(!getVElement().isReadonly());
-		downB.addSelectionListener(new DownButtonSelectionAdapter(list));
+		downButtonSelectionAdapter = new DownButtonSelectionAdapter(list);
+		downB.addSelectionListener(downButtonSelectionAdapter);
 	}
 
 	private InternalEObject getInstanceOf(EClass clazz) {
@@ -382,7 +394,7 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 		layout.setColumnData(column.getColumn(), new ColumnWeightData(1, false));
 
 		final VDomainModelReference dmr = getVElement().getDomainModelReference();
-		final EditingSupport observableSupport = new ECPListEditingSupport(tableViewer, cellEditor, getVElement(), dmr,
+		observableSupport = new ECPListEditingSupport(tableViewer, cellEditor, getVElement(), dmr,
 			list);
 		column.setEditingSupport(observableSupport);
 
@@ -440,9 +452,13 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 */
 	private final class DownButtonSelectionAdapter extends SelectionAdapter {
 
-		private final IObservableList list;
+		private IObservableList list;
 
 		DownButtonSelectionAdapter(IObservableList list) {
+			setObservableList(list);
+		}
+
+		public void setObservableList(IObservableList list) {
 			this.list = list;
 		}
 
@@ -471,9 +487,13 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 */
 	private final class UpButtonSelectionAdapter extends SelectionAdapter {
 
-		private final IObservableList list;
+		private IObservableList list;
 
 		UpButtonSelectionAdapter(IObservableList list) {
+			setObservableList(list);
+		}
+
+		public void setObservableList(IObservableList list) {
 			this.list = list;
 		}
 
@@ -503,9 +523,13 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 */
 	private final class RemoveButtonSelectionAdapter extends SelectionAdapter {
 
-		private final IObservableList list;
+		private IObservableList list;
 
 		RemoveButtonSelectionAdapter(IObservableList list) {
+			setObservableList(list);
+		}
+
+		public void setObservableList(IObservableList list) {
 			this.list = list;
 		}
 
@@ -533,9 +557,13 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 */
 	private final class AddButtonSelectionAdapter extends SelectionAdapter {
 
-		private final IObservableList list;
+		private IObservableList list;
 
 		AddButtonSelectionAdapter(IObservableList list) {
+			setObservableList(list);
+		}
+
+		public void setObservableList(IObservableList list) {
 			this.list = list;
 		}
 
@@ -583,7 +611,7 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 
 		private final VControl control;
 
-		private final IObservableList valueProperty;
+		private IObservableList valueProperty;
 
 		ECPListEditingSupport(ColumnViewer viewer, CellEditor cellEditor, VControl control,
 			VDomainModelReference domainModelReference, IObservableList valueProperty) {
@@ -653,7 +681,8 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 			final int index = item.getParent().indexOf(item);
 			@SuppressWarnings("restriction")
 			final IObservableValue model = new org.eclipse.emf.ecp.edit.internal.swt.util.ECPObservableValue(
-				valueProperty, index, String.class);
+				valueProperty, index,
+				EAttribute.class.cast(valueProperty.getElementType()).getEAttributeType().getInstanceClass());
 
 			final Binding binding = createBinding(target, model);
 
@@ -749,6 +778,32 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 				model.dispose();
 			}
 		}
+
+		public void setObservableList(IObservableList list) {
+			valueProperty = list;
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer#rootDomainModelChanged()
+	 */
+	@Override
+	protected void rootDomainModelChanged() throws DatabindingFailedException {
+		final IObservableList oldList = (IObservableList) getTableViewer().getInput();
+		oldList.dispose();
+
+		final IObservableList list = getEMFFormsDatabinding().getObservableList(getVElement().getDomainModelReference(),
+			getViewModelContext().getDomainModel());
+		// addRelayoutListenerIfNeeded(list, composite);
+		getTableViewer().setInput(list);
+
+		addButtonSelectionAdapter.setObservableList(list);
+		removeButtonSelectionAdapter.setObservableList(list);
+		upButtonSelectionAdapter.setObservableList(list);
+		downButtonSelectionAdapter.setObservableList(list);
+		observableSupport.setObservableList(list);
 	}
 
 }

@@ -18,6 +18,8 @@ import org.eclipse.emf.ecp.core.ECPProjectManager;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.internal.core.ECPProjectManagerImpl;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
+import org.eclipse.rap.rwt.service.UISessionEvent;
+import org.eclipse.rap.rwt.service.UISessionListener;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
@@ -32,7 +34,7 @@ import org.osgi.framework.ServiceRegistration;
  *
  */
 public class ECPProjectManagerFactory implements
-	ServiceFactory<ECPProjectManager> {
+	ServiceFactory<ECPProjectManager>, UISessionListener {
 
 	/**
 	 * The session provider used to retrieve the current session.
@@ -88,6 +90,9 @@ public class ECPProjectManagerFactory implements
 		ServiceRegistration<ECPProjectManager> registration) {
 		ECPProjectManagerImpl ecpProjectManager;
 		final String sessionId = getSessionProvider().getSessionId();
+		// final UISession uiSession = RWT.getUISession();
+		// uiSession.addUISessionListener(this);
+		getSessionProvider().registerListenerWithSession(this);
 		if (sessionRegistry.containsKey(sessionId)) {
 			ecpProjectManager = sessionRegistry.get(sessionId);
 		} else {
@@ -111,6 +116,17 @@ public class ECPProjectManagerFactory implements
 	public void ungetService(Bundle bundle,
 		ServiceRegistration<ECPProjectManager> registration,
 		ECPProjectManager service) {
+
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.rap.rwt.service.UISessionListener#beforeDestroy(org.eclipse.rap.rwt.service.UISessionEvent)
+	 */
+	@Override
+	public void beforeDestroy(UISessionEvent event) {
+		sessionRegistry.remove(event.getUISession().toString());
 
 	}
 

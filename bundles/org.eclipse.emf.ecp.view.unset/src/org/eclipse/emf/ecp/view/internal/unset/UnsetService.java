@@ -246,6 +246,7 @@ public class UnsetService implements ViewModelService, EMFFormsContextListener {
 	 */
 	@Override
 	public void dispose() {
+		context.unregisterEMFFormsContextListener(this);
 		context.unregisterViewChangeListener(viewChangeListener);
 	}
 
@@ -294,7 +295,7 @@ public class UnsetService implements ViewModelService, EMFFormsContextListener {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener#childContextAdded(org.eclipse.emf.ecp.view.spi.model.VElement,
 	 *      org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext)
 	 */
@@ -305,7 +306,7 @@ public class UnsetService implements ViewModelService, EMFFormsContextListener {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener#childContextDisposed(org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext)
 	 */
 	@Override
@@ -315,7 +316,7 @@ public class UnsetService implements ViewModelService, EMFFormsContextListener {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener#contextInitialised()
 	 */
 	@Override
@@ -364,7 +365,7 @@ public class UnsetService implements ViewModelService, EMFFormsContextListener {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener#contextDispose()
 	 */
 	@Override

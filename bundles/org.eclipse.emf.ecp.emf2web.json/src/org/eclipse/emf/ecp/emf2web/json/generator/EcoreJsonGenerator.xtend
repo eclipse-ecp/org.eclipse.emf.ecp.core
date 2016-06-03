@@ -67,7 +67,7 @@ class EcoreJsonGenerator extends JsonGenerator {
 	}
 
 	private def JsonObject withTypeProperties(JsonObject jsonObject, EClassifier eClassifier, int upper) {
-		if (upper > 1) {
+		if (upper > 1 || upper==-1) {
 			jsonObject.withType("array")
 			jsonObject.with("items", new JsonObject().withTypeProperties(eClassifier))
 		} else {
@@ -102,7 +102,7 @@ class EcoreJsonGenerator extends JsonGenerator {
 
 	private def dispatch JsonElement createJsonSchemaElement(EReference reference) {
 		val jsonObject = new JsonObject
-		if (reference.upperBound > 1) {
+		if (reference.upperBound > 1 || reference.upperBound==-1) {
 			jsonObject.withType("array")
 			jsonObject.with("items", createJsonSchemaElement(reference.EReferenceType))	
 		} else {

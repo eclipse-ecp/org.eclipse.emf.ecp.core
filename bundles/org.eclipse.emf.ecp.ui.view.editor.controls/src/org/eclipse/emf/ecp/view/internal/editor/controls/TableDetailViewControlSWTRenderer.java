@@ -13,6 +13,8 @@ package org.eclipse.emf.ecp.view.internal.editor.controls;
 
 import java.net.URL;
 
+import javax.inject.Inject;
+
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.IObserving;
@@ -57,9 +59,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
 
 /**
  * @author jfaltermeier
@@ -130,27 +129,7 @@ public class TableDetailViewControlSWTRenderer extends SimpleControlSWTControlSW
 		}
 	}
 
-	private static final EMFFormsDatabinding emfFormsDatabinding;
-	private static final EMFFormsEditSupport emfFormsEditSupport;
-	private static final EMFFormsLabelProvider emfFormsLabelProvider;
-	private static final VTViewTemplateProvider vtViewTemplateProvider;
-
-	static {
-		final BundleContext bundleContext = FrameworkUtil.getBundle(TableDetailViewControlSWTRenderer.class)
-			.getBundleContext();
-		final ServiceReference<EMFFormsDatabinding> emfFormsDatabindingServiceReference = bundleContext
-			.getServiceReference(EMFFormsDatabinding.class);
-		emfFormsDatabinding = bundleContext.getService(emfFormsDatabindingServiceReference);
-		final ServiceReference<EMFFormsEditSupport> emfFormsEditSupportServiceReference = bundleContext
-			.getServiceReference(EMFFormsEditSupport.class);
-		emfFormsEditSupport = bundleContext.getService(emfFormsEditSupportServiceReference);
-		final ServiceReference<EMFFormsLabelProvider> emfFormsLabelProviderServiceReference = bundleContext
-			.getServiceReference(EMFFormsLabelProvider.class);
-		emfFormsLabelProvider = bundleContext.getService(emfFormsLabelProviderServiceReference);
-		final ServiceReference<VTViewTemplateProvider> vtViewTemplateProviderServiceReference = bundleContext
-			.getServiceReference(VTViewTemplateProvider.class);
-		vtViewTemplateProvider = bundleContext.getService(vtViewTemplateProviderServiceReference);
-	}
+	private final EMFFormsEditSupport emfFormsEditSupport;
 
 	/**
 	 * Default constructor.
@@ -158,10 +137,18 @@ public class TableDetailViewControlSWTRenderer extends SimpleControlSWTControlSW
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
 	 * @param reportService The {@link ReportService}
+	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
+	 * @param emfFormsLabelProvider The {@link EMFFormsLabelProvider}
+	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
+	 * @param emfFormsEditSupport The {@link EMFFormsEditSupport}
 	 */
+	@Inject
 	public TableDetailViewControlSWTRenderer(VControl vElement, ViewModelContext viewContext,
-		ReportService reportService) {
+		ReportService reportService,
+		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
+		VTViewTemplateProvider vtViewTemplateProvider, EMFFormsEditSupport emfFormsEditSupport) {
 		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
+		this.emfFormsEditSupport = emfFormsEditSupport;
 	}
 
 	private ComposedAdapterFactory composedAdapterFactory;
@@ -312,7 +299,7 @@ public class TableDetailViewControlSWTRenderer extends SimpleControlSWTControlSW
 
 		/* create button */
 		final Button createButton = createButtonForAction(new NewReferenceAction(getEditingDomain(eObject), eObject,
-			structuralFeature, emfFormsEditSupport, emfFormsLabelProvider, null, getReportService(), getVElement()
+			structuralFeature, emfFormsEditSupport, getEMFFormsLabelProvider(), null, getReportService(), getVElement()
 				.getDomainModelReference(),
 			getViewModelContext().getDomainModel()), buttonComposite);
 		createButton.addSelectionListener(new CreateNewElementHandler(eObject, structuralFeature));

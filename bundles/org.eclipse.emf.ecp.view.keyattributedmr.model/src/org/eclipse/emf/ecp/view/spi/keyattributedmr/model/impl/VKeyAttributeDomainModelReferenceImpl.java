@@ -121,8 +121,7 @@ public class VKeyAttributeDomainModelReferenceImpl extends
 	 * @generated
 	 */
 	@Override
-	public VDomainModelReference getKeyDMR()
-	{
+	public VDomainModelReference getKeyDMR() {
 		return keyDMR;
 	}
 
@@ -132,12 +131,10 @@ public class VKeyAttributeDomainModelReferenceImpl extends
 	 *
 	 * @generated
 	 */
-	public NotificationChain basicSetKeyDMR(VDomainModelReference newKeyDMR, NotificationChain msgs)
-	{
+	public NotificationChain basicSetKeyDMR(VDomainModelReference newKeyDMR, NotificationChain msgs) {
 		final VDomainModelReference oldKeyDMR = keyDMR;
 		keyDMR = newKeyDMR;
-		if (eNotificationRequired())
-		{
+		if (eNotificationRequired()) {
 			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
 				VKeyattributedmrPackage.KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__KEY_DMR, oldKeyDMR, newKeyDMR);
 			if (msgs == null) {
@@ -156,10 +153,8 @@ public class VKeyAttributeDomainModelReferenceImpl extends
 	 * @generated
 	 */
 	@Override
-	public void setKeyDMR(VDomainModelReference newKeyDMR)
-	{
-		if (newKeyDMR != keyDMR)
-		{
+	public void setKeyDMR(VDomainModelReference newKeyDMR) {
+		if (newKeyDMR != keyDMR) {
 			NotificationChain msgs = null;
 			if (keyDMR != null) {
 				msgs = ((InternalEObject) keyDMR).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
@@ -173,8 +168,7 @@ public class VKeyAttributeDomainModelReferenceImpl extends
 			if (msgs != null) {
 				msgs.dispatch();
 			}
-		}
-		else if (eNotificationRequired()) {
+		} else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VKeyattributedmrPackage.KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__KEY_DMR, newKeyDMR, newKeyDMR));
 		}
@@ -187,8 +181,7 @@ public class VKeyAttributeDomainModelReferenceImpl extends
 	 * @generated
 	 */
 	@Override
-	public Object getKeyValue()
-	{
+	public Object getKeyValue() {
 		return keyValue;
 	}
 
@@ -199,8 +192,7 @@ public class VKeyAttributeDomainModelReferenceImpl extends
 	 * @generated
 	 */
 	@Override
-	public void setKeyValue(Object newKeyValue)
-	{
+	public void setKeyValue(Object newKeyValue) {
 		final Object oldKeyValue = keyValue;
 		keyValue = newKeyValue;
 		if (eNotificationRequired()) {
@@ -216,8 +208,7 @@ public class VKeyAttributeDomainModelReferenceImpl extends
 	 * @generated
 	 */
 	@Override
-	public VDomainModelReference getValueDMR()
-	{
+	public VDomainModelReference getValueDMR() {
 		return valueDMR;
 	}
 
@@ -227,12 +218,10 @@ public class VKeyAttributeDomainModelReferenceImpl extends
 	 *
 	 * @generated
 	 */
-	public NotificationChain basicSetValueDMR(VDomainModelReference newValueDMR, NotificationChain msgs)
-	{
+	public NotificationChain basicSetValueDMR(VDomainModelReference newValueDMR, NotificationChain msgs) {
 		final VDomainModelReference oldValueDMR = valueDMR;
 		valueDMR = newValueDMR;
-		if (eNotificationRequired())
-		{
+		if (eNotificationRequired()) {
 			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
 				VKeyattributedmrPackage.KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__VALUE_DMR, oldValueDMR, newValueDMR);
 			if (msgs == null) {
@@ -251,10 +240,8 @@ public class VKeyAttributeDomainModelReferenceImpl extends
 	 * @generated
 	 */
 	@Override
-	public void setValueDMR(VDomainModelReference newValueDMR)
-	{
-		if (newValueDMR != valueDMR)
-		{
+	public void setValueDMR(VDomainModelReference newValueDMR) {
+		if (newValueDMR != valueDMR) {
 			NotificationChain msgs = null;
 			if (valueDMR != null) {
 				msgs = ((InternalEObject) valueDMR).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
@@ -268,8 +255,7 @@ public class VKeyAttributeDomainModelReferenceImpl extends
 			if (msgs != null) {
 				msgs.dispatch();
 			}
-		}
-		else if (eNotificationRequired()) {
+		} else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VKeyattributedmrPackage.KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__VALUE_DMR, newValueDMR, newValueDMR));
 		}
@@ -282,10 +268,8 @@ public class VKeyAttributeDomainModelReferenceImpl extends
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-	{
-		switch (featureID)
-		{
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
 		case VKeyattributedmrPackage.KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__KEY_DMR:
 			return basicSetKeyDMR(null, msgs);
 		case VKeyattributedmrPackage.KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__VALUE_DMR:
@@ -301,10 +285,8 @@ public class VKeyAttributeDomainModelReferenceImpl extends
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
-		switch (featureID)
-		{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 		case VKeyattributedmrPackage.KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__KEY_DMR:
 			return getKeyDMR();
 		case VKeyattributedmrPackage.KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__KEY_VALUE:
@@ -322,10 +304,8 @@ public class VKeyAttributeDomainModelReferenceImpl extends
 	 * @generated
 	 */
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
-		switch (featureID)
-		{
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 		case VKeyattributedmrPackage.KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__KEY_DMR:
 			setKeyDMR((VDomainModelReference) newValue);
 			return;
@@ -346,10 +326,8 @@ public class VKeyAttributeDomainModelReferenceImpl extends
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
-		switch (featureID)
-		{
+	public void eUnset(int featureID) {
+		switch (featureID) {
 		case VKeyattributedmrPackage.KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__KEY_DMR:
 			setKeyDMR((VDomainModelReference) null);
 			return;
@@ -370,10 +348,8 @@ public class VKeyAttributeDomainModelReferenceImpl extends
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
-		switch (featureID)
-		{
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 		case VKeyattributedmrPackage.KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__KEY_DMR:
 			return keyDMR != null;
 		case VKeyattributedmrPackage.KEY_ATTRIBUTE_DOMAIN_MODEL_REFERENCE__KEY_VALUE:
@@ -391,8 +367,7 @@ public class VKeyAttributeDomainModelReferenceImpl extends
 	 * @generated
 	 */
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		if (eIsProxy()) {
 			return super.toString();
 		}
@@ -405,6 +380,7 @@ public class VKeyAttributeDomainModelReferenceImpl extends
 	}
 
 	@SuppressWarnings("unchecked")
+	@Deprecated
 	@Override
 	public boolean init(EObject eObject) {
 		if (getKeyValue() == null) {
@@ -426,8 +402,7 @@ public class VKeyAttributeDomainModelReferenceImpl extends
 
 			}
 			keySetting.set(keyValue);
-		}
-		else {
+		} else {
 			for (final EObject child : list) {
 				getKeyDMR().init(child);
 				final Setting setting = getKeyDMR().getIterator().next();
@@ -437,8 +412,7 @@ public class VKeyAttributeDomainModelReferenceImpl extends
 						break;
 					}
 
-				}
-				else if (getKeyValue().equals(setting.get(true))) {
+				} else if (getKeyValue().equals(setting.get(true))) {
 					foundChild = child;
 					break;
 				}
@@ -449,6 +423,7 @@ public class VKeyAttributeDomainModelReferenceImpl extends
 		return init && valueDMR;
 	}
 
+	@Deprecated
 	@Override
 	public Iterator<Setting> getIterator() {
 		if (getValueDMR() == null) {
@@ -458,6 +433,7 @@ public class VKeyAttributeDomainModelReferenceImpl extends
 		return getValueDMR().getIterator();
 	}
 
+	@Deprecated
 	@Override
 	public Iterator<EStructuralFeature> getEStructuralFeatureIterator() {
 		if (getValueDMR() == null) {

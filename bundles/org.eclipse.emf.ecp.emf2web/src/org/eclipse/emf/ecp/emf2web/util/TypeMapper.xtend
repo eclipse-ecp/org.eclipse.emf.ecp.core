@@ -13,6 +13,10 @@ package org.eclipse.emf.ecp.emf2web.util
 
 import org.eclipse.emf.ecore.EClassifier
 import org.eclipse.emf.ecore.EcorePackage
+import java.math.BigDecimal
+import java.math.BigInteger
+import javax.xml.datatype.XMLGregorianCalendar
+import java.util.Date
 
 /**
  * @author Stefan Dirix
@@ -20,52 +24,55 @@ import org.eclipse.emf.ecore.EcorePackage
  */
 class TypeMapper {
 	def static isBooleanType(EClassifier eType) {
-		switch (eType) {
-			case EcorePackage.eINSTANCE.EBoolean: true
-			case EcorePackage.eINSTANCE.EBooleanObject: true
+		switch (eType.instanceClass) {
+			case boolean:true
+			case Boolean:true
 			default: false
 		}
 	}
 
 	def static isStringType(EClassifier eType) {
-		switch (eType) {
-			case EcorePackage.eINSTANCE.EString: true
+		switch (eType.instanceClass) {
+			case String:true
 			default: false
 		}
 	}
 
 	def static isNumberType(EClassifier eType) {
-		switch (eType) {
-			case EcorePackage.eINSTANCE.EDouble: true
-			case EcorePackage.eINSTANCE.EDoubleObject: true
-			case EcorePackage.eINSTANCE.EFloat: true
-			case EcorePackage.eINSTANCE.EFloatObject: true
+		switch (eType.instanceClass) {
+			case BigDecimal:true
+			case double:true
+			case Double:true
+			case float:true
+			case Float:true
 			default: false
 		}
 	}
 
 	def static isIntegerType(EClassifier eType) {
-		switch (eType) {
-			case EcorePackage.eINSTANCE.EBigDecimal: true
-			case EcorePackage.eINSTANCE.EBigInteger: true
-			case EcorePackage.eINSTANCE.EByte: true
-			case EcorePackage.eINSTANCE.EByteObject: true
-			case EcorePackage.eINSTANCE.EChar: true
-			case EcorePackage.eINSTANCE.ECharacterObject: true
-			case EcorePackage.eINSTANCE.EInt: true
-			case EcorePackage.eINSTANCE.EIntegerObject: true
-			case EcorePackage.eINSTANCE.ELong: true
-			case EcorePackage.eINSTANCE.ELongObject: true
-			case EcorePackage.eINSTANCE.EShort: true
-			case EcorePackage.eINSTANCE.EShortObject: true
+		
+		switch (eType.instanceClass) {
+			case BigInteger:true
+			case Byte:true
+			case byte:true
+			case char:true
+			case Character:true
+			case int:true
+			case Integer: true
+			case Long:true
+			case long: true
+			case Short:true
+			case short:true
 			default: false
 		}
 	}
 
 	def static isDateType(EClassifier eType) {
-		EcorePackage.eINSTANCE.EDate.isInstance(eType) 
-		|| eType.instanceTypeName?.equals("javax.xml.datatype.XMLGregorianCalendar")
-		|| eType.instanceTypeName?.equals("java.util.Date")
+		switch(eType.instanceClass){
+			case XMLGregorianCalendar:true
+			case Date:true
+			default: false
+		}
 	}
 	
 	def static isEnumType(EClassifier eType) {

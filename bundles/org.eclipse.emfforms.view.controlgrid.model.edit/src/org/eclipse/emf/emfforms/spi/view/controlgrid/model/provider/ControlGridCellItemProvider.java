@@ -18,7 +18,9 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.view.spi.compoundcontrol.model.VCompoundcontrolFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
 import org.eclipse.emf.edit.provider.IChildCreationExtender;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -164,6 +166,23 @@ public class ControlGridCellItemProvider
 
 		newChildDescriptors.add(createChildParameter(VControlgridPackage.Literals.CONTROL_GRID_CELL__CONTROL,
 			VViewFactory.eINSTANCE.createControl()));
+
+		// custom add
+		try {
+			Class.forName("org.eclipse.emf.ecp.view.spi.table.model.VTableFactory"); //$NON-NLS-1$
+			newChildDescriptors.add(createChildParameter(VControlgridPackage.Literals.CONTROL_GRID_CELL__CONTROL,
+				VTableFactory.eINSTANCE.createTableControl()));
+		} catch (final ClassNotFoundException ex) {
+			// do nothing
+		}
+		try {
+			Class.forName("org.eclipse.emf.ecp.view.spi.compoundcontrol.model.VCompoundcontrolFactory"); //$NON-NLS-1$
+			newChildDescriptors.add(createChildParameter(VControlgridPackage.Literals.CONTROL_GRID_CELL__CONTROL,
+				VCompoundcontrolFactory.eINSTANCE.createCompoundControl()));
+		} catch (final ClassNotFoundException ex) {
+			// do nothing
+		}
+
 	}
 
 	/**

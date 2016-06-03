@@ -12,7 +12,6 @@
 package org.eclipse.emf.ecp.view.spi.model.util;
 
 import java.text.MessageFormat;
-import java.util.Iterator;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.BasicDiagnostic;
@@ -262,21 +261,6 @@ public class ViewValidator extends EObjectValidator {
 		VFeaturePathDomainModelReference featurePathDomainModelReference, DiagnosticChain diagnostics,
 		Map<Object, Object> context) {
 
-		if (VDomainModelReference.class.isInstance(featurePathDomainModelReference.eContainer())
-			&& featurePathDomainModelReference.eContainmentFeature().isMany()) {
-			final VDomainModelReference parent = VDomainModelReference.class.cast(featurePathDomainModelReference
-				.eContainer());
-			final Iterator<EStructuralFeature> structuralFeatureIterator = parent.getEStructuralFeatureIterator();
-			if (!structuralFeatureIterator.hasNext()) {
-				return true;
-			}
-			final EStructuralFeature feature = structuralFeatureIterator.next();
-			if (!EReference.class.isInstance(feature)) {
-				return true;
-			}
-			context.put(ECLASS_KEY, EReference.class.cast(feature).getEReferenceType());
-		}
-
 		if (featurePathDomainModelReference.getDomainModelEFeature() == null) {
 			if (featurePathDomainModelReference.eContainer() != null) {
 				diagnostics
@@ -487,7 +471,7 @@ public class ViewValidator extends EObjectValidator {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.8
 	 *        <!-- end-user-doc -->
 	 *
@@ -511,7 +495,7 @@ public class ViewValidator extends EObjectValidator {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.8
 	 *        <!-- end-user-doc -->
 	 *

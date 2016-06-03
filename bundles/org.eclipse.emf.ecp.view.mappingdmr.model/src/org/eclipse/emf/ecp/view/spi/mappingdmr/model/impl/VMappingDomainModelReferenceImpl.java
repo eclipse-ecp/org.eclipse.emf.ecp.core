@@ -300,6 +300,7 @@ public class VMappingDomainModelReferenceImpl extends
 	}
 
 	@SuppressWarnings("unchecked")
+	@Deprecated
 	@Override
 	public boolean init(EObject eObject) {
 		final boolean init = super.init(eObject);
@@ -312,6 +313,7 @@ public class VMappingDomainModelReferenceImpl extends
 		return init && subDMRInit;
 	}
 
+	@Deprecated
 	@Override
 	public Iterator<Setting> getIterator() {
 		if (getDomainModelReference() == null) {
@@ -321,6 +323,7 @@ public class VMappingDomainModelReferenceImpl extends
 		return getDomainModelReference().getIterator();
 	}
 
+	@Deprecated
 	@Override
 	public Iterator<EStructuralFeature> getEStructuralFeatureIterator() {
 		if (getDomainModelReference() == null) {

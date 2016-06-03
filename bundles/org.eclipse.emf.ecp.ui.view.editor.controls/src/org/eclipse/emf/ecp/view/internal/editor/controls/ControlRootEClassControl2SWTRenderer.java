@@ -13,6 +13,8 @@ package org.eclipse.emf.ecp.view.internal.editor.controls;
 
 import java.net.URL;
 
+import javax.inject.Inject;
+
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
@@ -40,9 +42,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
 
 /**
  * @author Alexandra Buzila
@@ -50,33 +49,20 @@ import org.osgi.framework.ServiceReference;
  */
 public class ControlRootEClassControl2SWTRenderer extends SimpleControlSWTControlSWTRenderer {
 
-	private static final EMFFormsDatabinding emfFormsDatabinding;
-	private static final EMFFormsLabelProvider emfFormsLabelProvider;
-	private static final VTViewTemplateProvider vtViewTemplateProvider;
-
-	static {
-		final BundleContext bundleContext = FrameworkUtil.getBundle(ControlRootEClassControl2SWTRenderer.class)
-			.getBundleContext();
-		final ServiceReference<EMFFormsDatabinding> emfFormsDatabindingServiceReference = bundleContext
-			.getServiceReference(EMFFormsDatabinding.class);
-		emfFormsDatabinding = bundleContext.getService(emfFormsDatabindingServiceReference);
-		final ServiceReference<EMFFormsLabelProvider> emfFormsLabelProviderServiceReference = bundleContext
-			.getServiceReference(EMFFormsLabelProvider.class);
-		emfFormsLabelProvider = bundleContext.getService(emfFormsLabelProviderServiceReference);
-		final ServiceReference<VTViewTemplateProvider> vtViewTemplateProviderServiceReference = bundleContext
-			.getServiceReference(VTViewTemplateProvider.class);
-		vtViewTemplateProvider = bundleContext.getService(vtViewTemplateProviderServiceReference);
-	}
-
 	/**
 	 * Default constructor.
 	 *
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
 	 * @param reportService The {@link ReportService}
+	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
+	 * @param emfFormsLabelProvider The {@link EMFFormsLabelProvider}
+	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
 	 */
+	@Inject
 	public ControlRootEClassControl2SWTRenderer(VControl vElement, ViewModelContext viewContext,
-		ReportService reportService) {
+		ReportService reportService, EMFFormsDatabinding emfFormsDatabinding,
+		EMFFormsLabelProvider emfFormsLabelProvider, VTViewTemplateProvider vtViewTemplateProvider) {
 		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
 	}
 

@@ -5,8 +5,8 @@ Bundle-SymbolicName: org.eclipse.emfforms.spreadsheet.core.renderer.custom
 Bundle-Version: 1.0.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
 Export-Package: org.eclipse.emfforms.internal.spreadsheet.core.renderer.custom;version="1.0.0";x-internal:=true
-Require-Bundle: org.eclipse.emf.ecp.view.context;bundle-version="[1.8.0,1.9.0)",
- org.eclipse.emf.ecp.view.custom.model;bundle-version="[1.8.0,1.9.0)",
+Require-Bundle: org.eclipse.emf.ecp.view.context;bundle-version="[1.9.0,2.0.0)",
+ org.eclipse.emf.ecp.view.custom.model;bundle-version="[1.9.0,2.0.0)",
  org.eclipse.emfforms.spreadsheet.core;bundle-version="[1.0.0,2.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.osgi.service.component.annotations;version="[1.2.0,2.0.0)"

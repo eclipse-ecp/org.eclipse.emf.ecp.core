@@ -18,7 +18,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
 	UUIDIntroductionTest.class,
 	LabelAlignmentTest.class,
-	ReadOnlyColumnConfigurationTest.class
+	ReadOnlyColumnConfigurationTest.class,
+	DomainWithModelAsPackageNameTest.class
 })
 public class All160to170Tests {
 

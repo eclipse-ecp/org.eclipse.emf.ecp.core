@@ -177,6 +177,9 @@
    <feature id="org.eclipse.emf.ecp.emf2web.feature" version="0.0.0">
       <category name="org.eclipse.emf.ecp.jsonforms"/>
    </feature>
+   <feature id="org.eclipse.emf.ecp.view.table.ui.swt.persistedstate.feature.source" version="0.0.0">
+      <category name="org.eclipse.emf.ecp.emfforms"/>
+   </feature>
    <category-def name="org.eclipse.emf.ecp.sdk" label="All SDKs  (install one of these)">
       <description>
          Contains the ECP SDKs. Please install only one of these.

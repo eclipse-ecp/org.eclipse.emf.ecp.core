@@ -2,15 +2,15 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.treemasterdetail.model;singleton:=true
-Bundle-Version: 1.8.0.qualifier
+Bundle-Version: 1.9.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Export-Package: org.eclipse.emf.ecp.view.treemasterdetail.model;version="1.8.0";x-friends:="org.eclipse.emf.ecp.view.treemasterdetail.model.edit,org.eclipse.emf.ecp.view.treemasterdetail.ui.swt",
- org.eclipse.emf.ecp.view.treemasterdetail.model.impl;version="1.8.0";x-internal:=true,
- org.eclipse.emf.ecp.view.treemasterdetail.model.util;version="1.8.0";x-friends:="org.eclipse.emf.ecp.view.treemasterdetail.model.edit"
+Export-Package: org.eclipse.emf.ecp.view.treemasterdetail.model;version="1.9.0";x-friends:="org.eclipse.emf.ecp.view.treemasterdetail.model.edit,org.eclipse.emf.ecp.view.treemasterdetail.ui.swt",
+ org.eclipse.emf.ecp.view.treemasterdetail.model.impl;version="1.9.0";x-internal:=true,
+ org.eclipse.emf.ecp.view.treemasterdetail.model.util;version="1.9.0";x-friends:="org.eclipse.emf.ecp.view.treemasterdetail.model.edit"
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
  org.eclipse.emf.ecore;bundle-version="[2.7.0,3.0.0)";visibility:=reexport,
- org.eclipse.emf.ecp.view.model;bundle-version="[1.8.0,1.9.0)";visibility:=reexport
+ org.eclipse.emf.ecp.view.model;bundle-version="[1.9.0,2.0.0)";visibility:=reexport
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy

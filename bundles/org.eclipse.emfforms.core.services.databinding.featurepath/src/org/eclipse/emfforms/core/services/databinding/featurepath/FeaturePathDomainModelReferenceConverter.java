@@ -91,9 +91,20 @@ public class FeaturePathDomainModelReferenceConverter implements DomainModelRefe
 			return EMFEditProperties.value(editingDomain, featurePathReference.getDomainModelEFeature());
 		}
 
+		if (referencePath.get(0).isMany()) {
+			throw new DatabindingFailedException(String.format(
+				"The path is not fully resolved. The reference being resolved is not a single reference [%1$s]. The DMR is %2$s.", //$NON-NLS-1$
+				referencePath.get(0), domainModelReference));
+		}
 		IEMFValueProperty emfValueProperty = EMFEditProperties.value(editingDomain, referencePath.get(0));
 		for (int i = 1; i < referencePath.size(); i++) {
-			emfValueProperty = emfValueProperty.value(referencePath.get(i));
+			final EReference eReference = referencePath.get(i);
+			if (eReference.isMany()) {
+				throw new DatabindingFailedException(String.format(
+					"The path is not fully resolved. The reference being resolved is not a single reference [%1$s]. The DMR is %2$s.", //$NON-NLS-1$
+					eReference, domainModelReference));
+			}
+			emfValueProperty = emfValueProperty.value(eReference);
 		}
 		return emfValueProperty.value(featurePathReference.getDomainModelEFeature());
 	}
@@ -140,10 +151,15 @@ public class FeaturePathDomainModelReferenceConverter implements DomainModelRefe
 
 		EObject currentObject = object;
 		for (final EReference eReference : featurePathReference.getDomainModelEReferencePath()) {
+			if (eReference.isMany()) {
+				throw new DatabindingFailedException(String.format(
+					"The path is not fully resolved. The reference being resolved is not a single reference [%1$s]. The DMR is %2$s. Last resolved EObject is %3$s.", //$NON-NLS-1$
+					eReference, domainModelReference, currentObject));
+			}
 			final EObject nextObject = (EObject) currentObject.eGet(eReference);
 			if (nextObject == null) {
 				throw new DatabindingFailedException(String.format(
-					"The path is not fully resolved. The DMR is %1$s. Last resolved EObject is %2$s. Reference beeing resolved is %3$s.", //$NON-NLS-1$
+					"The path is not fully resolved. The DMR is %1$s. Last resolved EObject is %2$s. Reference being resolved is %3$s.", //$NON-NLS-1$
 					domainModelReference, currentObject, eReference));
 			}
 			currentObject = nextObject;

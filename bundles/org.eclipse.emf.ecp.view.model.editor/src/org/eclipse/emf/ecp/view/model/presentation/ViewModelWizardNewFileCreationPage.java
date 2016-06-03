@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -177,6 +177,9 @@ public class ViewModelWizardNewFileCreationPage extends
 	}
 
 	private void checkProjectNature() {
+		if (getModelFile() == null) {
+			return;
+		}
 		final IProject project = getModelFile().getProject();
 		try {
 			if (!project.hasNature("org.eclipse.pde.PluginNature")) { //$NON-NLS-1$
@@ -193,7 +196,7 @@ public class ViewModelWizardNewFileCreationPage extends
 	 * @generated
 	 */
 	public IFile getModelFile() {
-		if (getContainerFullPath() == null || getFileName() == null) {
+		if (getControl() == null || getContainerFullPath() == null || getFileName() == null) {
 			return null;
 		}
 		return ResourcesPlugin.getWorkspace().getRoot()

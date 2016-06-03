@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -131,8 +131,7 @@ public class DMRCreationWizard extends Wizard implements INewWizard {
 	 */
 	@Override
 	public IWizardPage getStartingPage() {
-		if (selectedContainer == null)
-		{
+		if (selectedContainer == null) {
 			return selectEcorePage;
 		}
 
@@ -169,8 +168,7 @@ public class DMRCreationWizard extends Wizard implements INewWizard {
 		EPackage ePackage = null;
 		if (EPackage.class.isInstance(selectedContainer)) {
 			ePackage = EPackage.class.cast(selectedContainer);
-		}
-		else if (IFile.class.isInstance(selectedContainer)) {
+		} else if (IFile.class.isInstance(selectedContainer)) {
 			final ResourceSetImpl resourceSet = new ResourceSetImpl();
 			final String path = ((IFile) selectedContainer).getFullPath().toString();
 			final URI uri = URI.createPlatformResourceURI(path, true);
@@ -219,8 +217,8 @@ public class DMRCreationWizard extends Wizard implements INewWizard {
 	@Override
 	public boolean canFinish() {
 		if (selectEClassPage != null) {
+			selectedEStructuralFeature = selectEClassPage.getEStructuralFeature();
 			return selectedEStructuralFeature != null;
-
 		}
 		return false;
 	}

@@ -49,6 +49,7 @@ public abstract class SimpleControlRendererTester implements ECPRendererTester {
 		if (control.getDomainModelReference() == null) {
 			return NOT_APPLICABLE;
 		}
+
 		IObservableValue observableValue;
 		try {
 			observableValue = Activator.getDefault().getEMFFormsDatabinding()
@@ -60,6 +61,10 @@ public abstract class SimpleControlRendererTester implements ECPRendererTester {
 		final EStructuralFeature feature = (EStructuralFeature) observableValue.getValueType();
 		final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
 		observableValue.dispose();
+		return checkFeature(feature, eObject);
+	}
+
+	private int checkFeature(final EStructuralFeature feature, final EObject eObject) {
 		// if the feature is a multiValue and the description is a singlevalue continue
 		if (isSingleValue() == feature.isMany()) {
 			return NOT_APPLICABLE;

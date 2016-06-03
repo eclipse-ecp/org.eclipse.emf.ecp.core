@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- * Alexandra - initial API and implementation
+ * Alexandra Buzila - initial API and implementation
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.model.actions;
 
@@ -24,15 +24,13 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
- * @author Alexandra
- *
+ * An {@link AbstractHandler} that creates a new wizard allowing the creation of new view model files.
  */
 public class CreateViewModel extends AbstractHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		// get ecore
-		//
 		final IStructuredSelection selection = (IStructuredSelection) HandlerUtil.getCurrentSelection(event);
 
 		// TODO - check if the object can be cast and is an ecore
@@ -49,24 +47,22 @@ public class CreateViewModel extends AbstractHandler {
 		return null;
 	}
 
+	/** {@link WizardDialog} containing a {@link ViewModelWizard}. */
 	private class ViewModelWizardDialog extends WizardDialog {
 
-		ViewModelWizard wizard;
+		private final ViewModelWizard wizard;
 
 		/**
-		 * @param parentShell
-		 * @param newWizard
+		 * Creates a new wizard dialog for the given wizard.
+		 *
+		 * @param parentShell the parent shell
+		 * @param newWizard the wizard this dialog is working on
 		 */
-		public ViewModelWizardDialog(Shell parentShell, ViewModelWizard newWizard) {
+		ViewModelWizardDialog(Shell parentShell, ViewModelWizard newWizard) {
 			super(parentShell, newWizard);
 			wizard = newWizard;
 		}
 
-		/**
-		 * {@inheritDoc}
-		 *
-		 * @see org.eclipse.jface.wizard.WizardDialog#backPressed()
-		 */
 		@Override
 		protected void backPressed() {
 			if (SelectEClassWizardPage.class.isInstance(getCurrentPage())) {
@@ -74,6 +70,5 @@ public class CreateViewModel extends AbstractHandler {
 			}
 			super.backPressed();
 		}
-
 	}
 }

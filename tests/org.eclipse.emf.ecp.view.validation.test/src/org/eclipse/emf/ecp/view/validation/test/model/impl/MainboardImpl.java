@@ -24,10 +24,10 @@ import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.MainboardImpl#getName <em>Name</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

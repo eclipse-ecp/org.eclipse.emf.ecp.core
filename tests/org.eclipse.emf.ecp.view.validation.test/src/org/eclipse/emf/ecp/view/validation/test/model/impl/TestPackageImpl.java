@@ -24,10 +24,13 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecp.view.validation.test.model.Book;
 import org.eclipse.emf.ecp.view.validation.test.model.Computer;
 import org.eclipse.emf.ecp.view.validation.test.model.Content;
+import org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContainer;
+import org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContent;
 import org.eclipse.emf.ecp.view.validation.test.model.Librarian;
 import org.eclipse.emf.ecp.view.validation.test.model.Library;
 import org.eclipse.emf.ecp.view.validation.test.model.Mainboard;
 import org.eclipse.emf.ecp.view.validation.test.model.PowerBlock;
+import org.eclipse.emf.ecp.view.validation.test.model.Referencer;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContent;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild2;
@@ -195,6 +198,30 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	private EClass tableWithoutMultiplicityConcreteEClass = null;
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	private EClass referencerEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	private EClass crossReferenceContainerEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	private EClass crossReferenceContentEClass = null;
+
+	/**
 	 * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
 	 * EPackage.Registry} by the package
 	 * package URI value.
@@ -224,8 +251,9 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
 	 *
 	 * <p>
-	 * This method is used to initialize {@link TestPackage#eINSTANCE} when that field is accessed. Clients should not
-	 * invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc -->
+	 * This method is used to initialize {@link TestPackage#eINSTANCE} when that field is accessed.
+	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
 	 * @see #eNS_URI
@@ -239,9 +267,8 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		}
 
 		// Obtain or create and register package
-		final TestPackageImpl theTestPackage = (TestPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof TestPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI)
-			: new TestPackageImpl());
+		final TestPackageImpl theTestPackage = (TestPackageImpl) (EPackage.Registry.INSTANCE
+			.get(eNS_URI) instanceof TestPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new TestPackageImpl());
 
 		isInited = true;
 
@@ -252,14 +279,13 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		theTestPackage.initializePackageContents();
 
 		// Register package validator
-		EValidator.Registry.INSTANCE.put
-			(theTestPackage,
-				new EValidator.Descriptor() {
-					@Override
-					public EValidator getEValidator() {
-						return TestValidator.INSTANCE;
-					}
-				});
+		EValidator.Registry.INSTANCE.put(theTestPackage,
+			new EValidator.Descriptor() {
+				@Override
+				public EValidator getEValidator() {
+					return TestValidator.INSTANCE;
+				}
+			});
 
 		// Mark meta-data to indicate it can't be changed
 		theTestPackage.freeze();
@@ -848,6 +874,94 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * @generated
 	 */
 	@Override
+	public EClass getReferencer() {
+		return referencerEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EReference getReferencer_ReferencedContent() {
+		return (EReference) referencerEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EClass getCrossReferenceContainer() {
+		return crossReferenceContainerEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EReference getCrossReferenceContainer_Contents() {
+		return (EReference) crossReferenceContainerEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EReference getCrossReferenceContainer_SingleContent() {
+		return (EReference) crossReferenceContainerEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EClass getCrossReferenceContent() {
+		return crossReferenceContentEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EReference getCrossReferenceContent_Parent() {
+		return (EReference) crossReferenceContentEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EReference getCrossReferenceContent_SingleParent() {
+		return (EReference) crossReferenceContentEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
 	public TestFactory getTestFactory() {
 		return (TestFactory) getEFactoryInstance();
 	}
@@ -944,6 +1058,17 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 
 		tableWithoutMultiplicityConcreteEClass = createEClass(TABLE_WITHOUT_MULTIPLICITY_CONCRETE);
 		createEReference(tableWithoutMultiplicityConcreteEClass, TABLE_WITHOUT_MULTIPLICITY_CONCRETE__CONTENT);
+
+		referencerEClass = createEClass(REFERENCER);
+		createEReference(referencerEClass, REFERENCER__REFERENCED_CONTENT);
+
+		crossReferenceContainerEClass = createEClass(CROSS_REFERENCE_CONTAINER);
+		createEReference(crossReferenceContainerEClass, CROSS_REFERENCE_CONTAINER__CONTENTS);
+		createEReference(crossReferenceContainerEClass, CROSS_REFERENCE_CONTAINER__SINGLE_CONTENT);
+
+		crossReferenceContentEClass = createEClass(CROSS_REFERENCE_CONTENT);
+		createEReference(crossReferenceContentEClass, CROSS_REFERENCE_CONTENT__PARENT);
+		createEReference(crossReferenceContentEClass, CROSS_REFERENCE_CONTENT__SINGLE_PARENT);
 	}
 
 	/**
@@ -1066,12 +1191,13 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		g1.getETypeArguments().add(g2);
 		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-		initEClass(computerEClass, Computer.class, "Computer", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(computerEClass, Computer.class, "Computer", !IS_ABSTRACT, !IS_INTERFACE,
+			IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getComputer_Mainboard(), getMainboard(), null, "mainboard", null, 0, 1, Computer.class,
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
-		initEAttribute(getComputer_Name(), ecorePackage.getEString(), "name", null, 1, 1, Computer.class,
-			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getComputer_Name(), ecorePackage.getEString(), "name", null, 1, 1, Computer.class, !IS_TRANSIENT,
+			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getComputer_PowerBlock(), getPowerBlock(), null, "powerBlock", null, 0, 1, Computer.class,
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
@@ -1159,6 +1285,34 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		initEReference(getTableWithoutMultiplicityConcrete_Content(), getTableContentWithInnerChild(), null, "content",
 			null, 0, -1, TableWithoutMultiplicityConcrete.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
 			IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(referencerEClass, Referencer.class, "Referencer", !IS_ABSTRACT, !IS_INTERFACE,
+			IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getReferencer_ReferencedContent(), getComputer(), null, "referencedContent", null, 0, 1,
+			Referencer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
+			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(crossReferenceContainerEClass, CrossReferenceContainer.class, "CrossReferenceContainer",
+			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getCrossReferenceContainer_Contents(), getCrossReferenceContent(),
+			getCrossReferenceContent_Parent(), "contents", null, 0, -1, CrossReferenceContainer.class, !IS_TRANSIENT,
+			!IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+			IS_ORDERED);
+		initEReference(getCrossReferenceContainer_SingleContent(), getCrossReferenceContent(),
+			getCrossReferenceContent_SingleParent(), "singleContent", null, 0, 1, CrossReferenceContainer.class,
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
+
+		initEClass(crossReferenceContentEClass, CrossReferenceContent.class, "CrossReferenceContent", !IS_ABSTRACT,
+			!IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getCrossReferenceContent_Parent(), getCrossReferenceContainer(),
+			getCrossReferenceContainer_Contents(), "parent", null, 0, 1, CrossReferenceContent.class, !IS_TRANSIENT,
+			!IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+			IS_ORDERED);
+		initEReference(getCrossReferenceContent_SingleParent(), getCrossReferenceContainer(),
+			getCrossReferenceContainer_SingleContent(), "singleParent", null, 0, 1, CrossReferenceContent.class,
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

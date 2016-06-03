@@ -31,6 +31,7 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
  * @author Eugen Neufeld
  *
  */
+@Deprecated
 public class ReferenceMultiControlTester implements ECPApplicableTester {
 
 	/**

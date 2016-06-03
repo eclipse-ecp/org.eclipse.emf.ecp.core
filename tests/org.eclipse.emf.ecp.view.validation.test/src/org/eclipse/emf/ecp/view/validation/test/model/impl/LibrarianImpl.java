@@ -30,10 +30,10 @@ import org.eclipse.emf.ecp.view.validation.test.model.util.TestValidator;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.LibrarianImpl#getName <em>Name</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
@@ -117,13 +117,11 @@ public class LibrarianImpl extends EObjectImpl implements Librarian {
 	public boolean validate(DiagnosticChain diagnostic, Map<Object, Object> context) {
 		if (getName() == null || getName().equals("")) {
 			if (diagnostic != null) {
-				diagnostic.add
-					(new BasicDiagnostic
-					(Diagnostic.ERROR,
-						TestValidator.DIAGNOSTIC_SOURCE,
-						TestValidator.LIBRARIAN__VALIDATE,
-						"Pens need to have an id",
-						new Object[] { this, TestPackage.eINSTANCE.getLibrarian_Name() }));
+				diagnostic.add(new BasicDiagnostic(Diagnostic.ERROR,
+					TestValidator.DIAGNOSTIC_SOURCE,
+					TestValidator.LIBRARIAN__VALIDATE,
+					"Pens need to have an id",
+					new Object[] { this, TestPackage.eINSTANCE.getLibrarian_Name() }));
 			}
 			return false;
 		}

@@ -35,6 +35,7 @@ class FormsJsonGenerator extends JsonGenerator {
 	private static final val TYPE = "type"
 	private static final val ELEMENTS = "elements"
 	private static final val CONTROL = "Control"
+	private static final val CATEGORIZATION_ELEMENT = "CategorizationElement"
 	private static final val CATEGORIZATION = "Categorization"
 	private static final val CATEGORY = "Category"
 	private static final val SCOPE = "scope"
@@ -64,20 +65,21 @@ class FormsJsonGenerator extends JsonGenerator {
 	
 	private def dispatch JsonElement createJsonFormsElement(VCategorizationElement categorizationElement) {
 		new JsonObject()
-			.withType(CATEGORIZATION)
+			.withType(CATEGORIZATION_ELEMENT)
     		.withElements(categorizationElement.categorizations)
 	}
 	
 	private def dispatch JsonElement createJsonFormsElement(VCategorization categorization) {
 		new JsonObject()
 			.withType(CATEGORIZATION)
+			.withLabel(categorization.label)
 			.withElements(categorization.categorizations)
 	}
 	
 	private def dispatch JsonElement createJsonFormsElement(VCategory category) {
 		val jsonObj = new JsonObject
 		jsonObj.withType(CATEGORY)
-		jsonObj.withLabel(category.name)
+		jsonObj.withLabel(category.label)
 			
 	    // FIXME: shortcut the elements of any container into the category
 		val contained = category.composite
@@ -94,7 +96,6 @@ class FormsJsonGenerator extends JsonGenerator {
 			default : createJsonFormsElement(view.children)
 		}
 	}
-	
 	private def dispatch JsonElement createJsonFormsElement(VControl control){
 		val jsonObject = new JsonObject
 		jsonObject.withType(CONTROL)
@@ -105,6 +106,9 @@ class FormsJsonGenerator extends JsonGenerator {
 	private def dispatch JsonElement createJsonFormsElement(VContainer container){
 		val jsonObject = new JsonObject
 		jsonObject.withType(container.type)
+		if(container.name!=null) {
+			jsonObject.withLabel(container.label)
+		}
 		jsonObject.withElements(container.children)
 	}
 	

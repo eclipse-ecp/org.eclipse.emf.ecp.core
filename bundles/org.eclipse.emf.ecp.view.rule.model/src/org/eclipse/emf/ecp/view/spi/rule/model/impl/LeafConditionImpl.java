@@ -13,7 +13,6 @@ package org.eclipse.emf.ecp.view.spi.rule.model.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -161,8 +160,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 * @generated
 	 */
 	@Override
-	public VDomainModelReference getDomainModelReference()
-	{
+	public VDomainModelReference getDomainModelReference() {
 		return domainModelReference;
 	}
 
@@ -173,12 +171,10 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 * @generated
 	 */
 	public NotificationChain basicSetDomainModelReference(VDomainModelReference newDomainModelReference,
-		NotificationChain msgs)
-	{
+		NotificationChain msgs) {
 		final VDomainModelReference oldDomainModelReference = domainModelReference;
 		domainModelReference = newDomainModelReference;
-		if (eNotificationRequired())
-		{
+		if (eNotificationRequired()) {
 			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
 				RulePackage.LEAF_CONDITION__DOMAIN_MODEL_REFERENCE, oldDomainModelReference, newDomainModelReference);
 			if (msgs == null) {
@@ -197,10 +193,8 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 * @generated
 	 */
 	@Override
-	public void setDomainModelReference(VDomainModelReference newDomainModelReference)
-	{
-		if (newDomainModelReference != domainModelReference)
-		{
+	public void setDomainModelReference(VDomainModelReference newDomainModelReference) {
+		if (newDomainModelReference != domainModelReference) {
 			NotificationChain msgs = null;
 			if (domainModelReference != null) {
 				msgs = ((InternalEObject) domainModelReference).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
@@ -214,8 +208,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 			if (msgs != null) {
 				msgs.dispatch();
 			}
-		}
-		else if (eNotificationRequired()) {
+		} else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, RulePackage.LEAF_CONDITION__DOMAIN_MODEL_REFERENCE,
 				newDomainModelReference, newDomainModelReference));
 		}
@@ -229,8 +222,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 * @generated
 	 */
 	@Override
-	public VDomainModelReference getValueDomainModelReference()
-	{
+	public VDomainModelReference getValueDomainModelReference() {
 		return valueDomainModelReference;
 	}
 
@@ -242,12 +234,10 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 * @generated
 	 */
 	public NotificationChain basicSetValueDomainModelReference(VDomainModelReference newValueDomainModelReference,
-		NotificationChain msgs)
-	{
+		NotificationChain msgs) {
 		final VDomainModelReference oldValueDomainModelReference = valueDomainModelReference;
 		valueDomainModelReference = newValueDomainModelReference;
-		if (eNotificationRequired())
-		{
+		if (eNotificationRequired()) {
 			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
 				RulePackage.LEAF_CONDITION__VALUE_DOMAIN_MODEL_REFERENCE, oldValueDomainModelReference,
 				newValueDomainModelReference);
@@ -268,10 +258,8 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 * @generated
 	 */
 	@Override
-	public void setValueDomainModelReference(VDomainModelReference newValueDomainModelReference)
-	{
-		if (newValueDomainModelReference != valueDomainModelReference)
-		{
+	public void setValueDomainModelReference(VDomainModelReference newValueDomainModelReference) {
+		if (newValueDomainModelReference != valueDomainModelReference) {
 			NotificationChain msgs = null;
 			if (valueDomainModelReference != null) {
 				msgs = ((InternalEObject) valueDomainModelReference).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
@@ -285,8 +273,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 			if (msgs != null) {
 				msgs.dispatch();
 			}
-		}
-		else if (eNotificationRequired()) {
+		} else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				RulePackage.LEAF_CONDITION__VALUE_DOMAIN_MODEL_REFERENCE, newValueDomainModelReference,
 				newValueDomainModelReference));
@@ -300,10 +287,8 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-	{
-		switch (featureID)
-		{
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
 		case RulePackage.LEAF_CONDITION__DOMAIN_MODEL_REFERENCE:
 			return basicSetDomainModelReference(null, msgs);
 		case RulePackage.LEAF_CONDITION__VALUE_DOMAIN_MODEL_REFERENCE:
@@ -320,8 +305,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID)
-		{
+		switch (featureID) {
 		case RulePackage.LEAF_CONDITION__EXPECTED_VALUE:
 			return getExpectedValue();
 		case RulePackage.LEAF_CONDITION__DOMAIN_MODEL_REFERENCE:
@@ -340,8 +324,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID)
-		{
+		switch (featureID) {
 		case RulePackage.LEAF_CONDITION__EXPECTED_VALUE:
 			setExpectedValue(newValue);
 			return;
@@ -363,8 +346,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID)
-		{
+		switch (featureID) {
 		case RulePackage.LEAF_CONDITION__EXPECTED_VALUE:
 			setExpectedValue(EXPECTED_VALUE_EDEFAULT);
 			return;
@@ -386,8 +368,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID)
-		{
+		switch (featureID) {
 		case RulePackage.LEAF_CONDITION__EXPECTED_VALUE:
 			return EXPECTED_VALUE_EDEFAULT == null ? expectedValue != null : !EXPECTED_VALUE_EDEFAULT
 				.equals(expectedValue);
@@ -421,11 +402,12 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.rule.model.Condition#evaluate()
+	 * @see org.eclipse.emf.ecp.view.spi.rule.model.Condition#evaluate(org.eclipse.emf.ecore.EObject)
+	 * @since 1.9
 	 */
 	@Override
-	public boolean evaluate() {
-		final Iterator<Setting> settingIterator = new LeafConditionSettingIterator(this, false);
+	public boolean evaluate(EObject domainModel) {
+		final LeafConditionSettingIterator settingIterator = new LeafConditionSettingIterator(this, domainModel, false);
 		boolean result = false;
 		final Object expectedValue = getExpectedValue();
 		while (settingIterator.hasNext()) {
@@ -436,13 +418,13 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 				continue;
 			}
 		}
+		settingIterator.dispose();
 
 		return result;
 	}
 
 	private static boolean doEvaluate(EObject parent, EStructuralFeature feature, Object expectedValue,
-		boolean useNewValue, Object newValue)
-		throws NotApplicableForEvaluationException {
+		boolean useNewValue, Object newValue) throws NotApplicableForEvaluationException {
 
 		final EClass attributeClass = feature.getEContainingClass();
 		if (!attributeClass.isInstance(parent)) {
@@ -473,11 +455,13 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.rule.model.Condition#evaluateChangedValues(java.util.Map)
+	 * @see org.eclipse.emf.ecp.view.spi.rule.model.Condition#evaluateChangedValues(org.eclipse.emf.ecore.EObject,
+	 *      java.util.Map)
+	 * @since 1.9
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public boolean evaluateChangedValues(Map<Setting, Object> possibleNewValues) {
+	public boolean evaluateChangedValues(EObject domainModel, Map<Setting, Object> possibleNewValues) {
 		boolean result = false;
 		final Object expectedValue = getExpectedValue();
 

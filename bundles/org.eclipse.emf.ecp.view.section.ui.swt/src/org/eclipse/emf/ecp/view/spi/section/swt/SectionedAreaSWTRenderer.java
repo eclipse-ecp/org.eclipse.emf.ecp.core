@@ -16,6 +16,8 @@ import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import javax.inject.Inject;
+
 import org.eclipse.emf.ecp.view.internal.section.ui.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
@@ -57,6 +59,7 @@ public class SectionedAreaSWTRenderer extends
 	 * @param reportService the {@link ReportService}
 	 * @since 1.6
 	 */
+	@Inject
 	public SectionedAreaSWTRenderer(VSectionedArea vElement, ViewModelContext viewContext,
 		ReportService reportService) {
 		super(vElement, viewContext, reportService);

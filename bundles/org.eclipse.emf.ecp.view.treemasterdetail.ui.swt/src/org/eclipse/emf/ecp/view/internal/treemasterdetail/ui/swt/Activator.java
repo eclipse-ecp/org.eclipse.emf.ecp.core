@@ -12,7 +12,6 @@
 package org.eclipse.emf.ecp.view.internal.treemasterdetail.ui.swt;
 
 import org.eclipse.core.runtime.Plugin;
-import org.eclipse.emf.ecp.view.spi.swt.SWTRendererFactory;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -52,9 +51,9 @@ public class Activator extends Plugin {
 	}
 
 	/**
-	 * Returns the {@link SWTRendererFactory}.
+	 * Returns the {@link ReportService}.
 	 *
-	 * @return the {@link SWTRendererFactory}
+	 * @return the {@link ReportService}
 	 */
 	public ReportService getReportService() {
 		if (reportServiceReference == null) {

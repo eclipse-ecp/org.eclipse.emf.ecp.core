@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,11 +13,16 @@ package org.eclipse.emf.ecp.view.group.swt.internal.collapsable;
 
 import javax.inject.Inject;
 
+import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.emf.databinding.EMFDataBindingContext;
+import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.ContainerSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.group.model.VGroup;
+import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
@@ -25,6 +30,8 @@ import org.eclipse.emfforms.spi.swt.core.layout.EMFFormsSWTLayoutUtil;
 import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
+import org.eclipse.jface.databinding.swt.ISWTObservableValue;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
@@ -50,6 +57,8 @@ public class CollapsableGroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 
 	private SWTGridDescription rendererGridDescription;
 
+	private final EMFDataBindingContext dbc;
+
 	/**
 	 * Default constructor.
 	 *
@@ -63,6 +72,7 @@ public class CollapsableGroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 	public CollapsableGroupSWTRenderer(VGroup vElement, ViewModelContext viewContext, ReportService reportService,
 		EMFFormsRendererFactory factory, EMFFormsDatabinding emfFormsDatabinding) {
 		super(vElement, viewContext, reportService, factory, emfFormsDatabinding);
+		dbc = new EMFDataBindingContext();
 	}
 
 	@Override
@@ -92,8 +102,14 @@ public class CollapsableGroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 		final Composite composite = new Composite(bar, SWT.NONE);
 		GridLayoutFactory.fillDefaults().margins(MARGIN, MARGIN).applyTo(composite);
 		final ExpandItem item0 = new ExpandItem(bar, SWT.NONE, 0);
-		final String text = getVElement().getLabel() != null ? getVElement().getLabel() : ""; //$NON-NLS-1$
-		item0.setText(text);
+		bar.setInitialHeaderHeight(item0.getHeaderHeight());
+
+		final ISWTObservableValue target = WidgetProperties.text().observe(item0);
+		final IObservableValue modelValue = EMFEditObservables.observeValue(
+			AdapterFactoryEditingDomain.getEditingDomainFor(getVElement()), getVElement(),
+			VViewPackage.eINSTANCE.getElement_Label());
+		dbc.bindValue(target, modelValue);
+
 		final Control containerControl = super.renderControl(gridCell, composite);
 		GridDataFactory.fillDefaults().grab(true, false)
 			.minSize(containerControl.computeSize(SWT.DEFAULT, SWT.DEFAULT).x, SWT.DEFAULT).applyTo(containerControl);
@@ -167,9 +183,17 @@ public class CollapsableGroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 	private static final class CollapsableGroupExpandBar extends ExpandBar {
 
 		private Composite itemComposite;
+		private int headerHeight;
 
 		CollapsableGroupExpandBar(Composite parent, int style) {
 			super(parent, style);
+		}
+
+		/**
+		 * @param headerHeight the header height
+		 */
+		void setInitialHeaderHeight(int headerHeight) {
+			this.headerHeight = headerHeight;
 		}
 
 		@Override
@@ -198,8 +222,22 @@ public class CollapsableGroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 					/* else might be true if the expandbar has a really long group text */
 					sizeComputedByBar.x = itemSize.x;
 				}
+				/* workaround for SWT-Bug 430600 */
+				if (getItemCount() == 1 && getItem(0).getHeaderHeight() < 0) {
+					if (itemSize.y + headerHeight > sizeComputedByBar.y && getItem(0).getExpanded()) {
+						sizeComputedByBar.y = itemSize.y + headerHeight;
+					}
+				}
 			}
 			return sizeComputedByBar;
 		}
+	}
+
+	@Override
+	protected void dispose() {
+		if (dbc != null) {
+			dbc.dispose();
+		}
+		super.dispose();
 	}
 }

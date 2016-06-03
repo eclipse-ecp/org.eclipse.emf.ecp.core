@@ -17,13 +17,18 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfforms.common.Optional;
+import org.eclipse.emfforms.internal.swt.treemasterdetail.BaseLabelProviderWrapper;
 import org.eclipse.emfforms.internal.swt.treemasterdetail.DefaultTreeViewerCustomization;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.actions.MasterDetailAction;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateElementCallback;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.RootObject;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.viewers.DecoratingLabelProvider;
 import org.eclipse.jface.viewers.IBaseLabelProvider;
 import org.eclipse.jface.viewers.IContentProvider;
+import org.eclipse.jface.viewers.ILabelDecorator;
+import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.ViewerFilter;
@@ -143,6 +148,42 @@ public class TreeViewerSWTBuilder {
 			@Override
 			public IBaseLabelProvider getLabelProvider() {
 				return provider;
+			}
+		});
+		return this;
+	}
+
+	/**
+	 * Use this method to add a {@link ILabelDecorator} for decorating the labels of the label provider. The default
+	 * implementation does not use a decorator.
+	 *
+	 * @param provider the {@link LabelDecoratorProvider} which will be used to create the decorator
+	 * @return self
+	 * @since 1.9
+	 */
+	public TreeViewerSWTBuilder customizeLabelDecorator(LabelDecoratorProvider provider) {
+		behaviour.setLabelDecorator(provider);
+		return this;
+	}
+
+	/**
+	 * Use this method to add a {@link ILabelDecorator} for decorating the labels of the label provider. The default
+	 * implementation does not use a decorator.
+	 *
+	 * @param decorator the decorator instance to be used
+	 * @return self
+	 * @since 1.9
+	 */
+	public TreeViewerSWTBuilder customizeLabelDecorator(final ILabelDecorator decorator) {
+		behaviour.setLabelDecorator(new LabelDecoratorProvider() {
+			@Override
+			public Optional<ILabelDecorator> getLabelDecorator(TreeViewer viewer) {
+				return Optional.of(decorator);
+			}
+
+			@Override
+			public void dispose() {
+				/* no op */
 			}
 		});
 		return this;
@@ -290,7 +331,19 @@ public class TreeViewerSWTBuilder {
 				behaviour.getDropListener(editingDomain, treeViewer));
 		}
 		treeViewer.setContentProvider(behaviour.getContentProvider());
-		treeViewer.setLabelProvider(behaviour.getLabelProvider());
+		IBaseLabelProvider labelProvider = behaviour.getLabelProvider();
+		final Optional<ILabelDecorator> labelDecorator = behaviour.getLabelDecorator(treeViewer);
+		if (labelDecorator.isPresent()) {
+			ILabelProvider labelProviderForDecorator;
+			if (ILabelProvider.class.isInstance(labelProvider)) {
+				labelProviderForDecorator = ILabelProvider.class.cast(labelProvider);
+			} else {
+				labelProviderForDecorator = new BaseLabelProviderWrapper(labelProvider);
+			}
+			labelProvider = new DecoratingLabelProvider(labelProviderForDecorator,
+				labelDecorator.get());
+		}
+		treeViewer.setLabelProvider(labelProvider);
 		treeViewer.setFilters(behaviour.getViewerFilters());
 		treeViewer.getControl().setMenu(behaviour.getMenu(treeViewer, editingDomain));
 		treeViewer.setInput(input);

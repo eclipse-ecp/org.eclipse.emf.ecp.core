@@ -6,11 +6,19 @@
          point="org.eclipse.ui.editors">
       <editor
             class="org.eclipse.emfforms.internal.editor.ecore.EcoreEditor"
-            default="true"
+            contributorClass="org.eclipse.emfforms.spi.editor.EMFUndoRedoActionBarContributor"
+            default="false"
             extensions="ecore"
             icon="icons/EcoreModelFile.gif"
             id="EcoreEditor"
             name="Ecore Editor">
+      </editor>
+      <editor
+            class="org.eclipse.emfforms.spi.editor.GenericEditor"
+            contributorClass="org.eclipse.emfforms.spi.editor.EMFUndoRedoActionBarContributor"
+            default="false"
+            id="org.eclipse.emfforms.editor.ecore.genericxmieditor"
+            name="Generic XMI Editor">
       </editor>
    </extension>
    <extension
@@ -25,6 +33,8 @@
 
 
 <extension  point="org.eclipse.emf.ecp.view.model.provider.xmi.file">
+<file filePath="viewmodels/EAnnotation.view"/>
+
 <file filePath="viewmodels/EOperation.view">
 	<filter key="detail" value="true">
 	</filter>

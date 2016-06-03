@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,6 +13,8 @@ package org.eclipse.emf.ecp.view.internal.editor.controls;
 
 import java.util.Collection;
 import java.util.HashSet;
+
+import javax.inject.Inject;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -56,6 +58,7 @@ public class LeafConditionControlRenderer extends ExpectedValueControlRenderer {
 	 * @param viewContext the view context
 	 * @param reportService the {@link ReportService}
 	 */
+	@Inject
 	public LeafConditionControlRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService) {
 		super(vElement, viewContext, reportService);
 	}

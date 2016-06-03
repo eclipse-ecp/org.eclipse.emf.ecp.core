@@ -61,6 +61,13 @@
                 <message_argument value="8"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.label.model.VLabelPackage"/>
+                <message_argument value="LABEL_FEATURE_COUNT"/>
+                <message_argument value="9"/>
+            </message_arguments>
+        </filter>
         <filter comment="Changes due to new label field in 1.6" id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.label.model.VLabelPackage"/>
@@ -82,6 +89,13 @@
                 <message_argument value="7"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.label.model.VLabelPackage"/>
+                <message_argument value="LABEL__DOMAIN_MODEL_REFERENCE"/>
+                <message_argument value="8"/>
+            </message_arguments>
+        </filter>
         <filter comment="Changes due to new label field in 1.6" id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.label.model.VLabelPackage"/>
@@ -101,6 +115,13 @@
                 <message_argument value="org.eclipse.emf.ecp.view.spi.label.model.VLabelPackage"/>
                 <message_argument value="LABEL__STYLE"/>
                 <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.label.model.VLabelPackage"/>
+                <message_argument value="LABEL__STYLE"/>
+                <message_argument value="7"/>
             </message_arguments>
         </filter>
         <filter comment="Changes due to new label field in 1.6" id="388194388">

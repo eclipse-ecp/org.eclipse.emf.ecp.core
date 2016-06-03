@@ -20,6 +20,7 @@ import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization.ColumnDescription;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.layout.TableColumnLayout;
+import org.eclipse.jface.viewers.ColumnPixelData;
 import org.eclipse.jface.viewers.ColumnViewerEditor;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy;
@@ -133,7 +134,12 @@ public class TableViewerComposite extends Composite {
 			final boolean storedIsResizable = (Boolean) tableColumn.getData(RESIZABLE);
 			final Integer storedWeight = (Integer) tableColumn.getData(WEIGHT);
 			final Integer storedMinWidth = (Integer) tableColumn.getData(MIN_WIDTH);
-			layout.setColumnData(tableColumn, new ColumnWeightData(storedWeight, storedMinWidth, storedIsResizable));
+			if (storedWeight == ColumnDescription.NO_WEIGHT) {
+				layout.setColumnData(tableColumn, new ColumnPixelData(storedMinWidth, storedIsResizable));
+			} else {
+				layout.setColumnData(tableColumn,
+					new ColumnWeightData(storedWeight, storedMinWidth, storedIsResizable));
+			}
 		}
 	}
 

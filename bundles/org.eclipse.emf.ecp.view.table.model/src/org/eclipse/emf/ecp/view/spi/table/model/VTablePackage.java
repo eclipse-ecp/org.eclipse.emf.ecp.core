@@ -34,8 +34,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * @model kind="package"
  * @generated
  */
-public interface VTablePackage extends EPackage
-{
+public interface VTablePackage extends EPackage {
 	/**
 	 * The package name.
 	 * <!-- begin-user-doc -->
@@ -95,6 +94,17 @@ public interface VTablePackage extends EPackage
 	int TABLE_CONTROL__NAME = VViewPackage.CONTROL__NAME;
 
 	/**
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.9
+	 *        <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TABLE_CONTROL__LABEL = VViewPackage.CONTROL__LABEL;
+
+	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -143,6 +153,17 @@ public interface VTablePackage extends EPackage
 	 * @ordered
 	 */
 	int TABLE_CONTROL__ATTACHMENTS = VViewPackage.CONTROL__ATTACHMENTS;
+
+	/**
+	 * The feature id for the '<em><b>Uuid</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.9
+	 *        <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TABLE_CONTROL__UUID = VViewPackage.CONTROL__UUID;
 
 	/**
 	 * The feature id for the '<em><b>Label Alignment</b></em>' attribute.
@@ -296,7 +317,8 @@ public interface VTablePackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int TABLE_DOMAIN_MODEL_REFERENCE__COLUMN_DOMAIN_MODEL_REFERENCES = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 0;
+	int TABLE_DOMAIN_MODEL_REFERENCE__COLUMN_DOMAIN_MODEL_REFERENCES = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT
+		+ 0;
 
 	/**
 	 * The feature id for the '<em><b>Domain Model Reference</b></em>' containment reference.
@@ -304,11 +326,11 @@ public interface VTablePackage extends EPackage
 	 *
 	 * @since 1.5
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
-	int TABLE_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 1;
+	int TABLE_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT
+		+ 1;
 
 	/**
 	 * The number of structural features of the '<em>Domain Model Reference</em>' class.
@@ -316,15 +338,13 @@ public interface VTablePackage extends EPackage
 	 *
 	 * @since 1.5
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
 	int TABLE_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 2;
 
 	/**
-	 * The meta object id for the '
-	 * {@link org.eclipse.emf.ecp.view.spi.table.model.impl.VReadOnlyColumnConfigurationImpl
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VReadOnlyColumnConfigurationImpl
 	 * <em>Read Only Column Configuration</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -356,8 +376,65 @@ public interface VTablePackage extends EPackage
 	int READ_ONLY_COLUMN_CONFIGURATION_FEATURE_COUNT = TABLE_COLUMN_CONFIGURATION_FEATURE_COUNT + 1;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.table.model.DetailEditing
-	 * <em>Detail Editing</em>}' enum.
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VWidthConfigurationImpl
+	 * <em>Width Configuration</em>}' class.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.9
+	 *        <!-- end-user-doc -->
+	 * @see org.eclipse.emf.ecp.view.spi.table.model.impl.VWidthConfigurationImpl
+	 * @see org.eclipse.emf.ecp.view.spi.table.model.impl.VTablePackageImpl#getWidthConfiguration()
+	 * @generated
+	 */
+	int WIDTH_CONFIGURATION = 4;
+
+	/**
+	 * The feature id for the '<em><b>Column Domain Reference</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.9
+	 *        <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WIDTH_CONFIGURATION__COLUMN_DOMAIN_REFERENCE = TABLE_COLUMN_CONFIGURATION_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Weight</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.9
+	 *        <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WIDTH_CONFIGURATION__WEIGHT = TABLE_COLUMN_CONFIGURATION_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Min Width</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 * @since 1.9
+	 */
+	int WIDTH_CONFIGURATION__MIN_WIDTH = TABLE_COLUMN_CONFIGURATION_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of structural features of the '<em>Width Configuration</em>' class.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.9
+	 *        <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int WIDTH_CONFIGURATION_FEATURE_COUNT = TABLE_COLUMN_CONFIGURATION_FEATURE_COUNT + 3;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.table.model.DetailEditing <em>Detail Editing</em>
+	 * }' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -365,11 +442,11 @@ public interface VTablePackage extends EPackage
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.impl.VTablePackageImpl#getDetailEditing()
 	 * @generated
 	 */
-	int DETAIL_EDITING = 4;
+	int DETAIL_EDITING = 5;
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl
-	 * <em>Control</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl <em>Control</em>
+	 * }'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -492,7 +569,6 @@ public interface VTablePackage extends EPackage
 	 *
 	 * @since 1.5
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the meta object for the containment reference '<em>Domain Model Reference</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference#getDomainModelReference()
 	 * @see #getTableDomainModelReference()
@@ -525,6 +601,62 @@ public interface VTablePackage extends EPackage
 	 * @generated
 	 */
 	EReference getReadOnlyColumnConfiguration_ColumnDomainReferences();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration
+	 * <em>Width Configuration</em>}'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.9
+	 *        <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Width Configuration</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration
+	 * @generated
+	 */
+	EClass getWidthConfiguration();
+
+	/**
+	 * Returns the meta object for the reference '
+	 * {@link org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration#getColumnDomainReference
+	 * <em>Column Domain Reference</em>}'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.9
+	 *        <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Column Domain Reference</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration#getColumnDomainReference()
+	 * @see #getWidthConfiguration()
+	 * @generated
+	 */
+	EReference getWidthConfiguration_ColumnDomainReference();
+
+	/**
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration#getWeight <em>Weight</em>}'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.9
+	 *        <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Weight</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration#getWeight()
+	 * @see #getWidthConfiguration()
+	 * @generated
+	 */
+	EAttribute getWidthConfiguration_Weight();
+
+	/**
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration#getMinWidth <em>Min Width</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the attribute '<em>Min Width</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration#getMinWidth()
+	 * @see #getWidthConfiguration()
+	 * @generated
+	 * @since 1.9
+	 */
+	EAttribute getWidthConfiguration_MinWidth();
 
 	/**
 	 * Returns the meta object for enum '{@link org.eclipse.emf.ecp.view.spi.table.model.DetailEditing
@@ -561,8 +693,7 @@ public interface VTablePackage extends EPackage
 	 *
 	 * @generated
 	 */
-	interface Literals
-	{
+	interface Literals {
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableControlImpl
 		 * <em>Control</em>}' class.
@@ -659,10 +790,9 @@ public interface VTablePackage extends EPackage
 		/**
 		 * The meta object literal for the '<em><b>Domain Model Reference</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
-		 * 
+		 *
 		 * @since 1.5
 		 *        <!-- end-user-doc -->
-		 *
 		 * @generated
 		 */
 		EReference TABLE_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE = eINSTANCE
@@ -690,6 +820,50 @@ public interface VTablePackage extends EPackage
 		 */
 		EReference READ_ONLY_COLUMN_CONFIGURATION__COLUMN_DOMAIN_REFERENCES = eINSTANCE
 			.getReadOnlyColumnConfiguration_ColumnDomainReferences();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VWidthConfigurationImpl
+		 * <em>Width Configuration</em>}' class.
+		 * <!-- begin-user-doc -->
+		 *
+		 * @since 1.9
+		 *        <!-- end-user-doc -->
+		 * @see org.eclipse.emf.ecp.view.spi.table.model.impl.VWidthConfigurationImpl
+		 * @see org.eclipse.emf.ecp.view.spi.table.model.impl.VTablePackageImpl#getWidthConfiguration()
+		 * @generated
+		 */
+		EClass WIDTH_CONFIGURATION = eINSTANCE.getWidthConfiguration();
+
+		/**
+		 * The meta object literal for the '<em><b>Column Domain Reference</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 *
+		 * @since 1.9
+		 *        <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference WIDTH_CONFIGURATION__COLUMN_DOMAIN_REFERENCE = eINSTANCE
+			.getWidthConfiguration_ColumnDomainReference();
+
+		/**
+		 * The meta object literal for the '<em><b>Weight</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 *
+		 * @since 1.9
+		 *        <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute WIDTH_CONFIGURATION__WEIGHT = eINSTANCE.getWidthConfiguration_Weight();
+
+		/**
+		 * The meta object literal for the '<em><b>Min Width</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @generated
+		 * @since 1.9
+		 */
+		EAttribute WIDTH_CONFIGURATION__MIN_WIDTH = eINSTANCE.getWidthConfiguration_MinWidth();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.table.model.DetailEditing

@@ -33,6 +33,13 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/ecp/view/spi/compoundcontrol/model/VCompoundcontrolPackage.java" type="org.eclipse.emf.ecp.view.spi.compoundcontrol.model.VCompoundcontrolPackage">
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.compoundcontrol.model.VCompoundcontrolPackage"/>
+                <message_argument value="COMPOUND_CONTROL_FEATURE_COUNT"/>
+                <message_argument value="10"/>
+            </message_arguments>
+        </filter>
         <filter comment="Changes due to new label field in 1.6" id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.compoundcontrol.model.VCompoundcontrolPackage"/>
@@ -68,6 +75,13 @@
                 <message_argument value="7"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.compoundcontrol.model.VCompoundcontrolPackage"/>
+                <message_argument value="COMPOUND_CONTROL__CONTROLS"/>
+                <message_argument value="9"/>
+            </message_arguments>
+        </filter>
         <filter comment="Changes due to new label field in 1.6" id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.compoundcontrol.model.VCompoundcontrolPackage"/>
@@ -75,11 +89,25 @@
                 <message_argument value="4"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.compoundcontrol.model.VCompoundcontrolPackage"/>
+                <message_argument value="COMPOUND_CONTROL__DOMAIN_MODEL_REFERENCE"/>
+                <message_argument value="8"/>
+            </message_arguments>
+        </filter>
         <filter comment="Changes due to new label field in 1.6" id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.compoundcontrol.model.VCompoundcontrolPackage"/>
                 <message_argument value="COMPOUND_CONTROL__ENABLED"/>
                 <message_argument value="2"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.compoundcontrol.model.VCompoundcontrolPackage"/>
+                <message_argument value="COMPOUND_CONTROL__LABEL_ALIGNMENT"/>
+                <message_argument value="7"/>
             </message_arguments>
         </filter>
         <filter comment="Changes due to new label field in 1.6" id="388194388">

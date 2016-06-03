@@ -30,7 +30,6 @@ import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.internal.ide.IDEInternalWorkbenchImages;
 import org.eclipse.ui.internal.ide.IDEWorkbenchPlugin;
-import org.eclipse.ui.internal.ide.model.WorkbenchAdapterBuilder;
 import org.osgi.framework.Bundle;
 
 /**
@@ -39,7 +38,7 @@ import org.osgi.framework.Bundle;
  * @author Eugen Neufeld
  *
  */
-@SuppressWarnings({ "deprecation", "restriction" })
+@SuppressWarnings("restriction")
 public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
 
 	private static final String PERSPECTIVE_ID = "org.eclipse.emf.ecp.application3x.perspective"; //$NON-NLS-1$
@@ -86,7 +85,7 @@ public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
 
 	@Override
 	public void preStartup() {
-		WorkbenchAdapterBuilder.registerAdapters();
+		IDE.registerAdapters();
 	}
 
 	private void declareWorkbenchImages() {

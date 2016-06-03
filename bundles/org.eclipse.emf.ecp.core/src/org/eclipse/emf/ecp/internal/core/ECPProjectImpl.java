@@ -75,7 +75,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 
 	private boolean open;
 
-	private boolean initialized = false;
+	private boolean initialized;
 
 	/**
 	 * Constructor used when an offline project is created.
@@ -453,7 +453,7 @@ public final class ECPProjectImpl extends PropertiesElement implements InternalP
 	private static final class Disposed implements InternalRepository {
 		private final String name;
 
-		public Disposed(String name) {
+		Disposed(String name) {
 			this.name = name;
 		}
 

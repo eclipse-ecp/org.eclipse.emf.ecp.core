@@ -13,6 +13,12 @@
                 <message_argument value="1.5.0"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change 1.9.0" id="923795461">
+            <message_arguments>
+                <message_argument value="1.9.0"/>
+                <message_argument value="1.8.0"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.ecp.view.spi.model.reporting.AbstractReport">
         <filter comment="SPI Change in 1.6" id="305422471">
@@ -52,12 +58,34 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/table/model/VTableFactory.java" type="org.eclipse.emf.ecp.view.spi.table.model.VTableFactory">
+        <filter comment="SPI Change 1.9.0" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTableFactory"/>
+                <message_argument value="createWidthConfiguration()"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/ecp/view/spi/table/model/VTablePackage.java" type="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage">
+        <filter comment="SPI Change 1.9.0" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="DETAIL_EDITING"/>
+                <message_argument value="4"/>
+            </message_arguments>
+        </filter>
         <filter comment="Changes due to new label field in 1.6" id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
                 <message_argument value="TABLE_CONTROL_FEATURE_COUNT"/>
                 <message_argument value="13"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="TABLE_CONTROL_FEATURE_COUNT"/>
+                <message_argument value="14"/>
             </message_arguments>
         </filter>
         <filter comment="Changes due to new label field in 1.6" id="388194388">
@@ -67,11 +95,25 @@
                 <message_argument value="8"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="TABLE_CONTROL__ADD_REMOVE_DISABLED"/>
+                <message_argument value="9"/>
+            </message_arguments>
+        </filter>
         <filter comment="Changes due to new label field in 1.6" id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
                 <message_argument value="TABLE_CONTROL__ATTACHMENTS"/>
                 <message_argument value="5"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="TABLE_CONTROL__COLUMN_CONFIGURATIONS"/>
+                <message_argument value="10"/>
             </message_arguments>
         </filter>
         <filter comment="Changes due to new label field in 1.6" id="388194388">
@@ -88,11 +130,25 @@
                 <message_argument value="10"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="TABLE_CONTROL__DETAIL_EDITING"/>
+                <message_argument value="11"/>
+            </message_arguments>
+        </filter>
         <filter comment="Changes due to new label field in 1.6" id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
                 <message_argument value="TABLE_CONTROL__DETAIL_VIEW"/>
                 <message_argument value="11"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="TABLE_CONTROL__DETAIL_VIEW"/>
+                <message_argument value="12"/>
             </message_arguments>
         </filter>
         <filter comment="Changes due to new label field in 1.6" id="388194388">
@@ -109,6 +165,13 @@
                 <message_argument value="7"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="TABLE_CONTROL__DOMAIN_MODEL_REFERENCE"/>
+                <message_argument value="8"/>
+            </message_arguments>
+        </filter>
         <filter comment="Changes due to new label field in 1.6" id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
@@ -123,11 +186,25 @@
                 <message_argument value="12"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="TABLE_CONTROL__ENABLE_DETAIL_EDITING_DIALOG"/>
+                <message_argument value="13"/>
+            </message_arguments>
+        </filter>
         <filter comment="Changes due to new label field in 1.6" id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
                 <message_argument value="TABLE_CONTROL__LABEL_ALIGNMENT"/>
                 <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="TABLE_CONTROL__LABEL_ALIGNMENT"/>
+                <message_argument value="7"/>
             </message_arguments>
         </filter>
         <filter comment="Changes due to new label field in 1.6" id="388194388">
@@ -158,10 +235,58 @@
                 <message_argument value="http://org/eclipse/emf/ecp/view/table/model"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change 1.9.0" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="TABLE_CONTROL__LABEL"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.9.0" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="TABLE_CONTROL__UUID"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI Change with 1.5.0" id="403767336">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
                 <message_argument value="TABLE_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.9.0" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="WIDTH_CONFIGURATION"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.9.0" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="WIDTH_CONFIGURATION_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.9.0" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="WIDTH_CONFIGURATION__COLUMN_DOMAIN_REFERENCE"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="WIDTH_CONFIGURATION__MIN_WIDTH"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.9.0" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="WIDTH_CONFIGURATION__WEIGHT"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.9.0" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="WIDTH_CONFIGURATION__WIDTH"/>
             </message_arguments>
         </filter>
         <filter comment="SPI Change with 1.5.0" id="403804204">
@@ -170,12 +295,72 @@
                 <message_argument value="getTableDomainModelReference_DomainModelReference()"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change 1.9.0" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="getWidthConfiguration()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.9.0" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="getWidthConfiguration_ColumnDomainReference()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="getWidthConfiguration_MinWidth()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.9.0" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="getWidthConfiguration_Weight()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.9.0" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="getWidthConfiguration_Width()"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/ecp/view/spi/table/model/VTablePackage.java" type="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage$Literals">
         <filter comment="SPI Change with 1.5.0" id="403767336">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage.Literals"/>
                 <message_argument value="TABLE_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.9.0" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage.Literals"/>
+                <message_argument value="WIDTH_CONFIGURATION"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.9.0" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage.Literals"/>
+                <message_argument value="WIDTH_CONFIGURATION__COLUMN_DOMAIN_REFERENCE"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage.Literals"/>
+                <message_argument value="WIDTH_CONFIGURATION__MIN_WIDTH"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.9.0" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage.Literals"/>
+                <message_argument value="WIDTH_CONFIGURATION__WEIGHT"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.9.0" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage.Literals"/>
+                <message_argument value="WIDTH_CONFIGURATION__WIDTH"/>
             </message_arguments>
         </filter>
     </resource>

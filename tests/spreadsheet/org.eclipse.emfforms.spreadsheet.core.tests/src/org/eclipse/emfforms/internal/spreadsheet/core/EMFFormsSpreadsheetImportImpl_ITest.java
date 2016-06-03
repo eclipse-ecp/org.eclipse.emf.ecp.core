@@ -206,9 +206,9 @@ public class EMFFormsSpreadsheetImportImpl_ITest {
 
 		assertEquals(1, fans.size());
 		final Fan importedFan = (Fan) fans.iterator().next();
-		assertTrue(importedFan.isSetName());
+		assertFalse(importedFan.isSetName());
 		assertTrue(importedFan.isSetEMails());
-		assertTrue(importedFan.isSetFavouriteMerchandise());
+		assertFalse(importedFan.isSetFavouriteMerchandise());
 		// TODO the following assertions are failing because of a bug in EMF
 		// EMF is using an identity command instead of an empty set command, which would make the feature set
 		// assertTrue(importedFan.isSetFanMerchandise());

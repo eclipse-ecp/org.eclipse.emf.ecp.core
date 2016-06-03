@@ -16,10 +16,21 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartListener2;
 import org.eclipse.ui.IWorkbenchPartReference;
 
+/**
+ * An {@link IPartListener2} notifying an {@link ILinkedWithEditorView}, if the active editor changes.
+ *
+ * @author Eugen Neufeld
+ *
+ */
 public class LinkedWithEditorPartListener implements IPartListener2 {
 
 	private final ILinkedWithEditorView view;
 
+	/**
+	 * Default constructor.
+	 * 
+	 * @param view The {@link ILinkedWithEditorView} to be notified, if the active editor changes.
+	 */
 	public LinkedWithEditorPartListener(ILinkedWithEditorView view) {
 		this.view = view;
 	}

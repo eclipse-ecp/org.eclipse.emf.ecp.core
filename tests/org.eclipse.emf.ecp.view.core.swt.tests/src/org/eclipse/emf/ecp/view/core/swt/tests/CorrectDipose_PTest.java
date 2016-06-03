@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,11 +11,16 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.core.swt.tests;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
 
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
@@ -36,6 +41,7 @@ public class CorrectDipose_PTest {
 	private VView view;
 	private Shell shell;
 	private Player domain;
+	private ViewModelContext viewContext;
 
 	@Before
 	public void before() {
@@ -43,9 +49,11 @@ public class CorrectDipose_PTest {
 		view = VViewFactory.eINSTANCE.createView();
 		view.setRootEClass(BowlingPackage.eINSTANCE.getPlayer());
 		domain = BowlingFactory.eINSTANCE.createPlayer();
+		final ViewModelContext toSpy = ViewModelContextFactory.INSTANCE.createViewModelContext(view,
+			domain);
+		viewContext = spy(toSpy);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Test
 	public void rendererRemovesListenerTest() {
 		final VControl vControl = VViewFactory.eINSTANCE.createControl();
@@ -55,14 +63,15 @@ public class CorrectDipose_PTest {
 		view.getChildren().add(vControl);
 
 		try {
-			ECPSWTViewRenderer.INSTANCE.render(shell, domain, view);
+			ECPSWTViewRenderer.INSTANCE.render(shell, viewContext);
 		} catch (final ECPRendererException e) {
 			fail(e.getMessage());
 		}
-		// 1 for the control and 1 for the ViewModelContext
-		assertEquals(1, vdmr.getChangeListener().size());
 		shell.dispose();
 
-		assertEquals(0, vdmr.getChangeListener().size());
+		// Verify that the renderer registered one domain change listener on instantiation and unregistered it on
+		// dispose
+		verify(viewContext).registerDomainChangeListener(any(ModelChangeListener.class));
+		verify(viewContext).unregisterDomainChangeListener(any(ModelChangeListener.class));
 	}
 }

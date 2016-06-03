@@ -11,7 +11,6 @@
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.controlgrid.renderer;
 
-import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -97,11 +96,6 @@ public class ControlGridSWTRenderer extends AbstractSWTRenderer<VControlGrid> {
 	@Override
 	protected Control renderControl(SWTGridCell cell, Composite parent)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		if (cell.getColumn() != 0 || cell.getRow() != 0) {
-			throw new IllegalArgumentException(
-				MessageFormat.format("The grid cell {0} cannot be rendered.", cell.toString())); //$NON-NLS-1$
-		}
-
 		final Map<VControlGridCell, AbstractSWTRenderer<VElement>> renderers = getChildRenderers();
 
 		final Map<AbstractSWTRenderer<VElement>, SWTGridDescription> gridDescriptions = getGridDescriptions(

@@ -29,17 +29,16 @@ import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestP
  * The <b>Adapter Factory</b> for the model.
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
- *
+ * 
  * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage
  * @generated
  */
-public class TestAdapterFactory extends AdapterFactoryImpl
-{
+public class TestAdapterFactory extends AdapterFactoryImpl {
 	/**
 	 * The cached model package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected static TestPackage modelPackage;
@@ -48,13 +47,11 @@ public class TestAdapterFactory extends AdapterFactoryImpl
 	 * Creates an instance of the adapter factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	public TestAdapterFactory()
-	{
-		if (modelPackage == null)
-		{
+	public TestAdapterFactory() {
+		if (modelPackage == null) {
 			modelPackage = TestPackage.eINSTANCE;
 		}
 	}
@@ -65,19 +62,16 @@ public class TestAdapterFactory extends AdapterFactoryImpl
 	 * This implementation returns <code>true</code> if the object is either the model's package or is an instance
 	 * object of the model.
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return whether this factory is applicable for the type of the object.
 	 * @generated
 	 */
 	@Override
-	public boolean isFactoryForType(Object object)
-	{
-		if (object == modelPackage)
-		{
+	public boolean isFactoryForType(Object object) {
+		if (object == modelPackage) {
 			return true;
 		}
-		if (object instanceof EObject)
-		{
+		if (object instanceof EObject) {
 			return ((EObject) object).eClass().getEPackage() == modelPackage;
 		}
 		return false;
@@ -87,67 +81,57 @@ public class TestAdapterFactory extends AdapterFactoryImpl
 	 * The switch that delegates to the <code>createXXX</code> methods.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	protected TestSwitch<Adapter> modelSwitch =
-		new TestSwitch<Adapter>()
-		{
-			@Override
-			public Adapter caseA(A object)
-			{
-				return createAAdapter();
-			}
+	protected TestSwitch<Adapter> modelSwitch = new TestSwitch<Adapter>() {
+		@Override
+		public Adapter caseA(A object) {
+			return createAAdapter();
+		}
 
-			@Override
-			public Adapter caseB(B object)
-			{
-				return createBAdapter();
-			}
+		@Override
+		public Adapter caseB(B object) {
+			return createBAdapter();
+		}
 
-			@Override
-			public Adapter caseC(C object)
-			{
-				return createCAdapter();
-			}
+		@Override
+		public Adapter caseC(C object) {
+			return createCAdapter();
+		}
 
-			@Override
-			public Adapter caseD(D object)
-			{
-				return createDAdapter();
-			}
+		@Override
+		public Adapter caseD(D object) {
+			return createDAdapter();
+		}
 
-			@Override
-			public Adapter caseEClassToEStringMap(Map.Entry<EClass, String> object)
-			{
-				return createEClassToEStringMapAdapter();
-			}
+		@Override
+		public Adapter caseEClassToEStringMap(Map.Entry<EClass, String> object) {
+			return createEClassToEStringMapAdapter();
+		}
 
-			@Override
-			public Adapter caseEClassToAMap(Map.Entry<EClass, A> object)
-			{
-				return createEClassToAMapAdapter();
-			}
+		@Override
+		public Adapter caseEClassToAMap(Map.Entry<EClass, A> object) {
+			return createEClassToAMapAdapter();
+		}
 
-			@Override
-			public Adapter defaultCase(EObject object)
-			{
-				return createEObjectAdapter();
-			}
-		};
+		@Override
+		public Adapter defaultCase(EObject object) {
+			return createEObjectAdapter();
+		}
+	};
 
 	/**
 	 * Creates an adapter for the <code>target</code>.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param target the object to adapt.
 	 * @return the adapter for the <code>target</code>.
 	 * @generated
 	 */
 	@Override
-	public Adapter createAdapter(Notifier target)
-	{
+	public Adapter createAdapter(Notifier target) {
 		return modelSwitch.doSwitch((EObject) target);
 	}
 
@@ -158,13 +142,12 @@ public class TestAdapterFactory extends AdapterFactoryImpl
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the new adapter.
 	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A
 	 * @generated
 	 */
-	public Adapter createAAdapter()
-	{
+	public Adapter createAAdapter() {
 		return null;
 	}
 
@@ -175,13 +158,12 @@ public class TestAdapterFactory extends AdapterFactoryImpl
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the new adapter.
 	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B
 	 * @generated
 	 */
-	public Adapter createBAdapter()
-	{
+	public Adapter createBAdapter() {
 		return null;
 	}
 
@@ -192,13 +174,12 @@ public class TestAdapterFactory extends AdapterFactoryImpl
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the new adapter.
 	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C
 	 * @generated
 	 */
-	public Adapter createCAdapter()
-	{
+	public Adapter createCAdapter() {
 		return null;
 	}
 
@@ -209,13 +190,12 @@ public class TestAdapterFactory extends AdapterFactoryImpl
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the new adapter.
 	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D
 	 * @generated
 	 */
-	public Adapter createDAdapter()
-	{
+	public Adapter createDAdapter() {
 		return null;
 	}
 
@@ -225,13 +205,12 @@ public class TestAdapterFactory extends AdapterFactoryImpl
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the new adapter.
 	 * @see java.util.Map.Entry
 	 * @generated
 	 */
-	public Adapter createEClassToEStringMapAdapter()
-	{
+	public Adapter createEClassToEStringMapAdapter() {
 		return null;
 	}
 
@@ -241,13 +220,12 @@ public class TestAdapterFactory extends AdapterFactoryImpl
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the new adapter.
 	 * @see java.util.Map.Entry
 	 * @generated
 	 */
-	public Adapter createEClassToAMapAdapter()
-	{
+	public Adapter createEClassToAMapAdapter() {
 		return null;
 	}
 
@@ -256,12 +234,11 @@ public class TestAdapterFactory extends AdapterFactoryImpl
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null.
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the new adapter.
 	 * @generated
 	 */
-	public Adapter createEObjectAdapter()
-	{
+	public Adapter createEObjectAdapter() {
 		return null;
 	}
 

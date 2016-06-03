@@ -13,10 +13,10 @@ package org.eclipse.emf.ecp.view.model.provider.xmi;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
+import org.eclipse.emf.ecp.view.spi.model.util.VViewResourceImpl;
 import org.eclipse.emf.ecp.view.spi.provider.IViewProvider;
 
 /**
@@ -29,8 +29,9 @@ public abstract class XMIViewModelProvider implements IViewProvider {
 
 	@Override
 	public VView provideViewModel(EObject eObject, VViewModelProperties properties) {
-		final Resource resource = ViewModelFileExtensionsManager.loadResource(getXMIPath());
+		final VViewResourceImpl resource = ViewModelFileExtensionsManager.loadResource(getXMIPath());
 		final VView result = EcoreUtil.copy((VView) resource.getContents().get(0));
+		ViewModelFileExtensionsManager.setUUIDAsElementId(resource, result);
 		result.setLoadingProperties(EcoreUtil.copy(properties));
 		return result;
 	}

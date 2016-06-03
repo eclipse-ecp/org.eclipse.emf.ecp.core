@@ -50,21 +50,20 @@ import org.eclipse.emfforms.spi.common.report.AbstractReport;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  * <li>
  * {@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableDomainModelReferenceImpl#getColumnDomainModelReferences
  * <em>Column Domain Model References</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableDomainModelReferenceImpl#getDomainModelReference <em>
- * Domain Model Reference</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableDomainModelReferenceImpl#getDomainModelReference
+ * <em>Domain Model Reference</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
 @SuppressWarnings("deprecation")
 public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelReferenceImpl implements
-	VTableDomainModelReference
-{
+	VTableDomainModelReference {
 	/**
 	 * The cached value of the '{@link #getColumnDomainModelReferences() <em>Column Domain Model References</em>}'
 	 * containment reference list.
@@ -81,10 +80,9 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	 * The cached value of the '{@link #getDomainModelReference() <em>Domain Model Reference</em>}' containment
 	 * reference.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.5
 	 *        <!-- end-user-doc -->
-	 *
 	 * @see #getDomainModelReference()
 	 * @generated
 	 * @ordered
@@ -99,8 +97,7 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	 *
 	 * @generated
 	 */
-	protected VTableDomainModelReferenceImpl()
-	{
+	protected VTableDomainModelReferenceImpl() {
 		super();
 	}
 
@@ -111,8 +108,7 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return VTablePackage.Literals.TABLE_DOMAIN_MODEL_REFERENCE;
 	}
 
@@ -123,10 +119,8 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	 * @generated
 	 */
 	@Override
-	public EList<VDomainModelReference> getColumnDomainModelReferences()
-	{
-		if (columnDomainModelReferences == null)
-		{
+	public EList<VDomainModelReference> getColumnDomainModelReferences() {
+		if (columnDomainModelReferences == null) {
 			columnDomainModelReferences = new EObjectContainmentEList<VDomainModelReference>(
 				VDomainModelReference.class, this,
 				VTablePackage.TABLE_DOMAIN_MODEL_REFERENCE__COLUMN_DOMAIN_MODEL_REFERENCES);
@@ -136,33 +130,28 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.5
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
-	public VDomainModelReference getDomainModelReference()
-	{
+	public VDomainModelReference getDomainModelReference() {
 		return domainModelReference;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.5
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	public NotificationChain basicSetDomainModelReference(VDomainModelReference newDomainModelReference,
-		NotificationChain msgs)
-	{
+		NotificationChain msgs) {
 		final VDomainModelReference oldDomainModelReference = domainModelReference;
 		domainModelReference = newDomainModelReference;
-		if (eNotificationRequired())
-		{
+		if (eNotificationRequired()) {
 			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
 				VTablePackage.TABLE_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE, oldDomainModelReference,
 				newDomainModelReference);
@@ -177,32 +166,30 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.5
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
-	public void setDomainModelReference(VDomainModelReference newDomainModelReference)
-	{
-		if (newDomainModelReference != domainModelReference)
-		{
+	public void setDomainModelReference(VDomainModelReference newDomainModelReference) {
+		if (newDomainModelReference != domainModelReference) {
 			NotificationChain msgs = null;
 			if (domainModelReference != null) {
-				msgs = ((InternalEObject) domainModelReference).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
-					- VTablePackage.TABLE_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE, null, msgs);
+				msgs = ((InternalEObject) domainModelReference).eInverseRemove(this,
+					EOPPOSITE_FEATURE_BASE - VTablePackage.TABLE_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE, null,
+					msgs);
 			}
 			if (newDomainModelReference != null) {
-				msgs = ((InternalEObject) newDomainModelReference).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
-					- VTablePackage.TABLE_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE, null, msgs);
+				msgs = ((InternalEObject) newDomainModelReference).eInverseAdd(this,
+					EOPPOSITE_FEATURE_BASE - VTablePackage.TABLE_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE, null,
+					msgs);
 			}
 			msgs = basicSetDomainModelReference(newDomainModelReference, msgs);
 			if (msgs != null) {
 				msgs.dispatch();
 			}
-		}
-		else if (eNotificationRequired()) {
+		} else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VTablePackage.TABLE_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE, newDomainModelReference,
 				newDomainModelReference));
@@ -216,10 +203,8 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-	{
-		switch (featureID)
-		{
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
 		case VTablePackage.TABLE_DOMAIN_MODEL_REFERENCE__COLUMN_DOMAIN_MODEL_REFERENCES:
 			return ((InternalEList<?>) getColumnDomainModelReferences()).basicRemove(otherEnd, msgs);
 		case VTablePackage.TABLE_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE:
@@ -235,10 +220,8 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
-		switch (featureID)
-		{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 		case VTablePackage.TABLE_DOMAIN_MODEL_REFERENCE__COLUMN_DOMAIN_MODEL_REFERENCES:
 			return getColumnDomainModelReferences();
 		case VTablePackage.TABLE_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE:
@@ -255,10 +238,8 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
-		switch (featureID)
-		{
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 		case VTablePackage.TABLE_DOMAIN_MODEL_REFERENCE__COLUMN_DOMAIN_MODEL_REFERENCES:
 			getColumnDomainModelReferences().clear();
 			getColumnDomainModelReferences().addAll((Collection<? extends VDomainModelReference>) newValue);
@@ -277,10 +258,8 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
-		switch (featureID)
-		{
+	public void eUnset(int featureID) {
+		switch (featureID) {
 		case VTablePackage.TABLE_DOMAIN_MODEL_REFERENCE__COLUMN_DOMAIN_MODEL_REFERENCES:
 			getColumnDomainModelReferences().clear();
 			return;
@@ -298,10 +277,8 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
-		switch (featureID)
-		{
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 		case VTablePackage.TABLE_DOMAIN_MODEL_REFERENCE__COLUMN_DOMAIN_MODEL_REFERENCES:
 			return columnDomainModelReferences != null && !columnDomainModelReferences.isEmpty();
 		case VTablePackage.TABLE_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE:
@@ -379,13 +356,11 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 				Setting result = null;
 				if (returnedElements == 0) {
 					result = ((InternalEObject) lastResolvedEObject).eSetting(listFeature);
-				}
-				else {
+				} else {
 					final Iterator<Setting> iterator = resolvedColumns.get(returnedElements - 1).getIterator();
 					if (iterator.hasNext()) {
 						result = iterator.next();
-					}
-					else {
+					} else {
 						throw new NoSuchElementException(String.format(
 							"The iterator has %1$s but %2$s already has been returned!", numElems, returnedElements)); //$NON-NLS-1$
 					}
@@ -439,8 +414,7 @@ public class VTableDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 				EStructuralFeature result = null;
 				if (0 == counter) {
 					result = listFeature;
-				}
-				else {
+				} else {
 					result = getColumnDomainModelReferences().get(counter - 1).getEStructuralFeatureIterator().next();
 
 				}
