@@ -190,6 +190,9 @@ public class DateCellEditor extends CellEditor implements ECPCellEditor {
 
 	@Override
 	protected void doSetValue(Object value) {
+		if (value == null) {
+			return;
+		}
 		final Calendar cal = Calendar.getInstance();
 		cal.setTime((Date) value);
 		dateWidget.setDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));

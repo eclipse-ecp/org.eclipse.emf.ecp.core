@@ -187,6 +187,9 @@ public class XmlDateCellEditor extends CellEditor implements ECPCellEditor {
 
 	@Override
 	protected void doSetValue(Object value) {
+		if (value == null) {
+			return;
+		}
 		final XMLGregorianCalendar cal = (XMLGregorianCalendar) value;
 		final GregorianCalendar gregCal = cal.toGregorianCalendar();
 		dateWidget.setDate(gregCal.get(Calendar.YEAR), gregCal.get(Calendar.MONTH), gregCal.get(Calendar.DAY_OF_MONTH));

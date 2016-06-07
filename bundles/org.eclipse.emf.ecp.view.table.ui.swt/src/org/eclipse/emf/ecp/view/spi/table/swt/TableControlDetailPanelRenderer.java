@@ -18,6 +18,7 @@ import java.util.Set;
 import javax.inject.Inject;
 
 import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
@@ -28,6 +29,7 @@ import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.model.LocalizationAdapter;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
@@ -194,7 +196,20 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 			}
 			view = detailView;
 		}
-		return EcoreUtil.copy(view);
+		final VView copy = EcoreUtil.copy(view);
+		for (final Adapter adapter : view.eAdapters()) {
+			if (LocalizationAdapter.class.isInstance(adapter)) {
+				copy.eAdapters().add(new LocalizationAdapter() {
+
+					@Override
+					public String localize(String key) {
+						return LocalizationAdapter.class.cast(adapter).localize(key);
+					}
+				});
+				break;
+			}
+		}
+		return copy;
 	}
 
 	/**
@@ -234,7 +249,7 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 
 	/**
 	 * Called in order to render the selectedObject onto the created detail pane.
-	 * 
+	 *
 	 * @param composite The {@link Composite} to render on
 	 * @param eObject The selected {@link EObject} to render
 	 * @since 1.9

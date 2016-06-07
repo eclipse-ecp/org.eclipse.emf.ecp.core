@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.view.internal.table.model;
 import org.eclipse.emf.databinding.IEMFListProperty;
 import org.eclipse.emf.databinding.IEMFValueProperty;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
@@ -152,7 +153,14 @@ public class TableDMRConverter implements DomainModelReferenceConverterEMF {
 			throw new DatabindingFailedException(
 				"The field domainModelReference of the given VTableDomainModelReference must not be null."); //$NON-NLS-1$
 		}
-		return emfFormsDatabinding.getSetting(tableDomainModelReference.getDomainModelReference(), object);
+		final Setting setting = emfFormsDatabinding.getSetting(tableDomainModelReference.getDomainModelReference(),
+			object);
+		if (!setting.getEStructuralFeature().isMany()
+			|| !EReference.class.isInstance(setting.getEStructuralFeature())) {
+			throw new DatabindingFailedException(
+				"The field domainModelReference of the given VTableDomainModelReference must be a multi reference."); //$NON-NLS-1$
+		}
+		return setting;
 	}
 
 }

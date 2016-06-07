@@ -35,7 +35,8 @@ class FormsJsonGenerator extends JsonGenerator {
 	private static final val TYPE = "type"
 	private static final val ELEMENTS = "elements"
 	private static final val CONTROL = "Control"
-	private static final val CATEGORIZATION_ELEMENT = "CategorizationElement"
+	// reactive again
+	// private static final val CATEGORIZATION_ELEMENT = "CategorizationElement"
 	private static final val CATEGORIZATION = "Categorization"
 	private static final val CATEGORY = "Category"
 	private static final val SCOPE = "scope"
@@ -65,7 +66,8 @@ class FormsJsonGenerator extends JsonGenerator {
 	
 	private def dispatch JsonElement createJsonFormsElement(VCategorizationElement categorizationElement) {
 		new JsonObject()
-			.withType(CATEGORIZATION_ELEMENT)
+//			.withType(CATEGORIZATION_ELEMENT)
+			.withType(CATEGORIZATION)
     		.withElements(categorizationElement.categorizations)
 	}
 	
