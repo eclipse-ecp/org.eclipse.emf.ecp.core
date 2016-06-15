@@ -24,8 +24,9 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewModelLoadingProperties;
 import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
@@ -47,7 +48,7 @@ public class ViewSwitch<T> extends Switch<T> {
 	/**
 	 * The cached model package
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected static VViewPackage modelPackage;
@@ -56,7 +57,7 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * Creates an instance of the switch.
 	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public ViewSwitch() {
@@ -83,7 +84,7 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * result.
 	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 *
+	 * 
 	 * @return the first non-null result returned by a <code>caseXXX</code> call.
 	 * @generated
 	 */
@@ -91,149 +92,131 @@ public class ViewSwitch<T> extends Switch<T> {
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
 		case VViewPackage.DIAGNOSTIC: {
-			final VDiagnostic diagnostic = (VDiagnostic) theEObject;
+			VDiagnostic diagnostic = (VDiagnostic) theEObject;
 			T result = caseDiagnostic(diagnostic);
-			if (result == null) {
+			if (result == null)
 				result = defaultCase(theEObject);
-			}
 			return result;
 		}
 		case VViewPackage.ATTACHMENT: {
-			final VAttachment attachment = (VAttachment) theEObject;
+			VAttachment attachment = (VAttachment) theEObject;
 			T result = caseAttachment(attachment);
-			if (result == null) {
+			if (result == null)
 				result = defaultCase(theEObject);
-			}
 			return result;
 		}
 		case VViewPackage.DOMAIN_MODEL_REFERENCE: {
-			final VDomainModelReference domainModelReference = (VDomainModelReference) theEObject;
+			VDomainModelReference domainModelReference = (VDomainModelReference) theEObject;
 			T result = caseDomainModelReference(domainModelReference);
-			if (result == null) {
+			if (result == null)
 				result = defaultCase(theEObject);
-			}
-			return result;
-		}
-		case VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE: {
-			final VFeaturePathDomainModelReference featurePathDomainModelReference = (VFeaturePathDomainModelReference) theEObject;
-			T result = caseFeaturePathDomainModelReference(featurePathDomainModelReference);
-			if (result == null) {
-				result = caseDomainModelReference(featurePathDomainModelReference);
-			}
-			if (result == null) {
-				result = defaultCase(theEObject);
-			}
 			return result;
 		}
 		case VViewPackage.ELEMENT: {
-			final VElement element = (VElement) theEObject;
+			VElement element = (VElement) theEObject;
 			T result = caseElement(element);
-			if (result == null) {
+			if (result == null)
 				result = defaultCase(theEObject);
-			}
 			return result;
 		}
 		case VViewPackage.VIEW: {
-			final VView view = (VView) theEObject;
+			VView view = (VView) theEObject;
 			T result = caseView(view);
-			if (result == null) {
+			if (result == null)
 				result = caseElement(view);
-			}
-			if (result == null) {
+			if (result == null)
 				result = defaultCase(theEObject);
-			}
 			return result;
 		}
 		case VViewPackage.CONTAINED_ELEMENT: {
-			final VContainedElement containedElement = (VContainedElement) theEObject;
+			VContainedElement containedElement = (VContainedElement) theEObject;
 			T result = caseContainedElement(containedElement);
-			if (result == null) {
+			if (result == null)
 				result = caseElement(containedElement);
-			}
-			if (result == null) {
+			if (result == null)
 				result = defaultCase(theEObject);
-			}
 			return result;
 		}
 		case VViewPackage.CONTAINER: {
-			final VContainer container = (VContainer) theEObject;
+			VContainer container = (VContainer) theEObject;
 			T result = caseContainer(container);
-			if (result == null) {
+			if (result == null)
 				result = caseElement(container);
-			}
-			if (result == null) {
+			if (result == null)
 				result = defaultCase(theEObject);
-			}
 			return result;
 		}
 		case VViewPackage.CONTAINED_CONTAINER: {
-			final VContainedContainer containedContainer = (VContainedContainer) theEObject;
+			VContainedContainer containedContainer = (VContainedContainer) theEObject;
 			T result = caseContainedContainer(containedContainer);
-			if (result == null) {
+			if (result == null)
 				result = caseContainedElement(containedContainer);
-			}
-			if (result == null) {
+			if (result == null)
 				result = caseContainer(containedContainer);
-			}
-			if (result == null) {
+			if (result == null)
 				result = caseElement(containedContainer);
-			}
-			if (result == null) {
+			if (result == null)
 				result = defaultCase(theEObject);
-			}
 			return result;
 		}
 		case VViewPackage.CONTROL: {
-			final VControl control = (VControl) theEObject;
+			VControl control = (VControl) theEObject;
 			T result = caseControl(control);
-			if (result == null) {
+			if (result == null)
 				result = caseContainedElement(control);
-			}
-			if (result == null) {
+			if (result == null)
 				result = caseElement(control);
-			}
-			if (result == null) {
+			if (result == null)
 				result = defaultCase(theEObject);
-			}
 			return result;
 		}
 		case VViewPackage.VIEW_MODEL_LOADING_PROPERTIES: {
-			final VViewModelLoadingProperties viewModelLoadingProperties = (VViewModelLoadingProperties) theEObject;
+			VViewModelLoadingProperties viewModelLoadingProperties = (VViewModelLoadingProperties) theEObject;
 			T result = caseViewModelLoadingProperties(viewModelLoadingProperties);
-			if (result == null) {
+			if (result == null)
 				result = caseViewModelProperties(viewModelLoadingProperties);
-			}
-			if (result == null) {
+			if (result == null)
 				result = defaultCase(theEObject);
-			}
 			return result;
 		}
 		case VViewPackage.STRING_TO_OBJECT_MAP_ENTRY: {
 			@SuppressWarnings("unchecked")
-			final Map.Entry<String, Object> stringToObjectMapEntry = (Map.Entry<String, Object>) theEObject;
+			Map.Entry<String, Object> stringToObjectMapEntry = (Map.Entry<String, Object>) theEObject;
 			T result = caseStringToObjectMapEntry(stringToObjectMapEntry);
-			if (result == null) {
+			if (result == null)
 				result = defaultCase(theEObject);
-			}
 			return result;
 		}
 		case VViewPackage.VIEW_MODEL_PROPERTIES: {
-			final VViewModelProperties viewModelProperties = (VViewModelProperties) theEObject;
+			VViewModelProperties viewModelProperties = (VViewModelProperties) theEObject;
 			T result = caseViewModelProperties(viewModelProperties);
-			if (result == null) {
+			if (result == null)
 				result = defaultCase(theEObject);
-			}
 			return result;
 		}
 		case VViewPackage.DATE_TIME_DISPLAY_ATTACHMENT: {
-			final VDateTimeDisplayAttachment dateTimeDisplayAttachment = (VDateTimeDisplayAttachment) theEObject;
+			VDateTimeDisplayAttachment dateTimeDisplayAttachment = (VDateTimeDisplayAttachment) theEObject;
 			T result = caseDateTimeDisplayAttachment(dateTimeDisplayAttachment);
-			if (result == null) {
+			if (result == null)
 				result = caseAttachment(dateTimeDisplayAttachment);
-			}
-			if (result == null) {
+			if (result == null)
 				result = defaultCase(theEObject);
-			}
+			return result;
+		}
+		case VViewPackage.DOMAIN_MODEL_REFERENCE_SEGMENT: {
+			VDomainModelReferenceSegment domainModelReferenceSegment = (VDomainModelReferenceSegment) theEObject;
+			T result = caseDomainModelReferenceSegment(domainModelReferenceSegment);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case VViewPackage.FEATURE_DOMAIN_MODEL_REFERENCE_SEGMENT: {
+			VFeatureDomainModelReferenceSegment featureDomainModelReferenceSegment = (VFeatureDomainModelReferenceSegment) theEObject;
+			T result = caseFeatureDomainModelReferenceSegment(featureDomainModelReferenceSegment);
+			if (result == null)
+				result = caseDomainModelReferenceSegment(featureDomainModelReferenceSegment);
+			if (result == null)
+				result = defaultCase(theEObject);
 			return result;
 		}
 		default:
@@ -247,7 +230,7 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Element</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -263,7 +246,7 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Diagnostic</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -295,7 +278,7 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Contained Element</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -311,7 +294,7 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Container</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -344,7 +327,7 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * implementation returns
 	 * null; returning a non-null result will terminate the switch. <!--
 	 * end-user-doc -->
-	 *
+	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Control</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -410,10 +393,9 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
-	 * 
+	 *
 	 * @since 1.8
 	 *        <!-- end-user-doc -->
-	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Date Time Display Attachment</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -424,12 +406,48 @@ public class ViewSwitch<T> extends Switch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Domain Model Reference Segment</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 *
+	 * @since 2.0
+	 *        <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Domain Model Reference Segment</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseDomainModelReferenceSegment(VDomainModelReferenceSegment object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Feature Domain Model Reference Segment</em>
+	 * '.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * 
+	 * @since 2.0
+	 *        <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Feature Domain Model Reference Segment</em>
+	 *         '.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseFeatureDomainModelReferenceSegment(VFeatureDomainModelReferenceSegment object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Domain Model Reference</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Domain Model Reference</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -440,28 +458,12 @@ public class ViewSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Feature Path Domain Model Reference</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 *
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Feature Path Domain Model Reference</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseFeaturePathDomainModelReference(VFeaturePathDomainModelReference object) {
-		return null;
-	}
-
-	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Attachment</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Attachment</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -477,7 +479,7 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch, but this is the last case anyway.
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>EObject</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject)

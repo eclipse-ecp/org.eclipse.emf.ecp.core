@@ -54,7 +54,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * This keeps track of the root adapter factory that delegates to this adapter factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected ComposedAdapterFactory parentAdapterFactory;
@@ -63,7 +63,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * This is used to implement {@link org.eclipse.emf.edit.provider.IChangeNotifier}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected IChangeNotifier changeNotifier = new ChangeNotifier();
@@ -72,7 +72,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * This helps manage the child creation extenders.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected ChildCreationExtenderManager childCreationExtenderManager = new ChildCreationExtenderManager(
@@ -82,7 +82,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected Collection<Object> supportedTypes = new ArrayList<Object>();
@@ -91,7 +91,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * This constructs an instance.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public ViewItemProviderAdapterFactory() {
@@ -107,7 +107,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected DiagnosticItemProvider diagnosticItemProvider;
@@ -116,7 +116,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.model.VDiagnostic}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -129,10 +129,36 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference}
+	 * instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	protected DomainModelReferenceItemProvider domainModelReferenceItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
+	public Adapter createDomainModelReferenceAdapter() {
+		if (domainModelReferenceItemProvider == null) {
+			domainModelReferenceItemProvider = new DomainModelReferenceItemProvider(this);
+		}
+
+		return domainModelReferenceItemProvider;
+	}
+
+	/**
 	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.spi.model.VView} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected ViewItemProvider viewItemProvider;
@@ -141,7 +167,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.model.VView}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -157,7 +183,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.spi.model.VControl} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected ControlItemProvider controlItemProvider;
@@ -166,7 +192,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.model.VControl}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -193,7 +219,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.model.VViewModelLoadingProperties}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -219,7 +245,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * This creates an adapter for a {@link java.util.Map.Entry}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -238,7 +264,6 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * 
 	 * @since 1.8
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	protected DateTimeDisplayAttachmentItemProvider dateTimeDisplayAttachmentItemProvider;
@@ -247,7 +272,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -261,35 +286,35 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 
 	/**
 	 * This keeps track of the one adapter used for all
-	 * {@link org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference} instances.
+	 * {@link org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	protected FeaturePathDomainModelReferenceItemProvider featurePathDomainModelReferenceItemProvider;
+	protected FeatureDomainModelReferenceSegmentItemProvider featureDomainModelReferenceSegmentItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference}.
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public Adapter createFeaturePathDomainModelReferenceAdapter() {
-		if (featurePathDomainModelReferenceItemProvider == null) {
-			featurePathDomainModelReferenceItemProvider = new FeaturePathDomainModelReferenceItemProvider(this);
+	public Adapter createFeatureDomainModelReferenceSegmentAdapter() {
+		if (featureDomainModelReferenceSegmentItemProvider == null) {
+			featureDomainModelReferenceSegmentItemProvider = new FeatureDomainModelReferenceSegmentItemProvider(this);
 		}
 
-		return featurePathDomainModelReferenceItemProvider;
+		return featureDomainModelReferenceSegmentItemProvider;
 	}
 
 	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -301,7 +326,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * This sets the composed adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -312,7 +337,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -324,7 +349,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * This implementation substitutes the factory itself as the key for the adapter.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -335,14 +360,14 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Object adapt(Object object, Object type) {
 		if (isFactoryForType(type)) {
-			final Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter)) {
+			Object adapter = super.adapt(object, type);
+			if (!(type instanceof Class<?>) || (((Class<?>) type).isInstance(adapter))) {
 				return adapter;
 			}
 		}
@@ -353,7 +378,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public List<IChildCreationExtender> getChildCreationExtenders() {
@@ -363,7 +388,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -374,7 +399,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -386,7 +411,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * This adds a listener.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -398,7 +423,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * This removes a listener.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -410,7 +435,7 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * This delegates to {@link #changeNotifier} and to {@link #parentAdapterFactory}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -426,32 +451,27 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * This disposes all of the item providers created by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void dispose() {
-		if (diagnosticItemProvider != null) {
+		if (diagnosticItemProvider != null)
 			diagnosticItemProvider.dispose();
-		}
-		if (featurePathDomainModelReferenceItemProvider != null) {
-			featurePathDomainModelReferenceItemProvider.dispose();
-		}
-		if (viewItemProvider != null) {
+		if (domainModelReferenceItemProvider != null)
+			domainModelReferenceItemProvider.dispose();
+		if (viewItemProvider != null)
 			viewItemProvider.dispose();
-		}
-		if (controlItemProvider != null) {
+		if (controlItemProvider != null)
 			controlItemProvider.dispose();
-		}
-		if (viewModelLoadingPropertiesItemProvider != null) {
+		if (viewModelLoadingPropertiesItemProvider != null)
 			viewModelLoadingPropertiesItemProvider.dispose();
-		}
-		if (stringToObjectMapEntryItemProvider != null) {
+		if (stringToObjectMapEntryItemProvider != null)
 			stringToObjectMapEntryItemProvider.dispose();
-		}
-		if (dateTimeDisplayAttachmentItemProvider != null) {
+		if (dateTimeDisplayAttachmentItemProvider != null)
 			dateTimeDisplayAttachmentItemProvider.dispose();
-		}
+		if (featureDomainModelReferenceSegmentItemProvider != null)
+			featureDomainModelReferenceSegmentItemProvider.dispose();
 	}
 
 }

@@ -16,8 +16,9 @@ import org.eclipse.emf.ecore.EObject;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Attachment</b></em>'.
+ * 
  * @since 1.2
- * <!-- end-user-doc -->
+ *        <!-- end-user-doc -->
  *
  *
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getAttachment()

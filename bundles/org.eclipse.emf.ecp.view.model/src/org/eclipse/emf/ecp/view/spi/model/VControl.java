@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -45,7 +45,7 @@ public interface VControl extends VContainedElement {
 	 * more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the value of the '<em>Domain Model Reference</em>' containment reference.
 	 * @see #setDomainModelReference(VDomainModelReference)
 	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getControl_DomainModelReference()
@@ -59,7 +59,7 @@ public interface VControl extends VContainedElement {
 	 * <em>Domain Model Reference</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param value the new value of the '<em>Domain Model Reference</em>' containment reference.
 	 * @see #getDomainModelReference()
 	 * @generated
@@ -76,7 +76,7 @@ public interface VControl extends VContainedElement {
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the value of the '<em>Label Alignment</em>' attribute.
 	 * @see org.eclipse.emf.ecp.view.spi.model.LabelAlignment
 	 * @see #setLabelAlignment(LabelAlignment)
@@ -91,7 +91,7 @@ public interface VControl extends VContainedElement {
 	 * <em>Label Alignment</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param value the new value of the '<em>Label Alignment</em>' attribute.
 	 * @see org.eclipse.emf.ecp.view.spi.model.LabelAlignment
 	 * @see #getLabelAlignment()
@@ -101,7 +101,7 @@ public interface VControl extends VContainedElement {
 
 	/**
 	 * Sets the {@link VDomainModelReference} based on the provided {@link EStructuralFeature}. Thus a
-	 * {@link VFeaturePathDomainModelReference} is created.
+	 * {@link VDomainModelReference} with one {@link VFeatureDomainModelReferenceSegment} is created.
 	 *
 	 * @param feature the {@link EStructuralFeature} to create the {@link VDomainModelReference} for
 	 */
@@ -109,7 +109,8 @@ public interface VControl extends VContainedElement {
 
 	/**
 	 * Sets the {@link VDomainModelReference} based on the provided {@link EStructuralFeature} and the collection of
-	 * {@link EReference EReferences}. Thus a {@link VFeaturePathDomainModelReference} is created.
+	 * {@link EReference EReferences}. Thus a {@link VDomainModelReference} with the path as
+	 * {@link VFeatureDomainModelReferenceSegment VFeatureDomainModelReferenceSegments} is created.
 	 *
 	 * @param feature the {@link EStructuralFeature} to create the {@link VDomainModelReference} for
 	 * @param referencePath the {@link Collection} of {@link EReference EReferences} being the reference path

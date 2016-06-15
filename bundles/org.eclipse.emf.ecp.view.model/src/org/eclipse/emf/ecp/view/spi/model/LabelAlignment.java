@@ -45,7 +45,7 @@ public enum LabelAlignment implements Enumerator {
 	 * The '<em><b>Left</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #LEFT_VALUE
 	 * @generated
 	 * @ordered
@@ -68,7 +68,7 @@ public enum LabelAlignment implements Enumerator {
 	 * The '<em><b>None</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #NONE_VALUE
 	 * @generated
 	 * @ordered
@@ -100,7 +100,7 @@ public enum LabelAlignment implements Enumerator {
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #LEFT
 	 * @model name="Left"
 	 * @generated
@@ -133,7 +133,7 @@ public enum LabelAlignment implements Enumerator {
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #NONE
 	 * @model name="None"
 	 * @generated
@@ -145,7 +145,7 @@ public enum LabelAlignment implements Enumerator {
 	 * An array of all the '<em><b>Label Alignment</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private static final LabelAlignment[] VALUES_ARRAY = new LabelAlignment[] {
@@ -159,7 +159,7 @@ public enum LabelAlignment implements Enumerator {
 	 * A public read-only list of all the '<em><b>Label Alignment</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public static final List<LabelAlignment> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
@@ -168,14 +168,14 @@ public enum LabelAlignment implements Enumerator {
 	 * Returns the '<em><b>Label Alignment</b></em>' literal with the specified literal value.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param literal the literal.
 	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
 	public static LabelAlignment get(String literal) {
 		for (int i = 0; i < VALUES_ARRAY.length; ++i) {
-			final LabelAlignment result = VALUES_ARRAY[i];
+			LabelAlignment result = VALUES_ARRAY[i];
 			if (result.toString().equals(literal)) {
 				return result;
 			}
@@ -187,14 +187,14 @@ public enum LabelAlignment implements Enumerator {
 	 * Returns the '<em><b>Label Alignment</b></em>' literal with the specified name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param name the name.
 	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
 	public static LabelAlignment getByName(String name) {
 		for (int i = 0; i < VALUES_ARRAY.length; ++i) {
-			final LabelAlignment result = VALUES_ARRAY[i];
+			LabelAlignment result = VALUES_ARRAY[i];
 			if (result.getName().equals(name)) {
 				return result;
 			}
@@ -206,7 +206,7 @@ public enum LabelAlignment implements Enumerator {
 	 * Returns the '<em><b>Label Alignment</b></em>' literal with the specified integer value.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param value the integer value.
 	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
@@ -228,7 +228,7 @@ public enum LabelAlignment implements Enumerator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private final int value;
@@ -236,7 +236,7 @@ public enum LabelAlignment implements Enumerator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private final String name;
@@ -244,7 +244,7 @@ public enum LabelAlignment implements Enumerator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private final String literal;
@@ -253,7 +253,7 @@ public enum LabelAlignment implements Enumerator {
 	 * Only this class can construct instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private LabelAlignment(int value, String name, String literal) {
@@ -265,7 +265,7 @@ public enum LabelAlignment implements Enumerator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -276,7 +276,7 @@ public enum LabelAlignment implements Enumerator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -287,7 +287,7 @@ public enum LabelAlignment implements Enumerator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -299,7 +299,7 @@ public enum LabelAlignment implements Enumerator {
 	 * Returns the literal value of the enumerator, which is its string representation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override

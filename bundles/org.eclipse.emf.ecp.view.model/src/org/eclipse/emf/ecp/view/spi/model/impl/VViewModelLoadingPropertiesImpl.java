@@ -49,7 +49,7 @@ public class VViewModelLoadingPropertiesImpl extends EObjectImpl implements VVie
 	 * The cached value of the '{@link #getInheritableProperties() <em>Inheritable Properties</em>}' map.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getInheritableProperties()
 	 * @generated
 	 * @ordered
@@ -60,7 +60,7 @@ public class VViewModelLoadingPropertiesImpl extends EObjectImpl implements VVie
 	 * The cached value of the '{@link #getNonInheritableProperties() <em>Non Inheritable Properties</em>}' map.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getNonInheritableProperties()
 	 * @generated
 	 * @ordered
@@ -70,7 +70,7 @@ public class VViewModelLoadingPropertiesImpl extends EObjectImpl implements VVie
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected VViewModelLoadingPropertiesImpl() {
@@ -80,7 +80,7 @@ public class VViewModelLoadingPropertiesImpl extends EObjectImpl implements VVie
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -91,7 +91,7 @@ public class VViewModelLoadingPropertiesImpl extends EObjectImpl implements VVie
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -107,7 +107,7 @@ public class VViewModelLoadingPropertiesImpl extends EObjectImpl implements VVie
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -123,7 +123,7 @@ public class VViewModelLoadingPropertiesImpl extends EObjectImpl implements VVie
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -140,24 +140,22 @@ public class VViewModelLoadingPropertiesImpl extends EObjectImpl implements VVie
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case VViewPackage.VIEW_MODEL_LOADING_PROPERTIES__INHERITABLE_PROPERTIES:
-			if (coreType) {
+			if (coreType)
 				return getInheritableProperties();
-			}
-			return getInheritableProperties().map();
-
+			else
+				return getInheritableProperties().map();
 		case VViewPackage.VIEW_MODEL_LOADING_PROPERTIES__NON_INHERITABLE_PROPERTIES:
-			if (coreType) {
+			if (coreType)
 				return getNonInheritableProperties();
-			}
-			return getNonInheritableProperties().map();
-
+			else
+				return getNonInheritableProperties().map();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -165,7 +163,7 @@ public class VViewModelLoadingPropertiesImpl extends EObjectImpl implements VVie
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -184,7 +182,7 @@ public class VViewModelLoadingPropertiesImpl extends EObjectImpl implements VVie
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -203,7 +201,7 @@ public class VViewModelLoadingPropertiesImpl extends EObjectImpl implements VVie
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override

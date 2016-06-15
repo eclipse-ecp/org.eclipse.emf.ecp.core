@@ -8,7 +8,7 @@ Fragment-Host: org.eclipse.emf.ecp.view.vertical.ui.swt;bundle-version="[1.11.0,
 Export-Package: org.eclipse.emf.ecp.view.vertical.ui.swt.test;version="1.11.0";x-internal:=true
 Require-Bundle: org.eclipse.emf.ecp.view.test.common.swt;bundle-version="[1.11.0,1.12.0)",
  org.junit;bundle-version="[4.0.0,5.0.0)",
- org.eclipse.emf.ecp.view.model;bundle-version="[1.11.0,1.12.0)",
+ org.eclipse.emf.ecp.view.model;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.swt;bundle-version="[3.1.0,4.0.0)",
  org.eclipse.emf.ecp.edit;bundle-version="[1.11.0,1.12.0)",
  org.eclipse.emf.ecp.ui.view.test;bundle-version="[1.11.0,1.12.0)",

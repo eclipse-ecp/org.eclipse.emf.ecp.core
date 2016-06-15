@@ -39,7 +39,7 @@ public class VDateTimeDisplayAttachmentImpl extends VAttachmentImpl implements V
 	 * The default value of the '{@link #getDisplayType() <em>Display Type</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getDisplayType()
 	 * @generated
 	 * @ordered
@@ -50,7 +50,7 @@ public class VDateTimeDisplayAttachmentImpl extends VAttachmentImpl implements V
 	 * The cached value of the '{@link #getDisplayType() <em>Display Type</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getDisplayType()
 	 * @generated
 	 * @ordered
@@ -60,7 +60,7 @@ public class VDateTimeDisplayAttachmentImpl extends VAttachmentImpl implements V
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected VDateTimeDisplayAttachmentImpl() {
@@ -70,7 +70,7 @@ public class VDateTimeDisplayAttachmentImpl extends VAttachmentImpl implements V
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -81,7 +81,7 @@ public class VDateTimeDisplayAttachmentImpl extends VAttachmentImpl implements V
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -92,23 +92,22 @@ public class VDateTimeDisplayAttachmentImpl extends VAttachmentImpl implements V
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void setDisplayType(DateTimeDisplayType newDisplayType) {
-		final DateTimeDisplayType oldDisplayType = displayType;
+		DateTimeDisplayType oldDisplayType = displayType;
 		displayType = newDisplayType == null ? DISPLAY_TYPE_EDEFAULT : newDisplayType;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VViewPackage.DATE_TIME_DISPLAY_ATTACHMENT__DISPLAY_TYPE, oldDisplayType, displayType));
-		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -123,7 +122,7 @@ public class VDateTimeDisplayAttachmentImpl extends VAttachmentImpl implements V
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -139,7 +138,7 @@ public class VDateTimeDisplayAttachmentImpl extends VAttachmentImpl implements V
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -155,7 +154,7 @@ public class VDateTimeDisplayAttachmentImpl extends VAttachmentImpl implements V
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -170,16 +169,15 @@ public class VDateTimeDisplayAttachmentImpl extends VAttachmentImpl implements V
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) {
+		if (eIsProxy())
 			return super.toString();
-		}
 
-		final StringBuffer result = new StringBuffer(super.toString());
+		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (displayType: "); //$NON-NLS-1$
 		result.append(displayType);
 		result.append(')');

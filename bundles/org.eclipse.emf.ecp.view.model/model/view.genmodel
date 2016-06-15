@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
-    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.&#xD;&#xA;&#xD;&#xA;All rights reserved. This program and the accompanying materials&#xD;&#xA;are made available under the terms of the Eclipse Public License v1.0&#xD;&#xA;which accompanies this distribution, and is available at&#xD;&#xA;http://www.eclipse.org/legal/epl-v10.html&#xD;&#xA;&#xD;&#xA;Contributors:&#xD;&#xA;Eugen Neufeld - initial API and implementation"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.&#xD;&#xA;&#xD;&#xA;All rights reserved. This program and the accompanying materials&#xD;&#xA;are made available under the terms of the Eclipse Public License v1.0&#xD;&#xA;which accompanies this distribution, and is available at&#xD;&#xA;http://www.eclipse.org/legal/epl-v10.html&#xD;&#xA;&#xD;&#xA;Contributors:&#xD;&#xA;Eugen Neufeld - initial API and implementation"
     modelDirectory="/org.eclipse.emf.ecp.view.model/src" editDirectory="/org.eclipse.emf.ecp.view.model.edit/src"
     editorDirectory="/org.eclipse.emf.ecp.view.model.editor/src" modelPluginID="org.eclipse.emf.ecp.view.model"
     modelName="View" editPluginClass="org.eclipse.emf.ecp.view.spi.model.provider.ViewEditPlugin"
@@ -31,12 +31,7 @@
     </genClasses>
     <genClasses image="false" ecoreClass="view.ecore#//Attachment"/>
     <genClasses image="false" ecoreClass="view.ecore#//DomainModelReference">
-      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//DomainModelReference/changeListener"/>
-    </genClasses>
-    <genClasses ecoreClass="view.ecore#//FeaturePathDomainModelReference">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference view.ecore#//FeaturePathDomainModelReference/domainModelEFeature"/>
-      <genFeatures property="None" notify="false" createChild="false" propertySortChoices="true"
-          ecoreFeature="ecore:EReference view.ecore#//FeaturePathDomainModelReference/domainModelEReferencePath"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference view.ecore#//DomainModelReference/segments"/>
     </genClasses>
     <genClasses image="false" ecoreClass="view.ecore#//Element">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Element/name"/>
@@ -46,6 +41,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Element/readonly"/>
       <genFeatures property="None" createChild="false" ecoreFeature="ecore:EReference view.ecore#//Element/diagnostic"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference view.ecore#//Element/attachments"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Element/uuid"/>
     </genClasses>
     <genClasses ecoreClass="view.ecore#//View">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference view.ecore#//View/rootEClass"/>
@@ -73,6 +69,10 @@
     <genClasses ecoreClass="view.ecore#//ViewModelProperties"/>
     <genClasses ecoreClass="view.ecore#//DateTimeDisplayAttachment">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//DateTimeDisplayAttachment/displayType"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="view.ecore#//DomainModelReferenceSegment"/>
+    <genClasses ecoreClass="view.ecore#//FeatureDomainModelReferenceSegment">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//FeatureDomainModelReferenceSegment/domainModelFeature"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

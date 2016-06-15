@@ -45,7 +45,7 @@ public interface VViewModelLoadingProperties extends VViewModelProperties {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the value of the '<em>Inheritable Properties</em>' map.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getViewModelLoadingProperties_InheritableProperties()
 	 * @model mapType=
@@ -64,7 +64,7 @@ public interface VViewModelLoadingProperties extends VViewModelProperties {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the value of the '<em>Non Inheritable Properties</em>' map.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getViewModelLoadingProperties_NonInheritableProperties()
 	 * @model mapType=

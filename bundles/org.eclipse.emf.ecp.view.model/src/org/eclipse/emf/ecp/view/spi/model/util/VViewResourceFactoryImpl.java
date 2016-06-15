@@ -29,7 +29,7 @@ public class VViewResourceFactoryImpl extends ResourceFactoryImpl {
 	 * Creates an instance of the resource factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public VViewResourceFactoryImpl() {
@@ -40,12 +40,12 @@ public class VViewResourceFactoryImpl extends ResourceFactoryImpl {
 	 * Creates an instance of the resource.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Resource createResource(URI uri) {
-		final Resource result = new VViewResourceImpl(uri);
+		Resource result = new VViewResourceImpl(uri);
 		return result;
 	}
 

@@ -26,9 +26,9 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
 /**
  * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.spi.model.VContainedContainer} object.
  * <!-- begin-user-doc -->
+ * 
  * @since 1.4
- * <!-- end-user-doc -->
- *
+ *        <!-- end-user-doc -->
  * @generated
  */
 public class ContainedContainerItemProvider
@@ -37,7 +37,7 @@ public class ContainedContainerItemProvider
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public ContainedContainerItemProvider(AdapterFactory adapterFactory) {
@@ -48,7 +48,7 @@ public class ContainedContainerItemProvider
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -66,7 +66,7 @@ public class ContainedContainerItemProvider
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -81,7 +81,7 @@ public class ContainedContainerItemProvider
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -96,14 +96,14 @@ public class ContainedContainerItemProvider
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public String getText(Object object) {
-		final String label = ((VContainedContainer) object).getName();
-		return label == null || label.length() == 0 ? getString("_UI_ContainedContainer_type") //$NON-NLS-1$
-			: getString("_UI_ContainedContainer_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+		String label = ((VContainedContainer) object).getName();
+		return label == null || label.length() == 0 ? getString("_UI_ContainedContainer_type") : //$NON-NLS-1$
+			getString("_UI_ContainedContainer_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -111,7 +111,7 @@ public class ContainedContainerItemProvider
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -131,7 +131,7 @@ public class ContainedContainerItemProvider
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
