@@ -4,6 +4,6 @@
       <provide interface="org.eclipse.emf.ecp.view.spi.provider.EMFFormsViewService"/>
    </service>
    <reference bind="addProvider" cardinality="0..n" interface="org.eclipse.emf.ecp.view.spi.provider.IViewProvider" name="Provider" policy="dynamic" unbind="removeProvider"/>
-   <reference bind="setReportService" cardinality="1..1" interface="ReportService" name="ReportService" policy="static"/>
+   <reference bind="setReportService" cardinality="1..1" interface="org.eclipse.emfforms.spi.common.report.ReportService" name="ReportService" policy="static"/>
    <implementation class="org.eclipse.emf.ecp.view.internal.provider.ViewProviderImpl"/>
 </scr:component>

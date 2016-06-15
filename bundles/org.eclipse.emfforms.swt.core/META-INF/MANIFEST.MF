@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: EMFForms SWT Core
 Bundle-SymbolicName: org.eclipse.emfforms.swt.core
-Bundle-Version: 1.11.0.qualifier
+Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
 Export-Package: org.eclipse.emfforms.internal.swt.core;version="1.11.0";x-internal:=true,
  org.eclipse.emfforms.spi.swt.core;version="1.11.0",
@@ -11,11 +11,11 @@ Export-Package: org.eclipse.emfforms.internal.swt.core;version="1.11.0";x-intern
  org.eclipse.emfforms.spi.swt.core.util;version="1.11.0",
  org.eclipse.emfforms.swt.core;version="1.11.0"
 Require-Bundle: org.eclipse.emf.ecp.view.model;bundle-version="[2.0.0,3.0.0)",
- org.eclipse.emf.ecp.view.context;bundle-version="[1.11.0,1.12.0)",
- org.eclipse.emf.ecp.view.model.common;bundle-version="[1.11.0,1.12.0)",
- org.eclipse.emf.ecp.ui.view;bundle-version="[1.11.0,1.12.0)",
+ org.eclipse.emf.ecp.view.context;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emf.ecp.view.model.common;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emf.ecp.ui.view;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
- org.eclipse.emf.ecp.view.util.swt;bundle-version="[1.11.0,1.12.0)"
+ org.eclipse.emf.ecp.view.util.swt;bundle-version="[2.0.0,3.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.eclipse.emf.ecp.view.model.common;version="[1.11.0,1.12.0)",
  org.eclipse.emfforms.spi.common.report;version="[1.11.0,1.12.0)",

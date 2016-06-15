@@ -4,6 +4,6 @@
    <service>
       <provide interface="EMFFormsStructuralChangeTester"/>
    </service>
-   <reference bind="setReportService" cardinality="1..1" interface="ReportService" name="ReportService" policy="static"/>
+   <reference bind="setReportService" cardinality="1..1" interface="org.eclipse.emfforms.spi.common.report.ReportService" name="ReportService" policy="static"/>
    <reference bind="addStructuralChangeTesterInternal" cardinality="0..n" interface="StructuralChangeTesterInternal" name="StructuralChangeTesterInternal" policy="dynamic" unbind="removeStructuralChangeTesterInternal"/>
 </scr:component>

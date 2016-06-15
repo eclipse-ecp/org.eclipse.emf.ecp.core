@@ -4,6 +4,6 @@
       <provide interface="EMFFormsDMRExpander"/>
    </service>
    <reference bind="setEMFFormsDatabinding" interface="EMFFormsDatabinding" name="EMFFormsDatabinding"/>
-   <reference bind="setReportService" interface="ReportService" name="ReportService"/>
+   <reference bind="setReportService" interface="org.eclipse.emfforms.spi.common.report.ReportService" name="ReportService"/>
    <implementation class="org.eclipse.emfforms.internal.core.services.domainexpander.index.EMFFormsIndexDMRExpander"/>
 </scr:component>
