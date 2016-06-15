@@ -36,26 +36,6 @@ public interface EMFFormsDatabindingEMF extends EMFFormsDatabinding {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding#getObservableValue(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference,
-	 *      org.eclipse.emf.ecore.EObject)
-	 */
-	@Override
-	IObservableValue getObservableValue(VDomainModelReference domainModelReference, EObject object)
-		throws DatabindingFailedException;
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding#getObservableList(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference,
-	 *      org.eclipse.emf.ecore.EObject)
-	 */
-	@Override
-	IObservableList getObservableList(VDomainModelReference domainModelReference, EObject object)
-		throws DatabindingFailedException;
-
-	/**
-	 * {@inheritDoc}
-	 *
 	 * @see org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding#getValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference,
 	 *      org.eclipse.emf.ecore.EObject)
 	 */
