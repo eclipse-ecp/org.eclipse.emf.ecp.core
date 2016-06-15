@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ECP Change Broker
 Bundle-SymbolicName: org.eclipse.emf.ecp.changebroker
-Bundle-Version: 1.11.0.qualifier
+Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
 Export-Package: org.eclipse.emf.ecp.changebroker.internal;version="1.11.0";x-internal:=true,
  org.eclipse.emf.ecp.changebroker.spi;version="1.11.0"

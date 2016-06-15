@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ECP Diagnostician
 Bundle-SymbolicName: org.eclipse.emf.ecp.validation.diagnostician;singleton:=true
-Bundle-Version: 1.11.0.qualifier
+Bundle-Version: 2.0.0.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.internal.diagnostician.Activator
 Bundle-Vendor: Eclipse Modeling Project
 Export-Package: org.eclipse.emf.ecp.diagnostician;version="1.11.0";x-friends:="org.eclipse.emf.ecp.ui.validation.e4,org.eclipse.emf.ecp.ui.validation.test",

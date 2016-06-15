@@ -2,14 +2,14 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ViewTemplate Service
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.template.service;singleton:=true
-Bundle-Version: 1.11.0.qualifier
+Bundle-Version: 2.0.0.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.view.template.service.Activator
 Bundle-Vendor: Eclipse Modeling Project
 Export-Package: org.eclipse.emf.ecp.view.template.service;version="1.11.0";x-internal:=true
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
- org.eclipse.emf.ecp.view.template.model;bundle-version="[1.11.0,1.12.0)",
+ org.eclipse.emf.ecp.view.template.model;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.emf.ecore.xmi;bundle-version="[2.7.0,3.0.0)",
- org.eclipse.emf.ecp.view.context;bundle-version="[1.11.0,1.12.0)"
+ org.eclipse.emf.ecp.view.context;bundle-version="[2.0.0,3.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Service-Component: OSGI-INF/viewTemplate.xml
 Bundle-ActivationPolicy: lazy

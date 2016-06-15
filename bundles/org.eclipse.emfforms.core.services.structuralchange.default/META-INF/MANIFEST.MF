@@ -2,11 +2,11 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: EMFForms Structural Change Tester Default Heuristic
 Bundle-SymbolicName: org.eclipse.emfforms.core.services.structuralchange.default
-Bundle-Version: 1.11.0.qualifier
+Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
 Export-Package: org.eclipse.emfforms.internal.core.services.structuralchange.defaultheuristic;version="1.7.0";x-friends:="org.eclipse.emfforms.core.services.structuralchange.table"
-Require-Bundle: org.eclipse.emfforms.core.services;bundle-version="[1.11.0,1.12.0)",
- org.eclipse.emf.ecp.common;bundle-version="[1.11.0,1.12.0)"
+Require-Bundle: org.eclipse.emfforms.core.services;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emf.ecp.common;bundle-version="[2.0.0,3.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.osgi.service.component.annotations;version="0.0.0"
 Service-Component: OSGI-INF/StructuralChangeTesterDefault.xml

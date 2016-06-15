@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: EMF Forms EMF Specific Service
 Bundle-SymbolicName: org.eclipse.emfforms.core.services.emfspecificservice
-Bundle-Version: 1.11.0.qualifier
+Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
 Export-Package: org.eclipse.emfforms.internal.core.services.emfspecificservice;version="1.11.0";x-internal:=true,
  org.eclipse.emfforms.spi.core.services.emfspecificservice;version="1.11.0"

@@ -2,10 +2,10 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.validation.test;singleton:=true
-Bundle-Version: 1.11.0.qualifier
+Bundle-Version: 2.0.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
-Fragment-Host: org.eclipse.emf.ecp.view.validation;bundle-version="[1.11.0,1.12.0)"
+Fragment-Host: org.eclipse.emf.ecp.view.validation;bundle-version="[2.0.0,3.0.0)"
 Bundle-Localization: plugin
 Export-Package: org.eclipse.emf.ecp.view.validation.test;version="1.11.0",
  org.eclipse.emf.ecp.view.validation.test.model;version="1.11.0",
@@ -15,16 +15,16 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.emf.ecore;bundle-version="[2.5.0,3.0.0)";visibility:=reexport,
  org.eclipse.emf.ecp.view.model;bundle-version="[2.0.0,3.0.0)",
  org.junit;bundle-version="[4.11.0,5.0.0)",
- org.eclipse.emf.ecp.view.context;bundle-version="[1.11.0,1.12.0)",
- org.eclipse.emf.ecp.view.table.model;bundle-version="[1.11.0,1.12.0)",
- org.eclipse.emf.ecp.view.test.common;bundle-version="[1.11.0,1.12.0)",
- org.eclipse.emf.ecp.view.vertical.model;bundle-version="[1.11.0,1.12.0)",
- org.eclipse.emf.ecp.view.model.provider.xmi;bundle-version="[1.11.0,1.12.0)",
- org.eclipse.emf.ecp.test.common;bundle-version="[1.11.0,1.12.0)",
- org.eclipse.emfforms.core.services.legacy;bundle-version="[1.11.0,1.12.0)",
- org.eclipse.emfforms.core.services.domainexpander.default;bundle-version="[1.11.0,1.12.0)",
- org.eclipse.emfforms.core.services.mappingprovider.default;bundle-version="[1.11.0,1.12.0)",
- org.eclipse.emfforms.core.services.mappingprovider.table;bundle-version="[1.11.0,1.12.0)",
- org.eclipse.emfforms.core.services.domainexpander.table;bundle-version="[1.11.0,1.12.0)"
+ org.eclipse.emf.ecp.view.context;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emf.ecp.view.table.model;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emf.ecp.view.test.common;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emf.ecp.view.vertical.model;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emf.ecp.view.model.provider.xmi;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emf.ecp.test.common;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emfforms.core.services.legacy;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emfforms.core.services.domainexpander.default;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emfforms.core.services.mappingprovider.default;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emfforms.core.services.mappingprovider.table;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emfforms.core.services.domainexpander.table;bundle-version="[2.0.0,3.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ECP Common
 Bundle-SymbolicName: org.eclipse.emf.ecp.common
-Bundle-Version: 1.11.0.qualifier
+Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
 Export-Package: org.eclipse.emf.ecp.common.spi;version="1.11.0",
  org.eclipse.emf.ecp.common.spi.asserts;version="1.11.0",
