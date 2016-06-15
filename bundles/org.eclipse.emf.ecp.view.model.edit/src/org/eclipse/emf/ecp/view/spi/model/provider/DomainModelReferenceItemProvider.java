@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- * Eugen Neufeld - initial API and implementation
+ * Lucas Koehler - initial API and implementation
  */
 package org.eclipse.emf.ecp.view.spi.model.provider;
 
@@ -17,7 +17,6 @@ import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
-import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IChildCreationExtender;
@@ -30,18 +29,21 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference}
- * object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference} object.
  * <!-- begin-user-doc -->
  *
- * @since 1.2
+ * @since 2.0
  *        <!-- end-user-doc -->
+ *
  * @generated
  */
-public class FeaturePathDomainModelReferenceItemProvider
+public class DomainModelReferenceItemProvider
 	extends ItemProviderAdapter
 	implements
-	IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider,
+	IEditingDomainItemProvider,
+	IStructuredItemContentProvider,
+	ITreeItemContentProvider,
+	IItemLabelProvider,
 	IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier.
@@ -50,7 +52,7 @@ public class FeaturePathDomainModelReferenceItemProvider
 	 *
 	 * @generated
 	 */
-	public FeaturePathDomainModelReferenceItemProvider(AdapterFactory adapterFactory) {
+	public DomainModelReferenceItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -66,27 +68,26 @@ public class FeaturePathDomainModelReferenceItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addDomainModelEFeaturePropertyDescriptor(object);
+			addSegmentsPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Domain Model EFeature feature.
+	 * This adds a property descriptor for the Segments feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
-	protected void addDomainModelEFeaturePropertyDescriptor(Object object) {
+	protected void addSegmentsPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
 			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
-				getString("_UI_FeaturePathDomainModelReference_domainModelEFeature_feature"), //$NON-NLS-1$
-				getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
-					"_UI_FeaturePathDomainModelReference_domainModelEFeature_feature", //$NON-NLS-1$
-					"_UI_FeaturePathDomainModelReference_type"), //$NON-NLS-1$
-				VViewPackage.Literals.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE,
+				getString("_UI_DomainModelReference_segments_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_DomainModelReference_segments_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_DomainModelReference_type"), //$NON-NLS-1$
+				VViewPackage.Literals.DOMAIN_MODEL_REFERENCE__SEGMENTS,
 				true,
 				false,
 				true,
@@ -96,35 +97,15 @@ public class FeaturePathDomainModelReferenceItemProvider
 	}
 
 	/**
-	 * This returns FeaturePathDomainModelReference.gif.
+	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
 	@Override
-	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/FeaturePathDomainModelReference")); //$NON-NLS-1$
-	}
-
-	/**
-	 * This returns the label text for the adapted class.
-	 * 
-	 * @param object the object instance for which the label is fetched
-	 *
-	 * @return the label
-	 *         <!-- begin-user-doc -->
-	 *         <!-- end-user-doc -->
-	 *
-	 * @generated NOT
-	 */
-	@Override
 	public String getText(Object object) {
-		final VFeaturePathDomainModelReference dmr = (VFeaturePathDomainModelReference) object;
-		if (dmr == null || dmr.getDomainModelEFeature() == null) {
-			return getString("_UI_FeaturePathDomainModelReference_type"); //$NON-NLS-1$
-		}
-		return dmr.getDomainModelEFeature().getName();
+		return getString("_UI_DomainModelReference_type"); //$NON-NLS-1$
 	}
 
 	/**

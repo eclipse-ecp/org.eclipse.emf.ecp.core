@@ -7,19 +7,9 @@
         transient="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Attachment" abstract="true"/>
-  <eClassifiers xsi:type="ecore:EClass" name="DomainModelReference" abstract="true"
-      interface="true">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="changeListener" upperBound="-1"
-        eType="#//DomainModelReferenceChangeListener" transient="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="FeaturePathDomainModelReference" eSuperTypes="#//DomainModelReference">
-    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
-      <details key="constraints" value="resolveable"/>
-    </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="domainModelEFeature" lowerBound="1"
-        eType="ecore:EClass ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EStructuralFeature"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="domainModelEReferencePath"
-        unique="false" upperBound="-1" eType="ecore:EClass ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EReference"/>
+  <eClassifiers xsi:type="ecore:EClass" name="DomainModelReference">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="segments" lowerBound="1"
+        upperBound="-1" eType="#//DomainModelReferenceSegment"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Element" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
@@ -88,5 +78,12 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DateTimeDisplayAttachment" eSuperTypes="#//Attachment">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="displayType" eType="#//DateTimeDisplayType"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DomainModelReferenceSegment" abstract="true"
+      interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="FeatureDomainModelReferenceSegment"
+      eSuperTypes="#//DomainModelReferenceSegment">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="domainModelFeature" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>

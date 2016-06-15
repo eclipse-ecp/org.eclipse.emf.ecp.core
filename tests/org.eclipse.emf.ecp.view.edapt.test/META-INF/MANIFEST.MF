@@ -14,7 +14,7 @@ Export-Package: org.eclipse.emf.ecp.view.edapt.test;version="1.10.0";x-internal:
  org.eclipse.emf.ecp.view.edapt.test.model.impl;version="1.10.0";x-internal:=true,
  org.eclipse.emf.ecp.view.edapt.test.model.util;version="1.10.0";x-internal:=true
 Require-Bundle: org.junit;bundle-version="[4.11.0,5.0.0)",
- org.eclipse.emf.ecp.view.model;bundle-version="[1.10.0,2.0.0)",
+ org.eclipse.emf.ecp.view.model;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.emf.ecp.view.label.model;bundle-version="[1.10.0,2.0.0)",
  org.eclipse.emf.emfstore.examplemodel;bundle-version="[1.4.0,2.0.0)",
  org.eclipse.emf.ecp.view.horizontal.model;bundle-version="[1.10.0,2.0.0)",

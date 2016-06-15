@@ -52,7 +52,7 @@ public class ViewModelLoadingPropertiesItemProvider
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public ViewModelLoadingPropertiesItemProvider(AdapterFactory adapterFactory) {
@@ -63,7 +63,7 @@ public class ViewModelLoadingPropertiesItemProvider
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -81,7 +81,7 @@ public class ViewModelLoadingPropertiesItemProvider
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -97,7 +97,7 @@ public class ViewModelLoadingPropertiesItemProvider
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -112,7 +112,7 @@ public class ViewModelLoadingPropertiesItemProvider
 	 * This returns ViewModelLoadingProperties.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -124,7 +124,7 @@ public class ViewModelLoadingPropertiesItemProvider
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -137,7 +137,7 @@ public class ViewModelLoadingPropertiesItemProvider
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -158,7 +158,7 @@ public class ViewModelLoadingPropertiesItemProvider
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -178,16 +178,15 @@ public class ViewModelLoadingPropertiesItemProvider
 	 * This returns the label text for {@link org.eclipse.emf.edit.command.CreateChildCommand}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public String getCreateChildText(Object owner, Object feature, Object child, Collection<?> selection) {
-		final Object childFeature = feature;
-		final Object childObject = child;
+		Object childFeature = feature;
+		Object childObject = child;
 
-		final boolean qualify = childFeature == VViewPackage.Literals.VIEW_MODEL_LOADING_PROPERTIES__INHERITABLE_PROPERTIES
-			||
+		boolean qualify = childFeature == VViewPackage.Literals.VIEW_MODEL_LOADING_PROPERTIES__INHERITABLE_PROPERTIES ||
 			childFeature == VViewPackage.Literals.VIEW_MODEL_LOADING_PROPERTIES__NON_INHERITABLE_PROPERTIES;
 
 		if (qualify) {
@@ -201,7 +200,7 @@ public class ViewModelLoadingPropertiesItemProvider
 	 * Return the resource locator for this item provider's resources.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override

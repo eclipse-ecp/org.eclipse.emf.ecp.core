@@ -51,7 +51,7 @@ public class ElementItemProvider
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public ElementItemProvider(AdapterFactory adapterFactory) {
@@ -62,7 +62,7 @@ public class ElementItemProvider
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -84,7 +84,7 @@ public class ElementItemProvider
 	 * This adds a property descriptor for the Name feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected void addNamePropertyDescriptor(Object object) {
@@ -129,7 +129,7 @@ public class ElementItemProvider
 	 * This adds a property descriptor for the Visible feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected void addVisiblePropertyDescriptor(Object object) {
@@ -151,7 +151,7 @@ public class ElementItemProvider
 	 * This adds a property descriptor for the Enabled feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected void addEnabledPropertyDescriptor(Object object) {
@@ -173,7 +173,7 @@ public class ElementItemProvider
 	 * This adds a property descriptor for the Readonly feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected void addReadonlyPropertyDescriptor(Object object) {
@@ -197,7 +197,6 @@ public class ElementItemProvider
 	 *
 	 * @since 1.9
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	protected void addUuidPropertyDescriptor(Object object) {
@@ -221,7 +220,7 @@ public class ElementItemProvider
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -236,7 +235,7 @@ public class ElementItemProvider
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -251,14 +250,14 @@ public class ElementItemProvider
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public String getText(Object object) {
-		final String label = ((VElement) object).getName();
-		return label == null || label.length() == 0 ? getString("_UI_Element_type") //$NON-NLS-1$
-			: getString("_UI_Element_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+		String label = ((VElement) object).getName();
+		return label == null || label.length() == 0 ? getString("_UI_Element_type") : //$NON-NLS-1$
+			getString("_UI_Element_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -303,7 +302,7 @@ public class ElementItemProvider
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -318,7 +317,7 @@ public class ElementItemProvider
 	 * Return the resource locator for this item provider's resources.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override

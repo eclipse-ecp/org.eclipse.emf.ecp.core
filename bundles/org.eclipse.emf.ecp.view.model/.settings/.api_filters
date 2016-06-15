@@ -727,14 +727,6 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/ecp/view/spi/model/impl/VFeaturePathDomainModelReferenceImpl.java" type="org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceImpl">
-        <filter comment="SPI change (1.3)" id="338792546">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceImpl"/>
-                <message_argument value="resolve(EObject)"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="src/org/eclipse/emf/ecp/view/spi/model/reporting/DomainModelReferenceResolutionFailedReport.java" type="org.eclipse.emf.ecp.view.spi.model.reporting.DomainModelReferenceResolutionFailedReport">
         <filter comment="SPI Change in 1.6" id="338849923">
             <message_arguments>

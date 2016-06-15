@@ -49,7 +49,7 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	 * The default value of the '{@link #getLabelAlignment() <em>Label Alignment</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getLabelAlignment()
 	 * @generated
 	 * @ordered
@@ -60,7 +60,7 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	 * The cached value of the '{@link #getLabelAlignment() <em>Label Alignment</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getLabelAlignment()
 	 * @generated
 	 * @ordered
@@ -72,7 +72,7 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	 * reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getDomainModelReference()
 	 * @generated
 	 * @ordered
@@ -82,7 +82,7 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected VControlImpl() {
@@ -92,7 +92,7 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -103,7 +103,7 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -114,21 +114,20 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public NotificationChain basicSetDomainModelReference(VDomainModelReference newDomainModelReference,
 		NotificationChain msgs) {
-		final VDomainModelReference oldDomainModelReference = domainModelReference;
+		VDomainModelReference oldDomainModelReference = domainModelReference;
 		domainModelReference = newDomainModelReference;
 		if (eNotificationRequired()) {
-			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
 				VViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE, oldDomainModelReference, newDomainModelReference);
-			if (msgs == null) {
+			if (msgs == null)
 				msgs = notification;
-			} else {
+			else
 				msgs.add(notification);
-			}
 		}
 		return msgs;
 	}
@@ -136,35 +135,31 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void setDomainModelReference(VDomainModelReference newDomainModelReference) {
 		if (newDomainModelReference != domainModelReference) {
 			NotificationChain msgs = null;
-			if (domainModelReference != null) {
+			if (domainModelReference != null)
 				msgs = ((InternalEObject) domainModelReference).eInverseRemove(this,
 					EOPPOSITE_FEATURE_BASE - VViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE, null, msgs);
-			}
-			if (newDomainModelReference != null) {
+			if (newDomainModelReference != null)
 				msgs = ((InternalEObject) newDomainModelReference).eInverseAdd(this,
 					EOPPOSITE_FEATURE_BASE - VViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE, null, msgs);
-			}
 			msgs = basicSetDomainModelReference(newDomainModelReference, msgs);
-			if (msgs != null) {
+			if (msgs != null)
 				msgs.dispatch();
-			}
-		} else if (eNotificationRequired()) {
+		} else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, VViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE,
 				newDomainModelReference, newDomainModelReference));
-		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -179,7 +174,7 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -190,23 +185,22 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void setLabelAlignment(LabelAlignment newLabelAlignment) {
-		final LabelAlignment oldLabelAlignment = labelAlignment;
+		LabelAlignment oldLabelAlignment = labelAlignment;
 		labelAlignment = newLabelAlignment == null ? LABEL_ALIGNMENT_EDEFAULT : newLabelAlignment;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, VViewPackage.CONTROL__LABEL_ALIGNMENT,
 				oldLabelAlignment, labelAlignment));
-		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -223,7 +217,7 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -242,7 +236,7 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -261,7 +255,7 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -278,16 +272,15 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) {
+		if (eIsProxy())
 			return super.toString();
-		}
 
-		final StringBuffer result = new StringBuffer(super.toString());
+		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (labelAlignment: "); //$NON-NLS-1$
 		result.append(labelAlignment);
 		result.append(')');

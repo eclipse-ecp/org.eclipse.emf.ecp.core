@@ -25,7 +25,8 @@ import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
-import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewModelLoadingProperties;
@@ -43,17 +44,16 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public static VViewFactory init() {
 		try {
-			final VViewFactory theViewFactory = (VViewFactory) EPackage.Registry.INSTANCE
-				.getEFactory(VViewPackage.eNS_URI);
+			VViewFactory theViewFactory = (VViewFactory) EPackage.Registry.INSTANCE.getEFactory(VViewPackage.eNS_URI);
 			if (theViewFactory != null) {
 				return theViewFactory;
 			}
-		} catch (final Exception exception) {
+		} catch (Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new VViewFactoryImpl();
@@ -63,7 +63,7 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 * Creates an instance of the factory.
 	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public VViewFactoryImpl() {
@@ -72,7 +72,7 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -80,8 +80,8 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 		switch (eClass.getClassifierID()) {
 		case VViewPackage.DIAGNOSTIC:
 			return createDiagnostic();
-		case VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE:
-			return createFeaturePathDomainModelReference();
+		case VViewPackage.DOMAIN_MODEL_REFERENCE:
+			return createDomainModelReference();
 		case VViewPackage.VIEW:
 			return createView();
 		case VViewPackage.CONTROL:
@@ -92,6 +92,8 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 			return (EObject) createStringToObjectMapEntry();
 		case VViewPackage.DATE_TIME_DISPLAY_ATTACHMENT:
 			return createDateTimeDisplayAttachment();
+		case VViewPackage.FEATURE_DOMAIN_MODEL_REFERENCE_SEGMENT:
+			return createFeatureDomainModelReferenceSegment();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -100,7 +102,7 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -120,7 +122,7 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -140,34 +142,47 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public VDiagnostic createDiagnostic() {
-		final VDiagnosticImpl diagnostic = new VDiagnosticImpl();
+		VDiagnosticImpl diagnostic = new VDiagnosticImpl();
 		return diagnostic;
 	}
 
 	/**
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
 	 *
+	 * @since 2.0
+	 *        <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public VDomainModelReference createDomainModelReference() {
+		VDomainModelReferenceImpl domainModelReference = new VDomainModelReferenceImpl();
+		return domainModelReference;
+	}
+
+	/**
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
 	public VView createView() {
-		final VViewImpl view = new VViewImpl();
+		VViewImpl view = new VViewImpl();
 		return view;
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public VControl createControl() {
-		final VControlImpl control = new VControlImpl();
+		VControlImpl control = new VControlImpl();
 		return control;
 	}
 
@@ -180,7 +195,7 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 */
 	@Override
 	public VViewModelLoadingProperties createViewModelLoadingProperties() {
-		final VViewModelLoadingPropertiesImpl viewModelLoadingProperties = new VViewModelLoadingPropertiesImpl();
+		VViewModelLoadingPropertiesImpl viewModelLoadingProperties = new VViewModelLoadingPropertiesImpl();
 		return viewModelLoadingProperties;
 	}
 
@@ -192,43 +207,54 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 * @generated
 	 */
 	public Map.Entry<String, Object> createStringToObjectMapEntry() {
-		final VStringToObjectMapEntryImpl stringToObjectMapEntry = new VStringToObjectMapEntryImpl();
+		VStringToObjectMapEntryImpl stringToObjectMapEntry = new VStringToObjectMapEntryImpl();
 		return stringToObjectMapEntry;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.8
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
 	public VDateTimeDisplayAttachment createDateTimeDisplayAttachment() {
-		final VDateTimeDisplayAttachmentImpl dateTimeDisplayAttachment = new VDateTimeDisplayAttachmentImpl();
+		VDateTimeDisplayAttachmentImpl dateTimeDisplayAttachment = new VDateTimeDisplayAttachmentImpl();
 		return dateTimeDisplayAttachment;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 2.0
+	 *        <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public VFeatureDomainModelReferenceSegment createFeatureDomainModelReferenceSegment() {
+		VFeatureDomainModelReferenceSegmentImpl featureDomainModelReferenceSegment = new VFeatureDomainModelReferenceSegmentImpl();
+		return featureDomainModelReferenceSegment;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public LabelAlignment createLabelAlignmentFromString(EDataType eDataType, String initialValue) {
-		final LabelAlignment result = LabelAlignment.get(initialValue);
-		if (result == null) {
+		LabelAlignment result = LabelAlignment.get(initialValue);
+		if (result == null)
 			throw new IllegalArgumentException(
 				"The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-		}
 		return result;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public String convertLabelAlignmentToString(EDataType eDataType, Object instanceValue) {
@@ -240,15 +266,13 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 *
 	 * @since 1.8
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	public DateTimeDisplayType createDateTimeDisplayTypeFromString(EDataType eDataType, String initialValue) {
-		final DateTimeDisplayType result = DateTimeDisplayType.get(initialValue);
-		if (result == null) {
+		DateTimeDisplayType result = DateTimeDisplayType.get(initialValue);
+		if (result == null)
 			throw new IllegalArgumentException(
 				"The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-		}
 		return result;
 	}
 
@@ -257,7 +281,6 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 *
 	 * @since 1.8
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	public String convertDateTimeDisplayTypeToString(EDataType eDataType, Object instanceValue) {
@@ -288,20 +311,8 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	@Override
-	public VFeaturePathDomainModelReference createFeaturePathDomainModelReference() {
-		final VFeaturePathDomainModelReferenceImpl featurePathDomainModelReference = new VFeaturePathDomainModelReferenceImpl();
-		return featurePathDomainModelReference;
-	}
-
-	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -311,7 +322,7 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 *
+	 * 
 	 * @deprecated
 	 * @generated
 	 */

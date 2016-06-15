@@ -39,7 +39,7 @@ public class ControlItemProvider extends ContainedElementItemProvider {
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public ControlItemProvider(AdapterFactory adapterFactory) {
@@ -50,7 +50,7 @@ public class ControlItemProvider extends ContainedElementItemProvider {
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -68,7 +68,7 @@ public class ControlItemProvider extends ContainedElementItemProvider {
 	 * This adds a property descriptor for the Label Alignment feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected void addLabelAlignmentPropertyDescriptor(Object object) {
@@ -115,7 +115,7 @@ public class ControlItemProvider extends ContainedElementItemProvider {
 	 * This returns Control.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -146,7 +146,7 @@ public class ControlItemProvider extends ContainedElementItemProvider {
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -167,7 +167,7 @@ public class ControlItemProvider extends ContainedElementItemProvider {
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -175,7 +175,7 @@ public class ControlItemProvider extends ContainedElementItemProvider {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
 		newChildDescriptors.add(createChildParameter(VViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCE,
-			VViewFactory.eINSTANCE.createFeaturePathDomainModelReference()));
+			VViewFactory.eINSTANCE.createDomainModelReference()));
 	}
 
 }

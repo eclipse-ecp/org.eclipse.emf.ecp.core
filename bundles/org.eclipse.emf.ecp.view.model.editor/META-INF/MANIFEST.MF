@@ -11,7 +11,7 @@ Export-Package: org.eclipse.emf.ecp.view.model.actions;version="1.10.0";x-intern
  org.eclipse.emf.ecp.view.model.presentation;version="1.10.0";x-friends:="org.eclipse.emf.ecp.view.model.project.installer"
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
  org.eclipse.core.resources;bundle-version="[3.7.0,4.0.0)",
- org.eclipse.emf.ecp.view.model.edit;bundle-version="[1.10.0,2.0.0)",
+ org.eclipse.emf.ecp.view.model.edit;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.emf.ecore.xmi;bundle-version="[2.7.0,3.0.0)",
  org.eclipse.emf.edit.ui;bundle-version="[2.7.0,3.0.0)",
  org.eclipse.ui.ide;bundle-version="[3.7.0,4.0.0)",

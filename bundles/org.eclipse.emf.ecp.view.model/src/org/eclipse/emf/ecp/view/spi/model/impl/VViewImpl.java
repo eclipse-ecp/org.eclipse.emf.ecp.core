@@ -53,7 +53,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	 * The cached value of the '{@link #getRootEClass() <em>Root EClass</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getRootEClass()
 	 * @generated
 	 * @ordered
@@ -64,7 +64,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	 * The cached value of the '{@link #getChildren() <em>Children</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getChildren()
 	 * @generated
 	 * @ordered
@@ -110,7 +110,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected VViewImpl() {
@@ -120,7 +120,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -131,19 +131,18 @@ public class VViewImpl extends VElementImpl implements VView {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public EClass getRootEClass() {
 		if (rootEClass != null && rootEClass.eIsProxy()) {
-			final InternalEObject oldRootEClass = (InternalEObject) rootEClass;
+			InternalEObject oldRootEClass = (InternalEObject) rootEClass;
 			rootEClass = (EClass) eResolveProxy(oldRootEClass);
 			if (rootEClass != oldRootEClass) {
-				if (eNotificationRequired()) {
+				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, VViewPackage.VIEW__ROOT_ECLASS,
 						oldRootEClass, rootEClass));
-				}
 			}
 		}
 		return rootEClass;
@@ -152,7 +151,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public EClass basicGetRootEClass() {
@@ -162,23 +161,22 @@ public class VViewImpl extends VElementImpl implements VView {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void setRootEClass(EClass newRootEClass) {
-		final EClass oldRootEClass = rootEClass;
+		EClass oldRootEClass = rootEClass;
 		rootEClass = newRootEClass;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, VViewPackage.VIEW__ROOT_ECLASS, oldRootEClass,
 				rootEClass));
-		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -211,12 +209,11 @@ public class VViewImpl extends VElementImpl implements VView {
 	 */
 	@Override
 	public void setEcorePath(String newEcorePath) {
-		final String oldEcorePath = ecorePath;
+		String oldEcorePath = ecorePath;
 		ecorePath = newEcorePath;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(
 				new ENotificationImpl(this, Notification.SET, VViewPackage.VIEW__ECORE_PATH, oldEcorePath, ecorePath));
-		}
 	}
 
 	/**
@@ -240,16 +237,15 @@ public class VViewImpl extends VElementImpl implements VView {
 	 */
 	public NotificationChain basicSetLoadingProperties(VViewModelProperties newLoadingProperties,
 		NotificationChain msgs) {
-		final VViewModelProperties oldLoadingProperties = loadingProperties;
+		VViewModelProperties oldLoadingProperties = loadingProperties;
 		loadingProperties = newLoadingProperties;
 		if (eNotificationRequired()) {
-			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
 				VViewPackage.VIEW__LOADING_PROPERTIES, oldLoadingProperties, newLoadingProperties);
-			if (msgs == null) {
+			if (msgs == null)
 				msgs = notification;
-			} else {
+			else
 				msgs.add(notification);
-			}
 		}
 		return msgs;
 	}
@@ -265,28 +261,24 @@ public class VViewImpl extends VElementImpl implements VView {
 	public void setLoadingProperties(VViewModelProperties newLoadingProperties) {
 		if (newLoadingProperties != loadingProperties) {
 			NotificationChain msgs = null;
-			if (loadingProperties != null) {
+			if (loadingProperties != null)
 				msgs = ((InternalEObject) loadingProperties).eInverseRemove(this,
 					EOPPOSITE_FEATURE_BASE - VViewPackage.VIEW__LOADING_PROPERTIES, null, msgs);
-			}
-			if (newLoadingProperties != null) {
+			if (newLoadingProperties != null)
 				msgs = ((InternalEObject) newLoadingProperties).eInverseAdd(this,
 					EOPPOSITE_FEATURE_BASE - VViewPackage.VIEW__LOADING_PROPERTIES, null, msgs);
-			}
 			msgs = basicSetLoadingProperties(newLoadingProperties, msgs);
-			if (msgs != null) {
+			if (msgs != null)
 				msgs.dispatch();
-			}
-		} else if (eNotificationRequired()) {
+		} else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, VViewPackage.VIEW__LOADING_PROPERTIES,
 				newLoadingProperties, newLoadingProperties));
-		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -303,16 +295,15 @@ public class VViewImpl extends VElementImpl implements VView {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case VViewPackage.VIEW__ROOT_ECLASS:
-			if (resolve) {
+			if (resolve)
 				return getRootEClass();
-			}
 			return basicGetRootEClass();
 		case VViewPackage.VIEW__CHILDREN:
 			return getChildren();
@@ -327,7 +318,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -354,7 +345,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -379,7 +370,7 @@ public class VViewImpl extends VElementImpl implements VView {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -400,16 +391,15 @@ public class VViewImpl extends VElementImpl implements VView {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) {
+		if (eIsProxy())
 			return super.toString();
-		}
 
-		final StringBuffer result = new StringBuffer(super.toString());
+		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (ecorePath: "); //$NON-NLS-1$
 		result.append(ecorePath);
 		result.append(')');
