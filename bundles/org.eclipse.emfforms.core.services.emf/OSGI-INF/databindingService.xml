@@ -5,5 +5,5 @@
       <provide interface="org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding"/>
       <provide interface="org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF"/>
    </service>
-   <reference bind="addDomainModelReferenceConverter" cardinality="0..n" interface="org.eclipse.emfforms.spi.core.services.databinding.emf.DomainModelReferenceConverterEMF" name="DomainModelReferenceConverterEMF" policy="dynamic" unbind="removeDomainModelReferenceConverter"/>
+   <reference bind="addDomainModelReferenceSegmentConverter" cardinality="0..n" interface="org.eclipse.emfforms.spi.core.services.databinding.emf.DomainModelReferenceSegmentConverterEMF" name="DomainModelReferenceSegmentConverterEMF" policy="dynamic" unbind="removeDomainModelReferenceSegmentConverter"/>
 </scr:component>

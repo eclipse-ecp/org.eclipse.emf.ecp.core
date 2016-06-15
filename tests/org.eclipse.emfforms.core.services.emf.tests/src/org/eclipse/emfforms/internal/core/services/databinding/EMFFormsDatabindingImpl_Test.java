@@ -87,7 +87,7 @@ public class EMFFormsDatabindingImpl_Test {
 		when(converter1.convertToValueProperty(reference, eObject)).thenReturn(expectedResultProperty);
 		when(expectedResultProperty.observe(eObject)).thenReturn(expectedObservableValue);
 
-		databindingService.addDomainModelReferenceConverter(converter1);
+		databindingService.addDomainModelReferenceSegmentConverter(converter1);
 		final IObservableValue resultObservableValue = databindingService.getObservableValue(reference, eObject);
 
 		verify(databindingService).getValueProperty(reference, eObject);
@@ -175,8 +175,8 @@ public class EMFFormsDatabindingImpl_Test {
 		when(converter2.convertToValueProperty(same(reference), any(EObject.class))).thenReturn(
 			mock(IEMFValueProperty.class));
 
-		databindingService.addDomainModelReferenceConverter(converter1);
-		databindingService.addDomainModelReferenceConverter(converter2);
+		databindingService.addDomainModelReferenceSegmentConverter(converter1);
+		databindingService.addDomainModelReferenceSegmentConverter(converter2);
 		final IValueProperty valueProperty = databindingService.getValueProperty(reference, mock(EObject.class));
 		assertEquals(expectedResultProperty, valueProperty);
 	}
@@ -203,8 +203,8 @@ public class EMFFormsDatabindingImpl_Test {
 		when(converter2.convertToValueProperty(same(reference), any(EObject.class))).thenReturn(
 			mock(EMFValuePropertyDecorator.class));
 
-		databindingService.addDomainModelReferenceConverter(converter1);
-		databindingService.addDomainModelReferenceConverter(converter2);
+		databindingService.addDomainModelReferenceSegmentConverter(converter1);
+		databindingService.addDomainModelReferenceSegmentConverter(converter2);
 		final IValueProperty valueProperty = databindingService.getValueProperty(reference, mock(EObject.class));
 		assertEquals(expectedResultProperty, valueProperty);
 	}
@@ -227,9 +227,9 @@ public class EMFFormsDatabindingImpl_Test {
 		final DomainModelReferenceConverterEMF converter2 = mock(DomainModelReferenceConverterEMF.class);
 		final DomainModelReferenceConverterEMF converter3 = mock(DomainModelReferenceConverterEMF.class);
 
-		databindingService.addDomainModelReferenceConverter(converter1);
-		databindingService.addDomainModelReferenceConverter(converter2);
-		databindingService.addDomainModelReferenceConverter(converter3);
+		databindingService.addDomainModelReferenceSegmentConverter(converter1);
+		databindingService.addDomainModelReferenceSegmentConverter(converter2);
+		databindingService.addDomainModelReferenceSegmentConverter(converter3);
 
 		databindingService.getValueProperty(reference, mock(EObject.class));
 
@@ -272,7 +272,7 @@ public class EMFFormsDatabindingImpl_Test {
 		when(converter1.convertToListProperty(reference, eObject)).thenReturn(expectedResultProperty);
 		when(expectedResultProperty.observe(eObject)).thenReturn(expectedObservableList);
 
-		databindingService.addDomainModelReferenceConverter(converter1);
+		databindingService.addDomainModelReferenceSegmentConverter(converter1);
 		final IObservableList resultObservableList = databindingService.getObservableList(reference, eObject);
 
 		verify(databindingService).getListProperty(reference, eObject);
@@ -356,8 +356,8 @@ public class EMFFormsDatabindingImpl_Test {
 		when(converter2.convertToListProperty(same(reference), any(EObject.class))).thenReturn(
 			mock(IEMFListProperty.class));
 
-		databindingService.addDomainModelReferenceConverter(converter1);
-		databindingService.addDomainModelReferenceConverter(converter2);
+		databindingService.addDomainModelReferenceSegmentConverter(converter1);
+		databindingService.addDomainModelReferenceSegmentConverter(converter2);
 		final IListProperty listProperty = databindingService.getListProperty(reference, mock(EObject.class));
 		assertEquals(expectedResultProperty, listProperty);
 	}
@@ -384,8 +384,8 @@ public class EMFFormsDatabindingImpl_Test {
 		when(converter2.convertToListProperty(same(reference), any(EObject.class))).thenReturn(
 			mock(EMFListPropertyDecorator.class));
 
-		databindingService.addDomainModelReferenceConverter(converter1);
-		databindingService.addDomainModelReferenceConverter(converter2);
+		databindingService.addDomainModelReferenceSegmentConverter(converter1);
+		databindingService.addDomainModelReferenceSegmentConverter(converter2);
 		final IListProperty listProperty = databindingService.getListProperty(reference, mock(EObject.class));
 		assertEquals(expectedResultProperty, listProperty);
 	}
@@ -407,9 +407,9 @@ public class EMFFormsDatabindingImpl_Test {
 		final DomainModelReferenceConverterEMF converter2 = mock(DomainModelReferenceConverterEMF.class);
 		final DomainModelReferenceConverterEMF converter3 = mock(DomainModelReferenceConverterEMF.class);
 
-		databindingService.addDomainModelReferenceConverter(converter1);
-		databindingService.addDomainModelReferenceConverter(converter2);
-		databindingService.addDomainModelReferenceConverter(converter3);
+		databindingService.addDomainModelReferenceSegmentConverter(converter1);
+		databindingService.addDomainModelReferenceSegmentConverter(converter2);
+		databindingService.addDomainModelReferenceSegmentConverter(converter3);
 
 		databindingService.getListProperty(reference, mock(EObject.class));
 
@@ -434,7 +434,7 @@ public class EMFFormsDatabindingImpl_Test {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#removeDomainModelReferenceConverter(DomainModelReferenceConverterEMF)}
+	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#removeDomainModelReferenceSegmentConverter(DomainModelReferenceConverterEMF)}
 	 * .
 	 *
 	 * @throws DatabindingFailedException if the databinding failed
@@ -447,8 +447,8 @@ public class EMFFormsDatabindingImpl_Test {
 
 		when(converter1.isApplicable(reference)).thenReturn(5d);
 
-		databindingService.addDomainModelReferenceConverter(converter1);
-		databindingService.removeDomainModelReferenceConverter(converter1);
+		databindingService.addDomainModelReferenceSegmentConverter(converter1);
+		databindingService.removeDomainModelReferenceSegmentConverter(converter1);
 		databindingService.getValueProperty(reference, mock(EObject.class));
 	}
 
@@ -474,8 +474,8 @@ public class EMFFormsDatabindingImpl_Test {
 		when(converter2.convertToValueProperty(same(reference), any(EObject.class))).thenReturn(
 			mock(IEMFValueProperty.class));
 
-		databindingService.addDomainModelReferenceConverter(converter1);
-		databindingService.addDomainModelReferenceConverter(converter2);
+		databindingService.addDomainModelReferenceSegmentConverter(converter1);
+		databindingService.addDomainModelReferenceSegmentConverter(converter2);
 		final Setting setting = databindingService.getSetting(reference, mock(EObject.class));
 		assertEquals(expectedSetting, setting);
 	}
@@ -493,8 +493,8 @@ public class EMFFormsDatabindingImpl_Test {
 		when(converter2.convertToValueProperty(same(reference), any(EObject.class))).thenReturn(
 			mock(EMFValuePropertyDecorator.class));
 
-		databindingService.addDomainModelReferenceConverter(converter1);
-		databindingService.addDomainModelReferenceConverter(converter2);
+		databindingService.addDomainModelReferenceSegmentConverter(converter1);
+		databindingService.addDomainModelReferenceSegmentConverter(converter2);
 		final Setting setting = databindingService.getSetting(reference, mock(EObject.class));
 		assertEquals(expectedSetting, setting);
 	}
@@ -507,9 +507,9 @@ public class EMFFormsDatabindingImpl_Test {
 		final DomainModelReferenceConverterEMF converter2 = mock(DomainModelReferenceConverterEMF.class);
 		final DomainModelReferenceConverterEMF converter3 = mock(DomainModelReferenceConverterEMF.class);
 
-		databindingService.addDomainModelReferenceConverter(converter1);
-		databindingService.addDomainModelReferenceConverter(converter2);
-		databindingService.addDomainModelReferenceConverter(converter3);
+		databindingService.addDomainModelReferenceSegmentConverter(converter1);
+		databindingService.addDomainModelReferenceSegmentConverter(converter2);
+		databindingService.addDomainModelReferenceSegmentConverter(converter3);
 
 		databindingService.getSetting(reference, mock(EObject.class));
 
