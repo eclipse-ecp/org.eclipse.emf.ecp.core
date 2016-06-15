@@ -25,8 +25,9 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VHasTooltip;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewModelLoadingProperties;
@@ -107,11 +108,6 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 		}
 
 		@Override
-		public Adapter caseFeaturePathDomainModelReference(VFeaturePathDomainModelReference object) {
-			return createFeaturePathDomainModelReferenceAdapter();
-		}
-
-		@Override
 		public Adapter caseElement(VElement object) {
 			return createElementAdapter();
 		}
@@ -162,8 +158,13 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 		}
 
 		@Override
-		public Adapter caseHasTooltip(VHasTooltip object) {
-			return createHasTooltipAdapter();
+		public Adapter caseDomainModelReferenceSegment(VDomainModelReferenceSegment object) {
+			return createDomainModelReferenceSegmentAdapter();
+		}
+
+		@Override
+		public Adapter caseFeatureDomainModelReferenceSegment(VFeatureDomainModelReferenceSegment object) {
+			return createFeatureDomainModelReferenceSegmentAdapter();
 		}
 
 		@Override
@@ -317,19 +318,39 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VHasTooltip <em>Has
-	 * Tooltip</em>}'.
+	 * Creates a new adapter for an object of class '
+	 * {@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment <em>Domain Model Reference Segment</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
+	 *
+	 * @since 2.0
+	 *        <!-- end-user-doc -->
 	 *
 	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.spi.model.VHasTooltip
+	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment
 	 * @generated
-	 * @since 1.13
 	 */
-	public Adapter createHasTooltipAdapter() {
+	public Adapter createDomainModelReferenceSegmentAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '
+	 * {@link org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment
+	 * <em>Feature Domain Model Reference Segment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * 
+	 * @since 2.0
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment
+	 * @generated
+	 */
+	public Adapter createFeatureDomainModelReferenceSegmentAdapter() {
 		return null;
 	}
 
@@ -395,23 +416,6 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createDomainModelReferenceAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class
-	 * '{@link org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference <em>Feature Path Domain Model
-	 * Reference</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 *
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference
-	 * @generated
-	 */
-	public Adapter createFeaturePathDomainModelReferenceAdapter() {
 		return null;
 	}
 

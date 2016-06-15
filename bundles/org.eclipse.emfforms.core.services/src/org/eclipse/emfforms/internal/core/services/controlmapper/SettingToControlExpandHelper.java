@@ -55,14 +55,11 @@ public final class SettingToControlExpandHelper {
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	private static void expandAndInitDMR(EObject domainModelRoot, final EMFFormsDomainExpander domainExpander,
 		final EObject eObject, EMFFormsViewContext viewModelContext) {
 		if (VDomainModelReference.class.isInstance(eObject)
 			&& !VDomainModelReference.class.isInstance(eObject.eContainer())) {
 			final VDomainModelReference domainModelReference = VDomainModelReference.class.cast(eObject);
-			// FIXME remove as soon as all users have moved
-			domainModelReference.init(domainModelRoot);
 			try {
 				domainExpander.prepareDomainObject(domainModelReference, domainModelRoot);
 			} catch (final EMFFormsExpandingFailedException ex) {

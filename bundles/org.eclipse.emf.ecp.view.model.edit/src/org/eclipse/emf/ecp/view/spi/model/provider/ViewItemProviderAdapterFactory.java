@@ -129,6 +129,32 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference}
+	 * instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	protected DomainModelReferenceItemProvider domainModelReferenceItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
+	public Adapter createDomainModelReferenceAdapter() {
+		if (domainModelReferenceItemProvider == null) {
+			domainModelReferenceItemProvider = new DomainModelReferenceItemProvider(this);
+		}
+
+		return domainModelReferenceItemProvider;
+	}
+
+	/**
 	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.spi.model.VView} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -260,28 +286,28 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 
 	/**
 	 * This keeps track of the one adapter used for all
-	 * {@link org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference} instances.
+	 * {@link org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 */
-	protected FeaturePathDomainModelReferenceItemProvider featurePathDomainModelReferenceItemProvider;
+	protected FeatureDomainModelReferenceSegmentItemProvider featureDomainModelReferenceSegmentItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference}.
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @generated
 	 */
 	@Override
-	public Adapter createFeaturePathDomainModelReferenceAdapter() {
-		if (featurePathDomainModelReferenceItemProvider == null) {
-			featurePathDomainModelReferenceItemProvider = new FeaturePathDomainModelReferenceItemProvider(this);
+	public Adapter createFeatureDomainModelReferenceSegmentAdapter() {
+		if (featureDomainModelReferenceSegmentItemProvider == null) {
+			featureDomainModelReferenceSegmentItemProvider = new FeatureDomainModelReferenceSegmentItemProvider(this);
 		}
 
-		return featurePathDomainModelReferenceItemProvider;
+		return featureDomainModelReferenceSegmentItemProvider;
 	}
 
 	/**
@@ -432,8 +458,8 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	public void dispose() {
 		if (diagnosticItemProvider != null)
 			diagnosticItemProvider.dispose();
-		if (featurePathDomainModelReferenceItemProvider != null)
-			featurePathDomainModelReferenceItemProvider.dispose();
+		if (domainModelReferenceItemProvider != null)
+			domainModelReferenceItemProvider.dispose();
 		if (viewItemProvider != null)
 			viewItemProvider.dispose();
 		if (controlItemProvider != null)
@@ -444,6 +470,8 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 			stringToObjectMapEntryItemProvider.dispose();
 		if (dateTimeDisplayAttachmentItemProvider != null)
 			dateTimeDisplayAttachmentItemProvider.dispose();
+		if (featureDomainModelReferenceSegmentItemProvider != null)
+			featureDomainModelReferenceSegmentItemProvider.dispose();
 	}
 
 }

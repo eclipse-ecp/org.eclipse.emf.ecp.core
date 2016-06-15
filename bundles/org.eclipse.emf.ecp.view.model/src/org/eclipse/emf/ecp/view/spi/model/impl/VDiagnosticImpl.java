@@ -39,7 +39,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>VDiagnostic</b></em>'.
- *
+ * 
  * @since 1.2
  *        <!-- end-user-doc -->
  *        <p>
@@ -57,7 +57,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic {
 	 * The cached value of the '{@link #getDiagnostics() <em>Diagnostics</em>}' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getDiagnostics()
 	 * @generated
 	 * @ordered
@@ -68,7 +68,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected VDiagnosticImpl() {
@@ -148,7 +148,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -159,7 +159,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -173,7 +173,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -188,7 +188,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -206,7 +206,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -222,7 +222,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -237,16 +237,15 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) {
+		if (eIsProxy())
 			return super.toString();
-		}
 
-		final StringBuffer result = new StringBuffer(super.toString());
+		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (diagnostics: "); //$NON-NLS-1$
 		result.append(diagnostics);
 		result.append(')');

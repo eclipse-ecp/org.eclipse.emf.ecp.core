@@ -84,7 +84,7 @@ public interface VViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getElement()
 	 * @generated
 	 */
-	int ELEMENT = 4;
+	int ELEMENT = 3;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.impl.VDiagnosticImpl <em>Diagnostic</em>}'
@@ -127,7 +127,7 @@ public interface VViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getView()
 	 * @generated
 	 */
-	int VIEW = 5;
+	int VIEW = 4;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.impl.VControlImpl <em>Control</em>}' class.
@@ -138,7 +138,7 @@ public interface VViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getControl()
 	 * @generated
 	 */
-	int CONTROL = 9;
+	int CONTROL = 8;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.impl.VAttachmentImpl <em>Attachment</em>}'
@@ -163,27 +163,28 @@ public interface VViewPackage extends EPackage {
 	int ATTACHMENT_FEATURE_COUNT = 0;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference <em>Domain Model
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.impl.VDomainModelReferenceImpl
 	 * Reference</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference
+	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VDomainModelReferenceImpl
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getDomainModelReference()
 	 * @generated
 	 */
 	int DOMAIN_MODEL_REFERENCE = 2;
 
 	/**
-	 * The feature id for the '<em><b>Change Listener</b></em>' attribute list.
+	 * The feature id for the '<em><b>Segments</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 *
-	 * @since 1.3
+	 * @since 2.0
 	 *        <!-- end-user-doc -->
+	 *
 	 * @generated
 	 * @ordered
 	 */
-	int DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER = 0;
+	int DOMAIN_MODEL_REFERENCE__SEGMENTS = 0;
 
 	/**
 	 * The number of structural features of the '<em>Domain Model Reference</em>' class.
@@ -194,59 +195,6 @@ public interface VViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int DOMAIN_MODEL_REFERENCE_FEATURE_COUNT = 1;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceImpl
-	 * <em>Feature Path Domain Model Reference</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceImpl
-	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getFeaturePathDomainModelReference()
-	 * @generated
-	 */
-	int FEATURE_PATH_DOMAIN_MODEL_REFERENCE = 3;
-
-	/**
-	 * The feature id for the '<em><b>Change Listener</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 *
-	 * @since 1.3
-	 *        <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FEATURE_PATH_DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER = DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER;
-
-	/**
-	 * The feature id for the '<em><b>Domain Model EFeature</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 * @ordered
-	 */
-	int FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE = DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Domain Model EReference Path</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 * @ordered
-	 */
-	int FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH = DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 1;
-
-	/**
-	 * The number of structural features of the '<em>Feature Path Domain Model Reference</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 * @ordered
-	 */
-	int FEATURE_PATH_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT = DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -485,7 +433,7 @@ public interface VViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getContainedElement()
 	 * @generated
 	 */
-	int CONTAINED_ELEMENT = 6;
+	int CONTAINED_ELEMENT = 5;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -589,7 +537,7 @@ public interface VViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getContainer()
 	 * @generated
 	 */
-	int CONTAINER = 7;
+	int CONTAINER = 6;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -704,7 +652,7 @@ public interface VViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getContainedContainer()
 	 * @generated
 	 */
-	int CONTAINED_CONTAINER = 8;
+	int CONTAINED_CONTAINER = 7;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -939,7 +887,7 @@ public interface VViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getViewModelProperties()
 	 * @generated
 	 */
-	int VIEW_MODEL_PROPERTIES = 12;
+	int VIEW_MODEL_PROPERTIES = 11;
 
 	/**
 	 * The number of structural features of the '<em>Model Properties</em>' class.
@@ -963,7 +911,7 @@ public interface VViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getViewModelLoadingProperties()
 	 * @generated
 	 */
-	int VIEW_MODEL_LOADING_PROPERTIES = 10;
+	int VIEW_MODEL_LOADING_PROPERTIES = 9;
 
 	/**
 	 * The feature id for the '<em><b>Inheritable Properties</b></em>' map.
@@ -1009,7 +957,7 @@ public interface VViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getStringToObjectMapEntry()
 	 * @generated
 	 */
-	int STRING_TO_OBJECT_MAP_ENTRY = 11;
+	int STRING_TO_OBJECT_MAP_ENTRY = 10;
 
 	/**
 	 * The feature id for the '<em><b>Key</b></em>' attribute.
@@ -1055,7 +1003,7 @@ public interface VViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getDateTimeDisplayAttachment()
 	 * @generated
 	 */
-	int DATE_TIME_DISPLAY_ATTACHMENT = 13;
+	int DATE_TIME_DISPLAY_ATTACHMENT = 12;
 
 	/**
 	 * The feature id for the '<em><b>Display Type</b></em>' attribute.
@@ -1080,41 +1028,69 @@ public interface VViewPackage extends EPackage {
 	int DATE_TIME_DISPLAY_ATTACHMENT_FEATURE_COUNT = ATTACHMENT_FEATURE_COUNT + 1;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.VHasTooltip <em>Has Tooltip</em>}' class.
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment
+	 * <em>Domain Model Reference Segment</em>}' class.
 	 * <!-- begin-user-doc -->
-	 * 
-	 * @since 1.13
+	 *
+	 * @since 2.0
 	 *        <!-- end-user-doc -->
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.model.VHasTooltip
-	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getHasTooltip()
+	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment
+	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getDomainModelReferenceSegment()
 	 * @generated
 	 */
-	int HAS_TOOLTIP = 14;
+	int DOMAIN_MODEL_REFERENCE_SEGMENT = 13;
 
 	/**
-	 * The feature id for the '<em><b>Tooltip</b></em>' attribute.
+	 * The number of structural features of the '<em>Domain Model Reference Segment</em>' class.
 	 * <!-- begin-user-doc -->
-	 * 
-	 * @since 1.13
+	 *
+	 * @since 2.0
 	 *        <!-- end-user-doc -->
 	 *
 	 * @generated
 	 * @ordered
 	 */
-	int HAS_TOOLTIP__TOOLTIP = 0;
+	int DOMAIN_MODEL_REFERENCE_SEGMENT_FEATURE_COUNT = 0;
 
 	/**
-	 * The number of structural features of the '<em>Has Tooltip</em>' class.
+	 * The meta object id for the '
+	 * {@link org.eclipse.emf.ecp.view.spi.model.impl.VFeatureDomainModelReferenceSegmentImpl
+	 * <em>Feature Domain Model Reference Segment</em>}' class.
 	 * <!-- begin-user-doc -->
-	 * 
-	 * @since 1.13
+	 *
+	 * @since 2.0
+	 *        <!-- end-user-doc -->
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VFeatureDomainModelReferenceSegmentImpl
+	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getFeatureDomainModelReferenceSegment()
+	 * @generated
+	 */
+	int FEATURE_DOMAIN_MODEL_REFERENCE_SEGMENT = 14;
+
+	/**
+	 * The feature id for the '<em><b>Domain Model Feature</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 2.0
 	 *        <!-- end-user-doc -->
 	 *
 	 * @generated
 	 * @ordered
 	 */
-	int HAS_TOOLTIP_FEATURE_COUNT = 1;
+	int FEATURE_DOMAIN_MODEL_REFERENCE_SEGMENT__DOMAIN_MODEL_FEATURE = DOMAIN_MODEL_REFERENCE_SEGMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Feature Domain Model Reference Segment</em>' class.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 2.0
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int FEATURE_DOMAIN_MODEL_REFERENCE_SEGMENT_FEATURE_COUNT = DOMAIN_MODEL_REFERENCE_SEGMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.LabelAlignment <em>Label Alignment</em>}'
@@ -1479,32 +1455,48 @@ public interface VViewPackage extends EPackage {
 	EAttribute getDateTimeDisplayAttachment_DisplayType();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.model.VHasTooltip <em>Has Tooltip</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment
+	 * <em>Domain Model Reference Segment</em>}'.
 	 * <!-- begin-user-doc -->
-	 * 
-	 * @since 1.13
+	 *
+	 * @since 2.0
 	 *        <!-- end-user-doc -->
 	 *
-	 * @return the meta object for class '<em>Has Tooltip</em>'.
-	 * @see org.eclipse.emf.ecp.view.spi.model.VHasTooltip
+	 * @return the meta object for class '<em>Domain Model Reference Segment</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment
 	 * @generated
 	 */
-	EClass getHasTooltip();
+	EClass getDomainModelReferenceSegment();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.spi.model.VHasTooltip#getTooltip
-	 * <em>Tooltip</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment
+	 * <em>Feature Domain Model Reference Segment</em>}'.
 	 * <!-- begin-user-doc -->
-	 * 
-	 * @since 1.13
+	 *
+	 * @since 2.0
 	 *        <!-- end-user-doc -->
 	 *
-	 * @return the meta object for the attribute '<em>Tooltip</em>'.
-	 * @see org.eclipse.emf.ecp.view.spi.model.VHasTooltip#getTooltip()
-	 * @see #getHasTooltip()
+	 * @return the meta object for class '<em>Feature Domain Model Reference Segment</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment
 	 * @generated
 	 */
-	EAttribute getHasTooltip_Tooltip();
+	EClass getFeatureDomainModelReferenceSegment();
+
+	/**
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment#getDomainModelFeature
+	 * <em>Domain Model Feature</em>}'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 2.0
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the attribute '<em>Domain Model Feature</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment#getDomainModelFeature()
+	 * @see #getFeatureDomainModelReferenceSegment()
+	 * @generated
+	 */
+	EAttribute getFeatureDomainModelReferenceSegment_DomainModelFeature();
 
 	/**
 	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Object Map Entry</em>}'.
@@ -1649,58 +1641,19 @@ public interface VViewPackage extends EPackage {
 	EClass getDomainModelReference();
 
 	/**
-	 * Returns the meta object for the attribute list
-	 * '{@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getChangeListener <em>Change Listener</em>}'.
+	 * Returns the meta object for the reference list
+	 * {@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getSegments <em>Segments</em>}'.
 	 * <!-- begin-user-doc -->
 	 *
-	 * @since 1.3
+	 * @since 2.0
 	 *        <!-- end-user-doc -->
-	 * @return the meta object for the attribute list '<em>Change Listener</em>'.
-	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getChangeListener()
+	 *
+	 * @return the meta object for the reference list '<em>Segments</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getSegments()
 	 * @see #getDomainModelReference()
 	 * @generated
 	 */
-	EAttribute getDomainModelReference_ChangeListener();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference
-	 * <em>Feature Path Domain Model Reference</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @return the meta object for class '<em>Feature Path Domain Model Reference</em>'.
-	 * @see org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference
-	 * @generated
-	 */
-	EClass getFeaturePathDomainModelReference();
-
-	/**
-	 * Returns the meta object for the reference
-	 * '{@link org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference#getDomainModelEFeature <em>Domain
-	 * Model EFeature</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @return the meta object for the reference '<em>Domain Model EFeature</em>'.
-	 * @see org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference#getDomainModelEFeature()
-	 * @see #getFeaturePathDomainModelReference()
-	 * @generated
-	 */
-	EReference getFeaturePathDomainModelReference_DomainModelEFeature();
-
-	/**
-	 * Returns the meta object for the reference list
-	 * '{@link org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference#getDomainModelEReferencePath
-	 * <em>Domain Model EReference Path</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @return the meta object for the reference list '<em>Domain Model EReference Path</em>'.
-	 * @see org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference#getDomainModelEReferencePath()
-	 * @see #getFeaturePathDomainModelReference()
-	 * @generated
-	 */
-	EReference getFeaturePathDomainModelReference_DomainModelEReferencePath();
+	EReference getDomainModelReference_Segments();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.model.VAttachment <em>Attachment</em>}'.
@@ -2003,29 +1956,45 @@ public interface VViewPackage extends EPackage {
 		EAttribute DATE_TIME_DISPLAY_ATTACHMENT__DISPLAY_TYPE = eINSTANCE.getDateTimeDisplayAttachment_DisplayType();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.model.VHasTooltip <em>Has Tooltip</em>}'
-		 * class.
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment
+		 * <em>Domain Model Reference Segment</em>}' class.
 		 * <!-- begin-user-doc -->
-		 * 
-		 * @since 1.13
+		 *
+		 * @since 2.0
 		 *        <!-- end-user-doc -->
 		 *
-		 * @see org.eclipse.emf.ecp.view.spi.model.VHasTooltip
-		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getHasTooltip()
+		 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment
+		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getDomainModelReferenceSegment()
 		 * @generated
 		 */
-		EClass HAS_TOOLTIP = eINSTANCE.getHasTooltip();
+		EClass DOMAIN_MODEL_REFERENCE_SEGMENT = eINSTANCE.getDomainModelReferenceSegment();
 
 		/**
-		 * The meta object literal for the '<em><b>Tooltip</b></em>' attribute feature.
+		 * The meta object literal for the '
+		 * {@link org.eclipse.emf.ecp.view.spi.model.impl.VFeatureDomainModelReferenceSegmentImpl
+		 * <em>Feature Domain Model Reference Segment</em>}' class.
 		 * <!-- begin-user-doc -->
-		 * 
-		 * @since 1.13
+		 *
+		 * @since 2.0
+		 *        <!-- end-user-doc -->
+		 *
+		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VFeatureDomainModelReferenceSegmentImpl
+		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getFeatureDomainModelReferenceSegment()
+		 * @generated
+		 */
+		EClass FEATURE_DOMAIN_MODEL_REFERENCE_SEGMENT = eINSTANCE.getFeatureDomainModelReferenceSegment();
+
+		/**
+		 * The meta object literal for the '<em><b>Domain Model Feature</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 *
+		 * @since 2.0
 		 *        <!-- end-user-doc -->
 		 *
 		 * @generated
 		 */
-		EAttribute HAS_TOOLTIP__TOOLTIP = eINSTANCE.getHasTooltip_Tooltip();
+		EAttribute FEATURE_DOMAIN_MODEL_REFERENCE_SEGMENT__DOMAIN_MODEL_FEATURE = eINSTANCE
+			.getFeatureDomainModelReferenceSegment_DomainModelFeature();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.model.impl.VStringToObjectMapEntryImpl
@@ -2141,59 +2110,27 @@ public interface VViewPackage extends EPackage {
 		EDataType DOMAIN_MODEL_REFERENCE_CHANGE_LISTENER = eINSTANCE.getDomainModelReferenceChangeListener();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference <em>Domain
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.model.impl.VDomainModelReferenceImpl
 		 * Model Reference</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 *
-		 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference
+		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VDomainModelReferenceImpl
 		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getDomainModelReference()
 		 * @generated
 		 */
 		EClass DOMAIN_MODEL_REFERENCE = eINSTANCE.getDomainModelReference();
 
 		/**
-		 * The meta object literal for the '<em><b>Change Listener</b></em>' attribute list feature.
+		 * The meta object literal for the '<em><b>Segments</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
-		 *
-		 * @since 1.3
+		 * 
+		 * @since 2.0
 		 *        <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER = eINSTANCE.getDomainModelReference_ChangeListener();
-
-		/**
-		 * The meta object literal for the
-		 * '{@link org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceImpl <em>Feature Path Domain
-		 * Model Reference</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 *
-		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceImpl
-		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getFeaturePathDomainModelReference()
-		 * @generated
-		 */
-		EClass FEATURE_PATH_DOMAIN_MODEL_REFERENCE = eINSTANCE.getFeaturePathDomainModelReference();
-
-		/**
-		 * The meta object literal for the '<em><b>Domain Model EFeature</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
 		 *
 		 * @generated
 		 */
-		EReference FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EFEATURE = eINSTANCE
-			.getFeaturePathDomainModelReference_DomainModelEFeature();
-
-		/**
-		 * The meta object literal for the '<em><b>Domain Model EReference Path</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 *
-		 * @generated
-		 */
-		EReference FEATURE_PATH_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_EREFERENCE_PATH = eINSTANCE
-			.getFeaturePathDomainModelReference_DomainModelEReferencePath();
+		EReference DOMAIN_MODEL_REFERENCE__SEGMENTS = eINSTANCE.getDomainModelReference_Segments();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.model.impl.VAttachmentImpl

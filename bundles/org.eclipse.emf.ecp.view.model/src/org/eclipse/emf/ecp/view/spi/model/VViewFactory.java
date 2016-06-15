@@ -45,6 +45,17 @@ public interface VViewFactory extends EFactory {
 	VDiagnostic createDiagnostic();
 
 	/**
+	 * Returns a new object of class '<em>Domain Model Reference</em>'.
+	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 2.0
+	 *        <!-- end-user-doc -->
+	 * @return a new object of class '<em>Domain Model Reference</em>'.
+	 * @generated
+	 */
+	VDomainModelReference createDomainModelReference();
+
+	/**
 	 * Returns a new object of class '<em>View</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -87,14 +98,15 @@ public interface VViewFactory extends EFactory {
 	VDateTimeDisplayAttachment createDateTimeDisplayAttachment();
 
 	/**
-	 * Returns a new object of class '<em>Feature Path Domain Model Reference</em>'.
+	 * Returns a new object of class '<em>Feature Domain Model Reference Segment</em>'.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 * 
-	 * @return a new object of class '<em>Feature Path Domain Model Reference</em>'.
+	 * @since 2.0
+	 *        <!-- end-user-doc -->
+	 * @return a new object of class '<em>Feature Domain Model Reference Segment</em>'.
 	 * @generated
 	 */
-	VFeaturePathDomainModelReference createFeaturePathDomainModelReference();
+	VFeatureDomainModelReferenceSegment createFeatureDomainModelReferenceSegment();
 
 	/**
 	 * Returns the package supported by this factory.
