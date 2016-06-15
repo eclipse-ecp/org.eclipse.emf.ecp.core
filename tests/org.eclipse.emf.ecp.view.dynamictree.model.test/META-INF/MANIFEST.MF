@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Dynamic Containment Tree Tests
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.dynamictree.model.test;singleton:=true
-Bundle-Version: 1.10.0.qualifier
+Bundle-Version: 2.0.0.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.view.dynamictree.model.test.Activator
 Export-Package: org.eclipse.emf.ecp.view.dynamictree.model.test;version="1.10.0";
   uses:="org.eclipse.emf.ecore,
@@ -18,22 +18,22 @@ Export-Package: org.eclipse.emf.ecp.view.dynamictree.model.test;version="1.10.0"
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
  org.junit;bundle-version="4.11.0",
  org.eclipse.emf.ecp.view.model;bundle-version="[2.0.0,3.0.0)",
- org.eclipse.emf.ecp.view.context;bundle-version="[1.10.0,2.0.0)",
+ org.eclipse.emf.ecp.view.context;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.core.databinding;bundle-version="[1.4.1,2.0.0)",
- org.eclipse.emf.ecp.ui.view;bundle-version="[1.10.0,2.0.0)",
- org.eclipse.emf.ecp.view.dynamictree.model;bundle-version="[1.10.0,2.0.0)",
+ org.eclipse.emf.ecp.ui.view;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emf.ecp.view.dynamictree.model;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.jface.databinding;bundle-version="[1.6.200,2.0.0)",
  org.eclipse.swt;bundle-version="[3.102.1,4.0.0)",
- org.eclipse.emf.ecp.view.label.model;bundle-version="[1.10.0,2.0.0)",
- org.eclipse.emf.ecp.view.group.model;bundle-version="[1.10.0,2.0.0)",
- org.eclipse.emf.ecp.view.table.model;bundle-version="[1.10.0,2.0.0)",
- org.eclipse.emf.ecp.view.custom.model;bundle-version="[1.10.0,2.0.0)",
- org.eclipse.emf.ecp.ui.view.swt;bundle-version="[1.10.0,2.0.0)",
- org.eclipse.emf.ecp.view.dynamictree.model.edit;bundle-version="[1.10.0,2.0.0)",
- org.eclipse.emf.ecp.edit;bundle-version="[1.10.0,2.0.0)",
- org.eclipse.emfforms.core.services.legacy;bundle-version="[1.10.0,2.0.0)",
- org.eclipse.emfforms.core.services.domainexpander.default;bundle-version="[1.10.0,2.0.0)",
- org.eclipse.emf.ecp.test.common;bundle-version="[1.10.0,2.0.0)",
- org.eclipse.emfforms.core.services.mappingprovider.default;bundle-version="[1.10.0,2.0.0)"
+ org.eclipse.emf.ecp.view.label.model;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emf.ecp.view.group.model;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emf.ecp.view.table.model;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emf.ecp.view.custom.model;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emf.ecp.ui.view.swt;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emf.ecp.view.dynamictree.model.edit;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emf.ecp.edit;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emfforms.core.services.legacy;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emfforms.core.services.domainexpander.default;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emf.ecp.test.common;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emfforms.core.services.mappingprovider.default;bundle-version="[2.0.0,3.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy

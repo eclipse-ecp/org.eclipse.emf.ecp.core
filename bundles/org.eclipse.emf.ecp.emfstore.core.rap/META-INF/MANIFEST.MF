@@ -2,13 +2,13 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ECP EMFStore Core RAP
 Bundle-SymbolicName: org.eclipse.emf.ecp.emfstore.core.rap
-Bundle-Version: 1.10.0.qualifier
+Bundle-Version: 2.0.0.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.emfstore.internal.core.rap.Activator
 Bundle-Vendor: Eclipse Modeling Project
 Export-Package: org.eclipse.emf.ecp.emfstore.internal.core.rap;version="1.10.0";x-internal:=true
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
- org.eclipse.emf.ecp.core.rap;bundle-version="[1.10.0,2.0.0)",
- org.eclipse.emf.ecp.emfstore.core;bundle-version="[1.10.0,2.0.0)"
+ org.eclipse.emf.ecp.core.rap;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emf.ecp.emfstore.core;bundle-version="[2.0.0,3.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.eclipse.rap.rwt;version="0.0.0",
  org.eclipse.rap.rwt.service;version="0.0.0"

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ECP ECore Editor
 Bundle-SymbolicName: org.eclipse.emf.ecp.ecore.editor;singleton:=true
-Bundle-Version: 1.10.0.qualifier
+Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
 Export-Package: org.eclipse.emf.ecp.ecore.editor;version="1.2.0";x-friends:="org.eclipse.emf.ecp.ecore.editor.test,org.eclipse.emf.ecp.ecore.editor.ui",
  org.eclipse.emf.ecp.ecore.editor.factory;version="1.2.0";x-friends:="org.eclipse.emf.ecp.ecore.editor.test,org.eclipse.emf.ecp.ecore.editor.ui",

@@ -2,8 +2,8 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: EMFForms Core Services Tests
 Bundle-SymbolicName: org.eclipse.emfforms.core.services.tests
-Bundle-Version: 1.10.0.qualifier
-Fragment-Host: org.eclipse.emfforms.core.services;bundle-version="[1.10.0,2.0.0)"
+Bundle-Version: 2.0.0.qualifier
+Fragment-Host: org.eclipse.emfforms.core.services;bundle-version="[2.0.0,3.0.0)"
 Export-Package: org.eclipse.emfforms.internal.core.services.scoped;version="1.10.0";x-internal:=true,
  org.eclipse.emfforms.internal.core.services.tests;version="1.10.0";x-internal:=true
 Require-Bundle: org.junit;bundle-version="[4.11.0,5.0.0)",

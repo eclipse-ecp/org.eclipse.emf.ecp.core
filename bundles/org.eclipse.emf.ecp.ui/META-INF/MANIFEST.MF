@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ECP UI
 Bundle-SymbolicName: org.eclipse.emf.ecp.ui;singleton:=true
-Bundle-Version: 1.10.0.qualifier
+Bundle-Version: 2.0.0.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.internal.ui.Activator
 Bundle-Vendor: Eclipse Modeling Project
 Export-Package: org.eclipse.emf.ecp.internal.ui;version="1.10.0";
@@ -43,12 +43,12 @@ Export-Package: org.eclipse.emf.ecp.internal.ui;version="1.10.0";
  org.eclipse.emf.ecp.ui.common.dnd;version="1.10.0";x-friends:="org.eclipse.emf.ecp.ui.view.editor.controls",
  org.eclipse.emf.ecp.ui.util;version="1.10.0"
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
- org.eclipse.emf.ecp.core;bundle-version="[1.10.0,2.0.0)";visibility:=reexport,
+ org.eclipse.emf.ecp.core;bundle-version="[2.0.0,3.0.0)";visibility:=reexport,
  org.eclipse.net4j.util;bundle-version="[3.0.0,4.0.0)",
  org.eclipse.core.expressions;bundle-version="[3.4.0,4.0.0)",
- org.eclipse.emf.ecp.edit;bundle-version="[1.10.0,2.0.0)",
- org.eclipse.emf.ecp.view.context;bundle-version="[1.10.0,2.0.0)",
- org.eclipse.emf.ecp.common.ui;bundle-version="[1.10.0,2.0.0)"
+ org.eclipse.emf.ecp.edit;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emf.ecp.view.context;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emf.ecp.common.ui;bundle-version="[2.0.0,3.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.eclipse.core.commands;version="0.0.0",
  org.eclipse.emf.edit.ui.action;version="0.0.0",

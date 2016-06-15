@@ -2,12 +2,12 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: EMFForms SWT Util RAP
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.util.swt.rap
-Bundle-Version: 1.10.0.qualifier
+Bundle-Version: 2.0.0.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.view.internal.util.swt.rap.Activator
 Bundle-Vendor: Eclipse Modeling Project
 Export-Package: org.eclipse.emf.ecp.view.internal.util.swt.rap;version="1.10.0";x-internal:=true
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
- org.eclipse.emf.ecp.view.util.swt;bundle-version="[1.10.0,2.0.0)",
+ org.eclipse.emf.ecp.view.util.swt;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.rap.rwt;bundle-version="[2.2.0,4.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.osgi.framework;version="1.3.0"

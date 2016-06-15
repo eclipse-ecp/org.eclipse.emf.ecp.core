@@ -2,9 +2,9 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Model Quick Fix Test
 Bundle-SymbolicName: org.eclipse.emf.ecp.quickfix.test
-Bundle-Version: 1.10.0.qualifier
+Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
-Fragment-Host: org.eclipse.emf.ecp.quickfix;bundle-version="[1.10.0,2.0.0)"
+Fragment-Host: org.eclipse.emf.ecp.quickfix;bundle-version="[2.0.0,3.0.0)"
 Export-Package: org.eclipse.emf.ecp.ui.quickfix.test;version="1.10.0";x-internal:=true
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.emf.common;bundle-version="[2.7.0,3.0.0)",

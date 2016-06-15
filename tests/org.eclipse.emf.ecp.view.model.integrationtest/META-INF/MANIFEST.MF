@@ -2,25 +2,25 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Integrationtest
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.model.integrationtest
-Bundle-Version: 1.10.0.qualifier
+Bundle-Version: 2.0.0.qualifier
 Export-Package: org.eclipse.emf.ecp.view.model.integrationtest;version="1.10.0";x-internal:=true
 Require-Bundle: org.junit;bundle-version="[4.0.0,5.0.0)",
  org.eclipse.emf.edit;bundle-version="[2.8.0,3.0.0)",
  org.eclipse.emf.ecp.view.model.edit;bundle-version="[2.0.0,3.0.0)",
- org.eclipse.emf.ecp.common;bundle-version="[1.10.0,2.0.0)",
+ org.eclipse.emf.ecp.common;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.emf.ecp.view.model;bundle-version="[2.0.0,3.0.0)",
- org.eclipse.emf.ecp.view.groupedgrid.model;bundle-version="[1.10.0,2.0.0)",
- org.eclipse.emf.ecp.view.label.model;bundle-version="[1.10.0,2.0.0)",
- org.eclipse.emf.ecp.view.rule.model;bundle-version="[1.10.0,2.0.0)",
- org.eclipse.emf.ecp.view.group.model;bundle-version="[1.10.0,2.0.0)",
- org.eclipse.emf.ecp.view.table.model;bundle-version="[1.10.0,2.0.0)",
- org.eclipse.emf.ecp.view.categorization.model;bundle-version="[1.10.0,2.0.0)",
- org.eclipse.emf.ecp.view.horizontal.model;bundle-version="[1.10.0,2.0.0)",
- org.eclipse.emf.ecp.view.vertical.model;bundle-version="[1.10.0,2.0.0)",
- org.eclipse.emf.ecp.view.viewproxy.model;bundle-version="[1.10.0,2.0.0)",
- org.eclipse.emf.ecp.view.stack.model;bundle-version="[1.10.0,2.0.0)",
- org.eclipse.emf.ecp.view.section.model;bundle-version="[1.10.0,2.0.0)",
- org.eclipse.emf.ecp.view.treemasterdetail.model;bundle-version="[1.10.0,2.0.0)",
- org.eclipse.emf.ecp.view.compoundcontrol.model;bundle-version="[1.10.0,2.0.0)",
- org.eclipse.emf.ecp.view.custom.model;bundle-version="[1.10.0,2.0.0)"
+ org.eclipse.emf.ecp.view.groupedgrid.model;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emf.ecp.view.label.model;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emf.ecp.view.rule.model;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emf.ecp.view.group.model;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emf.ecp.view.table.model;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emf.ecp.view.categorization.model;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emf.ecp.view.horizontal.model;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emf.ecp.view.vertical.model;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emf.ecp.view.viewproxy.model;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emf.ecp.view.stack.model;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emf.ecp.view.section.model;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emf.ecp.view.treemasterdetail.model;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emf.ecp.view.compoundcontrol.model;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emf.ecp.view.custom.model;bundle-version="[2.0.0,3.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6

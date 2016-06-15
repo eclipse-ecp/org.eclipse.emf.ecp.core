@@ -2,12 +2,12 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Default Domain Expander
 Bundle-SymbolicName: org.eclipse.emfforms.core.services.domainexpander.default
-Bundle-Version: 1.10.0.qualifier
+Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
 Export-Package: org.eclipse.emfforms.internal.core.services.domainexpander.defaultheuristic;version="1.10.0";x-internal:=true
-Require-Bundle: org.eclipse.emfforms.common;bundle-version="[1.10.0,2.0.0)",
- org.eclipse.emfforms.core.services;bundle-version="[1.10.0,2.0.0)",
- org.eclipse.emf.ecp.common;bundle-version="[1.10.0,2.0.0)"
+Require-Bundle: org.eclipse.emfforms.common;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emfforms.core.services;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emf.ecp.common;bundle-version="[2.0.0,3.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.osgi.service.component.annotations;version="0.0.0"
 Service-Component: OSGI-INF/EMFFormsDomainExpanderDefaultHeuristic.xml,OSGI-INF/EMFFormsDomainExpanderImpl.xml

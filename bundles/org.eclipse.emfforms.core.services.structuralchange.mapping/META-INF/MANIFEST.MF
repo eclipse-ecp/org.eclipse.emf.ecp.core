@@ -2,11 +2,11 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: EMFForms StructuralChange Mapping
 Bundle-SymbolicName: org.eclipse.emfforms.core.services.structuralchange.mapping
-Bundle-Version: 1.10.0.qualifier
+Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
 Export-Package: org.eclipse.emfforms.internal.core.services.structuralchange.mapping;version="1.10.0";x-internal:=true
 Require-Bundle: org.eclipse.emf.ecore;bundle-version="[2.7.0,3.0.0)",
- org.eclipse.emf.ecp.view.mappingdmr.model;bundle-version="[1.10.0,2.0.0)"
+ org.eclipse.emf.ecp.view.mappingdmr.model;bundle-version="[2.0.0,3.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.eclipse.emf.ecp.common.spi.asserts;version="[1.10.0,2.0.0)",
  org.eclipse.emfforms.spi.core.services.structuralchange;version="[1.10.0,2.0.0)",
