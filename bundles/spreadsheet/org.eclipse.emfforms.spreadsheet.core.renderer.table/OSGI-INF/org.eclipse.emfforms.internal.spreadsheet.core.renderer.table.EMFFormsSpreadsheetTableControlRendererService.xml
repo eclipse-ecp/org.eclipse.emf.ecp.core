@@ -4,10 +4,10 @@
       <provide interface="EMFFormsSpreadsheetRendererService"/>
    </service>
    <reference bind="setConverterRegistry" interface="EMFFormsSpreadsheetValueConverterRegistry" name="ConverterRegistry"/>
-   <reference bind="setEMFFormsDomainExpander" interface="EMFFormsDomainExpander" name="EMFFormsDomainExpander"/>
+   <reference bind="setEMFFormsDomainExpander" interface="org.eclipse.emfforms.spi.core.services.domainexpander.EMFFormsDomainExpander" name="EMFFormsDomainExpander"/>
    <reference bind="setEmfFormsIdProvider" interface="EMFFormsIdProvider" name="EmfFormsIdProvider"/>
    <reference bind="setEmfformsDatabinding" interface="org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF" name="EmfformsDatabinding"/>
-   <reference bind="setEmfformsLabelProvider" interface="EMFFormsLabelProvider" name="EmfformsLabelProvider"/>
+   <reference bind="setEmfformsLabelProvider" interface="org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider" name="EmfformsLabelProvider"/>
    <reference bind="setFormatDescriptionProvider" interface="EMFFormsSpreadsheetFormatDescriptionProvider" name="FormatDescriptionProvider"/>
    <reference bind="setReportService" interface="org.eclipse.emfforms.spi.common.report.ReportService" name="ReportService"/>
    <reference bind="setVTViewTemplateProvider" interface="VTViewTemplateProvider" name="VTViewTemplateProvider"/>
