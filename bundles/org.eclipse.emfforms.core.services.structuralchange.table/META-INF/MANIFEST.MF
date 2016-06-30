@@ -4,7 +4,7 @@ Bundle-Name: EMFForms Structural Change Tester Table
 Bundle-SymbolicName: org.eclipse.emfforms.core.services.structuralchange.table
 Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emfforms.internal.core.services.structuralchange.table;version="1.7.0";x-internal:=true
+Export-Package: org.eclipse.emfforms.internal.core.services.structuralchange.table;version="2.0.0";x-internal:=true
 Require-Bundle: org.eclipse.emf.ecp.common;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.emf.ecp.view.table.model;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.emfforms.core.services;bundle-version="[2.0.0,3.0.0)",

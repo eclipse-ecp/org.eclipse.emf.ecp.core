@@ -4,8 +4,8 @@ Bundle-Name: EMFForms SWT Util
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.util.swt
 Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emf.ecp.view.internal.util.swt;version="1.11.0";x-internal:=true,
- org.eclipse.emf.ecp.view.spi.util.swt;version="1.11.0"
+Export-Package: org.eclipse.emf.ecp.view.internal.util.swt;version="2.0.0";x-internal:=true,
+ org.eclipse.emf.ecp.view.spi.util.swt;version="2.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Service-Component: OSGI-INF/rcpImageRegistry.xml
 Import-Package: org.eclipse.jface.resource;version="0.0.0",

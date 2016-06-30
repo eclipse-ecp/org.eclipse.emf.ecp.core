@@ -4,10 +4,10 @@ Bundle-Name: EMFForms Core Services Legacy Tests
 Bundle-SymbolicName: org.eclipse.emfforms.core.services.legacy.tests;singleton:=true
 Bundle-Version: 2.0.0.qualifier
 Fragment-Host: org.eclipse.emfforms.core.services.legacy;bundle-version="[2.0.0,3.0.0)"
-Export-Package: org.eclipse.emfforms.core.services.legacy.tests;version="1.11.0";x-internal:=true,
- org.eclipse.emfforms.internal.core.services.legacy;version="1.11.0";x-internal:=true
+Export-Package: org.eclipse.emfforms.core.services.legacy.tests;version="2.0.0";x-internal:=true,
+ org.eclipse.emfforms.internal.core.services.legacy;version="2.0.0";x-internal:=true
 Require-Bundle: org.junit;bundle-version="[4.11.0,5.0.0)",
  org.mockito.mockito-core-hamcrest-modified;bundle-version="[1.9.5,2.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Import-Package: org.eclipse.emfforms.common;version="[1.11.0,1.12.0)",
+Import-Package: org.eclipse.emfforms.common;version="[2.0.0,3.0.0)",
  org.osgi.framework;version="[1.3.0,2.0.0)"

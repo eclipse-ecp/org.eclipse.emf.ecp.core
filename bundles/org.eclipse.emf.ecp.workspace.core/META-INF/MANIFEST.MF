@@ -5,7 +5,7 @@ Bundle-SymbolicName: org.eclipse.emf.ecp.workspace.core;singleton:=true
 Bundle-Version: 2.0.0.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.workspace.internal.core.Activator
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emf.ecp.workspace.internal.core;version="1.11.0";x-friends:="org.eclipse.emf.ecp.workspace.ui,org.eclipse.emf.ecp.ui.view.editor.controls"
+Export-Package: org.eclipse.emf.ecp.workspace.internal.core;version="2.0.0";x-friends:="org.eclipse.emf.ecp.workspace.ui,org.eclipse.emf.ecp.ui.view.editor.controls"
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.core.resources;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.emf.ecp.core;bundle-version="[2.0.0,3.0.0)",

@@ -4,7 +4,7 @@ Bundle-Name: EMFForms Categorization renderer using an Expandbar
 Bundle-SymbolicName: org.eclipse.emfforms.swt.categorization.expandbar
 Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emfforms.internal.swt.categorization.expandbar;version="1.11.0";x-internal:=true
+Export-Package: org.eclipse.emfforms.internal.swt.categorization.expandbar;version="2.0.0";x-internal:=true
 Require-Bundle: org.eclipse.emf.ecp.view.categorization.model;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.emfforms.swt.core;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.emf.ecp.ui.view;bundle-version="[2.0.0,3.0.0)",
@@ -16,13 +16,13 @@ Require-Bundle: org.eclipse.emf.ecp.view.categorization.model;bundle-version="[2
  org.eclipse.emf.databinding.edit;bundle-version="[1.2.0,2.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Import-Package: javax.inject;version="[1.0.0,2.0.0)",
- org.eclipse.emf.ecp.edit.internal.swt.util;version="[1.11.0,1.12.0)",
- org.eclipse.emf.ecp.edit.spi.swt.util;version="[1.11.0,1.12.0)",
- org.eclipse.emf.ecp.view.spi.swt.reporting;version="[1.11.0,1.12.0)",
- org.eclipse.emf.ecp.view.template.model;version="[1.11.0,1.12.0)",
- org.eclipse.emf.ecp.view.template.style.validation.model;version="[1.11.0,1.12.0)",
+ org.eclipse.emf.ecp.edit.internal.swt.util;version="[2.0.0,3.0.0)",
+ org.eclipse.emf.ecp.edit.spi.swt.util;version="[2.0.0,3.0.0)",
+ org.eclipse.emf.ecp.view.spi.swt.reporting;version="[2.0.0,3.0.0)",
+ org.eclipse.emf.ecp.view.template.model;version="[2.0.0,3.0.0)",
+ org.eclipse.emf.ecp.view.template.style.validation.model;version="[2.0.0,3.0.0)",
  org.eclipse.emf.edit.ui.provider;version="0.0.0",
- org.eclipse.emfforms.spi.swt.core.di;version="[1.11.0,1.12.0)",
+ org.eclipse.emfforms.spi.swt.core.di;version="[2.0.0,3.0.0)",
  org.eclipse.jface.databinding.swt;version="0.0.0",
  org.eclipse.jface.layout;version="0.0.0",
  org.eclipse.jface.resource;version="0.0.0",

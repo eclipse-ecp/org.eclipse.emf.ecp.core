@@ -5,9 +5,9 @@ Bundle-SymbolicName: org.eclipse.emfforms.editor.genmodel;singleton:=true
 Bundle-Version: 2.0.0.qualifier
 Bundle-Activator: org.eclipse.emfforms.internal.editor.genmodel.Activator
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emfforms.internal.editor.genmodel;version="1.11.0";x-internal:=true;uses:="org.eclipse.emfforms.spi.editor",
- org.eclipse.emfforms.internal.editor.genmodel.service;version="1.11.0";x-internal:=true,
- org.eclipse.emfforms.internal.editor.genmodel.toolbaractions;version="1.11.0";x-internal:=true,
+Export-Package: org.eclipse.emfforms.internal.editor.genmodel;version="2.0.0";x-internal:=true;uses:="org.eclipse.emfforms.spi.editor",
+ org.eclipse.emfforms.internal.editor.genmodel.toolbaractions;version="2.0.0";x-internal:=true,
+ org.eclipse.emfforms.internal.editor.genmodel.util;version="2.0.0";x-internal:=true
 Require-Bundle: org.eclipse.emf.ecp.view.model.provider.xmi;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.emfforms.editor;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.emfforms.editor;bundle-version="[1.11.0,1.12.0)",

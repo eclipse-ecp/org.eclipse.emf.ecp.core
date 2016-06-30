@@ -5,12 +5,12 @@ Bundle-SymbolicName: org.eclipse.emf.ecp.view.table.columnservice;singleton:=tru
 Bundle-Version: 2.0.0.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.view.internal.table.columnservice.Activator
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emf.ecp.view.internal.table.columnservice;version="1.11.0";x-friends:="org.eclipse.emf.ecp.view.table.ui.swt.test"
+Export-Package: org.eclipse.emf.ecp.view.internal.table.columnservice;version="2.0.0";x-friends:="org.eclipse.emf.ecp.view.table.ui.swt.test"
 Require-Bundle: org.eclipse.emf.ecp.view.context;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.emf.ecp.view.table.model;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.core.runtime;bundle-version="[3.8.0,4.0.0)",
  org.eclipse.emfforms.core.services;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.core.databinding.property;bundle-version="[1.4.0,2.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Import-Package: org.eclipse.emfforms.spi.common.report;version="[1.11.0,1.12.0)"
+Import-Package: org.eclipse.emfforms.spi.common.report;version="[2.0.0,3.0.0)"
 Bundle-ActivationPolicy: lazy
