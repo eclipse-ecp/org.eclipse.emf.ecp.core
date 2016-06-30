@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="StructuralChangeTesterDefault">
-   <implementation class="org.eclipse.emfforms.internal.core.services.structuralchange.defaultheuristic.StructuralChangeTesterDefault"/>
-   <service>
-      <provide interface="org.eclipse.emfforms.spi.core.services.structuralchange.StructuralChangeTesterInternal"/>
-   </service>
-</scr:component>
