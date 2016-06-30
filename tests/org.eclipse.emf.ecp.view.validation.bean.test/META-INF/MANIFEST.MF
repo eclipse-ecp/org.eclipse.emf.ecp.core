@@ -10,10 +10,10 @@ Bundle-ClassPath: .,
 Bundle-Vendor: %providerName
 Fragment-Host: org.eclipse.emf.ecp.view.validation.bean.default;bundle-version="[2.0.0,3.0.0)"
 Bundle-Localization: plugin
-Export-Package: car;version="1.10.0";x-internal:=true,
- car.impl;version="1.10.0";x-internal:=true,
- car.util;version="1.10.0";x-internal:=true,
- org.eclipse.emf.ecp.view.validation.bean.test;version="1.10.0";x-internal:=true
+Export-Package: car;version="2.0.0";x-internal:=true,
+ car.impl;version="2.0.0";x-internal:=true,
+ car.util;version="2.0.0";x-internal:=true,
+ org.eclipse.emf.ecp.view.validation.bean.test;version="2.0.0";x-internal:=true
 Require-Bundle: org.junit;bundle-version="[4.0.0,5.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy

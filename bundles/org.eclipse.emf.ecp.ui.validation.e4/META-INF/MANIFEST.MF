@@ -4,8 +4,8 @@ Bundle-Name: ECP UI Validation E4
 Bundle-SymbolicName: org.eclipse.emf.ecp.ui.validation.e4;singleton:=true
 Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emf.ecp.ui.validation.e4.handler;version="1.10.0";x-internal:=true,
- org.eclipse.emf.ecp.ui.validation.e4.view;version="1.10.0";x-internal:=true
+Export-Package: org.eclipse.emf.ecp.ui.validation.e4.handler;version="2.0.0";x-internal:=true,
+ org.eclipse.emf.ecp.ui.validation.e4.view;version="2.0.0";x-internal:=true
 Require-Bundle: org.eclipse.e4.ui.workbench.swt;bundle-version="[0.10.0,1.0.0)",
  org.eclipse.e4.ui.workbench;bundle-version="[0.10.0,2.0.0)",
  org.eclipse.emf.ecp.ui.validation;bundle-version="[2.0.0,3.0.0)",

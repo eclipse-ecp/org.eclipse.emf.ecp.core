@@ -5,8 +5,8 @@ Bundle-SymbolicName: org.eclipse.emf.ecp.view.model.project.installer;singleton:
 Bundle-Version: 2.0.0.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.view.model.internal.project.installer.Activator
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emf.ecp.view.model.internal.project.handlers;version="1.10.0";x-internal:=true,
- org.eclipse.emf.ecp.view.model.internal.project.installer;version="1.10.0";x-internal:=true
+Export-Package: org.eclipse.emf.ecp.view.model.internal.project.handlers;version="2.0.0";x-internal:=true,
+ org.eclipse.emf.ecp.view.model.internal.project.installer;version="2.0.0";x-internal:=true
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.emf.ecp.view.model.editor;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.emf.ecp.edit.swt;bundle-version="[2.0.0,3.0.0)",

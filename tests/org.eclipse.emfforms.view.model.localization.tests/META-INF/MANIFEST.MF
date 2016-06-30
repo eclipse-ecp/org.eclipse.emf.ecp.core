@@ -5,11 +5,11 @@ Bundle-SymbolicName: org.eclipse.emfforms.view.model.localization.tests
 Bundle-Version: 2.0.0.qualifier
 Fragment-Host: org.eclipse.emfforms.view.model.localization;bundle-version="[2.0.0,3.0.0)"
 Bundle-Localization: OSGI-INF/l10n/bundle
-Export-Package: org.eclipse.emfforms.internal.view.model.localization;version="1.10.0";x-internal:=true,
- org.eclipse.emfforms.view.model.localization.tests;version="1.10.0"
+Export-Package: org.eclipse.emfforms.internal.view.model.localization;version="2.0.0";x-internal:=true,
+ org.eclipse.emfforms.view.model.localization.tests;version="2.0.0"
 Require-Bundle: org.junit;bundle-version="[4.11.0,5.0.0)",
  org.mockito.mockito-core-hamcrest-modified;bundle-version="[1.9.5,2.0.0)",
  org.eclipse.emf.ecp.view.vertical.model;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.equinox.ds;bundle-version="[1.4.0,2.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Import-Package: org.eclipse.emfforms.spi.localization;version="[1.10.0,2.0.0)"
+Import-Package: org.eclipse.emfforms.spi.localization;version="[2.0.0,3.0.0)"

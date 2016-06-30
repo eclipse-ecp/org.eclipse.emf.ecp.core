@@ -4,7 +4,7 @@ Bundle-Name: Tests for the TreeMasterDetail Renderer
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.test
 Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.test;version="1.10.0";x-internal:=true
+Export-Package: org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.test;version="2.0.0";x-internal:=true
 Require-Bundle: org.eclipse.emf.emfstore.examplemodel;bundle-version="[1.4.0,2.0.0)",
  org.eclipse.emf.ecore;bundle-version="[2.5.0,3.0.0)",
  org.eclipse.emf.ecp.view.model;bundle-version="[2.0.0,3.0.0)",

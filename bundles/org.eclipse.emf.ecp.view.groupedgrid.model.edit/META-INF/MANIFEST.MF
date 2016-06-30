@@ -7,7 +7,7 @@ Bundle-ClassPath: .
 Bundle-Activator: org.eclipse.emf.ecp.view.spi.groupedgrid.model.provider.GroupedGridEditPlugin$Implementation
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Export-Package: org.eclipse.emf.ecp.view.spi.groupedgrid.model.provider;version="1.10.0"
+Export-Package: org.eclipse.emf.ecp.view.spi.groupedgrid.model.provider;version="2.0.0"
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
  org.eclipse.emf.edit;bundle-version="[2.7.0,3.0.0)";visibility:=reexport,
  org.eclipse.emf.ecore;bundle-version="[2.7.0,3.0.0)";visibility:=reexport,

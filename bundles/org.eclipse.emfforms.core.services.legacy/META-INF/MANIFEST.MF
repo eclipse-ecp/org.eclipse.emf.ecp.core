@@ -4,14 +4,14 @@ Bundle-Name: EMFForms Core Services Legacy
 Bundle-SymbolicName: org.eclipse.emfforms.core.services.legacy;singleton:=true
 Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emfforms.internal.core.services.legacy;version="1.10.0";x-internal:=true
+Export-Package: org.eclipse.emfforms.internal.core.services.legacy;version="2.0.0";x-internal:=true
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.10.0,4.0.0)",
  org.eclipse.emf.ecp.view.context;bundle-version="[2.0.0,3.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Import-Package: org.eclipse.emf.ecp.view.spi.context;version="[1.10.0,2.0.0)",
- org.eclipse.emf.ecp.view.spi.model;version="[1.10.0,2.0.0)",
- org.eclipse.emfforms.spi.common.report;version="[1.10.0,2.0.0)",
- org.eclipse.emfforms.spi.core.services.view;version="[1.10.0,2.0.0)",
+Import-Package: org.eclipse.emf.ecp.view.spi.context;version="[2.0.0,3.0.0)",
+ org.eclipse.emf.ecp.view.spi.model;version="[2.0.0,3.0.0)",
+ org.eclipse.emfforms.spi.common.report;version="[2.0.0,3.0.0)",
+ org.eclipse.emfforms.spi.core.services.view;version="[2.0.0,3.0.0)",
  org.osgi.service.component.annotations;version="[1.1.0,2.0.0)";resolution:=optional
 Service-Component: OSGI-INF/org.eclipse.emfforms.internal.core.services.legacy.EMFFormsLegacyServicesManagerImpl.xml
 Bundle-ActivationPolicy: lazy

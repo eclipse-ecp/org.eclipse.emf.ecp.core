@@ -4,7 +4,7 @@ Bundle-Name: Dynamic Containment Tree Tests
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.dynamictree.model.test;singleton:=true
 Bundle-Version: 2.0.0.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.view.dynamictree.model.test.Activator
-Export-Package: org.eclipse.emf.ecp.view.dynamictree.model.test;version="1.10.0";
+Export-Package: org.eclipse.emf.ecp.view.dynamictree.model.test;version="2.0.0";
   uses:="org.eclipse.emf.ecore,
    org.eclipse.core.databinding,
    org.eclipse.emf.ecp.view.context,

@@ -4,7 +4,7 @@ Bundle-Name: ViewModel Editor based on EMFForms
 Bundle-SymbolicName: org.eclipse.emfforms.editor.viewmodel;singleton:=true
 Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emfforms.internal.editor.viewmodel;version="1.10.0";x-friends:="org.eclipse.emf.ecp.view.model.preview.e3"
+Export-Package: org.eclipse.emfforms.internal.editor.viewmodel;version="2.0.0";x-friends:="org.eclipse.emf.ecp.view.model.preview.e3"
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.emf.ecp.view.model.preview.common;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.emf.ecp.view.model;bundle-version="[2.0.0,3.0.0)",

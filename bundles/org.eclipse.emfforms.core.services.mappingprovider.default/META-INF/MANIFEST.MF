@@ -4,11 +4,11 @@ Bundle-Name: EMFForms Mapping Provider Default Heuristic
 Bundle-SymbolicName: org.eclipse.emfforms.core.services.mappingprovider.default
 Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emfforms.internal.core.services.mappingprovider.defaultheuristic;version="1.7.0";x-internal:=true
+Export-Package: org.eclipse.emfforms.internal.core.services.mappingprovider.defaultheuristic;version="2.0.0";x-internal:=true
 Require-Bundle: org.eclipse.emfforms.core.services;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.emf.ecp.common;bundle-version="[2.0.0,3.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Import-Package: org.eclipse.emfforms.spi.core.services.databinding.emf;version="[1.10.0,2.0.0)",
+Import-Package: org.eclipse.emfforms.spi.core.services.databinding.emf;version="[2.0.0,3.0.0)",
  org.osgi.service.component.annotations;version="0.0.0"
 Service-Component: OSGI-INF/EMFFormsMappingProviderDefaultHeuristic.xml
 Bundle-ActivationPolicy: lazy

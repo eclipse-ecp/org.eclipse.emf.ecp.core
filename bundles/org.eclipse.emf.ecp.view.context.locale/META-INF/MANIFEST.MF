@@ -4,7 +4,7 @@ Bundle-Name: EMF Forms Locale View Service
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.context.locale;singleton:=true
 Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emf.ecp.view.context.internal.locale;version="1.10.0";x-internal:=true
+Export-Package: org.eclipse.emf.ecp.view.context.internal.locale;version="2.0.0";x-internal:=true
 Require-Bundle: org.eclipse.emf.ecp.view.context;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.emf.ecp.edit;bundle-version="[2.0.0,3.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6

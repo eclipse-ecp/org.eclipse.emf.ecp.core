@@ -4,11 +4,11 @@ Bundle-Name: Ecore Editor based on EMFForms
 Bundle-SymbolicName: org.eclipse.emfforms.editor.ecore;singleton:=true
 Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emfforms.internal.editor.ecore;version="1.10.0";x-internal:=true,
- org.eclipse.emfforms.internal.editor.ecore.actions;version="1.10.0";x-internal:=true,
- org.eclipse.emfforms.internal.editor.ecore.controls;version="1.10.0";x-internal:=true,
- org.eclipse.emfforms.internal.editor.ecore.helpers;version="1.10.0";x-internal:=true,
- org.eclipse.emfforms.internal.editor.ecore.referenceservices;version="1.10.0";x-internal:=true
+Export-Package: org.eclipse.emfforms.internal.editor.ecore;version="2.0.0";x-internal:=true,
+ org.eclipse.emfforms.internal.editor.ecore.actions;version="2.0.0";x-internal:=true,
+ org.eclipse.emfforms.internal.editor.ecore.controls;version="2.0.0";x-internal:=true,
+ org.eclipse.emfforms.internal.editor.ecore.helpers;version="2.0.0";x-internal:=true,
+ org.eclipse.emfforms.internal.editor.ecore.referenceservices;version="2.0.0";x-internal:=true
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.1.0,4.0.0)",
  org.eclipse.emf.ecp.edit.swt;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.emf.ecp.view.template.model;bundle-version="[2.0.0,3.0.0)",
@@ -37,8 +37,8 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.1.0,4.0.0)",
  org.eclipse.emfforms.swt.treemasterdetail.decorator.validation.default;bundle-version="[2.0.0,3.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: javax.inject;version="1.0.0",
- org.eclipse.emfforms.internal.editor.ecore.controls;version="[1.10.0,2.0.0)",
- org.eclipse.emfforms.spi.swt.core.di;version="[1.10.0,2.0.0)";resolution:=optional,
+ org.eclipse.emfforms.internal.editor.ecore.controls;version="[2.0.0,3.0.0)",
+ org.eclipse.emfforms.spi.swt.core.di;version="[2.0.0,3.0.0)";resolution:=optional,
  org.osgi.service.component.annotations;version="[1.2.0,2.0.0)";resolution:=optional
 Service-Component: OSGI-INF/InstanceTypeNameSWTRendererService.xml,OSGI-INF/dataTypeControlService.xml,OSGI-INF/eenumLiteralControlService.xml,OSGI-INF/org.eclipse.emfforms.internal.editor.ecore.controls.LinkOnlyMultiReferenceRendererService.xml,OSGI-INF/typedElementBoundsControlService.xml
 Bundle-ActivationPolicy: lazy

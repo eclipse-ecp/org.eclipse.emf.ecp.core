@@ -5,16 +5,16 @@ Bundle-SymbolicName: org.eclipse.emf.ecp.ui;singleton:=true
 Bundle-Version: 2.0.0.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.internal.ui.Activator
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emf.ecp.internal.ui;version="1.10.0";
+Export-Package: org.eclipse.emf.ecp.internal.ui;version="2.0.0";
   x-friends:="org.eclipse.emf.ecp.explorereditorbridge,
    org.eclipse.emf.ecp.edit.ecore.swt,
    org.eclipse.emf.ecp.emfstore.ui,
    org.eclipse.emf.ecp.ui.rcp",
- org.eclipse.emf.ecp.internal.ui.composites;version="1.10.0";x-internal:=true,
- org.eclipse.emf.ecp.internal.ui.dialogs;version="1.10.0";x-friends:="org.eclipse.emf.ecp.explorereditorbridge",
- org.eclipse.emf.ecp.internal.ui.model;version="1.10.0";x-friends:="org.eclipse.emf.ecp.ui.e4,org.eclipse.emf.ecp.ui.e3,org.eclipse.emf.ecp.ui.transaction",
- org.eclipse.emf.ecp.internal.ui.tester;version="1.10.0",
- org.eclipse.emf.ecp.internal.ui.util;version="1.10.0";
+ org.eclipse.emf.ecp.internal.ui.composites;version="2.0.0";x-internal:=true,
+ org.eclipse.emf.ecp.internal.ui.dialogs;version="2.0.0";x-friends:="org.eclipse.emf.ecp.explorereditorbridge",
+ org.eclipse.emf.ecp.internal.ui.model;version="2.0.0";x-friends:="org.eclipse.emf.ecp.ui.e4,org.eclipse.emf.ecp.ui.e3,org.eclipse.emf.ecp.ui.transaction",
+ org.eclipse.emf.ecp.internal.ui.tester;version="2.0.0",
+ org.eclipse.emf.ecp.internal.ui.util;version="2.0.0";
   x-friends:="org.eclipse.emf.ecp.explorereditorbridge,
    org.eclipse.emf.ecp.ui.e3,
    org.eclipse.emf.ecp.ui.e4,
@@ -22,17 +22,17 @@ Export-Package: org.eclipse.emf.ecp.internal.ui;version="1.10.0";
    org.eclipse.emf.ecp.validationvieweditorbridge,
    org.eclipse.emf.ecp.emfstore.ui,
    org.eclipse.emf.ecp.ui.rcp",
- org.eclipse.emf.ecp.internal.wizards;version="1.10.0";
+ org.eclipse.emf.ecp.internal.wizards;version="2.0.0";
   x-friends:="org.eclipse.emf.ecp.edit.ecore.swt,
    org.eclipse.emf.ecp.explorereditorbridge,
    org.eclipse.emf.ecp.workspace.ui,
    org.eclipse.emf.ecp.view.table.editor,
    org.eclipse.emf.ecp.emfstore.ui",
- org.eclipse.emf.ecp.internal.wizards.page;version="1.10.0";x-friends:="org.eclipse.emf.ecp.explorereditorbridge",
- org.eclipse.emf.ecp.spi.ui;version="1.10.0",
- org.eclipse.emf.ecp.spi.ui.util;version="1.10.0",
- org.eclipse.emf.ecp.ui;version="1.10.0",
- org.eclipse.emf.ecp.ui.common;version="1.10.0";
+ org.eclipse.emf.ecp.internal.wizards.page;version="2.0.0";x-friends:="org.eclipse.emf.ecp.explorereditorbridge",
+ org.eclipse.emf.ecp.spi.ui;version="2.0.0",
+ org.eclipse.emf.ecp.spi.ui.util;version="2.0.0",
+ org.eclipse.emf.ecp.ui;version="2.0.0",
+ org.eclipse.emf.ecp.ui.common;version="2.0.0";
   x-friends:="org.eclipse.emf.ecp.edit.ecore.swt,
    org.eclipse.emf.ecp.explorereditorbridge,
    org.eclipse.emf.ecp.ui.e3,
@@ -40,8 +40,8 @@ Export-Package: org.eclipse.emf.ecp.internal.ui;version="1.10.0";
    org.eclipse.emf.ecp.view.ui.editor.test,
    org.eclipse.emf.ecp.workspace.ui,
    org.eclipse.emf.ecp.ui.e4",
- org.eclipse.emf.ecp.ui.common.dnd;version="1.10.0";x-friends:="org.eclipse.emf.ecp.ui.view.editor.controls",
- org.eclipse.emf.ecp.ui.util;version="1.10.0"
+ org.eclipse.emf.ecp.ui.common.dnd;version="2.0.0";x-friends:="org.eclipse.emf.ecp.ui.view.editor.controls",
+ org.eclipse.emf.ecp.ui.util;version="2.0.0"
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.emf.ecp.core;bundle-version="[2.0.0,3.0.0)";visibility:=reexport,
  org.eclipse.net4j.util;bundle-version="[3.0.0,4.0.0)",

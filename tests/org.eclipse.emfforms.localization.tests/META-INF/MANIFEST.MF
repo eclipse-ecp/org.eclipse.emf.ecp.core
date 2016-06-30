@@ -4,8 +4,8 @@ Bundle-Name: EMF Forms Localization Tests
 Bundle-SymbolicName: org.eclipse.emfforms.localization.tests
 Bundle-Version: 2.0.0.qualifier
 Fragment-Host: org.eclipse.emfforms.localization;bundle-version="[2.0.0,3.0.0)"
-Export-Package: org.eclipse.emfforms.internal.localization.tests;version="1.10.0";x-internal:=true,
- org.eclipse.emfforms.spi.localization;version="1.10.0"
+Export-Package: org.eclipse.emfforms.internal.localization.tests;version="2.0.0";x-internal:=true,
+ org.eclipse.emfforms.spi.localization;version="2.0.0"
 Require-Bundle: org.junit;bundle-version="4.11.0",
  org.mockito.mockito-core-hamcrest-modified;bundle-version="1.9.5",
  org.eclipse.equinox.ds;bundle-version="[1.4.0,2.0.0)"

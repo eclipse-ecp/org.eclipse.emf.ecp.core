@@ -4,8 +4,8 @@ Bundle-Name: EMFForms Control Grid SWT Renderer
 Bundle-SymbolicName: org.eclipse.emfforms.swt.controlgrid
 Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emfforms.internal.swt.controlgrid.renderer;version="1.10.0";x-internal:=true,
- org.eclipse.emfforms.spi.swt.controlgrid.renderer;version="1.10.0"
+Export-Package: org.eclipse.emfforms.internal.swt.controlgrid.renderer;version="2.0.0";x-internal:=true,
+ org.eclipse.emfforms.spi.swt.controlgrid.renderer;version="2.0.0"
 Require-Bundle: org.eclipse.emfforms.view.controlgrid.model;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.emfforms.swt.core;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.emf.ecp.ui.view;bundle-version="[2.0.0,3.0.0)",
@@ -14,7 +14,7 @@ Require-Bundle: org.eclipse.emfforms.view.controlgrid.model;bundle-version="[2.0
  org.eclipse.emf.ecp.ui.view.swt;bundle-version="[2.0.0,3.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: javax.inject;version="1.0.0",
- org.eclipse.emfforms.spi.swt.core.di;version="[1.10.0,2.0.0)",
+ org.eclipse.emfforms.spi.swt.core.di;version="[2.0.0,3.0.0)",
  org.eclipse.jface.layout;version="0.0.0",
  org.eclipse.swt;version="0.0.0",
  org.eclipse.swt.layout;version="0.0.0",

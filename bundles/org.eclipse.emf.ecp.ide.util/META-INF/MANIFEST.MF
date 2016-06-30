@@ -5,8 +5,8 @@ Bundle-SymbolicName: org.eclipse.emf.ecp.ide.util;singleton:=true
 Bundle-Version: 2.0.0.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.ide.util.Activator
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emf.ecp.ide.util;version="1.10.0";x-internal:=true,
- org.eclipse.emf.ecp.internal.ide.util;version="1.10.0";
+Export-Package: org.eclipse.emf.ecp.ide.util;version="2.0.0";x-internal:=true,
+ org.eclipse.emf.ecp.internal.ide.util;version="2.0.0";
   x-friends:="org.eclipse.emf.ecp.ecore.ui,
    org.eclipse.emf.ecp.ide.editor.view,
    org.eclipse.emf.ecp.ide.view.service,

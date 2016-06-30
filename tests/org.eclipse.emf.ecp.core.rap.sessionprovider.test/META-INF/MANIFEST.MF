@@ -4,7 +4,7 @@ Bundle-Name: ECP Core Rap Sessionprovider Test
 Bundle-SymbolicName: org.eclipse.emf.ecp.core.rap.sessionprovider.test
 Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emf.ecp.core.rap.sessionprovider.test;version="1.10.0"
+Export-Package: org.eclipse.emf.ecp.core.rap.sessionprovider.test;version="2.0.0"
 Require-Bundle: org.eclipse.emf.ecp.core.rap;bundle-version="[2.0.0,3.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.eclipse.rap.rwt.service;version="0.0.0"

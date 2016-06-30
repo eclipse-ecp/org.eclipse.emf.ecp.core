@@ -5,7 +5,7 @@ Bundle-SymbolicName: org.eclipse.emf.ecp.cdo.core;singleton:=true
 Bundle-Version: 2.0.0.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.cdo.internal.core.Activator
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emf.ecp.cdo.internal.core;version="1.10.0";x-friends:="org.eclipse.emf.ecp.cdo.ui"
+Export-Package: org.eclipse.emf.ecp.cdo.internal.core;version="2.0.0";x-friends:="org.eclipse.emf.ecp.cdo.ui"
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)";visibility:=reexport,
  org.eclipse.emf.ecp.core;bundle-version="[2.0.0,3.0.0)";visibility:=reexport,
  org.eclipse.emf.cdo.net4j;bundle-version="[4.1.0,5.0.0)",
