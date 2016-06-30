@@ -23,7 +23,8 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
-import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
@@ -52,9 +53,11 @@ public class ViewProvider implements IViewProvider {
 		for (final EStructuralFeature feature : getValidFeatures(delegator, eObject)) {
 
 			final VControl control = VViewFactory.eINSTANCE.createControl();
-			final VFeaturePathDomainModelReference modelReference = VViewFactory.eINSTANCE
-				.createFeaturePathDomainModelReference();
-			modelReference.setDomainModelEFeature(feature);
+			final VDomainModelReference modelReference = VViewFactory.eINSTANCE.createDomainModelReference();
+			final VFeatureDomainModelReferenceSegment featureSegment = VViewFactory.eINSTANCE
+				.createFeatureDomainModelReferenceSegment();
+			featureSegment.setDomainModelFeature(feature.getName());
+			modelReference.getSegments().add(featureSegment);
 			control.setDomainModelReference(modelReference);
 			control.setReadonly(isReadOnly(delegator, eObject, feature));
 			control.setUuid(generateId(eObject.eClass(), feature));
