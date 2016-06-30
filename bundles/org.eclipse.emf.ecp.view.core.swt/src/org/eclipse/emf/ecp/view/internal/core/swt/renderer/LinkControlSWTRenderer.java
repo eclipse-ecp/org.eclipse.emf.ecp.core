@@ -219,7 +219,8 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 
 		String elementDisplayName = null;
 		try {
-			elementDisplayName = (String) emfFormsLabelProvider.getDisplayName(getVElement().getDomainModelReference())
+			elementDisplayName = (String) emfFormsLabelProvider
+				.getDisplayName(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel())
 				.getValue();
 		} catch (final NoLabelFoundException ex) {
 			getReportService().report(new AbstractReport(ex));
