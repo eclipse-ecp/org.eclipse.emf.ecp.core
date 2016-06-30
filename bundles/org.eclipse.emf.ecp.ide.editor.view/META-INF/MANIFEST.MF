@@ -5,8 +5,8 @@ Bundle-SymbolicName: org.eclipse.emf.ecp.ide.editor.view;singleton:=true
 Bundle-Version: 2.0.0.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.ide.editor.view.Activator
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emf.ecp.ide.editor.view;version="1.11.0";x-friends:="org.eclipse.emf.ecp.view.model.preview.e3",
- org.eclipse.emf.ecp.ide.editor.view.messages;version="1.11.0";x-internal:=true
+Export-Package: org.eclipse.emf.ecp.ide.editor.view;version="2.0.0";x-friends:="org.eclipse.emf.ecp.view.model.preview.e3",
+ org.eclipse.emf.ecp.ide.editor.view.messages;version="2.0.0";x-internal:=true
 Require-Bundle: org.eclipse.ui;bundle-version="[3.0.0,4.0.0)",
  org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.emf.ecp.ui.view.swt;bundle-version="[2.0.0,3.0.0)",
@@ -22,5 +22,5 @@ Require-Bundle: org.eclipse.ui;bundle-version="[3.0.0,4.0.0)",
  org.eclipse.emf.ecp.view.migrator;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.emfforms.core.services;bundle-version="[2.0.0,3.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Import-Package: org.eclipse.emfforms.spi.common.report;version="[1.11.0,1.12.0)"
+Import-Package: org.eclipse.emfforms.spi.common.report;version="[2.0.0,3.0.0)"
 Bundle-ActivationPolicy: lazy

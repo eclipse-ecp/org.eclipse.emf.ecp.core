@@ -4,12 +4,12 @@ Bundle-Name: EMFForms View Localization
 Bundle-SymbolicName: org.eclipse.emfforms.view.model.localization;singleton:=true
 Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emfforms.internal.view.model.localization;version="1.11.0";x-internal:=true
+Export-Package: org.eclipse.emfforms.internal.view.model.localization;version="2.0.0";x-internal:=true
 Require-Bundle: org.eclipse.emf.ecp.view.context;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.emf.ecp.view.model;bundle-version="[2.0.0,3.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Import-Package: org.eclipse.emfforms.spi.common.locale;version="[1.11.0,1.12.0)",
- org.eclipse.emfforms.spi.common.report;version="[1.11.0,1.12.0)",
- org.eclipse.emfforms.spi.core.services.view;version="[1.11.0,1.12.0)",
+Import-Package: org.eclipse.emfforms.spi.common.locale;version="[2.0.0,3.0.0)",
+ org.eclipse.emfforms.spi.common.report;version="[2.0.0,3.0.0)",
+ org.eclipse.emfforms.spi.core.services.view;version="[2.0.0,3.0.0)",
  org.osgi.framework;version="1.5.0"
 Bundle-ActivationPolicy: lazy

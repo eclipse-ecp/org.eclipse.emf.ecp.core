@@ -4,8 +4,8 @@ Bundle-Name: View Model Label UI SWT
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.label.ui.swt
 Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emf.ecp.view.internal.label.swt;version="1.11.0";x-internal:=true,
- org.eclipse.emf.ecp.view.spi.label.swt;version="1.11.0"
+Export-Package: org.eclipse.emf.ecp.view.internal.label.swt;version="2.0.0";x-internal:=true,
+ org.eclipse.emf.ecp.view.spi.label.swt;version="2.0.0"
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.emf.ecp.view.label.model;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.emf.ecp.ui.view.swt;bundle-version="[2.0.0,3.0.0)",
@@ -18,8 +18,8 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: javax.inject;version="1.0.0",
  org.eclipse.core.databinding.property.value;version="0.0.0",
- org.eclipse.emfforms.spi.common.report;version="[1.11.0,1.12.0)",
- org.eclipse.emfforms.spi.core.services.databinding;version="[1.11.0,1.12.0)",
+ org.eclipse.emfforms.spi.common.report;version="[2.0.0,3.0.0)",
+ org.eclipse.emfforms.spi.core.services.databinding;version="[2.0.0,3.0.0)",
  org.eclipse.jface.databinding.swt;version="0.0.0",
  org.eclipse.jface.layout;version="0.0.0",
  org.eclipse.swt;version="0.0.0",

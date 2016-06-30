@@ -5,7 +5,7 @@ Bundle-SymbolicName: org.eclipse.emf.ecp.view.template.service.test
 Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
 Fragment-Host: org.eclipse.emf.ecp.view.template.service;bundle-version="[2.0.0,3.0.0)"
-Export-Package: org.eclipse.emf.ecp.view.template.service;version="1.11.0";x-internal:=true
+Export-Package: org.eclipse.emf.ecp.view.template.service;version="2.0.0";x-internal:=true
 Require-Bundle: org.eclipse.emf.ecp.view.label.model;bundle-version="[2.0.0,3.0.0)",
  org.junit;bundle-version="[4.11.0,5.0.0)",
  org.mockito.mockito-core-hamcrest-modified;bundle-version="[1.9.5,2.0.0)",

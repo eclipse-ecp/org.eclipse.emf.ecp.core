@@ -5,7 +5,7 @@ Bundle-SymbolicName: org.eclipse.emf.ecp.emfstore.core;singleton:=true
 Bundle-Version: 2.0.0.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.emfstore.core.internal.Activator
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emf.ecp.emfstore.core.internal;version="1.11.0";
+Export-Package: org.eclipse.emf.ecp.emfstore.core.internal;version="2.0.0";
   x-friends:="org.eclipse.emf.ecp.emfstore.ui,
    org.eclipse.emf.ecp.emfstore.ui.search,
    org.eclipse.emf.ecp.view.ui.editor.test,

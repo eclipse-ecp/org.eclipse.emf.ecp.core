@@ -4,7 +4,7 @@ Bundle-Name: Collapsable Group
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.group.swt.collapsable
 Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emf.ecp.view.group.swt.internal.collapsable;version="1.11.0";x-internal:=true
+Export-Package: org.eclipse.emf.ecp.view.group.swt.internal.collapsable;version="2.0.0";x-internal:=true
 Require-Bundle: org.eclipse.emf.ecp.view.model.common;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.emf.ecp.view.model;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.emf.ecp.view.context;bundle-version="[2.0.0,3.0.0)",
@@ -16,8 +16,8 @@ Require-Bundle: org.eclipse.emf.ecp.view.model.common;bundle-version="[2.0.0,3.0
  org.eclipse.emf.databinding.edit;bundle-version="[1.2.0,2.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: javax.inject;version="1.0.0",
- org.eclipse.emfforms.spi.common.report;version="[1.11.0,1.12.0)",
- org.eclipse.emfforms.spi.core.services.databinding;version="[1.11.0,1.12.0)",
+ org.eclipse.emfforms.spi.common.report;version="[2.0.0,3.0.0)",
+ org.eclipse.emfforms.spi.core.services.databinding;version="[2.0.0,3.0.0)",
  org.eclipse.jface.databinding.swt;version="0.0.0",
  org.eclipse.jface.layout;version="0.0.0",
  org.eclipse.swt;version="0.0.0",

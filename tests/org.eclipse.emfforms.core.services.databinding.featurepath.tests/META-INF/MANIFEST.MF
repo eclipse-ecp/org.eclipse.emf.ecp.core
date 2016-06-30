@@ -6,8 +6,8 @@ Bundle-Version: 2.0.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: Eclipse Modeling Project
 Fragment-Host: org.eclipse.emfforms.core.services.databinding.featurepath;bundle-version="[2.0.0,3.0.0)"
-Export-Package: org.eclipse.emfforms.core.services.databinding.featurepath.tests;version="1.11.0";x-internal:=true,
- org.eclipse.emfforms.internal.core.services.databinding.featurepath;version="1.11.0";x-internal:=true
+Export-Package: org.eclipse.emfforms.core.services.databinding.featurepath.tests;version="2.0.0";x-internal:=true,
+ org.eclipse.emfforms.internal.core.services.databinding.featurepath;version="2.0.0";x-internal:=true
 Require-Bundle: org.junit;bundle-version="[4.11.0,5.0.0)",
  org.mockito.mockito-core-hamcrest-modified;bundle-version="[1.9.5,2.0.0)",
  org.eclipse.emf.ecore;bundle-version="[2.9.0,3.0.0)",

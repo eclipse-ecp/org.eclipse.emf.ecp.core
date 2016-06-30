@@ -4,7 +4,7 @@ Bundle-Name: SWT Core DI Extension
 Bundle-SymbolicName: org.eclipse.emfforms.swt.core.di.extension;singleton:=true
 Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emfforms.internal.swt.core.di.extension;version="1.11.0";x-internal:=true
+Export-Package: org.eclipse.emfforms.internal.swt.core.di.extension;version="2.0.0";x-internal:=true
 Require-Bundle: org.eclipse.emfforms.swt.core;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.emfforms.swt.core.di;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.emf.ecp.view.model.common;bundle-version="[2.0.0,3.0.0)",

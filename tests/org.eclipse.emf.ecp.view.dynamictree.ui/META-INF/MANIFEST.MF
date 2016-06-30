@@ -4,7 +4,7 @@ Bundle-Name: View Model Dynamic Tree UI
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.dynamictree.ui;singleton:=true
 Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emf.ecp.view.dynamictree.ui;version="1.11.0";x-internal:=true
+Export-Package: org.eclipse.emf.ecp.view.dynamictree.ui;version="2.0.0";x-internal:=true
 Require-Bundle: org.eclipse.emf.ecp.ui.view;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.emf.ecp.view.dynamictree.model;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.emf.ecp.edit;bundle-version="[2.0.0,3.0.0)",
