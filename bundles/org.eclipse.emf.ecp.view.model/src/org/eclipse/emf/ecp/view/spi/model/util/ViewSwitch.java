@@ -423,8 +423,8 @@ public class ViewSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Feature Domain Model Reference Segment</em>
-	 * '.
+	 * Returns the result of interpreting the object as an instance of '<em>Feature Domain Model Reference
+	 * Segment</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
@@ -432,8 +432,8 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * @since 2.0
 	 *        <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Feature Domain Model Reference Segment</em>
-	 *         '.
+	 * @return the result of interpreting the object as an instance of '<em>Feature Domain Model Reference
+	 *         Segment</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */

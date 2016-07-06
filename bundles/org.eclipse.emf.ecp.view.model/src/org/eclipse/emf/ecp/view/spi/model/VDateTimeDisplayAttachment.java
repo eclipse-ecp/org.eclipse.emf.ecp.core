@@ -22,8 +22,8 @@ package org.eclipse.emf.ecp.view.spi.model;
  *        The following features are supported:
  *        </p>
  *        <ul>
- *        <li>{@link org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment#getDisplayType <em>Display Type</em>}
- *        </li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment#getDisplayType <em>Display
+ *        Type</em>}</li>
  *        </ul>
  *
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getDateTimeDisplayAttachment()

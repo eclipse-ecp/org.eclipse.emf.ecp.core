@@ -26,8 +26,8 @@ import org.eclipse.emf.common.util.EMap;
  *        <ul>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.model.VViewModelLoadingProperties#getInheritableProperties
  *        <em>Inheritable Properties</em>}</li>
- *        <li>{@link org.eclipse.emf.ecp.view.spi.model.VViewModelLoadingProperties#getNonInheritableProperties
- *        <em>Non Inheritable Properties</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.VViewModelLoadingProperties#getNonInheritableProperties <em>Non
+ *        Inheritable Properties</em>}</li>
  *        </ul>
  *
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getViewModelLoadingProperties()
@@ -48,8 +48,8 @@ public interface VViewModelLoadingProperties extends VViewModelProperties {
 	 * 
 	 * @return the value of the '<em>Inheritable Properties</em>' map.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getViewModelLoadingProperties_InheritableProperties()
-	 * @model mapType=
-	 *        "org.eclipse.emf.ecp.view.spi.model.StringToObjectMapEntry<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EJavaObject>"
+	 * @model mapType="org.eclipse.emf.ecp.view.spi.model.StringToObjectMapEntry<org.eclipse.emf.ecore.EString,
+	 *        org.eclipse.emf.ecore.EJavaObject>"
 	 * @generated
 	 */
 	EMap<String, Object> getInheritableProperties();
@@ -67,8 +67,8 @@ public interface VViewModelLoadingProperties extends VViewModelProperties {
 	 * 
 	 * @return the value of the '<em>Non Inheritable Properties</em>' map.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getViewModelLoadingProperties_NonInheritableProperties()
-	 * @model mapType=
-	 *        "org.eclipse.emf.ecp.view.spi.model.StringToObjectMapEntry<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EJavaObject>"
+	 * @model mapType="org.eclipse.emf.ecp.view.spi.model.StringToObjectMapEntry<org.eclipse.emf.ecore.EString,
+	 *        org.eclipse.emf.ecore.EJavaObject>"
 	 * @generated
 	 */
 	EMap<String, Object> getNonInheritableProperties();

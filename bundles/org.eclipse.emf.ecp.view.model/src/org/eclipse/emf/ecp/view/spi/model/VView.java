@@ -133,8 +133,8 @@ public interface VView extends VElement {
 	VViewModelProperties getLoadingProperties();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.spi.model.VView#getLoadingProperties
-	 * <em>Loading Properties</em>}' containment reference.
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.spi.model.VView#getLoadingProperties <em>Loading
+	 * Properties</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 *
 	 * @since 1.7
