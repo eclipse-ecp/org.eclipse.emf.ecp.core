@@ -9,7 +9,7 @@
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated view -->
       <package
-            uri="http://org/eclipse/emf/ecp/view/model/170"
+            uri="http://org/eclipse/emf/ecp/view/model/200"
             class="org.eclipse.emf.ecp.view.spi.model.VViewPackage"
             genModel="model/view.genmodel"/>
    </extension>

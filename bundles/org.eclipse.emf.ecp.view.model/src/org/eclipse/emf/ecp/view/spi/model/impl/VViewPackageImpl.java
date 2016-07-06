@@ -17,14 +17,12 @@ import java.util.Map;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecp.view.spi.model.DateTimeDisplayType;
-import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VContainedContainer;
@@ -169,14 +167,6 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * @generated
 	 */
 	private EEnum dateTimeDisplayTypeEEnum = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	private EDataType domainModelReferenceChangeListenerEDataType = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -687,18 +677,6 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 *
-	 * @since 1.3
-	 *        <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EDataType getDomainModelReferenceChangeListener() {
-		return domainModelReferenceChangeListenerEDataType;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
 	 * @generated
@@ -821,9 +799,6 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 		// Create enums
 		labelAlignmentEEnum = createEEnum(LABEL_ALIGNMENT);
 		dateTimeDisplayTypeEEnum = createEEnum(DATE_TIME_DISPLAY_TYPE);
-
-		// Create data types
-		domainModelReferenceChangeListenerEDataType = createEDataType(DOMAIN_MODEL_REFERENCE_CHANGE_LISTENER);
 	}
 
 	/**
@@ -883,8 +858,8 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 		initEClass(domainModelReferenceEClass, VDomainModelReference.class, "DomainModelReference", !IS_ABSTRACT, //$NON-NLS-1$
 			!IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getDomainModelReference_Segments(), getDomainModelReferenceSegment(), null, "segments", //$NON-NLS-1$
-			null, 1, -1, VDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
-			IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+			null, 1, -1, VDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+			!IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(elementEClass, VElement.class, "Element", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(getElement_Name(), theEcorePackage.getEString(), "name", null, 0, 1, VElement.class, //$NON-NLS-1$
@@ -985,10 +960,6 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 		addEEnumLiteral(dateTimeDisplayTypeEEnum, DateTimeDisplayType.TIME_AND_DATE);
 		addEEnumLiteral(dateTimeDisplayTypeEEnum, DateTimeDisplayType.TIME_ONLY);
 		addEEnumLiteral(dateTimeDisplayTypeEEnum, DateTimeDisplayType.DATE_ONLY);
-
-		// Initialize data types
-		initEDataType(domainModelReferenceChangeListenerEDataType, DomainModelReferenceChangeListener.class,
-			"DomainModelReferenceChangeListener", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		// Create resource
 		createResource(eNS_URI);

@@ -28,8 +28,8 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  *        The following features are implemented:
  *        </p>
  *        <ul>
- *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VDateTimeDisplayAttachmentImpl#getDisplayType
- *        <em>Display Type</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VDateTimeDisplayAttachmentImpl#getDisplayType <em>Display
+ *        Type</em>}</li>
  *        </ul>
  *
  * @generated

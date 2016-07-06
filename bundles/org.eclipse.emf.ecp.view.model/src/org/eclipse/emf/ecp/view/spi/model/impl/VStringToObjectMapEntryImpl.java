@@ -31,8 +31,8 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  *        </p>
  *        <ul>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VStringToObjectMapEntryImpl#getTypedKey <em>Key</em>}</li>
- *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VStringToObjectMapEntryImpl#getTypedValue <em>Value</em>}
- *        </li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VStringToObjectMapEntryImpl#getTypedValue
+ *        <em>Value</em>}</li>
  *        </ul>
  *
  * @generated

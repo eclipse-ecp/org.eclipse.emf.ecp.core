@@ -6,6 +6,9 @@
       <migration
             migration="org.eclipse.emf.ecp.internal.view.model.edapt._160to170.LabelAlignmentMigration">
       </migration>
+      <migration
+            migration="org.eclipse.emf.ecp.internal.view.model.edapt._190to200.FeaturePathDMRRemovalMigration">
+      </migration>
    </extension>
 
 </plugin>
