@@ -20,7 +20,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecp.view.spi.model.DateTimeDisplayType;
-import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment;
@@ -112,8 +111,6 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 			return createLabelAlignmentFromString(eDataType, initialValue);
 		case VViewPackage.DATE_TIME_DISPLAY_TYPE:
 			return createDateTimeDisplayTypeFromString(eDataType, initialValue);
-		case VViewPackage.DOMAIN_MODEL_REFERENCE_CHANGE_LISTENER:
-			return createDomainModelReferenceChangeListenerFromString(eDataType, initialValue);
 		default:
 			throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -132,8 +129,6 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 			return convertLabelAlignmentToString(eDataType, instanceValue);
 		case VViewPackage.DATE_TIME_DISPLAY_TYPE:
 			return convertDateTimeDisplayTypeToString(eDataType, instanceValue);
-		case VViewPackage.DOMAIN_MODEL_REFERENCE_CHANGE_LISTENER:
-			return convertDomainModelReferenceChangeListenerToString(eDataType, instanceValue);
 		default:
 			throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -285,29 +280,6 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 */
 	public String convertDateTimeDisplayTypeToString(EDataType eDataType, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 *
-	 * @since 1.3
-	 *        <!-- end-user-doc -->
-	 * @generated
-	 */
-	public DomainModelReferenceChangeListener createDomainModelReferenceChangeListenerFromString(EDataType eDataType,
-		String initialValue) {
-		return (DomainModelReferenceChangeListener) super.createFromString(eDataType, initialValue);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 *
-	 * @since 1.3
-	 *        <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String convertDomainModelReferenceChangeListenerToString(EDataType eDataType, Object instanceValue) {
-		return super.convertToString(eDataType, instanceValue);
 	}
 
 	/**

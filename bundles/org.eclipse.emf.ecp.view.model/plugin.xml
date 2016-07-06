@@ -1,30 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.0"?>
+
+<!--
+-->
+
 <plugin>
 
-   <extension
-         name=""
-         point="org.eclipse.emf.ecore.generated_package">
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated view -->
       <package
-            genModel="model/view.genmodel"
-            uri="http://org/eclipse/emf/ecp/view/model/170"
-            class="org.eclipse.emf.ecp.view.spi.model.VViewPackage">
-      </package>
+            uri="http://org/eclipse/emf/ecp/view/model/200"
+            class="org.eclipse.emf.ecp.view.spi.model.VViewPackage"
+            genModel="model/view.genmodel"/>
    </extension>
-   <extension
-         name=""
-         point="org.eclipse.emf.ecore.extension_parser">
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated view -->
       <parser
             type="view"
-            class="org.eclipse.emf.ecp.view.spi.model.util.VViewResourceFactoryImpl">
-      </parser>
+            class="org.eclipse.emf.ecp.view.spi.model.util.VViewResourceFactoryImpl"/>
    </extension>
    <extension
-         name=""
          point="org.eclipse.emf.edapt.migrators">
       <migrator
             path="model/view.history">
       </migrator>
    </extension>
+
 
 </plugin>

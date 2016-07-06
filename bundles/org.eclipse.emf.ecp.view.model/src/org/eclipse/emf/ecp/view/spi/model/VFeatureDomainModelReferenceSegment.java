@@ -39,7 +39,7 @@ public interface VFeatureDomainModelReferenceSegment extends VDomainModelReferen
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the value of the '<em>Domain Model Feature</em>' attribute.
 	 * @see #setDomainModelFeature(String)
 	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getFeatureDomainModelReferenceSegment_DomainModelFeature()
@@ -49,12 +49,12 @@ public interface VFeatureDomainModelReferenceSegment extends VDomainModelReferen
 	String getDomainModelFeature();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment#getDomainModelFeature
-	 * <em>Domain Model Feature</em>}' attribute.
+	 * Sets the value of the
+	 * '{@link org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment#getDomainModelFeature <em>Domain
+	 * Model Feature</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param value the new value of the '<em>Domain Model Feature</em>' attribute.
 	 * @see #getDomainModelFeature()
 	 * @generated

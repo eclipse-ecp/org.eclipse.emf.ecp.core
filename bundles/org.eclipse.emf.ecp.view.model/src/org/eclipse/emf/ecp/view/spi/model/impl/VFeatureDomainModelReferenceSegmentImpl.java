@@ -28,8 +28,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  *        The following features are implemented:
  *        </p>
  *        <ul>
- *        <li>
- *        {@link org.eclipse.emf.ecp.view.spi.model.impl.VFeatureDomainModelReferenceSegmentImpl#getDomainModelFeature
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VFeatureDomainModelReferenceSegmentImpl#getDomainModelFeature
  *        <em>Domain Model Feature</em>}</li>
  *        </ul>
  *
@@ -41,7 +40,7 @@ public class VFeatureDomainModelReferenceSegmentImpl extends EObjectImpl
 	 * The default value of the '{@link #getDomainModelFeature() <em>Domain Model Feature</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getDomainModelFeature()
 	 * @generated
 	 * @ordered
@@ -52,7 +51,7 @@ public class VFeatureDomainModelReferenceSegmentImpl extends EObjectImpl
 	 * The cached value of the '{@link #getDomainModelFeature() <em>Domain Model Feature</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getDomainModelFeature()
 	 * @generated
 	 * @ordered
@@ -62,7 +61,7 @@ public class VFeatureDomainModelReferenceSegmentImpl extends EObjectImpl
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected VFeatureDomainModelReferenceSegmentImpl() {
@@ -72,7 +71,7 @@ public class VFeatureDomainModelReferenceSegmentImpl extends EObjectImpl
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -83,7 +82,7 @@ public class VFeatureDomainModelReferenceSegmentImpl extends EObjectImpl
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -94,24 +93,23 @@ public class VFeatureDomainModelReferenceSegmentImpl extends EObjectImpl
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void setDomainModelFeature(String newDomainModelFeature) {
-		final String oldDomainModelFeature = domainModelFeature;
+		String oldDomainModelFeature = domainModelFeature;
 		domainModelFeature = newDomainModelFeature;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VViewPackage.FEATURE_DOMAIN_MODEL_REFERENCE_SEGMENT__DOMAIN_MODEL_FEATURE, oldDomainModelFeature,
 				domainModelFeature));
-		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -126,7 +124,7 @@ public class VFeatureDomainModelReferenceSegmentImpl extends EObjectImpl
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -142,7 +140,7 @@ public class VFeatureDomainModelReferenceSegmentImpl extends EObjectImpl
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -158,7 +156,7 @@ public class VFeatureDomainModelReferenceSegmentImpl extends EObjectImpl
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -174,16 +172,15 @@ public class VFeatureDomainModelReferenceSegmentImpl extends EObjectImpl
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) {
+		if (eIsProxy())
 			return super.toString();
-		}
 
-		final StringBuffer result = new StringBuffer(super.toString());
+		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (domainModelFeature: "); //$NON-NLS-1$
 		result.append(domainModelFeature);
 		result.append(')');

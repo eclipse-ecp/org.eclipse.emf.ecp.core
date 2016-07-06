@@ -34,7 +34,7 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface VDomainModelReference extends EObject {
 	/**
-	 * Returns the value of the '<em><b>Segments</b></em>' reference list.
+	 * Returns the value of the '<em><b>Segments</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment}.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -44,9 +44,9 @@ public interface VDomainModelReference extends EObject {
 	 *
 	 * @since 2.0
 	 *        <!-- end-user-doc -->
-	 * @return the value of the '<em>Segments</em>' reference list.
+	 * @return the value of the '<em>Segments</em>' containment reference list.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getDomainModelReference_Segments()
-	 * @model required="true"
+	 * @model containment="true" required="true"
 	 * @generated
 	 */
 	EList<VDomainModelReferenceSegment> getSegments();

@@ -1,686 +1,1108 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:history="http://www.eclipse.org/emf/edapt/history/0.3">
-  <releases date="2014-10-16T15:50:12.192+0200" label="140">
-    <changes xsi:type="history:CompositeChange">
-      <changes xsi:type="history:Create" element="view.ecore#/">
-        <changes xsi:type="history:Set" element="view.ecore#/" featureName="name"
-            dataValue="model"/>
-        <changes xsi:type="history:Set" element="view.ecore#/" featureName="nsURI"
-            dataValue="http://org/eclipse/emf/ecp/view/model"/>
-        <changes xsi:type="history:Set" element="view.ecore#/" featureName="nsPrefix"
-            dataValue="org.eclipse.emf.ecp.view.model"/>
+<history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:history="http://www.eclipse.org/emf/edapt/history/0.3" xmi:id="_8wgZwENeEeaFtY2yvf2yjQ">
+  <releases xmi:id="_8whA0ENeEeaFtY2yvf2yjQ" date="2014-10-16T15:50:12.192+0200" label="140">
+    <changes xsi:type="history:CompositeChange" xmi:id="_8whA0UNeEeaFtY2yvf2yjQ">
+      <changes xsi:type="history:Create" xmi:id="_8whA0kNeEeaFtY2yvf2yjQ">
+        <element href="view.ecore#/"/>
+        <changes xsi:type="history:Set" xmi:id="_8whA00NeEeaFtY2yvf2yjQ" featureName="name" dataValue="model">
+          <element href="view.ecore#/"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8whA1ENeEeaFtY2yvf2yjQ" featureName="nsURI" dataValue="http://org/eclipse/emf/ecp/view/model">
+          <element href="view.ecore#/"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8whA1UNeEeaFtY2yvf2yjQ" featureName="nsPrefix" dataValue="org.eclipse.emf.ecp.view.model">
+          <element href="view.ecore#/"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="view.ecore#/" referenceName="eClassifiers"
-          element="view.ecore#//Diagnostic">
-        <changes xsi:type="history:Set" element="view.ecore#//Diagnostic" featureName="name"
-            dataValue="Diagnostic"/>
+      <changes xsi:type="history:Create" xmi:id="_8whA1kNeEeaFtY2yvf2yjQ" referenceName="eClassifiers">
+        <target href="view.ecore#/"/>
+        <element href="view.ecore#//Diagnostic"/>
+        <changes xsi:type="history:Set" xmi:id="_8whA10NeEeaFtY2yvf2yjQ" featureName="name" dataValue="Diagnostic">
+          <element href="view.ecore#//Diagnostic"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="view.ecore#//Diagnostic" referenceName="eStructuralFeatures"
-          element="view.ecore#//Diagnostic/diagnostics">
-        <changes xsi:type="history:Set" element="view.ecore#//Diagnostic/diagnostics"
-            featureName="name" dataValue="diagnostics"/>
-        <changes xsi:type="history:Set" element="view.ecore#//Diagnostic/diagnostics"
-            featureName="upperBound" dataValue="-1" oldDataValue="1"/>
-        <changes xsi:type="history:Set" element="view.ecore#//Diagnostic/diagnostics"
-            featureName="transient" dataValue="true" oldDataValue="false"/>
-        <changes xsi:type="history:Set" element="view.ecore#//Diagnostic/diagnostics"
-            featureName="eType" referenceValue="../../org.eclipse.emf.ecore/model/Ecore.ecore#//EJavaObject"/>
+      <changes xsi:type="history:Create" xmi:id="_8whA2ENeEeaFtY2yvf2yjQ" referenceName="eStructuralFeatures">
+        <target href="view.ecore#//Diagnostic"/>
+        <element href="view.ecore#//Diagnostic/diagnostics"/>
+        <changes xsi:type="history:Set" xmi:id="_8whA2UNeEeaFtY2yvf2yjQ" featureName="name" dataValue="diagnostics">
+          <element href="view.ecore#//Diagnostic/diagnostics"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8whA2kNeEeaFtY2yvf2yjQ" featureName="upperBound" dataValue="-1" oldDataValue="1">
+          <element href="view.ecore#//Diagnostic/diagnostics"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8whA20NeEeaFtY2yvf2yjQ" featureName="transient" dataValue="true" oldDataValue="false">
+          <element href="view.ecore#//Diagnostic/diagnostics"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8whA3ENeEeaFtY2yvf2yjQ" featureName="eType">
+          <element href="view.ecore#//Diagnostic/diagnostics"/>
+          <referenceValue href="../../org.eclipse.emf.ecore/model/Ecore.ecore#//EJavaObject"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="view.ecore#/" referenceName="eClassifiers"
-          element="view.ecore#//Attachment">
-        <changes xsi:type="history:Set" element="view.ecore#//Attachment" featureName="name"
-            dataValue="Attachment"/>
-        <changes xsi:type="history:Set" element="view.ecore#//Attachment" featureName="abstract"
-            dataValue="true" oldDataValue="false"/>
+      <changes xsi:type="history:Create" xmi:id="_8whA3UNeEeaFtY2yvf2yjQ" referenceName="eClassifiers">
+        <target href="view.ecore#/"/>
+        <element href="view.ecore#//Attachment"/>
+        <changes xsi:type="history:Set" xmi:id="_8whA3kNeEeaFtY2yvf2yjQ" featureName="name" dataValue="Attachment">
+          <element href="view.ecore#//Attachment"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8whA30NeEeaFtY2yvf2yjQ" featureName="abstract" dataValue="true" oldDataValue="false">
+          <element href="view.ecore#//Attachment"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="view.ecore#/" referenceName="eClassifiers"
-          element="view.ecore#//DomainModelReference">
-        <changes xsi:type="history:Set" element="view.ecore#//DomainModelReference"
-            featureName="name" dataValue="DomainModelReference"/>
-        <changes xsi:type="history:Set" element="view.ecore#//DomainModelReference"
-            featureName="abstract" dataValue="true" oldDataValue="false"/>
-        <changes xsi:type="history:Set" element="view.ecore#//DomainModelReference"
-            featureName="interface" dataValue="true" oldDataValue="false"/>
+      <changes xsi:type="history:Create" xmi:id="_8whA4ENeEeaFtY2yvf2yjQ" referenceName="eClassifiers">
+        <target href="view.ecore#/"/>
+        <element href="view.ecore#//DomainModelReference"/>
+        <changes xsi:type="history:Set" xmi:id="_8whA4UNeEeaFtY2yvf2yjQ" featureName="name" dataValue="DomainModelReference">
+          <element href="view.ecore#//DomainModelReference"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8whA4kNeEeaFtY2yvf2yjQ" featureName="abstract" dataValue="true" oldDataValue="false">
+          <element href="view.ecore#//DomainModelReference"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8whA40NeEeaFtY2yvf2yjQ" featureName="interface" dataValue="true" oldDataValue="false">
+          <element href="view.ecore#//DomainModelReference"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="view.ecore#/" referenceName="eClassifiers"
-          element="view.ecore#//FeaturePathDomainModelReference">
-        <changes xsi:type="history:Set" element="view.ecore#//FeaturePathDomainModelReference"
-            featureName="name" dataValue="FeaturePathDomainModelReference"/>
-        <changes xsi:type="history:Add" element="view.ecore#//FeaturePathDomainModelReference"
-            featureName="eSuperTypes" referenceValue="view.ecore#//DomainModelReference"/>
+      <changes xsi:type="history:Create" xmi:id="_8whA5ENeEeaFtY2yvf2yjQ" referenceName="eClassifiers" element="_56GtAUNhEeaFtY2yvf2yjQ">
+        <target href="view.ecore#/"/>
+        <changes xsi:type="history:Set" xmi:id="_8whA5UNeEeaFtY2yvf2yjQ" element="_56GtAUNhEeaFtY2yvf2yjQ" featureName="name" dataValue="FeaturePathDomainModelReference"/>
+        <changes xsi:type="history:Add" xmi:id="_8whA5kNeEeaFtY2yvf2yjQ" element="_56GtAUNhEeaFtY2yvf2yjQ" featureName="eSuperTypes">
+          <referenceValue href="view.ecore#//DomainModelReference"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="view.ecore#//FeaturePathDomainModelReference"
-          referenceName="eStructuralFeatures" element="view.ecore#//FeaturePathDomainModelReference/domainModelEFeature">
-        <changes xsi:type="history:Set" element="view.ecore#//FeaturePathDomainModelReference/domainModelEFeature"
-            featureName="name" dataValue="domainModelEFeature"/>
-        <changes xsi:type="history:Set" element="view.ecore#//FeaturePathDomainModelReference/domainModelEFeature"
-            featureName="lowerBound" dataValue="1" oldDataValue="0"/>
-        <changes xsi:type="history:Set" element="view.ecore#//FeaturePathDomainModelReference/domainModelEFeature"
-            featureName="eType" referenceValue="../../org.eclipse.emf.ecore/model/Ecore.ecore#//EStructuralFeature"/>
+      <changes xsi:type="history:Create" xmi:id="_8whn4ENeEeaFtY2yvf2yjQ" target="_56GtAUNhEeaFtY2yvf2yjQ" referenceName="eStructuralFeatures" element="_56GtBENhEeaFtY2yvf2yjQ">
+        <changes xsi:type="history:Set" xmi:id="_8whn4UNeEeaFtY2yvf2yjQ" element="_56GtBENhEeaFtY2yvf2yjQ" featureName="name" dataValue="domainModelEFeature"/>
+        <changes xsi:type="history:Set" xmi:id="_8whn4kNeEeaFtY2yvf2yjQ" element="_56GtBENhEeaFtY2yvf2yjQ" featureName="lowerBound" dataValue="1" oldDataValue="0"/>
+        <changes xsi:type="history:Set" xmi:id="_8whn40NeEeaFtY2yvf2yjQ" element="_56GtBENhEeaFtY2yvf2yjQ" featureName="eType">
+          <referenceValue href="../../org.eclipse.emf.ecore/model/Ecore.ecore#//EStructuralFeature"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="view.ecore#//FeaturePathDomainModelReference"
-          referenceName="eStructuralFeatures" element="view.ecore#//FeaturePathDomainModelReference/domainModelEReferencePath">
-        <changes xsi:type="history:Set" element="view.ecore#//FeaturePathDomainModelReference/domainModelEReferencePath"
-            featureName="name" dataValue="domainModelEReferencePath"/>
-        <changes xsi:type="history:Set" element="view.ecore#//FeaturePathDomainModelReference/domainModelEReferencePath"
-            featureName="upperBound" dataValue="-1" oldDataValue="1"/>
-        <changes xsi:type="history:Set" element="view.ecore#//FeaturePathDomainModelReference/domainModelEReferencePath"
-            featureName="eType" referenceValue="../../org.eclipse.emf.ecore/model/Ecore.ecore#//EReference"/>
+      <changes xsi:type="history:Create" xmi:id="_8whn5ENeEeaFtY2yvf2yjQ" target="_56GtAUNhEeaFtY2yvf2yjQ" referenceName="eStructuralFeatures" element="_56GtBkNhEeaFtY2yvf2yjQ">
+        <changes xsi:type="history:Set" xmi:id="_8whn5UNeEeaFtY2yvf2yjQ" element="_56GtBkNhEeaFtY2yvf2yjQ" featureName="name" dataValue="domainModelEReferencePath"/>
+        <changes xsi:type="history:Set" xmi:id="_8whn5kNeEeaFtY2yvf2yjQ" element="_56GtBkNhEeaFtY2yvf2yjQ" featureName="upperBound" dataValue="-1" oldDataValue="1"/>
+        <changes xsi:type="history:Set" xmi:id="_8whn50NeEeaFtY2yvf2yjQ" element="_56GtBkNhEeaFtY2yvf2yjQ" featureName="eType">
+          <referenceValue href="../../org.eclipse.emf.ecore/model/Ecore.ecore#//EReference"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="view.ecore#/" referenceName="eClassifiers"
-          element="view.ecore#//Element">
-        <changes xsi:type="history:Set" element="view.ecore#//Element" featureName="name"
-            dataValue="Element"/>
-        <changes xsi:type="history:Set" element="view.ecore#//Element" featureName="abstract"
-            dataValue="true" oldDataValue="false"/>
+      <changes xsi:type="history:Create" xmi:id="_8whn6ENeEeaFtY2yvf2yjQ" referenceName="eClassifiers">
+        <target href="view.ecore#/"/>
+        <element href="view.ecore#//Element"/>
+        <changes xsi:type="history:Set" xmi:id="_8whn6UNeEeaFtY2yvf2yjQ" featureName="name" dataValue="Element">
+          <element href="view.ecore#//Element"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8whn6kNeEeaFtY2yvf2yjQ" featureName="abstract" dataValue="true" oldDataValue="false">
+          <element href="view.ecore#//Element"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="view.ecore#//Element" referenceName="eStructuralFeatures"
-          element="view.ecore#//Element/name">
-        <changes xsi:type="history:Set" element="view.ecore#//Element/name" featureName="name"
-            dataValue="name"/>
-        <changes xsi:type="history:Set" element="view.ecore#//Element/name" featureName="eType"
-            referenceValue="../../org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+      <changes xsi:type="history:Create" xmi:id="_8whn60NeEeaFtY2yvf2yjQ" referenceName="eStructuralFeatures">
+        <target href="view.ecore#//Element"/>
+        <element href="view.ecore#//Element/name"/>
+        <changes xsi:type="history:Set" xmi:id="_8whn7ENeEeaFtY2yvf2yjQ" featureName="name" dataValue="name">
+          <element href="view.ecore#//Element/name"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8whn7UNeEeaFtY2yvf2yjQ" featureName="eType">
+          <element href="view.ecore#//Element/name"/>
+          <referenceValue href="../../org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="view.ecore#//Element" referenceName="eStructuralFeatures"
-          element="view.ecore#//Element/visible">
-        <changes xsi:type="history:Set" element="view.ecore#//Element/visible" featureName="name"
-            dataValue="visible"/>
-        <changes xsi:type="history:Set" element="view.ecore#//Element/visible" featureName="transient"
-            dataValue="true" oldDataValue="false"/>
-        <changes xsi:type="history:Set" element="view.ecore#//Element/visible" featureName="defaultValueLiteral"
-            dataValue="true"/>
-        <changes xsi:type="history:Set" element="view.ecore#//Element/visible" featureName="eType"
-            referenceValue="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <changes xsi:type="history:Create" xmi:id="_8wiO8ENeEeaFtY2yvf2yjQ" referenceName="eStructuralFeatures">
+        <target href="view.ecore#//Element"/>
+        <element href="view.ecore#//Element/visible"/>
+        <changes xsi:type="history:Set" xmi:id="_8ww4cENeEeaFtY2yvf2yjQ" featureName="name" dataValue="visible">
+          <element href="view.ecore#//Element/visible"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8ww4cUNeEeaFtY2yvf2yjQ" featureName="transient" dataValue="true" oldDataValue="false">
+          <element href="view.ecore#//Element/visible"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8ww4ckNeEeaFtY2yvf2yjQ" featureName="defaultValueLiteral" dataValue="true">
+          <element href="view.ecore#//Element/visible"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8ww4c0NeEeaFtY2yvf2yjQ" featureName="eType">
+          <element href="view.ecore#//Element/visible"/>
+          <referenceValue href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="view.ecore#//Element" referenceName="eStructuralFeatures"
-          element="view.ecore#//Element/enabled">
-        <changes xsi:type="history:Set" element="view.ecore#//Element/enabled" featureName="name"
-            dataValue="enabled"/>
-        <changes xsi:type="history:Set" element="view.ecore#//Element/enabled" featureName="transient"
-            dataValue="true" oldDataValue="false"/>
-        <changes xsi:type="history:Set" element="view.ecore#//Element/enabled" featureName="defaultValueLiteral"
-            dataValue="true"/>
-        <changes xsi:type="history:Set" element="view.ecore#//Element/enabled" featureName="eType"
-            referenceValue="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+      <changes xsi:type="history:Create" xmi:id="_8ww4dENeEeaFtY2yvf2yjQ" referenceName="eStructuralFeatures">
+        <target href="view.ecore#//Element"/>
+        <element href="view.ecore#//Element/enabled"/>
+        <changes xsi:type="history:Set" xmi:id="_8ww4dUNeEeaFtY2yvf2yjQ" featureName="name" dataValue="enabled">
+          <element href="view.ecore#//Element/enabled"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8ww4dkNeEeaFtY2yvf2yjQ" featureName="transient" dataValue="true" oldDataValue="false">
+          <element href="view.ecore#//Element/enabled"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8ww4d0NeEeaFtY2yvf2yjQ" featureName="defaultValueLiteral" dataValue="true">
+          <element href="view.ecore#//Element/enabled"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8ww4eENeEeaFtY2yvf2yjQ" featureName="eType">
+          <element href="view.ecore#//Element/enabled"/>
+          <referenceValue href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="view.ecore#//Element" referenceName="eStructuralFeatures"
-          element="view.ecore#//Element/readonly">
-        <changes xsi:type="history:Set" element="view.ecore#//Element/readonly" featureName="name"
-            dataValue="readonly"/>
-        <changes xsi:type="history:Set" element="view.ecore#//Element/readonly" featureName="defaultValueLiteral"
-            dataValue="false"/>
-        <changes xsi:type="history:Set" element="view.ecore#//Element/readonly" featureName="eType"
-            referenceValue="../../org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
+      <changes xsi:type="history:Create" xmi:id="_8ww4eUNeEeaFtY2yvf2yjQ" referenceName="eStructuralFeatures">
+        <target href="view.ecore#//Element"/>
+        <element href="view.ecore#//Element/readonly"/>
+        <changes xsi:type="history:Set" xmi:id="_8ww4ekNeEeaFtY2yvf2yjQ" featureName="name" dataValue="readonly">
+          <element href="view.ecore#//Element/readonly"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8ww4e0NeEeaFtY2yvf2yjQ" featureName="defaultValueLiteral" dataValue="false">
+          <element href="view.ecore#//Element/readonly"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8ww4fENeEeaFtY2yvf2yjQ" featureName="eType">
+          <element href="view.ecore#//Element/readonly"/>
+          <referenceValue href="../../org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="view.ecore#//Element" referenceName="eStructuralFeatures"
-          element="view.ecore#//Element/diagnostic">
-        <changes xsi:type="history:Set" element="view.ecore#//Element/diagnostic"
-            featureName="name" dataValue="diagnostic"/>
-        <changes xsi:type="history:Set" element="view.ecore#//Element/diagnostic"
-            featureName="transient" dataValue="true" oldDataValue="false"/>
-        <changes xsi:type="history:Set" element="view.ecore#//Element/diagnostic"
-            featureName="containment" dataValue="true" oldDataValue="false"/>
-        <changes xsi:type="history:Set" element="view.ecore#//Element/diagnostic"
-            featureName="eType" referenceValue="view.ecore#//Diagnostic"/>
+      <changes xsi:type="history:Create" xmi:id="_8ww4fUNeEeaFtY2yvf2yjQ" referenceName="eStructuralFeatures">
+        <target href="view.ecore#//Element"/>
+        <element href="view.ecore#//Element/diagnostic"/>
+        <changes xsi:type="history:Set" xmi:id="_8ww4fkNeEeaFtY2yvf2yjQ" featureName="name" dataValue="diagnostic">
+          <element href="view.ecore#//Element/diagnostic"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8ww4f0NeEeaFtY2yvf2yjQ" featureName="transient" dataValue="true" oldDataValue="false">
+          <element href="view.ecore#//Element/diagnostic"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8ww4gENeEeaFtY2yvf2yjQ" featureName="containment" dataValue="true" oldDataValue="false">
+          <element href="view.ecore#//Element/diagnostic"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8ww4gUNeEeaFtY2yvf2yjQ" featureName="eType">
+          <element href="view.ecore#//Element/diagnostic"/>
+          <referenceValue href="view.ecore#//Diagnostic"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="view.ecore#//Element" referenceName="eStructuralFeatures"
-          element="view.ecore#//Element/attachments">
-        <changes xsi:type="history:Set" element="view.ecore#//Element/attachments"
-            featureName="name" dataValue="attachments"/>
-        <changes xsi:type="history:Set" element="view.ecore#//Element/attachments"
-            featureName="upperBound" dataValue="-1" oldDataValue="1"/>
-        <changes xsi:type="history:Set" element="view.ecore#//Element/attachments"
-            featureName="containment" dataValue="true" oldDataValue="false"/>
-        <changes xsi:type="history:Set" element="view.ecore#//Element/attachments"
-            featureName="eType" referenceValue="view.ecore#//Attachment"/>
+      <changes xsi:type="history:Create" xmi:id="_8ww4gkNeEeaFtY2yvf2yjQ" referenceName="eStructuralFeatures">
+        <target href="view.ecore#//Element"/>
+        <element href="view.ecore#//Element/attachments"/>
+        <changes xsi:type="history:Set" xmi:id="_8ww4g0NeEeaFtY2yvf2yjQ" featureName="name" dataValue="attachments">
+          <element href="view.ecore#//Element/attachments"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8ww4hENeEeaFtY2yvf2yjQ" featureName="upperBound" dataValue="-1" oldDataValue="1">
+          <element href="view.ecore#//Element/attachments"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8ww4hUNeEeaFtY2yvf2yjQ" featureName="containment" dataValue="true" oldDataValue="false">
+          <element href="view.ecore#//Element/attachments"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8ww4hkNeEeaFtY2yvf2yjQ" featureName="eType">
+          <element href="view.ecore#//Element/attachments"/>
+          <referenceValue href="view.ecore#//Attachment"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="view.ecore#/" referenceName="eClassifiers"
-          element="view.ecore#//View">
-        <changes xsi:type="history:Set" element="view.ecore#//View" featureName="name"
-            dataValue="View"/>
-        <changes xsi:type="history:Add" element="view.ecore#//View" featureName="eSuperTypes"
-            referenceValue="view.ecore#//Element"/>
+      <changes xsi:type="history:Create" xmi:id="_8ww4h0NeEeaFtY2yvf2yjQ" referenceName="eClassifiers">
+        <target href="view.ecore#/"/>
+        <element href="view.ecore#//View"/>
+        <changes xsi:type="history:Set" xmi:id="_8ww4iENeEeaFtY2yvf2yjQ" featureName="name" dataValue="View">
+          <element href="view.ecore#//View"/>
+        </changes>
+        <changes xsi:type="history:Add" xmi:id="_8ww4iUNeEeaFtY2yvf2yjQ" featureName="eSuperTypes">
+          <element href="view.ecore#//View"/>
+          <referenceValue href="view.ecore#//Element"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="view.ecore#//View" referenceName="eStructuralFeatures"
-          element="view.ecore#//View/rootEClass">
-        <changes xsi:type="history:Set" element="view.ecore#//View/rootEClass" featureName="name"
-            dataValue="rootEClass"/>
-        <changes xsi:type="history:Set" element="view.ecore#//View/rootEClass" featureName="lowerBound"
-            dataValue="1" oldDataValue="0"/>
-        <changes xsi:type="history:Set" element="view.ecore#//View/rootEClass" featureName="eType"
-            referenceValue="../../org.eclipse.emf.ecore/model/Ecore.ecore#//EClass"/>
+      <changes xsi:type="history:Create" xmi:id="_8ww4ikNeEeaFtY2yvf2yjQ" referenceName="eStructuralFeatures">
+        <target href="view.ecore#//View"/>
+        <element href="view.ecore#//View/rootEClass"/>
+        <changes xsi:type="history:Set" xmi:id="_8ww4i0NeEeaFtY2yvf2yjQ" featureName="name" dataValue="rootEClass">
+          <element href="view.ecore#//View/rootEClass"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8ww4jENeEeaFtY2yvf2yjQ" featureName="lowerBound" dataValue="1" oldDataValue="0">
+          <element href="view.ecore#//View/rootEClass"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8ww4jUNeEeaFtY2yvf2yjQ" featureName="eType">
+          <element href="view.ecore#//View/rootEClass"/>
+          <referenceValue href="../../org.eclipse.emf.ecore/model/Ecore.ecore#//EClass"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="view.ecore#//View" referenceName="eStructuralFeatures"
-          element="view.ecore#//View/ecorePath">
-        <changes xsi:type="history:Set" element="view.ecore#//View/ecorePath" featureName="name"
-            dataValue="ecorePath"/>
-        <changes xsi:type="history:Set" element="view.ecore#//View/ecorePath" featureName="lowerBound"
-            dataValue="1" oldDataValue="0"/>
-        <changes xsi:type="history:Set" element="view.ecore#//View/ecorePath" featureName="eType"
-            referenceValue="../../org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+      <changes xsi:type="history:Create" xmi:id="_8ww4jkNeEeaFtY2yvf2yjQ" referenceName="eStructuralFeatures">
+        <target href="view.ecore#//View"/>
+        <element href="view.ecore#//View/ecorePath"/>
+        <changes xsi:type="history:Set" xmi:id="_8wxfgENeEeaFtY2yvf2yjQ" featureName="name" dataValue="ecorePath">
+          <element href="view.ecore#//View/ecorePath"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8wxfgUNeEeaFtY2yvf2yjQ" featureName="lowerBound" dataValue="1" oldDataValue="0">
+          <element href="view.ecore#//View/ecorePath"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8wxfgkNeEeaFtY2yvf2yjQ" featureName="eType">
+          <element href="view.ecore#//View/ecorePath"/>
+          <referenceValue href="../../org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="view.ecore#/" referenceName="eClassifiers"
-          element="view.ecore#//ContainedElement">
-        <changes xsi:type="history:Set" element="view.ecore#//ContainedElement" featureName="name"
-            dataValue="ContainedElement"/>
-        <changes xsi:type="history:Set" element="view.ecore#//ContainedElement" featureName="abstract"
-            dataValue="true" oldDataValue="false"/>
-        <changes xsi:type="history:Add" element="view.ecore#//ContainedElement" featureName="eSuperTypes"
-            referenceValue="view.ecore#//Element"/>
+      <changes xsi:type="history:Create" xmi:id="_8wxfg0NeEeaFtY2yvf2yjQ" referenceName="eClassifiers">
+        <target href="view.ecore#/"/>
+        <element href="view.ecore#//ContainedElement"/>
+        <changes xsi:type="history:Set" xmi:id="_8wxfhENeEeaFtY2yvf2yjQ" featureName="name" dataValue="ContainedElement">
+          <element href="view.ecore#//ContainedElement"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8wxfhUNeEeaFtY2yvf2yjQ" featureName="abstract" dataValue="true" oldDataValue="false">
+          <element href="view.ecore#//ContainedElement"/>
+        </changes>
+        <changes xsi:type="history:Add" xmi:id="_8wxfhkNeEeaFtY2yvf2yjQ" featureName="eSuperTypes">
+          <element href="view.ecore#//ContainedElement"/>
+          <referenceValue href="view.ecore#//Element"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="view.ecore#//View" referenceName="eStructuralFeatures"
-          element="view.ecore#//View/children">
-        <changes xsi:type="history:Set" element="view.ecore#//View/children" featureName="name"
-            dataValue="children"/>
-        <changes xsi:type="history:Set" element="view.ecore#//View/children" featureName="upperBound"
-            dataValue="-1" oldDataValue="1"/>
-        <changes xsi:type="history:Set" element="view.ecore#//View/children" featureName="containment"
-            dataValue="true" oldDataValue="false"/>
-        <changes xsi:type="history:Set" element="view.ecore#//View/children" featureName="eType"
-            referenceValue="view.ecore#//ContainedElement"/>
+      <changes xsi:type="history:Create" xmi:id="_8wxfh0NeEeaFtY2yvf2yjQ" referenceName="eStructuralFeatures">
+        <target href="view.ecore#//View"/>
+        <element href="view.ecore#//View/children"/>
+        <changes xsi:type="history:Set" xmi:id="_8wxfiENeEeaFtY2yvf2yjQ" featureName="name" dataValue="children">
+          <element href="view.ecore#//View/children"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8wxfiUNeEeaFtY2yvf2yjQ" featureName="upperBound" dataValue="-1" oldDataValue="1">
+          <element href="view.ecore#//View/children"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8wxfikNeEeaFtY2yvf2yjQ" featureName="containment" dataValue="true" oldDataValue="false">
+          <element href="view.ecore#//View/children"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8wxfi0NeEeaFtY2yvf2yjQ" featureName="eType">
+          <element href="view.ecore#//View/children"/>
+          <referenceValue href="view.ecore#//ContainedElement"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="view.ecore#/" referenceName="eClassifiers"
-          element="view.ecore#//Container">
-        <changes xsi:type="history:Set" element="view.ecore#//Container" featureName="name"
-            dataValue="Container"/>
-        <changes xsi:type="history:Set" element="view.ecore#//Container" featureName="abstract"
-            dataValue="true" oldDataValue="false"/>
-        <changes xsi:type="history:Add" element="view.ecore#//Container" featureName="eSuperTypes"
-            referenceValue="view.ecore#//Element"/>
+      <changes xsi:type="history:Create" xmi:id="_8wxfjENeEeaFtY2yvf2yjQ" referenceName="eClassifiers">
+        <target href="view.ecore#/"/>
+        <element href="view.ecore#//Container"/>
+        <changes xsi:type="history:Set" xmi:id="_8wxfjUNeEeaFtY2yvf2yjQ" featureName="name" dataValue="Container">
+          <element href="view.ecore#//Container"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8wxfjkNeEeaFtY2yvf2yjQ" featureName="abstract" dataValue="true" oldDataValue="false">
+          <element href="view.ecore#//Container"/>
+        </changes>
+        <changes xsi:type="history:Add" xmi:id="_8wxfj0NeEeaFtY2yvf2yjQ" featureName="eSuperTypes">
+          <element href="view.ecore#//Container"/>
+          <referenceValue href="view.ecore#//Element"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="view.ecore#//Container" referenceName="eStructuralFeatures"
-          element="view.ecore#//Container/children">
-        <changes xsi:type="history:Set" element="view.ecore#//Container/children"
-            featureName="name" dataValue="children"/>
-        <changes xsi:type="history:Set" element="view.ecore#//Container/children"
-            featureName="upperBound" dataValue="-1" oldDataValue="1"/>
-        <changes xsi:type="history:Set" element="view.ecore#//Container/children"
-            featureName="containment" dataValue="true" oldDataValue="false"/>
-        <changes xsi:type="history:Set" element="view.ecore#//Container/children"
-            featureName="eType" referenceValue="view.ecore#//ContainedElement"/>
+      <changes xsi:type="history:Create" xmi:id="_8wxfkENeEeaFtY2yvf2yjQ" referenceName="eStructuralFeatures">
+        <target href="view.ecore#//Container"/>
+        <element href="view.ecore#//Container/children"/>
+        <changes xsi:type="history:Set" xmi:id="_8wxfkUNeEeaFtY2yvf2yjQ" featureName="name" dataValue="children">
+          <element href="view.ecore#//Container/children"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8wxfkkNeEeaFtY2yvf2yjQ" featureName="upperBound" dataValue="-1" oldDataValue="1">
+          <element href="view.ecore#//Container/children"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8wxfk0NeEeaFtY2yvf2yjQ" featureName="containment" dataValue="true" oldDataValue="false">
+          <element href="view.ecore#//Container/children"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8wxflENeEeaFtY2yvf2yjQ" featureName="eType">
+          <element href="view.ecore#//Container/children"/>
+          <referenceValue href="view.ecore#//ContainedElement"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="view.ecore#/" referenceName="eClassifiers"
-          element="view.ecore#//ContainedContainer">
-        <changes xsi:type="history:Set" element="view.ecore#//ContainedContainer"
-            featureName="name" dataValue="ContainedContainer"/>
-        <changes xsi:type="history:Set" element="view.ecore#//ContainedContainer"
-            featureName="abstract" dataValue="true" oldDataValue="false"/>
-        <changes xsi:type="history:Add" element="view.ecore#//ContainedContainer"
-            featureName="eSuperTypes" referenceValue="view.ecore#//ContainedElement"/>
-        <changes xsi:type="history:Add" element="view.ecore#//ContainedContainer"
-            featureName="eSuperTypes" referenceValue="view.ecore#//Container"/>
+      <changes xsi:type="history:Create" xmi:id="_8wxflUNeEeaFtY2yvf2yjQ" referenceName="eClassifiers">
+        <target href="view.ecore#/"/>
+        <element href="view.ecore#//ContainedContainer"/>
+        <changes xsi:type="history:Set" xmi:id="_8wxflkNeEeaFtY2yvf2yjQ" featureName="name" dataValue="ContainedContainer">
+          <element href="view.ecore#//ContainedContainer"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8wxfl0NeEeaFtY2yvf2yjQ" featureName="abstract" dataValue="true" oldDataValue="false">
+          <element href="view.ecore#//ContainedContainer"/>
+        </changes>
+        <changes xsi:type="history:Add" xmi:id="_8wxfmENeEeaFtY2yvf2yjQ" featureName="eSuperTypes">
+          <element href="view.ecore#//ContainedContainer"/>
+          <referenceValue href="view.ecore#//ContainedElement"/>
+        </changes>
+        <changes xsi:type="history:Add" xmi:id="_8wxfmUNeEeaFtY2yvf2yjQ" featureName="eSuperTypes">
+          <element href="view.ecore#//ContainedContainer"/>
+          <referenceValue href="view.ecore#//Container"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="view.ecore#/" referenceName="eClassifiers"
-          element="view.ecore#//Control">
-        <changes xsi:type="history:Set" element="view.ecore#//Control" featureName="name"
-            dataValue="Control"/>
-        <changes xsi:type="history:Add" element="view.ecore#//Control" featureName="eSuperTypes"
-            referenceValue="view.ecore#//ContainedElement"/>
+      <changes xsi:type="history:Create" xmi:id="_8wxfmkNeEeaFtY2yvf2yjQ" referenceName="eClassifiers">
+        <target href="view.ecore#/"/>
+        <element href="view.ecore#//Control"/>
+        <changes xsi:type="history:Set" xmi:id="_8wxfm0NeEeaFtY2yvf2yjQ" featureName="name" dataValue="Control">
+          <element href="view.ecore#//Control"/>
+        </changes>
+        <changes xsi:type="history:Add" xmi:id="_8wxfnENeEeaFtY2yvf2yjQ" featureName="eSuperTypes">
+          <element href="view.ecore#//Control"/>
+          <referenceValue href="view.ecore#//ContainedElement"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="view.ecore#//Control" referenceName="eStructuralFeatures"
-          element="view.ecore#//Control/domainModelReference">
-        <changes xsi:type="history:Set" element="view.ecore#//Control/domainModelReference"
-            featureName="name" dataValue="domainModelReference"/>
-        <changes xsi:type="history:Set" element="view.ecore#//Control/domainModelReference"
-            featureName="lowerBound" dataValue="1" oldDataValue="0"/>
-        <changes xsi:type="history:Set" element="view.ecore#//Control/domainModelReference"
-            featureName="containment" dataValue="true" oldDataValue="false"/>
-        <changes xsi:type="history:Set" element="view.ecore#//Control/domainModelReference"
-            featureName="eType" referenceValue="view.ecore#//DomainModelReference"/>
+      <changes xsi:type="history:Create" xmi:id="_8wxfnUNeEeaFtY2yvf2yjQ" referenceName="eStructuralFeatures">
+        <target href="view.ecore#//Control"/>
+        <element href="view.ecore#//Control/domainModelReference"/>
+        <changes xsi:type="history:Set" xmi:id="_8wxfnkNeEeaFtY2yvf2yjQ" featureName="name" dataValue="domainModelReference">
+          <element href="view.ecore#//Control/domainModelReference"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8wxfn0NeEeaFtY2yvf2yjQ" featureName="lowerBound" dataValue="1" oldDataValue="0">
+          <element href="view.ecore#//Control/domainModelReference"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8wxfoENeEeaFtY2yvf2yjQ" featureName="containment" dataValue="true" oldDataValue="false">
+          <element href="view.ecore#//Control/domainModelReference"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8wxfoUNeEeaFtY2yvf2yjQ" featureName="eType">
+          <element href="view.ecore#//Control/domainModelReference"/>
+          <referenceValue href="view.ecore#//DomainModelReference"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="view.ecore#/" referenceName="eClassifiers"
-          element="view.ecore#//LabelAlignment">
-        <changes xsi:type="history:Set" element="view.ecore#//LabelAlignment" featureName="name"
-            dataValue="LabelAlignment"/>
+      <changes xsi:type="history:Create" xmi:id="_8wxfokNeEeaFtY2yvf2yjQ" referenceName="eClassifiers">
+        <target href="view.ecore#/"/>
+        <element href="view.ecore#//LabelAlignment"/>
+        <changes xsi:type="history:Set" xmi:id="_8wxfo0NeEeaFtY2yvf2yjQ" featureName="name" dataValue="LabelAlignment">
+          <element href="view.ecore#//LabelAlignment"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="view.ecore#//Control" referenceName="eStructuralFeatures"
-          element="view.ecore#//Control/labelAlignment">
-        <changes xsi:type="history:Set" element="view.ecore#//Control/labelAlignment"
-            featureName="name" dataValue="labelAlignment"/>
-        <changes xsi:type="history:Set" element="view.ecore#//Control/labelAlignment"
-            featureName="lowerBound" dataValue="1" oldDataValue="0"/>
-        <changes xsi:type="history:Set" element="view.ecore#//Control/labelAlignment"
-            featureName="defaultValueLiteral" dataValue="Left"/>
-        <changes xsi:type="history:Set" element="view.ecore#//Control/labelAlignment"
-            featureName="eType" referenceValue="view.ecore#//LabelAlignment"/>
+      <changes xsi:type="history:Create" xmi:id="_8wxfpENeEeaFtY2yvf2yjQ" referenceName="eStructuralFeatures">
+        <target href="view.ecore#//Control"/>
+        <element href="view.ecore#//Control/labelAlignment"/>
+        <changes xsi:type="history:Set" xmi:id="_8wxfpUNeEeaFtY2yvf2yjQ" featureName="name" dataValue="labelAlignment">
+          <element href="view.ecore#//Control/labelAlignment"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8wxfpkNeEeaFtY2yvf2yjQ" featureName="lowerBound" dataValue="1" oldDataValue="0">
+          <element href="view.ecore#//Control/labelAlignment"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8wyGkENeEeaFtY2yvf2yjQ" featureName="defaultValueLiteral" dataValue="Left">
+          <element href="view.ecore#//Control/labelAlignment"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8wyGkUNeEeaFtY2yvf2yjQ" featureName="eType">
+          <element href="view.ecore#//Control/labelAlignment"/>
+          <referenceValue href="view.ecore#//LabelAlignment"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="view.ecore#//LabelAlignment" referenceName="eLiterals"
-          element="view.ecore#//LabelAlignment/Left">
-        <changes xsi:type="history:Set" element="view.ecore#//LabelAlignment/Left"
-            featureName="name" dataValue="Left"/>
-        <changes xsi:type="history:Set" element="view.ecore#//LabelAlignment/Left"
-            featureName="literal" dataValue="Left"/>
+      <changes xsi:type="history:Create" xmi:id="_8wyGkkNeEeaFtY2yvf2yjQ" referenceName="eLiterals">
+        <target href="view.ecore#//LabelAlignment"/>
+        <element href="view.ecore#//LabelAlignment/Left"/>
+        <changes xsi:type="history:Set" xmi:id="_8wyGk0NeEeaFtY2yvf2yjQ" featureName="name" dataValue="Left">
+          <element href="view.ecore#//LabelAlignment/Left"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8wyGlENeEeaFtY2yvf2yjQ" featureName="literal" dataValue="Left">
+          <element href="view.ecore#//LabelAlignment/Left"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="view.ecore#//LabelAlignment" referenceName="eLiterals"
-          element="view.ecore#//LabelAlignment/None">
-        <changes xsi:type="history:Set" element="view.ecore#//LabelAlignment/None"
-            featureName="name" dataValue="None"/>
-        <changes xsi:type="history:Set" element="view.ecore#//LabelAlignment/None"
-            featureName="value" dataValue="1" oldDataValue="0"/>
-        <changes xsi:type="history:Set" element="view.ecore#//LabelAlignment/None"
-            featureName="literal" dataValue="None"/>
+      <changes xsi:type="history:Create" xmi:id="_8wyGlUNeEeaFtY2yvf2yjQ" referenceName="eLiterals">
+        <target href="view.ecore#//LabelAlignment"/>
+        <element href="view.ecore#//LabelAlignment/None"/>
+        <changes xsi:type="history:Set" xmi:id="_8wyGlkNeEeaFtY2yvf2yjQ" featureName="name" dataValue="None">
+          <element href="view.ecore#//LabelAlignment/None"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8wyGl0NeEeaFtY2yvf2yjQ" featureName="value" dataValue="1" oldDataValue="0">
+          <element href="view.ecore#//LabelAlignment/None"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8wyGmENeEeaFtY2yvf2yjQ" featureName="literal" dataValue="None">
+          <element href="view.ecore#//LabelAlignment/None"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="view.ecore#/" referenceName="eClassifiers"
-          element="view.ecore#//DomainModelReferenceChangeListener">
-        <changes xsi:type="history:Set" element="view.ecore#//DomainModelReferenceChangeListener"
-            featureName="name" dataValue="DomainModelReferenceChangeListener"/>
-        <changes xsi:type="history:Set" element="view.ecore#//DomainModelReferenceChangeListener"
-            featureName="instanceClassName" dataValue="org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener"/>
-        <changes xsi:type="history:Set" element="view.ecore#//DomainModelReferenceChangeListener"
-            featureName="instanceTypeName" dataValue="org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener"/>
+      <changes xsi:type="history:Create" xmi:id="_8wyGmUNeEeaFtY2yvf2yjQ" referenceName="eClassifiers" element="_-x7-okNhEeaFtY2yvf2yjQ">
+        <target href="view.ecore#/"/>
+        <changes xsi:type="history:Set" xmi:id="_8wyGmkNeEeaFtY2yvf2yjQ" element="_-x7-okNhEeaFtY2yvf2yjQ" featureName="name" dataValue="DomainModelReferenceChangeListener"/>
+        <changes xsi:type="history:Set" xmi:id="_8wyGm0NeEeaFtY2yvf2yjQ" element="_-x7-okNhEeaFtY2yvf2yjQ" featureName="instanceClassName" dataValue="org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener"/>
+        <changes xsi:type="history:Set" xmi:id="_8wyGnENeEeaFtY2yvf2yjQ" element="_-x7-okNhEeaFtY2yvf2yjQ" featureName="instanceTypeName" dataValue="org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener"/>
       </changes>
-      <changes xsi:type="history:Create" target="view.ecore#//DomainModelReference"
-          referenceName="eStructuralFeatures" element="view.ecore#//DomainModelReference/changeListener">
-        <changes xsi:type="history:Set" element="view.ecore#//DomainModelReference/changeListener"
-            featureName="name" dataValue="changeListener"/>
-        <changes xsi:type="history:Set" element="view.ecore#//DomainModelReference/changeListener"
-            featureName="upperBound" dataValue="-1" oldDataValue="1"/>
-        <changes xsi:type="history:Set" element="view.ecore#//DomainModelReference/changeListener"
-            featureName="transient" dataValue="true" oldDataValue="false"/>
-        <changes xsi:type="history:Set" element="view.ecore#//DomainModelReference/changeListener"
-            featureName="eType" referenceValue="view.ecore#//DomainModelReferenceChangeListener"/>
+      <changes xsi:type="history:Create" xmi:id="_8wyGnUNeEeaFtY2yvf2yjQ" referenceName="eStructuralFeatures" element="_VxF3ckNhEeaFtY2yvf2yjQ">
+        <target href="view.ecore#//DomainModelReference"/>
+        <changes xsi:type="history:Set" xmi:id="_8wyGnkNeEeaFtY2yvf2yjQ" element="_VxF3ckNhEeaFtY2yvf2yjQ" featureName="name" dataValue="changeListener"/>
+        <changes xsi:type="history:Set" xmi:id="_8wyGn0NeEeaFtY2yvf2yjQ" element="_VxF3ckNhEeaFtY2yvf2yjQ" featureName="upperBound" dataValue="-1" oldDataValue="1"/>
+        <changes xsi:type="history:Set" xmi:id="_8wyGoENeEeaFtY2yvf2yjQ" element="_VxF3ckNhEeaFtY2yvf2yjQ" featureName="transient" dataValue="true" oldDataValue="false"/>
+        <changes xsi:type="history:Set" xmi:id="_8wyGoUNeEeaFtY2yvf2yjQ" element="_VxF3ckNhEeaFtY2yvf2yjQ" featureName="eType" referenceValue="_-x7-okNhEeaFtY2yvf2yjQ"/>
       </changes>
     </changes>
-    <changes xsi:type="history:CompositeChange">
-      <changes xsi:type="history:Set" element="view.ecore#//FeaturePathDomainModelReference/domainModelEReferencePath"
-          featureName="unique" dataValue="false" oldDataValue="true"/>
+    <changes xsi:type="history:CompositeChange" xmi:id="_8wyGokNeEeaFtY2yvf2yjQ">
+      <changes xsi:type="history:Set" xmi:id="_8wyGo0NeEeaFtY2yvf2yjQ" element="_56GtBkNhEeaFtY2yvf2yjQ" featureName="unique" dataValue="false" oldDataValue="true"/>
     </changes>
-    <changes xsi:type="history:CompositeChange">
-      <changes xsi:type="history:Create" target="view.ecore#//FeaturePathDomainModelReference"
-          referenceName="eAnnotations" element="view.ecore#//FeaturePathDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%"/>
-      <changes xsi:type="history:Set" element="view.ecore#//FeaturePathDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%"
-          featureName="source" dataValue="http://www.eclipse.org/emf/2002/Ecore"/>
-      <changes xsi:type="history:Create" target="view.ecore#//FeaturePathDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%"
-          referenceName="details" element="view.ecore#//FeaturePathDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%/@details.0"/>
-      <changes xsi:type="history:Set" element="view.ecore#//FeaturePathDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%/@details.0"
-          featureName="key" dataValue="constraints"/>
-      <changes xsi:type="history:Set" element="view.ecore#//FeaturePathDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%/@details.0"
-          featureName="value" dataValue="resolveable"/>
+    <changes xsi:type="history:CompositeChange" xmi:id="_8wyGpENeEeaFtY2yvf2yjQ">
+      <changes xsi:type="history:Create" xmi:id="_8wyGpUNeEeaFtY2yvf2yjQ" target="_56GtAUNhEeaFtY2yvf2yjQ" referenceName="eAnnotations" element="_56GtAkNhEeaFtY2yvf2yjQ"/>
+      <changes xsi:type="history:Set" xmi:id="_8wyGpkNeEeaFtY2yvf2yjQ" element="_56GtAkNhEeaFtY2yvf2yjQ" featureName="source" dataValue="http://www.eclipse.org/emf/2002/Ecore"/>
+      <changes xsi:type="history:Create" xmi:id="_8wyGp0NeEeaFtY2yvf2yjQ" target="_56GtAkNhEeaFtY2yvf2yjQ" referenceName="details" element="_56GtA0NhEeaFtY2yvf2yjQ"/>
+      <changes xsi:type="history:Set" xmi:id="_8wyGqENeEeaFtY2yvf2yjQ" element="_56GtA0NhEeaFtY2yvf2yjQ" featureName="key" dataValue="constraints"/>
+      <changes xsi:type="history:Set" xmi:id="_8wyGqUNeEeaFtY2yvf2yjQ" element="_56GtA0NhEeaFtY2yvf2yjQ" featureName="value" dataValue="resolveable"/>
     </changes>
   </releases>
-  <releases date="2015-08-16T21:20:47.038+0200" label="170">
-    <changes xsi:type="history:OperationChange">
-      <changes xsi:type="history:Create" target="view.ecore#/" referenceName="eClassifiers"
-          element="view.ecore#//ViewModelProperties">
-        <changes xsi:type="history:Set" element="view.ecore#//ViewModelProperties"
-            featureName="name" dataValue="ViewModelProperties"/>
-        <changes xsi:type="history:Set" element="view.ecore#//ViewModelProperties"
-            featureName="abstract" dataValue="true" oldDataValue="false"/>
+  <releases xmi:id="_8wyGqkNeEeaFtY2yvf2yjQ" date="2015-08-16T21:20:47.038+0200" label="170">
+    <changes xsi:type="history:OperationChange" xmi:id="_8wyGq0NeEeaFtY2yvf2yjQ">
+      <changes xsi:type="history:Create" xmi:id="_8wyGrENeEeaFtY2yvf2yjQ" referenceName="eClassifiers">
+        <target href="view.ecore#/"/>
+        <element href="view.ecore#//ViewModelProperties"/>
+        <changes xsi:type="history:Set" xmi:id="_8wyGrUNeEeaFtY2yvf2yjQ" featureName="name" dataValue="ViewModelProperties">
+          <element href="view.ecore#//ViewModelProperties"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8wyGrkNeEeaFtY2yvf2yjQ" featureName="abstract" dataValue="true" oldDataValue="false">
+          <element href="view.ecore#//ViewModelProperties"/>
+        </changes>
       </changes>
-      <operation name="newClass">
-        <parameters name="ePackage">
-          <referenceValue element="view.ecore#/"/>
+      <operation xmi:id="_8wyGr0NeEeaFtY2yvf2yjQ" name="newClass">
+        <parameters xmi:id="_8wyGsENeEeaFtY2yvf2yjQ" name="ePackage">
+          <referenceValue xmi:id="_8wyGsUNeEeaFtY2yvf2yjQ">
+            <element href="view.ecore#/"/>
+          </referenceValue>
         </parameters>
-        <parameters name="name">
+        <parameters xmi:id="_8wyGskNeEeaFtY2yvf2yjQ" name="name">
           <dataValue>ViewModelProperties</dataValue>
         </parameters>
-        <parameters name="superClasses"/>
-        <parameters name="abstr">
+        <parameters xmi:id="_8wyGs0NeEeaFtY2yvf2yjQ" name="superClasses"/>
+        <parameters xmi:id="_8wyGtENeEeaFtY2yvf2yjQ" name="abstr">
           <dataValue>true</dataValue>
         </parameters>
       </operation>
     </changes>
-    <changes xsi:type="history:Set" element="view.ecore#//ViewModelProperties" featureName="interface"
-        dataValue="true" oldDataValue="false"/>
-    <changes xsi:type="history:OperationChange">
-      <changes xsi:type="history:Create" target="view.ecore#/" referenceName="eClassifiers"
-          element="view.ecore#//StringToObjectMapEntry">
-        <changes xsi:type="history:Set" element="view.ecore#//StringToObjectMapEntry"
-            featureName="name" dataValue="StringToObjectMapEntry"/>
+    <changes xsi:type="history:Set" xmi:id="_8wyGtUNeEeaFtY2yvf2yjQ" featureName="interface" dataValue="true" oldDataValue="false">
+      <element href="view.ecore#//ViewModelProperties"/>
+    </changes>
+    <changes xsi:type="history:OperationChange" xmi:id="_8wyGtkNeEeaFtY2yvf2yjQ">
+      <changes xsi:type="history:Create" xmi:id="_8wyGt0NeEeaFtY2yvf2yjQ" referenceName="eClassifiers">
+        <target href="view.ecore#/"/>
+        <element href="view.ecore#//StringToObjectMapEntry"/>
+        <changes xsi:type="history:Set" xmi:id="_8wyGuENeEeaFtY2yvf2yjQ" featureName="name" dataValue="StringToObjectMapEntry">
+          <element href="view.ecore#//StringToObjectMapEntry"/>
+        </changes>
       </changes>
-      <operation name="newClass">
-        <parameters name="ePackage">
-          <referenceValue element="view.ecore#/"/>
+      <operation xmi:id="_8wyGuUNeEeaFtY2yvf2yjQ" name="newClass">
+        <parameters xmi:id="_8wyGukNeEeaFtY2yvf2yjQ" name="ePackage">
+          <referenceValue xmi:id="_8wyGu0NeEeaFtY2yvf2yjQ">
+            <element href="view.ecore#/"/>
+          </referenceValue>
         </parameters>
-        <parameters name="name">
+        <parameters xmi:id="_8wyGvENeEeaFtY2yvf2yjQ" name="name">
           <dataValue>StringToObjectMapEntry</dataValue>
         </parameters>
-        <parameters name="superClasses"/>
-        <parameters name="abstr">
+        <parameters xmi:id="_8wytoENeEeaFtY2yvf2yjQ" name="superClasses"/>
+        <parameters xmi:id="_8wytoUNeEeaFtY2yvf2yjQ" name="abstr">
           <dataValue>false</dataValue>
         </parameters>
       </operation>
     </changes>
-    <changes xsi:type="history:Set" element="view.ecore#//StringToObjectMapEntry"
-        featureName="instanceClassName" dataValue="java.util.Map$Entry"/>
-    <changes xsi:type="history:Set" element="view.ecore#//StringToObjectMapEntry"
-        featureName="instanceTypeName" dataValue="java.util.Map$Entry"/>
-    <changes xsi:type="history:OperationChange">
-      <changes xsi:type="history:Create" target="view.ecore#//StringToObjectMapEntry"
-          referenceName="eStructuralFeatures" element="view.ecore#//StringToObjectMapEntry/key">
-        <changes xsi:type="history:Set" element="view.ecore#//StringToObjectMapEntry/key"
-            featureName="name" dataValue="key"/>
-        <changes xsi:type="history:Set" element="view.ecore#//StringToObjectMapEntry/key"
-            featureName="lowerBound" dataValue="1" oldDataValue="0"/>
-        <changes xsi:type="history:Set" element="view.ecore#//StringToObjectMapEntry/key"
-            featureName="eType" referenceValue="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <changes xsi:type="history:Set" xmi:id="_8wytokNeEeaFtY2yvf2yjQ" featureName="instanceClassName" dataValue="java.util.Map$Entry">
+      <element href="view.ecore#//StringToObjectMapEntry"/>
+    </changes>
+    <changes xsi:type="history:Set" xmi:id="_8wyto0NeEeaFtY2yvf2yjQ" featureName="instanceTypeName" dataValue="java.util.Map$Entry">
+      <element href="view.ecore#//StringToObjectMapEntry"/>
+    </changes>
+    <changes xsi:type="history:OperationChange" xmi:id="_8wytpENeEeaFtY2yvf2yjQ">
+      <changes xsi:type="history:Create" xmi:id="_8wytpUNeEeaFtY2yvf2yjQ" referenceName="eStructuralFeatures">
+        <target href="view.ecore#//StringToObjectMapEntry"/>
+        <element href="view.ecore#//StringToObjectMapEntry/key"/>
+        <changes xsi:type="history:Set" xmi:id="_8wytpkNeEeaFtY2yvf2yjQ" featureName="name" dataValue="key">
+          <element href="view.ecore#//StringToObjectMapEntry/key"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8wytp0NeEeaFtY2yvf2yjQ" featureName="lowerBound" dataValue="1" oldDataValue="0">
+          <element href="view.ecore#//StringToObjectMapEntry/key"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8wytqENeEeaFtY2yvf2yjQ" featureName="eType">
+          <element href="view.ecore#//StringToObjectMapEntry/key"/>
+          <referenceValue href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </changes>
       </changes>
-      <operation name="newAttribute">
-        <parameters name="eClass">
-          <referenceValue element="view.ecore#//StringToObjectMapEntry"/>
+      <operation xmi:id="_8wytqUNeEeaFtY2yvf2yjQ" name="newAttribute">
+        <parameters xmi:id="_8wytqkNeEeaFtY2yvf2yjQ" name="eClass">
+          <referenceValue xmi:id="_8wytq0NeEeaFtY2yvf2yjQ">
+            <element href="view.ecore#//StringToObjectMapEntry"/>
+          </referenceValue>
         </parameters>
-        <parameters name="name">
+        <parameters xmi:id="_8wytrENeEeaFtY2yvf2yjQ" name="name">
           <dataValue>key</dataValue>
         </parameters>
-        <parameters name="type">
-          <referenceValue element="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        <parameters xmi:id="_8wytrUNeEeaFtY2yvf2yjQ" name="type">
+          <referenceValue xmi:id="_8wytrkNeEeaFtY2yvf2yjQ">
+            <element href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+          </referenceValue>
         </parameters>
-        <parameters name="lowerBound">
+        <parameters xmi:id="_8wytr0NeEeaFtY2yvf2yjQ" name="lowerBound">
           <dataValue>1</dataValue>
         </parameters>
-        <parameters name="upperBound">
+        <parameters xmi:id="_8wytsENeEeaFtY2yvf2yjQ" name="upperBound">
           <dataValue>1</dataValue>
         </parameters>
-        <parameters name="defaultValue">
+        <parameters xmi:id="_8wytsUNeEeaFtY2yvf2yjQ" name="defaultValue">
           <dataValue xsi:nil="true"/>
         </parameters>
       </operation>
     </changes>
-    <changes xsi:type="history:OperationChange">
-      <changes xsi:type="history:Create" target="view.ecore#//StringToObjectMapEntry"
-          referenceName="eStructuralFeatures" element="view.ecore#//StringToObjectMapEntry/value">
-        <changes xsi:type="history:Set" element="view.ecore#//StringToObjectMapEntry/value"
-            featureName="name" dataValue="value"/>
-        <changes xsi:type="history:Set" element="view.ecore#//StringToObjectMapEntry/value"
-            featureName="lowerBound" dataValue="1" oldDataValue="0"/>
-        <changes xsi:type="history:Set" element="view.ecore#//StringToObjectMapEntry/value"
-            featureName="eType" referenceValue="http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+    <changes xsi:type="history:OperationChange" xmi:id="_8wytskNeEeaFtY2yvf2yjQ">
+      <changes xsi:type="history:Create" xmi:id="_8wyts0NeEeaFtY2yvf2yjQ" referenceName="eStructuralFeatures">
+        <target href="view.ecore#//StringToObjectMapEntry"/>
+        <element href="view.ecore#//StringToObjectMapEntry/value"/>
+        <changes xsi:type="history:Set" xmi:id="_8wyttENeEeaFtY2yvf2yjQ" featureName="name" dataValue="value">
+          <element href="view.ecore#//StringToObjectMapEntry/value"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8wyttUNeEeaFtY2yvf2yjQ" featureName="lowerBound" dataValue="1" oldDataValue="0">
+          <element href="view.ecore#//StringToObjectMapEntry/value"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8w2YAENeEeaFtY2yvf2yjQ" featureName="eType">
+          <element href="view.ecore#//StringToObjectMapEntry/value"/>
+          <referenceValue href="http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+        </changes>
       </changes>
-      <operation name="newAttribute">
-        <parameters name="eClass">
-          <referenceValue element="view.ecore#//StringToObjectMapEntry"/>
+      <operation xmi:id="_8w2YAUNeEeaFtY2yvf2yjQ" name="newAttribute">
+        <parameters xmi:id="_8w2YAkNeEeaFtY2yvf2yjQ" name="eClass">
+          <referenceValue xmi:id="_8w2YA0NeEeaFtY2yvf2yjQ">
+            <element href="view.ecore#//StringToObjectMapEntry"/>
+          </referenceValue>
         </parameters>
-        <parameters name="name">
+        <parameters xmi:id="_8w2YBENeEeaFtY2yvf2yjQ" name="name">
           <dataValue>value</dataValue>
         </parameters>
-        <parameters name="type">
-          <referenceValue element="http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+        <parameters xmi:id="_8w2YBUNeEeaFtY2yvf2yjQ" name="type">
+          <referenceValue xmi:id="_8w2YBkNeEeaFtY2yvf2yjQ">
+            <element href="http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+          </referenceValue>
         </parameters>
-        <parameters name="lowerBound">
+        <parameters xmi:id="_8w2YB0NeEeaFtY2yvf2yjQ" name="lowerBound">
           <dataValue>1</dataValue>
         </parameters>
-        <parameters name="upperBound">
+        <parameters xmi:id="_8w2YCENeEeaFtY2yvf2yjQ" name="upperBound">
           <dataValue>1</dataValue>
         </parameters>
-        <parameters name="defaultValue">
+        <parameters xmi:id="_8w2YCUNeEeaFtY2yvf2yjQ" name="defaultValue">
           <dataValue xsi:nil="true"/>
         </parameters>
       </operation>
     </changes>
-    <changes xsi:type="history:OperationChange">
-      <changes xsi:type="history:Create" target="view.ecore#/" referenceName="eClassifiers"
-          element="view.ecore#//ViewModelLoadingProperties">
-        <changes xsi:type="history:Set" element="view.ecore#//ViewModelLoadingProperties"
-            featureName="name" dataValue="ViewModelLoadingProperties"/>
-        <changes xsi:type="history:Add" element="view.ecore#//ViewModelLoadingProperties"
-            featureName="eSuperTypes" referenceValue="view.ecore#//ViewModelProperties"/>
+    <changes xsi:type="history:OperationChange" xmi:id="_8w2YCkNeEeaFtY2yvf2yjQ">
+      <changes xsi:type="history:Create" xmi:id="_8w2_EENeEeaFtY2yvf2yjQ" referenceName="eClassifiers">
+        <target href="view.ecore#/"/>
+        <element href="view.ecore#//ViewModelLoadingProperties"/>
+        <changes xsi:type="history:Set" xmi:id="_8w2_EUNeEeaFtY2yvf2yjQ" featureName="name" dataValue="ViewModelLoadingProperties">
+          <element href="view.ecore#//ViewModelLoadingProperties"/>
+        </changes>
+        <changes xsi:type="history:Add" xmi:id="_8w2_EkNeEeaFtY2yvf2yjQ" featureName="eSuperTypes">
+          <element href="view.ecore#//ViewModelLoadingProperties"/>
+          <referenceValue href="view.ecore#//ViewModelProperties"/>
+        </changes>
       </changes>
-      <operation name="newClass">
-        <parameters name="ePackage">
-          <referenceValue element="view.ecore#/"/>
+      <operation xmi:id="_8w2_E0NeEeaFtY2yvf2yjQ" name="newClass">
+        <parameters xmi:id="_8w2_FENeEeaFtY2yvf2yjQ" name="ePackage">
+          <referenceValue xmi:id="_8w2_FUNeEeaFtY2yvf2yjQ">
+            <element href="view.ecore#/"/>
+          </referenceValue>
         </parameters>
-        <parameters name="name">
+        <parameters xmi:id="_8w2_FkNeEeaFtY2yvf2yjQ" name="name">
           <dataValue>ViewModelLoadingProperties</dataValue>
         </parameters>
-        <parameters name="superClasses">
-          <referenceValue element="view.ecore#//ViewModelProperties"/>
+        <parameters xmi:id="_8w2_F0NeEeaFtY2yvf2yjQ" name="superClasses">
+          <referenceValue xmi:id="_8w2_GENeEeaFtY2yvf2yjQ">
+            <element href="view.ecore#//ViewModelProperties"/>
+          </referenceValue>
         </parameters>
-        <parameters name="abstr">
+        <parameters xmi:id="_8w2_GUNeEeaFtY2yvf2yjQ" name="abstr">
           <dataValue>false</dataValue>
         </parameters>
       </operation>
     </changes>
-    <changes xsi:type="history:OperationChange">
-      <changes xsi:type="history:Create" target="view.ecore#//ViewModelLoadingProperties"
-          referenceName="eStructuralFeatures" element="view.ecore#//ViewModelLoadingProperties/inheritableProperties">
-        <changes xsi:type="history:Set" element="view.ecore#//ViewModelLoadingProperties/inheritableProperties"
-            featureName="name" dataValue="inheritableProperties"/>
-        <changes xsi:type="history:Set" element="view.ecore#//ViewModelLoadingProperties/inheritableProperties"
-            featureName="upperBound" dataValue="-1" oldDataValue="1"/>
-        <changes xsi:type="history:Set" element="view.ecore#//ViewModelLoadingProperties/inheritableProperties"
-            featureName="containment" dataValue="true" oldDataValue="false"/>
-        <changes xsi:type="history:Set" element="view.ecore#//ViewModelLoadingProperties/inheritableProperties"
-            featureName="eType" referenceValue="view.ecore#//StringToObjectMapEntry"/>
+    <changes xsi:type="history:OperationChange" xmi:id="_8w2_GkNeEeaFtY2yvf2yjQ">
+      <changes xsi:type="history:Create" xmi:id="_8w2_G0NeEeaFtY2yvf2yjQ" referenceName="eStructuralFeatures">
+        <target href="view.ecore#//ViewModelLoadingProperties"/>
+        <element href="view.ecore#//ViewModelLoadingProperties/inheritableProperties"/>
+        <changes xsi:type="history:Set" xmi:id="_8w2_HENeEeaFtY2yvf2yjQ" featureName="name" dataValue="inheritableProperties">
+          <element href="view.ecore#//ViewModelLoadingProperties/inheritableProperties"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8w2_HUNeEeaFtY2yvf2yjQ" featureName="upperBound" dataValue="-1" oldDataValue="1">
+          <element href="view.ecore#//ViewModelLoadingProperties/inheritableProperties"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8w2_HkNeEeaFtY2yvf2yjQ" featureName="containment" dataValue="true" oldDataValue="false">
+          <element href="view.ecore#//ViewModelLoadingProperties/inheritableProperties"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8w2_H0NeEeaFtY2yvf2yjQ" featureName="eType">
+          <element href="view.ecore#//ViewModelLoadingProperties/inheritableProperties"/>
+          <referenceValue href="view.ecore#//StringToObjectMapEntry"/>
+        </changes>
       </changes>
-      <operation name="newReference">
-        <parameters name="eClass">
-          <referenceValue element="view.ecore#//ViewModelLoadingProperties"/>
+      <operation xmi:id="_8w2_IENeEeaFtY2yvf2yjQ" name="newReference">
+        <parameters xmi:id="_8w2_IUNeEeaFtY2yvf2yjQ" name="eClass">
+          <referenceValue xmi:id="_8w2_IkNeEeaFtY2yvf2yjQ">
+            <element href="view.ecore#//ViewModelLoadingProperties"/>
+          </referenceValue>
         </parameters>
-        <parameters name="name">
+        <parameters xmi:id="_8w2_I0NeEeaFtY2yvf2yjQ" name="name">
           <dataValue>inheritableProperties</dataValue>
         </parameters>
-        <parameters name="type">
-          <referenceValue element="view.ecore#//StringToObjectMapEntry"/>
+        <parameters xmi:id="_8w2_JENeEeaFtY2yvf2yjQ" name="type">
+          <referenceValue xmi:id="_8w2_JUNeEeaFtY2yvf2yjQ">
+            <element href="view.ecore#//StringToObjectMapEntry"/>
+          </referenceValue>
         </parameters>
-        <parameters name="lowerBound">
+        <parameters xmi:id="_8w2_JkNeEeaFtY2yvf2yjQ" name="lowerBound">
           <dataValue>0</dataValue>
         </parameters>
-        <parameters name="upperBound">
+        <parameters xmi:id="_8w2_J0NeEeaFtY2yvf2yjQ" name="upperBound">
           <dataValue>-1</dataValue>
         </parameters>
-        <parameters name="containment">
+        <parameters xmi:id="_8w2_KENeEeaFtY2yvf2yjQ" name="containment">
           <dataValue>true</dataValue>
         </parameters>
-        <parameters name="opposite"/>
+        <parameters xmi:id="_8w2_KUNeEeaFtY2yvf2yjQ" name="opposite"/>
       </operation>
     </changes>
-    <changes xsi:type="history:OperationChange">
-      <changes xsi:type="history:Create" target="view.ecore#//ViewModelLoadingProperties"
-          referenceName="eStructuralFeatures" element="view.ecore#//ViewModelLoadingProperties/nonInheritableProperties">
-        <changes xsi:type="history:Set" element="view.ecore#//ViewModelLoadingProperties/nonInheritableProperties"
-            featureName="name" dataValue="nonInheritableProperties"/>
-        <changes xsi:type="history:Set" element="view.ecore#//ViewModelLoadingProperties/nonInheritableProperties"
-            featureName="upperBound" dataValue="-1" oldDataValue="1"/>
-        <changes xsi:type="history:Set" element="view.ecore#//ViewModelLoadingProperties/nonInheritableProperties"
-            featureName="containment" dataValue="true" oldDataValue="false"/>
-        <changes xsi:type="history:Set" element="view.ecore#//ViewModelLoadingProperties/nonInheritableProperties"
-            featureName="eType" referenceValue="view.ecore#//StringToObjectMapEntry"/>
+    <changes xsi:type="history:OperationChange" xmi:id="_8w2_KkNeEeaFtY2yvf2yjQ">
+      <changes xsi:type="history:Create" xmi:id="_8w2_K0NeEeaFtY2yvf2yjQ" referenceName="eStructuralFeatures">
+        <target href="view.ecore#//ViewModelLoadingProperties"/>
+        <element href="view.ecore#//ViewModelLoadingProperties/nonInheritableProperties"/>
+        <changes xsi:type="history:Set" xmi:id="_8w2_LENeEeaFtY2yvf2yjQ" featureName="name" dataValue="nonInheritableProperties">
+          <element href="view.ecore#//ViewModelLoadingProperties/nonInheritableProperties"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8w2_LUNeEeaFtY2yvf2yjQ" featureName="upperBound" dataValue="-1" oldDataValue="1">
+          <element href="view.ecore#//ViewModelLoadingProperties/nonInheritableProperties"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8w2_LkNeEeaFtY2yvf2yjQ" featureName="containment" dataValue="true" oldDataValue="false">
+          <element href="view.ecore#//ViewModelLoadingProperties/nonInheritableProperties"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8w2_L0NeEeaFtY2yvf2yjQ" featureName="eType">
+          <element href="view.ecore#//ViewModelLoadingProperties/nonInheritableProperties"/>
+          <referenceValue href="view.ecore#//StringToObjectMapEntry"/>
+        </changes>
       </changes>
-      <operation name="newReference">
-        <parameters name="eClass">
-          <referenceValue element="view.ecore#//ViewModelLoadingProperties"/>
+      <operation xmi:id="_8w2_MENeEeaFtY2yvf2yjQ" name="newReference">
+        <parameters xmi:id="_8w2_MUNeEeaFtY2yvf2yjQ" name="eClass">
+          <referenceValue xmi:id="_8w2_MkNeEeaFtY2yvf2yjQ">
+            <element href="view.ecore#//ViewModelLoadingProperties"/>
+          </referenceValue>
         </parameters>
-        <parameters name="name">
+        <parameters xmi:id="_8w2_M0NeEeaFtY2yvf2yjQ" name="name">
           <dataValue>nonInheritableProperties</dataValue>
         </parameters>
-        <parameters name="type">
-          <referenceValue element="view.ecore#//StringToObjectMapEntry"/>
+        <parameters xmi:id="_8w2_NENeEeaFtY2yvf2yjQ" name="type">
+          <referenceValue xmi:id="_8w2_NUNeEeaFtY2yvf2yjQ">
+            <element href="view.ecore#//StringToObjectMapEntry"/>
+          </referenceValue>
         </parameters>
-        <parameters name="lowerBound">
+        <parameters xmi:id="_8w2_NkNeEeaFtY2yvf2yjQ" name="lowerBound">
           <dataValue>0</dataValue>
         </parameters>
-        <parameters name="upperBound">
+        <parameters xmi:id="_8w2_N0NeEeaFtY2yvf2yjQ" name="upperBound">
           <dataValue>-1</dataValue>
         </parameters>
-        <parameters name="containment">
+        <parameters xmi:id="_8w2_OENeEeaFtY2yvf2yjQ" name="containment">
           <dataValue>true</dataValue>
         </parameters>
-        <parameters name="opposite"/>
+        <parameters xmi:id="_8w2_OUNeEeaFtY2yvf2yjQ" name="opposite"/>
       </operation>
     </changes>
-    <changes xsi:type="history:OperationChange">
-      <changes xsi:type="history:Create" target="view.ecore#//View" referenceName="eStructuralFeatures"
-          element="view.ecore#//View/loadingProperties">
-        <changes xsi:type="history:Set" element="view.ecore#//View/loadingProperties"
-            featureName="name" dataValue="loadingProperties"/>
-        <changes xsi:type="history:Set" element="view.ecore#//View/loadingProperties"
-            featureName="lowerBound" dataValue="1" oldDataValue="0"/>
-        <changes xsi:type="history:Set" element="view.ecore#//View/loadingProperties"
-            featureName="containment" dataValue="true" oldDataValue="false"/>
-        <changes xsi:type="history:Set" element="view.ecore#//View/loadingProperties"
-            featureName="eType" referenceValue="view.ecore#//ViewModelProperties"/>
+    <changes xsi:type="history:OperationChange" xmi:id="_8w3mIENeEeaFtY2yvf2yjQ">
+      <changes xsi:type="history:Create" xmi:id="_8w3mIUNeEeaFtY2yvf2yjQ" referenceName="eStructuralFeatures">
+        <target href="view.ecore#//View"/>
+        <element href="view.ecore#//View/loadingProperties"/>
+        <changes xsi:type="history:Set" xmi:id="_8w3mIkNeEeaFtY2yvf2yjQ" featureName="name" dataValue="loadingProperties">
+          <element href="view.ecore#//View/loadingProperties"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8w3mI0NeEeaFtY2yvf2yjQ" featureName="lowerBound" dataValue="1" oldDataValue="0">
+          <element href="view.ecore#//View/loadingProperties"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8w3mJENeEeaFtY2yvf2yjQ" featureName="containment" dataValue="true" oldDataValue="false">
+          <element href="view.ecore#//View/loadingProperties"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8w3mJUNeEeaFtY2yvf2yjQ" featureName="eType">
+          <element href="view.ecore#//View/loadingProperties"/>
+          <referenceValue href="view.ecore#//ViewModelProperties"/>
+        </changes>
       </changes>
-      <operation name="newReference">
-        <parameters name="eClass">
-          <referenceValue element="view.ecore#//View"/>
+      <operation xmi:id="_8w3mJkNeEeaFtY2yvf2yjQ" name="newReference">
+        <parameters xmi:id="_8w3mJ0NeEeaFtY2yvf2yjQ" name="eClass">
+          <referenceValue xmi:id="_8w3mKENeEeaFtY2yvf2yjQ">
+            <element href="view.ecore#//View"/>
+          </referenceValue>
         </parameters>
-        <parameters name="name">
+        <parameters xmi:id="_8w3mKUNeEeaFtY2yvf2yjQ" name="name">
           <dataValue>loadingProperties</dataValue>
         </parameters>
-        <parameters name="type">
-          <referenceValue element="view.ecore#//ViewModelProperties"/>
+        <parameters xmi:id="_8w3mKkNeEeaFtY2yvf2yjQ" name="type">
+          <referenceValue xmi:id="_8w3mK0NeEeaFtY2yvf2yjQ">
+            <element href="view.ecore#//ViewModelProperties"/>
+          </referenceValue>
         </parameters>
-        <parameters name="lowerBound">
+        <parameters xmi:id="_8w3mLENeEeaFtY2yvf2yjQ" name="lowerBound">
           <dataValue>1</dataValue>
         </parameters>
-        <parameters name="upperBound">
+        <parameters xmi:id="_8w3mLUNeEeaFtY2yvf2yjQ" name="upperBound">
           <dataValue>1</dataValue>
         </parameters>
-        <parameters name="containment">
+        <parameters xmi:id="_8w3mLkNeEeaFtY2yvf2yjQ" name="containment">
           <dataValue>true</dataValue>
         </parameters>
-        <parameters name="opposite"/>
+        <parameters xmi:id="_8w3mL0NeEeaFtY2yvf2yjQ" name="opposite"/>
       </operation>
     </changes>
-    <changes xsi:type="history:Set" element="view.ecore#//View/loadingProperties"
-        featureName="transient" dataValue="true" oldDataValue="false"/>
-    <changes xsi:type="history:Create" target="view.ecore#//LabelAlignment" referenceName="eLiterals"
-        element="view.ecore#//LabelAlignment/Top"/>
-    <changes xsi:type="history:Set" element="view.ecore#//LabelAlignment/Top" featureName="name"
-        dataValue="Top"/>
-    <changes xsi:type="history:Set" element="view.ecore#//LabelAlignment/Top" featureName="value"
-        dataValue="2" oldDataValue="0"/>
-    <changes xsi:type="history:Create" target="view.ecore#//LabelAlignment" referenceName="eLiterals"
-        element="view.ecore#//LabelAlignment/Default"/>
-    <changes xsi:type="history:Set" element="view.ecore#//LabelAlignment/Default"
-        featureName="name" dataValue="Default"/>
-    <changes xsi:type="history:Set" element="view.ecore#//LabelAlignment/Default"
-        featureName="value" dataValue="-1" oldDataValue="0"/>
-    <changes xsi:type="history:Set" element="view.ecore#//Control/labelAlignment"
-        featureName="defaultValueLiteral" dataValue="Default" oldDataValue="Left"/>
-    <changes xsi:type="history:MigrationChange" migration="org.eclipse.emf.ecp.internal.view.model.edapt._160to170.LabelAlignmentMigration"/>
-    <changes xsi:type="history:Set" element="view.ecore#/" featureName="nsURI" dataValue="http://org/eclipse/emf/ecp/view/model/170"
-        oldDataValue="http://org/eclipse/emf/ecp/view/model"/>
+    <changes xsi:type="history:Set" xmi:id="_8w3mMENeEeaFtY2yvf2yjQ" featureName="transient" dataValue="true" oldDataValue="false">
+      <element href="view.ecore#//View/loadingProperties"/>
+    </changes>
+    <changes xsi:type="history:Create" xmi:id="_8w3mMUNeEeaFtY2yvf2yjQ" referenceName="eLiterals">
+      <target href="view.ecore#//LabelAlignment"/>
+      <element href="view.ecore#//LabelAlignment/Top"/>
+    </changes>
+    <changes xsi:type="history:Set" xmi:id="_8w3mMkNeEeaFtY2yvf2yjQ" featureName="name" dataValue="Top">
+      <element href="view.ecore#//LabelAlignment/Top"/>
+    </changes>
+    <changes xsi:type="history:Set" xmi:id="_8w3mM0NeEeaFtY2yvf2yjQ" featureName="value" dataValue="2" oldDataValue="0">
+      <element href="view.ecore#//LabelAlignment/Top"/>
+    </changes>
+    <changes xsi:type="history:Create" xmi:id="_8w3mNENeEeaFtY2yvf2yjQ" referenceName="eLiterals">
+      <target href="view.ecore#//LabelAlignment"/>
+      <element href="view.ecore#//LabelAlignment/Default"/>
+    </changes>
+    <changes xsi:type="history:Set" xmi:id="_8w3mNUNeEeaFtY2yvf2yjQ" featureName="name" dataValue="Default">
+      <element href="view.ecore#//LabelAlignment/Default"/>
+    </changes>
+    <changes xsi:type="history:Set" xmi:id="_8w3mNkNeEeaFtY2yvf2yjQ" featureName="value" dataValue="-1" oldDataValue="0">
+      <element href="view.ecore#//LabelAlignment/Default"/>
+    </changes>
+    <changes xsi:type="history:Set" xmi:id="_8w3mN0NeEeaFtY2yvf2yjQ" featureName="defaultValueLiteral" dataValue="Default" oldDataValue="Left">
+      <element href="view.ecore#//Control/labelAlignment"/>
+    </changes>
+    <changes xsi:type="history:MigrationChange" xmi:id="_8w3mOENeEeaFtY2yvf2yjQ" migration="org.eclipse.emf.ecp.internal.view.model.edapt._160to170.LabelAlignmentMigration"/>
+    <changes xsi:type="history:Set" xmi:id="_8w3mOUNeEeaFtY2yvf2yjQ" featureName="nsURI" dataValue="http://org/eclipse/emf/ecp/view/model/170" oldDataValue="http://org/eclipse/emf/ecp/view/model">
+      <element href="view.ecore#/"/>
+    </changes>
   </releases>
-  <releases>
-    <changes xsi:type="history:OperationChange">
-      <changes xsi:type="history:Create" target="view.ecore#/" referenceName="eClassifiers"
-          element="view.ecore#//DateTimeDisplayType">
-        <changes xsi:type="history:Set" element="view.ecore#//DateTimeDisplayType"
-            featureName="name" dataValue="DateTimeDisplayType"/>
+  <releases xmi:id="_8w3mOkNeEeaFtY2yvf2yjQ" date="2016-07-06T12:16:03.420+0200" label="200">
+    <changes xsi:type="history:OperationChange" xmi:id="_8w3mO0NeEeaFtY2yvf2yjQ">
+      <changes xsi:type="history:Create" xmi:id="_8w3mPENeEeaFtY2yvf2yjQ" referenceName="eClassifiers">
+        <target href="view.ecore#/"/>
+        <element href="view.ecore#//DateTimeDisplayType"/>
+        <changes xsi:type="history:Set" xmi:id="_8w3mPUNeEeaFtY2yvf2yjQ" featureName="name" dataValue="DateTimeDisplayType">
+          <element href="view.ecore#//DateTimeDisplayType"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="view.ecore#//DateTimeDisplayType"
-          referenceName="eLiterals" element="view.ecore#//DateTimeDisplayType/TimeAndDate">
-        <changes xsi:type="history:Set" element="view.ecore#//DateTimeDisplayType/TimeAndDate"
-            featureName="name" dataValue="TimeAndDate"/>
-        <changes xsi:type="history:Set" element="view.ecore#//DateTimeDisplayType/TimeAndDate"
-            featureName="literal" dataValue="TimeAndDate"/>
+      <changes xsi:type="history:Create" xmi:id="_8w3mPkNeEeaFtY2yvf2yjQ" referenceName="eLiterals">
+        <target href="view.ecore#//DateTimeDisplayType"/>
+        <element href="view.ecore#//DateTimeDisplayType/TimeAndDate"/>
+        <changes xsi:type="history:Set" xmi:id="_8w3mP0NeEeaFtY2yvf2yjQ" featureName="name" dataValue="TimeAndDate">
+          <element href="view.ecore#//DateTimeDisplayType/TimeAndDate"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8w3mQENeEeaFtY2yvf2yjQ" featureName="literal" dataValue="TimeAndDate">
+          <element href="view.ecore#//DateTimeDisplayType/TimeAndDate"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="view.ecore#//DateTimeDisplayType"
-          referenceName="eLiterals" element="view.ecore#//DateTimeDisplayType/TimeOnly">
-        <changes xsi:type="history:Set" element="view.ecore#//DateTimeDisplayType/TimeOnly"
-            featureName="name" dataValue="TimeOnly"/>
-        <changes xsi:type="history:Set" element="view.ecore#//DateTimeDisplayType/TimeOnly"
-            featureName="literal" dataValue="TimeOnly"/>
-        <changes xsi:type="history:Set" element="view.ecore#//DateTimeDisplayType/TimeOnly"
-            featureName="value" dataValue="1" oldDataValue="0"/>
+      <changes xsi:type="history:Create" xmi:id="_8w4NMENeEeaFtY2yvf2yjQ" referenceName="eLiterals">
+        <target href="view.ecore#//DateTimeDisplayType"/>
+        <element href="view.ecore#//DateTimeDisplayType/TimeOnly"/>
+        <changes xsi:type="history:Set" xmi:id="_8w4NMUNeEeaFtY2yvf2yjQ" featureName="name" dataValue="TimeOnly">
+          <element href="view.ecore#//DateTimeDisplayType/TimeOnly"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8w4NMkNeEeaFtY2yvf2yjQ" featureName="literal" dataValue="TimeOnly">
+          <element href="view.ecore#//DateTimeDisplayType/TimeOnly"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8w4NM0NeEeaFtY2yvf2yjQ" featureName="value" dataValue="1" oldDataValue="0">
+          <element href="view.ecore#//DateTimeDisplayType/TimeOnly"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="view.ecore#//DateTimeDisplayType"
-          referenceName="eLiterals" element="view.ecore#//DateTimeDisplayType/DateOnly">
-        <changes xsi:type="history:Set" element="view.ecore#//DateTimeDisplayType/DateOnly"
-            featureName="name" dataValue="DateOnly"/>
-        <changes xsi:type="history:Set" element="view.ecore#//DateTimeDisplayType/DateOnly"
-            featureName="literal" dataValue="DateOnly"/>
-        <changes xsi:type="history:Set" element="view.ecore#//DateTimeDisplayType/DateOnly"
-            featureName="value" dataValue="2" oldDataValue="0"/>
+      <changes xsi:type="history:Create" xmi:id="_8w4NNENeEeaFtY2yvf2yjQ" referenceName="eLiterals">
+        <target href="view.ecore#//DateTimeDisplayType"/>
+        <element href="view.ecore#//DateTimeDisplayType/DateOnly"/>
+        <changes xsi:type="history:Set" xmi:id="_8w4NNUNeEeaFtY2yvf2yjQ" featureName="name" dataValue="DateOnly">
+          <element href="view.ecore#//DateTimeDisplayType/DateOnly"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8w4NNkNeEeaFtY2yvf2yjQ" featureName="literal" dataValue="DateOnly">
+          <element href="view.ecore#//DateTimeDisplayType/DateOnly"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8w4NN0NeEeaFtY2yvf2yjQ" featureName="value" dataValue="2" oldDataValue="0">
+          <element href="view.ecore#//DateTimeDisplayType/DateOnly"/>
+        </changes>
       </changes>
-      <operation name="createEnumeration">
-        <parameters name="ePackage">
-          <referenceValue element="view.ecore#/"/>
+      <operation xmi:id="_8w4NOENeEeaFtY2yvf2yjQ" name="createEnumeration">
+        <parameters xmi:id="_8w4NOUNeEeaFtY2yvf2yjQ" name="ePackage">
+          <referenceValue xmi:id="_8w4NOkNeEeaFtY2yvf2yjQ">
+            <element href="view.ecore#/"/>
+          </referenceValue>
         </parameters>
-        <parameters name="name">
+        <parameters xmi:id="_8w4NO0NeEeaFtY2yvf2yjQ" name="name">
           <dataValue>DateTimeDisplayType</dataValue>
         </parameters>
-        <parameters name="literals">
+        <parameters xmi:id="_8w4NPENeEeaFtY2yvf2yjQ" name="literals">
           <dataValue>TimeAndDate</dataValue>
           <dataValue>TimeOnly</dataValue>
           <dataValue>DateOnly</dataValue>
         </parameters>
       </operation>
     </changes>
-    <changes xsi:type="history:OperationChange">
-      <changes xsi:type="history:Create" target="view.ecore#/" referenceName="eClassifiers"
-          element="view.ecore#//DateTimeDisplayAttachment">
-        <changes xsi:type="history:Set" element="view.ecore#//DateTimeDisplayAttachment"
-            featureName="name" dataValue="DateTimeDisplayAttachment"/>
-        <changes xsi:type="history:Add" element="view.ecore#//DateTimeDisplayAttachment"
-            featureName="eSuperTypes" referenceValue="view.ecore#//Attachment"/>
+    <changes xsi:type="history:OperationChange" xmi:id="_8w4NPUNeEeaFtY2yvf2yjQ">
+      <changes xsi:type="history:Create" xmi:id="_8w4NPkNeEeaFtY2yvf2yjQ" referenceName="eClassifiers">
+        <target href="view.ecore#/"/>
+        <element href="view.ecore#//DateTimeDisplayAttachment"/>
+        <changes xsi:type="history:Set" xmi:id="_8w4NP0NeEeaFtY2yvf2yjQ" featureName="name" dataValue="DateTimeDisplayAttachment">
+          <element href="view.ecore#//DateTimeDisplayAttachment"/>
+        </changes>
+        <changes xsi:type="history:Add" xmi:id="_8w4NQENeEeaFtY2yvf2yjQ" featureName="eSuperTypes">
+          <element href="view.ecore#//DateTimeDisplayAttachment"/>
+          <referenceValue href="view.ecore#//Attachment"/>
+        </changes>
       </changes>
-      <operation name="newClass">
-        <parameters name="ePackage">
-          <referenceValue element="view.ecore#/"/>
+      <operation xmi:id="_8w4NQUNeEeaFtY2yvf2yjQ" name="newClass">
+        <parameters xmi:id="_8w4NQkNeEeaFtY2yvf2yjQ" name="ePackage">
+          <referenceValue xmi:id="_8w4NQ0NeEeaFtY2yvf2yjQ">
+            <element href="view.ecore#/"/>
+          </referenceValue>
         </parameters>
-        <parameters name="name">
+        <parameters xmi:id="_8w4NRENeEeaFtY2yvf2yjQ" name="name">
           <dataValue>DateTimeDisplayAttachment</dataValue>
         </parameters>
-        <parameters name="superClasses">
-          <referenceValue element="view.ecore#//Attachment"/>
+        <parameters xmi:id="_8w4NRUNeEeaFtY2yvf2yjQ" name="superClasses">
+          <referenceValue xmi:id="_8w4NRkNeEeaFtY2yvf2yjQ">
+            <element href="view.ecore#//Attachment"/>
+          </referenceValue>
         </parameters>
-        <parameters name="abstr">
+        <parameters xmi:id="_8w4NR0NeEeaFtY2yvf2yjQ" name="abstr">
           <dataValue>false</dataValue>
         </parameters>
       </operation>
     </changes>
-    <changes xsi:type="history:OperationChange">
-      <changes xsi:type="history:Create" target="view.ecore#//DateTimeDisplayAttachment"
-          referenceName="eStructuralFeatures" element="view.ecore#//DateTimeDisplayAttachment/displayType">
-        <changes xsi:type="history:Set" element="view.ecore#//DateTimeDisplayAttachment/displayType"
-            featureName="name" dataValue="displayType"/>
-        <changes xsi:type="history:Set" element="view.ecore#//DateTimeDisplayAttachment/displayType"
-            featureName="eType" referenceValue="view.ecore#//DateTimeDisplayType"/>
+    <changes xsi:type="history:OperationChange" xmi:id="_8w4NSENeEeaFtY2yvf2yjQ">
+      <changes xsi:type="history:Create" xmi:id="_8w4NSUNeEeaFtY2yvf2yjQ" referenceName="eStructuralFeatures">
+        <target href="view.ecore#//DateTimeDisplayAttachment"/>
+        <element href="view.ecore#//DateTimeDisplayAttachment/displayType"/>
+        <changes xsi:type="history:Set" xmi:id="_8w4NSkNeEeaFtY2yvf2yjQ" featureName="name" dataValue="displayType">
+          <element href="view.ecore#//DateTimeDisplayAttachment/displayType"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8w4NS0NeEeaFtY2yvf2yjQ" featureName="eType">
+          <element href="view.ecore#//DateTimeDisplayAttachment/displayType"/>
+          <referenceValue href="view.ecore#//DateTimeDisplayType"/>
+        </changes>
       </changes>
-      <operation name="newAttribute">
-        <parameters name="eClass">
-          <referenceValue element="view.ecore#//DateTimeDisplayAttachment"/>
+      <operation xmi:id="_8w4NTENeEeaFtY2yvf2yjQ" name="newAttribute">
+        <parameters xmi:id="_8w4NTUNeEeaFtY2yvf2yjQ" name="eClass">
+          <referenceValue xmi:id="_8w4NTkNeEeaFtY2yvf2yjQ">
+            <element href="view.ecore#//DateTimeDisplayAttachment"/>
+          </referenceValue>
         </parameters>
-        <parameters name="name">
+        <parameters xmi:id="_8w4NT0NeEeaFtY2yvf2yjQ" name="name">
           <dataValue>displayType</dataValue>
         </parameters>
-        <parameters name="type">
-          <referenceValue element="view.ecore#//DateTimeDisplayType"/>
+        <parameters xmi:id="_8w4NUENeEeaFtY2yvf2yjQ" name="type">
+          <referenceValue xmi:id="_8w4NUUNeEeaFtY2yvf2yjQ">
+            <element href="view.ecore#//DateTimeDisplayType"/>
+          </referenceValue>
         </parameters>
-        <parameters name="lowerBound">
+        <parameters xmi:id="_8w4NUkNeEeaFtY2yvf2yjQ" name="lowerBound">
           <dataValue>0</dataValue>
         </parameters>
-        <parameters name="upperBound">
+        <parameters xmi:id="_8w4NU0NeEeaFtY2yvf2yjQ" name="upperBound">
           <dataValue>1</dataValue>
         </parameters>
-        <parameters name="defaultValue">
+        <parameters xmi:id="_8w4NVENeEeaFtY2yvf2yjQ" name="defaultValue">
           <dataValue xsi:nil="true"/>
         </parameters>
       </operation>
     </changes>
-    <changes xsi:type="history:OperationChange">
-      <changes xsi:type="history:Create" target="view.ecore#//Element" referenceName="eStructuralFeatures"
-          element="view.ecore#//Element/uuid">
-        <changes xsi:type="history:Set" element="view.ecore#//Element/uuid" featureName="name"
-            dataValue="uuid"/>
-        <changes xsi:type="history:Set" element="view.ecore#//Element/uuid" featureName="eType"
-            referenceValue="../../org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+    <changes xsi:type="history:OperationChange" xmi:id="_8w4NVUNeEeaFtY2yvf2yjQ">
+      <changes xsi:type="history:Create" xmi:id="_8w4NVkNeEeaFtY2yvf2yjQ" referenceName="eStructuralFeatures">
+        <target href="view.ecore#//Element"/>
+        <element href="view.ecore#//Element/uuid"/>
+        <changes xsi:type="history:Set" xmi:id="_8w40QENeEeaFtY2yvf2yjQ" featureName="name" dataValue="uuid">
+          <element href="view.ecore#//Element/uuid"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8w40QUNeEeaFtY2yvf2yjQ" featureName="eType">
+          <element href="view.ecore#//Element/uuid"/>
+          <referenceValue href="../../org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+        </changes>
       </changes>
-      <operation name="newAttribute">
-        <parameters name="eClass">
-          <referenceValue element="view.ecore#//Element"/>
+      <operation xmi:id="_8w40QkNeEeaFtY2yvf2yjQ" name="newAttribute">
+        <parameters xmi:id="_8w40Q0NeEeaFtY2yvf2yjQ" name="eClass">
+          <referenceValue xmi:id="_8w40RENeEeaFtY2yvf2yjQ">
+            <element href="view.ecore#//Element"/>
+          </referenceValue>
         </parameters>
-        <parameters name="name">
+        <parameters xmi:id="_8w40RUNeEeaFtY2yvf2yjQ" name="name">
           <dataValue>uuid</dataValue>
         </parameters>
-        <parameters name="type">
-          <referenceValue element="../../org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+        <parameters xmi:id="_8w40RkNeEeaFtY2yvf2yjQ" name="type">
+          <referenceValue xmi:id="_8w40R0NeEeaFtY2yvf2yjQ">
+            <element href="../../org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+          </referenceValue>
         </parameters>
-        <parameters name="lowerBound">
+        <parameters xmi:id="_8w40SENeEeaFtY2yvf2yjQ" name="lowerBound">
           <dataValue>0</dataValue>
         </parameters>
-        <parameters name="upperBound">
+        <parameters xmi:id="_8w40SUNeEeaFtY2yvf2yjQ" name="upperBound">
           <dataValue>1</dataValue>
         </parameters>
-        <parameters name="defaultValue">
+        <parameters xmi:id="_8w40SkNeEeaFtY2yvf2yjQ" name="defaultValue">
           <dataValue xsi:nil="true"/>
         </parameters>
       </operation>
     </changes>
-    <changes xsi:type="history:Set" element="view.ecore#//Element/uuid" featureName="transient"
-        dataValue="true" oldDataValue="false"/>
+    <changes xsi:type="history:Set" xmi:id="_8w40S0NeEeaFtY2yvf2yjQ" featureName="transient" dataValue="true" oldDataValue="false">
+      <element href="view.ecore#//Element/uuid"/>
+    </changes>
+    <changes xsi:type="history:OperationChange" xmi:id="_Vwj94ENfEeaFtY2yvf2yjQ">
+      <changes xsi:type="history:Create" xmi:id="_Vwj94UNfEeaFtY2yvf2yjQ" referenceName="eClassifiers">
+        <target href="view.ecore#/"/>
+        <element href="view.ecore#//DomainModelReferenceSegment"/>
+        <changes xsi:type="history:Set" xmi:id="_Vwj94kNfEeaFtY2yvf2yjQ" featureName="name" dataValue="DomainModelReferenceSegment">
+          <element href="view.ecore#//DomainModelReferenceSegment"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_Vwj940NfEeaFtY2yvf2yjQ" featureName="abstract" dataValue="true" oldDataValue="false">
+          <element href="view.ecore#//DomainModelReferenceSegment"/>
+        </changes>
+      </changes>
+      <operation xmi:id="_Vwj95ENfEeaFtY2yvf2yjQ" name="newClass">
+        <parameters xmi:id="_Vwj95UNfEeaFtY2yvf2yjQ" name="ePackage">
+          <referenceValue xmi:id="_Vwj95kNfEeaFtY2yvf2yjQ">
+            <element href="view.ecore#/"/>
+          </referenceValue>
+        </parameters>
+        <parameters xmi:id="_Vwj950NfEeaFtY2yvf2yjQ" name="name">
+          <dataValue>DomainModelReferenceSegment</dataValue>
+        </parameters>
+        <parameters xmi:id="_Vwj96ENfEeaFtY2yvf2yjQ" name="superClasses"/>
+        <parameters xmi:id="_Vwj96UNfEeaFtY2yvf2yjQ" name="abstr">
+          <dataValue>true</dataValue>
+        </parameters>
+      </operation>
+    </changes>
+    <changes xsi:type="history:Set" xmi:id="_fpFiMENfEeaFtY2yvf2yjQ" featureName="interface" dataValue="true" oldDataValue="false">
+      <element href="view.ecore#//DomainModelReferenceSegment"/>
+    </changes>
+    <changes xsi:type="history:OperationChange" xmi:id="_wkhvoENfEeaFtY2yvf2yjQ">
+      <changes xsi:type="history:Create" xmi:id="_wkiWsENfEeaFtY2yvf2yjQ" referenceName="eClassifiers">
+        <target href="view.ecore#/"/>
+        <element href="view.ecore#//FeatureDomainModelReferenceSegment"/>
+        <changes xsi:type="history:Set" xmi:id="_wkiWsUNfEeaFtY2yvf2yjQ" featureName="name" dataValue="FeatureDomainModelReferenceSegment">
+          <element href="view.ecore#//FeatureDomainModelReferenceSegment"/>
+        </changes>
+        <changes xsi:type="history:Add" xmi:id="_wkiWskNfEeaFtY2yvf2yjQ" featureName="eSuperTypes">
+          <element href="view.ecore#//FeatureDomainModelReferenceSegment"/>
+          <referenceValue href="view.ecore#//DomainModelReferenceSegment"/>
+        </changes>
+      </changes>
+      <operation xmi:id="_wkiWs0NfEeaFtY2yvf2yjQ" name="newClass">
+        <parameters xmi:id="_wkiWtENfEeaFtY2yvf2yjQ" name="ePackage">
+          <referenceValue xmi:id="_wkiWtUNfEeaFtY2yvf2yjQ">
+            <element href="view.ecore#/"/>
+          </referenceValue>
+        </parameters>
+        <parameters xmi:id="_wkiWtkNfEeaFtY2yvf2yjQ" name="name">
+          <dataValue>FeatureDomainModelReferenceSegment</dataValue>
+        </parameters>
+        <parameters xmi:id="_wkiWt0NfEeaFtY2yvf2yjQ" name="superClasses">
+          <referenceValue xmi:id="_wkiWuENfEeaFtY2yvf2yjQ">
+            <element href="view.ecore#//DomainModelReferenceSegment"/>
+          </referenceValue>
+        </parameters>
+        <parameters xmi:id="_wkiWuUNfEeaFtY2yvf2yjQ" name="abstr">
+          <dataValue>false</dataValue>
+        </parameters>
+      </operation>
+    </changes>
+    <changes xsi:type="history:OperationChange" xmi:id="_7c9cUENgEeaFtY2yvf2yjQ">
+      <changes xsi:type="history:Create" xmi:id="_7c9cUUNgEeaFtY2yvf2yjQ" referenceName="eStructuralFeatures">
+        <target href="view.ecore#//FeatureDomainModelReferenceSegment"/>
+        <element href="view.ecore#//FeatureDomainModelReferenceSegment/domainModelFeature"/>
+        <changes xsi:type="history:Set" xmi:id="_7c9cUkNgEeaFtY2yvf2yjQ" featureName="name" dataValue="domainModelFeature">
+          <element href="view.ecore#//FeatureDomainModelReferenceSegment/domainModelFeature"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_7c9cU0NgEeaFtY2yvf2yjQ" featureName="lowerBound" dataValue="1" oldDataValue="0">
+          <element href="view.ecore#//FeatureDomainModelReferenceSegment/domainModelFeature"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_7c9cVENgEeaFtY2yvf2yjQ" featureName="eType">
+          <element href="view.ecore#//FeatureDomainModelReferenceSegment/domainModelFeature"/>
+          <referenceValue href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </changes>
+      </changes>
+      <operation xmi:id="_7c9cVUNgEeaFtY2yvf2yjQ" name="newAttribute">
+        <parameters xmi:id="_7c9cVkNgEeaFtY2yvf2yjQ" name="eClass">
+          <referenceValue xmi:id="_7c9cV0NgEeaFtY2yvf2yjQ">
+            <element href="view.ecore#//FeatureDomainModelReferenceSegment"/>
+          </referenceValue>
+        </parameters>
+        <parameters xmi:id="_7c9cWENgEeaFtY2yvf2yjQ" name="name">
+          <dataValue>domainModelFeature</dataValue>
+        </parameters>
+        <parameters xmi:id="_7c9cWUNgEeaFtY2yvf2yjQ" name="type">
+          <referenceValue xmi:id="_7c9cWkNgEeaFtY2yvf2yjQ">
+            <element href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+          </referenceValue>
+        </parameters>
+        <parameters xmi:id="_7c9cW0NgEeaFtY2yvf2yjQ" name="lowerBound">
+          <dataValue>1</dataValue>
+        </parameters>
+        <parameters xmi:id="_7c9cXENgEeaFtY2yvf2yjQ" name="upperBound">
+          <dataValue>1</dataValue>
+        </parameters>
+        <parameters xmi:id="_7c9cXUNgEeaFtY2yvf2yjQ" name="defaultValue">
+          <dataValue xsi:nil="true"/>
+        </parameters>
+      </operation>
+    </changes>
+    <changes xsi:type="history:Set" xmi:id="_0hC9UEmmEeawb9Y2qIoBjw" featureName="interface" dataValue="false" oldDataValue="true">
+      <element href="view.ecore#//DomainModelReference"/>
+    </changes>
+    <changes xsi:type="history:Set" xmi:id="_0CTy4EmmEeawb9Y2qIoBjw" featureName="abstract" dataValue="false" oldDataValue="true">
+      <element href="view.ecore#//DomainModelReference"/>
+    </changes>
+    <changes xsi:type="history:OperationChange" xmi:id="_SNIogENhEeaFtY2yvf2yjQ">
+      <changes xsi:type="history:Create" xmi:id="_SNIogUNhEeaFtY2yvf2yjQ" referenceName="eStructuralFeatures">
+        <target href="view.ecore#//DomainModelReference"/>
+        <element href="view.ecore#//DomainModelReference/segments"/>
+        <changes xsi:type="history:Set" xmi:id="_SNIogkNhEeaFtY2yvf2yjQ" featureName="name" dataValue="segments">
+          <element href="view.ecore#//DomainModelReference/segments"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_SNIog0NhEeaFtY2yvf2yjQ" featureName="lowerBound" dataValue="1" oldDataValue="0">
+          <element href="view.ecore#//DomainModelReference/segments"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_SNIohENhEeaFtY2yvf2yjQ" featureName="upperBound" dataValue="-1" oldDataValue="1">
+          <element href="view.ecore#//DomainModelReference/segments"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_SNIohUNhEeaFtY2yvf2yjQ" featureName="eType">
+          <element href="view.ecore#//DomainModelReference/segments"/>
+          <referenceValue href="view.ecore#//DomainModelReferenceSegment"/>
+        </changes>
+      </changes>
+      <operation xmi:id="_SNIohkNhEeaFtY2yvf2yjQ" name="newReference">
+        <parameters xmi:id="_SNIoh0NhEeaFtY2yvf2yjQ" name="eClass">
+          <referenceValue xmi:id="_SNIoiENhEeaFtY2yvf2yjQ">
+            <element href="view.ecore#//DomainModelReference"/>
+          </referenceValue>
+        </parameters>
+        <parameters xmi:id="_SNIoiUNhEeaFtY2yvf2yjQ" name="name">
+          <dataValue>segments</dataValue>
+        </parameters>
+        <parameters xmi:id="_SNIoikNhEeaFtY2yvf2yjQ" name="type">
+          <referenceValue xmi:id="_SNIoi0NhEeaFtY2yvf2yjQ">
+            <element href="view.ecore#//DomainModelReferenceSegment"/>
+          </referenceValue>
+        </parameters>
+        <parameters xmi:id="_SNIojENhEeaFtY2yvf2yjQ" name="lowerBound">
+          <dataValue>1</dataValue>
+        </parameters>
+        <parameters xmi:id="_SNIojUNhEeaFtY2yvf2yjQ" name="upperBound">
+          <dataValue>-1</dataValue>
+        </parameters>
+        <parameters xmi:id="_SNIojkNhEeaFtY2yvf2yjQ" name="containment">
+          <dataValue>false</dataValue>
+        </parameters>
+        <parameters xmi:id="_SNIoj0NhEeaFtY2yvf2yjQ" name="opposite"/>
+      </operation>
+    </changes>
+    <changes xsi:type="history:OperationChange" xmi:id="_FZmgwEmlEeawb9Y2qIoBjw">
+      <changes xsi:type="history:Set" xmi:id="_FZmgwUmlEeawb9Y2qIoBjw" featureName="containment" dataValue="true" oldDataValue="false">
+        <element href="view.ecore#//DomainModelReference/segments"/>
+      </changes>
+      <operation xmi:id="_FZmgwkmlEeawb9Y2qIoBjw" name="makeContainment">
+        <parameters xmi:id="_FZmgw0mlEeawb9Y2qIoBjw" name="reference">
+          <referenceValue xmi:id="_FZmgxEmlEeawb9Y2qIoBjw">
+            <element href="view.ecore#//DomainModelReference/segments"/>
+          </referenceValue>
+        </parameters>
+      </operation>
+    </changes>
+    <changes xsi:type="history:OperationChange" xmi:id="_VxF3cENhEeaFtY2yvf2yjQ">
+      <changes xsi:type="history:Delete" xmi:id="_VxF3cUNhEeaFtY2yvf2yjQ" referenceName="eStructuralFeatures">
+        <target href="view.ecore#//DomainModelReference"/>
+        <element xsi:type="ecore:EAttribute" xmi:id="_VxF3ckNhEeaFtY2yvf2yjQ" name="changeListener" upperBound="-1" eType="_-x7-okNhEeaFtY2yvf2yjQ" transient="true"/>
+      </changes>
+      <operation xmi:id="_VxF3dENhEeaFtY2yvf2yjQ" name="deleteFeature2">
+        <parameters xmi:id="_VxF3dUNhEeaFtY2yvf2yjQ" name="feature">
+          <referenceValue xmi:id="_VxF3dkNhEeaFtY2yvf2yjQ" element="_VxF3ckNhEeaFtY2yvf2yjQ"/>
+        </parameters>
+      </operation>
+    </changes>
+    <changes xsi:type="history:MigrationChange" xmi:id="_c1tUQENiEeaFtY2yvf2yjQ" migration="org.eclipse.emf.ecp.internal.view.model.edapt._190to200.FeaturePathDMRRemovalMigration">
+      <changes xsi:type="history:Delete" xmi:id="_56GtAENhEeaFtY2yvf2yjQ" referenceName="eClassifiers">
+        <target href="view.ecore#/"/>
+        <element xsi:type="ecore:EClass" xmi:id="_56GtAUNhEeaFtY2yvf2yjQ" name="FeaturePathDomainModelReference">
+          <eAnnotations xmi:id="_56GtAkNhEeaFtY2yvf2yjQ" source="http://www.eclipse.org/emf/2002/Ecore">
+            <details xmi:id="_56GtA0NhEeaFtY2yvf2yjQ" key="constraints" value="resolveable"/>
+          </eAnnotations>
+          <eSuperTypes href="view.ecore#//DomainModelReference"/>
+          <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_56GtBENhEeaFtY2yvf2yjQ" name="domainModelEFeature" lowerBound="1">
+            <eType xsi:type="ecore:EClass" href="../../org.eclipse.emf.ecore/model/Ecore.ecore#//EStructuralFeature"/>
+          </eStructuralFeatures>
+          <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_56GtBkNhEeaFtY2yvf2yjQ" name="domainModelEReferencePath" unique="false" upperBound="-1">
+            <eType xsi:type="ecore:EClass" href="../../org.eclipse.emf.ecore/model/Ecore.ecore#//EReference"/>
+          </eStructuralFeatures>
+        </element>
+      </changes>
+    </changes>
+    <changes xsi:type="history:Delete" xmi:id="_-x7-oUNhEeaFtY2yvf2yjQ" referenceName="eClassifiers">
+      <target href="view.ecore#/"/>
+      <element xsi:type="ecore:EDataType" xmi:id="_-x7-okNhEeaFtY2yvf2yjQ" name="DomainModelReferenceChangeListener" instanceClassName="org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener"/>
+    </changes>
+    <changes xsi:type="history:Set" xmi:id="_iv2XcENiEeaFtY2yvf2yjQ" featureName="nsURI" dataValue="http://org/eclipse/emf/ecp/view/model/200" oldDataValue="http://org/eclipse/emf/ecp/view/model/170">
+      <element href="view.ecore#/"/>
+    </changes>
   </releases>
+  <releases xmi:id="_pOyJwENiEeaFtY2yvf2yjQ"/>
 </history:History>
