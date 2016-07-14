@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexdmrPackage;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
@@ -126,6 +127,9 @@ public class IndexdmrValidator extends EObjectValidator {
 		switch (classifierID) {
 		case VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE:
 			return validateIndexDomainModelReference((VIndexDomainModelReference) value, diagnostics, context);
+		case VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE_SEGMENT:
+			return validateIndexDomainModelReferenceSegment((VIndexDomainModelReferenceSegment) value, diagnostics,
+				context);
 		default:
 			return true;
 		}
@@ -249,7 +253,8 @@ public class IndexdmrValidator extends EObjectValidator {
 			final VDomainModelReference targetDMR = indexDomainModelReference.getTargetDMR();
 			final EValidator validator = EValidator.Registry.INSTANCE.getEValidator(targetDMR.eClass().getEPackage());
 			final Map<Object, Object> newContext = new LinkedHashMap<Object, Object>(context);
-			newContext.put(ViewValidator.ECLASS_KEY, rootEClass);
+			// FIXME ViewValidator.ECLASS_KEY does not exist anymore
+			// newContext.put(ViewValidator.ECLASS_KEY, rootEClass);
 			if (!validator.validate(targetDMR, diagnostics, newContext)) {
 				final String message = "Target DMR not resolveable."; //$NON-NLS-1$
 				if (indexDomainModelReference.eContainer() != null && diagnostics != null) {
@@ -261,6 +266,19 @@ public class IndexdmrValidator extends EObjectValidator {
 			}
 		}
 		return true;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @since 2.0
+	 */
+	public boolean validateIndexDomainModelReferenceSegment(
+		VIndexDomainModelReferenceSegment indexDomainModelReferenceSegment, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(indexDomainModelReferenceSegment, diagnostics, context);
 	}
 
 	private void addValidationToControl(VIndexDomainModelReference indexDomainModelReference,

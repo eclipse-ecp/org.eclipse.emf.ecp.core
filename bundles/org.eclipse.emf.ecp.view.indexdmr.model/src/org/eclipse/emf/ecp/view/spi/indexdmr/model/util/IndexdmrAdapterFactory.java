@@ -16,8 +16,11 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexdmrPackage;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
+import org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 
 /**
@@ -29,8 +32,7 @@ import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
  * @see org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexdmrPackage
  * @generated
  */
-public class IndexdmrAdapterFactory extends AdapterFactoryImpl
-{
+public class IndexdmrAdapterFactory extends AdapterFactoryImpl {
 	/**
 	 * The cached model package.
 	 * <!-- begin-user-doc -->
@@ -47,10 +49,8 @@ public class IndexdmrAdapterFactory extends AdapterFactoryImpl
 	 *
 	 * @generated
 	 */
-	public IndexdmrAdapterFactory()
-	{
-		if (modelPackage == null)
-		{
+	public IndexdmrAdapterFactory() {
+		if (modelPackage == null) {
 			modelPackage = VIndexdmrPackage.eINSTANCE;
 		}
 	}
@@ -66,14 +66,11 @@ public class IndexdmrAdapterFactory extends AdapterFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public boolean isFactoryForType(Object object)
-	{
-		if (object == modelPackage)
-		{
+	public boolean isFactoryForType(Object object) {
+		if (object == modelPackage) {
 			return true;
 		}
-		if (object instanceof EObject)
-		{
+		if (object instanceof EObject) {
 			return ((EObject) object).eClass().getEPackage() == modelPackage;
 		}
 		return false;
@@ -86,33 +83,42 @@ public class IndexdmrAdapterFactory extends AdapterFactoryImpl
 	 *
 	 * @generated
 	 */
-	protected IndexdmrSwitch<Adapter> modelSwitch =
-		new IndexdmrSwitch<Adapter>()
-		{
-			@Override
-			public Adapter caseIndexDomainModelReference(VIndexDomainModelReference object)
-			{
-				return createIndexDomainModelReferenceAdapter();
-			}
+	protected IndexdmrSwitch<Adapter> modelSwitch = new IndexdmrSwitch<Adapter>() {
+		@Override
+		public Adapter caseIndexDomainModelReference(VIndexDomainModelReference object) {
+			return createIndexDomainModelReferenceAdapter();
+		}
 
-			@Override
-			public Adapter caseDomainModelReference(VDomainModelReference object)
-			{
-				return createDomainModelReferenceAdapter();
-			}
+		@Override
+		public Adapter caseIndexDomainModelReferenceSegment(VIndexDomainModelReferenceSegment object) {
+			return createIndexDomainModelReferenceSegmentAdapter();
+		}
 
-			@Override
-			public Adapter caseFeaturePathDomainModelReference(VFeaturePathDomainModelReference object)
-			{
-				return createFeaturePathDomainModelReferenceAdapter();
-			}
+		@Override
+		public Adapter caseDomainModelReference(VDomainModelReference object) {
+			return createDomainModelReferenceAdapter();
+		}
 
-			@Override
-			public Adapter defaultCase(EObject object)
-			{
-				return createEObjectAdapter();
-			}
-		};
+		@Override
+		public Adapter caseFeaturePathDomainModelReference(VFeaturePathDomainModelReference object) {
+			return createFeaturePathDomainModelReferenceAdapter();
+		}
+
+		@Override
+		public Adapter caseDomainModelReferenceSegment(VDomainModelReferenceSegment object) {
+			return createDomainModelReferenceSegmentAdapter();
+		}
+
+		@Override
+		public Adapter caseFeatureDomainModelReferenceSegment(VFeatureDomainModelReferenceSegment object) {
+			return createFeatureDomainModelReferenceSegmentAdapter();
+		}
+
+		@Override
+		public Adapter defaultCase(EObject object) {
+			return createEObjectAdapter();
+		}
+	};
 
 	/**
 	 * Creates an adapter for the <code>target</code>.
@@ -124,15 +130,14 @@ public class IndexdmrAdapterFactory extends AdapterFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public Adapter createAdapter(Notifier target)
-	{
+	public Adapter createAdapter(Notifier target) {
 		return modelSwitch.doSwitch((EObject) target);
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference
-	 * <em>Index Domain Model Reference</em>}'.
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference <em>Index Domain Model
+	 * Reference</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
@@ -142,8 +147,24 @@ public class IndexdmrAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference
 	 * @generated
 	 */
-	public Adapter createIndexDomainModelReferenceAdapter()
-	{
+	public Adapter createIndexDomainModelReferenceAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReferenceSegment <em>Index Domain Model
+	 * Reference Segment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReferenceSegment
+	 * @generated
+	 */
+	public Adapter createIndexDomainModelReferenceSegmentAdapter() {
 		return null;
 	}
 
@@ -159,15 +180,14 @@ public class IndexdmrAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReference
 	 * @generated
 	 */
-	public Adapter createDomainModelReferenceAdapter()
-	{
+	public Adapter createDomainModelReferenceAdapter() {
 		return null;
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference
-	 * <em>Feature Path Domain Model Reference</em>}'.
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference <em>Feature Path Domain Model
+	 * Reference</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
@@ -177,8 +197,41 @@ public class IndexdmrAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference
 	 * @generated
 	 */
-	public Adapter createFeaturePathDomainModelReferenceAdapter()
-	{
+	public Adapter createFeaturePathDomainModelReferenceAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment <em>Domain Model Reference
+	 * Segment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment
+	 * @generated
+	 */
+	public Adapter createDomainModelReferenceSegmentAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment <em>Feature Domain Model Reference
+	 * Segment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment
+	 * @generated
+	 */
+	public Adapter createFeatureDomainModelReferenceSegmentAdapter() {
 		return null;
 	}
 
@@ -191,8 +244,7 @@ public class IndexdmrAdapterFactory extends AdapterFactoryImpl
 	 * @return the new adapter.
 	 * @generated
 	 */
-	public Adapter createEObjectAdapter()
-	{
+	public Adapter createEObjectAdapter() {
 		return null;
 	}
 

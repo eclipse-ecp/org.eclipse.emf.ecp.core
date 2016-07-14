@@ -1,56 +1,149 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:history="http://www.eclipse.org/emf/edapt/history/0.3">
-  <releases date="2014-10-16T12:07:00.580+0200" label="150">
-    <changes xsi:type="history:CompositeChange">
-      <changes xsi:type="history:Create" element="indexdmr.ecore#/">
-        <changes xsi:type="history:Set" element="indexdmr.ecore#/" featureName="name"
-            dataValue="indexdmr"/>
-        <changes xsi:type="history:Set" element="indexdmr.ecore#/" featureName="nsURI"
-            dataValue="http://www.eclipse.org/emf/ecp/view/indexdmr/model"/>
-        <changes xsi:type="history:Set" element="indexdmr.ecore#/" featureName="nsPrefix"
-            dataValue="org.eclipse.emf.ecp.view.indexdmr.model"/>
+<history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:history="http://www.eclipse.org/emf/edapt/history/0.3" xmi:id="_0dxrQEnEEeawb9Y2qIoBjw">
+  <releases xmi:id="_0dxrQUnEEeawb9Y2qIoBjw" date="2014-10-16T12:07:00.580+0200" label="150">
+    <changes xsi:type="history:CompositeChange" xmi:id="_0dxrQknEEeawb9Y2qIoBjw">
+      <changes xsi:type="history:Create" xmi:id="_0dxrQ0nEEeawb9Y2qIoBjw">
+        <element href="indexdmr.ecore#/"/>
+        <changes xsi:type="history:Set" xmi:id="_0dxrREnEEeawb9Y2qIoBjw" featureName="name" dataValue="indexdmr">
+          <element href="indexdmr.ecore#/"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_0dxrRUnEEeawb9Y2qIoBjw" featureName="nsURI" dataValue="http://www.eclipse.org/emf/ecp/view/indexdmr/model">
+          <element href="indexdmr.ecore#/"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_0dxrRknEEeawb9Y2qIoBjw" featureName="nsPrefix" dataValue="org.eclipse.emf.ecp.view.indexdmr.model">
+          <element href="indexdmr.ecore#/"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="indexdmr.ecore#/" referenceName="eClassifiers"
-          element="indexdmr.ecore#//IndexDomainModelReference">
-        <changes xsi:type="history:Set" element="indexdmr.ecore#//IndexDomainModelReference"
-            featureName="name" dataValue="IndexDomainModelReference"/>
-        <changes xsi:type="history:Add" element="indexdmr.ecore#//IndexDomainModelReference"
-            featureName="eSuperTypes" referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//FeaturePathDomainModelReference"/>
+      <changes xsi:type="history:Create" xmi:id="_0dxrR0nEEeawb9Y2qIoBjw" referenceName="eClassifiers">
+        <target href="indexdmr.ecore#/"/>
+        <element href="indexdmr.ecore#//IndexDomainModelReference"/>
+        <changes xsi:type="history:Set" xmi:id="_0dxrSEnEEeawb9Y2qIoBjw" featureName="name" dataValue="IndexDomainModelReference">
+          <element href="indexdmr.ecore#//IndexDomainModelReference"/>
+        </changes>
+        <changes xsi:type="history:Add" xmi:id="_0dxrSUnEEeawb9Y2qIoBjw" featureName="eSuperTypes">
+          <element href="indexdmr.ecore#//IndexDomainModelReference"/>
+          <referenceValue href="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//FeaturePathDomainModelReference"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="indexdmr.ecore#//IndexDomainModelReference"
-          referenceName="eStructuralFeatures" element="indexdmr.ecore#//IndexDomainModelReference/targetDMR">
-        <changes xsi:type="history:Set" element="indexdmr.ecore#//IndexDomainModelReference/targetDMR"
-            featureName="name" dataValue="targetDMR"/>
-        <changes xsi:type="history:Set" element="indexdmr.ecore#//IndexDomainModelReference/targetDMR"
-            featureName="containment" dataValue="true" oldDataValue="false"/>
-        <changes xsi:type="history:Set" element="indexdmr.ecore#//IndexDomainModelReference/targetDMR"
-            featureName="eType" referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"/>
+      <changes xsi:type="history:Create" xmi:id="_0dxrSknEEeawb9Y2qIoBjw" referenceName="eStructuralFeatures">
+        <target href="indexdmr.ecore#//IndexDomainModelReference"/>
+        <element href="indexdmr.ecore#//IndexDomainModelReference/targetDMR"/>
+        <changes xsi:type="history:Set" xmi:id="_0dxrS0nEEeawb9Y2qIoBjw" featureName="name" dataValue="targetDMR">
+          <element href="indexdmr.ecore#//IndexDomainModelReference/targetDMR"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_0dySUEnEEeawb9Y2qIoBjw" featureName="containment" dataValue="true" oldDataValue="false">
+          <element href="indexdmr.ecore#//IndexDomainModelReference/targetDMR"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_0dySUUnEEeawb9Y2qIoBjw" featureName="eType">
+          <element href="indexdmr.ecore#//IndexDomainModelReference/targetDMR"/>
+          <referenceValue href="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="indexdmr.ecore#//IndexDomainModelReference"
-          referenceName="eStructuralFeatures" element="indexdmr.ecore#//IndexDomainModelReference/index">
-        <changes xsi:type="history:Set" element="indexdmr.ecore#//IndexDomainModelReference/index"
-            featureName="name" dataValue="index"/>
-        <changes xsi:type="history:Set" element="indexdmr.ecore#//IndexDomainModelReference/index"
-            featureName="eType" referenceValue="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      <changes xsi:type="history:Create" xmi:id="_0dySUknEEeawb9Y2qIoBjw" referenceName="eStructuralFeatures">
+        <target href="indexdmr.ecore#//IndexDomainModelReference"/>
+        <element href="indexdmr.ecore#//IndexDomainModelReference/index"/>
+        <changes xsi:type="history:Set" xmi:id="_0dySU0nEEeawb9Y2qIoBjw" featureName="name" dataValue="index">
+          <element href="indexdmr.ecore#//IndexDomainModelReference/index"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_0dySVEnEEeawb9Y2qIoBjw" featureName="eType">
+          <element href="indexdmr.ecore#//IndexDomainModelReference/index"/>
+          <referenceValue href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+        </changes>
       </changes>
     </changes>
-    <changes xsi:type="history:CompositeChange">
-      <changes xsi:type="history:Create" target="indexdmr.ecore#//IndexDomainModelReference"
-          referenceName="eAnnotations" element="indexdmr.ecore#//IndexDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%"/>
-      <changes xsi:type="history:Set" element="indexdmr.ecore#//IndexDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%"
-          featureName="source" dataValue="http://www.eclipse.org/emf/2002/Ecore"/>
-      <changes xsi:type="history:Create" target="indexdmr.ecore#//IndexDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%"
-          referenceName="details" element="indexdmr.ecore#//IndexDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%/@details.0"/>
-      <changes xsi:type="history:Set" element="indexdmr.ecore#//IndexDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%/@details.0"
-          featureName="key" dataValue="constraints"/>
-      <changes xsi:type="history:Set" element="indexdmr.ecore#//IndexDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%/@details.0"
-          featureName="value" dataValue="resolveable"/>
+    <changes xsi:type="history:CompositeChange" xmi:id="_0dySVUnEEeawb9Y2qIoBjw">
+      <changes xsi:type="history:Create" xmi:id="_0dySVknEEeawb9Y2qIoBjw" referenceName="eAnnotations">
+        <target href="indexdmr.ecore#//IndexDomainModelReference"/>
+        <element href="indexdmr.ecore#//IndexDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%"/>
+      </changes>
+      <changes xsi:type="history:Set" xmi:id="_0dySV0nEEeawb9Y2qIoBjw" featureName="source" dataValue="http://www.eclipse.org/emf/2002/Ecore">
+        <element href="indexdmr.ecore#//IndexDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%"/>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_0dySWEnEEeawb9Y2qIoBjw" referenceName="details">
+        <target href="indexdmr.ecore#//IndexDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%"/>
+        <element href="indexdmr.ecore#//IndexDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%/@details.0"/>
+      </changes>
+      <changes xsi:type="history:Set" xmi:id="_0dySWUnEEeawb9Y2qIoBjw" featureName="key" dataValue="constraints">
+        <element href="indexdmr.ecore#//IndexDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%/@details.0"/>
+      </changes>
+      <changes xsi:type="history:Set" xmi:id="_0dySWknEEeawb9Y2qIoBjw" featureName="value" dataValue="resolveable">
+        <element href="indexdmr.ecore#//IndexDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%/@details.0"/>
+      </changes>
     </changes>
-    <changes xsi:type="history:CompositeChange">
-      <changes xsi:type="history:Set" element="indexdmr.ecore#//IndexDomainModelReference/targetDMR"
-          featureName="lowerBound" dataValue="1" oldDataValue="0"/>
+    <changes xsi:type="history:CompositeChange" xmi:id="_0dySW0nEEeawb9Y2qIoBjw">
+      <changes xsi:type="history:Set" xmi:id="_0dySXEnEEeawb9Y2qIoBjw" featureName="lowerBound" dataValue="1" oldDataValue="0">
+        <element href="indexdmr.ecore#//IndexDomainModelReference/targetDMR"/>
+      </changes>
     </changes>
   </releases>
-  <releases/>
+  <releases xmi:id="_0dySXUnEEeawb9Y2qIoBjw">
+    <changes xsi:type="history:OperationChange" xmi:id="_lIAwQEnGEeawb9Y2qIoBjw">
+      <changes xsi:type="history:Create" xmi:id="_lIAwQUnGEeawb9Y2qIoBjw" referenceName="eClassifiers">
+        <target href="indexdmr.ecore#/"/>
+        <element href="indexdmr.ecore#//IndexDomainModelReferenceSegment"/>
+        <changes xsi:type="history:Set" xmi:id="_lIAwQknGEeawb9Y2qIoBjw" featureName="name" dataValue="IndexDomainModelReferenceSegment">
+          <element href="indexdmr.ecore#//IndexDomainModelReferenceSegment"/>
+        </changes>
+        <changes xsi:type="history:Add" xmi:id="_lIAwQ0nGEeawb9Y2qIoBjw" featureName="eSuperTypes">
+          <element href="indexdmr.ecore#//IndexDomainModelReferenceSegment"/>
+          <referenceValue href="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//FeatureDomainModelReferenceSegment"/>
+        </changes>
+      </changes>
+      <operation xmi:id="_lIAwREnGEeawb9Y2qIoBjw" name="newClass">
+        <parameters xmi:id="_lIAwRUnGEeawb9Y2qIoBjw" name="ePackage">
+          <referenceValue xmi:id="_lIAwRknGEeawb9Y2qIoBjw">
+            <element href="indexdmr.ecore#/"/>
+          </referenceValue>
+        </parameters>
+        <parameters xmi:id="_lIAwR0nGEeawb9Y2qIoBjw" name="name">
+          <dataValue>IndexDomainModelReferenceSegment</dataValue>
+        </parameters>
+        <parameters xmi:id="_lIAwSEnGEeawb9Y2qIoBjw" name="superClasses">
+          <referenceValue xmi:id="_lIAwSUnGEeawb9Y2qIoBjw">
+            <element href="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//FeatureDomainModelReferenceSegment"/>
+          </referenceValue>
+        </parameters>
+        <parameters xmi:id="_lIAwSknGEeawb9Y2qIoBjw" name="abstr">
+          <dataValue>false</dataValue>
+        </parameters>
+      </operation>
+    </changes>
+    <changes xsi:type="history:OperationChange" xmi:id="_x9kGYEnGEeawb9Y2qIoBjw">
+      <changes xsi:type="history:Create" xmi:id="_x9kGYUnGEeawb9Y2qIoBjw" referenceName="eStructuralFeatures">
+        <target href="indexdmr.ecore#//IndexDomainModelReferenceSegment"/>
+        <element href="indexdmr.ecore#//IndexDomainModelReferenceSegment/index"/>
+        <changes xsi:type="history:Set" xmi:id="_x9kGYknGEeawb9Y2qIoBjw" featureName="name" dataValue="index">
+          <element href="indexdmr.ecore#//IndexDomainModelReferenceSegment/index"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_x9kGY0nGEeawb9Y2qIoBjw" featureName="eType">
+          <element href="indexdmr.ecore#//IndexDomainModelReferenceSegment/index"/>
+          <referenceValue href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+        </changes>
+      </changes>
+      <operation xmi:id="_x9kGZEnGEeawb9Y2qIoBjw" name="newAttribute">
+        <parameters xmi:id="_x9kGZUnGEeawb9Y2qIoBjw" name="eClass">
+          <referenceValue xmi:id="_x9kGZknGEeawb9Y2qIoBjw">
+            <element href="indexdmr.ecore#//IndexDomainModelReferenceSegment"/>
+          </referenceValue>
+        </parameters>
+        <parameters xmi:id="_x9kGZ0nGEeawb9Y2qIoBjw" name="name">
+          <dataValue>index</dataValue>
+        </parameters>
+        <parameters xmi:id="_x9kGaEnGEeawb9Y2qIoBjw" name="type">
+          <referenceValue xmi:id="_x9kGaUnGEeawb9Y2qIoBjw">
+            <element href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+          </referenceValue>
+        </parameters>
+        <parameters xmi:id="_x9kGaknGEeawb9Y2qIoBjw" name="lowerBound">
+          <dataValue>0</dataValue>
+        </parameters>
+        <parameters xmi:id="_x9kGa0nGEeawb9Y2qIoBjw" name="upperBound">
+          <dataValue>1</dataValue>
+        </parameters>
+        <parameters xmi:id="_x9kGbEnGEeawb9Y2qIoBjw" name="defaultValue">
+          <dataValue xsi:nil="true"/>
+        </parameters>
+      </operation>
+    </changes>
+  </releases>
 </history:History>

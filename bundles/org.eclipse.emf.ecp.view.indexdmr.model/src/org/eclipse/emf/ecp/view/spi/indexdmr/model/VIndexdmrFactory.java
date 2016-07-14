@@ -22,8 +22,7 @@ import org.eclipse.emf.ecore.EFactory;
  * @see org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexdmrPackage
  * @generated
  */
-public interface VIndexdmrFactory extends EFactory
-{
+public interface VIndexdmrFactory extends EFactory {
 	/**
 	 * The singleton instance of the factory.
 	 * <!-- begin-user-doc -->
@@ -42,6 +41,16 @@ public interface VIndexdmrFactory extends EFactory
 	 * @generated
 	 */
 	VIndexDomainModelReference createIndexDomainModelReference();
+
+	/**
+	 * Returns a new object of class '<em>Index Domain Model Reference Segment</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return a new object of class '<em>Index Domain Model Reference Segment</em>'.
+	 * @generated
+	 */
+	VIndexDomainModelReferenceSegment createIndexDomainModelReferenceSegment();
 
 	/**
 	 * Returns the package supported by this factory.

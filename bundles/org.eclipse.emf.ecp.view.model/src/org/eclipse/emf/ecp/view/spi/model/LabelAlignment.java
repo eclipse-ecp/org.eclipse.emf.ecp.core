@@ -29,17 +29,7 @@ import org.eclipse.emf.common.util.Enumerator;
  * @generated
  */
 public enum LabelAlignment implements Enumerator {
-	/**
-	 * The '<em><b>Default</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 *
-	 * @since 1.7
-	 *        <!-- end-user-doc -->
-	 * @see #DEFAULT_VALUE
-	 * @generated
-	 * @ordered
-	 */
-	DEFAULT(-1, "Default", "Default"), //$NON-NLS-1$ //$NON-NLS-2$
+	// $NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>Left</b></em>' literal object.
@@ -50,7 +40,18 @@ public enum LabelAlignment implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	LEFT(0, "Left", "Left"), //$NON-NLS-1$//$NON-NLS-2$
+	LEFT(0, "Left", "Left"), //$NON-NLS-1$ //$NON-NLS-2$
+
+	/**
+	 * The '<em><b>None</b></em>' literal object.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see #NONE_VALUE
+	 * @generated
+	 * @ordered
+	 */
+	NONE(1, "None", "None"), //$NON-NLS-1$//$NON-NLS-2$
 
 	/**
 	 * The '<em><b>Top</b></em>' literal object.
@@ -62,35 +63,18 @@ public enum LabelAlignment implements Enumerator {
 	 * @generated
 	 * @ordered
 	 */
-	TOP(2, "Top", "Top"), //$NON-NLS-1$ //$NON-NLS-2$
-
+	TOP(2, "Top", "Top"),
 	/**
-	 * The '<em><b>None</b></em>' literal object.
+	 * The '<em><b>Default</b></em>' literal object.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see #NONE_VALUE
-	 * @generated
-	 * @ordered
-	 */
-	NONE(1, "None", "None"); //$NON-NLS-1$ //$NON-NLS-2$
-
-	/**
-	 * The '<em><b>Default</b></em>' literal value.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of '<em><b>Default</b></em>' literal object isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 *
 	 * @since 1.7
 	 *        <!-- end-user-doc -->
-	 * @see #DEFAULT
-	 * @model name="Default"
+	 * @see #DEFAULT_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	public static final int DEFAULT_VALUE = -1;
+	DEFAULT(-1, "Default", "Default"); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>Left</b></em>' literal value.
@@ -107,6 +91,22 @@ public enum LabelAlignment implements Enumerator {
 	 * @ordered
 	 */
 	public static final int LEFT_VALUE = 0;
+
+	/**
+	 * The '<em><b>None</b></em>' literal value.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of '<em><b>None</b></em>' literal object isn't clear, there really should be more of a description
+	 * here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see #NONE
+	 * @model name="None"
+	 * @generated
+	 * @ordered
+	 */
+	public static final int NONE_VALUE = 1;
 
 	/**
 	 * The '<em><b>Top</b></em>' literal value.
@@ -126,20 +126,21 @@ public enum LabelAlignment implements Enumerator {
 	public static final int TOP_VALUE = 2;
 
 	/**
-	 * The '<em><b>None</b></em>' literal value.
+	 * The '<em><b>Default</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>None</b></em>' literal object isn't clear, there really should be more of a description
-	 * here...
+	 * If the meaning of '<em><b>Default</b></em>' literal object isn't clear,
+	 * there really should be more of a description here...
 	 * </p>
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see #NONE
-	 * @model name="None"
+	 *
+	 * @since 1.7
+	 *        <!-- end-user-doc -->
+	 * @see #DEFAULT
+	 * @model name="Default"
 	 * @generated
 	 * @ordered
 	 */
-	public static final int NONE_VALUE = 1;
+	public static final int DEFAULT_VALUE = -1;
 
 	/**
 	 * An array of all the '<em><b>Label Alignment</b></em>' enumerators.
@@ -149,10 +150,10 @@ public enum LabelAlignment implements Enumerator {
 	 * @generated
 	 */
 	private static final LabelAlignment[] VALUES_ARRAY = new LabelAlignment[] {
-		DEFAULT,
 		LEFT,
-		TOP,
 		NONE,
+		TOP,
+		DEFAULT,
 	};
 
 	/**
@@ -213,14 +214,14 @@ public enum LabelAlignment implements Enumerator {
 	 */
 	public static LabelAlignment get(int value) {
 		switch (value) {
-		case DEFAULT_VALUE:
-			return DEFAULT;
 		case LEFT_VALUE:
 			return LEFT;
-		case TOP_VALUE:
-			return TOP;
 		case NONE_VALUE:
 			return NONE;
+		case TOP_VALUE:
+			return TOP;
+		case DEFAULT_VALUE:
+			return DEFAULT;
 		}
 		return null;
 	}

@@ -36,15 +36,27 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  *        The following features are implemented:
  *        </p>
  *        <ul>
- *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VControlImpl#getLabelAlignment <em>Label
- *        Alignment</em>}</li>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VControlImpl#getDomainModelReference <em>Domain Model
  *        Reference</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VControlImpl#getLabelAlignment <em>Label
+ *        Alignment</em>}</li>
  *        </ul>
  *
  * @generated
  */
 public class VControlImpl extends VContainedElementImpl implements VControl {
+	/**
+	 * The cached value of the '{@link #getDomainModelReference() <em>Domain Model Reference</em>}' containment
+	 * reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see #getDomainModelReference()
+	 * @generated
+	 * @ordered
+	 */
+	protected VDomainModelReference domainModelReference;
+
 	/**
 	 * The default value of the '{@link #getLabelAlignment() <em>Label Alignment</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -66,18 +78,6 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	 * @ordered
 	 */
 	protected LabelAlignment labelAlignment = LABEL_ALIGNMENT_EDEFAULT;
-
-	/**
-	 * The cached value of the '{@link #getDomainModelReference() <em>Domain Model Reference</em>}' containment
-	 * reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see #getDomainModelReference()
-	 * @generated
-	 * @ordered
-	 */
-	protected VDomainModelReference domainModelReference;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -206,10 +206,10 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case VViewPackage.CONTROL__LABEL_ALIGNMENT:
-			return getLabelAlignment();
 		case VViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE:
 			return getDomainModelReference();
+		case VViewPackage.CONTROL__LABEL_ALIGNMENT:
+			return getLabelAlignment();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -223,11 +223,11 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case VViewPackage.CONTROL__LABEL_ALIGNMENT:
-			setLabelAlignment((LabelAlignment) newValue);
-			return;
 		case VViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE:
 			setDomainModelReference((VDomainModelReference) newValue);
+			return;
+		case VViewPackage.CONTROL__LABEL_ALIGNMENT:
+			setLabelAlignment((LabelAlignment) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -242,11 +242,11 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case VViewPackage.CONTROL__LABEL_ALIGNMENT:
-			setLabelAlignment(LABEL_ALIGNMENT_EDEFAULT);
-			return;
 		case VViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE:
 			setDomainModelReference((VDomainModelReference) null);
+			return;
+		case VViewPackage.CONTROL__LABEL_ALIGNMENT:
+			setLabelAlignment(LABEL_ALIGNMENT_EDEFAULT);
 			return;
 		}
 		super.eUnset(featureID);
@@ -261,10 +261,10 @@ public class VControlImpl extends VContainedElementImpl implements VControl {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case VViewPackage.CONTROL__LABEL_ALIGNMENT:
-			return labelAlignment != LABEL_ALIGNMENT_EDEFAULT;
 		case VViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE:
 			return domainModelReference != null;
+		case VViewPackage.CONTROL__LABEL_ALIGNMENT:
+			return labelAlignment != LABEL_ALIGNMENT_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}

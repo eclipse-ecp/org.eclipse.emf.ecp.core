@@ -21,19 +21,20 @@ import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
  *
  * <p>
  * The following features are supported:
- * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference#getPrefixDMR <em>Prefix DMR</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference#getIndex <em>Index</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference#getTargetDMR <em>Target DMR</em>}</li>
- * </ul>
  * </p>
+ * <ul>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference#getPrefixDMR <em>Prefix
+ * DMR</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference#getIndex <em>Index</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference#getTargetDMR <em>Target
+ * DMR</em>}</li>
+ * </ul>
  *
  * @see org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexdmrPackage#getIndexDomainModelReference()
  * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='resolveable'"
  * @generated
  */
-public interface VIndexDomainModelReference extends VFeaturePathDomainModelReference
-{
+public interface VIndexDomainModelReference extends VFeaturePathDomainModelReference {
 	/**
 	 * Returns the value of the '<em><b>Prefix DMR</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
@@ -41,10 +42,9 @@ public interface VIndexDomainModelReference extends VFeaturePathDomainModelRefer
 	 * If the meaning of the '<em>Prefix DMR</em>' containment reference isn't clear, there really should be more of a
 	 * description here...
 	 * </p>
-	 * 
+	 *
 	 * @since 1.6
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the value of the '<em>Prefix DMR</em>' containment reference.
 	 * @see #setPrefixDMR(VDomainModelReference)
 	 * @see org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexdmrPackage#getIndexDomainModelReference_PrefixDMR()
@@ -54,14 +54,12 @@ public interface VIndexDomainModelReference extends VFeaturePathDomainModelRefer
 	VDomainModelReference getPrefixDMR();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference#getPrefixDMR <em>Prefix DMR</em>}'
-	 * containment reference.
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference#getPrefixDMR
+	 * <em>Prefix DMR</em>}' containment reference.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.6
 	 *        <!-- end-user-doc -->
-	 *
 	 * @param value the new value of the '<em>Prefix DMR</em>' containment reference.
 	 * @see #getPrefixDMR()
 	 * @generated
@@ -86,9 +84,8 @@ public interface VIndexDomainModelReference extends VFeaturePathDomainModelRefer
 	VDomainModelReference getTargetDMR();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference#getTargetDMR <em>Target DMR</em>}'
-	 * containment reference.
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference#getTargetDMR
+	 * <em>Target DMR</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
