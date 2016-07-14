@@ -27,9 +27,9 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  *        The following features are supported:
  *        </p>
  *        <ul>
- *        <li>{@link org.eclipse.emf.ecp.view.spi.model.VControl#getLabelAlignment <em>Label Alignment</em>}</li>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.model.VControl#getDomainModelReference <em>Domain Model
  *        Reference</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.VControl#getLabelAlignment <em>Label Alignment</em>}</li>
  *        </ul>
  *
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getControl()

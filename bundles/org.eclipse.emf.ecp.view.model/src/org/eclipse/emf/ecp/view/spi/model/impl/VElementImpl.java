@@ -38,7 +38,6 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  *        </p>
  *        <ul>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl#getName <em>Name</em>}</li>
- *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl#getLabel <em>Label</em>}</li>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl#isVisible <em>Visible</em>}</li>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl#isEnabled <em>Enabled</em>}</li>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl#isReadonly <em>Readonly</em>}</li>
@@ -71,30 +70,6 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 	 * @ordered
 	 */
 	protected String name = NAME_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 *
-	 * @since 1.6
-	 *        <!-- end-user-doc -->
-	 * @see #getLabel()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String LABEL_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getLabel() <em>Label</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 *
-	 * @since 1.6
-	 *        <!-- end-user-doc -->
-	 * @see #getLabel()
-	 * @generated
-	 * @ordered
-	 */
-	protected String label = LABEL_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #isVisible() <em>Visible</em>}' attribute.
@@ -252,33 +227,6 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 		name = newName;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, VViewPackage.ELEMENT__NAME, oldName, name));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 *
-	 * @since 1.6
-	 *        <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public String getLabel() {
-		return label;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 *
-	 * @since 1.6
-	 *        <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setLabel(String newLabel) {
-		String oldLabel = label;
-		label = newLabel;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, VViewPackage.ELEMENT__LABEL, oldLabel, label));
 	}
 
 	/**
@@ -482,8 +430,6 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 		switch (featureID) {
 		case VViewPackage.ELEMENT__NAME:
 			return getName();
-		case VViewPackage.ELEMENT__LABEL:
-			return getLabel();
 		case VViewPackage.ELEMENT__VISIBLE:
 			return isVisible();
 		case VViewPackage.ELEMENT__ENABLED:
@@ -512,9 +458,6 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 		switch (featureID) {
 		case VViewPackage.ELEMENT__NAME:
 			setName((String) newValue);
-			return;
-		case VViewPackage.ELEMENT__LABEL:
-			setLabel((String) newValue);
 			return;
 		case VViewPackage.ELEMENT__VISIBLE:
 			setVisible((Boolean) newValue);
@@ -551,9 +494,6 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 		case VViewPackage.ELEMENT__NAME:
 			setName(NAME_EDEFAULT);
 			return;
-		case VViewPackage.ELEMENT__LABEL:
-			setLabel(LABEL_EDEFAULT);
-			return;
 		case VViewPackage.ELEMENT__VISIBLE:
 			setVisible(VISIBLE_EDEFAULT);
 			return;
@@ -587,8 +527,6 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 		switch (featureID) {
 		case VViewPackage.ELEMENT__NAME:
 			return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-		case VViewPackage.ELEMENT__LABEL:
-			return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
 		case VViewPackage.ELEMENT__VISIBLE:
 			return visible != VISIBLE_EDEFAULT;
 		case VViewPackage.ELEMENT__ENABLED:
@@ -619,8 +557,6 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (name: "); //$NON-NLS-1$
 		result.append(name);
-		result.append(", label: "); //$NON-NLS-1$
-		result.append(label);
 		result.append(", visible: "); //$NON-NLS-1$
 		result.append(visible);
 		result.append(", enabled: "); //$NON-NLS-1$

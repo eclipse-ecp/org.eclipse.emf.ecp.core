@@ -40,8 +40,8 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  *        </p>
  *        <ul>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VViewImpl#getRootEClass <em>Root EClass</em>}</li>
- *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VViewImpl#getChildren <em>Children</em>}</li>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VViewImpl#getEcorePath <em>Ecore Path</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VViewImpl#getChildren <em>Children</em>}</li>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VViewImpl#getLoadingProperties <em>Loading
  *        Properties</em>}</li>
  *        </ul>
@@ -59,17 +59,6 @@ public class VViewImpl extends VElementImpl implements VView {
 	 * @ordered
 	 */
 	protected EClass rootEClass;
-
-	/**
-	 * The cached value of the '{@link #getChildren() <em>Children</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @see #getChildren()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<VContainedElement> children;
 
 	/**
 	 * The default value of the '{@link #getEcorePath() <em>Ecore Path</em>}' attribute.
@@ -94,6 +83,17 @@ public class VViewImpl extends VElementImpl implements VView {
 	 * @ordered
 	 */
 	protected String ecorePath = ECORE_PATH_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getChildren() <em>Children</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see #getChildren()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<VContainedElement> children;
 
 	/**
 	 * The cached value of the '{@link #getLoadingProperties() <em>Loading Properties</em>}' containment reference.
@@ -305,10 +305,10 @@ public class VViewImpl extends VElementImpl implements VView {
 			if (resolve)
 				return getRootEClass();
 			return basicGetRootEClass();
-		case VViewPackage.VIEW__CHILDREN:
-			return getChildren();
 		case VViewPackage.VIEW__ECORE_PATH:
 			return getEcorePath();
+		case VViewPackage.VIEW__CHILDREN:
+			return getChildren();
 		case VViewPackage.VIEW__LOADING_PROPERTIES:
 			return getLoadingProperties();
 		}
@@ -328,12 +328,12 @@ public class VViewImpl extends VElementImpl implements VView {
 		case VViewPackage.VIEW__ROOT_ECLASS:
 			setRootEClass((EClass) newValue);
 			return;
+		case VViewPackage.VIEW__ECORE_PATH:
+			setEcorePath((String) newValue);
+			return;
 		case VViewPackage.VIEW__CHILDREN:
 			getChildren().clear();
 			getChildren().addAll((Collection<? extends VContainedElement>) newValue);
-			return;
-		case VViewPackage.VIEW__ECORE_PATH:
-			setEcorePath((String) newValue);
 			return;
 		case VViewPackage.VIEW__LOADING_PROPERTIES:
 			setLoadingProperties((VViewModelProperties) newValue);
@@ -354,11 +354,11 @@ public class VViewImpl extends VElementImpl implements VView {
 		case VViewPackage.VIEW__ROOT_ECLASS:
 			setRootEClass((EClass) null);
 			return;
-		case VViewPackage.VIEW__CHILDREN:
-			getChildren().clear();
-			return;
 		case VViewPackage.VIEW__ECORE_PATH:
 			setEcorePath(ECORE_PATH_EDEFAULT);
+			return;
+		case VViewPackage.VIEW__CHILDREN:
+			getChildren().clear();
 			return;
 		case VViewPackage.VIEW__LOADING_PROPERTIES:
 			setLoadingProperties((VViewModelProperties) null);
@@ -378,10 +378,10 @@ public class VViewImpl extends VElementImpl implements VView {
 		switch (featureID) {
 		case VViewPackage.VIEW__ROOT_ECLASS:
 			return rootEClass != null;
-		case VViewPackage.VIEW__CHILDREN:
-			return children != null && !children.isEmpty();
 		case VViewPackage.VIEW__ECORE_PATH:
 			return ECORE_PATH_EDEFAULT == null ? ecorePath != null : !ECORE_PATH_EDEFAULT.equals(ecorePath);
+		case VViewPackage.VIEW__CHILDREN:
+			return children != null && !children.isEmpty();
 		case VViewPackage.VIEW__LOADING_PROPERTIES:
 			return loadingProperties != null;
 		}

@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getChangeListener <em>Change Listener</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference#getSegments <em>Segments</em>}</li>
  * </ul>
  *
@@ -33,6 +34,23 @@ import org.eclipse.emf.ecore.EObject;
  * @generated
  */
 public interface VDomainModelReference extends EObject {
+	/**
+	 * Returns the value of the '<em><b>Change Listener</b></em>' attribute list.
+	 * The list contents are of type {@link org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Change Listener</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the value of the '<em>Change Listener</em>' attribute list.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getDomainModelReference_ChangeListener()
+	 * @model dataType="org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener" transient="true"
+	 * @generated
+	 */
+	EList<DomainModelReferenceChangeListener> getChangeListener();
+
 	/**
 	 * Returns the value of the '<em><b>Segments</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment}.
