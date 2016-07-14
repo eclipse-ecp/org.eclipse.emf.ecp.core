@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexdmrFactory;
 import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexdmrPackage;
 import org.eclipse.emf.ecp.view.spi.indexdmr.model.util.IndexdmrValidator;
@@ -30,8 +31,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  *
  * @generated
  */
-public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPackage
-{
+public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -39,6 +39,14 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 	 * @generated
 	 */
 	private EClass indexDomainModelReferenceEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	private EClass indexDomainModelReferenceSegmentEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
@@ -54,8 +62,7 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 	 * @see #init()
 	 * @generated
 	 */
-	private VIndexdmrPackageImpl()
-	{
+	private VIndexdmrPackageImpl() {
 		super(eNS_URI, VIndexdmrFactory.eINSTANCE);
 	}
 
@@ -71,8 +78,9 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
 	 *
 	 * <p>
-	 * This method is used to initialize {@link VIndexdmrPackage#eINSTANCE} when that field is accessed. Clients should
-	 * not invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc
+	 * This method is used to initialize {@link VIndexdmrPackage#eINSTANCE} when that field is accessed.
+	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
+	 * <!-- begin-user-doc
 	 * --> <!-- end-user-doc -->
 	 *
 	 * @see #eNS_URI
@@ -80,16 +88,15 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 	 * @see #initializePackageContents()
 	 * @generated
 	 */
-	public static VIndexdmrPackage init()
-	{
+	public static VIndexdmrPackage init() {
 		if (isInited) {
 			return (VIndexdmrPackage) EPackage.Registry.INSTANCE.getEPackage(VIndexdmrPackage.eNS_URI);
 		}
 
 		// Obtain or create and register package
-		final VIndexdmrPackageImpl theIndexdmrPackage = (VIndexdmrPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof VIndexdmrPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI)
-			: new VIndexdmrPackageImpl());
+		final VIndexdmrPackageImpl theIndexdmrPackage = (VIndexdmrPackageImpl) (EPackage.Registry.INSTANCE
+			.get(eNS_URI) instanceof VIndexdmrPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
+				: new VIndexdmrPackageImpl());
 
 		isInited = true;
 
@@ -103,16 +110,13 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 		theIndexdmrPackage.initializePackageContents();
 
 		// Register package validator
-		EValidator.Registry.INSTANCE.put
-			(theIndexdmrPackage,
-				new EValidator.Descriptor()
-				{
-					@Override
-					public EValidator getEValidator()
-					{
-						return IndexdmrValidator.INSTANCE;
-					}
-				});
+		EValidator.Registry.INSTANCE.put(theIndexdmrPackage,
+			new EValidator.Descriptor() {
+				@Override
+				public EValidator getEValidator() {
+					return IndexdmrValidator.INSTANCE;
+				}
+			});
 
 		// Mark meta-data to indicate it can't be changed
 		theIndexdmrPackage.freeze();
@@ -129,8 +133,7 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 	 * @generated
 	 */
 	@Override
-	public EClass getIndexDomainModelReference()
-	{
+	public EClass getIndexDomainModelReference() {
 		return indexDomainModelReferenceEClass;
 	}
 
@@ -141,8 +144,7 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 	 * @generated
 	 */
 	@Override
-	public EReference getIndexDomainModelReference_PrefixDMR()
-	{
+	public EReference getIndexDomainModelReference_PrefixDMR() {
 		return (EReference) indexDomainModelReferenceEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -153,8 +155,7 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 	 * @generated
 	 */
 	@Override
-	public EReference getIndexDomainModelReference_TargetDMR()
-	{
+	public EReference getIndexDomainModelReference_TargetDMR() {
 		return (EReference) indexDomainModelReferenceEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -165,8 +166,29 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 	 * @generated
 	 */
 	@Override
-	public EAttribute getIndexDomainModelReference_Index()
-	{
+	public EClass getIndexDomainModelReferenceSegment() {
+		return indexDomainModelReferenceSegmentEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EAttribute getIndexDomainModelReferenceSegment_Index() {
+		return (EAttribute) indexDomainModelReferenceSegmentEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EAttribute getIndexDomainModelReference_Index() {
 		return (EAttribute) indexDomainModelReferenceEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -177,8 +199,7 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 	 * @generated
 	 */
 	@Override
-	public VIndexdmrFactory getIndexdmrFactory()
-	{
+	public VIndexdmrFactory getIndexdmrFactory() {
 		return (VIndexdmrFactory) getEFactoryInstance();
 	}
 
@@ -198,8 +219,7 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 	 *
 	 * @generated
 	 */
-	public void createPackageContents()
-	{
+	public void createPackageContents() {
 		if (isCreated) {
 			return;
 		}
@@ -210,6 +230,9 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 		createEReference(indexDomainModelReferenceEClass, INDEX_DOMAIN_MODEL_REFERENCE__PREFIX_DMR);
 		createEAttribute(indexDomainModelReferenceEClass, INDEX_DOMAIN_MODEL_REFERENCE__INDEX);
 		createEReference(indexDomainModelReferenceEClass, INDEX_DOMAIN_MODEL_REFERENCE__TARGET_DMR);
+
+		indexDomainModelReferenceSegmentEClass = createEClass(INDEX_DOMAIN_MODEL_REFERENCE_SEGMENT);
+		createEAttribute(indexDomainModelReferenceSegmentEClass, INDEX_DOMAIN_MODEL_REFERENCE_SEGMENT__INDEX);
 	}
 
 	/**
@@ -228,8 +251,7 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 	 *
 	 * @generated
 	 */
-	public void initializePackageContents()
-	{
+	public void initializePackageContents() {
 		if (isInitialized) {
 			return;
 		}
@@ -249,24 +271,27 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 
 		// Add supertypes to classes
 		indexDomainModelReferenceEClass.getESuperTypes().add(theViewPackage.getFeaturePathDomainModelReference());
+		indexDomainModelReferenceSegmentEClass.getESuperTypes()
+			.add(theViewPackage.getFeatureDomainModelReferenceSegment());
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(indexDomainModelReferenceEClass, VIndexDomainModelReference.class,
-			"IndexDomainModelReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-			getIndexDomainModelReference_PrefixDMR(),
-			theViewPackage.getDomainModelReference(),
-			null,
-			"prefixDMR", null, 1, 1, VIndexDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(
-			getIndexDomainModelReference_Index(),
-			ecorePackage.getEInt(),
-			"index", null, 0, 1, VIndexDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-			getIndexDomainModelReference_TargetDMR(),
-			theViewPackage.getDomainModelReference(),
-			null,
-			"targetDMR", null, 1, 1, VIndexDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEClass(indexDomainModelReferenceEClass, VIndexDomainModelReference.class, "IndexDomainModelReference", //$NON-NLS-1$
+			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getIndexDomainModelReference_PrefixDMR(), theViewPackage.getDomainModelReference(), null,
+			"prefixDMR", null, 1, 1, VIndexDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
+			IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getIndexDomainModelReference_Index(), ecorePackage.getEInt(), "index", null, 0, 1, //$NON-NLS-1$
+			VIndexDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
+			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getIndexDomainModelReference_TargetDMR(), theViewPackage.getDomainModelReference(), null,
+			"targetDMR", null, 1, 1, VIndexDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
+			IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(indexDomainModelReferenceSegmentEClass, VIndexDomainModelReferenceSegment.class,
+			"IndexDomainModelReferenceSegment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(getIndexDomainModelReferenceSegment_Index(), ecorePackage.getEInt(), "index", null, 0, 1, //$NON-NLS-1$
+			VIndexDomainModelReferenceSegment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
+			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);
@@ -283,13 +308,12 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 	 *
 	 * @generated
 	 */
-	protected void createEcoreAnnotations()
-	{
+	protected void createEcoreAnnotations() {
 		final String source = "http://www.eclipse.org/emf/2002/Ecore"; //$NON-NLS-1$
 		addAnnotation(indexDomainModelReferenceEClass,
 			source,
-			new String[]
-			{ "constraints", "resolveable" //$NON-NLS-1$ //$NON-NLS-2$
+			new String[] {
+				"constraints", "resolveable" //$NON-NLS-1$ //$NON-NLS-2$
 			});
 	}
 

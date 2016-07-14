@@ -17,6 +17,7 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.view.spi.model.*;
 import org.eclipse.emf.ecp.view.spi.model.VAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VContainedContainer;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
@@ -107,6 +108,11 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 		}
 
 		@Override
+		public Adapter caseFeaturePathDomainModelReference(VFeaturePathDomainModelReference object) {
+			return createFeaturePathDomainModelReferenceAdapter();
+		}
+
+		@Override
 		public Adapter caseElement(VElement object) {
 			return createElementAdapter();
 		}
@@ -137,8 +143,8 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 		}
 
 		@Override
-		public Adapter caseViewModelLoadingProperties(VViewModelLoadingProperties object) {
-			return createViewModelLoadingPropertiesAdapter();
+		public Adapter caseViewModelProperties(VViewModelProperties object) {
+			return createViewModelPropertiesAdapter();
 		}
 
 		@Override
@@ -147,8 +153,8 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 		}
 
 		@Override
-		public Adapter caseViewModelProperties(VViewModelProperties object) {
-			return createViewModelPropertiesAdapter();
+		public Adapter caseViewModelLoadingProperties(VViewModelLoadingProperties object) {
+			return createViewModelLoadingPropertiesAdapter();
 		}
 
 		@Override
@@ -414,6 +420,23 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createDomainModelReferenceAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference <em>Feature Path Domain Model
+	 * Reference</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference
+	 * @generated
+	 */
+	public Adapter createFeaturePathDomainModelReferenceAdapter() {
 		return null;
 	}
 

@@ -18,8 +18,10 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
@@ -34,6 +36,8 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  *        The following features are implemented:
  *        </p>
  *        <ul>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VDomainModelReferenceImpl#getChangeListener <em>Change
+ *        Listener</em>}</li>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VDomainModelReferenceImpl#getSegments
  *        <em>Segments</em>}</li>
  *        </ul>
@@ -41,6 +45,16 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * @generated
  */
 public class VDomainModelReferenceImpl extends EObjectImpl implements VDomainModelReference {
+	/**
+	 * The cached value of the '{@link #getChangeListener() <em>Change Listener</em>}' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see #getChangeListener()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<DomainModelReferenceChangeListener> changeListener;
 	/**
 	 * The cached value of the '{@link #getSegments() <em>Segments</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
@@ -71,6 +85,20 @@ public class VDomainModelReferenceImpl extends EObjectImpl implements VDomainMod
 	@Override
 	protected EClass eStaticClass() {
 		return VViewPackage.Literals.DOMAIN_MODEL_REFERENCE;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EList<DomainModelReferenceChangeListener> getChangeListener() {
+		if (changeListener == null) {
+			changeListener = new EDataTypeUniqueEList<DomainModelReferenceChangeListener>(
+				DomainModelReferenceChangeListener.class, this, VViewPackage.DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER);
+		}
+		return changeListener;
 	}
 
 	/**
@@ -112,6 +140,8 @@ public class VDomainModelReferenceImpl extends EObjectImpl implements VDomainMod
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+		case VViewPackage.DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER:
+			return getChangeListener();
 		case VViewPackage.DOMAIN_MODEL_REFERENCE__SEGMENTS:
 			return getSegments();
 		}
@@ -128,6 +158,10 @@ public class VDomainModelReferenceImpl extends EObjectImpl implements VDomainMod
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+		case VViewPackage.DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER:
+			getChangeListener().clear();
+			getChangeListener().addAll((Collection<? extends DomainModelReferenceChangeListener>) newValue);
+			return;
 		case VViewPackage.DOMAIN_MODEL_REFERENCE__SEGMENTS:
 			getSegments().clear();
 			getSegments().addAll((Collection<? extends VDomainModelReferenceSegment>) newValue);
@@ -145,6 +179,9 @@ public class VDomainModelReferenceImpl extends EObjectImpl implements VDomainMod
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+		case VViewPackage.DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER:
+			getChangeListener().clear();
+			return;
 		case VViewPackage.DOMAIN_MODEL_REFERENCE__SEGMENTS:
 			getSegments().clear();
 			return;
@@ -161,9 +198,29 @@ public class VDomainModelReferenceImpl extends EObjectImpl implements VDomainMod
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+		case VViewPackage.DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER:
+			return changeListener != null && !changeListener.isEmpty();
 		case VViewPackage.DOMAIN_MODEL_REFERENCE__SEGMENTS:
 			return segments != null && !segments.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy())
+			return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (changeListener: "); //$NON-NLS-1$
+		result.append(changeListener);
+		result.append(')');
+		return result.toString();
 	}
 } // VDomainModelReferenceImpl
