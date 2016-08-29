@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="ECP RCP" sequenceNumber="1472048285">
+<?pde version="3.8"?><target name="ECP RCP" sequenceNumber="1472462274">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.swtbot.forms.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.swtbot.eclipse.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.swtbot.eclipse.gef.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.swtbot.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.swtbot.eclipse.test.junit.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.swtbot.forms.feature.group" version="2.4.0.201604200752"/>
+<unit id="org.eclipse.swtbot.eclipse.feature.group" version="2.4.0.201604200752"/>
+<unit id="org.eclipse.swtbot.eclipse.gef.feature.group" version="2.4.0.201604200752"/>
+<unit id="org.eclipse.swtbot.feature.group" version="2.4.0.201604200752"/>
+<unit id="org.eclipse.swtbot.eclipse.test.junit.feature.group" version="2.4.0.201604200752"/>
 <repository location="http://download.eclipse.org/technology/swtbot/releases/latest/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
@@ -32,7 +32,7 @@
 <repository location="http://download.eclipse.org/emfstore/releases_18"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.jdt.feature.group" version="3.12.0.v20160606-1100"/>
+<unit id="org.eclipse.jdt.feature.group" version="3.12.0.v20160824-0427"/>
 <unit id="org.eclipse.emf.sdk.feature.group" version="2.12.0.v20160526-0356"/>
 <unit id="org.eclipse.gef.sdk.feature.group" version="3.11.0.201606061308"/>
 <unit id="org.eclipse.graphiti.feature.feature.group" version="0.13.0.v20160608-1043"/>
@@ -41,7 +41,7 @@
 <unit id="org.eclipse.emf.transaction.sdk.feature.group" version="1.10.0.201606071900"/>
 <unit id="org.eclipse.net4j.sdk.feature.group" version="4.5.0.v20160607-1511"/>
 <unit id="org.eclipse.emf.cdo.sdk.feature.group" version="4.5.0.v20160607-1511"/>
-<unit id="org.eclipse.pde.feature.group" version="3.12.0.v20160606-1100"/>
+<unit id="org.eclipse.pde.feature.group" version="3.12.0.v20160824-0059"/>
 <unit id="org.eclipse.ocl.all.sdk.feature.group" version="5.2.0.v20160523-1914"/>
 <unit id="org.eclipse.xtend.sdk.feature.group" version="2.10.0.v201605250459"/>
 <repository location="http://download.eclipse.org/staging/neon/"/>
@@ -76,7 +76,7 @@
 <repository location="http://download.eclipse.org/edapt/releases/12x"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.nebula.widgets.grid.feature.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.nebula.widgets.grid.feature.feature.group" version="1.0.0.201605312033"/>
 <repository location="http://download.eclipse.org/nebula/releases/1.0.0"/>
 </location>
 </locations>
@@ -175,13 +175,16 @@
 <plugin id="org.eclipse.compare.core"/>
 <plugin id="org.eclipse.compare.core.source"/>
 <plugin id="org.eclipse.compare.source"/>
+<plugin id="org.eclipse.compare.win32"/>
+<plugin id="org.eclipse.compare.win32.source"/>
 <plugin id="org.eclipse.core.commands"/>
 <plugin id="org.eclipse.core.commands.source"/>
 <plugin id="org.eclipse.core.contenttype"/>
 <plugin id="org.eclipse.core.contenttype.source"/>
 <plugin id="org.eclipse.core.databinding" version="1.5.0.v20150422-0725"/>
+<plugin id="org.eclipse.core.databinding.beans" version="1.3.100.v20160509-1025"/>
 <plugin id="org.eclipse.core.databinding.beans" version="1.3.0.v20150422-0725"/>
-<plugin id="org.eclipse.core.databinding.beans.source" version="1.3.0.v20150422-0725"/>
+<plugin id="org.eclipse.core.databinding.beans.source" version="1.3.100.v20160509-1025"/>
 <plugin id="org.eclipse.core.databinding.observable" version="1.5.0.v20150422-0725"/>
 <plugin id="org.eclipse.core.databinding.observable.source" version="1.5.0.v20150422-0725"/>
 <plugin id="org.eclipse.core.databinding.property" version="1.5.0.v20150422-0725"/>
@@ -194,15 +197,16 @@
 <plugin id="org.eclipse.core.filebuffers"/>
 <plugin id="org.eclipse.core.filebuffers.source"/>
 <plugin id="org.eclipse.core.filesystem"/>
-<plugin id="org.eclipse.core.filesystem.linux.x86_64"/>
 <plugin id="org.eclipse.core.filesystem.source"/>
+<plugin id="org.eclipse.core.filesystem.win32.x86_64"/>
 <plugin id="org.eclipse.core.jobs"/>
 <plugin id="org.eclipse.core.jobs.source"/>
 <plugin id="org.eclipse.core.net"/>
-<plugin id="org.eclipse.core.net.linux.x86_64"/>
 <plugin id="org.eclipse.core.net.source"/>
+<plugin id="org.eclipse.core.net.win32.x86_64"/>
 <plugin id="org.eclipse.core.resources"/>
 <plugin id="org.eclipse.core.resources.source"/>
+<plugin id="org.eclipse.core.resources.win32.x86_64"/>
 <plugin id="org.eclipse.core.runtime"/>
 <plugin id="org.eclipse.core.runtime.source"/>
 <plugin id="org.eclipse.core.variables"/>
@@ -244,8 +248,6 @@
 <plugin id="org.eclipse.e4.ui.model.workbench.source"/>
 <plugin id="org.eclipse.e4.ui.services"/>
 <plugin id="org.eclipse.e4.ui.services.source"/>
-<plugin id="org.eclipse.e4.ui.swt.gtk"/>
-<plugin id="org.eclipse.e4.ui.swt.gtk.source"/>
 <plugin id="org.eclipse.e4.ui.widgets"/>
 <plugin id="org.eclipse.e4.ui.widgets.source"/>
 <plugin id="org.eclipse.e4.ui.workbench"/>
@@ -513,8 +515,8 @@
 <plugin id="org.eclipse.equinox.jsp.jasper.registry.source"/>
 <plugin id="org.eclipse.equinox.jsp.jasper.source"/>
 <plugin id="org.eclipse.equinox.launcher"/>
-<plugin id="org.eclipse.equinox.launcher.gtk.linux.x86_64"/>
 <plugin id="org.eclipse.equinox.launcher.source"/>
+<plugin id="org.eclipse.equinox.launcher.win32.win32.x86_64"/>
 <plugin id="org.eclipse.equinox.metatype"/>
 <plugin id="org.eclipse.equinox.metatype.source"/>
 <plugin id="org.eclipse.equinox.p2.artifact.repository"/>
@@ -581,6 +583,8 @@
 <plugin id="org.eclipse.equinox.security.source"/>
 <plugin id="org.eclipse.equinox.security.ui"/>
 <plugin id="org.eclipse.equinox.security.ui.source"/>
+<plugin id="org.eclipse.equinox.security.win32.x86_64"/>
+<plugin id="org.eclipse.equinox.security.win32.x86_64.source"/>
 <plugin id="org.eclipse.equinox.servletbridge"/>
 <plugin id="org.eclipse.equinox.servletbridge.source"/>
 <plugin id="org.eclipse.equinox.simpleconfigurator"/>
@@ -627,8 +631,8 @@
 <plugin id="org.eclipse.help.webapp"/>
 <plugin id="org.eclipse.help.webapp.source"/>
 <plugin id="org.eclipse.jdt"/>
-<plugin id="org.eclipse.jdt.annotation" version="2.1.0.v20160418-1457"/>
 <plugin id="org.eclipse.jdt.annotation" version="1.1.100.v20160418-1457"/>
+<plugin id="org.eclipse.jdt.annotation" version="2.1.0.v20160418-1457"/>
 <plugin id="org.eclipse.jdt.annotation.source" version="2.1.0.v20160418-1457"/>
 <plugin id="org.eclipse.jdt.annotation.source" version="1.1.100.v20160418-1457"/>
 <plugin id="org.eclipse.jdt.apt.core"/>
@@ -807,8 +811,8 @@
 <plugin id="org.eclipse.search"/>
 <plugin id="org.eclipse.search.source"/>
 <plugin id="org.eclipse.swt"/>
-<plugin id="org.eclipse.swt.gtk.linux.x86_64"/>
-<plugin id="org.eclipse.swt.gtk.linux.x86_64.source"/>
+<plugin id="org.eclipse.swt.win32.win32.x86_64"/>
+<plugin id="org.eclipse.swt.win32.win32.x86_64.source"/>
 <plugin id="org.eclipse.swtbot.ant.junit"/>
 <plugin id="org.eclipse.swtbot.e4.finder"/>
 <plugin id="org.eclipse.swtbot.e4.finder.source"/>
@@ -875,6 +879,8 @@
 <plugin id="org.eclipse.ui.views.properties.tabbed"/>
 <plugin id="org.eclipse.ui.views.properties.tabbed.source"/>
 <plugin id="org.eclipse.ui.views.source"/>
+<plugin id="org.eclipse.ui.win32"/>
+<plugin id="org.eclipse.ui.win32.source"/>
 <plugin id="org.eclipse.ui.workbench"/>
 <plugin id="org.eclipse.ui.workbench.source"/>
 <plugin id="org.eclipse.ui.workbench.texteditor"/>
@@ -976,8 +982,8 @@
 <plugin id="org.w3c.dom.events.source"/>
 <plugin id="org.w3c.dom.smil" version="1.0.0.v200806040011"/>
 <plugin id="org.w3c.dom.smil" version="1.0.1.v200903091627"/>
-<plugin id="org.w3c.dom.smil.source" version="1.0.1.v200903091627"/>
 <plugin id="org.w3c.dom.smil.source" version="1.0.0.v200806040011"/>
+<plugin id="org.w3c.dom.smil.source" version="1.0.1.v200903091627"/>
 <plugin id="org.w3c.dom.svg" version="1.1.0.v201011041433"/>
 <plugin id="org.w3c.dom.svg" version="1.1.0.v201011041433"/>
 <plugin id="org.w3c.dom.svg.source" version="1.1.0.v201011041433"/>

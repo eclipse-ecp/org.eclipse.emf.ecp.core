@@ -32,7 +32,7 @@ location "http://download.eclipse.org/emfstore/releases_18" {
 	org.eclipse.emf.emfstore.ecore.feature.feature.group
 }
 
-location "http://download.eclipse.org/releases/neon" {
+location "http://download.eclipse.org/staging/neon/" {
 	org.eclipse.jdt.feature.group
 	org.eclipse.emf.sdk.feature.group
 	org.eclipse.gef.sdk.feature.group
