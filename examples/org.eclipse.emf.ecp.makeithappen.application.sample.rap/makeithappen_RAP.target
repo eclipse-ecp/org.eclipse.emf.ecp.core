@@ -13,7 +13,7 @@
 <unit id="org.eclipse.emf.sdk.feature.group" version="0"/>
 <unit id="org.eclipse.emf.rap.sdk.feature.group" version="0"/>
 <unit id="org.eclipse.e4.rcp.feature.group" version="0"/>
-<repository location="http://download.eclipse.org/releases/neon/"/>
+<repository location="http://download.eclipse.org/staging/neon/"/>
 </location>
 </locations>
 </target>
