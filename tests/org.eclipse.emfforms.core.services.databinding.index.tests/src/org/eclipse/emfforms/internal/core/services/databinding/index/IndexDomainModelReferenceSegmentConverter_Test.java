@@ -15,8 +15,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
-import java.util.List;
-
 import org.eclipse.emf.databinding.IEMFValueProperty;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -30,6 +28,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestFactory;
+import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.DomainModelReferenceSegmentConverterEMF;
 import org.junit.After;
@@ -148,29 +147,30 @@ public class IndexDomainModelReferenceSegmentConverter_Test {
 	/**
 	 * Test method for
 	 * {@link org.eclipse.emfforms.internal.core.services.databinding.index.IndexDomainModelReferenceSegmentConverter#getSetting(org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment, org.eclipse.emf.ecore.EObject)}.
-	 * 
+	 *
 	 * @throws DatabindingFailedException
 	 */
-	@SuppressWarnings("unchecked")
 	@Test
 	public void testGetSetting() throws DatabindingFailedException {
 		final B b = TestFactory.eINSTANCE.createB();
 		final C c0 = TestFactory.eINSTANCE.createC();
 		final C c1 = TestFactory.eINSTANCE.createC();
+		final C c2 = TestFactory.eINSTANCE.createC();
 		b.getCList().add(c0);
 		b.getCList().add(c1);
+		b.getCList().add(c2);
 
 		final VIndexDomainModelReferenceSegment segment = VIndexdmrFactory.eINSTANCE
 			.createIndexDomainModelReferenceSegment();
-		segment.setIndex(0);
+		segment.setIndex(1);
 		segment.setDomainModelFeature("cList"); //$NON-NLS-1$
 
 		final Setting setting = converter.getSetting(segment, b);
 		assertEquals(b, setting.getEObject());
-		assertTrue(setting.get(true) instanceof List);
-		final List<C> list = (List<C>) setting.get(true);
-		assertTrue(list.contains(c0));
-		assertTrue(list.contains(c1));
+		assertEquals(c1, setting.get(true));
+		assertTrue(setting instanceof IndexedSetting);
+		assertEquals(1, ((IndexedSetting) setting).getIndex());
+		assertEquals(TestPackage.eINSTANCE.getB_CList(), setting.getEStructuralFeature());
 	}
 
 	private EditingDomain getEditingDomain(EObject object) {

@@ -19,7 +19,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecp.common.spi.asserts.Assert;
 import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
@@ -114,8 +113,7 @@ public class IndexDomainModelReferenceSegmentConverter implements DomainModelRef
 				String.format("The eType of the feature %1$s is null.", structuralFeature.getName())); //$NON-NLS-1$
 		}
 
-		// TODO: This method does not consider the index. Instead, the value of the Setting is the whole list.
-		return InternalEObject.class.cast(eObject).eSetting(structuralFeature);
+		return new IndexedSetting(eObject, structuralFeature, indexSegment.getIndex());
 	}
 
 	private VIndexDomainModelReferenceSegment checkAndConvertSegment(VDomainModelReferenceSegment segment)
