@@ -13,8 +13,8 @@ package org.eclipse.emfforms.internal.core.services.databinding.featurepath;
 
 import static org.junit.Assert.assertTrue;
 
-import org.eclipse.emfforms.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter;
-import org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter;
+import org.eclipse.emfforms.core.services.databinding.featurepath.FeatureDomainModelReferenceSegmentConverter;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.DomainModelReferenceSegmentConverterEMF;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -24,27 +24,27 @@ import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 
 /**
- * JUnit integration test for the {@link FeaturePathDomainModelReferenceConverter}.
- * 
+ * JUnit integration test for the {@link FeatureDomainModelReferenceSegmentConverter}.
+ *
  * @author Lucas Koehler
  *
  */
-public class FeaturePathDomainModelReferenceConverter_ITest {
+public class FeatureDomainModelReferenceSegmentConverter_ITest {
 
 	private static BundleContext bundleContext;
-	private DomainModelReferenceConverter service;
-	private ServiceReference<DomainModelReferenceConverter> serviceReference;
+	private DomainModelReferenceSegmentConverterEMF service;
+	private ServiceReference<DomainModelReferenceSegmentConverterEMF> serviceReference;
 
 	@BeforeClass
 	public static void setUpBeforeClass() {
-		bundleContext = FrameworkUtil.getBundle(FeaturePathDomainModelReferenceConverter_ITest.class)
+		bundleContext = FrameworkUtil.getBundle(FeatureDomainModelReferenceSegmentConverter_ITest.class)
 			.getBundleContext();
 	}
 
 	@Before
 	public void setUp() {
 		serviceReference = bundleContext
-			.getServiceReference(DomainModelReferenceConverter.class);
+			.getServiceReference(DomainModelReferenceSegmentConverterEMF.class);
 		service = bundleContext.getService(serviceReference);
 	}
 
@@ -55,7 +55,7 @@ public class FeaturePathDomainModelReferenceConverter_ITest {
 
 	@Test
 	public void testServiceType() {
-		assertTrue(FeaturePathDomainModelReferenceConverter.class.isInstance(service));
+		assertTrue(FeatureDomainModelReferenceSegmentConverter.class.isInstance(service));
 
 	}
 

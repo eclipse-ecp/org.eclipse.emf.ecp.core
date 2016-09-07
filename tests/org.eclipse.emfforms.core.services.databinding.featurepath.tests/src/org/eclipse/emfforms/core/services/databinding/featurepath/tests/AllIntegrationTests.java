@@ -11,7 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emfforms.core.services.databinding.featurepath.tests;
 
-import org.eclipse.emfforms.internal.core.services.databinding.featurepath.FeaturePathDomainModelReferenceConverter_ITest;
+import org.eclipse.emfforms.internal.core.services.databinding.featurepath.FeatureDomainModelReferenceSegmentConverter_ITest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
@@ -23,7 +23,7 @@ import org.junit.runners.Suite.SuiteClasses;
  *
  */
 @RunWith(Suite.class)
-@SuiteClasses({ FeaturePathDomainModelReferenceConverter_ITest.class })
+@SuiteClasses({ FeatureDomainModelReferenceSegmentConverter_ITest.class })
 public class AllIntegrationTests {
 
 }

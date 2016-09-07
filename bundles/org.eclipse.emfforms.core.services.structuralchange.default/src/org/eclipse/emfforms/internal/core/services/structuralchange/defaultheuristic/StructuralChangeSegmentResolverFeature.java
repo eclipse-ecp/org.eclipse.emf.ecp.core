@@ -40,7 +40,7 @@ public class StructuralChangeSegmentResolverFeature implements StructuralChangeS
 	 *
 	 * @param reportService The {@link ReportService}
 	 */
-	@Reference
+	@Reference(unbind = "-")
 	protected void setReportService(ReportService reportService) {
 		this.reportService = reportService;
 	}
