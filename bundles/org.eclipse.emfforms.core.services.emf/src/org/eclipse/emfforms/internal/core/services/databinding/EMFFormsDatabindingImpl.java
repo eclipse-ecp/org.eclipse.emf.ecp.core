@@ -35,6 +35,7 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsSegmentResolver;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.DomainModelReferenceSegmentConverterEMF;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 
@@ -44,7 +45,7 @@ import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindin
  * @author Lucas Koehler
  *
  */
-public class EMFFormsDatabindingImpl implements EMFFormsDatabindingEMF {
+public class EMFFormsDatabindingImpl implements EMFFormsDatabindingEMF, EMFFormsSegmentResolver {
 
 	private final Set<DomainModelReferenceSegmentConverterEMF> segmentConverters = new LinkedHashSet<DomainModelReferenceSegmentConverterEMF>();
 
@@ -356,10 +357,7 @@ public class EMFFormsDatabindingImpl implements EMFFormsDatabindingEMF {
 				"The reference being resolved does not contain any segments. The DMR is %1$s.", domainModelReference)); //$NON-NLS-1$
 		}
 
-		// Retrieve the first setting
-		final DomainModelReferenceSegmentConverterEMF firstConverter = getBestDomainModelReferenceSegmentConverter(
-			segments.get(0));
-		Setting setting = firstConverter.getSetting(segments.get(0), object);
+		Setting setting = resolveSegment(segments.get(0), object);
 
 		/*
 		 * If present, iterate over the remaining segments. For every iteration step, use the resolved EObject of the
@@ -378,9 +376,7 @@ public class EMFFormsDatabindingImpl implements EMFFormsDatabindingEMF {
 			}
 
 			final EObject nextEObject = (EObject) nextObject;
-			final DomainModelReferenceSegmentConverterEMF converter = getBestDomainModelReferenceSegmentConverter(
-				segment);
-			setting = converter.getSetting(segment, nextEObject);
+			setting = resolveSegment(segment, nextEObject);
 		}
 
 		return setting;
@@ -388,5 +384,19 @@ public class EMFFormsDatabindingImpl implements EMFFormsDatabindingEMF {
 
 	private EditingDomain getEditingDomain(EObject object) throws DatabindingFailedException {
 		return AdapterFactoryEditingDomain.getEditingDomainFor(object);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.core.services.databinding.EMFFormsSegmentResolver#resolveSegment(org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment,
+	 *      org.eclipse.emf.ecore.EObject)
+	 */
+	@Override
+	public Setting resolveSegment(VDomainModelReferenceSegment segment, EObject domainObject)
+		throws DatabindingFailedException {
+		final DomainModelReferenceSegmentConverterEMF bestConverter = getBestDomainModelReferenceSegmentConverter(
+			segment);
+		return bestConverter.getSetting(segment, domainObject);
 	}
 }
