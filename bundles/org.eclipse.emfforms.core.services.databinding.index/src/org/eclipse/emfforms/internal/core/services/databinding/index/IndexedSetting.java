@@ -18,6 +18,11 @@ import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.common.spi.asserts.Assert;
 
 /**
+ * An {@link IndexedSetting} is a {@link Setting} whose {@link EStructuralFeature} is a multi reference or attribute
+ * that is indexed. This means the value of the Setting is the Object at the {@link IndexedSetting IndexedSetting's}
+ * index in the list referenced by the structural feature. In a "standard" Setting, the whole list would be the settings
+ * value.
+ *
  * @author Lucas Koehler
  *
  */
@@ -29,6 +34,8 @@ public class IndexedSetting implements Setting {
 	private final EList<Object> list;
 
 	/**
+	 * Creates a new {@link IndexedSetting}.
+	 * 
 	 * @param eObject The {@link EObject} holding a list
 	 * @param eStructuralFeature The specific feature holding the list
 	 * @param index The index that defines which list item is the value of this {@link Setting}
