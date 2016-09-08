@@ -12,20 +12,20 @@
 package org.eclipse.emfforms.spi.core.services.structuralchange;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 
 /**
+ * A concrete structural change tester for a type of {@link VDomainModelReferenceSegment}.
+ *
  * @author Lucas Koehler
  * @since 2.0
  *
  */
-public interface StructuralChangeSegmentResolver {
-
+public interface StructuralChangeSegmentTester {
 	/**
-	 * The value that expresses that a {@link StructuralChangeSegmentResolver} is not applicable for a
-	 * {@link VDomainModelReference}.
+	 * The value that expresses that a {@link StructuralChangeSegmentTester} is not applicable for a
+	 * {@link VDomainModelReferenceSegment}.
 	 */
 	double NOT_APPLICABLE = Double.NEGATIVE_INFINITY;
 
@@ -34,18 +34,21 @@ public interface StructuralChangeSegmentResolver {
 	 * {@link VDomainModelReferenceSegment}.
 	 *
 	 * @param segment The {@link VDomainModelReferenceSegment}
-	 * @return The value indicating how suitable this tester is, negative infinity if it cannot work with the given
+	 * @return The value indicating how suitable this tester is, negative infinity if it can't work with the given
 	 *         {@link VDomainModelReferenceSegment}.
 	 */
 	double isApplicable(VDomainModelReferenceSegment segment);
 
 	/**
-	 * Resolves the given {@link VDomainModelReferenceSegment segment} from the given {@link EObject domain object} and
-	 * returns the resulting {@link Setting}.
+	 * Checks whether the domain structure of the given {@link VDomainModelReferenceSegment} has changed for the changes
+	 * indicated by the given {@link ModelChangeNotification}.
 	 *
-	 * @param segment The {@link VDomainModelReferenceSegment} to resolve
-	 * @param domainObject The segment's root for which the segment is resolved
-	 * @return The resolved {@link Setting} or <strong>null</strong> if no {@link Setting} could be resolved
+	 * @param segment The {@link VDomainModelReferenceSegment}
+	 * @param domainObject The domain object of the {@link VDomainModelReferenceSegment segment}.
+	 * @param notification The {@link ModelChangeNotification}
+	 * @return true if the domain structure has changed, false otherwise
 	 */
-	Setting resolveSegment(VDomainModelReferenceSegment segment, EObject domainObject);
+	boolean isStructureChanged(VDomainModelReferenceSegment segment, EObject domainObject,
+		ModelChangeNotification notification);
+
 }
