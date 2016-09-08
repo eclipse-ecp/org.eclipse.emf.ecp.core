@@ -26,8 +26,10 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsSegmentResolver;
 import org.eclipse.emfforms.spi.core.services.structuralchange.EMFFormsStructuralChangeTester;
-import org.eclipse.emfforms.spi.core.services.structuralchange.StructuralChangeSegmentResolver;
+import org.eclipse.emfforms.spi.core.services.structuralchange.StructuralChangeSegmentTester;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -43,35 +45,46 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 public class EMFFormsStructuralChangeTesterImpl implements EMFFormsStructuralChangeTester {
 
 	private ReportService reportService;
-	private final Set<StructuralChangeSegmentResolver> structuralChangeResolvers = new LinkedHashSet<StructuralChangeSegmentResolver>();
+	private final Set<StructuralChangeSegmentTester> structuralChangeTesters = new LinkedHashSet<StructuralChangeSegmentTester>();
+	private EMFFormsSegmentResolver segmentResolver;
 
 	/**
 	 * Sets the {@link ReportService}.
 	 *
 	 * @param reportService The {@link ReportService}
 	 */
-	@Reference
+	@Reference(unbind = "-")
 	protected void setReportService(ReportService reportService) {
 		this.reportService = reportService;
 	}
 
 	/**
-	 * Called by the framework to add a {@link StructuralChangeSegmentResolver}.
+	 * Called by the framework to add a {@link StructuralChangeSegmentTester}.
 	 *
-	 * @param structuralChangeResolver The {@link StructuralChangeSegmentResolver} to add
+	 * @param structuralChangeTester The {@link StructuralChangeSegmentTester} to add
 	 */
 	@Reference(cardinality = ReferenceCardinality.MULTIPLE, policy = ReferencePolicy.DYNAMIC)
-	protected void addStructuralChangeSegmentResolver(StructuralChangeSegmentResolver structuralChangeResolver) {
-		structuralChangeResolvers.add(structuralChangeResolver);
+	protected void addStructuralChangeSegmentTester(StructuralChangeSegmentTester structuralChangeTester) {
+		structuralChangeTesters.add(structuralChangeTester);
 	}
 
 	/**
-	 * Called by the framework to remove a {@link StructuralChangeSegmentResolver}.
+	 * Sets the {@link EMFFormsSegmentResolver}.
 	 *
-	 * @param structuralChangeResolver The {@link StructuralChangeSegmentResolver} to remove
+	 * @param segmentResolver The {@link EMFFormsSegmentResolver}
 	 */
-	protected void removeStructuralChangeSegmentResolver(StructuralChangeSegmentResolver structuralChangeResolver) {
-		structuralChangeResolvers.remove(structuralChangeResolver);
+	@Reference(unbind = "-")
+	private void setEMFFormsSegmentResolver(EMFFormsSegmentResolver segmentResolver) {
+		this.segmentResolver = segmentResolver;
+	}
+
+	/**
+	 * Called by the framework to remove a {@link StructuralChangeSegmentTester}.
+	 *
+	 * @param structuralChangeTester The {@link StructuralChangeSegmentTester} to remove
+	 */
+	protected void removeStructuralChangeSegmentTester(StructuralChangeSegmentTester structuralChangeTester) {
+		structuralChangeTesters.remove(structuralChangeTester);
 	}
 
 	/**
@@ -101,33 +114,27 @@ public class EMFFormsStructuralChangeTesterImpl implements EMFFormsStructuralCha
 
 		EObject currentDomainObject = domainRootObject;
 		for (final VDomainModelReferenceSegment segment : segments) {
-			final StructuralChangeSegmentResolver segmentResolver = getBestSegmentResolver(segment);
-			if (segmentResolver == null) {
-				reportService.report(new AbstractReport("Warning: Structural changes of the DMR: " + reference //$NON-NLS-1$
-					+ "could not be analyzed because no suitable StructuralChangeSegmentResolver was available.")); //$NON-NLS-1$
+			final StructuralChangeSegmentTester segmentTester = getBestSegmentTester(segment);
+			if (segmentTester == null) {
+				reportService.report(new AbstractReport(String.format(
+					"Warning: Structural changes of the DMR: %1$s could not be analyzed because no suitable StructuralChangeSegmentTester was available for segment %2$s.", //$NON-NLS-1$
+					reference, segment)));
 				return false;
 			}
 
-			/*
-			 * Check whether the notifying EObject and the EReference match the notification.
-			 * If the EStructuralFeature of the resolved Setting is an EAttribute, we cannot resolve further and its
-			 * change is irrelevant.
-			 */
-			final Setting setting = segmentResolver.resolveSegment(segment, currentDomainObject);
-			if (setting == null) {
+			final Setting setting;
+			try {
+				setting = segmentResolver.resolveSegment(segment, currentDomainObject);
+			} catch (final DatabindingFailedException ex) {
+				reportService.report(new AbstractReport(ex,
+					"Could not finish structural change calculation.")); //$NON-NLS-1$
 				break;
 			}
 
-			if (EReference.class.isInstance(setting.getEStructuralFeature())) {
-				final EReference eReference = (EReference) setting.getEStructuralFeature();
-				relevantChange |= eReference.equals(notification.getStructuralFeature())
-					&& notification.getNotifier() == setting.getEObject();
-			} else {
-				break;
-			}
+			relevantChange |= segmentTester.isStructureChanged(segment, currentDomainObject, notification);
 
-			if (relevantChange) {
-				return true;
+			if (relevantChange || !EReference.class.isInstance(setting.getEStructuralFeature())) {
+				return relevantChange;
 			}
 
 			// The value of the Setting is an EObject because its EStructuralFeature is an EReference.
@@ -139,19 +146,20 @@ public class EMFFormsStructuralChangeTesterImpl implements EMFFormsStructuralCha
 	}
 
 	/**
-	 * @param segment
-	 * @return The most suitable {@link StructuralChangeSegmentResolver} for the given
+	 * @param segment The {@link VDomainModelReferenceSegment segment} for which a {@link StructuralChangeSegmentTester
+	 *            tester} is needed
+	 * @return The most suitable {@link StructuralChangeSegmentTester} for the given
 	 *         {@link VDomainModelReferenceSegment segment}, <code>null</code> if there is none
 	 */
-	private StructuralChangeSegmentResolver getBestSegmentResolver(VDomainModelReferenceSegment segment) {
-		double bestPriority = StructuralChangeSegmentResolver.NOT_APPLICABLE;
-		StructuralChangeSegmentResolver bestTester = null;
+	private StructuralChangeSegmentTester getBestSegmentTester(VDomainModelReferenceSegment segment) {
+		double bestPriority = StructuralChangeSegmentTester.NOT_APPLICABLE;
+		StructuralChangeSegmentTester bestTester = null;
 
-		for (final StructuralChangeSegmentResolver resolver : structuralChangeResolvers) {
-			final double priority = resolver.isApplicable(segment);
+		for (final StructuralChangeSegmentTester tester : structuralChangeTesters) {
+			final double priority = tester.isApplicable(segment);
 			if (priority > bestPriority) {
 				bestPriority = priority;
-				bestTester = resolver;
+				bestTester = tester;
 			}
 		}
 		return bestTester;

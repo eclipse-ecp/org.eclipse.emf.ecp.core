@@ -16,7 +16,6 @@ import org.eclipse.emf.databinding.IEMFValueProperty;
 import org.eclipse.emf.databinding.internal.EMFValuePropertyDecorator;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.common.spi.asserts.Assert;
@@ -113,6 +112,8 @@ public class IndexDomainModelReferenceSegmentConverter implements DomainModelRef
 				String.format("The eType of the feature %1$s is null.", structuralFeature.getName())); //$NON-NLS-1$
 		}
 
+		checkListType(structuralFeature);
+
 		return new IndexedSetting(eObject, structuralFeature, indexSegment.getIndex());
 	}
 
@@ -142,11 +143,7 @@ public class IndexDomainModelReferenceSegmentConverter implements DomainModelRef
 	private void checkListType(EStructuralFeature structuralFeature) throws IllegalListTypeException {
 		if (!structuralFeature.isMany()) {
 			throw new IllegalListTypeException(
-				"The VIndexDomainModelReference's domainModelEFeature must reference a list."); //$NON-NLS-1$
-		}
-		if (!EReference.class.isInstance(structuralFeature)) {
-			throw new IllegalListTypeException(
-				"The VIndexDomainModelReference's domainModelEFeature must reference a list of EObjects."); //$NON-NLS-1$
+				"The VIndexDomainModelReferenceSegment's domainModelFeature must reference a list."); //$NON-NLS-1$
 		}
 	}
 }
