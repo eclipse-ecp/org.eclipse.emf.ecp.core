@@ -217,6 +217,16 @@ public interface TestPackage extends EPackage {
 	int B__ELIST = 2;
 
 	/**
+	 * The feature id for the '<em><b>E</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int B__E = 3;
+
+	/**
 	 * The number of structural features of the '<em>B</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -224,7 +234,7 @@ public interface TestPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int B_FEATURE_COUNT = 3;
+	int B_FEATURE_COUNT = 4;
 
 	/**
 	 * The feature id for the '<em><b>D</b></em>' containment reference.
@@ -441,6 +451,19 @@ public interface TestPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getB_EList();
+
+	/**
+	 * Returns the meta object for the reference
+	 * '{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B#getE <em>E</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the reference '<em>E</em>'.
+	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B#getE()
+	 * @see #getB()
+	 * @generated
+	 */
+	EReference getB_E();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C
@@ -715,6 +738,15 @@ public interface TestPackage extends EPackage {
 		 * @generated
 		 */
 		EReference B__ELIST = eINSTANCE.getB_EList();
+
+		/**
+		 * The meta object literal for the '<em><b>E</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EReference B__E = eINSTANCE.getB_E();
 
 		/**
 		 * The meta object literal for the
