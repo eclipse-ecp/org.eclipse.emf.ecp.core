@@ -31,8 +31,8 @@ import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestP
  * </p>
  * <ul>
  * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.DImpl#getX <em>X</em>}</li>
- * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.DImpl#getYList <em>YList</em>}
- * </li>
+ * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.DImpl#getYList
+ * <em>YList</em>}</li>
  * </ul>
  *
  * @generated

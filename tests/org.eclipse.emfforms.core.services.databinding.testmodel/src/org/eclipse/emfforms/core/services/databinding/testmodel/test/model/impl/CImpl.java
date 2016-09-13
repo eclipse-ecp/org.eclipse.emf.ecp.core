@@ -37,8 +37,8 @@ import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestP
  * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.CImpl#getD <em>D</em>}</li>
  * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.CImpl#getEClassToString
  * <em>EClass To String</em>}</li>
- * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.CImpl#getEClassToA
- * <em>EClass To A</em>}</li>
+ * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.CImpl#getEClassToA <em>EClass To
+ * A</em>}</li>
  * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.CImpl#getA <em>A</em>}</li>
  * </ul>
  *
@@ -49,7 +49,7 @@ public class CImpl extends MinimalEObjectImpl.Container implements C {
 	 * The cached value of the '{@link #getD() <em>D</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getD()
 	 * @generated
 	 * @ordered
@@ -60,7 +60,7 @@ public class CImpl extends MinimalEObjectImpl.Container implements C {
 	 * The cached value of the '{@link #getEClassToString() <em>EClass To String</em>}' map.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getEClassToString()
 	 * @generated
 	 * @ordered
@@ -71,7 +71,7 @@ public class CImpl extends MinimalEObjectImpl.Container implements C {
 	 * The cached value of the '{@link #getEClassToA() <em>EClass To A</em>}' map.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getEClassToA()
 	 * @generated
 	 * @ordered
@@ -82,7 +82,7 @@ public class CImpl extends MinimalEObjectImpl.Container implements C {
 	 * The cached value of the '{@link #getA() <em>A</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getA()
 	 * @generated
 	 * @ordered
@@ -92,7 +92,7 @@ public class CImpl extends MinimalEObjectImpl.Container implements C {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected CImpl() {
@@ -102,7 +102,7 @@ public class CImpl extends MinimalEObjectImpl.Container implements C {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -113,7 +113,7 @@ public class CImpl extends MinimalEObjectImpl.Container implements C {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -124,20 +124,19 @@ public class CImpl extends MinimalEObjectImpl.Container implements C {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public NotificationChain basicSetD(D newD, NotificationChain msgs) {
-		final D oldD = d;
+		D oldD = d;
 		d = newD;
 		if (eNotificationRequired()) {
-			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TestPackage.C__D, oldD,
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, TestPackage.C__D, oldD,
 				newD);
-			if (msgs == null) {
+			if (msgs == null)
 				msgs = notification;
-			} else {
+			else
 				msgs.add(notification);
-			}
 		}
 		return msgs;
 	}
@@ -145,34 +144,30 @@ public class CImpl extends MinimalEObjectImpl.Container implements C {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void setD(D newD) {
 		if (newD != d) {
 			NotificationChain msgs = null;
-			if (d != null) {
+			if (d != null)
 				msgs = ((InternalEObject) d).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - TestPackage.C__D, null,
 					msgs);
-			}
-			if (newD != null) {
+			if (newD != null)
 				msgs = ((InternalEObject) newD).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - TestPackage.C__D, null,
 					msgs);
-			}
 			msgs = basicSetD(newD, msgs);
-			if (msgs != null) {
+			if (msgs != null)
 				msgs.dispatch();
-			}
-		} else if (eNotificationRequired()) {
+		} else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.C__D, newD, newD));
-		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -187,7 +182,7 @@ public class CImpl extends MinimalEObjectImpl.Container implements C {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -202,18 +197,17 @@ public class CImpl extends MinimalEObjectImpl.Container implements C {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public A getA() {
 		if (a != null && a.eIsProxy()) {
-			final InternalEObject oldA = (InternalEObject) a;
+			InternalEObject oldA = (InternalEObject) a;
 			a = (A) eResolveProxy(oldA);
 			if (a != oldA) {
-				if (eNotificationRequired()) {
+				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, TestPackage.C__A, oldA, a));
-				}
 			}
 		}
 		return a;
@@ -222,7 +216,7 @@ public class CImpl extends MinimalEObjectImpl.Container implements C {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public A basicGetA() {
@@ -232,22 +226,21 @@ public class CImpl extends MinimalEObjectImpl.Container implements C {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void setA(A newA) {
-		final A oldA = a;
+		A oldA = a;
 		a = newA;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.C__A, oldA, a));
-		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -266,7 +259,7 @@ public class CImpl extends MinimalEObjectImpl.Container implements C {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -275,19 +268,18 @@ public class CImpl extends MinimalEObjectImpl.Container implements C {
 		case TestPackage.C__D:
 			return getD();
 		case TestPackage.C__ECLASS_TO_STRING:
-			if (coreType) {
+			if (coreType)
 				return getEClassToString();
-			}
-			return getEClassToString().map();
+			else
+				return getEClassToString().map();
 		case TestPackage.C__ECLASS_TO_A:
-			if (coreType) {
+			if (coreType)
 				return getEClassToA();
-			}
-			return getEClassToA().map();
+			else
+				return getEClassToA().map();
 		case TestPackage.C__A:
-			if (resolve) {
+			if (resolve)
 				return getA();
-			}
 			return basicGetA();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -296,7 +288,7 @@ public class CImpl extends MinimalEObjectImpl.Container implements C {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -321,7 +313,7 @@ public class CImpl extends MinimalEObjectImpl.Container implements C {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -346,7 +338,7 @@ public class CImpl extends MinimalEObjectImpl.Container implements C {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override

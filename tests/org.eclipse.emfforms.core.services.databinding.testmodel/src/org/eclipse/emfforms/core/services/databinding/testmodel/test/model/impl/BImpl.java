@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C;
+import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.E;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage;
 
 /**
@@ -34,8 +35,10 @@ import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestP
  * </p>
  * <ul>
  * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.BImpl#getC <em>C</em>}</li>
- * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.BImpl#getCList <em>CList</em>}
- * </li>
+ * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.BImpl#getCList
+ * <em>CList</em>}</li>
+ * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.BImpl#getEList
+ * <em>EList</em>}</li>
  * </ul>
  *
  * @generated
@@ -62,6 +65,17 @@ public class BImpl extends MinimalEObjectImpl.Container implements B {
 	 * @ordered
 	 */
 	protected EList<C> cList;
+
+	/**
+	 * The cached value of the '{@link #getEList() <em>EList</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see #getEList()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<E> eList;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -158,6 +172,19 @@ public class BImpl extends MinimalEObjectImpl.Container implements B {
 	 * 
 	 * @generated
 	 */
+	public EList<E> getEList() {
+		if (eList == null) {
+			eList = new EObjectResolvingEList<E>(E.class, this, TestPackage.B__ELIST);
+		}
+		return eList;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -180,6 +207,8 @@ public class BImpl extends MinimalEObjectImpl.Container implements B {
 			return getC();
 		case TestPackage.B__CLIST:
 			return getCList();
+		case TestPackage.B__ELIST:
+			return getEList();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -201,6 +230,10 @@ public class BImpl extends MinimalEObjectImpl.Container implements B {
 			getCList().clear();
 			getCList().addAll((Collection<? extends C>) newValue);
 			return;
+		case TestPackage.B__ELIST:
+			getEList().clear();
+			getEList().addAll((Collection<? extends E>) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -220,6 +253,9 @@ public class BImpl extends MinimalEObjectImpl.Container implements B {
 		case TestPackage.B__CLIST:
 			getCList().clear();
 			return;
+		case TestPackage.B__ELIST:
+			getEList().clear();
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -237,6 +273,8 @@ public class BImpl extends MinimalEObjectImpl.Container implements B {
 			return c != null;
 		case TestPackage.B__CLIST:
 			return cList != null && !cList.isEmpty();
+		case TestPackage.B__ELIST:
+			return eList != null && !eList.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

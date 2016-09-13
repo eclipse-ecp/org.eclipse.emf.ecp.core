@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="test" nsURI="test" nsPrefix="test">
-  <eClassifiers xsi:type="ecore:EClass" name="A">
+  <eClassifiers xsi:type="ecore:EClass" name="A" eSuperTypes="#//E">
     <eStructuralFeatures xsi:type="ecore:EReference" name="b" eType="#//B" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="B">
     <eStructuralFeatures xsi:type="ecore:EReference" name="c" eType="#//C" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="cList" upperBound="-1"
         eType="#//C"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="eList" upperBound="-1"
+        eType="#//E"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="C">
     <eStructuralFeatures xsi:type="ecore:EReference" name="d" eType="#//D" containment="true"/>
@@ -30,4 +32,5 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="key" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//A"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="E" abstract="true"/>
 </ecore:EPackage>
