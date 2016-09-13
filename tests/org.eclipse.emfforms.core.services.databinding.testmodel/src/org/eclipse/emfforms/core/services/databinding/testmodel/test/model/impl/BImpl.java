@@ -39,6 +39,7 @@ import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestP
  * <em>CList</em>}</li>
  * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.BImpl#getEList
  * <em>EList</em>}</li>
+ * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.BImpl#getE <em>E</em>}</li>
  * </ul>
  *
  * @generated
@@ -76,6 +77,17 @@ public class BImpl extends MinimalEObjectImpl.Container implements B {
 	 * @ordered
 	 */
 	protected EList<E> eList;
+
+	/**
+	 * The cached value of the '{@link #getE() <em>E</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see #getE()
+	 * @generated
+	 * @ordered
+	 */
+	protected E e;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -185,6 +197,47 @@ public class BImpl extends MinimalEObjectImpl.Container implements B {
 	 * 
 	 * @generated
 	 */
+	public E getE() {
+		if (e != null && e.eIsProxy()) {
+			InternalEObject oldE = (InternalEObject) e;
+			e = (E) eResolveProxy(oldE);
+			if (e != oldE) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, TestPackage.B__E, oldE, e));
+			}
+		}
+		return e;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public E basicGetE() {
+		return e;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public void setE(E newE) {
+		E oldE = e;
+		e = newE;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.B__E, oldE, e));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -209,6 +262,10 @@ public class BImpl extends MinimalEObjectImpl.Container implements B {
 			return getCList();
 		case TestPackage.B__ELIST:
 			return getEList();
+		case TestPackage.B__E:
+			if (resolve)
+				return getE();
+			return basicGetE();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -234,6 +291,9 @@ public class BImpl extends MinimalEObjectImpl.Container implements B {
 			getEList().clear();
 			getEList().addAll((Collection<? extends E>) newValue);
 			return;
+		case TestPackage.B__E:
+			setE((E) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -256,6 +316,9 @@ public class BImpl extends MinimalEObjectImpl.Container implements B {
 		case TestPackage.B__ELIST:
 			getEList().clear();
 			return;
+		case TestPackage.B__E:
+			setE((E) null);
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -275,6 +338,8 @@ public class BImpl extends MinimalEObjectImpl.Container implements B {
 			return cList != null && !cList.isEmpty();
 		case TestPackage.B__ELIST:
 			return eList != null && !eList.isEmpty();
+		case TestPackage.B__E:
+			return e != null;
 		}
 		return super.eIsSet(featureID);
 	}
