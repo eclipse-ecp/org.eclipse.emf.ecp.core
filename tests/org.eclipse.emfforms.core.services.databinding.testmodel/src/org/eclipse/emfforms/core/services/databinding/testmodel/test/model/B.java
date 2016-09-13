@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B#getC <em>C</em>}</li>
  * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B#getCList <em>CList</em>}</li>
+ * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B#getEList <em>EList</em>}</li>
  * </ul>
  *
  * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage#getB()
@@ -77,5 +78,22 @@ public interface B extends EObject {
 	 * @generated
 	 */
 	EList<C> getCList();
+
+	/**
+	 * Returns the value of the '<em><b>EList</b></em>' reference list.
+	 * The list contents are of type {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.E}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>EList</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the value of the '<em>EList</em>' reference list.
+	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage#getB_EList()
+	 * @model
+	 * @generated
+	 */
+	EList<E> getEList();
 
 } // B
