@@ -11,7 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emfforms.core.services.domainexpander.defaultheuristic.tests;
 
-import org.eclipse.emfforms.internal.core.services.domainexpander.defaultheuristic.EMFFormsDMRExpanderDefaultHeuristic_Test;
+import org.eclipse.emfforms.internal.core.services.domainexpander.defaultheuristic.EMFFormsDMRSegmentExpanderFeature_Test;
 import org.eclipse.emfforms.internal.core.services.domainexpander.defaultheuristic.EMFFormsDomainExpanderImpl_Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -24,7 +24,7 @@ import org.junit.runners.Suite.SuiteClasses;
  *
  */
 @RunWith(Suite.class)
-@SuiteClasses({ EMFFormsDMRExpanderDefaultHeuristic_Test.class, EMFFormsDomainExpanderImpl_Test.class })
+@SuiteClasses({ EMFFormsDMRSegmentExpanderFeature_Test.class, EMFFormsDomainExpanderImpl_Test.class })
 public class AllTests {
 
 }

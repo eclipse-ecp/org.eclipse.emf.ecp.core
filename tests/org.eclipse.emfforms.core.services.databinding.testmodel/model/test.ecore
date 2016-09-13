@@ -10,6 +10,7 @@
         eType="#//C"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="eList" upperBound="-1"
         eType="#//E"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="e" eType="#//E"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="C">
     <eStructuralFeatures xsi:type="ecore:EReference" name="d" eType="#//D" containment="true"/>

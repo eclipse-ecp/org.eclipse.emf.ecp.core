@@ -220,6 +220,16 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	public EReference getB_E() {
+		return (EReference) bEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
 	@Override
 	public EClass getC() {
 		return cEClass;
@@ -418,6 +428,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		createEReference(bEClass, B__C);
 		createEReference(bEClass, B__CLIST);
 		createEReference(bEClass, B__ELIST);
+		createEReference(bEClass, B__E);
 
 		cEClass = createEClass(C);
 		createEReference(cEClass, C__D);
@@ -489,6 +500,9 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 			org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B.class, !IS_TRANSIENT, !IS_VOLATILE,
 			IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getB_EList(), this.getE(), null, "eList", null, 0, -1, //$NON-NLS-1$
+			org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B.class, !IS_TRANSIENT, !IS_VOLATILE,
+			IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getB_E(), this.getE(), null, "e", null, 0, 1, //$NON-NLS-1$
 			org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B.class, !IS_TRANSIENT, !IS_VOLATILE,
 			IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

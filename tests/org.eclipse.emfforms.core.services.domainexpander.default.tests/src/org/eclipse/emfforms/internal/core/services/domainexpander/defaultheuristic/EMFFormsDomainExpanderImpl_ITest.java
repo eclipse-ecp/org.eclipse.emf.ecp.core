@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -7,21 +7,22 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- * Lucas - initial API and implementation
+ * Lucas Koehler - initial API and implementation
+ * Lucas Koehler - adaption to segments
  ******************************************************************************/
 package org.eclipse.emfforms.internal.core.services.domainexpander.defaultheuristic;
 
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
-import org.eclipse.emfforms.spi.core.services.domainexpander.EMFFormsDMRExpander;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
+import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.emfforms.spi.core.services.domainexpander.EMFFormsDMRSegmentExpander;
 import org.eclipse.emfforms.spi.core.services.domainexpander.EMFFormsDomainExpander;
 import org.eclipse.emfforms.spi.core.services.domainexpander.EMFFormsExpandingFailedException;
 import org.junit.After;
@@ -68,15 +69,22 @@ public class EMFFormsDomainExpanderImpl_ITest {
 
 	@Test
 	public void testDMRExpanderUsage() throws EMFFormsExpandingFailedException {
-		final EMFFormsDMRExpander dmrExpander = mock(EMFFormsDMRExpander.class);
-		final VFeaturePathDomainModelReference dmr = mock(VFeaturePathDomainModelReference.class);
-		when(dmrExpander.isApplicable(dmr)).thenReturn(Double.MAX_VALUE);
-		bundleContext.registerService(EMFFormsDMRExpander.class, dmrExpander, null);
+		final VDomainModelReference dmr = VViewFactory.eINSTANCE.createDomainModelReference();
+		final VDomainModelReferenceSegment segment1 = VViewFactory.eINSTANCE.createFeatureDomainModelReferenceSegment();
+		final VDomainModelReferenceSegment segment2 = VViewFactory.eINSTANCE.createFeatureDomainModelReferenceSegment();
+		dmr.getSegments().add(segment1);
+		dmr.getSegments().add(segment2);
+		final EObject domainObject = mock(EObject.class);
 
-		service.prepareDomainObject(dmr, mock(EObject.class));
+		final EMFFormsDMRSegmentExpander segmentExpander = mock(EMFFormsDMRSegmentExpander.class);
+		when(segmentExpander.isApplicable(segment1)).thenReturn(Double.MAX_VALUE);
 
-		verify(dmrExpander, atLeastOnce()).isApplicable(dmr);
-		verify(dmrExpander).prepareDomainObject(eq(dmr), any(EObject.class));
+		bundleContext.registerService(EMFFormsDMRSegmentExpander.class, segmentExpander, null);
+
+		service.prepareDomainObject(dmr, domainObject);
+
+		verify(segmentExpander, atLeastOnce()).isApplicable(segment1);
+		verify(segmentExpander).prepareDomainObject(segment1, domainObject);
 
 	}
 }

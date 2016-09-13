@@ -13,7 +13,7 @@ package org.eclipse.emfforms.internal.core.services.domainexpander.defaultheuris
 
 import static org.junit.Assert.assertTrue;
 
-import org.eclipse.emfforms.spi.core.services.domainexpander.EMFFormsDMRExpander;
+import org.eclipse.emfforms.spi.core.services.domainexpander.EMFFormsDMRSegmentExpander;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -23,26 +23,26 @@ import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 
 /**
- * JUnit integration tests for the {@link EMFFormsDMRExpanderDefaultHeuristic}.
+ * JUnit integration tests for the {@link EMFFormsDMRSegmentExpanderFeature}.
  *
  * @author Lucas Koehler
  *
  */
-public class EMFFormsDMRExpanderDefaultHeuristic_ITest {
+public class EMFFormsDMRSegmentExpanderFeature_ITest {
 
 	private static BundleContext bundleContext;
-	private ServiceReference<EMFFormsDMRExpander> serviceReference;
-	private EMFFormsDMRExpander service;
+	private ServiceReference<EMFFormsDMRSegmentExpander> serviceReference;
+	private EMFFormsDMRSegmentExpander service;
 
 	@BeforeClass
 	public static void setUpBeforeClass() {
-		bundleContext = FrameworkUtil.getBundle(EMFFormsDMRExpanderDefaultHeuristic_ITest.class).getBundleContext();
+		bundleContext = FrameworkUtil.getBundle(EMFFormsDMRSegmentExpanderFeature_ITest.class).getBundleContext();
 
 	}
 
 	@Before
 	public void setUp() {
-		serviceReference = bundleContext.getServiceReference(EMFFormsDMRExpander.class);
+		serviceReference = bundleContext.getServiceReference(EMFFormsDMRSegmentExpander.class);
 		service = bundleContext.getService(serviceReference);
 	}
 
@@ -52,8 +52,8 @@ public class EMFFormsDMRExpanderDefaultHeuristic_ITest {
 	}
 
 	@Test
-	public void testServiceType() {
-		assertTrue(EMFFormsDMRExpanderDefaultHeuristic.class.isInstance(service));
+	public void testServiceTypeAndRegistration() {
+		assertTrue(EMFFormsDMRSegmentExpanderFeature.class.isInstance(service));
 	}
 
 }
