@@ -18,6 +18,7 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.*;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C;
@@ -116,6 +117,11 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 		}
 
 		@Override
+		public Adapter caseE(E object) {
+			return createEAdapter();
+		}
+
+		@Override
 		public Adapter defaultCase(EObject object) {
 			return createEObjectAdapter();
 		}
@@ -136,8 +142,8 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A <em>A</em>}'.
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A <em>A</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
@@ -152,8 +158,8 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B <em>B</em>}'.
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B <em>B</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
@@ -168,8 +174,8 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C <em>C</em>}'.
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C <em>C</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
@@ -184,8 +190,8 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D <em>D</em>}'.
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D <em>D</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
@@ -226,6 +232,22 @@ public class TestAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createEClassToAMapAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.E <em>E</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the new adapter.
+	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.E
+	 * @generated
+	 */
+	public Adapter createEAdapter() {
 		return null;
 	}
 

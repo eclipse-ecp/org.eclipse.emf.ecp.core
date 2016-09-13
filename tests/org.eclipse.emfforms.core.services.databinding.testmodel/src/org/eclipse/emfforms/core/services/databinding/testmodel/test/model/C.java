@@ -25,10 +25,10 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C#getD <em>D</em>}</li>
- * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C#getEClassToString
- * <em>EClass To String</em>}</li>
- * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C#getEClassToA <em>EClass To A</em>}
- * </li>
+ * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C#getEClassToString <em>EClass To
+ * String</em>}</li>
+ * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C#getEClassToA <em>EClass To
+ * A</em>}</li>
  * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C#getA <em>A</em>}</li>
  * </ul>
  *
@@ -79,8 +79,8 @@ public interface C extends EObject {
 	 * 
 	 * @return the value of the '<em>EClass To String</em>' map.
 	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage#getC_EClassToString()
-	 * @model mapType=
-	 *        "org.eclipse.emfforms.core.services.databinding.testmodel.test.model.EClassToEStringMap<org.eclipse.emf.ecore.EClass, org.eclipse.emf.ecore.EString>"
+	 * @model mapType="org.eclipse.emfforms.core.services.databinding.testmodel.test.model.EClassToEStringMap<org.eclipse.emf.ecore.EClass,
+	 *        org.eclipse.emf.ecore.EString>"
 	 * @generated
 	 */
 	EMap<EClass, String> getEClassToString();
@@ -98,8 +98,8 @@ public interface C extends EObject {
 	 * 
 	 * @return the value of the '<em>EClass To A</em>' map.
 	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage#getC_EClassToA()
-	 * @model mapType=
-	 *        "org.eclipse.emfforms.core.services.databinding.testmodel.test.model.EClassToAMap<org.eclipse.emf.ecore.EClass, org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A>"
+	 * @model mapType="org.eclipse.emfforms.core.services.databinding.testmodel.test.model.EClassToAMap<org.eclipse.emf.ecore.EClass,
+	 *        org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A>"
 	 * @generated
 	 */
 	EMap<EClass, A> getEClassToA();

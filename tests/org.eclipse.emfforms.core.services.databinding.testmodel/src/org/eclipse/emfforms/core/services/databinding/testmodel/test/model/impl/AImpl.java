@@ -16,7 +16,6 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage;
@@ -34,7 +33,7 @@ import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestP
  *
  * @generated
  */
-public class AImpl extends MinimalEObjectImpl.Container implements A {
+public class AImpl extends EImpl implements A {
 	/**
 	 * The cached value of the '{@link #getB() <em>B</em>}' containment reference.
 	 * <!-- begin-user-doc -->

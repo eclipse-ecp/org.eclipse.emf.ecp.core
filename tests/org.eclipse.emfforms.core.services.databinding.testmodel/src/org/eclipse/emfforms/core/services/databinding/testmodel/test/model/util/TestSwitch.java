@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
+import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.*;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C;
@@ -90,6 +91,8 @@ public class TestSwitch<T> extends Switch<T> {
 			A a = (A) theEObject;
 			T result = caseA(a);
 			if (result == null)
+				result = caseE(a);
+			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
 		}
@@ -126,6 +129,13 @@ public class TestSwitch<T> extends Switch<T> {
 			@SuppressWarnings("unchecked")
 			Map.Entry<EClass, A> eClassToAMap = (Map.Entry<EClass, A>) theEObject;
 			T result = caseEClassToAMap(eClassToAMap);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case TestPackage.E: {
+			E e = (E) theEObject;
+			T result = caseE(e);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -228,6 +238,22 @@ public class TestSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseEClassToAMap(Map.Entry<EClass, A> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>E</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>E</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseE(E object) {
 		return null;
 	}
 

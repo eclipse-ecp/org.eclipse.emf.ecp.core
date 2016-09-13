@@ -29,11 +29,9 @@ import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestP
  * The following features are implemented:
  * </p>
  * <ul>
- * <li>
- * {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.EClassToEStringMapImpl#getTypedKey
+ * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.EClassToEStringMapImpl#getTypedKey
  * <em>Key</em>}</li>
- * <li>
- * {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.EClassToEStringMapImpl#getTypedValue
+ * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.EClassToEStringMapImpl#getTypedValue
  * <em>Value</em>}</li>
  * </ul>
  *

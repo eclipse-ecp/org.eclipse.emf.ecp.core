@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,7 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emfforms.core.services.domainexpander.index.tests;
 
-import org.eclipse.emfforms.internal.core.services.domainexpander.index.EMFFormsIndexDMRExpander_ITest;
+import org.eclipse.emfforms.internal.core.services.domainexpander.index.EMFFormsDMRSegmentExpanderIndex_ITest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
@@ -23,7 +23,7 @@ import org.junit.runners.Suite.SuiteClasses;
  *
  */
 @RunWith(Suite.class)
-@SuiteClasses({ EMFFormsIndexDMRExpander_ITest.class })
+@SuiteClasses({ EMFFormsDMRSegmentExpanderIndex_ITest.class })
 public class AllIntegrationTests {
 
 }
