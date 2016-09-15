@@ -22,13 +22,13 @@ import org.eclipse.emf.ecore.EFactory;
  */
 public interface VMappingdmrFactory extends EFactory {
 	/**
-	 * The singleton instance of the factory. <!-- begin-user-doc --> <!--
+	 * The singleton instance of the factory.
+	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
 	 *
 	 * @generated
 	 */
-	VMappingdmrFactory eINSTANCE = org.eclipse.emf.ecp.view.spi.mappingdmr.model.impl.VMappingdmrFactoryImpl
-		.init();
+	VMappingdmrFactory eINSTANCE = org.eclipse.emf.ecp.view.spi.mappingdmr.model.impl.VMappingdmrFactoryImpl.init();
 
 	/**
 	 * Returns a new object of class '<em>Mapping Domain Model Reference</em>'.
@@ -40,7 +40,18 @@ public interface VMappingdmrFactory extends EFactory {
 	VMappingDomainModelReference createMappingDomainModelReference();
 
 	/**
-	 * Returns the package supported by this factory. <!-- begin-user-doc -->
+	 * Returns a new object of class '<em>Mapping Domain Model Reference Segment</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return a new object of class '<em>Mapping Domain Model Reference Segment</em>'.
+	 * @generated
+	 */
+	VMappingDomainModelReferenceSegment createMappingDomainModelReferenceSegment();
+
+	/**
+	 * Returns the package supported by this factory.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
 	 * @return the package supported by this factory.

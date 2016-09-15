@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingdmrPackage;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
@@ -39,8 +40,7 @@ import org.eclipse.emf.ecp.view.spi.model.util.ViewValidator;
  * @see org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingdmrPackage
  * @generated
  */
-public class MappingdmrValidator extends EObjectValidator
-{
+public class MappingdmrValidator extends EObjectValidator {
 	/**
 	 * The cached model package
 	 * <!-- begin-user-doc -->
@@ -97,8 +97,7 @@ public class MappingdmrValidator extends EObjectValidator
 	 *
 	 * @generated
 	 */
-	public MappingdmrValidator()
-	{
+	public MappingdmrValidator() {
 		super();
 		viewValidator = ViewValidator.INSTANCE;
 	}
@@ -111,8 +110,7 @@ public class MappingdmrValidator extends EObjectValidator
 	 * @generated
 	 */
 	@Override
-	protected EPackage getEPackage()
-	{
+	protected EPackage getEPackage() {
 		return VMappingdmrPackage.eINSTANCE;
 	}
 
@@ -124,12 +122,14 @@ public class MappingdmrValidator extends EObjectValidator
 	 * @generated
 	 */
 	@Override
-	protected boolean validate(int classifierID, Object value, DiagnosticChain diagnostics, Map<Object, Object> context)
-	{
-		switch (classifierID)
-		{
+	protected boolean validate(int classifierID, Object value, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
+		switch (classifierID) {
 		case VMappingdmrPackage.MAPPING_DOMAIN_MODEL_REFERENCE:
 			return validateMappingDomainModelReference((VMappingDomainModelReference) value, diagnostics, context);
+		case VMappingdmrPackage.MAPPING_DOMAIN_MODEL_REFERENCE_SEGMENT:
+			return validateMappingDomainModelReferenceSegment((VMappingDomainModelReferenceSegment) value, diagnostics,
+				context);
 		default:
 			return true;
 		}
@@ -142,8 +142,7 @@ public class MappingdmrValidator extends EObjectValidator
 	 * @generated
 	 */
 	public boolean validateMappingDomainModelReference(VMappingDomainModelReference mappingDomainModelReference,
-		DiagnosticChain diagnostics, Map<Object, Object> context)
-	{
+		DiagnosticChain diagnostics, Map<Object, Object> context) {
 		if (!validate_NoCircularContainment(mappingDomainModelReference, diagnostics, context)) {
 			return false;
 		}
@@ -170,7 +169,8 @@ public class MappingdmrValidator extends EObjectValidator
 			result &= validate_EveryMapEntryUnique(mappingDomainModelReference, diagnostics, context);
 		}
 		if (result || diagnostics != null) {
-			result &= validateMappingDomainModelReference_resolveable(mappingDomainModelReference, diagnostics, context);
+			result &= validateMappingDomainModelReference_resolveable(mappingDomainModelReference, diagnostics,
+				context);
 		}
 		return result;
 	}
@@ -241,6 +241,18 @@ public class MappingdmrValidator extends EObjectValidator
 		return true;
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public boolean validateMappingDomainModelReferenceSegment(
+		VMappingDomainModelReferenceSegment mappingDomainModelReferenceSegment, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(mappingDomainModelReferenceSegment, diagnostics, context);
+	}
+
 	// END COMPLEX CODE
 
 	private Diagnostic createDiagnostic(int severity, int code, String message, EObject object,
@@ -261,8 +273,7 @@ public class MappingdmrValidator extends EObjectValidator
 	 * @generated
 	 */
 	@Override
-	public ResourceLocator getResourceLocator()
-	{
+	public ResourceLocator getResourceLocator() {
 		// TODO
 		// Specialize this to return a resource locator for messages specific to this validator.
 		// Ensure that you remove @generated or mark it @generated NOT
