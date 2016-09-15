@@ -35,7 +35,7 @@ public class IndexedSetting implements Setting {
 
 	/**
 	 * Creates a new {@link IndexedSetting}.
-	 * 
+	 *
 	 * @param eObject The {@link EObject} holding a list
 	 * @param eStructuralFeature The specific feature holding the list
 	 * @param index The index that defines which list item is the value of this {@link Setting}
@@ -115,8 +115,7 @@ public class IndexedSetting implements Setting {
 	 */
 	@Override
 	public void unset() {
-		list.set(index, null);
-
+		throw new UnsupportedOperationException("It is not possible to unset a value in an IndexedSetting."); //$NON-NLS-1$
 	}
 
 	/**
