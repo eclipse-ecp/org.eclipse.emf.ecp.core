@@ -93,7 +93,7 @@ public class ModelChangeNotification {
 	 * Returns the collection of old EObjects.
 	 *
 	 * @return The collection of removed EObjects, the collection might be empty but never null.
-	 * @since 1.10
+	 * @since 2.0
 	 */
 	@SuppressWarnings("unchecked")
 	public Collection<EObject> getOldEObjects() {

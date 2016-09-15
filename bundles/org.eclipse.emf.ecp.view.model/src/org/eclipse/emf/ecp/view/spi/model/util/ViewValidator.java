@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  */
@@ -16,28 +16,45 @@ import java.util.Map;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.ResourceLocator;
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.util.EObjectValidator;
-
-import org.eclipse.emf.ecp.view.spi.model.*;
+import org.eclipse.emf.ecp.view.spi.model.DateTimeDisplayType;
+import org.eclipse.emf.ecp.view.spi.model.DomainModelReferenceChangeListener;
+import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
+import org.eclipse.emf.ecp.view.spi.model.VAttachment;
+import org.eclipse.emf.ecp.view.spi.model.VContainedContainer;
+import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
+import org.eclipse.emf.ecp.view.spi.model.VContainer;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment;
+import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment;
+import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VViewModelLoadingProperties;
+import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
+import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 
 /**
  * <!-- begin-user-doc -->
  * The <b>Validator</b> for the model.
  * <!-- end-user-doc -->
- * 
+ *
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage
  * @generated
  */
 public class ViewValidator extends EObjectValidator {
+	public static final String ECLASS_KEY = "dmr_resolvement_eclass"; //$NON-NLS-1$
+
 	/**
 	 * The cached model package
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public static final ViewValidator INSTANCE = new ViewValidator();
@@ -47,7 +64,7 @@ public class ViewValidator extends EObjectValidator {
 	 * {@link org.eclipse.emf.common.util.Diagnostic#getCode() codes} from this package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see org.eclipse.emf.common.util.Diagnostic#getSource()
 	 * @see org.eclipse.emf.common.util.Diagnostic#getCode()
 	 * @generated
@@ -58,7 +75,7 @@ public class ViewValidator extends EObjectValidator {
 	 * A constant with a fixed name that can be used as the base value for additional hand written constants.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private static final int GENERATED_DIAGNOSTIC_CODE_COUNT = 0;
@@ -68,7 +85,7 @@ public class ViewValidator extends EObjectValidator {
 	 * derived class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected static final int DIAGNOSTIC_CODE_COUNT = GENERATED_DIAGNOSTIC_CODE_COUNT;
@@ -77,7 +94,7 @@ public class ViewValidator extends EObjectValidator {
 	 * Creates an instance of the switch.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public ViewValidator() {
@@ -88,7 +105,7 @@ public class ViewValidator extends EObjectValidator {
 	 * Returns the package of this validator switch.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -100,7 +117,7 @@ public class ViewValidator extends EObjectValidator {
 	 * Calls <code>validateXXX</code> for the corresponding classifier of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -156,7 +173,7 @@ public class ViewValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public boolean validateDiagnostic(VDiagnostic diagnostic, DiagnosticChain diagnostics,
@@ -167,7 +184,7 @@ public class ViewValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public boolean validateAttachment(VAttachment attachment, DiagnosticChain diagnostics,
@@ -178,7 +195,7 @@ public class ViewValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public boolean validateDomainModelReference(VDomainModelReference domainModelReference, DiagnosticChain diagnostics,
@@ -189,33 +206,42 @@ public class ViewValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public boolean validateFeaturePathDomainModelReference(
 		VFeaturePathDomainModelReference featurePathDomainModelReference, DiagnosticChain diagnostics,
 		Map<Object, Object> context) {
-		if (!validate_NoCircularContainment(featurePathDomainModelReference, diagnostics, context))
+		if (!validate_NoCircularContainment(featurePathDomainModelReference, diagnostics, context)) {
 			return false;
+		}
 		boolean result = validate_EveryMultiplicityConforms(featurePathDomainModelReference, diagnostics, context);
-		if (result || diagnostics != null)
+		if (result || diagnostics != null) {
 			result &= validate_EveryDataValueConforms(featurePathDomainModelReference, diagnostics, context);
-		if (result || diagnostics != null)
+		}
+		if (result || diagnostics != null) {
 			result &= validate_EveryReferenceIsContained(featurePathDomainModelReference, diagnostics, context);
-		if (result || diagnostics != null)
+		}
+		if (result || diagnostics != null) {
 			result &= validate_EveryBidirectionalReferenceIsPaired(featurePathDomainModelReference, diagnostics,
 				context);
-		if (result || diagnostics != null)
+		}
+		if (result || diagnostics != null) {
 			result &= validate_EveryProxyResolves(featurePathDomainModelReference, diagnostics, context);
-		if (result || diagnostics != null)
+		}
+		if (result || diagnostics != null) {
 			result &= validate_UniqueID(featurePathDomainModelReference, diagnostics, context);
-		if (result || diagnostics != null)
+		}
+		if (result || diagnostics != null) {
 			result &= validate_EveryKeyUnique(featurePathDomainModelReference, diagnostics, context);
-		if (result || diagnostics != null)
+		}
+		if (result || diagnostics != null) {
 			result &= validate_EveryMapEntryUnique(featurePathDomainModelReference, diagnostics, context);
-		if (result || diagnostics != null)
+		}
+		if (result || diagnostics != null) {
 			result &= validateFeaturePathDomainModelReference_resolveable(featurePathDomainModelReference, diagnostics,
 				context);
+		}
 		return result;
 	}
 
@@ -223,7 +249,7 @@ public class ViewValidator extends EObjectValidator {
 	 * Validates the resolveable constraint of '<em>Feature Path Domain Model Reference</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public boolean validateFeaturePathDomainModelReference_resolveable(
@@ -251,7 +277,7 @@ public class ViewValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public boolean validateElement(VElement element, DiagnosticChain diagnostics, Map<Object, Object> context) {
@@ -261,7 +287,7 @@ public class ViewValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public boolean validateView(VView view, DiagnosticChain diagnostics, Map<Object, Object> context) {
@@ -271,7 +297,7 @@ public class ViewValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public boolean validateContainedElement(VContainedElement containedElement, DiagnosticChain diagnostics,
@@ -282,7 +308,7 @@ public class ViewValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public boolean validateContainer(VContainer container, DiagnosticChain diagnostics, Map<Object, Object> context) {
@@ -292,7 +318,7 @@ public class ViewValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public boolean validateContainedContainer(VContainedContainer containedContainer, DiagnosticChain diagnostics,
@@ -303,7 +329,7 @@ public class ViewValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public boolean validateControl(VControl control, DiagnosticChain diagnostics, Map<Object, Object> context) {
@@ -313,7 +339,7 @@ public class ViewValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public boolean validateViewModelProperties(VViewModelProperties viewModelProperties, DiagnosticChain diagnostics,
@@ -324,7 +350,7 @@ public class ViewValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public boolean validateStringToObjectMapEntry(Map.Entry<?, ?> stringToObjectMapEntry, DiagnosticChain diagnostics,
@@ -335,7 +361,7 @@ public class ViewValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public boolean validateViewModelLoadingProperties(VViewModelLoadingProperties viewModelLoadingProperties,
@@ -346,7 +372,7 @@ public class ViewValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public boolean validateDateTimeDisplayAttachment(VDateTimeDisplayAttachment dateTimeDisplayAttachment,
@@ -357,8 +383,9 @@ public class ViewValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
+	 * @since 2.0
 	 */
 	public boolean validateDomainModelReferenceSegment(VDomainModelReferenceSegment domainModelReferenceSegment,
 		DiagnosticChain diagnostics, Map<Object, Object> context) {
@@ -368,8 +395,9 @@ public class ViewValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
+	 * @since 2.0
 	 */
 	public boolean validateFeatureDomainModelReferenceSegment(
 		VFeatureDomainModelReferenceSegment featureDomainModelReferenceSegment, DiagnosticChain diagnostics,
@@ -380,7 +408,7 @@ public class ViewValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public boolean validateLabelAlignment(LabelAlignment labelAlignment, DiagnosticChain diagnostics,
@@ -391,7 +419,7 @@ public class ViewValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public boolean validateDateTimeDisplayType(DateTimeDisplayType dateTimeDisplayType, DiagnosticChain diagnostics,
@@ -402,7 +430,7 @@ public class ViewValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public boolean validateDomainModelReferenceChangeListener(
@@ -415,7 +443,7 @@ public class ViewValidator extends EObjectValidator {
 	 * Returns the resource locator that will be used to fetch messages for this validator's diagnostics.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
