@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingdmrFactory;
 import org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingdmrPackage;
 
@@ -29,7 +30,8 @@ import org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingdmrPackage;
 public class VMappingdmrFactoryImpl extends EFactoryImpl implements
 	VMappingdmrFactory {
 	/**
-	 * Creates the default factory implementation. <!-- begin-user-doc --> <!--
+	 * Creates the default factory implementation.
+	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
 	 *
 	 * @generated
@@ -48,7 +50,8 @@ public class VMappingdmrFactoryImpl extends EFactoryImpl implements
 	}
 
 	/**
-	 * Creates an instance of the factory. <!-- begin-user-doc --> <!--
+	 * Creates an instance of the factory.
+	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
 	 *
 	 * @generated
@@ -67,9 +70,10 @@ public class VMappingdmrFactoryImpl extends EFactoryImpl implements
 		switch (eClass.getClassifierID()) {
 		case VMappingdmrPackage.MAPPING_DOMAIN_MODEL_REFERENCE:
 			return createMappingDomainModelReference();
+		case VMappingdmrPackage.MAPPING_DOMAIN_MODEL_REFERENCE_SEGMENT:
+			return createMappingDomainModelReferenceSegment();
 		default:
-			throw new IllegalArgumentException(
-				"The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
+			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 
@@ -82,6 +86,18 @@ public class VMappingdmrFactoryImpl extends EFactoryImpl implements
 	public VMappingDomainModelReference createMappingDomainModelReference() {
 		final VMappingDomainModelReferenceImpl mappingDomainModelReference = new VMappingDomainModelReferenceImpl();
 		return mappingDomainModelReference;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public VMappingDomainModelReferenceSegment createMappingDomainModelReferenceSegment() {
+		final VMappingDomainModelReferenceSegmentImpl mappingDomainModelReferenceSegment = new VMappingDomainModelReferenceSegmentImpl();
+		return mappingDomainModelReferenceSegment;
 	}
 
 	/**

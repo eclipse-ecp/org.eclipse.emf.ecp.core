@@ -11,4 +11,9 @@
         eType="ecore:EClass ../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"
         containment="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MappingDomainModelReferenceSegment"
+      eSuperTypes="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//FeatureDomainModelReferenceSegment">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="mappedClass" lowerBound="1"
+        eType="ecore:EClass ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EClass"/>
+  </eClassifiers>
 </ecore:EPackage>
