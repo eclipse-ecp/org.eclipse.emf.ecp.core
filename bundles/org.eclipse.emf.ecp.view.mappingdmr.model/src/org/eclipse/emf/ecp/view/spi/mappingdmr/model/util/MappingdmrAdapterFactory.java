@@ -16,8 +16,11 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingdmrPackage;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
+import org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 
 /**
@@ -30,14 +33,16 @@ import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
  */
 public class MappingdmrAdapterFactory extends AdapterFactoryImpl {
 	/**
-	 * The cached model package. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * The cached model package.
+	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
 	protected static VMappingdmrPackage modelPackage;
 
 	/**
-	 * Creates an instance of the adapter factory. <!-- begin-user-doc --> <!--
+	 * Creates an instance of the adapter factory.
+	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
 	 *
 	 * @generated
@@ -76,9 +81,13 @@ public class MappingdmrAdapterFactory extends AdapterFactoryImpl {
 	 */
 	protected MappingdmrSwitch<Adapter> modelSwitch = new MappingdmrSwitch<Adapter>() {
 		@Override
-		public Adapter caseMappingDomainModelReference(
-			VMappingDomainModelReference object) {
+		public Adapter caseMappingDomainModelReference(VMappingDomainModelReference object) {
 			return createMappingDomainModelReferenceAdapter();
+		}
+
+		@Override
+		public Adapter caseMappingDomainModelReferenceSegment(VMappingDomainModelReferenceSegment object) {
+			return createMappingDomainModelReferenceSegmentAdapter();
 		}
 
 		@Override
@@ -87,9 +96,18 @@ public class MappingdmrAdapterFactory extends AdapterFactoryImpl {
 		}
 
 		@Override
-		public Adapter caseFeaturePathDomainModelReference(
-			VFeaturePathDomainModelReference object) {
+		public Adapter caseFeaturePathDomainModelReference(VFeaturePathDomainModelReference object) {
 			return createFeaturePathDomainModelReferenceAdapter();
+		}
+
+		@Override
+		public Adapter caseDomainModelReferenceSegment(VDomainModelReferenceSegment object) {
+			return createDomainModelReferenceSegmentAdapter();
+		}
+
+		@Override
+		public Adapter caseFeatureDomainModelReferenceSegment(VFeatureDomainModelReferenceSegment object) {
+			return createFeatureDomainModelReferenceSegmentAdapter();
 		}
 
 		@Override
@@ -99,11 +117,11 @@ public class MappingdmrAdapterFactory extends AdapterFactoryImpl {
 	};
 
 	/**
-	 * Creates an adapter for the <code>target</code>. <!-- begin-user-doc -->
+	 * Creates an adapter for the <code>target</code>.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
-	 * @param target
-	 *            the object to adapt.
+	 * @param target the object to adapt.
 	 * @return the adapter for the <code>target</code>.
 	 * @generated
 	 */
@@ -113,9 +131,10 @@ public class MappingdmrAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReference
-	 * <em>Mapping Domain Model Reference</em>}'. <!-- begin-user-doc --> This
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReference <em>Mapping Domain Model
+	 * Reference</em>}'.
+	 * <!-- begin-user-doc --> This
 	 * default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases
 	 * anyway. <!-- end-user-doc -->
@@ -129,8 +148,26 @@ public class MappingdmrAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class ' {@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference
-	 * <em>Domain Model Reference</em>}'. <!-- begin-user-doc --> This default
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReferenceSegment <em>Mapping Domain
+	 * Model Reference Segment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReferenceSegment
+	 * @generated
+	 */
+	public Adapter createMappingDomainModelReferenceSegmentAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference
+	 * <em>Domain Model Reference</em>}'.
+	 * <!-- begin-user-doc --> This default
 	 * implementation returns null so that we can easily ignore cases; it's
 	 * useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
@@ -144,9 +181,10 @@ public class MappingdmrAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference
-	 * <em>Feature Path Domain Model Reference</em>}'. <!-- begin-user-doc -->
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference <em>Feature Path Domain Model
+	 * Reference</em>}'.
+	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore
 	 * cases; it's useful to ignore a case when inheritance will catch all the
 	 * cases anyway. <!-- end-user-doc -->
@@ -160,7 +198,42 @@ public class MappingdmrAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for the default case. <!-- begin-user-doc --> This
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment <em>Domain Model Reference
+	 * Segment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment
+	 * @generated
+	 */
+	public Adapter createDomainModelReferenceSegmentAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment <em>Feature Domain Model Reference
+	 * Segment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment
+	 * @generated
+	 */
+	public Adapter createFeatureDomainModelReferenceSegmentAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for the default case.
+	 * <!-- begin-user-doc --> This
 	 * default implementation returns null. <!-- end-user-doc -->
 	 *
 	 * @return the new adapter.

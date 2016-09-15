@@ -21,18 +21,16 @@ import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
- * <li>
- * {@link org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReference#getMappedClass
- * <em>Mapped Class</em>}</li>
- * <li>
- * {@link org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReference#getDomainModelReference
+ * <li>{@link org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReference#getMappedClass <em>Mapped
+ * Class</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReference#getDomainModelReference
  * <em>Domain Model Reference</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingdmrPackage#getMappingDomainModelReference()
- * @model
+ * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='resolveable'"
  * @generated
  */
 public interface VMappingDomainModelReference extends
@@ -55,29 +53,28 @@ public interface VMappingDomainModelReference extends
 	EClass getMappedClass();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReference#getMappedClass
-	 * <em>Mapped Class</em>}' reference. <!-- begin-user-doc --> <!--
+	 * Sets the value of the
+	 * '{@link org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReference#getMappedClass <em>Mapped
+	 * Class</em>}' reference.
+	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
 	 *
-	 * @param value
-	 *            the new value of the '<em>Mapped Class</em>' reference.
+	 * @param value the new value of the '<em>Mapped Class</em>' reference.
 	 * @see #getMappedClass()
 	 * @generated
 	 */
 	void setMappedClass(EClass value);
 
 	/**
-	 * Returns the value of the '<em><b>Domain Model Reference</b></em>'
-	 * containment reference. <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Domain Model Reference</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Domain Model Reference</em>' containment reference isn't clear, there really should be
 	 * more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 *
-	 * @return the value of the '<em>Domain Model Reference</em>' containment
-	 *         reference.
+	 * @return the value of the '<em>Domain Model Reference</em>' containment reference.
 	 * @see #setDomainModelReference(VDomainModelReference)
 	 * @see org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingdmrPackage#getMappingDomainModelReference_DomainModelReference()
 	 * @model containment="true" required="true"

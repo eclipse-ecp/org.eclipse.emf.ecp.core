@@ -1,54 +1,151 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:history="http://www.eclipse.org/emf/edapt/history/0.3">
-  <releases date="2014-09-12T12:35:23.120+0200" label="140">
-    <changes xsi:type="history:CompositeChange">
-      <changes xsi:type="history:Create" element="mappingdmr.ecore#/">
-        <changes xsi:type="history:Set" element="mappingdmr.ecore#/" featureName="name"
-            dataValue="mappingdmr"/>
-        <changes xsi:type="history:Set" element="mappingdmr.ecore#/" featureName="nsURI"
-            dataValue="http://www.eclipse.org/emf/ecp/view/mappingdmr/model"/>
-        <changes xsi:type="history:Set" element="mappingdmr.ecore#/" featureName="nsPrefix"
-            dataValue="org.eclipse.emf.ecp.view.mappingdmr.model"/>
+<history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:history="http://www.eclipse.org/emf/edapt/history/0.3" xmi:id="_9Fn6UHsmEeasE5BuIkHIrw">
+  <releases xmi:id="_9FrksHsmEeasE5BuIkHIrw" date="2014-09-12T12:35:23.120+0200" label="140">
+    <changes xsi:type="history:CompositeChange" xmi:id="_9Fsy0HsmEeasE5BuIkHIrw">
+      <changes xsi:type="history:Create" xmi:id="_9Fv2IHsmEeasE5BuIkHIrw">
+        <element href="mappingdmr.ecore#/"/>
+        <changes xsi:type="history:Set" xmi:id="_9FxrUHsmEeasE5BuIkHIrw" featureName="name" dataValue="mappingdmr">
+          <element href="mappingdmr.ecore#/"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_9FxrUXsmEeasE5BuIkHIrw" featureName="nsURI" dataValue="http://www.eclipse.org/emf/ecp/view/mappingdmr/model">
+          <element href="mappingdmr.ecore#/"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_9FxrUnsmEeasE5BuIkHIrw" featureName="nsPrefix" dataValue="org.eclipse.emf.ecp.view.mappingdmr.model">
+          <element href="mappingdmr.ecore#/"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="mappingdmr.ecore#/" referenceName="eClassifiers"
-          element="mappingdmr.ecore#//MappingDomainModelReference">
-        <changes xsi:type="history:Set" element="mappingdmr.ecore#//MappingDomainModelReference"
-            featureName="name" dataValue="MappingDomainModelReference"/>
-        <changes xsi:type="history:Add" element="mappingdmr.ecore#//MappingDomainModelReference"
-            featureName="eSuperTypes" referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//FeaturePathDomainModelReference"/>
+      <changes xsi:type="history:Create" xmi:id="_9FxrU3smEeasE5BuIkHIrw" referenceName="eClassifiers">
+        <target href="mappingdmr.ecore#/"/>
+        <element href="mappingdmr.ecore#//MappingDomainModelReference"/>
+        <changes xsi:type="history:Set" xmi:id="_9FxrVHsmEeasE5BuIkHIrw" featureName="name" dataValue="MappingDomainModelReference">
+          <element href="mappingdmr.ecore#//MappingDomainModelReference"/>
+        </changes>
+        <changes xsi:type="history:Add" xmi:id="_9FySYHsmEeasE5BuIkHIrw" featureName="eSuperTypes">
+          <element href="mappingdmr.ecore#//MappingDomainModelReference"/>
+          <referenceValue href="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//FeaturePathDomainModelReference"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="mappingdmr.ecore#//MappingDomainModelReference"
-          referenceName="eStructuralFeatures" element="mappingdmr.ecore#//MappingDomainModelReference/mappedClass">
-        <changes xsi:type="history:Set" element="mappingdmr.ecore#//MappingDomainModelReference/mappedClass"
-            featureName="name" dataValue="mappedClass"/>
-        <changes xsi:type="history:Set" element="mappingdmr.ecore#//MappingDomainModelReference/mappedClass"
-            featureName="eType" referenceValue="../../org.eclipse.emf.ecore/model/Ecore.ecore#//EClass"/>
+      <changes xsi:type="history:Create" xmi:id="_9FySYXsmEeasE5BuIkHIrw" referenceName="eStructuralFeatures">
+        <target href="mappingdmr.ecore#//MappingDomainModelReference"/>
+        <element href="mappingdmr.ecore#//MappingDomainModelReference/mappedClass"/>
+        <changes xsi:type="history:Set" xmi:id="_9FySYnsmEeasE5BuIkHIrw" featureName="name" dataValue="mappedClass">
+          <element href="mappingdmr.ecore#//MappingDomainModelReference/mappedClass"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_9FySY3smEeasE5BuIkHIrw" featureName="eType">
+          <element href="mappingdmr.ecore#//MappingDomainModelReference/mappedClass"/>
+          <referenceValue href="../../org.eclipse.emf.ecore/model/Ecore.ecore#//EClass"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="mappingdmr.ecore#//MappingDomainModelReference"
-          referenceName="eStructuralFeatures" element="mappingdmr.ecore#//MappingDomainModelReference/domainModelReference">
-        <changes xsi:type="history:Set" element="mappingdmr.ecore#//MappingDomainModelReference/domainModelReference"
-            featureName="name" dataValue="domainModelReference"/>
-        <changes xsi:type="history:Set" element="mappingdmr.ecore#//MappingDomainModelReference/domainModelReference"
-            featureName="lowerBound" dataValue="1" oldDataValue="0"/>
-        <changes xsi:type="history:Set" element="mappingdmr.ecore#//MappingDomainModelReference/domainModelReference"
-            featureName="containment" dataValue="true" oldDataValue="false"/>
-        <changes xsi:type="history:Set" element="mappingdmr.ecore#//MappingDomainModelReference/domainModelReference"
-            featureName="eType" referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"/>
+      <changes xsi:type="history:Create" xmi:id="_9FySZHsmEeasE5BuIkHIrw" referenceName="eStructuralFeatures">
+        <target href="mappingdmr.ecore#//MappingDomainModelReference"/>
+        <element href="mappingdmr.ecore#//MappingDomainModelReference/domainModelReference"/>
+        <changes xsi:type="history:Set" xmi:id="_9FySZXsmEeasE5BuIkHIrw" featureName="name" dataValue="domainModelReference">
+          <element href="mappingdmr.ecore#//MappingDomainModelReference/domainModelReference"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_9Fy5cHsmEeasE5BuIkHIrw" featureName="lowerBound" dataValue="1" oldDataValue="0">
+          <element href="mappingdmr.ecore#//MappingDomainModelReference/domainModelReference"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_9Fy5cXsmEeasE5BuIkHIrw" featureName="containment" dataValue="true" oldDataValue="false">
+          <element href="mappingdmr.ecore#//MappingDomainModelReference/domainModelReference"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_9Fy5cnsmEeasE5BuIkHIrw" featureName="eType">
+          <element href="mappingdmr.ecore#//MappingDomainModelReference/domainModelReference"/>
+          <referenceValue href="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"/>
+        </changes>
       </changes>
     </changes>
-    <changes xsi:type="history:CompositeChange">
-      <changes xsi:type="history:Create" target="mappingdmr.ecore#//MappingDomainModelReference"
-          referenceName="eAnnotations" element="mappingdmr.ecore#//MappingDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%"/>
-      <changes xsi:type="history:Set" element="mappingdmr.ecore#//MappingDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%"
-          featureName="source" dataValue="http://www.eclipse.org/emf/2002/Ecore"/>
-      <changes xsi:type="history:Create" target="mappingdmr.ecore#//MappingDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%"
-          referenceName="details" element="mappingdmr.ecore#//MappingDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%/@details.0"/>
-      <changes xsi:type="history:Set" element="mappingdmr.ecore#//MappingDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%/@details.0"
-          featureName="key" dataValue="constraints"/>
-      <changes xsi:type="history:Set" element="mappingdmr.ecore#//MappingDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%/@details.0"
-          featureName="value" dataValue="resolveable"/>
+    <changes xsi:type="history:CompositeChange" xmi:id="_9Fy5c3smEeasE5BuIkHIrw">
+      <changes xsi:type="history:Create" xmi:id="_9Fy5dHsmEeasE5BuIkHIrw" referenceName="eAnnotations">
+        <target href="mappingdmr.ecore#//MappingDomainModelReference"/>
+        <element href="mappingdmr.ecore#//MappingDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%"/>
+      </changes>
+      <changes xsi:type="history:Set" xmi:id="_9Fy5dXsmEeasE5BuIkHIrw" featureName="source" dataValue="http://www.eclipse.org/emf/2002/Ecore">
+        <element href="mappingdmr.ecore#//MappingDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%"/>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_9Fy5dnsmEeasE5BuIkHIrw" referenceName="details">
+        <target href="mappingdmr.ecore#//MappingDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%"/>
+        <element href="mappingdmr.ecore#//MappingDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%/@details.0"/>
+      </changes>
+      <changes xsi:type="history:Set" xmi:id="_9FzggHsmEeasE5BuIkHIrw" featureName="key" dataValue="constraints">
+        <element href="mappingdmr.ecore#//MappingDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%/@details.0"/>
+      </changes>
+      <changes xsi:type="history:Set" xmi:id="_9FzggXsmEeasE5BuIkHIrw" featureName="value" dataValue="resolveable">
+        <element href="mappingdmr.ecore#//MappingDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%/@details.0"/>
+      </changes>
     </changes>
   </releases>
-  <releases/>
+  <releases xmi:id="_9FzggnsmEeasE5BuIkHIrw">
+    <changes xsi:type="history:OperationChange" xmi:id="_qf4cUHsoEeasE5BuIkHIrw">
+      <changes xsi:type="history:Create" xmi:id="_qf4cUXsoEeasE5BuIkHIrw" referenceName="eClassifiers">
+        <target href="mappingdmr.ecore#/"/>
+        <element href="mappingdmr.ecore#//MappingDomainModelReferenceSegment"/>
+        <changes xsi:type="history:Set" xmi:id="_qf4cUnsoEeasE5BuIkHIrw" featureName="name" dataValue="MappingDomainModelReferenceSegment">
+          <element href="mappingdmr.ecore#//MappingDomainModelReferenceSegment"/>
+        </changes>
+        <changes xsi:type="history:Add" xmi:id="_qf4cU3soEeasE5BuIkHIrw" featureName="eSuperTypes">
+          <element href="mappingdmr.ecore#//MappingDomainModelReferenceSegment"/>
+          <referenceValue href="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//FeatureDomainModelReferenceSegment"/>
+        </changes>
+      </changes>
+      <operation xmi:id="_qf4cVHsoEeasE5BuIkHIrw" name="newClass">
+        <parameters xmi:id="_qf4cVXsoEeasE5BuIkHIrw" name="ePackage">
+          <referenceValue xmi:id="_qf4cVnsoEeasE5BuIkHIrw">
+            <element href="mappingdmr.ecore#/"/>
+          </referenceValue>
+        </parameters>
+        <parameters xmi:id="_qf4cV3soEeasE5BuIkHIrw" name="name">
+          <dataValue>MappingDomainModelReferenceSegment</dataValue>
+        </parameters>
+        <parameters xmi:id="_qf4cWHsoEeasE5BuIkHIrw" name="superClasses">
+          <referenceValue xmi:id="_qf4cWXsoEeasE5BuIkHIrw">
+            <element href="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//FeatureDomainModelReferenceSegment"/>
+          </referenceValue>
+        </parameters>
+        <parameters xmi:id="_qf4cWnsoEeasE5BuIkHIrw" name="abstr">
+          <dataValue>false</dataValue>
+        </parameters>
+      </operation>
+    </changes>
+    <changes xsi:type="history:OperationChange" xmi:id="_LkwygHspEeasE5BuIkHIrw">
+      <changes xsi:type="history:Create" xmi:id="_LkwygXspEeasE5BuIkHIrw" referenceName="eStructuralFeatures">
+        <target href="mappingdmr.ecore#//MappingDomainModelReferenceSegment"/>
+        <element href="mappingdmr.ecore#//MappingDomainModelReferenceSegment/mappedClass"/>
+        <changes xsi:type="history:Set" xmi:id="_LkwygnspEeasE5BuIkHIrw" featureName="name" dataValue="mappedClass">
+          <element href="mappingdmr.ecore#//MappingDomainModelReferenceSegment/mappedClass"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_Lkwyg3spEeasE5BuIkHIrw" featureName="lowerBound" dataValue="1" oldDataValue="0">
+          <element href="mappingdmr.ecore#//MappingDomainModelReferenceSegment/mappedClass"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_LkwyhHspEeasE5BuIkHIrw" featureName="eType">
+          <element href="mappingdmr.ecore#//MappingDomainModelReferenceSegment/mappedClass"/>
+          <referenceValue href="../../org.eclipse.emf.ecore/model/Ecore.ecore#//EClass"/>
+        </changes>
+      </changes>
+      <operation xmi:id="_LkwyhXspEeasE5BuIkHIrw" name="newReference">
+        <parameters xmi:id="_LkwyhnspEeasE5BuIkHIrw" name="eClass">
+          <referenceValue xmi:id="_Lkwyh3spEeasE5BuIkHIrw">
+            <element href="mappingdmr.ecore#//MappingDomainModelReferenceSegment"/>
+          </referenceValue>
+        </parameters>
+        <parameters xmi:id="_LkwyiHspEeasE5BuIkHIrw" name="name">
+          <dataValue>mappedClass</dataValue>
+        </parameters>
+        <parameters xmi:id="_LkwyiXspEeasE5BuIkHIrw" name="type">
+          <referenceValue xmi:id="_LkwyinspEeasE5BuIkHIrw">
+            <element href="../../org.eclipse.emf.ecore/model/Ecore.ecore#//EClass"/>
+          </referenceValue>
+        </parameters>
+        <parameters xmi:id="_Lkwyi3spEeasE5BuIkHIrw" name="lowerBound">
+          <dataValue>1</dataValue>
+        </parameters>
+        <parameters xmi:id="_LkwyjHspEeasE5BuIkHIrw" name="upperBound">
+          <dataValue>1</dataValue>
+        </parameters>
+        <parameters xmi:id="_LkwyjXspEeasE5BuIkHIrw" name="containment">
+          <dataValue>false</dataValue>
+        </parameters>
+        <parameters xmi:id="_LkwyjnspEeasE5BuIkHIrw" name="opposite"/>
+      </operation>
+    </changes>
+  </releases>
 </history:History>

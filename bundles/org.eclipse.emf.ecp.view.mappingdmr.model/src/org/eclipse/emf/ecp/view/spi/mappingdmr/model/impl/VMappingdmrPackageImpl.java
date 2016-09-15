@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingdmrFactory;
 import org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingdmrPackage;
 import org.eclipse.emf.ecp.view.spi.mappingdmr.model.util.MappingdmrValidator;
@@ -37,6 +38,14 @@ public class VMappingdmrPackageImpl extends EPackageImpl implements
 	 * @generated
 	 */
 	private EClass mappingDomainModelReferenceEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	private EClass mappingDomainModelReferenceSegmentEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
@@ -84,8 +93,8 @@ public class VMappingdmrPackageImpl extends EPackageImpl implements
 
 		// Obtain or create and register package
 		final VMappingdmrPackageImpl theMappingdmrPackage = (VMappingdmrPackageImpl) (EPackage.Registry.INSTANCE
-			.get(eNS_URI) instanceof VMappingdmrPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI) : new VMappingdmrPackageImpl());
+			.get(eNS_URI) instanceof VMappingdmrPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
+				: new VMappingdmrPackageImpl());
 
 		isInited = true;
 
@@ -99,16 +108,13 @@ public class VMappingdmrPackageImpl extends EPackageImpl implements
 		theMappingdmrPackage.initializePackageContents();
 
 		// Register package validator
-		EValidator.Registry.INSTANCE.put
-			(theMappingdmrPackage,
-				new EValidator.Descriptor()
-				{
-					@Override
-					public EValidator getEValidator()
-					{
-						return MappingdmrValidator.INSTANCE;
-					}
-				});
+		EValidator.Registry.INSTANCE.put(theMappingdmrPackage,
+			new EValidator.Descriptor() {
+				@Override
+				public EValidator getEValidator() {
+					return MappingdmrValidator.INSTANCE;
+				}
+			});
 
 		// Mark meta-data to indicate it can't be changed
 		theMappingdmrPackage.freeze();
@@ -149,6 +155,28 @@ public class VMappingdmrPackageImpl extends EPackageImpl implements
 	}
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EClass getMappingDomainModelReferenceSegment() {
+		return mappingDomainModelReferenceSegmentEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EReference getMappingDomainModelReferenceSegment_MappedClass() {
+		return (EReference) mappingDomainModelReferenceSegmentEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 *
 	 * @generated
@@ -183,6 +211,10 @@ public class VMappingdmrPackageImpl extends EPackageImpl implements
 		mappingDomainModelReferenceEClass = createEClass(MAPPING_DOMAIN_MODEL_REFERENCE);
 		createEReference(mappingDomainModelReferenceEClass, MAPPING_DOMAIN_MODEL_REFERENCE__MAPPED_CLASS);
 		createEReference(mappingDomainModelReferenceEClass, MAPPING_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE);
+
+		mappingDomainModelReferenceSegmentEClass = createEClass(MAPPING_DOMAIN_MODEL_REFERENCE_SEGMENT);
+		createEReference(mappingDomainModelReferenceSegmentEClass,
+			MAPPING_DOMAIN_MODEL_REFERENCE_SEGMENT__MAPPED_CLASS);
 	}
 
 	/**
@@ -221,20 +253,24 @@ public class VMappingdmrPackageImpl extends EPackageImpl implements
 
 		// Add supertypes to classes
 		mappingDomainModelReferenceEClass.getESuperTypes().add(theViewPackage.getFeaturePathDomainModelReference());
+		mappingDomainModelReferenceSegmentEClass.getESuperTypes()
+			.add(theViewPackage.getFeatureDomainModelReferenceSegment());
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(mappingDomainModelReferenceEClass, VMappingDomainModelReference.class,
-			"MappingDomainModelReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-			getMappingDomainModelReference_MappedClass(),
-			theEcorePackage.getEClass(),
-			null,
-			"mappedClass", null, 0, 1, VMappingDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-			getMappingDomainModelReference_DomainModelReference(),
-			theViewPackage.getDomainModelReference(),
-			null,
-			"domainModelReference", null, 1, 1, VMappingDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEClass(mappingDomainModelReferenceEClass, VMappingDomainModelReference.class, "MappingDomainModelReference", //$NON-NLS-1$
+			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getMappingDomainModelReference_MappedClass(), theEcorePackage.getEClass(), null, "mappedClass", //$NON-NLS-1$
+			null, 0, 1, VMappingDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+			IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getMappingDomainModelReference_DomainModelReference(), theViewPackage.getDomainModelReference(),
+			null, "domainModelReference", null, 1, 1, VMappingDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
+			IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(mappingDomainModelReferenceSegmentEClass, VMappingDomainModelReferenceSegment.class,
+			"MappingDomainModelReferenceSegment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getMappingDomainModelReferenceSegment_MappedClass(), theEcorePackage.getEClass(), null,
+			"mappedClass", null, 1, 1, VMappingDomainModelReferenceSegment.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
+			IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);
@@ -251,13 +287,12 @@ public class VMappingdmrPackageImpl extends EPackageImpl implements
 	 *
 	 * @generated
 	 */
-	protected void createEcoreAnnotations()
-	{
+	protected void createEcoreAnnotations() {
 		final String source = "http://www.eclipse.org/emf/2002/Ecore"; //$NON-NLS-1$
 		addAnnotation(mappingDomainModelReferenceEClass,
 			source,
-			new String[]
-			{ "constraints", "resolveable" //$NON-NLS-1$ //$NON-NLS-2$
+			new String[] {
+				"constraints", "resolveable" //$NON-NLS-1$ //$NON-NLS-2$
 			});
 	}
 
