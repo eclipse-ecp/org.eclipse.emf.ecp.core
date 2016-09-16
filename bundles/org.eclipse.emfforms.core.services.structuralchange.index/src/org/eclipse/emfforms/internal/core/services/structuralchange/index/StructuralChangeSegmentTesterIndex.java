@@ -102,7 +102,6 @@ public class StructuralChangeSegmentTesterIndex implements StructuralChangeSegme
 				 * For ADD_MANY, REMOVE_MANY or MOVE events the position of the notification will not be the segment's
 				 * index even if the element at the index changed. Therefore, we have to be overly careful and always
 				 * indicate a change when one of the events was triggered.
-				 * TODO correct? (Always trigger ADD_MANY, REMOVE_MANY, MOVE)
 				 */
 				final int event = notification.getRawNotification().getEventType();
 				if (event == Notification.ADD_MANY || event == Notification.REMOVE_MANY || event == Notification.MOVE) {
