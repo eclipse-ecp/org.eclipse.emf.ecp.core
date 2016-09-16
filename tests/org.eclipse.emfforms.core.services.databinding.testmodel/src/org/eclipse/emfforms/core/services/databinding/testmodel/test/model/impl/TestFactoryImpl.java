@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.*;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.B;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C;
@@ -84,6 +85,8 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 			return (EObject) createEClassToEStringMap();
 		case TestPackage.ECLASS_TO_AMAP:
 			return (EObject) createEClassToAMap();
+		case TestPackage.ECLASS_TO_EMAP:
+			return (EObject) createEClassToEMap();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -157,6 +160,17 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	public Map.Entry<EClass, A> createEClassToAMap() {
 		EClassToAMapImpl eClassToAMap = new EClassToAMapImpl();
 		return eClassToAMap;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public Map.Entry<EClass, E> createEClassToEMap() {
+		EClassToEMapImpl eClassToEMap = new EClassToEMapImpl();
+		return eClassToEMap;
 	}
 
 	/**

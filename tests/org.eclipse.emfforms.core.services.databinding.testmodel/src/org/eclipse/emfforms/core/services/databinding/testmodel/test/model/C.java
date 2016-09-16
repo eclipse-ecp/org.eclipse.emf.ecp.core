@@ -29,6 +29,8 @@ import org.eclipse.emf.ecore.EObject;
  * String</em>}</li>
  * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C#getEClassToA <em>EClass To
  * A</em>}</li>
+ * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C#getEClassToE <em>EClass To
+ * E</em>}</li>
  * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C#getA <em>A</em>}</li>
  * </ul>
  *
@@ -103,6 +105,25 @@ public interface C extends EObject {
 	 * @generated
 	 */
 	EMap<EClass, A> getEClassToA();
+
+	/**
+	 * Returns the value of the '<em><b>EClass To E</b></em>' map.
+	 * The key is of type {@link org.eclipse.emf.ecore.EClass},
+	 * and the value is of type {@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.E},
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>EClass To E</em>' map isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the value of the '<em>EClass To E</em>' map.
+	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage#getC_EClassToE()
+	 * @model mapType="org.eclipse.emfforms.core.services.databinding.testmodel.test.model.EClassToEMap<org.eclipse.emf.ecore.EClass,
+	 *        org.eclipse.emfforms.core.services.databinding.testmodel.test.model.E>"
+	 * @generated
+	 */
+	EMap<EClass, E> getEClassToE();
 
 	/**
 	 * Returns the value of the '<em><b>A</b></em>' reference.
