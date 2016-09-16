@@ -18,6 +18,8 @@
         eType="#//EClassToEStringMap" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="eClassToA" upperBound="-1"
         eType="#//EClassToAMap" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="eClassToE" upperBound="-1"
+        eType="#//EClassToEMap" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="a" eType="#//A"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="D">
@@ -34,4 +36,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//A"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="E" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EClassToEMap" instanceClassName="java.util.Map$Entry">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="key" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//E"/>
+  </eClassifiers>
 </ecore:EPackage>
