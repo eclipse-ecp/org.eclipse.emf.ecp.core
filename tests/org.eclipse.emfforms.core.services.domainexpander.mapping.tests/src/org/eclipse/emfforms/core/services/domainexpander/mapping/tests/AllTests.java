@@ -11,7 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emfforms.core.services.domainexpander.mapping.tests;
 
-import org.eclipse.emfforms.internal.core.services.domainexpander.mapping.EMFFormsMappingDMRExpander_Test;
+import org.eclipse.emfforms.internal.core.services.domainexpander.mapping.EMFFormsDMRSegmentExpanderMapping_Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
@@ -23,7 +23,7 @@ import org.junit.runners.Suite.SuiteClasses;
  *
  */
 @RunWith(Suite.class)
-@SuiteClasses({ EMFFormsMappingDMRExpander_Test.class })
+@SuiteClasses({ EMFFormsDMRSegmentExpanderMapping_Test.class })
 public class AllTests {
 
 }

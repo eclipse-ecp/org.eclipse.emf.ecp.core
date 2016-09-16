@@ -86,6 +86,14 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	private EClass eEClass = null;
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	private EClass eClassToEMapEClass = null;
+
+	/**
 	 * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
 	 * EPackage.Registry} by the package
 	 * package URI value.
@@ -274,9 +282,19 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	public EReference getC_EClassToE() {
+		return (EReference) cEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
 	@Override
 	public EReference getC_A() {
-		return (EReference) cEClass.getEStructuralFeatures().get(3);
+		return (EReference) cEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -394,6 +412,36 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	public EClass getEClassToEMap() {
+		return eClassToEMapEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EReference getEClassToEMap_Key() {
+		return (EReference) eClassToEMapEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EReference getEClassToEMap_Value() {
+		return (EReference) eClassToEMapEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
 	@Override
 	public TestFactory getTestFactory() {
 		return (TestFactory) getEFactoryInstance();
@@ -434,6 +482,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		createEReference(cEClass, C__D);
 		createEReference(cEClass, C__ECLASS_TO_STRING);
 		createEReference(cEClass, C__ECLASS_TO_A);
+		createEReference(cEClass, C__ECLASS_TO_E);
 		createEReference(cEClass, C__A);
 
 		dEClass = createEClass(D);
@@ -449,6 +498,10 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		createEReference(eClassToAMapEClass, ECLASS_TO_AMAP__VALUE);
 
 		eEClass = createEClass(E);
+
+		eClassToEMapEClass = createEClass(ECLASS_TO_EMAP);
+		createEReference(eClassToEMapEClass, ECLASS_TO_EMAP__KEY);
+		createEReference(eClassToEMapEClass, ECLASS_TO_EMAP__VALUE);
 	}
 
 	/**
@@ -517,6 +570,9 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		initEReference(getC_EClassToA(), this.getEClassToAMap(), null, "eClassToA", null, 0, -1, //$NON-NLS-1$
 			org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C.class, !IS_TRANSIENT, !IS_VOLATILE,
 			IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getC_EClassToE(), this.getEClassToEMap(), null, "eClassToE", null, 0, -1, //$NON-NLS-1$
+			org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C.class, !IS_TRANSIENT, !IS_VOLATILE,
+			IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getC_A(), this.getA(), null, "a", null, 0, 1, //$NON-NLS-1$
 			org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C.class, !IS_TRANSIENT, !IS_VOLATILE,
 			IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -549,6 +605,15 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 
 		initEClass(eEClass, org.eclipse.emfforms.core.services.databinding.testmodel.test.model.E.class, "E", //$NON-NLS-1$
 			IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(eClassToEMapEClass, Map.Entry.class, "EClassToEMap", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
+			!IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getEClassToEMap_Key(), ecorePackage.getEClass(), null, "key", null, 0, 1, Map.Entry.class, //$NON-NLS-1$
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
+		initEReference(getEClassToEMap_Value(), this.getE(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, //$NON-NLS-1$
+			!IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+			IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

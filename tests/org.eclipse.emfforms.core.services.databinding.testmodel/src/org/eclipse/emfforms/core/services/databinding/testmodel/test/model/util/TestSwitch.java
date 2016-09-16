@@ -140,6 +140,14 @@ public class TestSwitch<T> extends Switch<T> {
 				result = defaultCase(theEObject);
 			return result;
 		}
+		case TestPackage.ECLASS_TO_EMAP: {
+			@SuppressWarnings("unchecked")
+			Map.Entry<EClass, E> eClassToEMap = (Map.Entry<EClass, E>) theEObject;
+			T result = caseEClassToEMap(eClassToEMap);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
 		default:
 			return defaultCase(theEObject);
 		}
@@ -254,6 +262,22 @@ public class TestSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseE(E object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>EClass To EMap</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>EClass To EMap</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseEClassToEMap(Map.Entry<EClass, E> object) {
 		return null;
 	}
 

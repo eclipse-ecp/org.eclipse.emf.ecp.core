@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.C;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D;
+import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.E;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage;
 
 /**
@@ -39,6 +40,8 @@ import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestP
  * <em>EClass To String</em>}</li>
  * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.CImpl#getEClassToA <em>EClass To
  * A</em>}</li>
+ * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.CImpl#getEClassToE <em>EClass To
+ * E</em>}</li>
  * <li>{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.CImpl#getA <em>A</em>}</li>
  * </ul>
  *
@@ -77,6 +80,17 @@ public class CImpl extends MinimalEObjectImpl.Container implements C {
 	 * @ordered
 	 */
 	protected EMap<EClass, A> eClassToA;
+
+	/**
+	 * The cached value of the '{@link #getEClassToE() <em>EClass To E</em>}' map.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see #getEClassToE()
+	 * @generated
+	 * @ordered
+	 */
+	protected EMap<EClass, E> eClassToE;
 
 	/**
 	 * The cached value of the '{@link #getA() <em>A</em>}' reference.
@@ -200,6 +214,20 @@ public class CImpl extends MinimalEObjectImpl.Container implements C {
 	 * 
 	 * @generated
 	 */
+	public EMap<EClass, E> getEClassToE() {
+		if (eClassToE == null) {
+			eClassToE = new EcoreEMap<EClass, E>(TestPackage.Literals.ECLASS_TO_EMAP, EClassToEMapImpl.class, this,
+				TestPackage.C__ECLASS_TO_E);
+		}
+		return eClassToE;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
 	@Override
 	public A getA() {
 		if (a != null && a.eIsProxy()) {
@@ -252,6 +280,8 @@ public class CImpl extends MinimalEObjectImpl.Container implements C {
 			return ((InternalEList<?>) getEClassToString()).basicRemove(otherEnd, msgs);
 		case TestPackage.C__ECLASS_TO_A:
 			return ((InternalEList<?>) getEClassToA()).basicRemove(otherEnd, msgs);
+		case TestPackage.C__ECLASS_TO_E:
+			return ((InternalEList<?>) getEClassToE()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -277,6 +307,11 @@ public class CImpl extends MinimalEObjectImpl.Container implements C {
 				return getEClassToA();
 			else
 				return getEClassToA().map();
+		case TestPackage.C__ECLASS_TO_E:
+			if (coreType)
+				return getEClassToE();
+			else
+				return getEClassToE().map();
 		case TestPackage.C__A:
 			if (resolve)
 				return getA();
@@ -303,6 +338,9 @@ public class CImpl extends MinimalEObjectImpl.Container implements C {
 		case TestPackage.C__ECLASS_TO_A:
 			((EStructuralFeature.Setting) getEClassToA()).set(newValue);
 			return;
+		case TestPackage.C__ECLASS_TO_E:
+			((EStructuralFeature.Setting) getEClassToE()).set(newValue);
+			return;
 		case TestPackage.C__A:
 			setA((A) newValue);
 			return;
@@ -328,6 +366,9 @@ public class CImpl extends MinimalEObjectImpl.Container implements C {
 		case TestPackage.C__ECLASS_TO_A:
 			getEClassToA().clear();
 			return;
+		case TestPackage.C__ECLASS_TO_E:
+			getEClassToE().clear();
+			return;
 		case TestPackage.C__A:
 			setA((A) null);
 			return;
@@ -350,6 +391,8 @@ public class CImpl extends MinimalEObjectImpl.Container implements C {
 			return eClassToString != null && !eClassToString.isEmpty();
 		case TestPackage.C__ECLASS_TO_A:
 			return eClassToA != null && !eClassToA.isEmpty();
+		case TestPackage.C__ECLASS_TO_E:
+			return eClassToE != null && !eClassToE.isEmpty();
 		case TestPackage.C__A:
 			return a != null;
 		}
