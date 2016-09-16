@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,7 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emfforms.core.services.databinding.mapping.tests;
 
-import org.eclipse.emfforms.internal.core.services.databinding.mapping.MappingDomainModelReferenceConverter_ITest;
+import org.eclipse.emfforms.internal.core.services.databinding.mapping.MappingDomainModelReferenceSegmentConverter_ITest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
@@ -23,7 +23,7 @@ import org.junit.runners.Suite.SuiteClasses;
  *
  */
 @RunWith(Suite.class)
-@SuiteClasses({ MappingDomainModelReferenceConverter_ITest.class })
+@SuiteClasses({ MappingDomainModelReferenceSegmentConverter_ITest.class })
 public class AllIntegrationTests {
 
 }
