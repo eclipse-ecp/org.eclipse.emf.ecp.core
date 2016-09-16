@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -12,7 +12,7 @@
 package org.eclipse.emfforms.core.services.databinding.mapping.tests;
 
 import org.eclipse.emfforms.internal.core.services.databinding.mapping.EMFMappingValueProperty_Test;
-import org.eclipse.emfforms.internal.core.services.databinding.mapping.MappingDomainModelReferenceConverter_Test;
+import org.eclipse.emfforms.internal.core.services.databinding.mapping.MappingDomainModelReferenceSegmentConverter_Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
@@ -24,7 +24,7 @@ import org.junit.runners.Suite.SuiteClasses;
  *
  */
 @RunWith(Suite.class)
-@SuiteClasses({ EMFMappingValueProperty_Test.class, MappingDomainModelReferenceConverter_Test.class })
+@SuiteClasses({ EMFMappingValueProperty_Test.class, MappingDomainModelReferenceSegmentConverter_Test.class })
 public class AllTests {
 
 }
