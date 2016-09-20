@@ -18,6 +18,7 @@ import org.eclipse.emf.ecp.common.spi.asserts.Assert;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
@@ -44,7 +45,7 @@ public class StructuralChangeSegmentTesterFeature implements StructuralChangeSeg
 	 * @param segmentResolver The {@link EMFFormsSegmentResolver}
 	 */
 	@Reference(unbind = "-")
-	private void setEMFFormsSegmentResolver(EMFFormsSegmentResolver segmentResolver) {
+	protected void setEMFFormsSegmentResolver(EMFFormsSegmentResolver segmentResolver) {
 		this.segmentResolver = segmentResolver;
 	}
 
@@ -70,6 +71,10 @@ public class StructuralChangeSegmentTesterFeature implements StructuralChangeSeg
 		Assert.create(segment).notNull();
 		Assert.create(domainObject).notNull();
 		Assert.create(segment).ofClass(VFeatureDomainModelReferenceSegment.class);
+
+		if (notification.getRawNotification().isTouch()) {
+			return false;
+		}
 
 		/*
 		 * Check whether the notifying EObject and the EReference match the notification.
@@ -98,7 +103,10 @@ public class StructuralChangeSegmentTesterFeature implements StructuralChangeSeg
 	 */
 	@Override
 	public double isApplicable(VDomainModelReferenceSegment segment) {
-		Assert.create(segment).notNull();
+		if (segment == null) {
+			reportService.report(new AbstractReport("Warning: The given domain model reference segment was null.")); //$NON-NLS-1$
+			return NOT_APPLICABLE;
+		}
 		if (VFeatureDomainModelReferenceSegment.class.isInstance(segment)) {
 			return 1d;
 		}
