@@ -12,6 +12,7 @@
 package org.eclipse.emfforms.internal.core.services.structuralchange.index;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
@@ -19,6 +20,7 @@ import org.eclipse.emf.ecp.common.spi.asserts.Assert;
 import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
@@ -45,7 +47,7 @@ public class StructuralChangeSegmentTesterIndex implements StructuralChangeSegme
 	 * @param segmentResolver The {@link EMFFormsSegmentResolver}
 	 */
 	@Reference(unbind = "-")
-	private void setEMFFormsSegmentResolver(EMFFormsSegmentResolver segmentResolver) {
+	protected void setEMFFormsSegmentResolver(EMFFormsSegmentResolver segmentResolver) {
 		this.segmentResolver = segmentResolver;
 	}
 
@@ -65,12 +67,17 @@ public class StructuralChangeSegmentTesterIndex implements StructuralChangeSegme
 	 * @see org.eclipse.emfforms.spi.core.services.structuralchange.StructuralChangeSegmentTester#isStructureChanged(org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment,
 	 *      org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification)
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public boolean isStructureChanged(VDomainModelReferenceSegment segment, EObject domainObject,
 		ModelChangeNotification notification) {
 		Assert.create(segment).notNull();
 		Assert.create(domainObject).notNull();
 		Assert.create(segment).ofClass(VIndexDomainModelReferenceSegment.class);
+
+		if (notification.getRawNotification().isTouch()) {
+			return false;
+		}
 
 		final VIndexDomainModelReferenceSegment indexSegment = (VIndexDomainModelReferenceSegment) segment;
 
@@ -92,24 +99,39 @@ public class StructuralChangeSegmentTesterIndex implements StructuralChangeSegme
 			if (eReference.equals(notification.getStructuralFeature())
 				&& notification.getNotifier() == setting.getEObject()) {
 
+				final int event = notification.getRawNotification().getEventType();
 				final int position = notification.getRawNotification().getPosition();
+				final int index = indexSegment.getIndex();
+				final EList<Object> list = (EList<Object>) setting.getEObject().eGet(setting.getEStructuralFeature());
 
-				if (position == indexSegment.getIndex()) {
+				/*
+				 * For ADD and REMOVE only changes at the index's or a lower position in the list affect the indexed
+				 * position.
+				 * For ADD, after the element has been added, the list's size must be at least index+1. Otherwise, the
+				 * element at the indexed position still does not exist after the change.
+				 */
+				if (event == Notification.ADD && position <= index && index < list.size()) {
+					return true;
+				}
+				/*
+				 * For REMOVE, after the element has been removed, the list's size must be at least equal to the index.
+				 * Otherwise, the element at the indexed position did not exist before and after the change.
+				 */
+				if (event == Notification.REMOVE && position <= index && index <= list.size()) {
 					return true;
 				}
 
 				/*
 				 * For ADD_MANY, REMOVE_MANY or MOVE events the position of the notification will not be the segment's
-				 * index even if the element at the index changed. Therefore, we have to be overly careful and always
-				 * indicate a change when one of the events was triggered.
+				 * index even if the element at the index changed. Therefore, we have to be overly careful and
+				 * always indicate a change when one of the events was triggered.
 				 */
-				final int event = notification.getRawNotification().getEventType();
-				if (event == Notification.ADD_MANY || event == Notification.REMOVE_MANY || event == Notification.MOVE) {
+				if (event == Notification.ADD_MANY || event == Notification.REMOVE_MANY
+					|| event == Notification.MOVE) {
 					return true;
 				}
 			}
 		}
-
 		return false;
 	}
 
@@ -120,7 +142,10 @@ public class StructuralChangeSegmentTesterIndex implements StructuralChangeSegme
 	 */
 	@Override
 	public double isApplicable(VDomainModelReferenceSegment segment) {
-		Assert.create(segment).notNull();
+		if (segment == null) {
+			reportService.report(new AbstractReport("Warning: The given domain model reference segment was null.")); //$NON-NLS-1$
+			return NOT_APPLICABLE;
+		}
 		if (VIndexDomainModelReferenceSegment.class.isInstance(segment)) {
 			return 5d;
 		}
