@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.eclipse.emf.ecp</groupId>
+		<artifactId>ecp-tests-parent</artifactId>
+		<version>1.10.0-SNAPSHOT</version>
+		<relativePath>../../releng/org.eclipse.emf.ecp.releng.tests/</relativePath>
+	</parent>
+	<groupId>org.eclipse.emf.ecp</groupId>
+	<artifactId>org.eclipse.emfforms.core.services.structuralchange.index.tests</artifactId>
+	<version>1.10.0-SNAPSHOT</version>
+	<packaging>eclipse-test-plugin</packaging>
+	
+	<build>
+		<sourceDirectory>src</sourceDirectory>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>target-platform-configuration</artifactId>
+				<configuration>
+					<dependency-resolution>
+						<extraRequirements>
+							<requirement>
+								<type>p2-installable-unit</type>
+								<id>org.eclipse.emfforms.core.services.locale.default</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+							<requirement>
+								<type>p2-installable-unit</type>
+								<id>org.eclipse.equinox.ds</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+							<requirement>
+								<type>p2-installable-unit</type>
+								<id>org.eclipse.emfforms.localization</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+						</extraRequirements>
+					</dependency-resolution>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
