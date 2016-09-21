@@ -30,6 +30,8 @@
         transient="true" defaultValueLiteral="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="readonly" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
         defaultValueLiteral="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+       transient="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="diagnostic" eType="#//Diagnostic"
         transient="true" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="attachments" upperBound="-1"

@@ -309,6 +309,16 @@ public interface VViewPackage extends EPackage {
 	int ELEMENT__READONLY = 3;
 
 	/**
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int ELEMENT__LABEL = 4;
+
+	/**
 	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -316,7 +326,7 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ELEMENT__DIAGNOSTIC = 4;
+	int ELEMENT__DIAGNOSTIC = 5;
 
 	/**
 	 * The feature id for the '<em><b>Attachments</b></em>' containment reference list.
@@ -326,7 +336,7 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ELEMENT__ATTACHMENTS = 5;
+	int ELEMENT__ATTACHMENTS = 6;
 
 	/**
 	 * The feature id for the '<em><b>Uuid</b></em>' attribute.
@@ -337,7 +347,7 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ELEMENT__UUID = 6;
+	int ELEMENT__UUID = 7;
 
 	/**
 	 * The number of structural features of the '<em>Element</em>' class.
@@ -347,7 +357,7 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ELEMENT_FEATURE_COUNT = 7;
+	int ELEMENT_FEATURE_COUNT = 8;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -388,6 +398,16 @@ public interface VViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int VIEW__READONLY = ELEMENT__READONLY;
+
+	/**
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int VIEW__LABEL = ELEMENT__LABEL;
 
 	/**
 	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
@@ -526,6 +546,16 @@ public interface VViewPackage extends EPackage {
 	int CONTAINED_ELEMENT__READONLY = ELEMENT__READONLY;
 
 	/**
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int CONTAINED_ELEMENT__LABEL = ELEMENT__LABEL;
+
+	/**
 	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -617,6 +647,16 @@ public interface VViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int CONTAINER__READONLY = ELEMENT__READONLY;
+
+	/**
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int CONTAINER__LABEL = ELEMENT__LABEL;
 
 	/**
 	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
@@ -727,6 +767,16 @@ public interface VViewPackage extends EPackage {
 	int CONTAINED_CONTAINER__READONLY = CONTAINED_ELEMENT__READONLY;
 
 	/**
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int CONTAINED_CONTAINER__LABEL = CONTAINED_ELEMENT__LABEL;
+
+	/**
 	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 *
@@ -820,6 +870,16 @@ public interface VViewPackage extends EPackage {
 	 * @ordered
 	 */
 	int CONTROL__READONLY = CONTAINED_ELEMENT__READONLY;
+
+	/**
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int CONTROL__LABEL = CONTAINED_ELEMENT__LABEL;
 
 	/**
 	 * The feature id for the '<em><b>Diagnostic</b></em>' containment reference.
@@ -1191,6 +1251,19 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getElement_Readonly();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.spi.model.VElement#getLabel
+	 * <em>Label</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the attribute '<em>Label</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VElement#getLabel()
+	 * @see #getElement()
+	 * @generated
+	 */
+	EAttribute getElement_Label();
 
 	/**
 	 * Returns the meta object for the containment reference
@@ -1773,6 +1846,15 @@ public interface VViewPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute ELEMENT__READONLY = eINSTANCE.getElement_Readonly();
+
+		/**
+		 * The meta object literal for the '<em><b>Label</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EAttribute ELEMENT__LABEL = eINSTANCE.getElement_Label();
 
 		/**
 		 * The meta object literal for the '<em><b>Diagnostic</b></em>' containment reference feature.
