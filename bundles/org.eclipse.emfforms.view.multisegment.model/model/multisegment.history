@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ASCII"?>
+<history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:history="http://www.eclipse.org/emf/edapt/history/0.3" xmi:id="_bi88QIAFEeaTSpfGD05dRQ">
+  <releases xmi:id="_bi88QYAFEeaTSpfGD05dRQ">
+    <changes xsi:type="history:CompositeChange" xmi:id="_bi88QoAFEeaTSpfGD05dRQ">
+      <changes xsi:type="history:Create" xmi:id="_bi88Q4AFEeaTSpfGD05dRQ">
+        <element href="multisegment.ecore#/"/>
+        <changes xsi:type="history:Set" xmi:id="_bi88RIAFEeaTSpfGD05dRQ" featureName="name" dataValue="multisegment">
+          <element href="multisegment.ecore#/"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_bi88RYAFEeaTSpfGD05dRQ" featureName="nsURI" dataValue="http://org/eclipse/emfforms/view/multisegment/model/200">
+          <element href="multisegment.ecore#/"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_bi88RoAFEeaTSpfGD05dRQ" featureName="nsPrefix" dataValue="org.eclipse.emfforms.view.multisegment.model">
+          <element href="multisegment.ecore#/"/>
+        </changes>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_bi88R4AFEeaTSpfGD05dRQ" referenceName="eClassifiers">
+        <target href="multisegment.ecore#/"/>
+        <element href="multisegment.ecore#//MultiDomainModelReferenceSegment"/>
+        <changes xsi:type="history:Set" xmi:id="_bi88SIAFEeaTSpfGD05dRQ" featureName="name" dataValue="MultiDomainModelReferenceSegment">
+          <element href="multisegment.ecore#//MultiDomainModelReferenceSegment"/>
+        </changes>
+        <changes xsi:type="history:Add" xmi:id="_bi88SYAFEeaTSpfGD05dRQ" featureName="eSuperTypes">
+          <element href="multisegment.ecore#//MultiDomainModelReferenceSegment"/>
+          <referenceValue href="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//FeatureDomainModelReferenceSegment"/>
+        </changes>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_bi88SoAFEeaTSpfGD05dRQ" referenceName="eStructuralFeatures">
+        <target href="multisegment.ecore#//MultiDomainModelReferenceSegment"/>
+        <element href="multisegment.ecore#//MultiDomainModelReferenceSegment/childDomainModelReferences"/>
+        <changes xsi:type="history:Set" xmi:id="_bi88S4AFEeaTSpfGD05dRQ" featureName="name" dataValue="childDomainModelReferences">
+          <element href="multisegment.ecore#//MultiDomainModelReferenceSegment/childDomainModelReferences"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_bi88TIAFEeaTSpfGD05dRQ" featureName="upperBound" dataValue="-1" oldDataValue="1">
+          <element href="multisegment.ecore#//MultiDomainModelReferenceSegment/childDomainModelReferences"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_bi88TYAFEeaTSpfGD05dRQ" featureName="containment" dataValue="true" oldDataValue="false">
+          <element href="multisegment.ecore#//MultiDomainModelReferenceSegment/childDomainModelReferences"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_bi88ToAFEeaTSpfGD05dRQ" featureName="eType">
+          <element href="multisegment.ecore#//MultiDomainModelReferenceSegment/childDomainModelReferences"/>
+          <referenceValue href="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"/>
+        </changes>
+      </changes>
+    </changes>
+  </releases>
+</history:History>
