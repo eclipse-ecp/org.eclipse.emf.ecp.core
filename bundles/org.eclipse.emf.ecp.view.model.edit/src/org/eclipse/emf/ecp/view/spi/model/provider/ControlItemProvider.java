@@ -58,8 +58,8 @@ public class ControlItemProvider extends ContainedElementItemProvider {
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addLabelAlignmentPropertyDescriptor(object);
 			addDomainModelReferencePropertyDescriptor(object);
+			addLabelAlignmentPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -154,8 +154,8 @@ public class ControlItemProvider extends ContainedElementItemProvider {
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(VControl.class)) {
-		case VViewPackage.CONTROL__LABEL_ALIGNMENT:
 		case VViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE:
+		case VViewPackage.CONTROL__LABEL_ALIGNMENT:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
 		}
@@ -176,6 +176,9 @@ public class ControlItemProvider extends ContainedElementItemProvider {
 
 		newChildDescriptors.add(createChildParameter(VViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCE,
 			VViewFactory.eINSTANCE.createDomainModelReference()));
+
+		newChildDescriptors.add(createChildParameter(VViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCE,
+			VViewFactory.eINSTANCE.createFeaturePathDomainModelReference()));
 	}
 
 }
