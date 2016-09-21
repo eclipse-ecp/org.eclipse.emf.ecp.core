@@ -71,10 +71,10 @@ public class ElementItemProvider
 			super.getPropertyDescriptors(object);
 
 			addNamePropertyDescriptor(object);
-			addLabelPropertyDescriptor(object);
 			addVisiblePropertyDescriptor(object);
 			addEnabledPropertyDescriptor(object);
 			addReadonlyPropertyDescriptor(object);
+			addLabelPropertyDescriptor(object);
 			addUuidPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;

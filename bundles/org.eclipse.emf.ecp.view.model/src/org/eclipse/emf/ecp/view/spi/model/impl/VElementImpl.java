@@ -41,6 +41,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl#isVisible <em>Visible</em>}</li>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl#isEnabled <em>Enabled</em>}</li>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl#isReadonly <em>Readonly</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl#getLabel <em>Label</em>}</li>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl#getDiagnostic <em>Diagnostic</em>}</li>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl#getAttachments <em>Attachments</em>}</li>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VElementImpl#getUuid <em>Uuid</em>}</li>
@@ -136,6 +137,28 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 	 * @ordered
 	 */
 	protected boolean readonly = READONLY_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see #getLabel()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String LABEL_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getLabel() <em>Label</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see #getLabel()
+	 * @generated
+	 * @ordered
+	 */
+	protected String label = LABEL_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getDiagnostic() <em>Diagnostic</em>}' containment reference.
@@ -311,6 +334,29 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 	 * 
 	 * @generated
 	 */
+	public String getLabel() {
+		return label;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public void setLabel(String newLabel) {
+		String oldLabel = label;
+		label = newLabel;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, VViewPackage.ELEMENT__LABEL, oldLabel, label));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
 	@Override
 	public VDiagnostic getDiagnostic() {
 		return diagnostic;
@@ -436,6 +482,8 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 			return isEnabled();
 		case VViewPackage.ELEMENT__READONLY:
 			return isReadonly();
+		case VViewPackage.ELEMENT__LABEL:
+			return getLabel();
 		case VViewPackage.ELEMENT__DIAGNOSTIC:
 			return getDiagnostic();
 		case VViewPackage.ELEMENT__ATTACHMENTS:
@@ -467,6 +515,9 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 			return;
 		case VViewPackage.ELEMENT__READONLY:
 			setReadonly((Boolean) newValue);
+			return;
+		case VViewPackage.ELEMENT__LABEL:
+			setLabel((String) newValue);
 			return;
 		case VViewPackage.ELEMENT__DIAGNOSTIC:
 			setDiagnostic((VDiagnostic) newValue);
@@ -503,6 +554,9 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 		case VViewPackage.ELEMENT__READONLY:
 			setReadonly(READONLY_EDEFAULT);
 			return;
+		case VViewPackage.ELEMENT__LABEL:
+			setLabel(LABEL_EDEFAULT);
+			return;
 		case VViewPackage.ELEMENT__DIAGNOSTIC:
 			setDiagnostic((VDiagnostic) null);
 			return;
@@ -533,6 +587,8 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 			return enabled != ENABLED_EDEFAULT;
 		case VViewPackage.ELEMENT__READONLY:
 			return readonly != READONLY_EDEFAULT;
+		case VViewPackage.ELEMENT__LABEL:
+			return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
 		case VViewPackage.ELEMENT__DIAGNOSTIC:
 			return diagnostic != null;
 		case VViewPackage.ELEMENT__ATTACHMENTS:
@@ -563,6 +619,8 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 		result.append(enabled);
 		result.append(", readonly: "); //$NON-NLS-1$
 		result.append(readonly);
+		result.append(", label: "); //$NON-NLS-1$
+		result.append(label);
 		result.append(", uuid: "); //$NON-NLS-1$
 		result.append(uuid);
 		result.append(')');

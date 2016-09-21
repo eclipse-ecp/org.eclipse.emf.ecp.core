@@ -341,9 +341,19 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 * 
 	 * @generated
 	 */
+	public EAttribute getElement_Label() {
+		return (EAttribute) elementEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
 	@Override
 	public EReference getElement_Diagnostic() {
-		return (EReference) elementEClass.getEStructuralFeatures().get(4);
+		return (EReference) elementEClass.getEStructuralFeatures().get(5);
 	}
 
 	/**
@@ -354,7 +364,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 */
 	@Override
 	public EReference getElement_Attachments() {
-		return (EReference) elementEClass.getEStructuralFeatures().get(5);
+		return (EReference) elementEClass.getEStructuralFeatures().get(6);
 	}
 
 	/**
@@ -366,7 +376,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 	 */
 	@Override
 	public EAttribute getElement_Uuid() {
-		return (EAttribute) elementEClass.getEStructuralFeatures().get(6);
+		return (EAttribute) elementEClass.getEStructuralFeatures().get(7);
 	}
 
 	/**
@@ -827,6 +837,7 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 		createEAttribute(elementEClass, ELEMENT__VISIBLE);
 		createEAttribute(elementEClass, ELEMENT__ENABLED);
 		createEAttribute(elementEClass, ELEMENT__READONLY);
+		createEAttribute(elementEClass, ELEMENT__LABEL);
 		createEReference(elementEClass, ELEMENT__DIAGNOSTIC);
 		createEReference(elementEClass, ELEMENT__ATTACHMENTS);
 		createEAttribute(elementEClass, ELEMENT__UUID);
@@ -957,6 +968,8 @@ public class VViewPackageImpl extends EPackageImpl implements VViewPackage {
 			IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getElement_Readonly(), theEcorePackage.getEBoolean(), "readonly", "false", 0, 1, VElement.class, //$NON-NLS-1$ //$NON-NLS-2$
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getElement_Label(), ecorePackage.getEString(), "label", null, 0, 1, VElement.class, IS_TRANSIENT, //$NON-NLS-1$
+			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getElement_Diagnostic(), this.getDiagnostic(), null, "diagnostic", null, 0, 1, VElement.class, //$NON-NLS-1$
 			IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
