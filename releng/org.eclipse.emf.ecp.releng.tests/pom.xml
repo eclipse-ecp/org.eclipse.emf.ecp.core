@@ -141,6 +141,7 @@
 		<module>../../tests/org.eclipse.emfforms.core.services.domainexpander.index.tests</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.domainexpander.keyattribute.tests</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.domainexpander.mapping.tests</module>
+		<module>../../tests/org.eclipse.emfforms.core.services.structuralchange.tests</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.structuralchange.default.tests</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.structuralchange.index.tests</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.structuralchange.keyattribute.tests</module>
