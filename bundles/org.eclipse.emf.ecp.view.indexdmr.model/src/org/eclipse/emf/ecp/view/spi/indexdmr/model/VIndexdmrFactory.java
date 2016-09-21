@@ -49,6 +49,7 @@ public interface VIndexdmrFactory extends EFactory {
 	 *
 	 * @return a new object of class '<em>Index Domain Model Reference Segment</em>'.
 	 * @generated
+	 * @since 2.0
 	 */
 	VIndexDomainModelReferenceSegment createIndexDomainModelReferenceSegment();
 
