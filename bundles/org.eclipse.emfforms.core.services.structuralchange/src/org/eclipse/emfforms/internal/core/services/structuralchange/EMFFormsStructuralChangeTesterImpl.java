@@ -74,7 +74,7 @@ public class EMFFormsStructuralChangeTesterImpl implements EMFFormsStructuralCha
 	 * @param segmentResolver The {@link EMFFormsSegmentResolver}
 	 */
 	@Reference(unbind = "-")
-	private void setEMFFormsSegmentResolver(EMFFormsSegmentResolver segmentResolver) {
+	protected void setEMFFormsSegmentResolver(EMFFormsSegmentResolver segmentResolver) {
 		this.segmentResolver = segmentResolver;
 	}
 
