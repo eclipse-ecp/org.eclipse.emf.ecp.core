@@ -29,6 +29,7 @@ import org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment;
  * @see org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexdmrPackage#getIndexDomainModelReferenceSegment()
  * @model
  * @generated
+ * @since 2.0
  */
 public interface VIndexDomainModelReferenceSegment extends VFeatureDomainModelReferenceSegment {
 	/**

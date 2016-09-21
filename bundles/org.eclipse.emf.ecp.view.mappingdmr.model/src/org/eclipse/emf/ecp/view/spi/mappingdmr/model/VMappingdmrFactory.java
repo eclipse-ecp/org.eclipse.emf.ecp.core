@@ -46,6 +46,7 @@ public interface VMappingdmrFactory extends EFactory {
 	 *
 	 * @return a new object of class '<em>Mapping Domain Model Reference Segment</em>'.
 	 * @generated
+	 * @since 2.0
 	 */
 	VMappingDomainModelReferenceSegment createMappingDomainModelReferenceSegment();
 
