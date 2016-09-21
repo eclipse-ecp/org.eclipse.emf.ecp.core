@@ -248,6 +248,10 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.indexdmr.model.edit</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.indexdmr.tooling</module>
 		
+		<!-- Multi Segment -->
+		<module>../../bundles/org.eclipse.emfforms.view.multisegment.model</module>
+		<module>../../bundles/org.eclipse.emfforms.view.multisegment.model.edit</module>
+
 		<!-- Migration -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.migrator</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.edapt</module>
