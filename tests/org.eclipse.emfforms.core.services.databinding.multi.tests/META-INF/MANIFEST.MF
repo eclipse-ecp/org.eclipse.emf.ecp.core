@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Multi Segment Databinding Services Tests
+Bundle-SymbolicName: org.eclipse.emfforms.core.services.databinding.multi.tests;singleton:=true
+Bundle-Version: 2.0.0.qualifier
+Bundle-Vendor: Eclipse Modeling Project
+Fragment-Host: org.eclipse.emfforms.core.services.databinding.multi;bundle-version="[2.0.0,3.0.0)"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: org.eclipse.emfforms.core.services.databinding.testmodel;bundle-version="[2.0.0,3.0.0)",
+ org.junit;bundle-version="[4.11.0,5.0.0)",
+ org.mockito.mockito-core-hamcrest-modified;bundle-version="[1.9.5,2.0.0)",
+ org.objenesis;bundle-version="[1.0.0,2.0.0)",
+ org.eclipse.emf.ecp.test.common;bundle-version="[2.0.0,3.0.0)"
+Export-Package: org.eclipse.emfforms.core.services.databinding.multi.tests;version="2.0.0";x-internal:=true,
+ org.eclipse.emfforms.internal.core.services.databinding.multi;version="2.0.0";x-internal:=true
+Import-Package: org.osgi.framework;version="[1.2.0,2.0.0)"
