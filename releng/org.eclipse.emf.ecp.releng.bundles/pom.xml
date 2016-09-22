@@ -270,6 +270,7 @@
 		<module>../../bundles/org.eclipse.emfforms.core.services.databinding.index</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.databinding.keyattribute</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.databinding.mapping</module>
+		<module>../../bundles/org.eclipse.emfforms.core.services.databinding.multi</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.domainexpander.default</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.domainexpander.index</module>
 		<module>../../bundles/org.eclipse.emfforms.core.services.domainexpander.keyattribute</module>
