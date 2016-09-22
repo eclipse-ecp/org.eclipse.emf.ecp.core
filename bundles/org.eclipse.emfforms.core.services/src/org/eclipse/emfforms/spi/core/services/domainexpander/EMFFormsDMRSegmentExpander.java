@@ -50,7 +50,9 @@ public interface EMFFormsDMRSegmentExpander {
 	 *            prepared.
 	 * @param domainObject The {@link EObject domain object} to prepare.
 	 * @return The new target of the segment's feature. If an {@link EObject} was created, it is returned,
-	 *         otherwise the already existing target is returned. Does not return <code>null</code>.
+	 *         otherwise the already existing target is returned. May return <strong>null</strong>. However, this will
+	 *         cause
+	 *         the domain expansion process to fail except if the given segment was the DMR's last segment.
 	 * @throws EMFFormsExpandingFailedException if the domain expansion fails.
 	 */
 	EObject prepareDomainObject(VDomainModelReferenceSegment segment, EObject domainObject)
@@ -67,4 +69,12 @@ public interface EMFFormsDMRSegmentExpander {
 	 *         applicable.
 	 */
 	double isApplicable(VDomainModelReferenceSegment segment);
+
+	/**
+	 * Returns whether a supported {@link VDomainModelReferenceSegment segment} needs to be expanded when it is the last
+	 * segment of a {@link VDomainModelReferenceSegment}.
+	 *
+	 * @return Whether the last segment needs to be expanded
+	 */
+	boolean needsToExpandLastSegment();
 }
