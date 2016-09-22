@@ -70,6 +70,7 @@ public class EMFFormsDomainExpanderImpl_Test {
 		final EMFFormsDMRSegmentExpander segmentExpander = mock(EMFFormsDMRSegmentExpander.class);
 		when(segmentExpander.isApplicable(any(VDomainModelReferenceSegment.class))).thenReturn(1d);
 		when(segmentExpander.prepareDomainObject(segment1, domainObject)).thenReturn(resultForSegment1);
+		when(segmentExpander.prepareDomainObject(segment2, resultForSegment1)).thenReturn(mock(EObject.class));
 
 		domainExpander.addEMFFormsDMRSegmentExpander(segmentExpander);
 
@@ -78,6 +79,42 @@ public class EMFFormsDomainExpanderImpl_Test {
 		verify(segmentExpander).prepareDomainObject(segment1, domainObject);
 		verify(segmentExpander).prepareDomainObject(segment2, resultForSegment1);
 		verify(segmentExpander, never()).prepareDomainObject(eq(segment3), any(EObject.class));
+	}
+
+	/**
+	 * Test method for
+	 * {@link org.eclipse.emfforms.internal.core.services.domainexpander.defaultheuristic.EMFFormsDomainExpanderImpl#prepareDomainObject(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EObject)}
+	 * .
+	 *
+	 * @throws EMFFormsExpandingFailedException
+	 */
+	@Test
+	public void testPrepareDomainObjectLastSegmentNeedsExpansion() throws EMFFormsExpandingFailedException {
+
+		final VDomainModelReference dmr = VViewFactory.eINSTANCE.createDomainModelReference();
+		final VDomainModelReferenceSegment segment1 = VViewFactory.eINSTANCE.createFeatureDomainModelReferenceSegment();
+		final VDomainModelReferenceSegment segment2 = VViewFactory.eINSTANCE.createFeatureDomainModelReferenceSegment();
+		final VDomainModelReferenceSegment segment3 = VViewFactory.eINSTANCE.createFeatureDomainModelReferenceSegment();
+		dmr.getSegments().add(segment1);
+		dmr.getSegments().add(segment2);
+		dmr.getSegments().add(segment3);
+		final EObject domainObject = mock(EObject.class);
+		final EObject resultForSegment1 = mock(EObject.class);
+		final EObject resultForSegment2 = mock(EObject.class);
+
+		final EMFFormsDMRSegmentExpander segmentExpander = mock(EMFFormsDMRSegmentExpander.class);
+		when(segmentExpander.isApplicable(any(VDomainModelReferenceSegment.class))).thenReturn(1d);
+		when(segmentExpander.needsToExpandLastSegment()).thenReturn(true);
+		when(segmentExpander.prepareDomainObject(segment1, domainObject)).thenReturn(resultForSegment1);
+		when(segmentExpander.prepareDomainObject(segment2, resultForSegment1)).thenReturn(resultForSegment2);
+
+		domainExpander.addEMFFormsDMRSegmentExpander(segmentExpander);
+
+		domainExpander.prepareDomainObject(dmr, domainObject);
+
+		verify(segmentExpander).prepareDomainObject(segment1, domainObject);
+		verify(segmentExpander).prepareDomainObject(segment2, resultForSegment1);
+		verify(segmentExpander).prepareDomainObject(segment3, resultForSegment2);
 	}
 
 	/**
@@ -128,6 +165,8 @@ public class EMFFormsDomainExpanderImpl_Test {
 		dmr.getSegments().add(segment1);
 		dmr.getSegments().add(segment2);
 
+		when(segmentExpander3.prepareDomainObject(eq(segment1), any(EObject.class))).thenReturn(mock(EObject.class));
+
 		domainExpander.prepareDomainObject(dmr, mock(EObject.class));
 		verify(segmentExpander1, atLeastOnce()).isApplicable(segment1);
 		verify(segmentExpander2, atLeastOnce()).isApplicable(segment1);
@@ -160,6 +199,8 @@ public class EMFFormsDomainExpanderImpl_Test {
 		dmr.getSegments().add(segment1);
 		dmr.getSegments().add(segment2);
 		final EObject domainObject = mock(EObject.class);
+
+		when(segmentExpander3.prepareDomainObject(eq(segment1), any(EObject.class))).thenReturn(mock(EObject.class));
 
 		domainExpander.prepareDomainObject(dmr, domainObject);
 		verify(segmentExpander3).prepareDomainObject(segment1, domainObject);

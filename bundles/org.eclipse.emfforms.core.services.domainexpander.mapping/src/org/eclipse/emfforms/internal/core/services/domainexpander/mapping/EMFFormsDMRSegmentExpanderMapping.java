@@ -185,4 +185,14 @@ public class EMFFormsDMRSegmentExpanderMapping implements EMFFormsDMRSegmentExpa
 				"The segment's structural feature must reference a map."); //$NON-NLS-1$
 		}
 	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emfforms.spi.core.services.domainexpander.EMFFormsDMRSegmentExpander#needsToExpandLastSegment()
+	 */
+	@Override
+	public boolean needsToExpandLastSegment() {
+		return false;
+	}
 }
