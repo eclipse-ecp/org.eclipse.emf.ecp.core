@@ -140,4 +140,14 @@ public class EMFFormsDMRSegmentExpanderIndex implements EMFFormsDMRSegmentExpand
 		return NOT_APPLICABLE;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emfforms.spi.core.services.domainexpander.EMFFormsDMRSegmentExpander#needsToExpandLastSegment()
+	 */
+	@Override
+	public boolean needsToExpandLastSegment() {
+		return false;
+	}
+
 }

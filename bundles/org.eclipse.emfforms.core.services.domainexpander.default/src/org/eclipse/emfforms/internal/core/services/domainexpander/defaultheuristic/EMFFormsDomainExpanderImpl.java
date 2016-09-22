@@ -76,10 +76,18 @@ public class EMFFormsDomainExpanderImpl implements EMFFormsDomainExpander {
 		}
 
 		EObject currentDomainObject = domainObject;
-		// the last segment is not expanded
-		for (int i = 0; i < segments.size() - 1; i++) {
+		for (int i = 0; i < segments.size(); i++) {
+			if (currentDomainObject == null) {
+				throw new EMFFormsExpandingFailedException(
+					"Could not finish expansion because a segment could not be expanded."); //$NON-NLS-1$
+			}
 			final VDomainModelReferenceSegment segment = segments.get(i);
 			final EMFFormsDMRSegmentExpander expander = getBestSegmentExpander(segment);
+
+			// Only expand the last segment if it is necessary
+			if (i == segments.size() - 1 && !expander.needsToExpandLastSegment()) {
+				break;
+			}
 			currentDomainObject = expander.prepareDomainObject(segment, currentDomainObject);
 		}
 	}
