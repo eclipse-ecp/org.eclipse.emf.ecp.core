@@ -1,17 +1,16 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: EMFForms Mapping Provider Table Control
-Bundle-SymbolicName: org.eclipse.emfforms.core.services.mappingprovider.table
+Bundle-Name: EMFForms Mapping Provider Multi
+Bundle-SymbolicName: org.eclipse.emfforms.core.services.mappingprovider.multi
 Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emfforms.internal.core.services.mappingprovider.table;version="2.0.0";x-internal:=true
+Export-Package: org.eclipse.emfforms.internal.core.services.mappingprovider.multi;version="2.0.0";x-internal:=true
 Require-Bundle: org.eclipse.emf.ecp.common;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.emfforms.core.services;bundle-version="[2.0.0,3.0.0)",
- org.eclipse.emf.ecp.view.table.model;bundle-version="[2.0.0,3.0.0)"
+ org.eclipse.emfforms.view.multisegment.model;bundle-version="[2.0.0,3.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Import-Package: org.eclipse.emf.ecp.view.spi.provider;version="[2.0.0,3.0.0)",
- org.eclipse.emfforms.spi.core.services.databinding.emf;version="[2.0.0,3.0.0)",
+Import-Package: org.eclipse.emfforms.spi.core.services.databinding.emf;version="[2.0.0,3.0.0)",
  org.osgi.framework;version="[1.3.0,2.0.0)",
  org.osgi.service.component.annotations;version="[1.2.0,2.0.0)";resolution:=optional
-Service-Component: OSGI-INF/EMFFormsMappingProviderTable.xml
+Service-Component: OSGI-INF/EMFFormsMappingProviderMulti.xml
 Bundle-ActivationPolicy: lazy
