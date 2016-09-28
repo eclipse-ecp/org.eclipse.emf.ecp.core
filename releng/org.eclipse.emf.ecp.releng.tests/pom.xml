@@ -143,6 +143,7 @@
 		<module>../../tests/org.eclipse.emfforms.core.services.domainexpander.keyattribute.tests</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.domainexpander.mapping.tests</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.domainexpander.multi.tests</module>
+		<module>../../tests/org.eclipse.emfforms.core.services.mappingprovider.default.tests</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.mappingprovider.multi.tests</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.structuralchange.tests</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.structuralchange.default.tests</module>
