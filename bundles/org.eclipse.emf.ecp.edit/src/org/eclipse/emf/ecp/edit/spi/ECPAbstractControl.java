@@ -197,6 +197,7 @@ public abstract class ECPAbstractControl {
 	 */
 	public final Setting getFirstSetting() {
 		if (firstSetting == null) {
+			@SuppressWarnings("rawtypes")
 			IObservableValue observableValue;
 			try {
 				observableValue = Activator.getDefault().getEMFFormsDatabinding()
@@ -224,6 +225,7 @@ public abstract class ECPAbstractControl {
 	 */
 	public final EStructuralFeature getFirstStructuralFeature() {
 		if (firstFeature == null) {
+			@SuppressWarnings("rawtypes")
 			IValueProperty valueProperty;
 			try {
 				valueProperty = Activator.getDefault().getEMFFormsDatabinding()
@@ -371,7 +373,7 @@ public abstract class ECPAbstractControl {
 	 * @param diagnostic of type Diagnostic
 	 * @deprecated
 	 * @since 1.2
-	 * **/
+	 **/
 	@Deprecated
 	public void handleValidation(Diagnostic diagnostic) {
 		// do nothing

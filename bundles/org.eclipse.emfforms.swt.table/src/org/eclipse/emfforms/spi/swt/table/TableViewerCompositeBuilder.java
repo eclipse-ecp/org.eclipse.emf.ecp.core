@@ -74,7 +74,7 @@ public interface TableViewerCompositeBuilder {
 	/**
 	 * Called after {@link #createCompositeLayout(Composite)}.
 	 *
-	 * @return the parent {@link Composite} for the {@link org.eclipse.jface.viewers.TableViewer TableViewer}.
+	 * @return the parent {@link Composite} for the {@link org.eclipse.jface.viewers.GridTableViewer TableViewer}.
 	 */
 	Composite getViewerComposite();
 

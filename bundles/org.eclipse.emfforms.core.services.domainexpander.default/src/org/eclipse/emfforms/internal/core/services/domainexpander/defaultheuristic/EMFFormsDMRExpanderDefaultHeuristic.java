@@ -42,7 +42,7 @@ public class EMFFormsDMRExpanderDefaultHeuristic implements EMFFormsDMRExpander 
 	 *
 	 * @param reportService The {@link ReportService}
 	 */
-	@Reference
+	@Reference(unbind = "-")
 	protected void setReportService(ReportService reportService) {
 		this.reportService = reportService;
 
@@ -68,8 +68,8 @@ public class EMFFormsDMRExpanderDefaultHeuristic implements EMFFormsDMRExpander 
 				"The domain model feature of the given feature path DMR must not be null."); //$NON-NLS-1$
 		}
 		EObject currentResolvedEObject = domainObject;
-		final ArrayList<EReference> currentLeftReferences = new
-			ArrayList<EReference>(featurePathDMR.getDomainModelEReferencePath());
+		final ArrayList<EReference> currentLeftReferences = new ArrayList<EReference>(
+			featurePathDMR.getDomainModelEReferencePath());
 		for (final EReference eReference : featurePathDMR.getDomainModelEReferencePath()) {
 			if (!currentResolvedEObject.eClass().getEAllReferences().contains(eReference)) {
 				throw new EMFFormsExpandingFailedException(

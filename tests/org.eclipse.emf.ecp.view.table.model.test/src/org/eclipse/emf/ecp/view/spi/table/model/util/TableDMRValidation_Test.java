@@ -35,7 +35,6 @@ import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
-import org.eclipse.emf.ecp.view.spi.model.util.ViewValidator;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
 import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
@@ -339,7 +338,7 @@ public class TableDMRValidation_Test {
 		assertFalse(validate());
 		if (createChain) {
 			assertEquals(Diagnostic.WARNING, chain.getSeverity());
-			assertChain(controlDMRWarning(), tableColumns());
+			assertChain(tableColumns());
 		}
 	}
 
@@ -391,20 +390,6 @@ public class TableDMRValidation_Test {
 		if (createChain) {
 			assertEquals(Diagnostic.ERROR, chain.getSeverity());
 			assertChain(controlDMR(), tableDMR(), tableDMRPath());
-		}
-	}
-
-	@Test
-	public void testBadRootEClassGoodRootEClassInContext() {
-		okColumn1();
-		okColumn2();
-		okTable();
-		view.setRootEClass(BowlingPackage.eINSTANCE.getFan());
-		context.put(ViewValidator.ECLASS_KEY, BowlingPackage.eINSTANCE.getReferee());
-		assertTrue(validate());
-		if (createChain) {
-			assertEquals(Diagnostic.OK, chain.getSeverity());
-			assertChain();
 		}
 	}
 

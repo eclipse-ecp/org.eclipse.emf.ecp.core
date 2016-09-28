@@ -98,7 +98,7 @@ public class DateTimeControlSWTRenderer extends SimpleControlSWTControlSWTRender
 			}
 			return super.doSet(observableValue, value);
 		}
-	};
+	}
 
 	private final EMFFormsLocalizationService localizationService;
 

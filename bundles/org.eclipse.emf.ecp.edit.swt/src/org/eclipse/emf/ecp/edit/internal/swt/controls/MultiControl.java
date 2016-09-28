@@ -271,6 +271,61 @@ public abstract class MultiControl extends SWTControl {
 	 *
 	 */
 	private final class ListChangeListener implements IListChangeListener {
+		/**
+		 * @author jonas
+		 *
+		 */
+		private final class ListDiffVisitorExtension extends ListDiffVisitor {
+			private int widthBeforeChange = -1; // initial negative value
+
+			@Override
+			public void handleRemove(int index, Object element) {
+				updateIndicesAfterRemove(index);
+				triggerScrollbarUpdate();
+				updateTargets();
+			}
+
+			private void updateTargets() {
+				for (final WidgetWrapper widgetWrapper : widgetWrappers) {
+					widgetWrapper.widget.getDataBindingContext().updateTargets();
+				}
+			}
+
+			@Override
+			public void handleAdd(int index, Object element) {
+				if (sectionComposite.isDisposed()) {
+					return;
+				}
+				addControl();
+
+				sectionComposite.layout();
+				triggerScrollbarUpdate();
+				updateTargets();
+			}
+
+			@Override
+			public void handleMove(int oldIndex, int newIndex, Object element) {
+				updateTargets();
+			}
+
+			@Override
+			public void handleReplace(int index, Object oldElement, Object newElement) {
+				widgetWrappers.get(index).widget.getDataBindingContext().updateTargets();
+			}
+
+			private void triggerScrollbarUpdate() {
+				if (sectionComposite.isDisposed()) {
+					return;
+				}
+				final int widthAfterChange = sectionComposite.getSize().x;
+				if (widthBeforeChange != widthAfterChange) {
+					scrolledComposite
+						.setMinHeight(sectionComposite.computeSize(widthAfterChange, SWT.DEFAULT).y);
+					widthBeforeChange = widthAfterChange;
+				}
+			}
+		}
+
 		private final ScrolledComposite scrolledComposite;
 
 		/**
@@ -283,57 +338,7 @@ public abstract class MultiControl extends SWTControl {
 		@Override
 		public void handleListChange(ListChangeEvent event) {
 			final ListDiff diff = event.diff;
-			diff.accept(new ListDiffVisitor() {
-
-				private int widthBeforeChange = -1; // initial negative value
-
-				@Override
-				public void handleRemove(int index, Object element) {
-					updateIndicesAfterRemove(index);
-					triggerScrollbarUpdate();
-					updateTargets();
-				}
-
-				private void updateTargets() {
-					for (final WidgetWrapper widgetWrapper : widgetWrappers) {
-						widgetWrapper.widget.getDataBindingContext().updateTargets();
-					}
-				}
-
-				@Override
-				public void handleAdd(int index, Object element) {
-					if (sectionComposite.isDisposed()) {
-						return;
-					}
-					addControl();
-
-					sectionComposite.layout();
-					triggerScrollbarUpdate();
-					updateTargets();
-				}
-
-				@Override
-				public void handleMove(int oldIndex, int newIndex, Object element) {
-					updateTargets();
-				}
-
-				@Override
-				public void handleReplace(int index, Object oldElement, Object newElement) {
-					widgetWrappers.get(index).widget.getDataBindingContext().updateTargets();
-				}
-
-				private void triggerScrollbarUpdate() {
-					if (sectionComposite.isDisposed()) {
-						return;
-					}
-					final int widthAfterChange = sectionComposite.getSize().x;
-					if (widthBeforeChange != widthAfterChange) {
-						scrolledComposite
-							.setMinHeight(sectionComposite.computeSize(widthAfterChange, SWT.DEFAULT).y);
-						widthBeforeChange = widthAfterChange;
-					}
-				}
-			});
+			diff.accept(new ListDiffVisitorExtension());
 		}
 	}
 

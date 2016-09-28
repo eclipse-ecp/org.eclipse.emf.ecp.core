@@ -71,6 +71,7 @@ import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
@@ -540,10 +541,10 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 			final EAttribute attribute = EAttribute.class.cast(list.getElementType());
 
 			final EditingDomain editingDomain = getEditingDomain(eObject);
-			final int currentIndex = tableViewer.getTable().getSelectionIndex();
-			if (currentIndex >= 0) {
+			final IStructuredSelection selection = tableViewer.getStructuredSelection();
+			if (!selection.isEmpty()) {
 				editingDomain.getCommandStack().execute(RemoveCommand.create(editingDomain, eObject, attribute,
-					tableViewer.getElementAt(currentIndex)));
+					selection.toList()));
 			}
 		}
 	}

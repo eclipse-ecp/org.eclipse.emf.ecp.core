@@ -218,6 +218,7 @@ public final class ControlFactoryImpl implements ECPControlFactory {
 		if (domainModelReference == null) {
 			return bestCandidate;
 		}
+		@SuppressWarnings("rawtypes")
 		IObservableValue observableValue;
 		try {
 			observableValue = Activator.getDefault().getEMFFormsDatabinding()

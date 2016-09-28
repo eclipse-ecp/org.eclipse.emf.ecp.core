@@ -32,10 +32,10 @@ import org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration;
  *        <ul>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VWidthConfigurationImpl#getColumnDomainReference
  *        <em>Column Domain Reference</em>}</li>
- *        <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VWidthConfigurationImpl#getWeight <em>Weight</em>}
- *        </li>
- *        <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VWidthConfigurationImpl#getMinWidth
- *        <em>Min Width</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VWidthConfigurationImpl#getWeight
+ *        <em>Weight</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VWidthConfigurationImpl#getMinWidth <em>Min
+ *        Width</em>}</li>
  *        </ul>
  *
  * @generated

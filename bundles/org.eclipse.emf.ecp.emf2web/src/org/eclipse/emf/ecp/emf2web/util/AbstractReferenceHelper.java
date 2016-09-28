@@ -112,7 +112,7 @@ public abstract class AbstractReferenceHelper implements ReferenceHelper {
 		final String firstPath = path.split("/")[1]; //$NON-NLS-1$
 		final String editPath = firstPath + ".edit/plugin.properties"; //$NON-NLS-1$
 		final IResource member = ResourcesPlugin.getWorkspace().getRoot().findMember(editPath);
-		if (member.exists()) {
+		if (member != null && member.exists()) {
 			final File file = member.getLocation().toFile();
 			final Properties p = new Properties();
 			FileInputStream fis = null;

@@ -45,7 +45,7 @@ public class AutocompleteTextControlSWTRendererService implements EMFFormsDIRend
 	 *
 	 * @param databinding service
 	 */
-	@Reference
+	@Reference(unbind = "-")
 	public void setDatabinding(EMFFormsDatabinding databinding) {
 		this.databinding = databinding;
 	}

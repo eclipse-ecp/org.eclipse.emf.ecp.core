@@ -9,13 +9,13 @@ Export-Package: org.eclipse.emf.ecp.emf2web.ui.json;version="1.0.0";x-internal:=
  org.eclipse.emf.ecp.emf2web.ui.json.internal.handler;version="1.0.0";x-internal:=true,
  org.eclipse.emf.ecp.emf2web.ui.json.internal.messages;version="1.0.0";x-internal:=true
 Require-Bundle: org.eclipse.ui;bundle-version="[3.107.0,4.0.0)",
- org.eclipse.emf.ecp.emf2web.ui;bundle-version="[1.0.0,2.0.0)",
+ org.eclipse.emf.ecp.emf2web.ui;bundle-version="[1.0.0,1.1.0)",
  org.eclipse.core.resources;bundle-version="[3.10.0,4.0.0)",
  org.eclipse.core.runtime;bundle-version="[3.11.0,4.0.0)",
  org.eclipse.emf.ecore;bundle-version="[2.11.0,3.0.0)",
- org.eclipse.emf.ecp.view.model;bundle-version="[1.9.0,2.0.0)",
- org.eclipse.emf.ecp.emf2web;bundle-version="[1.0.0,2.0.0)",
- org.eclipse.emf.ecp.emf2web.json;bundle-version="[1.0.0,2.0.0)",
- org.eclipse.emf.ecp.ide.util;bundle-version="[1.9.0,2.0.0)"
+ org.eclipse.emf.ecp.view.model;bundle-version="[1.10.0,2.0.0)",
+ org.eclipse.emf.ecp.emf2web;bundle-version="[1.0.0,1.1.0)",
+ org.eclipse.emf.ecp.emf2web.json;bundle-version="[1.0.0,1.1.0)",
+ org.eclipse.emf.ecp.ide.util;bundle-version="[1.10.0,2.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy

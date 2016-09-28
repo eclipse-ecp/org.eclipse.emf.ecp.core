@@ -75,18 +75,23 @@ public class ControlValidationTemplateItemProvider
 			super.getPropertyDescriptors(object);
 
 			addOkColorHEXPropertyDescriptor(object);
+			addOkForegroundColorHEXPropertyDescriptor(object);
 			addOkImageURLPropertyDescriptor(object);
 			addOkOverlayURLPropertyDescriptor(object);
 			addInfoColorHEXPropertyDescriptor(object);
+			addInfoForegroundColorHEXPropertyDescriptor(object);
 			addInfoImageURLPropertyDescriptor(object);
 			addInfoOverlayURLPropertyDescriptor(object);
 			addWarningColorHEXPropertyDescriptor(object);
+			addWarningForegroundColorHEXPropertyDescriptor(object);
 			addWarningImageURLPropertyDescriptor(object);
 			addWarningOverlayURLPropertyDescriptor(object);
 			addErrorColorHEXPropertyDescriptor(object);
+			addErrorForegroundColorHEXPropertyDescriptor(object);
 			addErrorImageURLPropertyDescriptor(object);
 			addErrorOverlayURLPropertyDescriptor(object);
 			addCancelColorHEXPropertyDescriptor(object);
+			addCancelForegroundColorHEXPropertyDescriptor(object);
 			addCancelImageURLPropertyDescriptor(object);
 			addCancelOverlayURLPropertyDescriptor(object);
 		}
@@ -111,6 +116,30 @@ public class ControlValidationTemplateItemProvider
 				getString(
 					"_UI_PropertyDescriptor_description", "_UI_ControlValidationTemplate_okColorHEX_feature", "_UI_ControlValidationTemplate_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				VTTemplatePackage.Literals.CONTROL_VALIDATION_TEMPLATE__OK_COLOR_HEX,
+				true,
+				false,
+				false,
+				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				null,
+				null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Ok Foreground Color HEX feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected void addOkForegroundColorHEXPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(
+				((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_ControlValidationTemplate_okForegroundColorHEX_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+					"_UI_ControlValidationTemplate_okForegroundColorHEX_feature", "_UI_ControlValidationTemplate_type"), //$NON-NLS-1$ //$NON-NLS-2$
+				VTTemplatePackage.Literals.CONTROL_VALIDATION_TEMPLATE__OK_FOREGROUND_COLOR_HEX,
 				true,
 				false,
 				false,
@@ -198,6 +227,30 @@ public class ControlValidationTemplateItemProvider
 	}
 
 	/**
+	 * This adds a property descriptor for the Info Foreground Color HEX feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected void addInfoForegroundColorHEXPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_ControlValidationTemplate_infoForegroundColorHEX_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+					"_UI_ControlValidationTemplate_infoForegroundColorHEX_feature", //$NON-NLS-1$
+					"_UI_ControlValidationTemplate_type"), //$NON-NLS-1$
+				VTTemplatePackage.Literals.CONTROL_VALIDATION_TEMPLATE__INFO_FOREGROUND_COLOR_HEX,
+				true,
+				false,
+				false,
+				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				null,
+				null));
+	}
+
+	/**
 	 * This adds a property descriptor for the Info Image URL feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -267,6 +320,30 @@ public class ControlValidationTemplateItemProvider
 				getString(
 					"_UI_PropertyDescriptor_description", "_UI_ControlValidationTemplate_warningColorHEX_feature", "_UI_ControlValidationTemplate_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				VTTemplatePackage.Literals.CONTROL_VALIDATION_TEMPLATE__WARNING_COLOR_HEX,
+				true,
+				false,
+				false,
+				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				null,
+				null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Warning Foreground Color HEX feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected void addWarningForegroundColorHEXPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_ControlValidationTemplate_warningForegroundColorHEX_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+					"_UI_ControlValidationTemplate_warningForegroundColorHEX_feature", //$NON-NLS-1$
+					"_UI_ControlValidationTemplate_type"), //$NON-NLS-1$
+				VTTemplatePackage.Literals.CONTROL_VALIDATION_TEMPLATE__WARNING_FOREGROUND_COLOR_HEX,
 				true,
 				false,
 				false,
@@ -354,6 +431,30 @@ public class ControlValidationTemplateItemProvider
 	}
 
 	/**
+	 * This adds a property descriptor for the Error Foreground Color HEX feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected void addErrorForegroundColorHEXPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_ControlValidationTemplate_errorForegroundColorHEX_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+					"_UI_ControlValidationTemplate_errorForegroundColorHEX_feature", //$NON-NLS-1$
+					"_UI_ControlValidationTemplate_type"), //$NON-NLS-1$
+				VTTemplatePackage.Literals.CONTROL_VALIDATION_TEMPLATE__ERROR_FOREGROUND_COLOR_HEX,
+				true,
+				false,
+				false,
+				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				null,
+				null));
+	}
+
+	/**
 	 * This adds a property descriptor for the Error Image URL feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -423,6 +524,30 @@ public class ControlValidationTemplateItemProvider
 				getString(
 					"_UI_PropertyDescriptor_description", "_UI_ControlValidationTemplate_cancelColorHEX_feature", "_UI_ControlValidationTemplate_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				VTTemplatePackage.Literals.CONTROL_VALIDATION_TEMPLATE__CANCEL_COLOR_HEX,
+				true,
+				false,
+				false,
+				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				null,
+				null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Cancel Foreground Color HEX feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected void addCancelForegroundColorHEXPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_ControlValidationTemplate_cancelForegroundColorHEX_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+					"_UI_ControlValidationTemplate_cancelForegroundColorHEX_feature", //$NON-NLS-1$
+					"_UI_ControlValidationTemplate_type"), //$NON-NLS-1$
+				VTTemplatePackage.Literals.CONTROL_VALIDATION_TEMPLATE__CANCEL_FOREGROUND_COLOR_HEX,
 				true,
 				false,
 				false,
@@ -528,18 +653,23 @@ public class ControlValidationTemplateItemProvider
 		switch (notification.getFeatureID(VTControlValidationTemplate.class))
 		{
 		case VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__OK_COLOR_HEX:
+		case VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__OK_FOREGROUND_COLOR_HEX:
 		case VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__OK_IMAGE_URL:
 		case VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__OK_OVERLAY_URL:
 		case VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__INFO_COLOR_HEX:
+		case VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__INFO_FOREGROUND_COLOR_HEX:
 		case VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__INFO_IMAGE_URL:
 		case VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__INFO_OVERLAY_URL:
 		case VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__WARNING_COLOR_HEX:
+		case VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__WARNING_FOREGROUND_COLOR_HEX:
 		case VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__WARNING_IMAGE_URL:
 		case VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__WARNING_OVERLAY_URL:
 		case VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__ERROR_COLOR_HEX:
+		case VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__ERROR_FOREGROUND_COLOR_HEX:
 		case VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__ERROR_IMAGE_URL:
 		case VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__ERROR_OVERLAY_URL:
 		case VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__CANCEL_COLOR_HEX:
+		case VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__CANCEL_FOREGROUND_COLOR_HEX:
 		case VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__CANCEL_IMAGE_URL:
 		case VTTemplatePackage.CONTROL_VALIDATION_TEMPLATE__CANCEL_OVERLAY_URL:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));

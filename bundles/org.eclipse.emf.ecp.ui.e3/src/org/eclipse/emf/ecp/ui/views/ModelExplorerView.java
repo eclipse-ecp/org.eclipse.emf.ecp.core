@@ -168,20 +168,7 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 
 		});
 
-		final IConfigurationElement[] modelExplorerSettings = Platform.getExtensionRegistry()
-			.getConfigurationElementsFor("org.eclipse.emf.ecp.ui.modelExplorerSettings"); //$NON-NLS-1$
-		if (modelExplorerSettings.length == 1) {
-			if (modelExplorerSettings[0].getAttribute(VIEW_SORTER) != null) {
-				try {
-					final ViewerSorter sorter = (ViewerSorter) modelExplorerSettings[0]
-						.createExecutableExtension(VIEW_SORTER);
-					viewer.setSorter(sorter);
-				} catch (final CoreException e) {
-					Activator.log(e);
-				}
-
-			}
-		}
+		addViewerSorter(viewer);
 
 		getSite().getWorkbenchWindow().getWorkbench().addWorkbenchListener(new IWorkbenchListener() {
 
@@ -199,6 +186,24 @@ public class ModelExplorerView extends TreeView implements ILinkedWithEditorView
 		});
 
 		return viewer;
+	}
+
+	@SuppressWarnings("deprecation")
+	private void addViewerSorter(TreeViewer viewer) {
+		final IConfigurationElement[] modelExplorerSettings = Platform.getExtensionRegistry()
+			.getConfigurationElementsFor("org.eclipse.emf.ecp.ui.modelExplorerSettings"); //$NON-NLS-1$
+		if (modelExplorerSettings.length == 1) {
+			if (modelExplorerSettings[0].getAttribute(VIEW_SORTER) != null) {
+				try {
+					final ViewerSorter sorter = (ViewerSorter) modelExplorerSettings[0]
+						.createExecutableExtension(VIEW_SORTER);
+					viewer.setSorter(sorter);
+				} catch (final CoreException e) {
+					Activator.log(e);
+				}
+
+			}
+		}
 	}
 
 	@Override

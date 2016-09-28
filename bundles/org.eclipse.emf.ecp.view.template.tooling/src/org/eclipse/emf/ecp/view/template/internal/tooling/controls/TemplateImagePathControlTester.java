@@ -20,6 +20,7 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.template.internal.tooling.Activator;
 import org.eclipse.emf.ecp.view.template.model.VTTemplatePackage;
+import org.eclipse.emf.ecp.view.template.style.tab.model.VTTabPackage;
 import org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableValidationPackage;
 import org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationPackage;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
@@ -121,6 +122,22 @@ public class TemplateImagePathControlTester implements ECPRendererTester {
 			return 5;
 		}
 		if (VTTemplatePackage.eINSTANCE.getControlValidationTemplate_CancelOverlayURL().equals(feature)) {
+			return 5;
+		}
+		// tab validation
+		if (VTTabPackage.eINSTANCE.getTabStyleProperty_OkImageURL().equals(feature)) {
+			return 5;
+		}
+		if (VTTabPackage.eINSTANCE.getTabStyleProperty_InfoImageURL().equals(feature)) {
+			return 5;
+		}
+		if (VTTabPackage.eINSTANCE.getTabStyleProperty_WarningImageURL().equals(feature)) {
+			return 5;
+		}
+		if (VTTabPackage.eINSTANCE.getTabStyleProperty_ErrorImageURL().equals(feature)) {
+			return 5;
+		}
+		if (VTTabPackage.eINSTANCE.getTabStyleProperty_CancelImageURL().equals(feature)) {
 			return 5;
 		}
 		return NOT_APPLICABLE;

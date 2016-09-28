@@ -52,8 +52,7 @@ import org.eclipse.emfforms.spi.common.report.AbstractReport;
  * The following features are implemented:
  * </p>
  * <ul>
- * <li>
- * {@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableDomainModelReferenceImpl#getColumnDomainModelReferences
+ * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableDomainModelReferenceImpl#getColumnDomainModelReferences
  * <em>Column Domain Model References</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableDomainModelReferenceImpl#getDomainModelReference
  * <em>Domain Model Reference</em>}</li>

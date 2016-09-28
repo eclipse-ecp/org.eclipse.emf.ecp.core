@@ -2,12 +2,12 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Key Attribute Structural Change Tester Tests
 Bundle-SymbolicName: org.eclipse.emfforms.core.services.structuralchange.keyattribute.tests
-Bundle-Version: 1.9.0.qualifier
-Fragment-Host: org.eclipse.emfforms.core.services.structuralchange.keyattribute;bundle-version="[1.9.0,2.0.0)"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Version: 1.10.0.qualifier
+Fragment-Host: org.eclipse.emfforms.core.services.structuralchange.keyattribute;bundle-version="[1.10.0,2.0.0)"
+Export-Package: org.eclipse.emfforms.core.services.structuralchange.keyattribute.tests;version="1.10.0";x-internal:=true,
+ org.eclipse.emfforms.internal.core.services.structuralchange.keyattribute;version="1.10.0";x-internal:=true
 Require-Bundle: org.junit;bundle-version="[4.11.0,5.0.0)",
  org.mockito.mockito-core-hamcrest-modified;bundle-version="[1.9.5,2.0.0)",
- org.eclipse.emfforms.core.services.databinding.testmodel;bundle-version="[1.9.0,2.0.0)",
+ org.eclipse.emfforms.core.services.databinding.testmodel;bundle-version="[1.10.0,2.0.0)",
  org.eclipse.emf.common;bundle-version="[2.11.0,3.0.0)"
-Export-Package: org.eclipse.emfforms.core.services.structuralchange.keyattribute.tests;version="1.9.0";x-internal:=true,
- org.eclipse.emfforms.internal.core.services.structuralchange.keyattribute;version="1.9.0";x-internal:=true
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

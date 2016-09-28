@@ -8,15 +8,21 @@
  *
  * Contributors:
  * Alexandra Buzila - initial API and implementation
+ * Johannes Faltermeier - Bug 500895
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.treemasterdetail.actions;
 
+import java.util.List;
+
 import org.eclipse.core.commands.AbstractHandler;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.viewers.TreeViewer;
 
 /**
+ * A MasterDetailAction may be added to the context menu of a
+ * {@link org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailComposite TreeMasterDetailComposite}.
+ *
  * @author Alexandra Buzila
+ * @author Johannes Faltermeier
  * @since 1.8
  *
  */
@@ -25,15 +31,17 @@ public abstract class MasterDetailAction extends AbstractHandler {
 	private TreeViewer treeviewer;
 
 	/**
-	 * @param eObject the {@link EObject} on which to test if the action can be executed
-	 * @return <b>true</b> if the action can be executed on the parameter {@code eObject}
+	 * @param objects the list of objects on which to test if the action can be executed
+	 * @return <b>true</b> if the action can be executed on the parameter
+	 * @since 1.10
 	 */
-	public abstract boolean shouldShow(EObject eObject);
+	public abstract boolean shouldShow(List<Object> objects);
 
 	/**
-	 * @param object The {@link EObject} on which the action is executed
+	 * @param objects The list of objects on which the action is executed
+	 * @since 1.10
 	 **/
-	public abstract void execute(EObject object);
+	public abstract void execute(List<Object> objects);
 
 	/**
 	 * @return the label of the action

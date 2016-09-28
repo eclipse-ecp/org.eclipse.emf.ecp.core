@@ -44,7 +44,7 @@ public class ControlRootEClassControl2SWTRendererService implements EMFFormsDIRe
 	 *
 	 * @param databindingService The {@link EMFFormsDatabinding}
 	 */
-	@Reference
+	@Reference(unbind = "-")
 	protected void setEMFFormsDatabinding(EMFFormsDatabinding databindingService) {
 		this.databindingService = databindingService;
 	}
@@ -54,7 +54,7 @@ public class ControlRootEClassControl2SWTRendererService implements EMFFormsDIRe
 	 *
 	 * @param reportService The {@link ReportService}
 	 */
-	@Reference
+	@Reference(unbind = "-")
 	protected void setReportService(ReportService reportService) {
 		this.reportService = reportService;
 	}

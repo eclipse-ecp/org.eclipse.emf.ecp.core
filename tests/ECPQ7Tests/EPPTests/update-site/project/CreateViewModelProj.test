@@ -6,8 +6,8 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _4U-bIDNtEeSiS7b7ptZeHw
-Runtime-Version: 2.0.1.201508250612
-Save-Time: 10/7/15 4:08 PM
+Runtime-Version: 2.1.0.201606221726
+Save-Time: 9/5/16 12:49 PM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -29,7 +29,7 @@ with [get-window "New View Model Project"] {
     get-button Finish | click
 }
 
-with [get-tab-folder -index 3] {
+with [get-tab-folder -index 2] {
     get-property "pages[0]" | equals "Task.view" | verify-true
     get-property "pages[1]" | equals "User.view" | verify-true
     get-property tabCount | equals 2 | verify-true

@@ -24,8 +24,8 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
  *        The following features are supported:
  *        </p>
  *        <ul>
- *        <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration#getColumnDomainReference
- *        <em>Column Domain Reference</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration#getColumnDomainReference <em>Column
+ *        Domain Reference</em>}</li>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration#getWeight <em>Weight</em>}</li>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration#getMinWidth <em>Min Width</em>}</li>
  *        </ul>
@@ -53,9 +53,9 @@ public interface VWidthConfiguration extends VTableColumnConfiguration {
 	VDomainModelReference getColumnDomainReference();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration#getColumnDomainReference
-	 * <em>Column Domain Reference</em>}' reference.
+	 * Sets the value of the
+	 * '{@link org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration#getColumnDomainReference <em>Column Domain
+	 * Reference</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -112,8 +112,8 @@ public interface VWidthConfiguration extends VTableColumnConfiguration {
 	int getMinWidth();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration#getMinWidth
-	 * <em>Min Width</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration#getMinWidth <em>Min
+	 * Width</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *

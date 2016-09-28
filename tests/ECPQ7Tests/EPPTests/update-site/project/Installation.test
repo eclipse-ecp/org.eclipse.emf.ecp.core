@@ -6,8 +6,8 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _jbzigJ7xEeOleLZC7V9mLg
-Runtime-Version: 1.5.2.201408180747
-Save-Time: 9/30/14 2:05 PM
+Runtime-Version: 2.1.0.201606221726
+Save-Time: 9/5/16 12:44 PM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -19,15 +19,15 @@ with [get-window Install] {
     get-button "Add..." | click
     with [get-window "Add Repository"] {
         get-editbox -after [get-label "Name:"] | set-text ecp
-        get-editbox -after [get-label "Location:"] | set-text "http://download.eclipse.org/ecp/releases/releases_17"
+        get-editbox -after [get-label "Location:"] | set-text "http://download.eclipse.org/ecp/releases/releases_110"
         get-button OK | click
     }
 }
-get-window Install | get-tree | get-item "All SDKs  \\(install one of these\\)/ECP SDK 3.x" | get-property caption | equals "ECP SDK 3.x" 
+get-window Install | get-tree | get-item "All SDKs  \\(install one of these\\)/EMF Forms SDK" | get-property caption | equals "EMF Forms SDK" 
     | verify-true
 with [get-window Install] {
     with [get-tree] {
-        get-item "All SDKs  \\(install one of these\\)/ECP SDK 3.x" | check
+        get-item "All SDKs  \\(install one of these\\)/EMF Forms SDK" | check
     }
     with [get-button "Next >"] {
         click

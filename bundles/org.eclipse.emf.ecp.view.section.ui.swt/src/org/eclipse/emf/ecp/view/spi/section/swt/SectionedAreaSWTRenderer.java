@@ -156,7 +156,7 @@ public class SectionedAreaSWTRenderer extends
 			Activator.getDefault().getReportService().report(new RenderingFailedReport(ex));
 			return columnComposite;
 		}
-
+		parent.layout(true);
 		return columnComposite;
 	}
 
@@ -173,7 +173,18 @@ public class SectionedAreaSWTRenderer extends
 		return true;
 	}
 
-	private void setLayoutDataForControl(SWTGridCell gridCell,
+	/**
+	 * Sets the LayoutData for the specified control.
+	 *
+	 * @param gridCell the {@link GridCell} used to render the control
+	 * @param gridDescription the {@link GridDescription} of the parent which rendered the control
+	 * @param currentRowGridDescription the {@link GridDescription} of the current row
+	 * @param fullGridDescription the {@link GridDescription} of the whole container
+	 * @param vElement the {@link VElement} to set the layoutData for
+	 * @param control the control to set the layout to
+	 * @since 1.10
+	 */
+	protected void setLayoutDataForControl(SWTGridCell gridCell,
 		SWTGridDescription gridDescription,
 		SWTGridDescription currentRowGridDescription,
 		SWTGridDescription fullGridDescription, VElement vElement,

@@ -1,0 +1,34 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: EMFForms SWT Rich Text Control
+Bundle-SymbolicName: org.eclipse.emfforms.swt.control.text.richtext;singleton:=true
+Bundle-Version: 1.10.0.qualifier
+Bundle-Vendor: Eclipse Modeling Project
+Export-Package: org.eclipse.emfforms.internal.swt.control.text.richtext.renderer;version="1.10.0";x-internal:=true
+Require-Bundle: org.eclipse.emf.ecp.view.core.swt;bundle-version="[1.10.0,2.0.0)",
+ org.eclipse.emfforms.core.services;bundle-version="[1.10.0,2.0.0)",
+ org.eclipse.emf.ecp.view.context;bundle-version="[1.10.0,2.0.0)",
+ org.eclipse.emf.ecp.view.template.model;bundle-version="[1.10.0,2.0.0)",
+ org.eclipse.emfforms.swt.core;bundle-version="[1.10.0,2.0.0)",
+ org.eclipse.emf.ecp.view.model.common;bundle-version="[1.10.0,2.0.0)",
+ org.eclipse.emf.ecp.ui.view;bundle-version="[1.10.0,2.0.0)",
+ org.eclipse.emf.databinding.edit;bundle-version="[1.3.0,2.0.0)",
+ org.eclipse.emfforms.localization;bundle-version="[1.10.0,2.0.0)",
+ org.eclipse.emfforms.swt.core.di;bundle-version="[1.10.0,2.0.0)",
+ org.eclipse.emfforms.core.services.editsupport;bundle-version="[1.10.0,2.0.0)"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Import-Package: javax.inject;version="1.0.0",
+ org.eclipse.jface.databinding.swt;version="0.0.0",
+ org.eclipse.jface.databinding.viewers;version="0.0.0",
+ org.eclipse.jface.fieldassist;version="0.0.0",
+ org.eclipse.jface.layout;version="0.0.0",
+ org.eclipse.jface.viewers;version="0.0.0",
+ org.eclipse.swt;version="0.0.0",
+ org.eclipse.swt.events;version="0.0.0",
+ org.eclipse.swt.graphics;version="0.0.0",
+ org.eclipse.swt.layout;version="0.0.0",
+ org.eclipse.swt.widgets;version="0.0.0",
+ org.osgi.framework;version="0.0.0",
+ org.osgi.service.component.annotations;version="0.0.0";resolution:=optional
+Service-Component: OSGI-INF/org.eclipse.emfforms.internal.swt.control.text.richtext.renderer.RichTextControlSWTRendererService.xml
+Bundle-ActivationPolicy: lazy

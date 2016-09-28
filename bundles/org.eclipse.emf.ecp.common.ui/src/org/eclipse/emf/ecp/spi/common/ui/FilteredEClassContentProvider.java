@@ -26,24 +26,36 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 
 /**
+ * A {@link ITreeContentProvider} to show available {@link EClass}s in a tree. The hierachy will be build based on
+ * {@link EPackage}s. If there is only one {@link EPackage} containing all {@link EClass}s, a flat list will be shown.
+ *
  * @author Eugen Neufeld
+ *
  *
  */
 public class FilteredEClassContentProvider implements ITreeContentProvider {
 
 	private final Map<EPackage, Set<EClass>> packageClassesMap = new HashMap<EPackage, Set<EClass>>();
 
+	/**
+	 * Default constructor.
+	 *
+	 * @param unsupportedEPackages {@link EPackage}s to be ignored completely
+	 * @param packagesToBeShown {@link EPackage}s to be shown in the tree, if a package is not in this list, no EClasses
+	 *            will be shown.
+	 * @param eClassesToBeShown {@link EClass}s to be shown.
+	 */
 	public FilteredEClassContentProvider(Collection<EPackage> unsupportedEPackages,
-		Collection<EPackage> projectFilteredEPackages, Collection<EClass> projectFilteredEClasss) {
+		Collection<EPackage> packagesToBeShown, Collection<EClass> eClassesToBeShown) {
 		for (final EPackage ePackage : EMFUtils.getAllRegisteredEPackages()) {
 			if (unsupportedEPackages.contains(ePackage)) {
 				continue;
 			}
-			final boolean addToPackages = projectFilteredEPackages.contains(ePackage);
+			final boolean addToPackages = packagesToBeShown.contains(ePackage);
 			for (final EClassifier classifier : ePackage.getEClassifiers()) {
 				if (classifier instanceof EClass && !((EClass) classifier).isAbstract()) {
 					final EClass eClass = (EClass) classifier;
-					if (addToPackages || projectFilteredEClasss.contains(eClass)) {
+					if (addToPackages || eClassesToBeShown.contains(eClass)) {
 						if (!packageClassesMap.containsKey(ePackage)) {
 							packageClassesMap.put(ePackage, new HashSet<EClass>());
 						}

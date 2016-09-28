@@ -33,8 +33,7 @@ import org.eclipse.emf.ecore.EReference;
  * @model kind="package"
  * @generated
  */
-public interface VTTemplatePackage extends EPackage
-{
+public interface VTTemplatePackage extends EPackage {
 	/**
 	 * The package name.
 	 * <!-- begin-user-doc -->
@@ -156,6 +155,18 @@ public interface VTTemplatePackage extends EPackage
 	int CONTROL_VALIDATION_TEMPLATE__OK_COLOR_HEX = 0;
 
 	/**
+	 * The feature id for the '<em><b>Ok Foreground Color HEX</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.10
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int CONTROL_VALIDATION_TEMPLATE__OK_FOREGROUND_COLOR_HEX = 1;
+
+	/**
 	 * The feature id for the '<em><b>Ok Image URL</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -163,7 +174,7 @@ public interface VTTemplatePackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL_VALIDATION_TEMPLATE__OK_IMAGE_URL = 1;
+	int CONTROL_VALIDATION_TEMPLATE__OK_IMAGE_URL = 2;
 
 	/**
 	 * The feature id for the '<em><b>Ok Overlay URL</b></em>' attribute.
@@ -173,7 +184,7 @@ public interface VTTemplatePackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL_VALIDATION_TEMPLATE__OK_OVERLAY_URL = 2;
+	int CONTROL_VALIDATION_TEMPLATE__OK_OVERLAY_URL = 3;
 
 	/**
 	 * The feature id for the '<em><b>Info Color HEX</b></em>' attribute.
@@ -183,7 +194,19 @@ public interface VTTemplatePackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL_VALIDATION_TEMPLATE__INFO_COLOR_HEX = 3;
+	int CONTROL_VALIDATION_TEMPLATE__INFO_COLOR_HEX = 4;
+
+	/**
+	 * The feature id for the '<em><b>Info Foreground Color HEX</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 1.10
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int CONTROL_VALIDATION_TEMPLATE__INFO_FOREGROUND_COLOR_HEX = 5;
 
 	/**
 	 * The feature id for the '<em><b>Info Image URL</b></em>' attribute.
@@ -193,7 +216,7 @@ public interface VTTemplatePackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL_VALIDATION_TEMPLATE__INFO_IMAGE_URL = 4;
+	int CONTROL_VALIDATION_TEMPLATE__INFO_IMAGE_URL = 6;
 
 	/**
 	 * The feature id for the '<em><b>Info Overlay URL</b></em>' attribute.
@@ -203,7 +226,7 @@ public interface VTTemplatePackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL_VALIDATION_TEMPLATE__INFO_OVERLAY_URL = 5;
+	int CONTROL_VALIDATION_TEMPLATE__INFO_OVERLAY_URL = 7;
 
 	/**
 	 * The feature id for the '<em><b>Warning Color HEX</b></em>' attribute.
@@ -213,7 +236,19 @@ public interface VTTemplatePackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL_VALIDATION_TEMPLATE__WARNING_COLOR_HEX = 6;
+	int CONTROL_VALIDATION_TEMPLATE__WARNING_COLOR_HEX = 8;
+
+	/**
+	 * The feature id for the '<em><b>Warning Foreground Color HEX</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 1.10
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int CONTROL_VALIDATION_TEMPLATE__WARNING_FOREGROUND_COLOR_HEX = 9;
 
 	/**
 	 * The feature id for the '<em><b>Warning Image URL</b></em>' attribute.
@@ -223,7 +258,7 @@ public interface VTTemplatePackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL_VALIDATION_TEMPLATE__WARNING_IMAGE_URL = 7;
+	int CONTROL_VALIDATION_TEMPLATE__WARNING_IMAGE_URL = 10;
 
 	/**
 	 * The feature id for the '<em><b>Warning Overlay URL</b></em>' attribute.
@@ -233,7 +268,7 @@ public interface VTTemplatePackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL_VALIDATION_TEMPLATE__WARNING_OVERLAY_URL = 8;
+	int CONTROL_VALIDATION_TEMPLATE__WARNING_OVERLAY_URL = 11;
 
 	/**
 	 * The feature id for the '<em><b>Error Color HEX</b></em>' attribute.
@@ -243,7 +278,19 @@ public interface VTTemplatePackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL_VALIDATION_TEMPLATE__ERROR_COLOR_HEX = 9;
+	int CONTROL_VALIDATION_TEMPLATE__ERROR_COLOR_HEX = 12;
+
+	/**
+	 * The feature id for the '<em><b>Error Foreground Color HEX</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 1.10
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int CONTROL_VALIDATION_TEMPLATE__ERROR_FOREGROUND_COLOR_HEX = 13;
 
 	/**
 	 * The feature id for the '<em><b>Error Image URL</b></em>' attribute.
@@ -253,7 +300,7 @@ public interface VTTemplatePackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL_VALIDATION_TEMPLATE__ERROR_IMAGE_URL = 10;
+	int CONTROL_VALIDATION_TEMPLATE__ERROR_IMAGE_URL = 14;
 
 	/**
 	 * The feature id for the '<em><b>Error Overlay URL</b></em>' attribute.
@@ -263,7 +310,7 @@ public interface VTTemplatePackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL_VALIDATION_TEMPLATE__ERROR_OVERLAY_URL = 11;
+	int CONTROL_VALIDATION_TEMPLATE__ERROR_OVERLAY_URL = 15;
 
 	/**
 	 * The feature id for the '<em><b>Cancel Color HEX</b></em>' attribute.
@@ -273,7 +320,19 @@ public interface VTTemplatePackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL_VALIDATION_TEMPLATE__CANCEL_COLOR_HEX = 12;
+	int CONTROL_VALIDATION_TEMPLATE__CANCEL_COLOR_HEX = 16;
+
+	/**
+	 * The feature id for the '<em><b>Cancel Foreground Color HEX</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 1.10
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int CONTROL_VALIDATION_TEMPLATE__CANCEL_FOREGROUND_COLOR_HEX = 17;
 
 	/**
 	 * The feature id for the '<em><b>Cancel Image URL</b></em>' attribute.
@@ -283,7 +342,7 @@ public interface VTTemplatePackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL_VALIDATION_TEMPLATE__CANCEL_IMAGE_URL = 13;
+	int CONTROL_VALIDATION_TEMPLATE__CANCEL_IMAGE_URL = 18;
 
 	/**
 	 * The feature id for the '<em><b>Cancel Overlay URL</b></em>' attribute.
@@ -293,7 +352,7 @@ public interface VTTemplatePackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL_VALIDATION_TEMPLATE__CANCEL_OVERLAY_URL = 14;
+	int CONTROL_VALIDATION_TEMPLATE__CANCEL_OVERLAY_URL = 19;
 
 	/**
 	 * The number of structural features of the '<em>Control Validation Template</em>' class.
@@ -303,7 +362,7 @@ public interface VTTemplatePackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROL_VALIDATION_TEMPLATE_FEATURE_COUNT = 15;
+	int CONTROL_VALIDATION_TEMPLATE_FEATURE_COUNT = 20;
 
 	/**
 	 * The number of operations of the '<em>Control Validation Template</em>' class.
@@ -510,6 +569,22 @@ public interface VTTemplatePackage extends EPackage
 
 	/**
 	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getOkForegroundColorHEX
+	 * <em>Ok Foreground Color HEX</em>}'.
+	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 1.10
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the attribute '<em>Ok Foreground Color HEX</em>'.
+	 * @see org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getOkForegroundColorHEX()
+	 * @see #getControlValidationTemplate()
+	 * @generated
+	 */
+	EAttribute getControlValidationTemplate_OkForegroundColorHEX();
+
+	/**
+	 * Returns the meta object for the attribute '
 	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getOkImageURL <em>Ok Image URL</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -548,6 +623,22 @@ public interface VTTemplatePackage extends EPackage
 	 * @generated
 	 */
 	EAttribute getControlValidationTemplate_InfoColorHEX();
+
+	/**
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getInfoForegroundColorHEX
+	 * <em>Info Foreground Color HEX</em>}'.
+	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 1.10
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the attribute '<em>Info Foreground Color HEX</em>'.
+	 * @see org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getInfoForegroundColorHEX()
+	 * @see #getControlValidationTemplate()
+	 * @generated
+	 */
+	EAttribute getControlValidationTemplate_InfoForegroundColorHEX();
 
 	/**
 	 * Returns the meta object for the attribute '
@@ -593,6 +684,22 @@ public interface VTTemplatePackage extends EPackage
 
 	/**
 	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getWarningForegroundColorHEX
+	 * <em>Warning Foreground Color HEX</em>}'.
+	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 1.10
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the attribute '<em>Warning Foreground Color HEX</em>'.
+	 * @see org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getWarningForegroundColorHEX()
+	 * @see #getControlValidationTemplate()
+	 * @generated
+	 */
+	EAttribute getControlValidationTemplate_WarningForegroundColorHEX();
+
+	/**
+	 * Returns the meta object for the attribute '
 	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getWarningImageURL
 	 * <em>Warning Image URL</em>}'.
 	 * <!-- begin-user-doc -->
@@ -635,6 +742,22 @@ public interface VTTemplatePackage extends EPackage
 
 	/**
 	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getErrorForegroundColorHEX
+	 * <em>Error Foreground Color HEX</em>}'.
+	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 1.10
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the attribute '<em>Error Foreground Color HEX</em>'.
+	 * @see org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getErrorForegroundColorHEX()
+	 * @see #getControlValidationTemplate()
+	 * @generated
+	 */
+	EAttribute getControlValidationTemplate_ErrorForegroundColorHEX();
+
+	/**
+	 * Returns the meta object for the attribute '
 	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getErrorImageURL
 	 * <em>Error Image URL</em>}'.
 	 * <!-- begin-user-doc -->
@@ -674,6 +797,22 @@ public interface VTTemplatePackage extends EPackage
 	 * @generated
 	 */
 	EAttribute getControlValidationTemplate_CancelColorHEX();
+
+	/**
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getCancelForegroundColorHEX
+	 * <em>Cancel Foreground Color HEX</em>}'.
+	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 1.10
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the attribute '<em>Cancel Foreground Color HEX</em>'.
+	 * @see org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getCancelForegroundColorHEX()
+	 * @see #getControlValidationTemplate()
+	 * @generated
+	 */
+	EAttribute getControlValidationTemplate_CancelForegroundColorHEX();
 
 	/**
 	 * Returns the meta object for the attribute '
@@ -788,8 +927,7 @@ public interface VTTemplatePackage extends EPackage
 	 *
 	 * @generated
 	 */
-	interface Literals
-	{
+	interface Literals {
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.template.model.impl.VTViewTemplateImpl
 		 * <em>View Template</em>}' class.
@@ -854,6 +992,18 @@ public interface VTTemplatePackage extends EPackage
 		EAttribute CONTROL_VALIDATION_TEMPLATE__OK_COLOR_HEX = eINSTANCE.getControlValidationTemplate_OkColorHEX();
 
 		/**
+		 * The meta object literal for the '<em><b>Ok Foreground Color HEX</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * 
+		 * @since 1.10
+		 *        <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EAttribute CONTROL_VALIDATION_TEMPLATE__OK_FOREGROUND_COLOR_HEX = eINSTANCE
+			.getControlValidationTemplate_OkForegroundColorHEX();
+
+		/**
 		 * The meta object literal for the '<em><b>Ok Image URL</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -879,6 +1029,18 @@ public interface VTTemplatePackage extends EPackage
 		 * @generated
 		 */
 		EAttribute CONTROL_VALIDATION_TEMPLATE__INFO_COLOR_HEX = eINSTANCE.getControlValidationTemplate_InfoColorHEX();
+
+		/**
+		 * The meta object literal for the '<em><b>Info Foreground Color HEX</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * 
+		 * @since 1.10
+		 *        <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EAttribute CONTROL_VALIDATION_TEMPLATE__INFO_FOREGROUND_COLOR_HEX = eINSTANCE
+			.getControlValidationTemplate_InfoForegroundColorHEX();
 
 		/**
 		 * The meta object literal for the '<em><b>Info Image URL</b></em>' attribute feature.
@@ -908,6 +1070,18 @@ public interface VTTemplatePackage extends EPackage
 		 */
 		EAttribute CONTROL_VALIDATION_TEMPLATE__WARNING_COLOR_HEX = eINSTANCE
 			.getControlValidationTemplate_WarningColorHEX();
+
+		/**
+		 * The meta object literal for the '<em><b>Warning Foreground Color HEX</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * 
+		 * @since 1.10
+		 *        <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EAttribute CONTROL_VALIDATION_TEMPLATE__WARNING_FOREGROUND_COLOR_HEX = eINSTANCE
+			.getControlValidationTemplate_WarningForegroundColorHEX();
 
 		/**
 		 * The meta object literal for the '<em><b>Warning Image URL</b></em>' attribute feature.
@@ -940,6 +1114,18 @@ public interface VTTemplatePackage extends EPackage
 			.getControlValidationTemplate_ErrorColorHEX();
 
 		/**
+		 * The meta object literal for the '<em><b>Error Foreground Color HEX</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * 
+		 * @since 1.10
+		 *        <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EAttribute CONTROL_VALIDATION_TEMPLATE__ERROR_FOREGROUND_COLOR_HEX = eINSTANCE
+			.getControlValidationTemplate_ErrorForegroundColorHEX();
+
+		/**
 		 * The meta object literal for the '<em><b>Error Image URL</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -968,6 +1154,18 @@ public interface VTTemplatePackage extends EPackage
 		 */
 		EAttribute CONTROL_VALIDATION_TEMPLATE__CANCEL_COLOR_HEX = eINSTANCE
 			.getControlValidationTemplate_CancelColorHEX();
+
+		/**
+		 * The meta object literal for the '<em><b>Cancel Foreground Color HEX</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * 
+		 * @since 1.10
+		 *        <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EAttribute CONTROL_VALIDATION_TEMPLATE__CANCEL_FOREGROUND_COLOR_HEX = eINSTANCE
+			.getControlValidationTemplate_CancelForegroundColorHEX();
 
 		/**
 		 * The meta object literal for the '<em><b>Cancel Image URL</b></em>' attribute feature.

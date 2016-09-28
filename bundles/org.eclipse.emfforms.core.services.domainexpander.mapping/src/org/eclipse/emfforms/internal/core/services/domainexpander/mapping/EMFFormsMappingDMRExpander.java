@@ -53,7 +53,7 @@ public class EMFFormsMappingDMRExpander implements EMFFormsDMRExpander {
 	 *
 	 * @param reportService The {@link ReportService}
 	 */
-	@Reference
+	@Reference(unbind = "-")
 	protected void setReportService(ReportService reportService) {
 		this.reportService = reportService;
 

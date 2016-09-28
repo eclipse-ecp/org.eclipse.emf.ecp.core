@@ -31,6 +31,8 @@ import org.eclipse.emfforms.spi.core.services.databinding.emf.DomainModelReferen
 import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * An implementation of {@link DomainModelReferenceConverterEMF} that converts {@link VIndexDomainModelReference
@@ -43,6 +45,7 @@ import org.osgi.framework.ServiceReference;
 public class IndexDomainModelReferenceConverter implements DomainModelReferenceConverterEMF {
 	private EMFFormsDatabindingEMF emfFormsDatabinding;
 	private ServiceReference<EMFFormsDatabindingEMF> databindingServiceReference;
+	private BundleContext bundleContext;
 
 	/**
 	 * Sets the {@link EMFFormsDatabindingEMF}.
@@ -66,14 +69,9 @@ public class IndexDomainModelReferenceConverter implements DomainModelReferenceC
 	 *
 	 * @param bundleContext The {@link BundleContext} of this classes bundle.
 	 */
+	@Activate
 	protected final void activate(BundleContext bundleContext) {
-		databindingServiceReference = bundleContext.getServiceReference(EMFFormsDatabindingEMF.class);
-		if (databindingServiceReference == null) {
-			throw new IllegalStateException(
-				"The org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF Service is not available!"); //$NON-NLS-1$
-		}
-		setEMFFormsDatabinding(bundleContext.getService(databindingServiceReference));
-
+		this.bundleContext = bundleContext;
 	}
 
 	/**
@@ -82,9 +80,23 @@ public class IndexDomainModelReferenceConverter implements DomainModelReferenceC
 	 *
 	 * @param bundleContext The {@link BundleContext} of this classes bundle.
 	 */
+	@Deactivate
 	protected final void deactivate(BundleContext bundleContext) {
-		unsetEMFFormsDatabinding();
-		bundleContext.ungetService(databindingServiceReference);
+		if (databindingServiceReference != null) {
+			bundleContext.ungetService(databindingServiceReference);
+			unsetEMFFormsDatabinding();
+		}
+	}
+
+	private EMFFormsDatabindingEMF getEMFFormsDatabindingEMF() {
+		if (emfFormsDatabinding == null) {
+			databindingServiceReference = bundleContext.getServiceReference(EMFFormsDatabindingEMF.class);
+			if (databindingServiceReference == null) {
+				throw new IllegalStateException("No EMFFormsDatabindingEMF available!"); //$NON-NLS-1$
+			}
+			setEMFFormsDatabinding(bundleContext.getService(databindingServiceReference));
+		}
+		return emfFormsDatabinding;
 	}
 
 	/**
@@ -124,7 +136,8 @@ public class IndexDomainModelReferenceConverter implements DomainModelReferenceC
 		final IEMFValueProperty valueProperty;
 
 		if (indexReference.getPrefixDMR() != null) {
-			final IEMFValueProperty prefixProperty = emfFormsDatabinding.getValueProperty(indexReference.getPrefixDMR(),
+			final IEMFValueProperty prefixProperty = getEMFFormsDatabindingEMF().getValueProperty(
+				indexReference.getPrefixDMR(),
 				object);
 			valueProperty = new EMFValuePropertyDecorator(new EMFIndexedValuePropertyDelegator(getEditingDomain(object),
 				indexReference.getIndex(), prefixProperty, prefixProperty.getStructuralFeature()),
@@ -155,7 +168,7 @@ public class IndexDomainModelReferenceConverter implements DomainModelReferenceC
 				valueProperty = emfValueProperty.value(indexedValueProperty);
 			}
 		}
-		return valueProperty.value(emfFormsDatabinding.getValueProperty(indexReference.getTargetDMR(), object));
+		return valueProperty.value(getEMFFormsDatabindingEMF().getValueProperty(indexReference.getTargetDMR(), object));
 	}
 
 	/**
@@ -179,7 +192,8 @@ public class IndexDomainModelReferenceConverter implements DomainModelReferenceC
 		IEMFValueProperty valueProperty;
 
 		if (indexReference.getPrefixDMR() != null) {
-			final IEMFValueProperty prefixProperty = emfFormsDatabinding.getValueProperty(indexReference.getPrefixDMR(),
+			final IEMFValueProperty prefixProperty = getEMFFormsDatabindingEMF().getValueProperty(
+				indexReference.getPrefixDMR(),
 				object);
 			valueProperty = new EMFValuePropertyDecorator(
 				new EMFIndexedValuePropertyDelegator(getEditingDomain(object), indexReference.getIndex(),
@@ -213,7 +227,7 @@ public class IndexDomainModelReferenceConverter implements DomainModelReferenceC
 			}
 		}
 
-		return valueProperty.list(emfFormsDatabinding.getListProperty(indexReference.getTargetDMR(), object));
+		return valueProperty.list(getEMFFormsDatabindingEMF().getListProperty(indexReference.getTargetDMR(), object));
 	}
 
 	/**
@@ -274,7 +288,7 @@ public class IndexDomainModelReferenceConverter implements DomainModelReferenceC
 			}
 			eList = (EList<EObject>) currentObject.eGet(indexDMR.getDomainModelEFeature());
 		} else {
-			final Setting setting = emfFormsDatabinding.getSetting(indexDMR.getPrefixDMR(), object);
+			final Setting setting = getEMFFormsDatabindingEMF().getSetting(indexDMR.getPrefixDMR(), object);
 			eList = (EList<EObject>) setting.get(true);
 		}
 		if (eList.isEmpty()) {
@@ -282,6 +296,6 @@ public class IndexDomainModelReferenceConverter implements DomainModelReferenceC
 				"The list used by the index dmr mustr must not be empty."); //$NON-NLS-1$
 		}
 		final EObject eObject = eList.get(indexDMR.getIndex());
-		return emfFormsDatabinding.getSetting(indexDMR.getTargetDMR(), eObject);
+		return getEMFFormsDatabindingEMF().getSetting(indexDMR.getTargetDMR(), eObject);
 	}
 }

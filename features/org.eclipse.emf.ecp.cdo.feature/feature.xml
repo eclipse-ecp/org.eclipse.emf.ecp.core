@@ -12,12 +12,12 @@
 <feature
       id="org.eclipse.emf.ecp.cdo.feature"
       label="ECP CDO Integration (Experimental)"
-      version="1.9.0.qualifier"
+      version="1.10.0.qualifier"
       provider-name="Eclipse Modeling Project"
       plugin="org.eclipse.emf.ecp.cdo.core"
       image="eclipse_update_120.jpg"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.9.0.qualifier">
+      license-feature-version="1.10.0.qualifier">
 
    <description>
       Integration of the CDO model repository.

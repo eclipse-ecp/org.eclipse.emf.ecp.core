@@ -9,7 +9,7 @@
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.emf.ecp.emfforms.runtime.feature.feature.group" version="0.0.0"/>
-<repository location="http://download.eclipse.org/ecp/releases/releases_target_19/"/>
+<repository location="http://download.eclipse.org/ecp/releases/releases_target_110/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.emf.emfstore.example.feature.feature.group" version="0.0.0"/>
@@ -22,7 +22,7 @@
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.equinox.sdk.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.platform.ide" version="0.0.0"/>
-<repository location="http://download.eclipse.org/eclipse/updates/4.6milestones"/>
+<repository location="http://download.eclipse.org/eclipse/updates/4.6"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.apache.poi.source" version="0.0.0"/>
@@ -43,6 +43,10 @@
 <unit id="org.eclipse.emf.edapt.runtime.feature.source.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.emf.edapt.runtime.feature.feature.group" version="0.0.0"/>
 <repository location="http://download.eclipse.org/edapt/releases/12x"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.nebula.widgets.grid.feature.feature.group" version="0.0.0"/>
+<repository location="http://download.eclipse.org/nebula/releases/1.0.0"/>
 </location>
 </locations>
 </target>

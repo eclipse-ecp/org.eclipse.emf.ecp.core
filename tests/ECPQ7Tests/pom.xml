@@ -8,8 +8,8 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<rcptt-runner-version>2.0.1</rcptt-runner-version>
-		<rcptt-maven-version>2.0.1</rcptt-maven-version>
+		<rcptt-runner-version>2.1.0</rcptt-runner-version>
+		<rcptt-maven-version>2.1.0</rcptt-maven-version>
 		<build_job>ecp-develop-nightly</build_job>
 		<currentBuild>https://hudson.eclipse.org/ecp/job/${build_job}/lastSuccessfulBuild/artifact/releng/</currentBuild>
 	</properties> 

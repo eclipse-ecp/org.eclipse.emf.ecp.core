@@ -41,7 +41,7 @@ public class EMFFormsCategoryRendererService implements EMFFormsSpreadsheetRende
 	 *
 	 * @param reportService the reportService to set
 	 */
-	@Reference
+	@Reference(unbind = "-")
 	protected void setReportService(ReportService reportService) {
 		this.reportService = reportService;
 	}

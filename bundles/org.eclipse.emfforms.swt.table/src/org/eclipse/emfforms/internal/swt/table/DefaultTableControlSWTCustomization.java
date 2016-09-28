@@ -24,6 +24,7 @@ import org.eclipse.emfforms.spi.swt.table.TableViewerCompositeBuilder;
 import org.eclipse.emfforms.spi.swt.table.TableViewerCreator;
 import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
+import org.eclipse.jface.viewers.AbstractTableViewer;
 import org.eclipse.jface.viewers.IContentProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.ViewerComparator;
@@ -95,7 +96,7 @@ public class DefaultTableControlSWTCustomization implements TableViewerSWTCustom
 	}
 
 	@Override
-	public TableViewer createTableViewer(Composite parent) {
+	public AbstractTableViewer createTableViewer(Composite parent) {
 		return tableViewerCreator.createTableViewer(parent);
 	}
 
@@ -110,7 +111,7 @@ public class DefaultTableControlSWTCustomization implements TableViewerSWTCustom
 	}
 
 	@Override
-	public void fillButtonComposite(Composite buttonComposite, TableViewer viewer) {
+	public void fillButtonComposite(Composite buttonComposite, AbstractTableViewer viewer) {
 		buttonBarBuilder.fillButtonComposite(buttonComposite, viewer);
 	}
 
@@ -219,7 +220,7 @@ public class DefaultTableControlSWTCustomization implements TableViewerSWTCustom
 	}
 
 	@Override
-	public DragSourceListener getDragListener(TableViewer tableViewer) {
+	public DragSourceListener getDragListener(AbstractTableViewer tableViewer) {
 		return dndProvider.getDragListener(tableViewer);
 	}
 
@@ -234,7 +235,7 @@ public class DefaultTableControlSWTCustomization implements TableViewerSWTCustom
 	}
 
 	@Override
-	public DropTargetListener getDropListener(TableViewer tableViewer) {
+	public DropTargetListener getDropListener(AbstractTableViewer tableViewer) {
 		return dndProvider.getDropListener(tableViewer);
 	}
 
@@ -261,7 +262,7 @@ public class DefaultTableControlSWTCustomization implements TableViewerSWTCustom
 		}
 
 		@Override
-		public DropTargetListener getDropListener(TableViewer tableViewer) {
+		public DropTargetListener getDropListener(AbstractTableViewer tableViewer) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -276,7 +277,7 @@ public class DefaultTableControlSWTCustomization implements TableViewerSWTCustom
 		}
 
 		@Override
-		public DragSourceListener getDragListener(TableViewer tableViewer) {
+		public DragSourceListener getDragListener(AbstractTableViewer tableViewer) {
 			throw new UnsupportedOperationException();
 		}
 	}

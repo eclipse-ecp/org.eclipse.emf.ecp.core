@@ -137,6 +137,10 @@ public class StructuralChangeTesterMapping implements StructuralChangeTesterInte
 		final EMap<EClass, EObject> map = (EMap<EClass, EObject>) lastResolvedEObject
 			.eGet(mappingDMR.getDomainModelEFeature());
 
+		if (!map.containsKey(mappingDMR.getMappedClass())) {
+			return false;
+		}
+
 		relevantChange = getEMFFormsStructuralChangeTester().isStructureChanged(mappingDMR.getDomainModelReference(),
 			map.get(mappingDMR.getMappedClass()),
 			notification);

@@ -19,8 +19,8 @@ import java.util.List;
 import org.eclipse.emfforms.internal.swt.table.messages.MessageKeys;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.jface.layout.GridLayoutFactory;
+import org.eclipse.jface.viewers.AbstractTableViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -37,7 +37,7 @@ public final class DefaultButtonBarBuilder implements ButtonBarBuilder {
 	private NewElementCreator<Object, Button> creator;
 
 	@Override
-	public void fillButtonComposite(Composite buttonComposite, TableViewer viewer) {
+	public void fillButtonComposite(Composite buttonComposite, AbstractTableViewer viewer) {
 		addLayoutToButtonComposite(buttonComposite);
 		createAddButton(buttonComposite, viewer);
 		createRemoveButton(buttonComposite, viewer);
@@ -67,7 +67,7 @@ public final class DefaultButtonBarBuilder implements ButtonBarBuilder {
 	 * @param buttonComposite the parent
 	 * @param viewer the viewer
 	 */
-	protected void createRemoveButton(Composite buttonComposite, final TableViewer viewer) {
+	protected void createRemoveButton(Composite buttonComposite, final AbstractTableViewer viewer) {
 		final Button removeButton = new Button(buttonComposite, SWT.PUSH);
 		removeButton.setText(LocalizationServiceHelper.getString(DefaultButtonBarBuilder.class,
 			MessageKeys.DefaultButtonBarBuilder_RemoveButtonText));
@@ -104,7 +104,7 @@ public final class DefaultButtonBarBuilder implements ButtonBarBuilder {
 	 * @param buttonComposite the parent
 	 * @param viewer the viewer
 	 */
-	protected void createAddButton(Composite buttonComposite, final TableViewer viewer) {
+	protected void createAddButton(Composite buttonComposite, final AbstractTableViewer viewer) {
 		final Button addButton = new Button(buttonComposite, SWT.PUSH);
 		addButton.setText(LocalizationServiceHelper.getString(DefaultButtonBarBuilder.class,
 			MessageKeys.DefaultButtonBarBuilder_AddButtonText));

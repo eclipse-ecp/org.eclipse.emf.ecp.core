@@ -24,18 +24,18 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
  * The following features are supported:
  * </p>
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#isAddRemoveDisabled <em>Add Remove Disabled</em>}
- * </li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#getColumnConfigurations
- * <em>Column Configurations</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#isAddRemoveDisabled <em>Add Remove
+ * Disabled</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#getColumnConfigurations <em>Column
+ * Configurations</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#getDetailEditing <em>Detail Editing</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#getDetailView <em>Detail View</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#isEnableDetailEditingDialog
- * <em>Enable Detail Editing Dialog</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#isEnableDetailEditingDialog <em>Enable Detail
+ * Editing Dialog</em>}</li>
  * </ul>
  *
  * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage#getTableControl()
- * @model
+ * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='resolveable'"
  * @generated
  */
 public interface VTableControl extends VControl {
@@ -58,8 +58,8 @@ public interface VTableControl extends VControl {
 	boolean isAddRemoveDisabled();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#isAddRemoveDisabled
-	 * <em>Add Remove Disabled</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#isAddRemoveDisabled <em>Add
+	 * Remove Disabled</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -107,8 +107,8 @@ public interface VTableControl extends VControl {
 	DetailEditing getDetailEditing();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#getDetailEditing
-	 * <em>Detail Editing</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#getDetailEditing <em>Detail
+	 * Editing</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -137,8 +137,8 @@ public interface VTableControl extends VControl {
 	VView getDetailView();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#getDetailView
-	 * <em>Detail View</em>}' containment reference.
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#getDetailView <em>Detail
+	 * View</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *

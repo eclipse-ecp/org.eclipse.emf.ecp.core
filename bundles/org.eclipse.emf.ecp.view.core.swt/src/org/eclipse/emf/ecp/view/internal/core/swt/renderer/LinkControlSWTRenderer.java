@@ -57,6 +57,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
+import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 
 /**
@@ -270,10 +271,14 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 		deleteReferenceButton = new Button(parent, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(false, false).align(SWT.CENTER, SWT.CENTER).applyTo(deleteReferenceButton);
 		deleteReferenceButton
-			.setImage(imageRegistryService.getImage(FrameworkUtil.getBundle(getClass()), "icons/unset_reference.png")); //$NON-NLS-1$
+			.setImage(imageRegistryService.getImage(getIconBundle(), "icons/unset_reference.png")); //$NON-NLS-1$
 		deleteReferenceButton.setToolTipText(getLocalizedString(MessageKeys.LinkControl_DeleteReference));
 		deleteReferenceButton.addSelectionListener(new DeleteSelectionAdapter());
 
+	}
+
+	private Bundle getIconBundle() {
+		return FrameworkUtil.getBundle(LinkControlSWTRenderer.class);
 	}
 
 	/**
@@ -311,11 +316,11 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	}
 
 	private Image getNewReferenceButtonImage() {
-		return imageRegistryService.getImage(FrameworkUtil.getBundle(getClass()), "icons/set_reference.png"); //$NON-NLS-1$
+		return imageRegistryService.getImage(getIconBundle(), "icons/set_reference.png"); //$NON-NLS-1$
 	}
 
 	private Image getAddReferenceButtonImage() {
-		return imageRegistryService.getImage(FrameworkUtil.getBundle(getClass()), "icons/reference.png"); //$NON-NLS-1$
+		return imageRegistryService.getImage(getIconBundle(), "icons/reference.png"); //$NON-NLS-1$
 	}
 
 	private void createHyperlink() throws DatabindingFailedException {
@@ -368,7 +373,7 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	}
 
 	private String getLocalizedString(String key) {
-		return localizationService.getString(getClass(), key);
+		return localizationService.getString(LinkControlSWTRenderer.class, key);
 	}
 
 	/**

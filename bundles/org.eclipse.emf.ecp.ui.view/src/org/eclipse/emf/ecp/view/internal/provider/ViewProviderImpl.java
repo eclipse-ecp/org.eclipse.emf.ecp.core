@@ -174,7 +174,7 @@ public class ViewProviderImpl implements EMFFormsViewService {
 	 *
 	 * @param reportService The {@link ReportService}
 	 */
-	@Reference(cardinality = ReferenceCardinality.MANDATORY, policy = ReferencePolicy.STATIC)
+	@Reference(cardinality = ReferenceCardinality.MANDATORY, policy = ReferencePolicy.STATIC, unbind = "-")
 	protected void setReportService(ReportService reportService) {
 		this.reportService = reportService;
 	}

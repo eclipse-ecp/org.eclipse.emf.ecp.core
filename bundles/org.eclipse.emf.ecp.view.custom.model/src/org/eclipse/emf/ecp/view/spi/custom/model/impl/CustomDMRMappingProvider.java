@@ -88,7 +88,8 @@ public class CustomDMRMappingProvider implements EMFFormsMappingProvider {
 						customDomainModelReference.getBundleName(), customDomainModelReference.getClassName()))));
 			return Collections.<UniqueSetting> emptySet();
 		}
-		final Set<VDomainModelReference> neededDomainModelReferences = hardcodedReference.getNeededDomainModelReferences();
+		final Set<VDomainModelReference> neededDomainModelReferences = hardcodedReference
+			.getNeededDomainModelReferences();
 		if (neededDomainModelReferences.isEmpty()) {
 			reportService.report(new DatabindingFailedReport(new DatabindingFailedException(
 				String
@@ -200,7 +201,7 @@ public class CustomDMRMappingProvider implements EMFFormsMappingProvider {
 	 *
 	 * @param reportService The {@link ReportService}
 	 */
-	@Reference
+	@Reference(unbind = "-")
 	protected void setReportService(ReportService reportService) {
 		this.reportService = reportService;
 	}

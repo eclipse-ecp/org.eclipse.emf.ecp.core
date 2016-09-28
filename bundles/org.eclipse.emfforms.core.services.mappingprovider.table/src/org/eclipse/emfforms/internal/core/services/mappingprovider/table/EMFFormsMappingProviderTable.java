@@ -48,7 +48,7 @@ public class EMFFormsMappingProviderTable implements EMFFormsMappingProvider {
 	 *
 	 * @param emfFormsDatabinding The databinding service
 	 */
-	@Reference
+	@Reference(unbind = "-")
 	protected void setEMFFormsDatabinding(EMFFormsDatabindingEMF emfFormsDatabinding) {
 		this.emfFormsDatabinding = emfFormsDatabinding;
 	}
@@ -58,7 +58,7 @@ public class EMFFormsMappingProviderTable implements EMFFormsMappingProvider {
 	 *
 	 * @param reportService The {@link ReportService}
 	 */
-	@Reference
+	@Reference(unbind = "-")
 	protected void setReportService(ReportService reportService) {
 		this.reportService = reportService;
 	}

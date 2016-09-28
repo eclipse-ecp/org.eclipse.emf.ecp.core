@@ -62,7 +62,7 @@ public class EMFFormsMappingProviderManagerImpl implements EMFFormsMappingProvid
 	 *
 	 * @param reportService The {@link ReportService}
 	 */
-	@Reference
+	@Reference(unbind = "-")
 	protected void setReportService(ReportService reportService) {
 		this.reportService = reportService;
 	}

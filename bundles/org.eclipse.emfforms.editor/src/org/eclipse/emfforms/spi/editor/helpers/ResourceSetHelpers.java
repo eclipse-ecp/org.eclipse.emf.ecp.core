@@ -19,7 +19,6 @@ import java.util.Map;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -77,13 +76,19 @@ public final class ResourceSetHelpers {
 		BasicCommandStack commandStack) {
 		// Create a ResourceSet and add the requested Resource
 		final ResourceSet resourceSet = createResourceSet(commandStack);
+		return loadResourceWithProxies(resourceURI, resourceSet);
+	}
+
+	/**
+	 * Load resource set with proxies.
+	 *
+	 * @param resourceURI the resource uri (= File to load)
+	 * @param resourceSet the resource set
+	 * @return the resource set
+	 * @since 1.10
+	 */
+	public static ResourceSet loadResourceWithProxies(URI resourceURI, final ResourceSet resourceSet) {
 		if (addResourceToSet(resourceSet, resourceURI)) {
-
-			// If the Root is a GenModel, refresh it
-			if (resourceSet.getResources().get(0) instanceof GenModel) {
-				((GenModel) resourceSet.getResources().get(0)).reconcile();
-			}
-
 			return resourceSet;
 		}
 		return null;
@@ -94,8 +99,9 @@ public final class ResourceSetHelpers {
 	 *
 	 * @param commandStack the command stack
 	 * @return the resource set
+	 * @since 1.10
 	 */
-	private static ResourceSet createResourceSet(CommandStack commandStack) {
+	public static ResourceSet createResourceSet(CommandStack commandStack) {
 		final AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(
 			new ComposedAdapterFactory(
 				new AdapterFactory[] {
@@ -118,11 +124,26 @@ public final class ResourceSetHelpers {
 	 */
 	public static boolean addResourceToSet(ResourceSet resourceSet,
 		URI resourceURI) {
-		try {
-			final Map<Object, Object> loadOptions = new HashMap<Object, Object>();
-			loadOptions.put(XMLResource.OPTION_RECORD_UNKNOWN_FEATURE,
-				Boolean.TRUE);
 
+		final Map<Object, Object> loadOptions = new HashMap<Object, Object>();
+		loadOptions.put(XMLResource.OPTION_RECORD_UNKNOWN_FEATURE,
+			Boolean.TRUE);
+
+		return addResourceToSet(resourceSet, resourceURI, loadOptions);
+	}
+
+	/**
+	 * Loads a resource from resourceURI and adds it to the resourceSet.
+	 *
+	 * @param resourceSet the resource set
+	 * @param resourceURI the resource uri
+	 * @param loadOptions the resource load options
+	 * @return true, if successful
+	 * @since 1.10
+	 */
+	public static boolean addResourceToSet(ResourceSet resourceSet, URI resourceURI,
+		final Map<Object, Object> loadOptions) {
+		try {
 			resourceSet.createResource(resourceURI).load(loadOptions);
 
 			// resolve all proxies

@@ -21,8 +21,8 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emfforms.internal.swt.table.util.DMREditingSupport;
 import org.eclipse.emfforms.spi.swt.table.CellEditorCreator;
 import org.eclipse.emfforms.spi.swt.table.EditingSupportCreator;
+import org.eclipse.jface.viewers.AbstractTableViewer;
 import org.eclipse.jface.viewers.EditingSupport;
-import org.eclipse.jface.viewers.TableViewer;
 
 /**
  * Util class for creating {@link EditingSupport EditingSupports}.
@@ -47,7 +47,7 @@ public final class EditingSupportUtil {
 		final EObject parent, final CellEditorCreator cellEditor) {
 		return new EditingSupportCreator() {
 			@Override
-			public EditingSupport createEditingSupport(TableViewer columnViewer) {
+			public EditingSupport createEditingSupport(AbstractTableViewer columnViewer) {
 				return new DMREditingSupport(columnViewer, cellEditor.createCellEditor(columnViewer),
 					domainModelReference, parent);
 			}

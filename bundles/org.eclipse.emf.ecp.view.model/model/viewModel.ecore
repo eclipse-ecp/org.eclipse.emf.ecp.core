@@ -13,13 +13,13 @@
         eType="#//VAttachment" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="enabled" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
         transient="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="minWidth" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EDouble"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="minWidth" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"
         unsettable="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxWidth" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EDouble"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxWidth" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"
         unsettable="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="minHeight" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EDouble"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="minHeight" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"
         unsettable="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxHeight" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EDouble"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxHeight" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"
         unsettable="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="VAttachment" abstract="true" interface="true"/>
@@ -34,16 +34,16 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DomainModelReference">
     <eOperations name="resolve"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject"
+    <eStructuralFeatures xsi:type="ecore:EReference" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
         transient="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="domainModelEAttribute"
-        eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EStructuralFeature"/>
+        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="VFeaturePathDomainModelReference" eSuperTypes="#//DomainModelReference">
     <eStructuralFeatures xsi:type="ecore:EReference" name="domainModelEAttribute"
-        eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EAttribute"/>
+        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EAttribute"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="domainModelEReferencePath"
-        upperBound="-1" eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EReference"/>
+        upperBound="-1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EReference"/>
   </eClassifiers>
   <eSubpackages name="separator">
     <eClassifiers xsi:type="ecore:EClass" name="VSeparator" eSuperTypes="#//VElement">
@@ -96,14 +96,14 @@
   </eSubpackages>
   <eSubpackages name="customControl">
     <eClassifiers xsi:type="ecore:EClass" name="VCustomControl" eSuperTypes="#//VElement">
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="osgiBundleName" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="javaClass" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="osgiBundleName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="javaClass" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eClassifiers>
   </eSubpackages>
   <eSubpackages name="customComposite">
     <eClassifiers xsi:type="ecore:EClass" name="VCustomViewModelElement" eSuperTypes="#//VElement">
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="osgiBundleName" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
-      <eStructuralFeatures xsi:type="ecore:EAttribute" name="javaClass" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="osgiBundleName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      <eStructuralFeatures xsi:type="ecore:EAttribute" name="javaClass" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eClassifiers>
   </eSubpackages>
   <eSubpackages name="columnComposite">

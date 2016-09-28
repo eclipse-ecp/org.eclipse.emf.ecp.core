@@ -19,24 +19,19 @@ import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization.ColumnDescription;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.layout.AbstractColumnLayout;
 import org.eclipse.jface.layout.TableColumnLayout;
-import org.eclipse.jface.viewers.ColumnPixelData;
-import org.eclipse.jface.viewers.ColumnViewerEditor;
-import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
-import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy;
-import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
-import org.eclipse.jface.viewers.ColumnWeightData;
+import org.eclipse.jface.viewers.AbstractTableViewer;
 import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
-import org.eclipse.jface.viewers.TableViewerEditor;
-import org.eclipse.jface.viewers.TableViewerFocusCellManager;
-import org.eclipse.jface.viewers.ViewerComparator;
-import org.eclipse.swt.SWT;
+import org.eclipse.jface.viewers.ViewerColumn;
+import org.eclipse.swt.events.ControlListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.Widget;
 
 /**
  * A {@link Composite} containing a {@link TableViewer}.
@@ -45,14 +40,9 @@ import org.eclipse.swt.widgets.TableColumn;
  * @author Johannes Faltermeier
  *
  */
-public class TableViewerComposite extends Composite {
+public class TableViewerComposite extends AbstractTableViewerComposite {
 
-	private static final String RESIZABLE = "resizable"; //$NON-NLS-1$
-	private static final String WEIGHT = "weight"; //$NON-NLS-1$
-	private static final String MIN_WIDTH = "min_width"; //$NON-NLS-1$
-	private final EMFDataBindingContext emfDatabindingContext;
 	private TableViewer tableViewer;
-	private Optional<List<Control>> validationControls;
 
 	/**
 	 * Default constructor.
@@ -64,175 +54,133 @@ public class TableViewerComposite extends Composite {
 	 * @param title the title
 	 * @param tooltip the tooltip
 	 */
-	TableViewerComposite(
-		Composite parent,
-		int style,
-		Object inputObject,
+	TableViewerComposite(Composite parent, int style, Object inputObject,
 		TableViewerSWTCustomization customization,
-		IObservableValue title,
-		IObservableValue tooltip) {
-		super(parent, style);
-		emfDatabindingContext = new EMFDataBindingContext();
-		renderControl(this, customization, inputObject, emfDatabindingContext, title, tooltip);
+		IObservableValue title, IObservableValue tooltip) {
+		super(parent, style, inputObject, customization, title, tooltip);
 	}
 
 	/**
 	 * @return the {@link TableViewer}
 	 */
+	@Override
 	public TableViewer getTableViewer() {
 		return tableViewer;
 	}
 
 	/**
+	 * {@inheritDoc}
 	 *
-	 * @return the validation controls, if present
+	 * @see org.eclipse.emfforms.spi.swt.table.AbstractTableViewerComposite#createTableViewer(org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization,
+	 *      org.eclipse.swt.widgets.Composite)
 	 */
-	public Optional<List<Control>> getValidationControls() {
-		return validationControls;
-	}
-
-	private void renderControl(Composite parent, TableViewerSWTCustomization customization,
-		Object inputObject, EMFDataBindingContext emfDataBindingContext, IObservableValue title,
-		IObservableValue tooltip) {
-		customization.createCompositeLayout(parent);
-
-		final Optional<Label> titleLabel = customization.getTitleLabel();
-		if (titleLabel.isPresent()) {
-			initTitleLabel(titleLabel.get(), title, tooltip, emfDatabindingContext);
-		}
-
-		validationControls = customization.getValidationControls();
-
-		final Composite viewerComposite = customization.getViewerComposite();
-
-		tableViewer = customization.createTableViewer(viewerComposite);
-
-		final Optional<Composite> buttonComposite = customization.getButtonComposite();
-		if (buttonComposite.isPresent()) {
-			initButtonComposite(buttonComposite.get(), customization, tableViewer);
-		}
-
-		enableTooltipSupport(tableViewer);
-
-		enableEditingSupport(tableViewer);
-
-		final Optional<ViewerComparator> comparator = customization.getComparator();
-		if (comparator.isPresent()) {
-			tableViewer.setComparator(comparator.get());
-		}
-
-		tableViewer.setContentProvider(customization.createContentProvider());
-
-		addColumns(customization, tableViewer, emfDataBindingContext);
-
-		tableViewer.setInput(inputObject);
-
-		final TableColumnLayout layout = new TableColumnLayout();
-		viewerComposite.setLayout(layout);
-		for (int i = 0; i < tableViewer.getTable().getColumns().length; i++) {
-			final TableColumn tableColumn = tableViewer.getTable().getColumns()[i];
-			final boolean storedIsResizable = (Boolean) tableColumn.getData(RESIZABLE);
-			final Integer storedWeight = (Integer) tableColumn.getData(WEIGHT);
-			final Integer storedMinWidth = (Integer) tableColumn.getData(MIN_WIDTH);
-			if (storedWeight == ColumnDescription.NO_WEIGHT) {
-				layout.setColumnData(tableColumn, new ColumnPixelData(storedMinWidth, storedIsResizable));
-			} else {
-				layout.setColumnData(tableColumn,
-					new ColumnWeightData(storedWeight, storedMinWidth, storedIsResizable));
-			}
-		}
-	}
-
-	private static void addColumns(TableViewerSWTCustomization customization, TableViewer tableViewer,
-		EMFDataBindingContext emfDataBindingContext) {
-		for (final ColumnDescription columnDescription : customization.getColumns()) {
-			/* create column */
-			// TODO move TableViewerColumnBuilder?
-			@SuppressWarnings("restriction")
-			final TableViewerColumn column = org.eclipse.emf.ecp.edit.internal.swt.controls.TableViewerColumnBuilder
-				.create()
-				.setData(RESIZABLE, columnDescription.isResizeable())
-				.setMoveable(columnDescription.isMoveable())
-				.setStyle(columnDescription.getStyleBits())
-				.setData(WEIGHT, columnDescription.getWeight())
-				.setData(MIN_WIDTH, columnDescription.getMinWidth())
-				.build(tableViewer);
-
-			/* bind text and tooltip */
-			final IObservableValue text = columnDescription.getColumnText();
-			emfDataBindingContext.bindValue(WidgetProperties.text().observe(column.getColumn()), text);
-			final IObservableValue tooltipText = columnDescription.getColumnTooltip();
-			emfDataBindingContext.bindValue(WidgetProperties.tooltipText().observe(column.getColumn()), tooltipText);
-
-			/* set label provider */
-			column.setLabelProvider(columnDescription.createLabelProvider(tableViewer));
-
-			/* set editing support */
-			final Optional<EditingSupport> editingSupport = columnDescription.createEditingSupport(tableViewer);
-			if (editingSupport.isPresent()) {
-				column.setEditingSupport(editingSupport.get());
-			}
-
-			if (columnDescription.getColumnImage().isPresent()) {
-				column.getColumn().setImage(columnDescription.getColumnImage().get());
-			}
-
-			/* setup drag&drop */
-			if (customization.hasDND()) {
-				tableViewer.addDragSupport(customization.getDragOperations(), customization.getDragTransferTypes(),
-					customization.getDragListener(tableViewer));
-				tableViewer.addDropSupport(customization.getDropOperations(), customization.getDropTransferTypes(),
-					customization.getDropListener(tableViewer));
-			}
-
-		}
-	}
-
-	private static void enableEditingSupport(final TableViewer tableViewer) {
-		@SuppressWarnings("restriction")
-		final TableViewerFocusCellManager focusCellManager = new TableViewerFocusCellManager(tableViewer,
-			new org.eclipse.emf.ecp.edit.internal.swt.controls.ECPFocusCellDrawHighlighter(tableViewer));
-		final ColumnViewerEditorActivationStrategy actSupport = new ColumnViewerEditorActivationStrategy(tableViewer) {
-			@Override
-			protected boolean isEditorActivationEvent(ColumnViewerEditorActivationEvent event) {
-				return event.eventType == ColumnViewerEditorActivationEvent.TRAVERSAL
-					|| event.eventType == ColumnViewerEditorActivationEvent.MOUSE_CLICK_SELECTION
-					|| event.eventType == ColumnViewerEditorActivationEvent.KEY_PRESSED && event.keyCode == SWT.CR
-					|| event.eventType == ColumnViewerEditorActivationEvent.PROGRAMMATIC;
-			}
-		};
-		TableViewerEditor.create(
-			tableViewer,
-			focusCellManager,
-			actSupport,
-			ColumnViewerEditor.TABBING_HORIZONTAL | ColumnViewerEditor.TABBING_MOVE_TO_ROW_NEIGHBOR
-				| ColumnViewerEditor.TABBING_VERTICAL | ColumnViewerEditor.KEYBOARD_ACTIVATION);
-	}
-
-	private static void enableTooltipSupport(final TableViewer tableViewer) {
-		ColumnViewerToolTipSupport.enableFor(tableViewer);
-	}
-
-	private static void initButtonComposite(Composite composite, ButtonBarBuilder customization,
-		TableViewer viewer) {
-		customization.fillButtonComposite(composite, viewer);
-
-	}
-
-	private static void initTitleLabel(Label label, IObservableValue title, IObservableValue tooltip,
-		EMFDataBindingContext emfDatabindingContext) {
-		emfDatabindingContext.bindValue(
-			WidgetProperties.text().observe(label),
-			title);
-		emfDatabindingContext.bindValue(
-			WidgetProperties.tooltipText().observe(label),
-			tooltip);
+	@Override
+	protected AbstractTableViewer createTableViewer(TableViewerSWTCustomization customization,
+		Composite viewerComposite) {
+		tableViewer = (TableViewer) customization.createTableViewer(viewerComposite);
+		return tableViewer;
 	}
 
 	@Override
-	public void dispose() {
-		emfDatabindingContext.dispose();
-		super.dispose();
+	protected AbstractColumnLayout createLayout(Composite viewerComposite) {
+		final TableColumnLayout layout = new TableColumnLayout();
+		viewerComposite.setLayout(layout);
+		return layout;
+	}
+
+	@Override
+	public Widget[] getColumns() {
+		return tableViewer.getTable().getColumns();
+	}
+
+	@Override
+	public void addColumnListener(ControlListener columnlistener) {
+		for (int i = 0; i < tableViewer.getTable().getColumns().length; i++) {
+			final TableColumn tableColumn = tableViewer.getTable().getColumns()[i];
+			tableColumn.addControlListener(columnlistener);
+		}
+	}
+
+	@Override
+	public TableControl getTableControl() {
+		return new TableControl() {
+			@Override
+			public boolean isDisposed() {
+				return getTableViewer().getTable().isDisposed();
+			}
+
+			@Override
+			public int getItemHeight() {
+				return getTableViewer().getTable().getItemHeight();
+			}
+
+			@Override
+			public boolean getHeaderVisible() {
+				return getTableViewer().getTable().getHeaderVisible();
+			}
+
+			@Override
+			public int getHeaderHeight() {
+				return getTableViewer().getTable().getHeaderHeight();
+			}
+		};
+	}
+
+	@Override
+	protected ViewerColumn createColumn(ColumnDescription columnDescription,
+		EMFDataBindingContext emfDataBindingContext, AbstractTableViewer tableViewer) {
+		final TableViewerColumnBuilder builder = TableViewerColumnBuilder
+			.create();
+
+		final TableViewerColumn column = builder.setData(RESIZABLE, columnDescription.isResizeable())
+			.setMoveable(columnDescription.isMoveable())
+			.setStyle(columnDescription.getStyleBits())
+			.setData(WEIGHT, columnDescription.getWeight())
+			.setData(MIN_WIDTH, columnDescription.getMinWidth())
+			.build((TableViewer) getTableViewer());
+
+		/* bind text and tooltip */
+		final IObservableValue text = columnDescription.getColumnText();
+		emfDataBindingContext.bindValue(WidgetProperties.text().observe(column.getColumn()), text);
+		final IObservableValue tooltipText = columnDescription.getColumnTooltip();
+		emfDataBindingContext.bindValue(WidgetProperties.tooltipText().observe(column.getColumn()), tooltipText);
+
+		/* set label provider */
+		column.setLabelProvider(columnDescription.createLabelProvider(tableViewer));
+
+		/* set editing support */
+		final Optional<EditingSupport> editingSupport = columnDescription.createEditingSupport(tableViewer);
+		if (editingSupport.isPresent()) {
+			column.setEditingSupport(editingSupport.get());
+		}
+
+		if (columnDescription.getColumnImage().isPresent()) {
+			column.getColumn().setImage(columnDescription.getColumnImage().get());
+		}
+		return column;
+	}
+
+	@Override
+	public void setComparator(final TableViewerComparator comparator, List<Integer> sortableColumns) {
+		for (int i = 0; i < getTableViewer().getTable().getColumns().length; i++) {
+			if (!sortableColumns.contains(i)) {
+				continue;
+			}
+			final int j = i;
+			final TableColumn tableColumn = getTableViewer().getTable().getColumns()[i];
+			final SelectionAdapter selectionAdapter = new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					comparator.setColumn(j);
+					final int dir = comparator.getDirection();
+					tableViewer.getTable().setSortDirection(dir);
+					tableViewer.getTable().setSortColumn(tableColumn);
+					tableViewer.refresh();
+				}
+			};
+			tableColumn.addSelectionListener(selectionAdapter);
+		}
+
 	}
 
 }

@@ -14,7 +14,9 @@ package org.eclipse.emfforms.internal.editor.ecore.referenceservices;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -25,18 +27,13 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecp.internal.edit.ECPControlHelper;
+import org.eclipse.emf.ecp.spi.common.ui.SelectModelElementWizardFactory;
 import org.eclipse.emf.ecp.ui.view.swt.DefaultReferenceService;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emfforms.spi.editor.helpers.ResourceSetHelpers;
-import org.eclipse.jface.viewers.ArrayContentProvider;
-import org.eclipse.jface.window.Window;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.dialogs.ListDialog;
 
 /**
  * The ReferenceService provides all widgets with Ecore specific references.
@@ -99,28 +96,13 @@ public class EcoreReferenceService extends DefaultReferenceService {
 	}
 
 	// Let the user select an item from a List using a dialog
-	private EObject select(List<?> elements, String title, String message) {
-		final ListDialog dialog = new ListDialog(Display.getDefault()
-			.getActiveShell());
-		dialog.setTitle(title);
-		dialog.setMessage(message);
-		dialog.setInput(elements);
-
-		dialog.setContentProvider(new ArrayContentProvider());
-
-		final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(
-			ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
-
-		final AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(composedAdapterFactory);
-
-		dialog.setLabelProvider(labelProvider);
-
-		final int result = dialog.open();
-		if (result == Window.OK && dialog.getResult().length > 0) {
-			return (EObject) dialog.getResult()[0];
+	private EObject select(List<? extends EObject> elements, String title, String message) {
+		final Set<EObject> selectedEObjects = SelectModelElementWizardFactory
+			.openModelElementSelectionDialog(new LinkedHashSet<EObject>(elements), false);
+		if (selectedEObjects.isEmpty()) {
+			return null;
 		}
-		return null;
-
+		return selectedEObjects.iterator().next();
 	}
 
 	private EObject getExistingElementFor(EReference eReference) {
@@ -169,8 +151,9 @@ public class EcoreReferenceService extends DefaultReferenceService {
 			"Select the opposite EReference");
 	}
 
+	@SuppressWarnings("unchecked")
 	private EObject getExistingGenericType(EReference eReference) {
-		final List<?> classes = ResourceSetHelpers
+		final List<EObject> classes = (List<EObject>) ResourceSetHelpers
 			.findAllOfTypeInResourceSet(context.getDomainModel(),
 				eReference.getEReferenceType(), false);
 

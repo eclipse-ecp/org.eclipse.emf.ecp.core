@@ -271,12 +271,20 @@ public class ViewValidator extends EObjectValidator {
 			return false;
 		}
 
+		// Do not validate feature dmrs witch are contained in another dmr,
+		// as normally a specific logic is applied for them
+		if (VDomainModelReference.class.isInstance(featurePathDomainModelReference.eContainer())
+			&& !context.containsKey(ECLASS_KEY)) {
+			return true;
+		}
+
 		// identify root eclass
 		final VView parentView = getParentView(featurePathDomainModelReference);
 		EClass rootEClass = null;
 		if (context.containsKey(ECLASS_KEY)) {
 			rootEClass = (EClass) context.get(ECLASS_KEY);
-		} else if (parentView != null) {
+		}
+		if (rootEClass == null && parentView != null) {
 			rootEClass = parentView.getRootEClass();
 			if (rootEClass == null) {
 				if (diagnostics != null) {
@@ -430,15 +438,73 @@ public class ViewValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateControl(VControl control, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(control, diagnostics, context);
+		if (!validate_NoCircularContainment(control, diagnostics, context)) {
+			return false;
+		}
+		boolean result = validate_EveryMultiplicityConforms(control, diagnostics, context);
+		if (result || diagnostics != null) {
+			result &= validate_EveryDataValueConforms(control, diagnostics, context);
+		}
+		if (result || diagnostics != null) {
+			result &= validate_EveryReferenceIsContained(control, diagnostics, context);
+		}
+		if (result || diagnostics != null) {
+			result &= validate_EveryBidirectionalReferenceIsPaired(control, diagnostics, context);
+		}
+		if (result || diagnostics != null) {
+			result &= validate_EveryProxyResolves(control, diagnostics, context);
+		}
+		if (result || diagnostics != null) {
+			result &= validate_UniqueID(control, diagnostics, context);
+		}
+		if (result || diagnostics != null) {
+			result &= validate_EveryKeyUnique(control, diagnostics, context);
+		}
+		if (result || diagnostics != null) {
+			result &= validate_EveryMapEntryUnique(control, diagnostics, context);
+		}
+		if (result || diagnostics != null) {
+			result &= validateControl_resolveable(control, diagnostics, context);
+		}
+		return result;
 	}
 
 	/**
+	 * Validates the resolveable constraint of '<em>Control</em>'.
 	 * <!-- begin-user-doc -->
 	 *
+	 * @param control the {@link VControl} to check
+	 * @param diagnostics the diagnostics
+	 * @param context the validation context
+	 *            <!-- end-user-doc -->
+	 * @return the validation result
+	 *
+	 * @generated NOT
+	 * @since 1.10
+	 */
+	// CHECKSTYLE.OFF: MethodName
+	public boolean validateControl_resolveable(VControl control, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
+		// CHECKSTYLE.ON: MethodName
+		final VDomainModelReference domainModelReference = control.getDomainModelReference();
+		if (domainModelReference == null) {
+			diagnostics
+				.add(createDiagnostic(Diagnostic.ERROR, 0, "No Domain Model Reference set.", //$NON-NLS-1$
+					control, VViewPackage.eINSTANCE.getControl_DomainModelReference()));
+			return false;
+		}
+		if (domainModelReference instanceof VFeaturePathDomainModelReference) {
+			return validateFeaturePathDomainModelReference_resolveable(
+				(VFeaturePathDomainModelReference) domainModelReference, diagnostics, context);
+		}
+		return validateDomainModelReference(domainModelReference, diagnostics, context);
+	}
+
+	/**
+	 * @generated
+	 * 			<!-- begin-user-doc -->
 	 * @since 1.7
 	 *        <!-- end-user-doc -->
-	 * @generated
 	 */
 	public boolean validateViewModelLoadingProperties(VViewModelLoadingProperties viewModelLoadingProperties,
 		DiagnosticChain diagnostics, Map<Object, Object> context) {

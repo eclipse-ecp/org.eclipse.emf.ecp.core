@@ -11,7 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.table;
 
-import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.AbstractTableViewer;
 import org.eclipse.swt.dnd.DragSourceListener;
 import org.eclipse.swt.dnd.DropTargetListener;
 import org.eclipse.swt.dnd.Transfer;
@@ -34,7 +34,7 @@ public interface DNDProvider {
 
 	/**
 	 * Returns the drag operations bits used to setup the
-	 * {@link TableViewer#addDragSupport(int, Transfer[], DragSourceListener) drag support} for the viewer.
+	 * {@link AbstractTableViewer#addDragSupport(int, Transfer[], DragSourceListener) drag support} for the viewer.
 	 *
 	 * @return the drag operations
 	 */
@@ -42,7 +42,7 @@ public interface DNDProvider {
 
 	/**
 	 * Returns the drag transfer types used to setup the
-	 * {@link TableViewer#addDragSupport(int, Transfer[], DragSourceListener) drag support} for the viewer.
+	 * {@link AbstractTableViewer#addDragSupport(int, Transfer[], DragSourceListener) drag support} for the viewer.
 	 *
 	 * @return the drag {@link Transfer transfer types}
 	 */
@@ -50,16 +50,16 @@ public interface DNDProvider {
 
 	/**
 	 * Returns the {@link DragSourceListener} used to setup the
-	 * {@link TableViewer#addDragSupport(int, Transfer[], DragSourceListener) drag support} for the viewer.
+	 * {@link AbstractTableViewer#addDragSupport(int, Transfer[], DragSourceListener) drag support} for the viewer.
 	 *
-	 * @param tableViewer the TableViewer
+	 * @param tableViewer the AbstractTableViewer
 	 * @return the listener
 	 */
-	DragSourceListener getDragListener(TableViewer tableViewer);
+	DragSourceListener getDragListener(AbstractTableViewer tableViewer);
 
 	/**
 	 * Returns the drag operations bits used to setup the
-	 * {@link TableViewer#addDropSupport(int, Transfer[], DropTargetListener) drop support} for the viewer.
+	 * {@link AbstractTableViewer#addDropSupport(int, Transfer[], DropTargetListener) drop support} for the viewer.
 	 *
 	 * @return the drop operations
 	 */
@@ -67,7 +67,7 @@ public interface DNDProvider {
 
 	/**
 	 * Returns the drag transfer types used to setup the
-	 * {@link TableViewer#addDropSupport(int, Transfer[], DropTargetListener) drop support} for the viewer.
+	 * {@link AbstractTableViewer#addDropSupport(int, Transfer[], DropTargetListener) drop support} for the viewer.
 	 *
 	 * @return the drop {@link Transfer transfer types}
 	 */
@@ -75,11 +75,11 @@ public interface DNDProvider {
 
 	/**
 	 * Returns the {@link DragSourceListener} used to setup the
-	 * {@link TableViewer#addDropSupport(int, Transfer[], DropTargetListener) drop support} for the viewer.
+	 * {@link AbstractTableViewer#addDropSupport(int, Transfer[], DropTargetListener) drop support} for the viewer.
 	 *
-	 * @param tableViewer the TableViewer
+	 * @param tableViewer the AbstractTableViewer
 	 * @return the listener
 	 */
-	DropTargetListener getDropListener(TableViewer tableViewer);
+	DropTargetListener getDropListener(AbstractTableViewer tableViewer);
 
 }

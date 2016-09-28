@@ -48,6 +48,7 @@ import org.osgi.service.component.annotations.Deactivate;
 public class CustomDMRConverter implements DomainModelReferenceConverterEMF {
 	private EMFFormsDatabindingEMF emfFormsDatabinding;
 	private ServiceReference<EMFFormsDatabindingEMF> databindingServiceReference;
+	private BundleContext bundleContext;
 
 	/**
 	 * This method is called by the OSGI framework when this {@link DomainModelReferenceConverterEMF} is activated. It
@@ -57,9 +58,7 @@ public class CustomDMRConverter implements DomainModelReferenceConverterEMF {
 	 */
 	@Activate
 	protected final void activate(BundleContext bundleContext) {
-		databindingServiceReference = bundleContext.getServiceReference(EMFFormsDatabindingEMF.class);
-		emfFormsDatabinding = bundleContext.getService(databindingServiceReference);
-
+		this.bundleContext = bundleContext;
 	}
 
 	/**
@@ -70,8 +69,21 @@ public class CustomDMRConverter implements DomainModelReferenceConverterEMF {
 	 */
 	@Deactivate
 	protected final void deactivate(BundleContext bundleContext) {
-		bundleContext.ungetService(databindingServiceReference);
-		emfFormsDatabinding = null;
+		if (databindingServiceReference != null) {
+			bundleContext.ungetService(databindingServiceReference);
+			emfFormsDatabinding = null;
+		}
+	}
+
+	private EMFFormsDatabindingEMF getEMFFormsDatabindingEMF() {
+		if (emfFormsDatabinding == null) {
+			databindingServiceReference = bundleContext.getServiceReference(EMFFormsDatabindingEMF.class);
+			if (databindingServiceReference == null) {
+				throw new IllegalStateException("No EMFFormsDatabindingEMF available!"); //$NON-NLS-1$
+			}
+			emfFormsDatabinding = bundleContext.getService(databindingServiceReference);
+		}
+		return emfFormsDatabinding;
 	}
 
 	/**
@@ -107,7 +119,7 @@ public class CustomDMRConverter implements DomainModelReferenceConverterEMF {
 		final VCustomDomainModelReference tableDomainModelReference = VCustomDomainModelReference.class
 			.cast(domainModelReference);
 		if (!tableDomainModelReference.getDomainModelReferences().isEmpty()) {
-			return emfFormsDatabinding
+			return getEMFFormsDatabindingEMF()
 				.getValueProperty(tableDomainModelReference.getDomainModelReferences().iterator().next(), object);
 		}
 		final ECPHardcodedReferences customControl = loadObject(tableDomainModelReference.getBundleName(),
@@ -127,7 +139,7 @@ public class CustomDMRConverter implements DomainModelReferenceConverterEMF {
 						"The provided ECPHardcodedReferences from Bundle %1$s Class %2$s doesn't define any DomainModelReferences.", //$NON-NLS-1$
 						tableDomainModelReference.getBundleName(), tableDomainModelReference.getClassName()));
 		}
-		return emfFormsDatabinding.getValueProperty(neededDomainModelReferences.iterator().next(), object);
+		return getEMFFormsDatabindingEMF().getValueProperty(neededDomainModelReferences.iterator().next(), object);
 	}
 
 	private static ECPHardcodedReferences loadObject(String bundleName, String clazz)
@@ -190,7 +202,7 @@ public class CustomDMRConverter implements DomainModelReferenceConverterEMF {
 						"The provided ECPHardcodedReferences from Bundle %1$s Class %2$s doesn't define any DomainModelReferences.", //$NON-NLS-1$
 						tableDomainModelReference.getBundleName(), tableDomainModelReference.getClassName()));
 		}
-		return emfFormsDatabinding.getListProperty(neededDomainModelReferences.iterator().next(), object);
+		return getEMFFormsDatabindingEMF().getListProperty(neededDomainModelReferences.iterator().next(), object);
 	}
 
 	/**

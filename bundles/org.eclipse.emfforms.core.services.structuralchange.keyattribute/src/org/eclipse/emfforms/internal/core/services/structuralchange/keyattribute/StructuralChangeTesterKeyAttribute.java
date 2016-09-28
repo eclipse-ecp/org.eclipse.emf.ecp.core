@@ -50,18 +50,9 @@ public class StructuralChangeTesterKeyAttribute implements StructuralChangeTeste
 	 *
 	 * @param emfFormsDatabindingEMF The {@link EMFFormsDatabindingEMF} to set
 	 */
-	@Reference
+	@Reference(unbind = "-")
 	protected void setEMFFormsDatabindingEMF(EMFFormsDatabindingEMF emfFormsDatabindingEMF) {
 		this.emfFormsDatabindingEMF = emfFormsDatabindingEMF;
-	}
-
-	/**
-	 * Called by the OSGI framework to unset the {@link EMFFormsDatabindingEMF}.
-	 *
-	 * @param emfFormsDatabindingEMF The {@link EMFFormsDatabindingEMF} to unset
-	 */
-	protected void unsetEMFFormsDatabindingEMF(EMFFormsDatabindingEMF emfFormsDatabindingEMF) {
-		this.emfFormsDatabindingEMF = null;
 	}
 
 	/**

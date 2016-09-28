@@ -28,6 +28,7 @@ import org.eclipse.emfforms.spi.swt.treemasterdetail.MenuProvider;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.ViewModelServiceProvider;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.actions.ActionCollector;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.actions.MasterDetailAction;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.decorator.validation.ecp.ECPValidationLabelDecoratorProvider;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateElementCallback;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.RootObject;
 import org.eclipse.jface.action.MenuManager;
@@ -49,8 +50,11 @@ public class EcoreEditorTMDCustomization extends DefaultTreeMasterDetailCustomiz
 	 *
 	 * @param createElementCallback the {@link CreateElementCallback}
 	 * @param notifier The Notifier to create the customization for
+	 * @param diagnosticCache the {@link org.eclipse.emfforms.spi.swt.treemasterdetail.diagnostic.DiagnosticCache
+	 *            DiagnosticCache}
 	 */
-	public EcoreEditorTMDCustomization(final CreateElementCallback createElementCallback, Notifier notifier) {
+	public EcoreEditorTMDCustomization(final CreateElementCallback createElementCallback, Notifier notifier,
+		EcoreDiagnosticCache diagnosticCache) {
 		setMenu(new MenuProvider() {
 			@Override
 			public Menu getMenu(TreeViewer treeViewer, EditingDomain editingDomain) {
@@ -75,7 +79,7 @@ public class EcoreEditorTMDCustomization extends DefaultTreeMasterDetailCustomiz
 			}
 		});
 
-		setLabelDecorator(new EcoreValidationLabelDecoratorProvider(notifier));
+		setLabelDecorator(new ECPValidationLabelDecoratorProvider(notifier, diagnosticCache));
 	}
 
 	@Override

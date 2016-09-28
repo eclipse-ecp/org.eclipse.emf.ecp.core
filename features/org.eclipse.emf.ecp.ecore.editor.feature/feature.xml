@@ -2,11 +2,11 @@
 <feature
       id="org.eclipse.emf.ecp.ecore.editor.feature"
       label="Ecore Editor Wizard Feature"
-      version="1.9.0.qualifier"
+      version="1.10.0.qualifier"
       provider-name="%providerName"
       plugin="org.eclipse.emf.ecp.ecore.editor.ui"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.9.0.qualifier">
+      license-feature-version="1.10.0.qualifier">
 
    <description>
       %description

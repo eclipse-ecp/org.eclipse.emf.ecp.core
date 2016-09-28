@@ -25,10 +25,9 @@ import org.eclipse.emf.ecp.view.template.style.tab.model.VTTabStyleProperty;
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Package</b>.
- * 
+ *
  * @since 1.8
  *        <!-- end-user-doc -->
- *
  * @generated
  */
 public class VTTabPackageImpl extends EPackageImpl implements VTTabPackage {
@@ -144,6 +143,71 @@ public class VTTabPackageImpl extends EPackageImpl implements VTTabPackage {
 
 	/**
 	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.10
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EAttribute getTabStyleProperty_OkImageURL() {
+		return (EAttribute) tabStylePropertyEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.10
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EAttribute getTabStyleProperty_InfoImageURL() {
+		return (EAttribute) tabStylePropertyEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 1.10
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EAttribute getTabStyleProperty_WarningImageURL() {
+		return (EAttribute) tabStylePropertyEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.10
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EAttribute getTabStyleProperty_ErrorImageURL() {
+		return (EAttribute) tabStylePropertyEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.10
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EAttribute getTabStyleProperty_CancelImageURL() {
+		return (EAttribute) tabStylePropertyEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
 	 * @generated
@@ -189,6 +253,11 @@ public class VTTabPackageImpl extends EPackageImpl implements VTTabPackage {
 		// Create classes and their features
 		tabStylePropertyEClass = createEClass(TAB_STYLE_PROPERTY);
 		createEAttribute(tabStylePropertyEClass, TAB_STYLE_PROPERTY__TYPE);
+		createEAttribute(tabStylePropertyEClass, TAB_STYLE_PROPERTY__OK_IMAGE_URL);
+		createEAttribute(tabStylePropertyEClass, TAB_STYLE_PROPERTY__INFO_IMAGE_URL);
+		createEAttribute(tabStylePropertyEClass, TAB_STYLE_PROPERTY__WARNING_IMAGE_URL);
+		createEAttribute(tabStylePropertyEClass, TAB_STYLE_PROPERTY__ERROR_IMAGE_URL);
+		createEAttribute(tabStylePropertyEClass, TAB_STYLE_PROPERTY__CANCEL_IMAGE_URL);
 
 		// Create enums
 		tabTypeEEnum = createEEnum(TAB_TYPE);
@@ -237,6 +306,21 @@ public class VTTabPackageImpl extends EPackageImpl implements VTTabPackage {
 			IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getTabStyleProperty_Type(), getTabType(), "type", "BOTTOM", 1, 1, VTTabStyleProperty.class, //$NON-NLS-1$ //$NON-NLS-2$
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTabStyleProperty_OkImageURL(), ecorePackage.getEString(), "okImageURL", null, 0, 1, //$NON-NLS-1$
+			VTTabStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTabStyleProperty_InfoImageURL(), ecorePackage.getEString(), "infoImageURL", null, 0, 1, //$NON-NLS-1$
+			VTTabStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTabStyleProperty_WarningImageURL(), ecorePackage.getEString(), "warningImageURL", null, 0, 1, //$NON-NLS-1$
+			VTTabStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTabStyleProperty_ErrorImageURL(), ecorePackage.getEString(), "errorImageURL", null, 0, 1, //$NON-NLS-1$
+			VTTabStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTabStyleProperty_CancelImageURL(), ecorePackage.getEString(), "cancelImageURL", null, 0, 1, //$NON-NLS-1$
+			VTTabStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(tabTypeEEnum, TabType.class, "TabType"); //$NON-NLS-1$

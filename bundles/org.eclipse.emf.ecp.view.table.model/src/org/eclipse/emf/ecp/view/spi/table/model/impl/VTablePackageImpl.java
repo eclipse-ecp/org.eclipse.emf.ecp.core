@@ -334,10 +334,10 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 
 	/**
 	 * <!-- begin-user-doc -->
+         * @since 1.9
 	 * <!-- end-user-doc -->
 	 *
 	 * @generated
-	 * @since 1.9
 	 */
 	@Override
 	public EAttribute getWidthConfiguration_MinWidth() {
@@ -529,6 +529,11 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 	 */
 	protected void createEcoreAnnotations() {
 		final String source = "http://www.eclipse.org/emf/2002/Ecore"; //$NON-NLS-1$
+		addAnnotation(tableControlEClass,
+			source,
+			new String[] {
+				"constraints", "resolveable" //$NON-NLS-1$ //$NON-NLS-2$
+			});
 		addAnnotation(tableDomainModelReferenceEClass,
 			source,
 			new String[] {

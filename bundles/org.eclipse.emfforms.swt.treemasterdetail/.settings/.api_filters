@@ -79,6 +79,49 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emfforms/spi/swt/treemasterdetail/actions/MasterDetailAction.java">
+        <filter id="0"/>
+    </resource>
+    <resource path="src/org/eclipse/emfforms/spi/swt/treemasterdetail/actions/MasterDetailAction.java" type="org.eclipse.emfforms.spi.swt.treemasterdetail.actions.MasterDetailAction">
+        <filter comment="SPI Change 1.10.0" id="336695337">
+            <message_arguments>
+                <message_argument value="org.eclipse.emfforms.spi.swt.treemasterdetail.actions.MasterDetailAction"/>
+                <message_argument value="execute(List&lt;Object&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.10.0" id="336695337">
+            <message_arguments>
+                <message_argument value="org.eclipse.emfforms.spi.swt.treemasterdetail.actions.MasterDetailAction"/>
+                <message_argument value="shouldShow(List&lt;Object&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.10.0" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emfforms.spi.swt.treemasterdetail.actions.MasterDetailAction"/>
+                <message_argument value="execute(EObject)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.10.0" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emfforms.spi.swt.treemasterdetail.actions.MasterDetailAction"/>
+                <message_argument value="shouldShow(EObject)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emfforms/spi/swt/treemasterdetail/actions/delegating/DelegatingMasterDetailAction.java" type="org.eclipse.emfforms.spi.swt.treemasterdetail.actions.delegating.DelegatingMasterDetailAction">
+        <filter comment="SPI Change 1.10.0" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emfforms.spi.swt.treemasterdetail.actions.delegating.DelegatingMasterDetailAction"/>
+                <message_argument value="execute(EObject)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.10.0" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emfforms.spi.swt.treemasterdetail.actions.delegating.DelegatingMasterDetailAction"/>
+                <message_argument value="shouldShow(EObject)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emfforms/spi/swt/treemasterdetail/util/CreateChildAction.java" type="org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateChildAction">
         <filter comment="This is SPI" id="576720909">
             <message_arguments>

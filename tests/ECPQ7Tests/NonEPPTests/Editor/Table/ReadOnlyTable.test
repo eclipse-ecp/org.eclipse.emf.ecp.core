@@ -6,8 +6,8 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _oawGcUYVEeO347zZ7X5NJw
-Runtime-Version: 1.5.4.201410231434
-Save-Time: 12/11/14 10:27 AM
+Runtime-Version: 2.1.0.201606221726
+Save-Time: 9/5/16 3:50 PM
 Tags: skipExecution
 Testcase-Type: ecl
 
@@ -27,11 +27,17 @@ with [get-view "Model Explorer" | get-tree] {
 }
 
 get-editor TableControl | get-button "Create and link new Domain Model Reference" | click
-with [get-window "New Reference Element"] {
-    get-button "Link Domain Model EFeature" | click
-    with [get-window "Select a EStructuralFeature"] {
-        get-tree | select "games : Game"
-        get-button OK | click
+with [get-window "Configure TableDomainModelReference"] {
+    get-button "Create and link new Domain Model Reference" | click
+    with [get-window "New Reference Element"] {
+        get-tree | select "model/FeaturePathDomainModelReference" | click
+        get-button "Next >" | click
+        get-button "Link Domain Model EFeature" | click
+        with [get-window "Select a EStructuralFeature"] {
+            get-tree | select "games : Game"
+            get-button OK | click
+        }
+        get-button Finish | click
     }
     get-button Finish | click
 }

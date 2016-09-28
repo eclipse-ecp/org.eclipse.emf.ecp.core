@@ -65,7 +65,16 @@ public final class EMFUtils {
 		final Set<EPackage> ePackages = new HashSet<EPackage>();
 		final Set<String> namespaceURIs = new LinkedHashSet<String>(Registry.INSTANCE.keySet());
 		for (final String nsURI : namespaceURIs) {
-			final EPackage ePackage = Registry.INSTANCE.getEPackage(nsURI);
+			EPackage ePackage;
+			try {
+				ePackage = Registry.INSTANCE.getEPackage(nsURI);
+			}
+			// BEGIN SUPRESS CATCH EXCEPTION
+			catch (final Exception ex) {// END SUPRESS CATCH EXCEPTION
+				/* If there is a wrongly configured EPackage the call to getEPackage might throw a runtime exception */
+				/* Catch here, so we can still loop through the whole registry */
+				continue;
+			}
 			if (ePackage == null) {
 				/*
 				 * this case is actually possible! we should only collect non null

@@ -46,7 +46,7 @@ public class DomainModelReferenceControlSWTRendererService implements EMFFormsDI
 	 *
 	 * @param databindingService The {@link EMFFormsDatabinding}
 	 */
-	@Reference
+	@Reference(unbind = "-")
 	protected void setEMFFormsDatabinding(EMFFormsDatabinding databindingService) {
 		this.databindingService = databindingService;
 	}
@@ -56,7 +56,7 @@ public class DomainModelReferenceControlSWTRendererService implements EMFFormsDI
 	 *
 	 * @param reportService The {@link ReportService}
 	 */
-	@Reference
+	@Reference(unbind = "-")
 	protected void setReportService(ReportService reportService) {
 		this.reportService = reportService;
 	}

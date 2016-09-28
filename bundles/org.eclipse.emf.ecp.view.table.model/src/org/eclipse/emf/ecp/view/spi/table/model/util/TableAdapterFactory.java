@@ -175,8 +175,8 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.spi.table.model.VTableColumnConfiguration <em>Column Configuration</em>}'.
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emf.ecp.view.spi.table.model.VTableColumnConfiguration <em>Column Configuration</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
@@ -191,8 +191,8 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference <em>Domain Model Reference</em>}'.
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference <em>Domain Model Reference</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
@@ -207,9 +207,9 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.spi.table.model.VReadOnlyColumnConfiguration
-	 * <em>Read Only Column Configuration</em>}'.
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emf.ecp.view.spi.table.model.VReadOnlyColumnConfiguration <em>Read Only Column
+	 * Configuration</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
@@ -241,8 +241,8 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VElement <em>Element</em>
-	 * }'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VElement
+	 * <em>Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
@@ -273,8 +273,8 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VControl <em>Control</em>
-	 * }'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VControl
+	 * <em>Control</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
@@ -305,9 +305,9 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference
-	 * <em>Feature Path Domain Model Reference</em>}'.
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference <em>Feature Path Domain Model
+	 * Reference</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.

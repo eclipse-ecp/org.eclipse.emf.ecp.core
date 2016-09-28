@@ -2,17 +2,17 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: SWT Renderer Tests
 Bundle-SymbolicName: org.eclipse.emf.ecp.ui.view.swt.test
-Bundle-Version: 1.9.0.qualifier
+Bundle-Version: 1.10.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
-Fragment-Host: org.eclipse.emf.ecp.ui.view.swt;bundle-version="[1.9.0,2.0.0)"
-Export-Package: org.eclipse.emf.ecp.ui.view.swt.test;version="1.9.0"
+Fragment-Host: org.eclipse.emf.ecp.ui.view.swt;bundle-version="[1.10.0,2.0.0)"
+Export-Package: org.eclipse.emf.ecp.ui.view.swt.test;version="1.10.0"
 Require-Bundle: org.junit;bundle-version="[4.0.0,5.0.0)",
  org.eclipse.jface.databinding;bundle-version="[1.6.0,2.0.0)",
- org.eclipse.emf.ecp.view.test.common.swt;bundle-version="[1.9.0,2.0.0)",
+ org.eclipse.emf.ecp.view.test.common.swt;bundle-version="[1.10.0,2.0.0)",
  org.eclipse.emf.emfstore.examplemodel;bundle-version="[1.3.0,2.0.0)",
- org.eclipse.emf.ecp.view.vertical.model;bundle-version="[1.9.0,2.0.0)",
- org.eclipse.emfforms.core.services.legacy;bundle-version="[1.9.0,2.0.0)",
- org.eclipse.emfforms.core.services.domainexpander.default;bundle-version="[1.9.0,2.0.0)",
- org.eclipse.emfforms.core.services.structuralchange.default;bundle-version="[1.9.0,2.0.0)",
- org.eclipse.emfforms.core.services.structuralchange;bundle-version="[1.9.0,2.0.0)"
+ org.eclipse.emf.ecp.view.vertical.model;bundle-version="[1.10.0,2.0.0)",
+ org.eclipse.emfforms.core.services.legacy;bundle-version="[1.10.0,2.0.0)",
+ org.eclipse.emfforms.core.services.domainexpander.default;bundle-version="[1.10.0,2.0.0)",
+ org.eclipse.emfforms.core.services.structuralchange.default;bundle-version="[1.10.0,2.0.0)",
+ org.eclipse.emfforms.core.services.structuralchange;bundle-version="[1.10.0,2.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6

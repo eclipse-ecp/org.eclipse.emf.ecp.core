@@ -43,7 +43,7 @@ public class EMFFormsCategorizationElementRendererService implements
 	 *
 	 * @param reportService the reportService to set
 	 */
-	@Reference
+	@Reference(unbind = "-")
 	protected void setReportService(ReportService reportService) {
 		this.reportService = reportService;
 	}
@@ -92,7 +92,8 @@ public class EMFFormsCategorizationElementRendererService implements
 	 * @see org.eclipse.emfforms.spi.spreadsheet.core.EMFFormsSpreadsheetRendererService#getRendererInstance(VElement,ViewModelContext)
 	 */
 	@Override
-	public EMFFormsAbstractSpreadsheetRenderer<VCategorizationElement> getRendererInstance(VCategorizationElement vElement,
+	public EMFFormsAbstractSpreadsheetRenderer<VCategorizationElement> getRendererInstance(
+		VCategorizationElement vElement,
 		ViewModelContext viewModelContext) {
 		return new EMFFormsCategorizationElementRenderer(emfformsSpreadsheetRendererFactory, reportService);
 	}

@@ -23,10 +23,9 @@ import org.eclipse.emf.ecp.view.template.style.tab.model.VTTabStyleProperty;
  * <!-- begin-user-doc -->
  * The <b>Adapter Factory</b> for the model.
  * It provides an adapter <code>createXXX</code> method for each class of the model.
- * 
+ *
  * @since 1.8
  *        <!-- end-user-doc -->
- *
  * @see org.eclipse.emf.ecp.view.template.style.tab.model.VTTabPackage
  * @generated
  */
@@ -113,8 +112,8 @@ public class TabAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.template.style.tab.model.VTTabStyleProperty <em>Style Property</em>}'.
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emf.ecp.view.template.style.tab.model.VTTabStyleProperty <em>Style Property</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.

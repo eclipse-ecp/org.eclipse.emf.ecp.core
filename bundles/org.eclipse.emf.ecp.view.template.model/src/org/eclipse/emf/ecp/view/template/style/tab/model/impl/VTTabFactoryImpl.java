@@ -25,10 +25,9 @@ import org.eclipse.emf.ecp.view.template.style.tab.model.VTTabStyleProperty;
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Factory</b>.
- * 
+ *
  * @since 1.8
  *        <!-- end-user-doc -->
- *
  * @generated
  */
 public class VTTabFactoryImpl extends EFactoryImpl implements VTTabFactory {

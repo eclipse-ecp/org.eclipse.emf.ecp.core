@@ -59,7 +59,7 @@ public class EMFFormsSpreadsheetMultiAttributeConverter implements EMFFormsSprea
 	 *
 	 * @param databinding the service
 	 */
-	@Reference(cardinality = ReferenceCardinality.MANDATORY)
+	@Reference(cardinality = ReferenceCardinality.MANDATORY, unbind = "-")
 	public void setDatabinding(EMFFormsDatabindingEMF databinding) {
 		this.databinding = databinding;
 	}
@@ -69,7 +69,7 @@ public class EMFFormsSpreadsheetMultiAttributeConverter implements EMFFormsSprea
 	 *
 	 * @param localeProvider the service
 	 */
-	@Reference(cardinality = ReferenceCardinality.MANDATORY)
+	@Reference(cardinality = ReferenceCardinality.MANDATORY, unbind = "-")
 	protected void setEMFFormsLocaleProvider(EMFFormsLocaleProvider localeProvider) {
 		this.localeProvider = localeProvider;
 	}
@@ -79,7 +79,7 @@ public class EMFFormsSpreadsheetMultiAttributeConverter implements EMFFormsSprea
 	 *
 	 * @param reportService the service
 	 */
-	@Reference(cardinality = ReferenceCardinality.MANDATORY)
+	@Reference(cardinality = ReferenceCardinality.MANDATORY, unbind = "-")
 	public void setReportService(ReportService reportService) {
 		this.reportService = reportService;
 	}
@@ -111,7 +111,7 @@ public class EMFFormsSpreadsheetMultiAttributeConverter implements EMFFormsSprea
 	@Override
 	public void setCellValue(Cell cell, Object fromObject, EStructuralFeature eStructuralFeature,
 		ViewModelContext viewModelContext)
-			throws EMFFormsConverterException {
+		throws EMFFormsConverterException {
 		final EDataType eDataType = EAttribute.class.cast(eStructuralFeature).getEAttributeType();
 		final EFactory eFactory = eDataType.getEPackage().getEFactoryInstance();
 		final StringBuilder result = new StringBuilder();

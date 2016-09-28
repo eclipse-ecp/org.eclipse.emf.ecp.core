@@ -2,16 +2,16 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Databinding Services Featurepath Tests
 Bundle-SymbolicName: org.eclipse.emfforms.core.services.databinding.featurepath.tests;singleton:=true
-Bundle-Version: 1.9.0.qualifier
+Bundle-Version: 1.10.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: Eclipse Modeling Project
-Fragment-Host: org.eclipse.emfforms.core.services.databinding.featurepath;bundle-version="[1.9.0,2.0.0)"
-Export-Package: org.eclipse.emfforms.core.services.databinding.featurepath.tests;version="1.9.0";x-internal:=true,
- org.eclipse.emfforms.internal.core.services.databinding.featurepath;version="1.9.0";x-internal:=true
+Fragment-Host: org.eclipse.emfforms.core.services.databinding.featurepath;bundle-version="[1.10.0,2.0.0)"
+Export-Package: org.eclipse.emfforms.core.services.databinding.featurepath.tests;version="1.10.0";x-internal:=true,
+ org.eclipse.emfforms.internal.core.services.databinding.featurepath;version="1.10.0";x-internal:=true
 Require-Bundle: org.junit;bundle-version="[4.11.0,5.0.0)",
  org.mockito.mockito-core-hamcrest-modified;bundle-version="[1.9.5,2.0.0)",
  org.eclipse.emf.ecore;bundle-version="[2.9.0,3.0.0)",
- org.eclipse.emfforms.core.services.databinding.testmodel;bundle-version="[1.9.0,2.0.0)"
+ org.eclipse.emfforms.core.services.databinding.testmodel;bundle-version="[1.10.0,2.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Import-Package: org.osgi.framework;version="[1.1.0,2.0.0)"

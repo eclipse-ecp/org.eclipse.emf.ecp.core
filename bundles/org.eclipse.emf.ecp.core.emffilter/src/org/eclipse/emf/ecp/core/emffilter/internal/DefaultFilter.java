@@ -60,6 +60,8 @@ public class DefaultFilter implements ECPFilterProvider {
 
 		addEDapt(packages);
 
+		addXcoreXtext(packages);
+
 		return packages;
 	}
 
@@ -420,5 +422,17 @@ public class DefaultFilter implements ECPFilterProvider {
 		packages.add("http://www.eclipse.org/ecl/interop.ecore"); //$NON-NLS-1$
 		packages.add("http://www.eclipse.org/ecl/platform/commands.ecore"); //$NON-NLS-1$
 		packages.add("http://www.eclipse.org/ecl/platform/objects.ecore"); //$NON-NLS-1$
+	}
+
+	private void addXcoreXtext(Set<String> packages) {
+		packages.add("http://www.eclipse.org/emf/2011/Xcore"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/xtext/builderstate/1.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/xtext/codetemplate/Codetemplates"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/xtext/trace/debug/1.0"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/xtext/common/JavaVMTypes"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/Xtext/Xbase/XAnnotations"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/xtext/xbase/Xbase"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/2008/Xtext"); //$NON-NLS-1$
+		packages.add("http://www.eclipse.org/xtext/xbase/Xtype"); //$NON-NLS-1$
 	}
 }

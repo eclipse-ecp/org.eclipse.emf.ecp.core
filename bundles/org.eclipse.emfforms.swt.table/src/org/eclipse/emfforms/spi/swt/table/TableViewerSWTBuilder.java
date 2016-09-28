@@ -31,13 +31,18 @@ import org.eclipse.swt.widgets.Composite;
  * @author Johannes Faltermeier
  *
  */
-public final class TableViewerSWTBuilder {
-
+public class TableViewerSWTBuilder {
+	/** The parent composite. */
 	private final Composite composite;
+	/** The style bits. */
 	private final int swtStyleBits;
+	/** The input object. */
 	private final Object input;
+	/** The table control customization. */
 	private final DefaultTableControlSWTCustomization customization;
+	/** The title. */
 	private final IObservableValue title;
+	/** The tooltip. */
 	private final IObservableValue tooltip;
 
 	/**
@@ -47,7 +52,7 @@ public final class TableViewerSWTBuilder {
 	 * @param title the title
 	 * @param tooltip the tooltip
 	 */
-	/* package */ TableViewerSWTBuilder(Composite composite, int swtStyleBits, Object input, IObservableValue title,
+	protected TableViewerSWTBuilder(Composite composite, int swtStyleBits, Object input, IObservableValue title,
 		IObservableValue tooltip) {
 		this.composite = composite;
 		this.swtStyleBits = swtStyleBits;
@@ -55,6 +60,48 @@ public final class TableViewerSWTBuilder {
 		this.title = title;
 		this.tooltip = tooltip;
 		customization = new DefaultTableControlSWTCustomization();
+	}
+
+	/**
+	 * @return the composite
+	 */
+	protected Composite getComposite() {
+		return composite;
+	}
+
+	/**
+	 * @return the swtStyleBits
+	 */
+	protected int getSwtStyleBits() {
+		return swtStyleBits;
+	}
+
+	/**
+	 * @return the input
+	 */
+	protected Object getInput() {
+		return input;
+	}
+
+	/**
+	 * @return the customization
+	 */
+	protected DefaultTableControlSWTCustomization getCustomization() {
+		return customization;
+	}
+
+	/**
+	 * @return the title
+	 */
+	protected IObservableValue getTitle() {
+		return title;
+	}
+
+	/**
+	 * @return the tooltip
+	 */
+	protected IObservableValue getTooltip() {
+		return tooltip;
 	}
 
 	/**
@@ -155,6 +202,22 @@ public final class TableViewerSWTBuilder {
 	 */
 	public TableViewerSWTBuilder customizeElementCreation(NewElementCreator<Object, Button> creator) {
 		customization.setNewElementCreator(creator);
+		return this;
+	}
+
+	/**
+	 * <p>
+	 * Use this method to customize drag&drop.
+	 * </p>
+	 * <p>
+	 * The default behaviour disables drag&drop.
+	 * </p>
+	 *
+	 * @param provider the provider
+	 * @return self
+	 */
+	public TableViewerSWTBuilder customizeDragAndDrop(DNDProvider provider) {
+		customization.setDND(provider);
 		return this;
 	}
 
@@ -591,7 +654,7 @@ public final class TableViewerSWTBuilder {
 	 *
 	 * @return the {@link TableViewerComposite}
 	 */
-	public TableViewerComposite create() {
+	public AbstractTableViewerComposite create() {
 		return new TableViewerComposite(composite, swtStyleBits, input, customization, title, tooltip);
 	}
 }

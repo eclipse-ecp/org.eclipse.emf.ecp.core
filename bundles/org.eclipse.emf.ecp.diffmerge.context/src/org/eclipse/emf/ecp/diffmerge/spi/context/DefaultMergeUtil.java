@@ -53,7 +53,9 @@ public final class DefaultMergeUtil {
 	 */
 	@SuppressWarnings("unchecked")
 	public static void copyValues(VControl from, EObject fromDomainModel, VControl to, EObject toDomainModel) {
+		@SuppressWarnings("rawtypes")
 		final IObservableValue fromObservableValue;
+		@SuppressWarnings("rawtypes")
 		final IObservableValue toObservableValue;
 		try {
 			fromObservableValue = Activator.getDefault().getEMFFormsDatabinding()
@@ -89,8 +91,7 @@ public final class DefaultMergeUtil {
 				editingDomain.getCommandStack().execute(
 					AddCommand.create(editingDomain, toEObject, toStructuralFeature,
 						(Collection<?>) fromEObject.eGet(fromStructuralFeature, true)));
-			}
-			else {
+			} else {
 				editingDomain.getCommandStack().execute(
 					SetCommand.create(editingDomain, toEObject, toStructuralFeature,
 						fromEObject.eGet(fromStructuralFeature, true)));

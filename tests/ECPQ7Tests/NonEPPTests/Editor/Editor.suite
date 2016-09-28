@@ -1,12 +1,11 @@
---- Q7 testcase ---
+--- RCPTT testcase ---
 Format-Version: 1.0
-Q7-vendor: www.xored.com/q7
 Element-Name: Editor
 Element-Type: testsuite
 Element-Version: 2.0
 Id: _r0qowHHTEeKndsdNMEr_UQ
-Q7-Runtime-Version: 1.3.7.201309090800
-Save-Time: 11/6/13 9:45 AM
+Runtime-Version: 2.1.0.201606221726
+Save-Time: 9/5/16 2:59 PM
 
 ------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
 Content-Type: text/testcase
@@ -24,24 +23,6 @@ _LsZZEDyoEeOyfvx0Xny3Ig	// kind: 'test' name: 'NewDate' path: 'NewDate.test'
 _axAiYDyVEeOk_dMIOzb4CA	// kind: 'test' name: 'NewDouble' path: 'NewDouble.test'
 _QSZfMHHWEeKndsdNMEr_UQ	// kind: 'test' name: 'String' path: 'String.test'
 _6xi7QQpDEeOJrN9cdzAxHQ	// kind: 'test' name: 'ValidationDecoratorInEditor' path: 'ValidationDecoratorInEditor.test'
-_kms5UIpVEeK80-dAVHg-DA	// kind: 'test' name: 'AddRow' path: 'Table/AddRow.test'
-_GLHKgIpeEeK80-dAVHg-DA	// kind: 'test' name: 'AddRowAndSetBigInt' path: 'Table/AddRowAndSetBigInt.test'
-_IWxDYIpWEeK80-dAVHg-DA	// kind: 'test' name: 'DeleteRow' path: 'Table/DeleteRow.test'
-_ObfJcIpXEeK80-dAVHg-DA	// kind: 'test' name: 'DeleteRows' path: 'Table/DeleteRows.test'
-_ud-CkEYUEeOmh5SOkeuFtw	// kind: 'test' name: 'MaxBoundReference' path: 'Table/MaxBoundReference.test'
-_gvAuUEYLEeOmh5SOkeuFtw	// kind: 'test' name: 'MinBoundReference' path: 'Table/MinBoundReference.test'
-_oawGcUYVEeO347zZ7X5NJw	// kind: 'test' name: 'ReadOnlyTable' path: 'Table/ReadOnlyTable.test'
-_amLggIpeEeK80-dAVHg-DA	// kind: 'test' name: 'SetBigDecimal' path: 'Table/SetBigDecimal.test'
-_Uv2qIEYKEeOmh5SOkeuFtw	// kind: 'test' name: 'SetBigInteger' path: 'Table/SetBigInteger.test'
-_GW5PoIpREeK80-dAVHg-DA	// kind: 'test' name: 'SetBoolean' path: 'Table/SetBoolean.test'
-_bYjBUIpNEeK80-dAVHg-DA	// kind: 'test' name: 'SetDate' path: 'Table/SetDate.test'
-_zSJeQIpOEeK80-dAVHg-DA	// kind: 'test' name: 'SetDouble' path: 'Table/SetDouble.test'
-_b_DD0IpREeK80-dAVHg-DA	// kind: 'test' name: 'SetEMail' path: 'Table/SetEMail.test'
-_s2yJMDsaEeOSoJrMKArUHA	// kind: 'test' name: 'SetEnum' path: 'Table/SetEnum.test'
-_X66MEIf4EeKpyoBptqEfAg	// kind: 'test' name: 'SetInt' path: 'Table/SetInt.test'
-_cga1EIpdEeK80-dAVHg-DA	// kind: 'test' name: 'SetMultiRef' path: 'Table/SetMultiRef.test'
-_Mr1VQYpNEeK80-dAVHg-DA	// kind: 'test' name: 'SetString' path: 'Table/SetString.test'
-_aJUTcIpgEeK80-dAVHg-DA	// kind: 'test' name: 'ValidateBigDecimal' path: 'Table/ValidateBigDecimal.test'
 __Gg_AIpgEeK80-dAVHg-DA	// kind: 'suite' name: 'TableSuite' path: 'Table/TableSuite.suite'
 _7xT6QXXGEeK2tZkPdpUavQ	// kind: 'test' name: 'MultiBoolean' path: 'Multicontrols/MultiBoolean.test'
 _fytq8HXSEeK2tZkPdpUavQ	// kind: 'test' name: 'MultiDouble' path: 'Multicontrols/MultiDouble.test'
@@ -49,5 +30,7 @@ _YAH8kHXLEeK2tZkPdpUavQ	// kind: 'test' name: 'MultiEnum' path: 'Multicontrols/M
 _YJbUcHXJEeK2tZkPdpUavQ	// kind: 'test' name: 'MultiInt' path: 'Multicontrols/MultiInt.test'
 _7fNEUHXLEeK2tZkPdpUavQ	// kind: 'test' name: 'MultiReference' path: 'Multicontrols/MultiReference.test'
 _l3nLwHHkEeKndsdNMEr_UQ	// kind: 'test' name: 'MultiString' path: 'Multicontrols/MultiString.test'
+_HzFpMGs4EeSUs_kOwABuHQ	// kind: 'test' name: 'TreeMasterDetailContextMenuFeatureMap' path: 'TreeMasterDetailContextMenuFeatureMap.test'
+_GYZaMHlAEeO9Ja8zvRhhOQ	// kind: 'test' name: 'XMLDate' path: 'XMLDate.test'
 
 ------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--

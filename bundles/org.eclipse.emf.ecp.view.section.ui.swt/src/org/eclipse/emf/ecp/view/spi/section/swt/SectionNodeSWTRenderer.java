@@ -12,6 +12,7 @@
 package org.eclipse.emf.ecp.view.spi.section.swt;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -304,16 +305,25 @@ public class SectionNodeSWTRenderer extends AbstractSectionSWTRenderer {
 	@Override
 	protected void initCollapseState() {
 		/* top root gets current width as width hint so that further resizes will keep the column width intact */
-		for (final Control control : getControls().values()) {
+		final Iterator<Control> iterator = getControls().values().iterator();
+		while (iterator.hasNext()) {
+			final Control control = iterator.next();
 			final int width = control.getSize().x;
 			final Object layoutData = control.getLayoutData();
 			if (GridData.class.isInstance(layoutData)) {
 				final GridData gridData = (GridData) layoutData;
-				if (gridData != null) {
-					gridData.widthHint = width;
+				if (gridData == null) {
+					continue;
 				}
+				gridData.widthHint = width;
+				if (iterator.hasNext()) {
+					continue;
+				}
+				gridData.grabExcessHorizontalSpace = true;
 			}
+
 		}
+
 		handleCollapseState();
 	}
 

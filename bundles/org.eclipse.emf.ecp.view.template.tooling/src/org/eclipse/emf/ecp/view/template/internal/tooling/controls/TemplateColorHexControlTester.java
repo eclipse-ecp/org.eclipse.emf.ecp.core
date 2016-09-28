@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -61,32 +61,62 @@ public class TemplateColorHexControlTester implements ECPRendererTester {
 		if (VTValidationPackage.eINSTANCE.getValidationStyleProperty_OkColorHEX().equals(feature)) {
 			return 5;
 		}
+		if (VTValidationPackage.eINSTANCE.getValidationStyleProperty_OkForegroundColorHEX().equals(feature)) {
+			return 5;
+		}
 		if (VTValidationPackage.eINSTANCE.getValidationStyleProperty_InfoColorHEX().equals(feature)) {
+			return 5;
+		}
+		if (VTValidationPackage.eINSTANCE.getValidationStyleProperty_InfoForegroundColorHEX().equals(feature)) {
 			return 5;
 		}
 		if (VTValidationPackage.eINSTANCE.getValidationStyleProperty_WarningColorHEX().equals(feature)) {
 			return 5;
 		}
+		if (VTValidationPackage.eINSTANCE.getValidationStyleProperty_WarningForegroundColorHEX().equals(feature)) {
+			return 5;
+		}
 		if (VTValidationPackage.eINSTANCE.getValidationStyleProperty_ErrorColorHEX().equals(feature)) {
 			return 5;
 		}
+		if (VTValidationPackage.eINSTANCE.getValidationStyleProperty_ErrorForegroundColorHEX().equals(feature)) {
+			return 5;
+		}
 		if (VTValidationPackage.eINSTANCE.getValidationStyleProperty_CancelColorHEX().equals(feature)) {
+			return 5;
+		}
+		if (VTValidationPackage.eINSTANCE.getValidationStyleProperty_CancelForegroundColorHEX().equals(feature)) {
 			return 5;
 		}
 		// template validation (Deprecated)
 		if (VTTemplatePackage.eINSTANCE.getControlValidationTemplate_OkColorHEX().equals(feature)) {
 			return 5;
 		}
+		if (VTTemplatePackage.eINSTANCE.getControlValidationTemplate_OkForegroundColorHEX().equals(feature)) {
+			return 5;
+		}
 		if (VTTemplatePackage.eINSTANCE.getControlValidationTemplate_InfoColorHEX().equals(feature)) {
+			return 5;
+		}
+		if (VTTemplatePackage.eINSTANCE.getControlValidationTemplate_InfoForegroundColorHEX().equals(feature)) {
 			return 5;
 		}
 		if (VTTemplatePackage.eINSTANCE.getControlValidationTemplate_WarningColorHEX().equals(feature)) {
 			return 5;
 		}
+		if (VTTemplatePackage.eINSTANCE.getControlValidationTemplate_WarningForegroundColorHEX().equals(feature)) {
+			return 5;
+		}
 		if (VTTemplatePackage.eINSTANCE.getControlValidationTemplate_ErrorColorHEX().equals(feature)) {
 			return 5;
 		}
+		if (VTTemplatePackage.eINSTANCE.getControlValidationTemplate_ErrorForegroundColorHEX().equals(feature)) {
+			return 5;
+		}
 		if (VTTemplatePackage.eINSTANCE.getControlValidationTemplate_CancelColorHEX().equals(feature)) {
+			return 5;
+		}
+		if (VTTemplatePackage.eINSTANCE.getControlValidationTemplate_CancelForegroundColorHEX().equals(feature)) {
 			return 5;
 		}
 		// background

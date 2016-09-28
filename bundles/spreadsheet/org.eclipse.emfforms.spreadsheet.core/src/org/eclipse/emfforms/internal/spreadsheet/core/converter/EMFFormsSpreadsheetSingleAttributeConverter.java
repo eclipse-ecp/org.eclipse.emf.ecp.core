@@ -59,7 +59,7 @@ public class EMFFormsSpreadsheetSingleAttributeConverter implements EMFFormsSpre
 	 *
 	 * @param databinding the service
 	 */
-	@Reference(cardinality = ReferenceCardinality.MANDATORY)
+	@Reference(cardinality = ReferenceCardinality.MANDATORY, unbind = "-")
 	public void setDatabinding(EMFFormsDatabindingEMF databinding) {
 		this.databinding = databinding;
 	}
@@ -69,7 +69,7 @@ public class EMFFormsSpreadsheetSingleAttributeConverter implements EMFFormsSpre
 	 *
 	 * @param reportService the service
 	 */
-	@Reference(cardinality = ReferenceCardinality.MANDATORY)
+	@Reference(cardinality = ReferenceCardinality.MANDATORY, unbind = "-")
 	public void setReportService(ReportService reportService) {
 		this.reportService = reportService;
 	}

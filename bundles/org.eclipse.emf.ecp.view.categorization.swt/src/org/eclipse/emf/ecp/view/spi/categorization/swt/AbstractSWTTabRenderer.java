@@ -22,8 +22,10 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecp.view.internal.categorization.swt.Activator;
+import org.eclipse.emf.ecp.view.internal.categorization.swt.ValidationTabImageHelper;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VAbstractCategorization;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.model.reporting.StatusReport;
@@ -33,6 +35,7 @@ import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.template.style.tab.model.VTTabStyleProperty;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
@@ -50,6 +53,7 @@ import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
@@ -62,6 +66,7 @@ import org.eclipse.swt.widgets.Control;
 public abstract class AbstractSWTTabRenderer<VELEMENT extends VElement> extends AbstractSWTRenderer<VELEMENT> {
 
 	private final Map<CTabItem, VAbstractCategorization> itemToCategorizationMap = new LinkedHashMap<CTabItem, VAbstractCategorization>();
+	private final Map<VAbstractCategorization, CTabItem> categorizationToItemMap = new LinkedHashMap<VAbstractCategorization, CTabItem>();
 	private final Map<CTabItem, Composite> itemToCompositeMap = new LinkedHashMap<CTabItem, Composite>();
 
 	private final EMFFormsRendererFactory emfFormsRendererFactory;
@@ -134,6 +139,7 @@ public abstract class AbstractSWTTabRenderer<VELEMENT extends VElement> extends 
 			}
 
 			itemToCategorizationMap.put(item, categorization);
+			categorizationToItemMap.put(categorization, item);
 			itemToCompositeMap.put(item, composite);
 
 			final IObservableValue modelValue = EMFEditObservables.observeValue(
@@ -239,9 +245,9 @@ public abstract class AbstractSWTTabRenderer<VELEMENT extends VElement> extends 
 		return false;
 	}
 
-	private int getTabFolderStyle() {
+	private Optional<VTTabStyleProperty> getTabStyle() {
 		if (getViewTemplateProvider() == null) {
-			return getDefaultFolderStyle();
+			return Optional.empty();
 		}
 		final Set<VTStyleProperty> styleProperties = getViewTemplateProvider()
 			.getStyleProperties(getVElement(), getViewModelContext());
@@ -249,17 +255,25 @@ public abstract class AbstractSWTTabRenderer<VELEMENT extends VElement> extends 
 			if (!VTTabStyleProperty.class.isInstance(styleProperty)) {
 				continue;
 			}
-			final VTTabStyleProperty style = VTTabStyleProperty.class.cast(styleProperty);
-			switch (style.getType()) {
-			case BOTTOM:
-				return SWT.BOTTOM;
-			case TOP:
-				return SWT.TOP;
-			default:
-				return getDefaultFolderStyle();
-			}
+			return Optional.of(VTTabStyleProperty.class.cast(styleProperty));
 		}
-		return getDefaultFolderStyle();
+		return Optional.empty();
+	}
+
+	private int getTabFolderStyle() {
+		final Optional<VTTabStyleProperty> tabStyle = getTabStyle();
+		if (!tabStyle.isPresent()) {
+			return getDefaultFolderStyle();
+		}
+		final VTTabStyleProperty style = tabStyle.get();
+		switch (style.getType()) {
+		case BOTTOM:
+			return SWT.BOTTOM;
+		case TOP:
+			return SWT.TOP;
+		default:
+			return getDefaultFolderStyle();
+		}
 	}
 
 	private int getDefaultFolderStyle() {
@@ -272,6 +286,21 @@ public abstract class AbstractSWTTabRenderer<VELEMENT extends VElement> extends 
 	 * @return the list of {@link VAbstractCategorization}
 	 */
 	protected abstract EList<VAbstractCategorization> getCategorizations();
+
+	@Override
+	protected void applyValidation() {
+		super.applyValidation();
+		for (final VAbstractCategorization categorization : getCategorizations()) {
+			final VDiagnostic diagnostic = categorization.getDiagnostic();
+			Image image = null;
+			if (diagnostic != null) {
+				final int highestSeverity = diagnostic.getHighestSeverity();
+				image = ValidationTabImageHelper.getValidationIcon(getTabStyle(), highestSeverity);
+			}
+			final CTabItem tabItem = categorizationToItemMap.get(categorization);
+			tabItem.setImage(image);
+		}
+	}
 
 	/**
 	 * {@inheritDoc}

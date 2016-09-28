@@ -21,8 +21,7 @@ import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization.ColumnDescription;
 import org.eclipse.jface.viewers.ColumnPixelData;
 import org.eclipse.jface.viewers.ColumnWeightData;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.Widget;
 
 /**
  * Helper class for retrieving configuration information.
@@ -106,11 +105,10 @@ public final class TableConfigurationHelper {
 	 *
 	 * @param tableControl the {@link VTableControl} containing the column configuration
 	 * @param domainModelReference the column {@link VDomainModelReference}
-	 * @param swtTable the swt table
 	 * @param tableColumn the table column
 	 */
 	public static void updateWidthConfiguration(VTableControl tableControl, VDomainModelReference domainModelReference,
-		Table swtTable, TableColumn tableColumn) {
+		Widget tableColumn) {
 		final Object layoutData = tableColumn.getData(LAYOUT_DATA);
 		if (!ColumnPixelData.class.isInstance(layoutData) && !ColumnWeightData.class.isInstance(layoutData)) {
 			return;

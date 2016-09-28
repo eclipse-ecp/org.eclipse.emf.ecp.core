@@ -406,6 +406,11 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 	}
 
 	@Override
+	protected void setValidationForegroundColor(Control control, Color validationColor) {
+		super.setValidationForegroundColor(Composite.class.cast(control).getChildren()[0], validationColor);
+	}
+
+	@Override
 	protected void setControlEnabled(SWTGridCell gridCell, Control control, boolean enabled) {
 		if (getVElement().getLabelAlignment() == LabelAlignment.NONE && gridCell.getColumn() == 1
 			|| hasLeftLabelAlignment() && gridCell.getColumn() == 2) {

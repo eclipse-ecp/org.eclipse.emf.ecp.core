@@ -42,7 +42,7 @@ public class EMFFormsSpreadsheetViewRendererService implements
 	 *
 	 * @param reportService the reportService to set
 	 */
-	@Reference
+	@Reference(unbind = "-")
 	protected void setReportService(ReportService reportService) {
 		this.reportService = reportService;
 	}

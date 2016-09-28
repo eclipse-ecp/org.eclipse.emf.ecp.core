@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" activate="activate" deactivate="deactivate" name="org.eclipse.emf.ecp.view.internal.rule.AndConditionService">
+   <service>
+      <provide interface="org.eclipse.emf.ecp.view.spi.rule.ConditionService"/>
+   </service>
+   <implementation class="org.eclipse.emf.ecp.view.internal.rule.AndConditionService"/>
+</scr:component>

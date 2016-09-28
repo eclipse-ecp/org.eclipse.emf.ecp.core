@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="MakeItHappen Sample e4 Product" uid="org.eclipse.emf.ecp.makeithappen.sample.product.e4" id="org.eclipse.emf.ecp.makeithappen.application.sample.e4.product" application="org.eclipse.e4.ui.workbench.swt.E4Application" version="1.9.0" useFeatures="false" includeLaunchers="true">
+<product name="MakeItHappen Sample e4 Product" uid="org.eclipse.emf.ecp.makeithappen.sample.product.e4" id="org.eclipse.emf.ecp.makeithappen.application.sample.e4.product" application="org.eclipse.e4.ui.workbench.swt.E4Application" version="1.10.0" useFeatures="false" includeLaunchers="true">
 
    <configIni use="default">
    </configIni>

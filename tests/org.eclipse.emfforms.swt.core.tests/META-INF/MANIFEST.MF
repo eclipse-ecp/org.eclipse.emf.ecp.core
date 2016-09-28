@@ -2,10 +2,10 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: EMFForms SWT Core Tests
 Bundle-SymbolicName: org.eclipse.emfforms.swt.core.tests
-Bundle-Version: 1.9.0.qualifier
-Fragment-Host: org.eclipse.emfforms.swt.core;bundle-version="[1.9.0,2.0.0)"
-Export-Package: org.eclipse.emfforms.internal.swt.core;version="1.9.0";x-internal:=true,
- org.eclipse.emfforms.swt.core.tests;version="1.9.0";x-internal:=true
+Bundle-Version: 1.10.0.qualifier
+Fragment-Host: org.eclipse.emfforms.swt.core;bundle-version="[1.10.0,2.0.0)"
+Export-Package: org.eclipse.emfforms.internal.swt.core;version="1.10.0";x-internal:=true,
+ org.eclipse.emfforms.swt.core.tests;version="1.10.0";x-internal:=true
 Require-Bundle: org.junit;bundle-version="[4.11.0,5.0.0)",
  org.mockito.mockito-core-hamcrest-modified;bundle-version="[1.9.5,2.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6

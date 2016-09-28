@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="rulerepository" nsURI="http://org/eclipse/emfforms/rulerepository/model"
+    nsPrefix="org.eclipse.emfforms.rulerepository.model">
+  <eClassifiers xsi:type="ecore:EClass" name="RuleRepository">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ruleEntries" upperBound="-1"
+        eType="#//RuleEntry" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RuleEntry">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="rule" lowerBound="1" eType="ecore:EClass ../../org.eclipse.emf.ecp.view.rule.model/model/rule.ecore#//Rule"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elements" upperBound="-1"
+        eType="ecore:EClass ../../org.eclipse.emf.ecp.view.model/model/view.ecore#//Element"/>
+  </eClassifiers>
+</ecore:EPackage>

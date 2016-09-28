@@ -2,18 +2,18 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.validation.bean.test;singleton:=true
-Bundle-Version: 1.9.0.qualifier
+Bundle-Version: 1.10.0.qualifier
 Bundle-ClassPath: .,
  lib/commons-beanutils-1.9.2.jar,
  lib/commons-lang3-3.3.2.jar,
  lib/org.apache.bval.bundle-0.5.jar
 Bundle-Vendor: %providerName
-Fragment-Host: org.eclipse.emf.ecp.view.validation.bean.default;bundle-version="[1.9.0,2.0.0)"
+Fragment-Host: org.eclipse.emf.ecp.view.validation.bean.default;bundle-version="[1.10.0,2.0.0)"
 Bundle-Localization: plugin
-Export-Package: car;version="1.9.0";x-internal:=true,
- car.impl;version="1.9.0";x-internal:=true,
- car.util;version="1.9.0";x-internal:=true,
- org.eclipse.emf.ecp.view.validation.bean.test;version="1.9.0";x-internal:=true
+Export-Package: car;version="1.10.0";x-internal:=true,
+ car.impl;version="1.10.0";x-internal:=true,
+ car.util;version="1.10.0";x-internal:=true,
+ org.eclipse.emf.ecp.view.validation.bean.test;version="1.10.0";x-internal:=true
 Require-Bundle: org.junit;bundle-version="[4.0.0,5.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy

@@ -527,7 +527,7 @@ public class SWTTable_PTest {
 			eclipseContext.get(EMFFormsEditSupport.class)) {
 
 			@Override
-			protected CellEditor createCellEditor(EObject tempInstance, EStructuralFeature feature, Table table) {
+			protected CellEditor createCellEditor(EObject tempInstance, EStructuralFeature feature, Composite table) {
 				if (feature == EcorePackage.eINSTANCE.getENamedElement_Name()) {
 					return new CompareCellEditor(table);
 				}
@@ -879,7 +879,7 @@ public class SWTTable_PTest {
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getParentContext()
 		 */
 		@Override
@@ -890,7 +890,7 @@ public class SWTTable_PTest {
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext#changeDomainModel(org.eclipse.emf.ecore.EObject)
 		 */
 		@Override
@@ -901,7 +901,7 @@ public class SWTTable_PTest {
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext#registerRootDomainModelChangeListener(org.eclipse.emfforms.spi.core.services.view.RootDomainModelChangeListener)
 		 */
 		@Override
@@ -912,7 +912,7 @@ public class SWTTable_PTest {
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext#unregisterRootDomainModelChangeListener(org.eclipse.emfforms.spi.core.services.view.RootDomainModelChangeListener)
 		 */
 		@Override
@@ -924,7 +924,7 @@ public class SWTTable_PTest {
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getParentVElement()
 		 */
 		@Override
@@ -958,7 +958,7 @@ public class SWTTable_PTest {
 
 	private static class CompareCellEditor extends StringCellEditor implements ECPCellEditorComparator {
 
-		CompareCellEditor(Table table) {
+		CompareCellEditor(Composite table) {
 			super(table);
 		}
 

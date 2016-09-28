@@ -58,7 +58,7 @@ public class EMFFormsIndexDMRExpander implements EMFFormsDMRExpander {
 	 *
 	 * @param reportService The {@link ReportService}
 	 */
-	@Reference
+	@Reference(unbind = "-")
 	protected void setReportService(ReportService reportService) {
 		this.reportService = reportService;
 
@@ -112,7 +112,7 @@ public class EMFFormsIndexDMRExpander implements EMFFormsDMRExpander {
 	 *
 	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
 	 */
-	@Reference
+	@Reference(unbind = "-")
 	protected void setEMFFormsDatabinding(EMFFormsDatabinding emfFormsDatabinding) {
 		databindingService = emfFormsDatabinding;
 	}

@@ -6,8 +6,8 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _S2QsofiCEeOywJv-3eEoIg
-Runtime-Version: 1.5.4.201410231434
-Save-Time: 12/19/14 4:45 PM
+Runtime-Version: 2.1.0.201606221726
+Save-Time: 9/5/16 3:12 PM
 Tags: skipExecution
 Testcase-Type: ecl
 
@@ -25,13 +25,10 @@ with [get-window "Add new model element"] {
     get-tree | select "university/CourseCatalog"
     get-button Finish | click
 }
-get-editor "Course Catalog" | get-button -after [get-label Courses] | get-property enablement | equals false 
+get-editor "Course Catalog" | get-button "Remove the selected Course" | get-property enablement | equals false 
     | verify-true
 get-editor "Course Catalog" | get-button "Add an instance of Course" | click
-get-editor "Course Catalog" | get-button -after [get-label Courses] | get-property enablement | equals false 
-    | verify-true
-get-editor "Course Catalog" | get-table | select 0 -column Etcs
-get-editor "Course Catalog" | get-button -after [get-label Courses] | get-property enablement | equals true 
+get-editor "Course Catalog" | get-button "Remove the selected Course" | get-property enablement | equals true 
     | verify-true
 get-editor "Course Catalog" | get-button -after [get-label Courses] | click
 with [get-window Course] {

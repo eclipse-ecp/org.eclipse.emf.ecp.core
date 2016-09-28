@@ -15,17 +15,24 @@ package org.eclipse.emfforms.internal.editor.handlers;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.command.DeleteCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.internal.editor.ui.CreateNewChildDialog;
+import org.eclipse.emfforms.spi.editor.handler.DeleteShortCutHandler;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * The ShorcutHandler receives the shortcuts defined in plugin.xml and passes them to the editor.
@@ -62,8 +69,7 @@ public class ShortcutHandler extends AbstractHandler {
 			.getEditingDomainFor(currentSelection);
 
 		if (getDeleteCmdName().equals(commandName)) {
-			editingDomain.getCommandStack().execute(
-				DeleteCommand.create(editingDomain, sSelection.toList()));
+			performDelete(sSelection, editingDomain);
 		} else if (getNewChildCmdName().equals(commandName)) {
 			createNewElementDialog(editingDomain, editor.getEditorSite().getSelectionProvider(), currentSelection,
 				"Create Child").open();
@@ -76,6 +82,34 @@ public class ShortcutHandler extends AbstractHandler {
 		}
 
 		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	private void performDelete(final StructuredSelection sSelection, final EditingDomain editingDomain) {
+		final Optional<DeleteShortCutHandler> deleteHandler = getDeleteHandler();
+		if (deleteHandler.isPresent()) {
+			deleteHandler.get().handleDeleteShortcut(sSelection.toList());
+			return;
+		}
+		final Command command = DeleteCommand.create(editingDomain, sSelection.toList());
+		if (!command.canExecute()) {
+			return;
+		}
+		editingDomain.getCommandStack().execute(command);
+	}
+
+	private Optional<DeleteShortCutHandler> getDeleteHandler() {
+		final Bundle bundle = FrameworkUtil.getBundle(ShortcutHandler.class);
+		final BundleContext bundleContext = bundle.getBundleContext();
+		final ServiceReference<DeleteShortCutHandler> serviceReference = bundleContext
+			.getServiceReference(DeleteShortCutHandler.class);
+		if (serviceReference == null) {
+			return Optional.empty();
+		}
+		final DeleteShortCutHandler service = bundleContext.getService(serviceReference);
+		final Optional<DeleteShortCutHandler> result = Optional.ofNullable(service);
+		bundleContext.ungetService(serviceReference);
+		return result;
 	}
 
 	/**

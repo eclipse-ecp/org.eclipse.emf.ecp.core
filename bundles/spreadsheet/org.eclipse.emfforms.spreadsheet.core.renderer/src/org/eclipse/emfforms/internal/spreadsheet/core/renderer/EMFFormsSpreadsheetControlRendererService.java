@@ -50,7 +50,7 @@ public class EMFFormsSpreadsheetControlRendererService implements
 	 *
 	 * @param vtViewTemplateProvider the VTViewTemplateProvider to set
 	 */
-	@Reference
+	@Reference(unbind = "-")
 	protected void setVTViewTemplateProvider(VTViewTemplateProvider vtViewTemplateProvider) {
 		this.vtViewTemplateProvider = vtViewTemplateProvider;
 	}
@@ -60,7 +60,7 @@ public class EMFFormsSpreadsheetControlRendererService implements
 	 *
 	 * @param reportService the reportService to set
 	 */
-	@Reference
+	@Reference(unbind = "-")
 	protected void setReportService(ReportService reportService) {
 		this.reportService = reportService;
 	}
@@ -70,7 +70,7 @@ public class EMFFormsSpreadsheetControlRendererService implements
 	 *
 	 * @param emfformsDatabinding The EMFFormsDatabinding to use
 	 */
-	@Reference
+	@Reference(unbind = "-")
 	public void setEmfformsDatabinding(EMFFormsDatabindingEMF emfformsDatabinding) {
 		this.emfformsDatabinding = emfformsDatabinding;
 	}
@@ -80,7 +80,7 @@ public class EMFFormsSpreadsheetControlRendererService implements
 	 *
 	 * @param emfformsLabelProvider The EMFFormsLabelProvider to use
 	 */
-	@Reference
+	@Reference(unbind = "-")
 	public void setEmfformsLabelProvider(EMFFormsLabelProvider emfformsLabelProvider) {
 		this.emfformsLabelProvider = emfformsLabelProvider;
 	}
@@ -90,7 +90,7 @@ public class EMFFormsSpreadsheetControlRendererService implements
 	 *
 	 * @param emfFormsIdProvider the EMFFormsIdProvider to set
 	 */
-	@Reference
+	@Reference(unbind = "-")
 	protected void setEmfFormsIdProvider(EMFFormsIdProvider emfFormsIdProvider) {
 		this.emfFormsIdProvider = emfFormsIdProvider;
 	}
@@ -100,7 +100,7 @@ public class EMFFormsSpreadsheetControlRendererService implements
 	 *
 	 * @param converterRegistry the converter registry
 	 */
-	@Reference
+	@Reference(unbind = "-")
 	public void setConverterRegistry(EMFFormsSpreadsheetValueConverterRegistry converterRegistry) {
 		this.converterRegistry = converterRegistry;
 	}
@@ -110,7 +110,7 @@ public class EMFFormsSpreadsheetControlRendererService implements
 	 *
 	 * @param formatDescriptionProvider the formatDescriptionProvider
 	 */
-	@Reference
+	@Reference(unbind = "-")
 	public void setFormatDescriptionProvider(EMFFormsSpreadsheetFormatDescriptionProvider formatDescriptionProvider) {
 		this.formatDescriptionProvider = formatDescriptionProvider;
 	}
@@ -120,7 +120,7 @@ public class EMFFormsSpreadsheetControlRendererService implements
 	 *
 	 * @param domainExpander the EMFFormsDomainExpander
 	 */
-	@Reference
+	@Reference(unbind = "-")
 	public void setEMFFormsDomainExpander(EMFFormsDomainExpander domainExpander) {
 		this.domainExpander = domainExpander;
 	}

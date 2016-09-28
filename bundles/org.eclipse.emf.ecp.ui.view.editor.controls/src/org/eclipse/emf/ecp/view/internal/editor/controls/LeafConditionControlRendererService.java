@@ -44,7 +44,7 @@ public class LeafConditionControlRendererService implements EMFFormsDIRendererSe
 	 *
 	 * @param databindingService The {@link EMFFormsDatabinding}
 	 */
-	@Reference
+	@Reference(unbind = "-")
 	protected void setEMFFormsDatabinding(EMFFormsDatabinding databindingService) {
 		this.databindingService = databindingService;
 	}
@@ -54,7 +54,7 @@ public class LeafConditionControlRendererService implements EMFFormsDIRendererSe
 	 *
 	 * @param reportService The {@link ReportService}
 	 */
-	@Reference
+	@Reference(unbind = "-")
 	protected void setReportService(ReportService reportService) {
 		this.reportService = reportService;
 	}

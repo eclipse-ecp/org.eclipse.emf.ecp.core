@@ -11,6 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emfforms.internal.editor.ecore.actions;
 
+import java.util.List;
+
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IStatus;
@@ -42,33 +44,23 @@ public class CreateNewInstanceAction extends MasterDetailAction {
 		setImagePath(ICON_PATH);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
-	 */
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		return null;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.swt.treemasterdetail.actions.MasterDetailAction#shouldShow(org.eclipse.emf.ecore.EObject)
-	 */
 	@Override
-	public boolean shouldShow(EObject eObject) {
+	public boolean shouldShow(List<Object> objects) {
+		if (objects.size() != 1 && !EObject.class.isInstance(objects.get(0))) {
+			return false;
+		}
+		final EObject eObject = EObject.class.cast(objects.get(0));
 		return EClass.class.isInstance(eObject);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.swt.treemasterdetail.actions.MasterDetailAction#execute(org.eclipse.emf.ecore.EObject)
-	 */
 	@Override
-	public void execute(EObject object) {
+	public void execute(List<Object> objects) {
+		final EObject object = EObject.class.cast(objects.get(0));
 		final EClass eClass = EClass.class.cast(object);
 		final Diagnostic validate = Diagnostician.INSTANCE.validate(eClass);
 		if (validate.getSeverity() == Diagnostic.OK) {

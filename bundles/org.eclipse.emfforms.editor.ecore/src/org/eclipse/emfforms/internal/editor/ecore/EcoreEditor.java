@@ -16,6 +16,7 @@ import org.eclipse.emfforms.spi.editor.GenericEditor;
 import org.eclipse.emfforms.spi.editor.InitializeChildCallback;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailComposite;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.TreeMasterDetailSWTFactory;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.diagnostic.DiagnosticCache;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.util.CreateElementCallback;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -41,11 +42,22 @@ public class EcoreEditor extends GenericEditor {
 	protected TreeMasterDetailComposite createTreeMasterDetail(Composite composite, Object editorInput,
 		CreateElementCallback createElementCallback) {
 		return TreeMasterDetailSWTFactory.createTreeMasterDetail(composite, SWT.NONE, editorInput,
-			new EcoreEditorTMDCustomization(createElementCallback, (Notifier) editorInput));
+			new EcoreEditorTMDCustomization(createElementCallback, (Notifier) editorInput,
+				(EcoreDiagnosticCache) getDiagnosticCache()));
+	}
+
+	@Override
+	protected DiagnosticCache createDiangosticCache(Notifier input) {
+		return new EcoreDiagnosticCache(input);
 	}
 
 	@Override
 	protected String getContextId() {
 		return ECORE_EDITOR_CONTEXT;
+	}
+
+	@Override
+	protected boolean enableValidation() {
+		return true;
 	}
 }

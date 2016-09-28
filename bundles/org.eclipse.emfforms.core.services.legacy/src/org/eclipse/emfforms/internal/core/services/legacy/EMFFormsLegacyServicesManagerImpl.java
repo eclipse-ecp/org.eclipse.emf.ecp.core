@@ -54,20 +54,12 @@ public class EMFFormsLegacyServicesManagerImpl implements EMFFormsLegacyServices
 	 *
 	 * @param reportService The {@link ReportService}
 	 */
-	@Reference(cardinality = ReferenceCardinality.MANDATORY, policy = ReferencePolicy.STATIC)
+	@Reference(cardinality = ReferenceCardinality.MANDATORY, policy = ReferencePolicy.STATIC, unbind = "-")
 	protected void setReportService(ReportService reportService) {
 		this.reportService = reportService;
 	}
 
-	/**
-	 * Called by OSGi to unset the {@link ReportService}.
-	 *
-	 * @param reportService The {@link ReportService}
-	 */
-	protected void unsetReportService(ReportService reportService) {
-		this.reportService = null;
-	}
-
+	
 	/**
 	 * Called by OSGi when the component is ready to be activated.
 	 *

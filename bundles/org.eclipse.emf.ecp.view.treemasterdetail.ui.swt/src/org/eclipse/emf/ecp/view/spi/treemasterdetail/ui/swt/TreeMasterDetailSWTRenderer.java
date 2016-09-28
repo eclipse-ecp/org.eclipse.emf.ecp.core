@@ -594,7 +594,6 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		/* The header */
 		final Composite header = new Composite(container, SWT.FILL);
 		final GridLayout headerLayout = GridLayoutFactory.fillDefaults().create();
-		headerLayout.marginWidth = 5;
 		header.setLayout(headerLayout);
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, false).applyTo(header);
 		header.setBackground(rightPanel.getBackground());

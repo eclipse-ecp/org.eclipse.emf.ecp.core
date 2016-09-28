@@ -66,7 +66,7 @@ public class LegacyRendererService implements EMFFormsRendererService<VElement> 
 	 *
 	 * @param reportService The ReportService to set
 	 */
-	@Reference
+	@Reference(unbind = "-")
 	protected void setReportService(ReportService reportService) {
 		this.reportService = reportService;
 	}
@@ -91,14 +91,13 @@ public class LegacyRendererService implements EMFFormsRendererService<VElement> 
 				try {
 					final Class<AbstractSWTRenderer<VElement>> renderer = loadClass(configurationElement
 						.getContributor().getName(), configurationElement
-						.getAttribute("renderer")); //$NON-NLS-1$
+							.getAttribute("renderer")); //$NON-NLS-1$
 
 					final Set<ECPRendererTester> tester = new LinkedHashSet<ECPRendererTester>();
 					for (final IConfigurationElement testerExtension : configurationElement.getChildren()) {
 						if (TEST_DYNAMIC.equals(testerExtension.getName())) {
 							tester.add((ECPRendererTester) testerExtension.createExecutableExtension(RENDERER_TESTER));
-						}
-						else if (TEST_STATIC.equals(testerExtension.getName())) {
+						} else if (TEST_STATIC.equals(testerExtension.getName())) {
 
 							final int priority = Integer.parseInt(testerExtension.getAttribute(TESTER_PRIORITY));
 

@@ -95,6 +95,19 @@ public interface VTValidationPackage extends EPackage {
 	int VALIDATION_STYLE_PROPERTY__OK_COLOR_HEX = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Ok Foreground Color HEX</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.10
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int VALIDATION_STYLE_PROPERTY__OK_FOREGROUND_COLOR_HEX = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT
+		+ 1;
+
+	/**
 	 * The feature id for the '<em><b>Ok Image URL</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -102,7 +115,7 @@ public interface VTValidationPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VALIDATION_STYLE_PROPERTY__OK_IMAGE_URL = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 1;
+	int VALIDATION_STYLE_PROPERTY__OK_IMAGE_URL = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Ok Overlay URL</b></em>' attribute.
@@ -112,7 +125,7 @@ public interface VTValidationPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VALIDATION_STYLE_PROPERTY__OK_OVERLAY_URL = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 2;
+	int VALIDATION_STYLE_PROPERTY__OK_OVERLAY_URL = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Info Color HEX</b></em>' attribute.
@@ -122,7 +135,20 @@ public interface VTValidationPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VALIDATION_STYLE_PROPERTY__INFO_COLOR_HEX = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 3;
+	int VALIDATION_STYLE_PROPERTY__INFO_COLOR_HEX = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 4;
+
+	/**
+	 * The feature id for the '<em><b>Info Foreground Color HEX</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.10
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int VALIDATION_STYLE_PROPERTY__INFO_FOREGROUND_COLOR_HEX = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT
+		+ 5;
 
 	/**
 	 * The feature id for the '<em><b>Info Image URL</b></em>' attribute.
@@ -132,17 +158,17 @@ public interface VTValidationPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VALIDATION_STYLE_PROPERTY__INFO_IMAGE_URL = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 4;
+	int VALIDATION_STYLE_PROPERTY__INFO_IMAGE_URL = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>Info Overlay URL</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
-	int VALIDATION_STYLE_PROPERTY__INFO_OVERLAY_URL = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 5;
+	int VALIDATION_STYLE_PROPERTY__INFO_OVERLAY_URL = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 7;
 
 	/**
 	 * The feature id for the '<em><b>Warning Color HEX</b></em>' attribute.
@@ -152,7 +178,20 @@ public interface VTValidationPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VALIDATION_STYLE_PROPERTY__WARNING_COLOR_HEX = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 6;
+	int VALIDATION_STYLE_PROPERTY__WARNING_COLOR_HEX = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 8;
+
+	/**
+	 * The feature id for the '<em><b>Warning Foreground Color HEX</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.10
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int VALIDATION_STYLE_PROPERTY__WARNING_FOREGROUND_COLOR_HEX = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT
+		+ 9;
 
 	/**
 	 * The feature id for the '<em><b>Warning Image URL</b></em>' attribute.
@@ -162,17 +201,17 @@ public interface VTValidationPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VALIDATION_STYLE_PROPERTY__WARNING_IMAGE_URL = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 7;
+	int VALIDATION_STYLE_PROPERTY__WARNING_IMAGE_URL = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 10;
 
 	/**
 	 * The feature id for the '<em><b>Warning Overlay URL</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
-	int VALIDATION_STYLE_PROPERTY__WARNING_OVERLAY_URL = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 8;
+	int VALIDATION_STYLE_PROPERTY__WARNING_OVERLAY_URL = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 11;
 
 	/**
 	 * The feature id for the '<em><b>Error Color HEX</b></em>' attribute.
@@ -182,7 +221,20 @@ public interface VTValidationPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VALIDATION_STYLE_PROPERTY__ERROR_COLOR_HEX = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 9;
+	int VALIDATION_STYLE_PROPERTY__ERROR_COLOR_HEX = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 12;
+
+	/**
+	 * The feature id for the '<em><b>Error Foreground Color HEX</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.10
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int VALIDATION_STYLE_PROPERTY__ERROR_FOREGROUND_COLOR_HEX = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT
+		+ 13;
 
 	/**
 	 * The feature id for the '<em><b>Error Image URL</b></em>' attribute.
@@ -192,7 +244,7 @@ public interface VTValidationPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VALIDATION_STYLE_PROPERTY__ERROR_IMAGE_URL = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 10;
+	int VALIDATION_STYLE_PROPERTY__ERROR_IMAGE_URL = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 14;
 
 	/**
 	 * The feature id for the '<em><b>Error Overlay URL</b></em>' attribute.
@@ -202,7 +254,7 @@ public interface VTValidationPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VALIDATION_STYLE_PROPERTY__ERROR_OVERLAY_URL = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 11;
+	int VALIDATION_STYLE_PROPERTY__ERROR_OVERLAY_URL = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 15;
 
 	/**
 	 * The feature id for the '<em><b>Cancel Color HEX</b></em>' attribute.
@@ -212,37 +264,50 @@ public interface VTValidationPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VALIDATION_STYLE_PROPERTY__CANCEL_COLOR_HEX = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 12;
+	int VALIDATION_STYLE_PROPERTY__CANCEL_COLOR_HEX = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 16;
+
+	/**
+	 * The feature id for the '<em><b>Cancel Foreground Color HEX</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.10
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int VALIDATION_STYLE_PROPERTY__CANCEL_FOREGROUND_COLOR_HEX = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT
+		+ 17;
 
 	/**
 	 * The feature id for the '<em><b>Cancel Image URL</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
-	int VALIDATION_STYLE_PROPERTY__CANCEL_IMAGE_URL = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 13;
+	int VALIDATION_STYLE_PROPERTY__CANCEL_IMAGE_URL = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 18;
 
 	/**
 	 * The feature id for the '<em><b>Cancel Overlay URL</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
-	int VALIDATION_STYLE_PROPERTY__CANCEL_OVERLAY_URL = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 14;
+	int VALIDATION_STYLE_PROPERTY__CANCEL_OVERLAY_URL = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 19;
 
 	/**
 	 * The number of structural features of the '<em>Style Property</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
-	int VALIDATION_STYLE_PROPERTY_FEATURE_COUNT = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 15;
+	int VALIDATION_STYLE_PROPERTY_FEATURE_COUNT = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 20;
 
 	/**
 	 * The number of operations of the '<em>Style Property</em>' class.
@@ -280,6 +345,22 @@ public interface VTValidationPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getValidationStyleProperty_OkColorHEX();
+
+	/**
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationStyleProperty#getOkForegroundColorHEX
+	 * <em>Ok Foreground Color HEX</em>}'.
+	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 1.10
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the attribute '<em>Ok Foreground Color HEX</em>'.
+	 * @see org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationStyleProperty#getOkForegroundColorHEX()
+	 * @see #getValidationStyleProperty()
+	 * @generated
+	 */
+	EAttribute getValidationStyleProperty_OkForegroundColorHEX();
 
 	/**
 	 * Returns the meta object for the attribute '
@@ -325,6 +406,22 @@ public interface VTValidationPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationStyleProperty#getInfoForegroundColorHEX
+	 * <em>Info Foreground Color HEX</em>}'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.10
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the attribute '<em>Info Foreground Color HEX</em>'.
+	 * @see org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationStyleProperty#getInfoForegroundColorHEX()
+	 * @see #getValidationStyleProperty()
+	 * @generated
+	 */
+	EAttribute getValidationStyleProperty_InfoForegroundColorHEX();
+
+	/**
+	 * Returns the meta object for the attribute '
 	 * {@link org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationStyleProperty#getInfoImageURL
 	 * <em>Info Image URL</em>}'.
 	 * <!-- begin-user-doc -->
@@ -364,6 +461,22 @@ public interface VTValidationPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getValidationStyleProperty_WarningColorHEX();
+
+	/**
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationStyleProperty#getWarningForegroundColorHEX
+	 * <em>Warning Foreground Color HEX</em>}'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.10
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the attribute '<em>Warning Foreground Color HEX</em>'.
+	 * @see org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationStyleProperty#getWarningForegroundColorHEX()
+	 * @see #getValidationStyleProperty()
+	 * @generated
+	 */
+	EAttribute getValidationStyleProperty_WarningForegroundColorHEX();
 
 	/**
 	 * Returns the meta object for the attribute '
@@ -409,6 +522,22 @@ public interface VTValidationPackage extends EPackage {
 
 	/**
 	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationStyleProperty#getErrorForegroundColorHEX
+	 * <em>Error Foreground Color HEX</em>}'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.10
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the attribute '<em>Error Foreground Color HEX</em>'.
+	 * @see org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationStyleProperty#getErrorForegroundColorHEX()
+	 * @see #getValidationStyleProperty()
+	 * @generated
+	 */
+	EAttribute getValidationStyleProperty_ErrorForegroundColorHEX();
+
+	/**
+	 * Returns the meta object for the attribute '
 	 * {@link org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationStyleProperty#getErrorImageURL
 	 * <em>Error Image URL</em>}'.
 	 * <!-- begin-user-doc -->
@@ -448,6 +577,22 @@ public interface VTValidationPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getValidationStyleProperty_CancelColorHEX();
+
+	/**
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationStyleProperty#getCancelForegroundColorHEX
+	 * <em>Cancel Foreground Color HEX</em>}'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.10
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the attribute '<em>Cancel Foreground Color HEX</em>'.
+	 * @see org.eclipse.emf.ecp.view.template.style.validation.model.VTValidationStyleProperty#getCancelForegroundColorHEX()
+	 * @see #getValidationStyleProperty()
+	 * @generated
+	 */
+	EAttribute getValidationStyleProperty_CancelForegroundColorHEX();
 
 	/**
 	 * Returns the meta object for the attribute '
@@ -525,6 +670,18 @@ public interface VTValidationPackage extends EPackage {
 		EAttribute VALIDATION_STYLE_PROPERTY__OK_COLOR_HEX = eINSTANCE.getValidationStyleProperty_OkColorHEX();
 
 		/**
+		 * The meta object literal for the '<em><b>Ok Foreground Color HEX</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 *
+		 * @since 1.10
+		 *        <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EAttribute VALIDATION_STYLE_PROPERTY__OK_FOREGROUND_COLOR_HEX = eINSTANCE
+			.getValidationStyleProperty_OkForegroundColorHEX();
+
+		/**
 		 * The meta object literal for the '<em><b>Ok Image URL</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -550,6 +707,18 @@ public interface VTValidationPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute VALIDATION_STYLE_PROPERTY__INFO_COLOR_HEX = eINSTANCE.getValidationStyleProperty_InfoColorHEX();
+
+		/**
+		 * The meta object literal for the '<em><b>Info Foreground Color HEX</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 *
+		 * @since 1.10
+		 *        <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EAttribute VALIDATION_STYLE_PROPERTY__INFO_FOREGROUND_COLOR_HEX = eINSTANCE
+			.getValidationStyleProperty_InfoForegroundColorHEX();
 
 		/**
 		 * The meta object literal for the '<em><b>Info Image URL</b></em>' attribute feature.
@@ -578,6 +747,18 @@ public interface VTValidationPackage extends EPackage {
 		 */
 		EAttribute VALIDATION_STYLE_PROPERTY__WARNING_COLOR_HEX = eINSTANCE
 			.getValidationStyleProperty_WarningColorHEX();
+
+		/**
+		 * The meta object literal for the '<em><b>Warning Foreground Color HEX</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 *
+		 * @since 1.10
+		 *        <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EAttribute VALIDATION_STYLE_PROPERTY__WARNING_FOREGROUND_COLOR_HEX = eINSTANCE
+			.getValidationStyleProperty_WarningForegroundColorHEX();
 
 		/**
 		 * The meta object literal for the '<em><b>Warning Image URL</b></em>' attribute feature.
@@ -609,6 +790,18 @@ public interface VTValidationPackage extends EPackage {
 		EAttribute VALIDATION_STYLE_PROPERTY__ERROR_COLOR_HEX = eINSTANCE.getValidationStyleProperty_ErrorColorHEX();
 
 		/**
+		 * The meta object literal for the '<em><b>Error Foreground Color HEX</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 *
+		 * @since 1.10
+		 *        <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EAttribute VALIDATION_STYLE_PROPERTY__ERROR_FOREGROUND_COLOR_HEX = eINSTANCE
+			.getValidationStyleProperty_ErrorForegroundColorHEX();
+
+		/**
 		 * The meta object literal for the '<em><b>Error Image URL</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -635,6 +828,18 @@ public interface VTValidationPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute VALIDATION_STYLE_PROPERTY__CANCEL_COLOR_HEX = eINSTANCE.getValidationStyleProperty_CancelColorHEX();
+
+		/**
+		 * The meta object literal for the '<em><b>Cancel Foreground Color HEX</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 *
+		 * @since 1.10
+		 *        <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EAttribute VALIDATION_STYLE_PROPERTY__CANCEL_FOREGROUND_COLOR_HEX = eINSTANCE
+			.getValidationStyleProperty_CancelForegroundColorHEX();
 
 		/**
 		 * The meta object literal for the '<em><b>Cancel Image URL</b></em>' attribute feature.

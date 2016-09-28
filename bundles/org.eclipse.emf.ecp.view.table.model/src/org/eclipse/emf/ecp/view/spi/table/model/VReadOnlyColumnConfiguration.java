@@ -23,8 +23,8 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
  * The following features are supported:
  * </p>
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VReadOnlyColumnConfiguration#getColumnDomainReferences
- * <em>Column Domain References</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VReadOnlyColumnConfiguration#getColumnDomainReferences <em>Column
+ * Domain References</em>}</li>
  * </ul>
  *
  * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage#getReadOnlyColumnConfiguration()

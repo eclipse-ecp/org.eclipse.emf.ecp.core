@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * DI renderer service for {@link ControlRootEClassControlChangeableSWTRenderer}.
- * 
+ *
  * @author Lucas Koehler
  *
  */
@@ -44,7 +44,7 @@ public class ControlRootEClassControlChangeableSWTRendererService implements EMF
 	 *
 	 * @param databindingService The {@link EMFFormsDatabinding}
 	 */
-	@Reference
+	@Reference(unbind = "-")
 	protected void setEMFFormsDatabinding(EMFFormsDatabinding databindingService) {
 		this.databindingService = databindingService;
 	}
@@ -54,7 +54,7 @@ public class ControlRootEClassControlChangeableSWTRendererService implements EMF
 	 *
 	 * @param reportService The {@link ReportService}
 	 */
-	@Reference
+	@Reference(unbind = "-")
 	protected void setReportService(ReportService reportService) {
 		this.reportService = reportService;
 	}

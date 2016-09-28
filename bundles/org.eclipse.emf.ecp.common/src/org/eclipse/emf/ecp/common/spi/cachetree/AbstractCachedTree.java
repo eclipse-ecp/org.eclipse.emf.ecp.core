@@ -14,9 +14,9 @@ package org.eclipse.emf.ecp.common.spi.cachetree;
 
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -46,7 +46,7 @@ public abstract class AbstractCachedTree<T> {
 	 * @param callback the {@link IExcludedObjectsCallback} to use when checking when to stop
 	 */
 	public AbstractCachedTree(IExcludedObjectsCallback callback) {
-		nodes = new LinkedHashMap<Object, CachedTreeNode<T>>();
+		nodes = new ConcurrentHashMap<Object, CachedTreeNode<T>>();
 		rootValue = createdCachedTreeNode(getDefaultValue());
 		this.excludedCallback = callback;
 	}
@@ -88,6 +88,10 @@ public abstract class AbstractCachedTree<T> {
 	 * @return set of affected eobjects
 	 */
 	public Set<EObject> update(EObject eObject, T value) {
+
+		if (eObject == null) {
+			return Collections.emptySet();
+		}
 
 		if (excludedCallback.isExcluded(eObject)) {
 			return Collections.emptySet();
@@ -163,6 +167,10 @@ public abstract class AbstractCachedTree<T> {
 	 *         the default value which is returned via {@link #getDefaultValue()}
 	 */
 	public T getCachedValue(Object eObject) {
+		if (eObject == null) {
+			return getDefaultValue();
+		}
+
 		final CachedTreeNode<T> nodeEntry = nodes.get(eObject);
 
 		if (nodeEntry != null) {
@@ -179,9 +187,13 @@ public abstract class AbstractCachedTree<T> {
 	 *            the {@link EObject} that needs to be removed from the cached tree
 	 */
 	public void remove(EObject eObject) {
+		if (eObject == null) {
+			return;
+		}
 
 		CachedTreeNode<T> node = nodes.get(eObject);
-		final CachedTreeNode<T> parentNode = nodes.get(node.getParent());
+		final Object parentObject = node.getParent();
+		final CachedTreeNode<T> parentNode = parentObject == null ? null : nodes.get(parentObject);
 
 		nodes.remove(eObject);
 		rootValue.removeFromCache(eObject);

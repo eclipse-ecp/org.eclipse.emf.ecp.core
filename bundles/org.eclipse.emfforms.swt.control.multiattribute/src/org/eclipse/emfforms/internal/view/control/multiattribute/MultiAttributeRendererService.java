@@ -48,7 +48,7 @@ public class MultiAttributeRendererService implements EMFFormsDIRendererService<
 	 *
 	 * @param databindingService The EMFFormsDatabinding
 	 */
-	@Reference(cardinality = ReferenceCardinality.MANDATORY)
+	@Reference(cardinality = ReferenceCardinality.MANDATORY, unbind = "-")
 	protected void setEMFFormsDatabinding(EMFFormsDatabinding databindingService) {
 		this.databindingService = databindingService;
 	}
@@ -58,7 +58,7 @@ public class MultiAttributeRendererService implements EMFFormsDIRendererService<
 	 *
 	 * @param reportService The ReportService
 	 */
-	@Reference(cardinality = ReferenceCardinality.MANDATORY)
+	@Reference(cardinality = ReferenceCardinality.MANDATORY, unbind = "-")
 	protected void setReportService(ReportService reportService) {
 		this.reportService = reportService;
 	}

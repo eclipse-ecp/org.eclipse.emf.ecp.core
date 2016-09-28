@@ -36,7 +36,7 @@ public class SettingToControlMapFactoryImpl implements EMFFormsViewServiceFactor
 	 *
 	 * @param mappingManager The {@link EMFFormsMappingProviderManager}
 	 */
-	@Reference
+	@Reference(unbind = "-")
 	protected void setEMFFormsMappingProviderManager(EMFFormsMappingProviderManager mappingManager) {
 		this.mappingManager = mappingManager;
 	}
@@ -88,7 +88,8 @@ public class SettingToControlMapFactoryImpl implements EMFFormsViewServiceFactor
 	 */
 	@Override
 	public EMFFormsSettingToControlMapper createService(EMFFormsViewContext emfFormsViewContext) {
-		final EMFFormsSettingToControlMapper mapper = new SettingToControlMapperImpl(mappingManager, emfFormsViewContext);
+		final EMFFormsSettingToControlMapper mapper = new SettingToControlMapperImpl(mappingManager,
+			emfFormsViewContext);
 		return mapper;
 	}
 

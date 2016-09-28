@@ -197,7 +197,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	 * </p>
 	 *
 	 * @return
-	 *         {@code true} if the Control SWT renderer can handle the {@link EMFFormsControlProcessorService} itself,
+	 * 		{@code true} if the Control SWT renderer can handle the {@link EMFFormsControlProcessorService} itself,
 	 *         {@code false} otherwise.
 	 * @since 1.8
 	 */
@@ -282,6 +282,21 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	}
 
 	/**
+	 * Returns the foreground color for a control with the given validation severity.
+	 *
+	 * @param severity severity the severity of the {@link org.eclipse.emf.common.util.Diagnostic}
+	 * @return the color to be used as a foreground color
+	 * @since 1.10
+	 */
+	protected final Color getValidationForegroundColor(int severity) {
+		if (isDisposed) {
+			return null;
+		}
+		return SWTValidationHelper.INSTANCE
+			.getValidationForegroundColor(severity, getVElement(), getViewModelContext());
+	}
+
+	/**
 	 * Creates a new {@link DataBindingContext}.
 	 *
 	 * @return a new {@link DataBindingContext} each time this method is called
@@ -333,7 +348,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	 * @param parent the {@link Composite} to render onto
 	 * @return the created {@link Control} or null
 	 */
-	protected final Control createLabel(final Composite parent) {
+	protected Control createLabel(final Composite parent) {
 		Label label = null;
 		labelRender: if (hasLeftLabelAlignment()) {
 			final VDomainModelReference domainModelReference = getVElement().getDomainModelReference();
@@ -430,7 +445,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	 * @param composite the {@link Composite} to create onto
 	 * @return the created Label
 	 */
-	protected final Label createValidationIcon(Composite composite) {
+	protected Label createValidationIcon(Composite composite) {
 		final Label validationLabel = new Label(composite, SWT.NONE);
 		SWTDataElementIdHelper.setElementIdDataWithSubId(validationLabel, getVElement(), "control_validation", //$NON-NLS-1$
 			getViewModelContext());

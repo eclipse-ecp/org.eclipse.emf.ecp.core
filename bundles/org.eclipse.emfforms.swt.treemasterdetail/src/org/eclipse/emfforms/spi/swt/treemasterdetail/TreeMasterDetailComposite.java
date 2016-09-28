@@ -93,6 +93,8 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 	private ECPSWTView renderedView;
 	private final Shell limbo;
 
+	private Object lastRenderedObject;
+
 	private final TreeMasterDetailSWTCustomization customization;
 	private TreeMasterDetailCache cache = new TreeMasterDetailCache() {
 
@@ -171,6 +173,9 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 
 			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
+				if (lastRenderedObject == getCurrentSelection()) {
+					return;
+				}
 				updateDetailPanel();
 			}
 		});
@@ -237,8 +242,9 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 			.getSelection()).getFirstElement() : null;
 
 		if (selectedObject instanceof EObject) {
+			lastRenderedObject = selectedObject;
 			final EObject eObject = EObject.class.cast(selectedObject);
-			if (renderedView != null) {
+			if (renderedView != null && !renderedView.getSWTControl().isDisposed()) {
 				renderedView.getSWTControl().setParent(limbo);
 				cache.cache(renderedView);
 			}
@@ -279,34 +285,39 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 				}
 			}
 		} else {
-			if (renderedView != null) {
-				renderedView.getSWTControl().setParent(limbo);
-				cache.cache(renderedView);
-				/* set renderedView to null so that it is not offered to the cache further times */
-				renderedView = null;
-			}
-			createDetailPanel();
-			final Label hint = new Label(detailPanel, SWT.CENTER);
-			final FontDescriptor boldDescriptor = FontDescriptor.createFrom(hint.getFont()).setHeight(18)
-				.setStyle(SWT.BOLD);
-			final Font boldFont = boldDescriptor.createFont(hint.getDisplay());
-			hint.setFont(boldFont);
-			hint.setForeground(new Color(hint.getDisplay(), 190, 190, 190));
-			hint.setText("Select a node in the tree to edit it");
-			final GridData hintLayoutData = new GridData();
-			hintLayoutData.grabExcessVerticalSpace = true;
-			hintLayoutData.grabExcessHorizontalSpace = true;
-			hintLayoutData.horizontalAlignment = SWT.CENTER;
-			hintLayoutData.verticalAlignment = SWT.CENTER;
-			hint.setLayoutData(hintLayoutData);
+			renderEmptyDetailPanel();
+		}
+	}
 
-			detailPanel.pack();
-			detailPanel.layout(true, true);
+	private void renderEmptyDetailPanel() {
+		lastRenderedObject = null;
+		if (renderedView != null && !renderedView.getSWTControl().isDisposed()) {
+			renderedView.getSWTControl().setParent(limbo);
+			cache.cache(renderedView);
+			/* set renderedView to null so that it is not offered to the cache further times */
+			renderedView = null;
+		}
+		createDetailPanel();
+		final Label hint = new Label(detailPanel, SWT.CENTER);
+		final FontDescriptor boldDescriptor = FontDescriptor.createFrom(hint.getFont()).setHeight(18)
+			.setStyle(SWT.BOLD);
+		final Font boldFont = boldDescriptor.createFont(hint.getDisplay());
+		hint.setFont(boldFont);
+		hint.setForeground(new Color(hint.getDisplay(), 190, 190, 190));
+		hint.setText("Select a node in the tree to edit it");
+		final GridData hintLayoutData = new GridData();
+		hintLayoutData.grabExcessVerticalSpace = true;
+		hintLayoutData.grabExcessHorizontalSpace = true;
+		hintLayoutData.horizontalAlignment = SWT.CENTER;
+		hintLayoutData.verticalAlignment = SWT.CENTER;
+		hint.setLayoutData(hintLayoutData);
 
-			if (ScrolledComposite.class.isInstance(detailComposite)) {
-				ScrolledComposite.class.cast(detailComposite)
-					.setMinSize(detailPanel.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-			}
+		detailPanel.pack();
+		detailPanel.layout(true, true);
+
+		if (ScrolledComposite.class.isInstance(detailComposite)) {
+			ScrolledComposite.class.cast(detailComposite)
+				.setMinSize(detailPanel.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		}
 	}
 

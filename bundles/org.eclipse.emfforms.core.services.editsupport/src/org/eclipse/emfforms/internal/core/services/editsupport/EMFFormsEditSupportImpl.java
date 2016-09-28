@@ -14,7 +14,7 @@ package org.eclipse.emfforms.internal.core.services.editsupport;
 import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -200,12 +200,12 @@ public class EMFFormsEditSupportImpl implements EMFFormsEditSupport {
 	private static final String LITERAL_NAME = "_UI_%1$s_%2$s_literal"; //$NON-NLS-1$
 
 	private String getEnumLiteral(EStructuralFeature feature, Object element) {
-		final EClass eContainingClass = feature.getEContainingClass();
+		final EClassifier featureType = feature.getEType();
 		Bundle bundle;
 		try {
-			bundle = bundleResolver.getEditBundle(eContainingClass);
-			final String key = String.format(LITERAL_NAME, feature.getEType().getName(),
-				EEnum.class.cast(feature.getEType()).getEEnumLiteralByLiteral(
+			bundle = bundleResolver.getEditBundle(featureType);
+			final String key = String.format(LITERAL_NAME, featureType.getName(),
+				EEnum.class.cast(featureType).getEEnumLiteralByLiteral(
 					Enum.class.cast(element).toString()).getName());
 			return emfFormsLocalizationService.getString(bundle, key);
 		} catch (final NoBundleFoundException ex) {

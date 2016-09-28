@@ -15,34 +15,34 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.osgi.framework.Bundle;
 
 /**
  * Implementation of the BundleResolver.
- * 
+ *
  * @author Eugen Neufeld
  */
 public class BundleResolverImpl implements BundleResolver {
 
 	/**
 	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emfforms.internal.core.services.label.BundleResolver#getEditBundle(org.eclipse.emf.ecore.EClass)
+	 *
+	 * @see org.eclipse.emfforms.internal.core.services.label.BundleResolver#getEditBundle(org.eclipse.emf.ecore.EClassifier)
 	 */
 	@Override
-	public Bundle getEditBundle(EClass eClass) throws NoBundleFoundException {
+	public Bundle getEditBundle(EClassifier eClassifier) throws NoBundleFoundException {
 		final IExtensionPoint extensionPoint = Platform.getExtensionRegistry()
 			.getExtensionPoint("org.eclipse.emf.edit.itemProviderAdapterFactories"); //$NON-NLS-1$
 
 		for (final IExtension extension : extensionPoint.getExtensions()) {
 			for (final IConfigurationElement configurationElement : extension.getConfigurationElements()) {
-				if (configurationElement.getAttribute("uri").equals(eClass.getEPackage().getNsURI())) { //$NON-NLS-1$
+				if (configurationElement.getAttribute("uri").equals(eClassifier.getEPackage().getNsURI())) { //$NON-NLS-1$
 					return Platform.getBundle(configurationElement.getContributor().getName());
 				}
 			}
 		}
-		throw new NoBundleFoundException(eClass);
+		throw new NoBundleFoundException(eClassifier);
 	}
 
 }

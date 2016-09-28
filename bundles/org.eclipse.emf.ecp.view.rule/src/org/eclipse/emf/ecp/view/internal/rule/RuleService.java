@@ -42,10 +42,6 @@ import org.eclipse.emf.ecp.view.spi.rule.model.EnableRule;
 import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.Rule;
 import org.eclipse.emf.ecp.view.spi.rule.model.ShowRule;
-import org.eclipse.emfforms.spi.common.report.AbstractReport;
-import org.eclipse.emfforms.spi.common.report.ReportService;
-import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
-import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext;
 
@@ -66,6 +62,7 @@ public class RuleService implements ViewModelService, EMFFormsContextListener {
 
 	private RuleRegistry<EnableRule> enableRuleRegistry;
 	private RuleRegistry<ShowRule> showRuleRegistry;
+	private ConditionServiceManager conditionServiceManager;
 
 	/**
 	 * Instantiates the rule service.
@@ -84,6 +81,7 @@ public class RuleService implements ViewModelService, EMFFormsContextListener {
 		enableRuleRegistry = new RuleRegistry<EnableRule>(context);
 		showRuleRegistry = new RuleRegistry<ShowRule>(context);
 		context.registerEMFFormsContextListener(this);
+		conditionServiceManager = context.getService(ConditionServiceManager.class);
 	}
 
 	private void resetToVisible(VElement renderable) {
@@ -128,7 +126,7 @@ public class RuleService implements ViewModelService, EMFFormsContextListener {
 			if (rule != null && ruleApplies(rule, ruleType)) {
 				final Condition condition = rule.getCondition();
 				if (condition != null && canOverrideParent(evalResult, isOpposite)) {
-					final boolean evaluate = condition.evaluate(context.getDomainModel());
+					final boolean evaluate = conditionServiceManager.evaluate(condition, context.getDomainModel());
 					stateMap.put(renderable, isOpposite(rule) ? !evaluate : evaluate);
 					didUpdate = true;
 				}
@@ -208,9 +206,10 @@ public class RuleService implements ViewModelService, EMFFormsContextListener {
 			if (rule.getCondition() == null) {
 				result = true;
 			} else if (isDryRun && hasChanged) {
-				result = rule.getCondition().evaluateChangedValues(context.getDomainModel(), possibleValues);
+				result = conditionServiceManager.evaluateChangedValues(rule.getCondition(), context.getDomainModel(),
+					possibleValues);
 			} else if (!isDryRun) {
-				result = rule.getCondition().evaluate(context.getDomainModel());
+				result = conditionServiceManager.evaluate(rule.getCondition(), context.getDomainModel());
 			} else {
 				updateMap = false;
 			}
@@ -513,16 +512,12 @@ public class RuleService implements ViewModelService, EMFFormsContextListener {
 				if (rule == null) {
 					return;
 				}
-				if (LeafCondition.class.isInstance(rule.getCondition())) {
-					evalNewRules(LeafCondition.class.cast(rule.getCondition()));
-				} else {
-					final TreeIterator<EObject> eAllContents = rule.getCondition().eAllContents();
-					while (eAllContents.hasNext()) {
-						final EObject eObject = eAllContents.next();
-						if (LeafCondition.class.isInstance(eObject)) {
-							evalNewRules(LeafCondition.class.cast(eObject));
-						}
-					}
+
+				final Set<UniqueSetting> settings = conditionServiceManager.getConditionSettings(rule.getCondition(),
+					context.getDomainModel());
+				for (final UniqueSetting setting : settings) {
+					evalEnable(setting);
+					evalShow(setting);
 				}
 
 			} else if (EnableRule.class.isInstance(notifier)) {
@@ -543,17 +538,6 @@ public class RuleService implements ViewModelService, EMFFormsContextListener {
 					evalShow(setting);
 				}
 
-			}
-		}
-
-		private void evalNewRules(LeafCondition leafCondition) {
-			try {
-				final Setting setting = context.getService(EMFFormsDatabindingEMF.class)
-					.getSetting(leafCondition.getDomainModelReference(), context.getDomainModel());
-				evalEnable(UniqueSetting.createSetting(setting));
-				evalShow(UniqueSetting.createSetting(setting));
-			} catch (final DatabindingFailedException ex) {
-				context.getService(ReportService.class).report(new AbstractReport(ex));
 			}
 		}
 

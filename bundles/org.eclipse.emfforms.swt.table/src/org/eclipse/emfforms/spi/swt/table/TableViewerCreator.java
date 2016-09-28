@@ -11,23 +11,25 @@
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.table;
 
-import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.AbstractTableViewer;
 import org.eclipse.swt.widgets.Composite;
 
 /**
- * The {@link TableViewerCreator} is used to create a {@link TableViewer} on a parent composite.
+ * The {@link TableViewerCreator} is used to create a {@link AbstractTableViewer} on a parent composite.
  *
- * @author Johanens Faltermeier
+ * @param <T> the type of the viewer. This must extend an {@link AbstractTableViewer}
+ *
+ * @author Johannes Faltermeier
  *
  */
-public interface TableViewerCreator {
+public interface TableViewerCreator<T extends AbstractTableViewer> {
 
 	/**
-	 * Creates the {@link TableViewer}.
-	 * 
+	 * Creates the {@link AbstractTableViewer}.
+	 *
 	 * @param parent the parent {@link Composite}
 	 * @return the viewer
 	 */
-	TableViewer createTableViewer(Composite parent);
+	T createTableViewer(Composite parent);
 
 }

@@ -43,7 +43,7 @@ public class LinkOnlyMultiReferenceRendererService implements EMFFormsDIRenderer
 	 *
 	 * @param databindingService The EMFFormsDatabinding
 	 */
-	@Reference
+	@Reference(unbind = "-")
 	protected void setEMFFormsDatabinding(EMFFormsDatabinding databindingService) {
 		this.databindingService = databindingService;
 	}
@@ -53,7 +53,7 @@ public class LinkOnlyMultiReferenceRendererService implements EMFFormsDIRenderer
 	 *
 	 * @param reportService The ReportService
 	 */
-	@Reference
+	@Reference(unbind = "-")
 	protected void setReportService(ReportService reportService) {
 		this.reportService = reportService;
 	}

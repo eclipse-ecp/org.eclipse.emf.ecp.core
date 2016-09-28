@@ -21,9 +21,10 @@ import org.eclipse.swt.widgets.Composite;
  * @author Johannes Faltermeier
  *
  */
-public final class TableViewerFactory {
+public class TableViewerFactory {
 
-	private TableViewerFactory() {
+	/** Constructor. */
+	protected TableViewerFactory() {
 		// factory
 	}
 

@@ -35,45 +35,87 @@ public class TableViewerColumnBuilder {
 	private Integer width;
 	private Integer style = SWT.NONE;
 
+	/**
+	 * Creates a new {@link TableViewerColumnBuilder} instance.
+	 *
+	 * @return the new instance
+	 */
 	public static TableViewerColumnBuilder create() {
 		return new TableViewerColumnBuilder();
 	}
 
+	/**
+	 * @param text the column text
+	 * @return self
+	 */
 	public TableViewerColumnBuilder setText(String text) {
 		this.text = text;
 		return this;
 	}
 
+	/**
+	 * @param tooltip the column tooltip
+	 * @return self
+	 */
 	public TableViewerColumnBuilder setToolTipText(String tooltip) {
 		this.tooltip = tooltip;
 		return this;
 	}
 
+	/**
+	 * @param isResizable whether the column is resizeable
+	 * @return self
+	 */
 	public TableViewerColumnBuilder setResizable(boolean isResizable) {
 		this.isResizable = isResizable;
 		return this;
 	}
 
+	/**
+	 * @param isMoveable whether the column is moveable
+	 * @return self
+	 */
 	public TableViewerColumnBuilder setMoveable(boolean isMoveable) {
 		this.isMoveable = isMoveable;
 		return this;
 	}
 
+	/**
+	 * Sets data on the column.
+	 *
+	 * @param key the key
+	 * @param value the value
+	 * @return self
+	 */
 	public TableViewerColumnBuilder setData(String key, Object value) {
 		data.put(key, value);
 		return this;
 	}
 
+	/**
+	 * @param style the swt style bits for the column
+	 * @return self
+	 */
 	public TableViewerColumnBuilder setStyle(int style) {
 		this.style = style;
 		return this;
 	}
 
+	/**
+	 * @param width the width of the column
+	 * @return self
+	 */
 	public TableViewerColumnBuilder setWidth(int width) {
 		this.width = width;
 		return this;
 	}
 
+	/**
+	 * Creates and returns a {@link TableViewerColumn}.
+	 * 
+	 * @param tableViewer the parent
+	 * @return the column
+	 */
 	public TableViewerColumn build(TableViewer tableViewer) {
 		final TableViewerColumn column = new TableViewerColumn(tableViewer, style);
 		setText(column);

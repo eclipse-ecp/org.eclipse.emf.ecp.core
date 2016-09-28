@@ -11,8 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.table;
 
+import org.eclipse.jface.viewers.AbstractTableViewer;
 import org.eclipse.jface.viewers.CellLabelProvider;
-import org.eclipse.jface.viewers.TableViewer;
 
 /**
  * This factory is used to create {@link CellLabelProvider}s.
@@ -24,10 +24,10 @@ public interface CellLabelProviderFactory {
 
 	/**
 	 * Creates the cell label provider.
-	 * 
+	 *
 	 * @param table the table viewer
 	 * @return the provider
 	 */
-	CellLabelProvider createCellLabelProvider(TableViewer table);
+	CellLabelProvider createCellLabelProvider(AbstractTableViewer table);
 
 }

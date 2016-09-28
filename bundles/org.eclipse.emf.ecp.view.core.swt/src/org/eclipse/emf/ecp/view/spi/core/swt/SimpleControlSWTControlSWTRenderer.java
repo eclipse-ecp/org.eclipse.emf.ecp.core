@@ -89,6 +89,7 @@ public abstract class SimpleControlSWTControlSWTRenderer extends SimpleControlSW
 	protected void rootDomainModelChanged() throws DatabindingFailedException {
 		disposeBindings();
 		bindings = createBindings(control);
+		super.rootDomainModelChanged();
 	}
 
 	/**

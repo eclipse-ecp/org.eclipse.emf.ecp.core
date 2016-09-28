@@ -21,7 +21,6 @@ import java.util.Set;
 import java.util.WeakHashMap;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.common.spi.BidirectionalMap;
 import org.eclipse.emf.ecp.common.spi.UniqueSetting;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
@@ -29,12 +28,8 @@ import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.rule.model.AndCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.Condition;
-import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
-import org.eclipse.emf.ecp.view.spi.rule.model.OrCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.Rule;
-import org.eclipse.emf.ecp.view.spi.rule.model.impl.LeafConditionSettingIterator;
 import org.eclipse.emfforms.spi.core.services.structuralchange.EMFFormsStructuralChangeTester;
 
 /**
@@ -55,6 +50,7 @@ public class RuleRegistry<T extends Rule> {
 	private final ViewModelContext context;
 	private final Map<VDomainModelReference, Set<T>> dmrsToRules;
 	private final DomainModelChangeListener domainModelChangeListener;
+	private final ConditionServiceManager conditionServiceManager;
 
 	/**
 	 * Default constructor.
@@ -70,16 +66,17 @@ public class RuleRegistry<T extends Rule> {
 		dmrsToRules = new WeakHashMap<VDomainModelReference, Set<T>>();
 		domainModelChangeListener = new DomainModelChangeListener();
 		context.registerDomainChangeListener(domainModelChangeListener);
+		conditionServiceManager = context.getService(ConditionServiceManager.class);
 	}
 
 	/**
-	 * Creates a setting from the given {@link EObject} and the {@link LeafCondition} and register it with the
+	 * Creates a setting from the given {@link EObject} and the {@link Condition} and register it with the
 	 * {@link VElement}.
 	 *
 	 * @param renderable
 	 *            the {@link VElement} to be updated in case the condition changes
 	 * @param rule
-	 *            the parent rule holding the {@link LeafCondition}
+	 *            the parent rule holding the {@link Condition}
 	 * @param condition
 	 *            contains the attribute that the condition is depending on
 	 * @param domainModel
@@ -88,43 +85,15 @@ public class RuleRegistry<T extends Rule> {
 	 * @return the registered {@link UniqueSetting UniqueSettings}
 	 */
 	public Set<UniqueSetting> register(VElement renderable, T rule, Condition condition, EObject domainModel) {
-
-		final Set<UniqueSetting> registeredSettings = new LinkedHashSet<UniqueSetting>();
-		if (condition instanceof LeafCondition) {
-			final LeafCondition leafCondition = (LeafCondition) condition;
-
-			final VDomainModelReference domainModelReference = leafCondition.getDomainModelReference();
-			if (domainModelReference == null) {
-				return registeredSettings;
-			}
-
-			mapDomainToDMRs(rule, Collections.singleton(domainModelReference));
-
-			final LeafConditionSettingIterator iterator = new LeafConditionSettingIterator(leafCondition,
-				context.getDomainModel(), true);
-			while (iterator.hasNext()) {
-				final Setting setting = iterator.next();
-				final UniqueSetting uniqueSetting = UniqueSetting.createSetting(setting);
-				mapSettingToRule(uniqueSetting, leafCondition, rule);
-				registeredSettings.add(uniqueSetting);
-			}
-			mapDomainToDMRs(rule, iterator.getUsedValueDomainModelReferences());
-			rulesToRenderables.put(rule, renderable);
-			iterator.dispose();
-
-		} else if (condition instanceof OrCondition) {
-			final OrCondition orCondition = (OrCondition) condition;
-			for (final Condition cond : orCondition.getConditions()) {
-				registeredSettings.addAll(register(renderable, rule, cond, domainModel));
-			}
-		} else if (condition instanceof AndCondition) {
-			final AndCondition andCondition = (AndCondition) condition;
-			for (final Condition cond : andCondition.getConditions()) {
-				registeredSettings.addAll(register(renderable, rule, cond, domainModel));
-			}
+		rulesToRenderables.put(rule, renderable);
+		final Set<UniqueSetting> settings = conditionServiceManager.getConditionSettings(condition, domainModel);
+		for (final UniqueSetting setting : settings) {
+			mapSettingToRule(setting, condition, rule);
 		}
-
-		return registeredSettings;
+		final Set<VDomainModelReference> domainModelReferences = conditionServiceManager
+			.getDomainModelReferences(condition);
+		mapDomainToDMRs(rule, domainModelReferences);
+		return settings;
 	}
 
 	/**
@@ -192,24 +161,19 @@ public class RuleRegistry<T extends Rule> {
 	public VElement removeCondition(Condition condition) {
 		VElement ret = null;
 		T rule = null;
-		// we only have to care about leaf conditions since or/and conditions aren't even registered
-		if (LeafCondition.class.isInstance(condition)) {
-			final Set<UniqueSetting> settings = conditionToSettings.remove(condition);
-			if (settings == null) {
-				return ret;
+		final Set<UniqueSetting> settings = conditionToSettings.remove(condition);
+		if (settings == null) {
+			return ret;
+		}
+		for (final UniqueSetting setting : settings) {
+			final BidirectionalMap<Condition, T> rules = settingToRules.get(setting);
+			if (rules.keys().contains(condition)) {
+				rule = rules.removeByKey(condition);
 			}
-			for (final UniqueSetting setting : settings) {
-				final BidirectionalMap<Condition, T> rules = settingToRules.get(setting);
-				if (rules.keys().contains(condition)) {
-					rule = rules.removeByKey(condition);
-				}
-				if (rules.keys().isEmpty()) {
-					settingToRules.remove(setting);
-				}
+			if (rules.keys().isEmpty()) {
+				settingToRules.remove(setting);
 			}
 		}
-
-		conditionToSettings.remove(condition);
 
 		if (rule != null) {
 			removeDomainModelChangeListener(rule);

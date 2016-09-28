@@ -15,14 +15,25 @@ package org.eclipse.emf.ecp.ui.linkedView;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IViewSite;
 
+/**
+ * A View, which can be linked to an editor.
+ * 
+ * @author jonas
+ *
+ */
 public interface ILinkedWithEditorView {
 
 	/**
 	 * Called to tell the view, that a certain {@link IEditorPart} has been activated.
-	 * 
+	 *
 	 * @param activatedEditor The activated {@link IEditorPart}
 	 */
 	void editorActivated(IEditorPart activatedEditor);
 
+	/**
+	 * @deprecated Use ViewPart#getViewSite instead
+	 * @return the {@link IViewSite} of the linked part
+	 */
+	@Deprecated
 	IViewSite getViewSite();
 }

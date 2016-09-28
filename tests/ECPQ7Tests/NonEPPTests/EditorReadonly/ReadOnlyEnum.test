@@ -6,8 +6,8 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _2Po7kTyyEeO8kN1jLMK8wg
-Runtime-Version: 1.5.4.201412181238
-Save-Time: 11/20/15 10:21 AM
+Runtime-Version: 2.1.0.201606221726
+Save-Time: 9/5/16 2:29 PM
 Tags: skipExecution
 Testcase-Type: ecl
 
@@ -28,7 +28,7 @@ with [get-window "New Reference Element"] {
     get-button "Next >" | click
     get-button "Link Domain Model EFeature" | click
     with [get-window "Select a EStructuralFeature"] {
-        get-tree | select "bowling/Tournament \\[org.eclipse.emf.emfstore.bowling.Tournament\\]/type : TournamentType"
+        get-tree | select "type : TournamentType"
         get-button OK | click
     }
     get-button Finish | click
@@ -62,7 +62,6 @@ get-editor View | click
 get-view "Model Explorer" | get-tree | select "TestProject/Tournament Amateur" | double-click
 with [get-editor "Tournament Amateur" | get-combo -after [get-label Type]] {
     get-property enablement | equals false | verify-true
-    get-property readOnly | equals true | verify-true
 }
 } -finally {
 /*

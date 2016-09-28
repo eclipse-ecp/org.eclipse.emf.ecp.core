@@ -23,7 +23,7 @@
 		</profile>
 	</profiles>
 	<properties>
-		<emfstore-update-site>http://download.eclipse.org/emfstore/releases_16</emfstore-update-site>
+		<emfstore-update-site>http://download.eclipse.org/emfstore/releases_18</emfstore-update-site>
 		<eclipse-product>http://mirror.cc.columbia.edu/pub/software/eclipse/technology/epp/downloads/release/${eclipse-name}/${eclipse-sr}/eclipse-modeling-${eclipse-name}-${eclipse-sr}-linux-gtk-x86_64.tar.gz</eclipse-product>
 	</properties>
 

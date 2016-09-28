@@ -159,6 +159,12 @@
    <feature id="org.eclipse.emfforms.swt.control.text.autocomplete.feature.source" version="0.0.0">
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
+   <feature id="org.eclipse.emfforms.swt.control.text.richtext.feature.source" version="0.0.0">
+      <category name="org.eclipse.emf.ecp.emfforms"/>
+   </feature>
+   <feature id="org.eclipse.emf.ecp.view.table.ui.nebula.grid.feature.source" version="0.0.0">
+      <category name="org.eclipse.emf.ecp.emfforms"/>
+   </feature>
    <feature id="org.eclipse.emfforms.view.annotation.feature.source" version="0.0.0">
       <category name="org.eclipse.emf.ecp.view"/>
    </feature>
@@ -178,6 +184,15 @@
       <category name="org.eclipse.emf.ecp.jsonforms"/>
    </feature>
    <feature id="org.eclipse.emf.ecp.view.table.ui.swt.persistedstate.feature.source" version="0.0.0">
+      <category name="org.eclipse.emf.ecp.emfforms"/>
+   </feature>
+   <feature id="org.eclipse.emfforms.rulerepository.feature.source" version="0.0.0">
+      <category name="org.eclipse.emf.ecp.view"/>
+   </feature>
+   <feature id="org.eclipse.emfforms.editor.genmodel.util.feature.source" version="0.0.0">
+      <category name="org.eclipse.emf.ecp.emfforms"/>
+   </feature>
+   <feature id="org.eclipse.emf.ecp.view.table.ui.rcp.feature.source" version="0.0.0">
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
    <category-def name="org.eclipse.emf.ecp.sdk" label="All SDKs  (install one of these)">

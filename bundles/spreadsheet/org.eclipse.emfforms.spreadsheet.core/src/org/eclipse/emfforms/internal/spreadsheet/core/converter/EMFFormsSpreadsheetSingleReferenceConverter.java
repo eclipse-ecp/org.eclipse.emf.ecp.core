@@ -49,7 +49,7 @@ public class EMFFormsSpreadsheetSingleReferenceConverter implements EMFFormsSpre
 	 *
 	 * @param databinding the service
 	 */
-	@Reference(cardinality = ReferenceCardinality.MANDATORY)
+	@Reference(cardinality = ReferenceCardinality.MANDATORY, unbind = "-")
 	public void setDatabinding(EMFFormsDatabindingEMF databinding) {
 		this.databinding = databinding;
 	}
@@ -59,7 +59,7 @@ public class EMFFormsSpreadsheetSingleReferenceConverter implements EMFFormsSpre
 	 *
 	 * @param reportService the service
 	 */
-	@Reference(cardinality = ReferenceCardinality.MANDATORY)
+	@Reference(cardinality = ReferenceCardinality.MANDATORY, unbind = "-")
 	public void setReportService(ReportService reportService) {
 		this.reportService = reportService;
 	}
@@ -91,7 +91,7 @@ public class EMFFormsSpreadsheetSingleReferenceConverter implements EMFFormsSpre
 	@Override
 	public void setCellValue(Cell cell, Object value, EStructuralFeature eStructuralFeature,
 		ViewModelContext viewModelContext)
-			throws EMFFormsConverterException {
+		throws EMFFormsConverterException {
 		if (value == null) {
 			return;
 		}

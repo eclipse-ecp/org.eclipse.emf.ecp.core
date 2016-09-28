@@ -28,10 +28,9 @@ import org.eclipse.emf.ecp.view.template.model.VTTemplatePackage;
  * <li>each enum,</li>
  * <li>and each data type</li>
  * </ul>
- * 
+ *
  * @since 1.8
  *        <!-- end-user-doc -->
- *
  * @see org.eclipse.emf.ecp.view.template.style.tab.model.VTTabFactory
  * @model kind="package"
  * @generated
@@ -96,6 +95,66 @@ public interface VTTabPackage extends EPackage {
 	int TAB_STYLE_PROPERTY__TYPE = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Ok Image URL</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.10
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int TAB_STYLE_PROPERTY__OK_IMAGE_URL = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Info Image URL</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.10
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int TAB_STYLE_PROPERTY__INFO_IMAGE_URL = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Warning Image URL</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.10
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int TAB_STYLE_PROPERTY__WARNING_IMAGE_URL = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>Error Image URL</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.10
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int TAB_STYLE_PROPERTY__ERROR_IMAGE_URL = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 4;
+
+	/**
+	 * The feature id for the '<em><b>Cancel Image URL</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.10
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int TAB_STYLE_PROPERTY__CANCEL_IMAGE_URL = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 5;
+
+	/**
 	 * The number of structural features of the '<em>Style Property</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -103,7 +162,7 @@ public interface VTTabPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TAB_STYLE_PROPERTY_FEATURE_COUNT = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 1;
+	int TAB_STYLE_PROPERTY_FEATURE_COUNT = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 6;
 
 	/**
 	 * The number of operations of the '<em>Style Property</em>' class.
@@ -140,8 +199,8 @@ public interface VTTabPackage extends EPackage {
 	EClass getTabStyleProperty();
 
 	/**
-	 * Returns the meta object for the attribute '
-	 * {@link org.eclipse.emf.ecp.view.template.style.tab.model.VTTabStyleProperty#getType <em>Type</em>}'.
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.template.style.tab.model.VTTabStyleProperty#getType <em>Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -153,8 +212,88 @@ public interface VTTabPackage extends EPackage {
 	EAttribute getTabStyleProperty_Type();
 
 	/**
-	 * Returns the meta object for enum '{@link org.eclipse.emf.ecp.view.template.style.tab.model.TabType <em>Type</em>}
-	 * '.
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.template.style.tab.model.VTTabStyleProperty#getOkImageURL <em>Ok Image
+	 * URL</em>}'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.10
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the attribute '<em>Ok Image URL</em>'.
+	 * @see org.eclipse.emf.ecp.view.template.style.tab.model.VTTabStyleProperty#getOkImageURL()
+	 * @see #getTabStyleProperty()
+	 * @generated
+	 */
+	EAttribute getTabStyleProperty_OkImageURL();
+
+	/**
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.template.style.tab.model.VTTabStyleProperty#getInfoImageURL <em>Info Image
+	 * URL</em>}'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.10
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the attribute '<em>Info Image URL</em>'.
+	 * @see org.eclipse.emf.ecp.view.template.style.tab.model.VTTabStyleProperty#getInfoImageURL()
+	 * @see #getTabStyleProperty()
+	 * @generated
+	 */
+	EAttribute getTabStyleProperty_InfoImageURL();
+
+	/**
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.template.style.tab.model.VTTabStyleProperty#getWarningImageURL <em>Warning Image
+	 * URL</em>}'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.10
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the attribute '<em>Warning Image URL</em>'.
+	 * @see org.eclipse.emf.ecp.view.template.style.tab.model.VTTabStyleProperty#getWarningImageURL()
+	 * @see #getTabStyleProperty()
+	 * @generated
+	 */
+	EAttribute getTabStyleProperty_WarningImageURL();
+
+	/**
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.template.style.tab.model.VTTabStyleProperty#getErrorImageURL <em>Error Image
+	 * URL</em>}'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.10
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the attribute '<em>Error Image URL</em>'.
+	 * @see org.eclipse.emf.ecp.view.template.style.tab.model.VTTabStyleProperty#getErrorImageURL()
+	 * @see #getTabStyleProperty()
+	 * @generated
+	 */
+	EAttribute getTabStyleProperty_ErrorImageURL();
+
+	/**
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.template.style.tab.model.VTTabStyleProperty#getCancelImageURL <em>Cancel Image
+	 * URL</em>}'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.10
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the attribute '<em>Cancel Image URL</em>'.
+	 * @see org.eclipse.emf.ecp.view.template.style.tab.model.VTTabStyleProperty#getCancelImageURL()
+	 * @see #getTabStyleProperty()
+	 * @generated
+	 */
+	EAttribute getTabStyleProperty_CancelImageURL();
+
+	/**
+	 * Returns the meta object for enum '{@link org.eclipse.emf.ecp.view.template.style.tab.model.TabType
+	 * <em>Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -190,9 +329,9 @@ public interface VTTabPackage extends EPackage {
 	 */
 	interface Literals {
 		/**
-		 * The meta object literal for the '
-		 * {@link org.eclipse.emf.ecp.view.template.style.tab.model.impl.VTTabStylePropertyImpl <em>Style Property</em>}
-		 * ' class.
+		 * The meta object literal for the
+		 * '{@link org.eclipse.emf.ecp.view.template.style.tab.model.impl.VTTabStylePropertyImpl <em>Style
+		 * Property</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 *
@@ -210,6 +349,61 @@ public interface VTTabPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute TAB_STYLE_PROPERTY__TYPE = eINSTANCE.getTabStyleProperty_Type();
+
+		/**
+		 * The meta object literal for the '<em><b>Ok Image URL</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 *
+		 * @since 1.10
+		 *        <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EAttribute TAB_STYLE_PROPERTY__OK_IMAGE_URL = eINSTANCE.getTabStyleProperty_OkImageURL();
+
+		/**
+		 * The meta object literal for the '<em><b>Info Image URL</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 *
+		 * @since 1.10
+		 *        <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EAttribute TAB_STYLE_PROPERTY__INFO_IMAGE_URL = eINSTANCE.getTabStyleProperty_InfoImageURL();
+
+		/**
+		 * The meta object literal for the '<em><b>Warning Image URL</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * 
+		 * @since 1.10
+		 *        <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EAttribute TAB_STYLE_PROPERTY__WARNING_IMAGE_URL = eINSTANCE.getTabStyleProperty_WarningImageURL();
+
+		/**
+		 * The meta object literal for the '<em><b>Error Image URL</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 *
+		 * @since 1.10
+		 *        <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EAttribute TAB_STYLE_PROPERTY__ERROR_IMAGE_URL = eINSTANCE.getTabStyleProperty_ErrorImageURL();
+
+		/**
+		 * The meta object literal for the '<em><b>Cancel Image URL</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 *
+		 * @since 1.10
+		 *        <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EAttribute TAB_STYLE_PROPERTY__CANCEL_IMAGE_URL = eINSTANCE.getTabStyleProperty_CancelImageURL();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.template.style.tab.model.TabType

@@ -15,6 +15,7 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.internal.swt.treemasterdetail.decorator.validation.ecp.ECPValidationServiceLabelDecorator;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.LabelDecoratorProvider;
+import org.eclipse.emfforms.spi.swt.treemasterdetail.diagnostic.DiagnosticCache;
 import org.eclipse.jface.viewers.ILabelDecorator;
 import org.eclipse.jface.viewers.TreeViewer;
 
@@ -26,6 +27,7 @@ public class ECPValidationLabelDecoratorProvider implements LabelDecoratorProvid
 
 	private final Notifier input;
 	private ECPValidationServiceLabelDecorator decorator;
+	private final DiagnosticCache cache;
 
 	/**
 	 * Default constructor.
@@ -33,12 +35,23 @@ public class ECPValidationLabelDecoratorProvider implements LabelDecoratorProvid
 	 * @param input the notifier which we will display the diagnostics
 	 */
 	public ECPValidationLabelDecoratorProvider(Notifier input) {
+		this(input, new DiagnosticCache(input));
+	}
+
+	/**
+	 * Default constructor.
+	 *
+	 * @param input the notifier which we will display the diagnostics
+	 * @param cache the cache to use.
+	 */
+	public ECPValidationLabelDecoratorProvider(Notifier input, DiagnosticCache cache) {
 		this.input = input;
+		this.cache = cache;
 	}
 
 	@Override
 	public Optional<ILabelDecorator> getLabelDecorator(TreeViewer viewer) {
-		decorator = new ECPValidationServiceLabelDecorator(viewer, input);
+		decorator = new ECPValidationServiceLabelDecorator(viewer, input, cache);
 		return Optional.<ILabelDecorator> of(decorator);
 	}
 

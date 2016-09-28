@@ -227,7 +227,12 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 		return textStyle;
 	}
 
-	private EMFFormsEditSupport getEMFFormsEditSupport() {
+	/**
+	 *
+	 * @return the {@link EMFFormsEditSupport}
+	 * @since 1.10
+	 */
+	protected EMFFormsEditSupport getEMFFormsEditSupport() {
 		return emfFormsEditSupport;
 	}
 
@@ -450,5 +455,10 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	@Override
 	protected void setValidationColor(Control control, Color validationColor) {
 		super.setValidationColor(Composite.class.cast(control).getChildren()[0], validationColor);
+	}
+
+	@Override
+	protected void setValidationForegroundColor(Control control, Color validationColor) {
+		super.setValidationForegroundColor(Composite.class.cast(control).getChildren()[0], validationColor);
 	}
 }

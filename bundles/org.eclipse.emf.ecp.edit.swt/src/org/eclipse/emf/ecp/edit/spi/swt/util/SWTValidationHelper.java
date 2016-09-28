@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -96,6 +96,49 @@ public final class SWTValidationHelper {
 	}
 
 	/**
+	 * Returns the foreground color for a control with the given validation severity, VElement
+	 * and view model context, if applicable.
+	 *
+	 * @param severity severity the severity of the {@link Diagnostic}
+	 * @param vElement The {@link VElement} that is being rendered
+	 * @param viewModelContext The corresponding {@link ViewModelContext}
+	 * @return the color to be used as a foreground color
+	 * @since 1.10
+	 */
+	public Color getValidationForegroundColor(int severity, VElement vElement, ViewModelContext viewModelContext) {
+		final VTControlValidationTemplate template = getTemplate().getControlValidationConfiguration();
+		String colorHex = null;
+
+		switch (severity) {
+		case Diagnostic.OK:
+			colorHex = getOkForegroundColorHEX(template, vElement, viewModelContext);
+			break;
+		case Diagnostic.INFO:
+			colorHex = getInfoForegroundColorHEX(template, vElement, viewModelContext);
+			break;
+		case Diagnostic.WARNING:
+			colorHex = getWarningForegroundColorHEX(template, vElement, viewModelContext);
+			break;
+		case Diagnostic.ERROR:
+			colorHex = getErrorForegroundColorHEX(template, vElement, viewModelContext);
+			break;
+		case Diagnostic.CANCEL:
+			colorHex = getCancelForegroundColorHEX(template, vElement, viewModelContext);
+			break;
+		default:
+			throw new IllegalArgumentException(
+				"The specified severity value " + severity + " is invalid. See Diagnostic class."); //$NON-NLS-1$ //$NON-NLS-2$
+		}
+		if (colorHex == null) {
+			return null;
+		}
+		if (!colorMap.containsKey(colorHex)) {
+			colorMap.put(colorHex, getColor(colorHex));
+		}
+		return colorMap.get(colorHex);
+	}
+
+	/**
 	 * Returns the background color for a control with the given validation severity.
 	 *
 	 * @param severity severity the severity of the {@link Diagnostic}
@@ -103,6 +146,17 @@ public final class SWTValidationHelper {
 	 */
 	public Color getValidationBackgroundColor(int severity) {
 		return getValidationBackgroundColor(severity, null, null);
+	}
+
+	/**
+	 * Returns the foreground color for a control with the given validation severity.
+	 *
+	 * @param severity severity the severity of the {@link Diagnostic}
+	 * @return the color to be used as a foreground color
+	 * @since 1.10
+	 */
+	public Color getValidationForegroundColor(int severity) {
+		return getValidationForegroundColor(severity, null, null);
 	}
 
 	/**
@@ -263,6 +317,20 @@ public final class SWTValidationHelper {
 		return colorHex;
 	}
 
+	private String getOkForegroundColorHEX(VTControlValidationTemplate template, VElement vElement,
+		ViewModelContext viewModelContext) {
+		String colorHex = null;
+		final VTValidationStyleProperty validationStyleProperty = getValidationStyleProperty(vElement,
+			viewModelContext);
+		if (template != null) {
+			colorHex = template.getOkForegroundColorHEX();
+		}
+		if (validationStyleProperty != null) {
+			colorHex = validationStyleProperty.getOkForegroundColorHEX();
+		}
+		return colorHex;
+	}
+
 	private String getInfoColorHEX(VTControlValidationTemplate template, VElement vElement,
 		ViewModelContext viewModelContext) {
 		String colorHex = null;
@@ -273,6 +341,20 @@ public final class SWTValidationHelper {
 		}
 		if (validationStyleProperty != null) {
 			colorHex = validationStyleProperty.getInfoColorHEX();
+		}
+		return colorHex;
+	}
+
+	private String getInfoForegroundColorHEX(VTControlValidationTemplate template, VElement vElement,
+		ViewModelContext viewModelContext) {
+		String colorHex = null;
+		final VTValidationStyleProperty validationStyleProperty = getValidationStyleProperty(vElement,
+			viewModelContext);
+		if (template != null) {
+			colorHex = template.getInfoForegroundColorHEX();
+		}
+		if (validationStyleProperty != null) {
+			colorHex = validationStyleProperty.getInfoForegroundColorHEX();
 		}
 		return colorHex;
 	}
@@ -291,6 +373,20 @@ public final class SWTValidationHelper {
 		return colorHex;
 	}
 
+	private String getWarningForegroundColorHEX(VTControlValidationTemplate template, VElement vElement,
+		ViewModelContext viewModelContext) {
+		String colorHex = null;
+		final VTValidationStyleProperty validationStyleProperty = getValidationStyleProperty(vElement,
+			viewModelContext);
+		if (template != null) {
+			colorHex = template.getWarningForegroundColorHEX();
+		}
+		if (validationStyleProperty != null) {
+			colorHex = validationStyleProperty.getWarningForegroundColorHEX();
+		}
+		return colorHex;
+	}
+
 	private String getErrorColorHEX(VTControlValidationTemplate template, VElement vElement,
 		ViewModelContext viewModelContext) {
 		String colorHex = null;
@@ -305,6 +401,20 @@ public final class SWTValidationHelper {
 		return colorHex;
 	}
 
+	private String getErrorForegroundColorHEX(VTControlValidationTemplate template, VElement vElement,
+		ViewModelContext viewModelContext) {
+		String colorHex = null;
+		final VTValidationStyleProperty validationStyleProperty = getValidationStyleProperty(vElement,
+			viewModelContext);
+		if (template != null) {
+			colorHex = template.getErrorForegroundColorHEX();
+		}
+		if (validationStyleProperty != null) {
+			colorHex = validationStyleProperty.getErrorForegroundColorHEX();
+		}
+		return colorHex;
+	}
+
 	private String getCancelColorHEX(VTControlValidationTemplate template, VElement vElement,
 		ViewModelContext viewModelContext) {
 		String colorHex = null;
@@ -315,6 +425,20 @@ public final class SWTValidationHelper {
 		}
 		if (validationStyleProperty != null) {
 			colorHex = validationStyleProperty.getCancelColorHEX();
+		}
+		return colorHex;
+	}
+
+	private String getCancelForegroundColorHEX(VTControlValidationTemplate template, VElement vElement,
+		ViewModelContext viewModelContext) {
+		String colorHex = null;
+		final VTValidationStyleProperty validationStyleProperty = getValidationStyleProperty(vElement,
+			viewModelContext);
+		if (template != null) {
+			colorHex = template.getCancelForegroundColorHEX();
+		}
+		if (validationStyleProperty != null) {
+			colorHex = validationStyleProperty.getCancelForegroundColorHEX();
 		}
 		return colorHex;
 	}
@@ -494,6 +618,8 @@ public final class SWTValidationHelper {
 					.getResource("icons/validation_error.png").toExternalForm()); //$NON-NLS-1$
 				validationTemplate.setErrorOverlayURL(Activator.getDefault().getBundle()
 					.getResource("icons/error_decorate.png").toExternalForm()); //$NON-NLS-1$
+				validationTemplate.setWarningImageURL(Activator.getDefault().getBundle()
+					.getResource("icons/validation_warning.png").toExternalForm()); //$NON-NLS-1$
 				validationTemplate.setWarningOverlayURL(Activator.getDefault().getBundle()
 					.getResource("icons/warning_decorate.png").toExternalForm()); //$NON-NLS-1$
 				validationTemplate.setInfoOverlayURL(Activator.getDefault().getBundle()

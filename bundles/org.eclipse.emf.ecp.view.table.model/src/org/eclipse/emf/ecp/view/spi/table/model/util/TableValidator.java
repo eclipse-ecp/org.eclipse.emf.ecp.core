@@ -58,6 +58,8 @@ import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
  * @generated
  */
 public class TableValidator extends EObjectValidator {
+	private static final String VALIDATING_TABLE_CONTROL_KEY = "ValidatingTableControl";
+
 	/**
 	 * The cached model package
 	 * <!-- begin-user-doc -->
@@ -189,14 +191,74 @@ public class TableValidator extends EObjectValidator {
 	 */
 	public boolean validateTableControl(VTableControl tableControl, DiagnosticChain diagnostics,
 		Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(tableControl, diagnostics, context);
+		if (!validate_NoCircularContainment(tableControl, diagnostics, context)) {
+			return false;
+		}
+		boolean result = validate_EveryMultiplicityConforms(tableControl, diagnostics, context);
+		if (result || diagnostics != null) {
+			result &= validate_EveryDataValueConforms(tableControl, diagnostics, context);
+		}
+		if (result || diagnostics != null) {
+			result &= validate_EveryReferenceIsContained(tableControl, diagnostics, context);
+		}
+		if (result || diagnostics != null) {
+			result &= validate_EveryBidirectionalReferenceIsPaired(tableControl, diagnostics, context);
+		}
+		if (result || diagnostics != null) {
+			result &= validate_EveryProxyResolves(tableControl, diagnostics, context);
+		}
+		if (result || diagnostics != null) {
+			result &= validate_UniqueID(tableControl, diagnostics, context);
+		}
+		if (result || diagnostics != null) {
+			result &= validate_EveryKeyUnique(tableControl, diagnostics, context);
+		}
+		if (result || diagnostics != null) {
+			result &= validate_EveryMapEntryUnique(tableControl, diagnostics, context);
+		}
+		if (result || diagnostics != null) {
+			result &= validateTableControl_resolveable(tableControl, diagnostics, context);
+		}
+		return result;
 	}
 
 	/**
+	 * Validates the resolveable constraint of '<em>Control</em>'.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 *
+	 * @param tableControl the {@link VTableControl} to check
+	 * @param diagnostics the diagnostics
+	 * @param context the validation context
+	 *            <!-- end-user-doc -->
+	 * @return the validation result
+	 *
+	 * @generated NOT
+	 * @since 1.10
+	 */
+	// CHECKSTYLE.OFF: MethodName
+	public boolean validateTableControl_resolveable(VTableControl tableControl, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
+		// CHECKSTYLE.ON: MethodName
+		final VDomainModelReference domainModelReference = tableControl.getDomainModelReference();
+		if (domainModelReference == null) {
+			diagnostics
+				.add(createDiagnostic(Diagnostic.ERROR, 0, "No Domain Model Reference set.", //$NON-NLS-1$
+					tableControl, VViewPackage.eINSTANCE.getControl_DomainModelReference()));
+			return false;
+		}
+		if (domainModelReference instanceof VTableDomainModelReference) {
+			context.put(VALIDATING_TABLE_CONTROL_KEY, true);
+			return validateTableDomainModelReference((VTableDomainModelReference) domainModelReference, diagnostics,
+				context);
+		}
+		return viewValidator.validateDomainModelReference(domainModelReference, diagnostics, context);
+	}
+
+	/**
 	 * @generated
+	 * 			<!-- begin-user-doc -->
+	 *            <!-- end-user-doc -->
+	 *
 	 */
 	public boolean validateTableColumnConfiguration(VTableColumnConfiguration tableColumnConfiguration,
 		DiagnosticChain diagnostics, Map<Object, Object> context) {
@@ -286,11 +348,11 @@ public class TableValidator extends EObjectValidator {
 	// BEGIN COMPLEX CODE
 	public boolean validateTableDomainModelReference_resolveable(VTableDomainModelReference tableDomainModelReference,
 		DiagnosticChain diagnostics, Map<Object, Object> context) {
-
 		// validate path to table
 		VDomainModelReference pathToMultiRef = tableDomainModelReference.getDomainModelReference();
 		final EValidator validator;
 		if (pathToMultiRef != null) {
+			context.put(ViewValidator.ECLASS_KEY, null);
 			validator = EValidator.Registry.INSTANCE.getEValidator(pathToMultiRef.eClass().getEPackage());
 		} else {
 			pathToMultiRef = tableDomainModelReference;
@@ -333,7 +395,9 @@ public class TableValidator extends EObjectValidator {
 			}
 			return false;
 		}
-
+		if (context.containsKey(VALIDATING_TABLE_CONTROL_KEY)) {
+			return true;
+		}
 		// test if columns are resolveable
 		final EReference reference = EReference.class.cast(feature);
 		final EClass referenceType = reference.getEReferenceType();
@@ -367,10 +431,6 @@ public class TableValidator extends EObjectValidator {
 		if (usableSubclasses.isEmpty()) {
 			if (diagnostics != null) {
 				final String message = "Some columns may not be resolvable"; //$NON-NLS-1$
-				if (tableDomainModelReference.eContainer() != null) {
-					diagnostics.add(createDiagnostic(Diagnostic.WARNING, 0, message,
-						tableDomainModelReference.eContainer(), tableDomainModelReference.eContainingFeature()));
-				}
 				diagnostics.add(createDiagnostic(Diagnostic.WARNING, 0, message, tableDomainModelReference,
 					VTablePackage.eINSTANCE.getTableDomainModelReference_ColumnDomainModelReferences()));
 			}
@@ -379,10 +439,6 @@ public class TableValidator extends EObjectValidator {
 
 		if (diagnostics != null) {
 			final String message = "Columns are resovable against a subclass of " + referenceType.getName(); //$NON-NLS-1$
-			if (tableDomainModelReference.eContainer() != null) {
-				diagnostics.add(createDiagnostic(Diagnostic.INFO, 0,
-					message, tableDomainModelReference.eContainer(), tableDomainModelReference.eContainingFeature()));
-			}
 			diagnostics.add(createDiagnostic(Diagnostic.INFO, 0, message, tableDomainModelReference,
 				VTablePackage.eINSTANCE.getTableDomainModelReference_ColumnDomainModelReferences()));
 		}

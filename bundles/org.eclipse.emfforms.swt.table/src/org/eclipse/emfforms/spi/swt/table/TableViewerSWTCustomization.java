@@ -16,10 +16,10 @@ import java.util.List;
 
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emfforms.common.Optional;
+import org.eclipse.jface.viewers.AbstractTableViewer;
 import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.jface.viewers.IContentProvider;
-import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.swt.graphics.Image;
 
@@ -122,15 +122,15 @@ public interface TableViewerSWTCustomization
 		 * @param columnViewer the column viewer
 		 * @return the label provider
 		 */
-		CellLabelProvider createLabelProvider(TableViewer columnViewer);
+		CellLabelProvider createLabelProvider(AbstractTableViewer columnViewer);
 
 		/**
 		 * Called to setup the {@link EditingSupport} for the viewer.
 		 *
-		 * @param columnViewer the {@link TableViewer}
+		 * @param columnViewer the {@link AbstractTableViewer}
 		 * @return the editing support for the column, if present
 		 */
-		Optional<EditingSupport> createEditingSupport(TableViewer columnViewer);
+		Optional<EditingSupport> createEditingSupport(AbstractTableViewer columnViewer);
 
 		/**
 		 * The image of the column.

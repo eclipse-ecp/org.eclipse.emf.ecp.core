@@ -14,9 +14,9 @@ package org.eclipse.emfforms.spi.swt.table;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization.ColumnDescription;
+import org.eclipse.jface.viewers.AbstractTableViewer;
 import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.EditingSupport;
-import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.graphics.Image;
 
 /**
@@ -112,12 +112,12 @@ public class ColumnDescriptionImpl implements ColumnDescription {
 	}
 
 	@Override
-	public CellLabelProvider createLabelProvider(TableViewer columnViewer) {
+	public CellLabelProvider createLabelProvider(AbstractTableViewer columnViewer) {
 		return labelProvider.createCellLabelProvider(columnViewer);
 	}
 
 	@Override
-	public Optional<EditingSupport> createEditingSupport(TableViewer columnViewer) {
+	public Optional<EditingSupport> createEditingSupport(AbstractTableViewer columnViewer) {
 		if (editingSupport.isPresent()) {
 			return Optional.of(editingSupport.get().createEditingSupport(columnViewer));
 		}

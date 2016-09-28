@@ -63,7 +63,7 @@ public class EMFFormsLocalizationServiceImpl implements EMFFormsLocalizationServ
 	 *
 	 * @param bundleLocalization The {@link BundleLocalization}
 	 */
-	@Reference
+	@Reference(unbind = "-")
 	protected void setBundleLocalization(BundleLocalization bundleLocalization) {
 		this.bundleLocalization = bundleLocalization;
 	}
@@ -73,7 +73,7 @@ public class EMFFormsLocalizationServiceImpl implements EMFFormsLocalizationServ
 	 *
 	 * @param reportService The {@link ReportService}
 	 */
-	@Reference
+	@Reference(unbind = "-")
 	protected void setReportService(ReportService reportService) {
 		this.reportService = reportService;
 	}
@@ -115,7 +115,8 @@ public class EMFFormsLocalizationServiceImpl implements EMFFormsLocalizationServ
 				.report(new AbstractReport(
 					String
 						.format(
-							"No ResourceBundle found for Language '%1$s' in Bundle %2$s with Version %3$s.", localeLanguage, bundle.getSymbolicName(), bundle.getVersion().toString()))); //$NON-NLS-1$
+							"No ResourceBundle found for Language '%1$s' in Bundle %2$s with Version %3$s.", //$NON-NLS-1$
+							localeLanguage, bundle.getSymbolicName(), bundle.getVersion().toString())));
 			return key;
 		}
 		if (!resourceBundle.containsKey(key)) {
@@ -123,7 +124,8 @@ public class EMFFormsLocalizationServiceImpl implements EMFFormsLocalizationServ
 				.report(new AbstractReport(
 					String
 						.format(
-							"The ResourceBundle for Language '%1$s' in Bundle %2$s with Version %3$s doesn't contain the key '%4$s'.", localeLanguage, bundle.getSymbolicName(), bundle.getVersion().toString(), key))); //$NON-NLS-1$
+							"The ResourceBundle for Language '%1$s' in Bundle %2$s with Version %3$s doesn't contain the key '%4$s'.", //$NON-NLS-1$
+							localeLanguage, bundle.getSymbolicName(), bundle.getVersion().toString(), key)));
 			return key;
 		}
 		return resourceBundle.getString(key);
@@ -157,7 +159,8 @@ public class EMFFormsLocalizationServiceImpl implements EMFFormsLocalizationServ
 				.report(new AbstractReport(
 					String
 						.format(
-							"No ResourceBundle found for Language '%1$s' in Bundle %2$s with Version %3$s.", localeLanguage, bundle.getSymbolicName(), bundle.getVersion().toString()))); //$NON-NLS-1$
+							"No ResourceBundle found for Language '%1$s' in Bundle %2$s with Version %3$s.", //$NON-NLS-1$
+							localeLanguage, bundle.getSymbolicName(), bundle.getVersion().toString())));
 			return false;
 		}
 		return resourceBundle.containsKey(key);

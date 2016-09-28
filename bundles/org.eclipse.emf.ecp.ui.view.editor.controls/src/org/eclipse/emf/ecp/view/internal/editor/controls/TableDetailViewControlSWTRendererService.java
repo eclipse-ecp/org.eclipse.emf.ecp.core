@@ -43,7 +43,7 @@ public class TableDetailViewControlSWTRendererService implements EMFFormsDIRende
 	 *
 	 * @param databindingService The {@link EMFFormsDatabinding}
 	 */
-	@Reference
+	@Reference(unbind = "-")
 	protected void setEMFFormsDatabinding(EMFFormsDatabinding databindingService) {
 		this.databindingService = databindingService;
 	}
@@ -53,7 +53,7 @@ public class TableDetailViewControlSWTRendererService implements EMFFormsDIRende
 	 *
 	 * @param reportService The {@link ReportService}
 	 */
-	@Reference
+	@Reference(unbind = "-")
 	protected void setReportService(ReportService reportService) {
 		this.reportService = reportService;
 	}

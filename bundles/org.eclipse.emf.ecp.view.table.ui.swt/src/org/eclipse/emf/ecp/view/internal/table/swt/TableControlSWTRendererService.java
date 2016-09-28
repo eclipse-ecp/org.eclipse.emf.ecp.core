@@ -45,7 +45,7 @@ public class TableControlSWTRendererService implements EMFFormsDIRendererService
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emfforms.spi.swt.core.di.EMFFormsDIRendererService#getRendererClass()
 	 */
 	@Override

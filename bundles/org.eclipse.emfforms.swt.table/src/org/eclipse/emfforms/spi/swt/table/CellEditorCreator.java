@@ -11,8 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.table;
 
+import org.eclipse.jface.viewers.AbstractTableViewer;
 import org.eclipse.jface.viewers.CellEditor;
-import org.eclipse.jface.viewers.TableViewer;
 
 /**
  * Interface for creating a {@link CellEditor}.
@@ -23,11 +23,11 @@ import org.eclipse.jface.viewers.TableViewer;
 public interface CellEditorCreator {
 
 	/**
-	 * Creates a {@link CellEditor} to be used in the given {@link TableViewer}.
-	 * 
+	 * Creates a {@link CellEditor} to be used in the given {@link AbstractTableViewer}.
+	 *
 	 * @param viewer the viewer
 	 * @return the editor
 	 */
-	CellEditor createCellEditor(TableViewer viewer);
+	CellEditor createCellEditor(AbstractTableViewer viewer);
 
 }

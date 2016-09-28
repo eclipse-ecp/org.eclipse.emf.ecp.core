@@ -56,7 +56,7 @@ public class LegacyAdditionalRendererService implements EMFFormsAdditionalRender
 	 *
 	 * @param reportService The ReportService to set
 	 */
-	@Reference
+	@Reference(unbind = "-")
 	protected void setReportService(ReportService reportService) {
 		this.reportService = reportService;
 	}
@@ -82,7 +82,7 @@ public class LegacyAdditionalRendererService implements EMFFormsAdditionalRender
 				try {
 					final Class<AbstractAdditionalSWTRenderer<VElement>> renderer = loadClass(configurationElement
 						.getContributor().getName(), configurationElement
-						.getAttribute("renderer")); //$NON-NLS-1$
+							.getAttribute("renderer")); //$NON-NLS-1$
 					final ECPAdditionalRendererTester tester = (ECPAdditionalRendererTester) configurationElement
 						.createExecutableExtension("tester"); //$NON-NLS-1$
 					legacyRenderer.put(tester, renderer);

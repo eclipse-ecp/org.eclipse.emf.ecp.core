@@ -6,8 +6,8 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _W0km0HlCEeO9Ja8zvRhhOQ
-Runtime-Version: 1.5.4.201412181238
-Save-Time: 11/20/15 10:25 AM
+Runtime-Version: 2.1.0.201606221726
+Save-Time: 9/5/16 2:30 PM
 Tags: skipExecution
 Testcase-Type: ecl
 
@@ -34,7 +34,7 @@ try {
 	    get-button "Next >" | click
 	    get-button "Link Domain Model EFeature" | click
 	    with [get-window "Select a EStructuralFeature"] {
-	        get-tree | select "bowling/Referee \\[org.eclipse.emf.emfstore.bowling.Referee\\]/dateOfBirth : XMLDate"
+	        get-tree | select "dateOfBirth : XMLDate"
 	        get-button OK | click
 	    }
 	    get-button Finish | click
@@ -62,7 +62,7 @@ try {
 	get-editor View | close
 	get-editor "Control dateOfBirth" | close
 	get-view "Model Explorer" | get-tree | select "TestProject/Referee" | double-click
-	get-editor Referee | get-editbox -after [get-label "Date Of Birth"] | get-property readOnly | equals true | verify-true
+	get-editor Referee | get-editbox -after [get-label "Date Of Birth"] | get-property enablement | equals false | verify-true
 } -finally {
 	/*
 	get-view "Model Explorer" | get-tree | select "Project/View" | double-click

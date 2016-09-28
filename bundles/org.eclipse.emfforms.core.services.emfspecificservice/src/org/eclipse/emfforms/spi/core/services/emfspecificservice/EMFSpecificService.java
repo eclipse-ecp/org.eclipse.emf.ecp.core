@@ -13,16 +13,14 @@ package org.eclipse.emfforms.spi.core.services.emfspecificservice;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 
 /**
  * The {@link EMFSpecificService} offers EMF specific functionality. Thereby, it provides the following things:
  * <ul>
- * <li>{@link AdapterFactoryItemDelegator}</li>
- * <li>{@link ComposedAdapterFactory}</li>
+ * <li>{@link org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator}</li>
+ * <li>{@link org.eclipse.emf.edit.provider.ComposedAdapterFactory}</li>
  * <ul>
  *
  * @author Lucas Koehler

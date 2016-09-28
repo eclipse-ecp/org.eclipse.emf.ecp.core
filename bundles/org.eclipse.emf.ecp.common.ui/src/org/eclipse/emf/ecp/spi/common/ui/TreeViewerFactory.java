@@ -19,7 +19,7 @@ import org.eclipse.jface.viewers.ILabelDecorator;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jface.viewers.ViewerSorter;
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
@@ -30,6 +30,17 @@ public final class TreeViewerFactory {
 	private TreeViewerFactory() {
 	}
 
+	/**
+	 * Creates a default {@link TreeViewer}.
+	 *
+	 * @param parent the parent {@link Composite}
+	 * @param labelProvider the {@link ILabelProvider}
+	 * @param contentProvider the {@link ITreeContentProvider}
+	 * @param input the input of the {@link TreeViewer}
+	 * @param labelDecorator the {@link ILabelDecorator}
+	 * @param sort if the {@link TreeViewer} shall be sorted
+	 * @return the created {@link TreeViewer}
+	 */
 	public static TreeViewer createTreeViewer(Composite parent, ILabelProvider labelProvider,
 		ITreeContentProvider contentProvider, Object input, ILabelDecorator labelDecorator, boolean sort) {
 		final TreeViewer viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
@@ -37,6 +48,17 @@ public final class TreeViewerFactory {
 		return viewer;
 	}
 
+	/**
+	 * Creates a default {@link CheckboxTreeViewer}.
+	 *
+	 * @param parent the parent {@link Composite}
+	 * @param labelProvider the {@link ILabelProvider}
+	 * @param contentProvider the {@link ITreeContentProvider}
+	 * @param input the input of the {@link CheckboxTreeViewer}
+	 * @param labelDecorator the {@link ILabelDecorator}
+	 * @param sort if the {@link CheckboxTreeViewer} shall be sorted
+	 * @return the created {@link CheckboxTreeViewer}
+	 */
 	public static TreeViewer createCheckedTreeViewer(Composite parent, ILabelProvider labelProvider,
 		ITreeContentProvider contentProvider, Object input, ILabelDecorator labelDecorator, boolean sort) {
 		final CheckboxTreeViewer viewer = new CheckboxTreeViewer(parent, SWT.MULTI | SWT.H_SCROLL
@@ -57,7 +79,7 @@ public final class TreeViewerFactory {
 		viewer.setContentProvider(contentProvider);
 		viewer.setLabelProvider(labelProvider);
 		if (sort) {
-			viewer.setSorter(new ViewerSorter());
+			viewer.setComparator(new ViewerComparator());
 		}
 		viewer.setInput(input);
 

@@ -44,6 +44,7 @@ public class SWTDiffMergeAdditionTester implements ECPAdditionalRendererTester {
 			return false;
 		}
 		final VControl control = (VControl) vElement;
+		@SuppressWarnings("rawtypes")
 		IValueProperty valueProperty;
 		try {
 			valueProperty = Activator.getInstance().getEMFFormsDatabinding()

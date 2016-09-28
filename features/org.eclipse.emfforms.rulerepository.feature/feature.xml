@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipse.emfforms.rulerepository.feature"
+      label="EMFForms RuleRepository Feature"
+      version="1.10.0.qualifier"
+      provider-name="Eclipse Modeling Project"
+      plugin="org.eclipse.emfforms.rulerepository.model"
+      image="eclipse_update_120.jpg"
+      license-feature="org.eclipse.emf.ecp.license.feature"
+      license-feature-version="1.10.0.qualifier">
+
+   <description>
+      %description
+   </description>
+
+   <copyright url="%copyrightURL">
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <plugin
+         id="org.eclipse.emfforms.rulerepository.model"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emfforms.rulerepository.model.edit"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emfforms.rulerepository.tooling"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

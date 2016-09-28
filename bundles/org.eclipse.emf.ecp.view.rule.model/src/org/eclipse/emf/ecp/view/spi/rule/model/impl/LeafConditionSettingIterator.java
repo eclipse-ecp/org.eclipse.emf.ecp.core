@@ -88,17 +88,18 @@ public class LeafConditionSettingIterator implements Iterator<Setting> {
 			expectedStackSize = expectedStackSize + 1;
 		}
 		iterators = new Stack<Iterator<Setting>>();
-
-		try {
-			final Setting setting = getDatabinding().getSetting(condition.getDomainModelReference(), domainModel);
-			final Iterator<Setting> iterator = Collections.singleton(setting).iterator();
-			iterators.push(iterator);
-		} catch (final DatabindingFailedException ex) {
-			getReportService().report(new AbstractReport(ex,
-				String.format("Could not get the setting iterator for DMR: %s and domain model: %s", //$NON-NLS-1$
-					condition.getDomainModelReference(), domainModel)));
+		final VDomainModelReference dmr = condition.getDomainModelReference();
+		if (dmr != null) {
+			try {
+				final Setting setting = getDatabinding().getSetting(dmr, domainModel);
+				final Iterator<Setting> iterator = Collections.singleton(setting).iterator();
+				iterators.push(iterator);
+			} catch (final DatabindingFailedException ex) {
+				getReportService().report(new AbstractReport(ex,
+					String.format("Could not get the setting iterator for DMR: %s and domain model: %s", //$NON-NLS-1$
+						condition.getDomainModelReference(), domainModel)));
+			}
 		}
-
 		// TODO: remove after segments are introduced.
 		// iterators.push(condition.getDomainModelReference().getIterator());
 
@@ -284,7 +285,7 @@ public class LeafConditionSettingIterator implements Iterator<Setting> {
 
 	/**
 	 * Disposes this {@link LeafConditionSettingIterator}.
-	 * 
+	 *
 	 * @since 1.9
 	 */
 	public void dispose() {

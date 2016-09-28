@@ -12,6 +12,7 @@
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.treemasterdetail;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -113,17 +114,19 @@ public class TreeMasterDetailMenuListener implements IMenuListener {
 			manager.add(new Separator());
 			addDeleteActionToContextMenu(editingDomain, menuMgr, selection);
 
-			if (selection.getFirstElement() instanceof EObject && rightClickActions != null) {
-				final EObject eSelectedObject = (EObject) selection.getFirstElement();
+			if (rightClickActions != null) {
+				// JFACE API
+				@SuppressWarnings("unchecked")
+				final List<Object> list = new ArrayList<Object>(selection.toList());
 
 				for (final MasterDetailAction menuAction : rightClickActions) {
-					if (menuAction.shouldShow(eSelectedObject)) {
+					if (menuAction.shouldShow(list)) {
 						menuAction.setTreeViewer(treeViewer);
 						final Action newAction = new Action() {
 							@Override
 							public void run() {
 								super.run();
-								menuAction.execute(eSelectedObject);
+								menuAction.execute(list);
 							}
 						};
 

@@ -246,8 +246,8 @@ public interface VTablePackage extends EPackage {
 	int TABLE_CONTROL_FEATURE_COUNT = VViewPackage.CONTROL_FEATURE_COUNT + 5;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.table.model.VTableColumnConfiguration
-	 * <em>Column Configuration</em>}' class.
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.table.model.VTableColumnConfiguration <em>Column
+	 * Configuration</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -413,11 +413,12 @@ public interface VTablePackage extends EPackage {
 	/**
 	 * The feature id for the '<em><b>Min Width</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 *
+	 * @since 1.9
+	 *        <!-- end-user-doc -->
 	 *
 	 * @generated
 	 * @ordered
-	 * @since 1.9
 	 */
 	int WIDTH_CONFIGURATION__MIN_WIDTH = TABLE_COLUMN_CONFIGURATION_FEATURE_COUNT + 2;
 
@@ -433,8 +434,8 @@ public interface VTablePackage extends EPackage {
 	int WIDTH_CONFIGURATION_FEATURE_COUNT = TABLE_COLUMN_CONFIGURATION_FEATURE_COUNT + 3;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.table.model.DetailEditing <em>Detail Editing</em>
-	 * }' enum.
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.table.model.DetailEditing <em>Detail
+	 * Editing</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -445,8 +446,8 @@ public interface VTablePackage extends EPackage {
 	int DETAIL_EDITING = 5;
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl <em>Control</em>
-	 * }'.
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl
+	 * <em>Control</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -457,8 +458,9 @@ public interface VTablePackage extends EPackage {
 	EClass getTableControl();
 
 	/**
-	 * Returns the meta object for the attribute '
-	 * {@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#isAddRemoveDisabled <em>Add Remove Disabled</em>}'.
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#isAddRemoveDisabled <em>Add Remove
+	 * Disabled</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -470,9 +472,9 @@ public interface VTablePackage extends EPackage {
 	EAttribute getTableControl_AddRemoveDisabled();
 
 	/**
-	 * Returns the meta object for the containment reference list '
-	 * {@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#getColumnConfigurations
-	 * <em>Column Configurations</em>}'.
+	 * Returns the meta object for the containment reference list
+	 * '{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#getColumnConfigurations <em>Column
+	 * Configurations</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -484,8 +486,8 @@ public interface VTablePackage extends EPackage {
 	EReference getTableControl_ColumnConfigurations();
 
 	/**
-	 * Returns the meta object for the attribute '
-	 * {@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#getDetailEditing <em>Detail Editing</em>}'.
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#getDetailEditing <em>Detail Editing</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -497,8 +499,8 @@ public interface VTablePackage extends EPackage {
 	EAttribute getTableControl_DetailEditing();
 
 	/**
-	 * Returns the meta object for the containment reference '
-	 * {@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#getDetailView <em>Detail View</em>}'.
+	 * Returns the meta object for the containment reference
+	 * '{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#getDetailView <em>Detail View</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -510,9 +512,9 @@ public interface VTablePackage extends EPackage {
 	EReference getTableControl_DetailView();
 
 	/**
-	 * Returns the meta object for the attribute '
-	 * {@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#isEnableDetailEditingDialog
-	 * <em>Enable Detail Editing Dialog</em>}'.
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#isEnableDetailEditingDialog <em>Enable Detail
+	 * Editing Dialog</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -548,8 +550,8 @@ public interface VTablePackage extends EPackage {
 	EClass getTableDomainModelReference();
 
 	/**
-	 * Returns the meta object for the containment reference list '
-	 * {@link org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference#getColumnDomainModelReferences
+	 * Returns the meta object for the containment reference list
+	 * '{@link org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference#getColumnDomainModelReferences
 	 * <em>Column Domain Model References</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -562,9 +564,9 @@ public interface VTablePackage extends EPackage {
 	EReference getTableDomainModelReference_ColumnDomainModelReferences();
 
 	/**
-	 * Returns the meta object for the containment reference '
-	 * {@link org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference#getDomainModelReference
-	 * <em>Domain Model Reference</em>}'.
+	 * Returns the meta object for the containment reference
+	 * '{@link org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference#getDomainModelReference <em>Domain
+	 * Model Reference</em>}'.
 	 * <!-- begin-user-doc -->
 	 *
 	 * @since 1.5
@@ -589,8 +591,8 @@ public interface VTablePackage extends EPackage {
 	EClass getReadOnlyColumnConfiguration();
 
 	/**
-	 * Returns the meta object for the reference list '
-	 * {@link org.eclipse.emf.ecp.view.spi.table.model.VReadOnlyColumnConfiguration#getColumnDomainReferences
+	 * Returns the meta object for the reference list
+	 * '{@link org.eclipse.emf.ecp.view.spi.table.model.VReadOnlyColumnConfiguration#getColumnDomainReferences
 	 * <em>Column Domain References</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -603,8 +605,8 @@ public interface VTablePackage extends EPackage {
 	EReference getReadOnlyColumnConfiguration_ColumnDomainReferences();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration
-	 * <em>Width Configuration</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration <em>Width
+	 * Configuration</em>}'.
 	 * <!-- begin-user-doc -->
 	 *
 	 * @since 1.9
@@ -616,9 +618,9 @@ public interface VTablePackage extends EPackage {
 	EClass getWidthConfiguration();
 
 	/**
-	 * Returns the meta object for the reference '
-	 * {@link org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration#getColumnDomainReference
-	 * <em>Column Domain Reference</em>}'.
+	 * Returns the meta object for the reference
+	 * '{@link org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration#getColumnDomainReference <em>Column Domain
+	 * Reference</em>}'.
 	 * <!-- begin-user-doc -->
 	 *
 	 * @since 1.9
@@ -631,8 +633,8 @@ public interface VTablePackage extends EPackage {
 	EReference getWidthConfiguration_ColumnDomainReference();
 
 	/**
-	 * Returns the meta object for the attribute '
-	 * {@link org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration#getWeight <em>Weight</em>}'.
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration#getWeight <em>Weight</em>}'.
 	 * <!-- begin-user-doc -->
 	 *
 	 * @since 1.9
@@ -645,22 +647,23 @@ public interface VTablePackage extends EPackage {
 	EAttribute getWidthConfiguration_Weight();
 
 	/**
-	 * Returns the meta object for the attribute '
-	 * {@link org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration#getMinWidth <em>Min Width</em>}'.
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration#getMinWidth <em>Min Width</em>}'.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.9
+	 *        <!-- end-user-doc -->
 	 *
 	 * @return the meta object for the attribute '<em>Min Width</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration#getMinWidth()
 	 * @see #getWidthConfiguration()
 	 * @generated
-	 * @since 1.9
 	 */
 	EAttribute getWidthConfiguration_MinWidth();
 
 	/**
-	 * Returns the meta object for enum '{@link org.eclipse.emf.ecp.view.spi.table.model.DetailEditing
-	 * <em>Detail Editing</em>}'.
+	 * Returns the meta object for enum '{@link org.eclipse.emf.ecp.view.spi.table.model.DetailEditing <em>Detail
+	 * Editing</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -764,9 +767,9 @@ public interface VTablePackage extends EPackage {
 		EClass TABLE_COLUMN_CONFIGURATION = eINSTANCE.getTableColumnConfiguration();
 
 		/**
-		 * The meta object literal for the '
-		 * {@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableDomainModelReferenceImpl
-		 * <em>Domain Model Reference</em>}' class.
+		 * The meta object literal for the
+		 * '{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableDomainModelReferenceImpl <em>Domain Model
+		 * Reference</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 *
@@ -799,9 +802,9 @@ public interface VTablePackage extends EPackage {
 			.getTableDomainModelReference_DomainModelReference();
 
 		/**
-		 * The meta object literal for the '
-		 * {@link org.eclipse.emf.ecp.view.spi.table.model.impl.VReadOnlyColumnConfigurationImpl
-		 * <em>Read Only Column Configuration</em>}' class.
+		 * The meta object literal for the
+		 * '{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VReadOnlyColumnConfigurationImpl <em>Read Only Column
+		 * Configuration</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 *
@@ -858,16 +861,17 @@ public interface VTablePackage extends EPackage {
 		/**
 		 * The meta object literal for the '<em><b>Min Width</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * 
+		 * @since 1.9
+		 *        <!-- end-user-doc -->
 		 *
 		 * @generated
-		 * @since 1.9
 		 */
 		EAttribute WIDTH_CONFIGURATION__MIN_WIDTH = eINSTANCE.getWidthConfiguration_MinWidth();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.table.model.DetailEditing
-		 * <em>Detail Editing</em>}' enum.
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.table.model.DetailEditing <em>Detail
+		 * Editing</em>}' enum.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 *

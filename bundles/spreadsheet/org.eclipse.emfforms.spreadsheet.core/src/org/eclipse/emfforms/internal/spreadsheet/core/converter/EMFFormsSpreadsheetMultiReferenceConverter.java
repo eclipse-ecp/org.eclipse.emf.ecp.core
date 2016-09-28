@@ -54,7 +54,7 @@ public class EMFFormsSpreadsheetMultiReferenceConverter implements EMFFormsSprea
 	 *
 	 * @param databinding the service
 	 */
-	@Reference(cardinality = ReferenceCardinality.MANDATORY)
+	@Reference(cardinality = ReferenceCardinality.MANDATORY, unbind = "-")
 	public void setDatabinding(EMFFormsDatabindingEMF databinding) {
 		this.databinding = databinding;
 	}
@@ -64,7 +64,7 @@ public class EMFFormsSpreadsheetMultiReferenceConverter implements EMFFormsSprea
 	 *
 	 * @param reportService the service
 	 */
-	@Reference(cardinality = ReferenceCardinality.MANDATORY)
+	@Reference(cardinality = ReferenceCardinality.MANDATORY, unbind = "-")
 	public void setReportService(ReportService reportService) {
 		this.reportService = reportService;
 	}
@@ -97,7 +97,7 @@ public class EMFFormsSpreadsheetMultiReferenceConverter implements EMFFormsSprea
 	@Override
 	public void setCellValue(Cell cell, Object values, EStructuralFeature eStructuralFeature,
 		ViewModelContext viewModelContext)
-			throws EMFFormsConverterException {
+		throws EMFFormsConverterException {
 		if (values == null) {
 			return;
 		}

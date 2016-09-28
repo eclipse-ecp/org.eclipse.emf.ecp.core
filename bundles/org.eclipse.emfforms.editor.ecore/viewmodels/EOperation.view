@@ -34,16 +34,6 @@
         <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/unique"/>
       </domainModelReference>
     </children>
-    <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_vSEHnnZeEeW79bHa435byw" name="Control required">
-      <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_vSEHn3ZeEeW79bHa435byw">
-        <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/required"/>
-      </domainModelReference>
-    </children>
-    <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_vSEHnHZeEeW79bHa435byw" name="Control many">
-      <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_vSEHnXZeEeW79bHa435byw">
-        <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement/many"/>
-      </domainModelReference>
-    </children>
     <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_vSEHqnZeEeW79bHa435byw" name="Control eExceptions">
       <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_vSEHq3ZeEeW79bHa435byw">
         <domainModelEFeature xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/2002/Ecore#//EOperation/eExceptions"/>

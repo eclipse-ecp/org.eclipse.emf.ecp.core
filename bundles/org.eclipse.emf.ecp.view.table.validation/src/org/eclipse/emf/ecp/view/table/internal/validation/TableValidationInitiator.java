@@ -89,14 +89,9 @@ public class TableValidationInitiator implements GlobalViewModelService, EMFForm
 				if (tableContextMapping == null) {
 					return;
 				}
-				for (final EObject newValue : notification.getNewEObjects()) {
-					try {
-						tableContextMapping.context.getChildContext(newValue,
-							tableContextMapping.control, getView(tableContextMapping.control));
-					} catch (final DatabindingFailedException ex) {
-						Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
-					}
-				}
+				checkAdditions(notification, tableContextMapping);
+
+				checkRemovals(notification, tableContextMapping);
 			}
 		});
 		checkForTables(context);
@@ -194,7 +189,7 @@ public class TableValidationInitiator implements GlobalViewModelService, EMFForm
 
 	@Override
 	public int getPriority() {
-		return 2;
+		return 1;
 	}
 
 	/**
@@ -205,6 +200,7 @@ public class TableValidationInitiator implements GlobalViewModelService, EMFForm
 	@Override
 	public void childViewModelContextAdded(ViewModelContext childContext) {
 		checkForTables(childContext);
+		childContext.registerEMFFormsContextListener(this);
 	}
 
 	/**
@@ -217,6 +213,7 @@ public class TableValidationInitiator implements GlobalViewModelService, EMFForm
 	public void childContextAdded(VElement parentElement, EMFFormsViewContext childContext) {
 		if (ViewModelContext.class.isInstance(childContext)) {
 			checkForTables(ViewModelContext.class.cast(childContext));
+			childContext.registerEMFFormsContextListener(this);
 		}
 	}
 
@@ -248,6 +245,30 @@ public class TableValidationInitiator implements GlobalViewModelService, EMFForm
 	@Override
 	public void contextDispose() {
 		// intentionally left empty
+	}
+
+	private void checkAdditions(ModelChangeNotification notification, final TableContextMapping tableContextMapping) {
+		for (final EObject newValue : notification.getNewEObjects()) {
+			try {
+				final ViewModelContext vmc = tableContextMapping.context.getChildContext(newValue,
+					tableContextMapping.control, getView(tableContextMapping.control));
+				vmc.addContextUser(this);
+			} catch (final DatabindingFailedException ex) {
+				Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+			}
+		}
+	}
+
+	private void checkRemovals(ModelChangeNotification notification, final TableContextMapping tableContextMapping) {
+		for (final EObject oldValue : notification.getOldEObjects()) {
+			try {
+				final ViewModelContext vmc = tableContextMapping.context.getChildContext(oldValue,
+					tableContextMapping.control, getView(tableContextMapping.control));
+				vmc.removeContextUser(this);
+			} catch (final DatabindingFailedException ex) {
+				Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+			}
+		}
 	}
 
 }

@@ -12,8 +12,8 @@
 package org.eclipse.emfforms.internal.swt.table.util;
 
 import org.eclipse.emfforms.spi.swt.table.CellLabelProviderFactory;
+import org.eclipse.jface.viewers.AbstractTableViewer;
 import org.eclipse.jface.viewers.CellLabelProvider;
-import org.eclipse.jface.viewers.TableViewer;
 
 /**
  * Returns a previously created provider.
@@ -27,7 +27,7 @@ public class StaticCellLabelProviderFactory implements CellLabelProviderFactory 
 
 	/**
 	 * Constructs a new {@link StaticCellLabelProviderFactory} with the given provider.
-	 * 
+	 *
 	 * @param provider the provider
 	 */
 	public StaticCellLabelProviderFactory(CellLabelProvider provider) {
@@ -35,7 +35,7 @@ public class StaticCellLabelProviderFactory implements CellLabelProviderFactory 
 	}
 
 	@Override
-	public CellLabelProvider createCellLabelProvider(TableViewer table) {
+	public CellLabelProvider createCellLabelProvider(AbstractTableViewer table) {
 		return provider;
 	}
 

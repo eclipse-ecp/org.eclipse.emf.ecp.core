@@ -72,6 +72,11 @@ public class TabStylePropertyItemProvider
 			super.getPropertyDescriptors(object);
 
 			addTypePropertyDescriptor(object);
+			addOkImageURLPropertyDescriptor(object);
+			addInfoImageURLPropertyDescriptor(object);
+			addWarningImageURLPropertyDescriptor(object);
+			addErrorImageURLPropertyDescriptor(object);
+			addCancelImageURLPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -91,6 +96,121 @@ public class TabStylePropertyItemProvider
 				getString("_UI_PropertyDescriptor_description", "_UI_TabStyleProperty_type_feature", //$NON-NLS-1$ //$NON-NLS-2$
 					"_UI_TabStyleProperty_type"), //$NON-NLS-1$
 				VTTabPackage.Literals.TAB_STYLE_PROPERTY__TYPE,
+				true,
+				false,
+				false,
+				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				null,
+				null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Ok Image URL feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected void addOkImageURLPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_TabStyleProperty_okImageURL_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_TabStyleProperty_okImageURL_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_TabStyleProperty_type"), //$NON-NLS-1$
+				VTTabPackage.Literals.TAB_STYLE_PROPERTY__OK_IMAGE_URL,
+				true,
+				false,
+				false,
+				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				null,
+				null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Info Image URL feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected void addInfoImageURLPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_TabStyleProperty_infoImageURL_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_TabStyleProperty_infoImageURL_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_TabStyleProperty_type"), //$NON-NLS-1$
+				VTTabPackage.Literals.TAB_STYLE_PROPERTY__INFO_IMAGE_URL,
+				true,
+				false,
+				false,
+				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				null,
+				null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Warning Image URL feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected void addWarningImageURLPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_TabStyleProperty_warningImageURL_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_TabStyleProperty_warningImageURL_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_TabStyleProperty_type"), //$NON-NLS-1$
+				VTTabPackage.Literals.TAB_STYLE_PROPERTY__WARNING_IMAGE_URL,
+				true,
+				false,
+				false,
+				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				null,
+				null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Error Image URL feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected void addErrorImageURLPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_TabStyleProperty_errorImageURL_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_TabStyleProperty_errorImageURL_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_TabStyleProperty_type"), //$NON-NLS-1$
+				VTTabPackage.Literals.TAB_STYLE_PROPERTY__ERROR_IMAGE_URL,
+				true,
+				false,
+				false,
+				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				null,
+				null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Cancel Image URL feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected void addCancelImageURLPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_TabStyleProperty_cancelImageURL_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_TabStyleProperty_cancelImageURL_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_TabStyleProperty_type"), //$NON-NLS-1$
+				VTTabPackage.Literals.TAB_STYLE_PROPERTY__CANCEL_IMAGE_URL,
 				true,
 				false,
 				false,
@@ -122,8 +242,8 @@ public class TabStylePropertyItemProvider
 	public String getText(Object object) {
 		final TabType labelValue = ((VTTabStyleProperty) object).getType();
 		final String label = labelValue == null ? null : labelValue.toString();
-		return label == null || label.length() == 0 ? getString("_UI_TabStyleProperty_type") //$NON-NLS-1$
-			: getString("_UI_TabStyleProperty_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+		return label == null || label.length() == 0 ? getString("_UI_TabStyleProperty_type") : //$NON-NLS-1$
+			getString("_UI_TabStyleProperty_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -140,6 +260,11 @@ public class TabStylePropertyItemProvider
 
 		switch (notification.getFeatureID(VTTabStyleProperty.class)) {
 		case VTTabPackage.TAB_STYLE_PROPERTY__TYPE:
+		case VTTabPackage.TAB_STYLE_PROPERTY__OK_IMAGE_URL:
+		case VTTabPackage.TAB_STYLE_PROPERTY__INFO_IMAGE_URL:
+		case VTTabPackage.TAB_STYLE_PROPERTY__WARNING_IMAGE_URL:
+		case VTTabPackage.TAB_STYLE_PROPERTY__ERROR_IMAGE_URL:
+		case VTTabPackage.TAB_STYLE_PROPERTY__CANCEL_IMAGE_URL:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
 		}

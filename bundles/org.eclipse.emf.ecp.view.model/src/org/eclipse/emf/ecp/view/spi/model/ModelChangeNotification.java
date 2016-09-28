@@ -88,4 +88,25 @@ public class ModelChangeNotification {
 			return Collections.emptySet();
 		}
 	}
+
+	/**
+	 * Returns the collection of old EObjects.
+	 *
+	 * @return The collection of removed EObjects, the collection might be empty but never null.
+	 * @since 1.10
+	 */
+	@SuppressWarnings("unchecked")
+	public Collection<EObject> getOldEObjects() {
+		if (!EReference.class.isInstance(getStructuralFeature())) {
+			return Collections.emptySet();
+		}
+		switch (getRawNotification().getEventType()) {
+		case Notification.REMOVE:
+			return Collections.singleton((EObject) getRawNotification().getOldValue());
+		case Notification.REMOVE_MANY:
+			return (Collection<EObject>) getRawNotification().getOldValue();
+		default:
+			return Collections.emptySet();
+		}
+	}
 }

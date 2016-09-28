@@ -36,15 +36,15 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
  * The following features are implemented:
  * </p>
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableControlImpl#isAddRemoveDisabled
- * <em>Add Remove Disabled</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableControlImpl#getColumnConfigurations
- * <em>Column Configurations</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableControlImpl#getDetailEditing <em>Detail Editing</em>}
- * </li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableControlImpl#isAddRemoveDisabled <em>Add Remove
+ * Disabled</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableControlImpl#getColumnConfigurations <em>Column
+ * Configurations</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableControlImpl#getDetailEditing <em>Detail
+ * Editing</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableControlImpl#getDetailView <em>Detail View</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableControlImpl#isEnableDetailEditingDialog
- * <em>Enable Detail Editing Dialog</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableControlImpl#isEnableDetailEditingDialog <em>Enable
+ * Detail Editing Dialog</em>}</li>
  * </ul>
  *
  * @generated

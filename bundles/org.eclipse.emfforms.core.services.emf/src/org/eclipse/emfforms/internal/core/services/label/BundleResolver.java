@@ -11,11 +11,11 @@
  ******************************************************************************/
 package org.eclipse.emfforms.internal.core.services.label;
 
-import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.osgi.framework.Bundle;
 
 /**
- * Class to resolve an EClass to a Bundle.
+ * Class to resolve an EClassifier to a Bundle.
  *
  * @author Eugen Neufeld
  *
@@ -34,19 +34,19 @@ public interface BundleResolver {
 		/**
 		 * Default Constructor.
 		 *
-		 * @param eClass The EClass to log for.
+		 * @param eClassifier The EClassifier to log for.
 		 */
-		public NoBundleFoundException(EClass eClass) {
-			super(String.format("No Bundle could not be found for %1$s.", eClass.getName())); //$NON-NLS-1$
+		public NoBundleFoundException(EClassifier eClassifier) {
+			super(String.format("No Bundle could not be found for %1$s.", eClassifier.getName())); //$NON-NLS-1$
 		}
 	}
 
 	/**
-	 * Retrieve the edit bundle for the passed EClass.
+	 * Retrieve the edit bundle for the passed EClassifier.
 	 *
-	 * @param eClass The EClass to get the edit bundle for
+	 * @param eClassifier The EClassifier to get the edit bundle for
 	 * @return the Bundle , never null
 	 * @throws NoBundleFoundException if no bundle could be found
 	 */
-	Bundle getEditBundle(EClass eClass) throws NoBundleFoundException;
+	Bundle getEditBundle(EClassifier eClassifier) throws NoBundleFoundException;
 }

@@ -11,9 +11,10 @@
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.treemasterdetail.actions.delegating;
 
+import java.util.List;
+
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.spi.swt.treemasterdetail.actions.KeybindedMasterDetailAction;
 import org.eclipse.jface.viewers.ISelection;
@@ -85,8 +86,8 @@ public abstract class DelegatingMasterDetailAction extends KeybindedMasterDetail
 	}
 
 	@Override
-	public void execute(EObject object) {
-		final IStructuredSelection selection = new StructuredSelection(object);
+	public void execute(List<Object> objects) {
+		final IStructuredSelection selection = new StructuredSelection(objects);
 		delegatedAction.selectionChanged(selection);
 		if (delegatedAction.isEnabled()) {
 			delegatedAction.run();
@@ -94,8 +95,8 @@ public abstract class DelegatingMasterDetailAction extends KeybindedMasterDetail
 	}
 
 	@Override
-	public boolean shouldShow(EObject eObject) {
-		final IStructuredSelection selection = new StructuredSelection(eObject);
+	public boolean shouldShow(List<Object> objects) {
+		final IStructuredSelection selection = new StructuredSelection(objects);
 		delegatedAction.selectionChanged(selection);
 		return delegatedAction.isEnabled();
 	}

@@ -61,8 +61,11 @@ public final class CompareControls {
 	 */
 	public static boolean areEqual(VDomainModelReference left, EObject leftDomainModel, VDomainModelReference right,
 		EObject rightDomainModel) {
+		@SuppressWarnings("rawtypes")
 		IObservableValue leftObservableValue;
+		@SuppressWarnings("rawtypes")
 		IObservableValue rightObservableValue;
+
 		try {
 			leftObservableValue = Activator.getDefault().getEMFFormsDatabinding()
 				.getObservableValue(left, leftDomainModel);

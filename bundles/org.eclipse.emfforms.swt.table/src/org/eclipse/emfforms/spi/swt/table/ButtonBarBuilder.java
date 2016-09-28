@@ -11,7 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.table;
 
-import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.AbstractTableViewer;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
@@ -27,9 +27,9 @@ public interface ButtonBarBuilder extends NewElementCreator<Object, Button> {
 	 * This method is called to fill the given {@link Composite} with all required buttons.
 	 *
 	 * @param composite the button bar
-	 * @param viewer the {@link TableViewer}
+	 * @param viewer the {@link AbstractTableViewer}
 	 */
-	void fillButtonComposite(Composite composite, TableViewer viewer);
+	void fillButtonComposite(Composite composite, AbstractTableViewer viewer);
 
 	/**
 	 * Gets called when a button is pressed which needs to create a new element which gets added to the list.

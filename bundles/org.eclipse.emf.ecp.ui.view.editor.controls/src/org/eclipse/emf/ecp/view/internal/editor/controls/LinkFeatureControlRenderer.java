@@ -21,6 +21,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -93,7 +94,7 @@ public class LinkFeatureControlRenderer extends EditableEReferenceLabelControlSW
 		FilteredReferenceCommand(final Notifier notifier, ComposedAdapterFactory composedAdapterFactory,
 			Shell shell) {
 
-			super(notifier, composedAdapterFactory, shell, Helper.getRootEClass((EObject) notifier),
+			super(notifier, composedAdapterFactory, shell, getRootEClass(notifier),
 				new ECPSelectionStatusValidator() {
 
 					@Override
@@ -132,6 +133,16 @@ public class LinkFeatureControlRenderer extends EditableEReferenceLabelControlSW
 			}
 		}
 
+	}
+
+	/**
+	 * Allows to retrieve the root eclass necessary to select the {@link VFeaturePathDomainModelReference}.
+	 * 
+	 * @param notifier The {@link Notifier} triggering the selection
+	 * @return The {@link EClass} that should be used as root
+	 */
+	protected EClass getRootEClass(Notifier notifier) {
+		return Helper.getRootEClass((EObject) notifier);
 	}
 
 }

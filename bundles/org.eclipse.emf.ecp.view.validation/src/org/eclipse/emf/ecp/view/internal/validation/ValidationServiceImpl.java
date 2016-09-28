@@ -115,13 +115,19 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 					final Set<EObject> eObjectsToValidate = new LinkedHashSet<EObject>();
 					eObjectsToValidate.add(observed);
 					final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
-					if (EReference.class.isInstance(structuralFeature)) {
+					final Object value = observableValue.getValue();
+					if (EReference.class.isInstance(structuralFeature) && value != null) {
+						/*
+						 * the value may be null! this is possible e.g. when there is a longer feature path dmr on
+						 * which an element on the path gets deleted/replaced during runtime.
+						 * Adding null to the set is no advised as we will get exception immediately or in the future.
+						 */
 						if (structuralFeature.isMany()) {
 							@SuppressWarnings("unchecked")
-							final List<EObject> list = (List<EObject>) observableValue.getValue();
+							final List<EObject> list = (List<EObject>) value;
 							eObjectsToValidate.addAll(list);
 						} else {
-							eObjectsToValidate.add((EObject) observableValue.getValue());
+							eObjectsToValidate.add((EObject) value);
 						}
 					}
 					validate(eObjectsToValidate);

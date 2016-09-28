@@ -26,8 +26,8 @@ import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference#getColumnDomainModelReferences
  * <em>Column Domain Model References</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference#getDomainModelReference
- * <em>Domain Model Reference</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference#getDomainModelReference <em>Domain
+ * Model Reference</em>}</li>
  * </ul>
  *
  * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage#getTableDomainModelReference()
@@ -72,9 +72,9 @@ public interface VTableDomainModelReference extends VFeaturePathDomainModelRefer
 	VDomainModelReference getDomainModelReference();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference#getDomainModelReference
-	 * <em>Domain Model Reference</em>}' containment reference.
+	 * Sets the value of the
+	 * '{@link org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference#getDomainModelReference <em>Domain
+	 * Model Reference</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 *
 	 * @since 1.5

@@ -34,6 +34,8 @@ import org.eclipse.emfforms.spi.core.services.databinding.emf.DomainModelReferen
 import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * Implementation of {@link DomainModelReferenceConverterEMF} that converts {@link VMappingDomainModelReference
@@ -46,6 +48,7 @@ import org.osgi.framework.ServiceReference;
 public class MappingDomainModelReferenceConverter implements DomainModelReferenceConverterEMF {
 	private EMFFormsDatabindingEMF emfFormsDatabinding;
 	private ServiceReference<EMFFormsDatabindingEMF> databindingServiceReference;
+	private BundleContext bundleContext;
 
 	/**
 	 * Sets the {@link EMFFormsDatabindingEMF}.
@@ -69,10 +72,9 @@ public class MappingDomainModelReferenceConverter implements DomainModelReferenc
 	 *
 	 * @param bundleContext The {@link BundleContext} of this classes bundle.
 	 */
+	@Activate
 	protected final void activate(BundleContext bundleContext) {
-		databindingServiceReference = bundleContext.getServiceReference(EMFFormsDatabindingEMF.class);
-		setEMFFormsDatabinding(bundleContext.getService(databindingServiceReference));
-
+		this.bundleContext = bundleContext;
 	}
 
 	/**
@@ -81,9 +83,23 @@ public class MappingDomainModelReferenceConverter implements DomainModelReferenc
 	 *
 	 * @param bundleContext The {@link BundleContext} of this classes bundle.
 	 */
+	@Deactivate
 	protected final void deactivate(BundleContext bundleContext) {
-		unsetEMFFormsDatabinding();
-		bundleContext.ungetService(databindingServiceReference);
+		if (databindingServiceReference != null) {
+			bundleContext.ungetService(databindingServiceReference);
+			unsetEMFFormsDatabinding();
+		}
+	}
+
+	private EMFFormsDatabindingEMF getEMFFormsDatabindingEMF() {
+		if (emfFormsDatabinding == null) {
+			databindingServiceReference = bundleContext.getServiceReference(EMFFormsDatabindingEMF.class);
+			if (databindingServiceReference == null) {
+				throw new IllegalStateException("No EMFFormsDatabindingEMF available!"); //$NON-NLS-1$
+			}
+			setEMFFormsDatabinding(bundleContext.getService(databindingServiceReference));
+		}
+		return emfFormsDatabinding;
 	}
 
 	/**
@@ -147,8 +163,9 @@ public class MappingDomainModelReferenceConverter implements DomainModelReferenc
 			valueProperty = emfValueProperty.value(mappingValueProperty);
 		}
 
-		return valueProperty.value(emfFormsDatabinding.getValueProperty(mappingReference.getDomainModelReference(),
-			object));
+		return valueProperty
+			.value(getEMFFormsDatabindingEMF().getValueProperty(mappingReference.getDomainModelReference(),
+				object));
 	}
 
 	/**
@@ -197,8 +214,9 @@ public class MappingDomainModelReferenceConverter implements DomainModelReferenc
 			valueProperty = emfValueProperty.value(mappingValueProperty);
 		}
 
-		return valueProperty.list(emfFormsDatabinding.getListProperty(mappingReference.getDomainModelReference(),
-			object));
+		return valueProperty
+			.list(getEMFFormsDatabindingEMF().getListProperty(mappingReference.getDomainModelReference(),
+				object));
 	}
 
 	/**
@@ -233,7 +251,7 @@ public class MappingDomainModelReferenceConverter implements DomainModelReferenc
 
 	/**
 	 * Checks basic required properties of the given {@link EStructuralFeature}.
-	 * 
+	 *
 	 * @param structuralFeature The {@link EStructuralFeature} to check
 	 * @throws IllegalMapTypeException if something's wrong with the feature
 	 */

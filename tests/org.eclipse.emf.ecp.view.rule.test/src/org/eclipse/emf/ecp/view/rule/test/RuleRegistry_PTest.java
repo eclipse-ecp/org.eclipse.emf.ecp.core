@@ -550,8 +550,6 @@ public class RuleRegistry_PTest {
 		// setup
 		final ShowRule rule = addFanMerchandiseOrRule(control1);
 		final OrCondition orCondition = (OrCondition) rule.getCondition();
-		final Condition condition1 = orCondition.getConditions().get(0);
-		final Condition condition2 = orCondition.getConditions().get(1);
 
 		// act
 		initialize();
@@ -566,32 +564,26 @@ public class RuleRegistry_PTest {
 			final Entry<UniqueSetting, BidirectionalMap<Condition, ShowRule>> entry1 = iterator.next();
 			assertEquals(fanSetting, entry1.getKey());
 			final BidirectionalMap<Condition, ShowRule> conditionToRules1 = entry1.getValue();
-			assertEquals(2, conditionToRules1.keys().size());
+			assertEquals(1, conditionToRules1.keys().size());
 			assertEquals(1, conditionToRules1.values().size());
-			assertTrue(conditionToRules1.keys().contains(condition1));
-			assertEquals(rule, conditionToRules1.getValue(condition1));
-			assertTrue(conditionToRules1.keys().contains(condition2));
-			assertEquals(rule, conditionToRules1.getValue(condition2));
+			assertTrue(conditionToRules1.keys().contains(orCondition));
+			assertEquals(rule, conditionToRules1.getValue(orCondition));
 
 			final Entry<UniqueSetting, BidirectionalMap<Condition, ShowRule>> entry2 = iterator.next();
 			assertEquals(merchandise1Setting, entry2.getKey());
 			final BidirectionalMap<Condition, ShowRule> conditionToRules2 = entry2.getValue();
-			assertEquals(2, conditionToRules2.keys().size());
+			assertEquals(1, conditionToRules2.keys().size());
 			assertEquals(1, conditionToRules2.values().size());
-			assertTrue(conditionToRules2.keys().contains(condition1));
-			assertEquals(rule, conditionToRules2.getValue(condition1));
-			assertTrue(conditionToRules2.keys().contains(condition2));
-			assertEquals(rule, conditionToRules2.getValue(condition2));
+			assertTrue(conditionToRules2.keys().contains(orCondition));
+			assertEquals(rule, conditionToRules2.getValue(orCondition));
 
 			final Entry<UniqueSetting, BidirectionalMap<Condition, ShowRule>> entry3 = iterator.next();
 			assertEquals(merchandise2Setting, entry3.getKey());
 			final BidirectionalMap<Condition, ShowRule> conditionToRules3 = entry3.getValue();
-			assertEquals(2, conditionToRules3.keys().size());
+			assertEquals(1, conditionToRules3.keys().size());
 			assertEquals(1, conditionToRules3.values().size());
-			assertTrue(conditionToRules3.keys().contains(condition1));
-			assertEquals(rule, conditionToRules3.getValue(condition1));
-			assertTrue(conditionToRules3.keys().contains(condition2));
-			assertEquals(rule, conditionToRules3.getValue(condition2));
+			assertTrue(conditionToRules3.keys().contains(orCondition));
+			assertEquals(rule, conditionToRules3.getValue(orCondition));
 		}
 
 		// assert rulesToRenderables
@@ -607,22 +599,16 @@ public class RuleRegistry_PTest {
 		// assert conditionToSettings
 		{
 			final Map<Condition, Set<UniqueSetting>> conditionsToSettings = getConditionsToSettings();
-			assertEquals(2, conditionsToSettings.size());
+			assertEquals(1, conditionsToSettings.size());
 			final Iterator<Entry<Condition, Set<UniqueSetting>>> iterator = conditionsToSettings.entrySet().iterator();
 
 			final Entry<Condition, Set<UniqueSetting>> entry1 = iterator.next();
-			assertEquals(condition1, entry1.getKey());
+			assertEquals(orCondition, entry1.getKey());
 			assertEquals(3, entry1.getValue().size());
 			assertTrue(entry1.getValue().contains(fanSetting));
 			assertTrue(entry1.getValue().contains(merchandise1Setting));
 			assertTrue(entry1.getValue().contains(merchandise2Setting));
 
-			final Entry<Condition, Set<UniqueSetting>> entry2 = iterator.next();
-			assertEquals(condition2, entry2.getKey());
-			assertEquals(3, entry2.getValue().size());
-			assertTrue(entry2.getValue().contains(fanSetting));
-			assertTrue(entry2.getValue().contains(merchandise1Setting));
-			assertTrue(entry2.getValue().contains(merchandise2Setting));
 		}
 	}
 

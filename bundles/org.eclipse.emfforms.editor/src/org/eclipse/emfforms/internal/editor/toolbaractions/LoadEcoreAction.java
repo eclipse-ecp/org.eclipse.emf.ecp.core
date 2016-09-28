@@ -72,7 +72,17 @@ public class LoadEcoreAction extends Action {
 	 * @param currentObject the currently loaded object in the Editor (should be ResourceSet)
 	 */
 	public LoadEcoreAction(Object currentObject) {
-		super("Load Ecore");
+		this(currentObject, "Load Ecore");
+	}
+
+	/**
+	 * Creates a new LoadEcoreAction.
+	 *
+	 * @param currentObject the currently loaded object in the Editor (should be ResourceSet)
+	 * @param actionName The name of the action
+	 */
+	public LoadEcoreAction(Object currentObject, String actionName) {
+		super(actionName);
 		setImageDescriptor(ImageDescriptor.createFromURL(FrameworkUtil.getBundle(this.getClass())
 			.getResource("icons/chart_organisation_add.png")));
 		this.currentObject = currentObject;

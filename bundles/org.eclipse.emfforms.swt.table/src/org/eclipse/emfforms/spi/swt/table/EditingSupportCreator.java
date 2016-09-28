@@ -11,23 +11,23 @@
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.table;
 
+import org.eclipse.jface.viewers.AbstractTableViewer;
 import org.eclipse.jface.viewers.EditingSupport;
-import org.eclipse.jface.viewers.TableViewer;
 
 /**
  * Interface for creating the {@link EditingSupport}.
- * 
+ *
  * @author Johannes Faltermeier
  *
  */
 public interface EditingSupportCreator {
 
 	/**
-	 * Create the editing support which will be set on a column of the given {@link TableViewer}.
-	 * 
+	 * Create the editing support which will be set on a column of the given {@link AbstractTableViewer}.
+	 *
 	 * @param columnViewer the viewer
 	 * @return the {@link EditingSupport}
 	 */
-	EditingSupport createEditingSupport(TableViewer columnViewer);
+	EditingSupport createEditingSupport(AbstractTableViewer columnViewer);
 
 }

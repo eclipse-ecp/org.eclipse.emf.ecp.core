@@ -45,7 +45,7 @@ public class EMFFormsMappingProviderDefaultHeuristic implements EMFFormsMappingP
 	 *
 	 * @param emfFormsDatabinding The databinding service
 	 */
-	@Reference
+	@Reference(unbind = "-")
 	protected void setEMFFormsDatabinding(EMFFormsDatabindingEMF emfFormsDatabinding) {
 		this.emfFormsDatabinding = emfFormsDatabinding;
 	}
@@ -55,7 +55,7 @@ public class EMFFormsMappingProviderDefaultHeuristic implements EMFFormsMappingP
 	 *
 	 * @param reportService The {@link ReportService}
 	 */
-	@Reference
+	@Reference(unbind = "-")
 	protected void setReportService(ReportService reportService) {
 		this.reportService = reportService;
 	}

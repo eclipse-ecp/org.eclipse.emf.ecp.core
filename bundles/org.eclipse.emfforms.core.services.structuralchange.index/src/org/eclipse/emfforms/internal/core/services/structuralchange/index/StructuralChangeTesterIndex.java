@@ -93,7 +93,7 @@ public class StructuralChangeTesterIndex implements StructuralChangeTesterIntern
 	 *
 	 * @param emfFormsDatabinding The emf databinding service
 	 */
-	@Reference
+	@Reference(unbind = "-")
 	protected void setEMFFormsDatabindingEMF(EMFFormsDatabindingEMF emfFormsDatabinding) {
 		this.emfFormsDatabinding = emfFormsDatabinding;
 	}

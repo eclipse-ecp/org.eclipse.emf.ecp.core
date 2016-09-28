@@ -38,30 +38,42 @@ import org.osgi.service.component.annotations.Deactivate;
 public class TableDMRConverter implements DomainModelReferenceConverterEMF {
 	private EMFFormsDatabindingEMF emfFormsDatabinding;
 	private ServiceReference<EMFFormsDatabindingEMF> databindingServiceReference;
+	private BundleContext bundleContext;
 
 	/**
-	 * This method is called by the OSGI framework when this {@link DomainModelReferenceConverter} is activated. It
+	 * This method is called by the OSGI framework when this {@link DomainModelReferenceConverterEMF} is activated. It
 	 * retrieves the {@link EMFFormsDatabindingEMF EMF Forms databinding service}.
 	 *
 	 * @param bundleContext The {@link BundleContext} of this classes bundle.
 	 */
 	@Activate
 	protected final void activate(BundleContext bundleContext) {
-		databindingServiceReference = bundleContext.getServiceReference(EMFFormsDatabindingEMF.class);
-		emfFormsDatabinding = bundleContext.getService(databindingServiceReference);
-
+		this.bundleContext = bundleContext;
 	}
 
 	/**
-	 * This method is called by the OSGI framework when this {@link DomainModelReferenceConverter} is deactivated.
+	 * This method is called by the OSGI framework when this {@link DomainModelReferenceConverterEMF} is deactivated.
 	 * It frees the {@link EMFFormsDatabindingEMF EMF Forms databinding service}.
 	 *
 	 * @param bundleContext The {@link BundleContext} of this classes bundle.
 	 */
 	@Deactivate
 	protected final void deactivate(BundleContext bundleContext) {
-		bundleContext.ungetService(databindingServiceReference);
-		emfFormsDatabinding = null;
+		if (databindingServiceReference != null) {
+			bundleContext.ungetService(databindingServiceReference);
+			emfFormsDatabinding = null;
+		}
+	}
+
+	private EMFFormsDatabindingEMF getEMFFormsDatabindingEMF() {
+		if (emfFormsDatabinding == null) {
+			databindingServiceReference = bundleContext.getServiceReference(EMFFormsDatabindingEMF.class);
+			if (databindingServiceReference == null) {
+				throw new IllegalStateException("No EMFFormsDatabindingEMF available!"); //$NON-NLS-1$
+			}
+			emfFormsDatabinding = bundleContext.getService(databindingServiceReference);
+		}
+		return emfFormsDatabinding;
 	}
 
 	/**
@@ -101,7 +113,8 @@ public class TableDMRConverter implements DomainModelReferenceConverterEMF {
 			throw new DatabindingFailedException(
 				"The field domainModelReference of the given VTableDomainModelReference must not be null."); //$NON-NLS-1$
 		}
-		return emfFormsDatabinding.getValueProperty(tableDomainModelReference.getDomainModelReference(), object);
+		return getEMFFormsDatabindingEMF().getValueProperty(tableDomainModelReference.getDomainModelReference(),
+			object);
 	}
 
 	/**
@@ -127,7 +140,7 @@ public class TableDMRConverter implements DomainModelReferenceConverterEMF {
 			throw new DatabindingFailedException(
 				"The field domainModelReference of the given VTableDomainModelReference must not be null."); //$NON-NLS-1$
 		}
-		return emfFormsDatabinding.getListProperty(tableDomainModelReference.getDomainModelReference(), object);
+		return getEMFFormsDatabindingEMF().getListProperty(tableDomainModelReference.getDomainModelReference(), object);
 	}
 
 	/**
@@ -153,7 +166,8 @@ public class TableDMRConverter implements DomainModelReferenceConverterEMF {
 			throw new DatabindingFailedException(
 				"The field domainModelReference of the given VTableDomainModelReference must not be null."); //$NON-NLS-1$
 		}
-		final Setting setting = emfFormsDatabinding.getSetting(tableDomainModelReference.getDomainModelReference(),
+		final Setting setting = getEMFFormsDatabindingEMF().getSetting(
+			tableDomainModelReference.getDomainModelReference(),
 			object);
 		if (!setting.getEStructuralFeature().isMany()
 			|| !EReference.class.isInstance(setting.getEStructuralFeature())) {
