@@ -9,6 +9,7 @@
  * Contributors:
  * Eugen Neufeld - initial API and implementation
  * Johannes Faltermeier - refactorings
+ * Lucas Koehler - use multi segment instead of table dmr
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.swt;
 
@@ -39,6 +40,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -59,15 +61,16 @@ import org.eclipse.emf.ecp.view.internal.table.swt.TableConfigurationHelper;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.DiagnosticMessageExtractor;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.reporting.StatusReport;
 import org.eclipse.emf.ecp.view.spi.provider.ECPTooltipModifierHelper;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
-import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
@@ -106,6 +109,7 @@ import org.eclipse.emfforms.spi.swt.table.TableViewerCompositeBuilder;
 import org.eclipse.emfforms.spi.swt.table.TableViewerCreator;
 import org.eclipse.emfforms.spi.swt.table.TableViewerFactory;
 import org.eclipse.emfforms.spi.swt.table.TableViewerSWTBuilder;
+import org.eclipse.emfforms.view.spi.multisegment.model.VMultiDomainModelReferenceSegment;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ObservableMapCellLabelProvider;
@@ -346,9 +350,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		final TableColumn[] allColumns = swtTable.getColumns();
 		for (int i = regularColumnsStartIndex; i < allColumns.length; i++) {
 			final TableColumn tableColumn = allColumns[i];
-			final VDomainModelReference columnDMR = VTableDomainModelReference.class
-				.cast(tableControl.getDomainModelReference()).getColumnDomainModelReferences()
-				.get(i - regularColumnsStartIndex);
+			final VDomainModelReference columnDMR = getColumnDomainModelReferences().get(i - regularColumnsStartIndex);
 			TableConfigurationHelper.updateWidthConfiguration(tableControl, columnDMR, swtTable, tableColumn);
 		}
 	}
@@ -398,11 +400,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		if (!clazz.isAbstract() && !clazz.isInterface()) {
 			tempInstance = getInstanceOf(clazz);
 		}
-		final VTableDomainModelReference tableDomainModelReference = VTableDomainModelReference.class
-			.cast(getVElement().getDomainModelReference());
 
 		/* regular columns */
-		for (final VDomainModelReference dmr : tableDomainModelReference.getColumnDomainModelReferences()) {
+		for (final VDomainModelReference dmr : getColumnDomainModelReferences()) {
 			try {
 				if (dmr == null) {
 					continue;
@@ -419,7 +419,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 				final TableControlEditingSupportAndLabelProvider labelProvider = new TableControlEditingSupportAndLabelProvider(
 					tempInstance, eStructuralFeature, dmr, valueProperty, observableMap,
-					tableDomainModelReference.getColumnDomainModelReferences().indexOf(dmr));
+					getColumnDomainModelReferences().indexOf(dmr));
 				final EditingSupportCreator editingSupportCreator = TableConfigurationHelper
 					.isReadOnly(getVElement(), dmr) ? null : labelProvider;
 
@@ -525,12 +525,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * @return the {@link VDomainModelReference} which ends at the table setting
 	 */
 	private VDomainModelReference getDMRToMultiReference() {
-		final VTableDomainModelReference tableDomainModelReference = (VTableDomainModelReference) getVElement()
-			.getDomainModelReference();
-		final VDomainModelReference dmrToCheck = tableDomainModelReference.getDomainModelReference() == null
-			? tableDomainModelReference
-			: tableDomainModelReference.getDomainModelReference();
-		return dmrToCheck;
+		return getVElement().getDomainModelReference();
 	}
 
 	/**
@@ -825,6 +820,22 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	}
 
 	/**
+	 * @return The multi segment of the {@link VDomainModelReference} of this renderer's {@link VControl}.
+	 */
+	private VMultiDomainModelReferenceSegment getMultiSegment() {
+		final EList<VDomainModelReferenceSegment> segments = getVElement().getDomainModelReference().getSegments();
+		// The multi segment is the dmr's last segment
+		return (VMultiDomainModelReferenceSegment) segments.get(segments.size() - 1);
+	}
+
+	/**
+	 * @return The domain model references defining the columns of this table.
+	 */
+	private EList<VDomainModelReference> getColumnDomainModelReferences() {
+		return getMultiSegment().getChildDomainModelReferences();
+	}
+
+	/**
 	 * This is called in order to setup the editing support for a table column.
 	 *
 	 * @param tempInstance the temporary input instance of the table
@@ -1106,8 +1117,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		Object value1;
 		Object value2;
 
-		final VDomainModelReference dmr = ((VTableDomainModelReference) getVElement().getDomainModelReference())
-			.getColumnDomainModelReferences().get(propertyIndex);
+		final VDomainModelReference dmr = getColumnDomainModelReferences().get(propertyIndex);
 		final EMFFormsDatabinding emfFormsDatabinding = getEMFFormsDatabinding();
 
 		try {
@@ -1200,17 +1210,10 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				return;
 			}
 
-			final VTableDomainModelReference tableDMR = (VTableDomainModelReference) getVElement()
-				.getDomainModelReference();
 			IObservableValue observableValue;
 			try {
-				if (tableDMR.getDomainModelReference() != null) {
-					observableValue = getEMFFormsDatabinding().getObservableValue(
-						tableDMR.getDomainModelReference(), getViewModelContext().getDomainModel());
-				} else {
-					observableValue = getEMFFormsDatabinding().getObservableValue(tableDMR,
-						getViewModelContext().getDomainModel());
-				}
+				observableValue = getEMFFormsDatabinding().getObservableValue(getVElement().getDomainModelReference(),
+					getViewModelContext().getDomainModel());
 			} catch (final DatabindingFailedException ex) {
 				getReportService().report(new DatabindingFailedReport(ex));
 				return;
