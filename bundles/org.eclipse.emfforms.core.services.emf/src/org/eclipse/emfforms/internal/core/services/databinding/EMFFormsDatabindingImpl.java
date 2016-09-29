@@ -84,8 +84,51 @@ public class EMFFormsDatabindingImpl implements EMFFormsDatabindingEMF, EMFForms
 	@Override
 	public IEMFValueProperty getValueProperty(VDomainModelReference domainModelReference, EObject object)
 		throws DatabindingFailedException {
-		Assert.create(domainModelReference).notNull();
 		Assert.create(object).notNull();
+
+		return internalGetValueProperty(domainModelReference, object.eClass(), getEditingDomain(object));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF#getValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference,
+	 *      org.eclipse.emf.ecore.EClass)
+	 */
+	@Override
+	public IEMFValueProperty getValueProperty(VDomainModelReference domainModelReference, EClass rootEClass)
+		throws DatabindingFailedException {
+
+		return internalGetValueProperty(domainModelReference, rootEClass, null);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF#getValueProperty(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference,
+	 *      org.eclipse.emf.ecore.EClass, org.eclipse.emf.edit.domain.EditingDomain)
+	 */
+	@Override
+	public IEMFValueProperty getValueProperty(VDomainModelReference domainModelReference, EClass rootEClass,
+		EditingDomain editingDomain) throws DatabindingFailedException {
+		Assert.create(editingDomain).notNull();
+
+		return internalGetValueProperty(domainModelReference, rootEClass, editingDomain);
+	}
+
+	/**
+	 * Actual calculation of a value property.
+	 *
+	 * @param domainModelReference The domain model reference pointing to the desired value
+	 * @param rootEClass The root EClass of the rendered form
+	 * @param editingDomain The {@link EditingDomain} of the resulting value property, can be null
+	 * @return The resulting {@link IEMFValueProperty}
+	 * @throws DatabindingFailedException
+	 */
+	private IEMFValueProperty internalGetValueProperty(VDomainModelReference domainModelReference, EClass rootEClass,
+		EditingDomain editingDomain) throws DatabindingFailedException {
+		Assert.create(domainModelReference).notNull();
+		Assert.create(rootEClass).notNull();
 
 		final EList<VDomainModelReferenceSegment> segments = domainModelReference.getSegments();
 		if (segments.isEmpty()) {
@@ -93,13 +136,11 @@ public class EMFFormsDatabindingImpl implements EMFFormsDatabindingEMF, EMFForms
 				"The reference being resolved does not contain any segments. The DMR is %1$s.", domainModelReference)); //$NON-NLS-1$
 		}
 
-		final EditingDomain editingDomain = getEditingDomain(object);
-
 		// Get value property for the (always present) first segment
 		final DomainModelReferenceSegmentConverterEMF firstConverter = getBestDomainModelReferenceSegmentConverter(
 			segments.get(0));
 		IEMFValueProperty resultProperty = firstConverter.convertToValueProperty(segments.get(0),
-			object.eClass(), editingDomain);
+			rootEClass, editingDomain);
 
 		/*
 		 * Iterate over all remaining segments and get the value properties for their corresponding EClasses.
@@ -109,7 +150,7 @@ public class EMFFormsDatabindingImpl implements EMFFormsDatabindingEMF, EMFForms
 		EStructuralFeature feature = resultProperty.getStructuralFeature();
 		for (int i = 1; i < segments.size(); i++) {
 			final VDomainModelReferenceSegment segment = segments.get(i);
-			final EClass nextEClass = getNextEClass(domainModelReference, object, feature, segment);
+			final EClass nextEClass = getNextEClass(domainModelReference, rootEClass, feature, segment);
 
 			final DomainModelReferenceSegmentConverterEMF bestConverter = getBestDomainModelReferenceSegmentConverter(
 				segment);
@@ -207,7 +248,7 @@ public class EMFFormsDatabindingImpl implements EMFFormsDatabindingEMF, EMFForms
 		EStructuralFeature feature = valueProperty.getStructuralFeature();
 		for (int i = 1; i < segments.size() - 1; i++) {
 			final VDomainModelReferenceSegment segment = segments.get(i);
-			final EClass nextEClass = getNextEClass(domainModelReference, object, feature, segment);
+			final EClass nextEClass = getNextEClass(domainModelReference, object.eClass(), feature, segment);
 
 			final DomainModelReferenceSegmentConverterEMF bestConverter = getBestDomainModelReferenceSegmentConverter(
 				segment);
@@ -221,7 +262,8 @@ public class EMFFormsDatabindingImpl implements EMFFormsDatabindingEMF, EMFForms
 
 		// Get the list property for the last segment
 		final int lastIndex = segments.size() - 1;
-		final EClass lastEClass = getNextEClass(domainModelReference, object, feature, segments.get(lastIndex));
+		final EClass lastEClass = getNextEClass(domainModelReference, object.eClass(), feature,
+			segments.get(lastIndex));
 		final DomainModelReferenceSegmentConverterEMF lastConverter = getBestDomainModelReferenceSegmentConverter(
 			segments.get(lastIndex));
 		final IEMFListProperty listProperty = lastConverter.convertToListProperty(segments.get(lastIndex), lastEClass,
@@ -232,21 +274,21 @@ public class EMFFormsDatabindingImpl implements EMFFormsDatabindingEMF, EMFForms
 
 	/**
 	 * @param domainModelReference only needed for exception description
-	 * @param object only needed for exception description
+	 * @param rootEClass only needed for exception description
 	 * @param feature The feature to extract the next {@link EClass} from
 	 * @param segment only needed for exception description
 	 * @return The next EClass if the given {@link EStructuralFeature} is a single {@link EReference}, throws a
 	 *         {@link DatabindingFailedException} otherwise.
 	 * @throws DatabindingFailedException if the given {@link EStructuralFeature} is not a single {@link EReference}
 	 */
-	private EClass getNextEClass(VDomainModelReference domainModelReference, EObject object, EStructuralFeature feature,
-		final VDomainModelReferenceSegment segment) throws DatabindingFailedException {
+	private EClass getNextEClass(VDomainModelReference domainModelReference, EClass rootEClass,
+		EStructuralFeature feature, final VDomainModelReferenceSegment segment) throws DatabindingFailedException {
 		if (!EReference.class.isInstance(feature)) {
 			throw new DatabindingFailedException(String.format(
-				"The reference being resolved is not compatible with the given root EObject: " //$NON-NLS-1$
+				"The reference being resolved is not compatible with the given root EClass: " //$NON-NLS-1$
 					+ "Segment [%1$s] cannot be resolved as the preceding segment did not resolve to an EReference. " //$NON-NLS-1$
 					+ "The DMR is %2$s. The root EObject is %3$s.", //$NON-NLS-1$
-				segment, domainModelReference, object));
+				segment, domainModelReference, rootEClass));
 		}
 		if (feature.isMany()) {
 			throw new DatabindingFailedException(String.format(

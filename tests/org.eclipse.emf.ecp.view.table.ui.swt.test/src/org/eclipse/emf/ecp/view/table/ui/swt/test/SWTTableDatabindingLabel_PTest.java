@@ -103,10 +103,12 @@ public class SWTTableDatabindingLabel_PTest {
 		databindingService = mock(EMFFormsDatabindingEMF.class);
 		labelProvider = mock(EMFFormsLabelProvider.class);
 
-		when(labelProvider.getDescription(any(VDomainModelReference.class))).thenReturn(DESCRIPTION_COLUMNS);
+		when(labelProvider.getDescription(any(VDomainModelReference.class), any(EClass.class)))
+			.thenReturn(DESCRIPTION_COLUMNS);
 		when(labelProvider.getDescription(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			DESCRIPTION);
-		when(labelProvider.getDisplayName(any(VDomainModelReference.class))).thenReturn(DISPLAYNAME_COLUMNS);
+		when(labelProvider.getDisplayName(any(VDomainModelReference.class), any(EClass.class)))
+			.thenReturn(DISPLAYNAME_COLUMNS);
 		when(labelProvider.getDisplayName(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			DISPLAYNAME);
 

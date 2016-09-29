@@ -97,12 +97,13 @@ public class EMFFormsLabelProviderDefaultImpl implements EMFFormsLabelProvider {
 	 * @see org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider#getDisplayName(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)
 	 */
 	@Override
-	public IObservableValue getDisplayName(VDomainModelReference domainModelReference) {
+	public IObservableValue getDisplayName(VDomainModelReference domainModelReference, EClass rootEClass) {
 		Assert.create(domainModelReference).notNull();
+		Assert.create(rootEClass).notNull();
 
 		IValueProperty valueProperty;
 		try {
-			valueProperty = emfFormsDatabinding.getValueProperty(domainModelReference, null);
+			valueProperty = emfFormsDatabinding.getValueProperty(domainModelReference, rootEClass);
 		} catch (final DatabindingFailedException ex) {
 			reportService.report(new DatabindingFailedReport(ex));
 			return getConstantObservableValue(ex.getMessage());
@@ -170,12 +171,13 @@ public class EMFFormsLabelProviderDefaultImpl implements EMFFormsLabelProvider {
 	 * @see org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider#getDescription(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)
 	 */
 	@Override
-	public IObservableValue getDescription(VDomainModelReference domainModelReference) {
+	public IObservableValue getDescription(VDomainModelReference domainModelReference, EClass rootEClass) {
 		Assert.create(domainModelReference).notNull();
+		Assert.create(rootEClass).notNull();
 
 		IValueProperty valueProperty;
 		try {
-			valueProperty = emfFormsDatabinding.getValueProperty(domainModelReference, null);
+			valueProperty = emfFormsDatabinding.getValueProperty(domainModelReference, rootEClass);
 		} catch (final DatabindingFailedException ex) {
 			reportService.report(new DatabindingFailedReport(ex));
 			return getConstantObservableValue(ex.getMessage());
