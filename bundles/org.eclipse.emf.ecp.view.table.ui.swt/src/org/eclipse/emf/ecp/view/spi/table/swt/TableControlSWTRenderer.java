@@ -86,6 +86,7 @@ import org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableVali
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.MoveCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.ui.dnd.EditingDomainViewerDropAdapter;
 import org.eclipse.emf.edit.ui.dnd.LocalTransfer;
@@ -274,8 +275,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				getViewModelContext().getDomainModel());
 
 			/* get the label text/tooltip */
-			final IObservableValue labelText = getLabelText(dmrToCheck, false);
-			final IObservableValue labelTooltipText = getLabelTooltipText(dmrToCheck, false);
+			final EClass rootEClass = getViewModelContext().getDomainModel().eClass();
+			final IObservableValue labelText = getLabelText(dmrToCheck, rootEClass, false);
+			final IObservableValue labelTooltipText = getLabelTooltipText(dmrToCheck, rootEClass, false);
 
 			/* content provider */
 			final ObservableListContentProvider cp = new ObservableListContentProvider();
@@ -510,11 +512,10 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 					continue;
 				}
 
-				final IObservableValue text = getLabelText(dmr, true);
-				final IObservableValue tooltip = getLabelTooltipText(dmr, true);
-
-				final IValueProperty valueProperty = getEMFFormsDatabinding().getValueProperty(dmr,
-					getViewModelContext().getDomainModel());
+				final IObservableValue text = getLabelText(dmr, clazz, true);
+				final IObservableValue tooltip = getLabelTooltipText(dmr, clazz, true);
+				final IValueProperty valueProperty = getEMFFormsDatabinding().getValueProperty(dmr, clazz,
+					getEditingDomain());
 				final EStructuralFeature eStructuralFeature = (EStructuralFeature) valueProperty.getValueType();
 
 				final IObservableMap observableMap = valueProperty.observeDetail(cp.getKnownElements());
@@ -556,7 +557,14 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	}
 
-	private void setupValidation(final AbstractTableViewerComposite tableViewerComposite) {
+	/**
+	 * @return The {@link EditingDomain} to use for the columns' value properties.
+	 */
+	private EditingDomain getEditingDomain() {
+		return AdapterFactoryEditingDomain.getEditingDomainFor(getViewModelContext().getDomainModel());
+	}
+
+	private void setupValidation(final TableViewerComposite tableViewerComposite) {
 		if (tableViewerComposite.getValidationControls().isPresent()) {
 			final List<Control> validationControls = tableViewerComposite.getValidationControls().get();
 			if (validationControls.size() == 1 && Label.class.isInstance(validationControls.get(0))) {
@@ -577,11 +585,11 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		tableViewerComposite.setComparator(comparator, sortableColumns);
 	}
 
-	private IObservableValue getLabelText(VDomainModelReference dmrToCheck, boolean forColumn) {
+	private IObservableValue getLabelText(VDomainModelReference dmrToCheck, EClass dmrRootEClass, boolean forColumn) {
 		final EMFFormsLabelProvider labelService = getEMFFormsLabelProvider();
 		if (forColumn) {
 			try {
-				return labelService.getDisplayName(dmrToCheck);
+				return labelService.getDisplayName(dmrToCheck, dmrRootEClass);
 			} catch (final NoLabelFoundException e) {
 				// FIXME Expectation?
 				getReportService().report(new RenderingFailedReport(e));
@@ -602,11 +610,12 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		}
 	}
 
-	private IObservableValue getLabelTooltipText(VDomainModelReference dmrToCheck, boolean forColumn) {
+	private IObservableValue getLabelTooltipText(VDomainModelReference dmrToCheck, EClass dmrRootEClass,
+		boolean forColumn) {
 		final EMFFormsLabelProvider labelService = getEMFFormsLabelProvider();
 		try {
 			if (forColumn) {
-				return labelService.getDescription(dmrToCheck);
+				return labelService.getDescription(dmrToCheck, dmrRootEClass);
 			}
 		} catch (final NoLabelFoundException e) {
 			// FIXME Expectation?

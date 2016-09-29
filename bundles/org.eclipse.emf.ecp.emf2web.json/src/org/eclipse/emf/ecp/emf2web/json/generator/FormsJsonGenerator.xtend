@@ -17,14 +17,14 @@ import com.google.gson.JsonObject
 import java.util.Collection
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecp.emf2web.util.ReferenceHelper
+import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorization
+import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement
+import org.eclipse.emf.ecp.view.spi.categorization.model.VCategory
+import org.eclipse.emf.ecp.view.spi.label.model.VLabel
 import org.eclipse.emf.ecp.view.spi.model.VContainer
 import org.eclipse.emf.ecp.view.spi.model.VControl
 import org.eclipse.emf.ecp.view.spi.model.VElement
 import org.eclipse.emf.ecp.view.spi.model.VView
-import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement
-import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorization
-import org.eclipse.emf.ecp.view.spi.categorization.model.VCategory
-import org.eclipse.emf.ecp.view.spi.label.model.VLabel
 
 /** 
  * The class which handles the conversion from ecore files to qbForm files.
@@ -151,7 +151,13 @@ class FormsJsonGenerator extends JsonGenerator {
 	}
 	
 	private def String getDisplayLabel(VControl control){
-		refHelper.getLabel(control.domainModelReference)
+		var container = control.eContainer;
+		while(container != null) {
+			if (container instanceof VView) {
+				return refHelper.getLabel(control.domainModelReference, container.rootEClass)
+			}
+			container = container.eContainer
+		}
+		throw new IllegalArgumentException("The given VControl must be (indirectly) contained in a VView.")
 	}
-	
 }

@@ -53,6 +53,7 @@ import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
@@ -151,7 +152,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 		@Override
 		public void notifyAdd(Notifier notifier) {
 			if (VDomainModelReference.class.isInstance(notifier)
-				&& !VDomainModelReference.class.isInstance(EObject.class.cast(notifier).eContainer())) {
+				&& !VDomainModelReferenceSegment.class.isInstance(EObject.class.cast(notifier).eContainer())) {
 				final VDomainModelReference domainModelReference = VDomainModelReference.class.cast(notifier);
 				if (domainModelReference == null) {
 					return;

@@ -12,15 +12,15 @@
 package org.eclipse.emfforms.spi.core.services.label;
 
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 
 /**
  * The {@link EMFFormsLabelProvider} offers methods to get the display name and the description
- * for a model object referenced by a {@link VDomainModelReference} as an IObservableValue. The reference can optionally
- * be complemented by an {@link EObject} which is the root object of the {@link VDomainModelReference}. This enables to
- * get the texts for a
- * concrete instance.
+ * for a model object referenced by a {@link VDomainModelReference} and its root {@link EClass} as an IObservableValue.
+ * The root class can optionally be replaced by an {@link EObject} which is the root object of the
+ * {@link VDomainModelReference}. This enables to get the texts for a concrete instance.
  *
  * @author Eugen Neufeld
  *
@@ -31,10 +31,13 @@ public interface EMFFormsLabelProvider {
 	 * Returns the display name of the referenced domain object.
 	 *
 	 * @param domainModelReference The {@link VDomainModelReference} referencing the domain object
+	 * @param rootEClass The root {@link EClass} of the domain model reference
 	 * @return The display name as an {@link IObservableValue}
 	 * @throws NoLabelFoundException if the display name cannot be retrieved
+	 * @since 2.0
 	 */
-	IObservableValue getDisplayName(VDomainModelReference domainModelReference) throws NoLabelFoundException;
+	IObservableValue getDisplayName(VDomainModelReference domainModelReference, EClass rootEClass)
+		throws NoLabelFoundException;
 
 	/**
 	 * Returns the display name of the referenced domain object resolved for the given root {@link EObject}.
@@ -51,10 +54,13 @@ public interface EMFFormsLabelProvider {
 	 * Returns the description of the referenced domain object.
 	 *
 	 * @param domainModelReference The {@link VDomainModelReference} referencing the model object
+	 * @param rootEClass The root {@link EClass} of the domain model reference
 	 * @return The description as an {@link IObservableValue}
 	 * @throws NoLabelFoundException if the description cannot be retrieved
+	 * @since 2.0
 	 */
-	IObservableValue getDescription(VDomainModelReference domainModelReference) throws NoLabelFoundException;
+	IObservableValue getDescription(VDomainModelReference domainModelReference, EClass rootEClass)
+		throws NoLabelFoundException;
 
 	/**
 	 * Returns the description of the referenced domain object resolved for the given root {@link EObject}.

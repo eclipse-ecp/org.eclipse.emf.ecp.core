@@ -37,6 +37,7 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestFactory;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.DomainModelReferenceSegmentConverterEMF;
@@ -158,7 +159,7 @@ public class EMFFormsDatabindingImpl_Test {
 		final VFeatureDomainModelReferenceSegment segment = VViewFactory.eINSTANCE
 			.createFeatureDomainModelReferenceSegment();
 		reference.getSegments().add(segment);
-		databindingService.getValueProperty(reference, mock(EObject.class));
+		databindingService.getValueProperty(reference, TestFactory.eINSTANCE.createA());
 	}
 
 	/**
@@ -188,7 +189,8 @@ public class EMFFormsDatabindingImpl_Test {
 
 		databindingService.addDomainModelReferenceSegmentConverter(converter1);
 		databindingService.addDomainModelReferenceSegmentConverter(converter2);
-		final IValueProperty valueProperty = databindingService.getValueProperty(reference, mock(EObject.class));
+		final IValueProperty valueProperty = databindingService.getValueProperty(reference,
+			TestFactory.eINSTANCE.createA());
 		assertEquals(expectedResultProperty, valueProperty);
 	}
 
@@ -220,7 +222,8 @@ public class EMFFormsDatabindingImpl_Test {
 
 		databindingService.addDomainModelReferenceSegmentConverter(converter1);
 		databindingService.addDomainModelReferenceSegmentConverter(converter2);
-		final IValueProperty valueProperty = databindingService.getValueProperty(reference, mock(EObject.class));
+		final IValueProperty valueProperty = databindingService.getValueProperty(reference,
+			TestFactory.eINSTANCE.createA());
 		assertEquals(expectedResultProperty, valueProperty);
 	}
 
@@ -256,7 +259,7 @@ public class EMFFormsDatabindingImpl_Test {
 		databindingService.addDomainModelReferenceSegmentConverter(converter2);
 		databindingService.addDomainModelReferenceSegmentConverter(converter3);
 
-		databindingService.getValueProperty(reference, mock(EObject.class));
+		databindingService.getValueProperty(reference, TestFactory.eINSTANCE.createA());
 
 		verify(converter1).isApplicable(segment);
 		verify(converter2).isApplicable(segment);
@@ -502,7 +505,7 @@ public class EMFFormsDatabindingImpl_Test {
 
 		databindingService.addDomainModelReferenceSegmentConverter(converter1);
 		databindingService.removeDomainModelReferenceSegmentConverter(converter1);
-		databindingService.getValueProperty(reference, mock(EObject.class));
+		databindingService.getValueProperty(reference, TestFactory.eINSTANCE.createA());
 	}
 
 	@Test(expected = DatabindingFailedException.class)
