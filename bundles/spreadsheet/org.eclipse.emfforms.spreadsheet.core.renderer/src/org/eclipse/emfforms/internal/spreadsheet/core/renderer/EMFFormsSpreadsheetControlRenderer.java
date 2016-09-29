@@ -40,6 +40,7 @@ import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.template.style.mandatory.model.VTMandatoryFactory;
@@ -250,7 +251,9 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 		if (viewModelContext.getDomainModel() != null) {
 			displayName = emfformsLabelProvider.getDisplayName(dmrToResolve, viewModelContext.getDomainModel());
 		} else {
-			displayName = emfformsLabelProvider.getDisplayName(dmrToResolve);
+			// TODO Check if/when this is the case
+			displayName = emfformsLabelProvider.getDisplayName(dmrToResolve,
+				((VView) viewModelContext.getViewModel()).getRootEClass());
 		}
 		String labelValue = displayName.getValue().toString();
 		if (exportTableParent != null) {
@@ -274,7 +277,9 @@ public class EMFFormsSpreadsheetControlRenderer extends EMFFormsAbstractSpreadsh
 		if (viewModelContext.getDomainModel() != null) {
 			description = emfformsLabelProvider.getDescription(dmrToResolve, viewModelContext.getDomainModel());
 		} else {
-			description = emfformsLabelProvider.getDescription(dmrToResolve);
+			// TODO Check if/when this is the case
+			description = emfformsLabelProvider.getDescription(dmrToResolve,
+				((VView) viewModelContext.getViewModel()).getRootEClass());
 		}
 		descriptionCell.setCellValue(description.getValue().toString());
 		description.dispose();

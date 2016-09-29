@@ -90,7 +90,7 @@ public abstract class AbstractReferenceHelper implements ReferenceHelper {
 	 * @see org.eclipse.emf.ecp.emf2web.util.ReferenceHelper#getLabel(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)
 	 */
 	@Override
-	public String getLabel(VDomainModelReference reference) {
+	public String getLabel(VDomainModelReference reference, EClass rootEClass) {
 		final String path = getEcorePath();
 		if (path == null) {
 			try {
@@ -98,7 +98,7 @@ public abstract class AbstractReferenceHelper implements ReferenceHelper {
 				final ServiceReference<EMFFormsLabelProvider> serviceReference = bundleContext
 					.getServiceReference(EMFFormsLabelProvider.class);
 				final EMFFormsLabelProvider labelProvider = bundleContext.getService(serviceReference);
-				final IObservableValue observableValue = labelProvider.getDisplayName(reference);
+				final IObservableValue observableValue = labelProvider.getDisplayName(reference, rootEClass);
 				final String result = (String) observableValue.getValue();
 				observableValue.dispose();
 				bundleContext.ungetService(serviceReference);

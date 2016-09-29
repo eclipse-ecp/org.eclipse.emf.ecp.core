@@ -150,9 +150,8 @@ public class EMFFormsLabelProviderDefaultImpl_ITest {
 	}
 
 	/**
-	 * Tests that {@link EMFFormsLabelProviderDefaultImpl#getDisplayName(VDomainModelReference)} uses the databinding
-	 * and emf
-	 * specific services.
+	 * Tests that {@link EMFFormsLabelProviderDefaultImpl#getDisplayName(VDomainModelReference, EClass)} uses the
+	 * databinding service.
 	 *
 	 * @throws DatabindingFailedException should not happen, just needs to be thrown because the databinding service
 	 *             defines the throw in its interface.
@@ -161,26 +160,27 @@ public class EMFFormsLabelProviderDefaultImpl_ITest {
 	@Test
 	public void testServiceUsageDisplayNameOneParam() throws DatabindingFailedException, NoLabelFoundException {
 		final VDomainModelReference domainModelReference = mock(VDomainModelReference.class);
-		labelProvider.getDisplayName(domainModelReference);
+		final EClass eClass = mock(EClass.class);
+		labelProvider.getDisplayName(domainModelReference, eClass);
 
-		verify(databindingService).getValueProperty(same(domainModelReference), any(EObject.class));
+		verify(databindingService).getValueProperty(domainModelReference, eClass);
 	}
 
 	/**
-	 * Tests that {@link EMFFormsLabelProviderDefaultImpl#getDescription(VDomainModelReference)} uses the databinding
-	 * and emf
-	 * specific services.
+	 * Tests that {@link EMFFormsLabelProviderDefaultImpl#getDescription(VDomainModelReference, EClass)} uses the
+	 * databinding service.
 	 *
 	 * @throws DatabindingFailedException should not happen, just needs to be thrown because the databinding service
 	 *             defines the throw in its interface.
 	 * @throws NoLabelFoundException should not be thrown
 	 */
 	@Test
-	public void testServiceUsageDescriptionOneParam() throws DatabindingFailedException, NoLabelFoundException {
+	public void testServiceUsageDescriptionEClass() throws DatabindingFailedException, NoLabelFoundException {
 		final VDomainModelReference domainModelReference = mock(VDomainModelReference.class);
-		labelProvider.getDescription(domainModelReference);
+		final EClass eClass = mock(EClass.class);
+		labelProvider.getDescription(domainModelReference, eClass);
 
-		verify(databindingService).getValueProperty(same(domainModelReference), any(EObject.class));
+		verify(databindingService).getValueProperty(domainModelReference, eClass);
 	}
 
 	/**

@@ -13,6 +13,7 @@ package org.eclipse.emfforms.internal.spreadsheet.core.renderer.table;
 
 import org.apache.poi.ss.usermodel.Workbook;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
@@ -146,7 +147,8 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 				.getDomainModelReference();
 
 			for (int i = 0; i < getNumberOfExportElements(vElement, tableSetting); i++) {
-				final String prefixName = getPrefixName(tableSetting, tableDomainModelReference, i);
+				final String prefixName = getPrefixName(tableSetting, tableDomainModelReference,
+					viewModelContext.getDomainModel().eClass(), i);
 
 				final VIndexDomainModelReference indexDMR = VIndexdmrFactory.eINSTANCE
 					.createIndexDomainModelReference();
@@ -230,9 +232,9 @@ public class EMFFormsSpreadsheetTableControlRenderer extends EMFFormsAbstractSpr
 	}
 
 	private String getPrefixName(final Setting tableSetting, final VTableDomainModelReference tableDomainModelReference,
-		int index) throws NoLabelFoundException {
+		EClass dmrRootEClass, int index) throws NoLabelFoundException {
 		String prefixName = (String) emfformsLabelProvider.getDisplayName(
-			tableDomainModelReference.getDomainModelReference())
+			tableDomainModelReference.getDomainModelReference(), dmrRootEClass)
 			.getValue();
 		if (prefixName == null || prefixName.length() == 0) {
 			prefixName = tableSetting.getEStructuralFeature()

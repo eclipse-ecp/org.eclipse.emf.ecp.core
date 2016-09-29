@@ -11,6 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.emf2web.util;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 
 /**
@@ -35,8 +36,10 @@ public interface ReferenceHelper {
 	 *
 	 * @param reference
 	 *            The {@link VDomainModelReference} for which a label is to be determined.
+	 * @param rootEClass
+	 *            The root {@link EClass} of the domain model reference.
 	 * @return
 	 * 		The label for the given {@code reference}.
 	 */
-	String getLabel(VDomainModelReference reference);
+	String getLabel(VDomainModelReference reference, EClass rootEClass);
 }

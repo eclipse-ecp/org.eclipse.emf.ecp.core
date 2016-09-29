@@ -30,7 +30,7 @@ import org.eclipse.emfforms.spi.common.locale.EMFFormsLocaleProvider;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
-import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
@@ -129,7 +129,7 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 	private static final String DESCRIPTION_COMPOSITE = "_UI_PropertyDescriptor_description"; //$NON-NLS-1$
 	private static final String TYPE = "_UI_%1$s_type"; //$NON-NLS-1$
 
-	private EMFFormsDatabinding emfFormsDatabinding;
+	private EMFFormsDatabindingEMF emfFormsDatabinding;
 	private EMFFormsLocalizationService localizationService;
 	private ReportService reportService;
 	private BundleResolver bundleResolver = new BundleResolverImpl();
@@ -149,11 +149,11 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 	}
 
 	/**
-	 * Sets the {@link EMFFormsDatabinding} service.
+	 * Sets the {@link EMFFormsDatabindingEMF} service.
 	 *
 	 * @param emfFormsDatabinding The databinding service.
 	 */
-	protected void setEMFFormsDatabinding(EMFFormsDatabinding emfFormsDatabinding) {
+	protected void setEMFFormsDatabinding(EMFFormsDatabindingEMF emfFormsDatabinding) {
 		this.emfFormsDatabinding = emfFormsDatabinding;
 	}
 
@@ -224,12 +224,14 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 	 * @see EMFFormsLabelProvider#getDisplayName(VDomainModelReference)
 	 */
 	@Override
-	public IObservableValue getDisplayName(VDomainModelReference domainModelReference) throws NoLabelFoundException {
+	public IObservableValue getDisplayName(VDomainModelReference domainModelReference, EClass rootEClass)
+		throws NoLabelFoundException {
 		Assert.create(domainModelReference).notNull();
+		Assert.create(rootEClass).notNull();
 
 		IValueProperty valueProperty;
 		try {
-			valueProperty = emfFormsDatabinding.getValueProperty(domainModelReference, null);
+			valueProperty = emfFormsDatabinding.getValueProperty(domainModelReference, rootEClass);
 		} catch (final DatabindingFailedException ex) {
 			reportService.report(new DatabindingFailedReport(ex));
 			throw new NoLabelFoundException(ex);
@@ -239,7 +241,7 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 		try {
 			bundleKeyResultWrapper = getDisplayBundleKeyResultWrapper(structuralFeature);
 		} catch (final NoBundleFoundException ex) {
-			return labelProviderDefault.getDisplayName(domainModelReference);
+			return labelProviderDefault.getDisplayName(domainModelReference, rootEClass);
 		}
 
 		final WritableValue value = getObservableValue(bundleKeyResultWrapper.getResult());
@@ -285,12 +287,14 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 	 * @see EMFFormsLabelProvider#getDescription(VDomainModelReference)
 	 */
 	@Override
-	public IObservableValue getDescription(VDomainModelReference domainModelReference) throws NoLabelFoundException {
+	public IObservableValue getDescription(VDomainModelReference domainModelReference, EClass rootEClass)
+		throws NoLabelFoundException {
 		Assert.create(domainModelReference).notNull();
+		Assert.create(rootEClass).notNull();
 
 		IValueProperty valueProperty;
 		try {
-			valueProperty = emfFormsDatabinding.getValueProperty(domainModelReference, null);
+			valueProperty = emfFormsDatabinding.getValueProperty(domainModelReference, rootEClass);
 		} catch (final DatabindingFailedException ex) {
 			reportService.report(new DatabindingFailedReport(ex));
 			throw new NoLabelFoundException(ex);
@@ -301,7 +305,7 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 		try {
 			bundle = bundleResolver.getEditBundle(eContainingClass);
 		} catch (final NoBundleFoundException ex) {
-			return labelProviderDefault.getDescription(domainModelReference);
+			return labelProviderDefault.getDescription(domainModelReference, rootEClass);
 		}
 		final WritableValue writableValue = getObservableValue(getDescription(eContainingClass
 			.getName(),
