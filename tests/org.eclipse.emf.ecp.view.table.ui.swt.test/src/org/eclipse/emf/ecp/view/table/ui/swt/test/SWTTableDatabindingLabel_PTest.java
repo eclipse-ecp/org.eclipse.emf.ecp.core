@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.view.table.ui.swt.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -38,17 +39,18 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecp.view.internal.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
-import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
+import org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
-import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
 import org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
@@ -56,6 +58,8 @@ import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
+import org.eclipse.emfforms.view.spi.multisegment.model.VMultiDomainModelReferenceSegment;
+import org.eclipse.emfforms.view.spi.multisegment.model.VMultisegmentFactory;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
@@ -117,8 +121,7 @@ public class SWTTableDatabindingLabel_PTest {
 		domainModel = EcoreFactory.eINSTANCE.createEClass();
 		final EStructuralFeature eStructuralFeature = EcorePackage.eINSTANCE.getEClass_ESuperTypes();
 
-		final VTableDomainModelReference tableDomainModelReference = createTableDomainModelReference(
-			eStructuralFeature);
+		final VDomainModelReference tableDomainModelReference = createTableDomainModelReference(eStructuralFeature);
 		vTableControl = VTableFactory.eINSTANCE.createTableControl();
 		vTableControl.setDomainModelReference(tableDomainModelReference);
 
@@ -138,16 +141,20 @@ public class SWTTableDatabindingLabel_PTest {
 		renderer.init();
 	}
 
-	private VTableDomainModelReference createTableDomainModelReference(EStructuralFeature eStructuralFeature) {
-		final VTableDomainModelReference tableDomainModelReference = VTableFactory.eINSTANCE
-			.createTableDomainModelReference();
-		tableDomainModelReference.setDomainModelEFeature(eStructuralFeature);
+	private VDomainModelReference createTableDomainModelReference(EStructuralFeature eStructuralFeature) {
+		final VDomainModelReference tableDomainModelReference = VViewFactory.eINSTANCE.createDomainModelReference();
+		final VMultiDomainModelReferenceSegment multiSegment = VMultisegmentFactory.eINSTANCE
+			.createMultiDomainModelReferenceSegment();
+		multiSegment.setDomainModelFeature(eStructuralFeature.getName());
+		tableDomainModelReference.getSegments().add(multiSegment);
 
-		final VFeaturePathDomainModelReference columnReference1 = VViewFactory.eINSTANCE
-			.createFeaturePathDomainModelReference();
-		columnReference1.setDomainModelEFeature(EcorePackage.eINSTANCE.getEClass_Abstract());
+		final VDomainModelReference columnReference1 = VViewFactory.eINSTANCE.createDomainModelReference();
+		final VFeatureDomainModelReferenceSegment column1Segment = VViewFactory.eINSTANCE
+			.createFeatureDomainModelReferenceSegment();
+		column1Segment.setDomainModelFeature(EcorePackage.eINSTANCE.getEClass_Abstract().getName());
+		columnReference1.getSegments().add(column1Segment);
 
-		tableDomainModelReference.getColumnDomainModelReferences().add(columnReference1);
+		multiSegment.getChildDomainModelReferences().add(columnReference1);
 
 		return tableDomainModelReference;
 	}
@@ -158,9 +165,11 @@ public class SWTTableDatabindingLabel_PTest {
 		final IEMFValueProperty columnValueProperty = new EMFValuePropertyDecorator(
 			new EMFValueProperty(EcorePackage.eINSTANCE.getEClass_Abstract()),
 			EcorePackage.eINSTANCE.getEClass_Abstract());
-		final VDomainModelReference columnDMR = ((VTableDomainModelReference) vTableControl.getDomainModelReference())
-			.getColumnDomainModelReferences().get(0);
-		when(databindingService.getValueProperty(columnDMR, domainModel)).thenReturn(columnValueProperty);
+		final VMultiDomainModelReferenceSegment multiSegment = getMultiSegmentFromDMR(
+			vTableControl.getDomainModelReference());
+		final VDomainModelReference columnDMR = multiSegment.getChildDomainModelReferences().get(0);
+		when(databindingService.getValueProperty(eq(columnDMR), eq(domainModel.eClass()), any(EditingDomain.class)))
+			.thenReturn(columnValueProperty);
 
 		final EReference eReference = mock(EReference.class);
 		final EClass eClass = EcorePackage.eINSTANCE.getEClass();
@@ -314,9 +323,11 @@ public class SWTTableDatabindingLabel_PTest {
 		final IEMFValueProperty columnValueProperty = new EMFValuePropertyDecorator(
 			new EMFValueProperty(EcorePackage.eINSTANCE.getEClass_Abstract()),
 			EcorePackage.eINSTANCE.getEClass_Abstract());
-		final VDomainModelReference columnDMR = ((VTableDomainModelReference) vTableControl.getDomainModelReference())
-			.getColumnDomainModelReferences().get(0);
-		when(databindingService.getValueProperty(columnDMR, domainModel)).thenReturn(columnValueProperty);
+		final VMultiDomainModelReferenceSegment multiSegment = getMultiSegmentFromDMR(
+			vTableControl.getDomainModelReference());
+		final VDomainModelReference columnDMR = multiSegment.getChildDomainModelReferences().get(0);
+		when(databindingService.getValueProperty(eq(columnDMR), eq(domainModel.eClass()), any(EditingDomain.class)))
+			.thenReturn(columnValueProperty);
 
 		when(databindingService.getSetting(vTableControl.getDomainModelReference(), domainModel)).thenReturn(
 			InternalEObject.class.cast(domainModel).eSetting(EcorePackage.eINSTANCE.getEClass_ESuperTypes()));
@@ -336,5 +347,20 @@ public class SWTTableDatabindingLabel_PTest {
 		composite = (Composite) composite.getChildren()[0];
 		composite = (Composite) composite.getChildren()[1];
 		return composite.getChildren()[0];
+	}
+
+	/**
+	 * @param dmr
+	 * @return The multi segment of the DMR, throws an {@link IllegalArgumentException} if it is not present
+	 */
+	private VMultiDomainModelReferenceSegment getMultiSegmentFromDMR(VDomainModelReference dmr) {
+		if (dmr.getSegments().isEmpty()) {
+			throw new IllegalStateException("The dmr does not contain any segments");
+		}
+		final VDomainModelReferenceSegment segment = dmr.getSegments().get(dmr.getSegments().size() - 1);
+		if (VMultiDomainModelReferenceSegment.class.isInstance(segment)) {
+			return (VMultiDomainModelReferenceSegment) segment;
+		}
+		throw new IllegalStateException("The DMR's last segment was not a multi segment.");
 	}
 }

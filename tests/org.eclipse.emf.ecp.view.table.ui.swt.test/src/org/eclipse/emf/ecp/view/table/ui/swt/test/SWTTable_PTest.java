@@ -21,10 +21,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.Set;
 
 import org.eclipse.e4.core.contexts.IEclipseContext;
+import org.eclipse.emf.common.command.BasicCommandStack;
+import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -33,6 +35,10 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.common.spi.UniqueSetting;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditorComparator;
 import org.eclipse.emf.ecp.edit.spi.swt.table.StringCellEditor;
@@ -42,8 +48,9 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
@@ -51,7 +58,6 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.table.model.DetailEditing;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
-import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
 import org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
@@ -59,6 +65,9 @@ import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTTestUtil;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTViewTestHelper;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
@@ -70,6 +79,8 @@ import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 import org.eclipse.emfforms.spi.swt.core.di.EMFFormsContextProvider;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
+import org.eclipse.emfforms.view.spi.multisegment.model.VMultiDomainModelReferenceSegment;
+import org.eclipse.emfforms.view.spi.multisegment.model.VMultisegmentFactory;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
@@ -124,6 +135,7 @@ public class SWTTable_PTest {
 		final EClass eClass = EcoreFactory.eINSTANCE.createEClass();
 		eClass.getESuperTypes().add(EcorePackage.eINSTANCE.getEClass());
 		domainElement = eClass;
+		addToResourceIfNecessary(domainElement);
 	}
 
 	@After
@@ -141,7 +153,7 @@ public class SWTTable_PTest {
 		//
 		final Control render = SWTViewTestHelper.render(handle.getTableControl(), domainElement, shell);
 		assertTrue(Label.class.isInstance(render));// Error label with error text
-		assertEquals("The field domainModelEFeature of the given VFeaturePathDomainModelReference must not be null.",
+		assertEquals("The segment's domain model feature must not be null.",
 			Label.class.cast(render).getText());
 	}
 
@@ -152,6 +164,7 @@ public class SWTTable_PTest {
 		final EClass createEClass = EcoreFactory.eINSTANCE.createEClass();
 		createEClass.eUnset(EcorePackage.eINSTANCE.getEClass_ESuperTypes());
 		domainElement = createEClass;
+		addToResourceIfNecessary(domainElement);
 		final TableControlHandle handle = createInitializedTableWithoutTableColumns();
 
 		try {
@@ -170,10 +183,13 @@ public class SWTTable_PTest {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		view.setRootEClass(VViewPackage.eINSTANCE.getView());
 		domainElement = view;
+		addToResourceIfNecessary(view);
 		final TableControlHandle handle = createInitializedTableWithoutTableColumns();
-		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
-			.createFeaturePathDomainModelReference();
-		domainModelReference.setDomainModelEFeature(VViewPackage.eINSTANCE.getView_RootEClass());
+		final VDomainModelReference domainModelReference = VViewFactory.eINSTANCE.createDomainModelReference();
+		final VMultiDomainModelReferenceSegment multiSegment = VMultisegmentFactory.eINSTANCE
+			.createMultiDomainModelReferenceSegment();
+		multiSegment.setDomainModelFeature(VViewPackage.eINSTANCE.getView_RootEClass().getName());
+		domainModelReference.getSegments().add(multiSegment);
 		handle.getTableControl().setDomainModelReference(domainModelReference);
 
 		try {
@@ -192,10 +208,13 @@ public class SWTTable_PTest {
 		// setup model
 		final VView view = VViewFactory.eINSTANCE.createView();
 		domainElement = view;
+		addToResourceIfNecessary(view);
 		final TableControlHandle handle = createInitializedTableWithoutTableColumns();
-		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
-			.createFeaturePathDomainModelReference();
-		domainModelReference.setDomainModelEFeature(VViewPackage.eINSTANCE.getView_RootEClass());
+		final VDomainModelReference domainModelReference = VViewFactory.eINSTANCE.createDomainModelReference();
+		final VMultiDomainModelReferenceSegment multiSegment = VMultisegmentFactory.eINSTANCE
+			.createMultiDomainModelReferenceSegment();
+		multiSegment.setDomainModelFeature(VViewPackage.eINSTANCE.getView_RootEClass().getName());
+		domainModelReference.getSegments().add(multiSegment);
 		handle.getTableControl().setDomainModelReference(domainModelReference);
 
 		try {
@@ -216,8 +235,8 @@ public class SWTTable_PTest {
 		assertTrue(render instanceof Composite);
 
 		assertEquals(domainElement.eClass().getEAttributes().size(),
-			VTableDomainModelReference.class.cast(handle.getTableControl().getDomainModelReference())
-				.getColumnDomainModelReferences().size());
+			getMultiSegmentFromDMR(handle.getTableControl().getDomainModelReference())
+				.getChildDomainModelReferences().size());
 
 		final Control control = getTable(render);
 		assertTrue(control instanceof Table);
@@ -239,8 +258,8 @@ public class SWTTable_PTest {
 		}
 		assertTrue(render instanceof Composite);
 
-		assertEquals(0, VTableDomainModelReference.class.cast(handle.getTableControl().getDomainModelReference())
-			.getColumnDomainModelReferences().size());
+		assertEquals(0, getMultiSegmentFromDMR(handle.getTableControl().getDomainModelReference())
+			.getChildDomainModelReferences().size());
 
 		final Control control = getTable(render);
 		assertTrue(control instanceof Table);
@@ -404,11 +423,12 @@ public class SWTTable_PTest {
 
 		// table control
 		final VTableControl tableControl = createTableControl();
-		final VTableDomainModelReference tableDMR = (VTableDomainModelReference) tableControl.getDomainModelReference();
-		tableDMR.setDomainModelEFeature(EcorePackage.eINSTANCE.getEClass_ESuperTypes());
-		tableDMR.getColumnDomainModelReferences().add(createDMR(EcorePackage.eINSTANCE.getENamedElement_Name()));
-		tableDMR.getColumnDomainModelReferences().add(
-			createDMR(EcorePackage.eINSTANCE.getEClassifier_InstanceClassName()));
+		final VMultiDomainModelReferenceSegment multiSegment = getMultiSegmentFromDMR(
+			tableControl.getDomainModelReference());
+		multiSegment.setDomainModelFeature(EcorePackage.eINSTANCE.getEClass_ESuperTypes().getName());
+		multiSegment.getChildDomainModelReferences().add(createDMR(EcorePackage.eINSTANCE.getENamedElement_Name()));
+		multiSegment.getChildDomainModelReferences()
+			.add(createDMR(EcorePackage.eINSTANCE.getEClassifier_InstanceClassName()));
 
 		// render
 		final AbstractSWTRenderer<VElement> tableRenderer = rendererFactory.getRendererInstance(tableControl,
@@ -465,11 +485,12 @@ public class SWTTable_PTest {
 
 		// table control
 		final VTableControl tableControl = createTableControl();
-		final VTableDomainModelReference tableDMR = (VTableDomainModelReference) tableControl.getDomainModelReference();
-		tableDMR.setDomainModelEFeature(EcorePackage.eINSTANCE.getEClass_ESuperTypes());
-		tableDMR.getColumnDomainModelReferences().add(createDMR(EcorePackage.eINSTANCE.getENamedElement_Name()));
-		tableDMR.getColumnDomainModelReferences().add(
-			createDMR(EcorePackage.eINSTANCE.getEClassifier_InstanceClassName()));
+		final VMultiDomainModelReferenceSegment multiSegment = getMultiSegmentFromDMR(
+			tableControl.getDomainModelReference());
+		multiSegment.setDomainModelFeature(EcorePackage.eINSTANCE.getEClass_ESuperTypes().getName());
+		multiSegment.getChildDomainModelReferences().add(createDMR(EcorePackage.eINSTANCE.getENamedElement_Name()));
+		multiSegment.getChildDomainModelReferences()
+			.add(createDMR(EcorePackage.eINSTANCE.getEClassifier_InstanceClassName()));
 
 		// render
 		final TableControlSWTRenderer tableRenderer = createRendererInstanceWithCustomCellEditor(tableControl);
@@ -553,24 +574,37 @@ public class SWTTable_PTest {
 		return clazz;
 	}
 
-	private static VFeaturePathDomainModelReference createDMR(EAttribute attribute, EReference... refs) {
-		final VFeaturePathDomainModelReference dmr = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
-		dmr.setDomainModelEFeature(attribute);
-		dmr.getDomainModelEReferencePath().addAll(Arrays.asList(refs));
+	private static VDomainModelReference createDMR(EAttribute attribute, EReference... refs) {
+		final VDomainModelReference dmr = VViewFactory.eINSTANCE.createDomainModelReference();
+		for (final EReference ref : refs) {
+			final VFeatureDomainModelReferenceSegment pathSegment = VViewFactory.eINSTANCE
+				.createFeatureDomainModelReferenceSegment();
+			pathSegment.setDomainModelFeature(ref.getName());
+			dmr.getSegments().add(pathSegment);
+		}
+		final VFeatureDomainModelReferenceSegment domainSegment = VViewFactory.eINSTANCE
+			.createFeatureDomainModelReferenceSegment();
+		domainSegment.setDomainModelFeature(attribute.getName());
+		dmr.getSegments().add(domainSegment);
 		return dmr;
 	}
 
 	private VView createDetailView() {
 		final VView detailView = VViewFactory.eINSTANCE.createView();
 		final VControl name = VViewFactory.eINSTANCE.createControl();
-		final VFeaturePathDomainModelReference nameRef = VViewFactory.eINSTANCE.createFeaturePathDomainModelReference();
-		nameRef.setDomainModelEFeature(EcorePackage.eINSTANCE.getENamedElement_Name());
+		final VDomainModelReference nameRef = VViewFactory.eINSTANCE.createDomainModelReference();
+		final VFeatureDomainModelReferenceSegment nameSegment = VViewFactory.eINSTANCE
+			.createFeatureDomainModelReferenceSegment();
+		nameSegment.setDomainModelFeature(EcorePackage.eINSTANCE.getENamedElement_Name().getName());
+		nameRef.getSegments().add(nameSegment);
 		name.setDomainModelReference(nameRef);
 		detailView.getChildren().add(name);
 		final VControl abstr = VViewFactory.eINSTANCE.createControl();
-		final VFeaturePathDomainModelReference abstractRef = VViewFactory.eINSTANCE
-			.createFeaturePathDomainModelReference();
-		abstractRef.setDomainModelEFeature(EcorePackage.eINSTANCE.getEClass_Abstract());
+		final VDomainModelReference abstractRef = VViewFactory.eINSTANCE.createDomainModelReference();
+		final VFeatureDomainModelReferenceSegment abstractSegment = VViewFactory.eINSTANCE
+			.createFeatureDomainModelReferenceSegment();
+		abstractSegment.setDomainModelFeature(EcorePackage.eINSTANCE.getEClass_Abstract().getName());
+		abstractRef.getSegments().add(abstractSegment);
 		abstr.setDomainModelReference(abstractRef);
 		detailView.getChildren().add(abstr);
 		return detailView;
@@ -598,17 +632,21 @@ public class SWTTable_PTest {
 	}
 
 	public static VDomainModelReference createTableColumn(EStructuralFeature feature) {
-		final VFeaturePathDomainModelReference reference = VViewFactory.eINSTANCE
-			.createFeaturePathDomainModelReference();
-		reference.setDomainModelEFeature(feature);
+		final VFeatureDomainModelReferenceSegment segment = VViewFactory.eINSTANCE
+			.createFeatureDomainModelReferenceSegment();
+		segment.setDomainModelFeature(feature.getName());
+		final VDomainModelReference reference = VViewFactory.eINSTANCE.createDomainModelReference();
+		reference.getSegments().add(segment);
 		return reference;
 	}
 
 	public static TableControlHandle createInitializedTableWithoutTableColumns() {
 		final TableControlHandle tableControlHandle = createUninitializedTableWithoutColumns();
-		final VFeaturePathDomainModelReference domainModelReference = VTableFactory.eINSTANCE
-			.createTableDomainModelReference();
-		domainModelReference.setDomainModelEFeature(EcorePackage.eINSTANCE.getEClass_ESuperTypes());
+		final VDomainModelReference domainModelReference = VViewFactory.eINSTANCE.createDomainModelReference();
+		final VMultiDomainModelReferenceSegment multiSegment = VMultisegmentFactory.eINSTANCE
+			.createMultiDomainModelReferenceSegment();
+		multiSegment.setDomainModelFeature(EcorePackage.eINSTANCE.getEClass_ESuperTypes().getName());
+		domainModelReference.getSegments().add(multiSegment);
 		tableControlHandle.getTableControl().setDomainModelReference(domainModelReference);
 
 		return tableControlHandle;
@@ -624,7 +662,11 @@ public class SWTTable_PTest {
 	 */
 	private static VTableControl createTableControl() {
 		final VTableControl tc = VTableFactory.eINSTANCE.createTableControl();
-		tc.setDomainModelReference(VTableFactory.eINSTANCE.createTableDomainModelReference());
+		final VDomainModelReference dmr = VViewFactory.eINSTANCE.createDomainModelReference();
+		final VMultiDomainModelReferenceSegment multiSegment = VMultisegmentFactory.eINSTANCE
+			.createMultiDomainModelReferenceSegment();
+		dmr.getSegments().add(multiSegment);
+		tc.setDomainModelReference(dmr);
 		return tc;
 	}
 
@@ -984,4 +1026,38 @@ public class SWTTable_PTest {
 
 	}
 
+	/**
+	 *
+	 * @param dmr
+	 * @return The multi segment of the DMR, throws an {@link IllegalArgumentException} if it is not present
+	 */
+	private VMultiDomainModelReferenceSegment getMultiSegmentFromDMR(VDomainModelReference dmr) {
+		if (dmr.getSegments().isEmpty()) {
+			throw new IllegalStateException("The dmr does not contain any segments");
+		}
+		final VDomainModelReferenceSegment segment = dmr.getSegments().get(dmr.getSegments().size() - 1);
+		if (VMultiDomainModelReferenceSegment.class.isInstance(segment)) {
+			return (VMultiDomainModelReferenceSegment) segment;
+		}
+		throw new IllegalStateException("The DMR's last segment was not a multi segment.");
+	}
+
+	private void addToResourceIfNecessary(EObject eObject) {
+		if (eObject.eResource() != null) {
+			return;
+		}
+		final EObject rootObject = EcoreUtil.getRootContainer(eObject);
+		final ResourceSet rs = new ResourceSetImpl();
+		final ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
+			new ReflectiveItemProviderAdapterFactory(),
+			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
+		final AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(
+			adapterFactory,
+			new BasicCommandStack(), rs);
+		rs.eAdapters().add(new AdapterFactoryEditingDomain.EditingDomainProvider(domain));
+		final Resource resource = rs.createResource(URI.createURI("VIRTUAL_URI")); //$NON-NLS-1$
+		if (resource != null) {
+			resource.getContents().add(rootObject);
+		}
+	}
 }
