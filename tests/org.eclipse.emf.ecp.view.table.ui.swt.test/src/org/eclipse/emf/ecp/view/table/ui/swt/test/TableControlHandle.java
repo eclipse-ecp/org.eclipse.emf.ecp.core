@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -12,8 +12,9 @@
 package org.eclipse.emf.ecp.view.table.ui.swt.test;
 
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
-import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
+import org.eclipse.emfforms.view.spi.multisegment.model.VMultiDomainModelReferenceSegment;
 
 /**
  * @author Jonas
@@ -34,8 +35,8 @@ public class TableControlHandle {
 	 */
 	public void addFirstTableColumn(VDomainModelReference tableColumn1) {
 		setTableColumn1(tableColumn1);
-		VTableDomainModelReference.class.cast(getTableControl().getDomainModelReference())
-			.getColumnDomainModelReferences().add(tableColumn1);
+		getMultiSegmentFromDMR(getTableControl().getDomainModelReference())
+			.getChildDomainModelReferences().add(tableColumn1);
 
 	}
 
@@ -44,8 +45,8 @@ public class TableControlHandle {
 	 */
 	public void addSecondTableColumn(VDomainModelReference tableColumn2) {
 		setTableColumn2(tableColumn2);
-		VTableDomainModelReference.class.cast(getTableControl().getDomainModelReference())
-			.getColumnDomainModelReferences().add(tableColumn2);
+		getMultiSegmentFromDMR(getTableControl().getDomainModelReference())
+			.getChildDomainModelReferences().add(tableColumn2);
 
 	}
 
@@ -91,4 +92,19 @@ public class TableControlHandle {
 		this.tableColumn2 = tableColumn2;
 	}
 
+	/**
+	 *
+	 * @param dmr
+	 * @return The multi segment of the DMR, throws an {@link IllegalArgumentException} if it is not present
+	 */
+	private VMultiDomainModelReferenceSegment getMultiSegmentFromDMR(VDomainModelReference dmr) {
+		if (dmr.getSegments().isEmpty()) {
+			throw new IllegalStateException("The dmr does not contain any segments");
+		}
+		final VDomainModelReferenceSegment segment = dmr.getSegments().get(dmr.getSegments().size() - 1);
+		if (VMultiDomainModelReferenceSegment.class.isInstance(segment)) {
+			return (VMultiDomainModelReferenceSegment) segment;
+		}
+		throw new IllegalStateException("The DMR's last segment was not a multi segment.");
+	}
 }

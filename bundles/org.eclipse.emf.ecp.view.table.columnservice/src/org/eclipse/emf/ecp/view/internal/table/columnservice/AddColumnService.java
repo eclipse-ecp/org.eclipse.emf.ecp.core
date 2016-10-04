@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
+ * Lucas Koehler - adapted to multi segments
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.table.columnservice;
 
@@ -20,11 +21,13 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.internal.table.generator.TableColumnGenerator;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
-import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
+import org.eclipse.emfforms.view.spi.multisegment.model.VMultiDomainModelReferenceSegment;
 
 /**
  * This service will iterate over all contents of the {@link org.eclipse.emf.ecp.view.spi.model.VView VView} and will
@@ -62,25 +65,23 @@ public class AddColumnService implements ViewModelService {
 	}
 
 	private void addColumnsIfNeeded(VTableControl tableControl) {
-		if (tableControl.getDomainModelReference() == null) {
+		final VDomainModelReference dmr = tableControl.getDomainModelReference();
+		if (dmr == null) {
 			return;
 		}
-		if (!VTableDomainModelReference.class.isInstance(tableControl.getDomainModelReference())) {
+		if (dmr.getSegments().isEmpty()) {
 			return;
 		}
-		if (VTableDomainModelReference.class.cast(tableControl.getDomainModelReference())
-			.getColumnDomainModelReferences().size() < 1) {
-			final VTableDomainModelReference tableDMR = (VTableDomainModelReference) tableControl
-				.getDomainModelReference();
+		final VDomainModelReferenceSegment lastSegment = dmr.getSegments().get(dmr.getSegments().size() - 1);
+		if (!VMultiDomainModelReferenceSegment.class.isInstance(lastSegment)) {
+			return;
+		}
+		final VMultiDomainModelReferenceSegment multiSegment = (VMultiDomainModelReferenceSegment) lastSegment;
+		if (multiSegment.getChildDomainModelReferences().size() < 1) {
 			final IValueProperty valueProperty;
 			try {
-				if (tableDMR.getDomainModelReference() != null) {
-					valueProperty = Activator.getDefault().getEMFFormsDatabinding()
-						.getValueProperty(tableDMR.getDomainModelReference(), context.getDomainModel());
-				} else {
-					valueProperty = Activator.getDefault().getEMFFormsDatabinding()
-						.getValueProperty(tableDMR, context.getDomainModel());
-				}
+				valueProperty = Activator.getDefault().getEMFFormsDatabinding().getValueProperty(dmr,
+					context.getDomainModel());
 			} catch (final DatabindingFailedException ex) {
 				Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 				return;
