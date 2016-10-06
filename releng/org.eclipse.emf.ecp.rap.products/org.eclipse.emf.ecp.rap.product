@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="ECP Rap Demo" uid="org.eclipse.emf.ecp.rap.demo" version="1.10.0" useFeatures="false" includeLaunchers="false">
+<product name="ECP Rap Demo" uid="org.eclipse.emf.ecp.rap.demo" version="2.0.0" useFeatures="false" includeLaunchers="false">
 
    <aboutInfo>
       <image path="icons/eclipse_lg.gif"/>
