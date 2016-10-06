@@ -2,10 +2,10 @@
 <feature
       id="org.eclipse.emf.ecp.emfforms.runtime.feature"
       label="EMF Forms Runtime"
-      version="1.11.0.qualifier"
+      version="2.0.0.qualifier"
       provider-name="%providerName"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.11.0.qualifier">
+      license-feature-version="2.0.0.qualifier">
 
    <description>
       %description
@@ -23,9 +23,11 @@
          id="org.eclipse.emf.ecp.view.categorization.feature"
          version="0.0.0"/>
 
+<!--
    <includes
          id="org.eclipse.emf.ecp.view.custom.feature"
          version="0.0.0"/>
+-->
 
    <includes
          id="org.eclipse.emf.ecp.view.group.feature"

@@ -2,11 +2,11 @@
 <feature
       id="org.eclipse.emf.ecp.view.section.feature"
       label="EMF Forms Section Model (Experimental)"
-      version="1.11.0.qualifier"
+      version="2.0.0.qualifier"
       provider-name="%providerName"
       plugin="org.eclipse.emf.ecp.view.section.model"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.11.0.qualifier">
+      license-feature-version="2.0.0.qualifier">
 
    <description>
       %description
