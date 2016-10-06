@@ -52,12 +52,14 @@
          version="0.0.0"
          unpack="false"/>
 
+<!--
    <plugin
          id="org.eclipse.emf.ecp.view.model.project.installer"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
+-->
 
    <plugin
          id="org.eclipse.emf.ecp.ide.editor.viewmodel"
@@ -85,12 +87,14 @@
          version="0.0.0"
          unpack="false"/>
 
+<!--
    <plugin
          id="org.eclipse.emf.ecp.view.template.tooling"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
+-->
 
    <plugin
          id="org.eclipse.emfforms.editor"
@@ -99,11 +103,12 @@
          version="0.0.0"
          unpack="false"/>
 
+<!--
    <plugin
          id="org.eclipse.emf.ecp.ide.editor.view.templatebridge"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
+-->
 </feature>

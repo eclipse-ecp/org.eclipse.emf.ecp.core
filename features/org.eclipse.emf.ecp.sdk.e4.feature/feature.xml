@@ -2,10 +2,10 @@
 <feature
       id="org.eclipse.emf.ecp.sdk.e4.feature"
       label="ECP SDK e4 (Target Feature)"
-      version="1.10.0.qualifier"
+      version="2.0.0.qualifier"
       provider-name="Eclipse Modeling Project"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.10.0.qualifier">
+      license-feature-version="2.0.0.qualifier">
 
    <description>
       %description
@@ -47,9 +47,11 @@
          id="org.eclipse.emf.ecp.e4.feature.source"
          version="0.0.0"/>
 
+<!--
    <includes
          id="org.eclipse.emf.ecp.view.model.editor.feature.source"
          version="0.0.0"/>
+-->
 
    <includes
          id="org.eclipse.emf.ecp.cdo.feature"
@@ -83,10 +85,13 @@
          id="org.eclipse.emf.ecp.license.feature"
          version="0.0.0"/>
 
+<!--
    <includes
          id="org.eclipse.emf.ecp.view.model.editor.feature"
          version="0.0.0"/>
+-->
 
+<!--
    <includes
          id="org.eclipse.emf.ecp.view.model.controls.feature"
          version="0.0.0"/>
@@ -94,5 +99,5 @@
    <includes
          id="org.eclipse.emf.ecp.view.model.controls.feature.source"
          version="0.0.0"/>
-
+-->
 </feature>

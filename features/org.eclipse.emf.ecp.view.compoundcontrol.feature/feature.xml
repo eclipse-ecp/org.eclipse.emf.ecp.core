@@ -2,11 +2,11 @@
 <feature
       id="org.eclipse.emf.ecp.view.compoundcontrol.feature"
       label="EMF Forms Compound Control Feature"
-      version="1.10.0.qualifier"
+      version="2.0.0.qualifier"
       provider-name="Eclipse Modeling Project"
       plugin="org.eclipse.emf.ecp.view.compoundcontrol.model"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.10.0.qualifier">
+      license-feature-version="2.0.0.qualifier">
 
    <description>
       %description

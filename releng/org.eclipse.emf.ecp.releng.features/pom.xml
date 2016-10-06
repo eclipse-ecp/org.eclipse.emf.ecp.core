@@ -6,16 +6,18 @@
 	<parent>
 		<groupId>org.eclipse.emf.ecp</groupId>
 		<artifactId>ecp-parent</artifactId>
-		<version>1.10.0-SNAPSHOT</version>
+		<version>2.0.0-SNAPSHOT</version>
 		<relativePath>../../releng/org.eclipse.emf.ecp.releng/</relativePath>
 	</parent>
 	<groupId>org.eclipse.emf.ecp</groupId>
 	<artifactId>ecp-features-parent</artifactId>
-	<version>1.10.0-SNAPSHOT</version>
+	<version>2.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<modules>
+		<!-- 
 		<module>../../features/org.eclipse.emf.ecp.emfforms.idetooling.feature</module>
+		-->
 		<module>../../features/org.eclipse.emf.ecp.target.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.cdo.feature</module>
@@ -27,11 +29,17 @@
 		<module>../../features/org.eclipse.emf.ecp.ecore.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.ecore.editor.feature</module>
 		<module>../../features/org.eclipse.emfforms.editor.feature</module>
+		<!--
 		<module>../../features/org.eclipse.emf.ecp.view.model.editor.feature</module>
+		-->
+		<!--
 		<module>../../features/org.eclipse.emf.ecp.view.model.controls.feature</module>
+		-->
 		<module>../../features/org.eclipse.emf.ecp.examplemodel.ui.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.categorization.feature</module>
+		<!--
 		<module>../../features/org.eclipse.emf.ecp.view.custom.feature</module>
+		-->
 		<module>../../features/org.eclipse.emf.ecp.view.groupedgrid.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.label.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.group.feature</module>
@@ -67,7 +75,9 @@
 		<module>../../features/org.eclipse.emf.ecp.rap.sdk.feature</module>
 		
 		<!-- key attribute mapping -->
+		<!--
 		<module>../../features/org.eclipse.emf.ecp.view.keyattributedmr.feature</module>
+		-->
 		
 		<!-- index mapping -->
 		<module>../../features/org.eclipse.emf.ecp.view.indexdmr.feature</module>
@@ -92,7 +102,9 @@
 		
 		<module>../../features/org.eclipse.emfforms.swt.controlgrid.feature</module>
 		
+		<!--
 		<module>../../features/org.eclipse.emf.ecp.emf2web.feature</module>
+		-->
 		
 		<module>../../features/org.eclipse.emf.ecp.view.table.ui.swt.persistedstate.feature</module>
 		
