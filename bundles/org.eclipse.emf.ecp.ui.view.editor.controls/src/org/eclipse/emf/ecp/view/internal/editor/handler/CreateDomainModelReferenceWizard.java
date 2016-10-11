@@ -32,7 +32,6 @@ import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.internal.editor.controls.Activator;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
-import org.eclipse.emf.ecp.view.spi.custom.model.VCustomDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
@@ -119,7 +118,8 @@ public class CreateDomainModelReferenceWizard extends SelectModelElementWizard {
 	public void addPages() {
 
 		customizeDMRPage = new CustomizeDomainModelReferencePage(
-			"New Domain Model Reference", "Select an EStructuralFeature", "Select a domain model EStructuralFeature for the domain model reference.", getDummyControl()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			"New Domain Model Reference", "Select an EStructuralFeature", //$NON-NLS-1$ //$NON-NLS-2$
+			"Select a domain model EStructuralFeature for the domain model reference.", getDummyControl()); //$NON-NLS-1$
 
 		if (domainModelReference == null) {
 			firstPage = new WizardPageExtension(getPageName());
@@ -128,11 +128,13 @@ public class CreateDomainModelReferenceWizard extends SelectModelElementWizard {
 			addPage(firstPage);
 		} else {
 			customizeDMRPage.setEClass(domainModelReference.eClass());
-			if (VCustomDomainModelReference.class.isInstance(domainModelReference)) {
-				customizeDMRPage.setTitle("Select a Custom Domain Model Reference"); //$NON-NLS-1$
-				customizeDMRPage
-					.setDescription("Please specify the bundle and class name for the Custom Domain Model Reference."); //$NON-NLS-1$
-			}
+			// TODO Consider CustomDMR when it is fixed
+			// if (VCustomDomainModelReference.class.isInstance(domainModelReference)) {
+			// customizeDMRPage.setTitle("Select a Custom Domain Model Reference"); //$NON-NLS-1$
+			// customizeDMRPage
+			// .setDescription("Please specify the bundle and class name for the Custom Domain Model Reference.");
+			// //$NON-NLS-1$
+			// }
 		}
 
 		addPage(customizeDMRPage);
@@ -197,8 +199,7 @@ public class CreateDomainModelReferenceWizard extends SelectModelElementWizard {
 		if (structuralFeature.isMany()) {
 			command = AddCommand.create(editingDomain, eObject,
 				structuralFeature, customizeDMRPage.getvControl().getDomainModelReference());
-		}
-		else {
+		} else {
 			command = SetCommand.create(editingDomain, eObject,
 				structuralFeature, customizeDMRPage.getvControl().getDomainModelReference());
 		}
@@ -223,22 +224,24 @@ public class CreateDomainModelReferenceWizard extends SelectModelElementWizard {
 			return false;
 		}
 
-		if (VCustomDomainModelReference.class.isInstance(customizeDMRPage.getvControl().getDomainModelReference())) {
-			final VCustomDomainModelReference customDMR = (VCustomDomainModelReference) customizeDMRPage.getvControl()
-				.getDomainModelReference();
-			if (customDMR.getBundleName() != null && customDMR.getClassName() != null) {
-				return true;
-			}
-			return false;
-		}
-		VDomainModelReference dmrToCheck = customizeDMRPage.getvControl().getDomainModelReference();
-		if (VTableDomainModelReference.class.isInstance(dmrToCheck)) {
-			final VTableDomainModelReference tableDomainModelReference = VTableDomainModelReference.class
-				.cast(dmrToCheck);
-			if (tableDomainModelReference.getDomainModelReference() != null) {
-				dmrToCheck = tableDomainModelReference.getDomainModelReference();
-			}
-		}
+		// TODO Consider CustomDMR when it is fixed
+		// if (VCustomDomainModelReference.class.isInstance(customizeDMRPage.getvControl().getDomainModelReference())) {
+		// final VCustomDomainModelReference customDMR = (VCustomDomainModelReference) customizeDMRPage.getvControl()
+		// .getDomainModelReference();
+		// if (customDMR.getBundleName() != null && customDMR.getClassName() != null) {
+		// return true;
+		// }
+		// return false;
+		// }
+		final VDomainModelReference dmrToCheck = customizeDMRPage.getvControl().getDomainModelReference();
+		// TODO remove
+		// if (VTableDomainModelReference.class.isInstance(dmrToCheck)) {
+		// final VTableDomainModelReference tableDomainModelReference = VTableDomainModelReference.class
+		// .cast(dmrToCheck);
+		// if (tableDomainModelReference.getDomainModelReference() != null) {
+		// dmrToCheck = tableDomainModelReference.getDomainModelReference();
+		// }
+		// }
 		try {
 			Activator.getDefault().getEMFFormsDatabinding()
 				.getValueProperty(dmrToCheck, null);
