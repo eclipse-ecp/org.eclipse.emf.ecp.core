@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.group.model="http://org/eclipse/emf/ecp/view/group/model" xmlns:org.eclipse.emf.ecp.view.horizontal.model="http://org/eclipse/emf/ecp/view/horizontal/model" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/170" xmi:id="_krXaMEWAEeWfKJaajyNdyA" ecorePath="/org.eclipse.emf.ecp.makeithappen.model/model/task.ecore">
+<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.group.model="http://org/eclipse/emf/ecp/view/group/model" xmlns:org.eclipse.emf.ecp.view.horizontal.model="http://org/eclipse/emf/ecp/view/horizontal/model" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/170" xmlns:org.eclipse.emf.ecp.view.table.model="http://org/eclipse/emf/ecp/view/table/model/150" xmlns:org.eclipse.emfforms.view.multisegment.model="http://org/eclipse/emfforms/view/multisegment/model/200" xmi:id="_krXaMEWAEeWfKJaajyNdyA" ecorePath="/org.eclipse.emf.ecp.makeithappen.model/model/task.ecore">
   <rootEClass href="http://eclipse/org/emf/ecp/makeithappen/model/task#//User"/>
   <children xsi:type="org.eclipse.emf.ecp.view.horizontal.model:HorizontalLayout" xmi:id="_krXaMUWAEeWfKJaajyNdyA">
     <children xsi:type="org.eclipse.emf.ecp.view.group.model:Group" xmi:id="_krXaMkWAEeWfKJaajyNdyA" name="%Primary">
@@ -60,6 +60,21 @@
   <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_krYBU0WAEeWfKJaajyNdyA" name="Control_tasks">
     <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:DomainModelReference" xmi:id="_krYBVEWAEeWfKJaajyNdyA">
       <segments xsi:type="org.eclipse.emf.ecp.view.model:FeatureDomainModelReferenceSegment" domainModelFeature="tasks"/>
+    </domainModelReference>
+  </children>
+  <children xsi:type="org.eclipse.emf.ecp.view.table.model:TableControl" xmi:id="_eUZ3IIVeEeaSkuhjvSDtzQ">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:DomainModelReference" xmi:id="_ijtJIIVeEeaSkuhjvSDtzQ">
+	  <segments xsi:type="org.eclipse.emfforms.view.multisegment.model:MultiDomainModelReferenceSegment" domainModelFeature="tasks">
+	    <childDomainModelReferences xsi:type="org.eclipse.emf.ecp.view.model:DomainModelReference" xmi:id="_3w0AEIVeEeaSkuhjvSDtzQ">
+          <segments xsi:type="org.eclipse.emf.ecp.view.model:FeatureDomainModelReferenceSegment" domainModelFeature="name"/>
+        </childDomainModelReferences>
+	    <childDomainModelReferences xsi:type="org.eclipse.emf.ecp.view.model:DomainModelReference" xmi:id="_3w0AFIVeEeaSkuhjvSDtzQ">
+          <segments xsi:type="org.eclipse.emf.ecp.view.model:FeatureDomainModelReferenceSegment" domainModelFeature="assignee"/>
+        </childDomainModelReferences>
+	    <childDomainModelReferences xsi:type="org.eclipse.emf.ecp.view.model:DomainModelReference" xmi:id="_3w0AGIVeEeaSkuhjvSDtzQ">
+          <segments xsi:type="org.eclipse.emf.ecp.view.model:FeatureDomainModelReferenceSegment" domainModelFeature="done"/>
+        </childDomainModelReferences>
+	  </segments>
     </domainModelReference>
   </children>
 </org.eclipse.emf.ecp.view.model:View>
