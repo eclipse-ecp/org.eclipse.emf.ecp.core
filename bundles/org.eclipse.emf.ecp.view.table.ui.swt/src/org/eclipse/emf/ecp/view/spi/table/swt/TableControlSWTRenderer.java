@@ -564,7 +564,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		return AdapterFactoryEditingDomain.getEditingDomainFor(getViewModelContext().getDomainModel());
 	}
 
-	private void setupValidation(final TableViewerComposite tableViewerComposite) {
+	private void setupValidation(final AbstractTableViewerComposite tableViewerComposite) {
 		if (tableViewerComposite.getValidationControls().isPresent()) {
 			final List<Control> validationControls = tableViewerComposite.getValidationControls().get();
 			if (validationControls.size() == 1 && Label.class.isInstance(validationControls.get(0))) {
