@@ -139,7 +139,9 @@ public class IndexdmrSwitch<T> extends Switch<T> {
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 2.0
+	 *        <!-- end-user-doc -->
 	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Index Domain Model Reference Segment</em>'.
@@ -187,7 +189,9 @@ public class IndexdmrSwitch<T> extends Switch<T> {
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
+	 *
+	 * @since 2.0
+	 *        <!-- end-user-doc -->
 	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Domain Model Reference Segment</em>'.
@@ -204,7 +208,9 @@ public class IndexdmrSwitch<T> extends Switch<T> {
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
+	 *
+	 * @since 2.0
+	 *        <!-- end-user-doc -->
 	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Feature Domain Model Reference

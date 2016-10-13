@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: EMFForms Genmodel Editor Utilities
 Bundle-SymbolicName: org.eclipse.emfforms.editor.genmodel.util;singleton:=true
-Bundle-Version: 1.11.0.qualifier
+Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
 Export-Package: org.eclipse.emfforms.editor.genmodel.util;version="1.11.0";x-internal:=true,
  org.eclipse.emfforms.internal.editor.genmodel.util;version="1.11.0";x-internal:=true,
