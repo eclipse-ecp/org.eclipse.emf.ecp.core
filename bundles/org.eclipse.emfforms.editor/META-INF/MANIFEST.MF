@@ -10,8 +10,8 @@ Export-Package: org.eclipse.emfforms.internal.editor;version="2.0.0";x-internal:
  org.eclipse.emfforms.internal.editor.toolbaractions;version="2.0.0";;x-internal:=true;x-internal:=true,
  org.eclipse.emfforms.internal.editor.ui;version="2.0.0";x-friends:="org.eclipse.emfforms.editor.ecore",
  org.eclipse.emfforms.spi.editor;version="2.0.0",
- org.eclipse.emfforms.spi.editor.helpers;version="2.0.0";;x-friends:="org.eclipse.emfforms.editor.ecore,org.eclipse.emfforms.editor.genmodel"
- org.eclipse.emfforms.spi.editor.helpers;version="1.11.0";;x-friends:="org.eclipse.emfforms.editor.ecore,org.eclipse.emfforms.editor.genmodel"
+ org.eclipse.emfforms.spi.editor.handler;version="2.0.0",
+ org.eclipse.emfforms.spi.editor.helpers;version="2.0.0";x-friends:="org.eclipse.emfforms.editor.ecore,org.eclipse.emfforms.editor.genmodel"
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.1.0,4.0.0)",
  org.eclipse.emf.ecp.ui.view.swt;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.emf.edit.ui;bundle-version="[2.10.0,3.0.0)",

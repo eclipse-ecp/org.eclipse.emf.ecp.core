@@ -14,6 +14,5 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.eclipse.emfforms.spi.core.services.databinding.emf;version="[2.0.0,3.0.0)",
  org.osgi.framework;version="[1.3.0,2.0.0)",
  org.osgi.service.component.annotations;version="[1.2.0,2.0.0)"
-Service-Component: OSGI-INF/indexDomainModelReferenceConverter.xml,
- OSGI-INF/IndexDomainModelReferenceSegmentConverter.xml
+Service-Component: OSGI-INF/IndexDomainModelReferenceSegmentConverter.xml
 Bundle-ActivationPolicy: lazy
