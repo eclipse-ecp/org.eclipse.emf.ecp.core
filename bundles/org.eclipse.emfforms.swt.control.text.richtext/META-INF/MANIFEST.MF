@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: EMFForms SWT Rich Text Control
 Bundle-SymbolicName: org.eclipse.emfforms.swt.control.text.richtext;singleton:=true
-Bundle-Version: 1.11.0.qualifier
+Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
 Export-Package: org.eclipse.emfforms.internal.swt.control.text.richtext.renderer;version="2.0.0";x-internal:=true,
  org.eclipse.emfforms.spi.swt.control.text.richtext.renderer;version="2.0.0"

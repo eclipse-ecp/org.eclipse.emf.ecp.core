@@ -158,7 +158,9 @@ public class IndexdmrAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 2.0
+	 *        <!-- end-user-doc -->
 	 *
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReferenceSegment
@@ -208,7 +210,9 @@ public class IndexdmrAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 2.0
+	 *        <!-- end-user-doc -->
 	 *
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment
@@ -225,7 +229,9 @@ public class IndexdmrAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 2.0
+	 *        <!-- end-user-doc -->
 	 *
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Table UI RCP
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.table.ui.rcp
-Bundle-Version: 1.11.0.qualifier
+Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
 Export-Package: org.eclipse.emf.ecp.view.internal.table.ui.rcp;version="1.11.0";x-internal:=true,
  org.eclipse.emf.ecp.view.spi.table.ui.rcp;version="1.11.0"
