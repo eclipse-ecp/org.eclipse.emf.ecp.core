@@ -4,8 +4,8 @@ Bundle-Name: Table UI RCP
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.table.ui.rcp
 Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emf.ecp.view.internal.table.ui.rcp;version="1.11.0";x-internal:=true,
- org.eclipse.emf.ecp.view.spi.table.ui.rcp;version="1.11.0"
+Export-Package: org.eclipse.emf.ecp.view.internal.table.ui.rcp;version="2.0.0";x-internal:=true,
+ org.eclipse.emf.ecp.view.spi.table.ui.rcp;version="2.0.0"
 Require-Bundle: org.eclipse.swt;bundle-version="[3.0.0,4.0.0)",
  org.eclipse.jface;bundle-version="[3.0.0,4.0.0)",
  org.eclipse.emf.edit.ui;bundle-version="[2.7.0,3.0.0)",
