@@ -29,6 +29,7 @@
 		<module>../../features/org.eclipse.emf.ecp.ecore.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.ecore.editor.feature</module>
 		<module>../../features/org.eclipse.emfforms.editor.feature</module>
+		<module>../../features/org.eclipse.emfforms.editor.genmodel.util.feature</module>
 		<!--
 		<module>../../features/org.eclipse.emf.ecp.view.model.editor.feature</module>
 		-->
