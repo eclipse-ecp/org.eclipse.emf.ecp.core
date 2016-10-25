@@ -25,11 +25,16 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.editor.controls.AbstractFilteredReferenceCommand;
 import org.eclipse.emf.ecp.view.spi.editor.controls.Helper;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
+import org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
@@ -73,6 +78,13 @@ public class LinkFeatureControlRenderer extends EditableEReferenceLabelControlSW
 		if (referenceCommand.canExecute()) {
 			referenceCommand.execute();
 		}
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	protected Object getText(Object value) {
+		final EObjectContainmentEList list = (EObjectContainmentEList) value;
+		return super.getText(list.getEObject());
 	}
 
 	/**
@@ -124,20 +136,39 @@ public class LinkFeatureControlRenderer extends EditableEReferenceLabelControlSW
 		@Override
 		protected void setSelectedValues(EStructuralFeature selectedFeature, List<EReference> bottomUpPath) {
 			try {
-				final VFeaturePathDomainModelReference modelReference = (VFeaturePathDomainModelReference) getEObject();
-				modelReference.setDomainModelEFeature(selectedFeature);
-				modelReference.getDomainModelEReferencePath().clear();
-				modelReference.getDomainModelEReferencePath().addAll(bottomUpPath);
+				// Transform the selected path to DMR segments and add them to the dmr.
+				final VDomainModelReference modelReference = (VDomainModelReference) getEObject();
+				if (!modelReference.getSegments().isEmpty()) {
+					modelReference.getSegments().clear();
+				}
+				for (final EReference eReference : bottomUpPath) {
+					modelReference.getSegments().add(createDMRSegment(eReference));
+				}
+				modelReference.getSegments().add(createDMRSegment(selectedFeature));
 			} catch (final DatabindingFailedException ex) {
 				Activator.getDefault().getReportService().report(new AbstractReport(ex));
 			}
+		}
+
+		/**
+		 * Creates a {@link VDomainModelReferenceSegment} for the given {@link EStructuralFeature}.
+		 *
+		 * @param structuralFeature The {@link EStructuralFeature} that defines the path part represented by the created
+		 *            segment
+		 * @return The created {@link VDomainModelReference}
+		 */
+		private VDomainModelReferenceSegment createDMRSegment(final EStructuralFeature structuralFeature) {
+			final VFeatureDomainModelReferenceSegment pathSegment = VViewFactory.eINSTANCE
+				.createFeatureDomainModelReferenceSegment();
+			pathSegment.setDomainModelFeature(structuralFeature.getName());
+			return pathSegment;
 		}
 
 	}
 
 	/**
 	 * Allows to retrieve the root eclass necessary to select the {@link VFeaturePathDomainModelReference}.
-	 * 
+	 *
 	 * @param notifier The {@link Notifier} triggering the selection
 	 * @return The {@link EClass} that should be used as root
 	 */

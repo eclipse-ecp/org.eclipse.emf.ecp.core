@@ -15,10 +15,10 @@
       disposableProviderFactory="true" extensibleProviderFactory="true" childCreationExtenders="true"
       ecorePackage="view.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="view.ecore#//LabelAlignment">
-      <genEnumLiterals ecoreEnumLiteral="view.ecore#//LabelAlignment/Default"/>
       <genEnumLiterals ecoreEnumLiteral="view.ecore#//LabelAlignment/Left"/>
-      <genEnumLiterals ecoreEnumLiteral="view.ecore#//LabelAlignment/Top"/>
       <genEnumLiterals ecoreEnumLiteral="view.ecore#//LabelAlignment/None"/>
+      <genEnumLiterals ecoreEnumLiteral="view.ecore#//LabelAlignment/Top"/>
+      <genEnumLiterals ecoreEnumLiteral="view.ecore#//LabelAlignment/Default"/>
     </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="view.ecore#//DateTimeDisplayType">
       <genEnumLiterals ecoreEnumLiteral="view.ecore#//DateTimeDisplayType/TimeAndDate"/>
@@ -32,6 +32,7 @@
     <genClasses image="false" ecoreClass="view.ecore#//Attachment"/>
     <genClasses image="false" ecoreClass="view.ecore#//DomainModelReference">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//DomainModelReference/changeListener"/>
+      <genFeatures children="true" createChild="true" ecoreFeature="ecore:EReference view.ecore#//DomainModelReference/segments"/>
     </genClasses>
     <genClasses ecoreClass="view.ecore#//FeaturePathDomainModelReference">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference view.ecore#//FeaturePathDomainModelReference/domainModelEFeature"/>
@@ -40,17 +41,18 @@
     </genClasses>
     <genClasses image="false" ecoreClass="view.ecore#//Element">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Element/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Element/label"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Element/visible"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Element/enabled"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Element/readonly"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Element/label"/>
       <genFeatures property="None" createChild="false" ecoreFeature="ecore:EReference view.ecore#//Element/diagnostic"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference view.ecore#//Element/attachments"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Element/uuid"/>
     </genClasses>
     <genClasses ecoreClass="view.ecore#//View">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference view.ecore#//View/rootEClass"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference view.ecore#//View/children"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//View/ecorePath"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference view.ecore#//View/children"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference view.ecore#//View/loadingProperties"/>
     </genClasses>
     <genClasses image="false" ecoreClass="view.ecore#//ContainedElement"/>
@@ -59,20 +61,24 @@
     </genClasses>
     <genClasses image="false" ecoreClass="view.ecore#//ContainedContainer"/>
     <genClasses ecoreClass="view.ecore#//Control">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Control/labelAlignment"/>
       <genFeatures createChild="true" ecoreFeature="ecore:EReference view.ecore#//Control/domainModelReference"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Control/labelAlignment"/>
+    </genClasses>
+    <genClasses ecoreClass="view.ecore#//ViewModelProperties"/>
+    <genClasses ecoreClass="view.ecore#//StringToObjectMapEntry">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//StringToObjectMapEntry/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//StringToObjectMapEntry/value"/>
     </genClasses>
     <genClasses ecoreClass="view.ecore#//ViewModelLoadingProperties">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference view.ecore#//ViewModelLoadingProperties/inheritableProperties"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference view.ecore#//ViewModelLoadingProperties/nonInheritableProperties"/>
     </genClasses>
-    <genClasses ecoreClass="view.ecore#//StringToObjectMapEntry">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//StringToObjectMapEntry/key"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//StringToObjectMapEntry/value"/>
-    </genClasses>
-    <genClasses ecoreClass="view.ecore#//ViewModelProperties"/>
     <genClasses ecoreClass="view.ecore#//DateTimeDisplayAttachment">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//DateTimeDisplayAttachment/displayType"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="view.ecore#//DomainModelReferenceSegment"/>
+    <genClasses ecoreClass="view.ecore#//FeatureDomainModelReferenceSegment">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//FeatureDomainModelReferenceSegment/domainModelFeature"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

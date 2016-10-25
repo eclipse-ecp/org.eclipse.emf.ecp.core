@@ -17,6 +17,7 @@ import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecp.edit.internal.swt.SWTImageHelper;
 import org.eclipse.emf.ecp.edit.spi.util.ECPModelElementChangeListener;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
@@ -112,6 +113,14 @@ public class EReferenceLabelControlSWTRenderer extends SimpleControlSWTControlSW
 		}, new UpdateValueStrategy() {
 			@Override
 			public Object convert(Object value) {
+				// FIXME hack for DMR.segments because the LinkFeature renderer binds dmr.segments which is a
+				// containment list
+				if (value instanceof EObjectContainmentEList) {
+					final EObjectContainmentEList list = (EObjectContainmentEList) value;
+					updateChangeListener(list.getEObject());
+					return getText(list);
+				}
+				// Hack end
 				updateChangeListener((EObject) value);
 				return getText(value);
 			}
@@ -162,7 +171,7 @@ public class EReferenceLabelControlSWTRenderer extends SimpleControlSWTControlSW
 		return SWTImageHelper.getImage(adapterFactoryItemDelegator.getImage(value));
 	}
 
-	private Object getText(Object value) {
+	protected Object getText(Object value) {
 		final String textName = adapterFactoryItemDelegator.getText(value);
 		return textName == null ? "" : textName; //$NON-NLS-1$
 	}

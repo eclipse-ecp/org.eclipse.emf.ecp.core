@@ -28,7 +28,6 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.impl.EReferenceImpl;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -47,9 +46,8 @@ import org.eclipse.emf.ecp.view.spi.editor.controls.Helper;
 import org.eclipse.emf.ecp.view.spi.label.model.VLabel;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
-import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.util.VViewResourceImpl;
-import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
@@ -197,34 +195,46 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 	// TODO this whole method is ugly as it has to many dependencies, the generating of the text should be delegated to
 	// some service
 	private Object getText(Object object) {
-		VFeaturePathDomainModelReference modelReference = (VFeaturePathDomainModelReference) object;
-		if (VTableDomainModelReference.class.isInstance(modelReference)) {
-			VTableDomainModelReference tableRef = VTableDomainModelReference.class.cast(modelReference);
-			while (tableRef.getDomainModelReference() != null
-				&& VTableDomainModelReference.class.isInstance(tableRef.getDomainModelReference())) {
-				tableRef = VTableDomainModelReference.class.cast(tableRef.getDomainModelReference());
-			}
-			modelReference = (VFeaturePathDomainModelReference) tableRef.getDomainModelReference();
-		}
+		final VDomainModelReference modelReference = (VDomainModelReference) object;
+
+		// VFeaturePathDomainModelReference modelReference = (VFeaturePathDomainModelReference) object;
+		// if (VTableDomainModelReference.class.isInstance(modelReference)) {
+		// VTableDomainModelReference tableRef = VTableDomainModelReference.class.cast(modelReference);
+		// while (tableRef.getDomainModelReference() != null
+		// && VTableDomainModelReference.class.isInstance(tableRef.getDomainModelReference())) {
+		// tableRef = VTableDomainModelReference.class.cast(tableRef.getDomainModelReference());
+		// }
+		// modelReference = (VFeaturePathDomainModelReference) tableRef.getDomainModelReference();
+		// }
 		if (modelReference == null) {
 			return null;
 		}
-		final EStructuralFeature value = modelReference.getDomainModelEFeature();
+		if (modelReference.getSegments().isEmpty()) {
+			return adapterFactoryItemDelegator.getText(object);
+		}
+		final VDomainModelReferenceSegment lastSegment = modelReference.getSegments()
+			.get(modelReference.getSegments().size() - 1);
+		// final EStructuralFeature value = modelReference.getDomainModelEFeature();
 
-		String className = ""; //$NON-NLS-1$
-		final String attributeName = " -> " + adapterFactoryItemDelegator.getText(value); //$NON-NLS-1$
+		final String className = Helper.getRootEClass(modelReference).getName();
+		final String attributeName = " -> " + adapterFactoryItemDelegator.getText(lastSegment); //$NON-NLS-1$
 		String referencePath = ""; //$NON-NLS-1$
 
-		for (final EReference ref : modelReference.getDomainModelEReferencePath()) {
-			if (className.isEmpty()) {
-				className = ref.getEContainingClass().getName();
-			}
-			referencePath = referencePath + " -> " + adapterFactoryItemDelegator.getText(ref); //$NON-NLS-1$
+		// TODO finish
+		for (int i = 0; i < modelReference.getSegments().size() - 1; i++) {
+			referencePath = referencePath + " -> " //$NON-NLS-1$
+				+ adapterFactoryItemDelegator.getText(modelReference.getSegments().get(i));
 		}
-		if (className.isEmpty() && modelReference.getDomainModelEFeature() != null
-			&& modelReference.getDomainModelEFeature().getEContainingClass() != null) {
-			className = modelReference.getDomainModelEFeature().getEContainingClass().getName();
-		}
+		// for (final EReference ref : modelReference.getDomainModelEReferencePath()) {
+		// if (className.isEmpty()) {
+		// className = ref.getEContainingClass().getName();
+		// }
+		// referencePath = referencePath + " -> " + adapterFactoryItemDelegator.getText(ref); //$NON-NLS-1$
+		// }
+		// if (className.isEmpty() && modelReference.getDomainModelEFeature() != null
+		// && modelReference.getDomainModelEFeature().getEContainingClass() != null) {
+		// className = modelReference.getDomainModelEFeature().getEContainingClass().getName();
+		// }
 
 		final String linkText = className + referencePath + attributeName;
 		if (linkText.equals(" -> ")) { //$NON-NLS-1$

@@ -19,8 +19,11 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
+import org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
+import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IChildCreationExtender;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -51,7 +54,7 @@ public class DomainModelReferenceItemProvider
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public DomainModelReferenceItemProvider(AdapterFactory adapterFactory) {
@@ -62,7 +65,7 @@ public class DomainModelReferenceItemProvider
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -70,8 +73,32 @@ public class DomainModelReferenceItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
+			addSegmentsPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
+	}
+
+	/**
+	 * This adds a property descriptor for the Segments feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected void addSegmentsPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_DomainModelReference_segments_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_DomainModelReference_segments_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_DomainModelReference_type"), //$NON-NLS-1$
+				VViewPackage.Literals.DOMAIN_MODEL_REFERENCE__SEGMENTS,
+				true,
+				false,
+				false,
+				null,
+				null,
+				null));
 	}
 
 	/**
@@ -80,7 +107,7 @@ public class DomainModelReferenceItemProvider
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -95,7 +122,7 @@ public class DomainModelReferenceItemProvider
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -110,11 +137,19 @@ public class DomainModelReferenceItemProvider
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	public String getText(Object object) {
+		final VDomainModelReference dmr = (VDomainModelReference) object;
+		if (dmr == null || dmr.getSegments().isEmpty()) {
+			return getString("_UI_DomainModelReference_type"); //$NON-NLS-1$
+		}
+		final VDomainModelReferenceSegment lastSegment = dmr.getSegments().get(dmr.getSegments().size() - 1);
+		if (VFeatureDomainModelReferenceSegment.class.isInstance(lastSegment)) {
+			return ((VFeatureDomainModelReferenceSegment) lastSegment).getDomainModelFeature();
+		}
 		return getString("_UI_DomainModelReference_type"); //$NON-NLS-1$
 	}
 
@@ -123,7 +158,7 @@ public class DomainModelReferenceItemProvider
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -143,7 +178,7 @@ public class DomainModelReferenceItemProvider
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -158,7 +193,7 @@ public class DomainModelReferenceItemProvider
 	 * Return the resource locator for this item provider's resources.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
