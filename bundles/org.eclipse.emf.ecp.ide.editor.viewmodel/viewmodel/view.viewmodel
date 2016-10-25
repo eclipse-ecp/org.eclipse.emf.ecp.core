@@ -5,18 +5,18 @@
     <detailView xmi:id="_70vJgkWAEeWfKJaajyNdyA">
       <rootEClass href="http://org/eclipse/emf/ecp/view/model/170#//View"/>
       <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_70vJg0WAEeWfKJaajyNdyA" name="Control name">
-        <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_70vJhEWAEeWfKJaajyNdyA">
-          <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/emf/ecp/view/model/170#//Element/name"/>
+        <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:DomainModelReference" xmi:id="_70vJhEWAEeWfKJaajyNdyA">
+          <segments xsi:type="org.eclipse.emf.ecp.view.model:FeatureDomainModelReferenceSegment" domainModelFeature="name"/>
         </domainModelReference>
       </children>
       <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_70vJhUWAEeWfKJaajyNdyA" name="Control readonly">
-        <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_70vJhkWAEeWfKJaajyNdyA">
-          <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/emf/ecp/view/model/170#//Element/readonly"/>
+        <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:DomainModelReference" xmi:id="_70vJhkWAEeWfKJaajyNdyA">
+          <segments xsi:type="org.eclipse.emf.ecp.view.model:FeatureDomainModelReferenceSegment" domainModelFeature="readonly"/>
         </domainModelReference>
       </children>
       <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_70vJh0WAEeWfKJaajyNdyA" name="Control rootEClass">
-        <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_70vJiEWAEeWfKJaajyNdyA">
-          <domainModelEFeature xsi:type="ecore:EReference" href="http://org/eclipse/emf/ecp/view/model/170#//View/rootEClass"/>
+        <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:DomainModelReference" xmi:id="_70vJiEWAEeWfKJaajyNdyA">
+          <segments xsi:type="org.eclipse.emf.ecp.view.model:FeatureDomainModelReferenceSegment" domainModelFeature="rootEClass"/>
         </domainModelReference>
       </children>
     </detailView>

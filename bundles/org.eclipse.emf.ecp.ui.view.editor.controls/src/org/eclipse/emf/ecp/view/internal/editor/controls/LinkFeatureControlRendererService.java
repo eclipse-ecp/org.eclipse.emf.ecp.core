@@ -82,7 +82,7 @@ public class LinkFeatureControlRendererService implements EMFFormsDIRendererServ
 			return NOT_APPLICABLE;
 		}
 		final EStructuralFeature feature = (EStructuralFeature) valueProperty.getValueType();
-		if (VViewPackage.eINSTANCE.getFeaturePathDomainModelReference_DomainModelEFeature() == feature) {
+		if (VViewPackage.eINSTANCE.getDomainModelReference_Segments() == feature) {
 			return 6d;
 		}
 

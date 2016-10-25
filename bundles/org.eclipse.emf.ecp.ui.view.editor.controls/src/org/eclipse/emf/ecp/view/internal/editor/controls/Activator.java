@@ -28,6 +28,7 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.workspace.internal.core.WorkspaceProvider;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -229,11 +230,11 @@ public class Activator extends AbstractUIPlugin {
 	 *
 	 * @return The {@link EMFFormsDatabinding}
 	 */
-	public EMFFormsDatabinding getEMFFormsDatabinding() {
-		final ServiceReference<EMFFormsDatabinding> serviceReference = plugin.getBundle().getBundleContext()
-			.getServiceReference(EMFFormsDatabinding.class);
+	public EMFFormsDatabindingEMF getEMFFormsDatabinding() {
+		final ServiceReference<EMFFormsDatabindingEMF> serviceReference = plugin.getBundle().getBundleContext()
+			.getServiceReference(EMFFormsDatabindingEMF.class);
 
-		final EMFFormsDatabinding service = plugin.getBundle().getBundleContext()
+		final EMFFormsDatabindingEMF service = plugin.getBundle().getBundleContext()
 			.getService(serviceReference);
 		plugin.getBundle().getBundleContext().ungetService(serviceReference);
 

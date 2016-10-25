@@ -35,7 +35,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * This is the item provider adapter for a
  * {@link org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment} object.
  * <!-- begin-user-doc -->
- * 
+ *
  * @since 2.0
  *        <!-- end-user-doc -->
  * @generated
@@ -52,7 +52,7 @@ public class FeatureDomainModelReferenceSegmentItemProvider
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public FeatureDomainModelReferenceSegmentItemProvider(AdapterFactory adapterFactory) {
@@ -63,7 +63,7 @@ public class FeatureDomainModelReferenceSegmentItemProvider
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -80,7 +80,7 @@ public class FeatureDomainModelReferenceSegmentItemProvider
 	 * This adds a property descriptor for the Domain Model Feature feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected void addDomainModelFeaturePropertyDescriptor(Object object) {
@@ -104,7 +104,7 @@ public class FeatureDomainModelReferenceSegmentItemProvider
 	 * This returns FeatureDomainModelReferenceSegment.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -116,14 +116,14 @@ public class FeatureDomainModelReferenceSegmentItemProvider
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
+	 *
+	 * @generated NOT
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((VFeatureDomainModelReferenceSegment) object).getDomainModelFeature();
+		final String label = ((VFeatureDomainModelReferenceSegment) object).getDomainModelFeature();
 		return label == null || label.length() == 0 ? getString("_UI_FeatureDomainModelReferenceSegment_type") : //$NON-NLS-1$
-			getString("_UI_FeatureDomainModelReferenceSegment_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+			label;
 	}
 
 	/**
@@ -131,7 +131,7 @@ public class FeatureDomainModelReferenceSegmentItemProvider
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -151,7 +151,7 @@ public class FeatureDomainModelReferenceSegmentItemProvider
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -163,7 +163,7 @@ public class FeatureDomainModelReferenceSegmentItemProvider
 	 * Return the resource locator for this item provider's resources.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
