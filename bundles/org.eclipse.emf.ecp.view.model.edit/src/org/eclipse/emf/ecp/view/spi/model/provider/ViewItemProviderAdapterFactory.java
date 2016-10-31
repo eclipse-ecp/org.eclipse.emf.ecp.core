@@ -132,10 +132,11 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReference}
 	 * instances.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 *
+	 * @since 2.0
+	 *        <!-- end-user-doc -->
 	 *
 	 * @generated
-	 * @since 2.0
 	 */
 	protected DomainModelReferenceItemProvider domainModelReferenceItemProvider;
 
@@ -315,10 +316,11 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 	 * This keeps track of the one adapter used for all
 	 * {@link org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment} instances.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 2.0
+	 *        <!-- end-user-doc -->
 	 *
 	 * @generated
-	 * @since 2.0
 	 */
 	protected FeatureDomainModelReferenceSegmentItemProvider featureDomainModelReferenceSegmentItemProvider;
 
