@@ -12,8 +12,7 @@
 package org.eclipse.emf.ecp.view.internal.editor.controls;
 
 import java.text.MessageFormat;
-import java.util.Collection;
-import java.util.HashSet;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -27,26 +26,20 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.impl.EReferenceImpl;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecp.core.util.ECPUtil;
 import org.eclipse.emf.ecp.edit.internal.swt.SWTImageHelper;
 import org.eclipse.emf.ecp.edit.spi.swt.reference.DeleteReferenceAction;
 import org.eclipse.emf.ecp.edit.spi.swt.reference.NewReferenceAction;
 import org.eclipse.emf.ecp.edit.spi.util.ECPModelElementChangeListener;
-import org.eclipse.emf.ecp.internal.ui.Messages;
-import org.eclipse.emf.ecp.spi.common.ui.CompositeFactory;
-import org.eclipse.emf.ecp.spi.common.ui.composites.SelectionComposite;
-import org.eclipse.emf.ecp.view.internal.editor.handler.CreateDomainModelReferenceWizard;
+import org.eclipse.emf.ecp.view.internal.editor.handler.SimpleCreateDomainModelReferenceWizard;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.editor.controls.Helper;
 import org.eclipse.emf.ecp.view.spi.label.model.VLabel;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
-import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
+import org.eclipse.emf.ecp.view.spi.model.util.SegmentResolvementUtil;
 import org.eclipse.emf.ecp.view.spi.model.util.VViewResourceImpl;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.edit.command.SetCommand;
@@ -65,7 +58,6 @@ import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
-import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
@@ -84,8 +76,6 @@ import org.eclipse.swt.widgets.Label;
  * @author Alexandra Buzila
  *
  */
-// needed because we use the Messages class from ecp.ui.
-@SuppressWarnings("restriction")
 public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 
 	private final EMFFormsEditSupport emfFormsEditSupport;
@@ -192,49 +182,31 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 		return SWTImageHelper.getImage(image);
 	}
 
-	// TODO this whole method is ugly as it has to many dependencies, the generating of the text should be delegated to
-	// some service
 	private Object getText(Object object) {
 		final VDomainModelReference modelReference = (VDomainModelReference) object;
-
-		// VFeaturePathDomainModelReference modelReference = (VFeaturePathDomainModelReference) object;
-		// if (VTableDomainModelReference.class.isInstance(modelReference)) {
-		// VTableDomainModelReference tableRef = VTableDomainModelReference.class.cast(modelReference);
-		// while (tableRef.getDomainModelReference() != null
-		// && VTableDomainModelReference.class.isInstance(tableRef.getDomainModelReference())) {
-		// tableRef = VTableDomainModelReference.class.cast(tableRef.getDomainModelReference());
-		// }
-		// modelReference = (VFeaturePathDomainModelReference) tableRef.getDomainModelReference();
-		// }
 		if (modelReference == null) {
 			return null;
 		}
 		if (modelReference.getSegments().isEmpty()) {
 			return adapterFactoryItemDelegator.getText(object);
 		}
-		final VDomainModelReferenceSegment lastSegment = modelReference.getSegments()
-			.get(modelReference.getSegments().size() - 1);
-		// final EStructuralFeature value = modelReference.getDomainModelEFeature();
 
+		final List<EStructuralFeature> featurePath = SegmentResolvementUtil
+			.resolveSegmentsToFeatureList(modelReference.getSegments(), Helper.getRootEClass(modelReference));
+		if (modelReference.getSegments().size() != featurePath.size()) {
+			return adapterFactoryItemDelegator.getText(object);
+		}
+
+		final EStructuralFeature attributeFeature = featurePath.get(featurePath.size() - 1);
 		final String className = Helper.getRootEClass(modelReference).getName();
-		final String attributeName = " -> " + adapterFactoryItemDelegator.getText(lastSegment); //$NON-NLS-1$
+		final String attributeName = " -> " + attributeFeature.getName() + " : " //$NON-NLS-1$ //$NON-NLS-2$
+			+ attributeFeature.getEType().getName();
 		String referencePath = ""; //$NON-NLS-1$
 
-		// TODO finish
 		for (int i = 0; i < modelReference.getSegments().size() - 1; i++) {
 			referencePath = referencePath + " -> " //$NON-NLS-1$
 				+ adapterFactoryItemDelegator.getText(modelReference.getSegments().get(i));
 		}
-		// for (final EReference ref : modelReference.getDomainModelEReferencePath()) {
-		// if (className.isEmpty()) {
-		// className = ref.getEContainingClass().getName();
-		// }
-		// referencePath = referencePath + " -> " + adapterFactoryItemDelegator.getText(ref); //$NON-NLS-1$
-		// }
-		// if (className.isEmpty() && modelReference.getDomainModelEFeature() != null
-		// && modelReference.getDomainModelEFeature().getEContainingClass() != null) {
-		// className = modelReference.getDomainModelEFeature().getEContainingClass().getName();
-		// }
 
 		final String linkText = className + referencePath + attributeName;
 		if (linkText.equals(" -> ")) { //$NON-NLS-1$
@@ -414,9 +386,6 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 
 		@Override
 		public void widgetSelected(SelectionEvent e) {
-			final Collection<EClass> classes = ECPUtil.getSubClasses(((EReferenceImpl) eStructuralFeature)
-				.getEReferenceType());
-
 			final EClass eclass = Helper.getRootEClass(getViewModelContext().getDomainModel());
 
 			VDomainModelReference reference = null;
@@ -426,19 +395,13 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 				reference = VLabel.class.cast(eObject).getDomainModelReference();
 			}
 
-			final CreateDomainModelReferenceWizard wizard = new CreateDomainModelReferenceWizard(
-				eObject, structuralFeature, getEditingDomain(eObject), eclass,
-				reference == null ? "New Reference Element" : "Configure " + reference.eClass().getName(), //$NON-NLS-1$ //$NON-NLS-2$
-				Messages.NewModelElementWizard_WizardTitle_AddModelElement,
-				Messages.NewModelElementWizard_PageTitle_AddModelElement,
-				Messages.NewModelElementWizard_PageDescription_AddModelElement, reference);
-
-			final SelectionComposite<TreeViewer> helper = CompositeFactory.getSelectModelClassComposite(
-				new HashSet<EPackage>(),
-				new HashSet<EPackage>(), classes);
-			wizard.setCompositeProvider(helper);
+			final SimpleCreateDomainModelReferenceWizard wizard = new SimpleCreateDomainModelReferenceWizard(eObject,
+				structuralFeature, getEditingDomain(eObject), eclass,
+				reference == null ? "New Domain Model Reference" : "Configure " + reference.eClass().getName(), //$NON-NLS-1$ //$NON-NLS-2$
+				reference);
 
 			final WizardDialog wd = new WizardDialog(Display.getDefault().getActiveShell(), wizard);
+			wd.setHelpAvailable(false);
 			wd.open();
 		}
 	}

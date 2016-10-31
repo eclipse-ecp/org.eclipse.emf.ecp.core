@@ -30,7 +30,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Diagnostic/diagnostics"/>
     </genClasses>
     <genClasses image="false" ecoreClass="view.ecore#//Attachment"/>
-    <genClasses image="false" ecoreClass="view.ecore#//DomainModelReference">
+    <genClasses ecoreClass="view.ecore#//DomainModelReference">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//DomainModelReference/changeListener"/>
       <genFeatures children="true" createChild="true" ecoreFeature="ecore:EReference view.ecore#//DomainModelReference/segments"/>
     </genClasses>
