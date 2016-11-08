@@ -16,12 +16,10 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.editor.controls.Helper;
-import org.eclipse.emf.ecp.view.spi.model.VAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
-import org.eclipse.emf.emfforms.spi.view.annotation.model.VAnnotation;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
@@ -32,22 +30,13 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * DI renderer service for {@link TableColumnsDMRTableControl}.
+ * DI renderer service for {@link MultiDomainModelReferenceControlSWTRenderer}.
  *
  * @author Lucas Koehler
  *
  */
-@Component(name = "TableColumnsDMRTableControlService")
-public class TableColumnsDMRTableControlService implements EMFFormsDIRendererService<VControl> {
-
-	/**
-	 * Key of the annotation that defines that the child dmrs of a dmr's multi segment should be rendered.
-	 */
-	private static final String SHOW_CHILD_DOMAIN_MODEL_REFERENCES = "showChildDomainModelReferences"; //$NON-NLS-1$
-	/**
-	 * Value of the annotation that defines that the child dmrs of a dmr's multi segment should be rendered.
-	 */
-	private static final String TRUE = "true"; //$NON-NLS-1$
+@Component(name = "MultiDomainModelReferenceControlSWTRendererService")
+public class MultiDomainModelReferenceControlSWTRendererService implements EMFFormsDIRendererService<VControl> {
 	private EMFFormsDatabinding databindingService;
 	private ReportService reportService;
 
@@ -79,6 +68,10 @@ public class TableColumnsDMRTableControlService implements EMFFormsDIRendererSer
 	 */
 	@Override
 	public double isApplicable(VElement vElement, ViewModelContext viewModelContext) {
+		final EClass rootEClass = Helper.getRootEClass(vElement);
+		if (!VTablePackage.eINSTANCE.getTableControl().equals(rootEClass)) {
+			return NOT_APPLICABLE;
+		}
 		if (!VControl.class.isInstance(vElement)) {
 			return NOT_APPLICABLE;
 		}
@@ -86,28 +79,6 @@ public class TableColumnsDMRTableControlService implements EMFFormsDIRendererSer
 		if (control.getDomainModelReference() == null) {
 			return NOT_APPLICABLE;
 		}
-		// Test that a feature of a table dmr is rendered
-		final EClass rootEClass = Helper.getRootEClass(vElement);
-		if (!VTablePackage.eINSTANCE.getTableControl().equals(rootEClass)) {
-			return NOT_APPLICABLE;
-		}
-
-		// Check that the correct annotation is set
-		boolean showChildDmrs = false;
-		for (final VAttachment attachment : control.getAttachments()) {
-			if (VAnnotation.class.isInstance(attachment)) {
-				final VAnnotation annotation = (VAnnotation) attachment;
-				if (SHOW_CHILD_DOMAIN_MODEL_REFERENCES.equals(annotation.getKey())
-					&& TRUE.equals(annotation.getValue())) {
-					showChildDmrs = true;
-					break;
-				}
-			}
-		}
-		if (!showChildDmrs) {
-			return NOT_APPLICABLE;
-		}
-
 		IValueProperty valueProperty;
 		try {
 			valueProperty = databindingService.getValueProperty(control.getDomainModelReference(),
@@ -116,12 +87,20 @@ public class TableColumnsDMRTableControlService implements EMFFormsDIRendererSer
 			reportService.report(new DatabindingFailedReport(ex));
 			return NOT_APPLICABLE;
 		}
-		final EStructuralFeature feature = (EStructuralFeature) valueProperty.getValueType();
+		return isApplicable((EStructuralFeature) valueProperty.getValueType());
+	}
 
-		if (VViewPackage.eINSTANCE.getControl_DomainModelReference() != feature) {
-			return NOT_APPLICABLE;
+	/**
+	 * Test if the structural feature contains the correct data.
+	 *
+	 * @param feature the {@link EStructuralFeature} to check
+	 * @return the priority of the control
+	 */
+	private double isApplicable(EStructuralFeature feature) {
+		if (VViewPackage.eINSTANCE.getControl_DomainModelReference() == feature) {
+			return 5;
 		}
-		return 10d;
+		return NOT_APPLICABLE;
 	}
 
 	/**
@@ -131,7 +110,7 @@ public class TableColumnsDMRTableControlService implements EMFFormsDIRendererSer
 	 */
 	@Override
 	public Class<? extends AbstractSWTRenderer<VControl>> getRendererClass() {
-		return TableColumnsDMRTableControl.class;
+		return MultiDomainModelReferenceControlSWTRenderer.class;
 	}
 
 }

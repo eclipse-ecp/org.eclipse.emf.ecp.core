@@ -26,7 +26,6 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
-import org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.util.SegmentResolvementUtil;
 import org.eclipse.emf.edit.command.AddCommand;
@@ -65,6 +64,8 @@ public class SimpleCreateDomainModelReferenceWizard extends Wizard {
 	private final EObject eObject;
 	private final EClass rootEClass;
 	private final VDomainModelReference existingDMR;
+	private final EStructuralFeatureSelectionValidator selectionValidator;
+	private final SegmentGenerator segmentGenerator;
 
 	/**
 	 * A wizard used for creating and configuring a DomainModelReference.
@@ -75,16 +76,21 @@ public class SimpleCreateDomainModelReferenceWizard extends Wizard {
 	 * @param rootEClass The root {@link EClass} of the VView the eObject belongs to
 	 * @param windowTitle The title for the wizard window
 	 * @param existingDMR The domain model reference to configure. May be null, then a new DMR is created
+	 * @param selectionValidator Validates whether a selected structural feature is a valid selection (e.g. the
+	 *            selection could be required to be a multi reference)
 	 */
 	public SimpleCreateDomainModelReferenceWizard(final EObject eObject, final EStructuralFeature structuralFeature,
 		final EditingDomain editingDomain, final EClass rootEClass, final String windowTitle,
-		VDomainModelReference existingDMR) {
+		VDomainModelReference existingDMR, EStructuralFeatureSelectionValidator selectionValidator,
+		SegmentGenerator segmentGenerator) {
 		setWindowTitle(windowTitle);
 		this.eObject = eObject;
 		this.structuralFeature = structuralFeature;
 		this.editingDomain = editingDomain;
 		this.rootEClass = rootEClass;
 		this.existingDMR = existingDMR;
+		this.selectionValidator = selectionValidator;
+		this.segmentGenerator = segmentGenerator;
 	}
 
 	/**
@@ -171,7 +177,6 @@ public class SimpleCreateDomainModelReferenceWizard extends Wizard {
 			setDescription(pageDescription);
 			this.rootEClass = rootEClass;
 			this.firstSelection = firstSelection;
-
 			domainModelReference = VViewFactory.eINSTANCE.createDomainModelReference();
 		}
 
@@ -227,6 +232,15 @@ public class SimpleCreateDomainModelReferenceWizard extends Wizard {
 					if (treeSelection.getPaths().length < 1) {
 						return;
 					}
+
+					// Validate that a valid structural feature was selected
+					final EStructuralFeature structuralFeature = (EStructuralFeature) treeSelection.getFirstElement();
+					final String errorMessage = selectionValidator.isValid(structuralFeature);
+					setErrorMessage(errorMessage);
+					if (errorMessage != null) {
+						return;
+					}
+
 					final TreePath treePath = treeSelection.getPaths()[0];
 					if (treePath.getSegmentCount() < 1) {
 						return;
@@ -239,7 +253,6 @@ public class SimpleCreateDomainModelReferenceWizard extends Wizard {
 					}
 					configureSegments(bottomUpPath);
 
-					// TODO validation?
 					if (!domainModelReference.getSegments().isEmpty()) {
 						setPageComplete(true);
 					}
@@ -257,23 +270,8 @@ public class SimpleCreateDomainModelReferenceWizard extends Wizard {
 			if (!domainModelReference.getSegments().isEmpty()) {
 				domainModelReference.getSegments().clear();
 			}
-			for (final EStructuralFeature eStructuralFeature : bottomUpPath) {
-				domainModelReference.getSegments().add(createDMRSegment(eStructuralFeature));
-			}
-		}
-
-		/**
-		 * Creates a {@link VDomainModelReferenceSegment} for the given {@link EStructuralFeature}.
-		 *
-		 * @param structuralFeature The {@link EStructuralFeature} that defines the path part represented by the created
-		 *            segment
-		 * @return The created {@link VDomainModelReference}
-		 */
-		private VDomainModelReferenceSegment createDMRSegment(final EStructuralFeature structuralFeature) {
-			final VFeatureDomainModelReferenceSegment pathSegment = VViewFactory.eINSTANCE
-				.createFeatureDomainModelReferenceSegment();
-			pathSegment.setDomainModelFeature(structuralFeature.getName());
-			return pathSegment;
+			final List<VDomainModelReferenceSegment> segments = segmentGenerator.generateSegments(bottomUpPath);
+			domainModelReference.getSegments().addAll(segments);
 		}
 
 		/**
