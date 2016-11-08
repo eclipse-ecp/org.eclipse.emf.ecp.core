@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,6 +9,7 @@
  * Contributors:
  * Eugen - initial API and implementation
  * Johannes Faltermeier - sorting + drag&drop
+ * Lucas Koehler - adjusted to multi segment replacing table dmr
  *
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.editor.controls;
@@ -31,6 +32,7 @@ import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -47,6 +49,9 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
+import org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment;
+import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableColumnConfiguration;
@@ -70,6 +75,8 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedRepor
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
+import org.eclipse.emfforms.view.spi.multisegment.model.VMultiDomainModelReferenceSegment;
+import org.eclipse.emfforms.view.spi.multisegment.model.VMultisegmentPackage;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -208,11 +215,10 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 		viewer.setContentProvider(new ObservableListContentProvider());
 		addDragAndDropSupport(viewer, getEditingDomain(eObject));
 
-		final IObservableList list = Activator.getDefault().getEMFFormsDatabinding()
-			.getObservableList(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
-		viewer.setInput(list);
 
-		adapter = new TableControlAdapter(parent, viewer);
+		viewer.setInput(getChildDmrsObservableList());
+
+		adapter = new TableControlAdapter(composite, viewer);
 		tableControl.eAdapters().add(adapter);
 
 		buttonSort.addSelectionListener(new SortSelectionAdapter());
@@ -224,6 +230,45 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 		return composite;
 	}
 	// END COMPLEX CODE
+
+	/**
+	 * Returns an {@link IObservableList} that tracks all child dmrs of the table defined by this renderer's parent
+	 * {@link VTableControl}. The child dmrs are stored in the last segment of the {@link VTableControl VTableControl's}
+	 * segment. This segment is a multi segment.
+	 * <p>
+	 * <strong>IMPORTANT:</strong> Can only be used after the field <code>tableControl</code> has been set
+	 *
+	 * @return The observable list of child dmrs that define the table's columns
+	 * @throws DatabindingFailedException If the databinding failed
+	 */
+	private IObservableList getChildDmrsObservableList() throws DatabindingFailedException {
+		if (tableControl == null) {
+			throw new DatabindingFailedException(
+				"The TableControl was null. Therefore, the DMR that contains the multisegment cannot be accessed."); //$NON-NLS-1$
+		}
+		if (tableControl.getDomainModelReference() == null) {
+			// throw new DatabindingFailedException(
+			// "The TableControl's domain model reference was null. Therefore, the multi segment that contains the child
+			// dmrs cannot be accessed."); //$NON-NLS-1$
+			return Observables.emptyObservableList();
+		}
+
+		// The dmr referencing the child dmrs of the multi segment defining the table
+		final VDomainModelReference childDmrsDMR = VViewFactory.eINSTANCE.createDomainModelReference();
+		final VFeatureDomainModelReferenceSegment featureSegment = VViewFactory.eINSTANCE
+			.createFeatureDomainModelReferenceSegment();
+		featureSegment.setDomainModelFeature(
+			VMultisegmentPackage.eINSTANCE.getMultiDomainModelReferenceSegment_ChildDomainModelReferences().getName());
+		childDmrsDMR.getSegments().add(featureSegment);
+
+		// The table control's dmr's last segment must always be a multi segment. This multi segment contains the child
+		// dmrs defining the table columns
+		final EList<VDomainModelReferenceSegment> segments = tableControl.getDomainModelReference().getSegments();
+		final VDomainModelReferenceSegment lastSegment = segments.get(segments.size() - 1);
+		final VMultiDomainModelReferenceSegment multiSegment = (VMultiDomainModelReferenceSegment) lastSegment;
+
+		return Activator.getDefault().getEMFFormsDatabinding().getObservableList(childDmrsDMR, multiSegment);
+	}
 
 	/**
 	 * @param viewer
@@ -317,6 +362,7 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 		@Override
 		public void notifyChanged(Notification notification) {
 			super.notifyChanged(notification);
+			// TODO the multi segments child dmr feature
 			if (notification.getFeature() == VTablePackage.eINSTANCE
 				.getTableDomainModelReference_ColumnDomainModelReferences()) {
 				viewer.refresh();
@@ -329,9 +375,7 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 			}
 
 			if (VTableControl.class.isInstance(notification.getNotifier())
-				&& (VTableDomainModelReference.class.isInstance(notification.getNewValue())
-					|| VTableDomainModelReference.class
-						.isInstance(notification.getOldValue()))) {
+				&& notification.getFeature() == VViewPackage.eINSTANCE.getControl_DomainModelReference()) {
 				updateEObjectAndStructuralFeature();
 				viewer.refresh();
 				parent.layout();
@@ -342,13 +386,13 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 			IObservableValue observableValue;
 			IObservableList list;
 			try {
+				// TODO get observable value for child dmrs
 				observableValue = Activator
 					.getDefault()
 					.getEMFFormsDatabinding()
 					.getObservableValue(getVElement().getDomainModelReference(),
 						getViewModelContext().getDomainModel());
-				list = Activator.getDefault().getEMFFormsDatabinding()
-					.getObservableList(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
+				list = getChildDmrsObservableList();
 			} catch (final DatabindingFailedException ex) {
 				Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 				viewer.setInput(Observables.emptyObservableList());
@@ -498,6 +542,21 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 			editingDomain.getCommandStack().execute(
 				SetCommand.create(editingDomain, eObject, structuralFeature, list));
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer#rootDomainModelChanged()
+	 */
+	@Override
+	protected void rootDomainModelChanged() throws DatabindingFailedException {
+		final IObservableList oldList = (IObservableList) viewer.getInput();
+		oldList.dispose();
+
+		final IObservableList list = getChildDmrsObservableList();
+		// addRelayoutListenerIfNeeded(list, composite);
+		viewer.setInput(list);
 	}
 
 	/**
