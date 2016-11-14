@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * EclipseSource Muenchen - initial API and implementation
+ * Lucas Koehler - adapted to DMR segments
  *
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.editor.handler;
@@ -15,6 +16,8 @@ package org.eclipse.emf.ecp.view.internal.editor.handler;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -34,8 +37,9 @@ import org.eclipse.emf.ecp.view.internal.editor.controls.Activator;
 import org.eclipse.emf.ecp.view.spi.editor.controls.Helper;
 import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 
@@ -81,14 +85,20 @@ public final class ControlGenerator {
 			control.setName("Control " + feature.getName()); //$NON-NLS-1$
 			control.setReadonly(false);
 
-			final VFeaturePathDomainModelReference modelReference = VViewFactory.eINSTANCE
-				.createFeaturePathDomainModelReference();
-			modelReference.setDomainModelEFeature(feature);
+			final VDomainModelReference modelReference = VViewFactory.eINSTANCE.createDomainModelReference();
 
-			final java.util.List<EReference> bottomUpPath = Helper.getReferencePath(rootClass,
-				feature.getEContainingClass(),
-				childParentReferenceMap);
-			modelReference.getDomainModelEReferencePath().addAll(bottomUpPath);
+			final List<EStructuralFeature> featurePath = new LinkedList<EStructuralFeature>();
+			featurePath
+				.addAll(Helper.getReferencePath(rootClass, feature.getEContainingClass(), childParentReferenceMap));
+			featurePath.add(feature);
+
+			// Create segments and add them to the model reference
+			for (final EStructuralFeature structuralFeature : featurePath) {
+				final VFeatureDomainModelReferenceSegment segment = VViewFactory.eINSTANCE
+					.createFeatureDomainModelReferenceSegment();
+				segment.setDomainModelFeature(structuralFeature.getName());
+				modelReference.getSegments().add(segment);
+			}
 
 			control.setDomainModelReference(modelReference);
 
@@ -130,8 +140,8 @@ public final class ControlGenerator {
 		final VView vview = (VView) resource.getContents().get(0);
 
 		final EClass rootEClass = vview.getRootEClass();
-		final Set<EStructuralFeature> mySet = new
-			LinkedHashSet<EStructuralFeature>(rootEClass.getEAllStructuralFeatures());
+		final Set<EStructuralFeature> mySet = new LinkedHashSet<EStructuralFeature>(
+			rootEClass.getEAllStructuralFeatures());
 		addControls(rootEClass, (VView) resource.getContents().get(0), mySet);
 		try {
 			resource.save(null);
