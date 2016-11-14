@@ -32,6 +32,9 @@ import org.eclipse.emf.ecp.edit.internal.swt.SWTImageHelper;
 import org.eclipse.emf.ecp.edit.spi.swt.reference.DeleteReferenceAction;
 import org.eclipse.emf.ecp.edit.spi.swt.reference.NewReferenceAction;
 import org.eclipse.emf.ecp.edit.spi.util.ECPModelElementChangeListener;
+import org.eclipse.emf.ecp.view.internal.editor.handler.EStructuralFeatureSelectionValidator;
+import org.eclipse.emf.ecp.view.internal.editor.handler.FeatureSegmentGenerator;
+import org.eclipse.emf.ecp.view.internal.editor.handler.SegmentGenerator;
 import org.eclipse.emf.ecp.view.internal.editor.handler.SimpleCreateDomainModelReferenceWizard;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
@@ -373,14 +376,44 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 		return LocalizationServiceHelper.getString(getClass(), "LinkControl_NoLinkSetClickToSetLink"); //$NON-NLS-1$
 	}
 
+	/**
+	 * Returns the {@link SegmentGenerator} that is used by the {@link SimpleCreateDomainModelReferenceWizard} to
+	 * generate segments from a selected {@link EStructuralFeatureSelectionValidator}.
+	 * <p>
+	 * Can be overwritten by subclasses to change which segments are generated.
+	 *
+	 * @return The {@link SegmentGenerator} to use
+	 */
+	protected SegmentGenerator getSegmentGenerator() {
+		return new FeatureSegmentGenerator();
+	}
+
+	/**
+	 * Returns the {@link EStructuralFeatureSelectionValidator} that is used by the
+	 * {@link SimpleCreateDomainModelReferenceWizard} to validate whether a selected {@link EStructuralFeature} is a
+	 * valid selection.
+	 * <p>
+	 * Can be overwritten by subclasses to change structural features are considered a valid selection.
+	 *
+	 * @return The {@link EStructuralFeatureSelectionValidator} to use
+	 */
+	protected EStructuralFeatureSelectionValidator getSelectionValidator() {
+		return new EStructuralFeatureSelectionValidator() {
+
+			@Override
+			public String isValid(EStructuralFeature structuralFeature) {
+				return null; // null means the selection is valid
+			}
+		};
+	}
+
 	/** SelectionAdapter for the set button. */
 	private class SelectionAdapterExtension extends SelectionAdapter {
 
 		private final EStructuralFeature eStructuralFeature;
 
 		SelectionAdapterExtension(Label label, IObservableValue modelValue, ViewModelContext viewModelContext,
-			DataBindingContext dataBindingContext,
-			EStructuralFeature eStructuralFeature) {
+			DataBindingContext dataBindingContext, EStructuralFeature eStructuralFeature) {
 			this.eStructuralFeature = eStructuralFeature;
 		}
 
@@ -396,9 +429,9 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 			}
 
 			final SimpleCreateDomainModelReferenceWizard wizard = new SimpleCreateDomainModelReferenceWizard(eObject,
-				structuralFeature, getEditingDomain(eObject), eclass,
-				reference == null ? "New Domain Model Reference" : "Configure " + reference.eClass().getName(), //$NON-NLS-1$ //$NON-NLS-2$
-				reference);
+				eStructuralFeature, getEditingDomain(eObject), eclass,
+				reference == null ? "New Domain Model Reference" : "Configure Domain Model Reference", //$NON-NLS-1$ //$NON-NLS-2$
+				reference, getSelectionValidator(), getSegmentGenerator());
 
 			final WizardDialog wd = new WizardDialog(Display.getDefault().getActiveShell(), wizard);
 			wd.setHelpAvailable(false);
