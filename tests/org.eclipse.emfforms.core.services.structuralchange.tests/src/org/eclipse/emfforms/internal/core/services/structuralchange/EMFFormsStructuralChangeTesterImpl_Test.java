@@ -11,6 +11,7 @@
  ******************************************************************************/
 package org.eclipse.emfforms.internal.core.services.structuralchange;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
@@ -149,6 +150,104 @@ public class EMFFormsStructuralChangeTesterImpl_Test {
 		assertTrue(isChanged);
 		verify(tester1).isStructureChanged(segmentB, domain, mcn);
 		verify(tester1).isStructureChanged(segmentC, c, mcn);
+	}
+
+	/**
+	 * Test method for
+	 * {@link org.eclipse.emfforms.internal.core.services.structuralchange.EMFFormsStructuralChangeTesterImpl#isStructureChanged(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification)}.
+	 *
+	 * @throws DatabindingFailedException
+	 */
+	@Test
+	public void testIsStructureChangedMultiReferenceRelevantChange() throws DatabindingFailedException {
+		final A domain = TestFactory.eINSTANCE.createA();
+		final B b = TestFactory.eINSTANCE.createB();
+		domain.setB(b);
+		final EReference aToB = TestPackage.eINSTANCE.getA_B();
+		final EReference bToCList = TestPackage.eINSTANCE.getB_CList();
+
+		final VFeatureDomainModelReferenceSegment segmentB = VViewFactory.eINSTANCE
+			.createFeatureDomainModelReferenceSegment();
+		segmentB.setDomainModelFeature(aToB.getName());
+		final VFeatureDomainModelReferenceSegment segmentCList = VViewFactory.eINSTANCE
+			.createFeatureDomainModelReferenceSegment();
+		segmentCList.setDomainModelFeature(bToCList.getName());
+
+		final VDomainModelReference dmr = VViewFactory.eINSTANCE.createDomainModelReference();
+		dmr.getSegments().add(segmentB);
+		dmr.getSegments().add(segmentCList);
+
+		final Setting settingB = ((InternalEObject) domain).eSetting(aToB);
+		final Setting settingCList = ((InternalEObject) b).eSetting(bToCList);
+
+		final C newValue = TestFactory.eINSTANCE.createC();
+		final TestNotification raw = new TestNotification(Notification.ADD, null, newValue, b, bToCList);
+		final ModelChangeNotification mcn = new ModelChangeNotification(raw);
+
+		final StructuralChangeSegmentTester tester = mock(StructuralChangeSegmentTester.class);
+
+		when(tester.isApplicable(any(VDomainModelReferenceSegment.class))).thenReturn(2d);
+		when(tester.isStructureChanged(segmentB, domain, mcn)).thenReturn(false);
+		when(tester.isStructureChanged(segmentCList, b, mcn)).thenReturn(true);
+		when(segmentResolver.resolveSegment(segmentB, domain)).thenReturn(settingB);
+		when(segmentResolver.resolveSegment(segmentCList, b)).thenReturn(settingCList);
+
+		changeTester.addStructuralChangeSegmentTester(tester);
+
+		final boolean isChanged = changeTester.isStructureChanged(dmr, domain, mcn);
+
+		assertTrue(isChanged);
+		verify(tester).isStructureChanged(segmentB, domain, mcn);
+		verify(tester).isStructureChanged(segmentCList, b, mcn);
+	}
+
+	/**
+	 * Test method for
+	 * {@link org.eclipse.emfforms.internal.core.services.structuralchange.EMFFormsStructuralChangeTesterImpl#isStructureChanged(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference, org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification)}.
+	 *
+	 * @throws DatabindingFailedException
+	 */
+	@Test
+	public void testIsStructureChangedMultiReferenceNoRelevantChange() throws DatabindingFailedException {
+		final A domain = TestFactory.eINSTANCE.createA();
+		final B b = TestFactory.eINSTANCE.createB();
+		domain.setB(b);
+		final EReference aToB = TestPackage.eINSTANCE.getA_B();
+		final EReference bToCList = TestPackage.eINSTANCE.getB_CList();
+
+		final VFeatureDomainModelReferenceSegment segmentB = VViewFactory.eINSTANCE
+			.createFeatureDomainModelReferenceSegment();
+		segmentB.setDomainModelFeature(aToB.getName());
+		final VFeatureDomainModelReferenceSegment segmentCList = VViewFactory.eINSTANCE
+			.createFeatureDomainModelReferenceSegment();
+		segmentCList.setDomainModelFeature(bToCList.getName());
+
+		final VDomainModelReference dmr = VViewFactory.eINSTANCE.createDomainModelReference();
+		dmr.getSegments().add(segmentB);
+		dmr.getSegments().add(segmentCList);
+
+		final Setting settingB = ((InternalEObject) domain).eSetting(aToB);
+		final Setting settingCList = ((InternalEObject) b).eSetting(bToCList);
+
+		final C newValue = TestFactory.eINSTANCE.createC();
+		final TestNotification raw = new TestNotification(Notification.ADD, null, newValue, b, bToCList);
+		final ModelChangeNotification mcn = new ModelChangeNotification(raw);
+
+		final StructuralChangeSegmentTester tester = mock(StructuralChangeSegmentTester.class);
+
+		when(tester.isApplicable(any(VDomainModelReferenceSegment.class))).thenReturn(2d);
+		when(tester.isStructureChanged(segmentB, domain, mcn)).thenReturn(false);
+		when(tester.isStructureChanged(segmentCList, b, mcn)).thenReturn(false);
+		when(segmentResolver.resolveSegment(segmentB, domain)).thenReturn(settingB);
+		when(segmentResolver.resolveSegment(segmentCList, b)).thenReturn(settingCList);
+
+		changeTester.addStructuralChangeSegmentTester(tester);
+
+		final boolean isChanged = changeTester.isStructureChanged(dmr, domain, mcn);
+
+		assertFalse(isChanged);
+		verify(tester).isStructureChanged(segmentB, domain, mcn);
+		verify(tester).isStructureChanged(segmentCList, b, mcn);
 	}
 
 	/**

@@ -113,7 +113,8 @@ public class EMFFormsStructuralChangeTesterImpl implements EMFFormsStructuralCha
 		boolean relevantChange = false;
 
 		EObject currentDomainObject = domainRootObject;
-		for (final VDomainModelReferenceSegment segment : segments) {
+		for (int i = 0; i < segments.size(); i++) {
+			final VDomainModelReferenceSegment segment = segments.get(i);
 			final StructuralChangeSegmentTester segmentTester = getBestSegmentTester(segment);
 			if (segmentTester == null) {
 				reportService.report(new AbstractReport(String.format(
@@ -137,6 +138,11 @@ public class EMFFormsStructuralChangeTesterImpl implements EMFFormsStructuralCha
 				return relevantChange;
 			}
 
+			// Do not resolve the last setting and convert its value because the last value is not needed and might be
+			// an EList because the last segment may represent a multi reference
+			if (i == segments.size() - 1) {
+				break;
+			}
 			// The value of the Setting is an EObject because its EStructuralFeature is an EReference.
 			currentDomainObject = (EObject) setting.get(true);
 		}
