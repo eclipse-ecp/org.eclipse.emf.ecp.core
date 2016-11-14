@@ -15,15 +15,12 @@
 package org.eclipse.emf.ecp.view.internal.editor.controls;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.Observables;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
@@ -34,18 +31,15 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.core.util.ECPUtil;
-import org.eclipse.emf.ecp.internal.ui.Messages;
-import org.eclipse.emf.ecp.spi.common.ui.CompositeFactory;
-import org.eclipse.emf.ecp.spi.common.ui.composites.SelectionComposite;
-import org.eclipse.emf.ecp.view.internal.editor.handler.CreateDomainModelReferenceWizard;
+import org.eclipse.emf.ecp.view.internal.editor.handler.EStructuralFeatureSelectionValidator;
+import org.eclipse.emf.ecp.view.internal.editor.handler.FeatureSegmentGenerator;
+import org.eclipse.emf.ecp.view.internal.editor.handler.SimpleCreateDomainModelReferenceWizard;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTRenderer;
+import org.eclipse.emf.ecp.view.spi.editor.controls.Helper;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
@@ -54,8 +48,6 @@ import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
-import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
-import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.command.SetCommand;
@@ -83,7 +75,6 @@ import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
-import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
@@ -101,7 +92,6 @@ import org.eclipse.swt.widgets.TableColumn;
  * @author Eugen
  *
  */
-@SuppressWarnings("restriction")
 public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 
 	private final EMFDataBindingContext viewModelDBC;
@@ -128,8 +118,6 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 	private AdapterFactoryLabelProvider labelProvider;
 	private AdapterImpl adapter;
 	private VTableControl tableControl;
-	private EStructuralFeature structuralFeature;
-	private EObject eObject;
 	private TableViewer viewer;
 
 	/**
@@ -139,12 +127,6 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 	 */
 	@Override
 	protected Control createControl(final Composite parent) throws DatabindingFailedException {
-		final IObservableValue observableValue = Activator.getDefault().getEMFFormsDatabinding()
-			.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
-		structuralFeature = (EStructuralFeature) observableValue.getValueType();
-		eObject = (EObject) ((IObserving) observableValue).getObserved();
-		observableValue.dispose();
-
 		final Composite composite = new Composite(parent, SWT.NONE);
 		composite.setBackgroundMode(SWT.INHERIT_FORCE);
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(composite);
@@ -206,9 +188,14 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 
 		viewer.setLabelProvider(labelProvider);
 		viewer.setContentProvider(new ObservableListContentProvider());
-		addDragAndDropSupport(viewer, getEditingDomain(eObject));
 
 		tableControl = (VTableControl) getViewModelContext().getDomainModel();
+
+		/*
+		 * The actual EObject on which the DND is executed is the list of child dmrs of the multi segment. But the multi
+		 * segment is null when the table control's dmr is not set. It works by using the table control's editing domain
+		 */
+		addDragAndDropSupport(viewer, getEditingDomain(tableControl));
 
 		viewer.setInput(getChildDmrsObservableList());
 
@@ -217,7 +204,7 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 
 		buttonSort.addSelectionListener(new SortSelectionAdapter());
 
-		buttonAdd.addSelectionListener(new AddSelectionAdapter(tableComposite, viewer));
+		buttonAdd.addSelectionListener(new AddSelectionAdapter(tableComposite));
 
 		buttonRemove.addSelectionListener(new RemoveSelectionAdapter(viewer));
 
@@ -251,16 +238,30 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 		final VFeatureDomainModelReferenceSegment featureSegment = VViewFactory.eINSTANCE
 			.createFeatureDomainModelReferenceSegment();
 		featureSegment.setDomainModelFeature(
-			VMultisegmentPackage.eINSTANCE.getMultiDomainModelReferenceSegment_ChildDomainModelReferences().getName());
+			getChildDmrsEReference().getName());
 		childDmrsDMR.getSegments().add(featureSegment);
 
+		return Activator.getDefault().getEMFFormsDatabinding().getObservableList(childDmrsDMR, getMultiSegment());
+	}
+
+	/**
+	 * @return The EReference describing the child dmr feature of the multi segment
+	 */
+	private EReference getChildDmrsEReference() {
+		return VMultisegmentPackage.eINSTANCE.getMultiDomainModelReferenceSegment_ChildDomainModelReferences();
+	}
+
+	/**
+	 * @return The {@link VMultiDomainModelReferenceSegment multi segment} of this renderer's {@link VTableControl} that
+	 *         contains the child DMRs defining the columns of the table.
+	 */
+	private VMultiDomainModelReferenceSegment getMultiSegment() {
 		// The table control's dmr's last segment must always be a multi segment. This multi segment contains the child
 		// dmrs defining the table columns
 		final EList<VDomainModelReferenceSegment> segments = tableControl.getDomainModelReference().getSegments();
 		final VDomainModelReferenceSegment lastSegment = segments.get(segments.size() - 1);
 		final VMultiDomainModelReferenceSegment multiSegment = (VMultiDomainModelReferenceSegment) lastSegment;
-
-		return Activator.getDefault().getEMFFormsDatabinding().getObservableList(childDmrsDMR, multiSegment);
+		return multiSegment;
 	}
 
 	/**
@@ -339,45 +340,24 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 		@Override
 		public void notifyChanged(Notification notification) {
 			super.notifyChanged(notification);
-			// TODO the multi segments child dmr feature
-			if (notification.getFeature() == VTablePackage.eINSTANCE
-				.getTableDomainModelReference_ColumnDomainModelReferences()) {
-				viewer.refresh();
-				parent.layout();
-			}
-			if (VTableDomainModelReference.class.isInstance(notification.getNotifier())) {
-				updateEObjectAndStructuralFeature();
-				viewer.refresh();
-				parent.layout();
-			}
 
 			if (VTableControl.class.isInstance(notification.getNotifier())
 				&& notification.getFeature() == VViewPackage.eINSTANCE.getControl_DomainModelReference()) {
-				updateEObjectAndStructuralFeature();
+				updateViewerInputObservableList();
 				viewer.refresh();
 				parent.layout();
 			}
 		}
 
-		private void updateEObjectAndStructuralFeature() {
-			IObservableValue observableValue;
+		private void updateViewerInputObservableList() {
 			IObservableList list;
 			try {
-				// TODO get observable value for child dmrs
-				observableValue = Activator
-					.getDefault()
-					.getEMFFormsDatabinding()
-					.getObservableValue(getVElement().getDomainModelReference(),
-						getViewModelContext().getDomainModel());
 				list = getChildDmrsObservableList();
 			} catch (final DatabindingFailedException ex) {
 				Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 				viewer.setInput(Observables.emptyObservableList());
 				return;
 			}
-			structuralFeature = (EStructuralFeature) observableValue.getValueType();
-			eObject = (EObject) ((IObserving) observableValue).getObserved();
-			observableValue.dispose();
 			viewer.setInput(list);
 		}
 	}
@@ -406,9 +386,9 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 			super.widgetSelected(e);
 			final IStructuredSelection selection = IStructuredSelection.class.cast(viewer.getSelection());
 
-			final EditingDomain editingDomain = getEditingDomain(eObject);
+			final EditingDomain editingDomain = getEditingDomain(getMultiSegment());
 			editingDomain.getCommandStack().execute(
-				RemoveCommand.create(editingDomain, eObject, structuralFeature, selection.toList()));
+				RemoveCommand.create(editingDomain, getMultiSegment(), getChildDmrsEReference(), selection.toList()));
 		}
 	}
 
@@ -418,15 +398,13 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 	 */
 	private final class AddSelectionAdapter extends SelectionAdapter {
 		private final Composite tableComposite;
-		private final TableViewer viewer;
 
 		/**
 		 * @param tableComposite
 		 * @param viewer
 		 */
-		private AddSelectionAdapter(Composite tableComposite, TableViewer viewer) {
+		private AddSelectionAdapter(Composite tableComposite) {
 			this.tableComposite = tableComposite;
-			this.viewer = viewer;
 		}
 
 		/**
@@ -437,11 +415,9 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 		@Override
 		public void widgetSelected(SelectionEvent e) {
 			super.widgetSelected(e);
-			final VTableDomainModelReference tableDomainModelReference = VTableDomainModelReference.class
-				.cast(eObject);
-			if (tableDomainModelReference == null) {
+			if (tableControl.getDomainModelReference() == null) {
 				Activator.getDefault().getReportService()
-					.report(new AbstractReport("Cannot add column. Table DMR is null.")); //$NON-NLS-1$
+					.report(new AbstractReport("Cannot add column. The VTableControl's DMR is null.")); //$NON-NLS-1$
 				return;
 			}
 
@@ -450,30 +426,25 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 				valueProperty = Activator
 					.getDefault()
 					.getEMFFormsDatabinding()
-					.getValueProperty(
-						tableDomainModelReference.getDomainModelReference() == null ? tableDomainModelReference
-							: tableDomainModelReference.getDomainModelReference(),
-						getViewModelContext().getDomainModel());
+					.getValueProperty(tableControl.getDomainModelReference(),
+						Helper.getRootEClass(getViewModelContext().getDomainModel()));
 			} catch (final DatabindingFailedException ex) {
 				Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 				return;
 			}
 			final EClass eclass = EReference.class.cast(valueProperty.getValueType()).getEReferenceType();
 
-			final Collection<EClass> classes = ECPUtil.getSubClasses(VViewPackage.eINSTANCE
-				.getDomainModelReference());
+			final SimpleCreateDomainModelReferenceWizard wizard = new SimpleCreateDomainModelReferenceWizard(
+				getMultiSegment(), getChildDmrsEReference(), getEditingDomain(getMultiSegment()), eclass,
+				"New Column DMR", null, //$NON-NLS-1$
+				new EStructuralFeatureSelectionValidator() {
 
-			final CreateDomainModelReferenceWizard wizard = new CreateDomainModelReferenceWizard(
-				eObject, structuralFeature, getEditingDomain(eObject), eclass, "New Reference Element", //$NON-NLS-1$
-				Messages.NewModelElementWizard_WizardTitle_AddModelElement,
-				Messages.NewModelElementWizard_PageTitle_AddModelElement,
-				Messages.NewModelElementWizard_PageDescription_AddModelElement,
-				(VDomainModelReference) IStructuredSelection.class.cast(viewer.getSelection()).getFirstElement());
-
-			final SelectionComposite<TreeViewer> helper = CompositeFactory.getSelectModelClassComposite(
-				new HashSet<EPackage>(),
-				new HashSet<EPackage>(), classes);
-			wizard.setCompositeProvider(helper);
+					@Override
+					public String isValid(EStructuralFeature structuralFeature) {
+						// Every selection is valid
+						return null;
+					}
+				}, new FeatureSegmentGenerator());
 
 			final WizardDialog wd = new WizardDialog(Display.getDefault().getActiveShell(), wizard);
 			wd.open();
@@ -502,7 +473,7 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 			// EMF API
 			@SuppressWarnings("unchecked")
 			final List<VDomainModelReference> list = new ArrayList<VDomainModelReference>(
-				(List<VDomainModelReference>) eObject.eGet(structuralFeature, true));
+				(List<VDomainModelReference>) getMultiSegment().eGet(getChildDmrsEReference(), true));
 			Collections.sort(list, new Comparator<VDomainModelReference>() {
 				@Override
 				public int compare(VDomainModelReference o1, VDomainModelReference o2) {
@@ -515,9 +486,9 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 					return result;
 				}
 			});
-			final EditingDomain editingDomain = getEditingDomain(eObject);
+			final EditingDomain editingDomain = getEditingDomain(getMultiSegment());
 			editingDomain.getCommandStack().execute(
-				SetCommand.create(editingDomain, eObject, structuralFeature, list));
+				SetCommand.create(editingDomain, getMultiSegment(), getChildDmrsEReference(), list));
 		}
 	}
 
