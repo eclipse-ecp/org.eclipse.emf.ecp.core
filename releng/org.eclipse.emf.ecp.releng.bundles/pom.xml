@@ -17,9 +17,7 @@
 	<modules>
 		<!-- Tooling -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.model.preview.common</module>
-		<!--
 		<module>../../bundles/org.eclipse.emf.ecp.view.model.editor.project.installer</module>
-		-->
 		<module>../../bundles/org.eclipse.emf.ecp.view.model.preview.e3</module>
 		<module>../../bundles/org.eclipse.emf.ecp.ide.util</module>
 				
@@ -90,9 +88,7 @@
 		<module>../../bundles/org.eclipse.emf.ecp.ecore.editor.ui</module>
 
 		<!-- Editor controls -->
-		<!--
 		<module>../../bundles/org.eclipse.emf.ecp.ui.view.editor.controls</module>
-		-->
 		
 		<module>../../bundles/org.eclipse.emf.ecp.examplemodel.ui</module>
 		
@@ -100,10 +96,8 @@
 		<module>../../bundles/org.eclipse.emf.ecp.ui.transaction</module>
 
 		<!-- IDE Feature -->
-		<!--
 		<module>../../bundles/org.eclipse.emf.ecp.view.model.editor</module>
-		-->
-		
+
 		<!-- Categorization Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.categorization.model</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.categorization.model.edit</module>
@@ -192,9 +186,7 @@
 		<module>../../bundles/org.eclipse.emf.ecp.ide.editor.view</module>
 		<module>../../bundles/org.eclipse.emf.ecp.ide.editor.viewmodel</module>
 		<module>../../bundles/org.eclipse.emf.ecp.ide.view.service</module>
-		<!--
 		<module>../../bundles/org.eclipse.emf.ecp.ide.editor.view.templatebridge</module>
-		-->
 
 		<!-- RAP -->
 		<module>../../bundles/org.eclipse.emf.ecp.rap.util</module>
@@ -227,9 +219,7 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.mappingdmr.model</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.mappingdmr.model.edit</module>
 		
-		<!--
 		<module>../../bundles/org.eclipse.emf.ecp.view.template.tooling</module>
-		-->
 		
 		<!-- DI -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.model.common.di</module>
@@ -363,9 +353,8 @@
 		<!-- Rule Repository -->
 		<module>../../bundles/org.eclipse.emfforms.rulerepository.model</module>
 		<module>../../bundles/org.eclipse.emfforms.rulerepository.model.edit</module>
-		<!--
 		<module>../../bundles/org.eclipse.emfforms.rulerepository.tooling</module>
-		-->
+
 		<!-- Nebula Table -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.ui.nebula.grid</module>
 		

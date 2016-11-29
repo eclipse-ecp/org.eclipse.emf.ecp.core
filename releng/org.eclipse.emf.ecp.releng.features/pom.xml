@@ -15,9 +15,7 @@
 	<packaging>pom</packaging>
 
 	<modules>
-		<!-- 
 		<module>../../features/org.eclipse.emf.ecp.emfforms.idetooling.feature</module>
-		-->
 		<module>../../features/org.eclipse.emf.ecp.target.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.cdo.feature</module>
@@ -30,12 +28,8 @@
 		<module>../../features/org.eclipse.emf.ecp.ecore.editor.feature</module>
 		<module>../../features/org.eclipse.emfforms.editor.feature</module>
 		<module>../../features/org.eclipse.emfforms.editor.genmodel.util.feature</module>
-		<!--
 		<module>../../features/org.eclipse.emf.ecp.view.model.editor.feature</module>
-		-->
-		<!--
 		<module>../../features/org.eclipse.emf.ecp.view.model.controls.feature</module>
-		-->
 		<module>../../features/org.eclipse.emf.ecp.examplemodel.ui.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.categorization.feature</module>
 		<!--
