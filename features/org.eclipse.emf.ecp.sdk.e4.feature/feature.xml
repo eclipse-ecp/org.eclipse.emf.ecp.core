@@ -47,11 +47,9 @@
          id="org.eclipse.emf.ecp.e4.feature.source"
          version="0.0.0"/>
 
-<!--
    <includes
          id="org.eclipse.emf.ecp.view.model.editor.feature.source"
          version="0.0.0"/>
--->
 
    <includes
          id="org.eclipse.emf.ecp.cdo.feature"
@@ -85,13 +83,10 @@
          id="org.eclipse.emf.ecp.license.feature"
          version="0.0.0"/>
 
-<!--
    <includes
          id="org.eclipse.emf.ecp.view.model.editor.feature"
          version="0.0.0"/>
--->
 
-<!--
    <includes
          id="org.eclipse.emf.ecp.view.model.controls.feature"
          version="0.0.0"/>
@@ -99,5 +94,4 @@
    <includes
          id="org.eclipse.emf.ecp.view.model.controls.feature.source"
          version="0.0.0"/>
--->
 </feature>

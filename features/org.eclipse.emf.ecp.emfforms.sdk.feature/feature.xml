@@ -19,11 +19,9 @@
       %license
    </license>
 
-<!--
    <includes
          id="org.eclipse.emf.ecp.emfforms.idetooling.feature"
          version="0.0.0"/>
--->
 
    <includes
          id="org.eclipse.emf.ecp.emfforms.runtime.feature"
@@ -53,27 +51,21 @@
          id="org.eclipse.emf.ecp.license.feature"
          version="0.0.0"/>
 
-<!--
    <includes
          id="org.eclipse.emf.ecp.view.model.controls.feature"
          version="0.0.0"/>
--->
 
-<!--
    <includes
          id="org.eclipse.emf.ecp.view.model.editor.feature"
          version="0.0.0"/>
--->
 
    <includes
          id="org.eclipse.emf.ecp.workspace.feature"
          version="0.0.0"/>
 
-<!--
    <includes
          id="org.eclipse.emf.ecp.emfforms.idetooling.feature.source"
          version="0.0.0"/>
--->
 
    <includes
          id="org.eclipse.emf.ecp.emfforms.runtime.feature.source"
@@ -99,17 +91,13 @@
          id="org.eclipse.emf.ecp.feature.source"
          version="0.0.0"/>
 
-<!--
    <includes
          id="org.eclipse.emf.ecp.view.model.controls.feature.source"
          version="0.0.0"/>
--->
 
-<!--
    <includes
          id="org.eclipse.emf.ecp.view.model.editor.feature.source"
          version="0.0.0"/>
--->
 
    <includes
          id="org.eclipse.emf.ecp.workspace.feature.source"
