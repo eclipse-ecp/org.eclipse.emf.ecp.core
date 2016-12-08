@@ -20,7 +20,7 @@ import org.eclipse.emf.ecp.view.spi.model.provider.ViewEditPlugin;
  * This is the central singleton for the Multisegment edit plugin.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
- *
+ * 
  * @generated
  */
 public final class MultisegmentEditPlugin extends EMFPlugin {
@@ -28,7 +28,7 @@ public final class MultisegmentEditPlugin extends EMFPlugin {
 	 * Keep track of the singleton.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public static final MultisegmentEditPlugin INSTANCE = new MultisegmentEditPlugin();
@@ -37,7 +37,7 @@ public final class MultisegmentEditPlugin extends EMFPlugin {
 	 * Keep track of the singleton.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private static Implementation plugin;
@@ -46,7 +46,7 @@ public final class MultisegmentEditPlugin extends EMFPlugin {
 	 * Create the instance.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public MultisegmentEditPlugin() {
@@ -60,7 +60,7 @@ public final class MultisegmentEditPlugin extends EMFPlugin {
 	 * Returns the singleton instance of the Eclipse plugin.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the singleton instance.
 	 * @generated
 	 */
@@ -73,7 +73,7 @@ public final class MultisegmentEditPlugin extends EMFPlugin {
 	 * Returns the singleton instance of the Eclipse plugin.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the singleton instance.
 	 * @generated
 	 */
@@ -85,7 +85,7 @@ public final class MultisegmentEditPlugin extends EMFPlugin {
 	 * The actual implementation of the Eclipse <b>Plugin</b>.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public static class Implementation extends EclipsePlugin {
@@ -93,7 +93,7 @@ public final class MultisegmentEditPlugin extends EMFPlugin {
 		 * Creates an instance.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
+		 * 
 		 * @generated
 		 */
 		public Implementation() {

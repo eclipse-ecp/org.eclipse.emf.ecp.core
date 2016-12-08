@@ -19,11 +19,6 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.ResourceLocator;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
-import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
-import org.eclipse.emf.ecp.view.spi.model.util.ViewSwitch;
-import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ChangeNotifier;
 import org.eclipse.emf.edit.provider.ChildCreationExtenderManager;
@@ -38,7 +33,6 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.INotifyChangedListener;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-import org.eclipse.emfforms.view.spi.multisegment.model.VMultisegmentFactory;
 import org.eclipse.emfforms.view.spi.multisegment.model.VMultisegmentPackage;
 import org.eclipse.emfforms.view.spi.multisegment.model.util.MultisegmentAdapterFactory;
 
@@ -50,7 +44,7 @@ import org.eclipse.emfforms.view.spi.multisegment.model.util.MultisegmentAdapter
  * Note that most of the adapters are shared among multiple instances.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
- *
+ * 
  * @generated
  */
 public class MultisegmentItemProviderAdapterFactory extends MultisegmentAdapterFactory
@@ -59,7 +53,7 @@ public class MultisegmentItemProviderAdapterFactory extends MultisegmentAdapterF
 	 * This keeps track of the root adapter factory that delegates to this adapter factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected ComposedAdapterFactory parentAdapterFactory;
@@ -68,7 +62,7 @@ public class MultisegmentItemProviderAdapterFactory extends MultisegmentAdapterF
 	 * This is used to implement {@link org.eclipse.emf.edit.provider.IChangeNotifier}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected IChangeNotifier changeNotifier = new ChangeNotifier();
@@ -77,7 +71,7 @@ public class MultisegmentItemProviderAdapterFactory extends MultisegmentAdapterF
 	 * This helps manage the child creation extenders.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected ChildCreationExtenderManager childCreationExtenderManager = new ChildCreationExtenderManager(
@@ -87,7 +81,7 @@ public class MultisegmentItemProviderAdapterFactory extends MultisegmentAdapterF
 	 * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected Collection<Object> supportedTypes = new ArrayList<Object>();
@@ -96,7 +90,7 @@ public class MultisegmentItemProviderAdapterFactory extends MultisegmentAdapterF
 	 * This constructs an instance.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public MultisegmentItemProviderAdapterFactory() {
@@ -112,7 +106,7 @@ public class MultisegmentItemProviderAdapterFactory extends MultisegmentAdapterF
 	 * {@link org.eclipse.emfforms.view.spi.multisegment.model.VMultiDomainModelReferenceSegment} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected MultiDomainModelReferenceSegmentItemProvider multiDomainModelReferenceSegmentItemProvider;
@@ -122,7 +116,7 @@ public class MultisegmentItemProviderAdapterFactory extends MultisegmentAdapterF
 	 * {@link org.eclipse.emfforms.view.spi.multisegment.model.VMultiDomainModelReferenceSegment}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -138,7 +132,7 @@ public class MultisegmentItemProviderAdapterFactory extends MultisegmentAdapterF
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -150,7 +144,7 @@ public class MultisegmentItemProviderAdapterFactory extends MultisegmentAdapterF
 	 * This sets the composed adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -161,7 +155,7 @@ public class MultisegmentItemProviderAdapterFactory extends MultisegmentAdapterF
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -173,7 +167,7 @@ public class MultisegmentItemProviderAdapterFactory extends MultisegmentAdapterF
 	 * This implementation substitutes the factory itself as the key for the adapter.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -184,14 +178,14 @@ public class MultisegmentItemProviderAdapterFactory extends MultisegmentAdapterF
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Object adapt(Object object, Object type) {
 		if (isFactoryForType(type)) {
-			final Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter)) {
+			Object adapter = super.adapt(object, type);
+			if (!(type instanceof Class<?>) || (((Class<?>) type).isInstance(adapter))) {
 				return adapter;
 			}
 		}
@@ -202,7 +196,7 @@ public class MultisegmentItemProviderAdapterFactory extends MultisegmentAdapterF
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public List<IChildCreationExtender> getChildCreationExtenders() {
@@ -212,7 +206,7 @@ public class MultisegmentItemProviderAdapterFactory extends MultisegmentAdapterF
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -223,7 +217,7 @@ public class MultisegmentItemProviderAdapterFactory extends MultisegmentAdapterF
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -235,7 +229,7 @@ public class MultisegmentItemProviderAdapterFactory extends MultisegmentAdapterF
 	 * This adds a listener.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -247,7 +241,7 @@ public class MultisegmentItemProviderAdapterFactory extends MultisegmentAdapterF
 	 * This removes a listener.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -259,7 +253,7 @@ public class MultisegmentItemProviderAdapterFactory extends MultisegmentAdapterF
 	 * This delegates to {@link #changeNotifier} and to {@link #parentAdapterFactory}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -275,111 +269,13 @@ public class MultisegmentItemProviderAdapterFactory extends MultisegmentAdapterF
 	 * This disposes all of the item providers created by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void dispose() {
-		if (multiDomainModelReferenceSegmentItemProvider != null) {
+		if (multiDomainModelReferenceSegmentItemProvider != null)
 			multiDomainModelReferenceSegmentItemProvider.dispose();
-		}
-	}
-
-	/**
-	 * A child creation extender for the {@link VViewPackage}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	public static class ViewChildCreationExtender implements IChildCreationExtender {
-		/**
-		 * The switch for creating child descriptors specific to each extended class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 *
-		 * @generated
-		 */
-		protected static class CreationSwitch extends ViewSwitch<Object> {
-			/**
-			 * The child descriptors being populated.
-			 * <!-- begin-user-doc -->
-			 * <!-- end-user-doc -->
-			 *
-			 * @generated
-			 */
-			protected List<Object> newChildDescriptors;
-
-			/**
-			 * The domain in which to create the children.
-			 * <!-- begin-user-doc -->
-			 * <!-- end-user-doc -->
-			 *
-			 * @generated
-			 */
-			protected EditingDomain editingDomain;
-
-			/**
-			 * Creates the a switch for populating child descriptors in the given domain.
-			 * <!-- begin-user-doc -->
-			 * <!-- end-user-doc -->
-			 *
-			 * @generated
-			 */
-			CreationSwitch(List<Object> newChildDescriptors, EditingDomain editingDomain) {
-				this.newChildDescriptors = newChildDescriptors;
-				this.editingDomain = editingDomain;
-			}
-
-			/**
-			 * <!-- begin-user-doc -->
-			 * <!-- end-user-doc -->
-			 *
-			 * @generated
-			 */
-			@Override
-			public Object caseDomainModelReference(VDomainModelReference object) {
-				newChildDescriptors.add(createChildParameter(VViewPackage.Literals.DOMAIN_MODEL_REFERENCE__SEGMENTS,
-					VMultisegmentFactory.eINSTANCE.createMultiDomainModelReferenceSegment()));
-
-				return null;
-			}
-
-			/**
-			 * <!-- begin-user-doc -->
-			 * <!-- end-user-doc -->
-			 *
-			 * @generated
-			 */
-			protected CommandParameter createChildParameter(Object feature, Object child) {
-				return new CommandParameter(null, feature, child);
-			}
-
-		}
-
-		/**
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 *
-		 * @generated
-		 */
-		@Override
-		public Collection<Object> getNewChildDescriptors(Object object, EditingDomain editingDomain) {
-			final ArrayList<Object> result = new ArrayList<Object>();
-			new CreationSwitch(result, editingDomain).doSwitch((EObject) object);
-			return result;
-		}
-
-		/**
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 *
-		 * @generated
-		 */
-		@Override
-		public ResourceLocator getResourceLocator() {
-			return MultisegmentEditPlugin.INSTANCE;
-		}
 	}
 
 }

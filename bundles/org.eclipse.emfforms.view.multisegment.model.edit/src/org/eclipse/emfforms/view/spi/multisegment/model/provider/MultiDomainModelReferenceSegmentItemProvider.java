@@ -29,7 +29,7 @@ import org.eclipse.emfforms.view.spi.multisegment.model.VMultisegmentPackage;
  * {@link org.eclipse.emfforms.view.spi.multisegment.model.VMultiDomainModelReferenceSegment} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
- *
+ * 
  * @generated
  */
 public class MultiDomainModelReferenceSegmentItemProvider extends FeatureDomainModelReferenceSegmentItemProvider {
@@ -37,7 +37,7 @@ public class MultiDomainModelReferenceSegmentItemProvider extends FeatureDomainM
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public MultiDomainModelReferenceSegmentItemProvider(AdapterFactory adapterFactory) {
@@ -48,7 +48,7 @@ public class MultiDomainModelReferenceSegmentItemProvider extends FeatureDomainM
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -66,7 +66,7 @@ public class MultiDomainModelReferenceSegmentItemProvider extends FeatureDomainM
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -82,7 +82,7 @@ public class MultiDomainModelReferenceSegmentItemProvider extends FeatureDomainM
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -97,7 +97,7 @@ public class MultiDomainModelReferenceSegmentItemProvider extends FeatureDomainM
 	 * This returns MultiDomainModelReferenceSegment.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -109,12 +109,12 @@ public class MultiDomainModelReferenceSegmentItemProvider extends FeatureDomainM
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public String getText(Object object) {
-		final String label = ((VMultiDomainModelReferenceSegment) object).getDomainModelFeature();
+		String label = ((VMultiDomainModelReferenceSegment) object).getDomainModelFeature();
 		return label == null || label.length() == 0 ? getString("_UI_MultiDomainModelReferenceSegment_type") : //$NON-NLS-1$
 			getString("_UI_MultiDomainModelReferenceSegment_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
@@ -124,7 +124,7 @@ public class MultiDomainModelReferenceSegmentItemProvider extends FeatureDomainM
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -144,7 +144,7 @@ public class MultiDomainModelReferenceSegmentItemProvider extends FeatureDomainM
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override

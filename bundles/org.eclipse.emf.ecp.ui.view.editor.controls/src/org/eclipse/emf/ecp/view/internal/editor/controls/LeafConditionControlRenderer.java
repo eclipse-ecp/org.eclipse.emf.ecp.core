@@ -8,14 +8,17 @@
  *
  * Contributors:
  * Alexandra Buzila - initial API and implementation
+ * Lucas Koehler - adjustment to segments
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.editor.controls;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 
 import javax.inject.Inject;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -27,9 +30,11 @@ import org.eclipse.emf.ecp.spi.common.ui.CompositeFactory;
 import org.eclipse.emf.ecp.spi.common.ui.composites.SelectionComposite;
 import org.eclipse.emf.ecp.view.internal.editor.handler.CreateDomainModelReferenceWizard;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.editor.controls.Helper;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
-import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
+import org.eclipse.emf.ecp.view.spi.model.util.SegmentResolvementUtil;
 import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.RulePackage;
 import org.eclipse.emf.ecp.view.spi.rule.model.impl.LeafConditionImpl;
@@ -79,25 +84,27 @@ public class LeafConditionControlRenderer extends ExpectedValueControlRenderer {
 		}
 
 		if (condition.getDomainModelReference() == null) {
-			MessageDialog.openError(control.getShell(), "No Feature Path Domain Model Reference found", //$NON-NLS-1$
-				"A Feature Path Domain Model Reference needs to be added to the condition first. " //$NON-NLS-1$
+			MessageDialog.openError(control.getShell(), "No Domain Model Reference found", //$NON-NLS-1$
+				"A Domain Model Reference needs to be added to the condition first. " //$NON-NLS-1$
 			);
 			return;
 		}
 
-		EStructuralFeature structuralFeature = ((VFeaturePathDomainModelReference) condition
-			.getDomainModelReference()).getDomainModelEFeature();
-
-		if (structuralFeature == null) {
-			MessageDialog.openError(control.getShell(), "No value selected", //$NON-NLS-1$
-				"Please set a value to the Domain Model Reference first. " //$NON-NLS-1$
-			);
+		final EList<VDomainModelReferenceSegment> segments = condition.getDomainModelReference().getSegments();
+		if (segments.isEmpty()) {
+			MessageDialog.openError(control.getShell(), "No feature selected", //$NON-NLS-1$
+				"Please set a feature to the Domain Model Reference first. "); //$NON-NLS-1$
 			return;
 		}
+		final EClass rootEClass = Helper.getRootEClass(condition);
+		final List<EStructuralFeature> features = SegmentResolvementUtil
+			.resolveSegmentsToFeatureList(condition.getDomainModelReference().getSegments(), rootEClass);
+		EStructuralFeature structuralFeature = features.get(features.size() - 1);
 
+		EClass referenceType = null;
 		if (EReference.class.isInstance(structuralFeature)) {
 			final EReference reference = EReference.class.cast(structuralFeature);
-			final EClass referenceType = reference.getEReferenceType();
+			referenceType = reference.getEReferenceType();
 			final Collection<EClass> dmrEClasses = ECPUtil.getSubClasses(VViewPackage.eINSTANCE
 				.getDomainModelReference());
 			final Setting valueDMRSeting = ((LeafConditionImpl) condition).eSetting(RulePackage.eINSTANCE
@@ -113,9 +120,17 @@ public class LeafConditionControlRenderer extends ExpectedValueControlRenderer {
 			wizardDialog.open();
 		}
 
-		if (condition.getValueDomainModelReference() != null) {
-			structuralFeature = ((VFeaturePathDomainModelReference) condition.getValueDomainModelReference())
-				.getDomainModelEFeature();
+		if (condition.getValueDomainModelReference() != null && referenceType != null) {
+			final EList<VDomainModelReferenceSegment> valueDmrSegments = condition.getValueDomainModelReference()
+				.getSegments();
+			if (valueDmrSegments.isEmpty()) {
+				MessageDialog.openError(control.getShell(), "No feature selected", //$NON-NLS-1$
+					"Please set a feature to the Value Domain Model Reference first. "); //$NON-NLS-1$
+				return;
+			}
+			final List<EStructuralFeature> valueDmrFeatures = SegmentResolvementUtil
+				.resolveSegmentsToFeatureList(valueDmrSegments, referenceType);
+			structuralFeature = valueDmrFeatures.get(valueDmrFeatures.size() - 1);
 		}
 
 		if (EReference.class.isInstance(structuralFeature)) {
