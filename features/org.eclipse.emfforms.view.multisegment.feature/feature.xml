@@ -3,7 +3,7 @@
       id="org.eclipse.emfforms.view.multisegment.feature"
       label="Multi Segment Feature"
       version="2.0.0.qualifier"
-      provider-name="%providerName"
+      provider-name="Eclipse Modeling Project"
       plugin="org.eclipse.emfforms.view.multisegment.model"
       license-feature="org.eclipse.emf.ecp.license.feature"
       license-feature-version="2.0.0.qualifier">
