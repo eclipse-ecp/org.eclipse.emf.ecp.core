@@ -109,6 +109,7 @@
 		<module>../../features/org.eclipse.emf.ecp.view.table.ui.swt.persistedstate.feature</module>
 		
 		<module>../../features/org.eclipse.emfforms.rulerepository.feature</module>
+		<module>../../features/org.eclipse.emfforms.view.multisegment.feature</module>
 	</modules>
 
 	<!-- Parent used for features. This POM contains all build steps for code signing. -->
