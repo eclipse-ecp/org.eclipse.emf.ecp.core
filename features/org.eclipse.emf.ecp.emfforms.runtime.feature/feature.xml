@@ -23,12 +23,6 @@
          id="org.eclipse.emf.ecp.view.categorization.feature"
          version="0.0.0"/>
 
-<!--
-   <includes
-         id="org.eclipse.emf.ecp.view.custom.feature"
-         version="0.0.0"/>
--->
-
    <includes
          id="org.eclipse.emf.ecp.view.group.feature"
          version="0.0.0"/>
@@ -79,6 +73,10 @@
 
    <includes
          id="org.eclipse.emf.ecp.view.compoundcontrol.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emfforms.view.multisegment.feature"
          version="0.0.0"/>
 
 </feature>
