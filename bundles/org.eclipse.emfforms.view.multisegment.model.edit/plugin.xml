@@ -28,11 +28,4 @@
                org.eclipse.emf.edit.provider.IItemPropertySource"/>
    </extension>
 
-   <extension point="org.eclipse.emf.edit.childCreationExtenders">
-      <!-- @generated multisegment -->
-      <extender
-            uri="http://org/eclipse/emf/ecp/view/model/170"
-            class="org.eclipse.emfforms.view.spi.multisegment.model.provider.MultisegmentItemProviderAdapterFactory$ViewChildCreationExtender"/>
-   </extension>
-
 </plugin>

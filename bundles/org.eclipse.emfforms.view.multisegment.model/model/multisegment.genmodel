@@ -13,7 +13,7 @@
       disposableProviderFactory="true" interfacePackageSuffix="model" metaDataPackageSuffix="model"
       classPackageSuffix="model.impl" utilityPackageSuffix="model.util" providerPackageSuffix="model.provider"
       presentationPackageSuffix="model.presentation" testsPackageSuffix="model.tests"
-      extensibleProviderFactory="true" childCreationExtenders="true" ecorePackage="multisegment.ecore#/">
+      extensibleProviderFactory="true" ecorePackage="multisegment.ecore#/">
     <genClasses ecoreClass="multisegment.ecore#//MultiDomainModelReferenceSegment">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference multisegment.ecore#//MultiDomainModelReferenceSegment/childDomainModelReferences"/>
     </genClasses>
