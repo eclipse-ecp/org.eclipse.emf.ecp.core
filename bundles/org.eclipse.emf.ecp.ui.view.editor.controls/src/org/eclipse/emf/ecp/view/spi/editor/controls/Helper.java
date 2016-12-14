@@ -20,6 +20,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -27,6 +28,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.core.util.ECPUtil;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.edit.provider.AdapterFactoryItemDelegator;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -199,5 +202,24 @@ public final class Helper {
 
 		composedAdapterFactory.dispose();
 		return propertyDescriptor != null;
+	}
+
+	/**
+	 * Returns the last segment of a given {@link VDomainModelReference}.
+	 *
+	 * @param domainModelReference The {@link VDomainModelReference}
+	 * @return the last {@link VDomainModelReferenceSegment} of the given DMR, <code>null</code> if the DMR is null or
+	 *         does not contain any segments.
+	 * @since 2.0
+	 */
+	public static VDomainModelReferenceSegment getLastSegment(VDomainModelReference domainModelReference) {
+		if (domainModelReference == null) {
+			return null;
+		}
+		final EList<VDomainModelReferenceSegment> segments = domainModelReference.getSegments();
+		if (segments.isEmpty()) {
+			return null;
+		}
+		return segments.get(segments.size() - 1);
 	}
 }
