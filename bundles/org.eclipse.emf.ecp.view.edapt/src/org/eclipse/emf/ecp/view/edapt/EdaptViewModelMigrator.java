@@ -86,7 +86,9 @@ public class EdaptViewModelMigrator implements ViewModelMigrator, StringViewMode
 
 	@Override
 	public boolean checkMigration(final URI resourceURI) {
-		return checkMigration(getNamespaceURIs(resourceURI));
+		// return checkMigration(getNamespaceURIs(resourceURI));
+		// FIXME activate check again
+		return true;
 	}
 
 	private boolean checkMigration(final List<String> nsUris) {
