@@ -15,21 +15,23 @@ import org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Index Domain Model Reference Segment</b></em>'.
- * <!-- end-user-doc -->
  *
- * <p>
- * The following features are supported:
- * </p>
- * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReferenceSegment#getIndex
- * <em>Index</em>}</li>
- * </ul>
+ * A representation of the model object '<em><b>Index Domain Model Reference Segment</b></em>'.
+ *
+ * @since 2.0
+ *        <!-- end-user-doc -->
+ *
+ *        <p>
+ *        The following features are supported:
+ *        </p>
+ *        <ul>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReferenceSegment#getIndex
+ *        <em>Index</em>}</li>
+ *        </ul>
  *
  * @see org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexdmrPackage#getIndexDomainModelReferenceSegment()
  * @model
  * @generated
- * @since 2.0
  */
 public interface VIndexDomainModelReferenceSegment extends VFeatureDomainModelReferenceSegment {
 	/**

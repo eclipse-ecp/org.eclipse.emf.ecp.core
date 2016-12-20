@@ -46,8 +46,7 @@ public final class IndexdmrEditPlugin extends EMFPlugin {
 	 * @generated
 	 */
 	public IndexdmrEditPlugin() {
-		super(new ResourceLocator[]
-		{
+		super(new ResourceLocator[] {
 			EcoreEditPlugin.INSTANCE,
 			ViewEditPlugin.INSTANCE,
 		});

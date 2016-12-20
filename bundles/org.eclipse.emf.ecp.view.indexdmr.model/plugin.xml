@@ -18,7 +18,7 @@
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated indexdmr -->
       <package
-            uri="http://www.eclipse.org/emf/ecp/view/indexdmr/model"
+            uri="http://www/eclipse/org/emf/ecp/view/indexdmr/model/200"
             class="org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexdmrPackage"
             genModel="model/indexdmr.genmodel"/>
    </extension>

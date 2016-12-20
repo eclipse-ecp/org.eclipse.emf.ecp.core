@@ -85,20 +85,6 @@ public class IndexdmrSwitch<T> extends Switch<T> {
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
-		case VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE: {
-			final VIndexDomainModelReference indexDomainModelReference = (VIndexDomainModelReference) theEObject;
-			T result = caseIndexDomainModelReference(indexDomainModelReference);
-			if (result == null) {
-				result = caseFeaturePathDomainModelReference(indexDomainModelReference);
-			}
-			if (result == null) {
-				result = caseDomainModelReference(indexDomainModelReference);
-			}
-			if (result == null) {
-				result = defaultCase(theEObject);
-			}
-			return result;
-		}
 		case VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE_SEGMENT: {
 			final VIndexDomainModelReferenceSegment indexDomainModelReferenceSegment = (VIndexDomainModelReferenceSegment) theEObject;
 			T result = caseIndexDomainModelReferenceSegment(indexDomainModelReferenceSegment);
@@ -113,9 +99,40 @@ public class IndexdmrSwitch<T> extends Switch<T> {
 			}
 			return result;
 		}
+		case VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE: {
+			final VIndexDomainModelReference indexDomainModelReference = (VIndexDomainModelReference) theEObject;
+			T result = caseIndexDomainModelReference(indexDomainModelReference);
+			if (result == null) {
+				result = caseFeaturePathDomainModelReference(indexDomainModelReference);
+			}
+			if (result == null) {
+				result = caseDomainModelReference(indexDomainModelReference);
+			}
+			if (result == null) {
+				result = defaultCase(theEObject);
+			}
+			return result;
+		}
 		default:
 			return defaultCase(theEObject);
 		}
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Index Domain Model Reference Segment</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 *
+	 * @since 2.0
+	 *        <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Index Domain Model Reference Segment</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseIndexDomainModelReferenceSegment(VIndexDomainModelReferenceSegment object) {
+		return null;
 	}
 
 	/**
@@ -135,20 +152,38 @@ public class IndexdmrSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Index Domain Model Reference Segment</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Domain Model Reference Segment</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
-	 * 
+	 *
 	 * @since 2.0
 	 *        <!-- end-user-doc -->
-	 *
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Index Domain Model Reference Segment</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Domain Model Reference Segment</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseIndexDomainModelReferenceSegment(VIndexDomainModelReferenceSegment object) {
+	public T caseDomainModelReferenceSegment(VDomainModelReferenceSegment object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Feature Domain Model Reference
+	 * Segment</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 *
+	 * @since 2.0
+	 *        <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Feature Domain Model Reference
+	 *         Segment</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseFeatureDomainModelReferenceSegment(VFeatureDomainModelReferenceSegment object) {
 		return null;
 	}
 
@@ -181,44 +216,6 @@ public class IndexdmrSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseFeaturePathDomainModelReference(VFeaturePathDomainModelReference object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Domain Model Reference Segment</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 *
-	 * @since 2.0
-	 *        <!-- end-user-doc -->
-	 *
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Domain Model Reference Segment</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseDomainModelReferenceSegment(VDomainModelReferenceSegment object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Feature Domain Model Reference
-	 * Segment</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 *
-	 * @since 2.0
-	 *        <!-- end-user-doc -->
-	 *
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Feature Domain Model Reference
-	 *         Segment</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseFeatureDomainModelReferenceSegment(VFeatureDomainModelReferenceSegment object) {
 		return null;
 	}
 

@@ -85,23 +85,13 @@ public class IndexdmrAdapterFactory extends AdapterFactoryImpl {
 	 */
 	protected IndexdmrSwitch<Adapter> modelSwitch = new IndexdmrSwitch<Adapter>() {
 		@Override
-		public Adapter caseIndexDomainModelReference(VIndexDomainModelReference object) {
-			return createIndexDomainModelReferenceAdapter();
-		}
-
-		@Override
 		public Adapter caseIndexDomainModelReferenceSegment(VIndexDomainModelReferenceSegment object) {
 			return createIndexDomainModelReferenceSegmentAdapter();
 		}
 
 		@Override
-		public Adapter caseDomainModelReference(VDomainModelReference object) {
-			return createDomainModelReferenceAdapter();
-		}
-
-		@Override
-		public Adapter caseFeaturePathDomainModelReference(VFeaturePathDomainModelReference object) {
-			return createFeaturePathDomainModelReferenceAdapter();
+		public Adapter caseIndexDomainModelReference(VIndexDomainModelReference object) {
+			return createIndexDomainModelReferenceAdapter();
 		}
 
 		@Override
@@ -112,6 +102,16 @@ public class IndexdmrAdapterFactory extends AdapterFactoryImpl {
 		@Override
 		public Adapter caseFeatureDomainModelReferenceSegment(VFeatureDomainModelReferenceSegment object) {
 			return createFeatureDomainModelReferenceSegmentAdapter();
+		}
+
+		@Override
+		public Adapter caseDomainModelReference(VDomainModelReference object) {
+			return createDomainModelReferenceAdapter();
+		}
+
+		@Override
+		public Adapter caseFeaturePathDomainModelReference(VFeaturePathDomainModelReference object) {
+			return createFeaturePathDomainModelReferenceAdapter();
 		}
 
 		@Override
@@ -136,6 +136,24 @@ public class IndexdmrAdapterFactory extends AdapterFactoryImpl {
 
 	/**
 	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReferenceSegment <em>Index Domain Model
+	 * Reference Segment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 *
+	 * @since 2.0
+	 *        <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReferenceSegment
+	 * @generated
+	 */
+	public Adapter createIndexDomainModelReferenceSegmentAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class
 	 * '{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference <em>Index Domain Model
 	 * Reference</em>}'.
 	 * <!-- begin-user-doc -->
@@ -153,20 +171,37 @@ public class IndexdmrAdapterFactory extends AdapterFactoryImpl {
 
 	/**
 	 * Creates a new adapter for an object of class
-	 * '{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReferenceSegment <em>Index Domain Model
-	 * Reference Segment</em>}'.
+	 * '{@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment <em>Domain Model Reference
+	 * Segment</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * 
+	 *
 	 * @since 2.0
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReferenceSegment
+	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment
 	 * @generated
 	 */
-	public Adapter createIndexDomainModelReferenceSegmentAdapter() {
+	public Adapter createDomainModelReferenceSegmentAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment <em>Feature Domain Model Reference
+	 * Segment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 *
+	 * @since 2.0
+	 *        <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment
+	 * @generated
+	 */
+	public Adapter createFeatureDomainModelReferenceSegmentAdapter() {
 		return null;
 	}
 
@@ -200,44 +235,6 @@ public class IndexdmrAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createFeaturePathDomainModelReferenceAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class
-	 * '{@link org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment <em>Domain Model Reference
-	 * Segment</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * 
-	 * @since 2.0
-	 *        <!-- end-user-doc -->
-	 *
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment
-	 * @generated
-	 */
-	public Adapter createDomainModelReferenceSegmentAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class
-	 * '{@link org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment <em>Feature Domain Model Reference
-	 * Segment</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * 
-	 * @since 2.0
-	 *        <!-- end-user-doc -->
-	 *
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment
-	 * @generated
-	 */
-	public Adapter createFeatureDomainModelReferenceSegmentAdapter() {
 		return null;
 	}
 

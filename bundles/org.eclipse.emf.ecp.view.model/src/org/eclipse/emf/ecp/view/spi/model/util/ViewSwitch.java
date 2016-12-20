@@ -113,15 +113,6 @@ public class ViewSwitch<T> extends Switch<T> {
 				result = defaultCase(theEObject);
 			return result;
 		}
-		case VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE: {
-			VFeaturePathDomainModelReference featurePathDomainModelReference = (VFeaturePathDomainModelReference) theEObject;
-			T result = caseFeaturePathDomainModelReference(featurePathDomainModelReference);
-			if (result == null)
-				result = caseDomainModelReference(featurePathDomainModelReference);
-			if (result == null)
-				result = defaultCase(theEObject);
-			return result;
-		}
 		case VViewPackage.ELEMENT: {
 			VElement element = (VElement) theEObject;
 			T result = caseElement(element);
@@ -225,6 +216,15 @@ public class ViewSwitch<T> extends Switch<T> {
 			T result = caseFeatureDomainModelReferenceSegment(featureDomainModelReferenceSegment);
 			if (result == null)
 				result = caseDomainModelReferenceSegment(featureDomainModelReferenceSegment);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE: {
+			VFeaturePathDomainModelReference featurePathDomainModelReference = (VFeaturePathDomainModelReference) theEObject;
+			T result = caseFeaturePathDomainModelReference(featurePathDomainModelReference);
+			if (result == null)
+				result = caseDomainModelReference(featurePathDomainModelReference);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -452,22 +452,6 @@ public class ViewSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Domain Model Reference</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * 
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Domain Model Reference</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseDomainModelReference(VDomainModelReference object) {
-		return null;
-	}
-
-	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Feature Path Domain Model Reference</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -480,6 +464,22 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseFeaturePathDomainModelReference(VFeaturePathDomainModelReference object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Domain Model Reference</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Domain Model Reference</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseDomainModelReference(VDomainModelReference object) {
 		return null;
 	}
 

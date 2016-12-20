@@ -69,10 +69,10 @@ public class VIndexdmrFactoryImpl extends EFactoryImpl implements VIndexdmrFacto
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-		case VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE:
-			return createIndexDomainModelReference();
 		case VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE_SEGMENT:
 			return createIndexDomainModelReferenceSegment();
+		case VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE:
+			return createIndexDomainModelReference();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -85,9 +85,9 @@ public class VIndexdmrFactoryImpl extends EFactoryImpl implements VIndexdmrFacto
 	 * @generated
 	 */
 	@Override
-	public VIndexDomainModelReference createIndexDomainModelReference() {
-		final VIndexDomainModelReferenceImpl indexDomainModelReference = new VIndexDomainModelReferenceImpl();
-		return indexDomainModelReference;
+	public VIndexDomainModelReferenceSegment createIndexDomainModelReferenceSegment() {
+		final VIndexDomainModelReferenceSegmentImpl indexDomainModelReferenceSegment = new VIndexDomainModelReferenceSegmentImpl();
+		return indexDomainModelReferenceSegment;
 	}
 
 	/**
@@ -97,9 +97,9 @@ public class VIndexdmrFactoryImpl extends EFactoryImpl implements VIndexdmrFacto
 	 * @generated
 	 */
 	@Override
-	public VIndexDomainModelReferenceSegment createIndexDomainModelReferenceSegment() {
-		final VIndexDomainModelReferenceSegmentImpl indexDomainModelReferenceSegment = new VIndexDomainModelReferenceSegmentImpl();
-		return indexDomainModelReferenceSegment;
+	public VIndexDomainModelReference createIndexDomainModelReference() {
+		final VIndexDomainModelReferenceImpl indexDomainModelReference = new VIndexDomainModelReferenceImpl();
+		return indexDomainModelReference;
 	}
 
 	/**

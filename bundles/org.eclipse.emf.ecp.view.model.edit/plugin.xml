@@ -9,7 +9,7 @@
    <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
       <!-- @generated view -->
       <factory
-            uri="http://org/eclipse/emf/ecp/view/model/170"
+            uri="http://org/eclipse/emf/ecp/view/model/200"
             class="org.eclipse.emf.ecp.view.spi.model.provider.ViewItemProviderAdapterFactory"
             supportedTypes=
               "org.eclipse.emf.edit.provider.IEditingDomainItemProvider

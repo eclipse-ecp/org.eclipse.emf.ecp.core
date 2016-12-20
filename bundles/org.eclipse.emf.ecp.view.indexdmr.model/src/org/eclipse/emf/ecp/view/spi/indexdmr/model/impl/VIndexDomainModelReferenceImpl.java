@@ -39,8 +39,8 @@ import org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceI
  *
  * @generated
  */
-public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelReferenceImpl implements
-	VIndexDomainModelReference {
+public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelReferenceImpl
+	implements VIndexDomainModelReference {
 	/**
 	 * The cached value of the '{@link #getPrefixDMR() <em>Prefix DMR</em>}' containment reference.
 	 * <!-- begin-user-doc -->
@@ -173,6 +173,33 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 	 * @generated
 	 */
 	@Override
+	public int getIndex() {
+		return index;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public void setIndex(int newIndex) {
+		final int oldIndex = index;
+		index = newIndex;
+		if (eNotificationRequired()) {
+			eNotify(new ENotificationImpl(this, Notification.SET, VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE__INDEX,
+				oldIndex, index));
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
 	public VDomainModelReference getTargetDMR() {
 		return targetDMR;
 	}
@@ -223,33 +250,6 @@ public class VIndexDomainModelReferenceImpl extends VFeaturePathDomainModelRefer
 		} else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE__TARGET_DMR, newTargetDMR, newTargetDMR));
-		}
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	@Override
-	public int getIndex() {
-		return index;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	@Override
-	public void setIndex(int newIndex) {
-		final int oldIndex = index;
-		index = newIndex;
-		if (eNotificationRequired()) {
-			eNotify(new ENotificationImpl(this, Notification.SET, VIndexdmrPackage.INDEX_DOMAIN_MODEL_REFERENCE__INDEX,
-				oldIndex, index));
 		}
 	}
 
