@@ -13,7 +13,10 @@
 package org.eclipse.emf.ecp.view.internal.rule;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -106,14 +109,26 @@ public class RuleService implements ViewModelService, EMFFormsContextListener {
 		}
 	}
 
-	private static Rule getRule(VElement renderable) {
+	private static Collection<Rule> getRules(VElement renderable) {
+		final Map<Class<? extends Rule>, Rule> rules = new HashMap<Class<? extends Rule>, Rule>();
 		for (final VAttachment attachment : renderable.getAttachments()) {
 			if (Rule.class.isInstance(attachment)) {
 				final Rule rule = (Rule) attachment;
-				return rule;
+				if (!rules.containsKey(rule.getClass())) {
+					rules.put(rule.getClass(), rule);
+				}
 			}
 		}
+		return rules.values();
+	}
 
+	private static <T extends Rule> T getRule(Class<T> ruleType, VElement renderable) {
+		final Collection<Rule> rules = getRules(renderable);
+		for (final Rule rule : rules) {
+			if (ruleType.isInstance(rule)) {
+				return ruleType.cast(rule);
+			}
+		}
 		return null;
 	}
 
@@ -121,14 +136,16 @@ public class RuleService implements ViewModelService, EMFFormsContextListener {
 		boolean isOpposite, boolean evalResult, Class<T> ruleType) {
 
 		if (!stateMap.containsKey(renderable)) {
+			final Collection<Rule> rules = getRules(renderable);
 			boolean didUpdate = false;
-			final Rule rule = getRule(renderable);
-			if (rule != null && ruleApplies(rule, ruleType)) {
-				final Condition condition = rule.getCondition();
-				if (condition != null && canOverrideParent(evalResult, isOpposite)) {
-					final boolean evaluate = conditionServiceManager.evaluate(condition, context.getDomainModel());
-					stateMap.put(renderable, isOpposite(rule) ? !evaluate : evaluate);
-					didUpdate = true;
+			for (final Rule rule : rules) {
+				if (rule != null && ruleApplies(rule, ruleType)) {
+					final Condition condition = rule.getCondition();
+					if (condition != null && canOverrideParent(evalResult, isOpposite)) {
+						final boolean evaluate = conditionServiceManager.evaluate(condition, context.getDomainModel());
+						stateMap.put(renderable, isOpposite(rule) ? !evaluate : evaluate);
+						didUpdate = true;
+					}
 				}
 			}
 			// use result of parent
@@ -159,22 +176,6 @@ public class RuleService implements ViewModelService, EMFFormsContextListener {
 
 	private static boolean isOpposite(Rule rule) {
 		return isHideRule(rule) || isDisableRule(rule);
-	}
-
-	private static <T extends Rule> boolean hasRule(Class<T> ruleType, EObject eObject) {
-
-		if (!VElement.class.isInstance(eObject)) {
-			return false;
-		}
-
-		final VElement renderable = (VElement) eObject;
-		final Rule rule = getRule(renderable);
-
-		if (ruleType.isInstance(rule)) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private <T extends Rule> Map<VElement, Boolean> evalAffectedRenderables(RuleRegistry<T> registry,
@@ -363,15 +364,16 @@ public class RuleService implements ViewModelService, EMFFormsContextListener {
 	}
 
 	private <T extends Rule> Set<UniqueSetting> register(RuleRegistry<T> registry, Class<T> ruleType,
-		EObject domainObject,
-		final EObject viewModel) {
-		if (hasRule(ruleType, viewModel)) {
+		EObject domainObject, final EObject viewModel) {
+		final Set<UniqueSetting> result = new HashSet<UniqueSetting>();
+		if (viewModel instanceof VElement) {
 			final VElement renderable = (VElement) viewModel;
-			@SuppressWarnings("unchecked")
-			final T rule = (T) getRule(renderable);
-			return registry.register(renderable, rule, rule.getCondition(), domainObject);
+			final T rule = getRule(ruleType, renderable);
+			if (rule != null) {
+				result.addAll(registry.register(renderable, rule, rule.getCondition(), domainObject));
+			}
 		}
-		return Collections.emptySet();
+		return result;
 	}
 
 	/**
@@ -508,16 +510,18 @@ public class RuleService implements ViewModelService, EMFFormsContextListener {
 					VElement.class.cast(notifier));
 				register(showRuleRegistry, ShowRule.class, context.getDomainModel(), VElement.class.cast(notifier));
 
-				final Rule rule = getRule(VElement.class.cast(notifier));
-				if (rule == null) {
+				final Collection<Rule> rules = getRules(VElement.class.cast(notifier));
+				if (rules.isEmpty()) {
 					return;
 				}
-
-				final Set<UniqueSetting> settings = conditionServiceManager.getConditionSettings(rule.getCondition(),
-					context.getDomainModel());
-				for (final UniqueSetting setting : settings) {
-					evalEnable(setting);
-					evalShow(setting);
+				for (final Rule rule : rules) {
+					final Set<UniqueSetting> settings = conditionServiceManager.getConditionSettings(
+						rule.getCondition(),
+						context.getDomainModel());
+					for (final UniqueSetting setting : settings) {
+						evalEnable(setting);
+						evalShow(setting);
+					}
 				}
 
 			} else if (EnableRule.class.isInstance(notifier)) {

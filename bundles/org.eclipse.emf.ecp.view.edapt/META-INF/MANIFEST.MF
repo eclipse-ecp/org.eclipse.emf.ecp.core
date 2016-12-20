@@ -2,12 +2,12 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Edapt
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.edapt;singleton:=true
-Bundle-Version: 1.10.0.qualifier
+Bundle-Version: 1.11.0.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.view.edapt.Activator
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emf.ecp.view.edapt;version="1.10.0"
-Require-Bundle: org.eclipse.emf.ecp.view.migrator;bundle-version="[1.10.0,2.0.0)",
+Export-Package: org.eclipse.emf.ecp.view.edapt;version="1.11.0"
+Require-Bundle: org.eclipse.emf.ecp.view.migrator;bundle-version="[1.11.0,1.12.0)",
  org.eclipse.emf.edapt.history;bundle-version="[1.0.0,2.0.0)",
- org.eclipse.emf.ecp.view.model;bundle-version="[1.10.0,2.0.0)"
+ org.eclipse.emf.ecp.view.model;bundle-version="[1.11.0,1.12.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy

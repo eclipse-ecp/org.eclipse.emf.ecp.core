@@ -11,5 +11,11 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="elements" upperBound="-1"
         eType="ecore:EClass ../../org.eclipse.emf.ecp.view.model/model/view.ecore#//Element"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="mergeType" lowerBound="1"
+        eType="#//MergeType" defaultValueLiteral="Or"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="MergeType">
+    <eLiterals name="And"/>
+    <eLiterals name="Or" value="1"/>
   </eClassifiers>
 </ecore:EPackage>

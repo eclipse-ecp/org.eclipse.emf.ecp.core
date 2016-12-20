@@ -2,20 +2,20 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Dynamic Containment Tree Edit Plugin
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.dynamictree.model.edit;singleton:=true
-Bundle-Version: 1.10.0.qualifier
+Bundle-Version: 1.11.0.qualifier
 Bundle-ClassPath: .
 Bundle-Activator: org.eclipse.emf.ecp.view.dynamictree.model.provider.DynamicTreeEditPlugin$Implementation
 Bundle-Vendor: Eclipse Modeling Project
 Bundle-Localization: plugin
-Export-Package: org.eclipse.emf.ecp.view.dynamictree.model.provider;version="1.10.0"
+Export-Package: org.eclipse.emf.ecp.view.dynamictree.model.provider;version="1.11.0"
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
- org.eclipse.emf.ecp.view.dynamictree.model;bundle-version="[1.10.0,2.0.0)";visibility:=reexport,
+ org.eclipse.emf.ecp.view.dynamictree.model;bundle-version="[1.11.0,1.12.0)";visibility:=reexport,
  org.eclipse.emf.edit;bundle-version="[2.5.0,3.0.0)";visibility:=reexport,
- org.eclipse.emf.ecp.view.categorization.model;bundle-version="[1.10.0,2.0.0)";visibility:=reexport,
- org.eclipse.emf.ecp.view.categorization.model.edit;bundle-version="[1.10.0,2.0.0)";visibility:=reexport,
+ org.eclipse.emf.ecp.view.categorization.model;bundle-version="[1.11.0,1.12.0)";visibility:=reexport,
+ org.eclipse.emf.ecp.view.categorization.model.edit;bundle-version="[1.11.0,1.12.0)";visibility:=reexport,
  org.eclipse.emf.ecore;bundle-version="[2.5.0,3.0.0)";visibility:=reexport,
  org.eclipse.emf.ecore.edit;bundle-version="[2.5.0,3.0.0)";visibility:=reexport,
- org.eclipse.emf.ecp.view.model;bundle-version="[1.10.0,2.0.0)";visibility:=reexport,
- org.eclipse.emf.ecp.view.model.edit;bundle-version="[1.10.0,2.0.0)";visibility:=reexport
+ org.eclipse.emf.ecp.view.model;bundle-version="[1.11.0,1.12.0)";visibility:=reexport,
+ org.eclipse.emf.ecp.view.model.edit;bundle-version="[1.11.0,1.12.0)";visibility:=reexport
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy

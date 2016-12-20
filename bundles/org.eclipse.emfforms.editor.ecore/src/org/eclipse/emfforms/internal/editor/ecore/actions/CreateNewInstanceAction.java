@@ -51,7 +51,7 @@ public class CreateNewInstanceAction extends MasterDetailAction {
 
 	@Override
 	public boolean shouldShow(List<Object> objects) {
-		if (objects.size() != 1 && !EObject.class.isInstance(objects.get(0))) {
+		if (objects.size() != 1 || !EObject.class.isInstance(objects.get(0))) {
 			return false;
 		}
 		final EObject eObject = EObject.class.cast(objects.get(0));

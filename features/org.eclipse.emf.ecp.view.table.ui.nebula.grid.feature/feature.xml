@@ -2,11 +2,11 @@
 <feature
       id="org.eclipse.emf.ecp.view.table.ui.nebula.grid.feature"
       label="EMF Forms Nebula Grid Table UI Feature"
-      version="1.10.0.qualifier"
+      version="1.11.0.qualifier"
       provider-name="Eclipse Modeling Project"
       plugin="org.eclipse.emf.ecp.view.table.ui.nebula.grid"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.10.0.qualifier">
+      license-feature-version="1.11.0.qualifier">
 
    <description>
       %description

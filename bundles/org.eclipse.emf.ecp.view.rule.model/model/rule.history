@@ -1,171 +1,358 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:history="http://www.eclipse.org/emf/edapt/history/0.3">
-  <releases date="2014-08-28T11:34:24.390+0200" label="140">
-    <changes xsi:type="history:CompositeChange">
-      <changes xsi:type="history:Create" element="rule.ecore#/">
-        <changes xsi:type="history:Set" element="rule.ecore#/" featureName="name"
-            dataValue="rule"/>
-        <changes xsi:type="history:Set" element="rule.ecore#/" featureName="nsURI"
-            dataValue="http://org/eclipse/emf/ecp/view/rule/model"/>
-        <changes xsi:type="history:Set" element="rule.ecore#/" featureName="nsPrefix"
-            dataValue="org.eclipse.emf.ecp.view.rule.model"/>
+<history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:history="http://www.eclipse.org/emf/edapt/history/0.3" xmi:id="_g9tCoH_iEeaZjMd1mcUoMw">
+  <releases xmi:id="_g9528H_iEeaZjMd1mcUoMw" date="2014-08-28T11:34:24.390+0200" label="140">
+    <changes xsi:type="history:CompositeChange" xmi:id="_g97FEH_iEeaZjMd1mcUoMw">
+      <changes xsi:type="history:Create" xmi:id="_g98TMH_iEeaZjMd1mcUoMw">
+        <element href="rule.ecore#/"/>
+        <changes xsi:type="history:Set" xmi:id="_g9-IYH_iEeaZjMd1mcUoMw" featureName="name" dataValue="rule">
+          <element href="rule.ecore#/"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_g9-vcH_iEeaZjMd1mcUoMw" featureName="nsURI" dataValue="http://org/eclipse/emf/ecp/view/rule/model">
+          <element href="rule.ecore#/"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_g9-vcX_iEeaZjMd1mcUoMw" featureName="nsPrefix" dataValue="org.eclipse.emf.ecp.view.rule.model">
+          <element href="rule.ecore#/"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="rule.ecore#/" referenceName="eClassifiers"
-          element="rule.ecore#//Condition">
-        <changes xsi:type="history:Set" element="rule.ecore#//Condition" featureName="name"
-            dataValue="Condition"/>
-        <changes xsi:type="history:Set" element="rule.ecore#//Condition" featureName="abstract"
-            dataValue="true" oldDataValue="false"/>
+      <changes xsi:type="history:Create" xmi:id="_g9-vcn_iEeaZjMd1mcUoMw" referenceName="eClassifiers">
+        <target href="rule.ecore#/"/>
+        <element href="rule.ecore#//Condition"/>
+        <changes xsi:type="history:Set" xmi:id="_g9_WgH_iEeaZjMd1mcUoMw" featureName="name" dataValue="Condition">
+          <element href="rule.ecore#//Condition"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_g9_WgX_iEeaZjMd1mcUoMw" featureName="abstract" dataValue="true" oldDataValue="false">
+          <element href="rule.ecore#//Condition"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="rule.ecore#/" referenceName="eClassifiers"
-          element="rule.ecore#//LeafCondition">
-        <changes xsi:type="history:Set" element="rule.ecore#//LeafCondition" featureName="name"
-            dataValue="LeafCondition"/>
-        <changes xsi:type="history:Add" element="rule.ecore#//LeafCondition" featureName="eSuperTypes"
-            referenceValue="rule.ecore#//Condition"/>
+      <changes xsi:type="history:Create" xmi:id="_g9_Wgn_iEeaZjMd1mcUoMw" referenceName="eClassifiers">
+        <target href="rule.ecore#/"/>
+        <element href="rule.ecore#//LeafCondition"/>
+        <changes xsi:type="history:Set" xmi:id="_g9_9kH_iEeaZjMd1mcUoMw" featureName="name" dataValue="LeafCondition">
+          <element href="rule.ecore#//LeafCondition"/>
+        </changes>
+        <changes xsi:type="history:Add" xmi:id="_g9_9kX_iEeaZjMd1mcUoMw" featureName="eSuperTypes">
+          <element href="rule.ecore#//LeafCondition"/>
+          <referenceValue href="rule.ecore#//Condition"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="rule.ecore#//LeafCondition" referenceName="eStructuralFeatures"
-          element="rule.ecore#//LeafCondition/expectedValue">
-        <changes xsi:type="history:Set" element="rule.ecore#//LeafCondition/expectedValue"
-            featureName="name" dataValue="expectedValue"/>
-        <changes xsi:type="history:Set" element="rule.ecore#//LeafCondition/expectedValue"
-            featureName="lowerBound" dataValue="1" oldDataValue="0"/>
-        <changes xsi:type="history:Set" element="rule.ecore#//LeafCondition/expectedValue"
-            featureName="eType" referenceValue="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EJavaObject"/>
+      <changes xsi:type="history:Create" xmi:id="_g9_9kn_iEeaZjMd1mcUoMw" referenceName="eStructuralFeatures">
+        <target href="rule.ecore#//LeafCondition"/>
+        <element href="rule.ecore#//LeafCondition/expectedValue"/>
+        <changes xsi:type="history:Set" xmi:id="_g9_9k3_iEeaZjMd1mcUoMw" featureName="name" dataValue="expectedValue">
+          <element href="rule.ecore#//LeafCondition/expectedValue"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_g9_9lH_iEeaZjMd1mcUoMw" featureName="lowerBound" dataValue="1" oldDataValue="0">
+          <element href="rule.ecore#//LeafCondition/expectedValue"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_g-AkoH_iEeaZjMd1mcUoMw" featureName="eType">
+          <element href="rule.ecore#//LeafCondition/expectedValue"/>
+          <referenceValue href="../../../plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EJavaObject"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="rule.ecore#//LeafCondition" referenceName="eStructuralFeatures"
-          element="rule.ecore#//LeafCondition/domainModelReference">
-        <changes xsi:type="history:Set" element="rule.ecore#//LeafCondition/domainModelReference"
-            featureName="name" dataValue="domainModelReference"/>
-        <changes xsi:type="history:Set" element="rule.ecore#//LeafCondition/domainModelReference"
-            featureName="lowerBound" dataValue="1" oldDataValue="0"/>
-        <changes xsi:type="history:Set" element="rule.ecore#//LeafCondition/domainModelReference"
-            featureName="containment" dataValue="true" oldDataValue="false"/>
-        <changes xsi:type="history:Set" element="rule.ecore#//LeafCondition/domainModelReference"
-            featureName="eType" referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"/>
+      <changes xsi:type="history:Create" xmi:id="_g-AkoX_iEeaZjMd1mcUoMw" referenceName="eStructuralFeatures">
+        <target href="rule.ecore#//LeafCondition"/>
+        <element href="rule.ecore#//LeafCondition/domainModelReference"/>
+        <changes xsi:type="history:Set" xmi:id="_g-Akon_iEeaZjMd1mcUoMw" featureName="name" dataValue="domainModelReference">
+          <element href="rule.ecore#//LeafCondition/domainModelReference"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_g-Ako3_iEeaZjMd1mcUoMw" featureName="lowerBound" dataValue="1" oldDataValue="0">
+          <element href="rule.ecore#//LeafCondition/domainModelReference"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_g-BLsH_iEeaZjMd1mcUoMw" featureName="containment" dataValue="true" oldDataValue="false">
+          <element href="rule.ecore#//LeafCondition/domainModelReference"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_g-BLsX_iEeaZjMd1mcUoMw" featureName="eType">
+          <element href="rule.ecore#//LeafCondition/domainModelReference"/>
+          <referenceValue href="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="rule.ecore#/" referenceName="eClassifiers"
-          element="rule.ecore#//OrCondition">
-        <changes xsi:type="history:Set" element="rule.ecore#//OrCondition" featureName="name"
-            dataValue="OrCondition"/>
-        <changes xsi:type="history:Add" element="rule.ecore#//OrCondition" featureName="eSuperTypes"
-            referenceValue="rule.ecore#//Condition"/>
+      <changes xsi:type="history:Create" xmi:id="_g-BLsn_iEeaZjMd1mcUoMw" referenceName="eClassifiers">
+        <target href="rule.ecore#/"/>
+        <element href="rule.ecore#//OrCondition"/>
+        <changes xsi:type="history:Set" xmi:id="_g-BLs3_iEeaZjMd1mcUoMw" featureName="name" dataValue="OrCondition">
+          <element href="rule.ecore#//OrCondition"/>
+        </changes>
+        <changes xsi:type="history:Add" xmi:id="_g-BLtH_iEeaZjMd1mcUoMw" featureName="eSuperTypes">
+          <element href="rule.ecore#//OrCondition"/>
+          <referenceValue href="rule.ecore#//Condition"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="rule.ecore#//OrCondition" referenceName="eStructuralFeatures"
-          element="rule.ecore#//OrCondition/conditions">
-        <changes xsi:type="history:Set" element="rule.ecore#//OrCondition/conditions"
-            featureName="name" dataValue="conditions"/>
-        <changes xsi:type="history:Set" element="rule.ecore#//OrCondition/conditions"
-            featureName="lowerBound" dataValue="2" oldDataValue="0"/>
-        <changes xsi:type="history:Set" element="rule.ecore#//OrCondition/conditions"
-            featureName="upperBound" dataValue="-1" oldDataValue="1"/>
-        <changes xsi:type="history:Set" element="rule.ecore#//OrCondition/conditions"
-            featureName="containment" dataValue="true" oldDataValue="false"/>
-        <changes xsi:type="history:Set" element="rule.ecore#//OrCondition/conditions"
-            featureName="eType" referenceValue="rule.ecore#//Condition"/>
+      <changes xsi:type="history:Create" xmi:id="_g-Dn8H_iEeaZjMd1mcUoMw" referenceName="eStructuralFeatures">
+        <target href="rule.ecore#//OrCondition"/>
+        <element href="rule.ecore#//OrCondition/conditions"/>
+        <changes xsi:type="history:Set" xmi:id="_g-EPAH_iEeaZjMd1mcUoMw" featureName="name" dataValue="conditions">
+          <element href="rule.ecore#//OrCondition/conditions"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_g-EPAX_iEeaZjMd1mcUoMw" featureName="lowerBound" dataValue="2" oldDataValue="0">
+          <element href="rule.ecore#//OrCondition/conditions"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_g-EPAn_iEeaZjMd1mcUoMw" featureName="upperBound" dataValue="-1" oldDataValue="1">
+          <element href="rule.ecore#//OrCondition/conditions"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_g-E2EH_iEeaZjMd1mcUoMw" featureName="containment" dataValue="true" oldDataValue="false">
+          <element href="rule.ecore#//OrCondition/conditions"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_g-HSUH_iEeaZjMd1mcUoMw" featureName="eType">
+          <element href="rule.ecore#//OrCondition/conditions"/>
+          <referenceValue href="rule.ecore#//Condition"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="rule.ecore#/" referenceName="eClassifiers"
-          element="rule.ecore#//AndCondition">
-        <changes xsi:type="history:Set" element="rule.ecore#//AndCondition" featureName="name"
-            dataValue="AndCondition"/>
-        <changes xsi:type="history:Add" element="rule.ecore#//AndCondition" featureName="eSuperTypes"
-            referenceValue="rule.ecore#//Condition"/>
+      <changes xsi:type="history:Create" xmi:id="_g-HSUX_iEeaZjMd1mcUoMw" referenceName="eClassifiers">
+        <target href="rule.ecore#/"/>
+        <element href="rule.ecore#//AndCondition"/>
+        <changes xsi:type="history:Set" xmi:id="_g-HSUn_iEeaZjMd1mcUoMw" featureName="name" dataValue="AndCondition">
+          <element href="rule.ecore#//AndCondition"/>
+        </changes>
+        <changes xsi:type="history:Add" xmi:id="_g-HSU3_iEeaZjMd1mcUoMw" featureName="eSuperTypes">
+          <element href="rule.ecore#//AndCondition"/>
+          <referenceValue href="rule.ecore#//Condition"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="rule.ecore#//AndCondition" referenceName="eStructuralFeatures"
-          element="rule.ecore#//AndCondition/conditions">
-        <changes xsi:type="history:Set" element="rule.ecore#//AndCondition/conditions"
-            featureName="name" dataValue="conditions"/>
-        <changes xsi:type="history:Set" element="rule.ecore#//AndCondition/conditions"
-            featureName="lowerBound" dataValue="2" oldDataValue="0"/>
-        <changes xsi:type="history:Set" element="rule.ecore#//AndCondition/conditions"
-            featureName="upperBound" dataValue="-1" oldDataValue="1"/>
-        <changes xsi:type="history:Set" element="rule.ecore#//AndCondition/conditions"
-            featureName="containment" dataValue="true" oldDataValue="false"/>
-        <changes xsi:type="history:Set" element="rule.ecore#//AndCondition/conditions"
-            featureName="eType" referenceValue="rule.ecore#//Condition"/>
+      <changes xsi:type="history:Create" xmi:id="_g-H5YH_iEeaZjMd1mcUoMw" referenceName="eStructuralFeatures">
+        <target href="rule.ecore#//AndCondition"/>
+        <element href="rule.ecore#//AndCondition/conditions"/>
+        <changes xsi:type="history:Set" xmi:id="_g-H5YX_iEeaZjMd1mcUoMw" featureName="name" dataValue="conditions">
+          <element href="rule.ecore#//AndCondition/conditions"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_g-H5Yn_iEeaZjMd1mcUoMw" featureName="lowerBound" dataValue="2" oldDataValue="0">
+          <element href="rule.ecore#//AndCondition/conditions"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_g-H5Y3_iEeaZjMd1mcUoMw" featureName="upperBound" dataValue="-1" oldDataValue="1">
+          <element href="rule.ecore#//AndCondition/conditions"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_g-H5ZH_iEeaZjMd1mcUoMw" featureName="containment" dataValue="true" oldDataValue="false">
+          <element href="rule.ecore#//AndCondition/conditions"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_g-H5ZX_iEeaZjMd1mcUoMw" featureName="eType">
+          <element href="rule.ecore#//AndCondition/conditions"/>
+          <referenceValue href="rule.ecore#//Condition"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="rule.ecore#/" referenceName="eClassifiers"
-          element="rule.ecore#//Rule">
-        <changes xsi:type="history:Set" element="rule.ecore#//Rule" featureName="name"
-            dataValue="Rule"/>
-        <changes xsi:type="history:Set" element="rule.ecore#//Rule" featureName="abstract"
-            dataValue="true" oldDataValue="false"/>
-        <changes xsi:type="history:Add" element="rule.ecore#//Rule" featureName="eSuperTypes"
-            referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//Attachment"/>
+      <changes xsi:type="history:Create" xmi:id="_g-H5Zn_iEeaZjMd1mcUoMw" referenceName="eClassifiers">
+        <target href="rule.ecore#/"/>
+        <element href="rule.ecore#//Rule"/>
+        <changes xsi:type="history:Set" xmi:id="_g-H5Z3_iEeaZjMd1mcUoMw" featureName="name" dataValue="Rule">
+          <element href="rule.ecore#//Rule"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_g-H5aH_iEeaZjMd1mcUoMw" featureName="abstract" dataValue="true" oldDataValue="false">
+          <element href="rule.ecore#//Rule"/>
+        </changes>
+        <changes xsi:type="history:Add" xmi:id="_g-H5aX_iEeaZjMd1mcUoMw" featureName="eSuperTypes">
+          <element href="rule.ecore#//Rule"/>
+          <referenceValue href="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//Attachment"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="rule.ecore#//Rule" referenceName="eStructuralFeatures"
-          element="rule.ecore#//Rule/condition">
-        <changes xsi:type="history:Set" element="rule.ecore#//Rule/condition" featureName="name"
-            dataValue="condition"/>
-        <changes xsi:type="history:Set" element="rule.ecore#//Rule/condition" featureName="lowerBound"
-            dataValue="1" oldDataValue="0"/>
-        <changes xsi:type="history:Set" element="rule.ecore#//Rule/condition" featureName="containment"
-            dataValue="true" oldDataValue="false"/>
-        <changes xsi:type="history:Set" element="rule.ecore#//Rule/condition" featureName="eType"
-            referenceValue="rule.ecore#//Condition"/>
+      <changes xsi:type="history:Create" xmi:id="_g-H5an_iEeaZjMd1mcUoMw" referenceName="eStructuralFeatures">
+        <target href="rule.ecore#//Rule"/>
+        <element href="rule.ecore#//Rule/condition"/>
+        <changes xsi:type="history:Set" xmi:id="_g-H5a3_iEeaZjMd1mcUoMw" featureName="name" dataValue="condition">
+          <element href="rule.ecore#//Rule/condition"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_g-H5bH_iEeaZjMd1mcUoMw" featureName="lowerBound" dataValue="1" oldDataValue="0">
+          <element href="rule.ecore#//Rule/condition"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_g-H5bX_iEeaZjMd1mcUoMw" featureName="containment" dataValue="true" oldDataValue="false">
+          <element href="rule.ecore#//Rule/condition"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_g-JukH_iEeaZjMd1mcUoMw" featureName="eType">
+          <element href="rule.ecore#//Rule/condition"/>
+          <referenceValue href="rule.ecore#//Condition"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="rule.ecore#/" referenceName="eClassifiers"
-          element="rule.ecore#//ShowRule">
-        <changes xsi:type="history:Set" element="rule.ecore#//ShowRule" featureName="name"
-            dataValue="ShowRule"/>
-        <changes xsi:type="history:Add" element="rule.ecore#//ShowRule" featureName="eSuperTypes"
-            referenceValue="rule.ecore#//Rule"/>
+      <changes xsi:type="history:Create" xmi:id="_g-KVoH_iEeaZjMd1mcUoMw" referenceName="eClassifiers">
+        <target href="rule.ecore#/"/>
+        <element href="rule.ecore#//ShowRule"/>
+        <changes xsi:type="history:Set" xmi:id="_g-MK0H_iEeaZjMd1mcUoMw" featureName="name" dataValue="ShowRule">
+          <element href="rule.ecore#//ShowRule"/>
+        </changes>
+        <changes xsi:type="history:Add" xmi:id="_g-OnEH_iEeaZjMd1mcUoMw" featureName="eSuperTypes">
+          <element href="rule.ecore#//ShowRule"/>
+          <referenceValue href="rule.ecore#//Rule"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="rule.ecore#//ShowRule" referenceName="eStructuralFeatures"
-          element="rule.ecore#//ShowRule/hide">
-        <changes xsi:type="history:Set" element="rule.ecore#//ShowRule/hide" featureName="name"
-            dataValue="hide"/>
-        <changes xsi:type="history:Set" element="rule.ecore#//ShowRule/hide" featureName="eType"
-            referenceValue="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
+      <changes xsi:type="history:Create" xmi:id="_g-OnEX_iEeaZjMd1mcUoMw" referenceName="eStructuralFeatures">
+        <target href="rule.ecore#//ShowRule"/>
+        <element href="rule.ecore#//ShowRule/hide"/>
+        <changes xsi:type="history:Set" xmi:id="_g-OnEn_iEeaZjMd1mcUoMw" featureName="name" dataValue="hide">
+          <element href="rule.ecore#//ShowRule/hide"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_g-OnE3_iEeaZjMd1mcUoMw" featureName="eType">
+          <element href="rule.ecore#//ShowRule/hide"/>
+          <referenceValue href="../../../plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="rule.ecore#/" referenceName="eClassifiers"
-          element="rule.ecore#//EnableRule">
-        <changes xsi:type="history:Set" element="rule.ecore#//EnableRule" featureName="name"
-            dataValue="EnableRule"/>
-        <changes xsi:type="history:Add" element="rule.ecore#//EnableRule" featureName="eSuperTypes"
-            referenceValue="rule.ecore#//Rule"/>
+      <changes xsi:type="history:Create" xmi:id="_g-OnFH_iEeaZjMd1mcUoMw" referenceName="eClassifiers">
+        <target href="rule.ecore#/"/>
+        <element href="rule.ecore#//EnableRule"/>
+        <changes xsi:type="history:Set" xmi:id="_g-OnFX_iEeaZjMd1mcUoMw" featureName="name" dataValue="EnableRule">
+          <element href="rule.ecore#//EnableRule"/>
+        </changes>
+        <changes xsi:type="history:Add" xmi:id="_g-POIH_iEeaZjMd1mcUoMw" featureName="eSuperTypes">
+          <element href="rule.ecore#//EnableRule"/>
+          <referenceValue href="rule.ecore#//Rule"/>
+        </changes>
       </changes>
-      <changes xsi:type="history:Create" target="rule.ecore#//EnableRule" referenceName="eStructuralFeatures"
-          element="rule.ecore#//EnableRule/disable">
-        <changes xsi:type="history:Set" element="rule.ecore#//EnableRule/disable"
-            featureName="name" dataValue="disable"/>
-        <changes xsi:type="history:Set" element="rule.ecore#//EnableRule/disable"
-            featureName="eType" referenceValue="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
+      <changes xsi:type="history:Create" xmi:id="_g-POIX_iEeaZjMd1mcUoMw" referenceName="eStructuralFeatures">
+        <target href="rule.ecore#//EnableRule"/>
+        <element href="rule.ecore#//EnableRule/disable"/>
+        <changes xsi:type="history:Set" xmi:id="_g-POIn_iEeaZjMd1mcUoMw" featureName="name" dataValue="disable">
+          <element href="rule.ecore#//EnableRule/disable"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_g-POI3_iEeaZjMd1mcUoMw" featureName="eType">
+          <element href="rule.ecore#//EnableRule/disable"/>
+          <referenceValue href="../../../plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
+        </changes>
       </changes>
     </changes>
-    <changes xsi:type="history:OperationChange">
-      <changes xsi:type="history:Create" target="rule.ecore#//LeafCondition" referenceName="eStructuralFeatures"
-          element="rule.ecore#//LeafCondition/valueDomainModelReference">
-        <changes xsi:type="history:Set" element="rule.ecore#//LeafCondition/valueDomainModelReference"
-            featureName="name" dataValue="valueDomainModelReference"/>
-        <changes xsi:type="history:Set" element="rule.ecore#//LeafCondition/valueDomainModelReference"
-            featureName="containment" dataValue="true" oldDataValue="false"/>
-        <changes xsi:type="history:Set" element="rule.ecore#//LeafCondition/valueDomainModelReference"
-            featureName="eType" referenceValue="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"/>
+    <changes xsi:type="history:OperationChange" xmi:id="_g-P1MH_iEeaZjMd1mcUoMw">
+      <changes xsi:type="history:Create" xmi:id="_g-RDUH_iEeaZjMd1mcUoMw" referenceName="eStructuralFeatures">
+        <target href="rule.ecore#//LeafCondition"/>
+        <element href="rule.ecore#//LeafCondition/valueDomainModelReference"/>
+        <changes xsi:type="history:Set" xmi:id="_g-RDUX_iEeaZjMd1mcUoMw" featureName="name" dataValue="valueDomainModelReference">
+          <element href="rule.ecore#//LeafCondition/valueDomainModelReference"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_g-RDUn_iEeaZjMd1mcUoMw" featureName="containment" dataValue="true" oldDataValue="false">
+          <element href="rule.ecore#//LeafCondition/valueDomainModelReference"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_g-RDU3_iEeaZjMd1mcUoMw" featureName="eType">
+          <element href="rule.ecore#//LeafCondition/valueDomainModelReference"/>
+          <referenceValue href="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"/>
+        </changes>
       </changes>
-      <operation name="newReference">
-        <parameters name="eClass">
-          <referenceValue element="rule.ecore#//LeafCondition"/>
+      <operation xmi:id="_g-UtsH_iEeaZjMd1mcUoMw" name="newReference">
+        <parameters xmi:id="_g-XxAH_iEeaZjMd1mcUoMw" name="eClass">
+          <referenceValue xmi:id="_g-a0UH_iEeaZjMd1mcUoMw">
+            <element href="rule.ecore#//LeafCondition"/>
+          </referenceValue>
         </parameters>
-        <parameters name="name">
+        <parameters xmi:id="_g-a0UX_iEeaZjMd1mcUoMw" name="name">
           <dataValue>valueDomainModelReference</dataValue>
         </parameters>
-        <parameters name="type">
-          <referenceValue element="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"/>
+        <parameters xmi:id="_g-cCcH_iEeaZjMd1mcUoMw" name="type">
+          <referenceValue xmi:id="_g-cCcX_iEeaZjMd1mcUoMw">
+            <element href="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"/>
+          </referenceValue>
         </parameters>
-        <parameters name="lowerBound">
+        <parameters xmi:id="_g-cCcn_iEeaZjMd1mcUoMw" name="lowerBound">
           <dataValue>0</dataValue>
         </parameters>
-        <parameters name="upperBound">
+        <parameters xmi:id="_g-cCc3_iEeaZjMd1mcUoMw" name="upperBound">
           <dataValue>1</dataValue>
         </parameters>
-        <parameters name="containment">
+        <parameters xmi:id="_g-cCdH_iEeaZjMd1mcUoMw" name="containment">
           <dataValue>true</dataValue>
         </parameters>
-        <parameters name="opposite"/>
+        <parameters xmi:id="_g-cCdX_iEeaZjMd1mcUoMw" name="opposite"/>
       </operation>
     </changes>
   </releases>
-  <releases/>
+  <releases xmi:id="_g-cpgH_iEeaZjMd1mcUoMw">
+    <changes xsi:type="history:OperationChange" xmi:id="_EI8oYH_jEeaZjMd1mcUoMw">
+      <changes xsi:type="history:Create" xmi:id="_EI9PcH_jEeaZjMd1mcUoMw" referenceName="eClassifiers">
+        <target href="rule.ecore#/"/>
+        <element href="rule.ecore#//CompareType"/>
+        <changes xsi:type="history:Set" xmi:id="_EI9PcX_jEeaZjMd1mcUoMw" featureName="name" dataValue="CompareType">
+          <element href="rule.ecore#//CompareType"/>
+        </changes>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_EI9Pcn_jEeaZjMd1mcUoMw" referenceName="eLiterals">
+        <target href="rule.ecore#//CompareType"/>
+        <element href="rule.ecore#//CompareType/EQUALS"/>
+        <changes xsi:type="history:Set" xmi:id="_EI9Pc3_jEeaZjMd1mcUoMw" featureName="name" dataValue="EQUALS">
+          <element href="rule.ecore#//CompareType/EQUALS"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_EI9PdH_jEeaZjMd1mcUoMw" featureName="literal" dataValue="EQUALS">
+          <element href="rule.ecore#//CompareType/EQUALS"/>
+        </changes>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_EI9PdX_jEeaZjMd1mcUoMw" referenceName="eLiterals">
+        <target href="rule.ecore#//CompareType"/>
+        <element href="rule.ecore#//CompareType/NOT_EQUALS"/>
+        <changes xsi:type="history:Set" xmi:id="_EI9Pdn_jEeaZjMd1mcUoMw" featureName="name" dataValue="NOT_EQUALS">
+          <element href="rule.ecore#//CompareType/NOT_EQUALS"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_EI9Pd3_jEeaZjMd1mcUoMw" featureName="literal" dataValue="NOT_EQUALS">
+          <element href="rule.ecore#//CompareType/NOT_EQUALS"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_EI9PeH_jEeaZjMd1mcUoMw" featureName="value" dataValue="1" oldDataValue="0">
+          <element href="rule.ecore#//CompareType/NOT_EQUALS"/>
+        </changes>
+      </changes>
+      <operation xmi:id="_EI9PeX_jEeaZjMd1mcUoMw" name="createEnumeration">
+        <parameters xmi:id="_EI9Pen_jEeaZjMd1mcUoMw" name="ePackage">
+          <referenceValue xmi:id="_EI9Pe3_jEeaZjMd1mcUoMw">
+            <element href="rule.ecore#/"/>
+          </referenceValue>
+        </parameters>
+        <parameters xmi:id="_EI9PfH_jEeaZjMd1mcUoMw" name="name">
+          <dataValue>CompareType</dataValue>
+        </parameters>
+        <parameters xmi:id="_EI9PfX_jEeaZjMd1mcUoMw" name="literals">
+          <dataValue>EQUALS</dataValue>
+          <dataValue>NOT_EQUALS</dataValue>
+        </parameters>
+      </operation>
+    </changes>
+    <changes xsi:type="history:OperationChange" xmi:id="_N5swwH_jEeaZjMd1mcUoMw">
+      <changes xsi:type="history:Create" xmi:id="_N5swwX_jEeaZjMd1mcUoMw" referenceName="eStructuralFeatures">
+        <target href="rule.ecore#//LeafCondition"/>
+        <element href="rule.ecore#//LeafCondition/compareType"/>
+        <changes xsi:type="history:Set" xmi:id="_N5swwn_jEeaZjMd1mcUoMw" featureName="name" dataValue="compareType">
+          <element href="rule.ecore#//LeafCondition/compareType"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_N5sww3_jEeaZjMd1mcUoMw" featureName="lowerBound" dataValue="1" oldDataValue="0">
+          <element href="rule.ecore#//LeafCondition/compareType"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_N5swxH_jEeaZjMd1mcUoMw" featureName="defaultValueLiteral" dataValue="EQUALS">
+          <element href="rule.ecore#//LeafCondition/compareType"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_N5swxX_jEeaZjMd1mcUoMw" featureName="eType">
+          <element href="rule.ecore#//LeafCondition/compareType"/>
+          <referenceValue href="rule.ecore#//CompareType"/>
+        </changes>
+      </changes>
+      <operation xmi:id="_N5swxn_jEeaZjMd1mcUoMw" name="newAttribute">
+        <parameters xmi:id="_N5swx3_jEeaZjMd1mcUoMw" name="eClass">
+          <referenceValue xmi:id="_N5swyH_jEeaZjMd1mcUoMw">
+            <element href="rule.ecore#//LeafCondition"/>
+          </referenceValue>
+        </parameters>
+        <parameters xmi:id="_N5swyX_jEeaZjMd1mcUoMw" name="name">
+          <dataValue>compareType</dataValue>
+        </parameters>
+        <parameters xmi:id="_N5swyn_jEeaZjMd1mcUoMw" name="type">
+          <referenceValue xmi:id="_N5swy3_jEeaZjMd1mcUoMw">
+            <element href="rule.ecore#//CompareType"/>
+          </referenceValue>
+        </parameters>
+        <parameters xmi:id="_N5swzH_jEeaZjMd1mcUoMw" name="lowerBound">
+          <dataValue>1</dataValue>
+        </parameters>
+        <parameters xmi:id="_N5swzX_jEeaZjMd1mcUoMw" name="upperBound">
+          <dataValue>1</dataValue>
+        </parameters>
+        <parameters xmi:id="_N5swzn_jEeaZjMd1mcUoMw" name="defaultValue">
+          <dataValue>EQUALS</dataValue>
+        </parameters>
+      </operation>
+    </changes>
+    <changes xsi:type="history:OperationChange" xmi:id="_IoblAICfEeaFbLjKL6JbsQ">
+      <changes xsi:type="history:Set" xmi:id="_IocMEICfEeaFbLjKL6JbsQ" featureName="lowerBound" dataValue="0" oldDataValue="1">
+        <element href="rule.ecore#//LeafCondition/expectedValue"/>
+      </changes>
+      <operation xmi:id="_IocMEYCfEeaFbLjKL6JbsQ" name="generalizeAttribute">
+        <parameters xmi:id="_IocMEoCfEeaFbLjKL6JbsQ" name="attribute">
+          <referenceValue xmi:id="_IocME4CfEeaFbLjKL6JbsQ">
+            <element href="rule.ecore#//LeafCondition/expectedValue"/>
+          </referenceValue>
+        </parameters>
+        <parameters xmi:id="_IocMFICfEeaFbLjKL6JbsQ" name="lowerBound">
+          <dataValue>0</dataValue>
+        </parameters>
+        <parameters xmi:id="_IocMFYCfEeaFbLjKL6JbsQ" name="upperBound">
+          <dataValue>1</dataValue>
+        </parameters>
+      </operation>
+    </changes>
+  </releases>
 </history:History>

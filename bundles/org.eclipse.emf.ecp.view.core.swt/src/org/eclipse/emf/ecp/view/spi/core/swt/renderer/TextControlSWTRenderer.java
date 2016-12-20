@@ -183,7 +183,7 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 	 * @return <code>true</code> if Modify should be used, <code>false</code> otherwise
 	 * @since 1.9
 	 */
-	protected final boolean useOnModifyDatabinding() {
+	protected boolean useOnModifyDatabinding() {
 		final VElement viewCandidate = getViewModelContext().getViewModel();
 		if (!VView.class.isInstance(viewCandidate)) {
 			return false;
@@ -391,9 +391,11 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 					return converted;
 				}
 				final InternalEObject internalEObject = (InternalEObject) ((IObserving) observableValue).getObserved();
-				final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
-				return ECPTooltipModifierHelper.modifyString(String.class.cast(converted),
-					internalEObject.eSetting(structuralFeature));
+				if (internalEObject != null) {
+					final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+					return ECPTooltipModifierHelper.modifyString(String.class.cast(converted),
+						internalEObject.eSetting(structuralFeature));
+				}
 			}
 			return converted;
 		}

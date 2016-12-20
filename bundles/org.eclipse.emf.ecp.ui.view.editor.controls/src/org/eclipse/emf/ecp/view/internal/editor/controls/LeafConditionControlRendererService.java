@@ -91,7 +91,8 @@ public class LeafConditionControlRendererService implements EMFFormsDIRendererSe
 			return NOT_APPLICABLE;
 		}
 		final EAttribute eAttribute = EAttribute.class.cast(feature);
-		if (eAttribute.getEContainingClass().equals(RulePackage.eINSTANCE.getLeafCondition())) {
+		if (eAttribute.getEContainingClass().equals(RulePackage.eINSTANCE.getLeafCondition())
+			&& eAttribute.equals(RulePackage.eINSTANCE.getLeafCondition_ExpectedValue())) {
 			return 3d;
 		}
 

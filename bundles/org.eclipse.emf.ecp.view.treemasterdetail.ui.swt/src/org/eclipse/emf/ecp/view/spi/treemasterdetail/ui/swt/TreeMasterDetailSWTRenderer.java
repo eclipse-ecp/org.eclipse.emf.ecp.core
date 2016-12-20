@@ -197,6 +197,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		@Override
 		public void menuAboutToShow(IMenuManager manager) {
 			if (treeViewer.getSelection().isEmpty()) {
+				fillMenu(null, manager);
 				return;
 			}
 			final EObject root = ((RootObject) treeViewer.getInput()).getRoot();
@@ -222,24 +223,28 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 				if (selection.getFirstElement() != null && EObject.class.isInstance(selection.getFirstElement())) {
 					final EObject selectedObject = (EObject) selection.getFirstElement();
 
-					for (final MasterDetailAction menuAction : menuActions) {
-						if (menuAction.shouldShow(selectedObject)) {
-							final Action newAction = new Action() {
-								@Override
-								public void run() {
-									super.run();
-									menuAction.execute(selectedObject);
-								}
-							};
+					fillMenu(selectedObject, manager);
+				}
+			}
+		}
 
-							newAction.setImageDescriptor(ImageDescriptor.createFromURL(FrameworkUtil.getBundle(
-								menuAction.getClass())
-								.getResource(menuAction.getImagePath())));
-							newAction.setText(menuAction.getLabel());
-
-							manager.add(newAction);
+		private void fillMenu(final EObject selectedObject, IMenuManager manager) {
+			for (final MasterDetailAction menuAction : menuActions) {
+				if (menuAction.shouldShow(selectedObject)) {
+					final Action newAction = new Action() {
+						@Override
+						public void run() {
+							super.run();
+							menuAction.execute(selectedObject);
 						}
-					}
+					};
+
+					newAction.setImageDescriptor(ImageDescriptor.createFromURL(FrameworkUtil.getBundle(
+						menuAction.getClass())
+						.getResource(menuAction.getImagePath())));
+					newAction.setText(menuAction.getLabel());
+
+					manager.add(newAction);
 				}
 			}
 		}
@@ -524,9 +529,6 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		}
 	}
 
-	/**
-	 * @param form2
-	 */
 	private Composite getPageHeader(Composite parent) {
 		final Composite header = new Composite(parent, SWT.FILL);
 		final FormLayout layout = new FormLayout();
@@ -553,17 +555,16 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		titleFont = new Font(title.getDisplay(), getDefaultFontName(title), 12, SWT.BOLD);
 		title.setFont(titleFont);
 		title.setForeground(getTitleColor(parent));
+		final int titleHeight = title.computeSize(SWT.DEFAULT, SWT.DEFAULT).y;
 		final FormData titleData = new FormData();
-		title.setLayoutData(titleData);
 		titleData.left = new FormAttachment(titleImage, 5, SWT.DEFAULT);
+		titleData.top = new FormAttachment(50, -titleHeight / 2);
+		title.setLayoutData(titleData);
 
 		return header;
 
 	}
 
-	/**
-	 * @return
-	 */
 	private Color getTitleColor(Composite parent) {
 		if (titleColor == null) {
 			titleColor = new Color(parent.getDisplay(), new RGB(25, 76, 127));
@@ -627,9 +628,6 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		return control.getDisplay().getSystemFont().getFontData()[0].getName();
 	}
 
-	/**
-	 *
-	 */
 	private List<Action> readToolbarActions(EObject modelElement, final EditingDomain editingDomain) {
 		final List<Action> actions = new ArrayList<Action>();
 		final IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();

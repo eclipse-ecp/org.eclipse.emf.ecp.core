@@ -3,14 +3,15 @@
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="rule" nsURI="http://org/eclipse/emf/ecp/view/rule/model" nsPrefix="org.eclipse.emf.ecp.view.rule.model">
   <eClassifiers xsi:type="ecore:EClass" name="Condition" abstract="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="LeafCondition" eSuperTypes="#//Condition">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="expectedValue" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="expectedValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="domainModelReference" lowerBound="1"
         eType="ecore:EClass ../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="valueDomainModelReference"
         eType="ecore:EClass ../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="compareType" lowerBound="1"
+        eType="#//CompareType" defaultValueLiteral="EQUALS"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OrCondition" eSuperTypes="#//Condition">
     <eStructuralFeatures xsi:type="ecore:EReference" name="conditions" lowerBound="2"
@@ -29,5 +30,9 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EnableRule" eSuperTypes="#//Rule">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="disable" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="CompareType">
+    <eLiterals name="EQUALS"/>
+    <eLiterals name="NOT_EQUALS" value="1"/>
   </eClassifiers>
 </ecore:EPackage>

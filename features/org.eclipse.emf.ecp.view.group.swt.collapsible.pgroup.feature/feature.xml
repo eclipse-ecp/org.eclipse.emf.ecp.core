@@ -2,11 +2,11 @@
 <feature
       id="org.eclipse.emf.ecp.view.group.swt.collapsible.pgroup.feature"
       label="EMFForms Collapsible Group Renderer using Nebula PGroup"
-      version="1.10.0.qualifier"
+      version="1.11.0.qualifier"
       provider-name="Eclipse Modeling Project"
       plugin="org.eclipse.emf.ecp.view.group.swt.collapsible.pgroup"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.10.0.qualifier">
+      license-feature-version="1.11.0.qualifier">
 
    <description>
       %description

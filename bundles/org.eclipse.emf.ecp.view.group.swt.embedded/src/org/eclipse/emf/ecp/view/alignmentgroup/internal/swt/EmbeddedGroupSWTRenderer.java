@@ -112,6 +112,15 @@ public class EmbeddedGroupSWTRenderer extends AbstractSWTRenderer<VGroup> {
 			for (final SWTGridCell rendererGridCell : rendererGridDescription.getGrid()) {
 				final SWTGridCell gc = new SWTGridCell(row, rendererGridCell.getColumn(),
 					rendererGridCell.getRenderer());
+				gc.setHorizontalAlignment(rendererGridCell.getHorizontalAlignment());
+				gc.setHorizontalFill(rendererGridCell.isHorizontalFill());
+				gc.setHorizontalGrab(rendererGridCell.isHorizontalGrab());
+				gc.setHorizontalSpan(rendererGridCell.getHorizontalSpan());
+				gc.setVerticalAlignment(rendererGridCell.getVerticalAlignment());
+				gc.setVerticalFill(rendererGridCell.isVerticalFill());
+				gc.setVerticalGrab(rendererGridCell.isVerticalGrab());
+				gc.setPreferredSize(rendererGridCell.getPreferredSize());
+
 				currentGridDescription.getGrid().add(gc);
 				gridCellsPerRow.get(row).add(gc);
 			}
@@ -147,32 +156,43 @@ public class EmbeddedGroupSWTRenderer extends AbstractSWTRenderer<VGroup> {
 	protected Control renderControl(SWTGridCell cell, Composite parent) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		if (cell.getRenderer().equals(this)) {
-			final Label l = new Label(parent, SWT.NONE);
-			l.setBackground(parent.getBackground());
+			final Control heading = createHeadingControl(parent);
 
 			switch (getVElement().getLabelAlignment()) {
 			case LABEL_ALIGNED:
 				if (cell.getColumn() == 0) {
-					bindValue(l);
-					l.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_view_group_title"); //$NON-NLS-1$
+					bindValue(heading);
+					heading.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_view_group_title"); //$NON-NLS-1$
 				}
 				break;
 			case INPUT_ALIGNED:
 				if (cell.getColumn() + 1 == currentGridDescription.getColumns()) {
-					bindValue(l);
-					l.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_view_group_title"); //$NON-NLS-1$
+					// bindValue(l);
+					heading.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_view_group_title"); //$NON-NLS-1$
 				}
 				break;
 			default:
 				break;
 			}
-			return l;
+			return heading;
 		}
 		return cell.getRenderer().render(cell, parent);
 	}
 
+	/**
+	 * Creates the control, which is used as a heading for the embedded group.
+	 *
+	 * @param parent The parent to render the heading control on
+	 * @return the heading {@link Control}
+	 */
+	protected Control createHeadingControl(Composite parent) {
+		final Label heading = new Label(parent, SWT.NONE);
+		heading.setBackground(parent.getBackground());
+		return heading;
+	}
+
 	/** Creates a binding that synchronizes the value of the target {@link Label} with the model value. */
-	private void bindValue(Label target) {
+	private void bindValue(Control target) {
 		final ISWTObservableValue targetValue = WidgetProperties.text().observe(target);
 		final IObservableValue modelValue = EMFEditObservables.observeValue(
 			AdapterFactoryEditingDomain.getEditingDomainFor(getVElement()), getVElement(),

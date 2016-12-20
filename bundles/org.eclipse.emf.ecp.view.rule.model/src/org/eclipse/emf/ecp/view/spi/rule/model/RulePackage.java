@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.view.spi.rule.model;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
@@ -138,6 +139,18 @@ public interface RulePackage extends EPackage {
 	int LEAF_CONDITION__VALUE_DOMAIN_MODEL_REFERENCE = CONDITION_FEATURE_COUNT + 2;
 
 	/**
+	 * The feature id for the '<em><b>Compare Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.11
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int LEAF_CONDITION__COMPARE_TYPE = CONDITION_FEATURE_COUNT + 3;
+
+	/**
 	 * The number of structural features of the '<em>Leaf Condition</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -145,7 +158,7 @@ public interface RulePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LEAF_CONDITION_FEATURE_COUNT = CONDITION_FEATURE_COUNT + 3;
+	int LEAF_CONDITION_FEATURE_COUNT = CONDITION_FEATURE_COUNT + 4;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.OrConditionImpl
@@ -327,6 +340,20 @@ public interface RulePackage extends EPackage {
 	int ENABLE_RULE_FEATURE_COUNT = RULE_FEATURE_COUNT + 1;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.rule.model.CompareType <em>Compare Type</em>}'
+	 * enum.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.11
+	 *        <!-- end-user-doc -->
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.rule.model.CompareType
+	 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.RulePackageImpl#getCompareType()
+	 * @generated
+	 */
+	int COMPARE_TYPE = 7;
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.rule.model.Condition <em>Condition</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -392,8 +419,23 @@ public interface RulePackage extends EPackage {
 	EReference getLeafCondition_ValueDomainModelReference();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.rule.model.OrCondition
-	 * <em>Or Condition</em>}'.
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition#getCompareType <em>Compare Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.11
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the attribute '<em>Compare Type</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition#getCompareType()
+	 * @see #getLeafCondition()
+	 * @generated
+	 */
+	EAttribute getLeafCondition_CompareType();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.rule.model.OrCondition <em>Or
+	 * Condition</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -515,6 +557,20 @@ public interface RulePackage extends EPackage {
 	EAttribute getEnableRule_Disable();
 
 	/**
+	 * Returns the meta object for enum '{@link org.eclipse.emf.ecp.view.spi.rule.model.CompareType <em>Compare
+	 * Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.11
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the meta object for enum '<em>Compare Type</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.rule.model.CompareType
+	 * @generated
+	 */
+	EEnum getCompareType();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -592,8 +648,19 @@ public interface RulePackage extends EPackage {
 			.getLeafCondition_ValueDomainModelReference();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.OrConditionImpl
-		 * <em>Or Condition</em>}' class.
+		 * The meta object literal for the '<em><b>Compare Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 *
+		 * @since 1.11
+		 *        <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EAttribute LEAF_CONDITION__COMPARE_TYPE = eINSTANCE.getLeafCondition_CompareType();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.OrConditionImpl <em>Or
+		 * Condition</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 *
@@ -695,6 +762,20 @@ public interface RulePackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute ENABLE_RULE__DISABLE = eINSTANCE.getEnableRule_Disable();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.rule.model.CompareType <em>Compare
+		 * Type</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 *
+		 * @since 1.11
+		 *        <!-- end-user-doc -->
+		 *
+		 * @see org.eclipse.emf.ecp.view.spi.rule.model.CompareType
+		 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.RulePackageImpl#getCompareType()
+		 * @generated
+		 */
+		EEnum COMPARE_TYPE = eINSTANCE.getCompareType();
 
 	}
 

@@ -31,8 +31,8 @@ import org.eclipse.emfforms.spi.rulerepository.model.VRulerepositoryPackage;
  * The following features are implemented:
  * </p>
  * <ul>
- * <li>{@link org.eclipse.emfforms.spi.rulerepository.model.impl.VRuleRepositoryImpl#getRuleEntries
- * <em>Rule Entries</em>}</li>
+ * <li>{@link org.eclipse.emfforms.spi.rulerepository.model.impl.VRuleRepositoryImpl#getRuleEntries <em>Rule
+ * Entries</em>}</li>
  * </ul>
  *
  * @generated

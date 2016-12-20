@@ -13,9 +13,9 @@ package org.eclipse.emfforms.internal.core.services.editsupport;
 
 import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
@@ -201,17 +201,26 @@ public class EMFFormsEditSupportImpl implements EMFFormsEditSupport {
 
 	private String getEnumLiteral(EStructuralFeature feature, Object element) {
 		final EClassifier featureType = feature.getEType();
+		final String enumName = getEnumName(element);
 		Bundle bundle;
 		try {
 			bundle = bundleResolver.getEditBundle(featureType);
-			final String key = String.format(LITERAL_NAME, featureType.getName(),
-				EEnum.class.cast(featureType).getEEnumLiteralByLiteral(
-					Enum.class.cast(element).toString()).getName());
+			final String key = String.format(LITERAL_NAME, featureType.getName(), enumName);
 			return emfFormsLocalizationService.getString(bundle, key);
 		} catch (final NoBundleFoundException ex) {
 			// do nothing - see bug 467498
 		}
 		return null;
+	}
+
+	private String getEnumName(Object element) {
+		if (Enumerator.class.isInstance(element)) {
+			return Enumerator.class.cast(element).getName();
+		}
+		if (Enum.class.isInstance(element)) {
+			return Enum.class.cast(element).name();
+		}
+		return element.toString();
 	}
 
 	/**

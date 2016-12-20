@@ -99,10 +99,9 @@ public class ECPReferenceServiceImpl implements ReferenceService {
 
 			newModelElement = SelectModelElementWizardFactory.openCreateNewModelElementDialog(helper);
 
-		}
-		else {
+		} else {
 			newModelElement = eReference.getEReferenceType().getEPackage().getEFactoryInstance()
-				.create(eReference.getEReferenceType());
+				.create(classes.iterator().next());
 
 		}
 

@@ -23,6 +23,7 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
  *
  *              <p>
  *              The following features are supported:
+ *              </p>
  *              <ul>
  *              <li>{@link org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition#getExpectedValue <em>Expected Value
  *              </em>}</li>
@@ -31,7 +32,6 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
  *              <li>{@link org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition#getValueDomainModelReference <em>Value
  *              Domain Model Reference</em>}</li>
  *              </ul>
- *              </p>
  *
  * @see org.eclipse.emf.ecp.view.spi.rule.model.RulePackage#getLeafCondition()
  * @model
@@ -50,7 +50,7 @@ public interface LeafCondition extends Condition {
 	 * @return the value of the '<em>Expected Value</em>' attribute.
 	 * @see #setExpectedValue(Object)
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.RulePackage#getLeafCondition_ExpectedValue()
-	 * @model required="true"
+	 * @model
 	 * @generated
 	 */
 	Object getExpectedValue();
@@ -126,5 +126,42 @@ public interface LeafCondition extends Condition {
 	 * @generated
 	 */
 	void setValueDomainModelReference(VDomainModelReference value);
+
+	/**
+	 * Returns the value of the '<em><b>Compare Type</b></em>' attribute.
+	 * The default value is <code>"EQUALS"</code>.
+	 * The literals are from the enumeration {@link org.eclipse.emf.ecp.view.spi.rule.model.CompareType}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Compare Type</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 *
+	 * @since 1.11
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the value of the '<em>Compare Type</em>' attribute.
+	 * @see org.eclipse.emf.ecp.view.spi.rule.model.CompareType
+	 * @see #setCompareType(CompareType)
+	 * @see org.eclipse.emf.ecp.view.spi.rule.model.RulePackage#getLeafCondition_CompareType()
+	 * @model default="EQUALS" required="true"
+	 * @generated
+	 */
+	CompareType getCompareType();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition#getCompareType <em>Compare
+	 * Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.11
+	 *        <!-- end-user-doc -->
+	 *
+	 * @param value the new value of the '<em>Compare Type</em>' attribute.
+	 * @see org.eclipse.emf.ecp.view.spi.rule.model.CompareType
+	 * @see #getCompareType()
+	 * @generated
+	 */
+	void setCompareType(CompareType value);
 
 } // LeafCondition

@@ -44,6 +44,7 @@ import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.IDisposable;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
@@ -66,6 +67,7 @@ import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IBaseLabelProvider;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
@@ -127,8 +129,8 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	}
 
 	private Label validationIcon;
-	private AdapterFactoryLabelProvider labelProvider;
-	private ComposedAdapterFactory composedAdapterFactory;
+	private IBaseLabelProvider labelProvider;
+	private AdapterFactory adapterFactory;
 	private TableViewer tableViewer;
 	private final EMFDataBindingContext viewModelDBC;
 	private IObservableList tableViewerInputList;
@@ -197,7 +199,8 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 			return createErrorLabel(parent, ex);
 		}
 
-		createLabelProvider();
+		adapterFactory = createAdapterFactory();
+		labelProvider = createLabelProvider();
 
 		final Composite controlComposite = createControlComposite(composite);
 		try {
@@ -259,12 +262,26 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		return errorLabel;
 	}
 
-	private void createLabelProvider() {
-		composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
+	/**
+	 * Creates a new {@link AdapterFactory}.
+	 *
+	 * @return the newly created {@link AdapterFactory}.
+	 */
+	protected AdapterFactory createAdapterFactory() {
+		return new ComposedAdapterFactory(new AdapterFactory[] {
 			new CustomReflectiveItemProviderAdapterFactory(),
 			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
-		labelProvider = new AdapterFactoryLabelProvider(composedAdapterFactory);
+	}
+
+	/**
+	 * Creates a new {@link IBaseLabelProvider} for the table viewer.
+	 *
+	 * @return the newly created {@link IBaseLabelProvider}.
+	 */
+	protected IBaseLabelProvider createLabelProvider() {
+		final AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(adapterFactory);
 		labelProvider.setFireLabelUpdateNotifications(true);
+		return labelProvider;
 	}
 
 	/**
@@ -274,7 +291,9 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 */
 	@Override
 	protected void dispose() {
-		composedAdapterFactory.dispose();
+		if (IDisposable.class.isInstance(adapterFactory)) {
+			IDisposable.class.cast(adapterFactory).dispose();
+		}
 		labelProvider.dispose();
 		viewModelDBC.dispose();
 		super.dispose();
@@ -371,7 +390,10 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		return btnDelete;
 	}
 
-	private void updateButtonEnabling() {
+	/**
+	 * Updates the 'addExisting', 'addNew' and 'delete' buttons according to the bound input.
+	 */
+	protected void updateButtonEnabling() {
 		final boolean isReadOnly = getVElement().isReadonly();
 		final boolean isEmptyList = tableViewerInputList == null || tableViewerInputList.isEmpty();
 
@@ -726,6 +748,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 			.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 		container = (EObject) ((IObserving) observableValue).getObserved();
 		observableValue.dispose();
+		updateButtonEnabling();
 	}
 
 	@Override

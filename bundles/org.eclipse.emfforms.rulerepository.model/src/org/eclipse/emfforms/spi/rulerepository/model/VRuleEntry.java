@@ -26,6 +26,7 @@ import org.eclipse.emf.ecp.view.spi.rule.model.Rule;
  * <ul>
  * <li>{@link org.eclipse.emfforms.spi.rulerepository.model.VRuleEntry#getRule <em>Rule</em>}</li>
  * <li>{@link org.eclipse.emfforms.spi.rulerepository.model.VRuleEntry#getElements <em>Elements</em>}</li>
+ * <li>{@link org.eclipse.emfforms.spi.rulerepository.model.VRuleEntry#getMergeType <em>Merge Type</em>}</li>
  * </ul>
  *
  * @see org.eclipse.emfforms.spi.rulerepository.model.VRulerepositoryPackage#getRuleEntry()
@@ -79,5 +80,38 @@ public interface VRuleEntry extends EObject {
 	 * @generated
 	 */
 	EList<VElement> getElements();
+
+	/**
+	 * Returns the value of the '<em><b>Merge Type</b></em>' attribute.
+	 * The default value is <code>"Or"</code>.
+	 * The literals are from the enumeration {@link org.eclipse.emfforms.spi.rulerepository.model.MergeType}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Merge Type</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the value of the '<em>Merge Type</em>' attribute.
+	 * @see org.eclipse.emfforms.spi.rulerepository.model.MergeType
+	 * @see #setMergeType(MergeType)
+	 * @see org.eclipse.emfforms.spi.rulerepository.model.VRulerepositoryPackage#getRuleEntry_MergeType()
+	 * @model default="Or" required="true"
+	 * @generated
+	 */
+	MergeType getMergeType();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.emfforms.spi.rulerepository.model.VRuleEntry#getMergeType <em>Merge
+	 * Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @param value the new value of the '<em>Merge Type</em>' attribute.
+	 * @see org.eclipse.emfforms.spi.rulerepository.model.MergeType
+	 * @see #getMergeType()
+	 * @generated
+	 */
+	void setMergeType(MergeType value);
 
 } // VRuleEntry

@@ -64,7 +64,25 @@ public final class TreeMasterDetailSWTFactory {
 	 */
 	public static TreeMasterDetailComposite createTreeMasterDetail(Composite parent, int style, Object input,
 		TreeMasterDetailSWTCustomization buildBehaviour) {
-		return new TreeMasterDetailComposite(parent, style, input, buildBehaviour);
+		return createTreeMasterDetail(parent, style, input, 100, buildBehaviour);
+	}
+
+	/**
+	 * Creates a {@link TreeMasterDetailComposite} with a customized behavior. Please note that there is also the
+	 * {@link #fillDefaults(Composite, int, Object)} method which allows to customize single aspects of the default
+	 * behavior without having to provider a full implementaion of {@link TreeMasterDetailSWTCustomization}.
+	 *
+	 * @param parent the parent composite
+	 * @param style the style bits which will be passed to the {@link TreeMasterDetailComposite}
+	 * @param input the input object
+	 * @param buildBehaviour the custom behavior
+	 * @param updateDelay the time between a detected selection change and updating the detail panel in ms
+	 * @return the tree master detail
+	 * @since 1.11
+	 */
+	public static TreeMasterDetailComposite createTreeMasterDetail(Composite parent, int style, Object input,
+		int updateDelay, TreeMasterDetailSWTCustomization buildBehaviour) {
+		return new TreeMasterDetailComposite(parent, style, input, buildBehaviour, updateDelay);
 	}
 
 }

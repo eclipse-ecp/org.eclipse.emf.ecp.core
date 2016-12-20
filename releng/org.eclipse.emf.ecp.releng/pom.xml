@@ -5,14 +5,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.eclipse.emf.ecp</groupId>
 	<artifactId>ecp-parent</artifactId>
-	<version>1.10.0-SNAPSHOT</version>
+	<version>1.11.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<properties>
 		<tycho-version>0.25.0</tycho-version>
 		<tycho-extras-version>0.25.0</tycho-extras-version>
 		<javadoc-version>2.10.3</javadoc-version>
-		<ecp-version>1.10.0</ecp-version>
+		<ecp-version>1.11.0</ecp-version>
 		<javadoc-title>EMF Client Platform ${ecp-version} API</javadoc-title>
 		<maven.antrun.plugin.version>1.7</maven.antrun.plugin.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

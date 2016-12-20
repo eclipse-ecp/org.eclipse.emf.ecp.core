@@ -463,7 +463,8 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	 */
 	protected ResourceSet loadResource(IEditorInput editorInput) {
 		final IURIEditorInput uei = (IURIEditorInput) editorInput;
-		return ResourceSetHelpers.loadResourceSetWithProxies(URI.createURI(uei.getURI().toString(), false),
+		final String uriString = URI.decode(uei.getURI().toString());
+		return ResourceSetHelpers.loadResourceSetWithProxies(URI.createURI(uriString, false),
 			getCommandStack());
 	}
 
@@ -648,14 +649,19 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	 * @since 1.10
 	 */
 	public void reveal(EObject objectToReveal) {
-		while (objectToReveal != null && rootView.getSelectionProvider().testFindItem(objectToReveal) == null) {
+		rootView.getSelectionProvider().refresh();
+
+		while (objectToReveal != null) {
+			rootView.getSelectionProvider().reveal(objectToReveal);
+			if (rootView.getSelectionProvider().testFindItem(objectToReveal) != null) {
+				break;
+			}
 			objectToReveal = objectToReveal.eContainer();
 		}
 		if (objectToReveal == null) {
 			return;
 		}
-		rootView.getSelectionProvider().refresh();
-		rootView.getSelectionProvider().reveal(objectToReveal);
+
 		rootView.setSelection(new StructuredSelection(objectToReveal));
 	}
 

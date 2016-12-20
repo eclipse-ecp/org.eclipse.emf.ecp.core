@@ -81,8 +81,10 @@ public class EditorToolBar extends Composite {
 		title.setFont(boldFont);
 		title.setText(titleText);
 		final FormData titleData = new FormData();
-		title.setLayoutData(titleData);
 		titleData.left = new FormAttachment(titleImage, 5, SWT.DEFAULT);
+		final int titleHeight = title.computeSize(SWT.DEFAULT, SWT.DEFAULT).y;
+		titleData.top = new FormAttachment(50, -titleHeight / 2);
+		title.setLayoutData(titleData);
 
 		// Create the toolbar and add it to the header
 		final ToolBar toolBar = new ToolBar(this, SWT.FLAT | SWT.RIGHT);

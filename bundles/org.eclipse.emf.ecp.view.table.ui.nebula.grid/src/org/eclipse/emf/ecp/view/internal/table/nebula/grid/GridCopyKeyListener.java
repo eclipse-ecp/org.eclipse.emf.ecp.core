@@ -9,9 +9,13 @@
  * Contributors:
  * Alexandra Buzila - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.spi.table.internal.nebula.grid;
+package org.eclipse.emf.ecp.view.internal.table.nebula.grid;
 
+import java.util.Map;
+
+import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor;
 import org.eclipse.nebula.widgets.grid.Grid;
+import org.eclipse.nebula.widgets.grid.GridItem;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
@@ -48,16 +52,24 @@ public class GridCopyKeyListener implements KeyListener {
 	public void keyReleased(KeyEvent e) {
 		if ((e.stateMask & SWT.CTRL) != 0 && e.keyCode == 'c') {
 			final Grid grid = (Grid) e.widget;
-
-			final String selectionText = getSelectionAsText(grid);
-			if (selectionText == null || selectionText.isEmpty()) {
-				return;
-			}
-			final String[] data = { selectionText };
-			final TextTransfer[] dataTypes = { TextTransfer.getInstance() };
-
-			clipboard.setContents(data, dataTypes);
+			copySelectionToClipboard(grid);
 		}
+	}
+
+	/**
+	 * Copies the table selection of the {@link Grid} as a formatted string (if a selection exists).
+	 *
+	 * @param grid the {@link Grid} control.
+	 */
+	public void copySelectionToClipboard(Grid grid) {
+		final String selectionText = getSelectionAsText(grid);
+		if (selectionText == null || selectionText.isEmpty()) {
+			return;
+		}
+		final String[] data = { selectionText };
+		final TextTransfer[] dataTypes = { TextTransfer.getInstance() };
+
+		clipboard.setContents(data, dataTypes);
 	}
 
 	/**
@@ -117,9 +129,21 @@ public class GridCopyKeyListener implements KeyListener {
 		for (int i = 0; i < cellSelection.length; i++) {
 			final int column = cellSelection[i].x;
 			final int row = cellSelection[i].y;
-			final String text = grid.getItem(row).getText(column);
+			final String text = getText(grid, column, row);
 			tableSelection[column - minColumn][row - minRow] = text;
 		}
 		return tableSelection;
+	}
+
+	private String getText(Grid grid, int column, int row) {
+		final GridItem item = grid.getItem(row);
+		@SuppressWarnings("unchecked")
+		final Map<Integer, String> copyAlternative = (Map<Integer, String>) item
+			.getData(ECPCellEditor.COPY_STRING_ALTERNATIVE);
+		if (copyAlternative != null && copyAlternative.containsKey(column)) {
+			return copyAlternative.get(column);
+		}
+		final String text = item.getText(column);
+		return text;
 	}
 }

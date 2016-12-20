@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.rule.model.Activator;
+import org.eclipse.emf.ecp.view.spi.rule.model.CompareType;
 import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.NotApplicableForEvaluationException;
 import org.eclipse.emf.ecp.view.spi.rule.model.RulePackage;
@@ -50,8 +51,10 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedRepor
  *        </em>}</li>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.LeafConditionImpl#getDomainModelReference <em>Domain
  *        Model Reference</em>}</li>
- *        <li>{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.LeafConditionImpl#getValueDomainModelReference <em>
- *        Value Domain Model Reference</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.LeafConditionImpl#getValueDomainModelReference
+ *        <em>Value Domain Model Reference</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.LeafConditionImpl#getCompareType <em>Compare
+ *        Type</em>}</li>
  *        </ul>
  *        </p>
  *
@@ -104,6 +107,32 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 * @ordered
 	 */
 	protected VDomainModelReference valueDomainModelReference;
+
+	/**
+	 * The default value of the '{@link #getCompareType() <em>Compare Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.11
+	 *        <!-- end-user-doc -->
+	 *
+	 * @see #getCompareType()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final CompareType COMPARE_TYPE_EDEFAULT = CompareType.EQUALS;
+
+	/**
+	 * The cached value of the '{@link #getCompareType() <em>Compare Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.11
+	 *        <!-- end-user-doc -->
+	 *
+	 * @see #getCompareType()
+	 * @generated
+	 * @ordered
+	 */
+	protected CompareType compareType = COMPARE_TYPE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -282,6 +311,37 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 
 	/**
 	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.11
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public CompareType getCompareType() {
+		return compareType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.11
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public void setCompareType(CompareType newCompareType) {
+		final CompareType oldCompareType = compareType;
+		compareType = newCompareType == null ? COMPARE_TYPE_EDEFAULT : newCompareType;
+		if (eNotificationRequired()) {
+			eNotify(new ENotificationImpl(this, Notification.SET, RulePackage.LEAF_CONDITION__COMPARE_TYPE,
+				oldCompareType, compareType));
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
 	 * @generated
@@ -312,6 +372,8 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 			return getDomainModelReference();
 		case RulePackage.LEAF_CONDITION__VALUE_DOMAIN_MODEL_REFERENCE:
 			return getValueDomainModelReference();
+		case RulePackage.LEAF_CONDITION__COMPARE_TYPE:
+			return getCompareType();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -333,6 +395,9 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 			return;
 		case RulePackage.LEAF_CONDITION__VALUE_DOMAIN_MODEL_REFERENCE:
 			setValueDomainModelReference((VDomainModelReference) newValue);
+			return;
+		case RulePackage.LEAF_CONDITION__COMPARE_TYPE:
+			setCompareType((CompareType) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -356,6 +421,9 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 		case RulePackage.LEAF_CONDITION__VALUE_DOMAIN_MODEL_REFERENCE:
 			setValueDomainModelReference((VDomainModelReference) null);
 			return;
+		case RulePackage.LEAF_CONDITION__COMPARE_TYPE:
+			setCompareType(COMPARE_TYPE_EDEFAULT);
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -376,6 +444,8 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 			return domainModelReference != null;
 		case RulePackage.LEAF_CONDITION__VALUE_DOMAIN_MODEL_REFERENCE:
 			return valueDomainModelReference != null;
+		case RulePackage.LEAF_CONDITION__COMPARE_TYPE:
+			return compareType != COMPARE_TYPE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -395,6 +465,8 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (expectedValue: "); //$NON-NLS-1$
 		result.append(expectedValue);
+		result.append(", compareType: "); //$NON-NLS-1$
+		result.append(compareType);
 		result.append(')');
 		return result.toString();
 	}
@@ -413,7 +485,8 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 		while (settingIterator.hasNext()) {
 			try {
 				final Setting setting = settingIterator.next();
-				result |= doEvaluate(setting.getEObject(), setting.getEStructuralFeature(), expectedValue, false, null);
+				result |= doEvaluate(setting.getEObject(), setting.getEStructuralFeature(), expectedValue, false, null,
+					getCompareType());
 			} catch (final NotApplicableForEvaluationException e) {
 				continue;
 			}
@@ -424,7 +497,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	}
 
 	private static boolean doEvaluate(EObject parent, EStructuralFeature feature, Object expectedValue,
-		boolean useNewValue, Object newValue) throws NotApplicableForEvaluationException {
+		boolean useNewValue, Object newValue, CompareType compareType) throws NotApplicableForEvaluationException {
 
 		final EClass attributeClass = feature.getEContainingClass();
 		if (!attributeClass.isInstance(parent)) {
@@ -436,20 +509,29 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 		} else {
 			value = newValue;
 		}
+		boolean result;
 		if (!feature.isMany()) {
 			if (expectedValue == null) {
-				return value == null;
+				result = value == null;
+			} else if (EcorePackage.eINSTANCE.getEEnum().isInstance(feature.getEType())) {
+				result = expectedValue.equals(Enumerator.class.cast(value).getLiteral());
+			} else {
+				result = expectedValue.equals(value);
 			}
-			if (EcorePackage.eINSTANCE.getEEnum().isInstance(feature.getEType())) {
-				return expectedValue.equals(Enumerator.class.cast(value).getLiteral());
-			}
-			return expectedValue.equals(value);
+
+		} else {
+			// EMF API
+			@SuppressWarnings("unchecked")
+			final List<Object> objects = (List<Object>) value;
+			result = objects.contains(expectedValue);
 		}
 
-		// EMF API
-		@SuppressWarnings("unchecked")
-		final List<Object> objects = (List<Object>) value;
-		return objects.contains(expectedValue);
+		if (compareType == CompareType.EQUALS) {
+			return result;
+		} else if (compareType == CompareType.NOT_EQUALS) {
+			return !result;
+		}
+		return false;
 	}
 
 	/**
@@ -491,7 +573,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 
 					try {
 						result |= doEvaluate(eObject, structuralFeature, expectedValue, true,
-							eObject.eGet(structuralFeature, true));
+							eObject.eGet(structuralFeature, true), getCompareType());
 					} catch (final NotApplicableForEvaluationException ex) {
 						continue;
 					}
@@ -499,7 +581,7 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 			} else {
 				try {
 					result |= doEvaluate(setting.getEObject(), setting.getEStructuralFeature(), expectedValue, true,
-						possibleNewValues.get(setting));
+						possibleNewValues.get(setting), getCompareType());
 				} catch (final NotApplicableForEvaluationException e) {
 					continue;
 				}

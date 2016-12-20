@@ -11,6 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.table;
 
+import java.util.Map;
+
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization.ColumnDescription;
@@ -23,6 +25,7 @@ import org.eclipse.swt.graphics.Image;
  * Implementation of the {@link ColumnDescription}.
  *
  * @author Johannes Faltermeier
+ * @author Mathias Schaefer
  *
  */
 public class ColumnDescriptionImpl implements ColumnDescription {
@@ -37,6 +40,7 @@ public class ColumnDescriptionImpl implements ColumnDescription {
 	private final CellLabelProviderFactory labelProvider;
 	private final Optional<EditingSupportCreator> editingSupport;
 	private final Optional<Image> image;
+	private final Map<String, Object> data;
 
 	// BEGIN COMPLEX CODE
 	/**
@@ -62,7 +66,8 @@ public class ColumnDescriptionImpl implements ColumnDescription {
 		IObservableValue tooltipText,
 		CellLabelProviderFactory labelProvider,
 		EditingSupportCreator editingSupport,
-		Image image) {
+		Image image,
+		Map<String, Object> data) {
 		// END COMPLEX CODE
 		this.resizeable = resizeable;
 		this.moveable = moveable;
@@ -74,6 +79,7 @@ public class ColumnDescriptionImpl implements ColumnDescription {
 		this.labelProvider = labelProvider;
 		this.editingSupport = Optional.ofNullable(editingSupport);
 		this.image = Optional.ofNullable(image);
+		this.data = data;
 	}
 
 	@Override
@@ -127,6 +133,21 @@ public class ColumnDescriptionImpl implements ColumnDescription {
 	@Override
 	public Optional<Image> getColumnImage() {
 		return image;
+	}
+
+	@Override
+	public void setData(Map<String, Object> data) {
+		this.data.putAll(data);
+	}
+
+	@Override
+	public Object getData(String key) {
+		return data.get(key);
+	}
+
+	@Override
+	public Map<String, Object> getData() {
+		return data;
 	}
 
 }

@@ -13,12 +13,13 @@ package org.eclipse.emf.ecp.view.spi.rule.model.impl;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.rule.model.AndCondition;
+import org.eclipse.emf.ecp.view.spi.rule.model.CompareType;
 import org.eclipse.emf.ecp.view.spi.rule.model.Condition;
 import org.eclipse.emf.ecp.view.spi.rule.model.EnableRule;
 import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
@@ -92,6 +93,14 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	 * @generated
 	 */
 	private EClass enableRuleEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	private EEnum compareTypeEEnum = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
@@ -221,6 +230,19 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 
 	/**
 	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.11
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EAttribute getLeafCondition_CompareType() {
+		return (EAttribute) leafConditionEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
 	 * @generated
@@ -331,6 +353,19 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 
 	/**
 	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.11
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EEnum getCompareType() {
+		return compareTypeEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
 	 * @generated
@@ -369,6 +404,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 		createEAttribute(leafConditionEClass, LEAF_CONDITION__EXPECTED_VALUE);
 		createEReference(leafConditionEClass, LEAF_CONDITION__DOMAIN_MODEL_REFERENCE);
 		createEReference(leafConditionEClass, LEAF_CONDITION__VALUE_DOMAIN_MODEL_REFERENCE);
+		createEAttribute(leafConditionEClass, LEAF_CONDITION__COMPARE_TYPE);
 
 		orConditionEClass = createEClass(OR_CONDITION);
 		createEReference(orConditionEClass, OR_CONDITION__CONDITIONS);
@@ -384,6 +420,9 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 
 		enableRuleEClass = createEClass(ENABLE_RULE);
 		createEAttribute(enableRuleEClass, ENABLE_RULE__DISABLE);
+
+		// Create enums
+		compareTypeEEnum = createEEnum(COMPARE_TYPE);
 	}
 
 	/**
@@ -414,8 +453,6 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		final EcorePackage theEcorePackage = (EcorePackage) EPackage.Registry.INSTANCE
-			.getEPackage(EcorePackage.eNS_URI);
 		final VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
 
 		// Create type parameters
@@ -434,58 +471,52 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 		initEClass(conditionEClass, Condition.class,
 			"Condition", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-		initEClass(leafConditionEClass, LeafCondition.class,
-			"LeafCondition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(
-			getLeafCondition_ExpectedValue(),
-			theEcorePackage.getEJavaObject(),
-			"expectedValue", null, 1, 1, LeafCondition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-			getLeafCondition_DomainModelReference(),
-			theViewPackage.getDomainModelReference(),
-			null,
-			"domainModelReference", null, 1, 1, LeafCondition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-			getLeafCondition_ValueDomainModelReference(),
-			theViewPackage.getDomainModelReference(),
-			null,
-			"valueDomainModelReference", null, 0, 1, LeafCondition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEClass(leafConditionEClass, LeafCondition.class, "LeafCondition", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
+			IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getLeafCondition_ExpectedValue(), ecorePackage.getEJavaObject(), "expectedValue", null, 0, 1, //$NON-NLS-1$
+			LeafCondition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
+		initEReference(getLeafCondition_DomainModelReference(), theViewPackage.getDomainModelReference(), null,
+			"domainModelReference", null, 1, 1, LeafCondition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
+			IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getLeafCondition_ValueDomainModelReference(), theViewPackage.getDomainModelReference(), null,
+			"valueDomainModelReference", null, 0, 1, LeafCondition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
+			IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getLeafCondition_CompareType(), getCompareType(), "compareType", "EQUALS", 1, 1, //$NON-NLS-1$ //$NON-NLS-2$
+			LeafCondition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
 
-		initEClass(orConditionEClass, OrCondition.class,
-			"OrCondition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-			getOrCondition_Conditions(),
-			getCondition(),
-			null,
-			"conditions", null, 2, -1, OrCondition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEClass(orConditionEClass, OrCondition.class, "OrCondition", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
+			IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getOrCondition_Conditions(), getCondition(), null, "conditions", null, 2, -1, //$NON-NLS-1$
+			OrCondition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(andConditionEClass, AndCondition.class,
-			"AndCondition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-			getAndCondition_Conditions(),
-			getCondition(),
-			null,
-			"conditions", null, 2, -1, AndCondition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEClass(andConditionEClass, AndCondition.class, "AndCondition", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
+			IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getAndCondition_Conditions(), getCondition(), null, "conditions", null, 2, -1, //$NON-NLS-1$
+			AndCondition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(ruleEClass, Rule.class, "Rule", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-			getRule_Condition(),
-			getCondition(),
-			null,
-			"condition", null, 1, 1, Rule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getRule_Condition(), getCondition(), null, "condition", null, 1, 1, Rule.class, //$NON-NLS-1$
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
 
-		initEClass(showRuleEClass, ShowRule.class, "ShowRule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(
-			getShowRule_Hide(),
-			theEcorePackage.getEBoolean(),
-			"hide", null, 0, 1, ShowRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEClass(showRuleEClass, ShowRule.class, "ShowRule", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
+			IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getShowRule_Hide(), ecorePackage.getEBoolean(), "hide", null, 0, 1, ShowRule.class, //$NON-NLS-1$
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(enableRuleEClass, EnableRule.class,
-			"EnableRule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(
-			getEnableRule_Disable(),
-			theEcorePackage.getEBoolean(),
-			"disable", null, 0, 1, EnableRule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEClass(enableRuleEClass, EnableRule.class, "EnableRule", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
+			IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getEnableRule_Disable(), ecorePackage.getEBoolean(), "disable", null, 0, 1, EnableRule.class, //$NON-NLS-1$
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		// Initialize enums and add enum literals
+		initEEnum(compareTypeEEnum, CompareType.class, "CompareType"); //$NON-NLS-1$
+		addEEnumLiteral(compareTypeEEnum, CompareType.EQUALS);
+		addEEnumLiteral(compareTypeEEnum, CompareType.NOT_EQUALS);
 
 		// Create resource
 		createResource(eNS_URI);

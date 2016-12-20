@@ -19,6 +19,13 @@ import org.eclipse.osgi.util.NLS;
  */
 public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "org.eclipse.emf.ecp.view.model.internal.preview.messages"; //$NON-NLS-1$
+	public static String ManageAdditionalViewsDialog_AddView;
+	public static String ManageAdditionalViewsDialog_LoadedView;
+	public static String ManageAdditionalViewsDialog_NoFileSelected;
+	public static String ManageAdditionalViewsDialog_NoViewModelSelected;
+	public static String ManageAdditionalViewsDialog_RemoveView;
+	public static String ManageAdditionalViewsDialog_Title;
+	public static String PreviewView_AdditionalViews;
 	public static String PreviewView_AutomaticRefresh;
 	public static String PreviewView_ClearSampleDataButton;
 	public static String PreviewView_EditorTitle;

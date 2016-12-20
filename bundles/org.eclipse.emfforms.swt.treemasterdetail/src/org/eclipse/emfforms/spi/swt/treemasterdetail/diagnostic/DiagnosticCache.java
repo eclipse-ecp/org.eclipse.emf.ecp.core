@@ -325,7 +325,8 @@ public class DiagnosticCache extends AbstractCachedTree<Diagnostic> {
 		@Override
 		public void notifyChanged(Notification notification) {
 			super.notifyChanged(notification);
-			if (notification.isTouch()) {
+			if (notification.isTouch() && notification.getEventType() < Notification.EVENT_TYPE_COUNT) {
+				/* if touch and non-user-defined event type break */
 				return;
 			}
 			handleStructuralChangeNotification(notification);

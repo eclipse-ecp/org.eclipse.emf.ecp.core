@@ -9,7 +9,7 @@
  * Contributors:
  * Alexandra Buzila - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.spi.table.internal.nebula.grid;
+package org.eclipse.emf.ecp.view.internal.table.nebula.grid;
 
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;

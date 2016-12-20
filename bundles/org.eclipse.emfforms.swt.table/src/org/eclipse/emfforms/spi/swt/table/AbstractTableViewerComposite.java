@@ -39,12 +39,19 @@ import org.eclipse.swt.widgets.Widget;
  *
  */
 public abstract class AbstractTableViewerComposite extends Composite {
+
+	// TODO: refactor these constants into ColumnDescription interface
 	/** Data key for resizable columns. */
-	protected static final String RESIZABLE = "resizable"; //$NON-NLS-1$
+	public static final String RESIZABLE = "resizable"; //$NON-NLS-1$
 	/** Data key for column weight. */
-	protected static final String WEIGHT = "weight"; //$NON-NLS-1$
+	public static final String WEIGHT = "weight"; //$NON-NLS-1$
 	/** Data key for the minimum width of the column. */
-	protected static final String MIN_WIDTH = "min_width"; //$NON-NLS-1$
+	public static final String MIN_WIDTH = "min_width"; //$NON-NLS-1$
+	/** Data key for column id. */
+	public static final String COLUMN_ID = "column_id"; //$NON-NLS-1$
+	/** Data key for a domain model reference. */
+	public static final String DMR = "domain_model_reference"; //$NON-NLS-1$
+
 	private final EMFDataBindingContext emfDatabindingContext;
 	private Optional<List<Control>> validationControls;
 

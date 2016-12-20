@@ -180,7 +180,7 @@ public class OrConditionImpl extends ConditionImpl implements OrCondition {
 	 */
 	@Override
 	public boolean evaluate(EObject domainModel) {
-		boolean result = false;
+		boolean result = getConditions().isEmpty();
 		for (final Condition innerCondition : getConditions()) {
 			result |= innerCondition.evaluate(domainModel);
 		}

@@ -25,9 +25,12 @@ import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
+import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
+import org.eclipse.emfforms.spi.rulerepository.model.MergeType;
 import org.eclipse.emfforms.spi.rulerepository.model.VRuleEntry;
 import org.eclipse.emfforms.spi.rulerepository.model.VRulerepositoryPackage;
 
@@ -39,7 +42,7 @@ import org.eclipse.emfforms.spi.rulerepository.model.VRulerepositoryPackage;
  * @generated
  */
 public class RuleEntryItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
-	ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
+	IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
@@ -63,6 +66,7 @@ public class RuleEntryItemProvider extends ItemProviderAdapter implements IEditi
 
 			addRulePropertyDescriptor(object);
 			addElementsPropertyDescriptor(object);
+			addMergeTypePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -106,6 +110,29 @@ public class RuleEntryItemProvider extends ItemProviderAdapter implements IEditi
 				false,
 				true,
 				null,
+				null,
+				null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Merge Type feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected void addMergeTypePropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_RuleEntry_mergeType_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_RuleEntry_mergeType_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_RuleEntry_type"), //$NON-NLS-1$
+				VRulerepositoryPackage.Literals.RULE_ENTRY__MERGE_TYPE,
+				true,
+				false,
+				false,
+				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
 				null,
 				null));
 	}
@@ -162,7 +189,10 @@ public class RuleEntryItemProvider extends ItemProviderAdapter implements IEditi
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_RuleEntry_type"); //$NON-NLS-1$
+		final MergeType labelValue = ((VRuleEntry) object).getMergeType();
+		final String label = labelValue == null ? null : labelValue.toString();
+		return label == null || label.length() == 0 ? getString("_UI_RuleEntry_type") : //$NON-NLS-1$
+			getString("_UI_RuleEntry_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -178,6 +208,9 @@ public class RuleEntryItemProvider extends ItemProviderAdapter implements IEditi
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(VRuleEntry.class)) {
+		case VRulerepositoryPackage.RULE_ENTRY__MERGE_TYPE:
+			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+			return;
 		case VRulerepositoryPackage.RULE_ENTRY__RULE:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;

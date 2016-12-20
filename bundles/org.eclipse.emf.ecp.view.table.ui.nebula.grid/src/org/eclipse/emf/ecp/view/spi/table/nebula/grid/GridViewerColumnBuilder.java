@@ -15,8 +15,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.eclipse.emfforms.spi.swt.table.AbstractTableViewerComposite;
 import org.eclipse.nebula.jface.gridviewer.GridTableViewer;
 import org.eclipse.nebula.jface.gridviewer.GridViewerColumn;
+import org.eclipse.nebula.widgets.grid.GridCellRenderer;
 import org.eclipse.swt.SWT;
 
 /**
@@ -24,6 +26,9 @@ import org.eclipse.swt.SWT;
  *
  */
 public class GridViewerColumnBuilder {
+
+	private int columnId;
+
 	/**
 	 * Creates a new viewer column.
 	 *
@@ -56,12 +61,14 @@ public class GridViewerColumnBuilder {
 	 */
 	public GridViewerColumn build(GridTableViewer tableViewer) {
 		final GridViewerColumn column = buildViewerColumn(tableViewer);
+		setData(AbstractTableViewerComposite.COLUMN_ID, columnId++);
 		setText(column);
 		setToolTipText(column);
 		setResizable(column);
 		setMoveable(column);
 		setData(column);
 		setWidth(column);
+		setCellRenderer(column);
 		return column;
 	}
 
@@ -72,6 +79,7 @@ public class GridViewerColumnBuilder {
 	private final Map<String, Object> data = new LinkedHashMap<String, Object>();
 	private Integer width;
 	private Integer style = SWT.NONE;
+	private GridCellRenderer cellRenderer;
 
 	/**
 	 * Configures the text of the {@link GridViewerColumn}.
@@ -118,6 +126,17 @@ public class GridViewerColumnBuilder {
 	}
 
 	/**
+	 * Configures the application data entries to be set for the {@link GridViewerColumn}.
+	 *
+	 * @param data the data entries to be added
+	 * @return the TableViewerColumnBuilder instance
+	 */
+	public GridViewerColumnBuilder setData(Map<String, Object> data) {
+		this.data.putAll(data);
+		return this;
+	}
+
+	/**
 	 * Configures the application data to be set for the {@link GridViewerColumn}.
 	 *
 	 * @param key the data key
@@ -151,6 +170,17 @@ public class GridViewerColumnBuilder {
 		return this;
 	}
 
+	/**
+	 * Overwrites the DefaultGridCellRenderer.
+	 *
+	 * @param cellRenderer the cell renderer
+	 * @return self
+	 */
+	public GridViewerColumnBuilder setCellRenderer(GridCellRenderer cellRenderer) {
+		this.cellRenderer = cellRenderer;
+		return this;
+	}
+
 	private void setText(GridViewerColumn column) {
 		if (text != null) {
 			column.getColumn().setText(text);
@@ -174,7 +204,6 @@ public class GridViewerColumnBuilder {
 	private void setMoveable(GridViewerColumn column) {
 		if (isMoveable != null) {
 			column.getColumn().setMoveable(true);
-
 		}
 	}
 
@@ -187,6 +216,12 @@ public class GridViewerColumnBuilder {
 	private void setWidth(GridViewerColumn column) {
 		if (width != null) {
 			column.getColumn().setWidth(width);
+		}
+	}
+
+	private void setCellRenderer(GridViewerColumn column) {
+		if (cellRenderer != null) {
+			column.getColumn().setCellRenderer(cellRenderer);
 		}
 	}
 

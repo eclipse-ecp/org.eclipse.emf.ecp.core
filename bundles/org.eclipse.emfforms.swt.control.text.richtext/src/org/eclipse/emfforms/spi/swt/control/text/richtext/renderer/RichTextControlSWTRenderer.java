@@ -13,6 +13,10 @@ package org.eclipse.emfforms.spi.swt.control.text.richtext.renderer;
 
 import javax.inject.Inject;
 
+import org.eclipse.core.databinding.Binding;
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.UpdateValueStrategy;
+import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.renderer.TextControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -23,6 +27,7 @@ import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.swt.core.layout.EMFFormsSWTLayoutUtil;
 import org.eclipse.emfforms.spi.swt.core.util.PopupWindow;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
@@ -148,6 +153,25 @@ public class RichTextControlSWTRenderer extends TextControlSWTRenderer {
 		VTViewTemplateProvider vtViewTemplateProvider, EMFFormsEditSupport emfFormsEditSupport) {
 		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider,
 			emfFormsEditSupport);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * Databinding is set to SWT.Modify, because we cannot guarantee that the focus of the text field is lost after the
+	 * popup windows is closed.
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.renderer.TextControlSWTRenderer#bindValue(org.eclipse.swt.widgets.Control,
+	 *      org.eclipse.core.databinding.observable.value.IObservableValue,
+	 *      org.eclipse.core.databinding.DataBindingContext, org.eclipse.core.databinding.UpdateValueStrategy,
+	 *      org.eclipse.core.databinding.UpdateValueStrategy)
+	 */
+	@Override
+	protected Binding bindValue(Control text, IObservableValue modelValue, DataBindingContext dataBindingContext,
+		UpdateValueStrategy targetToModel, UpdateValueStrategy modelToTarget) {
+		final IObservableValue value = WidgetProperties.text(SWT.Modify).observe(this.text);
+		final Binding binding = dataBindingContext.bindValue(value, modelValue, targetToModel, modelToTarget);
+		return binding;
 	}
 
 	@Override

@@ -123,13 +123,21 @@ public class GridTableViewerComposite extends AbstractTableViewerComposite {
 	}
 
 	// TODO: could be refactored to reduce overlap with TableViewerComposite
+	// TODO: refactor (ms)
 	@Override
 	protected ViewerColumn createColumn(ColumnDescription columnDescription,
 		EMFDataBindingContext emfDataBindingContext, AbstractTableViewer tableViewer) {
 		final GridViewerColumnBuilder builder = GridViewerColumnBuilder
 			.create();
 
-		final GridViewerColumn column = builder.setData(RESIZABLE, columnDescription.isResizeable())
+		// TODO: set correct colors here
+		// builder.setCellRenderer(new CustomSelectionColorCellRenderer(
+		// getDisplay().getSystemColor(SWT.COLOR_WHITE),
+		// getDisplay().getSystemColor(SWT.COLOR_CYAN)));
+
+		final GridViewerColumn column = builder
+			.setData(columnDescription.getData())
+			.setData(RESIZABLE, columnDescription.isResizeable())
 			.setMoveable(columnDescription.isMoveable())
 			.setStyle(columnDescription.getStyleBits())
 			.setData(WEIGHT, columnDescription.getWeight())

@@ -38,6 +38,11 @@ public interface ECPCellEditor {
 	String CUSTOM_VARIANT = "org.eclipse.rap.rwt.customVariant"; //$NON-NLS-1$
 
 	/**
+	 * Indicator for an alternative copy string.
+	 */
+	String COPY_STRING_ALTERNATIVE = "org.eclipse.emf.ecp.edit.spi.swt.table.copyStringAlternative"; //$NON-NLS-1$
+
+	/**
 	 * Returns the {@link IValueProperty} for this cell editor which is used by the table to create an
 	 * {@link org.eclipse.core.databinding.observable.value.IObservableValue IObservableValue}.
 	 *

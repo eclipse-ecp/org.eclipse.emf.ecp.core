@@ -18,8 +18,11 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.util.URI;
@@ -42,7 +45,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
  * The Handler that gets triggered when the merge of rule repository and view is triggered.
- * 
+ *
  * @author Eugen Neufeld
  *
  */
@@ -99,6 +102,14 @@ public class MergeWithViewHandler extends AbstractHandler {
 		}
 
 		final SaveAsDialog sad = new SaveAsDialog(activeShell);
+		final URI viewURI = view.eResource().getURI();
+		final IWorkspace workspace = ResourcesPlugin.getWorkspace();
+		final String mergedViewPath = viewURI.trimFileExtension().toPlatformString(false).substring(1) + "_merged." //$NON-NLS-1$
+			+ viewURI.fileExtension();
+
+		final IFile file = workspace.getRoot().getFile(new Path(mergedViewPath));
+
+		sad.setOriginalFile(file);
 		final int result = sad.open();
 		if (result == Window.CANCEL) {
 			return null;

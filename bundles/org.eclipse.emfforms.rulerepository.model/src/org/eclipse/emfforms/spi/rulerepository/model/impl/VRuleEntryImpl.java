@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.rule.model.Rule;
+import org.eclipse.emfforms.spi.rulerepository.model.MergeType;
 import org.eclipse.emfforms.spi.rulerepository.model.VRuleEntry;
 import org.eclipse.emfforms.spi.rulerepository.model.VRulerepositoryPackage;
 
@@ -35,6 +36,7 @@ import org.eclipse.emfforms.spi.rulerepository.model.VRulerepositoryPackage;
  * <ul>
  * <li>{@link org.eclipse.emfforms.spi.rulerepository.model.impl.VRuleEntryImpl#getRule <em>Rule</em>}</li>
  * <li>{@link org.eclipse.emfforms.spi.rulerepository.model.impl.VRuleEntryImpl#getElements <em>Elements</em>}</li>
+ * <li>{@link org.eclipse.emfforms.spi.rulerepository.model.impl.VRuleEntryImpl#getMergeType <em>Merge Type</em>}</li>
  * </ul>
  *
  * @generated
@@ -59,6 +61,28 @@ public class VRuleEntryImpl extends EObjectImpl implements VRuleEntry {
 	 * @ordered
 	 */
 	protected EList<VElement> elements;
+
+	/**
+	 * The default value of the '{@link #getMergeType() <em>Merge Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see #getMergeType()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final MergeType MERGE_TYPE_EDEFAULT = MergeType.OR;
+
+	/**
+	 * The cached value of the '{@link #getMergeType() <em>Merge Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see #getMergeType()
+	 * @generated
+	 * @ordered
+	 */
+	protected MergeType mergeType = MERGE_TYPE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -151,6 +175,33 @@ public class VRuleEntryImpl extends EObjectImpl implements VRuleEntry {
 	}
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public MergeType getMergeType() {
+		return mergeType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public void setMergeType(MergeType newMergeType) {
+		final MergeType oldMergeType = mergeType;
+		mergeType = newMergeType == null ? MERGE_TYPE_EDEFAULT : newMergeType;
+		if (eNotificationRequired()) {
+			eNotify(new ENotificationImpl(this, Notification.SET, VRulerepositoryPackage.RULE_ENTRY__MERGE_TYPE,
+				oldMergeType, mergeType));
+		}
+	}
+
+	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 *
 	 * @generated
@@ -176,6 +227,8 @@ public class VRuleEntryImpl extends EObjectImpl implements VRuleEntry {
 			return getRule();
 		case VRulerepositoryPackage.RULE_ENTRY__ELEMENTS:
 			return getElements();
+		case VRulerepositoryPackage.RULE_ENTRY__MERGE_TYPE:
+			return getMergeType();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -196,6 +249,9 @@ public class VRuleEntryImpl extends EObjectImpl implements VRuleEntry {
 			getElements().clear();
 			getElements().addAll((Collection<? extends VElement>) newValue);
 			return;
+		case VRulerepositoryPackage.RULE_ENTRY__MERGE_TYPE:
+			setMergeType((MergeType) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -214,6 +270,9 @@ public class VRuleEntryImpl extends EObjectImpl implements VRuleEntry {
 		case VRulerepositoryPackage.RULE_ENTRY__ELEMENTS:
 			getElements().clear();
 			return;
+		case VRulerepositoryPackage.RULE_ENTRY__MERGE_TYPE:
+			setMergeType(MERGE_TYPE_EDEFAULT);
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -230,8 +289,29 @@ public class VRuleEntryImpl extends EObjectImpl implements VRuleEntry {
 			return rule != null;
 		case VRulerepositoryPackage.RULE_ENTRY__ELEMENTS:
 			return elements != null && !elements.isEmpty();
+		case VRulerepositoryPackage.RULE_ENTRY__MERGE_TYPE:
+			return mergeType != MERGE_TYPE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) {
+			return super.toString();
+		}
+
+		final StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (mergeType: "); //$NON-NLS-1$
+		result.append(mergeType);
+		result.append(')');
+		return result.toString();
 	}
 
 } // VRuleEntryImpl

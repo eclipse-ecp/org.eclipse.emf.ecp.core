@@ -129,6 +129,9 @@ public class DerivedAttributeAdapter extends AdapterImpl {
 
 	@Override
 	public void notifyChanged(Notification notification) {
+		if (notification == null || notification.getFeature() == null) {
+			return;
+		}
 		if (notification.getFeature().equals(navigationFeature)) {
 			switch (notification.getEventType()) {
 			// TODO support ADD_MANY/REMOVE_MANY?

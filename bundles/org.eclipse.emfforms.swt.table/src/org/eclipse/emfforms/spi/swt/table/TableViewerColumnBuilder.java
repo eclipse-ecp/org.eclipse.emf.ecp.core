@@ -119,6 +119,17 @@ public class TableViewerColumnBuilder {
 	}
 
 	/**
+	 * Configures the application data entries to be set for the {@link TableViewerColumn}.
+	 *
+	 * @param data the data entries to be added
+	 * @return the TableViewerColumnBuilder instance
+	 */
+	public TableViewerColumnBuilder setData(Map<String, Object> data) {
+		data.putAll(data);
+		return this;
+	}
+
+	/**
 	 * Configures the application data to be set for the {@link TableViewerColumn}.
 	 *
 	 * @param key the data key
@@ -127,6 +138,17 @@ public class TableViewerColumnBuilder {
 	 */
 	public TableViewerColumnBuilder setData(String key, Object value) {
 		data.put(key, value);
+		return this;
+	}
+
+	/**
+	 * Append a map of items to the data map property for the {@link TableViewerColumn}.
+	 *
+	 * @param map to append to data map
+	 * @return the TableViewerColumnBuilder instance
+	 */
+	public TableViewerColumnBuilder addData(Map<String, Object> map) {
+		data.putAll(map);
 		return this;
 	}
 

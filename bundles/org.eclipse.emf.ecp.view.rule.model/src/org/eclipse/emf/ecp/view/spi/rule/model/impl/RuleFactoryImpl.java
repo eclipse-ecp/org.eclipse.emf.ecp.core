@@ -12,11 +12,13 @@
 package org.eclipse.emf.ecp.view.spi.rule.model.impl;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecp.view.spi.rule.model.AndCondition;
+import org.eclipse.emf.ecp.view.spi.rule.model.CompareType;
 import org.eclipse.emf.ecp.view.spi.rule.model.EnableRule;
 import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.OrCondition;
@@ -99,6 +101,38 @@ public class RuleFactoryImpl extends EFactoryImpl implements RuleFactory {
 	 * @generated
 	 */
 	@Override
+	public Object createFromString(EDataType eDataType, String initialValue) {
+		switch (eDataType.getClassifierID()) {
+		case RulePackage.COMPARE_TYPE:
+			return createCompareTypeFromString(eDataType, initialValue);
+		default:
+			throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public String convertToString(EDataType eDataType, Object instanceValue) {
+		switch (eDataType.getClassifierID()) {
+		case RulePackage.COMPARE_TYPE:
+			return convertCompareTypeToString(eDataType, instanceValue);
+		default:
+			throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
 	public LeafCondition createLeafCondition() {
 		final LeafConditionImpl leafCondition = new LeafConditionImpl();
 		return leafCondition;
@@ -150,6 +184,35 @@ public class RuleFactoryImpl extends EFactoryImpl implements RuleFactory {
 	public EnableRule createEnableRule() {
 		final EnableRuleImpl enableRule = new EnableRuleImpl();
 		return enableRule;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.11
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public CompareType createCompareTypeFromString(EDataType eDataType, String initialValue) {
+		final CompareType result = CompareType.get(initialValue);
+		if (result == null) {
+			throw new IllegalArgumentException(
+				"The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		}
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.11
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public String convertCompareTypeToString(EDataType eDataType, Object instanceValue) {
+		return instanceValue == null ? null : instanceValue.toString();
 	}
 
 	/**

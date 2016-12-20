@@ -276,7 +276,7 @@ public class RuleService_PTest extends CommonRuleTest {
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getParentContext()
 		 */
 		@Override
@@ -287,7 +287,7 @@ public class RuleService_PTest extends CommonRuleTest {
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext#changeDomainModel(org.eclipse.emf.ecore.EObject)
 		 */
 		@Override
@@ -298,7 +298,7 @@ public class RuleService_PTest extends CommonRuleTest {
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext#registerRootDomainModelChangeListener(org.eclipse.emfforms.spi.core.services.view.RootDomainModelChangeListener)
 		 */
 		@Override
@@ -309,7 +309,7 @@ public class RuleService_PTest extends CommonRuleTest {
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext#unregisterRootDomainModelChangeListener(org.eclipse.emfforms.spi.core.services.view.RootDomainModelChangeListener)
 		 */
 		@Override
@@ -321,7 +321,7 @@ public class RuleService_PTest extends CommonRuleTest {
 
 		/**
 		 * {@inheritDoc}
-		 * 
+		 *
 		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getParentVElement()
 		 */
 		@Override
@@ -2376,6 +2376,21 @@ public class RuleService_PTest extends CommonRuleTest {
 		instantiateRuleService();
 		assertFalse(parentColumn.isEnabled());
 		assertFalse(controlPName.isEnabled());
+	}
+
+	@Test
+	public void testInitEnableShowSameControl() {
+		addEnableRule(controlPName, true, BowlingPackage.eINSTANCE.getLeague_Name(), "foo");
+		addShowRule(controlPName, true, BowlingPackage.eINSTANCE.getLeague_Name(), "bar");
+		instantiateRuleService();
+		assertFalse(controlPName.isEnabled());
+		assertFalse(controlPName.isVisible());
+		league.setName("foo");
+		assertTrue(controlPName.isEnabled());
+		assertFalse(controlPName.isVisible());
+		league.setName("bar");
+		assertFalse(controlPName.isEnabled());
+		assertTrue(controlPName.isVisible());
 	}
 
 	/**

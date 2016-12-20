@@ -109,6 +109,17 @@ public final class ResourceSetHelpers {
 					new ComposedAdapterFactory(
 						ComposedAdapterFactory.Descriptor.Registry.INSTANCE) }),
 			commandStack);
+		return createResourceSet(domain);
+	}
+
+	/**
+	 * Creates a ResourceSet with the given EditingDomain.
+	 *
+	 * @param domain the editing domain
+	 * @return the resource set
+	 * @since 1.11
+	 */
+	public static ResourceSet createResourceSet(final AdapterFactoryEditingDomain domain) {
 		final ResourceSet resourceSet = domain.getResourceSet();
 		resourceSet.eAdapters().add(
 			new AdapterFactoryEditingDomain.EditingDomainProvider(domain));

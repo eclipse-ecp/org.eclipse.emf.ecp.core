@@ -107,8 +107,8 @@ public class RulerepositoryAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emfforms.spi.rulerepository.model.VRuleRepository <em>Rule Repository</em>}'.
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emfforms.spi.rulerepository.model.VRuleRepository <em>Rule Repository</em>}'.
 	 * <!-- begin-user-doc --> This default
 	 * implementation returns null so that we can easily ignore cases; it's
 	 * useful to ignore a case when inheritance will catch all the cases anyway.

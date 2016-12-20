@@ -543,6 +543,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 						? ECPCellEditor.class.cast(tempCellEditor).getMinWidth() : 10;
 				}
 
+				// TODO: rewrite builder (ms)
+				tableViewerSWTBuilder.setData(AbstractTableViewerComposite.DMR, dmr);
 				tableViewerSWTBuilder.addColumn(true, false, SWT.NONE, weight, minWidth, text, tooltip,
 					labelProvider, editingSupportCreator, null);
 
@@ -627,9 +629,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	/**
 	 * @return the {@link VDomainModelReference} which ends at the table setting
-	 * @since 1.10
+	 * @since 1.11
 	 */
-	protected final VDomainModelReference getDMRToMultiReference() {
+	protected VDomainModelReference getDMRToMultiReference() {
 		final VTableDomainModelReference tableDomainModelReference = (VTableDomainModelReference) getVElement()
 			.getDomainModelReference();
 		final VDomainModelReference dmrToCheck = tableDomainModelReference.getDomainModelReference() == null
@@ -1277,6 +1279,18 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		getTableViewer().setInput(list);
 
 		tableControlSWTRendererButtonBarBuilder.updateValues();
+	}
+
+	/**
+	 * Checks whether an element is editable or not.
+	 * 
+	 * @param element The list entry to be checked
+	 * @return True if the element can be edited, false otherwise
+	 *
+	 * @since 1.11
+	 */
+	protected boolean canEditObject(Object element) {
+		return true;
 	}
 
 	/**
@@ -1966,10 +1980,15 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		 */
 		@Override
 		protected boolean canEdit(Object element) {
-
+			final boolean isObjectEditable = canEditObject(element);
+			if (!isObjectEditable) {
+				return false;
+			}
 			boolean editable = tableControl.isEnabled()
 				&& !tableControl.isReadonly();
-
+			if (!editable) {
+				return false;
+			}
 			final IObservableValue observableValue = valueProperty.observe(element);
 			final EObject eObject = (EObject) ((IObserving) observableValue).getObserved();
 			final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();

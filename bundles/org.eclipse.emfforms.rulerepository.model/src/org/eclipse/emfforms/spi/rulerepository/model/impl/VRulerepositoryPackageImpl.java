@@ -11,12 +11,15 @@
  */
 package org.eclipse.emfforms.spi.rulerepository.model.impl;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.rule.model.RulePackage;
+import org.eclipse.emfforms.spi.rulerepository.model.MergeType;
 import org.eclipse.emfforms.spi.rulerepository.model.VRuleEntry;
 import org.eclipse.emfforms.spi.rulerepository.model.VRuleRepository;
 import org.eclipse.emfforms.spi.rulerepository.model.VRulerepositoryFactory;
@@ -42,6 +45,14 @@ public class VRulerepositoryPackageImpl extends EPackageImpl implements VRulerep
 	 * @generated
 	 */
 	private EClass ruleEntryEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	private EEnum mergeTypeEEnum = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -163,6 +174,28 @@ public class VRulerepositoryPackageImpl extends EPackageImpl implements VRulerep
 	}
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EAttribute getRuleEntry_MergeType() {
+		return (EAttribute) ruleEntryEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EEnum getMergeType() {
+		return mergeTypeEEnum;
+	}
+
+	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 *
 	 * @generated
@@ -200,6 +233,10 @@ public class VRulerepositoryPackageImpl extends EPackageImpl implements VRulerep
 		ruleEntryEClass = createEClass(RULE_ENTRY);
 		createEReference(ruleEntryEClass, RULE_ENTRY__RULE);
 		createEReference(ruleEntryEClass, RULE_ENTRY__ELEMENTS);
+		createEAttribute(ruleEntryEClass, RULE_ENTRY__MERGE_TYPE);
+
+		// Create enums
+		mergeTypeEEnum = createEEnum(MERGE_TYPE);
 	}
 
 	/**
@@ -252,6 +289,13 @@ public class VRulerepositoryPackageImpl extends EPackageImpl implements VRulerep
 		initEReference(getRuleEntry_Elements(), theViewPackage.getElement(), null, "elements", null, 0, -1, //$NON-NLS-1$
 			VRuleEntry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
 			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getRuleEntry_MergeType(), getMergeType(), "mergeType", "Or", 1, 1, VRuleEntry.class, //$NON-NLS-1$ //$NON-NLS-2$
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		// Initialize enums and add enum literals
+		initEEnum(mergeTypeEEnum, MergeType.class, "MergeType"); //$NON-NLS-1$
+		addEEnumLiteral(mergeTypeEEnum, MergeType.AND);
+		addEEnumLiteral(mergeTypeEEnum, MergeType.OR);
 
 		// Create resource
 		createResource(eNS_URI);

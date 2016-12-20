@@ -11,7 +11,9 @@
  */
 package org.eclipse.emfforms.spi.rulerepository.model;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -126,17 +128,39 @@ public interface VRulerepositoryPackage extends EPackage {
 	int RULE_ENTRY__ELEMENTS = 1;
 
 	/**
+	 * The feature id for the '<em><b>Merge Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int RULE_ENTRY__MERGE_TYPE = 2;
+
+	/**
 	 * The number of structural features of the '<em>Rule Entry</em>' class.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 *
 	 * @generated
 	 * @ordered
 	 */
-	int RULE_ENTRY_FEATURE_COUNT = 2;
+	int RULE_ENTRY_FEATURE_COUNT = 3;
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emfforms.spi.rulerepository.model.VRuleRepository
-	 * <em>Rule Repository</em>}'.
+	 * The meta object id for the '{@link org.eclipse.emfforms.spi.rulerepository.model.MergeType <em>Merge Type</em>}'
+	 * enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see org.eclipse.emfforms.spi.rulerepository.model.MergeType
+	 * @see org.eclipse.emfforms.spi.rulerepository.model.impl.VRulerepositoryPackageImpl#getMergeType()
+	 * @generated
+	 */
+	int MERGE_TYPE = 2;
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emfforms.spi.rulerepository.model.VRuleRepository <em>Rule
+	 * Repository</em>}'.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 *
 	 * @return the meta object for class '<em>Rule Repository</em>'.
@@ -146,8 +170,8 @@ public interface VRulerepositoryPackage extends EPackage {
 	EClass getRuleRepository();
 
 	/**
-	 * Returns the meta object for the containment reference list '
-	 * {@link org.eclipse.emfforms.spi.rulerepository.model.VRuleRepository#getRuleEntries <em>Rule Entries</em>}'.
+	 * Returns the meta object for the containment reference list
+	 * '{@link org.eclipse.emfforms.spi.rulerepository.model.VRuleRepository#getRuleEntries <em>Rule Entries</em>}'.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 *
 	 * @return the meta object for the containment reference list '<em>Rule Entries</em>'.
@@ -158,8 +182,8 @@ public interface VRulerepositoryPackage extends EPackage {
 	EReference getRuleRepository_RuleEntries();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emfforms.spi.rulerepository.model.VRuleEntry
-	 * <em>Rule Entry</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.emfforms.spi.rulerepository.model.VRuleEntry <em>Rule
+	 * Entry</em>}'.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 *
 	 * @return the meta object for class '<em>Rule Entry</em>'.
@@ -169,8 +193,8 @@ public interface VRulerepositoryPackage extends EPackage {
 	EClass getRuleEntry();
 
 	/**
-	 * Returns the meta object for the containment reference '
-	 * {@link org.eclipse.emfforms.spi.rulerepository.model.VRuleEntry#getRule <em>Rule</em>}'.
+	 * Returns the meta object for the containment reference
+	 * '{@link org.eclipse.emfforms.spi.rulerepository.model.VRuleEntry#getRule <em>Rule</em>}'.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 *
 	 * @return the meta object for the containment reference '<em>Rule</em>'.
@@ -181,8 +205,8 @@ public interface VRulerepositoryPackage extends EPackage {
 	EReference getRuleEntry_Rule();
 
 	/**
-	 * Returns the meta object for the reference list '
-	 * {@link org.eclipse.emfforms.spi.rulerepository.model.VRuleEntry#getElements <em>Elements</em>}'.
+	 * Returns the meta object for the reference list
+	 * '{@link org.eclipse.emfforms.spi.rulerepository.model.VRuleEntry#getElements <em>Elements</em>}'.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 *
 	 * @return the meta object for the reference list '<em>Elements</em>'.
@@ -191,6 +215,31 @@ public interface VRulerepositoryPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getRuleEntry_Elements();
+
+	/**
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emfforms.spi.rulerepository.model.VRuleEntry#getMergeType <em>Merge Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the attribute '<em>Merge Type</em>'.
+	 * @see org.eclipse.emfforms.spi.rulerepository.model.VRuleEntry#getMergeType()
+	 * @see #getRuleEntry()
+	 * @generated
+	 */
+	EAttribute getRuleEntry_MergeType();
+
+	/**
+	 * Returns the meta object for enum '{@link org.eclipse.emfforms.spi.rulerepository.model.MergeType <em>Merge
+	 * Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for enum '<em>Merge Type</em>'.
+	 * @see org.eclipse.emfforms.spi.rulerepository.model.MergeType
+	 * @generated
+	 */
+	EEnum getMergeType();
 
 	/**
 	 * Returns the factory that creates the instances of the model. <!--
@@ -216,8 +265,8 @@ public interface VRulerepositoryPackage extends EPackage {
 	 */
 	interface Literals {
 		/**
-		 * The meta object literal for the '
-		 * {@link org.eclipse.emfforms.spi.rulerepository.model.impl.VRuleRepositoryImpl <em>Rule Repository</em>}'
+		 * The meta object literal for the
+		 * '{@link org.eclipse.emfforms.spi.rulerepository.model.impl.VRuleRepositoryImpl <em>Rule Repository</em>}'
 		 * class.
 		 * <!-- begin-user-doc --> <!--
 		 * end-user-doc -->
@@ -264,6 +313,27 @@ public interface VRulerepositoryPackage extends EPackage {
 		 * @generated
 		 */
 		EReference RULE_ENTRY__ELEMENTS = eINSTANCE.getRuleEntry_Elements();
+
+		/**
+		 * The meta object literal for the '<em><b>Merge Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EAttribute RULE_ENTRY__MERGE_TYPE = eINSTANCE.getRuleEntry_MergeType();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emfforms.spi.rulerepository.model.MergeType <em>Merge
+		 * Type</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @see org.eclipse.emfforms.spi.rulerepository.model.MergeType
+		 * @see org.eclipse.emfforms.spi.rulerepository.model.impl.VRulerepositoryPackageImpl#getMergeType()
+		 * @generated
+		 */
+		EEnum MERGE_TYPE = eINSTANCE.getMergeType();
 
 	}
 

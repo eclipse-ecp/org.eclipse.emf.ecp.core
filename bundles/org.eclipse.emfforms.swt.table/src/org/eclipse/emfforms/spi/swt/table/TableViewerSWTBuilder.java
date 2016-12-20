@@ -12,6 +12,9 @@
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.table;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.core.databinding.observable.Observables;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emfforms.internal.swt.table.DefaultTableControlSWTCustomization;
@@ -44,6 +47,7 @@ public class TableViewerSWTBuilder {
 	private final IObservableValue title;
 	/** The tooltip. */
 	private final IObservableValue tooltip;
+	private Map<String, Object> columnData;
 
 	/**
 	 * @param composite the parent {@link Composite}
@@ -60,6 +64,7 @@ public class TableViewerSWTBuilder {
 		this.title = title;
 		this.tooltip = tooltip;
 		customization = new DefaultTableControlSWTCustomization();
+		columnData = new HashMap<String, Object>();
 	}
 
 	/**
@@ -221,6 +226,16 @@ public class TableViewerSWTBuilder {
 		return this;
 	}
 
+	/**
+	 * Add an arbitrary key/value pair.
+	 *
+	 * @param key literal
+	 * @param value object
+	 */
+	public void setData(String key, Object value) {
+		columnData.put(key, value);
+	}
+
 	// BEGIN COMPLEX CODE
 	/**
 	 * Adds a column.
@@ -261,8 +276,10 @@ public class TableViewerSWTBuilder {
 				tooltipText,
 				labelProvider,
 				editingSupport,
-				image));
+				image,
+				columnData));
 
+		columnData = new HashMap<String, Object>();
 		return this;
 	}
 
@@ -306,8 +323,10 @@ public class TableViewerSWTBuilder {
 				tooltipText,
 				new StaticCellLabelProviderFactory(labelProvider),
 				editingSupport,
-				image));
+				image,
+				columnData));
 
+		columnData = new HashMap<String, Object>();
 		return this;
 	}
 
@@ -351,8 +370,10 @@ public class TableViewerSWTBuilder {
 				Observables.constantObservableValue(tooltipText, String.class),
 				new StaticCellLabelProviderFactory(labelProvider),
 				editingSupport,
-				image));
+				image,
+				columnData));
 
+		columnData = new HashMap<String, Object>();
 		return this;
 	}
 
@@ -394,8 +415,10 @@ public class TableViewerSWTBuilder {
 				tooltipText,
 				new StaticCellLabelProviderFactory(labelProvider),
 				editingSupport,
-				null));
+				null,
+				columnData));
 
+		columnData = new HashMap<String, Object>();
 		return this;
 	}
 
@@ -437,8 +460,10 @@ public class TableViewerSWTBuilder {
 				Observables.constantObservableValue(tooltipText, String.class),
 				new StaticCellLabelProviderFactory(labelProvider),
 				editingSupport,
-				null));
+				null,
+				columnData));
 
+		columnData = new HashMap<String, Object>();
 		return this;
 	}
 
@@ -469,8 +494,10 @@ public class TableViewerSWTBuilder {
 				tooltipText,
 				new StaticCellLabelProviderFactory(labelProvider),
 				editingSupport,
-				null));
+				null,
+				columnData));
 
+		columnData = new HashMap<String, Object>();
 		return this;
 	}
 
@@ -501,8 +528,10 @@ public class TableViewerSWTBuilder {
 				Observables.constantObservableValue(tooltipText, String.class),
 				new StaticCellLabelProviderFactory(labelProvider),
 				editingSupport,
-				null));
+				null,
+				columnData));
 
+		columnData = new HashMap<String, Object>();
 		return this;
 	}
 
@@ -542,8 +571,10 @@ public class TableViewerSWTBuilder {
 				tooltipText,
 				new StaticCellLabelProviderFactory(labelProvider),
 				null,
-				null));
+				null,
+				columnData));
 
+		columnData = new HashMap<String, Object>();
 		return this;
 	}
 
@@ -583,8 +614,10 @@ public class TableViewerSWTBuilder {
 				Observables.constantObservableValue(tooltipText, String.class),
 				new StaticCellLabelProviderFactory(labelProvider),
 				null,
-				null));
+				null,
+				columnData));
 
+		columnData = new HashMap<String, Object>();
 		return this;
 	}
 
@@ -613,8 +646,10 @@ public class TableViewerSWTBuilder {
 				tooltipText,
 				new StaticCellLabelProviderFactory(labelProvider),
 				null,
-				null));
+				null,
+				columnData));
 
+		columnData = new HashMap<String, Object>();
 		return this;
 	}
 
@@ -643,8 +678,10 @@ public class TableViewerSWTBuilder {
 				Observables.constantObservableValue(tooltipText, String.class),
 				new StaticCellLabelProviderFactory(labelProvider),
 				null,
-				null));
+				null,
+				columnData));
 
+		columnData = new HashMap<String, Object>();
 		return this;
 	}
 

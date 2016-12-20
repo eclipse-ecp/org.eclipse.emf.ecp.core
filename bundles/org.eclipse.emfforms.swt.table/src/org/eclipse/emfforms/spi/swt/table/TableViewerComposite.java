@@ -127,17 +127,20 @@ public class TableViewerComposite extends AbstractTableViewerComposite {
 	}
 
 	@Override
+	// TODO: refactor (ms)
 	protected ViewerColumn createColumn(ColumnDescription columnDescription,
 		EMFDataBindingContext emfDataBindingContext, AbstractTableViewer tableViewer) {
 		final TableViewerColumnBuilder builder = TableViewerColumnBuilder
 			.create();
 
-		final TableViewerColumn column = builder.setData(RESIZABLE, columnDescription.isResizeable())
+		final TableViewerColumn column = builder
+			.setData(columnDescription.getData())
+			.setData(RESIZABLE, columnDescription.isResizeable())
 			.setMoveable(columnDescription.isMoveable())
 			.setStyle(columnDescription.getStyleBits())
 			.setData(WEIGHT, columnDescription.getWeight())
 			.setData(MIN_WIDTH, columnDescription.getMinWidth())
-			.build((TableViewer) getTableViewer());
+			.build(getTableViewer());
 
 		/* bind text and tooltip */
 		final IObservableValue text = columnDescription.getColumnText();

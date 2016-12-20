@@ -17,8 +17,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.Status;
@@ -36,8 +39,10 @@ import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecp.ide.editor.view.ViewEditorPart;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.ecp.view.model.internal.preview.Activator;
+import org.eclipse.emf.ecp.view.model.internal.preview.ManageAdditionalViewsDialog;
 import org.eclipse.emf.ecp.view.model.internal.preview.Messages;
 import org.eclipse.emf.ecp.view.model.preview.common.Preview;
+import org.eclipse.emf.ecp.view.model.preview.common.PreviewWorkspaceViewProvider;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -54,6 +59,7 @@ import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.ControlEvent;
@@ -84,6 +90,9 @@ import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /** The {@link ViewPart} containing a rendered version a {@link VView}. */
 public class PreviewView extends ViewPart implements ISelectionListener {
@@ -122,7 +131,7 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 					preView.registerForViewModelChanges();
 				}
 			} else if (NEW_EDITOR_CONSTANT
-				.equals(partRef.getPart(true) != null ? partRef.getPart(true).getClass().getName() : "")) {
+				.equals(partRef.getPart(true) != null ? partRef.getPart(true).getClass().getName() : "")) { //$NON-NLS-1$
 				final ViewModelEditor part = (ViewModelEditor) partRef.getPart(true);
 				if (part.getView() != view) {
 					setView(part.getView());
@@ -149,7 +158,7 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 				preView.removeView();
 				view = null;
 			} else if (NEW_EDITOR_CONSTANT
-				.equals(partRef.getPart(true) != null ? partRef.getPart(true).getClass().getName() : "")) {
+				.equals(partRef.getPart(true) != null ? partRef.getPart(true).getClass().getName() : "")) { //$NON-NLS-1$
 				if (updateAutomatic) {
 					preView.clear();
 				}
@@ -165,7 +174,7 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 			if (ViewEditorPart.class.isInstance(part) || PreviewView.class.isInstance(part)) {
 				removeAdapters();
 			} else if (NEW_EDITOR_CONSTANT
-				.equals(partRef.getPart(true) != null ? partRef.getPart(true).getClass().getName() : "")
+				.equals(partRef.getPart(true) != null ? partRef.getPart(true).getClass().getName() : "") //$NON-NLS-1$
 				|| PreviewView.class.isInstance(part)) {
 				removeAdapters();
 			}
@@ -216,6 +225,11 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 	private Action cleanDataButton;
 	private Action exportDataButton;
 
+	private final Set<IPath> knownViews = new LinkedHashSet<IPath>();
+	private BundleContext bundleContext;
+	private ServiceReference<PreviewWorkspaceViewProvider> previewViewProviderServiceRef;
+	private PreviewWorkspaceViewProvider workspaceViewProvider;
+
 	/** The constructor. */
 	public PreviewView() {
 		super();
@@ -236,11 +250,21 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 		titleColor.dispose();
 		titleFont.dispose();
 		headerBgColor.dispose();
+		for (final IPath path : knownViews) {
+			workspaceViewProvider.removeViewModel(path);
+		}
+		knownViews.clear();
+		workspaceViewProvider = null;
+		bundleContext.ungetService(previewViewProviderServiceRef);
 	}
 
 	@Override
 	public void createPartControl(Composite parent) {
 		this.parent = parent;
+		bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
+		previewViewProviderServiceRef = bundleContext.getServiceReference(PreviewWorkspaceViewProvider.class);
+		workspaceViewProvider = bundleContext.getService(previewViewProviderServiceRef);
+
 		/* The container composite */
 		form = new Composite(parent, SWT.BORDER);
 		form.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
@@ -296,7 +320,7 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 					final ViewEditorPart viewPart = (ViewEditorPart) part;
 					setView(viewPart.getView());
 					render(view);
-				} else if (NEW_EDITOR_CONSTANT.equals(part != null ? part.getClass().getName() : "")) {
+				} else if (NEW_EDITOR_CONSTANT.equals(part != null ? part.getClass().getName() : "")) { //$NON-NLS-1$
 					final ViewModelEditor viewPart = (ViewModelEditor) part;
 					setView(viewPart.getView());
 					render(view);
@@ -368,9 +392,11 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 		titleFont = new Font(title.getDisplay(), getDefaultFontName(title), 12, SWT.BOLD);
 		title.setFont(titleFont);
 		title.setForeground(getTitleColor());
+		final int titleHeight = title.computeSize(SWT.DEFAULT, SWT.DEFAULT).y;
 		final FormData titleData = new FormData();
-		title.setLayoutData(titleData);
 		titleData.left = new FormAttachment(titleImage, 5, SWT.DEFAULT);
+		titleData.top = new FormAttachment(50, -titleHeight / 2);
+		title.setLayoutData(titleData);
 
 		return header;
 	}
@@ -398,8 +424,49 @@ public class PreviewView extends ViewPart implements ISelectionListener {
 		addSampleDataButtons(toolBarManager);
 		toolBarManager.add(new Separator());
 		addRefreshButtons(toolBarManager);
-
+		toolBarManager.add(new Separator());
+		additionalViewsButtons(toolBarManager);
 		toolBarManager.update(true);
+	}
+
+	private void additionalViewsButtons(IToolBarManager toolBarManager) {
+		final Action manageAdditionalViews = new Action() {
+			@Override
+			public void run() {
+				super.run();
+				openAdditionalViewsDialog();
+			}
+		};
+		manageAdditionalViews.setText(Messages.PreviewView_AdditionalViews);
+		final String exportDataImagePath = "icons/manageViews.png";//$NON-NLS-1$
+		manageAdditionalViews.setImageDescriptor(ImageDescriptor.createFromURL(Activator.getDefault()
+			.getBundle().getResource(exportDataImagePath)));
+		toolBarManager.add(manageAdditionalViews);
+	}
+
+	private void openAdditionalViewsDialog() {
+		final Set<IPath> input = new LinkedHashSet<IPath>(knownViews);
+		final ManageAdditionalViewsDialog d = new ManageAdditionalViewsDialog(getSite().getShell(), input);
+		final int result = d.open();
+		if (result == Window.OK) {
+			// add views
+			final Set<IPath> viewsToAdd = new LinkedHashSet<IPath>(input);
+			viewsToAdd.removeAll(knownViews);
+			for (final IPath path : viewsToAdd) {
+				knownViews.add(path);
+				workspaceViewProvider.addViewModel(path);
+			}
+			// remove views
+			final Set<IPath> viewsToRemove = new LinkedHashSet<IPath>(knownViews);
+			viewsToRemove.removeAll(input);
+			for (final IPath path : viewsToRemove) {
+				knownViews.remove(path);
+				workspaceViewProvider.removeViewModel(path);
+			}
+
+			render();
+		}
+
 	}
 
 	/**

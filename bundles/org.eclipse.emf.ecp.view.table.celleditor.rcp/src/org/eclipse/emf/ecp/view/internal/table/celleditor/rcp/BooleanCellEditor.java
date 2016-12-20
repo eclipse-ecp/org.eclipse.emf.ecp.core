@@ -11,6 +11,9 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.table.celleditor.rcp;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.Diffs;
@@ -21,6 +24,7 @@ import org.eclipse.core.runtime.Assert;
 import org.eclipse.emf.databinding.EMFUpdateValueStrategy;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor;
+import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCustomUpdateCellEditor;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.table.celleditor.rcp.NativeWidgetHelper;
 import org.eclipse.emf.ecp.view.spi.table.celleditor.rcp.NativeWidgetHelper.CheckBoxState;
@@ -28,9 +32,11 @@ import org.eclipse.jface.databinding.swt.WidgetValueProperty;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
 import org.eclipse.jface.viewers.ICellEditorListener;
+import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Widget;
 
 /**
  * Cell editor for boolean values.
@@ -38,7 +44,7 @@ import org.eclipse.swt.widgets.Control;
  * @author jfaltermeier
  *
  */
-public class BooleanCellEditor extends CellEditor implements ECPCellEditor {
+public class BooleanCellEditor extends CellEditor implements ECPCellEditor, ECPCustomUpdateCellEditor {
 
 	private boolean editable;
 	private final Composite parent;
@@ -217,6 +223,48 @@ public class BooleanCellEditor extends CellEditor implements ECPCellEditor {
 		if (activationEvent.eventType != ColumnViewerEditorActivationEvent.TRAVERSAL) {
 			super.activate(activationEvent);
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCustomUpdateCellEditor#updateCell(org.eclipse.jface.viewers.ViewerCell,
+	 *      java.lang.Object)
+	 */
+	@Override
+	public void updateCell(ViewerCell cell, Object value) {
+		cell.setText(""); //$NON-NLS-1$
+		cell.setImage(getImage(value));
+		setCopyTextMarker(cell, value);
+	}
+
+	/**
+	 * Sets the copy text marker for the given {@code cell} and {@code value}.
+	 * @param cell the {@link ViewerCell}.
+	 * @param value the {@link Object} value.
+	 */
+	protected void setCopyTextMarker(ViewerCell cell, Object value) {
+		if (value != null) {
+			final Widget item = cell.getItem();
+			final Map<Integer, String> copyMap = getCopyMap(item);
+			copyMap.put(cell.getColumnIndex(), value.toString());
+		}
+	}
+
+	/**
+	 * Get the copy map of the given {@code widget}. If it does not exist it will be created.
+	 *
+	 * @param widget the {@link Widget} to check.
+	 * @return the copy map.
+	 */
+	protected Map<Integer, String> getCopyMap(Widget widget) {
+		@SuppressWarnings("unchecked")
+		Map<Integer, String> copyMap = (Map<Integer, String>) widget.getData(ECPCellEditor.COPY_STRING_ALTERNATIVE);
+		if (copyMap == null) {
+			copyMap = new HashMap<Integer, String>();
+			widget.setData(ECPCellEditor.COPY_STRING_ALTERNATIVE, copyMap);
+		}
+		return copyMap;
 	}
 
 	/**

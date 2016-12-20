@@ -59,6 +59,7 @@ public class LeafConditionItemProvider extends ConditionItemProvider {
 			super.getPropertyDescriptors(object);
 
 			addExpectedValuePropertyDescriptor(object);
+			addCompareTypePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -80,6 +81,31 @@ public class LeafConditionItemProvider extends ConditionItemProvider {
 				getString(
 					"_UI_PropertyDescriptor_description", "_UI_LeafCondition_expectedValue_feature", "_UI_LeafCondition_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				RulePackage.Literals.LEAF_CONDITION__EXPECTED_VALUE,
+				true,
+				false,
+				false,
+				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				null,
+				null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Compare Type feature.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.11
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected void addCompareTypePropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_LeafCondition_compareType_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_LeafCondition_compareType_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_LeafCondition_type"), //$NON-NLS-1$
+				RulePackage.Literals.LEAF_CONDITION__COMPARE_TYPE,
 				true,
 				false,
 				false,
@@ -167,6 +193,7 @@ public class LeafConditionItemProvider extends ConditionItemProvider {
 		switch (notification.getFeatureID(LeafCondition.class))
 		{
 		case RulePackage.LEAF_CONDITION__EXPECTED_VALUE:
+		case RulePackage.LEAF_CONDITION__COMPARE_TYPE:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
 		case RulePackage.LEAF_CONDITION__DOMAIN_MODEL_REFERENCE:

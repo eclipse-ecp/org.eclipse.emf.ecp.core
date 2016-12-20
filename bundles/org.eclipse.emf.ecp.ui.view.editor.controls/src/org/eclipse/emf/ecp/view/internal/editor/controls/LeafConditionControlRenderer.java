@@ -125,13 +125,15 @@ public class LeafConditionControlRenderer extends ExpectedValueControlRenderer {
 
 		final Object object = getSelectedObject((EAttribute) structuralFeature);
 
-		if (object != null) {
-			final EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(condition);
-			editingDomain.getCommandStack().execute(
-				SetCommand.create(editingDomain, condition,
-					RulePackage.eINSTANCE.getLeafCondition_ExpectedValue(), object));
+		final EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(condition);
+		editingDomain.getCommandStack().execute(
+			SetCommand.create(editingDomain, condition,
+				RulePackage.eINSTANCE.getLeafCondition_ExpectedValue(), object));
 
+		if (object != null) {
 			control.setText(object.toString());
+		} else {
+			control.setText("null"); //$NON-NLS-1$
 		}
 	}
 }

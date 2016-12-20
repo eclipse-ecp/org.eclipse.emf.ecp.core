@@ -13,6 +13,7 @@
 package org.eclipse.emfforms.spi.swt.table;
 
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emfforms.common.Optional;
@@ -138,6 +139,28 @@ public interface TableViewerSWTCustomization
 		 * @return the column image, if present
 		 */
 		Optional<Image> getColumnImage();
+
+		/**
+		 * Get an arbitrary element from the data map.
+		 *
+		 * @param key (see constants)
+		 * @return object
+		 */
+		Object getData(String key);
+
+		/**
+		 * Add the contents of the given map to the data map.
+		 * 
+		 * @param data object
+		 */
+		void setData(Map<String, Object> data);
+
+		/**
+		 * Get the underlying data map.
+		 *
+		 * @return data map object
+		 */
+		Map<String, Object> getData();
 
 	}
 

@@ -38,6 +38,8 @@ public final class TreeMasterDetailSWTBuilder {
 	private final Object input;
 	private final DefaultTreeMasterDetailCustomization behaviour;
 
+	private int renderDelay;
+
 	/**
 	 * Default constructor.
 	 *
@@ -50,6 +52,7 @@ public final class TreeMasterDetailSWTBuilder {
 		this.swtStyleBits = swtStyleBits;
 		this.input = input;
 		behaviour = new DefaultTreeMasterDetailCustomization();
+		renderDelay = 100;
 	}
 
 	/**
@@ -321,13 +324,26 @@ public final class TreeMasterDetailSWTBuilder {
 	}
 
 	/**
+	 * Use this method to specify the time between a detected selection change and updating the detail panel. The
+	 * default is 100ms.
+	 *
+	 * @param updateDelay the new update delay in ms
+	 * @return self
+	 * @since 1.11
+	 */
+	public TreeMasterDetailSWTBuilder customizeUpdateDelay(int updateDelay) {
+		renderDelay = updateDelay;
+		return this;
+	}
+
+	/**
 	 * Call this method after all desired customizations have been passed to the builder. The will create a new
 	 * {@link TreeMasterDetailComposite} with the desired customizations.
 	 *
 	 * @return the {@link TreeMasterDetailComposite}
 	 */
 	public TreeMasterDetailComposite create() {
-		return new TreeMasterDetailComposite(composite, swtStyleBits, input, behaviour);
+		return new TreeMasterDetailComposite(composite, swtStyleBits, input, behaviour, renderDelay);
 	}
 
 }
