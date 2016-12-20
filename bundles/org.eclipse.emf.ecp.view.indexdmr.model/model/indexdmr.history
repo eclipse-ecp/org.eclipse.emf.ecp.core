@@ -74,9 +74,26 @@
       <changes xsi:type="history:Set" xmi:id="_0dySXEnEEeawb9Y2qIoBjw" featureName="lowerBound" dataValue="1" oldDataValue="0">
         <element href="indexdmr.ecore#//IndexDomainModelReference/targetDMR"/>
       </changes>
+      <changes xsi:type="history:Create" xmi:id="_0dxrSknEEexcx9Y2qIoBjw" referenceName="eStructuralFeatures">
+        <target href="indexdmr.ecore#//IndexDomainModelReference"/>
+        <element href="indexdmr.ecore#//IndexDomainModelReference/prefixDMR"/>
+        <changes xsi:type="history:Set" xmi:id="_0dxrS0nEEexcx9Y2qIoBjw" featureName="name" dataValue="prefixDMR">
+          <element href="indexdmr.ecore#//IndexDomainModelReference/prefixDMR"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_0dySUEnEEexcx9Y2qIoBjw" featureName="containment" dataValue="true" oldDataValue="false">
+          <element href="indexdmr.ecore#//IndexDomainModelReference/prefixDMR"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_0dySUUnEEexcx9Y2qIoBjw" featureName="eType">
+          <element href="indexdmr.ecore#//IndexDomainModelReference/prefixDMR"/>
+          <referenceValue href="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_0dySXEnEEexcx9Y2qIoBjw" featureName="lowerBound" dataValue="1" oldDataValue="0">
+          <element href="indexdmr.ecore#//IndexDomainModelReference/prefixDMR"/>
+        </changes>
+      </changes>
     </changes>
   </releases>
-  <releases xmi:id="_0dySXUnEEeawb9Y2qIoBjw">
+  <releases xmi:id="_0dySXUnEEeawb9Y2qIoBjw" date="2016-12-14T17:47:16.973+0100" label="200">
     <changes xsi:type="history:OperationChange" xmi:id="_lIAwQEnGEeawb9Y2qIoBjw">
       <changes xsi:type="history:Create" xmi:id="_lIAwQUnGEeawb9Y2qIoBjw" referenceName="eClassifiers">
         <target href="indexdmr.ecore#/"/>
@@ -145,5 +162,9 @@
         </parameters>
       </operation>
     </changes>
+    <changes xsi:type="history:Set" xmi:id="_3QJYEMIcEeaf2rZFPfIFdA" featureName="nsURI" dataValue="http://www/eclipse/org/emf/ecp/view/indexdmr/model/200" oldDataValue="http://www.eclipse.org/emf/ecp/view/indexdmr/model">
+      <element href="indexdmr.ecore#/"/>
+    </changes>
   </releases>
+  <releases xmi:id="_-MI50MIcEeaf2rZFPfIFdA"/>
 </history:History>

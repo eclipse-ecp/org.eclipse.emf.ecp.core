@@ -39,12 +39,11 @@ public interface VIndexDomainModelReference extends VFeaturePathDomainModelRefer
 	 * Returns the value of the '<em><b>Prefix DMR</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Prefix DMR</em>' containment reference isn't clear, there really should be more of a
-	 * description here...
+	 * If the meaning of the '<em>Prefix DMR</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
 	 * </p>
+	 * <!-- end-user-doc -->
 	 *
-	 * @since 1.6
-	 *        <!-- end-user-doc -->
 	 * @return the value of the '<em>Prefix DMR</em>' containment reference.
 	 * @see #setPrefixDMR(VDomainModelReference)
 	 * @see org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexdmrPackage#getIndexDomainModelReference_PrefixDMR()
@@ -57,9 +56,8 @@ public interface VIndexDomainModelReference extends VFeaturePathDomainModelRefer
 	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference#getPrefixDMR
 	 * <em>Prefix DMR</em>}' containment reference.
 	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 *
-	 * @since 1.6
-	 *        <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Prefix DMR</em>' containment reference.
 	 * @see #getPrefixDMR()
 	 * @generated
@@ -67,40 +65,11 @@ public interface VIndexDomainModelReference extends VFeaturePathDomainModelRefer
 	void setPrefixDMR(VDomainModelReference value);
 
 	/**
-	 * Returns the value of the '<em><b>Target DMR</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Target DMR</em>' containment reference isn't clear, there really should be more of a
-	 * description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 *
-	 * @return the value of the '<em>Target DMR</em>' containment reference.
-	 * @see #setTargetDMR(VDomainModelReference)
-	 * @see org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexdmrPackage#getIndexDomainModelReference_TargetDMR()
-	 * @model containment="true" required="true"
-	 * @generated
-	 */
-	VDomainModelReference getTargetDMR();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference#getTargetDMR
-	 * <em>Target DMR</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @param value the new value of the '<em>Target DMR</em>' containment reference.
-	 * @see #getTargetDMR()
-	 * @generated
-	 */
-	void setTargetDMR(VDomainModelReference value);
-
-	/**
 	 * Returns the value of the '<em><b>Index</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Index</em>' attribute isn't clear, there really should be more of a description
-	 * here...
+	 * If the meaning of the '<em>Index</em>' attribute isn't clear,
+	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
 	 *
@@ -123,5 +92,34 @@ public interface VIndexDomainModelReference extends VFeaturePathDomainModelRefer
 	 * @generated
 	 */
 	void setIndex(int value);
+
+	/**
+	 * Returns the value of the '<em><b>Target DMR</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Target DMR</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the value of the '<em>Target DMR</em>' containment reference.
+	 * @see #setTargetDMR(VDomainModelReference)
+	 * @see org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexdmrPackage#getIndexDomainModelReference_TargetDMR()
+	 * @model containment="true" required="true"
+	 * @generated
+	 */
+	VDomainModelReference getTargetDMR();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference#getTargetDMR
+	 * <em>Target DMR</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @param value the new value of the '<em>Target DMR</em>' containment reference.
+	 * @see #getTargetDMR()
+	 * @generated
+	 */
+	void setTargetDMR(VDomainModelReference value);
 
 } // VIndexDomainModelReference

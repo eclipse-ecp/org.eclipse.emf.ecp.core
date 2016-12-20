@@ -107,6 +107,33 @@ public class IndexdmrItemProviderAdapterFactory extends IndexdmrAdapterFactory
 
 	/**
 	 * This keeps track of the one adapter used for all
+	 * {@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReferenceSegment} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected IndexDomainModelReferenceSegmentItemProvider indexDomainModelReferenceSegmentItemProvider;
+
+	/**
+	 * This creates an adapter for a
+	 * {@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReferenceSegment}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public Adapter createIndexDomainModelReferenceSegmentAdapter() {
+		if (indexDomainModelReferenceSegmentItemProvider == null) {
+			indexDomainModelReferenceSegmentItemProvider = new IndexDomainModelReferenceSegmentItemProvider(this);
+		}
+
+		return indexDomainModelReferenceSegmentItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all
 	 * {@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -117,14 +144,14 @@ public class IndexdmrItemProviderAdapterFactory extends IndexdmrAdapterFactory
 
 	/**
 	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference}.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
 	@Override
 	public Adapter createIndexDomainModelReferenceAdapter() {
-		if (indexDomainModelReferenceItemProvider == null)
-		{
+		if (indexDomainModelReferenceItemProvider == null) {
 			indexDomainModelReferenceItemProvider = new IndexDomainModelReferenceItemProvider(this);
 		}
 
@@ -182,11 +209,9 @@ public class IndexdmrItemProviderAdapterFactory extends IndexdmrAdapterFactory
 	 */
 	@Override
 	public Object adapt(Object object, Object type) {
-		if (isFactoryForType(type))
-		{
+		if (isFactoryForType(type)) {
 			final Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter))
-			{
+			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter)) {
 				return adapter;
 			}
 		}
@@ -257,8 +282,7 @@ public class IndexdmrItemProviderAdapterFactory extends IndexdmrAdapterFactory
 	public void fireNotifyChanged(Notification notification) {
 		changeNotifier.fireNotifyChanged(notification);
 
-		if (parentAdapterFactory != null)
-		{
+		if (parentAdapterFactory != null) {
 			parentAdapterFactory.fireNotifyChanged(notification);
 		}
 	}
@@ -271,22 +295,26 @@ public class IndexdmrItemProviderAdapterFactory extends IndexdmrAdapterFactory
 	 */
 	@Override
 	public void dispose() {
+		if (indexDomainModelReferenceSegmentItemProvider != null) {
+			indexDomainModelReferenceSegmentItemProvider.dispose();
+		}
 		if (indexDomainModelReferenceItemProvider != null) {
 			indexDomainModelReferenceItemProvider.dispose();
 		}
 	}
 
 	/**
-	 * A child creation extender for the {@link VViewPackage}. <!--
-	 * begin-user-doc --> <!-- end-user-doc -->
+	 * A child creation extender for the {@link VViewPackage}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
-	public static class ViewChildCreationExtender implements
-		IChildCreationExtender {
+	public static class ViewChildCreationExtender implements IChildCreationExtender {
 		/**
 		 * The switch for creating child descriptors specific to each extended class.
-		 * <!-- begin-user-doc --> <!-- end-user-doc -->
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
 		 *
 		 * @generated
 		 */
@@ -302,8 +330,8 @@ public class IndexdmrItemProviderAdapterFactory extends IndexdmrAdapterFactory
 
 			/**
 			 * The domain in which to create the children.
-			 * <!-- begin-user-doc
-			 * --> <!-- end-user-doc -->
+			 * <!-- begin-user-doc -->
+			 * <!-- end-user-doc -->
 			 *
 			 * @generated
 			 */
@@ -311,58 +339,58 @@ public class IndexdmrItemProviderAdapterFactory extends IndexdmrAdapterFactory
 
 			/**
 			 * Creates the a switch for populating child descriptors in the given domain.
-			 * <!-- begin-user-doc --> <!-- end-user-doc -->
+			 * <!-- begin-user-doc -->
+			 * <!-- end-user-doc -->
 			 *
 			 * @generated
 			 */
-			CreationSwitch(List<Object> newChildDescriptors,
-				EditingDomain editingDomain) {
+			CreationSwitch(List<Object> newChildDescriptors, EditingDomain editingDomain) {
 				this.newChildDescriptors = newChildDescriptors;
 				this.editingDomain = editingDomain;
 			}
 
 			/**
-			 * <!-- begin-user-doc --> <!-- end-user-doc -->
+			 * <!-- begin-user-doc -->
+			 * <!-- end-user-doc -->
 			 *
 			 * @generated
 			 */
 			@Override
 			public Object caseControl(VControl object) {
-				newChildDescriptors.add
-					(createChildParameter
-					(VViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCE,
-						VIndexdmrFactory.eINSTANCE.createIndexDomainModelReference()));
+				newChildDescriptors.add(createChildParameter(VViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCE,
+					VIndexdmrFactory.eINSTANCE.createIndexDomainModelReference()));
 
 				return null;
 			}
 
 			/**
-			 * <!-- begin-user-doc --> <!-- end-user-doc -->
+			 * <!-- begin-user-doc -->
+			 * <!-- end-user-doc -->
 			 *
 			 * @generated
 			 */
-			protected CommandParameter createChildParameter(Object feature,
-				Object child) {
+			protected CommandParameter createChildParameter(Object feature, Object child) {
 				return new CommandParameter(null, feature, child);
 			}
 
 		}
 
 		/**
-		 * <!-- begin-user-doc --> <!-- end-user-doc -->
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
 		 *
 		 * @generated
 		 */
 		@Override
-		public Collection<Object> getNewChildDescriptors(Object object,
-			EditingDomain editingDomain) {
+		public Collection<Object> getNewChildDescriptors(Object object, EditingDomain editingDomain) {
 			final ArrayList<Object> result = new ArrayList<Object>();
 			new CreationSwitch(result, editingDomain).doSwitch((EObject) object);
 			return result;
 		}
 
 		/**
-		 * <!-- begin-user-doc --> <!-- end-user-doc -->
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
 		 *
 		 * @generated
 		 */

@@ -38,7 +38,7 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 	 *
 	 * @generated
 	 */
-	private EClass indexDomainModelReferenceEClass = null;
+	private EClass indexDomainModelReferenceSegmentEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -46,7 +46,7 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 	 *
 	 * @generated
 	 */
-	private EClass indexDomainModelReferenceSegmentEClass = null;
+	private EClass indexDomainModelReferenceEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
@@ -133,39 +133,6 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 	 * @generated
 	 */
 	@Override
-	public EClass getIndexDomainModelReference() {
-		return indexDomainModelReferenceEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	@Override
-	public EReference getIndexDomainModelReference_PrefixDMR() {
-		return (EReference) indexDomainModelReferenceEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	@Override
-	public EReference getIndexDomainModelReference_TargetDMR() {
-		return (EReference) indexDomainModelReferenceEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 */
-	@Override
 	public EClass getIndexDomainModelReferenceSegment() {
 		return indexDomainModelReferenceSegmentEClass;
 	}
@@ -188,8 +155,41 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 	 * @generated
 	 */
 	@Override
+	public EClass getIndexDomainModelReference() {
+		return indexDomainModelReferenceEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EReference getIndexDomainModelReference_PrefixDMR() {
+		return (EReference) indexDomainModelReferenceEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
 	public EAttribute getIndexDomainModelReference_Index() {
 		return (EAttribute) indexDomainModelReferenceEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EReference getIndexDomainModelReference_TargetDMR() {
+		return (EReference) indexDomainModelReferenceEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -226,13 +226,13 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 		isCreated = true;
 
 		// Create classes and their features
+		indexDomainModelReferenceSegmentEClass = createEClass(INDEX_DOMAIN_MODEL_REFERENCE_SEGMENT);
+		createEAttribute(indexDomainModelReferenceSegmentEClass, INDEX_DOMAIN_MODEL_REFERENCE_SEGMENT__INDEX);
+
 		indexDomainModelReferenceEClass = createEClass(INDEX_DOMAIN_MODEL_REFERENCE);
 		createEReference(indexDomainModelReferenceEClass, INDEX_DOMAIN_MODEL_REFERENCE__PREFIX_DMR);
 		createEAttribute(indexDomainModelReferenceEClass, INDEX_DOMAIN_MODEL_REFERENCE__INDEX);
 		createEReference(indexDomainModelReferenceEClass, INDEX_DOMAIN_MODEL_REFERENCE__TARGET_DMR);
-
-		indexDomainModelReferenceSegmentEClass = createEClass(INDEX_DOMAIN_MODEL_REFERENCE_SEGMENT);
-		createEAttribute(indexDomainModelReferenceSegmentEClass, INDEX_DOMAIN_MODEL_REFERENCE_SEGMENT__INDEX);
 	}
 
 	/**
@@ -270,11 +270,17 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		indexDomainModelReferenceEClass.getESuperTypes().add(theViewPackage.getFeaturePathDomainModelReference());
 		indexDomainModelReferenceSegmentEClass.getESuperTypes()
 			.add(theViewPackage.getFeatureDomainModelReferenceSegment());
+		indexDomainModelReferenceEClass.getESuperTypes().add(theViewPackage.getFeaturePathDomainModelReference());
 
 		// Initialize classes and features; add operations and parameters
+		initEClass(indexDomainModelReferenceSegmentEClass, VIndexDomainModelReferenceSegment.class,
+			"IndexDomainModelReferenceSegment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(getIndexDomainModelReferenceSegment_Index(), ecorePackage.getEInt(), "index", null, 0, 1, //$NON-NLS-1$
+			VIndexDomainModelReferenceSegment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
+			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
 		initEClass(indexDomainModelReferenceEClass, VIndexDomainModelReference.class, "IndexDomainModelReference", //$NON-NLS-1$
 			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getIndexDomainModelReference_PrefixDMR(), theViewPackage.getDomainModelReference(), null,
@@ -286,12 +292,6 @@ public class VIndexdmrPackageImpl extends EPackageImpl implements VIndexdmrPacka
 		initEReference(getIndexDomainModelReference_TargetDMR(), theViewPackage.getDomainModelReference(), null,
 			"targetDMR", null, 1, 1, VIndexDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
 			IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(indexDomainModelReferenceSegmentEClass, VIndexDomainModelReferenceSegment.class,
-			"IndexDomainModelReferenceSegment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(getIndexDomainModelReferenceSegment_Index(), ecorePackage.getEInt(), "index", null, 0, 1, //$NON-NLS-1$
-			VIndexDomainModelReferenceSegment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
-			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

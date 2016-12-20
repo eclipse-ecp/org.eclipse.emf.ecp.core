@@ -33,6 +33,17 @@ public interface VIndexdmrFactory extends EFactory {
 	VIndexdmrFactory eINSTANCE = org.eclipse.emf.ecp.view.spi.indexdmr.model.impl.VIndexdmrFactoryImpl.init();
 
 	/**
+	 * Returns a new object of class '<em>Index Domain Model Reference Segment</em>'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 2.0
+	 *        <!-- end-user-doc -->
+	 * @return a new object of class '<em>Index Domain Model Reference Segment</em>'.
+	 * @generated
+	 */
+	VIndexDomainModelReferenceSegment createIndexDomainModelReferenceSegment();
+
+	/**
 	 * Returns a new object of class '<em>Index Domain Model Reference</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -41,17 +52,6 @@ public interface VIndexdmrFactory extends EFactory {
 	 * @generated
 	 */
 	VIndexDomainModelReference createIndexDomainModelReference();
-
-	/**
-	 * Returns a new object of class '<em>Index Domain Model Reference Segment</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @return a new object of class '<em>Index Domain Model Reference Segment</em>'.
-	 * @generated
-	 * @since 2.0
-	 */
-	VIndexDomainModelReferenceSegment createIndexDomainModelReferenceSegment();
 
 	/**
 	 * Returns the package supported by this factory.

@@ -74,7 +74,6 @@ public class ElementItemProvider
 			addVisiblePropertyDescriptor(object);
 			addEnabledPropertyDescriptor(object);
 			addReadonlyPropertyDescriptor(object);
-			addLabelPropertyDescriptor(object);
 			addUuidPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
@@ -94,29 +93,6 @@ public class ElementItemProvider
 				getString("_UI_Element_name_feature"), //$NON-NLS-1$
 				getString("_UI_PropertyDescriptor_description", "_UI_Element_name_feature", "_UI_Element_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				VViewPackage.Literals.ELEMENT__NAME,
-				true,
-				false,
-				false,
-				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				null,
-				null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Label feature.
-	 * <!-- begin-user-doc -->
-	 *
-	 * @since 1.6
-	 *        <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addLabelPropertyDescriptor(Object object) {
-		itemPropertyDescriptors
-			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
-				getResourceLocator(),
-				getString("_UI_Element_label_feature"), //$NON-NLS-1$
-				getString("_UI_PropertyDescriptor_description", "_UI_Element_label_feature", "_UI_Element_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				VViewPackage.Literals.ELEMENT__LABEL,
 				true,
 				false,
 				false,

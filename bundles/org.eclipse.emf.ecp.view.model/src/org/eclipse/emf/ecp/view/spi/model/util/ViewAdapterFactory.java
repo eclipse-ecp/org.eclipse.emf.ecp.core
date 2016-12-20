@@ -109,11 +109,6 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 		}
 
 		@Override
-		public Adapter caseFeaturePathDomainModelReference(VFeaturePathDomainModelReference object) {
-			return createFeaturePathDomainModelReferenceAdapter();
-		}
-
-		@Override
 		public Adapter caseElement(VElement object) {
 			return createElementAdapter();
 		}
@@ -171,6 +166,11 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 		@Override
 		public Adapter caseFeatureDomainModelReferenceSegment(VFeatureDomainModelReferenceSegment object) {
 			return createFeatureDomainModelReferenceSegmentAdapter();
+		}
+
+		@Override
+		public Adapter caseFeaturePathDomainModelReference(VFeaturePathDomainModelReference object) {
+			return createFeaturePathDomainModelReferenceAdapter();
 		}
 
 		@Override
@@ -360,6 +360,23 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference <em>Feature Path Domain Model
+	 * Reference</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference
+	 * @generated
+	 */
+	public Adapter createFeaturePathDomainModelReferenceAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>String To Object Map Entry</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -421,23 +438,6 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createDomainModelReferenceAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class
-	 * '{@link org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference <em>Feature Path Domain Model
-	 * Reference</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * 
-	 * @return the new adapter.
-	 * @see org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference
-	 * @generated
-	 */
-	public Adapter createFeaturePathDomainModelReferenceAdapter() {
 		return null;
 	}
 

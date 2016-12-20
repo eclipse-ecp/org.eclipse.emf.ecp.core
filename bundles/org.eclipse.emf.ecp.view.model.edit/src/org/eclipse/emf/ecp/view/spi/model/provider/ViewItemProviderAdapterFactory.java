@@ -488,8 +488,6 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 			diagnosticItemProvider.dispose();
 		if (domainModelReferenceItemProvider != null)
 			domainModelReferenceItemProvider.dispose();
-		if (featurePathDomainModelReferenceItemProvider != null)
-			featurePathDomainModelReferenceItemProvider.dispose();
 		if (viewItemProvider != null)
 			viewItemProvider.dispose();
 		if (controlItemProvider != null)
@@ -502,6 +500,8 @@ public class ViewItemProviderAdapterFactory extends ViewAdapterFactory implement
 			dateTimeDisplayAttachmentItemProvider.dispose();
 		if (featureDomainModelReferenceSegmentItemProvider != null)
 			featureDomainModelReferenceSegmentItemProvider.dispose();
+		if (featurePathDomainModelReferenceItemProvider != null)
+			featurePathDomainModelReferenceItemProvider.dispose();
 	}
 
 }

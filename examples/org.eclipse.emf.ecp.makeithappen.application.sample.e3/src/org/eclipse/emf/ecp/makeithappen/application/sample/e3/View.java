@@ -37,7 +37,7 @@ public class View extends ViewPart {
 
 	private EObject getDummyEObject() {
 		// Replace this with your own model EClass to test the application with a custom model
-		final EClass eClass = TaskPackage.eINSTANCE.getUser();
+		final EClass eClass = TaskPackage.eINSTANCE.getTask();
 		return EcoreUtil.create(eClass);
 	}
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/170" xmi:id="_v7PdkEmrEeawb9Y2qIoBjw" name="Fan">
+<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.indexdmr.model="http://www.eclipse.org/emf/ecp/view/indexdmr/model" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/170" xmi:id="_v7PdkEmrEeawb9Y2qIoBjw" name="Fan">
   <rootEClass href="http://org/eclipse/example/bowling#//Fan"/>
   <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_v7fVMEmrEeawb9Y2qIoBjw" name="Control name">
     <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_v7fVMUmrEeawb9Y2qIoBjw">
@@ -10,6 +10,39 @@
     <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_Lc5bwEmsEeawb9Y2qIoBjw">
       <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/example/bowling#//Merchandise/name"/>
       <domainModelEReferencePath href="http://org/eclipse/example/bowling#//Fan/favouriteMerchandise"/>
+    </domainModelReference>
+  </children>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_BDpLEMIgEeaf2rZFPfIFdA" name="NoPrefixDmr">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.indexdmr.model:IndexDomainModelReference" xmi:id="_-ux6AMaUEea-De6iH_DOSA" index="1">
+      <domainModelEFeature xsi:type="ecore:EReference" href="http://org/eclipse/example/bowling#//Fan/visitedTournaments"/>
+      <targetDMR xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_-ux6AcaUEea-De6iH_DOSA">
+        <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/example/bowling#//Tournament/type"/>
+      </targetDMR>
+    </domainModelReference>
+  </children>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_ocK-IMaVEea-De6iH_DOSA" name="PrefixDmr">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.indexdmr.model:IndexDomainModelReference" xmi:id="_uyIaoMaVEea-De6iH_DOSA" index="2">
+      <prefixDMR xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_uyIaocaVEea-De6iH_DOSA">
+        <domainModelEFeature xsi:type="ecore:EReference" href="http://org/eclipse/example/bowling#//Fan/visitedTournaments"/>
+      </prefixDMR>
+      <targetDMR xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_uyIaosaVEea-De6iH_DOSA">
+        <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/example/bowling#//Tournament/type"/>
+      </targetDMR>
+    </domainModelReference>
+  </children>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_kYWp8MbCEea-De6iH_DOSA" name="CascadedTargetDmr">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.indexdmr.model:IndexDomainModelReference" xmi:id="_fYu40MbDEea-De6iH_DOSA" index="1">
+      <prefixDMR xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_fYu40cbDEea-De6iH_DOSA">
+        <domainModelEFeature xsi:type="ecore:EReference" href="http://org/eclipse/example/bowling#//Fan/visitedTournaments"/>
+      </prefixDMR>
+      <targetDMR xsi:type="org.eclipse.emf.ecp.view.indexdmr.model:IndexDomainModelReference" xmi:id="_fYu40sbDEea-De6iH_DOSA" index="2">
+        <prefixDMR xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_fYu408bDEea-De6iH_DOSA">
+          <domainModelEFeature xsi:type="ecore:EReference" href="http://org/eclipse/example/bowling#//Tournament/players"/>
+        </prefixDMR>
+        <targetDMR xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_fYu41MbDEea-De6iH_DOSA">
+          <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/example/bowling#//Player/name"/>
+        </targetDMR>
+      </targetDMR>
     </domainModelReference>
   </children>
 </org.eclipse.emf.ecp.view.model:View>

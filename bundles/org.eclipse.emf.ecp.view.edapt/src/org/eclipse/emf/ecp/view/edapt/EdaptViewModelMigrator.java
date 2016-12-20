@@ -86,9 +86,7 @@ public class EdaptViewModelMigrator implements ViewModelMigrator, StringViewMode
 
 	@Override
 	public boolean checkMigration(final URI resourceURI) {
-		// return checkMigration(getNamespaceURIs(resourceURI));
-		// FIXME activate check again
-		return true;
+		return checkMigration(getNamespaceURIs(resourceURI));
 	}
 
 	private boolean checkMigration(final List<String> nsUris) {
@@ -206,7 +204,7 @@ public class EdaptViewModelMigrator implements ViewModelMigrator, StringViewMode
 	 */
 	private URI saveHistoryFile(final History history) throws IOException {
 		final File historyFile = File.createTempFile("EMFFormsMigration", ".history"); //$NON-NLS-1$//$NON-NLS-2$
-		historyFile.deleteOnExit();
+		// historyFile.deleteOnExit();
 		final URI uri = URI.createFileURI(historyFile.getAbsolutePath());
 		final Resource resource = new ResourceSetImpl().createResource(uri);
 		resource.getContents().add(history);

@@ -33,7 +33,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  *        </ul>
  *
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getControl()
- * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='resolveable'"
+ * @model
  * @generated
  */
 public interface VControl extends VContainedElement {

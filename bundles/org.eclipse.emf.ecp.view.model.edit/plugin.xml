@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.0"?>
+
+<!--
+-->
+
 <plugin>
 
-   <extension
-         name=""
-         point="org.eclipse.emf.edit.itemProviderAdapterFactories">
+   <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
+      <!-- @generated view -->
       <factory
-            uri="http://org/eclipse/emf/ecp/view/model/170"
-            supportedTypes="org.eclipse.emf.edit.provider.IEditingDomainItemProvider                org.eclipse.emf.edit.provider.IStructuredItemContentProvider                org.eclipse.emf.edit.provider.ITreeItemContentProvider                org.eclipse.emf.edit.provider.IItemLabelProvider                org.eclipse.emf.edit.provider.IItemPropertySource"
-            class="org.eclipse.emf.ecp.view.spi.model.provider.ViewItemProviderAdapterFactory">
-      </factory>
+            uri="http://org/eclipse/emf/ecp/view/model/200"
+            class="org.eclipse.emf.ecp.view.spi.model.provider.ViewItemProviderAdapterFactory"
+            supportedTypes=
+              "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
+               org.eclipse.emf.edit.provider.IStructuredItemContentProvider
+               org.eclipse.emf.edit.provider.ITreeItemContentProvider
+               org.eclipse.emf.edit.provider.IItemLabelProvider
+               org.eclipse.emf.edit.provider.IItemPropertySource"/>
    </extension>
 
 </plugin>

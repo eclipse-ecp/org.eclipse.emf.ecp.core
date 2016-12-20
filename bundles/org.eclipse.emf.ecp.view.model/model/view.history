@@ -61,24 +61,42 @@
           <element href="view.ecore#//DomainModelReference"/>
         </changes>
       </changes>
-      <changes xsi:type="history:Create" xmi:id="_8whA5ENeEeaFtY2yvf2yjQ" referenceName="eClassifiers" element="_56GtAUNhEeaFtY2yvf2yjQ">
+      <changes xsi:type="history:Create" xmi:id="_8whA5ENeEeaFtY2yvf2yjQ" referenceName="eClassifiers">
         <target href="view.ecore#/"/>
-        <changes xsi:type="history:Set" xmi:id="_8whA5UNeEeaFtY2yvf2yjQ" element="_56GtAUNhEeaFtY2yvf2yjQ" featureName="name" dataValue="FeaturePathDomainModelReference"/>
-        <changes xsi:type="history:Add" xmi:id="_8whA5kNeEeaFtY2yvf2yjQ" element="_56GtAUNhEeaFtY2yvf2yjQ" featureName="eSuperTypes">
+        <element href="view.ecore#//FeaturePathDomainModelReference"/>
+        <changes xsi:type="history:Set" xmi:id="_8whA5UNeEeaFtY2yvf2yjQ" featureName="name" dataValue="FeaturePathDomainModelReference">
+          <element href="view.ecore#//FeaturePathDomainModelReference"/>
+        </changes>
+        <changes xsi:type="history:Add" xmi:id="_8whA5kNeEeaFtY2yvf2yjQ" featureName="eSuperTypes">
+          <element href="view.ecore#//FeaturePathDomainModelReference"/>
           <referenceValue href="view.ecore#//DomainModelReference"/>
         </changes>
       </changes>
-      <changes xsi:type="history:Create" xmi:id="_8whn4ENeEeaFtY2yvf2yjQ" target="_56GtAUNhEeaFtY2yvf2yjQ" referenceName="eStructuralFeatures" element="_56GtBENhEeaFtY2yvf2yjQ">
-        <changes xsi:type="history:Set" xmi:id="_8whn4UNeEeaFtY2yvf2yjQ" element="_56GtBENhEeaFtY2yvf2yjQ" featureName="name" dataValue="domainModelEFeature"/>
-        <changes xsi:type="history:Set" xmi:id="_8whn4kNeEeaFtY2yvf2yjQ" element="_56GtBENhEeaFtY2yvf2yjQ" featureName="lowerBound" dataValue="1" oldDataValue="0"/>
-        <changes xsi:type="history:Set" xmi:id="_8whn40NeEeaFtY2yvf2yjQ" element="_56GtBENhEeaFtY2yvf2yjQ" featureName="eType">
+      <changes xsi:type="history:Create" xmi:id="_8whn4ENeEeaFtY2yvf2yjQ" referenceName="eStructuralFeatures">
+        <target href="view.ecore#//FeaturePathDomainModelReference"/>
+        <element href="view.ecore#//FeaturePathDomainModelReference/domainModelEFeature"/>
+        <changes xsi:type="history:Set" xmi:id="_8whn4UNeEeaFtY2yvf2yjQ" featureName="name" dataValue="domainModelEFeature">
+          <element href="view.ecore#//FeaturePathDomainModelReference/domainModelEFeature"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8whn4kNeEeaFtY2yvf2yjQ" featureName="lowerBound" dataValue="1" oldDataValue="0">
+          <element href="view.ecore#//FeaturePathDomainModelReference/domainModelEFeature"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8whn40NeEeaFtY2yvf2yjQ" featureName="eType">
+          <element href="view.ecore#//FeaturePathDomainModelReference/domainModelEFeature"/>
           <referenceValue href="../../org.eclipse.emf.ecore/model/Ecore.ecore#//EStructuralFeature"/>
         </changes>
       </changes>
-      <changes xsi:type="history:Create" xmi:id="_8whn5ENeEeaFtY2yvf2yjQ" target="_56GtAUNhEeaFtY2yvf2yjQ" referenceName="eStructuralFeatures" element="_56GtBkNhEeaFtY2yvf2yjQ">
-        <changes xsi:type="history:Set" xmi:id="_8whn5UNeEeaFtY2yvf2yjQ" element="_56GtBkNhEeaFtY2yvf2yjQ" featureName="name" dataValue="domainModelEReferencePath"/>
-        <changes xsi:type="history:Set" xmi:id="_8whn5kNeEeaFtY2yvf2yjQ" element="_56GtBkNhEeaFtY2yvf2yjQ" featureName="upperBound" dataValue="-1" oldDataValue="1"/>
-        <changes xsi:type="history:Set" xmi:id="_8whn50NeEeaFtY2yvf2yjQ" element="_56GtBkNhEeaFtY2yvf2yjQ" featureName="eType">
+      <changes xsi:type="history:Create" xmi:id="_8whn5ENeEeaFtY2yvf2yjQ" referenceName="eStructuralFeatures">
+        <target href="view.ecore#//FeaturePathDomainModelReference"/>
+        <element href="view.ecore#//FeaturePathDomainModelReference/domainModelEReferencePath"/>
+        <changes xsi:type="history:Set" xmi:id="_8whn5UNeEeaFtY2yvf2yjQ" featureName="name" dataValue="domainModelEReferencePath">
+          <element href="view.ecore#//FeaturePathDomainModelReference/domainModelEReferencePath"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8whn5kNeEeaFtY2yvf2yjQ" featureName="upperBound" dataValue="-1" oldDataValue="1">
+          <element href="view.ecore#//FeaturePathDomainModelReference/domainModelEReferencePath"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8whn50NeEeaFtY2yvf2yjQ" featureName="eType">
+          <element href="view.ecore#//FeaturePathDomainModelReference/domainModelEReferencePath"/>
           <referenceValue href="../../org.eclipse.emf.ecore/model/Ecore.ecore#//EReference"/>
         </changes>
       </changes>
@@ -394,14 +412,28 @@
       </changes>
     </changes>
     <changes xsi:type="history:CompositeChange" xmi:id="_8wyGokNeEeaFtY2yvf2yjQ">
-      <changes xsi:type="history:Set" xmi:id="_8wyGo0NeEeaFtY2yvf2yjQ" element="_56GtBkNhEeaFtY2yvf2yjQ" featureName="unique" dataValue="false" oldDataValue="true"/>
+      <changes xsi:type="history:Set" xmi:id="_8wyGo0NeEeaFtY2yvf2yjQ" featureName="unique" dataValue="false" oldDataValue="true">
+        <element href="view.ecore#//FeaturePathDomainModelReference/domainModelEReferencePath"/>
+      </changes>
     </changes>
     <changes xsi:type="history:CompositeChange" xmi:id="_8wyGpENeEeaFtY2yvf2yjQ">
-      <changes xsi:type="history:Create" xmi:id="_8wyGpUNeEeaFtY2yvf2yjQ" target="_56GtAUNhEeaFtY2yvf2yjQ" referenceName="eAnnotations" element="_56GtAkNhEeaFtY2yvf2yjQ"/>
-      <changes xsi:type="history:Set" xmi:id="_8wyGpkNeEeaFtY2yvf2yjQ" element="_56GtAkNhEeaFtY2yvf2yjQ" featureName="source" dataValue="http://www.eclipse.org/emf/2002/Ecore"/>
-      <changes xsi:type="history:Create" xmi:id="_8wyGp0NeEeaFtY2yvf2yjQ" target="_56GtAkNhEeaFtY2yvf2yjQ" referenceName="details" element="_56GtA0NhEeaFtY2yvf2yjQ"/>
-      <changes xsi:type="history:Set" xmi:id="_8wyGqENeEeaFtY2yvf2yjQ" element="_56GtA0NhEeaFtY2yvf2yjQ" featureName="key" dataValue="constraints"/>
-      <changes xsi:type="history:Set" xmi:id="_8wyGqUNeEeaFtY2yvf2yjQ" element="_56GtA0NhEeaFtY2yvf2yjQ" featureName="value" dataValue="resolveable"/>
+      <changes xsi:type="history:Create" xmi:id="_8wyGpUNeEeaFtY2yvf2yjQ" referenceName="eAnnotations">
+        <target href="view.ecore#//FeaturePathDomainModelReference"/>
+        <element href="view.ecore#//FeaturePathDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%"/>
+      </changes>
+      <changes xsi:type="history:Set" xmi:id="_8wyGpkNeEeaFtY2yvf2yjQ" featureName="source" dataValue="http://www.eclipse.org/emf/2002/Ecore">
+        <element href="view.ecore#//FeaturePathDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%"/>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_8wyGp0NeEeaFtY2yvf2yjQ" referenceName="details">
+        <target href="view.ecore#//FeaturePathDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%"/>
+        <element href="view.ecore#//FeaturePathDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%/@details.0"/>
+      </changes>
+      <changes xsi:type="history:Set" xmi:id="_8wyGqENeEeaFtY2yvf2yjQ" featureName="key" dataValue="constraints">
+        <element href="view.ecore#//FeaturePathDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%/@details.0"/>
+      </changes>
+      <changes xsi:type="history:Set" xmi:id="_8wyGqUNeEeaFtY2yvf2yjQ" featureName="value" dataValue="resolveable">
+        <element href="view.ecore#//FeaturePathDomainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%/@details.0"/>
+      </changes>
     </changes>
   </releases>
   <releases xmi:id="_8wyGqkNeEeaFtY2yvf2yjQ" date="2015-08-16T21:20:47.038+0200" label="170">
@@ -1068,6 +1100,7 @@
         </parameters>
       </operation>
     </changes>
+    <changes xsi:type="history:MigrationChange" xmi:id="_zjBZ8MaZEea-De6iH_DOSA" migration="org.eclipse.emf.ecp.internal.view.model.edapt._190to200.FeaturePathDMRRemovalMigration"/>
     <changes xsi:type="history:OperationChange" xmi:id="_VxF3cENhEeaFtY2yvf2yjQ">
       <changes xsi:type="history:Delete" xmi:id="_VxF3cUNhEeaFtY2yvf2yjQ" referenceName="eStructuralFeatures">
         <target href="view.ecore#//DomainModelReference"/>
@@ -1078,23 +1111,6 @@
           <referenceValue xmi:id="_VxF3dkNhEeaFtY2yvf2yjQ" element="_VxF3ckNhEeaFtY2yvf2yjQ"/>
         </parameters>
       </operation>
-    </changes>
-    <changes xsi:type="history:MigrationChange" xmi:id="_c1tUQENiEeaFtY2yvf2yjQ" migration="org.eclipse.emf.ecp.internal.view.model.edapt._190to200.FeaturePathDMRRemovalMigration">
-      <changes xsi:type="history:Delete" xmi:id="_56GtAENhEeaFtY2yvf2yjQ" referenceName="eClassifiers">
-        <target href="view.ecore#/"/>
-        <element xsi:type="ecore:EClass" xmi:id="_56GtAUNhEeaFtY2yvf2yjQ" name="FeaturePathDomainModelReference">
-          <eAnnotations xmi:id="_56GtAkNhEeaFtY2yvf2yjQ" source="http://www.eclipse.org/emf/2002/Ecore">
-            <details xmi:id="_56GtA0NhEeaFtY2yvf2yjQ" key="constraints" value="resolveable"/>
-          </eAnnotations>
-          <eSuperTypes href="view.ecore#//DomainModelReference"/>
-          <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_56GtBENhEeaFtY2yvf2yjQ" name="domainModelEFeature" lowerBound="1">
-            <eType xsi:type="ecore:EClass" href="../../org.eclipse.emf.ecore/model/Ecore.ecore#//EStructuralFeature"/>
-          </eStructuralFeatures>
-          <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="_56GtBkNhEeaFtY2yvf2yjQ" name="domainModelEReferencePath" unique="false" upperBound="-1">
-            <eType xsi:type="ecore:EClass" href="../../org.eclipse.emf.ecore/model/Ecore.ecore#//EReference"/>
-          </eStructuralFeatures>
-        </element>
-      </changes>
     </changes>
     <changes xsi:type="history:Delete" xmi:id="_-x7-oUNhEeaFtY2yvf2yjQ" referenceName="eClassifiers">
       <target href="view.ecore#/"/>

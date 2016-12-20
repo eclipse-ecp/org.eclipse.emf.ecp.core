@@ -50,7 +50,7 @@ public interface VIndexdmrPackage extends EPackage {
 	 *
 	 * @generated
 	 */
-	String eNS_URI = "http://www.eclipse.org/emf/ecp/view/indexdmr/model"; //$NON-NLS-1$
+	String eNS_URI = "http://www/eclipse/org/emf/ecp/view/indexdmr/model/200"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace name.
@@ -72,6 +72,55 @@ public interface VIndexdmrPackage extends EPackage {
 
 	/**
 	 * The meta object id for the
+	 * '{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.impl.VIndexDomainModelReferenceSegmentImpl <em>Index Domain
+	 * Model Reference Segment</em>}' class.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 2.0
+	 *        <!-- end-user-doc -->
+	 * @see org.eclipse.emf.ecp.view.spi.indexdmr.model.impl.VIndexDomainModelReferenceSegmentImpl
+	 * @see org.eclipse.emf.ecp.view.spi.indexdmr.model.impl.VIndexdmrPackageImpl#getIndexDomainModelReferenceSegment()
+	 * @generated
+	 */
+	int INDEX_DOMAIN_MODEL_REFERENCE_SEGMENT = 0;
+
+	/**
+	 * The feature id for the '<em><b>Domain Model Feature</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 2.0
+	 *        <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INDEX_DOMAIN_MODEL_REFERENCE_SEGMENT__DOMAIN_MODEL_FEATURE = VViewPackage.FEATURE_DOMAIN_MODEL_REFERENCE_SEGMENT__DOMAIN_MODEL_FEATURE;
+
+	/**
+	 * The feature id for the '<em><b>Index</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 2.0
+	 *        <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INDEX_DOMAIN_MODEL_REFERENCE_SEGMENT__INDEX = VViewPackage.FEATURE_DOMAIN_MODEL_REFERENCE_SEGMENT_FEATURE_COUNT
+		+ 0;
+
+	/**
+	 * The number of structural features of the '<em>Index Domain Model Reference Segment</em>' class.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 2.0
+	 *        <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INDEX_DOMAIN_MODEL_REFERENCE_SEGMENT_FEATURE_COUNT = VViewPackage.FEATURE_DOMAIN_MODEL_REFERENCE_SEGMENT_FEATURE_COUNT
+		+ 1;
+
+	/**
+	 * The meta object id for the
 	 * '{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.impl.VIndexDomainModelReferenceImpl <em>Index Domain Model
 	 * Reference</em>}' class.
 	 * <!-- begin-user-doc -->
@@ -81,26 +130,17 @@ public interface VIndexdmrPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.spi.indexdmr.model.impl.VIndexdmrPackageImpl#getIndexDomainModelReference()
 	 * @generated
 	 */
-	int INDEX_DOMAIN_MODEL_REFERENCE = 0;
-
-	/**
-	 * The feature id for the '<em><b>Change Listener</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 * @ordered
-	 */
-	int INDEX_DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER;
+	int INDEX_DOMAIN_MODEL_REFERENCE = 1;
 
 	/**
 	 * The feature id for the '<em><b>Segments</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 2.0
+	 *        <!-- end-user-doc -->
 	 *
 	 * @generated
 	 * @ordered
-	 * @since 2.0
 	 */
 	int INDEX_DOMAIN_MODEL_REFERENCE__SEGMENTS = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__SEGMENTS;
 
@@ -127,9 +167,8 @@ public interface VIndexdmrPackage extends EPackage {
 	/**
 	 * The feature id for the '<em><b>Prefix DMR</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 *
-	 * @since 1.6
-	 *        <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
@@ -166,53 +205,32 @@ public interface VIndexdmrPackage extends EPackage {
 	int INDEX_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 3;
 
 	/**
-	 * The meta object id for the
-	 * '{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.impl.VIndexDomainModelReferenceSegmentImpl <em>Index Domain
-	 * Model Reference Segment</em>}' class.
+	 * Returns the meta object for class
+	 * '{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReferenceSegment <em>Index Domain Model
+	 * Reference Segment</em>}'.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 *
-	 * @see org.eclipse.emf.ecp.view.spi.indexdmr.model.impl.VIndexDomainModelReferenceSegmentImpl
-	 * @see org.eclipse.emf.ecp.view.spi.indexdmr.model.impl.VIndexdmrPackageImpl#getIndexDomainModelReferenceSegment()
-	 * @generated
 	 * @since 2.0
+	 *        <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Index Domain Model Reference Segment</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReferenceSegment
+	 * @generated
 	 */
-	int INDEX_DOMAIN_MODEL_REFERENCE_SEGMENT = 1;
+	EClass getIndexDomainModelReferenceSegment();
 
 	/**
-	 * The feature id for the '<em><b>Domain Model Feature</b></em>' attribute.
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReferenceSegment#getIndex <em>Index</em>}'.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 *
-	 * @generated
-	 * @ordered
 	 * @since 2.0
-	 */
-	int INDEX_DOMAIN_MODEL_REFERENCE_SEGMENT__DOMAIN_MODEL_FEATURE = VViewPackage.FEATURE_DOMAIN_MODEL_REFERENCE_SEGMENT__DOMAIN_MODEL_FEATURE;
-
-	/**
-	 * The feature id for the '<em><b>Index</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
+	 *        <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Index</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReferenceSegment#getIndex()
+	 * @see #getIndexDomainModelReferenceSegment()
 	 * @generated
-	 * @ordered
-	 * @since 2.0
 	 */
-	int INDEX_DOMAIN_MODEL_REFERENCE_SEGMENT__INDEX = VViewPackage.FEATURE_DOMAIN_MODEL_REFERENCE_SEGMENT_FEATURE_COUNT
-		+ 0;
-
-	/**
-	 * The number of structural features of the '<em>Index Domain Model Reference Segment</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 * @ordered
-	 * @since 2.0
-	 */
-	int INDEX_DOMAIN_MODEL_REFERENCE_SEGMENT_FEATURE_COUNT = VViewPackage.FEATURE_DOMAIN_MODEL_REFERENCE_SEGMENT_FEATURE_COUNT
-		+ 1;
+	EAttribute getIndexDomainModelReferenceSegment_Index();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference
@@ -231,15 +249,27 @@ public interface VIndexdmrPackage extends EPackage {
 	 * '{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference#getPrefixDMR <em>Prefix
 	 * DMR</em>}'.
 	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 *
-	 * @since 1.6
-	 *        <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Prefix DMR</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference#getPrefixDMR()
 	 * @see #getIndexDomainModelReference()
 	 * @generated
 	 */
 	EReference getIndexDomainModelReference_PrefixDMR();
+
+	/**
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference#getIndex <em>Index</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the attribute '<em>Index</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference#getIndex()
+	 * @see #getIndexDomainModelReference()
+	 * @generated
+	 */
+	EAttribute getIndexDomainModelReference_Index();
 
 	/**
 	 * Returns the meta object for the containment reference
@@ -254,47 +284,6 @@ public interface VIndexdmrPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getIndexDomainModelReference_TargetDMR();
-
-	/**
-	 * Returns the meta object for class
-	 * '{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReferenceSegment <em>Index Domain Model
-	 * Reference Segment</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @return the meta object for class '<em>Index Domain Model Reference Segment</em>'.
-	 * @see org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReferenceSegment
-	 * @generated
-	 * @since 2.0
-	 */
-	EClass getIndexDomainModelReferenceSegment();
-
-	/**
-	 * Returns the meta object for the attribute
-	 * '{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReferenceSegment#getIndex <em>Index</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @return the meta object for the attribute '<em>Index</em>'.
-	 * @see org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReferenceSegment#getIndex()
-	 * @see #getIndexDomainModelReferenceSegment()
-	 * @generated
-	 * @since 2.0
-	 */
-	EAttribute getIndexDomainModelReferenceSegment_Index();
-
-	/**
-	 * Returns the meta object for the attribute
-	 * '{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference#getIndex <em>Index</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @return the meta object for the attribute '<em>Index</em>'.
-	 * @see org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReference#getIndex()
-	 * @see #getIndexDomainModelReference()
-	 * @generated
-	 */
-	EAttribute getIndexDomainModelReference_Index();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -322,6 +311,30 @@ public interface VIndexdmrPackage extends EPackage {
 	interface Literals {
 		/**
 		 * The meta object literal for the
+		 * '{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.impl.VIndexDomainModelReferenceSegmentImpl <em>Index
+		 * Domain Model Reference Segment</em>}' class.
+		 * <!-- begin-user-doc -->
+		 *
+		 * @since 2.0
+		 *        <!-- end-user-doc -->
+		 * @see org.eclipse.emf.ecp.view.spi.indexdmr.model.impl.VIndexDomainModelReferenceSegmentImpl
+		 * @see org.eclipse.emf.ecp.view.spi.indexdmr.model.impl.VIndexdmrPackageImpl#getIndexDomainModelReferenceSegment()
+		 * @generated
+		 */
+		EClass INDEX_DOMAIN_MODEL_REFERENCE_SEGMENT = eINSTANCE.getIndexDomainModelReferenceSegment();
+
+		/**
+		 * The meta object literal for the '<em><b>Index</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 *
+		 * @since 2.0
+		 *        <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute INDEX_DOMAIN_MODEL_REFERENCE_SEGMENT__INDEX = eINSTANCE.getIndexDomainModelReferenceSegment_Index();
+
+		/**
+		 * The meta object literal for the
 		 * '{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.impl.VIndexDomainModelReferenceImpl <em>Index Domain
 		 * Model Reference</em>}' class.
 		 * <!-- begin-user-doc -->
@@ -336,45 +349,11 @@ public interface VIndexdmrPackage extends EPackage {
 		/**
 		 * The meta object literal for the '<em><b>Prefix DMR</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
 		 *
-		 * @since 1.6
-		 *        <!-- end-user-doc -->
 		 * @generated
 		 */
 		EReference INDEX_DOMAIN_MODEL_REFERENCE__PREFIX_DMR = eINSTANCE.getIndexDomainModelReference_PrefixDMR();
-
-		/**
-		 * The meta object literal for the '<em><b>Target DMR</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 *
-		 * @generated
-		 */
-		EReference INDEX_DOMAIN_MODEL_REFERENCE__TARGET_DMR = eINSTANCE.getIndexDomainModelReference_TargetDMR();
-
-		/**
-		 * The meta object literal for the
-		 * '{@link org.eclipse.emf.ecp.view.spi.indexdmr.model.impl.VIndexDomainModelReferenceSegmentImpl <em>Index
-		 * Domain Model Reference Segment</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 *
-		 * @see org.eclipse.emf.ecp.view.spi.indexdmr.model.impl.VIndexDomainModelReferenceSegmentImpl
-		 * @see org.eclipse.emf.ecp.view.spi.indexdmr.model.impl.VIndexdmrPackageImpl#getIndexDomainModelReferenceSegment()
-		 * @generated
-		 * @since 2.0
-		 */
-		EClass INDEX_DOMAIN_MODEL_REFERENCE_SEGMENT = eINSTANCE.getIndexDomainModelReferenceSegment();
-
-		/**
-		 * The meta object literal for the '<em><b>Index</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 *
-		 * @generated
-		 * @since 2.0
-		 */
-		EAttribute INDEX_DOMAIN_MODEL_REFERENCE_SEGMENT__INDEX = eINSTANCE.getIndexDomainModelReferenceSegment_Index();
 
 		/**
 		 * The meta object literal for the '<em><b>Index</b></em>' attribute feature.
@@ -384,6 +363,15 @@ public interface VIndexdmrPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute INDEX_DOMAIN_MODEL_REFERENCE__INDEX = eINSTANCE.getIndexDomainModelReference_Index();
+
+		/**
+		 * The meta object literal for the '<em><b>Target DMR</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EReference INDEX_DOMAIN_MODEL_REFERENCE__TARGET_DMR = eINSTANCE.getIndexDomainModelReference_TargetDMR();
 
 	}
 
