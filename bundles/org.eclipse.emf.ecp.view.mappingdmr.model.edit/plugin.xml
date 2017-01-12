@@ -18,7 +18,7 @@
    <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
       <!-- @generated mappingdmr -->
       <factory
-            uri="http://www.eclipse.org/emf/ecp/view/mappingdmr/model"
+            uri="http://www/eclipse/org/emf/ecp/view/mappingdmr/model/200"
             class="org.eclipse.emf.ecp.view.spi.mappingdmr.model.provider.MappingdmrItemProviderAdapterFactory"
             supportedTypes=
               "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
@@ -31,7 +31,7 @@
    <extension point="org.eclipse.emf.edit.childCreationExtenders">
       <!-- @generated mappingdmr -->
       <extender
-            uri="http://org/eclipse/emf/ecp/view/model/170"
+            uri="http://org/eclipse/emf/ecp/view/model/200"
             class="org.eclipse.emf.ecp.view.spi.mappingdmr.model.provider.MappingdmrItemProviderAdapterFactory$ViewChildCreationExtender"/>
    </extension>
 
