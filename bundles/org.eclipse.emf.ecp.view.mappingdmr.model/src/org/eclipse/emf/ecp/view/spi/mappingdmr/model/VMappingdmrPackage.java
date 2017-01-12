@@ -46,7 +46,7 @@ public interface VMappingdmrPackage extends EPackage {
 	 *
 	 * @generated
 	 */
-	String eNS_URI = "http://www.eclipse.org/emf/ecp/view/mappingdmr/model"; //$NON-NLS-1$
+	String eNS_URI = "http://www/eclipse/org/emf/ecp/view/mappingdmr/model/200"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace name.
@@ -79,21 +79,11 @@ public interface VMappingdmrPackage extends EPackage {
 	int MAPPING_DOMAIN_MODEL_REFERENCE = 0;
 
 	/**
-	 * The feature id for the '<em><b>Change Listener</b></em>' attribute list.
-	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 *
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPING_DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER;
-
-	/**
 	 * The feature id for the '<em><b>Segments</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 2.0
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -154,10 +144,9 @@ public interface VMappingdmrPackage extends EPackage {
 	 * '{@link org.eclipse.emf.ecp.view.spi.mappingdmr.model.impl.VMappingDomainModelReferenceSegmentImpl <em>Mapping
 	 * Domain Model Reference Segment</em>}' class.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 2.0
 	 *        <!-- end-user-doc -->
-	 *
 	 * @see org.eclipse.emf.ecp.view.spi.mappingdmr.model.impl.VMappingDomainModelReferenceSegmentImpl
 	 * @see org.eclipse.emf.ecp.view.spi.mappingdmr.model.impl.VMappingdmrPackageImpl#getMappingDomainModelReferenceSegment()
 	 * @generated
@@ -167,10 +156,9 @@ public interface VMappingdmrPackage extends EPackage {
 	/**
 	 * The feature id for the '<em><b>Domain Model Feature</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 2.0
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -179,10 +167,9 @@ public interface VMappingdmrPackage extends EPackage {
 	/**
 	 * The feature id for the '<em><b>Mapped Class</b></em>' reference.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 2.0
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -192,10 +179,9 @@ public interface VMappingdmrPackage extends EPackage {
 	/**
 	 * The number of structural features of the '<em>Mapping Domain Model Reference Segment</em>' class.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 2.0
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -247,10 +233,9 @@ public interface VMappingdmrPackage extends EPackage {
 	 * '{@link org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReferenceSegment <em>Mapping Domain
 	 * Model Reference Segment</em>}'.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 2.0
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the meta object for class '<em>Mapping Domain Model Reference Segment</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReferenceSegment
 	 * @generated
@@ -262,10 +247,9 @@ public interface VMappingdmrPackage extends EPackage {
 	 * '{@link org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReferenceSegment#getMappedClass
 	 * <em>Mapped Class</em>}'.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 2.0
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the meta object for the reference '<em>Mapped Class</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReferenceSegment#getMappedClass()
 	 * @see #getMappingDomainModelReferenceSegment()
@@ -332,10 +316,9 @@ public interface VMappingdmrPackage extends EPackage {
 		 * '{@link org.eclipse.emf.ecp.view.spi.mappingdmr.model.impl.VMappingDomainModelReferenceSegmentImpl
 		 * <em>Mapping Domain Model Reference Segment</em>}' class.
 		 * <!-- begin-user-doc -->
-		 * 
+		 *
 		 * @since 2.0
 		 *        <!-- end-user-doc -->
-		 *
 		 * @see org.eclipse.emf.ecp.view.spi.mappingdmr.model.impl.VMappingDomainModelReferenceSegmentImpl
 		 * @see org.eclipse.emf.ecp.view.spi.mappingdmr.model.impl.VMappingdmrPackageImpl#getMappingDomainModelReferenceSegment()
 		 * @generated
@@ -348,7 +331,6 @@ public interface VMappingdmrPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 *
 		 * @generated
-		 * @since 2.0
 		 */
 		EReference MAPPING_DOMAIN_MODEL_REFERENCE_SEGMENT__MAPPED_CLASS = eINSTANCE
 			.getMappingDomainModelReferenceSegment_MappedClass();

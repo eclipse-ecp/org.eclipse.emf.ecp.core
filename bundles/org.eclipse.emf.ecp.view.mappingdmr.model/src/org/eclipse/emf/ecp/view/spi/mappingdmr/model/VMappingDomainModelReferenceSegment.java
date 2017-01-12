@@ -17,20 +17,21 @@ import org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Mapping Domain Model Reference Segment</b></em>'.
- * <!-- end-user-doc -->
+ * 
+ * @since 2.0
+ *        <!-- end-user-doc -->
  *
- * <p>
- * The following features are supported:
- * </p>
- * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReferenceSegment#getMappedClass
- * <em>Mapped Class</em>}</li>
- * </ul>
+ *        <p>
+ *        The following features are supported:
+ *        </p>
+ *        <ul>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReferenceSegment#getMappedClass
+ *        <em>Mapped Class</em>}</li>
+ *        </ul>
  *
  * @see org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingdmrPackage#getMappingDomainModelReferenceSegment()
  * @model
  * @generated
- * @since 2.0
  */
 public interface VMappingDomainModelReferenceSegment extends VFeatureDomainModelReferenceSegment {
 	/**

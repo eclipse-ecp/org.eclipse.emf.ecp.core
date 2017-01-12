@@ -259,7 +259,7 @@ public class VMappingdmrPackageImpl extends EPackageImpl implements
 		// Initialize classes and features; add operations and parameters
 		initEClass(mappingDomainModelReferenceEClass, VMappingDomainModelReference.class, "MappingDomainModelReference", //$NON-NLS-1$
 			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getMappingDomainModelReference_MappedClass(), theEcorePackage.getEClass(), null, "mappedClass", //$NON-NLS-1$
+		initEReference(getMappingDomainModelReference_MappedClass(), ecorePackage.getEClass(), null, "mappedClass", //$NON-NLS-1$
 			null, 0, 1, VMappingDomainModelReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
 			IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getMappingDomainModelReference_DomainModelReference(), theViewPackage.getDomainModelReference(),

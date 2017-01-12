@@ -42,11 +42,12 @@ public interface VMappingdmrFactory extends EFactory {
 	/**
 	 * Returns a new object of class '<em>Mapping Domain Model Reference Segment</em>'.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 2.0
+	 *        <!-- end-user-doc -->
 	 *
 	 * @return a new object of class '<em>Mapping Domain Model Reference Segment</em>'.
 	 * @generated
-	 * @since 2.0
 	 */
 	VMappingDomainModelReferenceSegment createMappingDomainModelReferenceSegment();
 

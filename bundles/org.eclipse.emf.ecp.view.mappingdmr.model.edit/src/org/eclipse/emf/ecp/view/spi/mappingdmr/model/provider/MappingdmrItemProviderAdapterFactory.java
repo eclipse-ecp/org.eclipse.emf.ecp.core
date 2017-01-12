@@ -122,12 +122,38 @@ public class MappingdmrItemProviderAdapterFactory extends
 	 */
 	@Override
 	public Adapter createMappingDomainModelReferenceAdapter() {
-		if (mappingDomainModelReferenceItemProvider == null)
-		{
+		if (mappingDomainModelReferenceItemProvider == null) {
 			mappingDomainModelReferenceItemProvider = new MappingDomainModelReferenceItemProvider(this);
 		}
 
 		return mappingDomainModelReferenceItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all
+	 * {@link org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReferenceSegment} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected MappingDomainModelReferenceSegmentItemProvider mappingDomainModelReferenceSegmentItemProvider;
+
+	/**
+	 * This creates an adapter for a
+	 * {@link org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReferenceSegment}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public Adapter createMappingDomainModelReferenceSegmentAdapter() {
+		if (mappingDomainModelReferenceSegmentItemProvider == null) {
+			mappingDomainModelReferenceSegmentItemProvider = new MappingDomainModelReferenceSegmentItemProvider(this);
+		}
+
+		return mappingDomainModelReferenceSegmentItemProvider;
 	}
 
 	/**
@@ -181,11 +207,9 @@ public class MappingdmrItemProviderAdapterFactory extends
 	 */
 	@Override
 	public Object adapt(Object object, Object type) {
-		if (isFactoryForType(type))
-		{
+		if (isFactoryForType(type)) {
 			final Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter))
-			{
+			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter)) {
 				return adapter;
 			}
 		}
@@ -256,8 +280,7 @@ public class MappingdmrItemProviderAdapterFactory extends
 	public void fireNotifyChanged(Notification notification) {
 		changeNotifier.fireNotifyChanged(notification);
 
-		if (parentAdapterFactory != null)
-		{
+		if (parentAdapterFactory != null) {
 			parentAdapterFactory.fireNotifyChanged(notification);
 		}
 	}
@@ -272,6 +295,9 @@ public class MappingdmrItemProviderAdapterFactory extends
 	public void dispose() {
 		if (mappingDomainModelReferenceItemProvider != null) {
 			mappingDomainModelReferenceItemProvider.dispose();
+		}
+		if (mappingDomainModelReferenceSegmentItemProvider != null) {
+			mappingDomainModelReferenceSegmentItemProvider.dispose();
 		}
 	}
 
@@ -327,10 +353,8 @@ public class MappingdmrItemProviderAdapterFactory extends
 			 */
 			@Override
 			public Object caseControl(VControl object) {
-				newChildDescriptors.add
-					(createChildParameter
-					(VViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCE,
-						VMappingdmrFactory.eINSTANCE.createMappingDomainModelReference()));
+				newChildDescriptors.add(createChildParameter(VViewPackage.Literals.CONTROL__DOMAIN_MODEL_REFERENCE,
+					VMappingdmrFactory.eINSTANCE.createMappingDomainModelReference()));
 
 				return null;
 			}

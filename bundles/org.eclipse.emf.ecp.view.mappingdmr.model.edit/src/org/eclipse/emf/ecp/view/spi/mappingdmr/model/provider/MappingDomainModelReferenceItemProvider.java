@@ -53,8 +53,7 @@ public class MappingDomainModelReferenceItemProvider extends
 	 */
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (itemPropertyDescriptors == null)
-		{
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addMappedClassPropertyDescriptor(object);
@@ -71,13 +70,11 @@ public class MappingDomainModelReferenceItemProvider extends
 	 */
 	protected void addMappedClassPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_MappingDomainModelReference_mappedClass_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_MappingDomainModelReference_mappedClass_feature", "_UI_MappingDomainModelReference_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				getString("_UI_PropertyDescriptor_description", "_UI_MappingDomainModelReference_mappedClass_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_MappingDomainModelReference_type"), //$NON-NLS-1$
 				VMappingdmrPackage.Literals.MAPPING_DOMAIN_MODEL_REFERENCE__MAPPED_CLASS,
 				true,
 				false,
@@ -94,16 +91,14 @@ public class MappingDomainModelReferenceItemProvider extends
 	 *
 	 * @generated
 	 */
-	protected void addDomainModelReferencePropertyDescriptor(Object object)
-	{
+	protected void addDomainModelReferencePropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_MappingDomainModelReference_domainModelReference_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_MappingDomainModelReference_domainModelReference_feature", "_UI_MappingDomainModelReference_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+					"_UI_MappingDomainModelReference_domainModelReference_feature", //$NON-NLS-1$
+					"_UI_MappingDomainModelReference_type"), //$NON-NLS-1$
 				VMappingdmrPackage.Literals.MAPPING_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE,
 				true,
 				false,
@@ -124,8 +119,7 @@ public class MappingDomainModelReferenceItemProvider extends
 	@Override
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(
 		Object object) {
-		if (childrenFeatures == null)
-		{
+		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(VMappingdmrPackage.Literals.MAPPING_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE);
 		}
@@ -181,8 +175,7 @@ public class MappingDomainModelReferenceItemProvider extends
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(VMappingDomainModelReference.class))
-		{
+		switch (notification.getFeatureID(VMappingDomainModelReference.class)) {
 		case VMappingdmrPackage.MAPPING_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;
@@ -202,14 +195,16 @@ public class MappingDomainModelReferenceItemProvider extends
 		Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
-		newChildDescriptors.add
-			(createChildParameter
-			(VMappingdmrPackage.Literals.MAPPING_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE,
+		newChildDescriptors.add(
+			createChildParameter(VMappingdmrPackage.Literals.MAPPING_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE,
 				VMappingdmrFactory.eINSTANCE.createMappingDomainModelReference()));
 
-		newChildDescriptors.add
-			(createChildParameter
-			(VMappingdmrPackage.Literals.MAPPING_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE,
+		newChildDescriptors.add(
+			createChildParameter(VMappingdmrPackage.Literals.MAPPING_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE,
+				VViewFactory.eINSTANCE.createDomainModelReference()));
+
+		newChildDescriptors.add(
+			createChildParameter(VMappingdmrPackage.Literals.MAPPING_DOMAIN_MODEL_REFERENCE__DOMAIN_MODEL_REFERENCE,
 				VViewFactory.eINSTANCE.createFeaturePathDomainModelReference()));
 	}
 
