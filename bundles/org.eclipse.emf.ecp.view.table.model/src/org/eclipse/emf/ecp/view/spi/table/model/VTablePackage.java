@@ -51,7 +51,7 @@ public interface VTablePackage extends EPackage {
 	 *
 	 * @generated
 	 */
-	String eNS_URI = "http://org/eclipse/emf/ecp/view/table/model/150"; //$NON-NLS-1$
+	String eNS_URI = "http://org/eclipse/emf/ecp/view/table/model/190"; //$NON-NLS-1$
 
 	/**
 	 * The package namespace name.
@@ -92,17 +92,6 @@ public interface VTablePackage extends EPackage {
 	 * @ordered
 	 */
 	int TABLE_CONTROL__NAME = VViewPackage.CONTROL__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Label</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 *
-	 * @since 1.9
-	 *        <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TABLE_CONTROL__LABEL = VViewPackage.CONTROL__LABEL;
 
 	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
@@ -166,16 +155,6 @@ public interface VTablePackage extends EPackage {
 	int TABLE_CONTROL__UUID = VViewPackage.CONTROL__UUID;
 
 	/**
-	 * The feature id for the '<em><b>Label Alignment</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @generated
-	 * @ordered
-	 */
-	int TABLE_CONTROL__LABEL_ALIGNMENT = VViewPackage.CONTROL__LABEL_ALIGNMENT;
-
-	/**
 	 * The feature id for the '<em><b>Domain Model Reference</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -184,6 +163,16 @@ public interface VTablePackage extends EPackage {
 	 * @ordered
 	 */
 	int TABLE_CONTROL__DOMAIN_MODEL_REFERENCE = VViewPackage.CONTROL__DOMAIN_MODEL_REFERENCE;
+
+	/**
+	 * The feature id for the '<em><b>Label Alignment</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int TABLE_CONTROL__LABEL_ALIGNMENT = VViewPackage.CONTROL__LABEL_ALIGNMENT;
 
 	/**
 	 * The feature id for the '<em><b>Add Remove Disabled</b></em>' attribute.
@@ -280,14 +269,16 @@ public interface VTablePackage extends EPackage {
 	int TABLE_DOMAIN_MODEL_REFERENCE = 2;
 
 	/**
-	 * The feature id for the '<em><b>Change Listener</b></em>' attribute list.
+	 * The feature id for the '<em><b>Segments</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 2.0
+	 *        <!-- end-user-doc -->
 	 *
 	 * @generated
 	 * @ordered
 	 */
-	int TABLE_DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__CHANGE_LISTENER;
+	int TABLE_DOMAIN_MODEL_REFERENCE__SEGMENTS = VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE__SEGMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Domain Model EFeature</b></em>' reference.
@@ -416,7 +407,6 @@ public interface VTablePackage extends EPackage {
 	 *
 	 * @since 1.9
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -650,10 +640,9 @@ public interface VTablePackage extends EPackage {
 	 * Returns the meta object for the attribute
 	 * '{@link org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration#getMinWidth <em>Min Width</em>}'.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.9
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the meta object for the attribute '<em>Min Width</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration#getMinWidth()
 	 * @see #getWidthConfiguration()
@@ -861,10 +850,9 @@ public interface VTablePackage extends EPackage {
 		/**
 		 * The meta object literal for the '<em><b>Min Width</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
-		 * 
+		 *
 		 * @since 1.9
 		 *        <!-- end-user-doc -->
-		 *
 		 * @generated
 		 */
 		EAttribute WIDTH_CONFIGURATION__MIN_WIDTH = eINSTANCE.getWidthConfiguration_MinWidth();

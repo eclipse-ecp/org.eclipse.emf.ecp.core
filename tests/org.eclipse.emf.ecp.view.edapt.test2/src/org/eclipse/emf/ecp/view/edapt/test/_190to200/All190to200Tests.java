@@ -20,7 +20,7 @@ import org.junit.runners.Suite.SuiteClasses;
  *
  */
 @RunWith(Suite.class)
-@SuiteClasses({ FeaturePathDMRTest.class, MappingDMRTest.class })
+@SuiteClasses({ FeaturePathDMRTest.class, MappingDMRTest.class, TableDmrTest.class })
 public class All190to200Tests {
 
 }

@@ -286,6 +286,16 @@ public class EdaptViewModelMigrator implements ViewModelMigrator, StringViewMode
 			}
 		}
 
+		// FIXME remove hack for multi segment history
+		// final Migrator multiSegmentMigrator = MigratorRegistry.getInstance()
+		// .getMigrator("http://org/eclipse/emfforms/view/multisegment/model/200"); //$NON-NLS-1$
+		// final Release multiSegmentRelease = multiSegmentMigrator.getRelease(0);
+		// targetReleaseNameToChangesMap.get(multiSegmentRelease.getLabel());
+		// if (targetReleaseNameToChangesMap.get(multiSegmentRelease.getLabel()) == null) {
+		// targetReleaseNameToChangesMap.put(multiSegmentRelease.getLabel(), new ArrayList<Change>());
+		// }
+		// targetReleaseNameToChangesMap.get(multiSegmentRelease.getLabel()).addAll(multiSegmentRelease.getChanges());
+
 		/* Based on combined changes from all histories insert the changed to source release and target releases */
 		fillReleases(sourceRelease, targetReleases, sourceReleaseNameToChangesMap, targetReleaseNameToChangesMap);
 	}
@@ -347,6 +357,8 @@ public class EdaptViewModelMigrator implements ViewModelMigrator, StringViewMode
 			nsUris.remove(nsURI);
 		}
 		nsUris.addAll(domainMapping.getNsURIsWithHistory());
+		// FIXME hack
+		nsUris.add("http://org/eclipse/emfforms/view/multisegment/model/1110"); //$NON-NLS-1$
 		return nsUris;
 	}
 

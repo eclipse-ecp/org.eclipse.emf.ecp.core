@@ -6,6 +6,9 @@
       <file
             filePath="viewmodels/User.view">
       </file>
+      <file
+            filePath="viewmodels/Task.view">
+      </file>
    </extension>
 
 </plugin>

@@ -37,6 +37,7 @@ import org.eclipse.emf.ecp.view.internal.table.model.Activator;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewValidator;
+import org.eclipse.emf.ecp.view.spi.table.model.*;
 import org.eclipse.emf.ecp.view.spi.table.model.DetailEditing;
 import org.eclipse.emf.ecp.view.spi.table.model.VReadOnlyColumnConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableColumnConfiguration;
@@ -64,7 +65,7 @@ public class TableValidator extends EObjectValidator {
 	 * The cached model package
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public static final TableValidator INSTANCE = new TableValidator();
@@ -74,7 +75,7 @@ public class TableValidator extends EObjectValidator {
 	 * {@link org.eclipse.emf.common.util.Diagnostic#getCode() codes} from this package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see org.eclipse.emf.common.util.Diagnostic#getSource()
 	 * @see org.eclipse.emf.common.util.Diagnostic#getCode()
 	 * @generated
@@ -85,7 +86,7 @@ public class TableValidator extends EObjectValidator {
 	 * A constant with a fixed name that can be used as the base value for additional hand written constants.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private static final int GENERATED_DIAGNOSTIC_CODE_COUNT = 0;
@@ -95,7 +96,7 @@ public class TableValidator extends EObjectValidator {
 	 * derived class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected static final int DIAGNOSTIC_CODE_COUNT = GENERATED_DIAGNOSTIC_CODE_COUNT;
@@ -104,7 +105,7 @@ public class TableValidator extends EObjectValidator {
 	 * The cached base package validator.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected ViewValidator viewValidator;
@@ -135,7 +136,7 @@ public class TableValidator extends EObjectValidator {
 	 * Creates an instance of the switch.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public TableValidator() {
@@ -147,7 +148,7 @@ public class TableValidator extends EObjectValidator {
 	 * Returns the package of this validator switch.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -159,7 +160,7 @@ public class TableValidator extends EObjectValidator {
 	 * Calls <code>validateXXX</code> for the corresponding classifier of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -186,39 +187,30 @@ public class TableValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public boolean validateTableControl(VTableControl tableControl, DiagnosticChain diagnostics,
 		Map<Object, Object> context) {
-		if (!validate_NoCircularContainment(tableControl, diagnostics, context)) {
+		if (!validate_NoCircularContainment(tableControl, diagnostics, context))
 			return false;
-		}
 		boolean result = validate_EveryMultiplicityConforms(tableControl, diagnostics, context);
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_EveryDataValueConforms(tableControl, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_EveryReferenceIsContained(tableControl, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_EveryBidirectionalReferenceIsPaired(tableControl, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_EveryProxyResolves(tableControl, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_UniqueID(tableControl, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_EveryKeyUnique(tableControl, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_EveryMapEntryUnique(tableControl, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validateTableControl_resolveable(tableControl, diagnostics, context);
-		}
 		return result;
 	}
 
@@ -255,10 +247,10 @@ public class TableValidator extends EObjectValidator {
 	}
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
-	 * 			<!-- begin-user-doc -->
-	 *            <!-- end-user-doc -->
-	 *
 	 */
 	public boolean validateTableColumnConfiguration(VTableColumnConfiguration tableColumnConfiguration,
 		DiagnosticChain diagnostics, Map<Object, Object> context) {
@@ -268,39 +260,30 @@ public class TableValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public boolean validateTableDomainModelReference(VTableDomainModelReference tableDomainModelReference,
 		DiagnosticChain diagnostics, Map<Object, Object> context) {
-		if (!validate_NoCircularContainment(tableDomainModelReference, diagnostics, context)) {
+		if (!validate_NoCircularContainment(tableDomainModelReference, diagnostics, context))
 			return false;
-		}
 		boolean result = validate_EveryMultiplicityConforms(tableDomainModelReference, diagnostics, context);
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_EveryDataValueConforms(tableDomainModelReference, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_EveryReferenceIsContained(tableDomainModelReference, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_EveryBidirectionalReferenceIsPaired(tableDomainModelReference, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_EveryProxyResolves(tableDomainModelReference, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_UniqueID(tableDomainModelReference, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_EveryKeyUnique(tableDomainModelReference, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validate_EveryMapEntryUnique(tableDomainModelReference, diagnostics, context);
-		}
-		if (result || diagnostics != null) {
+		if (result || diagnostics != null)
 			result &= validateTableDomainModelReference_resolveable(tableDomainModelReference, diagnostics, context);
-		}
 		return result;
 	}
 
@@ -475,7 +458,7 @@ public class TableValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->.
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public boolean validateReadOnlyColumnConfiguration(VReadOnlyColumnConfiguration readOnlyColumnConfiguration,
@@ -498,7 +481,7 @@ public class TableValidator extends EObjectValidator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public boolean validateDetailEditing(DetailEditing detailEditing, DiagnosticChain diagnostics,
@@ -510,7 +493,7 @@ public class TableValidator extends EObjectValidator {
 	 * Returns the resource locator that will be used to fetch messages for this validator's diagnostics.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override

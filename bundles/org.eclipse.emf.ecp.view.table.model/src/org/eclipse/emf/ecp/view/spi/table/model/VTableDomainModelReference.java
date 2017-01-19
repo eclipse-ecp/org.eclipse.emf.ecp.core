@@ -45,7 +45,7 @@ public interface VTableDomainModelReference extends VFeaturePathDomainModelRefer
 	 * really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the value of the '<em>Column Domain Model References</em>' containment reference list.
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage#getTableDomainModelReference_ColumnDomainModelReferences()
 	 * @model containment="true"
