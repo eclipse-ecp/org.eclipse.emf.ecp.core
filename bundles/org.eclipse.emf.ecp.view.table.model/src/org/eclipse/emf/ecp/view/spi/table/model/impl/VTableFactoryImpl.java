@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.emf.ecp.view.spi.table.model.*;
 import org.eclipse.emf.ecp.view.spi.table.model.DetailEditing;
 import org.eclipse.emf.ecp.view.spi.table.model.VEnablementConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VReadOnlyColumnConfiguration;
@@ -30,7 +31,7 @@ import org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration;
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Factory</b>.
  * <!-- end-user-doc -->
- *
+ * 
  * @generated
  */
 public class VTableFactoryImpl extends EFactoryImpl implements VTableFactory {
@@ -38,17 +39,17 @@ public class VTableFactoryImpl extends EFactoryImpl implements VTableFactory {
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public static VTableFactory init() {
 		try {
-			final VTableFactory theTableFactory = (VTableFactory) EPackage.Registry.INSTANCE
+			VTableFactory theTableFactory = (VTableFactory) EPackage.Registry.INSTANCE
 				.getEFactory(VTablePackage.eNS_URI);
 			if (theTableFactory != null) {
 				return theTableFactory;
 			}
-		} catch (final Exception exception) {
+		} catch (Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new VTableFactoryImpl();
@@ -58,7 +59,7 @@ public class VTableFactoryImpl extends EFactoryImpl implements VTableFactory {
 	 * Creates an instance of the factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public VTableFactoryImpl() {
@@ -68,7 +69,7 @@ public class VTableFactoryImpl extends EFactoryImpl implements VTableFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -92,7 +93,7 @@ public class VTableFactoryImpl extends EFactoryImpl implements VTableFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -108,7 +109,7 @@ public class VTableFactoryImpl extends EFactoryImpl implements VTableFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -124,36 +125,36 @@ public class VTableFactoryImpl extends EFactoryImpl implements VTableFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public VTableControl createTableControl() {
-		final VTableControlImpl tableControl = new VTableControlImpl();
+		VTableControlImpl tableControl = new VTableControlImpl();
 		return tableControl;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public VTableDomainModelReference createTableDomainModelReference() {
-		final VTableDomainModelReferenceImpl tableDomainModelReference = new VTableDomainModelReferenceImpl();
+		VTableDomainModelReferenceImpl tableDomainModelReference = new VTableDomainModelReferenceImpl();
 		return tableDomainModelReference;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public VReadOnlyColumnConfiguration createReadOnlyColumnConfiguration() {
-		final VReadOnlyColumnConfigurationImpl readOnlyColumnConfiguration = new VReadOnlyColumnConfigurationImpl();
+		VReadOnlyColumnConfigurationImpl readOnlyColumnConfiguration = new VReadOnlyColumnConfigurationImpl();
 		return readOnlyColumnConfiguration;
 	}
 
@@ -166,7 +167,7 @@ public class VTableFactoryImpl extends EFactoryImpl implements VTableFactory {
 	 */
 	@Override
 	public VWidthConfiguration createWidthConfiguration() {
-		final VWidthConfigurationImpl widthConfiguration = new VWidthConfigurationImpl();
+		VWidthConfigurationImpl widthConfiguration = new VWidthConfigurationImpl();
 		return widthConfiguration;
 	}
 
@@ -186,22 +187,21 @@ public class VTableFactoryImpl extends EFactoryImpl implements VTableFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public DetailEditing createDetailEditingFromString(EDataType eDataType, String initialValue) {
-		final DetailEditing result = DetailEditing.get(initialValue);
-		if (result == null) {
+		DetailEditing result = DetailEditing.get(initialValue);
+		if (result == null)
 			throw new IllegalArgumentException(
 				"The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-		}
 		return result;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public String convertDetailEditingToString(EDataType eDataType, Object instanceValue) {
@@ -211,7 +211,7 @@ public class VTableFactoryImpl extends EFactoryImpl implements VTableFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -222,7 +222,7 @@ public class VTableFactoryImpl extends EFactoryImpl implements VTableFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @deprecated
 	 * @generated
 	 */

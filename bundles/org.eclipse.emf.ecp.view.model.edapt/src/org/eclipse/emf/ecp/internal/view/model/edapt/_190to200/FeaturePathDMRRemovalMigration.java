@@ -11,6 +11,9 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.internal.view.model.edapt._190to200;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
@@ -36,6 +39,8 @@ public class FeaturePathDMRRemovalMigration extends CustomMigration {
 	private static final String DOMAIN_MODEL_REFERENCE = "http://org/eclipse/emf/ecp/view/model/200.DomainModelReference"; //$NON-NLS-1$
 	private static final String FEATURE_PATH_DOMAIN_MODEL_REFERENCE = "http://org/eclipse/emf/ecp/view/model/200.FeaturePathDomainModelReference"; //$NON-NLS-1$
 	private static final String INDEX_DOMAIN_MODEL_REFERENCE = "http://www/eclipse/org/emf/ecp/view/indexdmr/model/200.IndexDomainModelReference"; //$NON-NLS-1$
+	private static final String TABLE_DOMAIN_MODEL_REFERENCE = "http://org/eclipse/emf/ecp/view/table/model/190.TableDomainModelReference"; //$NON-NLS-1$
+	private static final String MULTI_SEGMENT = "http://org/eclipse/emfforms/view/multisegment/model/200.MultiDomainModelReferenceSegment"; //$NON-NLS-1$
 
 	/**
 	 * {@inheritDoc}
@@ -64,36 +69,130 @@ public class FeaturePathDMRRemovalMigration extends CustomMigration {
 		}
 
 		// -------------------------
+		// TODO Fix Bug described in commit 1d8e1d9548c417e104ea8513a81973fb04c4ce62
 		// Mapping DMR Migration
-		final EClass mappingDmrEClass = metamodel.getEClass(MAPPING_DOMAIN_MODEL_REFERENCE);
-		EList<Instance> mappingDmrs = model.getInstances(mappingDmrEClass);
-		while (!mappingDmrs.isEmpty()) {
-			final Instance mappingDmr = mappingDmrs.get(0);
-			migrateMappingDmr(model, metamodel, mappingDmr);
-			mappingDmrs = model.getInstances(mappingDmrEClass);
+		// final EClass mappingDmrEClass = metamodel.getEClass(MAPPING_DOMAIN_MODEL_REFERENCE);
+		// EList<Instance> mappingDmrs = model.getInstances(mappingDmrEClass);
+		// while (!mappingDmrs.isEmpty()) {
+		// final Instance mappingDmr = mappingDmrs.get(0);
+		// migrateMappingDmr(model, metamodel, mappingDmr);
+		// mappingDmrs = model.getInstances(mappingDmrEClass);
+		// }
+
+		// -------------------------
+		// Table DMR Migration
+		final EClass tableDmrEClass = metamodel.getEClass(TABLE_DOMAIN_MODEL_REFERENCE);
+		EList<Instance> tableDmrs = model.getInstances(tableDmrEClass);
+		while (!tableDmrs.isEmpty()) {
+			final Instance tableDmr = tableDmrs.get(0);
+			migrateTableDmr(model, metamodel, tableDmr);
+			tableDmrs = model.getInstances(tableDmrEClass);
 		}
 	}
 
 	private void migrateDmr(Model model, Metamodel metamodel, Instance dmr) throws MigrationException {
+		final EClass dmrEClass = metamodel.getEClass(DOMAIN_MODEL_REFERENCE);
 		final EClass featurePathDmrEClass = metamodel.getEClass(FEATURE_PATH_DOMAIN_MODEL_REFERENCE);
 		final EClass indexDmrEClass = metamodel.getEClass(INDEX_DOMAIN_MODEL_REFERENCE);
 		final EClass mappingDmrEClass = metamodel.getEClass(MAPPING_DOMAIN_MODEL_REFERENCE);
-		if (featurePathDmrEClass.equals(dmr.getEClass())) {
+		final EClass tableDmrEClass = metamodel.getEClass(TABLE_DOMAIN_MODEL_REFERENCE);
+
+		if (dmrEClass.equals(dmr.getEClass())) {
+			// TODO remove system out println
+			System.out.println("Was already a standard DMR, no migration needed: " + dmr); //$NON-NLS-1$
+			// No migration needed
+			return;
+		} else if (featurePathDmrEClass.equals(dmr.getEClass())) {
 			migrateFeaturePathDmr(model, metamodel, dmr);
 		}
 		// additional null checks necessary because a EClass is null if it is not used in the model
-		else if (indexDmrEClass != null) {
-			if (indexDmrEClass.equals(dmr.getEClass())) {
-				migrateIndexDmr(model, metamodel, dmr);
-			}
-		} else if (mappingDmrEClass != null) {
-			if (mappingDmrEClass.equals(dmr.getEClass())) {
-				migrateMappingDmr(model, metamodel, dmr);
-			}
+		else if (indexDmrEClass != null && indexDmrEClass.equals(dmr.getEClass())) {
+			migrateIndexDmr(model, metamodel, dmr);
+		}
+		// TODO uncomment when mapping migration works
+		// else if (mappingDmrEClass != null && mappingDmrEClass.equals(dmr.getEClass())) {
+		// migrateMappingDmr(model, metamodel, dmr);
+		// }
+		else if (tableDmrEClass != null && tableDmrEClass.equals(dmr.getEClass())) {
+			migrateTableDmr(model, metamodel, dmr);
 		} else {
 			// TODO remove
 			System.out.println("No suitable migration method for " + dmr); //$NON-NLS-1$
 		}
+	}
+
+	/**
+	 * @param model
+	 * @param metamodel
+	 * @param dmr
+	 * @throws MigrationException
+	 */
+	@SuppressWarnings("unchecked")
+	private void migrateTableDmr(Model model, Metamodel metamodel, Instance dmr) throws MigrationException {
+		final EClass multiSegmentEClass = metamodel.getEClass(MULTI_SEGMENT);
+		if (multiSegmentEClass == null) {
+			throw new MigrationException(new IllegalStateException(
+				"A Table DMR needs to be migrated but the MultiDomainModelReferenceSegment's EClass cannot be found.")); //$NON-NLS-1$
+		}
+
+		final EClass dmrEClass = metamodel.getEClass(DOMAIN_MODEL_REFERENCE);
+		final EClass featureSegmentEClass = metamodel
+			.getEClass("http://org/eclipse/emf/ecp/view/model/200.FeatureDomainModelReferenceSegment"); //$NON-NLS-1$
+		final EClass tableDmrEClass = metamodel.getEClass(TABLE_DOMAIN_MODEL_REFERENCE);
+		final EReference domainModelReferenceERef = (EReference) tableDmrEClass
+			.getEStructuralFeature("domainModelReference"); //$NON-NLS-1$
+		final EReference columnDmrsERef = (EReference) tableDmrEClass
+			.getEStructuralFeature("columnDomainModelReferences"); //$NON-NLS-1$
+		// TODO Auto-generated method stub
+
+		final Instance newDmr = model.newInstance(dmrEClass);
+		final Instance domainModelReference = dmr.get(domainModelReferenceERef);
+
+		final Instance multiSegment;
+		if (domainModelReference == null) {
+			// Table dmr uses reference path and domain model e feature
+
+			// Migrate domain model reference path
+			final EList<Instance> referencePath = dmr.get("domainModelEReferencePath"); //$NON-NLS-1$
+			for (final Instance pathPart : referencePath) {
+				final Instance featureSegment = createSegmentForStructuralFeatureInstance(model,
+					featureSegmentEClass, pathPart);
+				newDmr.add(SEGMENTS, featureSegment);
+			}
+
+			// migrate domainModelEFeature
+			final Instance domainModelEFeature = dmr.get("domainModelEFeature"); //$NON-NLS-1$
+			multiSegment = createSegmentForStructuralFeatureInstance(model,
+				multiSegmentEClass, domainModelEFeature);
+		} else {
+			migrateDmr(model, metamodel, domainModelReference);
+			// domain model reference feature of table dmr now contains a migrated dmr with segments
+			final Instance newDomainModelReference = dmr.get(domainModelReferenceERef);
+			final EList<Instance> domainModelReferenceSegments = newDomainModelReference.get(SEGMENTS);
+			// All but the last segment are copied
+			for (int i = 0; i < domainModelReferenceSegments.size() - 1; i++) {
+				newDmr.add(SEGMENTS, domainModelReferenceSegments.get(i).copy());
+			}
+			// The last segment needs to be "transformed" to a multi segment
+			final Instance lastDomainModelReferenceSegment = domainModelReferenceSegments
+				.get(domainModelReferenceSegments.size() - 1);
+			final String domainModelFeature = lastDomainModelReferenceSegment.get(DOMAIN_MODEL_FEATURE);
+			multiSegment = createSegmentForStructuralFeatureName(model, multiSegmentEClass,
+				domainModelFeature);
+		}
+		newDmr.add(SEGMENTS, multiSegment);
+
+		// Migrate column dmrs and add to multi segment
+		final List<Instance> columnDmrs = new LinkedList<Instance>((EList<Instance>) dmr.get(columnDmrsERef));
+		for (final Instance columDmr : columnDmrs) {
+			migrateDmr(model, metamodel, columDmr);
+		}
+		for (final Instance migratedColumnDmr : (EList<Instance>) dmr.get(columnDmrsERef)) {
+			multiSegment.add("childDomainModelReferences", migratedColumnDmr.copy()); //$NON-NLS-1$
+		}
+
+		replaceDmrInContainer(dmr, newDmr);
+		model.delete(dmr);
 	}
 
 	/**
@@ -138,10 +237,7 @@ public class FeaturePathDMRRemovalMigration extends CustomMigration {
 		}
 
 		// replace Mapping Dmr with new DMR
-		final Instance container = dmr.getContainer();
-		final EReference containerReference = dmr.getContainerReference();
-		container.set(containerReference, newDMR);
-		// Delete old Mapping DMR from the model
+		replaceDmrInContainer(dmr, newDMR);
 		model.delete(dmr);
 	}
 
@@ -208,9 +304,7 @@ public class FeaturePathDMRRemovalMigration extends CustomMigration {
 		}
 
 		// replace IndexDmr with new DMR
-		final Instance container = dmr.getContainer();
-		final EReference containerReference = dmr.getContainerReference();
-		container.set(containerReference, newDMR);
+		replaceDmrInContainer(dmr, newDMR);
 		// Delete old Index DMR from the model
 		model.delete(dmr);
 	}
@@ -250,12 +344,28 @@ public class FeaturePathDMRRemovalMigration extends CustomMigration {
 		newDMR.add(segments, featureSegment);
 
 		// replace FeaturePathDMR with new DMR
-		final Instance container = dmr.getContainer();
-		final EReference containerReference = dmr.getContainerReference();
-		// container.unset(containerReference);
-		container.set(containerReference, newDMR);
+		replaceDmrInContainer(dmr, newDMR);
 		// Delete old FeaturePathDMR from the model
 		model.delete(dmr);
+	}
+
+	/**
+	 * @param oldDmr The DMR that is replaced
+	 * @param newDmr The new DMR
+	 */
+	private void replaceDmrInContainer(Instance oldDmr, Instance newDmr) {
+		final Instance container = oldDmr.getContainer();
+		if (container == null) {
+			return;
+		}
+		final EReference containerReference = oldDmr.getContainerReference();
+		if (containerReference.isMany()) {
+			// TODO may not preserve order
+			container.remove(containerReference, oldDmr);
+			container.add(containerReference, newDmr);
+		} else {
+			container.set(containerReference, newDmr);
+		}
 	}
 
 	/**

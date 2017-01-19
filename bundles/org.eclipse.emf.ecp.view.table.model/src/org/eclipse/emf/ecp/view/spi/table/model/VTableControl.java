@@ -50,7 +50,7 @@ public interface VTableControl extends VControl {
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the value of the '<em>Add Remove Disabled</em>' attribute.
 	 * @see #setAddRemoveDisabled(boolean)
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage#getTableControl_AddRemoveDisabled()
@@ -64,7 +64,7 @@ public interface VTableControl extends VControl {
 	 * Remove Disabled</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param value the new value of the '<em>Add Remove Disabled</em>' attribute.
 	 * @see #isAddRemoveDisabled()
 	 * @generated
@@ -110,7 +110,7 @@ public interface VTableControl extends VControl {
 	 * should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the value of the '<em>Column Configurations</em>' containment reference list.
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage#getTableControl_ColumnConfigurations()
 	 * @model containment="true"
@@ -128,7 +128,7 @@ public interface VTableControl extends VControl {
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the value of the '<em>Detail Editing</em>' attribute.
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.DetailEditing
 	 * @see #setDetailEditing(DetailEditing)
@@ -143,7 +143,7 @@ public interface VTableControl extends VControl {
 	 * Editing</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param value the new value of the '<em>Detail Editing</em>' attribute.
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.DetailEditing
 	 * @see #getDetailEditing()
@@ -159,7 +159,7 @@ public interface VTableControl extends VControl {
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the value of the '<em>Detail View</em>' containment reference.
 	 * @see #setDetailView(VView)
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage#getTableControl_DetailView()
@@ -173,7 +173,7 @@ public interface VTableControl extends VControl {
 	 * View</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param value the new value of the '<em>Detail View</em>' containment reference.
 	 * @see #getDetailView()
 	 * @generated

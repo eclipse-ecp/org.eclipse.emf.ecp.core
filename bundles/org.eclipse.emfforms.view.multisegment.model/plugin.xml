@@ -31,4 +31,10 @@
             type="multisegment"
             class="org.eclipse.emfforms.view.spi.multisegment.model.util.VMultisegmentResourceFactoryImpl"/>
    </extension>
+   <extension
+         point="org.eclipse.emf.edapt.migrators">
+      <migrator
+            path="model/multisegment.history">
+      </migrator>
+   </extension>
 </plugin>
