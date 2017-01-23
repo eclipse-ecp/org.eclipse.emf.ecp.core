@@ -428,6 +428,7 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 			sl.topControl = createUnsetLabel;
 			unsetButton.setImage(Activator.getImage(ICONS_SET_FEATURE));
 		}
+		controlComposite.layout(true);
 		/* There is no UNSET databinding trigger available */
 		final UnsetModelChangeListener unsetModelChangeListener = new UnsetModelChangeListener(eObject, unsetButton,
 			structuralFeature, createUnsetLabel, controlComposite, sl, baseControl);
