@@ -42,6 +42,9 @@ import org.eclipse.swt.widgets.Control;
  *
  */
 public class TableControlDetailPanelRCPRenderer extends TableControlDetailPanelRenderer {
+
+	private CutCopyPasteListener cutCopyPasteListener;
+
 	/**
 	 * Default constructor.
 	 *
@@ -89,11 +92,19 @@ public class TableControlDetailPanelRCPRenderer extends TableControlDetailPanelR
 				final EditingDomain editingDomain = getEditingDomain(getViewModelContext().getDomainModel());
 				final Setting setting = getEMFFormsDatabinding().getSetting(getDMRToMultiReference(),
 					getViewModelContext().getDomainModel());
-				TableControlRCPRenderer.enableCutCopyPaste(tableViewer, editingDomain, setting);
+				cutCopyPasteListener = TableControlRCPRenderer.enableCutCopyPaste(tableViewer, editingDomain, setting);
 			} catch (final DatabindingFailedException ex) {
 				getReportService().report(new AbstractReport(ex, "Enabling Cut Copy Paste failed")); //$NON-NLS-1$
 			}
 		}
 		return control;
+	}
+
+	@Override
+	protected void rootDomainModelChanged() throws DatabindingFailedException {
+		super.rootDomainModelChanged();
+		final Setting setting = getEMFFormsDatabinding().getSetting(getDMRToMultiReference(),
+			getViewModelContext().getDomainModel());
+		cutCopyPasteListener.rootDomainModelChanged(setting);
 	}
 }
