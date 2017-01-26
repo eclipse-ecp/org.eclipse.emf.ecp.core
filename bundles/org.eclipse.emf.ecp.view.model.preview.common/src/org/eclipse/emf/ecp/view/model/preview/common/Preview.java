@@ -39,7 +39,6 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.LocalizationAdapter;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VView;
-import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -113,10 +112,6 @@ public class Preview {
 				}
 
 				if (EStructuralFeature.class.cast(notification.getFeature()).isTransient()) {
-					return;
-				}
-
-				if (VViewPackage.eINSTANCE.getDomainModelReference_ChangeListener() == notification.getFeature()) {
 					return;
 				}
 
