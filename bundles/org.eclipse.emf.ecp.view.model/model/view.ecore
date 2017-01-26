@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="model" nsURI="http://org/eclipse/emf/ecp/view/model/200" nsPrefix="org.eclipse.emf.ecp.view.model">
-  <eAnnotations source="http://www.eclipse.org/edapt">
-    <details key="historyURI" value="../../org.eclipse.emf.ecp.view.indexdmr.model/model/indexdmr.history"/>
-  </eAnnotations>
   <eClassifiers xsi:type="ecore:EClass" name="Diagnostic">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="diagnostics" upperBound="-1"
         eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EJavaObject"
@@ -22,6 +19,8 @@
         transient="true" defaultValueLiteral="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="readonly" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"
         defaultValueLiteral="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EString"
+        transient="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="diagnostic" eType="#//Diagnostic"
         transient="true" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="attachments" upperBound="-1"

@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.EObject;
  *              <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#isVisible <em>Visible</em>}</li>
  *              <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#isEnabled <em>Enabled</em>}</li>
  *              <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#isReadonly <em>Readonly</em>}</li>
+ *              <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#getLabel <em>Label</em>}</li>
  *              <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#getDiagnostic <em>Diagnostic</em>}</li>
  *              <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#getAttachments <em>Attachments</em>}</li>
  *              <li>{@link org.eclipse.emf.ecp.view.spi.model.VElement#getUuid <em>Uuid</em>}</li>
@@ -155,6 +156,34 @@ public interface VElement extends EObject {
 	 * @generated
 	 */
 	void setReadonly(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Label</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the value of the '<em>Label</em>' attribute.
+	 * @see #setLabel(String)
+	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getElement_Label()
+	 * @model transient="true"
+	 * @generated
+	 */
+	String getLabel();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.spi.model.VElement#getLabel <em>Label</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @param value the new value of the '<em>Label</em>' attribute.
+	 * @see #getLabel()
+	 * @generated
+	 */
+	void setLabel(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Diagnostic</b></em>' containment reference.

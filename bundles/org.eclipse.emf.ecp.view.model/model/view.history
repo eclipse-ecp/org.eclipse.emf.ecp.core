@@ -169,6 +169,20 @@
           <referenceValue href="../../org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
         </changes>
       </changes>
+      <changes xsi:type="history:Create" xmi:id="_8ww5eUNeEeaFtY2yvf2yjQ" referenceName="eStructuralFeatures">
+        <target href="view.ecore#//Element"/>
+        <element href="view.ecore#//Element/label"/>
+        <changes xsi:type="history:Set" xmi:id="_8ww5ekNeEeaFtY2yvf2yjQ" featureName="name" dataValue="label">
+          <element href="view.ecore#//Element/label"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8ww5e0NeEeaFtY2yvf2yjQ" featureName="transient" dataValue="true" oldDataValue="false">
+          <element href="view.ecore#//Element/label"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_8ww5fENeEeaFtY2yvf2yjQ" featureName="eType">
+          <element href="view.ecore#//Element/label"/>
+          <referenceValue href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </changes>
+      </changes>
       <changes xsi:type="history:Create" xmi:id="_8ww4fUNeEeaFtY2yvf2yjQ" referenceName="eStructuralFeatures">
         <target href="view.ecore#//Element"/>
         <element href="view.ecore#//Element/diagnostic"/>
