@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ASCII"?>
+<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.indexdmr.model="http://www.eclipse.org/emf/ecp/view/indexdmr/model" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/170" xmlns:org.eclipse.emf.ecp.view.table.model="http://org/eclipse/emf/ecp/view/table/model/150" xmi:id="_3O5_AOOnEeab9PAcV_6hwQ" name="B" ecorePath="/org.eclipse.emfforms.core.services.databinding.testmodel/model/test.ecore">
+  <rootEClass href="test#//B"/>
+  <children xsi:type="org.eclipse.emf.ecp.view.table.model:TableControl" xmi:id="_5KYNMOOnEeab9PAcV_6hwQ" name="Cascaded Dmr">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.table.model:TableDomainModelReference" xmi:id="_I3CTUOOoEeab9PAcV_6hwQ">
+      <columnDomainModelReferences xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_NdJi0OOoEeab9PAcV_6hwQ">
+        <domainModelEFeature xsi:type="ecore:EAttribute" href="test#//D/x"/>
+        <domainModelEReferencePath href="test#//C/d"/>
+      </columnDomainModelReferences>
+      <domainModelReference xsi:type="org.eclipse.emf.ecp.view.indexdmr.model:IndexDomainModelReference" xmi:id="_I3CTUeOoEeab9PAcV_6hwQ" index="1">
+        <prefixDMR xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_I3CTUuOoEeab9PAcV_6hwQ">
+          <domainModelEFeature xsi:type="ecore:EReference" href="test#//B/cList"/>
+        </prefixDMR>
+        <targetDMR xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_I3CTU-OoEeab9PAcV_6hwQ">
+          <domainModelEFeature xsi:type="ecore:EReference" href="test#//B/cList"/>
+          <domainModelEReferencePath href="test#//C/a"/>
+          <domainModelEReferencePath href="test#//A/b"/>
+        </targetDMR>
+      </domainModelReference>
+    </domainModelReference>
+  </children>
+</org.eclipse.emf.ecp.view.model:View>

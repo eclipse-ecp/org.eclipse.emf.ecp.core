@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -25,7 +25,7 @@ import org.eclipse.emf.edapt.spi.migration.Metamodel;
 import org.eclipse.emf.edapt.spi.migration.Model;
 
 /**
- * {@link CustomMigration} that migrates feature path DMRs to "normal" DMRs with segments.
+ * {@link CustomMigration} that migrates feature path DMRs and subclasses to "normal" DMRs with segments.
  *
  * @author Lucas Koehler
  *
@@ -62,7 +62,6 @@ public class FeaturePathDMRRemovalMigration extends CustomMigration {
 		final EClass indexDmrEClass = metamodel.getEClass(INDEX_DOMAIN_MODEL_REFERENCE);
 		EList<Instance> indexDmrs = model.getInstances(indexDmrEClass);
 		while (!indexDmrs.isEmpty()) {
-			// TODO performance problem?
 			final Instance indexDmr = indexDmrs.get(0);
 			migrateIndexDmr(model, metamodel, indexDmr);
 			indexDmrs = model.getInstances(indexDmrEClass);
@@ -94,18 +93,16 @@ public class FeaturePathDMRRemovalMigration extends CustomMigration {
 		final EClass dmrEClass = metamodel.getEClass(DOMAIN_MODEL_REFERENCE);
 		final EClass featurePathDmrEClass = metamodel.getEClass(FEATURE_PATH_DOMAIN_MODEL_REFERENCE);
 		final EClass indexDmrEClass = metamodel.getEClass(INDEX_DOMAIN_MODEL_REFERENCE);
-		final EClass mappingDmrEClass = metamodel.getEClass(MAPPING_DOMAIN_MODEL_REFERENCE);
+		// final EClass mappingDmrEClass = metamodel.getEClass(MAPPING_DOMAIN_MODEL_REFERENCE);
 		final EClass tableDmrEClass = metamodel.getEClass(TABLE_DOMAIN_MODEL_REFERENCE);
 
 		if (dmrEClass.equals(dmr.getEClass())) {
-			// TODO remove system out println
-			System.out.println("Was already a standard DMR, no migration needed: " + dmr); //$NON-NLS-1$
 			// No migration needed
 			return;
 		} else if (featurePathDmrEClass.equals(dmr.getEClass())) {
 			migrateFeaturePathDmr(model, metamodel, dmr);
 		}
-		// additional null checks necessary because a EClass is null if it is not used in the model
+		// additional null checks necessary because an EClass is null if it is not used in the model
 		else if (indexDmrEClass != null && indexDmrEClass.equals(dmr.getEClass())) {
 			migrateIndexDmr(model, metamodel, dmr);
 		}
@@ -115,9 +112,6 @@ public class FeaturePathDMRRemovalMigration extends CustomMigration {
 		// }
 		else if (tableDmrEClass != null && tableDmrEClass.equals(dmr.getEClass())) {
 			migrateTableDmr(model, metamodel, dmr);
-		} else {
-			// TODO remove
-			System.out.println("No suitable migration method for " + dmr); //$NON-NLS-1$
 		}
 	}
 
@@ -143,7 +137,6 @@ public class FeaturePathDMRRemovalMigration extends CustomMigration {
 			.getEStructuralFeature("domainModelReference"); //$NON-NLS-1$
 		final EReference columnDmrsERef = (EReference) tableDmrEClass
 			.getEStructuralFeature("columnDomainModelReferences"); //$NON-NLS-1$
-		// TODO Auto-generated method stub
 
 		final Instance newDmr = model.newInstance(dmrEClass);
 		final Instance domainModelReference = dmr.get(domainModelReferenceERef);
@@ -211,7 +204,6 @@ public class FeaturePathDMRRemovalMigration extends CustomMigration {
 		final Instance mappedClass = dmr.get("mappedClass"); //$NON-NLS-1$
 		final Instance newDMR = model.newInstance(dmrEClass);
 		final Instance domainModelReference = dmr.get("domainModelReference"); //$NON-NLS-1$
-		// TODO Auto-generated method stub
 
 		// migrate domainModelEReferencePath
 		final EList<Instance> referencePath = dmr.get("domainModelEReferencePath"); //$NON-NLS-1$
@@ -360,9 +352,10 @@ public class FeaturePathDMRRemovalMigration extends CustomMigration {
 		}
 		final EReference containerReference = oldDmr.getContainerReference();
 		if (containerReference.isMany()) {
-			// TODO may not preserve order
-			container.remove(containerReference, oldDmr);
-			container.add(containerReference, newDmr);
+			final EList<Instance> list = container.get(containerReference);
+			final int index = list.indexOf(oldDmr);
+			list.remove(index);
+			list.add(index, newDmr);
 		} else {
 			container.set(containerReference, newDmr);
 		}

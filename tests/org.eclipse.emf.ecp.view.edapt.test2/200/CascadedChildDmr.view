@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ASCII"?>
+<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.indexdmr.model="http://www.eclipse.org/emf/ecp/view/indexdmr/model" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/170" xmlns:org.eclipse.emf.ecp.view.table.model="http://org/eclipse/emf/ecp/view/table/model/150" xmi:id="_3O5_AOOnEeab9PAcV_6hwQ" name="B" ecorePath="/org.eclipse.emfforms.core.services.databinding.testmodel/model/test.ecore">
+  <rootEClass href="test#//B"/>
+  <children xsi:type="org.eclipse.emf.ecp.view.table.model:TableControl" xmi:id="_UMHtgOOuEeab9PAcV_6hwQ" name="Cascaded Child Dmr">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.table.model:TableDomainModelReference" xmi:id="_ZOpMMOOuEeab9PAcV_6hwQ">
+      <columnDomainModelReferences xsi:type="org.eclipse.emf.ecp.view.indexdmr.model:IndexDomainModelReference" xmi:id="_krlwoOOuEeab9PAcV_6hwQ" index="2">
+        <prefixDMR xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_krlwoeOuEeab9PAcV_6hwQ">
+          <domainModelEFeature xsi:type="ecore:EReference" href="test#//B/cList"/>
+          <domainModelEReferencePath href="test#//C/a"/>
+          <domainModelEReferencePath href="test#//A/b"/>
+        </prefixDMR>
+        <targetDMR xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_krlwouOuEeab9PAcV_6hwQ">
+          <domainModelEFeature xsi:type="ecore:EReference" href="test#//C/a"/>
+        </targetDMR>
+      </columnDomainModelReferences>
+      <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_ZOpMMeOuEeab9PAcV_6hwQ">
+        <domainModelEFeature xsi:type="ecore:EReference" href="test#//B/cList"/>
+      </domainModelReference>
+    </domainModelReference>
+  </children>
+</org.eclipse.emf.ecp.view.model:View>
