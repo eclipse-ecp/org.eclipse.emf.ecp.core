@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="ASCII"?>
-<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/170" xmi:id="_9-nfwEWDEeWAUvDRzOysOA">
-  <rootEClass href="http://www.eclipse.org/emf/ecp/view/mappingdmr/model#//MappingDomainModelReference"/>
+<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/200" xmi:id="_9-nfwEWDEeWAUvDRzOysOA">
+  <rootEClass href="http://www.eclipse.org/emf/ecp/view/mappingdmr/model/200#//MappingDomainModelReference"/>
   <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_9-pU8EWDEeWAUvDRzOysOA" name="Control domainModelEFeature">
-    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_9-pU8UWDEeWAUvDRzOysOA">
-      <domainModelEFeature xsi:type="ecore:EReference" href="http://org/eclipse/emf/ecp/view/model/170#//FeaturePathDomainModelReference/domainModelEFeature"/>
+    <domainModelReference xmi:id="_mgPIlOlVEeaycIO3gg5WLQ">
+      <segments xsi:type="org.eclipse.emf.ecp.view.model:FeatureDomainModelReferenceSegment" xmi:id="_mgPIl-lVEeaycIO3gg5WLQ" domainModelFeature="domainModelEFeature"/>
     </domainModelReference>
   </children>
   <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_9-pU8kWDEeWAUvDRzOysOA" name="Control mappedClass">
-    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_9-pU80WDEeWAUvDRzOysOA">
-      <domainModelEFeature xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/ecp/view/mappingdmr/model#//MappingDomainModelReference/mappedClass"/>
+    <domainModelReference xmi:id="_mgPIlelVEeaycIO3gg5WLQ">
+      <segments xsi:type="org.eclipse.emf.ecp.view.model:FeatureDomainModelReferenceSegment" xmi:id="_mgPImOlVEeaycIO3gg5WLQ" domainModelFeature="mappedClass"/>
     </domainModelReference>
   </children>
   <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_9-pU9EWDEeWAUvDRzOysOA" name="SubReference">
-    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_9-pU9UWDEeWAUvDRzOysOA">
-      <domainModelEFeature xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/ecp/view/mappingdmr/model#//MappingDomainModelReference/domainModelReference"/>
+    <domainModelReference xmi:id="_mgPIlulVEeaycIO3gg5WLQ">
+      <segments xsi:type="org.eclipse.emf.ecp.view.model:FeatureDomainModelReferenceSegment" xmi:id="_mgPImelVEeaycIO3gg5WLQ" domainModelFeature="domainModelReference"/>
     </domainModelReference>
   </children>
 </org.eclipse.emf.ecp.view.model:View>

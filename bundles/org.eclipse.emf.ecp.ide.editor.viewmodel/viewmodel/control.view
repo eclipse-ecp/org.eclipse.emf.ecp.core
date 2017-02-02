@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="ASCII"?>
-<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/170" xmi:id="_WB0E8EWCEeWfKJaajyNdyA" ecorePath="/org.eclipse.emf.ecp.view.model/model/view.ecore">
-  <rootEClass href="http://org/eclipse/emf/ecp/view/model/170#//Control"/>
+<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/200" xmi:id="_WB0E8EWCEeWfKJaajyNdyA">
+  <rootEClass href="http://org/eclipse/emf/ecp/view/model/200#//Control"/>
   <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_WB0E8UWCEeWfKJaajyNdyA" name="Control name">
-    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_WB0E8kWCEeWfKJaajyNdyA">
-      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/emf/ecp/view/model/170#//Element/name"/>
+    <domainModelReference xmi:id="_RHFZtelVEeaycIO3gg5WLQ">
+      <segments xsi:type="org.eclipse.emf.ecp.view.model:FeatureDomainModelReferenceSegment" xmi:id="_RHFZuelVEeaycIO3gg5WLQ" domainModelFeature="name"/>
     </domainModelReference>
   </children>
   <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_WB0E80WCEeWfKJaajyNdyA" name="Control readonly">
-    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_WB0E9EWCEeWfKJaajyNdyA">
-      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/emf/ecp/view/model/170#//Element/readonly"/>
+    <domainModelReference xmi:id="_RHFZtulVEeaycIO3gg5WLQ">
+      <segments xsi:type="org.eclipse.emf.ecp.view.model:FeatureDomainModelReferenceSegment" xmi:id="_RHFZuulVEeaycIO3gg5WLQ" domainModelFeature="readonly"/>
     </domainModelReference>
   </children>
   <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_WB0E9UWCEeWfKJaajyNdyA" name="Control labelAlignment">
-    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_WB0E9kWCEeWfKJaajyNdyA">
-      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/emf/ecp/view/model/170#//Control/labelAlignment"/>
+    <domainModelReference xmi:id="_RHFZt-lVEeaycIO3gg5WLQ">
+      <segments xsi:type="org.eclipse.emf.ecp.view.model:FeatureDomainModelReferenceSegment" xmi:id="_RHFZu-lVEeaycIO3gg5WLQ" domainModelFeature="labelAlignment"/>
     </domainModelReference>
   </children>
   <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_WB0E90WCEeWfKJaajyNdyA" name="Control domainModelReference">
-    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_WB0E-EWCEeWfKJaajyNdyA">
-      <domainModelEFeature xsi:type="ecore:EReference" href="http://org/eclipse/emf/ecp/view/model/170#//Control/domainModelReference"/>
+    <domainModelReference xmi:id="_RHFZuOlVEeaycIO3gg5WLQ">
+      <segments xsi:type="org.eclipse.emf.ecp.view.model:FeatureDomainModelReferenceSegment" xmi:id="_RHFZvOlVEeaycIO3gg5WLQ" domainModelFeature="domainModelReference"/>
     </domainModelReference>
   </children>
 </org.eclipse.emf.ecp.view.model:View>
