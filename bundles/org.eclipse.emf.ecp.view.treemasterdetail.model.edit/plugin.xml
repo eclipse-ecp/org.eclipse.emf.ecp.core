@@ -31,7 +31,7 @@
    <extension point="org.eclipse.emf.edit.childCreationExtenders">
       <!-- @generated treeMasterDetail -->
       <extender
-            uri="http://org/eclipse/emf/ecp/view/model/170"
+            uri="http://org/eclipse/emf/ecp/view/model/200"
             class="org.eclipse.emf.ecp.view.treemasterdetail.model.provider.TreeMasterDetailItemProviderAdapterFactory$ViewChildCreationExtender"/>
    </extension>
 

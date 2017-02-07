@@ -72,7 +72,7 @@ public class DefaultFilter implements ECPFilterProvider {
 	}
 
 	private void addViewModels(Set<String> packages) {
-		packages.add("http://org/eclipse/emf/ecp/view/model/170"); //$NON-NLS-1$
+		packages.add("http://org/eclipse/emf/ecp/view/model/200"); //$NON-NLS-1$
 		packages.add("http://org/eclipse/emf/ecp/view/custom/model"); //$NON-NLS-1$
 		packages.add("http://org/eclipse/emf/ecp/view/dynamictree/model"); //$NON-NLS-1$
 		packages.add("http://org/eclipse/emf/ecp/view/group/model"); //$NON-NLS-1$
@@ -81,7 +81,7 @@ public class DefaultFilter implements ECPFilterProvider {
 		packages.add("http://org/eclipse/emf/ecp/view/label/model"); //$NON-NLS-1$
 		packages.add("http://org/eclipse/emf/ecp/view/rule/model"); //$NON-NLS-1$
 		packages.add("http://org/eclipse/emf/ecp/view/separator/model"); //$NON-NLS-1$
-		packages.add("http://org/eclipse/emf/ecp/view/table/model/150"); //$NON-NLS-1$
+		packages.add("http://org/eclipse/emf/ecp/view/table/model/190"); //$NON-NLS-1$
 		packages.add("http://org/eclipse/emf/ecp/view/vertical/model"); //$NON-NLS-1$
 
 		packages.add("http://org/eclipse/emf/ecp/view/categorization/model"); //$NON-NLS-1$
@@ -103,13 +103,14 @@ public class DefaultFilter implements ECPFilterProvider {
 
 		packages.add("http://org/eclipse/emf/ecp/view/compoundcontrol/model"); //$NON-NLS-1$
 
-		packages.add("http://www.eclipse.org/emf/ecp/view/mappingdmr/model"); //$NON-NLS-1$
+		packages.add("http://www/eclipse/org/emf/ecp/view/mappingdmr/model/200"); //$NON-NLS-1$
 		packages.add("http://org/eclipse/emf/ecp/view/viewproxy/model"); //$NON-NLS-1$
 		packages.add("http://org/eclipse/emf/ecp/view/section/model"); //$NON-NLS-1$
 		packages.add("http://www.eclipse.org/emf/ecp/view/template/style/textcontrol/enablement/model"); //$NON-NLS-1$
 
-		packages.add("http://www.eclipse.org/emf/ecp/view/indexdmr/model"); //$NON-NLS-1$
+		packages.add("http://www/eclipse/org/emf/ecp/view/indexdmr/model/200"); //$NON-NLS-1$
 		packages.add("http://www.eclipse.org/emf/ecp/view/keyattributedmr/model"); //$NON-NLS-1$
+		packages.add("http://org/eclipse/emfforms/view/multisegment/model/200"); //$NON-NLS-1$
 
 		packages.add("http://org/eclipse/emf/ecp/view/diffmerge/model"); //$NON-NLS-1$
 
