@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ASCII"?>
+<history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:history="http://www.eclipse.org/emf/edapt/history/0.3" xmi:id="_IEyW8OlOEeaH8eNkz4wasw">
+  <releases xmi:id="_IEyW8elOEeaH8eNkz4wasw" date="2017-02-02T14:48:05.727+0100" label="160">
+    <changes xsi:type="history:CompositeChange" xmi:id="_IEyW8ulOEeaH8eNkz4wasw">
+      <changes xsi:type="history:Create" xmi:id="_IEyW8-lOEeaH8eNkz4wasw">
+        <element href="annotation.ecore#/"/>
+        <changes xsi:type="history:Set" xmi:id="_IEyW9OlOEeaH8eNkz4wasw" featureName="name" dataValue="annotation">
+          <element href="annotation.ecore#/"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_IEyW9elOEeaH8eNkz4wasw" featureName="nsURI" dataValue="http://org/eclipse/emf/emfforms/view/annotation/model">
+          <element href="annotation.ecore#/"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_IEyW9ulOEeaH8eNkz4wasw" featureName="nsPrefix" dataValue="org.eclipse.emfforms.view.annotation.model">
+          <element href="annotation.ecore#/"/>
+        </changes>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_IEyW9-lOEeaH8eNkz4wasw" referenceName="eClassifiers">
+        <target href="annotation.ecore#/"/>
+        <element href="annotation.ecore#//Annotation"/>
+        <changes xsi:type="history:Set" xmi:id="_IEyW-OlOEeaH8eNkz4wasw" featureName="name" dataValue="Annotation">
+          <element href="annotation.ecore#//Annotation"/>
+        </changes>
+        <changes xsi:type="history:Add" xmi:id="_IEyW-elOEeaH8eNkz4wasw" featureName="eSuperTypes">
+          <element href="annotation.ecore#//Annotation"/>
+          <referenceValue href="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//Attachment"/>
+        </changes>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_IEyW-ulOEeaH8eNkz4wasw" referenceName="eStructuralFeatures">
+        <target href="annotation.ecore#//Annotation"/>
+        <element href="annotation.ecore#//Annotation/key"/>
+        <changes xsi:type="history:Set" xmi:id="_IEyW--lOEeaH8eNkz4wasw" featureName="name" dataValue="key">
+          <element href="annotation.ecore#//Annotation/key"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_IEyW_OlOEeaH8eNkz4wasw" featureName="lowerBound" dataValue="1" oldDataValue="0">
+          <element href="annotation.ecore#//Annotation/key"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_IEy-AOlOEeaH8eNkz4wasw" featureName="eType">
+          <element href="annotation.ecore#//Annotation/key"/>
+          <referenceValue href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </changes>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_IEy-AelOEeaH8eNkz4wasw" referenceName="eStructuralFeatures">
+        <target href="annotation.ecore#//Annotation"/>
+        <element href="annotation.ecore#//Annotation/value"/>
+        <changes xsi:type="history:Set" xmi:id="_IEy-AulOEeaH8eNkz4wasw" featureName="name" dataValue="value">
+          <element href="annotation.ecore#//Annotation/value"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_IEy-A-lOEeaH8eNkz4wasw" featureName="eType">
+          <element href="annotation.ecore#//Annotation/value"/>
+          <referenceValue href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </changes>
+      </changes>
+    </changes>
+  </releases>
+  <releases xmi:id="_OSvG8OlOEeaH8eNkz4wasw"/>
+</history:History>
