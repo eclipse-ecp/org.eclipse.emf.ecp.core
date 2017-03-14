@@ -61,7 +61,7 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 	 * This keeps track of the root adapter factory that delegates to this adapter factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected ComposedAdapterFactory parentAdapterFactory;
@@ -70,7 +70,7 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 	 * This is used to implement {@link org.eclipse.emf.edit.provider.IChangeNotifier}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected IChangeNotifier changeNotifier = new ChangeNotifier();
@@ -79,7 +79,7 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 	 * This helps manage the child creation extenders.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected ChildCreationExtenderManager childCreationExtenderManager = new ChildCreationExtenderManager(
@@ -89,7 +89,7 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 	 * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected Collection<Object> supportedTypes = new ArrayList<Object>();
@@ -98,7 +98,7 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 	 * This constructs an instance.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public RuleItemProviderAdapterFactory() {
@@ -114,7 +114,7 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 	 * instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected LeafConditionItemProvider leafConditionItemProvider;
@@ -123,13 +123,12 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Adapter createLeafConditionAdapter() {
-		if (leafConditionItemProvider == null)
-		{
+		if (leafConditionItemProvider == null) {
 			leafConditionItemProvider = new LeafConditionItemProvider(this);
 		}
 
@@ -141,7 +140,7 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 	 * instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected OrConditionItemProvider orConditionItemProvider;
@@ -150,13 +149,12 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.rule.model.OrCondition}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Adapter createOrConditionAdapter() {
-		if (orConditionItemProvider == null)
-		{
+		if (orConditionItemProvider == null) {
 			orConditionItemProvider = new OrConditionItemProvider(this);
 		}
 
@@ -168,7 +166,7 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 	 * instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected AndConditionItemProvider andConditionItemProvider;
@@ -177,13 +175,12 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.rule.model.AndCondition}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Adapter createAndConditionAdapter() {
-		if (andConditionItemProvider == null)
-		{
+		if (andConditionItemProvider == null) {
 			andConditionItemProvider = new AndConditionItemProvider(this);
 		}
 
@@ -195,7 +192,7 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 	 * instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected ShowRuleItemProvider showRuleItemProvider;
@@ -204,13 +201,12 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.rule.model.ShowRule}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Adapter createShowRuleAdapter() {
-		if (showRuleItemProvider == null)
-		{
+		if (showRuleItemProvider == null) {
 			showRuleItemProvider = new ShowRuleItemProvider(this);
 		}
 
@@ -222,7 +218,7 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 	 * instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected EnableRuleItemProvider enableRuleItemProvider;
@@ -231,13 +227,12 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.rule.model.EnableRule}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Adapter createEnableRuleAdapter() {
-		if (enableRuleItemProvider == null)
-		{
+		if (enableRuleItemProvider == null) {
 			enableRuleItemProvider = new EnableRuleItemProvider(this);
 		}
 
@@ -248,7 +243,7 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -260,7 +255,7 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 	 * This sets the composed adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -272,7 +267,7 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -284,7 +279,7 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 	 * This implementation substitutes the factory itself as the key for the adapter.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -295,16 +290,14 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Object adapt(Object object, Object type) {
-		if (isFactoryForType(type))
-		{
-			final Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter))
-			{
+		if (isFactoryForType(type)) {
+			Object adapter = super.adapt(object, type);
+			if (!(type instanceof Class<?>) || (((Class<?>) type).isInstance(adapter))) {
 				return adapter;
 			}
 		}
@@ -315,7 +308,7 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public List<IChildCreationExtender> getChildCreationExtenders() {
@@ -325,7 +318,7 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -337,7 +330,7 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -349,7 +342,7 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 	 * This adds a listener.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -361,7 +354,7 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 	 * This removes a listener.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -373,15 +366,14 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 	 * This delegates to {@link #changeNotifier} and to {@link #parentAdapterFactory}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void fireNotifyChanged(Notification notification) {
 		changeNotifier.fireNotifyChanged(notification);
 
-		if (parentAdapterFactory != null)
-		{
+		if (parentAdapterFactory != null) {
 			parentAdapterFactory.fireNotifyChanged(notification);
 		}
 	}
@@ -390,33 +382,28 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 	 * This disposes all of the item providers created by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void dispose() {
-		if (leafConditionItemProvider != null) {
+		if (leafConditionItemProvider != null)
 			leafConditionItemProvider.dispose();
-		}
-		if (orConditionItemProvider != null) {
+		if (orConditionItemProvider != null)
 			orConditionItemProvider.dispose();
-		}
-		if (andConditionItemProvider != null) {
+		if (andConditionItemProvider != null)
 			andConditionItemProvider.dispose();
-		}
-		if (showRuleItemProvider != null) {
+		if (showRuleItemProvider != null)
 			showRuleItemProvider.dispose();
-		}
-		if (enableRuleItemProvider != null) {
+		if (enableRuleItemProvider != null)
 			enableRuleItemProvider.dispose();
-		}
 	}
 
 	/**
 	 * A child creation extender for the {@link VViewPackage}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public static class ViewChildCreationExtender implements
@@ -425,7 +412,7 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 		 * The switch for creating child descriptors specific to each extended class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
+		 * 
 		 * @generated
 		 */
 		protected static class CreationSwitch extends ViewSwitch<Object> {
@@ -433,7 +420,7 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 			 * The child descriptors being populated.
 			 * <!-- begin-user-doc -->
 			 * <!-- end-user-doc -->
-			 *
+			 * 
 			 * @generated
 			 */
 			protected List<Object> newChildDescriptors;
@@ -442,7 +429,7 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 			 * The domain in which to create the children.
 			 * <!-- begin-user-doc -->
 			 * <!-- end-user-doc -->
-			 *
+			 * 
 			 * @generated
 			 */
 			protected EditingDomain editingDomain;
@@ -451,7 +438,7 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 			 * Creates the a switch for populating child descriptors in the given domain.
 			 * <!-- begin-user-doc -->
 			 * <!-- end-user-doc -->
-			 *
+			 * 
 			 * @generated
 			 */
 			CreationSwitch(List<Object> newChildDescriptors,
@@ -463,21 +450,16 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 			/**
 			 * <!-- begin-user-doc -->
 			 * <!-- end-user-doc -->
-			 *
+			 * 
 			 * @generated
 			 */
 			@Override
-			public Object caseElement(VElement object)
-			{
-				newChildDescriptors.add
-					(createChildParameter
-					(VViewPackage.Literals.ELEMENT__ATTACHMENTS,
-						RuleFactory.eINSTANCE.createShowRule()));
+			public Object caseElement(VElement object) {
+				newChildDescriptors.add(createChildParameter(VViewPackage.Literals.ELEMENT__ATTACHMENTS,
+					RuleFactory.eINSTANCE.createShowRule()));
 
-				newChildDescriptors.add
-					(createChildParameter
-					(VViewPackage.Literals.ELEMENT__ATTACHMENTS,
-						RuleFactory.eINSTANCE.createEnableRule()));
+				newChildDescriptors.add(createChildParameter(VViewPackage.Literals.ELEMENT__ATTACHMENTS,
+					RuleFactory.eINSTANCE.createEnableRule()));
 
 				return null;
 			}
@@ -485,7 +467,7 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 			/**
 			 * <!-- begin-user-doc -->
 			 * <!-- end-user-doc -->
-			 *
+			 * 
 			 * @generated
 			 */
 			protected CommandParameter createChildParameter(Object feature,
@@ -498,13 +480,13 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 		/**
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
+		 * 
 		 * @generated
 		 */
 		@Override
 		public Collection<Object> getNewChildDescriptors(Object object,
 			EditingDomain editingDomain) {
-			final ArrayList<Object> result = new ArrayList<Object>();
+			ArrayList<Object> result = new ArrayList<Object>();
 			new CreationSwitch(result, editingDomain).doSwitch((EObject) object);
 			return result;
 		}
@@ -512,7 +494,7 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 		/**
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
+		 * 
 		 * @generated
 		 */
 		@Override

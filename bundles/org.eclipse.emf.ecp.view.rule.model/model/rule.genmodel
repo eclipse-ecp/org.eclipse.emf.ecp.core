@@ -11,11 +11,16 @@
       utilityPackageSuffix="model.util" providerPackageSuffix="model.provider" presentationPackageSuffix="model.presentation"
       testsPackageSuffix="model.tests" extensibleProviderFactory="true" childCreationExtenders="true"
       ecorePackage="rule.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="rule.ecore#//CompareType">
+      <genEnumLiterals ecoreEnumLiteral="rule.ecore#//CompareType/EQUALS"/>
+      <genEnumLiterals ecoreEnumLiteral="rule.ecore#//CompareType/NOT_EQUALS"/>
+    </genEnums>
     <genClasses image="false" ecoreClass="rule.ecore#//Condition"/>
     <genClasses ecoreClass="rule.ecore#//LeafCondition">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rule.ecore#//LeafCondition/expectedValue"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rule.ecore#//LeafCondition/domainModelReference"/>
+      <genFeatures property="None" createChild="false" ecoreFeature="ecore:EReference rule.ecore#//LeafCondition/domainModelReference"/>
       <genFeatures property="None" children="true" createChild="false" ecoreFeature="ecore:EReference rule.ecore#//LeafCondition/valueDomainModelReference"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rule.ecore#//LeafCondition/compareType"/>
     </genClasses>
     <genClasses ecoreClass="rule.ecore#//OrCondition">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rule.ecore#//OrCondition/conditions"/>

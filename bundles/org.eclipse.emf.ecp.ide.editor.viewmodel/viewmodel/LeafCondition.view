@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ASCII"?>
+<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/200" xmi:id="_EI380AjQEeeHkMlzCasuog" name="LeafCondition">
+  <rootEClass href="http://org/eclipse/emf/ecp/view/rule/model#//LeafCondition"/>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_EI_RkAjQEeeHkMlzCasuog" name="Control expectedValue">
+    <domainModelReference xmi:id="_EI_RkQjQEeeHkMlzCasuog">
+      <segments xsi:type="org.eclipse.emf.ecp.view.model:FeatureDomainModelReferenceSegment" xmi:id="_EI_RkgjQEeeHkMlzCasuog" domainModelFeature="expectedValue"/>
+    </domainModelReference>
+  </children>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_EI_RmQjQEeeHkMlzCasuog" name="Control compareType">
+    <domainModelReference xmi:id="_EI_RmgjQEeeHkMlzCasuog">
+      <segments xsi:type="org.eclipse.emf.ecp.view.model:FeatureDomainModelReferenceSegment" xmi:id="_EI_RmwjQEeeHkMlzCasuog" domainModelFeature="compareType"/>
+    </domainModelReference>
+  </children>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_EI_RkwjQEeeHkMlzCasuog" name="Control domainModelReference">
+    <domainModelReference xmi:id="_EI_RlAjQEeeHkMlzCasuog">
+      <segments xsi:type="org.eclipse.emf.ecp.view.model:FeatureDomainModelReferenceSegment" xmi:id="_EI_RlQjQEeeHkMlzCasuog" domainModelFeature="domainModelReference"/>
+    </domainModelReference>
+  </children>
+</org.eclipse.emf.ecp.view.model:View>

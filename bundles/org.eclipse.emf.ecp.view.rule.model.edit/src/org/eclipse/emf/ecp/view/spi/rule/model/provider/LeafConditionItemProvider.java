@@ -38,7 +38,7 @@ public class LeafConditionItemProvider extends ConditionItemProvider {
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public LeafConditionItemProvider(AdapterFactory adapterFactory) {
@@ -49,7 +49,7 @@ public class LeafConditionItemProvider extends ConditionItemProvider {
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -67,7 +67,7 @@ public class LeafConditionItemProvider extends ConditionItemProvider {
 	 * This adds a property descriptor for the Expected Value feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected void addExpectedValuePropertyDescriptor(Object object) {
@@ -75,8 +75,7 @@ public class LeafConditionItemProvider extends ConditionItemProvider {
 			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_LeafCondition_expectedValue_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_LeafCondition_expectedValue_feature", //$NON-NLS-1$ //$NON-NLS-2$
+				getString("_UI_PropertyDescriptor_description", "_UI_LeafCondition_expectedValue_feature", //$NON-NLS-1$ //$NON-NLS-2$
 					"_UI_LeafCondition_type"), //$NON-NLS-1$
 				RulePackage.Literals.LEAF_CONDITION__EXPECTED_VALUE,
 				true,
@@ -93,7 +92,6 @@ public class LeafConditionItemProvider extends ConditionItemProvider {
 	 *
 	 * @since 1.11
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	protected void addCompareTypePropertyDescriptor(Object object) {
@@ -118,14 +116,13 @@ public class LeafConditionItemProvider extends ConditionItemProvider {
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(RulePackage.Literals.LEAF_CONDITION__DOMAIN_MODEL_REFERENCE);
 			childrenFeatures.add(RulePackage.Literals.LEAF_CONDITION__VALUE_DOMAIN_MODEL_REFERENCE);
 		}
 		return childrenFeatures;
@@ -134,7 +131,7 @@ public class LeafConditionItemProvider extends ConditionItemProvider {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -149,7 +146,7 @@ public class LeafConditionItemProvider extends ConditionItemProvider {
 	 * This returns LeafCondition.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -161,13 +158,13 @@ public class LeafConditionItemProvider extends ConditionItemProvider {
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public String getText(Object object) {
-		final Object labelValue = ((LeafCondition) object).getExpectedValue();
-		final String label = labelValue == null ? null : labelValue.toString();
+		Object labelValue = ((LeafCondition) object).getExpectedValue();
+		String label = labelValue == null ? null : labelValue.toString();
 		return label == null || label.length() == 0 ? getString("_UI_LeafCondition_type") : //$NON-NLS-1$
 			getString("_UI_LeafCondition_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
@@ -177,7 +174,7 @@ public class LeafConditionItemProvider extends ConditionItemProvider {
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -186,10 +183,10 @@ public class LeafConditionItemProvider extends ConditionItemProvider {
 
 		switch (notification.getFeatureID(LeafCondition.class)) {
 		case RulePackage.LEAF_CONDITION__EXPECTED_VALUE:
+		case RulePackage.LEAF_CONDITION__DOMAIN_MODEL_REFERENCE:
 		case RulePackage.LEAF_CONDITION__COMPARE_TYPE:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
-		case RulePackage.LEAF_CONDITION__DOMAIN_MODEL_REFERENCE:
 		case RulePackage.LEAF_CONDITION__VALUE_DOMAIN_MODEL_REFERENCE:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;

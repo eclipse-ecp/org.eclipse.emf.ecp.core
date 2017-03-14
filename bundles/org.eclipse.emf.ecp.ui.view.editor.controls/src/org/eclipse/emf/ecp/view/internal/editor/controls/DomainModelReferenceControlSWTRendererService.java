@@ -18,6 +18,7 @@ import org.eclipse.emf.ecp.view.spi.label.model.VLabelPackage;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
+import org.eclipse.emf.ecp.view.spi.rule.model.RulePackage;
 import org.eclipse.emf.ecp.view.spi.stack.model.VStackPackage;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
@@ -100,6 +101,9 @@ public class DomainModelReferenceControlSWTRendererService implements EMFFormsDI
 			return 3;
 		}
 		if (VStackPackage.eINSTANCE.getStackLayout_DomainModelReference() == feature) {
+			return 3;
+		}
+		if (RulePackage.eINSTANCE.getLeafCondition_DomainModelReference() == feature) {
 			return 3;
 		}
 		return NOT_APPLICABLE;

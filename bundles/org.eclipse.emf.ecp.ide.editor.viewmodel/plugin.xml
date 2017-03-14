@@ -23,6 +23,9 @@
       <file
             filePath="viewmodel/TableDomainModelReference.view">
       </file>
+      <file
+            filePath="viewmodel/LeafCondition.view">
+      </file>
    </extension>
 
 </plugin>
