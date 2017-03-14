@@ -36,7 +36,7 @@ public class EnableRuleItemProvider extends RuleItemProvider {
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public EnableRuleItemProvider(AdapterFactory adapterFactory) {
@@ -47,13 +47,12 @@ public class EnableRuleItemProvider extends RuleItemProvider {
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (itemPropertyDescriptors == null)
-		{
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addDisablePropertyDescriptor(object);
@@ -65,17 +64,16 @@ public class EnableRuleItemProvider extends RuleItemProvider {
 	 * This adds a property descriptor for the Disable feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected void addDisablePropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_EnableRule_disable_feature"), //$NON-NLS-1$
-				getString("_UI_PropertyDescriptor_description", "_UI_EnableRule_disable_feature", "_UI_EnableRule_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				getString("_UI_PropertyDescriptor_description", "_UI_EnableRule_disable_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_EnableRule_type"), //$NON-NLS-1$
 				RulePackage.Literals.ENABLE_RULE__DISABLE,
 				true,
 				false,
@@ -89,7 +87,7 @@ public class EnableRuleItemProvider extends RuleItemProvider {
 	 * This returns EnableRule.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -101,12 +99,12 @@ public class EnableRuleItemProvider extends RuleItemProvider {
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public String getText(Object object) {
-		final EnableRule enableRule = (EnableRule) object;
+		EnableRule enableRule = (EnableRule) object;
 		return getString("_UI_EnableRule_type") + " " + enableRule.isDisable(); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
@@ -115,15 +113,14 @@ public class EnableRuleItemProvider extends RuleItemProvider {
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(EnableRule.class))
-		{
+		switch (notification.getFeatureID(EnableRule.class)) {
 		case RulePackage.ENABLE_RULE__DISABLE:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
@@ -136,7 +133,7 @@ public class EnableRuleItemProvider extends RuleItemProvider {
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
