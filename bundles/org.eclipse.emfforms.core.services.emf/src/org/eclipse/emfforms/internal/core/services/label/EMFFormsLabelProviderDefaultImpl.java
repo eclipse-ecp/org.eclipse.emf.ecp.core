@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -27,6 +27,7 @@ import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.emfforms.spi.core.services.emfspecificservice.EMFSpecificService;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 
@@ -38,7 +39,7 @@ import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
  *
  */
 public class EMFFormsLabelProviderDefaultImpl implements EMFFormsLabelProvider {
-	private EMFFormsDatabinding emfFormsDatabinding;
+	private EMFFormsDatabindingEMF emfFormsDatabinding;
 	private EMFSpecificService emfSpecificService;
 	private ReportService reportService;
 
@@ -47,7 +48,7 @@ public class EMFFormsLabelProviderDefaultImpl implements EMFFormsLabelProvider {
 	 *
 	 * @param emfFormsDatabinding The databinding service.
 	 */
-	protected void setEMFFormsDatabinding(EMFFormsDatabinding emfFormsDatabinding) {
+	protected void setEMFFormsDatabinding(EMFFormsDatabindingEMF emfFormsDatabinding) {
 		this.emfFormsDatabinding = emfFormsDatabinding;
 	}
 
@@ -94,7 +95,8 @@ public class EMFFormsLabelProviderDefaultImpl implements EMFFormsLabelProvider {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider#getDisplayName(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)
+	 * @see org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider#getDisplayName(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference,
+	 *      org.eclipse.emf.ecore.EClass)
 	 */
 	@Override
 	public IObservableValue getDisplayName(VDomainModelReference domainModelReference, EClass rootEClass) {
@@ -168,7 +170,8 @@ public class EMFFormsLabelProviderDefaultImpl implements EMFFormsLabelProvider {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider#getDescription(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference)
+	 * @see org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider#getDescription(org.eclipse.emf.ecp.view.spi.model.VDomainModelReference,
+	 *      org.eclipse.emf.ecore.EClass)
 	 */
 	@Override
 	public IObservableValue getDescription(VDomainModelReference domainModelReference, EClass rootEClass) {

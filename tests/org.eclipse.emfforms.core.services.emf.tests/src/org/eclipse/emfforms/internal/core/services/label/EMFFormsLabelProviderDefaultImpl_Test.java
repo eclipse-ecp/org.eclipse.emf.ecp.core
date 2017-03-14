@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -18,8 +18,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.databinding.EObjectObservableValue;
+import org.eclipse.emf.databinding.IEMFValueProperty;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -29,7 +29,7 @@ import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
-import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.emfforms.spi.core.services.emfspecificservice.EMFSpecificService;
 import org.junit.After;
 import org.junit.Before;
@@ -46,9 +46,9 @@ public class EMFFormsLabelProviderDefaultImpl_Test {
 	private EMFFormsLabelProviderDefaultImpl labelProvider;
 	private EMFSpecificService emfSpecificService;
 	private IItemPropertyDescriptor itemPropertyDescriptor;
-	private IValueProperty valueProperty;
+	private IEMFValueProperty valueProperty;
 	private EObjectObservableValue observableValue;
-	private EMFFormsDatabinding databindingService;
+	private EMFFormsDatabindingEMF databindingService;
 	private DefaultRealm defaultRealm;
 
 	/**
@@ -61,10 +61,10 @@ public class EMFFormsLabelProviderDefaultImpl_Test {
 		defaultRealm = new DefaultRealm();
 		labelProvider = new EMFFormsLabelProviderDefaultImpl();
 
-		databindingService = mock(EMFFormsDatabinding.class);
+		databindingService = mock(EMFFormsDatabindingEMF.class);
 		labelProvider.setEMFFormsDatabinding(databindingService);
 
-		valueProperty = mock(IValueProperty.class);
+		valueProperty = mock(IEMFValueProperty.class);
 		observableValue = mock(EObjectObservableValue.class);
 		// when(observableValue.getRealm()).thenReturn(Realm.getDefault());
 
