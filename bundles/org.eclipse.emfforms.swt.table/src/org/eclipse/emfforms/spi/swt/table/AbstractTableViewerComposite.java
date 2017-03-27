@@ -166,7 +166,7 @@ public abstract class AbstractTableViewerComposite extends Composite {
 	 * @return the applied layout
 	 *
 	 */
-	protected abstract AbstractColumnLayout createLayout(final Composite viewerComposite);
+	protected abstract AbstractColumnLayout createLayout(Composite viewerComposite);
 
 	/**
 	 * Creates the table viewer.
@@ -177,7 +177,7 @@ public abstract class AbstractTableViewerComposite extends Composite {
 	 * @return the table viewer
 	 */
 	protected abstract AbstractTableViewer createTableViewer(TableViewerSWTCustomization customization,
-		final Composite viewerComposite);
+		Composite viewerComposite);
 
 	private void addColumns(TableViewerSWTCustomization customization, AbstractTableViewer tableViewer,
 		EMFDataBindingContext emfDataBindingContext) {
@@ -267,6 +267,6 @@ public abstract class AbstractTableViewerComposite extends Composite {
 	 * @param comparator the {@link TableViewerComparator} to set
 	 * @param sortableColumns the list of columns that can be sorted
 	 */
-	public abstract void setComparator(final TableViewerComparator comparator, List<Integer> sortableColumns);
+	public abstract void setComparator(TableViewerComparator comparator, List<Integer> sortableColumns);
 
 }

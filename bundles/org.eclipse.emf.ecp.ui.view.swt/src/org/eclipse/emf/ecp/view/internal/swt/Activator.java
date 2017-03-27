@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -7,7 +7,8 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- * Edagr Mueller - initial API and implementation
+ * Edgar Mueller - initial API and implementation
+ * Martin Fleck - Bug 490708: Add layout provider service
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.swt;
 
@@ -21,6 +22,7 @@ import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.common.report.ReportServiceConsumer;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
+import org.eclipse.emfforms.spi.swt.core.layout.LayoutProvider;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
@@ -106,8 +108,7 @@ public class Activator extends Plugin {
 	 */
 	public ReportService getReportService() {
 		final BundleContext bundleContext = getBundle().getBundleContext();
-		final ServiceReference<ReportService> serviceReference =
-			bundleContext.getServiceReference(ReportService.class);
+		final ServiceReference<ReportService> serviceReference = bundleContext.getServiceReference(ReportService.class);
 		return bundleContext.getService(serviceReference);
 	}
 
@@ -135,6 +136,24 @@ public class Activator extends Plugin {
 			.getServiceReference(EMFFormsRendererFactory.class);
 
 		final EMFFormsRendererFactory service = plugin.getBundle().getBundleContext()
+			.getService(serviceReference);
+		plugin.getBundle().getBundleContext().ungetService(serviceReference);
+
+		return service;
+	}
+
+	/**
+	 * Returns the {@link LayoutProvider} service.
+	 *
+	 * @return The {@link LayoutProvider}
+	 */
+	public LayoutProvider getLayoutProvider() {
+		final ServiceReference<LayoutProvider> serviceReference = plugin.getBundle().getBundleContext()
+			.getServiceReference(LayoutProvider.class);
+		if (serviceReference == null) {
+			return null;
+		}
+		final LayoutProvider service = plugin.getBundle().getBundleContext()
 			.getService(serviceReference);
 		plugin.getBundle().getBundleContext().ungetService(serviceReference);
 

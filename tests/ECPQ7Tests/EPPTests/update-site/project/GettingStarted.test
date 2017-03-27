@@ -7,7 +7,7 @@ Element-Version: 3.0
 External-Reference: 
 Id: _lx7aYE_YEeWlOMw7vcjT4A
 Runtime-Version: 2.1.0.201606221726
-Save-Time: 9/5/16 12:56 PM
+Save-Time: 1/30/17 9:39 AM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -127,7 +127,7 @@ get-editor "User.view" | get-tree | get-property "getTopItem().getItemCount()" |
 get-editor "User.view" | get-button "Open Preview" | click
 with [get-view "EMF Forms Preview"] {
 	get-button "Refresh Preview View" | click
-    get-control Any -after [get-label "View Editor Preview"] -index 9 | get-property "getChildren().length" | equals 9 
+    get-control Any -after [get-label "View Editor Preview"] -index 10 | get-property "getChildren().length" | equals 9 
         | verify-true
     get-editbox -after [get-label "Last Name*"] | get-property text | equals "" | verify-true
     with [get-label "" -after [get-label "Last Name*"]] {
@@ -152,7 +152,7 @@ with [get-view "EMF Forms Preview" | get-label "" -after [get-label "Last Name*"
 
 // 03 The View Model Editor: verify (manual controls reorder)
 get-view "EMF Forms Preview" | get-button "Refresh Preview View" | click
-with [get-view "EMF Forms Preview" | get-control Any -after [get-label "View Editor Preview"] -index 9] {
+with [get-view "EMF Forms Preview" | get-control Any -after [get-label "View Editor Preview"] -index 10] {
     get-property "getChildren().Control[0].getText()" | equals "First Name" | verify-true
     get-property "getChildren().Control[3].getText()" | equals "Last Name*" | verify-true
 }
@@ -169,7 +169,7 @@ with [get-editor "User.view" | get-tree] {
     drag-end -detail move
 }
 get-view "EMF Forms Preview" | get-button "Refresh Preview View" | click
-with [get-view "EMF Forms Preview" | get-control Any -after [get-label "View Editor Preview"] -index 9] {
+with [get-view "EMF Forms Preview" | get-control Any -after [get-label "View Editor Preview"] -index 10] {
     get-property "getChildren().Control[0].getText()" | equals "Last Name*" | verify-true
     get-property "getChildren().Control[3].getText()" | equals "First Name" | verify-true
 }
@@ -231,7 +231,7 @@ with [get-editor "User.view" | get-tree] {
 // 04 The First View Model: verify
 get-view "EMF Forms Preview" | get-button "Refresh Preview View" | click
 with [get-view "EMF Forms Preview"] {
-    get-control Any -after [get-label "View Editor Preview"] -index 10 | get-property "getLayout().numColumns" 
+    get-control Any -after [get-label "View Editor Preview"] -index 11 | get-property "getLayout().numColumns" 
         | equals 2 | verify-true
     get-label Active | get-property caption | equals Active | verify-true
     with [get-control Any -after [get-label Nationality] -index 9] {

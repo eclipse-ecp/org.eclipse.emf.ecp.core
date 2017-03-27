@@ -62,10 +62,10 @@ import org.mockito.Mockito;
 
 public abstract class AbstractControl_PTest {
 	protected static final String CUSTOM_VARIANT = "org.eclipse.rap.rwt.customVariant"; //$NON-NLS-1$
-	protected EMFFormsDatabinding databindingService;
-	protected VTViewTemplateProvider templateProvider;
-	protected AbstractControlSWTRenderer<VControl> renderer;
-	protected EMFFormsLabelProvider labelProvider;
+	private EMFFormsDatabinding databindingService;
+	private VTViewTemplateProvider templateProvider;
+	private AbstractControlSWTRenderer<VControl> renderer;
+	private EMFFormsLabelProvider labelProvider;
 
 	private Resource createResource() {
 		final Resource.Factory.Registry registry = Resource.Factory.Registry.INSTANCE;
@@ -102,7 +102,7 @@ public abstract class AbstractControl_PTest {
 
 		mockDatabindingIsUnsettable();
 
-		Mockito.when(vControl.getDomainModelReference()).thenReturn(
+		Mockito.when(getvControl().getDomainModelReference()).thenReturn(
 			domainModelReference);
 	}
 
@@ -111,34 +111,34 @@ public abstract class AbstractControl_PTest {
 		when(structuralFeature.isUnsettable()).thenReturn(false);
 		final IValueProperty valueProperty = mock(IValueProperty.class);
 		when(valueProperty.getValueType()).thenReturn(structuralFeature);
-		when(databindingService.getValueProperty(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+		when(getDatabindingService().getValueProperty(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			valueProperty);
 	}
 
 	protected void setMockLabelAlignment(LabelAlignment labelAlignment) {
-		Mockito.when(vControl.getLabelAlignment()).thenReturn(labelAlignment);
+		Mockito.when(getvControl().getLabelAlignment()).thenReturn(labelAlignment);
 	}
 
-	protected ViewModelContext context;
-	protected VControl vControl;
-	protected Shell shell;
+	private ViewModelContext context;
+	private VControl vControl;
+	private Shell shell;
 
 	protected void setup() throws DatabindingFailedException {
-		vControl = Mockito.mock(VControl.class);
+		setvControl(Mockito.mock(VControl.class));
 		mockControl();
-		context = Mockito.mock(ViewModelContext.class);
-		when(context.getDomainModel()).thenReturn(mock(EObject.class));
-		shell = new Shell(Display.getDefault(), SWT.NONE);
+		setContext(Mockito.mock(ViewModelContext.class));
+		when(getContext().getDomainModel()).thenReturn(mock(EObject.class));
+		setShell(new Shell(Display.getDefault(), SWT.NONE));
 	}
 
 	protected void dispose() {
-		shell.dispose();
+		getShell().dispose();
 	}
 
 	@Test
 	public void testGridDescriptionLabelAlignmentNone() {
 		setMockLabelAlignment(LabelAlignment.NONE);
-		final SWTGridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE
+		final SWTGridDescription gridDescription = getRenderer().getGridDescription(GridDescriptionFactory.INSTANCE
 			.createEmptyGridDescription());
 		assertEquals(2, gridDescription.getColumns());
 		assertEquals(1, gridDescription.getRows());
@@ -147,7 +147,7 @@ public abstract class AbstractControl_PTest {
 	@Test
 	public void testGridDescriptionLabelAlignmentLeft() {
 		setMockLabelAlignment(LabelAlignment.LEFT);
-		final SWTGridDescription gridDescription = renderer.getGridDescription(GridDescriptionFactory.INSTANCE
+		final SWTGridDescription gridDescription = getRenderer().getGridDescription(GridDescriptionFactory.INSTANCE
 			.createEmptyGridDescription());
 		assertEquals(3, gridDescription.getColumns());
 		assertEquals(1, gridDescription.getRows());
@@ -157,19 +157,19 @@ public abstract class AbstractControl_PTest {
 	public void renderValidationIconLabelAlignmentNone()
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		setMockLabelAlignment(LabelAlignment.NONE);
-		renderValidationIcon(new SWTGridCell(0, 0, renderer));
+		renderValidationIcon(new SWTGridCell(0, 0, getRenderer()));
 	}
 
 	@Test
 	public void renderValidationIconLabelAlignmentLeft()
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 		setMockLabelAlignment(LabelAlignment.LEFT);
-		renderValidationIcon(new SWTGridCell(0, 1, renderer));
+		renderValidationIcon(new SWTGridCell(0, 1, getRenderer()));
 	}
 
 	private void renderValidationIcon(SWTGridCell gridCell)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		final Control render = renderer.render(gridCell, shell);
+		final Control render = getRenderer().render(gridCell, getShell());
 		assertTrue(Label.class.isInstance(render));
 		assertEquals("", Label.class.cast(render).getText());
 	}
@@ -177,7 +177,7 @@ public abstract class AbstractControl_PTest {
 	protected void renderLabel(String text) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		setMockLabelAlignment(LabelAlignment.LEFT);
-		final Control render = renderer.render(new SWTGridCell(0, 0, renderer), shell);
+		final Control render = getRenderer().render(new SWTGridCell(0, 0, getRenderer()), getShell());
 		assertTrue(Label.class.isInstance(render));
 		assertEquals(text, Label.class.cast(render).getText());
 	}
@@ -191,16 +191,16 @@ public abstract class AbstractControl_PTest {
 	 */
 	protected void labelServiceUsage() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
 		NoLabelFoundException {
-		reset(labelProvider);
+		reset(getLabelProvider());
 		final IObservableValue testDescription = Observables.constantObservableValue("test-description", String.class);
 		final IObservableValue testDisplayName = Observables.constantObservableValue("test-displayname", String.class);
-		when(labelProvider.getDescription(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+		when(getLabelProvider().getDescription(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			testDescription);
-		when(labelProvider.getDisplayName(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+		when(getLabelProvider().getDisplayName(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			testDisplayName);
 
 		setMockLabelAlignment(LabelAlignment.LEFT);
-		final Control renderControl = renderControl(new SWTGridCell(0, 0, renderer));
+		final Control renderControl = renderControl(new SWTGridCell(0, 0, getRenderer()));
 		assertTrue(Label.class.isInstance(renderControl));
 
 		final Label label = (Label) renderControl;
@@ -210,11 +210,109 @@ public abstract class AbstractControl_PTest {
 
 	protected Control renderControl(SWTGridCell gridCell)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		final Control render = renderer.render(gridCell, shell);
+		final Control render = getRenderer().render(gridCell, getShell());
 		return render;
 	}
 
 	protected abstract void mockControl() throws DatabindingFailedException;
+
+	/**
+	 * @return the context
+	 */
+	public ViewModelContext getContext() {
+		return context;
+	}
+
+	/**
+	 * @param context the context to set
+	 */
+	public void setContext(ViewModelContext context) {
+		this.context = context;
+	}
+
+	/**
+	 * @return the vControl
+	 */
+	public VControl getvControl() {
+		return vControl;
+	}
+
+	/**
+	 * @param vControl the vControl to set
+	 */
+	public void setvControl(VControl vControl) {
+		this.vControl = vControl;
+	}
+
+	/**
+	 * @return the shell
+	 */
+	public Shell getShell() {
+		return shell;
+	}
+
+	/**
+	 * @param shell the shell to set
+	 */
+	public void setShell(Shell shell) {
+		this.shell = shell;
+	}
+
+	/**
+	 * @return the databindingService
+	 */
+	public EMFFormsDatabinding getDatabindingService() {
+		return databindingService;
+	}
+
+	/**
+	 * @param databindingService the databindingService to set
+	 */
+	public void setDatabindingService(EMFFormsDatabinding databindingService) {
+		this.databindingService = databindingService;
+	}
+
+	/**
+	 * @return the templateProvider
+	 */
+	public VTViewTemplateProvider getTemplateProvider() {
+		return templateProvider;
+	}
+
+	/**
+	 * @param templateProvider the templateProvider to set
+	 */
+	public void setTemplateProvider(VTViewTemplateProvider templateProvider) {
+		this.templateProvider = templateProvider;
+	}
+
+	/**
+	 * @return the renderer
+	 */
+	public AbstractControlSWTRenderer<VControl> getRenderer() {
+		return renderer;
+	}
+
+	/**
+	 * @param renderer the renderer to set
+	 */
+	public void setRenderer(AbstractControlSWTRenderer<VControl> renderer) {
+		this.renderer = renderer;
+	}
+
+	/**
+	 * @return the labelProvider
+	 */
+	public EMFFormsLabelProvider getLabelProvider() {
+		return labelProvider;
+	}
+
+	/**
+	 * @param labelProvider the labelProvider to set
+	 */
+	public void setLabelProvider(EMFFormsLabelProvider labelProvider) {
+		this.labelProvider = labelProvider;
+	}
 
 	/**
 	 * Helper Interface for mocking.

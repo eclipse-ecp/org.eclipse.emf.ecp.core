@@ -27,10 +27,9 @@ import org.eclipse.emf.ecp.view.template.model.VTTemplatePackage;
  * <li>each enum,</li>
  * <li>and each data type</li>
  * </ul>
- * 
+ *
  * @since 1.9
  *        <!-- end-user-doc -->
- *
  * @see org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyFactory
  * @model kind="package"
  * @generated
@@ -74,9 +73,9 @@ public interface VTTableStylePropertyPackage extends EPackage {
 		.init();
 
 	/**
-	 * The meta object id for the '
-	 * {@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.impl.VTTableStylePropertyImpl
-	 * <em>Table Style Property</em>}' class.
+	 * The meta object id for the
+	 * '{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.impl.VTTableStylePropertyImpl <em>Table
+	 * Style Property</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -107,14 +106,38 @@ public interface VTTableStylePropertyPackage extends EPackage {
 	int TABLE_STYLE_PROPERTY__MAXIMUM_HEIGHT = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 1;
 
 	/**
-	 * The number of structural features of the '<em>Table Style Property</em>' class.
+	 * The feature id for the '<em><b>Show Validation Summary Tooltip</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 *
+	 * @since 1.12
+	 *        <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TABLE_STYLE_PROPERTY__SHOW_VALIDATION_SUMMARY_TOOLTIP = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Enable Sorting</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 1.12
+	 *        <!-- end-user-doc -->
 	 *
 	 * @generated
 	 * @ordered
 	 */
-	int TABLE_STYLE_PROPERTY_FEATURE_COUNT = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 2;
+	int TABLE_STYLE_PROPERTY__ENABLE_SORTING = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 3;
+
+	/**
+	 * The number of structural features of the '<em>Table Style Property</em>' class.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.12
+	 *        <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TABLE_STYLE_PROPERTY_FEATURE_COUNT = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 4;
 
 	/**
 	 * The number of operations of the '<em>Table Style Property</em>' class.
@@ -127,9 +150,9 @@ public interface VTTableStylePropertyPackage extends EPackage {
 	int TABLE_STYLE_PROPERTY_OPERATION_COUNT = VTTemplatePackage.STYLE_PROPERTY_OPERATION_COUNT + 0;
 
 	/**
-	 * Returns the meta object for class '
-	 * {@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty
-	 * <em>Table Style Property</em>}'.
+	 * Returns the meta object for class
+	 * '{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty <em>Table Style
+	 * Property</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -140,8 +163,8 @@ public interface VTTableStylePropertyPackage extends EPackage {
 	EClass getTableStyleProperty();
 
 	/**
-	 * Returns the meta object for the attribute '
-	 * {@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getMinimumHeight
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getMinimumHeight
 	 * <em>Minimum Height</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -154,8 +177,8 @@ public interface VTTableStylePropertyPackage extends EPackage {
 	EAttribute getTableStyleProperty_MinimumHeight();
 
 	/**
-	 * Returns the meta object for the attribute '
-	 * {@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getMaximumHeight
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getMaximumHeight
 	 * <em>Maximum Height</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -166,6 +189,36 @@ public interface VTTableStylePropertyPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getTableStyleProperty_MaximumHeight();
+
+	/**
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#isShowValidationSummaryTooltip
+	 * <em>Show Validation Summary Tooltip</em>}'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.12
+	 *        <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Show Validation Summary Tooltip</em>'.
+	 * @see org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#isShowValidationSummaryTooltip()
+	 * @see #getTableStyleProperty()
+	 * @generated
+	 */
+	EAttribute getTableStyleProperty_ShowValidationSummaryTooltip();
+
+	/**
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#isEnableSorting
+	 * <em>Enable Sorting</em>}'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.12
+	 *        <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Enable Sorting</em>'.
+	 * @see org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#isEnableSorting()
+	 * @see #getTableStyleProperty()
+	 * @generated
+	 */
+	EAttribute getTableStyleProperty_EnableSorting();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -193,8 +246,8 @@ public interface VTTableStylePropertyPackage extends EPackage {
 	 */
 	interface Literals {
 		/**
-		 * The meta object literal for the '
-		 * {@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.impl.VTTableStylePropertyImpl
+		 * The meta object literal for the
+		 * '{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.impl.VTTableStylePropertyImpl
 		 * <em>Table Style Property</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -222,6 +275,27 @@ public interface VTTableStylePropertyPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute TABLE_STYLE_PROPERTY__MAXIMUM_HEIGHT = eINSTANCE.getTableStyleProperty_MaximumHeight();
+
+		/**
+		 * The meta object literal for the '<em><b>Show Validation Summary Tooltip</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 *
+		 * @since 1.12
+		 *        <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TABLE_STYLE_PROPERTY__SHOW_VALIDATION_SUMMARY_TOOLTIP = eINSTANCE
+			.getTableStyleProperty_ShowValidationSummaryTooltip();
+
+		/**
+		 * The meta object literal for the '<em><b>Enable Sorting</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 *
+		 * @since 1.12
+		 *        <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TABLE_STYLE_PROPERTY__ENABLE_SORTING = eINSTANCE.getTableStyleProperty_EnableSorting();
 
 	}
 

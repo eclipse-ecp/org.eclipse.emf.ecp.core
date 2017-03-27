@@ -18,61 +18,95 @@
 		<profile>
 			<id>local</id>
 			<properties>
-				<eclipse-product>http://ftp.fau.de/eclipse/technology/epp/downloads/release/${eclipse-name}/${eclipse-sr}/eclipse-modeling-${eclipse-name}-${eclipse-sr}-win32-x86_64.zip</eclipse-product>
+				<aut-path>/home/eugen/tmp/ecp</aut-path>
 			</properties>
 		</profile>
 	</profiles>
 	<properties>
 		<emfstore-update-site>http://download.eclipse.org/emfstore/releases_18</emfstore-update-site>
-		<eclipse-product>http://mirror.cc.columbia.edu/pub/software/eclipse/technology/epp/downloads/release/${eclipse-name}/${eclipse-sr}/eclipse-modeling-${eclipse-name}-${eclipse-sr}-linux-gtk-x86_64.tar.gz</eclipse-product>
+		<aut-path>/home/data/httpd/download.eclipse.org/ecp</aut-path>
 	</properties>
-
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.eclipse.rcptt</groupId>
-						<artifactId>rcptt-maven-plugin</artifactId>
-						<version>${rcptt-maven-version}</version>
-						<extensions>true</extensions>
-						<configuration>
-							<runner>
-				                <version>${rcptt-runner-version}</version>
-				            </runner>
-							<aut>
-								
-								<explicit>${eclipse-product}</explicit>
-								
-								<!--win32-x86_64.zip-->
-								<!--linux-gtk-x86_64.tar.gz-->
-
-								<injections>
-									<injection>
-										<site>${emfstore-update-site}</site>
-										<features>
-											<feature>org.eclipse.emf.emfstore.server.feature.feature.group</feature>
-											<feature>org.eclipse.emf.emfstore.ecore.feature.feature.group</feature>
-											<feature>org.eclipse.emf.emfstore.example.feature.feature.group</feature>
-											<feature>org.eclipse.emf.emfstore.client.feature.feature.group</feature>
-											<feature>org.eclipse.emf.emfstore.common.feature.feature.group</feature>
-											<feature>org.eclipse.emf.emfstore.client.transaction.feature.feature.group</feature>
-											<feature>org.eclipse.emf.emfstore.client.ui.feature.feature.group</feature>
-										</features>
-									</injection>
-									<injection>
-										<site>${currentBuild}/org.eclipse.emf.ecp.repository.target/target/repository</site>
-										<features>
-											<feature>org.eclipse.emf.ecp.sdk.feature.feature.group</feature>
-										</features>
-									</injection>
-								</injections>
-							</aut>
-							<projects>
-								<project>${project.basedir}/../project</project>
-							</projects>
-
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		
+	<build>
+		<pluginManagement>
+            <plugins>
+                <plugin>
+				  <artifactId>exec-maven-plugin</artifactId>
+				  <groupId>org.codehaus.mojo</groupId>
+				  <executions>
+				    <execution>
+				      <id>Download Eclipses</id>
+				      <phase>validate</phase>
+				      <goals>
+				        <goal>exec</goal>
+				      </goals>
+				      <configuration>
+				        <executable>${project.basedir}/../../download.sh</executable>
+				        <arguments>
+				        	<argument>${aut-path}</argument>
+	                        <argument>${eclipse-name}</argument>
+	                        <argument>${eclipse-sr}</argument>
+	                    </arguments>
+				      </configuration>
+				    </execution>
+				  </executions>
+				</plugin>
+            </plugins>
+        </pluginManagement>
+		<plugins>
+			
+			<plugin>
+				<groupId>org.eclipse.rcptt</groupId>
+				<artifactId>rcptt-maven-plugin</artifactId>
+				<version>${rcptt-maven-version}</version>
+				<extensions>true</extensions>
+				<configuration>
+					<runner>
+		                <version>${rcptt-runner-version}</version>
+		            </runner>
+					<aut>
+						
+						<explicit>${aut-path}/aut/${eclipse-name}_${eclipse-sr}.tar.gz</explicit>
+						
+						<injections>
+							<injection>
+								<site>${emfstore-update-site}</site>
+								<features>
+									<feature>org.eclipse.emf.emfstore.server.feature.feature.group</feature>
+									<feature>org.eclipse.emf.emfstore.ecore.feature.feature.group</feature>
+									<feature>org.eclipse.emf.emfstore.example.feature.feature.group</feature>
+									<feature>org.eclipse.emf.emfstore.client.feature.feature.group</feature>
+									<feature>org.eclipse.emf.emfstore.common.feature.feature.group</feature>
+									<feature>org.eclipse.emf.emfstore.client.transaction.feature.feature.group</feature>
+									<feature>org.eclipse.emf.emfstore.client.ui.feature.feature.group</feature>
+								</features>
+							</injection>
+							<injection>
+								<site>${currentBuild}/org.eclipse.emf.ecp.repository.target/target/repository</site>
+								<features>
+									<feature>org.eclipse.emf.ecp.sdk.feature.feature.group</feature>
+								</features>
+							</injection>
+						</injections>
+						<args>
+							<arg>-nosplash</arg>
+							<arg>-consoleLog</arg>
+							<arg>--launcher.GTK_version</arg>
+							<arg>2</arg>
+						</args>
+						<vmArgs>
+							<vmArg>-Xmx2g</vmArg>
+							<vmArg>-Dorg.eclipse.swt.browser.DefaultType=mozilla</vmArg>
+						</vmArgs>
+					</aut>
+					<projects>
+						<project>${project.basedir}/../project</project>
+					</projects>
+					<testOptions>
+					    <execTimeout>10800</execTimeout>
+					    <testExecTimeout>600</testExecTimeout>
+					</testOptions>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

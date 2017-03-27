@@ -139,6 +139,9 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 
 			@Override
 			public void notifyChange(ModelChangeNotification notification) {
+				if (isDisposed) {
+					return;
+				}
 				// Execute applyEnable whenever the structure of the VControl's DMR has been changed.
 				final EMFFormsStructuralChangeTester changeTester = getViewModelContext()
 					.getService(EMFFormsStructuralChangeTester.class);

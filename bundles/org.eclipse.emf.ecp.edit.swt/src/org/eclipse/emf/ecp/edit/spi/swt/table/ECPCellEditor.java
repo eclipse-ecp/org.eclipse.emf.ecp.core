@@ -39,6 +39,8 @@ public interface ECPCellEditor {
 
 	/**
 	 * Indicator for an alternative copy string.
+	 *
+	 * @since 1.11
 	 */
 	String COPY_STRING_ALTERNATIVE = "org.eclipse.emf.ecp.edit.spi.swt.table.copyStringAlternative"; //$NON-NLS-1$
 

@@ -19,6 +19,7 @@ import org.eclipse.core.databinding.observable.Observables;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emfforms.internal.swt.table.DefaultTableControlSWTCustomization;
 import org.eclipse.emfforms.internal.swt.table.util.StaticCellLabelProviderFactory;
+import org.eclipse.jface.viewers.AbstractTableViewer;
 import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.IContentProvider;
 import org.eclipse.jface.viewers.ViewerComparator;
@@ -140,7 +141,8 @@ public class TableViewerSWTBuilder {
 	 * @param creator the {@link TableViewerCreator}
 	 * @return self
 	 */
-	public TableViewerSWTBuilder customizeTableViewerCreation(TableViewerCreator creator) {
+	public TableViewerSWTBuilder customizeTableViewerCreation(
+		TableViewerCreator<? extends AbstractTableViewer> creator) {
 		customization.setTableViewerCreator(creator);
 		return this;
 	}

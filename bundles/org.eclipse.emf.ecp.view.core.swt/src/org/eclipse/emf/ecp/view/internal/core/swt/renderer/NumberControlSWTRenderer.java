@@ -132,15 +132,15 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 		final EStructuralFeature structuralFeature = (EStructuralFeature) getModelValue().getValueType();
 
 		final NumericalTargetToModelUpdateStrategy targetToModelStrategy = new NumericalTargetToModelUpdateStrategy(
-			structuralFeature, getViewModelContext(), getModelValue(), getDataBindingContext(),
+			structuralFeature, getModelValue(), getDataBindingContext(),
 			(Text) Composite.class.cast(control).getChildren()[0]);
 		final NumericalModelToTargetUpdateStrategy modelToTargetStrategy = new NumericalModelToTargetUpdateStrategy(
-			getInstanceClass(structuralFeature), getViewModelContext(), false);
+			getInstanceClass(structuralFeature), false);
 		final Binding binding = bindValue(control, getModelValue(), getDataBindingContext(),
 			targetToModelStrategy, modelToTargetStrategy);
 		final Binding tooltipBinding = createTooltipBinding(control, getModelValue(), getDataBindingContext(),
 			targetToModelStrategy,
-			new NumericalModelToTargetUpdateStrategy(getInstanceClass(structuralFeature), getViewModelContext(), true));
+			new NumericalModelToTargetUpdateStrategy(getInstanceClass(structuralFeature), true));
 
 		emfFormsLocaleChangeListener = new EMFFormsLocaleChangeListener() {
 
@@ -171,13 +171,11 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 	private class NumericalModelToTargetUpdateStrategy extends ModelToTargetUpdateStrategy {
 
 		private final Class<?> instanceClass;
-		private final ViewModelContext viewModelContext;
 
-		NumericalModelToTargetUpdateStrategy(Class<?> instanceClass, ViewModelContext viewModelContext,
+		NumericalModelToTargetUpdateStrategy(Class<?> instanceClass,
 			boolean tooltip) {
 			super(tooltip);
 			this.instanceClass = instanceClass;
-			this.viewModelContext = viewModelContext;
 
 		}
 
@@ -200,18 +198,16 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 	 */
 	private class NumericalTargetToModelUpdateStrategy extends TargetToModelUpdateStrategy {
 
-		private final ViewModelContext viewModelContext;
 		private final Text text;
 		private final IObservableValue modelValue;
 		private final EStructuralFeature eStructuralFeature;
 		private final DataBindingContext dataBindingContext;
 
-		NumericalTargetToModelUpdateStrategy(EStructuralFeature eStructuralFeature,
-			ViewModelContext viewModelContext, IObservableValue modelValue, DataBindingContext dataBindingContext,
+		NumericalTargetToModelUpdateStrategy(EStructuralFeature eStructuralFeature, IObservableValue modelValue,
+			DataBindingContext dataBindingContext,
 			Text text) {
 			super(eStructuralFeature.isUnsettable());
 			this.eStructuralFeature = eStructuralFeature;
-			this.viewModelContext = viewModelContext;
 			this.modelValue = modelValue;
 			this.dataBindingContext = dataBindingContext;
 			this.text = text;

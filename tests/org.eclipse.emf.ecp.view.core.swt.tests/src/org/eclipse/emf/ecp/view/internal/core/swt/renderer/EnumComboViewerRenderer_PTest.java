@@ -59,15 +59,15 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest {
 	public void before() throws DatabindingFailedException {
 		realm = new DefaultRealm();
 		final ReportService reportService = mock(ReportService.class);
-		databindingService = mock(EMFFormsDatabinding.class);
-		labelProvider = mock(EMFFormsLabelProvider.class);
-		templateProvider = mock(VTViewTemplateProvider.class);
+		setDatabindingService(mock(EMFFormsDatabinding.class));
+		setLabelProvider(mock(EMFFormsLabelProvider.class));
+		setTemplateProvider(mock(VTViewTemplateProvider.class));
 		editSupport = mock(EMFFormsEditSupport.class);
 
 		setup();
-		renderer = new EnumComboViewerSWTRenderer(vControl, context, reportService, databindingService, labelProvider,
-			templateProvider, editSupport);
-		renderer.init();
+		setRenderer(new EnumComboViewerSWTRenderer(getvControl(), getContext(), reportService, getDatabindingService(), getLabelProvider(),
+			getTemplateProvider(), editSupport));
+		getRenderer().init();
 	}
 
 	@After
@@ -159,12 +159,12 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest {
 	private Combo setUpDatabindingTest(final ObservingWritableValue mockedObservable) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		mockDatabindingIsUnsettable();
-		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			mockedObservable);
-		when(databindingService.getValueProperty(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+		when(getDatabindingService().getValueProperty(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			Properties.selfValue(mockedObservable.getValueType()));
 
-		final Control renderControl = renderControl(new SWTGridCell(0, 2, renderer));
+		final Control renderControl = renderControl(new SWTGridCell(0, 2, getRenderer()));
 
 		final Combo combo = (Combo) renderControl;
 		return combo;

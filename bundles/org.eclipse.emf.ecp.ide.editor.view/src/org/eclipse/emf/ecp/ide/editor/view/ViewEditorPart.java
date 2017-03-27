@@ -136,7 +136,7 @@ public class ViewEditorPart extends EditorPart implements
 
 		try {
 			basicCommandStack = new BasicCommandStack();
-			loadView(false);
+			loadView(false, false);
 		} // BEGIN SUPRESS CATCH EXCEPTION
 		catch (final Exception e) {// END SUPRESS CATCH EXCEPTION
 			/*
@@ -149,7 +149,7 @@ public class ViewEditorPart extends EditorPart implements
 		try {
 			registerEcore();
 			// reload view resource after EClass' package resource was loaded into the package registry
-			loadView(true);
+			loadView(true, true);
 			if (getView() == null) {
 				throw new IllegalArgumentException(Messages.ViewEditorPart_InvalidVView);
 			}
@@ -208,7 +208,7 @@ public class ViewEditorPart extends EditorPart implements
 	 * @throws IOException if the view model resource failed to load
 	 * @throws PartInitException
 	 */
-	private void loadView(boolean migrate) throws IOException, PartInitException {
+	private void loadView(boolean migrate, boolean resolve) throws IOException, PartInitException {
 		final FileEditorInput fei = (FileEditorInput) getEditorInput();
 
 		final ResourceSet resourceSet = createResourceSet();
@@ -226,12 +226,14 @@ public class ViewEditorPart extends EditorPart implements
 		if (resource.getContents().size() == 0 || !VView.class.isInstance(resource.getContents().get(0))) {
 			throw new PartInitException(Messages.ViewEditorPart_InvalidVView);
 		}
-		// resolve all proxies
-		int rsSize = resourceSet.getResources().size();
-		EcoreUtil.resolveAll(resourceSet);
-		while (rsSize != resourceSet.getResources().size()) {
+		if (resolve) {
+			// resolve all proxies
+			int rsSize = resourceSet.getResources().size();
 			EcoreUtil.resolveAll(resourceSet);
-			rsSize = resourceSet.getResources().size();
+			while (rsSize != resourceSet.getResources().size()) {
+				EcoreUtil.resolveAll(resourceSet);
+				rsSize = resourceSet.getResources().size();
+			}
 		}
 	}
 
@@ -580,7 +582,7 @@ public class ViewEditorPart extends EditorPart implements
 
 			// reload view resource after EClass' package resource was loaded into the package registry
 			try {
-				loadView(true);
+				loadView(true, true);
 			} catch (final IOException e) {
 				Activator.getDefault().getLog()
 					.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));

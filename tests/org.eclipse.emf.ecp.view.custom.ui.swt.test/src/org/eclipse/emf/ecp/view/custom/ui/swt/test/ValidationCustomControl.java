@@ -38,7 +38,7 @@ public class ValidationCustomControl extends ECPAbstractCustomControlSWT impleme
 	private final Set<VDomainModelReference> features = new LinkedHashSet<VDomainModelReference>();
 
 	/**
-	 * @param features
+	 * Default constructor.
 	 */
 	public ValidationCustomControl() {
 		super();

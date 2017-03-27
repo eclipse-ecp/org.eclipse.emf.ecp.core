@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.eclipse.emf.ecp</groupId>
 		<artifactId>ecp-features-parent</artifactId>
-		<version>1.11.0-SNAPSHOT</version>
+		<version>1.12.0-SNAPSHOT</version>
 		<relativePath>../../releng/org.eclipse.emf.ecp.releng.features/</relativePath>
 	</parent>
 	<groupId>org.eclipse.emf.ecp</groupId>
@@ -28,9 +28,6 @@
 						</goals>
 					</execution>
 				</executions>
-				<configuration>
-					<skip>true</skip>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>

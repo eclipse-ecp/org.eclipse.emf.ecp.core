@@ -258,7 +258,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	 * @throws NoPropertyDescriptorFoundExeption this is thrown when no property descriptor can be found
 	 * @since 1.3
 	 */
-	protected abstract Control renderControl(final SWTGridCell cell, Composite parent) throws NoRendererFoundException,
+	protected abstract Control renderControl(SWTGridCell cell, Composite parent) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption;
 
 	/**

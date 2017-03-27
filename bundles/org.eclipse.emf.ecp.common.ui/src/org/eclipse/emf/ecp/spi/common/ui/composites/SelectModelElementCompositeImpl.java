@@ -147,6 +147,7 @@ public class SelectModelElementCompositeImpl extends AbstractFilteredSelectionCo
 			final Matcher matcher = pattern.matcher(eObjectName);
 			return matcher.matches();
 		}
+		// BEGIN COMPLEX CODE
 
 		private String wildcardToRegex(String wildcard) {
 			final StringBuffer s = new StringBuffer(wildcard.length());
@@ -185,6 +186,7 @@ public class SelectModelElementCompositeImpl extends AbstractFilteredSelectionCo
 			}
 			s.append('$');
 			return s.toString();
+			// END COMPLEX CODE
 		}
 	}
 }

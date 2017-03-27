@@ -34,6 +34,14 @@ public interface TableControl {
 	int getItemHeight();
 
 	/**
+	 * Returns the number of items contained in the receiver.
+	 *
+	 * @return the number of items
+	 * @since 1.12
+	 */
+	int getItemCount();
+
+	/**
 	 * Returns <code>true</code> if the receiver's header is visible,
 	 * and <code>false</code> otherwise.
 	 *

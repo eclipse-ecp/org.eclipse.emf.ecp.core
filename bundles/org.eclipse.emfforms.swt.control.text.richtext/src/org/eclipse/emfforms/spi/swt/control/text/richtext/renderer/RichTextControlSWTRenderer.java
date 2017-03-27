@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- * Johannes Faltermeier - initial API and implementation
+ * Jonas Helming - initial API and implementation
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.control.text.richtext.renderer;
 
@@ -31,6 +31,7 @@ import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.FocusEvent;
@@ -39,30 +40,34 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.events.VerifyEvent;
+import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 
 /**
- * The text control renderer allows to enter text while given autocompletion proposals. Moreover it is possible to
- * select a proposed value from a combo box.
+ * The multi line text control renderer displays the text in a read only fashion. Once the control gains focus a
+ * popupcontrol is displayed allowing the user to edit the contents.
  *
- * @author jfaltermeier
+ * @author Jonas Helming
  *
  */
 public class RichTextControlSWTRenderer extends TextControlSWTRenderer {
 	private GridData textGridData;
-	private Text text;
+	private StyledText text;
 
 	/**
-	 * @author jonas
+	 * @author Jonas Helming
 	 *
 	 */
 	private final class OpenPopupHandler implements MouseListener {
-		private final Text text;
+		private static final String RETURN_PATTERN = "[\n]"; //$NON-NLS-1$
+		private static final String CARRIAGE_PATTERN = "[\r]"; //$NON-NLS-1$
+		private final StyledText text;
 
-		private OpenPopupHandler(Text text) {
+		private OpenPopupHandler(StyledText text) {
 			this.text = text;
 		}
 
@@ -84,8 +89,17 @@ public class RichTextControlSWTRenderer extends TextControlSWTRenderer {
 			innerText.setSize(300, getPreferrredPopupHeight());
 			popupWindow.getContent().pack();
 			innerText.setText(text.getText());
-			innerText.setSelection(text.getCaretPosition());
+			innerText.setSelection(text.getCaretOffset());
 
+			innerText.addVerifyListener(new VerifyListener() {
+
+				@Override
+				public void verifyText(VerifyEvent e) {
+					if (e.text != null) {
+						e.text = e.text.replaceAll(CARRIAGE_PATTERN, "").replaceAll(RETURN_PATTERN, Text.DELIMITER); //$NON-NLS-1$
+					}
+				}
+			});
 			innerText.addFocusListener(new FocusListener() {
 				@Override
 				public void focusLost(FocusEvent e) {
@@ -178,15 +192,15 @@ public class RichTextControlSWTRenderer extends TextControlSWTRenderer {
 	protected Control createSWTControl(Composite parent) {
 		final Composite composite = new Composite(parent, SWT.NONE);
 		GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(true).applyTo(composite);
-		text = new Text(composite, getTextWidgetStyle());
+		text = new StyledText(composite, getTextWidgetStyle());
 		text.setData(CUSTOM_VARIANT, getTextVariantID());
 		text.setEditable(false);
-		text.setMessage(getTextMessage());
+		text.setToolTipText(getTextMessage());
 		final GridDataFactory gdf = GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
 			.grab(true, true).span(1, 1);
 		final EMFFormsEditSupport editSupport = getEMFFormsEditSupport();
 		if (editSupport.isMultiLine(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel())) {
-			gdf.hint(50, getTextHeightHint());// set x hint to enable wrapping
+			gdf.hint(0, getTextHeightHint());// set x hint to enable wrapping
 		}
 		textGridData = gdf.create();
 		text.setLayoutData(textGridData);
@@ -198,8 +212,8 @@ public class RichTextControlSWTRenderer extends TextControlSWTRenderer {
 				textGridData.heightHint = getTextHeightHint();
 				text.setLayoutData(textGridData);
 				EMFFormsSWTLayoutUtil.adjustParentSize(text);
-
 			}
+
 		});
 		return composite;
 	}
@@ -227,6 +241,7 @@ public class RichTextControlSWTRenderer extends TextControlSWTRenderer {
 		}
 		final int lineCount = text.getLineCount();
 		int height = lineCount * text.getLineHeight();
+
 		final int maxHeight = getMaxTextHeight();
 		final int minHeight = getMinTextHeight();
 		if (height > maxHeight) {
@@ -246,6 +261,7 @@ public class RichTextControlSWTRenderer extends TextControlSWTRenderer {
 		if (text == null || text.isDisposed()) {
 			return -1;
 		}
+
 		return getMaxVisibleLines() * text.getLineHeight();
 	}
 

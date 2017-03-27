@@ -203,6 +203,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	private AbstractTableViewer tableViewer;
 
 	private Label validationIcon;
+	private boolean showValidationSummaryTooltip;
 	private Button addButton;
 	private Button removeButton;
 
@@ -562,11 +563,19 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			if (validationControls.size() == 1 && Label.class.isInstance(validationControls.get(0))) {
 				validationIcon = (Label) validationControls.get(0);
 			}
+
+			final VTTableStyleProperty tableStyleProperty = getTableStyleProperty();
+			showValidationSummaryTooltip = tableStyleProperty.isShowValidationSummaryTooltip();
 		}
 	}
 
 	private void setupSorting(final ECPTableViewerComparator comparator, int regularColumnsStartIndex,
 		final AbstractTableViewerComposite tableViewerComposite) {
+
+		final VTTableStyleProperty tableStyleProperty = getTableStyleProperty();
+		if (!tableStyleProperty.isEnableSorting()) {
+			return;
+		}
 		final int length = tableViewerComposite.getColumns().length;
 		final List<Integer> sortableColumns = new ArrayList<Integer>();
 		for (int i = 0; i < length; i++) {
@@ -716,7 +725,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		}
 		final int itemHeight = table.getItemHeight();
 		// show one empty row if table does not contain any items
-		final int itemCount = Math.max(table.getItemHeight(), 1);
+		final int itemCount = Math.max(table.getItemCount(), 1);
 		final int headerHeight = table.getHeaderVisible() ? table.getHeaderHeight() : 0;
 		// 4px needed as a buffer to avoid scrollbars
 		final int tableHeight = itemHeight * itemCount + headerHeight + 4;
@@ -867,12 +876,12 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	private VTTableStyleProperty getTableStyleProperty() {
 		VTTableStyleProperty styleProperty = getStyleProperty(VTTableStyleProperty.class);
 		if (styleProperty == null) {
-			styleProperty = getDefaultTableStylProperty();
+			styleProperty = getDefaultTableStyleProperty();
 		}
 		return styleProperty;
 	}
 
-	private VTTableStyleProperty getDefaultTableStylProperty() {
+	private VTTableStyleProperty getDefaultTableStyleProperty() {
 		final VTTableStyleProperty tableStyleProperty = VTTableStylePropertyFactory.eINSTANCE
 			.createTableStyleProperty();
 		tableStyleProperty.setMaximumHeight(200);
@@ -1283,7 +1292,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	/**
 	 * Checks whether an element is editable or not.
-	 * 
+	 *
 	 * @param element The list entry to be checked
 	 * @return True if the element can be edited, false otherwise
 	 *
@@ -1291,6 +1300,51 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 */
 	protected boolean canEditObject(Object element) {
 		return true;
+	}
+
+	/**
+	 * Defined whether a cell editor should be created or not.
+	 *
+	 * @param element The table entry to be checked
+	 * @return True if a CellEditor should be created, false otherwise
+	 * @since 1.12
+	 */
+	protected boolean shouldCreateCellEditor(Object element) {
+		final boolean isObjectEditable = canEditObject(element);
+		if (!isObjectEditable) {
+			return false;
+		}
+		final boolean editable = getVElement().isEnabled()
+			&& !getVElement().isReadonly();
+		return editable;
+	}
+
+	/**
+	 * Called by the {@link TableControlEditingSupportAndLabelProvider}.
+	 *
+	 * @param feature the feature of the column
+	 * @param cellEditor the cell editor for the column
+	 * @param attributeMap the attribute map displayed in the table
+	 * @param vTableControl the table view model element
+	 * @param dmr the domain model reference of the column
+	 * @param table the table control
+	 * @return the {@link CellLabelProvider} of the column
+	 * @since 1.12
+	 */
+	protected CellLabelProvider createCellLabelProvider(
+		EStructuralFeature feature,
+		CellEditor cellEditor,
+		IObservableMap attributeMap,
+		VTableControl vTableControl,
+		VDomainModelReference dmr,
+		Control table) {
+		return new ECPCellLabelProvider(
+			feature,
+			cellEditor,
+			attributeMap,
+			getVElement(),
+			dmr,
+			table);
 	}
 
 	/**
@@ -1515,14 +1569,21 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			observableValue.dispose();
 
 			validationIcon.setImage(getValidationIcon(getVElement().getDiagnostic().getHighestSeverity()));
+			showValidationSummaryTooltip(showValidationSummaryTooltip);
 
-			validationIcon.setToolTipText(ECPTooltipModifierHelper.modifyString(getVElement().getDiagnostic()
-				.getMessage(), null));
 			final Collection<?> collection = (Collection<?>) eObject.eGet(structuralFeature, true);
 			if (!collection.isEmpty()) {
 				for (final Object object : collection) {
 					tableViewer.update(object, null);
 				}
+			}
+		}
+
+		// extracted in order to avoid checkstyle complexity warning
+		private void showValidationSummaryTooltip(boolean doShow) {
+			if (doShow) {
+				validationIcon.setToolTipText(ECPTooltipModifierHelper.modifyString(getVElement().getDiagnostic()
+					.getMessage(), null));
 			}
 		}
 	}
@@ -1535,7 +1596,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * @author Johannes Faltermeier
 	 *
 	 */
-	private final class TableControlEditingSupportAndLabelProvider
+	protected final class TableControlEditingSupportAndLabelProvider
 		implements EditingSupportCreator, CellLabelProviderFactory {
 		private final InternalEObject tempInstance;
 		private final EStructuralFeature eStructuralFeature;
@@ -1574,8 +1635,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			if (ECPCellEditorComparator.class.isInstance(cellEditor)) {
 				columnIndexToComparatorMap.put(indexOfColumn, ECPCellEditorComparator.class.cast(cellEditor));
 			}
-			observableSupport = new ECPTableEditingSupport(tableViewer, cellEditor,
-				getVElement(), dmr, valueProperty);
+			observableSupport = new ECPTableEditingSupport(tableViewer, cellEditor, dmr, valueProperty);
 			initialized = true;
 		}
 
@@ -1584,7 +1644,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			if (!initialized) {
 				init(table);
 			}
-			return new ECPCellLabelProvider(eStructuralFeature, cellEditor, observableMap,
+			return TableControlSWTRenderer.this.createCellLabelProvider(eStructuralFeature, cellEditor, observableMap,
 				getVElement(), dmr, table.getControl());
 		}
 	}
@@ -1891,7 +1951,11 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			if (value == null) {
 				return null;
 			}
-			return ECPTooltipModifierHelper.modifyString(String.valueOf(value), setting);
+			final String tooltip = ECPTooltipModifierHelper.modifyString(String.valueOf(value), setting);
+			if (tooltip == null || tooltip.isEmpty()) {
+				return null;
+			}
+			return tooltip;
 		}
 
 		@Override
@@ -1951,8 +2015,6 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 		private final CellEditor cellEditor;
 
-		private final VTableControl tableControl;
-
 		private final IValueProperty valueProperty;
 
 		private final VDomainModelReference domainModelReference;
@@ -1960,11 +2022,10 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		/**
 		 * @param viewer
 		 */
-		ECPTableEditingSupport(ColumnViewer viewer, CellEditor cellEditor,
-			VTableControl tableControl, VDomainModelReference domainModelReference, IValueProperty valueProperty) {
+		ECPTableEditingSupport(ColumnViewer viewer, CellEditor cellEditor, VDomainModelReference domainModelReference,
+			IValueProperty valueProperty) {
 			super(viewer);
 			this.cellEditor = cellEditor;
-			this.tableControl = tableControl;
 			this.valueProperty = valueProperty;
 			this.domainModelReference = domainModelReference;
 		}
@@ -1980,13 +2041,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		 */
 		@Override
 		protected boolean canEdit(Object element) {
-			final boolean isObjectEditable = canEditObject(element);
-			if (!isObjectEditable) {
-				return false;
-			}
-			boolean editable = tableControl.isEnabled()
-				&& !tableControl.isReadonly();
-			if (!editable) {
+			if (!shouldCreateCellEditor(element)) {
 				return false;
 			}
 			final IObservableValue observableValue = valueProperty.observe(element);
@@ -1994,7 +2049,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
 			final Setting setting = ((InternalEObject) eObject).eSetting(structuralFeature);
 
-			editable &= emfFormsEditSupport.canSetProperty(domainModelReference, (EObject) element);
+			boolean editable = emfFormsEditSupport.canSetProperty(domainModelReference, (EObject) element);
 			editable &= !CellReadOnlyTesterHelper.getInstance().isReadOnly(getVElement(), setting);
 
 			if (ECPCellEditor.class.isInstance(cellEditor)) {

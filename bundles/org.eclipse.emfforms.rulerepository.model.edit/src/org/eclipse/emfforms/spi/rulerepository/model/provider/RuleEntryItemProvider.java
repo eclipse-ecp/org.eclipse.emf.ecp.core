@@ -30,7 +30,6 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-import org.eclipse.emfforms.spi.rulerepository.model.MergeType;
 import org.eclipse.emfforms.spi.rulerepository.model.VRuleEntry;
 import org.eclipse.emfforms.spi.rulerepository.model.VRulerepositoryPackage;
 
@@ -64,11 +63,34 @@ public class RuleEntryItemProvider extends ItemProviderAdapter implements IEditi
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
+			addNamePropertyDescriptor(object);
 			addRulePropertyDescriptor(object);
 			addElementsPropertyDescriptor(object);
 			addMergeTypePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
+	}
+
+	/**
+	 * This adds a property descriptor for the Name feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected void addNamePropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_RuleEntry_name_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_RuleEntry_name_feature", "_UI_RuleEntry_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				VRulerepositoryPackage.Literals.RULE_ENTRY__NAME,
+				true,
+				false,
+				false,
+				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				null,
+				null));
 	}
 
 	/**
@@ -189,8 +211,7 @@ public class RuleEntryItemProvider extends ItemProviderAdapter implements IEditi
 	 */
 	@Override
 	public String getText(Object object) {
-		final MergeType labelValue = ((VRuleEntry) object).getMergeType();
-		final String label = labelValue == null ? null : labelValue.toString();
+		final String label = ((VRuleEntry) object).getName();
 		return label == null || label.length() == 0 ? getString("_UI_RuleEntry_type") : //$NON-NLS-1$
 			getString("_UI_RuleEntry_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
@@ -208,6 +229,7 @@ public class RuleEntryItemProvider extends ItemProviderAdapter implements IEditi
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(VRuleEntry.class)) {
+		case VRulerepositoryPackage.RULE_ENTRY__NAME:
 		case VRulerepositoryPackage.RULE_ENTRY__MERGE_TYPE:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;

@@ -27,12 +27,14 @@ import org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableS
  * The following features are implemented:
  * </p>
  * <ul>
- * <li>
- * {@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.impl.VTTableStylePropertyImpl#getMinimumHeight
+ * <li>{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.impl.VTTableStylePropertyImpl#getMinimumHeight
  * <em>Minimum Height</em>}</li>
- * <li>
- * {@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.impl.VTTableStylePropertyImpl#getMaximumHeight
+ * <li>{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.impl.VTTableStylePropertyImpl#getMaximumHeight
  * <em>Maximum Height</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.impl.VTTableStylePropertyImpl#isShowValidationSummaryTooltip
+ * <em>Show Validation Summary Tooltip</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.impl.VTTableStylePropertyImpl#isEnableSorting
+ * <em>Enable Sorting</em>}</li>
  * </ul>
  *
  * @generated
@@ -42,7 +44,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	 * The default value of the '{@link #getMinimumHeight() <em>Minimum Height</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getMinimumHeight()
 	 * @generated
 	 * @ordered
@@ -53,7 +55,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	 * The cached value of the '{@link #getMinimumHeight() <em>Minimum Height</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getMinimumHeight()
 	 * @generated
 	 * @ordered
@@ -64,7 +66,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	 * This is true if the Minimum Height attribute has been set.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -74,7 +76,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	 * The default value of the '{@link #getMaximumHeight() <em>Maximum Height</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getMaximumHeight()
 	 * @generated
 	 * @ordered
@@ -85,7 +87,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	 * The cached value of the '{@link #getMaximumHeight() <em>Maximum Height</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getMaximumHeight()
 	 * @generated
 	 * @ordered
@@ -96,16 +98,62 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	 * This is true if the Maximum Height attribute has been set.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 * @ordered
 	 */
 	protected boolean maximumHeightESet;
 
 	/**
+	 * The default value of the '{@link #isShowValidationSummaryTooltip() <em>Show Validation Summary Tooltip</em>}'
+	 * attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
+	 * @see #isShowValidationSummaryTooltip()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean SHOW_VALIDATION_SUMMARY_TOOLTIP_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isShowValidationSummaryTooltip() <em>Show Validation Summary Tooltip</em>}'
+	 * attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see #isShowValidationSummaryTooltip()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean showValidationSummaryTooltip = SHOW_VALIDATION_SUMMARY_TOOLTIP_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #isEnableSorting() <em>Enable Sorting</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see #isEnableSorting()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean ENABLE_SORTING_EDEFAULT = true;
+
+	/**
+	 * The cached value of the '{@link #isEnableSorting() <em>Enable Sorting</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see #isEnableSorting()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean enableSorting = ENABLE_SORTING_EDEFAULT;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected VTTableStylePropertyImpl() {
@@ -115,7 +163,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -126,7 +174,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -137,7 +185,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -156,7 +204,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -175,7 +223,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -186,7 +234,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -197,7 +245,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -216,7 +264,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -235,7 +283,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -246,7 +294,62 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
+	 * @generated
+	 */
+	@Override
+	public boolean isShowValidationSummaryTooltip() {
+		return showValidationSummaryTooltip;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
+	public void setShowValidationSummaryTooltip(boolean newShowValidationSummaryTooltip) {
+		final boolean oldShowValidationSummaryTooltip = showValidationSummaryTooltip;
+		showValidationSummaryTooltip = newShowValidationSummaryTooltip;
+		if (eNotificationRequired()) {
+			eNotify(new ENotificationImpl(this, Notification.SET,
+				VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__SHOW_VALIDATION_SUMMARY_TOOLTIP,
+				oldShowValidationSummaryTooltip, showValidationSummaryTooltip));
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
+	public boolean isEnableSorting() {
+		return enableSorting;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
+	public void setEnableSorting(boolean newEnableSorting) {
+		final boolean oldEnableSorting = enableSorting;
+		enableSorting = newEnableSorting;
+		if (eNotificationRequired()) {
+			eNotify(new ENotificationImpl(this, Notification.SET,
+				VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__ENABLE_SORTING, oldEnableSorting, enableSorting));
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -256,6 +359,10 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 			return getMinimumHeight();
 		case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__MAXIMUM_HEIGHT:
 			return getMaximumHeight();
+		case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__SHOW_VALIDATION_SUMMARY_TOOLTIP:
+			return isShowValidationSummaryTooltip();
+		case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__ENABLE_SORTING:
+			return isEnableSorting();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -263,7 +370,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -275,6 +382,12 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 		case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__MAXIMUM_HEIGHT:
 			setMaximumHeight((Integer) newValue);
 			return;
+		case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__SHOW_VALIDATION_SUMMARY_TOOLTIP:
+			setShowValidationSummaryTooltip((Boolean) newValue);
+			return;
+		case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__ENABLE_SORTING:
+			setEnableSorting((Boolean) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -282,7 +395,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -294,6 +407,12 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 		case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__MAXIMUM_HEIGHT:
 			unsetMaximumHeight();
 			return;
+		case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__SHOW_VALIDATION_SUMMARY_TOOLTIP:
+			setShowValidationSummaryTooltip(SHOW_VALIDATION_SUMMARY_TOOLTIP_EDEFAULT);
+			return;
+		case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__ENABLE_SORTING:
+			setEnableSorting(ENABLE_SORTING_EDEFAULT);
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -301,7 +420,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -311,6 +430,10 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 			return isSetMinimumHeight();
 		case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__MAXIMUM_HEIGHT:
 			return isSetMaximumHeight();
+		case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__SHOW_VALIDATION_SUMMARY_TOOLTIP:
+			return showValidationSummaryTooltip != SHOW_VALIDATION_SUMMARY_TOOLTIP_EDEFAULT;
+		case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__ENABLE_SORTING:
+			return enableSorting != ENABLE_SORTING_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -318,7 +441,7 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -340,6 +463,10 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 		} else {
 			result.append("<unset>"); //$NON-NLS-1$
 		}
+		result.append(", showValidationSummaryTooltip: "); //$NON-NLS-1$
+		result.append(showValidationSummaryTooltip);
+		result.append(", enableSorting: "); //$NON-NLS-1$
+		result.append(enableSorting);
 		result.append(')');
 		return result.toString();
 	}

@@ -119,6 +119,11 @@ public class GridTableViewerComposite extends AbstractTableViewerComposite {
 			public int getHeaderHeight() {
 				return getTableViewer().getGrid().getHeaderHeight();
 			}
+
+			@Override
+			public int getItemCount() {
+				return getTableViewer().getGrid().getItemCount();
+			}
 		};
 	}
 

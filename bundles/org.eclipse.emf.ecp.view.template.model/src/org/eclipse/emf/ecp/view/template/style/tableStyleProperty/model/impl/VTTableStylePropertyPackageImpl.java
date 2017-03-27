@@ -24,14 +24,14 @@ import org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableS
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Package</b>.
  * <!-- end-user-doc -->
- *
+ * 
  * @generated
  */
 public class VTTableStylePropertyPackageImpl extends EPackageImpl implements VTTableStylePropertyPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private EClass tableStylePropertyEClass = null;
@@ -47,7 +47,7 @@ public class VTTableStylePropertyPackageImpl extends EPackageImpl implements VTT
 	 * if one already exists.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
 	 * @see org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage#eNS_URI
 	 * @see #init()
@@ -60,7 +60,7 @@ public class VTTableStylePropertyPackageImpl extends EPackageImpl implements VTT
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private static boolean isInited = false;
@@ -73,7 +73,7 @@ public class VTTableStylePropertyPackageImpl extends EPackageImpl implements VTT
 	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #eNS_URI
 	 * @see #createPackageContents()
 	 * @see #initializePackageContents()
@@ -112,7 +112,7 @@ public class VTTableStylePropertyPackageImpl extends EPackageImpl implements VTT
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -123,7 +123,7 @@ public class VTTableStylePropertyPackageImpl extends EPackageImpl implements VTT
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -134,7 +134,7 @@ public class VTTableStylePropertyPackageImpl extends EPackageImpl implements VTT
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -145,7 +145,29 @@ public class VTTableStylePropertyPackageImpl extends EPackageImpl implements VTT
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
+	 * @generated
+	 */
+	@Override
+	public EAttribute getTableStyleProperty_ShowValidationSummaryTooltip() {
+		return (EAttribute) tableStylePropertyEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
+	public EAttribute getTableStyleProperty_EnableSorting() {
+		return (EAttribute) tableStylePropertyEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -156,7 +178,7 @@ public class VTTableStylePropertyPackageImpl extends EPackageImpl implements VTT
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private boolean isCreated = false;
@@ -166,7 +188,7 @@ public class VTTableStylePropertyPackageImpl extends EPackageImpl implements VTT
 	 * guarded to have no affect on any invocation but its first.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public void createPackageContents() {
@@ -179,12 +201,14 @@ public class VTTableStylePropertyPackageImpl extends EPackageImpl implements VTT
 		tableStylePropertyEClass = createEClass(TABLE_STYLE_PROPERTY);
 		createEAttribute(tableStylePropertyEClass, TABLE_STYLE_PROPERTY__MINIMUM_HEIGHT);
 		createEAttribute(tableStylePropertyEClass, TABLE_STYLE_PROPERTY__MAXIMUM_HEIGHT);
+		createEAttribute(tableStylePropertyEClass, TABLE_STYLE_PROPERTY__SHOW_VALIDATION_SUMMARY_TOOLTIP);
+		createEAttribute(tableStylePropertyEClass, TABLE_STYLE_PROPERTY__ENABLE_SORTING);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private boolean isInitialized = false;
@@ -194,7 +218,7 @@ public class VTTableStylePropertyPackageImpl extends EPackageImpl implements VTT
 	 * method is guarded to have no affect on any invocation but its first.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public void initializePackageContents() {
@@ -227,6 +251,12 @@ public class VTTableStylePropertyPackageImpl extends EPackageImpl implements VTT
 			!IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTableStyleProperty_MaximumHeight(), ecorePackage.getEInt(), "maximumHeight", null, 0, 1, //$NON-NLS-1$
 			VTTableStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTableStyleProperty_ShowValidationSummaryTooltip(), ecorePackage.getEBoolean(),
+			"showValidationSummaryTooltip", null, 0, 1, VTTableStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
+			IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTableStyleProperty_EnableSorting(), ecorePackage.getEBoolean(), "enableSorting", "true", 0, 1, //$NON-NLS-1$ //$NON-NLS-2$
+			VTTableStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
 
 		// Create resource

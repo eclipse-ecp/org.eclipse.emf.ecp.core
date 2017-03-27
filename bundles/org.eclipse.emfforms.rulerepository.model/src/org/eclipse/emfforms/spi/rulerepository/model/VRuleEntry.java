@@ -24,6 +24,7 @@ import org.eclipse.emf.ecp.view.spi.rule.model.Rule;
  * The following features are supported:
  * </p>
  * <ul>
+ * <li>{@link org.eclipse.emfforms.spi.rulerepository.model.VRuleEntry#getName <em>Name</em>}</li>
  * <li>{@link org.eclipse.emfforms.spi.rulerepository.model.VRuleEntry#getRule <em>Rule</em>}</li>
  * <li>{@link org.eclipse.emfforms.spi.rulerepository.model.VRuleEntry#getElements <em>Elements</em>}</li>
  * <li>{@link org.eclipse.emfforms.spi.rulerepository.model.VRuleEntry#getMergeType <em>Merge Type</em>}</li>
@@ -34,6 +35,35 @@ import org.eclipse.emf.ecp.view.spi.rule.model.Rule;
  * @generated
  */
 public interface VRuleEntry extends EObject {
+	/**
+	 * Returns the value of the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Name</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the value of the '<em>Name</em>' attribute.
+	 * @see #setName(String)
+	 * @see org.eclipse.emfforms.spi.rulerepository.model.VRulerepositoryPackage#getRuleEntry_Name()
+	 * @model
+	 * @generated
+	 */
+	String getName();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.emfforms.spi.rulerepository.model.VRuleEntry#getName <em>Name</em>}'
+	 * attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @param value the new value of the '<em>Name</em>' attribute.
+	 * @see #getName()
+	 * @generated
+	 */
+	void setName(String value);
+
 	/**
 	 * Returns the value of the '<em><b>Rule</b></em>' containment reference.
 	 * <!-- begin-user-doc -->

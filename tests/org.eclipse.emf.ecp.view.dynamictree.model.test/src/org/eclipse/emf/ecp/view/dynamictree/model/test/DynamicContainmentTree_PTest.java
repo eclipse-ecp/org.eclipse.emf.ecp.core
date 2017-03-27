@@ -15,7 +15,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
@@ -32,8 +31,6 @@ import org.eclipse.emf.ecp.view.dynamictree.model.ModelFactory;
 import org.eclipse.emf.ecp.view.dynamictree.model.ModelPackage;
 import org.eclipse.emf.ecp.view.dynamictree.model.TestElement;
 import org.eclipse.emf.ecp.view.dynamictree.model.TestElementContainer;
-import org.eclipse.emf.ecp.view.spi.categorization.model.VAction;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -95,7 +92,7 @@ public class DynamicContainmentTree_PTest {
 		viewControl.setDomainModelReference(createFeaturePathDomainModelReference);
 		tree.setComposite(viewControl);
 
-		final ViewModelContext viewModelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(tree, root);
+		ViewModelContextFactory.INSTANCE.createViewModelContext(tree, root);
 	}
 
 	@After
@@ -260,7 +257,6 @@ public class DynamicContainmentTree_PTest {
 
 		VElement renderable = null;
 		DynamicContainmentTree tree = null;
-		List<VAction> actions = null;
 
 		if (!TestElementContainer.class.isInstance(virtualParent)) {
 			virtualParent = virtualParent.eContainer();
@@ -276,7 +272,7 @@ public class DynamicContainmentTree_PTest {
 		if (tree == null) {
 			tree = (DynamicContainmentTree) viewModelParent;
 		}
-		actions = tree.getActions();
+		tree.getActions();
 		renderable = tree.getChildComposite();
 
 		final DynamicContainmentItem pi = ModelFactory.eINSTANCE.createDynamicContainmentItem();

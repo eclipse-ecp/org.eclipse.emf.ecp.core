@@ -123,6 +123,11 @@ public class TableViewerComposite extends AbstractTableViewerComposite {
 			public int getHeaderHeight() {
 				return getTableViewer().getTable().getHeaderHeight();
 			}
+
+			@Override
+			public int getItemCount() {
+				return getTableViewer().getTable().getItemCount();
+			}
 		};
 	}
 

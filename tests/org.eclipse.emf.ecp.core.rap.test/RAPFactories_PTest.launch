@@ -71,7 +71,6 @@
 <setEntry value="org.eclipse.emf.ecp.graphiti.feature:default"/>
 <setEntry value="org.eclipse.emf.ecp.ide.feature:default"/>
 <setEntry value="org.eclipse.emf.ecp.license.feature:default"/>
-<setEntry value="org.eclipse.emf.ecp.nosite.feature:default"/>
 <setEntry value="org.eclipse.emf.ecp.test.feature:default"/>
 <setEntry value="org.eclipse.emf.ecp.view.categorization.feature:default"/>
 <setEntry value="org.eclipse.emf.ecp.view.custom.feature:default"/>

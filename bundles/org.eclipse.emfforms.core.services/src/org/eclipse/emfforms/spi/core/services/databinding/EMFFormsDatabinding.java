@@ -33,7 +33,9 @@ public interface EMFFormsDatabinding {
 	 * of the given {@link EObject}.
 	 *
 	 * @param domainModelReference The domain model reference pointing to the desired value
-	 * @param object The object containing the value of the reference
+	 * @param object The root object of the rendered form. If the {@link VDomainModelReference} contains a path, the
+	 *            object is the first node of the path. Therefore, the {@link IObservableValue} can be bound to a
+	 *            feature of a sub element in case of a path.
 	 * @return The resulting {@link IObservableValue}, does not return <code>null</code>.
 	 * @throws DatabindingFailedException if the databinding could not be executed successfully.
 	 */
@@ -45,7 +47,9 @@ public interface EMFFormsDatabinding {
 	 * the given {@link EObject}.
 	 *
 	 * @param domainModelReference The domain model reference pointing to the desired list
-	 * @param object The object containing the values of the reference
+	 * @param object The root object of the rendered form. If the {@link VDomainModelReference} contains a path, the
+	 *            object is the first node of the path. Therefore, the {@link IObservableValue} can be bound to a
+	 *            feature of a sub element in case of a path.
 	 * @return The resulting {@link IObservableList}, does not return <code>null</code>
 	 * @throws DatabindingFailedException if the databinding could not be executed successfully.
 	 */
@@ -56,7 +60,9 @@ public interface EMFFormsDatabinding {
 	 * Returns an {@link IValueProperty} described by the given {@link VDomainModelReference}.
 	 *
 	 * @param domainModelReference The domain model reference pointing to the desired value
-	 * @param object The root object of the rendered form
+	 * @param object The root object of the rendered form. If the {@link VDomainModelReference} contains a path, the
+	 *            object is the first node of the path. Therefore, the {@link IValueProperty} can be bound to a feature
+	 *            of a sub element in case of a path.
 	 * @return The resulting {@link IValueProperty}, does not return <code>null</code>.
 	 * @throws DatabindingFailedException if the databinding could not be executed successfully.
 	 */
@@ -67,7 +73,9 @@ public interface EMFFormsDatabinding {
 	 * Returns an {@link IListProperty} described by the given {@link VDomainModelReference}.
 	 *
 	 * @param domainModelReference The domain model reference pointing to the desired list
-	 * @param object The root object of the rendered form
+	 * @param object The root object of the rendered form. If the {@link VDomainModelReference} contains a path, the
+	 *            object is the first node of the path. Therefore, the {@link IValueProperty} can be bound to a feature
+	 *            of a sub element in case of a path.
 	 * @return The resulting {@link IListProperty}, does not return <code>null</code>.
 	 * @throws DatabindingFailedException if the databinding could not be executed successfully.
 	 */

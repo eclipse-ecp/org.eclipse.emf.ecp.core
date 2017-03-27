@@ -44,9 +44,9 @@ public abstract class AbstractEClassTreeSelectionComposite extends AbstractFilte
 	/**
 	 * Constructor setting the necessary data for selecting the {@link EClass EClasses}.
 	 *
-	 * @param unsupportedEPackages {@link EPackage EPackages} that are not supported
-	 * @param filteredEPackages {@link EPackage EPackages} selected by the user
-	 * @param filteredEClasses {@link EClass EClasses} selected by the user
+	 * @param unsupportedEPackages {@link EPackage EPackages} that are not supported and will not be shown
+	 * @param filteredEPackages {@link EPackage EPackages} to be shown
+	 * @param filteredEClasses {@link EClass EClasses} to be shown
 	 */
 	public AbstractEClassTreeSelectionComposite(Collection<EPackage> unsupportedEPackages,
 		Collection<EPackage> filteredEPackages, Collection<EClass> filteredEClasses) {

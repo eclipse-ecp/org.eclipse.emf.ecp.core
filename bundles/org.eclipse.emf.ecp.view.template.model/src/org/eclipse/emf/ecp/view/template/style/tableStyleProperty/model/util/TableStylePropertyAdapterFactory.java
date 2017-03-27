@@ -24,7 +24,6 @@ import org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableS
  * The <b>Adapter Factory</b> for the model.
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
- *
  * @see org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage
  * @generated
  */
@@ -33,7 +32,6 @@ public class TableStylePropertyAdapterFactory extends AdapterFactoryImpl {
 	 * The cached model package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	protected static VTTableStylePropertyPackage modelPackage;
@@ -42,7 +40,6 @@ public class TableStylePropertyAdapterFactory extends AdapterFactoryImpl {
 	 * Creates an instance of the adapter factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	public TableStylePropertyAdapterFactory() {
@@ -57,7 +54,6 @@ public class TableStylePropertyAdapterFactory extends AdapterFactoryImpl {
 	 * This implementation returns <code>true</code> if the object is either the model's package or is an instance
 	 * object of the model.
 	 * <!-- end-user-doc -->
-	 *
 	 * @return whether this factory is applicable for the type of the object.
 	 * @generated
 	 */
@@ -67,7 +63,7 @@ public class TableStylePropertyAdapterFactory extends AdapterFactoryImpl {
 			return true;
 		}
 		if (object instanceof EObject) {
-			return ((EObject) object).eClass().getEPackage() == modelPackage;
+			return ((EObject)object).eClass().getEPackage() == modelPackage;
 		}
 		return false;
 	}
@@ -76,49 +72,42 @@ public class TableStylePropertyAdapterFactory extends AdapterFactoryImpl {
 	 * The switch that delegates to the <code>createXXX</code> methods.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	protected TableStylePropertySwitch<Adapter> modelSwitch = new TableStylePropertySwitch<Adapter>() {
-		@Override
-		public Adapter caseTableStyleProperty(VTTableStyleProperty object) {
-			return createTableStylePropertyAdapter();
-		}
-
-		@Override
-		public Adapter caseStyleProperty(VTStyleProperty object) {
-			return createStylePropertyAdapter();
-		}
-
-		@Override
-		public Adapter defaultCase(EObject object) {
-			return createEObjectAdapter();
-		}
-	};
+			@Override
+			public Adapter caseTableStyleProperty(VTTableStyleProperty object) {
+				return createTableStylePropertyAdapter();
+			}
+			@Override
+			public Adapter caseStyleProperty(VTStyleProperty object) {
+				return createStylePropertyAdapter();
+			}
+			@Override
+			public Adapter defaultCase(EObject object) {
+				return createEObjectAdapter();
+			}
+		};
 
 	/**
 	 * Creates an adapter for the <code>target</code>.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
 	 * @param target the object to adapt.
 	 * @return the adapter for the <code>target</code>.
 	 * @generated
 	 */
 	@Override
 	public Adapter createAdapter(Notifier target) {
-		return modelSwitch.doSwitch((EObject) target);
+		return modelSwitch.doSwitch((EObject)target);
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty
-	 * <em>Table Style Property</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty <em>Table Style Property</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 *
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty
 	 * @generated
@@ -128,13 +117,11 @@ public class TableStylePropertyAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.template.model.VTStyleProperty
-	 * <em>Style Property</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.template.model.VTStyleProperty <em>Style Property</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
-	 *
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.template.model.VTStyleProperty
 	 * @generated
@@ -148,7 +135,6 @@ public class TableStylePropertyAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null.
 	 * <!-- end-user-doc -->
-	 *
 	 * @return the new adapter.
 	 * @generated
 	 */

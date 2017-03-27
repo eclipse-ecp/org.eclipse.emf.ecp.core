@@ -29,5 +29,5 @@ public interface DialogWrapper {
 	 * @param dialog the JFace {@link Dialog}
 	 * @param callBack the {@link ECPDialogExecutor} called
 	 */
-	void openDialog(final Dialog dialog, final ECPDialogExecutor callBack);
+	void openDialog(Dialog dialog, ECPDialogExecutor callBack);
 }

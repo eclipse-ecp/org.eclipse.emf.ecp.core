@@ -50,7 +50,7 @@ public class DefaultTableControlSWTCustomization implements TableViewerSWTCustom
 
 	private TableViewerCompositeBuilder tableViewerCompositeBuilder = new DefaultTableViewerCompositeBuilder();
 
-	private TableViewerCreator tableViewerCreator = new TableViewerCreator() {
+	private TableViewerCreator<? extends AbstractTableViewer> tableViewerCreator = new TableViewerCreator<TableViewer>() {
 
 		@Override
 		public TableViewer createTableViewer(Composite parent) {
@@ -139,7 +139,7 @@ public class DefaultTableControlSWTCustomization implements TableViewerSWTCustom
 	 *
 	 * @param creator the {@link TableViewerCreator}
 	 */
-	public void setTableViewerCreator(TableViewerCreator creator) {
+	public void setTableViewerCreator(TableViewerCreator<? extends AbstractTableViewer> creator) {
 		tableViewerCreator = creator;
 	}
 

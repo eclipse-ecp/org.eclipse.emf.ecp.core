@@ -7,6 +7,12 @@
                 <message_argument value="1.9.0"/>
             </message_arguments>
         </filter>
+        <filter comment="Model Additions in 1.12" id="923795461">
+            <message_arguments>
+                <message_argument value="1.12.0"/>
+                <message_argument value="1.11.0"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI Change in 1.6" id="923795461">
             <message_arguments>
                 <message_argument value="1.6.0"/>
@@ -459,6 +465,79 @@
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.template.style.tab.model.VTTabStyleProperty"/>
                 <message_argument value="setWarningImageURL(String)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/template/style/tableStyleProperty/model/VTTableStyleProperty.java" type="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty">
+        <filter comment="SPI Changes for 1.12" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty"/>
+                <message_argument value="isEnableSorting()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Model Additions in 1.12" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty"/>
+                <message_argument value="isShowValidationSummaryTooltip()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Changes for 1.12" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty"/>
+                <message_argument value="setEnableSorting(boolean)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Model Additions in 1.12" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty"/>
+                <message_argument value="setShowValidationSummaryTooltip(boolean)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/template/style/tableStyleProperty/model/VTTableStylePropertyPackage.java" type="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage">
+        <filter comment="Model Additions in 1.12" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage"/>
+                <message_argument value="TABLE_STYLE_PROPERTY_FEATURE_COUNT"/>
+                <message_argument value="2"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Changes for 1.12" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage"/>
+                <message_argument value="TABLE_STYLE_PROPERTY__ENABLE_SORTING"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Model Additions in 1.12" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage"/>
+                <message_argument value="TABLE_STYLE_PROPERTY__SHOW_VALIDATION_SUMMARY_TOOLTIP"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Changes for 1.12" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage"/>
+                <message_argument value="getTableStyleProperty_EnableSorting()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Model Additions in 1.12" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage"/>
+                <message_argument value="getTableStyleProperty_ShowValidationSummaryTooltip()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/template/style/tableStyleProperty/model/VTTableStylePropertyPackage.java" type="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage$Literals">
+        <filter comment="SPI Changes for 1.12" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage.Literals"/>
+                <message_argument value="TABLE_STYLE_PROPERTY__ENABLE_SORTING"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Model Additions in 1.12" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage.Literals"/>
+                <message_argument value="TABLE_STYLE_PROPERTY__SHOW_VALIDATION_SUMMARY_TOOLTIP"/>
             </message_arguments>
         </filter>
     </resource>

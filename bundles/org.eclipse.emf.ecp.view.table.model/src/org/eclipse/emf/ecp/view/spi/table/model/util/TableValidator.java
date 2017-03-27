@@ -58,7 +58,7 @@ import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
  * @generated
  */
 public class TableValidator extends EObjectValidator {
-	private static final String VALIDATING_TABLE_CONTROL_KEY = "ValidatingTableControl";
+	private static final String VALIDATING_TABLE_CONTROL_KEY = "ValidatingTableControl"; //$NON-NLS-1$
 
 	/**
 	 * The cached model package

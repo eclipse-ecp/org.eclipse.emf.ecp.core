@@ -512,6 +512,9 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 						view, eObject, customization.getViewModelServices(view, eObject));
 				renderedView = ECPSWTViewRenderer.INSTANCE.render(limbo, modelContext);
 				label.dispose();
+				if (detailPanel.isDisposed()) {
+					return;
+				}
 				renderedView.getSWTControl().setParent(detailPanel);
 				detailPanel.layout(true, true);
 				if (ScrolledComposite.class.isInstance(detailComposite)) {

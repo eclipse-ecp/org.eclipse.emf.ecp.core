@@ -110,13 +110,23 @@ public interface VRulerepositoryPackage extends EPackage {
 	int RULE_ENTRY = 1;
 
 	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int RULE_ENTRY__NAME = 0;
+
+	/**
 	 * The feature id for the '<em><b>Rule</b></em>' containment reference. <!--
 	 * begin-user-doc --> <!-- end-user-doc -->
 	 *
 	 * @generated
 	 * @ordered
 	 */
-	int RULE_ENTRY__RULE = 0;
+	int RULE_ENTRY__RULE = 1;
 
 	/**
 	 * The feature id for the '<em><b>Elements</b></em>' reference list. <!--
@@ -125,7 +135,7 @@ public interface VRulerepositoryPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RULE_ENTRY__ELEMENTS = 1;
+	int RULE_ENTRY__ELEMENTS = 2;
 
 	/**
 	 * The feature id for the '<em><b>Merge Type</b></em>' attribute.
@@ -135,7 +145,7 @@ public interface VRulerepositoryPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RULE_ENTRY__MERGE_TYPE = 2;
+	int RULE_ENTRY__MERGE_TYPE = 3;
 
 	/**
 	 * The number of structural features of the '<em>Rule Entry</em>' class.
@@ -144,7 +154,7 @@ public interface VRulerepositoryPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int RULE_ENTRY_FEATURE_COUNT = 3;
+	int RULE_ENTRY_FEATURE_COUNT = 4;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emfforms.spi.rulerepository.model.MergeType <em>Merge Type</em>}'
@@ -191,6 +201,19 @@ public interface VRulerepositoryPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getRuleEntry();
+
+	/**
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emfforms.spi.rulerepository.model.VRuleEntry#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.eclipse.emfforms.spi.rulerepository.model.VRuleEntry#getName()
+	 * @see #getRuleEntry()
+	 * @generated
+	 */
+	EAttribute getRuleEntry_Name();
 
 	/**
 	 * Returns the meta object for the containment reference
@@ -297,6 +320,15 @@ public interface VRulerepositoryPackage extends EPackage {
 		 * @generated
 		 */
 		EClass RULE_ENTRY = eINSTANCE.getRuleEntry();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EAttribute RULE_ENTRY__NAME = eINSTANCE.getRuleEntry_Name();
 
 		/**
 		 * The meta object literal for the '<em><b>Rule</b></em>' containment reference feature.

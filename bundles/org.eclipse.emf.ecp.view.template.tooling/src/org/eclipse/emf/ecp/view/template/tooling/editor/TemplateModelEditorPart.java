@@ -112,6 +112,7 @@ public class TemplateModelEditorPart extends GenericEditor {
 	 *
 	 * @param objectToReveal the object to reveal
 	 */
+	@Override
 	public void reveal(EObject objectToReveal) {
 		treeMasterDetail.getSelectionProvider().refresh();
 		treeMasterDetail.getSelectionProvider().reveal(objectToReveal);

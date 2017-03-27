@@ -42,7 +42,7 @@ public class CustomControlStub2 extends ECPAbstractCustomControlSWT implements E
 	private static Composite parent;
 
 	private final Set<VDomainModelReference> features = new LinkedHashSet<VDomainModelReference>();
-	public static VDomainModelReference resolvedDomainModelReference;
+	private static VDomainModelReference resolvedDomainModelReference;
 
 	public CustomControlStub2() {
 		super();
@@ -92,8 +92,7 @@ public class CustomControlStub2 extends ECPAbstractCustomControlSWT implements E
 			setLabel(new Label(parent, SWT.NONE));
 			return label;
 
-		}
-		else if (cell.getColumn() == 1) {
+		} else if (cell.getColumn() == 1) {
 			resolvedDomainModelReference = getResolvedDomainModelReference(BowlingPackage.eINSTANCE
 				.getMerchandise_Name());
 			final Composite createControl = getControl(SWTControl.class, resolvedDomainModelReference).createControl(

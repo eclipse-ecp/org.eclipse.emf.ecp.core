@@ -15,6 +15,7 @@ import java.util.Collection;
 import java.util.HashSet;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecp.spi.common.ui.composites.CheckedEStructuralFeatureComposite;
 import org.eclipse.emf.ecp.spi.common.ui.composites.CheckedEStructuralFeatureCompositeImpl;
@@ -47,7 +48,9 @@ public final class CompositeFactory {
 	/**
 	 * Creates a {@link SelectionComposite} to select an {@link EClass}.
 	 *
-	 *
+	 * @param unsupportedEPackages {@link EPackage EPackages} that are not supported and will not be shown
+	 * @param filteredEPackages {@link EPackage EPackages} to be shown
+	 * @param filteredEClasses {@link EClass EClasses} to be shown
 	 * @return {@link SelectionComposite}
 	 */
 	public static SelectionComposite<TreeViewer> getSelectModelClassComposite(
@@ -57,9 +60,15 @@ public final class CompositeFactory {
 	}
 
 	/**
+	 * Creates a {@link SelectionComposite} with a {@link TableViewer} to select an {@link EObject}.
+	 *
+	 * @param rootObject The children of this object are shown in the table.
+	 * @param multiSelection Whether the user can select multiple {@link EObject}s
+	 * @return a {@link SelectionComposite}
 	 * @since 1.5
 	 */
-	public static SelectionComposite<TableViewer> getTableSelectionComposite(Object rootObject, boolean multiSelection) {
+	public static SelectionComposite<TableViewer> getTableSelectionComposite(Object rootObject,
+		boolean multiSelection) {
 		return new SelectModelElementCompositeImpl(rootObject, multiSelection);
 	}
 

@@ -41,14 +41,14 @@ public class GridCutKeyListener extends GridCopyKeyListener {
 		this.dataBinding = dataBinding;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.swt.events.KeyListener#keyReleased(org.eclipse.swt.events.KeyEvent)
-	 */
+	@Override
+	public void keyPressed(KeyEvent e) {
+		setTriggerActive((e.stateMask & SWT.CTRL) != 0 && e.keyCode == 'x');
+	}
+
 	@Override
 	public void keyReleased(KeyEvent e) {
-		if ((e.stateMask & SWT.CTRL) != 0 && e.keyCode == 'x') {
+		if (isTriggerActive()) {
 			final Grid grid = (Grid) e.widget;
 			copySelectionToClipboard(grid);
 			KeyListenerUtil.clearSelection(grid, vControl, dataBinding);

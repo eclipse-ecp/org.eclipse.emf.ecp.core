@@ -285,6 +285,8 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 				controlToUnset = Composite.class
 					.cast(Composite.class.cast(Composite.class.cast(control).getChildren()[0]).getChildren()[0])
 					.getChildren()[0];
+			} else {
+				controlToUnset = Composite.class.cast(control).getChildren()[0];
 			}
 			Text.class.cast(controlToUnset).setEditable(enabled);
 		} else {

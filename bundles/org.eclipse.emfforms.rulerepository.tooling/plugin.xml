@@ -16,7 +16,7 @@
          point="org.eclipse.ui.menus">
       <menuContribution
             allPopups="false"
-            locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu">
+            locationURI="popup:org.eclipse.ui.popup.any">
          <menu
                id="org.eclipse.emf.ecp.ui.e3.emfFormsMenu"
                label="EMF Forms">

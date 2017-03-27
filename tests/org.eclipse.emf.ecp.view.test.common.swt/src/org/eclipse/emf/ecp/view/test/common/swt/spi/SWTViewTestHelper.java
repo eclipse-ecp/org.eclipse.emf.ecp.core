@@ -38,6 +38,12 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 
+/**
+ * Helper Class for SWT Tests.
+ *
+ * @author Jonas Helming
+ *
+ */
 public final class SWTViewTestHelper {
 	// private static SWTRendererFactory factory = new SWTRendererFactoryImpl();
 	private static EMFFormsRendererFactory factory;
@@ -109,16 +115,32 @@ public final class SWTViewTestHelper {
 		return render(renderable, VViewFactory.eINSTANCE.createView(), shell);
 	}
 
+	/**
+	 *
+	 * @param composite a {@link Composite} with a {@link GridLayout}
+	 * @return the number of columns
+	 */
 	public static int getNumberofColumns(Composite composite) {
 		final GridLayout gridLayout = (GridLayout) composite.getLayout();
 		return gridLayout.numColumns;
 	}
 
-	public static int getHorizontalSpan(Composite composite) {
-		final GridData gridData = (GridData) composite.getLayoutData();
+	/**
+	 *
+	 * @param control a control with a Horitontal Span specified
+	 * @return the horizontal span
+	 */
+	public static int getHorizontalSpan(Control control) {
+		final GridData gridData = (GridData) control.getLayoutData();
 		return gridData.horizontalSpan;
 	}
 
+	/**
+	 * Checks whether there is a text control.
+	 *
+	 * @param control the control to check its children
+	 * @return if there is a text control
+	 */
 	public static boolean checkIfThereIsATextControlWithLabel(Control control) {
 		if (!(control instanceof Composite)) {
 			return false;
@@ -128,6 +150,13 @@ public final class SWTViewTestHelper {
 		return checkIfThereIsATextControl(controlComposite.getChildren()[2]);
 	}
 
+	/**
+	 * Checks whether there is at least one text control in the children of a control (recursivly). The method will only
+	 * check the first child on every level.
+	 *
+	 * @param control control the control to check its children
+	 * @return if there is a text control
+	 */
 	public static boolean checkIfThereIsATextControl(Control control) {
 		if (Text.class.isInstance(control)) {
 			return true;
@@ -137,6 +166,12 @@ public final class SWTViewTestHelper {
 		return false;
 	}
 
+	/**
+	 * Retrieve all text controls, which are children on a given control.
+	 *
+	 * @param control the control to check its children
+	 * @return a {@link List} of {@link Text}
+	 */
 	public static List<Text> getAllTextControls(Control control) {
 		final Composite controlComposite = (Composite) control;
 		final List<Text> textFields = new ArrayList<Text>();

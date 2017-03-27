@@ -15,6 +15,7 @@
     <genClasses ecoreClass="tableStyleProperty.ecore#//TableStyleProperty">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tableStyleProperty.ecore#//TableStyleProperty/minimumHeight"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tableStyleProperty.ecore#//TableStyleProperty/maximumHeight"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute tableStyleProperty.ecore#//TableStyleProperty/showValidationSummaryTooltip"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

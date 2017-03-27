@@ -13,6 +13,14 @@
 
 	<properties>
     <eclipse-name>neon</eclipse-name>
-	<eclipse-sr>R</eclipse-sr>
+	<eclipse-sr>2</eclipse-sr>
   </properties>
+  <build>
+  	<plugins>
+  		<plugin>
+		  <artifactId>exec-maven-plugin</artifactId>
+		  <groupId>org.codehaus.mojo</groupId>
+	  </plugin>
+  	</plugins>
+  </build>
 </project>

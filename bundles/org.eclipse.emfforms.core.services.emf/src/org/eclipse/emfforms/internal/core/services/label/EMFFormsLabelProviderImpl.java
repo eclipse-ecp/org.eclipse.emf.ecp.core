@@ -376,13 +376,19 @@ public class EMFFormsLabelProviderImpl implements EMFFormsLabelProvider, EMFForm
 	@Override
 	public void notifyLocaleChange() {
 		for (final Entry<WritableValue, BundleKeyWrapper> entry : displayKeyObservableMap.entrySet()) {
-			final BundleKeyWrapper displayNameKey = entry.getValue();
 			final WritableValue writableValue = entry.getKey();
+			if (writableValue.isDisposed()) {
+				continue;
+			}
+			final BundleKeyWrapper displayNameKey = entry.getValue();
 			writableValue.setValue(getDisplayName(displayNameKey.getBundle(), displayNameKey.getKey()));
 		}
 		for (final Entry<WritableValue, DescriptionKey> entry : descriptionKeyObservableMap.entrySet()) {
-			final DescriptionKey descriptionKey = entry.getValue();
 			final WritableValue writableValue = entry.getKey();
+			if (writableValue.isDisposed()) {
+				continue;
+			}
+			final DescriptionKey descriptionKey = entry.getValue();
 			writableValue.setValue(getDescription(descriptionKey.geteClassName(), descriptionKey.getFeatureName(),
 				descriptionKey.getBundle()));
 		}

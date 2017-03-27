@@ -201,11 +201,7 @@ public class EcoreReferenceService extends DefaultReferenceService {
 			return;
 		}
 
-		if (!eReference.isMany()) {
-			context.getDomainModel().eSet(eReference, eObject);
-		} else {
-			ECPControlHelper.addModelElementInReference(context.getDomainModel(), eObject, eReference, editingDomain);
-		}
+		ECPControlHelper.addModelElementInReference(context.getDomainModel(), eObject, eReference, editingDomain);
 	}
 
 	@Override

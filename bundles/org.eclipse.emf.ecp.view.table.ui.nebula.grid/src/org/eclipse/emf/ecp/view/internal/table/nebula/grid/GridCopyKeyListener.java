@@ -33,6 +33,7 @@ import org.eclipse.swt.widgets.Display;
  */
 public class GridCopyKeyListener implements KeyListener {
 	private final Clipboard clipboard;
+	private boolean triggerActive;
 
 	/**
 	 * Constructor.
@@ -45,12 +46,12 @@ public class GridCopyKeyListener implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// do nothing
+		setTriggerActive((e.stateMask & SWT.CTRL) != 0 && e.keyCode == 'c');
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		if ((e.stateMask & SWT.CTRL) != 0 && e.keyCode == 'c') {
+		if (isTriggerActive()) {
 			final Grid grid = (Grid) e.widget;
 			copySelectionToClipboard(grid);
 		}
@@ -123,8 +124,7 @@ public class GridCopyKeyListener implements KeyListener {
 	}
 
 	private String[][] initializeTableSelection(Grid grid, Point[] cellSelection, int columnSize, int rowSize,
-		int minColumn,
-		int minRow) {
+		int minColumn, int minRow) {
 		final String[][] tableSelection = new String[columnSize][rowSize];
 		for (int i = 0; i < cellSelection.length; i++) {
 			final int column = cellSelection[i].x;
@@ -145,5 +145,21 @@ public class GridCopyKeyListener implements KeyListener {
 		}
 		final String text = item.getText(column);
 		return text;
+	}
+
+	/**
+	 * @return <code>true</code> if copy was triggered in key pressed
+	 */
+	protected boolean isTriggerActive() {
+		return triggerActive;
+	}
+
+	/**
+	 * May be called from {@link #keyPressed(KeyEvent)} to indicated whether this triggers the action.
+	 * 
+	 * @param triggerActive <code>true</code> if key release should perform the action, <code>false</code> otherwise
+	 */
+	protected void setTriggerActive(boolean triggerActive) {
+		this.triggerActive = triggerActive;
 	}
 }

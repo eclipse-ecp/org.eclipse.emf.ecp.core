@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<fragment>
+
+   <extension
+         name=""
+         point="org.eclipse.emf.ecore.generated_package">
+      <package
+            genModel="model/ecp.common.test.genmodel"
+            uri="http://eclipse.org/ecp/common/test/model"
+            class="org.eclipse.emf.ecp.common.test.model.TestPackage">
+      </package>
+   </extension>
+
+</fragment>

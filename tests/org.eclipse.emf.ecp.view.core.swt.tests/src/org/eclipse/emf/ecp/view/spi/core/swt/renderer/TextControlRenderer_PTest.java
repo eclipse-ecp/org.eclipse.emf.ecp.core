@@ -57,14 +57,14 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 	public void before() throws DatabindingFailedException {
 		realm = new DefaultRealm();
 		final ReportService reportService = mock(ReportService.class);
-		databindingService = mock(EMFFormsDatabinding.class);
-		labelProvider = mock(EMFFormsLabelProvider.class);
-		templateProvider = mock(VTViewTemplateProvider.class);
+		setDatabindingService(mock(EMFFormsDatabinding.class));
+		setLabelProvider(mock(EMFFormsLabelProvider.class));
+		setTemplateProvider(mock(VTViewTemplateProvider.class));
 		final EMFFormsEditSupport editSupport = mock(EMFFormsEditSupport.class);
 		setup();
-		renderer = new TextControlSWTRenderer(vControl, context, reportService, databindingService, labelProvider,
-			templateProvider, editSupport);
-		renderer.init();
+		setRenderer(new TextControlSWTRenderer(getvControl(), getContext(), reportService, getDatabindingService(), getLabelProvider(),
+			getTemplateProvider(), editSupport));
+		getRenderer().init();
 	}
 
 	@After
@@ -77,7 +77,7 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 	public void renderControlLabelAlignmentNone()
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException,
 		NoLabelFoundException {
-		when(labelProvider.getDisplayName(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+		when(getLabelProvider().getDisplayName(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			Observables.constantObservableValue("antiException", String.class));
 		setMockLabelAlignment(LabelAlignment.NONE);
 		final TestObservableValue mockedObservableValue = mock(TestObservableValue.class);
@@ -87,9 +87,9 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 		when(mockedObservableValue.getObserved()).thenReturn(mockedEObject);
 		final EStructuralFeature mockedEStructuralFeature = EcorePackage.eINSTANCE.getENamedElement_Name();
 		when(mockedObservableValue.getValueType()).thenReturn(mockedEStructuralFeature);
-		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			mockedObservableValue);
-		final Control render = renderControl(new SWTGridCell(0, 1, renderer));
+		final Control render = renderControl(new SWTGridCell(0, 1, getRenderer()));
 		assertControl(render);
 	}
 
@@ -97,7 +97,7 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 	public void renderControlLabelAlignmentLeft()
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException,
 		NoLabelFoundException {
-		when(labelProvider.getDisplayName(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+		when(getLabelProvider().getDisplayName(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			Observables.constantObservableValue("antiException", String.class));
 		setMockLabelAlignment(LabelAlignment.LEFT);
 		final TestObservableValue mockedObservableValue = mock(TestObservableValue.class);
@@ -108,9 +108,9 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 		final EStructuralFeature mockedEStructuralFeature = mock(EStructuralFeature.class);
 		when(mockedEStructuralFeature.isUnsettable()).thenReturn(false);
 		when(mockedObservableValue.getValueType()).thenReturn(mockedEStructuralFeature);
-		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			mockedObservableValue);
-		final Control render = renderControl(new SWTGridCell(0, 2, renderer));
+		final Control render = renderControl(new SWTGridCell(0, 2, getRenderer()));
 
 		assertControl(render);
 	}
@@ -199,14 +199,14 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 	 */
 	private Text setUpDatabindingTest(final ObservingWritableValue mockedObservable) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException, NoLabelFoundException {
-		when(labelProvider.getDisplayName(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+		when(getLabelProvider().getDisplayName(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			Observables.constantObservableValue("antiException"));
-		Mockito.reset(databindingService);
+		Mockito.reset(getDatabindingService());
 		mockDatabindingIsUnsettable();
-		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			mockedObservable, new ObservingWritableValue(mockedObservable));
 
-		final Control renderControl = renderControl(new SWTGridCell(0, 2, renderer));
+		final Control renderControl = renderControl(new SWTGridCell(0, 2, getRenderer()));
 		final Text text = (Text) Composite.class.cast(renderControl).getChildren()[0];
 		return text;
 	}
@@ -224,7 +224,7 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 	public void testLabelServiceUsageTextField() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
 		DatabindingFailedException, NoLabelFoundException {
 		final IObservableValue testDisplayName = Observables.constantObservableValue("test-displayname", String.class);
-		when(labelProvider.getDisplayName(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+		when(getLabelProvider().getDisplayName(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			testDisplayName);
 
 		setMockLabelAlignment(LabelAlignment.LEFT);
@@ -236,10 +236,10 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 		when(mockedObservableValue.getObserved()).thenReturn(mockedEObject);
 		final EStructuralFeature mockedEStructuralFeature = EcorePackage.eINSTANCE.getENamedElement_Name();
 		when(mockedObservableValue.getValueType()).thenReturn(mockedEStructuralFeature);
-		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			mockedObservableValue);
 
-		final Control renderControl = renderControl(new SWTGridCell(0, 2, renderer));
+		final Control renderControl = renderControl(new SWTGridCell(0, 2, getRenderer()));
 		final Control textRender = Composite.class.cast(renderControl).getChildren()[0];
 		assertTrue(Text.class.isInstance(textRender));
 

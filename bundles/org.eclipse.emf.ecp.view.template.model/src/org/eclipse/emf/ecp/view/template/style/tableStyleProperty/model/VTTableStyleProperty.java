@@ -16,7 +16,7 @@ import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Table Style Property</b></em>'.
- * 
+ *
  * @since 1.9
  *        <!-- end-user-doc -->
  *
@@ -24,12 +24,14 @@ import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
  *        The following features are supported:
  *        </p>
  *        <ul>
- *        <li>
- *        {@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getMinimumHeight
+ *        <li>{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getMinimumHeight
  *        <em>Minimum Height</em>}</li>
- *        <li>
- *        {@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getMaximumHeight
+ *        <li>{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getMaximumHeight
  *        <em>Maximum Height</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#isShowValidationSummaryTooltip
+ *        <em>Show Validation Summary Tooltip</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#isEnableSorting
+ *        <em>Enable Sorting</em>}</li>
  *        </ul>
  *
  * @see org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage#getTableStyleProperty()
@@ -57,8 +59,8 @@ public interface VTTableStyleProperty extends VTStyleProperty {
 	int getMinimumHeight();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getMinimumHeight
+	 * Sets the value of the
+	 * '{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getMinimumHeight
 	 * <em>Minimum Height</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -72,8 +74,8 @@ public interface VTTableStyleProperty extends VTStyleProperty {
 	void setMinimumHeight(int value);
 
 	/**
-	 * Unsets the value of the '
-	 * {@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getMinimumHeight
+	 * Unsets the value of the
+	 * '{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getMinimumHeight
 	 * <em>Minimum Height</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -86,8 +88,8 @@ public interface VTTableStyleProperty extends VTStyleProperty {
 	void unsetMinimumHeight();
 
 	/**
-	 * Returns whether the value of the '
-	 * {@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getMinimumHeight
+	 * Returns whether the value of the
+	 * '{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getMinimumHeight
 	 * <em>Minimum Height</em>}' attribute is set.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -120,8 +122,8 @@ public interface VTTableStyleProperty extends VTStyleProperty {
 	int getMaximumHeight();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getMaximumHeight
+	 * Sets the value of the
+	 * '{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getMaximumHeight
 	 * <em>Maximum Height</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -135,8 +137,8 @@ public interface VTTableStyleProperty extends VTStyleProperty {
 	void setMaximumHeight(int value);
 
 	/**
-	 * Unsets the value of the '
-	 * {@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getMaximumHeight
+	 * Unsets the value of the
+	 * '{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getMaximumHeight
 	 * <em>Maximum Height</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -149,8 +151,8 @@ public interface VTTableStyleProperty extends VTStyleProperty {
 	void unsetMaximumHeight();
 
 	/**
-	 * Returns whether the value of the '
-	 * {@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getMaximumHeight
+	 * Returns whether the value of the
+	 * '{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getMaximumHeight
 	 * <em>Maximum Height</em>}' attribute is set.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -162,5 +164,72 @@ public interface VTTableStyleProperty extends VTStyleProperty {
 	 * @generated
 	 */
 	boolean isSetMaximumHeight();
+
+	/**
+	 * Returns the value of the '<em><b>Show Validation Summary Tooltip</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Show Validation Summary Tooltip</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 *
+	 * @since 1.12
+	 *        <!-- end-user-doc -->
+	 * @return the value of the '<em>Show Validation Summary Tooltip</em>' attribute.
+	 * @see #setShowValidationSummaryTooltip(boolean)
+	 * @see org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage#getTableStyleProperty_ShowValidationSummaryTooltip()
+	 * @model
+	 * @generated
+	 */
+	boolean isShowValidationSummaryTooltip();
+
+	/**
+	 * Sets the value of the
+	 * '{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#isShowValidationSummaryTooltip
+	 * <em>Show Validation Summary Tooltip</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.12
+	 *        <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Show Validation Summary Tooltip</em>' attribute.
+	 * @see #isShowValidationSummaryTooltip()
+	 * @generated
+	 */
+	void setShowValidationSummaryTooltip(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Enable Sorting</b></em>' attribute.
+	 * The default value is <code>"true"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Enable Sorting</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 *
+	 * @since 1.12
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the value of the '<em>Enable Sorting</em>' attribute.
+	 * @see #setEnableSorting(boolean)
+	 * @see org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage#getTableStyleProperty_EnableSorting()
+	 * @model default="true"
+	 * @generated
+	 */
+	boolean isEnableSorting();
+
+	/**
+	 * Sets the value of the
+	 * '{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#isEnableSorting
+	 * <em>Enable Sorting</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.12
+	 *        <!-- end-user-doc -->
+	 *
+	 * @param value the new value of the '<em>Enable Sorting</em>' attribute.
+	 * @see #isEnableSorting()
+	 * @generated
+	 */
+	void setEnableSorting(boolean value);
 
 } // VTTableStyleProperty

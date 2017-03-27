@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * Eugen - initial API and implementation
+ * Martin Fleck - Bug 490708: Add layout provider service
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.swt.layout;
 
@@ -50,7 +51,14 @@ public final class LayoutProviderHelper {
 
 	private static synchronized List<LayoutProvider> getLayoutProvider() {
 		if (layoutProviders == null || layoutProviders.isEmpty()) {
-			readLayoutProviders();
+			final LayoutProvider layoutProviderService = Activator.getDefault().getLayoutProvider();
+			// allow service registration and registration through extension points
+			// service has precedence over extension points
+			if (layoutProviderService != null) {
+				layoutProviders.add(layoutProviderService);
+			} else {
+				readLayoutProviders();
+			}
 		}
 		return layoutProviders;
 	}

@@ -44,7 +44,7 @@ import org.eclipse.swt.widgets.Control;
  */
 public class TableControlRCPRenderer extends TableControlSWTRenderer {
 
-	private static CutCopyPasteListener cutCopyPasteListener;
+	private CutCopyPasteListener cutCopyPasteListener;
 
 	/**
 	 * Default constructor.
@@ -93,7 +93,7 @@ public class TableControlRCPRenderer extends TableControlSWTRenderer {
 				final EditingDomain editingDomain = getEditingDomain(getViewModelContext().getDomainModel());
 				final Setting setting = getEMFFormsDatabinding().getSetting(getDMRToMultiReference(),
 					getViewModelContext().getDomainModel());
-				enableCutCopyPaste(tableViewer, editingDomain, setting);
+				cutCopyPasteListener = enableCutCopyPaste(tableViewer, editingDomain, setting);
 			} catch (final DatabindingFailedException ex) {
 				getReportService().report(new AbstractReport(ex, "Enabling Cut Copy Paste failed")); //$NON-NLS-1$
 			}
@@ -107,13 +107,14 @@ public class TableControlRCPRenderer extends TableControlSWTRenderer {
 	 * @param tableViewer the {@link TableViewer}
 	 * @param editingDomain the {@link EditingDomain}
 	 * @param setting the {@link Setting} displayed in the table
+	 * @return the {@link CutCopyPasteListener} or <code>null</code>
 	 */
-	static void enableCutCopyPaste(AbstractTableViewer tableViewer, EditingDomain editingDomain,
+	static CutCopyPasteListener enableCutCopyPaste(AbstractTableViewer tableViewer, EditingDomain editingDomain,
 		Setting setting) {
 		if (!TableViewer.class.isInstance(tableViewer)) {
-			return;
+			return null;
 		}
-		cutCopyPasteListener = new CutCopyPasteListener((TableViewer) tableViewer, editingDomain, setting);
+		return new CutCopyPasteListener((TableViewer) tableViewer, editingDomain, setting);
 	}
 
 	@Override
@@ -122,7 +123,6 @@ public class TableControlRCPRenderer extends TableControlSWTRenderer {
 		final Setting setting = getEMFFormsDatabinding().getSetting(getDMRToMultiReference(),
 			getViewModelContext().getDomainModel());
 		cutCopyPasteListener.rootDomainModelChanged(setting);
-
 	}
 
 }

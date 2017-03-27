@@ -31,5 +31,5 @@ public interface ECPControlSWT {
 	 * @param parent the {@link Composite} to render onto
 	 * @return the list of {@link RenderingResultRow RenderingResultRows}
 	 */
-	List<RenderingResultRow<Control>> createControls(final Composite parent);
+	List<RenderingResultRow<Control>> createControls(Composite parent);
 }

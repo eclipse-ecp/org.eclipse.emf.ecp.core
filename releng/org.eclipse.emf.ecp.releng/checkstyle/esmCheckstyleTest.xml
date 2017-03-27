@@ -158,7 +158,7 @@
       <property name="max" value="30"/>
     </module>
     <module name="ThrowsCount">
-      <property name="max" value="3"/>
+      <property name="max" value="10"/>
     </module>
     <module name="UncommentedMain"/>
     <module name="CyclomaticComplexity">

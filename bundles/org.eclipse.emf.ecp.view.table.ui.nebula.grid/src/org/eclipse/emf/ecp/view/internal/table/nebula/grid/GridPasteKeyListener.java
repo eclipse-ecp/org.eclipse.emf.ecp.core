@@ -49,6 +49,7 @@ public class GridPasteKeyListener implements KeyListener {
 	private final VControl vControl;
 
 	private boolean selectPastedCells = true;
+	private boolean alreadyPasted;
 
 	/**
 	 * Constructor.
@@ -70,18 +71,23 @@ public class GridPasteKeyListener implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// do nothing
+		if ((e.stateMask & SWT.CTRL) != 0 && e.keyCode == 'v') {
+			if (!alreadyPasted) {
+				final Grid grid = (Grid) e.widget;
+				final Object contents = clipboard.getContents(TextTransfer.getInstance());
+				if (contents instanceof String) {
+					pasteSelection(grid, (String) contents);
+				}
+				alreadyPasted = true;
+			}
+		} else {
+			alreadyPasted = false;
+		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		if ((e.stateMask & SWT.CTRL) != 0 && e.keyCode == 'v') {
-			final Grid grid = (Grid) e.widget;
-			final Object contents = clipboard.getContents(TextTransfer.getInstance());
-			if (contents instanceof String) {
-				pasteSelection(grid, (String) contents);
-			}
-		}
+		/* no op */
 	}
 
 	/**
@@ -97,8 +103,7 @@ public class GridPasteKeyListener implements KeyListener {
 		}
 
 		final List<Point> pastedCells = new ArrayList<Point>();
-		if (grid.getCellSelection().length > 1
-			&& new StringTokenizer(contents, "\n\t", false).countTokens() == 1) { //$NON-NLS-1$
+		if (grid.getCellSelection().length > 1 && new StringTokenizer(contents, "\n\t", false).countTokens() == 1) { //$NON-NLS-1$
 
 			// fill selection
 			for (final Point startItem : grid.getCellSelection()) {
@@ -168,8 +173,8 @@ public class GridPasteKeyListener implements KeyListener {
 					try {
 
 						value = dataBinding.getObservableValue(dmr, eObject);
-						final Object convertedValue = converterService
-							.convertToModelValue(eObject, (EStructuralFeature) value.getValueType(), cellValue);
+						final Object convertedValue = converterService.convertToModelValue(eObject,
+							(EStructuralFeature) value.getValueType(), cellValue);
 						if (convertedValue != null) {
 							value.setValue(convertedValue);
 							pastedValues.add(value);

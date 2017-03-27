@@ -154,13 +154,24 @@ public class VRulerepositoryPackageImpl extends EPackageImpl implements VRulerep
 	}
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EAttribute getRuleEntry_Name() {
+		return (EAttribute) ruleEntryEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
 	 *
 	 * @generated
 	 */
 	@Override
 	public EReference getRuleEntry_Rule() {
-		return (EReference) ruleEntryEClass.getEStructuralFeatures().get(0);
+		return (EReference) ruleEntryEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -170,7 +181,7 @@ public class VRulerepositoryPackageImpl extends EPackageImpl implements VRulerep
 	 */
 	@Override
 	public EReference getRuleEntry_Elements() {
-		return (EReference) ruleEntryEClass.getEStructuralFeatures().get(1);
+		return (EReference) ruleEntryEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -181,7 +192,7 @@ public class VRulerepositoryPackageImpl extends EPackageImpl implements VRulerep
 	 */
 	@Override
 	public EAttribute getRuleEntry_MergeType() {
-		return (EAttribute) ruleEntryEClass.getEStructuralFeatures().get(2);
+		return (EAttribute) ruleEntryEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -231,6 +242,7 @@ public class VRulerepositoryPackageImpl extends EPackageImpl implements VRulerep
 		createEReference(ruleRepositoryEClass, RULE_REPOSITORY__RULE_ENTRIES);
 
 		ruleEntryEClass = createEClass(RULE_ENTRY);
+		createEAttribute(ruleEntryEClass, RULE_ENTRY__NAME);
 		createEReference(ruleEntryEClass, RULE_ENTRY__RULE);
 		createEReference(ruleEntryEClass, RULE_ENTRY__ELEMENTS);
 		createEAttribute(ruleEntryEClass, RULE_ENTRY__MERGE_TYPE);
@@ -283,6 +295,8 @@ public class VRulerepositoryPackageImpl extends EPackageImpl implements VRulerep
 
 		initEClass(ruleEntryEClass, VRuleEntry.class, "RuleEntry", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
 			IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getRuleEntry_Name(), ecorePackage.getEString(), "name", null, 0, 1, VRuleEntry.class, //$NON-NLS-1$
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getRuleEntry_Rule(), theRulePackage.getRule(), null, "rule", null, 1, 1, VRuleEntry.class, //$NON-NLS-1$
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);

@@ -59,7 +59,8 @@ public class MappedEClassControlSWTRenderer extends
 	 * @param viewContext the view context
 	 * @param reportService the {@link ReportService}
 	 */
-	public MappedEClassControlSWTRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService) {
+	public MappedEClassControlSWTRenderer(VControl vElement, ViewModelContext viewContext,
+		ReportService reportService) {
 		super(vElement, viewContext, reportService);
 	}
 
@@ -192,6 +193,9 @@ public class MappedEClassControlSWTRenderer extends
 		final EClass referenceMap = EReference.class.cast(dmr.getDomainModelEFeature()).getEReferenceType();
 
 		final EReference valueReference = EReference.class.cast(referenceMap.getEStructuralFeature("value")); //$NON-NLS-1$
+		if (valueReference == null) {
+			return null;
+		}
 		return EMFUtils.getSubClasses(valueReference.getEReferenceType());
 		// return Registry.INSTANCE;
 	}

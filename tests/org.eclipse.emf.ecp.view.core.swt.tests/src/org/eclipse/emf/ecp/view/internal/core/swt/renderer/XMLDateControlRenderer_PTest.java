@@ -69,9 +69,9 @@ public class XMLDateControlRenderer_PTest extends AbstractControl_PTest {
 	public void before() throws DatabindingFailedException {
 		realm = new DefaultRealm();
 		final ReportService reportService = mock(ReportService.class);
-		databindingService = mock(EMFFormsDatabinding.class);
-		labelProvider = mock(EMFFormsLabelProvider.class);
-		templateProvider = mock(VTViewTemplateProvider.class);
+		setDatabindingService(mock(EMFFormsDatabinding.class));
+		setLabelProvider(mock(EMFFormsLabelProvider.class));
+		setTemplateProvider(mock(VTViewTemplateProvider.class));
 		final EMFFormsEditSupport editSupport = mock(EMFFormsEditSupport.class);
 		final EMFFormsLocalizationService localizationService = mock(EMFFormsLocalizationService.class);
 		final EMFFormsLocaleProvider localeProvider = mock(EMFFormsLocaleProvider.class);
@@ -79,9 +79,9 @@ public class XMLDateControlRenderer_PTest extends AbstractControl_PTest {
 		final ImageRegistryService imageRegistryService = mock(ImageRegistryService.class);
 
 		setup();
-		renderer = new XMLDateControlSWTRenderer(vControl, context, reportService, databindingService, labelProvider,
-			templateProvider, editSupport, localizationService, localeProvider, imageRegistryService);
-		renderer.init();
+		setRenderer(new XMLDateControlSWTRenderer(getvControl(), getContext(), reportService, getDatabindingService(), getLabelProvider(),
+			getTemplateProvider(), editSupport, localizationService, localeProvider, imageRegistryService));
+		getRenderer().init();
 	}
 
 	@After
@@ -102,9 +102,9 @@ public class XMLDateControlRenderer_PTest extends AbstractControl_PTest {
 		final EStructuralFeature mockedEStructuralFeature = mock(EStructuralFeature.class);
 		when(mockedEStructuralFeature.isUnsettable()).thenReturn(false);
 		when(mockedObservableValue.getValueType()).thenReturn(mockedEStructuralFeature);
-		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			mockedObservableValue);
-		final Control render = renderControl(new SWTGridCell(0, 1, renderer));
+		final Control render = renderControl(new SWTGridCell(0, 1, getRenderer()));
 		assertControl(render);
 	}
 
@@ -120,9 +120,9 @@ public class XMLDateControlRenderer_PTest extends AbstractControl_PTest {
 		final EStructuralFeature mockedEStructuralFeature = mock(EStructuralFeature.class);
 		when(mockedEStructuralFeature.isUnsettable()).thenReturn(false);
 		when(mockedObservableValue.getValueType()).thenReturn(mockedEStructuralFeature);
-		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			mockedObservableValue);
-		final Control render = renderControl(new SWTGridCell(0, 2, renderer));
+		final Control render = renderControl(new SWTGridCell(0, 2, getRenderer()));
 
 		assertControl(render);
 	}
@@ -219,14 +219,14 @@ public class XMLDateControlRenderer_PTest extends AbstractControl_PTest {
 	 */
 	private Text setUpDatabindingTest(final ObservingWritableValue mockedObservable) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
-		Mockito.reset(databindingService);
+		Mockito.reset(getDatabindingService());
 		mockDatabindingIsUnsettable();
-		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			mockedObservable, new ObservingWritableValue(mockedObservable));
-		when(databindingService.getValueProperty(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+		when(getDatabindingService().getValueProperty(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			Properties.selfValue(mockedObservable.getValueType()));
 
-		final Control renderControl = renderControl(new SWTGridCell(0, 2, renderer));
+		final Control renderControl = renderControl(new SWTGridCell(0, 2, getRenderer()));
 		final Composite composite = (Composite) renderControl;
 		final Text text = (Text) Composite.class.cast(composite.getChildren()[0]).getChildren()[0];
 		return text;

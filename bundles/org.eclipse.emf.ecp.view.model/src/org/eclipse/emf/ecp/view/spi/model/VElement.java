@@ -264,4 +264,28 @@ public interface VElement extends EObject {
 	 * @generated
 	 */
 	void setUuid(String value);
+
+	/**
+	 * Returns true if this element and all parent elements are visible.
+	 * 
+	 * @since 1.12
+	 * @return true if this element and all parent elements are visible
+	 */
+	boolean isEffectivelyVisible();
+
+	/**
+	 * Returns true if this element and all parent elements are enabled.
+	 * 
+	 * @since 1.12
+	 * @return true if this element and all parent elements are enabled
+	 */
+	boolean isEffectivelyEnabled();
+
+	/**
+	 * Returns true if this element or any parent element is readonly.
+	 * 
+	 * @since 1.12
+	 * @return true if this element or any parent element is readonly
+	 */
+	boolean isEffectivelyReadonly();
 } // Renderable

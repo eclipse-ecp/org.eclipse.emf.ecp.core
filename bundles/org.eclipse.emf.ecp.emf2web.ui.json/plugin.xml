@@ -6,14 +6,14 @@
       <command
             defaultHandler="org.eclipse.emf.ecp.emf2web.ui.json.internal.handler.ExportJSONFormsHandler"
             id="org.eclipse.emf.ecp.emf2web.ui.json.exportJSONSchemaCommand"
-            name="Export to JSONForms">
+            name="Export to JSON Forms">
       </command>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
             allPopups="true"
-            locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu">
+            locationURI="popup:org.eclipse.ui.popup.any">
          <menu
                id="org.eclipse.emf.ecp.ui.e3.emfFormsMenu"
                label="EMF Forms">

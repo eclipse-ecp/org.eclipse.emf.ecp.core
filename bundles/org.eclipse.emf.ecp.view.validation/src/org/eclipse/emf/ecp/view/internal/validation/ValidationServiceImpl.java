@@ -92,46 +92,17 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 					.getFeature()) {
 				if (VViewPackage.eINSTANCE.getControl().isInstance(notification.getNotifier())) {
 					final VControl control = (VControl) notification.getNotifier();
-
-					if (VViewPackage.eINSTANCE.getElement_Enabled() == notification.getRawNotification().getFeature()) {
-						control.setDiagnostic(null);
-					}
-
 					final VDomainModelReference domainModelReference = control.getDomainModelReference();
 					if (domainModelReference == null) {
 						return;
 					}
-					IObservableValue observableValue;
 					try {
-						observableValue = Activator.getDefault().getEMFFormsDatabinding()
-							.getObservableValue(domainModelReference, context.getDomainModel());
+						handleControlNotification(notification, control, domainModelReference);
 					} catch (final DatabindingFailedException ex) {
 						Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
 						return;
 					}
-					final EObject observed = (EObject) ((IObserving) observableValue).getObserved();
-					// validate(observed);
-					// TODO: add test case fo this
-					final Set<EObject> eObjectsToValidate = new LinkedHashSet<EObject>();
-					eObjectsToValidate.add(observed);
-					final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
-					final Object value = observableValue.getValue();
-					if (EReference.class.isInstance(structuralFeature) && value != null) {
-						/*
-						 * the value may be null! this is possible e.g. when there is a longer feature path dmr on
-						 * which an element on the path gets deleted/replaced during runtime.
-						 * Adding null to the set is no advised as we will get exception immediately or in the future.
-						 */
-						if (structuralFeature.isMany()) {
-							@SuppressWarnings("unchecked")
-							final List<EObject> list = (List<EObject>) value;
-							eObjectsToValidate.addAll(list);
-						} else {
-							eObjectsToValidate.add((EObject) value);
-						}
-					}
-					validate(eObjectsToValidate);
-					observableValue.dispose();
+
 				}
 			}
 			if (!VElement.class.isInstance(notification.getNotifier())) {
@@ -146,6 +117,48 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 			default:
 				break;
 			}
+		}
+
+		/**
+		 * @param notification
+		 * @param control
+		 * @param domainModelReference
+		 * @throws DatabindingFailedException
+		 */
+		private void handleControlNotification(ModelChangeNotification notification, VControl control,
+			VDomainModelReference domainModelReference) throws DatabindingFailedException {
+			if (VViewPackage.eINSTANCE.getElement_Enabled() == notification.getRawNotification().getFeature()) {
+				control.setDiagnostic(null);
+			}
+
+			IObservableValue observableValue;
+			observableValue = Activator.getDefault().getEMFFormsDatabinding()
+				.getObservableValue(domainModelReference, context.getDomainModel());
+
+			final EObject observed = (EObject) ((IObserving) observableValue).getObserved();
+			// validate(observed);
+			// TODO: add test case fo this
+			final Set<EObject> eObjectsToValidate = new LinkedHashSet<EObject>();
+			eObjectsToValidate.add(observed);
+			final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+			final Object value = observableValue.getValue();
+			if (EReference.class.isInstance(structuralFeature) && value != null) {
+				/*
+				 * the value may be null! this is possible e.g. when there is a longer feature path dmr on
+				 * which an element on the path gets deleted/replaced during runtime.
+				 * Adding null to the set is no advised as we will get exception immediately or in the future.
+				 */
+				if (structuralFeature.isMany()) {
+					@SuppressWarnings("unchecked")
+					final List<EObject> list = (List<EObject>) value;
+					eObjectsToValidate.addAll(list);
+				} else {
+					eObjectsToValidate.add((EObject) value);
+				}
+			}
+			validate(eObjectsToValidate);
+			observableValue.dispose();
+
 		}
 
 		@Override

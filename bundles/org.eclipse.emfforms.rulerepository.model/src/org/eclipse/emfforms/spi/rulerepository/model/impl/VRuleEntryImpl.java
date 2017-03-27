@@ -34,6 +34,7 @@ import org.eclipse.emfforms.spi.rulerepository.model.VRulerepositoryPackage;
  * The following features are implemented:
  * </p>
  * <ul>
+ * <li>{@link org.eclipse.emfforms.spi.rulerepository.model.impl.VRuleEntryImpl#getName <em>Name</em>}</li>
  * <li>{@link org.eclipse.emfforms.spi.rulerepository.model.impl.VRuleEntryImpl#getRule <em>Rule</em>}</li>
  * <li>{@link org.eclipse.emfforms.spi.rulerepository.model.impl.VRuleEntryImpl#getElements <em>Elements</em>}</li>
  * <li>{@link org.eclipse.emfforms.spi.rulerepository.model.impl.VRuleEntryImpl#getMergeType <em>Merge Type</em>}</li>
@@ -42,6 +43,28 @@ import org.eclipse.emfforms.spi.rulerepository.model.VRulerepositoryPackage;
  * @generated
  */
 public class VRuleEntryImpl extends EObjectImpl implements VRuleEntry {
+	/**
+	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String NAME_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
+	protected String name = NAME_EDEFAULT;
+
 	/**
 	 * The cached value of the '{@link #getRule() <em>Rule</em>}' containment reference.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -101,6 +124,33 @@ public class VRuleEntryImpl extends EObjectImpl implements VRuleEntry {
 	@Override
 	protected EClass eStaticClass() {
 		return VRulerepositoryPackage.Literals.RULE_ENTRY;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public void setName(String newName) {
+		final String oldName = name;
+		name = newName;
+		if (eNotificationRequired()) {
+			eNotify(
+				new ENotificationImpl(this, Notification.SET, VRulerepositoryPackage.RULE_ENTRY__NAME, oldName, name));
+		}
 	}
 
 	/**
@@ -223,6 +273,8 @@ public class VRuleEntryImpl extends EObjectImpl implements VRuleEntry {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+		case VRulerepositoryPackage.RULE_ENTRY__NAME:
+			return getName();
 		case VRulerepositoryPackage.RULE_ENTRY__RULE:
 			return getRule();
 		case VRulerepositoryPackage.RULE_ENTRY__ELEMENTS:
@@ -242,6 +294,9 @@ public class VRuleEntryImpl extends EObjectImpl implements VRuleEntry {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+		case VRulerepositoryPackage.RULE_ENTRY__NAME:
+			setName((String) newValue);
+			return;
 		case VRulerepositoryPackage.RULE_ENTRY__RULE:
 			setRule((Rule) newValue);
 			return;
@@ -264,6 +319,9 @@ public class VRuleEntryImpl extends EObjectImpl implements VRuleEntry {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+		case VRulerepositoryPackage.RULE_ENTRY__NAME:
+			setName(NAME_EDEFAULT);
+			return;
 		case VRulerepositoryPackage.RULE_ENTRY__RULE:
 			setRule((Rule) null);
 			return;
@@ -285,6 +343,8 @@ public class VRuleEntryImpl extends EObjectImpl implements VRuleEntry {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+		case VRulerepositoryPackage.RULE_ENTRY__NAME:
+			return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 		case VRulerepositoryPackage.RULE_ENTRY__RULE:
 			return rule != null;
 		case VRulerepositoryPackage.RULE_ENTRY__ELEMENTS:
@@ -308,7 +368,9 @@ public class VRuleEntryImpl extends EObjectImpl implements VRuleEntry {
 		}
 
 		final StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (mergeType: "); //$NON-NLS-1$
+		result.append(" (name: "); //$NON-NLS-1$
+		result.append(name);
+		result.append(", mergeType: "); //$NON-NLS-1$
 		result.append(mergeType);
 		result.append(')');
 		return result.toString();

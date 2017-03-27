@@ -48,7 +48,7 @@
       </menuContribution>
       <menuContribution
             allPopups="false"
-            locationURI="popup:org.eclipse.jdt.ui.PackageExplorer">
+            locationURI="popup:org.eclipse.ui.popup.any">
          <separator
                name="org.eclipse.emf.ecp.ui.e3.viewModelSeparator">
          </separator>

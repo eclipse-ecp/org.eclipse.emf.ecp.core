@@ -63,9 +63,9 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest {
 	public void before() throws DatabindingFailedException {
 		realm = new DefaultRealm();
 		final ReportService reportService = mock(ReportService.class);
-		databindingService = mock(EMFFormsDatabinding.class);
-		labelProvider = mock(EMFFormsLabelProvider.class);
-		templateProvider = mock(VTViewTemplateProvider.class);
+		setDatabindingService(mock(EMFFormsDatabinding.class));
+		setLabelProvider(mock(EMFFormsLabelProvider.class));
+		setTemplateProvider(mock(VTViewTemplateProvider.class));
 		final EMFFormsLocalizationService localizationService = mock(EMFFormsLocalizationService.class);
 		when(
 			localizationService.getString(NumberControlSWTRenderer.class, MessageKeys.NumericalControl_FormatNumerical))
@@ -77,9 +77,9 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest {
 		when(localeProvider.getLocale()).thenReturn(Locale.getDefault());
 		final EMFFormsEditSupport editSupport = mock(EMFFormsEditSupport.class);
 		setup();
-		renderer = new NumberControlSWTRenderer(vControl, context, reportService, databindingService, labelProvider,
-			templateProvider, editSupport, localizationService, localeProvider);
-		renderer.init();
+		setRenderer(new NumberControlSWTRenderer(getvControl(), getContext(), reportService, getDatabindingService(), getLabelProvider(),
+			getTemplateProvider(), editSupport, localizationService, localeProvider));
+		getRenderer().init();
 	}
 
 	@After
@@ -104,11 +104,11 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest {
 		when(mockedEClassifier.getInstanceClass()).thenReturn(clazz);
 		when(mockedEStructuralFeature.getEType()).thenReturn(mockedEClassifier);
 		when(mockedObservableValue.getValueType()).thenReturn(mockedEStructuralFeature);
-		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			mockedObservableValue);
-		when(databindingService.getValueProperty(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+		when(getDatabindingService().getValueProperty(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			Properties.selfValue(mockedEStructuralFeature));
-		final Control render = renderControl(new SWTGridCell(0, 1, renderer));
+		final Control render = renderControl(new SWTGridCell(0, 1, getRenderer()));
 		assertControl(render);
 	}
 
@@ -128,12 +128,12 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest {
 		when(mockedEClassifier.getInstanceClass()).thenReturn(clazz);
 		when(mockedEStructuralFeature.getEType()).thenReturn(mockedEClassifier);
 		when(mockedObservableValue.getValueType()).thenReturn(mockedEStructuralFeature);
-		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			mockedObservableValue);
-		when(databindingService.getValueProperty(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+		when(getDatabindingService().getValueProperty(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			Properties.selfValue(mockedEStructuralFeature));
 
-		final Control render = renderControl(new SWTGridCell(0, 2, renderer));
+		final Control render = renderControl(new SWTGridCell(0, 2, getRenderer()));
 
 		assertControl(render);
 	}
@@ -230,12 +230,12 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest {
 	private Text setUpDatabindingTest(final ObservingWritableValue mockedObservable) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		mockDatabindingIsUnsettable();
-		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			mockedObservable, new ObservingWritableValue(mockedObservable));
-		when(databindingService.getValueProperty(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+		when(getDatabindingService().getValueProperty(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			Properties.selfValue(mockedObservable.getValueType()));
 
-		final Control renderControl = renderControl(new SWTGridCell(0, 2, renderer));
+		final Control renderControl = renderControl(new SWTGridCell(0, 2, getRenderer()));
 		final Text text = (Text) Composite.class.cast(renderControl).getChildren()[0];
 		return text;
 	}

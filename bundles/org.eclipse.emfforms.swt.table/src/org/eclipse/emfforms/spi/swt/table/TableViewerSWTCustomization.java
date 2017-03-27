@@ -32,7 +32,8 @@ import org.eclipse.swt.graphics.Image;
  *
  */
 public interface TableViewerSWTCustomization
-	extends TableViewerCompositeBuilder, TableViewerCreator, ButtonBarBuilder, DNDProvider {
+	extends TableViewerCompositeBuilder, TableViewerCreator<AbstractTableViewer>, ButtonBarBuilder,
+	DNDProvider {
 
 	/**
 	 * Returns the comparator to use.
@@ -150,7 +151,7 @@ public interface TableViewerSWTCustomization
 
 		/**
 		 * Add the contents of the given map to the data map.
-		 * 
+		 *
 		 * @param data object
 		 */
 		void setData(Map<String, Object> data);

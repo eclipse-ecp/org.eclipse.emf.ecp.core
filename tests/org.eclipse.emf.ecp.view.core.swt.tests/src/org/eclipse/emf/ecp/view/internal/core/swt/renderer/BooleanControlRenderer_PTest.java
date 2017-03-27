@@ -53,13 +53,13 @@ public class BooleanControlRenderer_PTest extends AbstractControl_PTest {
 	public void before() throws DatabindingFailedException {
 		realm = new DefaultRealm();
 		final ReportService reportService = mock(ReportService.class);
-		databindingService = mock(EMFFormsDatabinding.class);
-		labelProvider = mock(EMFFormsLabelProvider.class);
-		templateProvider = mock(VTViewTemplateProvider.class);
+		setDatabindingService(mock(EMFFormsDatabinding.class));
+		setLabelProvider(mock(EMFFormsLabelProvider.class));
+		setTemplateProvider(mock(VTViewTemplateProvider.class));
 		setup();
-		renderer = new BooleanControlSWTRenderer(vControl, context, reportService, databindingService, labelProvider,
-			templateProvider);
-		renderer.init();
+		setRenderer(new BooleanControlSWTRenderer(getvControl(), getContext(), reportService, getDatabindingService(), getLabelProvider(),
+			getTemplateProvider()));
+		getRenderer().init();
 	}
 
 	@After
@@ -74,9 +74,9 @@ public class BooleanControlRenderer_PTest extends AbstractControl_PTest {
 		setMockLabelAlignment(LabelAlignment.NONE);
 		final TestObservableValue mockedObservableValue = mock(TestObservableValue.class);
 		when(mockedObservableValue.getRealm()).thenReturn(realm);
-		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			mockedObservableValue);
-		final Control render = renderControl(new SWTGridCell(0, 1, renderer));
+		final Control render = renderControl(new SWTGridCell(0, 1, getRenderer()));
 		assertControl(render);
 	}
 
@@ -86,9 +86,9 @@ public class BooleanControlRenderer_PTest extends AbstractControl_PTest {
 		setMockLabelAlignment(LabelAlignment.LEFT);
 		final TestObservableValue mockedObservableValue = mock(TestObservableValue.class);
 		when(mockedObservableValue.getRealm()).thenReturn(realm);
-		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			mockedObservableValue);
-		final Control render = renderControl(new SWTGridCell(0, 2, renderer));
+		final Control render = renderControl(new SWTGridCell(0, 2, getRenderer()));
 
 		assertControl(render);
 	}
@@ -156,13 +156,13 @@ public class BooleanControlRenderer_PTest extends AbstractControl_PTest {
 	 */
 	private Button setUpDatabindingTest(final ObservingWritableValue mockedObservable) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
-		Mockito.reset(databindingService);
+		Mockito.reset(getDatabindingService());
 
 		mockDatabindingIsUnsettable();
-		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			mockedObservable);
 
-		final Control renderControl = renderControl(new SWTGridCell(0, 2, renderer));
+		final Control renderControl = renderControl(new SWTGridCell(0, 2, getRenderer()));
 		final Button button = (Button) renderControl;
 		return button;
 	}

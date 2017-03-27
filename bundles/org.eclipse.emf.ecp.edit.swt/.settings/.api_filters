@@ -55,6 +55,12 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/ecp/edit/spi/swt/table/ECPCellEditor.java" type="org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor">
+        <filter comment="SPI Change" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor"/>
+                <message_argument value="COPY_STRING_ALTERNATIVE"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI change" id="403804204">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor"/>

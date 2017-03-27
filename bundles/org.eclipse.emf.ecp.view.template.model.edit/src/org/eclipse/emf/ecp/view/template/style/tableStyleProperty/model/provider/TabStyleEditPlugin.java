@@ -19,7 +19,6 @@ import org.eclipse.emf.ecp.view.template.model.provider.TemplateEditPlugin;
  * This is the central singleton for the TabStyle edit plugin.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
- *
  * @generated
  */
 public final class TabStyleEditPlugin extends EMFPlugin {
@@ -27,7 +26,6 @@ public final class TabStyleEditPlugin extends EMFPlugin {
 	 * Keep track of the singleton.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	public static final TabStyleEditPlugin INSTANCE = new TabStyleEditPlugin();
@@ -36,7 +34,6 @@ public final class TabStyleEditPlugin extends EMFPlugin {
 	 * Keep track of the singleton.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	private static Implementation plugin;
@@ -45,20 +42,19 @@ public final class TabStyleEditPlugin extends EMFPlugin {
 	 * Create the instance.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	public TabStyleEditPlugin() {
-		super(new ResourceLocator[] {
-			TemplateEditPlugin.INSTANCE,
-		});
+		super
+		  (new ResourceLocator [] {
+		     TemplateEditPlugin.INSTANCE,
+		   });
 	}
 
 	/**
 	 * Returns the singleton instance of the Eclipse plugin.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
 	 * @return the singleton instance.
 	 * @generated
 	 */
@@ -71,7 +67,6 @@ public final class TabStyleEditPlugin extends EMFPlugin {
 	 * Returns the singleton instance of the Eclipse plugin.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
 	 * @return the singleton instance.
 	 * @generated
 	 */
@@ -83,7 +78,6 @@ public final class TabStyleEditPlugin extends EMFPlugin {
 	 * The actual implementation of the Eclipse <b>Plugin</b>.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	public static class Implementation extends EclipsePlugin {
@@ -91,7 +85,6 @@ public final class TabStyleEditPlugin extends EMFPlugin {
 		 * Creates an instance.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 *
 		 * @generated
 		 */
 		public Implementation() {

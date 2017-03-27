@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2014-2017 EclipseSource Muenchen GmbH and others.
  * 
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -109,7 +109,7 @@ class FormsJsonGenerator extends JsonGenerator {
 		val jsonObject = new JsonObject
 		jsonObject.withType(container.type)
 		if(container.name!=null) {
-			jsonObject.withLabel(container.label)
+			jsonObject.withLabel(container.label.displayLabel)
 		}
 		jsonObject.withElements(container.children)
 	}
@@ -152,6 +152,25 @@ class FormsJsonGenerator extends JsonGenerator {
 	
 	private def String getDisplayLabel(VControl control){
 		refHelper.getLabel(control.domainModelReference)
+	}
+	
+	private def String getDisplayLabel(String containerLabel){
+		if(containerLabel.trim.startsWith("%")){
+			var label = containerLabel.trim.substring(1);
+			val split = label.split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])"); //$NON-NLS-1$
+			if(split.get(0).length > 0){
+				val charArray = split.get(0).toCharArray();
+				charArray.set(0, Character.toUpperCase(charArray.get(0)))
+				split.set(0, new String(charArray))
+			}
+			val sb = new StringBuilder();
+			for (str : split) {
+				sb.append(str);
+				sb.append(" "); //$NON-NLS-1$
+			}
+			return sb.toString.trim;
+		}
+		containerLabel
 	}
 	
 }

@@ -24,6 +24,8 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.celleditor.rcp;
 
+import java.util.concurrent.Semaphore;
+
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
@@ -33,6 +35,7 @@ import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
@@ -52,6 +55,9 @@ public final class NativeWidgetHelper {
 	private static final String CHECKED_DEFAULT = "icons/checked.png"; //$NON-NLS-1$
 	private static final String UNCHECKED_DEFAULT = "icons/unchecked.png"; //$NON-NLS-1$
 
+	private static final Semaphore LOCK = new Semaphore(1, true);
+	private static boolean initalized;
+
 	private static ServiceReference<ImageRegistryService> imageRegistryServiceReference;
 
 	private static ImageData checked;
@@ -69,8 +75,18 @@ public final class NativeWidgetHelper {
 	 *            create the screen shots
 	 */
 	public static void initCheckBoxImages(Control control) {
-		createCheckBoxImage(control, true);
-		createCheckBoxImage(control, false);
+		try {
+			LOCK.acquire();
+		} catch (final InterruptedException ex) {
+			if (initalized) {
+				return;
+			}
+			createCheckBoxImage(control, true);
+			createCheckBoxImage(control, false);
+			initalized = true;
+		} finally {
+			LOCK.release();
+		}
 	}
 
 	/**
@@ -83,21 +99,31 @@ public final class NativeWidgetHelper {
 	 * @return the image
 	 */
 	public static Image getCheckBoxImage(Control control, CheckBoxState state) {
-		switch (state) {
-		case checked:
-			if (checked != null) {
-				return new Image(control.getDisplay(), checked);
-			}
-			return getImage(CHECKED_DEFAULT);
-		case unchecked:
-			if (unchecked != null) {
-				return new Image(control.getDisplay(), unchecked);
-			}
-			return getImage(UNCHECKED_DEFAULT);
-		default:
-			return null;
+		try {
+			LOCK.acquire();
+			switch (state) {
 
+			case checked:
+				if (checked != null) {
+					return new Image(control.getDisplay(), checked);
+				}
+				return getImage(CHECKED_DEFAULT);
+			case unchecked:
+				if (unchecked != null) {
+					return new Image(control.getDisplay(), unchecked);
+				}
+				return getImage(UNCHECKED_DEFAULT);
+			default:
+				break;
+
+			}
+		} catch (final InterruptedException ex) {
+
+		} finally {
+			LOCK.release();
 		}
+
+		return null;
 
 	}
 
@@ -115,9 +141,12 @@ public final class NativeWidgetHelper {
 	private static void createCheckBoxImage(Control control, boolean type) {
 		// Hopefully no platform uses exactly this color because we'll make
 		// it transparent in the image.
-		final Color greenScreen = new Color(control.getDisplay(), 222, 223, 224);
 
-		final Shell shell = new Shell(control.getShell(), SWT.NO_TRIM);
+		final Display display = Display.getDefault();
+		final Color greenScreen = new Color(display, 3, 223, 7);
+
+		final Shell shell = new Shell(control.getShell());
+		ImageData imageData = null;
 
 		// otherwise we have a default gray color
 		shell.setBackground(greenScreen);
@@ -152,12 +181,12 @@ public final class NativeWidgetHelper {
 		shell.open();
 
 		final GC gc = new GC(shell);
-		final Image image = new Image(control.getDisplay(), bsize.x, bsize.y);
+		final Image image = new Image(display, bsize.x, bsize.y);
 		gc.copyArea(image, 0, 0);
 		gc.dispose();
 		shell.close();
 
-		final ImageData imageData = image.getImageData();
+		imageData = image.getImageData();
 		imageData.transparentPixel = imageData.palette.getPixel(greenScreen
 			.getRGB());
 

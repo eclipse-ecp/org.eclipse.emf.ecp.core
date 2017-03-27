@@ -151,8 +151,7 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 			}
 			rowGridDescription.put(child, gridDescription);
 			if (maximalGridDescription == null
-				|| maximalGridDescription.getColumns() < gridDescription.getColumns())
-			{
+				|| maximalGridDescription.getColumns() < gridDescription.getColumns()) {
 				maximalGridDescription = gridDescription;
 			}
 			final Set<AbstractSWTRenderer<VElement>> allRenderer = new LinkedHashSet<AbstractSWTRenderer<VElement>>();
@@ -208,11 +207,12 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 	}
 
 	/**
-	 * Package visible method, to allow an easy replacement.
+	 * Returns the {@link EMFFormsDatabinding}.
 	 *
-	 * @return The EMFFormsDatabinding
+	 * @return The {@link EMFFormsDatabinding}
+	 * @since 1.12
 	 */
-	private EMFFormsDatabinding getEMFFormsDatabinding() {
+	protected EMFFormsDatabinding getEMFFormsDatabinding() {
 		// Method is eventually needed to check the validity of controls that are to be rendered.
 		return emfFormsDatabinding;
 	}

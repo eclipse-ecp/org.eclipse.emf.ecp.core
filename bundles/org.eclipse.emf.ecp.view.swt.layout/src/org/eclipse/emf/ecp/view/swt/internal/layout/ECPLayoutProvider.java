@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.view.swt.internal.layout;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.swt.layout.AbstractLayoutProvider;
+import org.eclipse.emfforms.spi.swt.core.layout.LayoutProvider;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -23,6 +24,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Layout;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * A default layout provider.
@@ -30,6 +32,7 @@ import org.eclipse.swt.widgets.Layout;
  * @author Eugen Neufeld
  *
  */
+@Component(service = LayoutProvider.class)
 public class ECPLayoutProvider extends AbstractLayoutProvider {
 
 	/**

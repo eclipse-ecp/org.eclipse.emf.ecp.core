@@ -137,7 +137,8 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 		final Set<VControl> currentControls = settingToControlMap.get(setting);
 		if (currentControls != null) {
 			for (final VElement control : currentControls) {
-				if (!control.isEnabled() || !control.isVisible() || control.isReadonly()) {
+				if (!control.isEffectivelyEnabled() || !control.isEffectivelyVisible()
+					|| control.isEffectivelyReadonly()) {
 					continue;
 				}
 				elements.add(control);

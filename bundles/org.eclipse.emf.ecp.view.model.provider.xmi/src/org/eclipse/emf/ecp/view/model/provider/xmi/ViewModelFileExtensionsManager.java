@@ -18,7 +18,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -32,6 +31,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -40,6 +40,7 @@ import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecp.internal.view.model.provider.xmi.Activator;
 import org.eclipse.emf.ecp.view.migrator.ViewModelMigrationException;
 import org.eclipse.emf.ecp.view.migrator.ViewModelMigrator;
@@ -70,6 +71,14 @@ public final class ViewModelFileExtensionsManager {
 	private static final String FILTER_ELEMENT = "filter"; //$NON-NLS-1$
 	private static final String FILE_EXTENSION = "org.eclipse.emf.ecp.view.model.provider.xmi.file"; //$NON-NLS-1$
 	private static final String FILEPATH_ATTRIBUTE = "filePath"; //$NON-NLS-1$
+
+	private static final Map<Object, Object> LOAD_OPTIONS = new LinkedHashMap<Object, Object>();
+	{
+		LOAD_OPTIONS.put(URIConverter.OPTION_TIMEOUT, 1);
+		LOAD_OPTIONS.put(XMLResource.OPTION_DEFER_ATTACHMENT, Boolean.TRUE);
+		LOAD_OPTIONS.put(XMLResource.OPTION_DEFER_IDREF_RESOLUTION, Boolean.TRUE);
+		LOAD_OPTIONS.put(XMLResource.OPTION_USE_DEPRECATED_METHODS, Boolean.TRUE);
+	}
 
 	private final Map<EClass, Map<VView, Set<ExtensionDescription>>> map = new LinkedHashMap<EClass, Map<VView, Set<ExtensionDescription>>>();
 	private static File viewModelFolder;
@@ -185,24 +194,22 @@ public final class ViewModelFileExtensionsManager {
 		}
 
 		final ResourceSet resourceSet = new ResourceSetImpl();
+		resourceSet.getLoadOptions().putAll(LOAD_OPTIONS);
 		final Map<String, Object> extensionToFactoryMap = resourceSet
 			.getResourceFactoryRegistry().getExtensionToFactoryMap();
 		extensionToFactoryMap.put(Resource.Factory.Registry.DEFAULT_EXTENSION,
 			new VViewResourceFactoryImpl());
-		resourceSet.getPackageRegistry().put(VViewPackage.eNS_URI,
-			VViewPackage.eINSTANCE);
-		final VViewResourceImpl resource = (VViewResourceImpl) resourceSet.createResource(uri);
-
-		final Map<Object, Object> loadOptions = new HashMap<Object, Object>();
-
+		resourceSet.getPackageRegistry().put(VViewPackage.eNS_URI, VViewPackage.eINSTANCE);
+		VViewResourceImpl resource;
 		try {
-			resource.load(loadOptions);
-		} catch (final IOException exception) {
+			resource = (VViewResourceImpl) resourceSet.getResource(uri, true);
+		} catch (final WrappedException exception) {
 			final ReportService reportService = Activator.getReportService();
 			if (reportService != null) {
 				reportService.report(new AbstractReport(exception,
 					"Loading view model failed. Maybe a migration is needed. Please take a look at the migration guide at: http://www.eclipse.org/ecp/emfforms/documentation.html")); //$NON-NLS-1$
 			}
+			resource = (VViewResourceImpl) resourceSet.createResource(uri);
 		}
 		return resource;
 	}
@@ -216,7 +223,7 @@ public final class ViewModelFileExtensionsManager {
 				return uri;
 			}
 			final URIConverter uriConverter = new ExtensibleURIConverterImpl();
-			final InputStream inputStream = uriConverter.createInputStream(uri);
+			final InputStream inputStream = uriConverter.createInputStream(uri, LOAD_OPTIONS);
 			copy(inputStream, dest);
 			uri = URI.createFileURI(dest.getAbsolutePath());
 
@@ -317,9 +324,9 @@ public final class ViewModelFileExtensionsManager {
 			final String bundleName = file.getContributor().getName();
 			final String path = bundleName + '/' + filePath;
 			uri = URI.createPlatformPluginURI(path, false);
-			if (!converter.exists(uri, null)) {
+			if (!converter.exists(uri, LOAD_OPTIONS)) {
 				uri = URI.createPlatformResourceURI(filePath, false);
-				if (!converter.exists(uri, null)) {
+				if (!converter.exists(uri, LOAD_OPTIONS)) {
 					final ReportService reportService = Activator.getReportService();
 					if (reportService != null) {
 						reportService.report(new AbstractReport(

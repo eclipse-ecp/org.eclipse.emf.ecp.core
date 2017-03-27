@@ -28,8 +28,10 @@ import org.junit.runners.model.InitializationError;
 public class DatabindingClassRunner extends BlockJUnit4ClassRunner {
 
 	/**
-	 * @param klass
-	 * @throws InitializationError
+	 * Creates a DatabindingClassRunner providing a {@link Realm} to run {@code klass}.
+	 *
+	 * @param klass the test class to be executed
+	 * @throws InitializationError if the test class is malformed.
 	 */
 	public DatabindingClassRunner(Class<?> klass) throws InitializationError {
 		super(klass);
