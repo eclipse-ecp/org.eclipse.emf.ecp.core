@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="ASCII"?>
+<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/200" xmi:id="_4-E5gC_5Eee7Hoc85scwFA" name="FeatureDomainModelReferenceSegment" ecorePath="/org.eclipse.emf.ecp.view.model/model/view.ecore">
+  <rootEClass href="http://org/eclipse/emf/ecp/view/model/200#//FeatureDomainModelReferenceSegment"/>
+</org.eclipse.emf.ecp.view.model:View>

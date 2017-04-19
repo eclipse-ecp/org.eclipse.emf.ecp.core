@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="ASCII"?>
+<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/200" xmi:id="_0wLi8DYeEee-tqg0TxPCZQ" name="MultiDomainModelReferenceSegment" ecorePath="/org.eclipse.emfforms.view.multisegment.model/model/multisegment.ecore">
+  <rootEClass href="http://org/eclipse/emfforms/view/multisegment/model/200#//MultiDomainModelReferenceSegment"/>
+</org.eclipse.emf.ecp.view.model:View>
