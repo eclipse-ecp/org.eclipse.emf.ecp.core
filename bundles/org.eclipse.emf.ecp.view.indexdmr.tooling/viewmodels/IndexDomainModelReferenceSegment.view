@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="ASCII"?>
+<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/200" xmi:id="_DE7foC_4Eee7Hoc85scwFA" name="IndexDomainModelReferenceSegment" ecorePath="/org.eclipse.emf.ecp.view.indexdmr.model/model/indexdmr.ecore">
+  <rootEClass href="http://www/eclipse/org/emf/ecp/view/indexdmr/model/200#//IndexDomainModelReferenceSegment"/>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_cVEuMy_4EeeQWY-ZQdOPWg" name="Control index">
+    <domainModelReference xmi:id="_cVEuNC_4EeeQWY-ZQdOPWg">
+      <segments xsi:type="org.eclipse.emf.ecp.view.model:FeatureDomainModelReferenceSegment" xmi:id="_cVEuNS_4EeeQWY-ZQdOPWg" domainModelFeature="index"/>
+    </domainModelReference>
+  </children>
+</org.eclipse.emf.ecp.view.model:View>

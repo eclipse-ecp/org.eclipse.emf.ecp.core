@@ -9,7 +9,7 @@
  * Contributors:
  * Lucas Koehler - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.internal.editor.handler;
+package org.eclipse.emf.ecp.view.spi.editor.controls;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  * Implemented by clients to specify the validation criteria.
  *
  * @author Lucas Koehler
+ * @since 2.0
  *
  */
 public interface EStructuralFeatureSelectionValidator {

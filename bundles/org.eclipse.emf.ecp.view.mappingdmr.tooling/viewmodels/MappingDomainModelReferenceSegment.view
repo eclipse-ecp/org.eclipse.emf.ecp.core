@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="ASCII"?>
+<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/200" xmi:id="_IJPRkC_5Eee7Hoc85scwFA" name="MappingDomainModelReferenceSegment" ecorePath="/org.eclipse.emf.ecp.view.mappingdmr.model/model/mappingdmr.ecore">
+  <rootEClass href="http://www/eclipse/org/emf/ecp/view/mappingdmr/model/200#//MappingDomainModelReferenceSegment"/>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_07DlcS_4Eeeg7NBRIk3fPg" name="Control mappedClass">
+    <domainModelReference xmi:id="_07Dlci_4Eeeg7NBRIk3fPg">
+      <segments xsi:type="org.eclipse.emf.ecp.view.model:FeatureDomainModelReferenceSegment" xmi:id="_07Dlcy_4Eeeg7NBRIk3fPg" domainModelFeature="mappedClass"/>
+    </domainModelReference>
+  </children>
+</org.eclipse.emf.ecp.view.model:View>

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -24,6 +24,7 @@ import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -32,16 +33,19 @@ import org.eclipse.emf.ecp.edit.internal.swt.SWTImageHelper;
 import org.eclipse.emf.ecp.edit.spi.swt.reference.DeleteReferenceAction;
 import org.eclipse.emf.ecp.edit.spi.swt.reference.NewReferenceAction;
 import org.eclipse.emf.ecp.edit.spi.util.ECPModelElementChangeListener;
-import org.eclipse.emf.ecp.view.internal.editor.handler.EStructuralFeatureSelectionValidator;
+import org.eclipse.emf.ecp.view.internal.editor.handler.AdvancedCreateDomainModelReferenceWizard;
 import org.eclipse.emf.ecp.view.internal.editor.handler.FeatureSegmentGenerator;
 import org.eclipse.emf.ecp.view.internal.editor.handler.SegmentGenerator;
 import org.eclipse.emf.ecp.view.internal.editor.handler.SimpleCreateDomainModelReferenceWizard;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
+import org.eclipse.emf.ecp.view.spi.editor.controls.EStructuralFeatureSelectionValidator;
 import org.eclipse.emf.ecp.view.spi.editor.controls.Helper;
+import org.eclipse.emf.ecp.view.spi.editor.controls.SegmentIdeDescriptor;
 import org.eclipse.emf.ecp.view.spi.label.model.VLabel;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.util.SegmentResolvementUtil;
 import org.eclipse.emf.ecp.view.spi.model.util.VViewResourceImpl;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
@@ -61,6 +65,7 @@ import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
+import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
@@ -192,25 +197,26 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 		if (modelReference == null) {
 			return null;
 		}
-		if (modelReference.getSegments().isEmpty()) {
+		final EList<VDomainModelReferenceSegment> segments = modelReference.getSegments();
+		if (segments.isEmpty()) {
 			return adapterFactoryItemDelegator.getText(object);
 		}
 
 		final List<EStructuralFeature> featurePath = SegmentResolvementUtil
-			.resolveSegmentsToFeatureList(modelReference.getSegments(), Helper.getRootEClass(modelReference));
-		if (modelReference.getSegments().size() != featurePath.size()) {
+			.resolveSegmentsToFeatureList(segments, Helper.getRootEClass(modelReference));
+		if (segments.size() != featurePath.size()) {
 			return adapterFactoryItemDelegator.getText(object);
 		}
 
 		final EStructuralFeature attributeFeature = featurePath.get(featurePath.size() - 1);
 		final String className = Helper.getRootEClass(modelReference).getName();
-		final String attributeName = " -> " + attributeFeature.getName() + " : " //$NON-NLS-1$ //$NON-NLS-2$
-			+ attributeFeature.getEType().getName();
+		final String attributeName = " -> " + adapterFactoryItemDelegator.getText(segments.get(segments.size() - 1)) //$NON-NLS-1$
+			+ " : " + attributeFeature.getEType().getName(); //$NON-NLS-1$
 		String referencePath = ""; //$NON-NLS-1$
 
-		for (int i = 0; i < modelReference.getSegments().size() - 1; i++) {
+		for (int i = 0; i < segments.size() - 1; i++) {
 			referencePath = referencePath + " -> " //$NON-NLS-1$
-				+ adapterFactoryItemDelegator.getText(modelReference.getSegments().get(i));
+				+ adapterFactoryItemDelegator.getText(segments.get(i));
 		}
 
 		final String linkText = className + referencePath + attributeName;
@@ -410,6 +416,35 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 		};
 	}
 
+	/**
+	 * Returns whether the display restrictions defined by {@link SegmentIdeDescriptor SegmentIdeDescriptors} are
+	 * ignored by the dmr creation wizard.
+	 * <p>
+	 * Can be overwritten by subclasses to select the desired behavior.
+	 *
+	 * @return <code>true</code> if the restrictions are ignored, <code>false</code> otherwise
+	 */
+	protected boolean isIgnoreSegmentIdeRestriction() {
+		return false;
+	}
+
+	/**
+	 * This method can be used to restrict the type of the last segment in the advanced dmr creation mode of the dmr
+	 * creation wizard. <br/>
+	 * If this method returns a type, the wizard will not finish as along as the last segment's type
+	 * does not match the returned type.</br>
+	 * If this method returns <strong>null</strong>, the last segment's type is not restricted.
+	 * <p>
+	 * Can be overwritten by subclasses to set a mandatory type for the last segment.<br>
+	 * <strong>Important: </strong> This does not influence the last segment's type in simple editing mode. This can be
+	 * done by providing an appropriate {@link SegmentGenerator} by overwriting {@link #getSegmentGenerator()}.
+	 *
+	 * @return the last segment's type or <strong>null</strong> if there is no restriction.
+	 */
+	protected EClass getLastSegmentType() {
+		return null;
+	}
+
 	/** SelectionAdapter for the set button. */
 	private class SelectionAdapterExtension extends SelectionAdapter {
 
@@ -431,10 +466,16 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 				reference = VLabel.class.cast(eObject).getDomainModelReference();
 			}
 
-			final SimpleCreateDomainModelReferenceWizard wizard = new SimpleCreateDomainModelReferenceWizard(eObject,
+			final Wizard wizard = new AdvancedCreateDomainModelReferenceWizard(eObject,
 				eStructuralFeature, getEditingDomain(eObject), eclass,
 				reference == null ? "New Domain Model Reference" : "Configure Domain Model Reference", //$NON-NLS-1$ //$NON-NLS-2$
-				reference, getSelectionValidator(), getSegmentGenerator());
+				reference, getSelectionValidator(), getSegmentGenerator(), getLastSegmentType(),
+				isIgnoreSegmentIdeRestriction());
+			// new SimpleCreateDomainModelReferenceWizard(eObject,
+			// eStructuralFeature, getEditingDomain(eObject), eclass,
+			// reference == null ? "New Domain Model Reference" : "Configure Domain Model Reference", //$NON-NLS-1$
+			// //$NON-NLS-2$
+			// reference, getSelectionValidator(), getSegmentGenerator());
 
 			final WizardDialog wd = new WizardDialog(Display.getDefault().getActiveShell(), wizard);
 			wd.setHelpAvailable(false);

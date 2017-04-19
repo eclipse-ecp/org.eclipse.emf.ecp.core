@@ -13,18 +13,20 @@ package org.eclipse.emf.ecp.view.internal.editor.controls;
 
 import javax.inject.Inject;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.view.internal.editor.handler.EStructuralFeatureSelectionValidator;
 import org.eclipse.emf.ecp.view.internal.editor.handler.MultiSegmentGenerator;
 import org.eclipse.emf.ecp.view.internal.editor.handler.SegmentGenerator;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.editor.controls.EStructuralFeatureSelectionValidator;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
+import org.eclipse.emfforms.view.spi.multisegment.model.VMultisegmentPackage;
 
 /**
  * Renderer for domain model references that end in a multi segment (for table controls).
@@ -81,6 +83,27 @@ public class MultiDomainModelReferenceControlSWTRenderer extends DomainModelRefe
 				return "A multi reference must be selected."; //$NON-NLS-1$
 			}
 		};
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.internal.editor.controls.DomainModelReferenceControlSWTRenderer#isIgnoreSegmentIdeRestriction()
+	 */
+	@Override
+	protected boolean isIgnoreSegmentIdeRestriction() {
+		return true;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.internal.editor.controls.DomainModelReferenceControlSWTRenderer#getLastSegmentType()
+	 */
+	@Override
+	protected EClass getLastSegmentType() {
+		// TODO Auto-generated method stub
+		return VMultisegmentPackage.eINSTANCE.getMultiDomainModelReferenceSegment();
 	}
 
 }

@@ -27,5 +27,7 @@ Import-Package: org.eclipse.emf.edit.ui.provider;version="0.0.0",
  org.eclipse.jface.window;version="0.0.0",
  org.eclipse.jface.wizard;version="0.0.0",
  org.eclipse.swt.widgets;version="0.0.0",
- org.eclipse.ui.dialogs;ui.workbench=split;version="0.0.0"
+ org.eclipse.ui.dialogs;ui.workbench=split;version="0.0.0",
+ org.osgi.service.component.annotations;version="[1.2.0,2.0.0)"
 Bundle-ActivationPolicy: lazy
+Service-Component: OSGI-INF/MappingSegmentIdeDescriptor.xml
