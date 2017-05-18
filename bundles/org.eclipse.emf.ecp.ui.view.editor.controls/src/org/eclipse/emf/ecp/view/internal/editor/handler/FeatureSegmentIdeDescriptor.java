@@ -80,7 +80,7 @@ public class FeatureSegmentIdeDescriptor implements SegmentIdeDescriptor {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.editor.controls.SegmentIdeDescriptor#getReferenceTypeResolver()
 	 */
 	@Override
@@ -92,6 +92,16 @@ public class FeatureSegmentIdeDescriptor implements SegmentIdeDescriptor {
 				return reference.getEReferenceType();
 			}
 		};
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.spi.editor.controls.SegmentIdeDescriptor#isAllowedAsLastElementInPath()
+	 */
+	@Override
+	public boolean isAllowedAsLastElementInPath() {
+		return true;
 	}
 
 }

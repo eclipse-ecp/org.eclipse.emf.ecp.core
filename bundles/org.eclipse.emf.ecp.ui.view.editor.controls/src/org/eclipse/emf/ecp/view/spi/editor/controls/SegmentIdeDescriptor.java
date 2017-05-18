@@ -49,6 +49,14 @@ public interface SegmentIdeDescriptor {
 	boolean isLastElementInPath();
 
 	/**
+	 * Defines whether the described segment can be the last element of a reference path.
+	 *
+	 * @return <code>true</code> if the segment can be the last element of a reference path, <code>false</code>
+	 *         otherwise
+	 */
+	boolean isAllowedAsLastElementInPath();
+
+	/**
 	 * Returns an {@link EStructuralFeatureSelectionValidator} that determines whether an {@link EStructuralFeature} is
 	 * a
 	 * valid reference path part for the described segment type. E.g. an index segment needs a multi reference or
