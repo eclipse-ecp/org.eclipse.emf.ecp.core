@@ -141,4 +141,14 @@ public class MappingSegmentIdeDescriptor implements SegmentIdeDescriptor {
 		};
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emf.ecp.view.spi.editor.controls.SegmentIdeDescriptor#isAllowedAsLastElementInPath()
+	 */
+	@Override
+	public boolean isAllowedAsLastElementInPath() {
+		return false;
+	}
+
 }

@@ -253,7 +253,7 @@ public class AdvancedCreateDomainModelReferenceWizard extends Wizard {
 					}
 				}
 			}
-			
+
 			if (structuralFeature.isMany()) {
 				command = AddCommand.create(editingDomain, eObject,
 					structuralFeature, advancedDmr);
@@ -282,11 +282,16 @@ public class AdvancedCreateDomainModelReferenceWizard extends Wizard {
 		if (advancedDmr.getSegments().isEmpty() || !getContainer().getCurrentPage().isPageComplete()) {
 			return false;
 		}
+		final EList<VDomainModelReferenceSegment> segments = advancedDmr.getSegments();
+		final VDomainModelReferenceSegment lastSegment = segments.get(segments.size() - 1);
+		final SegmentIdeDescriptor descriptor = segmentToIdeDescriptorMap.get(lastSegment.eClass());
+		if (!descriptor.isAllowedAsLastElementInPath()) {
+			return false;
+		}
 		if (lastSegmentType == null) {
 			return true;
 		}
-		final EList<VDomainModelReferenceSegment> segments = advancedDmr.getSegments();
-		return lastSegmentType.isInstance(segments.get(segments.size() - 1));
+		return lastSegmentType.isInstance(lastSegment);
 	}
 
 	/**
