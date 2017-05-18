@@ -30,6 +30,8 @@ import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestF
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.DomainModelReferenceSegmentConverterEMF;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.SegmentConverterListResultEMF;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.SegmentConverterValueResultEMF;
 import org.eclipse.emfforms.view.spi.multisegment.model.VMultiDomainModelReferenceSegment;
 import org.eclipse.emfforms.view.spi.multisegment.model.VMultisegmentFactory;
 import org.junit.After;
@@ -97,7 +99,6 @@ public class MultiDomainModelReferenceSegmentConverter_Test {
 	 *
 	 * @throws DatabindingFailedException
 	 */
-	@SuppressWarnings("unchecked")
 	@Test
 	public void testConvertToValueProperty() throws DatabindingFailedException {
 		final EClass segmentRoot = TestPackage.eINSTANCE.getB();
@@ -107,9 +108,12 @@ public class MultiDomainModelReferenceSegmentConverter_Test {
 			.createMultiDomainModelReferenceSegment();
 		segment.setDomainModelFeature(feature.getName());
 
-		final IEMFValueProperty valueProperty = converter.convertToValueProperty(segment, segmentRoot, editingDomain);
+		final SegmentConverterValueResultEMF conversionResult = converter.convertToValueProperty(segment, segmentRoot,
+			editingDomain);
+		final IEMFValueProperty valueProperty = conversionResult.getValueProperty();
 		assertEquals(feature, valueProperty.getStructuralFeature());
 		assertEquals(b.getCList(), valueProperty.getValue(b));
+		assertEquals(TestPackage.eINSTANCE.getC(), conversionResult.getNextEClass());
 	}
 
 	/**
@@ -169,7 +173,6 @@ public class MultiDomainModelReferenceSegmentConverter_Test {
 	 *
 	 * @throws DatabindingFailedException
 	 */
-	@SuppressWarnings("unchecked")
 	@Test
 	public void testConvertToListProperty() throws DatabindingFailedException {
 		final EClass segmentRoot = TestPackage.eINSTANCE.getB();
@@ -179,9 +182,13 @@ public class MultiDomainModelReferenceSegmentConverter_Test {
 			.createMultiDomainModelReferenceSegment();
 		segment.setDomainModelFeature(feature.getName());
 
-		final IEMFListProperty listProperty = converter.convertToListProperty(segment, segmentRoot, editingDomain);
+		final SegmentConverterListResultEMF conversionResult = converter.convertToListProperty(segment, segmentRoot,
+			editingDomain);
+		final IEMFListProperty listProperty = conversionResult.getListProperty();
+
 		assertEquals(feature, listProperty.getStructuralFeature());
 		assertEquals(b.getCList(), listProperty.getList(b));
+		assertEquals(TestPackage.eINSTANCE.getC(), conversionResult.getNextEClass());
 	}
 
 	/**

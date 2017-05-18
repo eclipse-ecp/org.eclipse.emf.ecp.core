@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -31,6 +31,7 @@ import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestF
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.DomainModelReferenceSegmentConverterEMF;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.SegmentConverterValueResultEMF;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -88,7 +89,6 @@ public class IndexDomainModelReferenceSegmentConverter_Test {
 	 *
 	 * @throws DatabindingFailedException
 	 */
-	@SuppressWarnings("unchecked")
 	@Test
 	public void testConvertToValuePropertyIndexOne() throws DatabindingFailedException {
 		final B b = TestFactory.eINSTANCE.createB();
@@ -101,10 +101,13 @@ public class IndexDomainModelReferenceSegmentConverter_Test {
 			.createIndexDomainModelReferenceSegment();
 		segment.setIndex(1);
 		segment.setDomainModelFeature("cList"); //$NON-NLS-1$
-		final IEMFValueProperty property = converter.convertToValueProperty(segment, b.eClass(), getEditingDomain(b));
+		final SegmentConverterValueResultEMF conversionResult = converter.convertToValueProperty(segment, b.eClass(),
+			getEditingDomain(b));
+		final IEMFValueProperty property = conversionResult.getValueProperty();
 
 		assertEquals("B.cList<C> index 1", property.toString()); //$NON-NLS-1$
 		assertEquals(c1, property.getValue(b));
+		assertEquals(TestPackage.eINSTANCE.getC(), conversionResult.getNextEClass());
 	}
 
 	/**
@@ -113,7 +116,6 @@ public class IndexDomainModelReferenceSegmentConverter_Test {
 	 *
 	 * @throws DatabindingFailedException
 	 */
-	@SuppressWarnings("unchecked")
 	@Test
 	public void testConvertToValuePropertyIndexZero() throws DatabindingFailedException {
 		final B b = TestFactory.eINSTANCE.createB();
@@ -126,10 +128,13 @@ public class IndexDomainModelReferenceSegmentConverter_Test {
 			.createIndexDomainModelReferenceSegment();
 		segment.setIndex(0);
 		segment.setDomainModelFeature("cList"); //$NON-NLS-1$
-		final IEMFValueProperty property = converter.convertToValueProperty(segment, b.eClass(), getEditingDomain(b));
+		final SegmentConverterValueResultEMF conversionResult = converter.convertToValueProperty(segment, b.eClass(),
+			getEditingDomain(b));
+		final IEMFValueProperty property = conversionResult.getValueProperty();
 
 		assertEquals("B.cList<C> index 0", property.toString()); //$NON-NLS-1$
 		assertEquals(c0, property.getValue(b));
+		assertEquals(TestPackage.eINSTANCE.getC(), conversionResult.getNextEClass());
 	}
 
 	/**

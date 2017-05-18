@@ -26,7 +26,6 @@ import org.eclipse.emf.databinding.IEMFObservable;
 import org.eclipse.emf.databinding.IEMFValueProperty;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.common.spi.asserts.Assert;
@@ -38,6 +37,8 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedExcep
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsSegmentResolver;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.DomainModelReferenceSegmentConverterEMF;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.SegmentConverterListResultEMF;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.SegmentConverterValueResultEMF;
 
 /**
  * EMF implementation of {@link EMFFormsDatabindingEMF}.
@@ -139,30 +140,47 @@ public class EMFFormsDatabindingImpl implements EMFFormsDatabindingEMF, EMFForms
 		// Get value property for the (always present) first segment
 		final DomainModelReferenceSegmentConverterEMF firstConverter = getBestDomainModelReferenceSegmentConverter(
 			segments.get(0));
-		IEMFValueProperty resultProperty = firstConverter.convertToValueProperty(segments.get(0),
+
+		final SegmentConverterValueResultEMF converterResult = firstConverter.convertToValueProperty(segments.get(0),
 			rootEClass, editingDomain);
+		IEMFValueProperty resultProperty = converterResult.getValueProperty();
 
 		/*
 		 * Iterate over all remaining segments and get the value properties for their corresponding EClasses.
-		 * Get the EClass by getting the target EClass of the EReference from the value property of the previously
-		 * resolved segment.
 		 */
-		EStructuralFeature feature = resultProperty.getStructuralFeature();
+		EClass nextEClass = converterResult.getNextEClass();
 		for (int i = 1; i < segments.size(); i++) {
 			final VDomainModelReferenceSegment segment = segments.get(i);
-			final EClass nextEClass = getNextEClass(domainModelReference, rootEClass, feature, segment);
+			checkNextEClass(nextEClass, domainModelReference, segment);
 
 			final DomainModelReferenceSegmentConverterEMF bestConverter = getBestDomainModelReferenceSegmentConverter(
 				segment);
-			final IEMFValueProperty nextProperty = bestConverter.convertToValueProperty(segment, nextEClass,
+			final SegmentConverterValueResultEMF nextConverterResult = bestConverter.convertToValueProperty(segment,
+				nextEClass,
 				editingDomain);
-			feature = nextProperty.getStructuralFeature();
-
+			final IEMFValueProperty nextProperty = nextConverterResult.getValueProperty();
+			nextEClass = nextConverterResult.getNextEClass();
 			// Chain the properties together
 			resultProperty = resultProperty.value(nextProperty);
 		}
 
 		return resultProperty;
+	}
+
+	/**
+	 * @param nextEClass the {@link EClass} to check
+	 * @param domainModelReference only needed for exception description
+	 * @param segment only needed for exception description
+	 * @throws DatabindingFailedException if the next EClass is <code>null</code>
+	 */
+	private void checkNextEClass(final EClass nextEClass, VDomainModelReference domainModelReference,
+		final VDomainModelReferenceSegment segment) throws DatabindingFailedException {
+		if (nextEClass == null) {
+			throw new DatabindingFailedException(String.format(
+				"The Segment [%1$s] could not be resolved because this segment's root EClass" //$NON-NLS-1$
+					+ " could not be resolved from the preceding segment. The DMR is %2$s.", //$NON-NLS-1$
+				segment, domainModelReference));
+		}
 	}
 
 	/**
@@ -234,68 +252,46 @@ public class EMFFormsDatabindingImpl implements EMFFormsDatabindingEMF, EMFForms
 			segments.get(0));
 		if (segments.size() == 1) {
 			// If there is only one segment, directly return its list property
-			return firstConverter.convertToListProperty(segments.get(0), object.eClass(), editingDomain);
+			return firstConverter.convertToListProperty(segments.get(0), object.eClass(), editingDomain)
+				.getListProperty();
 		}
 
-		IEMFValueProperty valueProperty = firstConverter.convertToValueProperty(segments.get(0),
+		final SegmentConverterValueResultEMF converterResult = firstConverter.convertToValueProperty(segments.get(0),
 			object.eClass(), editingDomain);
+		IEMFValueProperty valueProperty = converterResult.getValueProperty();
 
 		/*
 		 * Iterate over all "middle" segments and get the value properties for their corresponding EClasses.
 		 * Get the EClass by getting the target EClass of the EReference from the value property of the previously
 		 * resolved segment.
 		 */
-		EStructuralFeature feature = valueProperty.getStructuralFeature();
+		EClass nextEClass = converterResult.getNextEClass();
 		for (int i = 1; i < segments.size() - 1; i++) {
 			final VDomainModelReferenceSegment segment = segments.get(i);
-			final EClass nextEClass = getNextEClass(domainModelReference, object.eClass(), feature, segment);
+			checkNextEClass(nextEClass, domainModelReference, segment);
 
 			final DomainModelReferenceSegmentConverterEMF bestConverter = getBestDomainModelReferenceSegmentConverter(
 				segment);
-			final IEMFValueProperty nextProperty = bestConverter.convertToValueProperty(segment, nextEClass,
+			final SegmentConverterValueResultEMF nextConverterResult = bestConverter.convertToValueProperty(segment,
+				nextEClass,
 				editingDomain);
-			feature = nextProperty.getStructuralFeature();
+			final IEMFValueProperty nextProperty = nextConverterResult.getValueProperty();
 
+			nextEClass = nextConverterResult.getNextEClass();
 			// Chain the properties together
 			valueProperty = valueProperty.value(nextProperty);
 		}
 
 		// Get the list property for the last segment
 		final int lastIndex = segments.size() - 1;
-		final EClass lastEClass = getNextEClass(domainModelReference, object.eClass(), feature,
-			segments.get(lastIndex));
+		checkNextEClass(nextEClass, domainModelReference, segments.get(lastIndex));
 		final DomainModelReferenceSegmentConverterEMF lastConverter = getBestDomainModelReferenceSegmentConverter(
 			segments.get(lastIndex));
-		final IEMFListProperty listProperty = lastConverter.convertToListProperty(segments.get(lastIndex), lastEClass,
+		final SegmentConverterListResultEMF converterListResult = lastConverter.convertToListProperty(
+			segments.get(lastIndex), nextEClass,
 			editingDomain);
 
-		return valueProperty.list(listProperty);
-	}
-
-	/**
-	 * @param domainModelReference only needed for exception description
-	 * @param rootEClass only needed for exception description
-	 * @param feature The feature to extract the next {@link EClass} from
-	 * @param segment only needed for exception description
-	 * @return The next EClass if the given {@link EStructuralFeature} is a single {@link EReference}, throws a
-	 *         {@link DatabindingFailedException} otherwise.
-	 * @throws DatabindingFailedException if the given {@link EStructuralFeature} is not a single {@link EReference}
-	 */
-	private EClass getNextEClass(VDomainModelReference domainModelReference, EClass rootEClass,
-		EStructuralFeature feature, final VDomainModelReferenceSegment segment) throws DatabindingFailedException {
-		if (!EReference.class.isInstance(feature)) {
-			throw new DatabindingFailedException(String.format(
-				"The reference being resolved is not compatible with the given root EClass: " //$NON-NLS-1$
-					+ "Segment [%1$s] cannot be resolved as the preceding segment did not resolve to an EReference. " //$NON-NLS-1$
-					+ "The DMR is %2$s. The root EObject is %3$s.", //$NON-NLS-1$
-				segment, domainModelReference, rootEClass));
-		}
-		if (feature.isMany()) {
-			throw new DatabindingFailedException(String.format(
-				"The path is not fully resolved. The reference being resolved is not a single reference [%1$s]. The DMR is %2$s.", //$NON-NLS-1$
-				feature, domainModelReference));
-		}
-		return ((EReference) feature).getEReferenceType();
+		return valueProperty.list(converterListResult.getListProperty());
 	}
 
 	/**

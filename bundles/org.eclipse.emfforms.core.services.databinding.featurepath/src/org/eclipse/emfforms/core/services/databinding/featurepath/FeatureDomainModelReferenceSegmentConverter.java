@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -11,11 +11,12 @@
  ******************************************************************************/
 package org.eclipse.emfforms.core.services.databinding.featurepath;
 
-import org.eclipse.emf.databinding.IEMFListProperty;
-import org.eclipse.emf.databinding.IEMFValueProperty;
 import org.eclipse.emf.databinding.edit.EMFEditProperties;
+import org.eclipse.emf.databinding.edit.IEMFEditListProperty;
+import org.eclipse.emf.databinding.edit.IEMFEditValueProperty;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -23,8 +24,12 @@ import org.eclipse.emf.ecp.common.spi.asserts.Assert;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfforms.internal.core.services.databinding.SegmentConverterListResultImpl;
+import org.eclipse.emfforms.internal.core.services.databinding.SegmentConverterValueResultImpl;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.DomainModelReferenceSegmentConverterEMF;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.SegmentConverterListResultEMF;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.SegmentConverterValueResultEMF;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -35,6 +40,7 @@ import org.osgi.service.component.annotations.Component;
  *
  */
 @Component(name = "FeatureDomainModelReferenceSegmentConverter")
+@SuppressWarnings("restriction")
 public class FeatureDomainModelReferenceSegmentConverter implements DomainModelReferenceSegmentConverterEMF {
 
 	/**
@@ -57,7 +63,8 @@ public class FeatureDomainModelReferenceSegmentConverter implements DomainModelR
 	 *      org.eclipse.emf.ecore.EClass, org.eclipse.emf.edit.domain.EditingDomain)
 	 */
 	@Override
-	public IEMFValueProperty convertToValueProperty(VDomainModelReferenceSegment segment, EClass segmentRoot,
+	public SegmentConverterValueResultEMF convertToValueProperty(VDomainModelReferenceSegment segment,
+		EClass segmentRoot,
 		EditingDomain editingDomain) throws DatabindingFailedException {
 		final VFeatureDomainModelReferenceSegment featureSegment = checkAndConvertSegment(segment);
 
@@ -68,7 +75,12 @@ public class FeatureDomainModelReferenceSegmentConverter implements DomainModelR
 				"The segment's feature could not be resolved for the given EClass. The segment was %1$s. The EClass was %2$s.", //$NON-NLS-1$
 				segment, segmentRoot));
 		}
-		return EMFEditProperties.value(editingDomain, structuralFeature);
+		final IEMFEditValueProperty valueProperty = EMFEditProperties.value(editingDomain, structuralFeature);
+		if (EReference.class.isInstance(structuralFeature)) {
+			return new SegmentConverterValueResultImpl(valueProperty,
+				((EReference) structuralFeature).getEReferenceType());
+		}
+		return new SegmentConverterValueResultImpl(valueProperty, null);
 	}
 
 	/**
@@ -78,7 +90,7 @@ public class FeatureDomainModelReferenceSegmentConverter implements DomainModelR
 	 *      org.eclipse.emf.ecore.EClass, org.eclipse.emf.edit.domain.EditingDomain)
 	 */
 	@Override
-	public IEMFListProperty convertToListProperty(VDomainModelReferenceSegment segment, EClass segmentRoot,
+	public SegmentConverterListResultEMF convertToListProperty(VDomainModelReferenceSegment segment, EClass segmentRoot,
 		EditingDomain editingDomain) throws DatabindingFailedException {
 		final VFeatureDomainModelReferenceSegment featureSegment = checkAndConvertSegment(segment);
 
@@ -89,7 +101,12 @@ public class FeatureDomainModelReferenceSegmentConverter implements DomainModelR
 				"The segment's feature could not be resolved for the given EClass. The segment was %1$s. The EClass was %2$s.", //$NON-NLS-1$
 				segment, segmentRoot));
 		}
-		return EMFEditProperties.list(editingDomain, structuralFeature);
+		final IEMFEditListProperty listProperty = EMFEditProperties.list(editingDomain, structuralFeature);
+		if (EReference.class.isInstance(structuralFeature)) {
+			return new SegmentConverterListResultImpl(listProperty,
+				((EReference) structuralFeature).getEReferenceType());
+		}
+		return new SegmentConverterListResultImpl(listProperty, null);
 	}
 
 	/**

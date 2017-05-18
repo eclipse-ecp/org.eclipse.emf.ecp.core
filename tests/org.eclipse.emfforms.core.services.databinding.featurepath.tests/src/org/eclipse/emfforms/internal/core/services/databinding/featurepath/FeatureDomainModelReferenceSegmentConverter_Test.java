@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -33,6 +33,8 @@ import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestF
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.DomainModelReferenceSegmentConverterEMF;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.SegmentConverterListResultEMF;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.SegmentConverterValueResultEMF;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -97,9 +99,12 @@ public class FeatureDomainModelReferenceSegmentConverter_Test {
 			.createFeatureDomainModelReferenceSegment();
 		segment.setDomainModelFeature(reference.getName());
 
-		final IEMFValueProperty property = converter.convertToValueProperty(segment, a.eClass(), getEditingDomain(a));
+		final SegmentConverterValueResultEMF conversionResult = converter.convertToValueProperty(segment, a.eClass(),
+			getEditingDomain(a));
+		final IEMFValueProperty property = conversionResult.getValueProperty();
 
 		assertEquals("A.b<B>", property.toString()); //$NON-NLS-1$
+		assertEquals(TestPackage.eINSTANCE.getB(), conversionResult.getNextEClass());
 	}
 
 	/**
@@ -135,9 +140,12 @@ public class FeatureDomainModelReferenceSegmentConverter_Test {
 			.createFeatureDomainModelReferenceSegment();
 		segment.setDomainModelFeature(reference.getName());
 
-		final IEMFListProperty property = converter.convertToListProperty(segment, b.eClass(), getEditingDomain(b));
+		final SegmentConverterListResultEMF conversionResult = converter.convertToListProperty(segment, b.eClass(),
+			getEditingDomain(b));
+		final IEMFListProperty property = conversionResult.getListProperty();
 
 		assertEquals("B.cList[]<C>", property.toString()); //$NON-NLS-1$
+		assertEquals(TestPackage.eINSTANCE.getC(), conversionResult.getNextEClass());
 	}
 
 	/**
@@ -162,7 +170,7 @@ public class FeatureDomainModelReferenceSegmentConverter_Test {
 	 * Test method for
 	 * {@link org.eclipse.emfforms.core.services.databinding.featurepath.FeatureDomainModelReferenceSegmentConverter#getSetting(org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment, org.eclipse.emf.ecore.EObject)}
 	 * .
-	 * 
+	 *
 	 * @throws DatabindingFailedException
 	 */
 	@Test

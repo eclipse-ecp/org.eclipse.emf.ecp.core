@@ -34,6 +34,7 @@ import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestF
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.DomainModelReferenceSegmentConverterEMF;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.SegmentConverterValueResultEMF;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -106,7 +107,7 @@ public class MappingDomainModelReferenceSegmentConverter_Test {
 	 *
 	 * @throws DatabindingFailedException
 	 */
-	@SuppressWarnings({ "unchecked" })
+	@SuppressWarnings({})
 	@Test
 	public void testConvertToValuePropertyReference() throws DatabindingFailedException {
 		final VMappingDomainModelReferenceSegment mappingSegment = VMappingdmrFactory.eINSTANCE
@@ -121,12 +122,14 @@ public class MappingDomainModelReferenceSegmentConverter_Test {
 		mappingSegment.setMappedClass(key);
 		mappingSegment.setDomainModelFeature(domainModelEFeature.getName());
 
-		final IEMFValueProperty valueProperty = converter.convertToValueProperty(mappingSegment, domainObject.eClass(),
-			mock(EditingDomain.class));
+		final SegmentConverterValueResultEMF conversionResult = converter.convertToValueProperty(mappingSegment,
+			domainObject.eClass(), mock(EditingDomain.class));
+		final IEMFValueProperty valueProperty = conversionResult.getValueProperty();
 
 		final Object returnedValue = valueProperty.getValue(domainObject);
 		assertEquals(value, returnedValue);
 		assertTrue(valueProperty instanceof EMFValuePropertyDecorator);
+		assertEquals(TestPackage.eINSTANCE.getA(), conversionResult.getNextEClass());
 	}
 
 	/**
@@ -135,8 +138,7 @@ public class MappingDomainModelReferenceSegmentConverter_Test {
 	 *
 	 * @throws DatabindingFailedException
 	 */
-	@SuppressWarnings({ "unchecked" })
-	@Test
+	@Test(expected = DatabindingFailedException.class)
 	public void testConvertToValuePropertyAttribute() throws DatabindingFailedException {
 		final VMappingDomainModelReferenceSegment mappingSegment = VMappingdmrFactory.eINSTANCE
 			.createMappingDomainModelReferenceSegment();
@@ -150,12 +152,7 @@ public class MappingDomainModelReferenceSegmentConverter_Test {
 		mappingSegment.setMappedClass(key);
 		mappingSegment.setDomainModelFeature(domainModelEFeature.getName());
 
-		final IEMFValueProperty valueProperty = converter.convertToValueProperty(mappingSegment, domainObject.eClass(),
-			mock(EditingDomain.class));
-
-		final Object returnedValue = valueProperty.getValue(domainObject);
-		assertEquals(value, returnedValue);
-		assertTrue(valueProperty instanceof EMFValuePropertyDecorator);
+		converter.convertToValueProperty(mappingSegment, domainObject.eClass(), mock(EditingDomain.class));
 	}
 
 	/**
@@ -222,7 +219,7 @@ public class MappingDomainModelReferenceSegmentConverter_Test {
 	 *
 	 * @throws DatabindingFailedException
 	 */
-	@Test
+	@Test(expected = DatabindingFailedException.class)
 	public void testGetSettingValueAttribute() throws DatabindingFailedException {
 		final VMappingDomainModelReferenceSegment mappingSegment = VMappingdmrFactory.eINSTANCE
 			.createMappingDomainModelReferenceSegment();
@@ -236,12 +233,7 @@ public class MappingDomainModelReferenceSegmentConverter_Test {
 		mappingSegment.setMappedClass(key);
 		mappingSegment.setDomainModelFeature(domainModelEFeature.getName());
 
-		final Setting setting = converter.getSetting(mappingSegment, domainObject);
-
-		assertEquals(domainModelEFeature, setting.getEStructuralFeature());
-		assertEquals(domainObject, setting.getEObject());
-		assertEquals(value, setting.get(true));
-
+		converter.getSetting(mappingSegment, domainObject);
 	}
 
 	/**
