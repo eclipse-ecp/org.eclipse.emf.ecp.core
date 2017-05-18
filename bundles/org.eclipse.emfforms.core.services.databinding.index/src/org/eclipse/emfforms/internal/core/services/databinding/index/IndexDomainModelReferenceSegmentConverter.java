@@ -11,19 +11,22 @@
  ******************************************************************************/
 package org.eclipse.emfforms.internal.core.services.databinding.index;
 
-import org.eclipse.emf.databinding.IEMFListProperty;
 import org.eclipse.emf.databinding.IEMFValueProperty;
 import org.eclipse.emf.databinding.internal.EMFValuePropertyDecorator;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.common.spi.asserts.Assert;
 import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfforms.internal.core.services.databinding.SegmentConverterValueResultImpl;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.DomainModelReferenceSegmentConverterEMF;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.SegmentConverterListResultEMF;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.SegmentConverterValueResultEMF;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -58,8 +61,8 @@ public class IndexDomainModelReferenceSegmentConverter implements DomainModelRef
 	 *      org.eclipse.emf.ecore.EClass, org.eclipse.emf.edit.domain.EditingDomain)
 	 */
 	@Override
-	public IEMFValueProperty convertToValueProperty(VDomainModelReferenceSegment segment, EClass segmentRoot,
-		EditingDomain editingDomain) throws DatabindingFailedException {
+	public SegmentConverterValueResultEMF convertToValueProperty(VDomainModelReferenceSegment segment,
+		EClass segmentRoot, EditingDomain editingDomain) throws DatabindingFailedException {
 		final VIndexDomainModelReferenceSegment indexSegment = checkAndConvertSegment(segment);
 
 		final EStructuralFeature structuralFeature = segmentRoot
@@ -74,7 +77,12 @@ public class IndexDomainModelReferenceSegmentConverter implements DomainModelRef
 
 		final EMFIndexedValueProperty indexProperty = new EMFIndexedValueProperty(editingDomain,
 			indexSegment.getIndex(), structuralFeature);
-		return new EMFValuePropertyDecorator(indexProperty, structuralFeature);
+		final IEMFValueProperty resultProperty = new EMFValuePropertyDecorator(indexProperty, structuralFeature);
+		if (EReference.class.isInstance(structuralFeature)) {
+			return new SegmentConverterValueResultImpl(resultProperty,
+				((EReference) structuralFeature).getEReferenceType());
+		}
+		return new SegmentConverterValueResultImpl(resultProperty, null);
 	}
 
 	/**
@@ -84,7 +92,7 @@ public class IndexDomainModelReferenceSegmentConverter implements DomainModelRef
 	 *      org.eclipse.emf.ecore.EClass, org.eclipse.emf.edit.domain.EditingDomain)
 	 */
 	@Override
-	public IEMFListProperty convertToListProperty(VDomainModelReferenceSegment segment, EClass segmentRoot,
+	public SegmentConverterListResultEMF convertToListProperty(VDomainModelReferenceSegment segment, EClass segmentRoot,
 		EditingDomain editingDomain) throws DatabindingFailedException {
 		throw new UnsupportedOperationException(
 			"A VIndexDomainModelReferenceSegment cannot be converted to a list property, only to a value property."); //$NON-NLS-1$

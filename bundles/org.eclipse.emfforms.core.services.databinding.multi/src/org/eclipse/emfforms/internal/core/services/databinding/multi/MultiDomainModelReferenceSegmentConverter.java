@@ -11,8 +11,6 @@
  ******************************************************************************/
 package org.eclipse.emfforms.internal.core.services.databinding.multi;
 
-import org.eclipse.emf.databinding.IEMFListProperty;
-import org.eclipse.emf.databinding.IEMFValueProperty;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -23,6 +21,8 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.core.services.databinding.featurepath.FeatureDomainModelReferenceSegmentConverter;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.DomainModelReferenceSegmentConverterEMF;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.SegmentConverterListResultEMF;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.SegmentConverterValueResultEMF;
 import org.eclipse.emfforms.view.spi.multisegment.model.VMultiDomainModelReferenceSegment;
 import org.osgi.service.component.annotations.Component;
 
@@ -57,11 +57,12 @@ public class MultiDomainModelReferenceSegmentConverter extends FeatureDomainMode
 	 *      org.eclipse.emf.ecore.EClass, org.eclipse.emf.edit.domain.EditingDomain)
 	 */
 	@Override
-	public IEMFValueProperty convertToValueProperty(VDomainModelReferenceSegment segment, EClass segmentRoot,
-		EditingDomain editingDomain) throws DatabindingFailedException {
-		final IEMFValueProperty valueProperty = super.convertToValueProperty(segment, segmentRoot, editingDomain);
-		checkForMultiReference(valueProperty.getStructuralFeature());
-		return valueProperty;
+	public SegmentConverterValueResultEMF convertToValueProperty(VDomainModelReferenceSegment segment,
+		EClass segmentRoot, EditingDomain editingDomain) throws DatabindingFailedException {
+		final SegmentConverterValueResultEMF result = super.convertToValueProperty(segment, segmentRoot,
+			editingDomain);
+		checkForMultiReference(result.getValueProperty().getStructuralFeature());
+		return result;
 	}
 
 	/**
@@ -71,11 +72,11 @@ public class MultiDomainModelReferenceSegmentConverter extends FeatureDomainMode
 	 *      org.eclipse.emf.ecore.EClass, org.eclipse.emf.edit.domain.EditingDomain)
 	 */
 	@Override
-	public IEMFListProperty convertToListProperty(VDomainModelReferenceSegment segment, EClass segmentRoot,
+	public SegmentConverterListResultEMF convertToListProperty(VDomainModelReferenceSegment segment, EClass segmentRoot,
 		EditingDomain editingDomain) throws DatabindingFailedException {
-		final IEMFListProperty listProperty = super.convertToListProperty(segment, segmentRoot, editingDomain);
-		checkForMultiReference(listProperty.getStructuralFeature());
-		return listProperty;
+		final SegmentConverterListResultEMF result = super.convertToListProperty(segment, segmentRoot, editingDomain);
+		checkForMultiReference(result.getListProperty().getStructuralFeature());
+		return result;
 	}
 
 	/**

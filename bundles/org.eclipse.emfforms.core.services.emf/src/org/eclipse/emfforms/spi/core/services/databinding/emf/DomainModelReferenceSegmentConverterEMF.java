@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -58,10 +58,11 @@ public interface DomainModelReferenceSegmentConverterEMF {
 	 *            the segment to an {@link EStructuralFeature}. This means the {@link EClass} has to contain the feature
 	 *            used in the segment
 	 * @param editingDomain The {@link EditingDomain} in which the {@link IEMFValueProperty} is created
-	 * @return The created {@link IEMFValueProperty}, does not return <code>null</code>
+	 * @return The {@link SegmentConverterValueResultEMF} with the created {@link IEMFValueProperty}, does not return
+	 *         <code>null</code>
 	 * @throws DatabindingFailedException if no value property could be created
 	 */
-	IEMFValueProperty convertToValueProperty(VDomainModelReferenceSegment segment, EClass segmentRoot,
+	SegmentConverterValueResultEMF convertToValueProperty(VDomainModelReferenceSegment segment, EClass segmentRoot,
 		EditingDomain editingDomain) throws DatabindingFailedException;
 
 	/**
@@ -72,10 +73,11 @@ public interface DomainModelReferenceSegmentConverterEMF {
 	 *            the segment to an {@link EStructuralFeature}. This means the {@link EClass} has to contain the feature
 	 *            used in the segment
 	 * @param editingDomain The {@link EditingDomain} in which the {@link IEMFValueProperty} is created
-	 * @return The created {@link IEMFListProperty}, does not return <code>null</code>
+	 * @return The {@link SegmentConverterListResultEMF} with the created {@link IEMFListProperty}, does not return
+	 *         <code>null</code>
 	 * @throws DatabindingFailedException if no value property could be created
 	 */
-	IEMFListProperty convertToListProperty(VDomainModelReferenceSegment segment, EClass segmentRoot,
+	SegmentConverterListResultEMF convertToListProperty(VDomainModelReferenceSegment segment, EClass segmentRoot,
 		EditingDomain editingDomain) throws DatabindingFailedException;
 
 	/**

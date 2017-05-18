@@ -11,8 +11,6 @@
  ******************************************************************************/
 package org.eclipse.emfforms.internal.core.services.databinding.mapping;
 
-import org.eclipse.emf.databinding.IEMFListProperty;
-import org.eclipse.emf.databinding.IEMFValueProperty;
 import org.eclipse.emf.databinding.internal.EMFValuePropertyDecorator;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -23,8 +21,11 @@ import org.eclipse.emf.ecp.common.spi.asserts.Assert;
 import org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfforms.internal.core.services.databinding.SegmentConverterValueResultImpl;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.DomainModelReferenceSegmentConverterEMF;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.SegmentConverterListResultEMF;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.SegmentConverterValueResultEMF;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -59,8 +60,8 @@ public class MappingDomainModelReferenceSegmentConverter implements DomainModelR
 	 *      org.eclipse.emf.ecore.EClass, org.eclipse.emf.edit.domain.EditingDomain)
 	 */
 	@Override
-	public IEMFValueProperty convertToValueProperty(VDomainModelReferenceSegment segment, EClass segmentRoot,
-		EditingDomain editingDomain) throws DatabindingFailedException {
+	public SegmentConverterValueResultEMF convertToValueProperty(VDomainModelReferenceSegment segment,
+		EClass segmentRoot, EditingDomain editingDomain) throws DatabindingFailedException {
 
 		final VMappingDomainModelReferenceSegment mappingSegment = checkAndConvertSegment(segment);
 
@@ -73,9 +74,16 @@ public class MappingDomainModelReferenceSegmentConverter implements DomainModelR
 		}
 		checkMapType(structuralFeature);
 
+		// no checks necessary as they are already done in checkMapType()
+		final EClass eClass = (EClass) structuralFeature.getEType();
+		final EReference valueReference = (EReference) eClass.getEStructuralFeature("value"); //$NON-NLS-1$
+
 		final EMFMappingValueProperty mappingProperty = new EMFMappingValueProperty(editingDomain,
 			mappingSegment.getMappedClass(), structuralFeature);
-		return new EMFValuePropertyDecorator(mappingProperty, structuralFeature);
+		final EMFValuePropertyDecorator resultProperty = new EMFValuePropertyDecorator(mappingProperty,
+			structuralFeature);
+		return new SegmentConverterValueResultImpl(resultProperty, valueReference.getEReferenceType());
+
 	}
 
 	/**
@@ -85,7 +93,7 @@ public class MappingDomainModelReferenceSegmentConverter implements DomainModelR
 	 *      org.eclipse.emf.ecore.EClass, org.eclipse.emf.edit.domain.EditingDomain)
 	 */
 	@Override
-	public IEMFListProperty convertToListProperty(VDomainModelReferenceSegment segment, EClass segmentRoot,
+	public SegmentConverterListResultEMF convertToListProperty(VDomainModelReferenceSegment segment, EClass segmentRoot,
 		EditingDomain editingDomain) throws DatabindingFailedException {
 		throw new UnsupportedOperationException(
 			"A VMappingDomainModelReferenceSegment cannot be converted to a list property, only to a value property."); //$NON-NLS-1$
@@ -165,6 +173,10 @@ public class MappingDomainModelReferenceSegmentConverter implements DomainModelR
 		if (!EClass.class.isAssignableFrom(((EReference) keyFeature).getEReferenceType().getInstanceClass())) {
 			throw new IllegalMapTypeException(
 				"The keys of the map referenced by the segment's structural feature must be referenced EClasses."); //$NON-NLS-1$
+		}
+		if (!EReference.class.isInstance(valueFeature)) {
+			throw new IllegalMapTypeException(
+				"The values of the map referenced by the segment's structural feature must be referenced EObjects."); //$NON-NLS-1$
 		}
 	}
 
