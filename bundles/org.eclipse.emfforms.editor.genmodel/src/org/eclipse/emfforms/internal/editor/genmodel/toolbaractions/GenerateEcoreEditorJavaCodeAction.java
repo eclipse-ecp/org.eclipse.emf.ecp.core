@@ -20,7 +20,6 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
@@ -65,9 +64,9 @@ public class GenerateEcoreEditorJavaCodeAction extends GenerateJavaCodeAction {
 			return null;
 		}
 		final URI resourceURI = ePackage.eResource().getURI();
+		final URI uri = ePackage.eResource().getResourceSet().getURIConverter().normalize(resourceURI);
 		final IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-		final IPath path = new Path(resourceURI.toFileString());
-		final IFile file = root.getFileForLocation(path);
+		final IFile file = root.getFile(new Path(uri.toPlatformString(true)));
 		final IContainer parent = file.getParent();
 		return getGenModelFile(parent, resourceSet, ePackage);
 	}
@@ -92,7 +91,6 @@ public class GenerateEcoreEditorJavaCodeAction extends GenerateJavaCodeAction {
 
 	private List<IResource> getGenModelFiles(IContainer parent) {
 		final List<IResource> genModelFiles = new ArrayList<IResource>();
-		parent.exists();
 		try {
 			for (final IResource member : parent.members()) {
 				if (member.getFileExtension().equals("genmodel")) { //$NON-NLS-1$
