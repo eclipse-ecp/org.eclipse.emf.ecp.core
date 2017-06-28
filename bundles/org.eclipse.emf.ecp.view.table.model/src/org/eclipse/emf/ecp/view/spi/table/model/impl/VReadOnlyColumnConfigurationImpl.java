@@ -35,7 +35,8 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
  *
  * @generated
  */
-public class VReadOnlyColumnConfigurationImpl extends EObjectImpl implements VReadOnlyColumnConfiguration {
+public class VReadOnlyColumnConfigurationImpl extends EObjectImpl
+	implements VReadOnlyColumnConfiguration {
 	/**
 	 * The cached value of the '{@link #getColumnDomainReferences() <em>Column Domain References</em>}' reference list.
 	 * <!-- begin-user-doc -->

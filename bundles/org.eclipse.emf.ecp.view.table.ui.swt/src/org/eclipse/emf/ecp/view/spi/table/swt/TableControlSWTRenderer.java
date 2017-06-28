@@ -17,6 +17,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -56,6 +58,7 @@ import org.eclipse.emf.ecp.edit.spi.swt.table.ECPElementAwareCellEditor;
 import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.view.internal.table.swt.CellReadOnlyTesterHelper;
 import org.eclipse.emf.ecp.view.internal.table.swt.MessageKeys;
+import org.eclipse.emf.ecp.view.internal.table.swt.RunnableManager;
 import org.eclipse.emf.ecp.view.internal.table.swt.TableConfigurationHelper;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer;
@@ -67,6 +70,7 @@ import org.eclipse.emf.ecp.view.spi.provider.ECPTooltipModifierHelper;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
+import org.eclipse.emf.ecp.view.spi.table.model.VEnablementConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
@@ -191,6 +195,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	private static final String ICON_ADD = "icons/add.png"; //$NON-NLS-1$
 	private static final String ICON_DELETE = "icons/delete.png"; //$NON-NLS-1$
+	private static final String ICON_MOVE_DOWN = "icons/move_down.png"; //$NON-NLS-1$
+	private static final String ICON_MOVE_UP = "icons/move_up.png"; //$NON-NLS-1$
 
 	private final Map<Integer, ECPCellEditorComparator> columnIndexToComparatorMap = new LinkedHashMap<Integer, ECPCellEditorComparator>();
 
@@ -206,13 +212,19 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	private boolean showValidationSummaryTooltip;
 	private Button addButton;
 	private Button removeButton;
+	private Button moveUpButton;
+	private Button moveDownButton;
 
 	private Optional<Integer> minimumHeight;
 	private Optional<Integer> maximumHeight;
+	private Optional<Integer> visibleLines;
 	private TableControlSWTRendererButtonBarBuilder tableControlSWTRendererButtonBarBuilder;
 	private AbstractTableViewerComposite tableViewerComposite;
 	private int regularColumnsStartIndex;
 	private boolean isDisposing;
+	private IObservableList list;
+	private boolean isFeatureOrdered;
+	private final RunnableManager runnableManager = new RunnableManager(Display.getDefault());
 
 	/**
 	 * Default constructor.
@@ -267,7 +279,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			final VDomainModelReference dmrToCheck = getDMRToMultiReference();
 
 			/* get the observable list */
-			final IObservableList list = getEMFFormsDatabinding().getObservableList(dmrToCheck,
+			list = getEMFFormsDatabinding().getObservableList(dmrToCheck,
 				getViewModelContext().getDomainModel());
 
 			/* get the label text/tooltip */
@@ -280,7 +292,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			final ECPTableViewerComparator comparator = new ECPTableViewerComparator();
 
 			/* render */
-			final TableViewerCompositeBuilder compositeBuilder = new TableControlSWTRendererCompositeBuilder();
+			final TableViewerCompositeBuilder compositeBuilder = createTableViewerCompositeBuilder();
 			tableControlSWTRendererButtonBarBuilder = new TableControlSWTRendererButtonBarBuilder();
 
 			final TableViewerSWTBuilder tableViewerSWTBuilder = getTableViewerSWTBuilder(parent, list, labelText,
@@ -334,6 +346,17 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			errorLabel.setText(ex.getMessage());
 			return errorLabel;
 		}
+	}
+
+	/**
+	 * Creates the {@link TableViewerCompositeBuilder} used to get Composite hierarchy for this table renderer. This
+	 * method can be overwritten by sub classes to customize the layout.
+	 *
+	 * @return The {@link TableViewerCompositeBuilder}
+	 * @since 1.13
+	 */
+	protected TableViewerCompositeBuilder createTableViewerCompositeBuilder() {
+		return new TableControlSWTRendererCompositeBuilder();
 	}
 
 	/**
@@ -461,6 +484,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		minimumHeight = styleProperty.isSetMinimumHeight() ? Optional.of(styleProperty.getMinimumHeight())
 			: Optional.<Integer> empty();
 		maximumHeight = styleProperty.isSetMaximumHeight() ? Optional.of(styleProperty.getMaximumHeight())
+			: Optional.<Integer> empty();
+		visibleLines = styleProperty.isSetVisibleLines() ? Optional.of(styleProperty.getVisibleLines())
 			: Optional.<Integer> empty();
 	}
 
@@ -681,17 +706,21 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 *
 	 * @return the height in px
 	 */
+	// BEGIN COMPLEX CODE
 	protected int getTableHeightHint() {
 		/* if neither min nor max is set we use a fixed height */
-		if (!minimumHeight.isPresent() && !maximumHeight.isPresent()) {
+		if (!minimumHeight.isPresent() && !maximumHeight.isPresent() && !visibleLines.isPresent()) {
 			return 200;
 		}
-
+		// if the visible lines attribute is present, it takes precedence over the minimum & maximum height hints
+		if (visibleLines.isPresent()) {
+			return computeRequiredHeight(visibleLines.get());
+		}
 		if (minimumHeight.isPresent() && maximumHeight.isPresent() && minimumHeight.get() == maximumHeight.get()) {
 			return minimumHeight.get();
 		}
 
-		final int requiredHeight = computeRequiredHeight();
+		final int requiredHeight = computeRequiredHeight(null);
 
 		if (minimumHeight.isPresent() && !maximumHeight.isPresent()) {
 			return requiredHeight < minimumHeight.get() ? minimumHeight.get() : requiredHeight;
@@ -711,8 +740,17 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 		return requiredHeight;
 	}
+	// END COMPLEX CODE
 
-	private int computeRequiredHeight() {
+	/**
+	 * Returns the height in pixels required to display the given number of table items. If the visible items are not
+	 * specified, the height required to display all the table items is returned.
+	 *
+	 * @param visibleLines the number of visible table items
+	 * @return the required height
+	 * @since 1.13
+	 */
+	protected int computeRequiredHeight(Integer visibleLines) {
 		if (tableViewer == null) {
 			return SWT.DEFAULT;
 		}
@@ -724,8 +762,13 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			return SWT.DEFAULT;
 		}
 		final int itemHeight = table.getItemHeight();
-		// show one empty row if table does not contain any items
-		final int itemCount = Math.max(table.getItemCount(), 1);
+		// show one empty row if table does not contain any items or visibleLines < 1
+		int itemCount;
+		if (visibleLines != null) {
+			itemCount = Math.max(visibleLines, 1);
+		} else {
+			itemCount = Math.max(table.getItemCount(), 1);
+		}
 		final int headerHeight = table.getHeaderVisible() ? table.getHeaderHeight() : 0;
 		// 4px needed as a buffer to avoid scrollbars
 		final int tableHeight = itemHeight * itemCount + headerHeight + 4;
@@ -740,6 +783,16 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 */
 	protected AbstractTableViewer getTableViewer() {
 		return tableViewer;
+	}
+
+	/**
+	 * Returns the {@link AbstractTableViewerComposite}.
+	 *
+	 * @return the table viewer composite
+	 * @since 1.13
+	 */
+	protected AbstractTableViewerComposite getTableViewerComposite() {
+		return tableViewerComposite;
 	}
 
 	/**
@@ -778,9 +831,25 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			if (getRemoveButton() != null) {
 				getRemoveButton().setEnabled(false);
 			}
+			if (isFeatureOrdered) {
+				if (moveDownButton != null) {
+					moveDownButton.setEnabled(false);
+				}
+				if (moveUpButton != null) {
+					moveUpButton.setEnabled(false);
+				}
+			}
 		} else {
 			if (getRemoveButton() != null) {
 				getRemoveButton().setEnabled(true);
+			}
+			if (isFeatureOrdered) {
+				if (moveDownButton != null) {
+					moveDownButton.setEnabled(true);
+				}
+				if (moveUpButton != null) {
+					moveUpButton.setEnabled(true);
+				}
 			}
 		}
 	}
@@ -1004,6 +1073,45 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		return addButton;
 	}
 
+	private Button createMoveUpButton(final EClass clazz, final Composite buttonComposite, final EObject eObject,
+		final EStructuralFeature structuralFeature) {
+		moveUpButton = new Button(buttonComposite, SWT.None);
+		final Image image = getImage(ICON_MOVE_UP);
+		moveUpButton.setImage(image);
+		final String instanceName = clazz.getInstanceClass() == null ? "" : clazz.getInstanceClass().getSimpleName(); //$NON-NLS-1$
+		moveUpButton.setToolTipText(String.format(
+			LocalizationServiceHelper.getString(TableControlSWTRenderer.class, MessageKeys.TableControl_MoveUp),
+			instanceName));
+
+		final List<?> containments = (List<?>) eObject.eGet(structuralFeature, true);
+		if (!structuralFeature.isOrdered() || containments.size() <= 1) {
+			moveUpButton.setEnabled(false);
+		}
+		isFeatureOrdered = structuralFeature.isOrdered();
+		SWTDataElementIdHelper.setElementIdDataWithSubId(moveUpButton, getVElement(), "table_moveUp", //$NON-NLS-1$
+			getViewModelContext());
+		return moveUpButton;
+	}
+
+	private Button createMoveDownButton(final EClass clazz, final Composite buttonComposite, final EObject eObject,
+		final EStructuralFeature structuralFeature) {
+		moveDownButton = new Button(buttonComposite, SWT.None);
+		final Image image = getImage(ICON_MOVE_DOWN);
+		moveDownButton.setImage(image);
+		final String instanceName = clazz.getInstanceClass() == null ? "" : clazz.getInstanceClass().getSimpleName(); //$NON-NLS-1$
+		moveDownButton.setToolTipText(String.format(
+			LocalizationServiceHelper.getString(TableControlSWTRenderer.class, MessageKeys.TableControl_MoveDown),
+			instanceName));
+
+		final List<?> containments = (List<?>) eObject.eGet(structuralFeature, true);
+		if (!structuralFeature.isOrdered() || containments.size() <= 1) {
+			moveDownButton.setEnabled(false);
+		}
+		SWTDataElementIdHelper.setElementIdDataWithSubId(moveDownButton, getVElement(), "table_moveDown", //$NON-NLS-1$
+			getViewModelContext());
+		return moveDownButton;
+	}
+
 	/**
 	 * This method shows a user confirmation dialog when the user attempts to delete a row in the table.
 	 *
@@ -1129,6 +1237,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		final EObject instance = eObjectToAdd.get();
 		final EditingDomain editingDomain = getEditingDomain(eObject);
 		if (editingDomain == null) {
+			return;
 		}
 		editingDomain.getCommandStack().execute(
 			AddCommand.create(editingDomain, eObject, structuralFeature, instance));
@@ -1137,8 +1246,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	@Override
 	protected void applyValidation() {
-		Display.getDefault().asyncExec(new ApplyValidationRunnable());
-
+		runnableManager.executeAsync(new ApplyValidationRunnable());
 	}
 
 	/**
@@ -1201,6 +1309,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		isDisposing = true;
 		rendererGridDescription = null;
 		viewModelDBC.dispose();
+		if (list != null) {
+			list.dispose();
+		}
 		super.dispose();
 	}
 
@@ -1317,6 +1428,18 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		final boolean editable = getVElement().isEnabled()
 			&& !getVElement().isReadonly();
 		return editable;
+	}
+
+	private boolean isDisabled(EObject eObject, VDomainModelReference columnDmr) {
+
+		final Optional<VEnablementConfiguration> enablmentConf = TableConfigurationHelper
+			.findEnablementConfiguration(getVElement(), columnDmr);
+
+		if (enablmentConf.isPresent()) {
+			return !enablmentConf.get().isEnabled();
+		}
+
+		return false;
 	}
 
 	/**
@@ -1537,13 +1660,11 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				return;
 			}
 			// triggered due to another validation rule before this control is rendered
-			if (validationIcon == null) {
-				return;
-			}
 			// validation rule triggered after the control was disposed
-			if (validationIcon.isDisposed()) {
+			if (validationIcon == null || validationIcon.isDisposed()) {
 				return;
 			}
+
 			// no diagnostic set
 			if (getVElement().getDiagnostic() == null) {
 				return;
@@ -1747,6 +1868,17 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		@Override
 		public void fillButtonComposite(Composite buttonComposite, AbstractTableViewer viewer) {
 			int numButtons = addButtonsToButtonBar(buttonComposite);
+			if (!getVElement().isMoveUpDownDisabled() && structuralFeature.isOrdered()
+				&& structuralFeature.getUpperBound() != 1) {
+				moveUpButton = createMoveUpButton(
+					clazz, buttonComposite, eObject, structuralFeature);
+				moveDownButton = createMoveDownButton(
+					clazz, buttonComposite, eObject, structuralFeature);
+
+				numButtons = numButtons + 2;
+
+				initMoveUpDownButtons(moveUpButton, moveDownButton, viewer);
+			}
 			if (!getVElement().isAddRemoveDisabled()) {
 				addButton = createAddRowButton(
 					clazz, buttonComposite, eObject, structuralFeature);
@@ -1755,13 +1887,14 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 				numButtons = numButtons + 2;
 
-				initButtons(addButton, removeButton, viewer);
+				initAddRemoveButtons(addButton, removeButton, viewer);
 			}
 			GridLayoutFactory.fillDefaults().numColumns(numButtons).equalWidth(false)
 				.applyTo(buttonComposite);
 		}
 
-		private void initButtons(final Button addButton, final Button removeButton, final AbstractTableViewer viewer) {
+		private void initAddRemoveButtons(final Button addButton, final Button removeButton,
+			final AbstractTableViewer viewer) {
 			addButton.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent e) {
@@ -1778,7 +1911,6 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				}
 			});
 			removeButton.addSelectionListener(new SelectionAdapter() {
-
 				@Override
 				public void widgetSelected(SelectionEvent e) {
 					final IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
@@ -1800,6 +1932,73 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			});
 		}
 
+		private void initMoveUpDownButtons(final Button moveUpButton, final Button moveDownButton,
+			final AbstractTableViewer viewer) {
+			moveUpButton.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					final List<?> containments = (List<?>) eObject.eGet(structuralFeature, true);
+					final EditingDomain editingDomain = getEditingDomain(eObject);
+
+					@SuppressWarnings({ "rawtypes", "unchecked" })
+					final List<?> moveUpList = new ArrayList(
+						IStructuredSelection.class.cast(tableViewer.getSelection()).toList());
+					sortSelectionBasedOnIndex(moveUpList, containments);
+
+					for (final Object moveUpObject : moveUpList) {
+						final int currentIndex = containments.indexOf(moveUpObject);
+						if (currentIndex <= 0) {
+							return;
+						}
+						editingDomain.getCommandStack()
+							.execute(
+								new MoveCommand(editingDomain, eObject, structuralFeature, currentIndex,
+									currentIndex - 1));
+					}
+				}
+			});
+			moveDownButton.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					final List<?> containments = (List<?>) eObject.eGet(structuralFeature, true);
+					final EditingDomain editingDomain = getEditingDomain(eObject);
+
+					@SuppressWarnings({ "rawtypes", "unchecked" })
+					final List<?> moveDownList = new ArrayList(
+						IStructuredSelection.class.cast(tableViewer.getSelection()).toList());
+					sortSelectionBasedOnIndex(moveDownList, containments);
+					// need to reverse to avoid the moves interfering each other
+					Collections.reverse(moveDownList);
+
+					final int maxIndex = containments.size() - 1;
+
+					for (final Object moveDownObject : moveDownList) {
+						final int currentIndex = containments.indexOf(moveDownObject);
+						if (currentIndex < 0 || currentIndex == maxIndex) {
+							return;
+						}
+						editingDomain.getCommandStack()
+							.execute(
+								new MoveCommand(editingDomain, eObject, structuralFeature, currentIndex,
+									currentIndex + 1));
+					}
+				}
+			});
+		}
+
+		private void sortSelectionBasedOnIndex(List<?> selection, final List<?> list) {
+			Collections.sort(
+				selection,
+				new Comparator<Object>() {
+					@Override
+					public int compare(Object o1, Object o2) {
+						final int i1 = list.indexOf(o1);
+						final int i2 = list.indexOf(o2);
+						return i1 - i2;
+					}
+				});
+		}
+
 		@Override
 		public Object createNewElement(Button button) {
 			throw new UnsupportedOperationException();
@@ -1810,10 +2009,11 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * {@link org.eclipse.emfforms.spi.swt.table.TableViewerCompositeBuilder TableViewerCompositeBuilder} which calls
 	 * the existing template method to create the validation label.
 	 *
+	 * @since 1.13
+	 *
 	 */
-	@SuppressWarnings("restriction")
-	private final class TableControlSWTRendererCompositeBuilder
-		extends org.eclipse.emfforms.internal.swt.table.DefaultTableViewerCompositeBuilder {
+	protected class TableControlSWTRendererCompositeBuilder
+		extends org.eclipse.emfforms.spi.swt.table.DefaultTableViewerCompositeBuilder {
 		@Override
 		protected Label createValidationLabel(Composite topComposite) {
 			final Label validationLabel = createValidationIcon(topComposite);
@@ -2003,6 +2203,27 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			return getValidationBackgroundColor(diagnostic.size() == 0 ? Diagnostic.OK : diagnostic.get(0)
 				.getSeverity());
 		}
+
+		/**
+		 * @return the cellEditor
+		 */
+		protected CellEditor getCellEditor() {
+			return cellEditor;
+		}
+
+		/**
+		 * @return the feature
+		 */
+		protected EStructuralFeature getFeature() {
+			return feature;
+		}
+
+		/**
+		 * @return the dmr
+		 */
+		protected VDomainModelReference getDmr() {
+			return dmr;
+		}
 	}
 
 	/**
@@ -2049,8 +2270,12 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
 			final Setting setting = ((InternalEObject) eObject).eSetting(structuralFeature);
 
-			boolean editable = emfFormsEditSupport.canSetProperty(domainModelReference, (EObject) element);
-			editable &= !CellReadOnlyTesterHelper.getInstance().isReadOnly(getVElement(), setting);
+			if (isDisabled(eObject, domainModelReference)
+				|| CellReadOnlyTesterHelper.getInstance().isReadOnly(getVElement(), setting)) {
+				return false;
+			}
+
+			final boolean editable = emfFormsEditSupport.canSetProperty(domainModelReference, (EObject) element);
 
 			if (ECPCellEditor.class.isInstance(cellEditor)) {
 				ECPCellEditor.class.cast(cellEditor).setEditable(editable);

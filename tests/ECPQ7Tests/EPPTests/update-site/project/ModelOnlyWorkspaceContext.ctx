@@ -1,0 +1,136 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Context-Type: org.eclipse.rcptt.ctx.workspace
+Element-Name: ModelOnlyWorkspaceContext
+Element-Type: context
+Element-Version: 2.0
+Id: _tmlPYBO2EeeY1-76dQ9m2g
+Runtime-Version: 2.1.0.201606221726
+Save-Time: 3/28/17 3:01 PM
+
+------=_contents/org.eclipse.emf.ecp.makeithappen.model/.settings/org.eclipse.jdt.core.prefs-48b9b7dc-2f42-3171-8f65-ce3238ddfe6e
+Content-Type: q7/binary
+Entry-Name: contents/org.eclipse.emf.ecp.makeithappen.model/.settings/org.eclipse.jdt.core.prefs
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAACVjrEKAjEQRHs/ZuE6
+mzR2WvkL8TJ3rCSbMJsT/HsjXO/ZDMMwDx7mrM0hjVhA2AyXF+haLUynylWwP56py1yJEaVpBkdJWGGi
+ltVwc17eHd8xwOIjIx3ke+SKfs+xL5UlTHL+CZaWNQ7ZA+fGOlyKRHewXxOs66JgAFl5EIZt5U/U68Zd
+8ANQSwcIkBprkIcAAABlAQAAUEsBAhQAFAAICAgAAAAhAJAaa5CHAAAAZQEAAAgACQAAAAAAAAAAAAAA
+AAAAAC5jb250ZW50VVQFAAEAAAAAUEsFBgAAAAABAAEAPwAAAMYAAAAAAA==
+------=_contents/org.eclipse.emf.ecp.makeithappen.model/.settings/org.eclipse.jdt.core.prefs-48b9b7dc-2f42-3171-8f65-ce3238ddfe6e--
+------=_contents/org.eclipse.emf.ecp.makeithappen.model/.settings/org.eclipse.pde.core.prefs-ca86bf0d-59d3-3906-a2af-374513707cf7
+Content-Type: q7/binary
+Entry-Name: contents/org.eclipse.emf.ecp.makeithappen.model/.settings/org.eclipse.pde.core.prefs
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAAAtydEJgDAMQMH/DlNw
+gO7gClqfUglpTWxxfBG83yNLaU5sxo6hGY8D81I1TaFJP4rOVk/yHXlu9BtP+yJOMLzKIBpXL8badRP+
+ewFQSwcIRGUd3UsAAABZAAAAUEsBAhQAFAAICAgAAAAhAERlHd1LAAAAWQAAAAgACQAAAAAAAAAAAAAA
+AAAAAC5jb250ZW50VVQFAAEAAAAAUEsFBgAAAAABAAEAPwAAAIoAAAAAAA==
+------=_contents/org.eclipse.emf.ecp.makeithappen.model/.settings/org.eclipse.pde.core.prefs-ca86bf0d-59d3-3906-a2af-374513707cf7--
+------=_contents/org.eclipse.emf.ecp.makeithappen.model/.classpath-d6f98db9-b6c0-3e91-9b07-7582b4bc4b2b
+Content-Type: q7/binary
+Entry-Name: contents/org.eclipse.emf.ecp.makeithappen.model/.classpath
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAACVkMFqAjEQhs/1KZbc
+na03D7tKkS1U0Bbd9ioxGdZp00mcJKJvbxcqLUIL3uYfvvn4mWp6/HTFASWS51qN4F4VyMZb4q5Wr+3j
+cKymk0FlnI4x6LSbDO5+AnKSU/FBbGtlPKuiX9bKSwdoHIWI8G4TOJ3Z7L6MMF81m9nzsn14Wjar8poj
+TiisHVjc5g4yfV+iwDpptlrs26I9BSzn+qDXzXAEY1Xe2ihYBOMFQXCfSdC+uNwRx39MUczF1I9/gz6n
+kNOF3RL3bFX++t4ZUEsHCJdL+mfNAAAAcQEAAFBLAQIUABQACAgIAAAAIQCXS/pnzQAAAHEBAAAIAAkA
+AAAAAAAAAAAAAAAAAAAuY29udGVudFVUBQABAAAAAFBLBQYAAAAAAQABAD8AAAAMAQAAAAA=
+------=_contents/org.eclipse.emf.ecp.makeithappen.model/.classpath-d6f98db9-b6c0-3e91-9b07-7582b4bc4b2b--
+------=_contents/org.eclipse.emf.ecp.makeithappen.model/META-INF/MANIFEST.MF-3a4049b2-c613-3669-a633-4db6a8805d66
+Content-Type: q7/binary
+Entry-Name: contents/org.eclipse.emf.ecp.makeithappen.model/META-INF/MANIFEST.MF
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAABNzUEKwjAQBdB9T5EL
+NFhXkqXQjVAXFtyP7a8OJpM0TYre3oJWymyG/+YzDQkPmFJ5RZzYi1GV3hXHLL1F2fzwb/tVzuRgVON7
+2DVq3+7mLXdf8vGu0VkOEzTcsOxBO3qC04NCgGi37W6fLzNmsjww4uoXjJkj+vqFLqflspaZoxcHSUad
+aKa2Lit9KD5QSwcI01cVFI0AAADPAAAAUEsBAhQAFAAICAgAAAAhANNXFRSNAAAAzwAAAAgACQAAAAAA
+AAAAAAAAAAAAAC5jb250ZW50VVQFAAEAAAAAUEsFBgAAAAABAAEAPwAAAMwAAAAAAA==
+------=_contents/org.eclipse.emf.ecp.makeithappen.model/META-INF/MANIFEST.MF-3a4049b2-c613-3669-a633-4db6a8805d66--
+------=_contents/org.eclipse.emf.ecp.makeithappen.model/.project-9f8bd933-8ef2-35df-98eb-02b460f7903e
+Content-Type: q7/binary
+Entry-Name: contents/org.eclipse.emf.ecp.makeithappen.model/.project
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAAC9ks1OAyEUhdf2KZrZ
+C3bngk4Ta9zVmFQf4Aq3UypcCDCNj++dnzZO1cTExN05l3P4CKBW797Nj5iyDbSsFuKmmiPpYCw1y+rl
++eH6tlrVMxVTOKAu95h1srFwuJ5dKQKPdUiNQO1szCjQ71hH4eENbdlDjEjCB4NOyT7MJR28Ryq1kifF
+w3H/3Gn52by21pltRM1mdGuuAZlu8M0RDqYIHRILOEKfx3SGcwFS03bUPFg58UpeEn6DjAbFBsjuMJe7
+fyNu9R49/Jk3DsYrZlRpEw7RQX8BP7m2sfTYL3bcPvRDfvIadFk5ScadX33yxT4AUEsHCNkbY5jxAAAA
+nwIAAFBLAQIUABQACAgIAAAAIQDZG2OY8QAAAJ8CAAAIAAkAAAAAAAAAAAAAAAAAAAAuY29udGVudFVU
+BQABAAAAAFBLBQYAAAAAAQABAD8AAAAwAQAAAAA=
+------=_contents/org.eclipse.emf.ecp.makeithappen.model/.project-9f8bd933-8ef2-35df-98eb-02b460f7903e--
+------=_.q7.content-3d2e0690-ce48-3609-83e0-c704d49f1eaf
+Content-Type: q7/binary
+Entry-Name: .q7.content
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAACVk8tuwjAQRfd8ReQ9
+dmHRB0pAtAKJRaBVkVpWVXCGYPBL8VDo39cBElFEWrpzknPv3BlPwt5OyeATcieMjkiL3pAANDep0FlE
+Nrho3pNetxGaPKPApbAOaM4tIuW4o1uTr51NOHTeytOT0Qg7DHZKdCrbdmHrC2nX8e8jskS0Hca22y01
+KqPenL3HoxL5o1YlL5lCvueY51jFkUAnytOxSUFOtPw6z0gCkUbkA5V8nj1O2gOAWat5d5u+PKh2RrqN
+IAh5QWoszv7J5mYFHN3R+DQnqIU/W6qSNQhcJtaCpqqoTA5iL18ICaWWcpk4HwaXhF0GjsVqPs83QqYF
+YyFHAe4UMzL1gy99HCD6y3RVjjOn0y5WqZ+1ycEbw+LE8xeJTeGiJGTHHDW54sG03xyNh3Wx4v54NBy8
+Tmk8vN50LnTtIH5exlk1TNzat+T7qG16j2SgDz5XR3I5L+GQlQu03y1WLVfI/vt7dRvfUEsHCOilVxls
+AQAAuQMAAFBLAQIUABQACAgIAAAAIQDopVcZbAEAALkDAAAIAAkAAAAAAAAAAAAAAAAAAAAuY29udGVu
+dFVUBQABAAAAAFBLBQYAAAAAAQABAD8AAACrAQAAAAA=
+------=_.q7.content-3d2e0690-ce48-3609-83e0-c704d49f1eaf--
+------=_contents/org.eclipse.emf.ecp.makeithappen.model/model/task.ecore-8318bff2-a3ba-3874-ad52-da24d909f834
+Content-Type: q7/binary
+Entry-Name: contents/org.eclipse.emf.ecp.makeithappen.model/model/task.ecore
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAADNWFtP6zAMfudXVOWZ
+hsvL0bSBuIwJHW7iIp3X0HptDm1SJQ4b//44WduFyxDQSZy9rIpj+/Nnx6k7PJhXZfQE2gglR/FOsh1H
+IFOVCZmP4vu7061f8cH+xhBSpWEwvubpI88hmldi0CntOiUyI82A1kdxgVgPGJvNZomq8kTpnP25OOu2
+mJdbZnt+x+729g5tO79NC6j4lpAGuUwh3ojot9D0GF7oQlqK2oA3ANXUGdllY7ctjiSvaDNy80jP5v7m
+rNNstFirBWnNKv4IAgte1yBZpTIomVf17qW51jAV81FMKp1TUqXnOglVE6+aeNV90h3CccmNEVNBZEUU
++gCfa4LV0OmFLdS7VsmpXdWgORK9ppEW3FzSA2XnLrRwwpG7hehTrGwyNj5SqgQuG0/O1zXXZBkdwoWv
+tOBC9vd0IngulUGRHnuD7COXSiLMsUPlNk1Aghapdxrw2APRBa8DD86H0z/Uua1AomGfkw1ZCK0LigVR
+NWlkQR7bzN6itilazctT4PQP79TFIaIWDxa7MpZrST25pmPd5uGbUDIwqRa1i+lnEN3AFDS43tAgcoWR
+S1gSRJbvDei4yxiloVZG4FLmT7fpS4UFCnkNifFW+pFg7MOdDymy1Ij0kbIyG8VbOwEJHTm+00TuyNGx
+dNVNfVLbLyJ4y4aSa2xPHgsdoKB/frWh+hroFdJUaIPrabtrOXsUXQOnVLMuyW9z/LMoc5AZMR8U3GSx
+0s8sT1E8rbvCvo0GRQVX0xvIhcFFh/+JNvAG1gxEXuAaoCj7UPYFUxAYLPqDOZPYE4n0GeKlwOewLi+D
+5Z7Nj1J3NT0SOoiXHJwEy/0c0EuxKF+f+//j/sWv3TsvL2O3xrobfE1df6KVrfu1/p9743rDr6WIPsWv
+v/BW3etfZnUsbdVCaBp4G8Y5ZY9iaF/eL3jYKl4JT6lySRw98dKCK9r+aMJju8LrBHRFPT4qF8vdwkqU
+jvFipfj+92rR7UrRbc2lMKutniHF8AGoG0t8fPtdqK3WlrWwF0XtfO0tXHr5X/7E5wmN2gk1M+5MJTSP
+TzTkShOKY8qizPiyCA6lVNjMqEZZnS5n88Vo3YzZixGbIDGLomTjObpiyi4AuYO4HEQzWhEU/CM8j+IH
+bmCBvimcj8/cnvt24PZvZuElykKU77E4ZC+/bOxv/ANQSwcIMQ/yBnUDAAASEQAAUEsBAhQAFAAICAgA
+AAAhADEP8gZ1AwAAEhEAAAgACQAAAAAAAAAAAAAAAAAAAC5jb250ZW50VVQFAAEAAAAAUEsFBgAAAAAB
+AAEAPwAAALQDAAAAAA==
+------=_contents/org.eclipse.emf.ecp.makeithappen.model/model/task.ecore-8318bff2-a3ba-3874-ad52-da24d909f834--
+------=_contents/org.eclipse.emf.ecp.makeithappen.model/model/task.genmodel-b6b8f319-7f0d-30b7-bd56-07b57313810b
+Content-Type: q7/binary
+Entry-Name: contents/org.eclipse.emf.ecp.makeithappen.model/model/task.genmodel
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAADFWG1P6zYU/s6vsHKn
+aZNGAmjSpl7KFSvtvWgUEC3SvrrJaeLh2JHtlHa/fsd23gqlu4VW4wPEjs9znnN83sL5l2XOyQKUZlL0
+g9PwJCAgYpkwkfaDx+no+Pfgy8XReQoilwnw3lcQY/tAljnrNXJnVg6RhO7hfj/IjCl6UfT8/BzKPA2l
+SqO/xtf1EYilgrVDEHNWaHAHIZ9HZycnZ9HQHguOCP54uZrEf4vWLAMSy2KlWJqZKSxNPxjUS/JT/DM5
+Ozk9PcZfv5KhR5nIUsVAxiX6IANBvuazb4SKhEiToa3hj5+WV5/x1+Xn9umSc+IgNVGgQS0gCck0Y5oU
+SqaK5g4A5QmNY5kXVKzQuSSnBhSjXLdIVAFuJ3hwQRmnMw6kFAkoJ4ync03k3C0quuS+nHEWkxsWg8Dl
+Au+vhXvOWJw1ShloFEVWCdNGsVlp8OZ+cdxws9VITYvwhps5pJRHUPDjxelJmJmcb/LLQAqvRyrda7df
+elpYkseECWbQG+Ty/tpzygsOOQhDLU8fBe7yr5iCGDFX/SBCMg0xvHt8LsKcPgEzGS0KEKGTiLSKMaoT
+ZnaXDa2YA3AM7Eqqd8JI5Zm4nXtepkxcX/WD70PoeOCW5pg9U6qfvFUeasCp1t+LFhqUDjE+FwzjK7RY
+wwapa+oHsDEXqttr8Gs8r0FIcXszGVP1hKnVD4wqISBKSjNcGhCJflMrloXQxkc4xqjJKR/ezf7GC7nG
+rR9s1FEmQHkdWMlgJBUmm3EVzSvBjLCh9fqFAW0mJTPwDoutrHamYkWY2oWngEylwuzddNf1O2+UI1Zw
+RkUMN7Cwhe43W1ibGjZiwBOkNceyAe017RpLLhqDtRveUVhW7pUFKHfFDzDneAWuGXhXetPuVIql55+u
+7zlQURbV8gJhzudoO0t9xb5wvnTuOI/WXtiT2AHuafxEU7DVFeZsWSfCjGqoXu2WUsQWxEJqW/zuq4QY
+0Sq9PWXHpgFvCX6KHH/PayhKrM9mVcCEzsGuBrbuGoa49Y15JPtuHcb2K1RbobV4NxiJCiVbuWpno3g0
+phyC6IMgI8g7MOdRbdqeLL114UI5M6t3m9vBQNaYw+L9VnexRsq2/f1gPf65J5zJfnAmdgTQezLu2lBb
+pfYD9lBq3QHbFHFX1NApxluFWy9fgOI23M3/YMo0ZlphV8pRFDtF+iI+qyq/huLKSdeuEVBTYjcjscIn
+GGSMJ+sw1Yl+4Fa94aXxgw8ObS+RI4HNe91vW/GxRWOJNatxyQ27wb62VpN2UZyAjhUr3DS1Wb+Qhs1X
+jeptdCZY2geZxLFTbyWEbQFsUm0ihK7H2g67eGN3o0sbLG+pqK3pB7dSWIutMqTbtKouhXdaqcuZ/asP
+aqVlv4Z/V/flKmOa9YZgjzKq7UjZBH3dZ/HTBTB5dd3/qvUWiCjOcPZqqXwECec4/GLrmBWt2dUpFlWC
+v874N3P8Ub9otnu7D4sczZnS5na3RN9ZCZp1cB2pH0sOqAEHLbY4qA2G5dgVHiC1n710S/nbi7ZnsHP6
+ITVkqMFkh9QgOiPaAdUkr9v1IdTgOMv4/97xfCh2G8EHStdXJcvicPXLwW8dVPbbJ1udJT696SC3rr/+
+Lo7ccv1/khdH/wJQSwcIsYfuo8gEAADPFAAAUEsBAhQAFAAICAgAAAAhALGH7qPIBAAAzxQAAAgACQAA
+AAAAAAAAAAAAAAAAAC5jb250ZW50VVQFAAEAAAAAUEsFBgAAAAABAAEAPwAAAAcFAAAAAA==
+------=_contents/org.eclipse.emf.ecp.makeithappen.model/model/task.genmodel-b6b8f319-7f0d-30b7-bd56-07b57313810b--
+------=_contents/org.eclipse.emf.ecp.makeithappen.model/build.properties-cc87da17-459e-3336-914d-458903e214fa
+Content-Type: q7/binary
+Entry-Name: contents/org.eclipse.emf.ecp.makeithappen.model/build.properties
+
+UEsDBBQACAgIAAAAIQAAAAAAAAAAAAAAAAAIAAkALmNvbnRlbnRVVAUAAQAAAAArzi8tSk7V01OwVSgu
+Stbnyi8tKSgtAfOTMvP0uYCEXmZeck5pSmoxUMzXNcRR19PPTV8nhksBFehxAQBQSwcIH3Tt+TwAAABM
+AAAAUEsBAhQAFAAICAgAAAAhAB907fk8AAAATAAAAAgACQAAAAAAAAAAAAAAAAAAAC5jb250ZW50VVQF
+AAEAAAAAUEsFBgAAAAABAAEAPwAAAHsAAAAAAA==
+------=_contents/org.eclipse.emf.ecp.makeithappen.model/build.properties-cc87da17-459e-3336-914d-458903e214fa--

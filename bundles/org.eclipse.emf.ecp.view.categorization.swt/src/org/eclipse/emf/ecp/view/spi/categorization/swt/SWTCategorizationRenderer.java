@@ -25,6 +25,7 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
@@ -116,13 +117,24 @@ public class SWTCategorizationRenderer extends AbstractSWTRenderer<VCategorizati
 		final Label whatToDoLbl = new Label(categoryComposite, SWT.NONE);
 		whatToDoLbl.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_categorization_message"); //$NON-NLS-1$
 
-		final IObservableValue modelValue = EMFEditObservables.observeValue(
-			AdapterFactoryEditingDomain.getEditingDomainFor(getVElement()), getVElement(),
+		final EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(getVElement());
+		final IObservableValue modelLabelValue = EMFEditObservables.observeValue(
+			editingDomain,
+			getVElement(),
 			VViewPackage.eINSTANCE.getElement_Label());
-		final IObservableValue targetValue = WidgetProperties.text().observe(headingLbl);
-		dataBindingContext.bindValue(targetValue, modelValue);
+		final IObservableValue targetLabelValue = WidgetProperties.text().observe(headingLbl);
+		dataBindingContext.bindValue(targetLabelValue, modelLabelValue);
 
-		whatToDoLbl.setText(LocalizationServiceHelper.getString(getClass(), MessageKeys.Categorization_Selection));
+		final IObservableValue modelTooltipValue = EMFEditObservables.observeValue(
+			editingDomain,
+			getVElement(),
+			VViewPackage.eINSTANCE.getHasTooltip_Tooltip());
+		final IObservableValue targetTooltipValue = WidgetProperties.tooltipText().observe(headingLbl);
+
+		dataBindingContext.bindValue(targetTooltipValue, modelTooltipValue);
+
+		whatToDoLbl.setText(
+			LocalizationServiceHelper.getString(SWTCategorizationRenderer.class, MessageKeys.Categorization_Selection));
 		SWTDataElementIdHelper.setElementIdDataWithSubId(categoryComposite, getVElement(), "category", //$NON-NLS-1$
 			getViewModelContext());
 		return categoryComposite;

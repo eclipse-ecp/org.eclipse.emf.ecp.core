@@ -13,13 +13,19 @@ package org.eclipse.emf.ecp.view.spi.section.swt;
 
 import javax.inject.Inject;
 
+import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.section.model.VSection;
 import org.eclipse.emf.ecp.view.spi.section.model.VSectionedArea;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -70,6 +76,14 @@ public class SectionLeafSWTRenderer extends AbstractSectionSWTRenderer {
 		final String text = getVElement().getName() == null ? "" //$NON-NLS-1$
 			: getVElement().getName();
 		label.setText(text);
+
+		final EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(getVElement());
+		final IObservableValue modelTooltipValue = EMFEditObservables.observeValue(
+			editingDomain,
+			getVElement(),
+			VViewPackage.eINSTANCE.getHasTooltip_Tooltip());
+		final IObservableValue targetTooltipValue = WidgetProperties.tooltipText().observe(label);
+		getDataBindingContext().bindValue(targetTooltipValue, modelTooltipValue);
 
 		return composite;
 	}

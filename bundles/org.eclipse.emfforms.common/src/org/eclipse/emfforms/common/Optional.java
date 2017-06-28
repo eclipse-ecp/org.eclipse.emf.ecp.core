@@ -95,4 +95,18 @@ public final class Optional<T> {
 		}
 		return value;
 	}
+
+	/**
+	 * Returns the wrapped value, if present, otherwise {@code null}.
+	 *
+	 * @return the wrapped value, if present, otherwise {@code null}
+	 *
+	 * @since 1.13
+	 */
+	public Object orNull() {
+		if (isPresent()) {
+			return get();
+		}
+		return null;
+	}
 }

@@ -18,6 +18,8 @@ import org.eclipse.emf.ecp.view.spi.group.model.GroupLabelAlignment;
 import org.eclipse.emf.ecp.view.spi.group.model.GroupType;
 import org.eclipse.emf.ecp.view.spi.group.model.VGroup;
 import org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage;
+import org.eclipse.emf.ecp.view.spi.model.VHasTooltip;
+import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.model.impl.VContainedContainerImpl;
 
 /**
@@ -28,25 +30,46 @@ import org.eclipse.emf.ecp.view.spi.model.impl.VContainedContainerImpl;
  *        <!-- end-user-doc -->
  *        <p>
  *        The following features are implemented:
+ *        </p>
  *        <ul>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupImpl#getTooltip <em>Tooltip</em>}</li>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupImpl#getGroupType <em>Group Type</em>}</li>
- *        <li>{@link org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupImpl#getLabelAlignment <em>Label Alignment
- *        </em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupImpl#getLabelAlignment <em>Label
+ *        Alignment</em>}</li>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.group.model.impl.VGroupImpl#isCollapsed <em>Collapsed</em>}</li>
  *        </ul>
- *        </p>
  *
  * @generated
  */
-public class VGroupImpl extends VContainedContainerImpl implements VGroup
-{
+public class VGroupImpl extends VContainedContainerImpl implements VGroup {
+	/**
+	 * The default value of the '{@link #getTooltip() <em>Tooltip</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see #getTooltip()
+	 * @generated
+	 * @ordered
+	 * @since 1.13
+	 */
+	protected static final String TOOLTIP_EDEFAULT = null;
+	/**
+	 * The cached value of the '{@link #getTooltip() <em>Tooltip</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see #getTooltip()
+	 * @generated
+	 * @ordered
+	 * @since 1.13
+	 */
+	protected String tooltip = TOOLTIP_EDEFAULT;
 	/**
 	 * The default value of the '{@link #getGroupType() <em>Group Type</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
-	 *
 	 * @see #getGroupType()
 	 * @generated
 	 * @ordered
@@ -58,7 +81,6 @@ public class VGroupImpl extends VContainedContainerImpl implements VGroup
 	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
-	 *
 	 * @see #getGroupType()
 	 * @generated
 	 * @ordered
@@ -70,7 +92,6 @@ public class VGroupImpl extends VContainedContainerImpl implements VGroup
 	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 *
 	 * @see #getLabelAlignment()
 	 * @generated
 	 * @ordered
@@ -82,7 +103,6 @@ public class VGroupImpl extends VContainedContainerImpl implements VGroup
 	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 *
 	 * @see #getLabelAlignment()
 	 * @generated
 	 * @ordered
@@ -95,7 +115,6 @@ public class VGroupImpl extends VContainedContainerImpl implements VGroup
 	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
-	 *
 	 * @see #isCollapsed()
 	 * @generated
 	 * @ordered
@@ -107,7 +126,6 @@ public class VGroupImpl extends VContainedContainerImpl implements VGroup
 	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
-	 *
 	 * @see #isCollapsed()
 	 * @generated
 	 * @ordered
@@ -120,8 +138,7 @@ public class VGroupImpl extends VContainedContainerImpl implements VGroup
 	 *
 	 * @generated
 	 */
-	protected VGroupImpl()
-	{
+	protected VGroupImpl() {
 		super();
 	}
 
@@ -132,9 +149,36 @@ public class VGroupImpl extends VContainedContainerImpl implements VGroup
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return VGroupPackage.Literals.GROUP;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @since 1.13
+	 */
+	@Override
+	public String getTooltip() {
+		return tooltip;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @since 1.13
+	 */
+	@Override
+	public void setTooltip(String newTooltip) {
+		final String oldTooltip = tooltip;
+		tooltip = newTooltip;
+		if (eNotificationRequired()) {
+			eNotify(new ENotificationImpl(this, Notification.SET, VGroupPackage.GROUP__TOOLTIP, oldTooltip, tooltip));
+		}
 	}
 
 	/**
@@ -142,12 +186,10 @@ public class VGroupImpl extends VContainedContainerImpl implements VGroup
 	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
-	public GroupType getGroupType()
-	{
+	public GroupType getGroupType() {
 		return groupType;
 	}
 
@@ -156,12 +198,10 @@ public class VGroupImpl extends VContainedContainerImpl implements VGroup
 	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
-	public void setGroupType(GroupType newGroupType)
-	{
+	public void setGroupType(GroupType newGroupType) {
 		final GroupType oldGroupType = groupType;
 		groupType = newGroupType == null ? GROUP_TYPE_EDEFAULT : newGroupType;
 		if (eNotificationRequired()) {
@@ -175,12 +215,10 @@ public class VGroupImpl extends VContainedContainerImpl implements VGroup
 	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
-	public GroupLabelAlignment getLabelAlignment()
-	{
+	public GroupLabelAlignment getLabelAlignment() {
 		return labelAlignment;
 	}
 
@@ -189,12 +227,10 @@ public class VGroupImpl extends VContainedContainerImpl implements VGroup
 	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
-	public void setLabelAlignment(GroupLabelAlignment newLabelAlignment)
-	{
+	public void setLabelAlignment(GroupLabelAlignment newLabelAlignment) {
 		final GroupLabelAlignment oldLabelAlignment = labelAlignment;
 		labelAlignment = newLabelAlignment == null ? LABEL_ALIGNMENT_EDEFAULT : newLabelAlignment;
 		if (eNotificationRequired()) {
@@ -208,12 +244,10 @@ public class VGroupImpl extends VContainedContainerImpl implements VGroup
 	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
-	public boolean isCollapsed()
-	{
+	public boolean isCollapsed() {
 		return collapsed;
 	}
 
@@ -222,17 +256,15 @@ public class VGroupImpl extends VContainedContainerImpl implements VGroup
 	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
-	public void setCollapsed(boolean newCollapsed)
-	{
+	public void setCollapsed(boolean newCollapsed) {
 		final boolean oldCollapsed = collapsed;
 		collapsed = newCollapsed;
 		if (eNotificationRequired()) {
-			eNotify(new ENotificationImpl(this, Notification.SET, VGroupPackage.GROUP__COLLAPSED, oldCollapsed,
-				collapsed));
+			eNotify(
+				new ENotificationImpl(this, Notification.SET, VGroupPackage.GROUP__COLLAPSED, oldCollapsed, collapsed));
 		}
 	}
 
@@ -243,10 +275,10 @@ public class VGroupImpl extends VContainedContainerImpl implements VGroup
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
-		switch (featureID)
-		{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
+		case VGroupPackage.GROUP__TOOLTIP:
+			return getTooltip();
 		case VGroupPackage.GROUP__GROUP_TYPE:
 			return getGroupType();
 		case VGroupPackage.GROUP__LABEL_ALIGNMENT:
@@ -264,10 +296,11 @@ public class VGroupImpl extends VContainedContainerImpl implements VGroup
 	 * @generated
 	 */
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
-		switch (featureID)
-		{
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
+		case VGroupPackage.GROUP__TOOLTIP:
+			setTooltip((String) newValue);
+			return;
 		case VGroupPackage.GROUP__GROUP_TYPE:
 			setGroupType((GroupType) newValue);
 			return;
@@ -288,10 +321,11 @@ public class VGroupImpl extends VContainedContainerImpl implements VGroup
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
-		switch (featureID)
-		{
+	public void eUnset(int featureID) {
+		switch (featureID) {
+		case VGroupPackage.GROUP__TOOLTIP:
+			setTooltip(TOOLTIP_EDEFAULT);
+			return;
 		case VGroupPackage.GROUP__GROUP_TYPE:
 			setGroupType(GROUP_TYPE_EDEFAULT);
 			return;
@@ -312,10 +346,10 @@ public class VGroupImpl extends VContainedContainerImpl implements VGroup
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
-		switch (featureID)
-		{
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
+		case VGroupPackage.GROUP__TOOLTIP:
+			return TOOLTIP_EDEFAULT == null ? tooltip != null : !TOOLTIP_EDEFAULT.equals(tooltip);
 		case VGroupPackage.GROUP__GROUP_TYPE:
 			return groupType != GROUP_TYPE_EDEFAULT;
 		case VGroupPackage.GROUP__LABEL_ALIGNMENT:
@@ -333,14 +367,53 @@ public class VGroupImpl extends VContainedContainerImpl implements VGroup
 	 * @generated
 	 */
 	@Override
-	public String toString()
-	{
+	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+		if (baseClass == VHasTooltip.class) {
+			switch (derivedFeatureID) {
+			case VGroupPackage.GROUP__TOOLTIP:
+				return VViewPackage.HAS_TOOLTIP__TOOLTIP;
+			default:
+				return -1;
+			}
+		}
+		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+		if (baseClass == VHasTooltip.class) {
+			switch (baseFeatureID) {
+			case VViewPackage.HAS_TOOLTIP__TOOLTIP:
+				return VGroupPackage.GROUP__TOOLTIP;
+			default:
+				return -1;
+			}
+		}
+		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public String toString() {
 		if (eIsProxy()) {
 			return super.toString();
 		}
 
 		final StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (groupType: "); //$NON-NLS-1$
+		result.append(" (tooltip: "); //$NON-NLS-1$
+		result.append(tooltip);
+		result.append(", groupType: "); //$NON-NLS-1$
 		result.append(groupType);
 		result.append(", labelAlignment: "); //$NON-NLS-1$
 		result.append(labelAlignment);

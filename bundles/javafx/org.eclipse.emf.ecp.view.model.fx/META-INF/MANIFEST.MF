@@ -8,14 +8,14 @@ Bundle-Vendor: Eclipse Modeling Project
 Export-Package: org.eclipse.emf.ecp.view.model.fx;version="1.9.0",
  org.eclipse.emf.ecp.view.model.internal.fx;version="1.9.0"
 Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.emf.ecp.view.model;bundle-version="[1.9.0,2.0.0)",
- org.eclipse.emf.ecp.edit;bundle-version="[1.9.0,2.0.0)",
- org.eclipse.emf.ecp.view.context;bundle-version="[1.9.0,2.0.0)",
- org.eclipse.emf.ecp.ui.view;bundle-version="[1.9.0,2.0.0)";visibility:=reexport,
+ org.eclipse.emf.ecp.view.model;bundle-version="[1.13.0,1.14.0)",
+ org.eclipse.emf.ecp.edit;bundle-version="[1.13.0,1.14.0)",
+ org.eclipse.emf.ecp.view.context;bundle-version="[1.13.0,1.14.0)",
+ org.eclipse.emf.ecp.ui.view;bundle-version="[1.13.0,1.14.0)";visibility:=reexport,
  org.eclipse.fx.core.databinding;bundle-version="1.0.0",
  org.eclipse.core.databinding.property;bundle-version="1.4.200",
- org.eclipse.emf.ecp.view.model.common;bundle-version="[1.9.0,2.0.0)";visibility:=reexport,
- org.eclipse.emfforms.common;bundle-version="[1.9.0,2.0.0)",
+ org.eclipse.emf.ecp.view.model.common;bundle-version="[1.13.0,1.14.0)";visibility:=reexport,
+ org.eclipse.emfforms.common;bundle-version="[1.13.0,1.14.0)",
  org.eclipse.emf.edit,
  org.eclipse.emf.databinding.edit
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

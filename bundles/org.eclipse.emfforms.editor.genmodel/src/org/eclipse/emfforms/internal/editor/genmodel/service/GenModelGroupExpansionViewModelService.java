@@ -26,7 +26,8 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
 
 /**
  * This {@link ViewModelService} tracks the collapsed state of the groups used in {@link ViewModelContext#getViewModel()
- * view model} of the {@link org.eclipse.emfforms.internal.editor.genmodel.GenModelEditor GenModelEditor}. The group state is stored statically so it is the same across all input
+ * view model} of the {@link org.eclipse.emfforms.internal.editor.genmodel.GenModelEditor GenModelEditor}. The group
+ * state is stored statically so it is the same across all input
  * models.
  *
  * @author Martin Fleck
@@ -35,19 +36,19 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
 public class GenModelGroupExpansionViewModelService implements ViewModelService {
 
 	// known group names of the Ecore visible through the GenModel editor
-	private static final String ECORE_STANDARD = "Standard";
-	private static final String ECORE_ADVANCED = "Advanced";
+	private static final String ECORE_STANDARD = "Standard"; //$NON-NLS-1$
+	private static final String ECORE_ADVANCED = "Advanced"; //$NON-NLS-1$
 
 	// known group names of the GenModel visible through the GenModel editor
-	private static final String GENMODEL_ALL = "All";
-	private static final String GENMODEL_EDIT = "Edit";
-	private static final String GENMODEL_EDITOR = "Editor";
-	private static final String GENMODEL_MODEL = "Model";
-	private static final String GENMODEL_MODEL_CLASS_DEFAULTS = "Model Class Defaults";
-	private static final String GENMODEL_MODEL_FEATURE_DEFAULTS = "Model Feature Defaults";
-	private static final String GENMODEL_PACKAGE_SUFFIXES = "Package Suffixes";
-	private static final String GENMODEL_TEMPLATES_MERGE = "Templates & Merge";
-	private static final String GENMODEL_TESTS = "Tests";
+	private static final String GENMODEL_ALL = "All"; //$NON-NLS-1$
+	private static final String GENMODEL_EDIT = "Edit"; //$NON-NLS-1$
+	private static final String GENMODEL_EDITOR = "Editor"; //$NON-NLS-1$
+	private static final String GENMODEL_MODEL = "Model"; //$NON-NLS-1$
+	private static final String GENMODEL_MODEL_CLASS_DEFAULTS = "Model Class Defaults"; //$NON-NLS-1$
+	private static final String GENMODEL_MODEL_FEATURE_DEFAULTS = "Model Feature Defaults"; //$NON-NLS-1$
+	private static final String GENMODEL_PACKAGE_SUFFIXES = "Package Suffixes"; //$NON-NLS-1$
+	private static final String GENMODEL_TEMPLATES_MERGE = "Templates & Merge"; //$NON-NLS-1$
+	private static final String GENMODEL_TESTS = "Tests"; //$NON-NLS-1$
 
 	/**
 	 * Map storing the collapsed group states by group name.

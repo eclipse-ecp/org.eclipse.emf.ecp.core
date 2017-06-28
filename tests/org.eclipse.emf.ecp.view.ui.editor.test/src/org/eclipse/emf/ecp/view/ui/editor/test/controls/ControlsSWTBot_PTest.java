@@ -47,8 +47,8 @@ import org.eclipse.emf.emfstore.bowling.TournamentType;
 import org.eclipse.swtbot.swt.finder.finders.UIThreadRunnable;
 import org.eclipse.swtbot.swt.finder.results.VoidResult;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotButton;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotCCombo;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotCheckBox;
-import org.eclipse.swtbot.swt.finder.widgets.SWTBotCombo;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotDateTime;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTable;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotText;
@@ -274,7 +274,7 @@ public class ControlsSWTBot_PTest extends ECPCommonSWTBotTest {
 		UIThreadRunnable.syncExec(new VoidResult() {
 			@Override
 			public void run() {
-				final SWTBotCombo combo = bot.comboBox("Male");
+				final SWTBotCCombo combo = bot.ccomboBox("Male");
 				combo.setSelection(0);
 				combo.setSelection(1);
 				bot.label("Gender").setFocus();

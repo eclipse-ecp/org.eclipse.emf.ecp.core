@@ -7,11 +7,29 @@
   <foreignModel>test.ecore</foreignModel>
   <genPackages prefix="Test" basePackage="org.eclipse.emf.ecp.view.validation.test"
       disposableProviderFactory="true" ecorePackage="test.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="test.ecore#//Gender">
+      <genEnumLiterals ecoreEnumLiteral="test.ecore#//Gender/Male"/>
+      <genEnumLiterals ecoreEnumLiteral="test.ecore#//Gender/Female"/>
+      <genEnumLiterals ecoreEnumLiteral="test.ecore#//Gender/Both"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="test.ecore#//Color">
+      <genEnumLiterals ecoreEnumLiteral="test.ecore#//Color/Red"/>
+      <genEnumLiterals ecoreEnumLiteral="test.ecore#//Color/Green"/>
+      <genEnumLiterals ecoreEnumLiteral="test.ecore#//Color/Blue"/>
+    </genEnums>
+    <genDataTypes ecoreDataType="test.ecore#//StringWithMaxLength8"/>
+    <genDataTypes ecoreDataType="test.ecore#//OnlyCapitals"/>
+    <genDataTypes ecoreDataType="test.ecore#//CustomDataType"/>
+    <genDataTypes ecoreDataType="test.ecore#//PhoneNumber"/>
+    <genDataTypes ecoreDataType="test.ecore#//MinLengthOf3"/>
+    <genDataTypes ecoreDataType="test.ecore#//StrictMinLengthOf3"/>
+    <genDataTypes ecoreDataType="test.ecore#//Age"/>
     <genClasses ecoreClass="test.ecore#//Library">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//Library/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference test.ecore#//Library/writers"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference test.ecore#//Library/books"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference test.ecore#//Library/librarian"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//Library/phoneNumber"/>
       <genOperations ecoreOperation="test.ecore#//Library/validate">
         <genParameters ecoreParameter="test.ecore#//Library/validate/diagnostic"/>
         <genParameters ecoreParameter="test.ecore#//Library/validate/context"/>
@@ -25,6 +43,8 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference test.ecore#//Writer/books"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//Writer/Pseudonym"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference test.ecore#//Writer/library"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//Writer/initials"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//Writer/title"/>
       <genOperations ecoreOperation="test.ecore#//Writer/validate">
         <genParameters ecoreParameter="test.ecore#//Writer/validate/diagnostic"/>
         <genParameters ecoreParameter="test.ecore#//Writer/validate/context"/>
@@ -50,6 +70,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference test.ecore#//Computer/mainboard"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//Computer/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference test.ecore#//Computer/powerBlock"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//Computer/colors"/>
     </genClasses>
     <genClasses ecoreClass="test.ecore#//Mainboard">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//Mainboard/name"/>
@@ -94,6 +115,21 @@
     </genClasses>
     <genClasses ecoreClass="test.ecore#//Referencer">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference test.ecore#//Referencer/referencedContent"/>
+    </genClasses>
+    <genClasses ecoreClass="test.ecore#//CrossReferenceContainer">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference test.ecore#//CrossReferenceContainer/contents"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference test.ecore#//CrossReferenceContainer/singleContent"/>
+    </genClasses>
+    <genClasses ecoreClass="test.ecore#//CrossReferenceContent">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference test.ecore#//CrossReferenceContent/parent"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference test.ecore#//CrossReferenceContent/singleParent"/>
+    </genClasses>
+    <genClasses ecoreClass="test.ecore#//Person">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//Person/firstName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//Person/gender"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//Person/lastName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//Person/custom"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute test.ecore#//Person/age"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

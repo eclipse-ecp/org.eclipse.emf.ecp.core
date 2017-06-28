@@ -46,6 +46,7 @@ import org.eclipse.emf.ecp.view.validation.test.model.util.TestValidator;
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.LibraryImpl#getWriters <em>Writers</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.LibraryImpl#getBooks <em>Books</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.LibraryImpl#getLibrarian <em>Librarian</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.LibraryImpl#getPhoneNumber <em>Phone Number</em>}</li>
  * </ul>
  *
  * @generated
@@ -105,6 +106,28 @@ public class LibraryImpl extends EObjectImpl implements Library {
 	 * @ordered
 	 */
 	protected Librarian librarian;
+
+	/**
+	 * The default value of the '{@link #getPhoneNumber() <em>Phone Number</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see #getPhoneNumber()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String PHONE_NUMBER_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getPhoneNumber() <em>Phone Number</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see #getPhoneNumber()
+	 * @generated
+	 * @ordered
+	 */
+	protected String phoneNumber = PHONE_NUMBER_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -246,6 +269,33 @@ public class LibraryImpl extends EObjectImpl implements Library {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
+	 * @generated
+	 */
+	@Override
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public void setPhoneNumber(String newPhoneNumber) {
+		final String oldPhoneNumber = phoneNumber;
+		phoneNumber = newPhoneNumber;
+		if (eNotificationRequired()) {
+			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.LIBRARY__PHONE_NUMBER, oldPhoneNumber,
+				phoneNumber));
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
 	 * @generated NOT
 	 */
 	@Override
@@ -316,6 +366,8 @@ public class LibraryImpl extends EObjectImpl implements Library {
 			return getBooks();
 		case TestPackage.LIBRARY__LIBRARIAN:
 			return getLibrarian();
+		case TestPackage.LIBRARY__PHONE_NUMBER:
+			return getPhoneNumber();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -344,6 +396,9 @@ public class LibraryImpl extends EObjectImpl implements Library {
 		case TestPackage.LIBRARY__LIBRARIAN:
 			setLibrarian((Librarian) newValue);
 			return;
+		case TestPackage.LIBRARY__PHONE_NUMBER:
+			setPhoneNumber((String) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -369,6 +424,9 @@ public class LibraryImpl extends EObjectImpl implements Library {
 		case TestPackage.LIBRARY__LIBRARIAN:
 			setLibrarian((Librarian) null);
 			return;
+		case TestPackage.LIBRARY__PHONE_NUMBER:
+			setPhoneNumber(PHONE_NUMBER_EDEFAULT);
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -390,6 +448,8 @@ public class LibraryImpl extends EObjectImpl implements Library {
 			return books != null && !books.isEmpty();
 		case TestPackage.LIBRARY__LIBRARIAN:
 			return librarian != null;
+		case TestPackage.LIBRARY__PHONE_NUMBER:
+			return PHONE_NUMBER_EDEFAULT == null ? phoneNumber != null : !PHONE_NUMBER_EDEFAULT.equals(phoneNumber);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -409,6 +469,8 @@ public class LibraryImpl extends EObjectImpl implements Library {
 		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (name: ");
 		result.append(name);
+		result.append(", phoneNumber: ");
+		result.append(phoneNumber);
 		result.append(')');
 		return result.toString();
 	}

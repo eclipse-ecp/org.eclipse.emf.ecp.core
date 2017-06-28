@@ -22,6 +22,7 @@ import java.text.DecimalFormat;
 import java.util.Locale;
 
 import org.eclipse.core.databinding.property.Properties;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -77,7 +78,8 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest {
 		when(localeProvider.getLocale()).thenReturn(Locale.getDefault());
 		final EMFFormsEditSupport editSupport = mock(EMFFormsEditSupport.class);
 		setup();
-		setRenderer(new NumberControlSWTRenderer(getvControl(), getContext(), reportService, getDatabindingService(), getLabelProvider(),
+		setRenderer(new NumberControlSWTRenderer(getvControl(), getContext(), reportService, getDatabindingService(),
+			getLabelProvider(),
 			getTemplateProvider(), editSupport, localizationService, localeProvider));
 		getRenderer().init();
 	}
@@ -104,8 +106,9 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest {
 		when(mockedEClassifier.getInstanceClass()).thenReturn(clazz);
 		when(mockedEStructuralFeature.getEType()).thenReturn(mockedEClassifier);
 		when(mockedObservableValue.getValueType()).thenReturn(mockedEStructuralFeature);
-		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
-			mockedObservableValue);
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(
+				mockedObservableValue);
 		when(getDatabindingService().getValueProperty(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			Properties.selfValue(mockedEStructuralFeature));
 		final Control render = renderControl(new SWTGridCell(0, 1, getRenderer()));
@@ -128,8 +131,9 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest {
 		when(mockedEClassifier.getInstanceClass()).thenReturn(clazz);
 		when(mockedEStructuralFeature.getEType()).thenReturn(mockedEClassifier);
 		when(mockedObservableValue.getValueType()).thenReturn(mockedEStructuralFeature);
-		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
-			mockedObservableValue);
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(
+				mockedObservableValue);
 		when(getDatabindingService().getValueProperty(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			Properties.selfValue(mockedEStructuralFeature));
 
@@ -218,6 +222,26 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest {
 
 	}
 
+	@Test
+	public void testDatabindingServiceUsageChangeControlToDoubleValue() throws NoRendererFoundException,
+		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
+		final double initialValue = 13;
+		final double changedValue = 42.5;
+		final EAttribute eAttribute = EcoreFactory.eINSTANCE.createEAttribute();
+		eAttribute.setEType(EcorePackage.eINSTANCE.getEDouble());
+		eAttribute.setName("doubleAttr");
+		final ObservingWritableValue mockedObservable = new ObservingWritableValue(realm, initialValue,
+			eAttribute);
+
+		final Text text = setUpDatabindingTest(mockedObservable);
+
+		final DecimalFormat format = getDecimalFormat(Double.class);
+		SWTTestUtil.typeAndFocusOut(text, format.format(changedValue));
+
+		assertEquals(changedValue, mockedObservable.getValue());
+
+	}
+
 	/**
 	 * Universal set up stuff for the data binding test cases.
 	 *
@@ -230,8 +254,9 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest {
 	private Text setUpDatabindingTest(final ObservingWritableValue mockedObservable) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		mockDatabindingIsUnsettable();
-		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
-			mockedObservable, new ObservingWritableValue(mockedObservable));
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(
+				mockedObservable, new ObservingWritableValue(mockedObservable));
 		when(getDatabindingService().getValueProperty(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			Properties.selfValue(mockedObservable.getValueType()));
 

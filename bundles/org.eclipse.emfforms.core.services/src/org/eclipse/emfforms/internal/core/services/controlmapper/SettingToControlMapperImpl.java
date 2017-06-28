@@ -160,7 +160,7 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void updateControlMapping(VControl vControl) {
+	public synchronized void updateControlMapping(VControl vControl) {
 		if (vControl == null) {
 			return;
 		}

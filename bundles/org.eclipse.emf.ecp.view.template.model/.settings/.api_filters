@@ -469,10 +469,22 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/ecp/view/template/style/tableStyleProperty/model/VTTableStyleProperty.java" type="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty">
+        <filter comment="SPI Changes for 1.13" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty"/>
+                <message_argument value="getVisibleLines()"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI Changes for 1.12" id="403804204">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty"/>
                 <message_argument value="isEnableSorting()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Changes for 1.13" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty"/>
+                <message_argument value="isSetVisibleLines()"/>
             </message_arguments>
         </filter>
         <filter comment="Model Additions in 1.12" id="403804204">
@@ -493,6 +505,18 @@
                 <message_argument value="setShowValidationSummaryTooltip(boolean)"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Changes for 1.13" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty"/>
+                <message_argument value="setVisibleLines(int)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Changes for 1.13" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty"/>
+                <message_argument value="unsetVisibleLines()"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/ecp/view/template/style/tableStyleProperty/model/VTTableStylePropertyPackage.java" type="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage">
         <filter comment="Model Additions in 1.12" id="388194388">
@@ -500,6 +524,13 @@
                 <message_argument value="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage"/>
                 <message_argument value="TABLE_STYLE_PROPERTY_FEATURE_COUNT"/>
                 <message_argument value="2"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Changes for 1.13" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage"/>
+                <message_argument value="TABLE_STYLE_PROPERTY_FEATURE_COUNT"/>
+                <message_argument value="4"/>
             </message_arguments>
         </filter>
         <filter comment="SPI Changes for 1.12" id="403767336">
@@ -512,6 +543,12 @@
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage"/>
                 <message_argument value="TABLE_STYLE_PROPERTY__SHOW_VALIDATION_SUMMARY_TOOLTIP"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Changes for 1.13" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage"/>
+                <message_argument value="TABLE_STYLE_PROPERTY__VISIBLE_LINES"/>
             </message_arguments>
         </filter>
         <filter comment="SPI Changes for 1.12" id="403804204">
@@ -526,6 +563,12 @@
                 <message_argument value="getTableStyleProperty_ShowValidationSummaryTooltip()"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Changes for 1.13" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage"/>
+                <message_argument value="getTableStyleProperty_VisibleLines()"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/ecp/view/template/style/tableStyleProperty/model/VTTableStylePropertyPackage.java" type="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage$Literals">
         <filter comment="SPI Changes for 1.12" id="403767336">
@@ -538,6 +581,12 @@
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage.Literals"/>
                 <message_argument value="TABLE_STYLE_PROPERTY__SHOW_VALIDATION_SUMMARY_TOOLTIP"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Changes for 1.13" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage.Literals"/>
+                <message_argument value="TABLE_STYLE_PROPERTY__VISIBLE_LINES"/>
             </message_arguments>
         </filter>
     </resource>

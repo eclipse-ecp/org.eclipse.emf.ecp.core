@@ -12,18 +12,22 @@
 package org.eclipse.emf.ecp.view.validation.test.model.impl;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecp.view.validation.test.model.Book;
+import org.eclipse.emf.ecp.view.validation.test.model.Color;
 import org.eclipse.emf.ecp.view.validation.test.model.Computer;
 import org.eclipse.emf.ecp.view.validation.test.model.Content;
 import org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContainer;
 import org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContent;
+import org.eclipse.emf.ecp.view.validation.test.model.Gender;
 import org.eclipse.emf.ecp.view.validation.test.model.Librarian;
 import org.eclipse.emf.ecp.view.validation.test.model.Library;
 import org.eclipse.emf.ecp.view.validation.test.model.Mainboard;
+import org.eclipse.emf.ecp.view.validation.test.model.Person;
 import org.eclipse.emf.ecp.view.validation.test.model.PowerBlock;
 import org.eclipse.emf.ecp.view.validation.test.model.Referencer;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild;
@@ -126,8 +130,74 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 			return createCrossReferenceContainer();
 		case TestPackage.CROSS_REFERENCE_CONTENT:
 			return createCrossReferenceContent();
+		case TestPackage.PERSON:
+			return createPerson();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public Object createFromString(EDataType eDataType, String initialValue) {
+		switch (eDataType.getClassifierID()) {
+		case TestPackage.GENDER:
+			return createGenderFromString(eDataType, initialValue);
+		case TestPackage.COLOR:
+			return createColorFromString(eDataType, initialValue);
+		case TestPackage.STRING_WITH_MAX_LENGTH8:
+			return createStringWithMaxLength8FromString(eDataType, initialValue);
+		case TestPackage.ONLY_CAPITALS:
+			return createOnlyCapitalsFromString(eDataType, initialValue);
+		case TestPackage.CUSTOM_DATA_TYPE:
+			return createCustomDataTypeFromString(eDataType, initialValue);
+		case TestPackage.PHONE_NUMBER:
+			return createPhoneNumberFromString(eDataType, initialValue);
+		case TestPackage.MIN_LENGTH_OF3:
+			return createMinLengthOf3FromString(eDataType, initialValue);
+		case TestPackage.STRICT_MIN_LENGTH_OF3:
+			return createStrictMinLengthOf3FromString(eDataType, initialValue);
+		case TestPackage.AGE:
+			return createAgeFromString(eDataType, initialValue);
+		default:
+			throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public String convertToString(EDataType eDataType, Object instanceValue) {
+		switch (eDataType.getClassifierID()) {
+		case TestPackage.GENDER:
+			return convertGenderToString(eDataType, instanceValue);
+		case TestPackage.COLOR:
+			return convertColorToString(eDataType, instanceValue);
+		case TestPackage.STRING_WITH_MAX_LENGTH8:
+			return convertStringWithMaxLength8ToString(eDataType, instanceValue);
+		case TestPackage.ONLY_CAPITALS:
+			return convertOnlyCapitalsToString(eDataType, instanceValue);
+		case TestPackage.CUSTOM_DATA_TYPE:
+			return convertCustomDataTypeToString(eDataType, instanceValue);
+		case TestPackage.PHONE_NUMBER:
+			return convertPhoneNumberToString(eDataType, instanceValue);
+		case TestPackage.MIN_LENGTH_OF3:
+			return convertMinLengthOf3ToString(eDataType, instanceValue);
+		case TestPackage.STRICT_MIN_LENGTH_OF3:
+			return convertStrictMinLengthOf3ToString(eDataType, instanceValue);
+		case TestPackage.AGE:
+			return convertAgeToString(eDataType, instanceValue);
+		default:
+			throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
 	}
 
@@ -369,6 +439,208 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	public CrossReferenceContent createCrossReferenceContent() {
 		final CrossReferenceContentImpl crossReferenceContent = new CrossReferenceContentImpl();
 		return crossReferenceContent;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public Person createPerson() {
+		final PersonImpl person = new PersonImpl();
+		return person;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public String createStringWithMaxLength8FromString(EDataType eDataType, String initialValue) {
+		return (String) super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public String convertStringWithMaxLength8ToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public String createOnlyCapitalsFromString(EDataType eDataType, String initialValue) {
+		return (String) super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public String convertOnlyCapitalsToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public String createCustomDataTypeFromString(EDataType eDataType, String initialValue) {
+		return (String) super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public String convertCustomDataTypeToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public String createPhoneNumberFromString(EDataType eDataType, String initialValue) {
+		return (String) super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public String convertPhoneNumberToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public String createMinLengthOf3FromString(EDataType eDataType, String initialValue) {
+		return (String) super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public String convertMinLengthOf3ToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public String createStrictMinLengthOf3FromString(EDataType eDataType, String initialValue) {
+		return (String) super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public String convertStrictMinLengthOf3ToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public Integer createAgeFromString(EDataType eDataType, String initialValue) {
+		return (Integer) super.createFromString(eDataType, initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public String convertAgeToString(EDataType eDataType, Object instanceValue) {
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public Gender createGenderFromString(EDataType eDataType, String initialValue) {
+		final Gender result = Gender.get(initialValue);
+		if (result == null) {
+			throw new IllegalArgumentException(
+				"The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		}
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public String convertGenderToString(EDataType eDataType, Object instanceValue) {
+		return instanceValue == null ? null : instanceValue.toString();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public Color createColorFromString(EDataType eDataType, String initialValue) {
+		final Color result = Color.get(initialValue);
+		if (result == null) {
+			throw new IllegalArgumentException(
+				"The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		}
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public String convertColorToString(EDataType eDataType, Object instanceValue) {
+		return instanceValue == null ? null : instanceValue.toString();
 	}
 
 	/**

@@ -148,7 +148,8 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 				resolveDMR(dmr, eObject);
 			} catch (final EMFFormsExpandingFailedException ex) {
 				errorReports.reportError(
-					Severity.ERROR, LocalizationServiceHelper.getString(getClass(), "ImportError_DMRResolvementFailed"), //$NON-NLS-1$
+					Severity.ERROR, LocalizationServiceHelper.getString(EMFFormsSpreadsheetImporterImpl.class,
+						"ImportError_DMRResolvementFailed"), //$NON-NLS-1$
 					ErrorFactory.eINSTANCE.createEMFLocation(eObject,
 						ErrorFactory.eINSTANCE.createDMRLocation(dmr)),
 					ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0,
@@ -163,7 +164,7 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 			} catch (final DatabindingFailedException ex) {
 				errorReports.reportError(
 					Severity.ERROR,
-					LocalizationServiceHelper.getString(getClass(),
+					LocalizationServiceHelper.getString(EMFFormsSpreadsheetImporterImpl.class,
 						MessageFormat.format("ImportError_DatabindingFailed", ex.getMessage())), //$NON-NLS-1$
 					ErrorFactory.eINSTANCE.createEMFLocation(eObject,
 						ErrorFactory.eINSTANCE.createDMRLocation(dmr)),
@@ -179,7 +180,8 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 					converterMap.put(dmr, converter);
 				} catch (final EMFFormsConverterException ex) {
 					errorReports.reportError(
-						Severity.ERROR, LocalizationServiceHelper.getString(getClass(), "ImportError_NoValueConverter"), //$NON-NLS-1$
+						Severity.ERROR, LocalizationServiceHelper.getString(EMFFormsSpreadsheetImporterImpl.class,
+							"ImportError_NoValueConverter"), //$NON-NLS-1$
 						ErrorFactory.eINSTANCE.createEMFLocation(eObject,
 							ErrorFactory.eINSTANCE.createDMRLocation(dmr)),
 						ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0,
@@ -217,7 +219,8 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 				errorReports.reportError(
 					Severity.ERROR,
 					MessageFormat.format(
-						LocalizationServiceHelper.getString(getClass(), "ImportError_ValueConversionFailed"), //$NON-NLS-1$
+						LocalizationServiceHelper.getString(EMFFormsSpreadsheetImporterImpl.class,
+							"ImportError_ValueConversionFailed"), //$NON-NLS-1$
 						ex.getMessage()),
 					ErrorFactory.eINSTANCE.createEMFLocation(eObject,
 						createSettingLocation(setting),
@@ -232,7 +235,8 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 				if (!checkTypes(feature, convertedValue)) {
 					errorReports.reportError(
 						Severity.ERROR,
-						LocalizationServiceHelper.getString(getClass(), "ImportError_InvalidType"), //$NON-NLS-1$
+						LocalizationServiceHelper.getString(EMFFormsSpreadsheetImporterImpl.class,
+							"ImportError_InvalidType"), //$NON-NLS-1$
 						ErrorFactory.eINSTANCE.createEMFLocation(eObject,
 							createSettingLocation(setting),
 							ErrorFactory.eINSTANCE.createDMRLocation(dmr)),
@@ -262,7 +266,8 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 		/* get dmr comment */
 		if (cell == null) {
 			errorReports.reportError(
-				Severity.ERROR, LocalizationServiceHelper.getString(getClass(), "ImportError_LabelCellDeleted"), //$NON-NLS-1$
+				Severity.ERROR, LocalizationServiceHelper.getString(EMFFormsSpreadsheetImporterImpl.class,
+					"ImportError_LabelCellDeleted"), //$NON-NLS-1$
 				ErrorFactory.eINSTANCE.createEMFLocation(eObject),
 				ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0, "NO CELL")); //$NON-NLS-1$
 			return null;
@@ -270,7 +275,8 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 		final Comment cellComment = cell.getCellComment();
 		if (cellComment == null) {
 			errorReports.reportError(
-				Severity.ERROR, LocalizationServiceHelper.getString(getClass(), "ImportError_CommentDeleted"), //$NON-NLS-1$
+				Severity.ERROR, LocalizationServiceHelper.getString(EMFFormsSpreadsheetImporterImpl.class,
+					"ImportError_CommentDeleted"), //$NON-NLS-1$
 				ErrorFactory.eINSTANCE.createEMFLocation(eObject),
 				ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0,
 					getStringCellValue(cell, errorReports, sheetname, columnId)));
@@ -279,7 +285,8 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 		final String serializedDMR = cellComment.getString().getString();
 		if (serializedDMR == null || serializedDMR.isEmpty()) {
 			errorReports.reportError(
-				Severity.ERROR, LocalizationServiceHelper.getString(getClass(), "ImportError_CommentEmpty"), //$NON-NLS-1$
+				Severity.ERROR,
+				LocalizationServiceHelper.getString(EMFFormsSpreadsheetImporterImpl.class, "ImportError_CommentEmpty"), //$NON-NLS-1$
 				ErrorFactory.eINSTANCE.createEMFLocation(eObject),
 				ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0,
 					getStringCellValue(cell, errorReports, sheetname, columnId)));
@@ -293,7 +300,8 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 		} catch (final IOException ex1) {
 			errorReports.reportError(
 				Severity.ERROR,
-				LocalizationServiceHelper.getString(getClass(), "ImportError_DMRDeserializationFailed"), //$NON-NLS-1$
+				LocalizationServiceHelper.getString(EMFFormsSpreadsheetImporterImpl.class,
+					"ImportError_DMRDeserializationFailed"), //$NON-NLS-1$
 				ErrorFactory.eINSTANCE.createEMFLocation(eObject),
 				ErrorFactory.eINSTANCE.createSheetLocation(sheetname, columnId, 0,
 					getStringCellValue(cell, errorReports, sheetname, columnId)));
@@ -379,7 +387,8 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 			if (labelRow == null) {
 				errorReports.reportError(
 					Severity.ERROR, MessageFormat.format(
-						LocalizationServiceHelper.getString(getClass(), "ImportError_SheetEmpty"), //$NON-NLS-1$
+						LocalizationServiceHelper.getString(EMFFormsSpreadsheetImporterImpl.class,
+							"ImportError_SheetEmpty"), //$NON-NLS-1$
 						sheet.getSheetName()),
 					ErrorFactory.eINSTANCE.createSheetLocation(workbook.getSheetName(sheetId), 0, 0, "NO CELL")); //$NON-NLS-1$
 				continue;
@@ -396,7 +405,8 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 				/* ID Column is missing. We have to ignore this sheet */
 				errorReports.reportError(
 					Severity.ERROR, MessageFormat.format(
-						LocalizationServiceHelper.getString(getClass(), "ImportError_FirstColumnWrong"), //$NON-NLS-1$
+						LocalizationServiceHelper.getString(EMFFormsSpreadsheetImporterImpl.class,
+							"ImportError_FirstColumnWrong"), //$NON-NLS-1$
 						EMFFormsIdProvider.ID_COLUMN, idColumnLabel),
 					ErrorFactory.eINSTANCE.createSheetLocation(workbook.getSheetName(sheetId), 0, 0, "NO CELL")); //$NON-NLS-1$
 				continue;
@@ -405,7 +415,8 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 				final Row row = sheet.getRow(rowId);
 				if (row == null || isRowEmpty(row)) {
 					errorReports.reportError(
-						Severity.INFO, LocalizationServiceHelper.getString(getClass(), "ImportError_EmptyRow"), //$NON-NLS-1$
+						Severity.INFO, LocalizationServiceHelper.getString(EMFFormsSpreadsheetImporterImpl.class,
+							"ImportError_EmptyRow"), //$NON-NLS-1$
 						ErrorFactory.eINSTANCE.createSheetLocation(workbook.getSheetName(sheetId), 0, rowId,
 							EMFFormsIdProvider.ID_COLUMN));
 					continue;
@@ -415,7 +426,8 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 				if (eObjectId == null || eObjectId.isEmpty()) {
 					/* EObject id deleted */
 					errorReports.reportError(
-						Severity.ERROR, LocalizationServiceHelper.getString(getClass(), "ImportError_NoEObjectID"), //$NON-NLS-1$
+						Severity.ERROR, LocalizationServiceHelper.getString(EMFFormsSpreadsheetImporterImpl.class,
+							"ImportError_NoEObjectID"), //$NON-NLS-1$
 						ErrorFactory.eINSTANCE.createSheetLocation(workbook.getSheetName(sheetId), 0, rowId,
 							EMFFormsIdProvider.ID_COLUMN));
 					continue;
@@ -428,7 +440,8 @@ public class EMFFormsSpreadsheetImporterImpl implements EMFFormsSpreadsheetImpor
 					/* duplicate EObject ID */
 					errorReports.reportError(
 						Severity.ERROR,
-						LocalizationServiceHelper.getString(getClass(), "ImportError_DuplicateEObjectID"), //$NON-NLS-1$
+						LocalizationServiceHelper.getString(EMFFormsSpreadsheetImporterImpl.class,
+							"ImportError_DuplicateEObjectID"), //$NON-NLS-1$
 						ErrorFactory.eINSTANCE.createSheetLocation(workbook.getSheetName(sheetId), 0, rowId,
 							EMFFormsIdProvider.ID_COLUMN));
 					continue;

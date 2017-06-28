@@ -28,8 +28,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  *        </p>
  *        <ul>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.model.VControl#getLabelAlignment <em>Label Alignment</em>}</li>
- *        <li>{@link org.eclipse.emf.ecp.view.spi.model.VControl#getDomainModelReference <em>Domain Model Reference</em>
- *        }</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.VControl#getDomainModelReference <em>Domain Model
+ *        Reference</em>}</li>
  *        </ul>
  *
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getControl()
@@ -45,7 +45,7 @@ public interface VControl extends VContainedElement {
 	 * more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the value of the '<em>Domain Model Reference</em>' containment reference.
 	 * @see #setDomainModelReference(VDomainModelReference)
 	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getControl_DomainModelReference()
@@ -55,11 +55,11 @@ public interface VControl extends VContainedElement {
 	VDomainModelReference getDomainModelReference();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.spi.model.VControl#getDomainModelReference
-	 * <em>Domain Model Reference</em>}' containment reference.
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.spi.model.VControl#getDomainModelReference <em>Domain
+	 * Model Reference</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param value the new value of the '<em>Domain Model Reference</em>' containment reference.
 	 * @see #getDomainModelReference()
 	 * @generated
@@ -76,7 +76,7 @@ public interface VControl extends VContainedElement {
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the value of the '<em>Label Alignment</em>' attribute.
 	 * @see org.eclipse.emf.ecp.view.spi.model.LabelAlignment
 	 * @see #setLabelAlignment(LabelAlignment)
@@ -87,11 +87,11 @@ public interface VControl extends VContainedElement {
 	LabelAlignment getLabelAlignment();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.spi.model.VControl#getLabelAlignment
-	 * <em>Label Alignment</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.spi.model.VControl#getLabelAlignment <em>Label
+	 * Alignment</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param value the new value of the '<em>Label Alignment</em>' attribute.
 	 * @see org.eclipse.emf.ecp.view.spi.model.LabelAlignment
 	 * @see #getLabelAlignment()

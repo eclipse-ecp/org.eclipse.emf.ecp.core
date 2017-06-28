@@ -36,6 +36,8 @@ import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.MouseEvent;
@@ -118,6 +120,14 @@ public class RichTextControlSWTRenderer extends TextControlSWTRenderer {
 					text.setText(innerText.getText());
 				}
 			});
+			innerText.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyPressed(KeyEvent e) {
+					if (e.keyCode == 'a' && (isCtrlKeyPressed(e) || isCommandKeyPressed(e))) {
+						innerText.selectAll();
+					}
+				}
+			});
 			popupWindow.open();
 
 		}
@@ -126,6 +136,14 @@ public class RichTextControlSWTRenderer extends TextControlSWTRenderer {
 		public void mouseDoubleClick(MouseEvent e) {
 			// do nothing
 		}
+	}
+
+	private static boolean isCtrlKeyPressed(KeyEvent e) {
+		return (e.stateMask & SWT.MODIFIER_MASK) == SWT.CTRL;
+	}
+
+	private static boolean isCommandKeyPressed(KeyEvent e) {
+		return (e.stateMask & SWT.MODIFIER_MASK) == SWT.COMMAND;
 	}
 
 	/**

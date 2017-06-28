@@ -35,6 +35,8 @@ import org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableS
  * <em>Show Validation Summary Tooltip</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.impl.VTTableStylePropertyImpl#isEnableSorting
  * <em>Enable Sorting</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.impl.VTTableStylePropertyImpl#getVisibleLines
+ * <em>Visible Lines</em>}</li>
  * </ul>
  *
  * @generated
@@ -149,6 +151,40 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	 * @ordered
 	 */
 	protected boolean enableSorting = ENABLE_SORTING_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getVisibleLines() <em>Visible Lines</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 * @see #getVisibleLines()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final int VISIBLE_LINES_EDEFAULT = 0;
+
+	/**
+	 * The cached value of the '{@link #getVisibleLines() <em>Visible Lines</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 * @see #getVisibleLines()
+	 * @generated
+	 * @ordered
+	 */
+	protected int visibleLines = VISIBLE_LINES_EDEFAULT;
+
+	/**
+	 * This is true if the Visible Lines attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean visibleLinesESet;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -353,6 +389,66 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	 * @generated
 	 */
 	@Override
+	public int getVisibleLines() {
+		return visibleLines;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
+	public void setVisibleLines(int newVisibleLines) {
+		final int oldVisibleLines = visibleLines;
+		visibleLines = newVisibleLines;
+		final boolean oldVisibleLinesESet = visibleLinesESet;
+		visibleLinesESet = true;
+		if (eNotificationRequired()) {
+			eNotify(new ENotificationImpl(this, Notification.SET,
+				VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__VISIBLE_LINES, oldVisibleLines, visibleLines,
+				!oldVisibleLinesESet));
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
+	public void unsetVisibleLines() {
+		final int oldVisibleLines = visibleLines;
+		final boolean oldVisibleLinesESet = visibleLinesESet;
+		visibleLines = VISIBLE_LINES_EDEFAULT;
+		visibleLinesESet = false;
+		if (eNotificationRequired()) {
+			eNotify(new ENotificationImpl(this, Notification.UNSET,
+				VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__VISIBLE_LINES, oldVisibleLines,
+				VISIBLE_LINES_EDEFAULT, oldVisibleLinesESet));
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
+	public boolean isSetVisibleLines() {
+		return visibleLinesESet;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__MINIMUM_HEIGHT:
@@ -363,6 +459,8 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 			return isShowValidationSummaryTooltip();
 		case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__ENABLE_SORTING:
 			return isEnableSorting();
+		case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__VISIBLE_LINES:
+			return getVisibleLines();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -387,6 +485,9 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 			return;
 		case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__ENABLE_SORTING:
 			setEnableSorting((Boolean) newValue);
+			return;
+		case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__VISIBLE_LINES:
+			setVisibleLines((Integer) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -413,6 +514,9 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 		case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__ENABLE_SORTING:
 			setEnableSorting(ENABLE_SORTING_EDEFAULT);
 			return;
+		case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__VISIBLE_LINES:
+			unsetVisibleLines();
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -434,6 +538,8 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 			return showValidationSummaryTooltip != SHOW_VALIDATION_SUMMARY_TOOLTIP_EDEFAULT;
 		case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__ENABLE_SORTING:
 			return enableSorting != ENABLE_SORTING_EDEFAULT;
+		case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__VISIBLE_LINES:
+			return isSetVisibleLines();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -467,6 +573,12 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 		result.append(showValidationSummaryTooltip);
 		result.append(", enableSorting: "); //$NON-NLS-1$
 		result.append(enableSorting);
+		result.append(", visibleLines: "); //$NON-NLS-1$
+		if (visibleLinesESet) {
+			result.append(visibleLines);
+		} else {
+			result.append("<unset>"); //$NON-NLS-1$
+		}
 		result.append(')');
 		return result.toString();
 	}

@@ -11,10 +11,10 @@ Require-Bundle: org.eclipse.e4.ui.model.workbench;bundle-version="[1.1.100,2.0.0
  org.eclipse.e4.ui.di;bundle-version="[1.1.0,2.0.0)",
  org.eclipse.emf.ecore;bundle-version="[2.11.0,3.0.0)",
  org.eclipse.emf.emfstore.client;bundle-version="[1.7.0,1.8.0)",
- org.eclipse.emf.ecp.controls.fx;bundle-version="[1.9.0,2.0.0)",
- org.eclipse.emf.ecp.view.model.fx;bundle-version="[1.9.0,2.0.0)",
- org.eclipse.emf.ecp.edit;bundle-version="[1.9.0,2.0.0)",
- org.eclipse.emf.ecp.util.e4.fx;bundle-version="[1.9.0,2.0.0)",
+ org.eclipse.emf.ecp.controls.fx;bundle-version="[1.13.0,1.14.0)",
+ org.eclipse.emf.ecp.view.model.fx;bundle-version="[1.13.0,1.14.0)",
+ org.eclipse.emf.ecp.edit;bundle-version="[1.13.0,1.14.0)",
+ org.eclipse.emf.ecp.util.e4.fx;bundle-version="[1.13.0,1.14.0)",
  org.eclipse.emf.emfstore.fx.util;bundle-version="[1.8.0,1.9.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: javax.annotation;version="1.0.0",

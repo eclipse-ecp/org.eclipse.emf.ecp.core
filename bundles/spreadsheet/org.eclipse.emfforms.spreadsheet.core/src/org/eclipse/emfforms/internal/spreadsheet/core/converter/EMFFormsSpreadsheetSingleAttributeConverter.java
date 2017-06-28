@@ -23,6 +23,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.DateUtil;
+import org.eclipse.emf.common.util.EMap;
+import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
@@ -233,7 +235,7 @@ public class EMFFormsSpreadsheetSingleAttributeConverter implements EMFFormsSpre
 		} else if (isDate(attributeType.getInstanceClass())) {
 			return DateUtil.getJavaDate(cell.getNumericCellValue());
 		} else if (isXMLDate(attributeType.getInstanceClass())) {
-			return convertCellToXMLDate(cell);
+			return convertCellToXMLDate(cell, isDate(attributeType));
 		} else {
 			if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
 				cell.setCellType(Cell.CELL_TYPE_STRING);
@@ -242,17 +244,36 @@ public class EMFFormsSpreadsheetSingleAttributeConverter implements EMFFormsSpre
 		}
 	}
 
-	private XMLGregorianCalendar convertCellToXMLDate(Cell cell) {
+	private boolean isDate(EDataType attributeType) {
+		final EAnnotation eAnnotation = attributeType
+			.getEAnnotation("http:///org/eclipse/emf/ecore/util/ExtendedMetaData");//$NON-NLS-1$
+		if (eAnnotation == null) {
+			return true;
+		}
+		final EMap<String, String> typeDetails = eAnnotation.getDetails();
+		if (typeDetails.containsKey("name")) {//$NON-NLS-1$
+			return "date".equals(typeDetails.get("name"));//$NON-NLS-1$//$NON-NLS-2$
+		}
+		if (typeDetails.containsKey("baseType")) {//$NON-NLS-1$
+			return typeDetails.get("baseType").endsWith("date");//$NON-NLS-1$//$NON-NLS-2$
+		}
+		return true;
+	}
+
+	private XMLGregorianCalendar convertCellToXMLDate(Cell cell, boolean isDate) {
 		final Calendar targetCal = DateUtil.getJavaCalendarUTC(cell.getNumericCellValue(), false);
 		if (targetCal == null) {
 			return null;
 		}
-		final XMLGregorianCalendar cal = new XMLCalendar(targetCal.getTime(), XMLCalendar.DATE);
-		cal.setTimezone(DatatypeConstants.FIELD_UNDEFINED);
-		cal.setHour(DatatypeConstants.FIELD_UNDEFINED);
-		cal.setMinute(DatatypeConstants.FIELD_UNDEFINED);
-		cal.setSecond(DatatypeConstants.FIELD_UNDEFINED);
-		cal.setMillisecond(DatatypeConstants.FIELD_UNDEFINED);
+		final XMLGregorianCalendar cal = new XMLCalendar(targetCal.getTime(),
+			isDate ? XMLCalendar.DATE : XMLCalendar.DATETIME);
+		if (isDate) {
+			cal.setTimezone(DatatypeConstants.FIELD_UNDEFINED);
+			cal.setHour(DatatypeConstants.FIELD_UNDEFINED);
+			cal.setMinute(DatatypeConstants.FIELD_UNDEFINED);
+			cal.setSecond(DatatypeConstants.FIELD_UNDEFINED);
+			cal.setMillisecond(DatatypeConstants.FIELD_UNDEFINED);
+		}
 		return cal;
 	}
 

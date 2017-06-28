@@ -41,6 +41,7 @@ import org.eclipse.emf.ecp.view.internal.validation.bean.Activator;
 import org.eclipse.emf.ecp.view.spi.validation.ValidationProvider;
 import org.osgi.framework.Bundle;
 
+// TODO refactor to implement org.eclipse.emfforms.common.spi.validation.Validator instead
 public abstract class BeanValidationProvider implements ValidationProvider {
 
 	private ValidatorContext validatorContext;

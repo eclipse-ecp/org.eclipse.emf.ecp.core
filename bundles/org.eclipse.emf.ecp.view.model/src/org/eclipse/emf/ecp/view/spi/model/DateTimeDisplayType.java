@@ -24,7 +24,6 @@ import org.eclipse.emf.common.util.Enumerator;
  * 
  * @since 1.8
  *        <!-- end-user-doc -->
- *
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getDateTimeDisplayType()
  * @model
  * @generated
@@ -34,7 +33,7 @@ public enum DateTimeDisplayType implements Enumerator {
 	 * The '<em><b>Time And Date</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #TIME_AND_DATE_VALUE
 	 * @generated
 	 * @ordered
@@ -45,7 +44,7 @@ public enum DateTimeDisplayType implements Enumerator {
 	 * The '<em><b>Time Only</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #TIME_ONLY_VALUE
 	 * @generated
 	 * @ordered
@@ -56,7 +55,7 @@ public enum DateTimeDisplayType implements Enumerator {
 	 * The '<em><b>Date Only</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #DATE_ONLY_VALUE
 	 * @generated
 	 * @ordered
@@ -71,7 +70,7 @@ public enum DateTimeDisplayType implements Enumerator {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #TIME_AND_DATE
 	 * @model name="TimeAndDate"
 	 * @generated
@@ -87,7 +86,7 @@ public enum DateTimeDisplayType implements Enumerator {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #TIME_ONLY
 	 * @model name="TimeOnly"
 	 * @generated
@@ -103,7 +102,7 @@ public enum DateTimeDisplayType implements Enumerator {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #DATE_ONLY
 	 * @model name="DateOnly"
 	 * @generated
@@ -115,7 +114,7 @@ public enum DateTimeDisplayType implements Enumerator {
 	 * An array of all the '<em><b>Date Time Display Type</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private static final DateTimeDisplayType[] VALUES_ARRAY = new DateTimeDisplayType[] {
@@ -128,7 +127,7 @@ public enum DateTimeDisplayType implements Enumerator {
 	 * A public read-only list of all the '<em><b>Date Time Display Type</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public static final List<DateTimeDisplayType> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
@@ -137,14 +136,14 @@ public enum DateTimeDisplayType implements Enumerator {
 	 * Returns the '<em><b>Date Time Display Type</b></em>' literal with the specified literal value.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param literal the literal.
 	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
 	public static DateTimeDisplayType get(String literal) {
 		for (int i = 0; i < VALUES_ARRAY.length; ++i) {
-			final DateTimeDisplayType result = VALUES_ARRAY[i];
+			DateTimeDisplayType result = VALUES_ARRAY[i];
 			if (result.toString().equals(literal)) {
 				return result;
 			}
@@ -156,14 +155,14 @@ public enum DateTimeDisplayType implements Enumerator {
 	 * Returns the '<em><b>Date Time Display Type</b></em>' literal with the specified name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param name the name.
 	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
 	public static DateTimeDisplayType getByName(String name) {
 		for (int i = 0; i < VALUES_ARRAY.length; ++i) {
-			final DateTimeDisplayType result = VALUES_ARRAY[i];
+			DateTimeDisplayType result = VALUES_ARRAY[i];
 			if (result.getName().equals(name)) {
 				return result;
 			}
@@ -175,7 +174,7 @@ public enum DateTimeDisplayType implements Enumerator {
 	 * Returns the '<em><b>Date Time Display Type</b></em>' literal with the specified integer value.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param value the integer value.
 	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
@@ -195,7 +194,7 @@ public enum DateTimeDisplayType implements Enumerator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private final int value;
@@ -203,7 +202,7 @@ public enum DateTimeDisplayType implements Enumerator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private final String name;
@@ -211,7 +210,7 @@ public enum DateTimeDisplayType implements Enumerator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private final String literal;
@@ -220,7 +219,7 @@ public enum DateTimeDisplayType implements Enumerator {
 	 * Only this class can construct instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private DateTimeDisplayType(int value, String name, String literal) {
@@ -232,7 +231,7 @@ public enum DateTimeDisplayType implements Enumerator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -243,7 +242,7 @@ public enum DateTimeDisplayType implements Enumerator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -254,7 +253,7 @@ public enum DateTimeDisplayType implements Enumerator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -266,7 +265,7 @@ public enum DateTimeDisplayType implements Enumerator {
 	 * Returns the literal value of the enumerator, which is its string representation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override

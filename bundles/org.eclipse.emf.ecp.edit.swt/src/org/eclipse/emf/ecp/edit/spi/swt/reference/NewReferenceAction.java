@@ -123,7 +123,7 @@ public class NewReferenceAction extends ECPSWTAction {
 		} else if (attribute.endsWith("s")) {//$NON-NLS-1$
 			attribute = attribute.substring(0, attribute.length() - 1);
 		}
-		setToolTipText(LocalizationServiceHelper.getString(getClass(),
+		setToolTipText(LocalizationServiceHelper.getString(NewReferenceAction.class,
 			ReferenceMessageKeys.NewReferenceAction_CreateAndLinkNew)
 			+ attribute);
 	}

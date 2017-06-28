@@ -19,6 +19,7 @@ import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.spi.swt.table.ButtonBarBuilder;
 import org.eclipse.emfforms.spi.swt.table.DNDProvider;
 import org.eclipse.emfforms.spi.swt.table.DefaultButtonBarBuilder;
+import org.eclipse.emfforms.spi.swt.table.DefaultTableViewerCompositeBuilder;
 import org.eclipse.emfforms.spi.swt.table.NewElementCreator;
 import org.eclipse.emfforms.spi.swt.table.TableViewerCompositeBuilder;
 import org.eclipse.emfforms.spi.swt.table.TableViewerCreator;

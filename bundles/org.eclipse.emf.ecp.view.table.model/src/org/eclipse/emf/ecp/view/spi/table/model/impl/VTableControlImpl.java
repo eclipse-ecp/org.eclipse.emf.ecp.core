@@ -38,6 +38,8 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableControlImpl#isAddRemoveDisabled <em>Add Remove
  * Disabled</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableControlImpl#isMoveUpDownDisabled <em>Move Up Down
+ * Disabled</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableControlImpl#getColumnConfigurations <em>Column
  * Configurations</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.impl.VTableControlImpl#getDetailEditing <em>Detail
@@ -71,6 +73,28 @@ public class VTableControlImpl extends VControlImpl implements VTableControl {
 	 * @ordered
 	 */
 	protected boolean addRemoveDisabled = ADD_REMOVE_DISABLED_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #isMoveUpDownDisabled() <em>Move Up Down Disabled</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see #isMoveUpDownDisabled()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean MOVE_UP_DOWN_DISABLED_EDEFAULT = true;
+
+	/**
+	 * The cached value of the '{@link #isMoveUpDownDisabled() <em>Move Up Down Disabled</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see #isMoveUpDownDisabled()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean moveUpDownDisabled = MOVE_UP_DOWN_DISABLED_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getColumnConfigurations() <em>Column Configurations</em>}' containment reference
@@ -185,6 +209,33 @@ public class VTableControlImpl extends VControlImpl implements VTableControl {
 		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, VTablePackage.TABLE_CONTROL__ADD_REMOVE_DISABLED,
 				oldAddRemoveDisabled, addRemoveDisabled));
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public boolean isMoveUpDownDisabled() {
+		return moveUpDownDisabled;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public void setMoveUpDownDisabled(boolean newMoveUpDownDisabled) {
+		final boolean oldMoveUpDownDisabled = moveUpDownDisabled;
+		moveUpDownDisabled = newMoveUpDownDisabled;
+		if (eNotificationRequired()) {
+			eNotify(new ENotificationImpl(this, Notification.SET, VTablePackage.TABLE_CONTROL__MOVE_UP_DOWN_DISABLED,
+				oldMoveUpDownDisabled, moveUpDownDisabled));
 		}
 	}
 
@@ -350,6 +401,8 @@ public class VTableControlImpl extends VControlImpl implements VTableControl {
 		switch (featureID) {
 		case VTablePackage.TABLE_CONTROL__ADD_REMOVE_DISABLED:
 			return isAddRemoveDisabled();
+		case VTablePackage.TABLE_CONTROL__MOVE_UP_DOWN_DISABLED:
+			return isMoveUpDownDisabled();
 		case VTablePackage.TABLE_CONTROL__COLUMN_CONFIGURATIONS:
 			return getColumnConfigurations();
 		case VTablePackage.TABLE_CONTROL__DETAIL_EDITING:
@@ -374,6 +427,9 @@ public class VTableControlImpl extends VControlImpl implements VTableControl {
 		switch (featureID) {
 		case VTablePackage.TABLE_CONTROL__ADD_REMOVE_DISABLED:
 			setAddRemoveDisabled((Boolean) newValue);
+			return;
+		case VTablePackage.TABLE_CONTROL__MOVE_UP_DOWN_DISABLED:
+			setMoveUpDownDisabled((Boolean) newValue);
 			return;
 		case VTablePackage.TABLE_CONTROL__COLUMN_CONFIGURATIONS:
 			getColumnConfigurations().clear();
@@ -404,6 +460,9 @@ public class VTableControlImpl extends VControlImpl implements VTableControl {
 		case VTablePackage.TABLE_CONTROL__ADD_REMOVE_DISABLED:
 			setAddRemoveDisabled(ADD_REMOVE_DISABLED_EDEFAULT);
 			return;
+		case VTablePackage.TABLE_CONTROL__MOVE_UP_DOWN_DISABLED:
+			setMoveUpDownDisabled(MOVE_UP_DOWN_DISABLED_EDEFAULT);
+			return;
 		case VTablePackage.TABLE_CONTROL__COLUMN_CONFIGURATIONS:
 			getColumnConfigurations().clear();
 			return;
@@ -431,6 +490,8 @@ public class VTableControlImpl extends VControlImpl implements VTableControl {
 		switch (featureID) {
 		case VTablePackage.TABLE_CONTROL__ADD_REMOVE_DISABLED:
 			return addRemoveDisabled != ADD_REMOVE_DISABLED_EDEFAULT;
+		case VTablePackage.TABLE_CONTROL__MOVE_UP_DOWN_DISABLED:
+			return moveUpDownDisabled != MOVE_UP_DOWN_DISABLED_EDEFAULT;
 		case VTablePackage.TABLE_CONTROL__COLUMN_CONFIGURATIONS:
 			return columnConfigurations != null && !columnConfigurations.isEmpty();
 		case VTablePackage.TABLE_CONTROL__DETAIL_EDITING:
@@ -458,6 +519,8 @@ public class VTableControlImpl extends VControlImpl implements VTableControl {
 		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (addRemoveDisabled: "); //$NON-NLS-1$
 		result.append(addRemoveDisabled);
+		result.append(", moveUpDownDisabled: "); //$NON-NLS-1$
+		result.append(moveUpDownDisabled);
 		result.append(", detailEditing: "); //$NON-NLS-1$
 		result.append(detailEditing);
 		result.append(", enableDetailEditingDialog: "); //$NON-NLS-1$

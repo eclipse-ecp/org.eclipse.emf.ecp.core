@@ -15,10 +15,10 @@ import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.edit.internal.swt.table.StringBasedCellEditor;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.CellEditorProperties;
-import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
@@ -30,12 +30,15 @@ import org.eclipse.swt.widgets.Composite;
  * @since 1.5
  *
  */
-public class StringCellEditor extends TextCellEditor implements ECPCellEditor {
+public class StringCellEditor extends StringBasedCellEditor {
+
+	private EStructuralFeature eStructuralFeature;
 
 	/**
 	 * Default constructor.
 	 */
 	public StringCellEditor() {
+		super();
 	}
 
 	/**
@@ -75,8 +78,7 @@ public class StringCellEditor extends TextCellEditor implements ECPCellEditor {
 	 */
 	@Override
 	public void instantiate(EStructuralFeature feature, ViewModelContext viewModelContext) {
-		// TODO Auto-generated method stub
-
+		eStructuralFeature = feature;
 	}
 
 	/**
@@ -113,8 +115,7 @@ public class StringCellEditor extends TextCellEditor implements ECPCellEditor {
 	 */
 	@Override
 	public UpdateValueStrategy getTargetToModelStrategy(DataBindingContext databindingContext) {
-		// TODO Auto-generated method stub
-		return null;
+		return withPreSetValidation(eStructuralFeature, new UpdateValueStrategy());
 	}
 
 	/**
@@ -126,7 +127,6 @@ public class StringCellEditor extends TextCellEditor implements ECPCellEditor {
 	 */
 	@Override
 	public UpdateValueStrategy getModelToTargetStrategy(DataBindingContext databindingContext) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

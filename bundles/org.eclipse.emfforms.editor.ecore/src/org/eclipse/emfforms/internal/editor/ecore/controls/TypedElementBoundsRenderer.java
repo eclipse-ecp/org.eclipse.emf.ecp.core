@@ -200,7 +200,7 @@ public class TypedElementBoundsRenderer extends AbstractControlSWTRenderer<VCont
 	}
 
 	private String getLocalizedString(String string) {
-		return LocalizationServiceHelper.getString(getClass(), string);
+		return LocalizationServiceHelper.getString(TypedElementBoundsRenderer.class, string);
 	}
 
 	private void createDataBindings(final Spinner lowerBound, final Spinner upperBound, Button unbounded) {

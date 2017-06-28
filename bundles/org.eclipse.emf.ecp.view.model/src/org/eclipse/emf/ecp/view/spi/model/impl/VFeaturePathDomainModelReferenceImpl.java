@@ -50,8 +50,8 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * The following features are implemented:
  * </p>
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceImpl#getChangeListener
- * <em>Change Listener</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceImpl#getChangeListener <em>Change
+ * Listener</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceImpl#getDomainModelEFeature
  * <em>Domain Model EFeature</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.model.impl.VFeaturePathDomainModelReferenceImpl#getDomainModelEReferencePath
@@ -378,7 +378,13 @@ public class VFeaturePathDomainModelReferenceImpl extends EObjectImpl implements
 					&& !domainModelEFeatureValue.getEContainingClass().isInterface()) {
 					child = EcoreUtil.create(domainModelEFeatureValue.getEContainingClass());
 				}
-				currentResolvedEObject.eSet(eReference, child);
+				if (child != null) {
+					/*
+					 * only set the reference if we could create a child. otherwise we could end up in a infinite loop,
+					 * because a null-to-null set produces a non-touch notification. This might trigger resolve again.
+					 */
+					currentResolvedEObject.eSet(eReference, child);
+				}
 			}
 			if (child == null) {
 				break;

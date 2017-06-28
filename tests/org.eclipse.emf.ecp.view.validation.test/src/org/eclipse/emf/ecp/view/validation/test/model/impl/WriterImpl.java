@@ -49,6 +49,8 @@ import org.eclipse.emf.ecp.view.validation.test.model.util.TestValidator;
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.WriterImpl#getBooks <em>Books</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.WriterImpl#isPseudonym <em>Pseudonym</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.WriterImpl#getLibrary <em>Library</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.WriterImpl#getInitials <em>Initials</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.WriterImpl#getTitle <em>Title</em>}</li>
  * </ul>
  *
  * @generated
@@ -174,6 +176,50 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	 * @ordered
 	 */
 	protected boolean pseudonym = PSEUDONYM_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getInitials() <em>Initials</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see #getInitials()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String INITIALS_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getInitials() <em>Initials</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see #getInitials()
+	 * @generated
+	 * @ordered
+	 */
+	protected String initials = INITIALS_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getTitle() <em>Title</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see #getTitle()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String TITLE_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getTitle() <em>Title</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see #getTitle()
+	 * @generated
+	 * @ordered
+	 */
+	protected String title = TITLE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -401,6 +447,58 @@ public class WriterImpl extends EObjectImpl implements Writer {
 	}
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public String getInitials() {
+		return initials;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public void setInitials(String newInitials) {
+		final String oldInitials = initials;
+		initials = newInitials;
+		if (eNotificationRequired()) {
+			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.WRITER__INITIALS, oldInitials, initials));
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public String getTitle() {
+		return title;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public void setTitle(String newTitle) {
+		final String oldTitle = title;
+		title = newTitle;
+		if (eNotificationRequired()) {
+			eNotify(new ENotificationImpl(this, Notification.SET, TestPackage.WRITER__TITLE, oldTitle, title));
+		}
+	}
+
+	/**
 	 * Validates the writer. Only adds one diagnostic item to the chain.
 	 *
 	 * @generated NOT
@@ -564,6 +662,10 @@ public class WriterImpl extends EObjectImpl implements Writer {
 			return isPseudonym();
 		case TestPackage.WRITER__LIBRARY:
 			return getLibrary();
+		case TestPackage.WRITER__INITIALS:
+			return getInitials();
+		case TestPackage.WRITER__TITLE:
+			return getTitle();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -600,6 +702,12 @@ public class WriterImpl extends EObjectImpl implements Writer {
 		case TestPackage.WRITER__LIBRARY:
 			setLibrary((Library) newValue);
 			return;
+		case TestPackage.WRITER__INITIALS:
+			setInitials((String) newValue);
+			return;
+		case TestPackage.WRITER__TITLE:
+			setTitle((String) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -634,6 +742,12 @@ public class WriterImpl extends EObjectImpl implements Writer {
 		case TestPackage.WRITER__LIBRARY:
 			setLibrary((Library) null);
 			return;
+		case TestPackage.WRITER__INITIALS:
+			setInitials(INITIALS_EDEFAULT);
+			return;
+		case TestPackage.WRITER__TITLE:
+			setTitle(TITLE_EDEFAULT);
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -661,6 +775,10 @@ public class WriterImpl extends EObjectImpl implements Writer {
 			return pseudonym != PSEUDONYM_EDEFAULT;
 		case TestPackage.WRITER__LIBRARY:
 			return getLibrary() != null;
+		case TestPackage.WRITER__INITIALS:
+			return INITIALS_EDEFAULT == null ? initials != null : !INITIALS_EDEFAULT.equals(initials);
+		case TestPackage.WRITER__TITLE:
+			return TITLE_EDEFAULT == null ? title != null : !TITLE_EDEFAULT.equals(title);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -688,6 +806,10 @@ public class WriterImpl extends EObjectImpl implements Writer {
 		result.append(birthDate);
 		result.append(", Pseudonym: ");
 		result.append(pseudonym);
+		result.append(", initials: ");
+		result.append(initials);
+		result.append(", title: ");
+		result.append(title);
 		result.append(')');
 		return result.toString();
 	}

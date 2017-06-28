@@ -20,17 +20,16 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.spi.section.model.VSectionedArea#getRoot <em>Root</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.ecp.view.spi.section.model.VSectionPackage#getSectionedArea()
  * @model
  * @generated
  */
-public interface VSectionedArea extends VContainedElement
-{
+public interface VSectionedArea extends VContainedElement {
 	/**
 	 * Returns the value of the '<em><b>Root</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
@@ -39,7 +38,7 @@ public interface VSectionedArea extends VContainedElement
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the value of the '<em>Root</em>' containment reference.
 	 * @see #setRoot(VSection)
 	 * @see org.eclipse.emf.ecp.view.spi.section.model.VSectionPackage#getSectionedArea_Root()
@@ -53,7 +52,7 @@ public interface VSectionedArea extends VContainedElement
 	 * containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param value the new value of the '<em>Root</em>' containment reference.
 	 * @see #getRoot()
 	 * @generated

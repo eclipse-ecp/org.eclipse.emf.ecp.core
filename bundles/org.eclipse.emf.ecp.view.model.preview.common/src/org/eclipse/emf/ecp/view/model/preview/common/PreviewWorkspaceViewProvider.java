@@ -15,6 +15,10 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.eclipse.core.resources.IResourceChangeEvent;
+import org.eclipse.core.resources.IResourceChangeListener;
+import org.eclipse.core.resources.IResourceDelta;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -25,6 +29,7 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
 import org.eclipse.emf.ecp.view.spi.provider.IViewProvider;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * The IViewProvider provides views from the workspace.
@@ -36,14 +41,46 @@ import org.osgi.service.component.annotations.Component;
 public class PreviewWorkspaceViewProvider implements IViewProvider {
 
 	private final Map<IPath, VView> trackedPaths = new LinkedHashMap<IPath, VView>();
+	private IResourceChangeListener viewResourceChangeListener;
+
+	/** Constructor. */
+	public PreviewWorkspaceViewProvider() {
+		addViewResourceChangeListener();
+	}
+
+	private void addViewResourceChangeListener() {
+		viewResourceChangeListener = new IResourceChangeListener() {
+			@Override
+			public void resourceChanged(IResourceChangeEvent event) {
+				if (trackedPaths.isEmpty()) {
+					return;
+				}
+				IResourceDelta delta = event.getDelta();
+				if (delta != null) {
+					while (delta.getAffectedChildren().length != 0) {
+						delta = delta.getAffectedChildren()[0];
+					}
+					for (final IPath path : trackedPaths.keySet()) {
+						if (delta.getResource().getFullPath().equals(path)) {
+							// reload view
+							final VView view = loadView(path);
+							trackedPaths.put(path, view);
+						}
+					}
+				}
+			}
+		};
+		ResourcesPlugin.getWorkspace().addResourceChangeListener(viewResourceChangeListener);
+	}
 
 	/**
 	 * Add a new view model path to the list of available views in the preview.
 	 *
 	 * @param path The {@link IPath} to load
 	 */
-	public void addViewModel(IPath path) {
-		trackedPaths.put(path, loadView(path));
+	public void addViewModel(final IPath path) {
+		final VView view = loadView(path);
+		trackedPaths.put(path, view);
 	}
 
 	private VView loadView(IPath path) {
@@ -78,12 +115,7 @@ public class PreviewWorkspaceViewProvider implements IViewProvider {
 		view.eResource().unload();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.provider.IViewProvider#canProvideViewModel(org.eclipse.emf.ecore.EObject,
-	 *      org.eclipse.emf.ecp.view.spi.model.VViewModelProperties)
-	 */
+	@Override
 	public double canProvideViewModel(EObject eObject, VViewModelProperties properties) {
 		for (final VView view : trackedPaths.values()) {
 			if (view.getRootEClass().equals(eObject.eClass())) {
@@ -93,12 +125,7 @@ public class PreviewWorkspaceViewProvider implements IViewProvider {
 		return NOT_APPLICABLE;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.provider.IViewProvider#provideViewModel(org.eclipse.emf.ecore.EObject,
-	 *      org.eclipse.emf.ecp.view.spi.model.VViewModelProperties)
-	 */
+	@Override
 	public VView provideViewModel(EObject eObject, VViewModelProperties properties) {
 		for (final VView view : trackedPaths.values()) {
 			if (view.getRootEClass().equals(eObject.eClass())) {
@@ -106,6 +133,14 @@ public class PreviewWorkspaceViewProvider implements IViewProvider {
 			}
 		}
 		return null;
+	}
+
+	/** Clean the used resources. */
+	@Deactivate
+	public void dispose() {
+		if (viewResourceChangeListener != null) {
+			ResourcesPlugin.getWorkspace().removeResourceChangeListener(viewResourceChangeListener);
+		}
 	}
 
 }

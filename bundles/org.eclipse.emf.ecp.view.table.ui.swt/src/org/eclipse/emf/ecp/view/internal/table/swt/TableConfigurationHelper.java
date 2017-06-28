@@ -12,6 +12,7 @@
 package org.eclipse.emf.ecp.view.internal.table.swt;
 
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.table.model.VEnablementConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VReadOnlyColumnConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableColumnConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
@@ -54,6 +55,31 @@ public final class TableConfigurationHelper {
 			}
 		}
 		return readOnly;
+	}
+
+	/**
+	 * Returns the {@link VEnablementConfiguration} for the given {@link VDomainModelReference}, if any.
+	 *
+	 * @param tableControl the {@link VTableControl}
+	 * @param columnDmr the {@link VDomainModelReference} a {@link VDomainModelReference} within the table
+	 * @return an {@link Optional} containing the {@link VEnablementConfiguration}
+	 */
+	public static Optional<VEnablementConfiguration> findEnablementConfiguration(
+		VTableControl tableControl,
+		VDomainModelReference columnDmr) {
+
+		for (final VTableColumnConfiguration columnConfiguration : tableControl.getColumnConfigurations()) {
+			if (VEnablementConfiguration.class.isInstance(columnConfiguration)) {
+				final VEnablementConfiguration configuration = VEnablementConfiguration.class
+					.cast(columnConfiguration);
+				if (configuration.getColumnDomainReference() == columnDmr) {
+					return Optional.of(configuration);
+				}
+			}
+		}
+
+		return Optional.empty();
+
 	}
 
 	/**

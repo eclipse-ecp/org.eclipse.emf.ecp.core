@@ -26,15 +26,14 @@ import org.eclipse.emf.ecp.view.spi.section.model.VSectionedArea;
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Package</b>.
  * <!-- end-user-doc -->
- *
+ * 
  * @generated
  */
-public class VSectionPackageImpl extends EPackageImpl implements VSectionPackage
-{
+public class VSectionPackageImpl extends EPackageImpl implements VSectionPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private EClass sectionedAreaEClass = null;
@@ -42,7 +41,7 @@ public class VSectionPackageImpl extends EPackageImpl implements VSectionPackage
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private EClass sectionEClass = null;
@@ -61,42 +60,40 @@ public class VSectionPackageImpl extends EPackageImpl implements VSectionPackage
 	 * @see #init()
 	 * @generated
 	 */
-	private VSectionPackageImpl()
-	{
+	private VSectionPackageImpl() {
 		super(eNS_URI, VSectionFactory.eINSTANCE);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private static boolean isInited = false;
 
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-	 *
+	 * 
 	 * <p>
-	 * This method is used to initialize {@link VSectionPackage#eINSTANCE} when that field is accessed. Clients should
-	 * not invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc
+	 * This method is used to initialize {@link VSectionPackage#eINSTANCE} when that field is accessed.
+	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
+	 * <!-- begin-user-doc
 	 * --> <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #eNS_URI
 	 * @see #createPackageContents()
 	 * @see #initializePackageContents()
 	 * @generated
 	 */
-	public static VSectionPackage init()
-	{
-		if (isInited) {
+	public static VSectionPackage init() {
+		if (isInited)
 			return (VSectionPackage) EPackage.Registry.INSTANCE.getEPackage(VSectionPackage.eNS_URI);
-		}
 
 		// Obtain or create and register package
-		final VSectionPackageImpl theSectionPackage = (VSectionPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof VSectionPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI)
-			: new VSectionPackageImpl());
+		VSectionPackageImpl theSectionPackage = (VSectionPackageImpl) (EPackage.Registry.INSTANCE
+			.get(eNS_URI) instanceof VSectionPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
+				: new VSectionPackageImpl());
 
 		isInited = true;
 
@@ -120,79 +117,73 @@ public class VSectionPackageImpl extends EPackageImpl implements VSectionPackage
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public EClass getSectionedArea()
-	{
+	public EClass getSectionedArea() {
 		return sectionedAreaEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public EReference getSectionedArea_Root()
-	{
+	public EReference getSectionedArea_Root() {
 		return (EReference) sectionedAreaEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public EClass getSection()
-	{
+	public EClass getSection() {
 		return sectionEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public EReference getSection_ChildItems()
-	{
+	public EReference getSection_ChildItems() {
 		return (EReference) sectionEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public EAttribute getSection_Collapsed()
-	{
+	public EAttribute getSection_Collapsed() {
 		return (EAttribute) sectionEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public VSectionFactory getSectionFactory()
-	{
+	public VSectionFactory getSectionFactory() {
 		return (VSectionFactory) getEFactoryInstance();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private boolean isCreated = false;
@@ -202,14 +193,12 @@ public class VSectionPackageImpl extends EPackageImpl implements VSectionPackage
 	 * guarded to have no affect on any invocation but its first.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	public void createPackageContents()
-	{
-		if (isCreated) {
+	public void createPackageContents() {
+		if (isCreated)
 			return;
-		}
 		isCreated = true;
 
 		// Create classes and their features
@@ -224,7 +213,7 @@ public class VSectionPackageImpl extends EPackageImpl implements VSectionPackage
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private boolean isInitialized = false;
@@ -234,14 +223,12 @@ public class VSectionPackageImpl extends EPackageImpl implements VSectionPackage
 	 * method is guarded to have no affect on any invocation but its first.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	public void initializePackageContents()
-	{
-		if (isInitialized) {
+	public void initializePackageContents() {
+		if (isInitialized)
 			return;
-		}
 		isInitialized = true;
 
 		// Initialize package
@@ -250,7 +237,7 @@ public class VSectionPackageImpl extends EPackageImpl implements VSectionPackage
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		final VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
+		VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
 
 		// Create type parameters
 
@@ -259,26 +246,21 @@ public class VSectionPackageImpl extends EPackageImpl implements VSectionPackage
 		// Add supertypes to classes
 		sectionedAreaEClass.getESuperTypes().add(theViewPackage.getContainedElement());
 		sectionEClass.getESuperTypes().add(theViewPackage.getContainer());
+		sectionEClass.getESuperTypes().add(theViewPackage.getHasTooltip());
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(sectionedAreaEClass, VSectionedArea.class,
-			"SectionedArea", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-			getSectionedArea_Root(),
-			getSection(),
-			null,
-			"root", null, 1, 1, VSectionedArea.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEClass(sectionedAreaEClass, VSectionedArea.class, "SectionedArea", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
+			IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getSectionedArea_Root(), this.getSection(), null, "root", null, 1, 1, VSectionedArea.class, //$NON-NLS-1$
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
 
 		initEClass(sectionEClass, VSection.class, "Section", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-			getSection_ChildItems(),
-			getSection(),
-			null,
-			"childItems", null, 0, -1, VSection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(
-			getSection_Collapsed(),
-			ecorePackage.getEBoolean(),
-			"collapsed", "false", 0, 1, VSection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEReference(getSection_ChildItems(), this.getSection(), null, "childItems", null, 0, -1, VSection.class, //$NON-NLS-1$
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
+		initEAttribute(getSection_Collapsed(), ecorePackage.getEBoolean(), "collapsed", "false", 0, 1, VSection.class, //$NON-NLS-1$ //$NON-NLS-2$
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

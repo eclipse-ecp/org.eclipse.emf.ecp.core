@@ -20,9 +20,11 @@ import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizableElement;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VElementUtil;
+import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.model.provider.ElementItemProvider;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
@@ -34,8 +36,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class CategorizableElementItemProvider
-	extends ElementItemProvider
-{
+	extends ElementItemProvider {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -43,8 +44,7 @@ public class CategorizableElementItemProvider
 	 *
 	 * @generated
 	 */
-	public CategorizableElementItemProvider(AdapterFactory adapterFactory)
-	{
+	public CategorizableElementItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -56,15 +56,38 @@ public class CategorizableElementItemProvider
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object)
-	{
-		if (itemPropertyDescriptors == null)
-		{
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
+			addTooltipPropertyDescriptor(object);
 			addLabelObjectPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
+	}
+
+	/**
+	 * This adds a property descriptor for the Tooltip feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @since 1.13
+	 */
+	protected void addTooltipPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_HasTooltip_tooltip_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_HasTooltip_tooltip_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_HasTooltip_type"), //$NON-NLS-1$
+				VViewPackage.Literals.HAS_TOOLTIP__TOOLTIP,
+				true,
+				true,
+				false,
+				ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				null,
+				null));
 	}
 
 	/**
@@ -74,16 +97,13 @@ public class CategorizableElementItemProvider
 	 *
 	 * @generated
 	 */
-	protected void addLabelObjectPropertyDescriptor(Object object)
-	{
+	protected void addLabelObjectPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_CategorizableElement_labelObject_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_CategorizableElement_labelObject_feature", "_UI_CategorizableElement_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				getString("_UI_PropertyDescriptor_description", "_UI_CategorizableElement_labelObject_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_CategorizableElement_type"), //$NON-NLS-1$
 				VCategorizationPackage.Literals.CATEGORIZABLE_ELEMENT__LABEL_OBJECT,
 				false,
 				false,
@@ -101,14 +121,12 @@ public class CategorizableElementItemProvider
 	 * @generated NOT
 	 */
 	@Override
-	public String getText(Object object)
-	{
+	public String getText(Object object) {
 		String label = ((VCategorizableElement) object).getLabel();
 		if (label == null) {
 			label = VElementUtil.getCleanName(VElement.class.cast(object));
 		}
-		return label == null || label.length() == 0 ?
-			getString("_UI_CategorizableElement_type") : //$NON-NLS-1$
+		return label == null || label.length() == 0 ? getString("_UI_CategorizableElement_type") : //$NON-NLS-1$
 			getString("_UI_CategorizableElement_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
@@ -121,12 +139,11 @@ public class CategorizableElementItemProvider
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(Notification notification)
-	{
+	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(VCategorizableElement.class))
-		{
+		switch (notification.getFeatureID(VCategorizableElement.class)) {
+		case VCategorizationPackage.CATEGORIZABLE_ELEMENT__TOOLTIP:
 		case VCategorizationPackage.CATEGORIZABLE_ELEMENT__LABEL_OBJECT:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
@@ -143,8 +160,7 @@ public class CategorizableElementItemProvider
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
-	{
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 	}
 

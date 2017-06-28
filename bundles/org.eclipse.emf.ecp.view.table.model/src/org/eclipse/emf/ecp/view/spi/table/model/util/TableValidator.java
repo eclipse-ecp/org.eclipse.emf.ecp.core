@@ -38,7 +38,9 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.model.util.ViewValidator;
 import org.eclipse.emf.ecp.view.spi.table.model.DetailEditing;
+import org.eclipse.emf.ecp.view.spi.table.model.VEnablementConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VReadOnlyColumnConfiguration;
+import org.eclipse.emf.ecp.view.spi.table.model.VSingleColumnConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableColumnConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
@@ -176,6 +178,10 @@ public class TableValidator extends EObjectValidator {
 			return validateReadOnlyColumnConfiguration((VReadOnlyColumnConfiguration) value, diagnostics, context);
 		case VTablePackage.WIDTH_CONFIGURATION:
 			return validateWidthConfiguration((VWidthConfiguration) value, diagnostics, context);
+		case VTablePackage.ENABLEMENT_CONFIGURATION:
+			return validateEnablementConfiguration((VEnablementConfiguration) value, diagnostics, context);
+		case VTablePackage.SINGLE_COLUMN_CONFIGURATION:
+			return validateSingleColumnConfiguration((VSingleColumnConfiguration) value, diagnostics, context);
 		case VTablePackage.DETAIL_EDITING:
 			return validateDetailEditing((DetailEditing) value, diagnostics, context);
 		default:
@@ -253,12 +259,13 @@ public class TableValidator extends EObjectValidator {
 		}
 		return viewValidator.validateDomainModelReference(domainModelReference, diagnostics, context);
 	}
+	// end of custom code
 
 	/**
-	 * @generated
-	 * 			<!-- begin-user-doc -->
-	 *            <!-- end-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 *
+	 * @generated
 	 */
 	public boolean validateTableColumnConfiguration(VTableColumnConfiguration tableColumnConfiguration,
 		DiagnosticChain diagnostics, Map<Object, Object> context) {
@@ -493,6 +500,30 @@ public class TableValidator extends EObjectValidator {
 	public boolean validateWidthConfiguration(VWidthConfiguration widthConfiguration, DiagnosticChain diagnostics,
 		Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(widthConfiguration, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateEnablementConfiguration(VEnablementConfiguration enablementConfiguration,
+		DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(enablementConfiguration, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateSingleColumnConfiguration(VSingleColumnConfiguration singleColumnConfiguration,
+		DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(singleColumnConfiguration, diagnostics, context);
 	}
 
 	/**

@@ -11,12 +11,17 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.validation.test.model.impl;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
+import org.eclipse.emf.ecp.view.validation.test.model.Color;
 import org.eclipse.emf.ecp.view.validation.test.model.Computer;
 import org.eclipse.emf.ecp.view.validation.test.model.Mainboard;
 import org.eclipse.emf.ecp.view.validation.test.model.PowerBlock;
@@ -33,6 +38,7 @@ import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.ComputerImpl#getMainboard <em>Mainboard</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.ComputerImpl#getName <em>Name</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.ComputerImpl#getPowerBlock <em>Power Block</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.impl.ComputerImpl#getColors <em>Colors</em>}</li>
  * </ul>
  *
  * @generated
@@ -81,6 +87,17 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 	 * @ordered
 	 */
 	protected PowerBlock powerBlock;
+
+	/**
+	 * The cached value of the '{@link #getColors() <em>Colors</em>}' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see #getColors()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Color> colors;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -256,6 +273,20 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 	 * @generated
 	 */
 	@Override
+	public EList<Color> getColors() {
+		if (colors == null) {
+			colors = new EDataTypeUniqueEList<Color>(Color.class, this, TestPackage.COMPUTER__COLORS);
+		}
+		return colors;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 		case TestPackage.COMPUTER__MAINBOARD:
@@ -281,6 +312,8 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 			return getName();
 		case TestPackage.COMPUTER__POWER_BLOCK:
 			return getPowerBlock();
+		case TestPackage.COMPUTER__COLORS:
+			return getColors();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -291,6 +324,7 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 	 *
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
@@ -302,6 +336,10 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 			return;
 		case TestPackage.COMPUTER__POWER_BLOCK:
 			setPowerBlock((PowerBlock) newValue);
+			return;
+		case TestPackage.COMPUTER__COLORS:
+			getColors().clear();
+			getColors().addAll((Collection<? extends Color>) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -325,6 +363,9 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 		case TestPackage.COMPUTER__POWER_BLOCK:
 			setPowerBlock((PowerBlock) null);
 			return;
+		case TestPackage.COMPUTER__COLORS:
+			getColors().clear();
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -344,6 +385,8 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 			return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 		case TestPackage.COMPUTER__POWER_BLOCK:
 			return powerBlock != null;
+		case TestPackage.COMPUTER__COLORS:
+			return colors != null && !colors.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -363,6 +406,8 @@ public class ComputerImpl extends EObjectImpl implements Computer {
 		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (name: ");
 		result.append(name);
+		result.append(", colors: ");
+		result.append(colors);
 		result.append(')');
 		return result.toString();
 	}

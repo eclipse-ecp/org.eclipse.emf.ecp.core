@@ -20,17 +20,16 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.spi.categorization.model.VCategory#getComposite <em>Composite</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage#getCategory()
  * @model
  * @generated
  */
-public interface VCategory extends VAbstractCategorization
-{
+public interface VCategory extends VAbstractCategorization {
 	/**
 	 * Returns the value of the '<em><b>Composite</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
@@ -39,7 +38,7 @@ public interface VCategory extends VAbstractCategorization
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the value of the '<em>Composite</em>' containment reference.
 	 * @see #setComposite(VContainedElement)
 	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage#getCategory_Composite()
@@ -53,7 +52,7 @@ public interface VCategory extends VAbstractCategorization
 	 * <em>Composite</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param value the new value of the '<em>Composite</em>' containment reference.
 	 * @see #getComposite()
 	 * @generated

@@ -8,8 +8,7 @@
     nonNLSMarkers="true" codeFormatting="true" commentFormatting="true" testSuiteClass="org.eclipse.emf.ecp.view.model.tests.ViewAllTests"
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
     editPluginID="org.eclipse.emf.ecp.view.model.edit" editorPluginID="org.eclipse.emf.ecp.view.model.editor"
-    language="" usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore"
-    interfaceNamePattern="V{0}" classNamePattern="V{0}Impl" importOrganizing="true">
+    language="" interfaceNamePattern="V{0}" classNamePattern="V{0}Impl" importOrganizing="true">
   <foreignModel>view.ecore</foreignModel>
   <genPackages prefix="View" basePackage="org.eclipse.emf.ecp.view.spi" resource="XMI"
       disposableProviderFactory="true" extensibleProviderFactory="true" childCreationExtenders="true"
@@ -46,6 +45,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Element/readonly"/>
       <genFeatures property="None" createChild="false" ecoreFeature="ecore:EReference view.ecore#//Element/diagnostic"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference view.ecore#//Element/attachments"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//Element/uuid"/>
     </genClasses>
     <genClasses ecoreClass="view.ecore#//View">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference view.ecore#//View/rootEClass"/>
@@ -73,6 +73,10 @@
     <genClasses ecoreClass="view.ecore#//ViewModelProperties"/>
     <genClasses ecoreClass="view.ecore#//DateTimeDisplayAttachment">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//DateTimeDisplayAttachment/displayType"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="view.ecore#//HasTooltip">
+      <genFeatures createChild="false" propertyDescription="" propertyMultiLine="true"
+          ecoreFeature="ecore:EAttribute view.ecore#//HasTooltip/tooltip"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

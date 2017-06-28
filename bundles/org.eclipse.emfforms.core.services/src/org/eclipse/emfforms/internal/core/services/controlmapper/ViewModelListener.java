@@ -15,6 +15,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
@@ -89,6 +90,9 @@ public class ViewModelListener implements ModelChangeListener {
 	 */
 	@Override
 	public void notifyChange(ModelChangeNotification notification) {
+		if (notification.getRawNotification().getEventType() == Notification.REMOVING_ADAPTER) {
+			return;
+		}
 		for (final VControl control : vControls) {
 			// TODO: table detail views might have a different root.
 

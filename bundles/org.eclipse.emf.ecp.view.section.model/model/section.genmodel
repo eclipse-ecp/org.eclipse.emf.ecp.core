@@ -7,7 +7,7 @@
     nonNLSMarkers="true" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     codeFormatting="true" commentFormatting="true" testSuiteClass="org.eclipse.emf.ecp.view.spi.section.model.tests.SectionAllTests"
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="6.0" copyrightFields="false"
-    providerRootExtendsClass="" runtimeVersion="2.10" usedGenPackages="../../org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model"
+    providerRootExtendsClass="" runtimeVersion="2.10" usedGenPackages="../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model"
     interfaceNamePattern="V{0}" classNamePattern="V{0}Impl" importOrganizing="true">
   <foreignModel>section.ecore</foreignModel>
   <genPackages prefix="Section" basePackage="org.eclipse.emf.ecp.view.spi" disposableProviderFactory="true"
@@ -15,12 +15,12 @@
       utilityPackageSuffix="model.util" providerPackageSuffix="model.provider" presentationPackageSuffix="model.presentation"
       testsPackageSuffix="model.tests" extensibleProviderFactory="true" childCreationExtenders="true"
       ecorePackage="section.ecore#/">
-    <genClasses ecoreClass="section.ecore#//Section">
-      <genFeatures children="true" createChild="true" ecoreFeature="ecore:EReference section.ecore#//Section/root"/>
+    <genClasses ecoreClass="section.ecore#//SectionedArea">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference section.ecore#//SectionedArea/root"/>
     </genClasses>
-    <genClasses ecoreClass="section.ecore#//SectionItem"/>
-    <genClasses ecoreClass="section.ecore#//SectionNode">
-      <genFeatures children="true" createChild="true" ecoreFeature="ecore:EReference section.ecore#//SectionNode/childItems"/>
+    <genClasses ecoreClass="section.ecore#//Section">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference section.ecore#//Section/childItems"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute section.ecore#//Section/collapsed"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

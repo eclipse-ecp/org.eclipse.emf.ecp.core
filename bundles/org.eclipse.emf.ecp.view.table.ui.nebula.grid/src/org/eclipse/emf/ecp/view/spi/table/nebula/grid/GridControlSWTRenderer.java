@@ -33,6 +33,8 @@ import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
+import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
+import org.eclipse.emfforms.spi.swt.table.TableControl;
 import org.eclipse.emfforms.spi.swt.table.TableViewerCompositeBuilder;
 import org.eclipse.emfforms.spi.swt.table.TableViewerCreator;
 import org.eclipse.emfforms.spi.swt.table.TableViewerSWTBuilder;
@@ -55,6 +57,7 @@ import org.eclipse.swt.widgets.ScrollBar;
 public class GridControlSWTRenderer extends TableControlSWTRenderer {
 
 	private final EStructuralFeatureValueConverterService converterService;
+	private final EMFFormsLocalizationService localizationService;
 
 	/**
 	 * Default constructor.
@@ -68,6 +71,7 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 	 * @param imageRegistryService The {@link ImageRegistryService}
 	 * @param emfFormsEditSupport The {@link EMFFormsEditSupport}
 	 * @param converterService the {@link EStructuralFeatureValueConverterService}
+	 * @param localizationService the {@link EMFFormsLocalizationService}
 	 * @since 1.11
 	 */
 	@Inject
@@ -75,11 +79,13 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 	public GridControlSWTRenderer(VTableControl vElement, ViewModelContext viewContext, ReportService reportService,
 		EMFFormsDatabindingEMF emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
 		VTViewTemplateProvider vtViewTemplateProvider, ImageRegistryService imageRegistryService,
-		EMFFormsEditSupport emfFormsEditSupport, EStructuralFeatureValueConverterService converterService) {
+		EMFFormsEditSupport emfFormsEditSupport, EStructuralFeatureValueConverterService converterService,
+		EMFFormsLocalizationService localizationService) {
 		// CHECKSTYLE.ON: ParameterNumber
 		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider,
 			imageRegistryService, emfFormsEditSupport);
 		this.converterService = converterService;
+		this.localizationService = localizationService;
 	}
 
 	/**
@@ -87,7 +93,7 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 	 * custom variant data and the correct style properties as defined in the template model.
 	 *
 	 */
-	protected final class GridTableControlSWTRendererTableViewerCreator implements TableViewerCreator<GridTableViewer> {
+	protected class GridTableControlSWTRendererTableViewerCreator implements TableViewerCreator<GridTableViewer> {
 
 		@Override
 		public GridTableViewer createTableViewer(Composite parent) {
@@ -100,13 +106,7 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 			tableViewer.getGrid().setCellSelectionEnabled(true);
 			tableViewer.getGrid().setFooterVisible(false);
 
-			tableViewer.getGrid().addKeyListener(new GridCopyKeyListener(tableViewer.getGrid().getDisplay()));
-			tableViewer.getGrid()
-				.addKeyListener(new GridPasteKeyListener(tableViewer.getGrid().getDisplay(), getVElement(),
-					getEMFFormsDatabinding(), converterService, true));
-			tableViewer.getGrid().addKeyListener(new GridClearKeyListener(getVElement(), getEMFFormsDatabinding()));
-			tableViewer.getGrid().addKeyListener(
-				new GridCutKeyListener(tableViewer.getGrid().getDisplay(), getVElement(), getEMFFormsDatabinding()));
+			addKeyListener(tableViewer);
 			// TODO MS
 			// tableViewer.getGrid().addKeyListener(new GridNewLineKeyListener() {
 			//
@@ -148,6 +148,21 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 			createTableViewerEditor(tableViewer);
 
 			return tableViewer;
+		}
+
+		/**
+		 * Add key listener.
+		 *
+		 * @param tableViewer the viewer to add the listeners to
+		 */
+		protected void addKeyListener(final GridTableViewer tableViewer) {
+			tableViewer.getGrid().addKeyListener(new GridCopyKeyListener(tableViewer.getGrid().getDisplay()));
+			tableViewer.getGrid()
+				.addKeyListener(new GridPasteKeyListener(tableViewer.getGrid().getDisplay(), getVElement(),
+					getEMFFormsDatabinding(), getConverterService(), getLocalizationService(), true));
+			tableViewer.getGrid().addKeyListener(new GridClearKeyListener(getVElement(), getEMFFormsDatabinding()));
+			tableViewer.getGrid().addKeyListener(
+				new GridCutKeyListener(tableViewer.getGrid().getDisplay(), getVElement(), getEMFFormsDatabinding()));
 		}
 
 		/**
@@ -215,6 +230,48 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 	@Override
 	protected ScrollBar getVerticalBar() {
 		return ((GridTableViewer) getTableViewer()).getGrid().getVerticalBar();
+	}
+
+	@Override
+	protected int computeRequiredHeight(Integer visibleLines) {
+		if (getTableViewer() == null || getTableViewerComposite() == null) {
+			return SWT.DEFAULT;
+		}
+		final TableControl table = getTableViewerComposite().getTableControl();
+		if (table == null) {
+			return SWT.DEFAULT;
+		}
+		if (table.isDisposed()) {
+			return SWT.DEFAULT;
+		}
+		final int itemHeight = table.getItemHeight() + 1;
+		// show one empty row if table does not contain any items or visibleLines < 1
+		int itemCount;
+		if (visibleLines != null) {
+			itemCount = Math.max(visibleLines, 1);
+		} else {
+			itemCount = Math.max(table.getItemCount(), 1);
+		}
+		final int headerHeight = table.getHeaderVisible() ? table.getHeaderHeight() : 0;
+
+		final int tableHeight = itemHeight * itemCount + headerHeight;
+		return tableHeight;
+	}
+
+	/**
+	 *
+	 * @return the {@link EStructuralFeatureValueConverterService}
+	 */
+	protected EStructuralFeatureValueConverterService getConverterService() {
+		return converterService;
+	}
+
+	/**
+	 *
+	 * @return the {@link EMFFormsLocalizationService}
+	 */
+	protected EMFFormsLocalizationService getLocalizationService() {
+		return localizationService;
 	}
 
 	/**

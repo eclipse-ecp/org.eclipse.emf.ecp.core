@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.EObject;
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Library#getWriters <em>Writers</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Library#getBooks <em>Books</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Library#getLibrarian <em>Librarian</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.validation.test.model.Library#getPhoneNumber <em>Phone Number</em>}</li>
  * </ul>
  *
  * @see org.eclipse.emf.ecp.view.validation.test.model.TestPackage#getLibrary()
@@ -44,7 +45,7 @@ public interface Library extends EObject {
 	 * If the meaning of the '<em>Name</em>' attribute isn't clear, there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.TestPackage#getLibrary_Name()
@@ -58,7 +59,7 @@ public interface Library extends EObject {
 	 * attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param value the new value of the '<em>Name</em>' attribute.
 	 * @see #getName()
 	 * @generated
@@ -76,7 +77,7 @@ public interface Library extends EObject {
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the value of the '<em>Writers</em>' containment reference list.
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.TestPackage#getLibrary_Writers()
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.Writer#getLibrary
@@ -94,7 +95,7 @@ public interface Library extends EObject {
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the value of the '<em>Books</em>' containment reference list.
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.TestPackage#getLibrary_Books()
 	 * @model containment="true"
@@ -110,7 +111,7 @@ public interface Library extends EObject {
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the value of the '<em>Librarian</em>' containment reference.
 	 * @see #setLibrarian(Librarian)
 	 * @see org.eclipse.emf.ecp.view.validation.test.model.TestPackage#getLibrary_Librarian()
@@ -124,7 +125,7 @@ public interface Library extends EObject {
 	 * <em>Librarian</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param value the new value of the '<em>Librarian</em>' containment reference.
 	 * @see #getLibrarian()
 	 * @generated
@@ -132,9 +133,38 @@ public interface Library extends EObject {
 	void setLibrarian(Librarian value);
 
 	/**
+	 * Returns the value of the '<em><b>Phone Number</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Phone Number</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the value of the '<em>Phone Number</em>' attribute.
+	 * @see #setPhoneNumber(String)
+	 * @see org.eclipse.emf.ecp.view.validation.test.model.TestPackage#getLibrary_PhoneNumber()
+	 * @model dataType="org.eclipse.emf.ecp.view.validation.test.model.PhoneNumber"
+	 * @generated
+	 */
+	String getPhoneNumber();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.validation.test.model.Library#getPhoneNumber <em>Phone
+	 * Number</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
+	 * @param value the new value of the '<em>Phone Number</em>' attribute.
+	 * @see #getPhoneNumber()
+	 * @generated
+	 */
+	void setPhoneNumber(String value);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
 	 * @model
 	 * @generated
 	 */

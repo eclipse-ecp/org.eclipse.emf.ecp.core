@@ -171,6 +171,17 @@ public class VTTableStylePropertyPackageImpl extends EPackageImpl implements VTT
 	 * @generated
 	 */
 	@Override
+	public EAttribute getTableStyleProperty_VisibleLines() {
+		return (EAttribute) tableStylePropertyEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
 	public VTTableStylePropertyFactory getTableStylePropertyFactory() {
 		return (VTTableStylePropertyFactory) getEFactoryInstance();
 	}
@@ -203,6 +214,7 @@ public class VTTableStylePropertyPackageImpl extends EPackageImpl implements VTT
 		createEAttribute(tableStylePropertyEClass, TABLE_STYLE_PROPERTY__MAXIMUM_HEIGHT);
 		createEAttribute(tableStylePropertyEClass, TABLE_STYLE_PROPERTY__SHOW_VALIDATION_SUMMARY_TOOLTIP);
 		createEAttribute(tableStylePropertyEClass, TABLE_STYLE_PROPERTY__ENABLE_SORTING);
+		createEAttribute(tableStylePropertyEClass, TABLE_STYLE_PROPERTY__VISIBLE_LINES);
 	}
 
 	/**
@@ -257,6 +269,9 @@ public class VTTableStylePropertyPackageImpl extends EPackageImpl implements VTT
 			IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTableStyleProperty_EnableSorting(), ecorePackage.getEBoolean(), "enableSorting", "true", 0, 1, //$NON-NLS-1$ //$NON-NLS-2$
 			VTTableStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTableStyleProperty_VisibleLines(), ecorePackage.getEInt(), "visibleLines", null, 0, 1, //$NON-NLS-1$
+			VTTableStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
 
 		// Create resource

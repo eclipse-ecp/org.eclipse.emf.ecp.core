@@ -33,8 +33,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * @model kind="package"
  * @generated
  */
-public interface VCategorizationPackage extends EPackage
-{
+public interface VCategorizationPackage extends EPackage {
 	/**
 	 * The package name.
 	 * <!-- begin-user-doc -->
@@ -73,9 +72,9 @@ public interface VCategorizationPackage extends EPackage
 		.init();
 
 	/**
-	 * The meta object id for the '
-	 * {@link org.eclipse.emf.ecp.view.spi.categorization.model.impl.VAbstractCategorizationImpl
-	 * <em>Abstract Categorization</em>}' class.
+	 * The meta object id for the
+	 * '{@link org.eclipse.emf.ecp.view.spi.categorization.model.impl.VAbstractCategorizationImpl <em>Abstract
+	 * Categorization</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -122,8 +121,8 @@ public interface VCategorizationPackage extends EPackage
 	int ACTION = 3;
 
 	/**
-	 * The meta object id for the '
-	 * {@link org.eclipse.emf.ecp.view.spi.categorization.model.impl.VCategorizationElementImpl <em>Element</em>}'
+	 * The meta object id for the
+	 * '{@link org.eclipse.emf.ecp.view.spi.categorization.model.impl.VCategorizationElementImpl <em>Element</em>}'
 	 * class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -135,9 +134,9 @@ public interface VCategorizationPackage extends EPackage
 	int CATEGORIZATION_ELEMENT = 4;
 
 	/**
-	 * The meta object id for the '
-	 * {@link org.eclipse.emf.ecp.view.spi.categorization.model.impl.VCategorizableElementImpl
-	 * <em>Categorizable Element</em>}' class.
+	 * The meta object id for the
+	 * '{@link org.eclipse.emf.ecp.view.spi.categorization.model.impl.VCategorizableElementImpl <em>Categorizable
+	 * Element</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -156,6 +155,18 @@ public interface VCategorizationPackage extends EPackage
 	 * @ordered
 	 */
 	int CATEGORIZABLE_ELEMENT__NAME = VViewPackage.ELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORIZABLE_ELEMENT__LABEL = VViewPackage.ELEMENT__LABEL;
 
 	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
@@ -208,6 +219,30 @@ public interface VCategorizationPackage extends EPackage
 	int CATEGORIZABLE_ELEMENT__ATTACHMENTS = VViewPackage.ELEMENT__ATTACHMENTS;
 
 	/**
+	 * The feature id for the '<em><b>Uuid</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORIZABLE_ELEMENT__UUID = VViewPackage.ELEMENT__UUID;
+
+	/**
+	 * The feature id for the '<em><b>Tooltip</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORIZABLE_ELEMENT__TOOLTIP = VViewPackage.ELEMENT_FEATURE_COUNT + 0;
+
+	/**
 	 * The feature id for the '<em><b>Label Object</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -215,7 +250,7 @@ public interface VCategorizationPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORIZABLE_ELEMENT__LABEL_OBJECT = VViewPackage.ELEMENT_FEATURE_COUNT + 0;
+	int CATEGORIZABLE_ELEMENT__LABEL_OBJECT = VViewPackage.ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Categorizable Element</em>' class.
@@ -225,7 +260,7 @@ public interface VCategorizationPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORIZABLE_ELEMENT_FEATURE_COUNT = VViewPackage.ELEMENT_FEATURE_COUNT + 1;
+	int CATEGORIZABLE_ELEMENT_FEATURE_COUNT = VViewPackage.ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -236,6 +271,18 @@ public interface VCategorizationPackage extends EPackage
 	 * @ordered
 	 */
 	int ABSTRACT_CATEGORIZATION__NAME = CATEGORIZABLE_ELEMENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_CATEGORIZATION__LABEL = CATEGORIZABLE_ELEMENT__LABEL;
 
 	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
@@ -288,6 +335,30 @@ public interface VCategorizationPackage extends EPackage
 	int ABSTRACT_CATEGORIZATION__ATTACHMENTS = CATEGORIZABLE_ELEMENT__ATTACHMENTS;
 
 	/**
+	 * The feature id for the '<em><b>Uuid</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_CATEGORIZATION__UUID = CATEGORIZABLE_ELEMENT__UUID;
+
+	/**
+	 * The feature id for the '<em><b>Tooltip</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_CATEGORIZATION__TOOLTIP = CATEGORIZABLE_ELEMENT__TOOLTIP;
+
+	/**
 	 * The feature id for the '<em><b>Label Object</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -326,6 +397,18 @@ public interface VCategorizationPackage extends EPackage
 	 * @ordered
 	 */
 	int CATEGORIZATION__NAME = ABSTRACT_CATEGORIZATION__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORIZATION__LABEL = ABSTRACT_CATEGORIZATION__LABEL;
 
 	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
@@ -378,6 +461,30 @@ public interface VCategorizationPackage extends EPackage
 	int CATEGORIZATION__ATTACHMENTS = ABSTRACT_CATEGORIZATION__ATTACHMENTS;
 
 	/**
+	 * The feature id for the '<em><b>Uuid</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORIZATION__UUID = ABSTRACT_CATEGORIZATION__UUID;
+
+	/**
+	 * The feature id for the '<em><b>Tooltip</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORIZATION__TOOLTIP = ABSTRACT_CATEGORIZATION__TOOLTIP;
+
+	/**
 	 * The feature id for the '<em><b>Label Object</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -428,6 +535,18 @@ public interface VCategorizationPackage extends EPackage
 	int CATEGORY__NAME = ABSTRACT_CATEGORIZATION__NAME;
 
 	/**
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORY__LABEL = ABSTRACT_CATEGORIZATION__LABEL;
+
+	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -476,6 +595,30 @@ public interface VCategorizationPackage extends EPackage
 	 * @ordered
 	 */
 	int CATEGORY__ATTACHMENTS = ABSTRACT_CATEGORIZATION__ATTACHMENTS;
+
+	/**
+	 * The feature id for the '<em><b>Uuid</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORY__UUID = ABSTRACT_CATEGORIZATION__UUID;
+
+	/**
+	 * The feature id for the '<em><b>Tooltip</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORY__TOOLTIP = ABSTRACT_CATEGORIZATION__TOOLTIP;
 
 	/**
 	 * The feature id for the '<em><b>Label Object</b></em>' reference.
@@ -558,6 +701,18 @@ public interface VCategorizationPackage extends EPackage
 	int CATEGORIZATION_ELEMENT__NAME = VViewPackage.CONTAINED_ELEMENT__NAME;
 
 	/**
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORIZATION_ELEMENT__LABEL = VViewPackage.CONTAINED_ELEMENT__LABEL;
+
+	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -608,6 +763,18 @@ public interface VCategorizationPackage extends EPackage
 	int CATEGORIZATION_ELEMENT__ATTACHMENTS = VViewPackage.CONTAINED_ELEMENT__ATTACHMENTS;
 
 	/**
+	 * The feature id for the '<em><b>Uuid</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int CATEGORIZATION_ELEMENT__UUID = VViewPackage.CONTAINED_ELEMENT__UUID;
+
+	/**
 	 * The feature id for the '<em><b>Categorizations</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -648,9 +815,9 @@ public interface VCategorizationPackage extends EPackage
 	int CATEGORIZATION_ELEMENT_FEATURE_COUNT = VViewPackage.CONTAINED_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
-	 * Returns the meta object for class '
-	 * {@link org.eclipse.emf.ecp.view.spi.categorization.model.VAbstractCategorization
-	 * <em>Abstract Categorization</em>}'.
+	 * Returns the meta object for class
+	 * '{@link org.eclipse.emf.ecp.view.spi.categorization.model.VAbstractCategorization <em>Abstract
+	 * Categorization</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -661,8 +828,8 @@ public interface VCategorizationPackage extends EPackage
 	EClass getAbstractCategorization();
 
 	/**
-	 * Returns the meta object for the containment reference list '
-	 * {@link org.eclipse.emf.ecp.view.spi.categorization.model.VAbstractCategorization#getActions <em>Actions</em>}'.
+	 * Returns the meta object for the containment reference list
+	 * '{@link org.eclipse.emf.ecp.view.spi.categorization.model.VAbstractCategorization#getActions <em>Actions</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -686,8 +853,8 @@ public interface VCategorizationPackage extends EPackage
 	EClass getCategorization();
 
 	/**
-	 * Returns the meta object for the containment reference list '
-	 * {@link org.eclipse.emf.ecp.view.spi.categorization.model.VCategorization#getCategorizations
+	 * Returns the meta object for the containment reference list
+	 * '{@link org.eclipse.emf.ecp.view.spi.categorization.model.VCategorization#getCategorizations
 	 * <em>Categorizations</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -712,8 +879,8 @@ public interface VCategorizationPackage extends EPackage
 	EClass getCategory();
 
 	/**
-	 * Returns the meta object for the containment reference '
-	 * {@link org.eclipse.emf.ecp.view.spi.categorization.model.VCategory#getComposite <em>Composite</em>}'.
+	 * Returns the meta object for the containment reference
+	 * '{@link org.eclipse.emf.ecp.view.spi.categorization.model.VCategory#getComposite <em>Composite</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -737,8 +904,8 @@ public interface VCategorizationPackage extends EPackage
 	EClass getAction();
 
 	/**
-	 * Returns the meta object for the attribute '
-	 * {@link org.eclipse.emf.ecp.view.spi.categorization.model.VAction#getBundle <em>Bundle</em>}'.
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.spi.categorization.model.VAction#getBundle <em>Bundle</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -750,8 +917,8 @@ public interface VCategorizationPackage extends EPackage
 	EAttribute getAction_Bundle();
 
 	/**
-	 * Returns the meta object for the attribute '
-	 * {@link org.eclipse.emf.ecp.view.spi.categorization.model.VAction#getClassName <em>Class Name</em>}'.
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.spi.categorization.model.VAction#getClassName <em>Class Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -763,8 +930,8 @@ public interface VCategorizationPackage extends EPackage
 	EAttribute getAction_ClassName();
 
 	/**
-	 * Returns the meta object for class '
-	 * {@link org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement <em>Element</em>}'.
+	 * Returns the meta object for class
+	 * '{@link org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement <em>Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -775,8 +942,8 @@ public interface VCategorizationPackage extends EPackage
 	EClass getCategorizationElement();
 
 	/**
-	 * Returns the meta object for the containment reference list '
-	 * {@link org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement#getCategorizations
+	 * Returns the meta object for the containment reference list
+	 * '{@link org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement#getCategorizations
 	 * <em>Categorizations</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -789,9 +956,9 @@ public interface VCategorizationPackage extends EPackage
 	EReference getCategorizationElement_Categorizations();
 
 	/**
-	 * Returns the meta object for the reference '
-	 * {@link org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement#getCurrentSelection
-	 * <em>Current Selection</em>}'.
+	 * Returns the meta object for the reference
+	 * '{@link org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement#getCurrentSelection <em>Current
+	 * Selection</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -803,9 +970,9 @@ public interface VCategorizationPackage extends EPackage
 	EReference getCategorizationElement_CurrentSelection();
 
 	/**
-	 * Returns the meta object for the attribute '
-	 * {@link org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement#getMainCategoryDepth
-	 * <em>Main Category Depth</em>}'.
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement#getMainCategoryDepth <em>Main
+	 * Category Depth</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -817,8 +984,8 @@ public interface VCategorizationPackage extends EPackage
 	EAttribute getCategorizationElement_MainCategoryDepth();
 
 	/**
-	 * Returns the meta object for class '
-	 * {@link org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizableElement <em>Categorizable Element</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizableElement
+	 * <em>Categorizable Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -829,9 +996,9 @@ public interface VCategorizationPackage extends EPackage
 	EClass getCategorizableElement();
 
 	/**
-	 * Returns the meta object for the reference '
-	 * {@link org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizableElement#getLabelObject
-	 * <em>Label Object</em>}'.
+	 * Returns the meta object for the reference
+	 * '{@link org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizableElement#getLabelObject <em>Label
+	 * Object</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -865,12 +1032,11 @@ public interface VCategorizationPackage extends EPackage
 	 *
 	 * @generated
 	 */
-	interface Literals
-	{
+	interface Literals {
 		/**
-		 * The meta object literal for the '
-		 * {@link org.eclipse.emf.ecp.view.spi.categorization.model.impl.VAbstractCategorizationImpl
-		 * <em>Abstract Categorization</em>}' class.
+		 * The meta object literal for the
+		 * '{@link org.eclipse.emf.ecp.view.spi.categorization.model.impl.VAbstractCategorizationImpl <em>Abstract
+		 * Categorization</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 *
@@ -890,8 +1056,8 @@ public interface VCategorizationPackage extends EPackage
 		EReference ABSTRACT_CATEGORIZATION__ACTIONS = eINSTANCE.getAbstractCategorization_Actions();
 
 		/**
-		 * The meta object literal for the '
-		 * {@link org.eclipse.emf.ecp.view.spi.categorization.model.impl.VCategorizationImpl <em>Categorization</em>}'
+		 * The meta object literal for the
+		 * '{@link org.eclipse.emf.ecp.view.spi.categorization.model.impl.VCategorizationImpl <em>Categorization</em>}'
 		 * class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -963,8 +1129,8 @@ public interface VCategorizationPackage extends EPackage
 		EAttribute ACTION__CLASS_NAME = eINSTANCE.getAction_ClassName();
 
 		/**
-		 * The meta object literal for the '
-		 * {@link org.eclipse.emf.ecp.view.spi.categorization.model.impl.VCategorizationElementImpl <em>Element</em>}'
+		 * The meta object literal for the
+		 * '{@link org.eclipse.emf.ecp.view.spi.categorization.model.impl.VCategorizationElementImpl <em>Element</em>}'
 		 * class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1003,9 +1169,9 @@ public interface VCategorizationPackage extends EPackage
 		EAttribute CATEGORIZATION_ELEMENT__MAIN_CATEGORY_DEPTH = eINSTANCE.getCategorizationElement_MainCategoryDepth();
 
 		/**
-		 * The meta object literal for the '
-		 * {@link org.eclipse.emf.ecp.view.spi.categorization.model.impl.VCategorizableElementImpl
-		 * <em>Categorizable Element</em>}' class.
+		 * The meta object literal for the
+		 * '{@link org.eclipse.emf.ecp.view.spi.categorization.model.impl.VCategorizableElementImpl <em>Categorizable
+		 * Element</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 *

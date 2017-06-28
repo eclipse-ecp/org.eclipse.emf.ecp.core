@@ -12,6 +12,7 @@
 package org.eclipse.emf.ecp.view.spi.group.model;
 
 import org.eclipse.emf.ecp.view.spi.model.VContainedContainer;
+import org.eclipse.emf.ecp.view.spi.model.VHasTooltip;
 
 /**
  * <!-- begin-user-doc -->
@@ -20,19 +21,18 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedContainer;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.spi.group.model.VGroup#getGroupType <em>Group Type</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.group.model.VGroup#getLabelAlignment <em>Label Alignment</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.group.model.VGroup#isCollapsed <em>Collapsed</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage#getGroup()
  * @model
  * @generated
  */
-public interface VGroup extends VContainedContainer
-{
+public interface VGroup extends VContainedContainer, VHasTooltip {
 
 	/**
 	 * Returns the value of the '<em><b>Group Type</b></em>' attribute.
@@ -45,7 +45,6 @@ public interface VGroup extends VContainedContainer
 	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the value of the '<em>Group Type</em>' attribute.
 	 * @see org.eclipse.emf.ecp.view.spi.group.model.GroupType
 	 * @see #setGroupType(GroupType)
@@ -62,7 +61,6 @@ public interface VGroup extends VContainedContainer
 	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
-	 *
 	 * @param value the new value of the '<em>Group Type</em>' attribute.
 	 * @see org.eclipse.emf.ecp.view.spi.group.model.GroupType
 	 * @see #getGroupType()
@@ -80,7 +78,7 @@ public interface VGroup extends VContainedContainer
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the value of the '<em>Label Alignment</em>' attribute.
 	 * @see org.eclipse.emf.ecp.view.spi.group.model.GroupLabelAlignment
 	 * @see #setLabelAlignment(GroupLabelAlignment)
@@ -91,13 +89,12 @@ public interface VGroup extends VContainedContainer
 	GroupLabelAlignment getLabelAlignment();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.spi.group.model.VGroup#getLabelAlignment
-	 * <em>Label Alignment</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.spi.group.model.VGroup#getLabelAlignment <em>Label
+	 * Alignment</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 *
 	 * @param value the new value of the '<em>Label Alignment</em>' attribute.
 	 * @see org.eclipse.emf.ecp.view.spi.group.model.GroupLabelAlignment
 	 * @see #getLabelAlignment()
@@ -115,7 +112,6 @@ public interface VGroup extends VContainedContainer
 	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the value of the '<em>Collapsed</em>' attribute.
 	 * @see #setCollapsed(boolean)
 	 * @see org.eclipse.emf.ecp.view.spi.group.model.VGroupPackage#getGroup_Collapsed()
@@ -131,7 +127,6 @@ public interface VGroup extends VContainedContainer
 	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
-	 *
 	 * @param value the new value of the '<em>Collapsed</em>' attribute.
 	 * @see #isCollapsed()
 	 * @generated

@@ -32,6 +32,8 @@ import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
  *        <em>Show Validation Summary Tooltip</em>}</li>
  *        <li>{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#isEnableSorting
  *        <em>Enable Sorting</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getVisibleLines
+ *        <em>Visible Lines</em>}</li>
  *        </ul>
  *
  * @see org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage#getTableStyleProperty()
@@ -208,7 +210,6 @@ public interface VTTableStyleProperty extends VTStyleProperty {
 	 *
 	 * @since 1.12
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the value of the '<em>Enable Sorting</em>' attribute.
 	 * @see #setEnableSorting(boolean)
 	 * @see org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage#getTableStyleProperty_EnableSorting()
@@ -225,11 +226,79 @@ public interface VTTableStyleProperty extends VTStyleProperty {
 	 *
 	 * @since 1.12
 	 *        <!-- end-user-doc -->
-	 *
 	 * @param value the new value of the '<em>Enable Sorting</em>' attribute.
 	 * @see #isEnableSorting()
 	 * @generated
 	 */
 	void setEnableSorting(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Visible Lines</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Visible Lines</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 *
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 * @return the value of the '<em>Visible Lines</em>' attribute.
+	 * @see #isSetVisibleLines()
+	 * @see #unsetVisibleLines()
+	 * @see #setVisibleLines(int)
+	 * @see org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage#getTableStyleProperty_VisibleLines()
+	 * @model unsettable="true"
+	 * @generated
+	 */
+	int getVisibleLines();
+
+	/**
+	 * Sets the value of the
+	 * '{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getVisibleLines
+	 * <em>Visible Lines</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Visible Lines</em>' attribute.
+	 * @see #isSetVisibleLines()
+	 * @see #unsetVisibleLines()
+	 * @see #getVisibleLines()
+	 * @generated
+	 */
+	void setVisibleLines(int value);
+
+	/**
+	 * Unsets the value of the
+	 * '{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getVisibleLines
+	 * <em>Visible Lines</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 *
+	 * @see #isSetVisibleLines()
+	 * @see #getVisibleLines()
+	 * @see #setVisibleLines(int)
+	 * @generated
+	 */
+	void unsetVisibleLines();
+
+	/**
+	 * Returns whether the value of the
+	 * '{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getVisibleLines
+	 * <em>Visible Lines</em>}' attribute is set.
+	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return whether the value of the '<em>Visible Lines</em>' attribute is set.
+	 * @see #unsetVisibleLines()
+	 * @see #getVisibleLines()
+	 * @see #setVisibleLines(int)
+	 * @generated
+	 */
+	boolean isSetVisibleLines();
 
 } // VTTableStyleProperty

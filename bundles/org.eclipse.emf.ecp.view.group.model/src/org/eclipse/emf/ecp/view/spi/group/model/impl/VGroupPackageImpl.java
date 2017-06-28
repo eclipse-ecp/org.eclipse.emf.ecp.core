@@ -15,7 +15,6 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecp.view.spi.group.model.GroupLabelAlignment;
 import org.eclipse.emf.ecp.view.spi.group.model.GroupType;
@@ -28,15 +27,14 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Package</b>.
  * <!-- end-user-doc -->
- *
+ * 
  * @generated
  */
-public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
-{
+public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private EClass groupEClass = null;
@@ -44,7 +42,7 @@ public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private EEnum groupTypeEEnum = null;
@@ -52,7 +50,7 @@ public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private EEnum groupLabelAlignmentEEnum = null;
@@ -71,42 +69,40 @@ public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
 	 * @see #init()
 	 * @generated
 	 */
-	private VGroupPackageImpl()
-	{
+	private VGroupPackageImpl() {
 		super(eNS_URI, VGroupFactory.eINSTANCE);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private static boolean isInited = false;
 
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-	 *
+	 * 
 	 * <p>
-	 * This method is used to initialize {@link VGroupPackage#eINSTANCE} when that field is accessed. Clients should not
-	 * invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc -->
+	 * This method is used to initialize {@link VGroupPackage#eINSTANCE} when that field is accessed.
+	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #eNS_URI
 	 * @see #createPackageContents()
 	 * @see #initializePackageContents()
 	 * @generated
 	 */
-	public static VGroupPackage init()
-	{
-		if (isInited) {
+	public static VGroupPackage init() {
+		if (isInited)
 			return (VGroupPackage) EPackage.Registry.INSTANCE.getEPackage(VGroupPackage.eNS_URI);
-		}
 
 		// Obtain or create and register package
-		final VGroupPackageImpl theGroupPackage = (VGroupPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof VGroupPackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI)
-			: new VGroupPackageImpl());
+		VGroupPackageImpl theGroupPackage = (VGroupPackageImpl) (EPackage.Registry.INSTANCE
+			.get(eNS_URI) instanceof VGroupPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
+				: new VGroupPackageImpl());
 
 		isInited = true;
 
@@ -130,12 +126,11 @@ public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public EClass getGroup()
-	{
+	public EClass getGroup() {
 		return groupEClass;
 	}
 
@@ -144,12 +139,10 @@ public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
 	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
-	public EAttribute getGroup_GroupType()
-	{
+	public EAttribute getGroup_GroupType() {
 		return (EAttribute) groupEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -158,12 +151,10 @@ public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
 	 *
 	 * @since 1.3
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
-	public EAttribute getGroup_LabelAlignment()
-	{
+	public EAttribute getGroup_LabelAlignment() {
 		return (EAttribute) groupEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -172,12 +163,10 @@ public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
 	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
-	public EAttribute getGroup_Collapsed()
-	{
+	public EAttribute getGroup_Collapsed() {
 		return (EAttribute) groupEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -186,43 +175,39 @@ public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
 	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
-	public EEnum getGroupType()
-	{
+	public EEnum getGroupType() {
 		return groupTypeEEnum;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public EEnum getGroupLabelAlignment()
-	{
+	public EEnum getGroupLabelAlignment() {
 		return groupLabelAlignmentEEnum;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public VGroupFactory getGroupFactory()
-	{
+	public VGroupFactory getGroupFactory() {
 		return (VGroupFactory) getEFactoryInstance();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private boolean isCreated = false;
@@ -232,14 +217,12 @@ public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
 	 * guarded to have no affect on any invocation but its first.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	public void createPackageContents()
-	{
-		if (isCreated) {
+	public void createPackageContents() {
+		if (isCreated)
 			return;
-		}
 		isCreated = true;
 
 		// Create classes and their features
@@ -256,7 +239,7 @@ public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private boolean isInitialized = false;
@@ -266,14 +249,12 @@ public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
 	 * method is guarded to have no affect on any invocation but its first.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	public void initializePackageContents()
-	{
-		if (isInitialized) {
+	public void initializePackageContents() {
+		if (isInitialized)
 			return;
-		}
 		isInitialized = true;
 
 		// Initialize package
@@ -282,9 +263,7 @@ public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		final VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
-		final EcorePackage theEcorePackage = (EcorePackage) EPackage.Registry.INSTANCE
-			.getEPackage(EcorePackage.eNS_URI);
+		VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
 
 		// Create type parameters
 
@@ -292,21 +271,17 @@ public class VGroupPackageImpl extends EPackageImpl implements VGroupPackage
 
 		// Add supertypes to classes
 		groupEClass.getESuperTypes().add(theViewPackage.getContainedContainer());
+		groupEClass.getESuperTypes().add(theViewPackage.getHasTooltip());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(groupEClass, VGroup.class, "Group", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(
-			getGroup_GroupType(),
-			getGroupType(),
-			"groupType", null, 1, 1, VGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(
-			getGroup_LabelAlignment(),
-			getGroupLabelAlignment(),
-			"labelAlignment", "LabelAligned", 0, 1, VGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-		initEAttribute(
-			getGroup_Collapsed(),
-			theEcorePackage.getEBoolean(),
-			"collapsed", null, 0, 1, VGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getGroup_GroupType(), this.getGroupType(), "groupType", null, 1, 1, VGroup.class, !IS_TRANSIENT, //$NON-NLS-1$
+			!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getGroup_LabelAlignment(), this.getGroupLabelAlignment(), "labelAlignment", "LabelAligned", 0, 1, //$NON-NLS-1$ //$NON-NLS-2$
+			VGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
+			IS_ORDERED);
+		initEAttribute(getGroup_Collapsed(), ecorePackage.getEBoolean(), "collapsed", null, 0, 1, VGroup.class, //$NON-NLS-1$
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(groupTypeEEnum, GroupType.class, "GroupType"); //$NON-NLS-1$

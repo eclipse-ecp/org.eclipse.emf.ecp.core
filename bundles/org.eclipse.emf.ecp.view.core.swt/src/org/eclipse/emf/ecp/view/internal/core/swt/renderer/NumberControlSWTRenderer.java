@@ -19,9 +19,11 @@ import javax.inject.Inject;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.NumericalHelper;
 import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
@@ -128,12 +130,20 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 	}
 
 	@Override
+	protected Object convert(Text text, EDataType attributeType, String value) throws DatabindingFailedException {
+		final EStructuralFeature eStructuralFeature = (EStructuralFeature) getModelValue().getValueType();
+		final NumericalTargetToModelUpdateStrategy converter = new NumericalTargetToModelUpdateStrategy(
+			eStructuralFeature, getModelValue(), getDataBindingContext(), text);
+		return converter.convert(value);
+	}
+
+	@Override
 	protected Binding[] createBindings(final Control control) throws DatabindingFailedException {
 		final EStructuralFeature structuralFeature = (EStructuralFeature) getModelValue().getValueType();
 
-		final NumericalTargetToModelUpdateStrategy targetToModelStrategy = new NumericalTargetToModelUpdateStrategy(
+		final UpdateValueStrategy targetToModelStrategy = withPreSetValidation(new NumericalTargetToModelUpdateStrategy(
 			structuralFeature, getModelValue(), getDataBindingContext(),
-			(Text) Composite.class.cast(control).getChildren()[0]);
+			(Text) Composite.class.cast(control).getChildren()[0]));
 		final NumericalModelToTargetUpdateStrategy modelToTargetStrategy = new NumericalModelToTargetUpdateStrategy(
 			getInstanceClass(structuralFeature), false);
 		final Binding binding = bindValue(control, getModelValue(), getDataBindingContext(),
@@ -164,6 +174,19 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 		return feature.getEType().getInstanceClass();
 	}
 
+	@Override
+	protected String getTextFromTextField(Text text, EDataType attributeType) {
+		if (!Object.class.isAssignableFrom(attributeType.getInstanceClass())) {
+			/* primitive types */
+			return super.getTextFromTextField(text, attributeType);
+		}
+		if (text.getText() != null && text.getText().isEmpty()) {
+			/* string is empty, but since we are a non primitive type, return null instead */
+			return null;
+		}
+		return super.getTextFromTextField(text, attributeType);
+	}
+
 	/**
 	 * Converts the numerical value from the model to the target. Locale settings are respected,
 	 * i.e. formatting is performed according to the current locale.
@@ -172,11 +195,9 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 
 		private final Class<?> instanceClass;
 
-		NumericalModelToTargetUpdateStrategy(Class<?> instanceClass,
-			boolean tooltip) {
+		NumericalModelToTargetUpdateStrategy(Class<?> instanceClass, boolean tooltip) {
 			super(tooltip);
 			this.instanceClass = instanceClass;
-
 		}
 
 		@Override
@@ -203,9 +224,8 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 		private final EStructuralFeature eStructuralFeature;
 		private final DataBindingContext dataBindingContext;
 
-		NumericalTargetToModelUpdateStrategy(EStructuralFeature eStructuralFeature, IObservableValue modelValue,
-			DataBindingContext dataBindingContext,
-			Text text) {
+		NumericalTargetToModelUpdateStrategy(EStructuralFeature eStructuralFeature,
+			IObservableValue modelValue, DataBindingContext dataBindingContext, Text text) {
 			super(eStructuralFeature.isUnsettable());
 			this.eStructuralFeature = eStructuralFeature;
 			this.modelValue = modelValue;
@@ -214,8 +234,7 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 		}
 
 		private DecimalFormat getFormat() {
-			return NumericalHelper.setupFormat(localeProvider.getLocale(),
-				getInstanceClass(eStructuralFeature));
+			return NumericalHelper.setupFormat(localeProvider.getLocale(), getInstanceClass(eStructuralFeature));
 		}
 
 		@Override

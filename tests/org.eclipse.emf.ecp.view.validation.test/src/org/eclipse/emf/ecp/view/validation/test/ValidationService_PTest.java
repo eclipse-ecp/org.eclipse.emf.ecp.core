@@ -15,6 +15,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -33,9 +34,15 @@ import org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContainer;
 import org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContent;
 import org.eclipse.emf.ecp.view.validation.test.model.TestFactory;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
+import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.common.report.ReportServiceConsumer;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author Stefan Dirix
@@ -52,6 +59,8 @@ public class ValidationService_PTest {
 	private CrossReferenceContent content;
 
 	private CrossReferenceContainer otherContainer;
+
+	private ReportService reportService;
 
 	/**
 	 * @throws java.lang.Exception
@@ -185,6 +194,105 @@ public class ValidationService_PTest {
 		otherContainer.getContents().add(content);
 
 		assertTrue(called.get(0));
+	}
+
+	@Test
+	public void testValidationTimeoutReport2000() {
+		setupContent();
+		container.getContents().add(content);
+		final ReportService reportService = getReportService();
+
+		final List<Boolean> called = new ArrayList<Boolean>(1);
+		called.add(false);
+		reportService.addConsumer(new ReportServiceConsumer() {
+
+			@Override
+			public void reported(AbstractReport reportEntity) {
+				assertTrue(reportEntity.getMessage().startsWith("Validation took longer than expected for"));
+				called.set(0, true);
+			}
+		});
+		validationService.addValidationProvider(new ValidationProvider() {
+			@Override
+			public List<Diagnostic> validate(EObject eObject) {
+				try {
+					Thread.sleep(3000);
+				} catch (final InterruptedException ex) {
+				}
+				return Collections.emptyList();
+			}
+		});
+
+		validationService.validate(Arrays.asList(content.eContainer()));
+		assertTrue("Validation report missing", called.get(0));
+	}
+
+	@Test
+	public void testValidationTimeoutReport1000() {
+		setupContent();
+		container.getContents().add(content);
+		final ReportService reportService = getReportService();
+
+		final List<Boolean> called = new ArrayList<Boolean>(1);
+		called.add(false);
+		reportService.addConsumer(new ReportServiceConsumer() {
+
+			@Override
+			public void reported(AbstractReport reportEntity) {
+				assertTrue(reportEntity.getMessage().startsWith("Validation took longer than expected for"));
+				called.set(0, true);
+
+			}
+		});
+		validationService.addValidationProvider(new ValidationProvider() {
+			@Override
+			public List<Diagnostic> validate(EObject eObject) {
+				try {
+					Thread.sleep(1000);
+				} catch (final InterruptedException ex) {
+				}
+				return Collections.emptyList();
+			}
+		});
+
+		validationService.validate(Arrays.asList(content.eContainer()));
+		assertTrue("Validation report missing", called.get(0));
+	}
+
+	@Test
+	public void testValidationTimeoutReportNoDelay() {
+		setupContent();
+		container.getContents().add(content);
+		final ReportService reportService = getReportService();
+
+		final List<Boolean> called = new ArrayList<Boolean>(1);
+		called.add(false);
+		reportService.addConsumer(new ReportServiceConsumer() {
+
+			@Override
+			public void reported(AbstractReport reportEntity) {
+				assertTrue(reportEntity.getMessage().startsWith("Validation took longer than expected for"));
+				called.set(0, true);
+
+			}
+		});
+		validationService.addValidationProvider(new ValidationProvider() {
+			@Override
+			public List<Diagnostic> validate(EObject eObject) {
+				return Collections.emptyList();
+			}
+		});
+
+		validationService.validate(Arrays.asList(content.eContainer()));
+		assertFalse("Validation report present", called.get(0));
+	}
+
+	private ReportService getReportService() {
+		final BundleContext bundleContext = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
+		final ServiceReference<ReportService> serviceReference = bundleContext.getServiceReference(ReportService.class);
+		final ReportService service = bundleContext.getService(serviceReference);
+		bundleContext.ungetService(serviceReference);
+		return service;
 	}
 
 }

@@ -27,6 +27,7 @@ import org.eclipse.emf.emfstore.bowling.BowlingFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.emf.emfstore.bowling.Gender;
 import org.eclipse.emf.emfstore.bowling.Player;
+import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
@@ -107,7 +108,7 @@ public class SWTStack_PTest {
 		composite = (Composite) composite.getChildren()[0];
 		boolean comboFound = false;
 		for (final Control control : composite.getChildren()) {
-			if (control instanceof Combo) {
+			if (control instanceof Combo || control instanceof CCombo) {
 				comboFound = true;
 				break;
 			}

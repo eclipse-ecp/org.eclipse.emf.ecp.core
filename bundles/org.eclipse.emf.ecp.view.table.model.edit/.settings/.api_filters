@@ -32,4 +32,12 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/table/model/provider/WidthConfigurationItemProvider.java" type="org.eclipse.emf.ecp.view.spi.table.model.provider.WidthConfigurationItemProvider">
+        <filter comment="SPI change" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.provider.WidthConfigurationItemProvider"/>
+                <message_argument value="addColumnDomainReferencePropertyDescriptor(Object)"/>
+            </message_arguments>
+        </filter>
+    </resource>
 </component>

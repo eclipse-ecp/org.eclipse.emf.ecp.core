@@ -135,9 +135,12 @@ public abstract class AbstractTableViewerComposite extends Composite {
 			final Integer storedMinWidth = (Integer) tableColumn.getData(MIN_WIDTH);
 			if (storedWeight == ColumnDescription.NO_WEIGHT) {
 				layout.setColumnData(tableColumn, new ColumnPixelData(storedMinWidth, storedIsResizable));
-			} else {
+			} else if (storedMinWidth > 0) {
 				layout.setColumnData(tableColumn,
 					new ColumnWeightData(storedWeight, storedMinWidth, storedIsResizable));
+			} else {
+				layout.setColumnData(tableColumn,
+					new ColumnWeightData(storedWeight, storedIsResizable));
 			}
 		}
 	}

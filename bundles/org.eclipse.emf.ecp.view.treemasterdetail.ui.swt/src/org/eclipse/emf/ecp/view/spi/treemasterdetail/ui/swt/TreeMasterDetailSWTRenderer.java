@@ -39,7 +39,6 @@ import org.eclipse.emf.ecp.edit.spi.EMFDeleteServiceImpl;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.edit.spi.swt.util.SWTValidationHelper;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
-import org.eclipse.emf.ecp.ui.view.swt.DefaultReferenceService;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.internal.swt.ContextMenuViewModelService;
 import org.eclipse.emf.ecp.view.internal.treemasterdetail.ui.swt.Activator;
@@ -833,16 +832,6 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 	private class TreeMasterViewSelectionListener implements ISelectionChangedListener {
 
 		private Composite childComposite;
-		private ReferenceService referenceService;
-
-		TreeMasterViewSelectionListener() {
-			// TODO refactor
-			if (getViewModelContext().hasService(ReferenceService.class)) {
-				referenceService = getViewModelContext().getService(ReferenceService.class);
-			} else {
-				referenceService = new DefaultReferenceService();
-			}
-		}
 
 		@Override
 		public void selectionChanged(SelectionChangedEvent event) {

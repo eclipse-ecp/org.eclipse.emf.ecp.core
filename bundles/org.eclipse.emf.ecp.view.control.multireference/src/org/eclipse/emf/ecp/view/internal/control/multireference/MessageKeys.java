@@ -26,5 +26,16 @@ public interface MessageKeys {
 	 * Add New Tooltip.
 	 */
 	String MultiReferenceSWTRenderer_addNewTooltip = "MultiReferenceSWTRenderer_addNewTooltip"; //$NON-NLS-1$
+	/**
+	 * Delete Tooltip.
+	 */
 	String MultiReferenceSWTRenderer_deleteTooltip = "MultiReferenceSWTRenderer_deleteTooltip"; //$NON-NLS-1$
+	/**
+	 * Move Up Tooltip.
+	 */
+	String MultiReferenceSWTRenderer_moveUpTooltip = "MultiReferenceSWTRenderer_moveUpTooltip"; //$NON-NLS-1$
+	/**
+	 * Move Down Tooltip.
+	 */
+	String MultiReferenceSWTRenderer_moveDownTooltip = "MultiReferenceSWTRenderer_moveDownTooltip"; //$NON-NLS-1$
 }

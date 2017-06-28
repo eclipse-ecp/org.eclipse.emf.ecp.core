@@ -15,6 +15,7 @@ import java.io.File;
 import java.net.MalformedURLException;
 
 import org.eclipse.core.databinding.Binding;
+import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.resources.IResource;
@@ -64,22 +65,22 @@ import org.osgi.framework.ServiceReference;
  */
 public class URLSelectionControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 
-	private static final EMFFormsDatabinding emfFormsDatabinding;
-	private static final EMFFormsLabelProvider emfFormsLabelProvider;
-	private static final VTViewTemplateProvider vtViewTemplateProvider;
+	private static final EMFFormsDatabinding EMFFORMS_DATABINDING;
+	private static final EMFFormsLabelProvider EMFFORMS_LABELPROVIDER;
+	private static final VTViewTemplateProvider VT_VIEW_TEMPLATEPROVIDER;
 
 	static {
 		final BundleContext bundleContext = FrameworkUtil.getBundle(URLSelectionControlSWTRenderer.class)
 			.getBundleContext();
 		final ServiceReference<EMFFormsDatabinding> emfFormsDatabindingServiceReference = bundleContext
 			.getServiceReference(EMFFormsDatabinding.class);
-		emfFormsDatabinding = bundleContext.getService(emfFormsDatabindingServiceReference);
+		EMFFORMS_DATABINDING = bundleContext.getService(emfFormsDatabindingServiceReference);
 		final ServiceReference<EMFFormsLabelProvider> emfFormsLabelProviderServiceReference = bundleContext
 			.getServiceReference(EMFFormsLabelProvider.class);
-		emfFormsLabelProvider = bundleContext.getService(emfFormsLabelProviderServiceReference);
+		EMFFORMS_LABELPROVIDER = bundleContext.getService(emfFormsLabelProviderServiceReference);
 		final ServiceReference<VTViewTemplateProvider> vtViewTemplateProviderServiceReference = bundleContext
 			.getServiceReference(VTViewTemplateProvider.class);
-		vtViewTemplateProvider = bundleContext.getService(vtViewTemplateProviderServiceReference);
+		VT_VIEW_TEMPLATEPROVIDER = bundleContext.getService(vtViewTemplateProviderServiceReference);
 	}
 
 	/**
@@ -91,7 +92,8 @@ public class URLSelectionControlSWTRenderer extends SimpleControlSWTControlSWTRe
 	 */
 	public URLSelectionControlSWTRenderer(VControl vElement, ViewModelContext viewContext,
 		ReportService reportService) {
-		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
+		super(vElement, viewContext, reportService, EMFFORMS_DATABINDING, EMFFORMS_LABELPROVIDER,
+			VT_VIEW_TEMPLATEPROVIDER);
 	}
 
 	/**
@@ -105,10 +107,12 @@ public class URLSelectionControlSWTRenderer extends SimpleControlSWTControlSWTRe
 		final Composite composite = Composite.class.cast(control);
 		final Control childControl = composite.getChildren()[0];
 		final IObservableValue value = WidgetProperties.text().observe(childControl);
-		final Binding binding = getDataBindingContext().bindValue(value, getModelValue());
+		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(),
+			withPreSetValidation(new UpdateValueStrategy()), null);
 
 		final IObservableValue toolTip = WidgetProperties.tooltipText().observe(childControl);
-		final Binding tooltipBinding = getDataBindingContext().bindValue(toolTip, getModelValue());
+		final Binding tooltipBinding = getDataBindingContext().bindValue(toolTip, getModelValue(),
+			withPreSetValidation(new UpdateValueStrategy()), null);
 		return new Binding[] { binding, tooltipBinding };
 	}
 

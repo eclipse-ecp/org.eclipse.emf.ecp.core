@@ -105,5 +105,11 @@
                 <message_argument value="getTargetToModelStrategy()"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI change" id="576720909">
+            <message_arguments>
+                <message_argument value="StringBasedCellEditor"/>
+                <message_argument value="StringCellEditor"/>
+            </message_arguments>
+        </filter>
     </resource>
 </component>

@@ -33,8 +33,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * @model kind="package"
  * @generated
  */
-public interface VSectionPackage extends EPackage
-{
+public interface VSectionPackage extends EPackage {
 	/**
 	 * The package name.
 	 * <!-- begin-user-doc -->
@@ -94,6 +93,18 @@ public interface VSectionPackage extends EPackage
 	int SECTIONED_AREA__NAME = VViewPackage.CONTAINED_ELEMENT__NAME;
 
 	/**
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int SECTIONED_AREA__LABEL = VViewPackage.CONTAINED_ELEMENT__LABEL;
+
+	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -144,6 +155,18 @@ public interface VSectionPackage extends EPackage
 	int SECTIONED_AREA__ATTACHMENTS = VViewPackage.CONTAINED_ELEMENT__ATTACHMENTS;
 
 	/**
+	 * The feature id for the '<em><b>Uuid</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int SECTIONED_AREA__UUID = VViewPackage.CONTAINED_ELEMENT__UUID;
+
+	/**
 	 * The feature id for the '<em><b>Root</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -164,8 +187,8 @@ public interface VSectionPackage extends EPackage
 	int SECTIONED_AREA_FEATURE_COUNT = VViewPackage.CONTAINED_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.section.model.impl.VSectionImpl <em>Section</em>}
-	 * ' class.
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.section.model.impl.VSectionImpl
+	 * <em>Section</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -184,6 +207,18 @@ public interface VSectionPackage extends EPackage
 	 * @ordered
 	 */
 	int SECTION__NAME = VViewPackage.CONTAINER__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int SECTION__LABEL = VViewPackage.CONTAINER__LABEL;
 
 	/**
 	 * The feature id for the '<em><b>Visible</b></em>' attribute.
@@ -236,6 +271,18 @@ public interface VSectionPackage extends EPackage
 	int SECTION__ATTACHMENTS = VViewPackage.CONTAINER__ATTACHMENTS;
 
 	/**
+	 * The feature id for the '<em><b>Uuid</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int SECTION__UUID = VViewPackage.CONTAINER__UUID;
+
+	/**
 	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -246,6 +293,18 @@ public interface VSectionPackage extends EPackage
 	int SECTION__CHILDREN = VViewPackage.CONTAINER__CHILDREN;
 
 	/**
+	 * The feature id for the '<em><b>Tooltip</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int SECTION__TOOLTIP = VViewPackage.CONTAINER_FEATURE_COUNT + 0;
+
+	/**
 	 * The feature id for the '<em><b>Child Items</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -253,7 +312,7 @@ public interface VSectionPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int SECTION__CHILD_ITEMS = VViewPackage.CONTAINER_FEATURE_COUNT + 0;
+	int SECTION__CHILD_ITEMS = VViewPackage.CONTAINER_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Collapsed</b></em>' attribute.
@@ -263,7 +322,7 @@ public interface VSectionPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int SECTION__COLLAPSED = VViewPackage.CONTAINER_FEATURE_COUNT + 1;
+	int SECTION__COLLAPSED = VViewPackage.CONTAINER_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>Section</em>' class.
@@ -273,11 +332,11 @@ public interface VSectionPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int SECTION_FEATURE_COUNT = VViewPackage.CONTAINER_FEATURE_COUNT + 2;
+	int SECTION_FEATURE_COUNT = VViewPackage.CONTAINER_FEATURE_COUNT + 3;
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.section.model.VSectionedArea
-	 * <em>Sectioned Area</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.section.model.VSectionedArea <em>Sectioned
+	 * Area</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -288,8 +347,8 @@ public interface VSectionPackage extends EPackage
 	EClass getSectionedArea();
 
 	/**
-	 * Returns the meta object for the containment reference '
-	 * {@link org.eclipse.emf.ecp.view.spi.section.model.VSectionedArea#getRoot <em>Root</em>}'.
+	 * Returns the meta object for the containment reference
+	 * '{@link org.eclipse.emf.ecp.view.spi.section.model.VSectionedArea#getRoot <em>Root</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -312,8 +371,8 @@ public interface VSectionPackage extends EPackage
 	EClass getSection();
 
 	/**
-	 * Returns the meta object for the containment reference list '
-	 * {@link org.eclipse.emf.ecp.view.spi.section.model.VSection#getChildItems <em>Child Items</em>}'.
+	 * Returns the meta object for the containment reference list
+	 * '{@link org.eclipse.emf.ecp.view.spi.section.model.VSection#getChildItems <em>Child Items</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -325,8 +384,8 @@ public interface VSectionPackage extends EPackage
 	EReference getSection_ChildItems();
 
 	/**
-	 * Returns the meta object for the attribute '
-	 * {@link org.eclipse.emf.ecp.view.spi.section.model.VSection#isCollapsed <em>Collapsed</em>}'.
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.spi.section.model.VSection#isCollapsed
+	 * <em>Collapsed</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -360,8 +419,7 @@ public interface VSectionPackage extends EPackage
 	 *
 	 * @generated
 	 */
-	interface Literals
-	{
+	interface Literals {
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.section.model.impl.VSectionedAreaImpl
 		 * <em>Sectioned Area</em>}' class.

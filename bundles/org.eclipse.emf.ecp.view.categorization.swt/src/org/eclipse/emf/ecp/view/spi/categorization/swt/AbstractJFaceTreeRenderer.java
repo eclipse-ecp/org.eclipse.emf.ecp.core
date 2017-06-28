@@ -9,7 +9,7 @@
  * Contributors:
  * Edagr Mueller - initial API and implementation
  * Eugen Neufeld - Refactoring
- * Johannes Falterimeier - Refactoring
+ * Johannes Faltermeier - Refactoring
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.categorization.swt;
 
@@ -28,8 +28,11 @@ import org.eclipse.emf.ecp.view.internal.categorization.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VAbstractCategorization;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizableElement;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement;
+import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage.Literals;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.reporting.StatusReport;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
@@ -297,9 +300,12 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 		treeViewer.setContentProvider(contentProvider);
 		treeViewer.setLabelProvider(treeTableLabelProvider);
 
-		treeViewer.addSelectionChangedListener(new TreeSelectionChangedListener(getViewModelContext(), editorComposite,
+		final AbstractJFaceTreeRenderer<VELEMENT>.TreeSelectionChangedListener treeSelectionChangedListener = new TreeSelectionChangedListener(
+			getViewModelContext(), editorComposite,
 			getCategorizationElement(),
-			treeViewer, editors));
+			treeViewer, editors);
+		treeViewer.addSelectionChangedListener(treeSelectionChangedListener);
+		getViewModelContext().registerViewChangeListener(treeSelectionChangedListener);
 
 		addTreeEditor(treeViewer, getVElement(), editors);
 
@@ -326,7 +332,9 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 
 		treeViewer.setInput(getVElement());
 		treeViewer.expandAll();
-		if (getCategorizations().size() != 0) {
+		if (getCategorizationElement().getCurrentSelection() != null) {
+			treeViewer.setSelection(new StructuredSelection(getCategorizationElement().getCurrentSelection()));
+		} else if (getCategorizations().size() != 0) {
 			treeViewer.setSelection(new StructuredSelection(getCategorizations().get(0)));
 		}
 	}
@@ -458,13 +466,15 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 	 * @author Jonas Helming
 	 *
 	 */
-	private final class TreeSelectionChangedListener implements ISelectionChangedListener {
+	private final class TreeSelectionChangedListener implements ISelectionChangedListener, ModelChangeListener {
 		private final ViewModelContext viewModelContext;
 		private final ScrolledComposite editorComposite;
 		private final VCategorizationElement vCategorizationElement;
 		private final TreeViewer treeViewer;
 		private final List<TreeEditor> editors;
 		private Composite childComposite;
+
+		private boolean busy;
 
 		private TreeSelectionChangedListener(ViewModelContext viewModelContext,
 			ScrolledComposite editorComposite, VCategorizationElement vCategorizationElement, TreeViewer treeViewer,
@@ -486,50 +496,80 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 			if (selection == null) {
 				return;
 			}
-			if (childComposite != null) {
-				childComposite.dispose();
-				childComposite = null;
+			onSelectionChanged(VElement.class.cast(selection));
+		}
+
+		public void onSelectionChanged(VElement child) {
+
+			if (busy) {
+				return;
 			}
-			childComposite = createComposite(editorComposite);
 
-			childComposite.setBackground(editorComposite.getBackground());
-			editorComposite.setContent(childComposite);
-
-			final VElement child = (VElement) selection;
+			busy = true;
 			try {
-
-				AbstractSWTRenderer<VElement> renderer;
-				try {
-					renderer = getEMFFormsRendererFactory().getRendererInstance(child,
-						viewModelContext);
-				} catch (final EMFFormsNoRendererException ex) {
-					getReportService().report(
-						new StatusReport(
-							new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format(
-								"No Renderer for %s found.", child.eClass().getName(), ex)))); //$NON-NLS-1$
-					return;
+				if (childComposite != null) {
+					childComposite.dispose();
+					childComposite = null;
 				}
-				// we have a VCategory-> thus only one element in the grid
-				final Control render = renderer.render(
-					renderer.getGridDescription(GridDescriptionFactory.INSTANCE.createEmptyGridDescription()).getGrid()
-						.get(0),
-					childComposite);
-				renderer.finalizeRendering(childComposite);
-				GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true)
-					.minSize(SWT.DEFAULT, 200)
-					.applyTo(render);
-				vCategorizationElement.setCurrentSelection((VCategorizableElement) child);
-			} catch (final NoRendererFoundException e) {
-				getReportService().report(new RenderingFailedReport(e));
-			} catch (final NoPropertyDescriptorFoundExeption e) {
-				getReportService().report(new RenderingFailedReport(e));
-			}
+				childComposite = createComposite(editorComposite);
 
-			childComposite.layout();
-			final Point point = childComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-			editorComposite.setMinSize(point);
+				childComposite.setBackground(editorComposite.getBackground());
+				editorComposite.setContent(childComposite);
+
+				try {
+
+					AbstractSWTRenderer<VElement> renderer;
+					try {
+						renderer = getEMFFormsRendererFactory().getRendererInstance(child,
+							viewModelContext);
+					} catch (final EMFFormsNoRendererException ex) {
+						getReportService().report(
+							new StatusReport(
+								new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format(
+									"No Renderer for %s found.", child.eClass().getName(), ex)))); //$NON-NLS-1$
+						return;
+					}
+					// we have a VCategory-> thus only one element in the grid
+					final Control render = renderer.render(
+						renderer.getGridDescription(GridDescriptionFactory.INSTANCE.createEmptyGridDescription())
+							.getGrid()
+							.get(0),
+						childComposite);
+					renderer.finalizeRendering(childComposite);
+					GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true)
+						.minSize(SWT.DEFAULT, 200)
+						.applyTo(render);
+					vCategorizationElement.setCurrentSelection((VCategorizableElement) child);
+				} catch (final NoRendererFoundException e) {
+					getReportService().report(new RenderingFailedReport(e));
+				} catch (final NoPropertyDescriptorFoundExeption e) {
+					getReportService().report(new RenderingFailedReport(e));
+				}
+
+				childComposite.layout();
+				final Point point = childComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+				editorComposite.setMinSize(point);
+
+			} finally {
+				busy = false;
+			}
 
 		}
+
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @see org.eclipse.emf.ecp.view.spi.model.ModelChangeListener#notifyChange(org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification)
+		 */
+		@Override
+		public void notifyChange(ModelChangeNotification notification) {
+			if (notification.getNotifier() instanceof VCategorizationElement
+				&& notification.getStructuralFeature() == Literals.CATEGORIZATION_ELEMENT__CURRENT_SELECTION) {
+				onSelectionChanged((VElement) notification.getNotifier());
+			}
+
+		}
+
 	}
 
 	/**

@@ -23,6 +23,7 @@ import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategory;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VHasTooltip;
 
 /**
  * <!-- begin-user-doc -->
@@ -38,8 +39,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage
  * @generated
  */
-public class CategorizationSwitch<T> extends Switch<T>
-{
+public class CategorizationSwitch<T> extends Switch<T> {
 	/**
 	 * The cached model package
 	 * <!-- begin-user-doc -->
@@ -56,10 +56,8 @@ public class CategorizationSwitch<T> extends Switch<T>
 	 *
 	 * @generated
 	 */
-	public CategorizationSwitch()
-	{
-		if (modelPackage == null)
-		{
+	public CategorizationSwitch() {
+		if (modelPackage == null) {
 			modelPackage = VCategorizationPackage.eINSTANCE;
 		}
 	}
@@ -69,13 +67,12 @@ public class CategorizationSwitch<T> extends Switch<T>
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
-	 * @parameter ePackage the package in question.
+	 * @param ePackage the package in question.
 	 * @return whether this is a switch for the given package.
 	 * @generated
 	 */
 	@Override
-	protected boolean isSwitchFor(EPackage ePackage)
-	{
+	protected boolean isSwitchFor(EPackage ePackage) {
 		return ePackage == modelPackage;
 	}
 
@@ -89,10 +86,8 @@ public class CategorizationSwitch<T> extends Switch<T>
 	 * @generated
 	 */
 	@Override
-	protected T doSwitch(int classifierID, EObject theEObject)
-	{
-		switch (classifierID)
-		{
+	protected T doSwitch(int classifierID, EObject theEObject) {
+		switch (classifierID) {
 		case VCategorizationPackage.ABSTRACT_CATEGORIZATION: {
 			final VAbstractCategorization abstractCategorization = (VAbstractCategorization) theEObject;
 			T result = caseAbstractCategorization(abstractCategorization);
@@ -101,6 +96,9 @@ public class CategorizationSwitch<T> extends Switch<T>
 			}
 			if (result == null) {
 				result = caseElement(abstractCategorization);
+			}
+			if (result == null) {
+				result = caseHasTooltip(abstractCategorization);
 			}
 			if (result == null) {
 				result = defaultCase(theEObject);
@@ -120,6 +118,9 @@ public class CategorizationSwitch<T> extends Switch<T>
 				result = caseElement(categorization);
 			}
 			if (result == null) {
+				result = caseHasTooltip(categorization);
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
 			}
 			return result;
@@ -135,6 +136,9 @@ public class CategorizationSwitch<T> extends Switch<T>
 			}
 			if (result == null) {
 				result = caseElement(category);
+			}
+			if (result == null) {
+				result = caseHasTooltip(category);
 			}
 			if (result == null) {
 				result = defaultCase(theEObject);
@@ -170,6 +174,9 @@ public class CategorizationSwitch<T> extends Switch<T>
 				result = caseElement(categorizableElement);
 			}
 			if (result == null) {
+				result = caseHasTooltip(categorizableElement);
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
 			}
 			return result;
@@ -191,8 +198,7 @@ public class CategorizationSwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseAbstractCategorization(VAbstractCategorization object)
-	{
+	public T caseAbstractCategorization(VAbstractCategorization object) {
 		return null;
 	}
 
@@ -208,8 +214,7 @@ public class CategorizationSwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseCategorization(VCategorization object)
-	{
+	public T caseCategorization(VCategorization object) {
 		return null;
 	}
 
@@ -225,8 +230,7 @@ public class CategorizationSwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseCategory(VCategory object)
-	{
+	public T caseCategory(VCategory object) {
 		return null;
 	}
 
@@ -242,8 +246,7 @@ public class CategorizationSwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseAction(VAction object)
-	{
+	public T caseAction(VAction object) {
 		return null;
 	}
 
@@ -259,8 +262,7 @@ public class CategorizationSwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseCategorizationElement(VCategorizationElement object)
-	{
+	public T caseCategorizationElement(VCategorizationElement object) {
 		return null;
 	}
 
@@ -276,8 +278,7 @@ public class CategorizationSwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseCategorizableElement(VCategorizableElement object)
-	{
+	public T caseCategorizableElement(VCategorizableElement object) {
 		return null;
 	}
 
@@ -293,8 +294,24 @@ public class CategorizationSwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseElement(VElement object)
-	{
+	public T caseElement(VElement object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Has Tooltip</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 *
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Has Tooltip</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 * @since 1.13
+	 */
+	public T caseHasTooltip(VHasTooltip object) {
 		return null;
 	}
 
@@ -310,8 +327,7 @@ public class CategorizationSwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseContainedElement(VContainedElement object)
-	{
+	public T caseContainedElement(VContainedElement object) {
 		return null;
 	}
 
@@ -328,8 +344,7 @@ public class CategorizationSwitch<T> extends Switch<T>
 	 * @generated
 	 */
 	@Override
-	public T defaultCase(EObject object)
-	{
+	public T defaultCase(EObject object) {
 		return null;
 	}
 

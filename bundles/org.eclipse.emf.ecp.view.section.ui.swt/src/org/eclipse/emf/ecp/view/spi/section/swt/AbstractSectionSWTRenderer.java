@@ -17,6 +17,7 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecp.view.internal.section.ui.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
@@ -55,6 +56,8 @@ import org.osgi.framework.ServiceReference;
 public abstract class AbstractSectionSWTRenderer extends
 	AbstractSWTRenderer<VSection> {
 
+	private final EMFDataBindingContext dbc;
+
 	/**
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
@@ -63,6 +66,7 @@ public abstract class AbstractSectionSWTRenderer extends
 	 */
 	public AbstractSectionSWTRenderer(VSection vElement, ViewModelContext viewContext, ReportService reportService) {
 		super(vElement, viewContext, reportService);
+		dbc = new EMFDataBindingContext();
 	}
 
 	@Override
@@ -245,6 +249,27 @@ public abstract class AbstractSectionSWTRenderer extends
 		control.setLayoutData(LayoutProviderHelper.getLayoutData(gridCell, gridDescription, currentRowGridDescription,
 			fullGridDescription, vElement, getViewModelContext().getDomainModel(), control));
 
+	}
+
+	/**
+	 * Returns the {@link EMFDataBindingContext}.
+	 *
+	 * @return the data binding context
+	 * @since 1.13
+	 */
+	protected EMFDataBindingContext getDataBindingContext() {
+		return dbc;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#dispose()
+	 */
+	@Override
+	protected void dispose() {
+		dbc.dispose();
+		super.dispose();
 	}
 
 	/**

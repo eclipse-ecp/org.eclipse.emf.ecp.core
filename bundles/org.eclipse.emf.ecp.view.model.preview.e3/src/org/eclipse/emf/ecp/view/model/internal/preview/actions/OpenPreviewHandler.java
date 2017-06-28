@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecp.view.model.internal.preview.Activator;
+import org.eclipse.emf.ecp.view.model.internal.preview.Messages;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.reporting.StatusReport;
 import org.eclipse.emf.ecp.view.spi.treemasterdetail.ui.swt.MasterDetailAction;
@@ -81,14 +82,14 @@ public class OpenPreviewHandler extends MasterDetailAction implements IToolbarAc
 
 	@Override
 	public Action getAction(final Object currentObject, ISelectionProvider selectionProvider) {
-		final Action previewAction = new Action("Open Preview") {
+		final Action previewAction = new Action(Messages.OpenPreviewHandler_OpenPreview) {
 			@Override
 			public void run() {
 				execute(((ResourceSet) currentObject).getResources().get(0).getAllContents().next());
 			}
 		};
 		previewAction.setImageDescriptor(ImageDescriptor.createFromURL(FrameworkUtil.getBundle(this.getClass())
-			.getResource("icons/preview.png")));
+			.getResource("icons/preview.png"))); //$NON-NLS-1$
 		return previewAction;
 	}
 

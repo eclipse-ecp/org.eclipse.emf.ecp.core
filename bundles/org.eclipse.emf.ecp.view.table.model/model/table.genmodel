@@ -4,7 +4,7 @@
     modelDirectory="/org.eclipse.emf.ecp.view.table.model/src" modelPluginID="org.eclipse.emf.ecp.view.table.model"
     modelName="Table" nonNLSMarkers="true" codeFormatting="true" commentFormatting="true"
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="6.0" copyrightFields="false"
-    usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model"
+    usedGenPackages="../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model"
     interfaceNamePattern="V{0}" classNamePattern="V{0}Impl">
   <foreignModel>table.ecore</foreignModel>
   <genPackages prefix="Table" basePackage="org.eclipse.emf.ecp.view.spi" disposableProviderFactory="true"
@@ -33,9 +33,14 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference table.ecore#//ReadOnlyColumnConfiguration/columnDomainReferences"/>
     </genClasses>
     <genClasses ecoreClass="table.ecore#//WidthConfiguration">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference table.ecore#//WidthConfiguration/columnDomainReference"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute table.ecore#//WidthConfiguration/weight"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute table.ecore#//WidthConfiguration/minWidth"/>
+      <genFeatures createChild="false" propertyDescription="The weight of the column. The renderer will calculate the width based on all given weights (relatively) and the total width of the table. If there is no weight specified for a column, the default &quot;100&quot; is used."
+          ecoreFeature="ecore:EAttribute table.ecore#//WidthConfiguration/weight"/>
+      <genFeatures createChild="false" propertyDescription="The minimal width of the column in pixel. The column will not get smaller than this width, even when the user changes the width manually. If there is no minimal width specified for a column, the default &quot;10&quot; is used."
+          ecoreFeature="ecore:EAttribute table.ecore#//WidthConfiguration/minWidth"/>
+    </genClasses>
+    <genClasses ecoreClass="table.ecore#//EnablementConfiguration"/>
+    <genClasses ecoreClass="table.ecore#//SingleColumnConfiguration">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference table.ecore#//SingleColumnConfiguration/columnDomainReference"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

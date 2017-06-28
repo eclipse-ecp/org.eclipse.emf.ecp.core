@@ -36,6 +36,9 @@
    <feature id="org.eclipse.emf.ecp.view.validation.feature.source" version="0.0.0">
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
+   <feature id="org.eclipse.emfforms.common.prevalidation.feature.source" version="0.0.0">
+      <category name="org.eclipse.emf.ecp.emfforms"/>
+   </feature>
    <feature id="org.eclipse.emf.ecp.view.horizontal.feature.source" version="0.0.0">
       <category name="org.eclipse.emf.ecp.view"/>
    </feature>

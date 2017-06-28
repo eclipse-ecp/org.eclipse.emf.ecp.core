@@ -26,20 +26,19 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.spi.categorization.model.impl.VCategoryImpl#getComposite <em>Composite</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
-public class VCategoryImpl extends VAbstractCategorizationImpl implements VCategory
-{
+public class VCategoryImpl extends VAbstractCategorizationImpl implements VCategory {
 	/**
 	 * The cached value of the '{@link #getComposite() <em>Composite</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getComposite()
 	 * @generated
 	 * @ordered
@@ -49,57 +48,51 @@ public class VCategoryImpl extends VAbstractCategorizationImpl implements VCateg
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	protected VCategoryImpl()
-	{
+	protected VCategoryImpl() {
 		super();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return VCategorizationPackage.Literals.CATEGORY;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public VContainedElement getComposite()
-	{
+	public VContainedElement getComposite() {
 		return composite;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	public NotificationChain basicSetComposite(VContainedElement newComposite, NotificationChain msgs)
-	{
-		final VContainedElement oldComposite = composite;
+	public NotificationChain basicSetComposite(VContainedElement newComposite, NotificationChain msgs) {
+		VContainedElement oldComposite = composite;
 		composite = newComposite;
-		if (eNotificationRequired())
-		{
-			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
 				VCategorizationPackage.CATEGORY__COMPOSITE, oldComposite, newComposite);
-			if (msgs == null) {
+			if (msgs == null)
 				msgs = notification;
-			} else {
+			else
 				msgs.add(notification);
-			}
 		}
 		return msgs;
 	}
@@ -107,45 +100,36 @@ public class VCategoryImpl extends VAbstractCategorizationImpl implements VCateg
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public void setComposite(VContainedElement newComposite)
-	{
-		if (newComposite != composite)
-		{
+	public void setComposite(VContainedElement newComposite) {
+		if (newComposite != composite) {
 			NotificationChain msgs = null;
-			if (composite != null) {
-				msgs = ((InternalEObject) composite).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
-					- VCategorizationPackage.CATEGORY__COMPOSITE, null, msgs);
-			}
-			if (newComposite != null) {
-				msgs = ((InternalEObject) newComposite).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
-					- VCategorizationPackage.CATEGORY__COMPOSITE, null, msgs);
-			}
+			if (composite != null)
+				msgs = ((InternalEObject) composite).eInverseRemove(this,
+					EOPPOSITE_FEATURE_BASE - VCategorizationPackage.CATEGORY__COMPOSITE, null, msgs);
+			if (newComposite != null)
+				msgs = ((InternalEObject) newComposite).eInverseAdd(this,
+					EOPPOSITE_FEATURE_BASE - VCategorizationPackage.CATEGORY__COMPOSITE, null, msgs);
 			msgs = basicSetComposite(newComposite, msgs);
-			if (msgs != null) {
+			if (msgs != null)
 				msgs.dispatch();
-			}
-		}
-		else if (eNotificationRequired()) {
+		} else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, VCategorizationPackage.CATEGORY__COMPOSITE,
 				newComposite, newComposite));
-		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-	{
-		switch (featureID)
-		{
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
 		case VCategorizationPackage.CATEGORY__COMPOSITE:
 			return basicSetComposite(null, msgs);
 		}
@@ -155,14 +139,12 @@ public class VCategoryImpl extends VAbstractCategorizationImpl implements VCateg
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
-		switch (featureID)
-		{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 		case VCategorizationPackage.CATEGORY__COMPOSITE:
 			return getComposite();
 		}
@@ -172,14 +154,12 @@ public class VCategoryImpl extends VAbstractCategorizationImpl implements VCateg
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
-		switch (featureID)
-		{
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 		case VCategorizationPackage.CATEGORY__COMPOSITE:
 			setComposite((VContainedElement) newValue);
 			return;
@@ -190,14 +170,12 @@ public class VCategoryImpl extends VAbstractCategorizationImpl implements VCateg
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
-		switch (featureID)
-		{
+	public void eUnset(int featureID) {
+		switch (featureID) {
 		case VCategorizationPackage.CATEGORY__COMPOSITE:
 			setComposite((VContainedElement) null);
 			return;
@@ -208,14 +186,12 @@ public class VCategoryImpl extends VAbstractCategorizationImpl implements VCateg
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
-		switch (featureID)
-		{
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 		case VCategorizationPackage.CATEGORY__COMPOSITE:
 			return composite != null;
 		}

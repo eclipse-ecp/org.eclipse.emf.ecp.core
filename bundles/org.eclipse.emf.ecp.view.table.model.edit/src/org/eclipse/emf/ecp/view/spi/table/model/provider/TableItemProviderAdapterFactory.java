@@ -215,6 +215,33 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all
+	 * {@link org.eclipse.emf.ecp.view.spi.table.model.VEnablementConfiguration} instances.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected EnablementConfigurationItemProvider enablementConfigurationItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.table.model.VEnablementConfiguration}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public Adapter createEnablementConfigurationAdapter() {
+		if (enablementConfigurationItemProvider == null) {
+			enablementConfigurationItemProvider = new EnablementConfigurationItemProvider(this);
+		}
+
+		return enablementConfigurationItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -371,6 +398,9 @@ public class TableItemProviderAdapterFactory extends TableAdapterFactory impleme
 		}
 		if (widthConfigurationItemProvider != null) {
 			widthConfigurationItemProvider.dispose();
+		}
+		if (enablementConfigurationItemProvider != null) {
+			enablementConfigurationItemProvider.dispose();
 		}
 	}
 

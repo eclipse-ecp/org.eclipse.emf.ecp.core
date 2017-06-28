@@ -20,7 +20,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.emf.ecp.internal.ide.util.EcoreHelper;
+import org.eclipse.emf.ecp.ide.spi.util.EcoreHelper;
 import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.Test;

@@ -40,6 +40,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecp.view.spi.model.reporting.StatusReport;
 import org.eclipse.emfforms.internal.editor.genmodel.Activator;
+import org.eclipse.emfforms.internal.editor.genmodel.Messages;
 import org.eclipse.emfforms.internal.editor.genmodel.util.PluginXmlUtil;
 import org.eclipse.emfforms.spi.editor.IToolbarAction;
 import org.eclipse.emfforms.spi.editor.helpers.ResourceUtil;
@@ -59,23 +60,34 @@ import org.eclipse.swt.widgets.Menu;
 import org.osgi.framework.FrameworkUtil;
 
 /**
- *
  * The ToolbarAction allowing the User to generate Java code for the currently visible Genmodel.
  *
  * @author Clemens Elflein
  */
 public class GenerateJavaCodeAction implements IToolbarAction {
 
-	/**
-	 *
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.editor.IToolbarAction#getAction(java.lang.Object,
-	 *      org.eclipse.jface.viewers.ISelectionProvider)
-	 */
 	@Override
 	public Action getAction(Object currentObject, ISelectionProvider selectionProvider) {
-		return new CreateJavaCodeAction(currentObject, selectionProvider);
+		final ResourceSet resourceSet = (ResourceSet) currentObject;
+		final GenModel genModel = getGenModel(resourceSet);
+		return new CreateJavaCodeAction(genModel, selectionProvider);
+	}
+
+	/**
+	 * Returns the first {@link GenModel} object found in the first of the given {@link ResourceSet}.
+	 *
+	 * @param resourceSet the {@link ResourceSet} to check
+	 * @return the {@link GenModel} or <code>null</code> if none was found
+	 */
+	protected GenModel getGenModel(ResourceSet resourceSet) {
+		if (resourceSet.getResources().isEmpty()) {
+			return null;
+		}
+		final Resource topResource = resourceSet.getResources().get(0);
+		if (!topResource.getContents().isEmpty() && GenModel.class.isInstance(topResource.getContents().get(0))) {
+			return (GenModel) topResource.getContents().get(0);
+		}
+		return null;
 	}
 
 	@Override
@@ -84,46 +96,55 @@ public class GenerateJavaCodeAction implements IToolbarAction {
 		if (!(object instanceof ResourceSet)) {
 			return false;
 		}
-		// Check, if the ResourceSet contains a Genmodel. If so, we also can't execute our Action
+		// We can execute our Action only if the ResourceSet contains a GenModel
 		final ResourceSet resourceSet = (ResourceSet) object;
-		for (final Resource r : resourceSet.getResources()) {
-			if (r.getContents().size() > 0 && r.getContents().get(0) instanceof GenModel) {
-				return true;
-			}
-		}
-		return false;
+		final GenModel genModel = getGenModel(resourceSet);
+		return genModel != null;
 	}
 
 	/**
 	 * ToolbarAction to generate Java Code. It also provides the DropDown menu to create
 	 * each type separately (Model, Edit, Editor, Tests).
 	 */
-	private static class CreateJavaCodeAction extends Action {
+	class CreateJavaCodeAction extends Action {
 		private final Object[] types;
-		private final Object currentObject;
 		private final ISelectionProvider selectionProvider;
+		private final GenModel genModel;
+		private static final String FILE_NAME_PLUGIN_XML = "plugin.xml"; //$NON-NLS-1$
+		private static final String FILE_NAME_META_INF = "META-INF"; //$NON-NLS-1$
+		private static final String FILE_NAME_MANIFEST_MF = "MANIFEST.MF"; //$NON-NLS-1$
+		private static final String REQUIRE_BUNDLE_HEADER = "Require-Bundle"; //$NON-NLS-1$
+		private static final String EDITOR_BUNDLE_NAME = "org.eclipse.emfforms.editor";//$NON-NLS-1$
+		private static final String EDITOR_BUNDLE_VERSION = "1.8.0";//$NON-NLS-1$
+		private static final String EMFFORMS_EDITOR_CLASS_NAME = "org.eclipse.emfforms.spi.editor.GenericEditor";//$NON-NLS-1$
+		private static final String EMFFORMS_EDITOR_NAME = "EMFForms Editor";//$NON-NLS-1$
+		private static final String EMFFORMS_EDITOR_ID = "emfformseditor";//$NON-NLS-1$
 
-		public static final String FILE_NAME_PLUGIN_XML = "plugin.xml";
-		public static final String FILE_NAME_META_INF = "META-INF";
-		public static final String FILE_NAME_MANIFEST_MF = "MANIFEST.MF";
-		public static final String REQUIRE_BUNDLE_HEADER = "Require-Bundle";
-		public static final String EDITOR_BUNDLE_NAME = "org.eclipse.emfforms.editor";
-		public static final String EDITOR_BUNDLE_VERSION = "1.8.0";
-		public static final String EMFFORMS_EDITOR_CLASS_NAME = "org.eclipse.emfforms.spi.editor.GenericEditor";
-		public static final String EMFFORMS_EDITOR_NAME = "EMFForms Editor";
-		public static final String EMFFORMS_EDITOR_ID = "emfformseditor";
-
-		CreateJavaCodeAction(String text, Object[] types, Object currentObject, ISelectionProvider selectionProvider) {
+		/**
+		 * Constructor.
+		 *
+		 * @param text the string used as the text for the action, or null if there is no text
+		 * @param types the project types
+		 * @param genModel the {@link GenModel}
+		 * @param selectionProvider the {@link ISelectionProvider}
+		 */
+		CreateJavaCodeAction(String text, Object[] types, GenModel genModel, ISelectionProvider selectionProvider) {
 			super(text);
 			this.types = types;
-			this.currentObject = currentObject;
+			this.genModel = genModel;
 			this.selectionProvider = selectionProvider;
 		}
 
-		CreateJavaCodeAction(Object currentObject, ISelectionProvider selectionProvider) {
-			super("Generate All", SWT.DROP_DOWN);
+		/**
+		 * Constructor.
+		 *
+		 * @param genModel the {@link GenModel}
+		 * @param selectionProvider the {@link ISelectionProvider}
+		 */
+		CreateJavaCodeAction(GenModel genModel, ISelectionProvider selectionProvider) {
+			super(Messages.GenerateJavaCodeAction_generateAll, SWT.DROP_DOWN);
 			this.selectionProvider = selectionProvider;
-			this.currentObject = currentObject;
+			this.genModel = genModel;
 
 			types = new Object[] {
 				GenBaseGeneratorAdapter.MODEL_PROJECT_TYPE,
@@ -135,23 +156,27 @@ public class GenerateJavaCodeAction implements IToolbarAction {
 			setMenuCreator(new GenmodelDropdownCreator(selectionProvider));
 
 			setImageDescriptor(ImageDescriptor.createFromURL(FrameworkUtil.getBundle(
-				this.getClass()).getResource("icons/page_white_cup.png")));
+				this.getClass()).getResource("icons/page_white_cup.png"))); //$NON-NLS-1$
 		}
 
 		/**
-		 * {@inheritDoc}
+		 * Returns the Java code generation action.
 		 *
-		 * @see org.eclipse.jface.action.Action#run()
+		 * @param text the text of the Action
+		 * @param types the project types
+		 * @return a new Action
 		 */
+		protected Action getJavaCodeAction(String text, Object[] types) {
+			return new CreateJavaCodeAction(text, types, getGenModel(), selectionProvider);
+		}
+
 		@Override
 		public void run() {
-			final ResourceSet resourceSet = (ResourceSet) currentObject;
-			final GenModel genmodel = (GenModel) resourceSet.getResources().get(0).getContents().get(0);
 			final ISelection oldSelection = selectionProvider.getSelection();
-			selectionProvider.setSelection(new StructuredSelection(resourceSet));
-			genmodel.reconcile();
+			selectionProvider.setSelection(new StructuredSelection(getGenModel()));
+			getGenModel().reconcile();
 			selectionProvider.setSelection(oldSelection);
-			final IRunnableWithProgress generateCodeRunnable = new GenerateJavaCodeRunnable(genmodel);
+			final IRunnableWithProgress generateCodeRunnable = new GenerateJavaCodeRunnable(getGenModel());
 
 			try {
 				new ProgressMonitorDialog(Display.getCurrent().getActiveShell()).run(true, false, generateCodeRunnable);
@@ -165,19 +190,38 @@ public class GenerateJavaCodeAction implements IToolbarAction {
 		}
 
 		/**
+		 * @return the genModel
+		 */
+		public GenModel getGenModel() {
+			return genModel;
+		}
+
+		/**
+		 * @return the selectionProvider
+		 */
+		public ISelectionProvider getSelectionProvider() {
+			return selectionProvider;
+		}
+
+		/**
 		 * {@link IRunnableWithProgress} to execute code generation.
 		 */
 		public class GenerateJavaCodeRunnable implements IRunnableWithProgress {
 
 			private final GenModel genmodel;
 
+			/**
+			 * Constructor.
+			 *
+			 * @param genmodel the {@link GenModel}
+			 */
 			GenerateJavaCodeRunnable(GenModel genmodel) {
 				this.genmodel = genmodel;
 			}
 
 			@Override
 			public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-				monitor.beginTask("Generating Code", IProgressMonitor.UNKNOWN);
+				monitor.beginTask(Messages.GenerateJavaCodeAction_generatingCodeTask, IProgressMonitor.UNKNOWN);
 
 				genmodel.setCanGenerate(true);
 
@@ -259,13 +303,13 @@ public class GenerateJavaCodeAction implements IToolbarAction {
 					final Attributes attributes = originalManifest.getMainAttributes();
 					String newValue = attributes.getValue(REQUIRE_BUNDLE_HEADER);
 					if (newValue == null) {
-						newValue = "";
+						newValue = ""; //$NON-NLS-1$
 					} else {
-						newValue += ",";
+						newValue += ","; //$NON-NLS-1$
 					}
 					newValue += EDITOR_BUNDLE_NAME;
 					if (EDITOR_BUNDLE_VERSION != null) {
-						newValue += ";bundle-version=\"" + EDITOR_BUNDLE_VERSION + "\"";
+						newValue += ";bundle-version=\"" + EDITOR_BUNDLE_VERSION + "\""; //$NON-NLS-1$ //$NON-NLS-2$
 					}
 					attributes.putValue(REQUIRE_BUNDLE_HEADER, newValue);
 					final ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -296,7 +340,7 @@ public class GenerateJavaCodeAction implements IToolbarAction {
 					 * stringBuffer.append(genPackage.getPrefix());
 					 * stringBuffer.append("ModelFile.gif\"");
 					 */
-					MessageFormat.format("icons/full/obj16/{0}ModelFile.gif", genPackage.getPrefix()),
+					MessageFormat.format("icons/full/obj16/{0}ModelFile.gif", genPackage.getPrefix()), //$NON-NLS-1$
 					/**
 					 * Default id is the fully qualified generated editor class appended by ID.
 					 * e.g.: org.eclipse.emf.ecp.makeithappen.model.task.presentation.TaskEditorID
@@ -305,7 +349,7 @@ public class GenerateJavaCodeAction implements IToolbarAction {
 					 * emfformseditor.
 					 * e.g.: org.eclipse.emf.ecp.makeithappen.model.editor.Task.emfformseditor
 					 */
-					MessageFormat.format("{0}.{1}.{2}", genmodel.getEditorPluginID(), genPackage.getPrefix(),
+					MessageFormat.format("{0}.{1}.{2}", genmodel.getEditorPluginID(), genPackage.getPrefix(), //$NON-NLS-1$
 						EMFFORMS_EDITOR_ID),
 					EMFFORMS_EDITOR_NAME);
 			}
@@ -326,11 +370,6 @@ public class GenerateJavaCodeAction implements IToolbarAction {
 				this.selectionProvider = selectionProvider;
 			}
 
-			/**
-			 * {@inheritDoc}
-			 *
-			 * @see org.eclipse.jface.action.IMenuCreator#dispose()
-			 */
 			@Override
 			public void dispose() {
 				if (dropDown != null) {
@@ -338,41 +377,26 @@ public class GenerateJavaCodeAction implements IToolbarAction {
 				}
 			}
 
-			/**
-			 * {@inheritDoc}
-			 *
-			 * @see org.eclipse.jface.action.IMenuCreator#getMenu(org.eclipse.swt.widgets.Control)
-			 */
 			@Override
 			public Menu getMenu(Control parent) {
 				dispose();
 
 				dropDown = new Menu(parent);
-				final Action generateModelAndEdit = new CreateJavaCodeAction("Generate Model + Edit",
-					new Object[] {
-						GenBaseGeneratorAdapter.MODEL_PROJECT_TYPE,
-						GenBaseGeneratorAdapter.EDIT_PROJECT_TYPE
-					}, currentObject, selectionProvider);
+				final Action generateModelAndEdit = getJavaCodeAction(
+					Messages.GenerateJavaCodeAction_generateModelEdit, new Object[] {
+						GenBaseGeneratorAdapter.MODEL_PROJECT_TYPE, GenBaseGeneratorAdapter.EDIT_PROJECT_TYPE });
 
-				final Action generateModel = new CreateJavaCodeAction("Generate Model",
-					new Object[] {
-						GenBaseGeneratorAdapter.MODEL_PROJECT_TYPE
-					}, currentObject, selectionProvider);
+				final Action generateModel = getJavaCodeAction(Messages.GenerateJavaCodeAction_generateModel,
+					new Object[] { GenBaseGeneratorAdapter.MODEL_PROJECT_TYPE });
 
-				final Action generateEdit = new CreateJavaCodeAction("Generate Edit",
-					new Object[] {
-						GenBaseGeneratorAdapter.EDIT_PROJECT_TYPE
-					}, currentObject, selectionProvider);
+				final Action generateEdit = getJavaCodeAction(Messages.GenerateJavaCodeAction_generateEdit,
+					new Object[] { GenBaseGeneratorAdapter.EDIT_PROJECT_TYPE });
 
-				final Action generateEditor = new CreateJavaCodeAction("Generate Editor",
-					new Object[] {
-						GenBaseGeneratorAdapter.EDITOR_PROJECT_TYPE
-					}, currentObject, selectionProvider);
+				final Action generateEditor = getJavaCodeAction(Messages.GenerateJavaCodeAction_generateEditor,
+					new Object[] { GenBaseGeneratorAdapter.EDITOR_PROJECT_TYPE });
 
-				final Action generateTests = new CreateJavaCodeAction("Generate Tests",
-					new Object[] {
-						GenBaseGeneratorAdapter.TESTS_PROJECT_TYPE
-					}, currentObject, selectionProvider);
+				final Action generateTests = getJavaCodeAction(Messages.GenerateJavaCodeAction_generateTests,
+					new Object[] { GenBaseGeneratorAdapter.TESTS_PROJECT_TYPE });
 
 				new ActionContributionItem(generateModelAndEdit).fill(dropDown, 0);
 				new ActionContributionItem(generateModel).fill(dropDown, 1);
@@ -383,11 +407,6 @@ public class GenerateJavaCodeAction implements IToolbarAction {
 				return dropDown;
 			}
 
-			/**
-			 * {@inheritDoc}
-			 *
-			 * @see org.eclipse.jface.action.IMenuCreator#getMenu(org.eclipse.swt.widgets.Menu)
-			 */
 			@Override
 			public Menu getMenu(Menu parent) {
 				return null;

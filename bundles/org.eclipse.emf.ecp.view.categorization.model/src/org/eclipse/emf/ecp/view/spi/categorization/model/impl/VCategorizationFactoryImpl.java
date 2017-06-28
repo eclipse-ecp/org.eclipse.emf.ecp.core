@@ -27,30 +27,25 @@ import org.eclipse.emf.ecp.view.spi.categorization.model.VCategory;
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Factory</b>.
  * <!-- end-user-doc -->
- *
+ * 
  * @generated
  */
-public class VCategorizationFactoryImpl extends EFactoryImpl implements VCategorizationFactory
-{
+public class VCategorizationFactoryImpl extends EFactoryImpl implements VCategorizationFactory {
 	/**
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	public static VCategorizationFactory init()
-	{
-		try
-		{
-			final VCategorizationFactory theCategorizationFactory = (VCategorizationFactory) EPackage.Registry.INSTANCE
+	public static VCategorizationFactory init() {
+		try {
+			VCategorizationFactory theCategorizationFactory = (VCategorizationFactory) EPackage.Registry.INSTANCE
 				.getEFactory(VCategorizationPackage.eNS_URI);
-			if (theCategorizationFactory != null)
-			{
+			if (theCategorizationFactory != null) {
 				return theCategorizationFactory;
 			}
-		} catch (final Exception exception)
-		{
+		} catch (Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new VCategorizationFactoryImpl();
@@ -60,25 +55,22 @@ public class VCategorizationFactoryImpl extends EFactoryImpl implements VCategor
 	 * Creates an instance of the factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	public VCategorizationFactoryImpl()
-	{
+	public VCategorizationFactoryImpl() {
 		super();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public EObject create(EClass eClass)
-	{
-		switch (eClass.getClassifierID())
-		{
+	public EObject create(EClass eClass) {
+		switch (eClass.getClassifierID()) {
 		case VCategorizationPackage.CATEGORIZATION:
 			return createCategorization();
 		case VCategorizationPackage.CATEGORY:
@@ -95,77 +87,71 @@ public class VCategorizationFactoryImpl extends EFactoryImpl implements VCategor
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public VCategorization createCategorization()
-	{
-		final VCategorizationImpl categorization = new VCategorizationImpl();
+	public VCategorization createCategorization() {
+		VCategorizationImpl categorization = new VCategorizationImpl();
 		return categorization;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public VCategory createCategory()
-	{
-		final VCategoryImpl category = new VCategoryImpl();
+	public VCategory createCategory() {
+		VCategoryImpl category = new VCategoryImpl();
 		return category;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public VAction createAction()
-	{
-		final VActionImpl action = new VActionImpl();
+	public VAction createAction() {
+		VActionImpl action = new VActionImpl();
 		return action;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public VCategorizationElement createCategorizationElement()
-	{
-		final VCategorizationElementImpl categorizationElement = new VCategorizationElementImpl();
+	public VCategorizationElement createCategorizationElement() {
+		VCategorizationElementImpl categorizationElement = new VCategorizationElementImpl();
 		return categorizationElement;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public VCategorizationPackage getCategorizationPackage()
-	{
+	public VCategorizationPackage getCategorizationPackage() {
 		return (VCategorizationPackage) getEPackage();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @deprecated
 	 * @generated
 	 */
 	@Deprecated
-	public static VCategorizationPackage getPackage()
-	{
+	public static VCategorizationPackage getPackage() {
 		return VCategorizationPackage.eINSTANCE;
 	}
 

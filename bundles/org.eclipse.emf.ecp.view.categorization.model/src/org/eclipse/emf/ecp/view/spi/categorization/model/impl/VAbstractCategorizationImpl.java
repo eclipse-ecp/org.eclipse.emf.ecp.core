@@ -32,21 +32,20 @@ import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
- * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.categorization.model.impl.VAbstractCategorizationImpl#getActions <em>Actions
- * </em>}</li>
- * </ul>
  * </p>
+ * <ul>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.categorization.model.impl.VAbstractCategorizationImpl#getActions
+ * <em>Actions</em>}</li>
+ * </ul>
  *
  * @generated
  */
-public abstract class VAbstractCategorizationImpl extends VCategorizableElementImpl implements VAbstractCategorization
-{
+public abstract class VAbstractCategorizationImpl extends VCategorizableElementImpl implements VAbstractCategorization {
 	/**
 	 * The cached value of the '{@link #getActions() <em>Actions</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getActions()
 	 * @generated
 	 * @ordered
@@ -56,37 +55,33 @@ public abstract class VAbstractCategorizationImpl extends VCategorizableElementI
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	protected VAbstractCategorizationImpl()
-	{
+	protected VAbstractCategorizationImpl() {
 		super();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return VCategorizationPackage.Literals.ABSTRACT_CATEGORIZATION;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public EList<VAction> getActions()
-	{
-		if (actions == null)
-		{
+	public EList<VAction> getActions() {
+		if (actions == null) {
 			actions = new EObjectContainmentEList<VAction>(VAction.class, this,
 				VCategorizationPackage.ABSTRACT_CATEGORIZATION__ACTIONS);
 		}
@@ -96,14 +91,12 @@ public abstract class VAbstractCategorizationImpl extends VCategorizableElementI
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-	{
-		switch (featureID)
-		{
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
 		case VCategorizationPackage.ABSTRACT_CATEGORIZATION__ACTIONS:
 			return ((InternalEList<?>) getActions()).basicRemove(otherEnd, msgs);
 		}
@@ -113,14 +106,12 @@ public abstract class VAbstractCategorizationImpl extends VCategorizableElementI
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
-		switch (featureID)
-		{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 		case VCategorizationPackage.ABSTRACT_CATEGORIZATION__ACTIONS:
 			return getActions();
 		}
@@ -130,15 +121,13 @@ public abstract class VAbstractCategorizationImpl extends VCategorizableElementI
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
-		switch (featureID)
-		{
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 		case VCategorizationPackage.ABSTRACT_CATEGORIZATION__ACTIONS:
 			getActions().clear();
 			getActions().addAll((Collection<? extends VAction>) newValue);
@@ -150,14 +139,12 @@ public abstract class VAbstractCategorizationImpl extends VCategorizableElementI
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
-		switch (featureID)
-		{
+	public void eUnset(int featureID) {
+		switch (featureID) {
 		case VCategorizationPackage.ABSTRACT_CATEGORIZATION__ACTIONS:
 			getActions().clear();
 			return;
@@ -168,14 +155,12 @@ public abstract class VAbstractCategorizationImpl extends VCategorizableElementI
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
-		switch (featureID)
-		{
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 		case VCategorizationPackage.ABSTRACT_CATEGORIZATION__ACTIONS:
 			return actions != null && !actions.isEmpty();
 		}

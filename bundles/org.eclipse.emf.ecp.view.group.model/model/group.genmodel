@@ -5,7 +5,7 @@
     modelName="Group" editPluginClass="org.eclipse.emf.ecp.view.spi.group.model.provider.GroupEditPlugin"
     nonNLSMarkers="true" codeFormatting="true" commentFormatting="true" importerID="org.eclipse.emf.importer.ecore"
     complianceLevel="6.0" copyrightFields="false" providerRootExtendsClass="" language=""
-    usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model"
+    usedGenPackages="../../org.eclipse.emf.ecp.view.model/model/view.genmodel#//model"
     interfaceNamePattern="V{0}" classNamePattern="V{0}Impl" importOrganizing="true">
   <foreignModel>group.ecore</foreignModel>
   <genPackages prefix="Group" basePackage="org.eclipse.emf.ecp.view.spi" disposableProviderFactory="true"
@@ -13,13 +13,19 @@
       utilityPackageSuffix="model.util" providerPackageSuffix="model.provider" presentationPackageSuffix="model.presentation"
       testsPackageSuffix="model.tests" extensibleProviderFactory="true" childCreationExtenders="true"
       ecorePackage="group.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="group.ecore#//GroupType">
+      <genEnumLiterals ecoreEnumLiteral="group.ecore#//GroupType/Normal"/>
+      <genEnumLiterals ecoreEnumLiteral="group.ecore#//GroupType/Embedded"/>
+      <genEnumLiterals ecoreEnumLiteral="group.ecore#//GroupType/Collapsible"/>
+    </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="group.ecore#//GroupLabelAlignment">
       <genEnumLiterals ecoreEnumLiteral="group.ecore#//GroupLabelAlignment/LabelAligned"/>
       <genEnumLiterals ecoreEnumLiteral="group.ecore#//GroupLabelAlignment/InputAligned"/>
     </genEnums>
     <genClasses ecoreClass="group.ecore#//Group">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute group.ecore#//Group/containerLayoutEmbedding"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute group.ecore#//Group/groupType"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute group.ecore#//Group/labelAlignment"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute group.ecore#//Group/collapsed"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

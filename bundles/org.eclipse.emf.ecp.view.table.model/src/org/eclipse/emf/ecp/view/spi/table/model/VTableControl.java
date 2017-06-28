@@ -26,6 +26,8 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#isAddRemoveDisabled <em>Add Remove
  * Disabled</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#isMoveUpDownDisabled <em>Move Up Down
+ * Disabled</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#getColumnConfigurations <em>Column
  * Configurations</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#getDetailEditing <em>Detail Editing</em>}</li>
@@ -68,6 +70,36 @@ public interface VTableControl extends VControl {
 	 * @generated
 	 */
 	void setAddRemoveDisabled(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Move Up Down Disabled</b></em>' attribute.
+	 * The default value is <code>"true"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Move Up Down Disabled</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the value of the '<em>Move Up Down Disabled</em>' attribute.
+	 * @see #setMoveUpDownDisabled(boolean)
+	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage#getTableControl_MoveUpDownDisabled()
+	 * @model default="true" required="true"
+	 * @generated
+	 */
+	boolean isMoveUpDownDisabled();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.spi.table.model.VTableControl#isMoveUpDownDisabled
+	 * <em>Move Up Down Disabled</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @param value the new value of the '<em>Move Up Down Disabled</em>' attribute.
+	 * @see #isMoveUpDownDisabled()
+	 * @generated
+	 */
+	void setMoveUpDownDisabled(boolean value);
 
 	/**
 	 * Returns the value of the '<em><b>Column Configurations</b></em>' containment reference list.

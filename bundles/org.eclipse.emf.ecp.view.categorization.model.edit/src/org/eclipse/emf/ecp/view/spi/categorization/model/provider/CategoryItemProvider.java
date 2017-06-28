@@ -32,21 +32,19 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.spi.categorization.model.VCategory} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
- *
+ * 
  * @generated
  */
 public class CategoryItemProvider
-	extends AbstractCategorizationItemProvider
-{
+	extends AbstractCategorizationItemProvider {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	public CategoryItemProvider(AdapterFactory adapterFactory)
-	{
+	public CategoryItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -54,14 +52,12 @@ public class CategoryItemProvider
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object)
-	{
-		if (itemPropertyDescriptors == null)
-		{
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 		}
@@ -74,14 +70,12 @@ public class CategoryItemProvider
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object)
-	{
-		if (childrenFeatures == null)
-		{
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
+		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(VCategorizationPackage.Literals.CATEGORY__COMPOSITE);
 		}
@@ -91,12 +85,11 @@ public class CategoryItemProvider
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	protected EStructuralFeature getChildFeature(Object object, Object child)
-	{
+	protected EStructuralFeature getChildFeature(Object object, Object child) {
 		// Check the type of the specified child object and return the proper feature to use for
 		// adding (see {@link AddCommand}) it as a child.
 
@@ -107,12 +100,11 @@ public class CategoryItemProvider
 	 * This returns Category.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public Object getImage(Object object)
-	{
+	public Object getImage(Object object) {
 		return overlayImage(object, getResourceLocator().getImage("full/obj16/Category")); //$NON-NLS-1$
 	}
 
@@ -124,14 +116,12 @@ public class CategoryItemProvider
 	 * @generated NOT
 	 */
 	@Override
-	public String getText(Object object)
-	{
+	public String getText(Object object) {
 		String label = ((VCategory) object).getLabel();
 		if (label == null) {
 			label = VElementUtil.getCleanName(VElement.class.cast(object));
 		}
-		return label == null || label.length() == 0 ?
-			getString("_UI_Category_type") : label; //$NON-NLS-1$
+		return label == null || label.length() == 0 ? getString("_UI_Category_type") : label; //$NON-NLS-1$
 	}
 
 	/**
@@ -139,16 +129,14 @@ public class CategoryItemProvider
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(Notification notification)
-	{
+	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(VCategory.class))
-		{
+		switch (notification.getFeatureID(VCategory.class)) {
 		case VCategorizationPackage.CATEGORY__COMPOSITE:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;
@@ -165,28 +153,19 @@ public class CategoryItemProvider
 	 * @generated NOT
 	 */
 	@Override
-	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
-	{
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
-		newChildDescriptors.add
-			(createChildParameter
-			(VCategorizationPackage.Literals.CATEGORY__COMPOSITE,
-				VCategorizationFactory.eINSTANCE.createCategorizationElement()));
+		newChildDescriptors.add(createChildParameter(VCategorizationPackage.Literals.CATEGORY__COMPOSITE,
+			VCategorizationFactory.eINSTANCE.createCategorizationElement()));
 
-		newChildDescriptors.add
-			(createChildParameter
-			(VCategorizationPackage.Literals.CATEGORY__COMPOSITE,
-				VViewFactory.eINSTANCE.createControl()));
+		newChildDescriptors.add(createChildParameter(VCategorizationPackage.Literals.CATEGORY__COMPOSITE,
+			VViewFactory.eINSTANCE.createControl()));
 
-		newChildDescriptors.add
-			(createChildParameter
-			(VCategorizationPackage.Literals.CATEGORY__COMPOSITE,
-				VHorizontalFactory.eINSTANCE.createHorizontalLayout()));
+		newChildDescriptors.add(createChildParameter(VCategorizationPackage.Literals.CATEGORY__COMPOSITE,
+			VHorizontalFactory.eINSTANCE.createHorizontalLayout()));
 
-		newChildDescriptors.add
-			(createChildParameter
-			(VCategorizationPackage.Literals.CATEGORY__COMPOSITE,
-				VVerticalFactory.eINSTANCE.createVerticalLayout()));
+		newChildDescriptors.add(createChildParameter(VCategorizationPackage.Literals.CATEGORY__COMPOSITE,
+			VVerticalFactory.eINSTANCE.createVerticalLayout()));
 	}
 }

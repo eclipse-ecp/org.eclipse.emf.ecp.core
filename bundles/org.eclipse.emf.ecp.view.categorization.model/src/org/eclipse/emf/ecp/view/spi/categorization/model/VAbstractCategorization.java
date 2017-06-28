@@ -20,17 +20,17 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
- * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.categorization.model.VAbstractCategorization#getActions <em>Actions</em>}</li>
- * </ul>
  * </p>
+ * <ul>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.categorization.model.VAbstractCategorization#getActions
+ * <em>Actions</em>}</li>
+ * </ul>
  *
  * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage#getAbstractCategorization()
  * @model abstract="true"
  * @generated
  */
-public interface VAbstractCategorization extends VCategorizableElement
-{
+public interface VAbstractCategorization extends VCategorizableElement {
 	/**
 	 * Returns the value of the '<em><b>Actions</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.emf.ecp.view.spi.categorization.model.VAction}.
@@ -40,7 +40,7 @@ public interface VAbstractCategorization extends VCategorizableElement
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the value of the '<em>Actions</em>' containment reference list.
 	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage#getAbstractCategorization_Actions()
 	 * @model containment="true"

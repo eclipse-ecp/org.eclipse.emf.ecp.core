@@ -79,7 +79,8 @@ public class XMLDateControlRenderer_PTest extends AbstractControl_PTest {
 		final ImageRegistryService imageRegistryService = mock(ImageRegistryService.class);
 
 		setup();
-		setRenderer(new XMLDateControlSWTRenderer(getvControl(), getContext(), reportService, getDatabindingService(), getLabelProvider(),
+		setRenderer(new XMLDateControlSWTRenderer(getvControl(), getContext(), reportService, getDatabindingService(),
+			getLabelProvider(),
 			getTemplateProvider(), editSupport, localizationService, localeProvider, imageRegistryService));
 		getRenderer().init();
 	}
@@ -102,8 +103,9 @@ public class XMLDateControlRenderer_PTest extends AbstractControl_PTest {
 		final EStructuralFeature mockedEStructuralFeature = mock(EStructuralFeature.class);
 		when(mockedEStructuralFeature.isUnsettable()).thenReturn(false);
 		when(mockedObservableValue.getValueType()).thenReturn(mockedEStructuralFeature);
-		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
-			mockedObservableValue);
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(
+				mockedObservableValue);
 		final Control render = renderControl(new SWTGridCell(0, 1, getRenderer()));
 		assertControl(render);
 	}
@@ -120,8 +122,9 @@ public class XMLDateControlRenderer_PTest extends AbstractControl_PTest {
 		final EStructuralFeature mockedEStructuralFeature = mock(EStructuralFeature.class);
 		when(mockedEStructuralFeature.isUnsettable()).thenReturn(false);
 		when(mockedObservableValue.getValueType()).thenReturn(mockedEStructuralFeature);
-		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
-			mockedObservableValue);
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(
+				mockedObservableValue);
 		final Control render = renderControl(new SWTGridCell(0, 2, getRenderer()));
 
 		assertControl(render);
@@ -221,8 +224,9 @@ public class XMLDateControlRenderer_PTest extends AbstractControl_PTest {
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		Mockito.reset(getDatabindingService());
 		mockDatabindingIsUnsettable();
-		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
-			mockedObservable, new ObservingWritableValue(mockedObservable));
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(
+				mockedObservable, new ObservingWritableValue(mockedObservable));
 		when(getDatabindingService().getValueProperty(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			Properties.selfValue(mockedObservable.getValueType()));
 

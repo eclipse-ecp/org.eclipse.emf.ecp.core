@@ -27,6 +27,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPropertyListener;
@@ -342,7 +343,14 @@ public class EMFUndoRedoActionBarContributor
 
 	@Override
 	public void propertyChanged(Object source, int id) {
-		update();
+		Display.getDefault().asyncExec(new Runnable() {
+
+			@Override
+			public void run() {
+				update();
+			}
+		});
+
 	}
 }
 // END REUSED CLASS

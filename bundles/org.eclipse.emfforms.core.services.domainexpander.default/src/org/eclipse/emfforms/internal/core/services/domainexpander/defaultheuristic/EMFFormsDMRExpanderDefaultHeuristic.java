@@ -84,14 +84,8 @@ public class EMFFormsDMRExpanderDefaultHeuristic implements EMFFormsDMRExpander 
 			}
 			EObject child = (EObject) currentResolvedEObject.eGet(eReference);
 			if (child == null) {
-				if (!eReference.getEReferenceType().isAbstract() && !eReference.getEReferenceType().isInterface()) {
-					child = EcoreUtil.create(eReference.getEReferenceType());
-				} else if (currentLeftReferences.size() == 1
-					&& !featurePathDMR.getDomainModelEFeature().getEContainingClass().isAbstract()
-					&& !featurePathDMR.getDomainModelEFeature().getEContainingClass().isInterface()) {
-					child = EcoreUtil.create(featurePathDMR.getDomainModelEFeature().getEContainingClass());
-				}
-				currentResolvedEObject.eSet(eReference, child);
+				child = createMissingPathElementIfPossible(featurePathDMR, currentResolvedEObject,
+					currentLeftReferences, eReference, child);
 			}
 			if (child == null) {
 				break;
@@ -99,6 +93,29 @@ public class EMFFormsDMRExpanderDefaultHeuristic implements EMFFormsDMRExpander 
 			currentResolvedEObject = child;
 			currentLeftReferences.remove(eReference);
 		}
+	}
+
+	/**
+	 * @return the newly created object. may be <code>null</code> if creation was not possible
+	 */
+	private EObject createMissingPathElementIfPossible(final VFeaturePathDomainModelReference featurePathDMR,
+		EObject currentResolvedEObject, final ArrayList<EReference> currentLeftReferences, final EReference eReference,
+		EObject child) {
+		if (!eReference.getEReferenceType().isAbstract() && !eReference.getEReferenceType().isInterface()) {
+			child = EcoreUtil.create(eReference.getEReferenceType());
+		} else if (currentLeftReferences.size() == 1
+			&& !featurePathDMR.getDomainModelEFeature().getEContainingClass().isAbstract()
+			&& !featurePathDMR.getDomainModelEFeature().getEContainingClass().isInterface()) {
+			child = EcoreUtil.create(featurePathDMR.getDomainModelEFeature().getEContainingClass());
+		}
+		if (child != null) {
+			/*
+			 * only set the reference if we could create a child. otherwise we could end up in a infinite loop,
+			 * because a null-to-null set produces a non-touch notification. This might trigger resolve again.
+			 */
+			currentResolvedEObject.eSet(eReference, child);
+		}
+		return child;
 	}
 
 	/**

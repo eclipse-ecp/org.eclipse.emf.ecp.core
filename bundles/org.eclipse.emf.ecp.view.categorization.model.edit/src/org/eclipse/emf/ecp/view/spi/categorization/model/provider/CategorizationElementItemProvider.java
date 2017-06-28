@@ -37,21 +37,19 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * {@link org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
- *
+ * 
  * @generated
  */
 public class CategorizationElementItemProvider
-	extends ContainedElementItemProvider
-{
+	extends ContainedElementItemProvider {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	public CategorizationElementItemProvider(AdapterFactory adapterFactory)
-	{
+	public CategorizationElementItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -59,14 +57,12 @@ public class CategorizationElementItemProvider
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object)
-	{
-		if (itemPropertyDescriptors == null)
-		{
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addMainCategoryDepthPropertyDescriptor(object);
@@ -78,19 +74,16 @@ public class CategorizationElementItemProvider
 	 * This adds a property descriptor for the Main Category Depth feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	protected void addMainCategoryDepthPropertyDescriptor(Object object)
-	{
+	protected void addMainCategoryDepthPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_CategorizationElement_mainCategoryDepth_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_CategorizationElement_mainCategoryDepth_feature", "_UI_CategorizationElement_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				getString("_UI_PropertyDescriptor_description", "_UI_CategorizationElement_mainCategoryDepth_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_CategorizationElement_type"), //$NON-NLS-1$
 				VCategorizationPackage.Literals.CATEGORIZATION_ELEMENT__MAIN_CATEGORY_DEPTH,
 				true,
 				false,
@@ -106,14 +99,12 @@ public class CategorizationElementItemProvider
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object)
-	{
-		if (childrenFeatures == null)
-		{
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
+		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(VCategorizationPackage.Literals.CATEGORIZATION_ELEMENT__CATEGORIZATIONS);
 		}
@@ -123,12 +114,11 @@ public class CategorizationElementItemProvider
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	protected EStructuralFeature getChildFeature(Object object, Object child)
-	{
+	protected EStructuralFeature getChildFeature(Object object, Object child) {
 		// Check the type of the specified child object and return the proper feature to use for
 		// adding (see {@link AddCommand}) it as a child.
 
@@ -139,12 +129,11 @@ public class CategorizationElementItemProvider
 	 * This returns CategorizationElement.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public Object getImage(Object object)
-	{
+	public Object getImage(Object object) {
 		return overlayImage(object, getResourceLocator().getImage("full/obj16/CategorizationElement")); //$NON-NLS-1$
 	}
 
@@ -156,14 +145,12 @@ public class CategorizationElementItemProvider
 	 * @generated NOT
 	 */
 	@Override
-	public String getText(Object object)
-	{
+	public String getText(Object object) {
 		String label = ((VCategorizationElement) object).getLabel();
 		if (label == null) {
 			label = VElementUtil.getCleanName(VElement.class.cast(object));
 		}
-		return label == null || label.length() == 0 ?
-			getString("_UI_CategorizationElement_type") : label; //$NON-NLS-1$
+		return label == null || label.length() == 0 ? getString("_UI_CategorizationElement_type") : label; //$NON-NLS-1$
 	}
 
 	/**
@@ -171,16 +158,14 @@ public class CategorizationElementItemProvider
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(Notification notification)
-	{
+	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(VCategorizationElement.class))
-		{
+		switch (notification.getFeatureID(VCategorizationElement.class)) {
 		case VCategorizationPackage.CATEGORIZATION_ELEMENT__MAIN_CATEGORY_DEPTH:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
@@ -196,22 +181,19 @@ public class CategorizationElementItemProvider
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
-	{
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
-		newChildDescriptors.add
-			(createChildParameter
-			(VCategorizationPackage.Literals.CATEGORIZATION_ELEMENT__CATEGORIZATIONS,
+		newChildDescriptors
+			.add(createChildParameter(VCategorizationPackage.Literals.CATEGORIZATION_ELEMENT__CATEGORIZATIONS,
 				VCategorizationFactory.eINSTANCE.createCategorization()));
 
-		newChildDescriptors.add
-			(createChildParameter
-			(VCategorizationPackage.Literals.CATEGORIZATION_ELEMENT__CATEGORIZATIONS,
+		newChildDescriptors
+			.add(createChildParameter(VCategorizationPackage.Literals.CATEGORIZATION_ELEMENT__CATEGORIZATIONS,
 				VCategorizationFactory.eINSTANCE.createCategory()));
 	}
 

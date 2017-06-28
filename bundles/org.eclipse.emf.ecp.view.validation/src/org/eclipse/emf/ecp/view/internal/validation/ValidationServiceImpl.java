@@ -22,29 +22,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
-import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
-import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecore.EValidator;
+import org.eclipse.emf.ecore.EValidator.SubstitutionLabelProvider;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.util.Diagnostician;
-import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.common.spi.UniqueSetting;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
@@ -61,6 +55,9 @@ import org.eclipse.emf.ecp.view.spi.validation.ValidationService;
 import org.eclipse.emf.ecp.view.spi.validation.ViewValidationListener;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
+import org.eclipse.emfforms.common.internal.validation.DiagnosticHelper;
+import org.eclipse.emfforms.common.spi.validation.ValidationResultListener;
+import org.eclipse.emfforms.common.spi.validation.filter.AbstractSimpleFilter;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.core.services.controlmapper.EMFFormsSettingToControlMapper;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
@@ -68,6 +65,9 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedRepor
 import org.eclipse.emfforms.spi.core.services.mappingprovider.EMFFormsMappingProviderManager;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener;
 import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * Validation service that, once instantiated, synchronizes the validation result of a model element with its
@@ -137,7 +137,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 
 			final EObject observed = (EObject) ((IObserving) observableValue).getObserved();
 			// validate(observed);
-			// TODO: add test case fo this
+			// TODO: add test case for this
 			final Set<EObject> eObjectsToValidate = new LinkedHashSet<EObject>();
 			eObjectsToValidate.add(observed);
 			final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
@@ -323,7 +323,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 
 	}
 
-	private final Set<ValidationProvider> validationProviders = new LinkedHashSet<ValidationProvider>();
+	private org.eclipse.emfforms.common.spi.validation.ValidationService validationService;
 	private ValidationDomainModelChangeListener domainChangeListener;
 	private ViewModelChangeListener viewChangeListener;
 	private ViewModelContext context;
@@ -331,6 +331,8 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	private final Set<EObject> validated = new LinkedHashSet<EObject>();
 	private boolean validationRunning;
 	private final Map<UniqueSetting, VDiagnostic> currentUpdates = new LinkedHashMap<UniqueSetting, VDiagnostic>();
+	private ComposedAdapterFactory adapterFactory;
+	private final Timer timer = new Timer();
 
 	/**
 	 * {@inheritDoc}
@@ -354,14 +356,53 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 			throw new IllegalStateException("Domain model must not be null"); //$NON-NLS-1$
 		}
 
-		readValidationProvider();
+		validationService = new org.eclipse.emfforms.common.internal.validation.ValidationServiceImpl();
+		validationService.registerValidationFilter(new AbstractSimpleFilter() {
+			@Override
+			public boolean skipValidation(EObject eObject) {
+				return validated.contains(eObject);
+			}
+
+			@Override
+			public boolean ignoreDiagnostic(EObject eObject, Diagnostic diagnostic) {
+				return !controlMapper.hasControlsFor(eObject);
+			}
+		});
+		validationService.registerValidationResultListener(new ValidationResultListener() {
+			@Override
+			public void onValidate(EObject eObject, Diagnostic diagnostic) {
+				validated.add(eObject);
+			}
+
+			@Override
+			public void afterValidate(EObject eObject, Diagnostic diagnostic) {
+				// nothing to do here
+			}
+		});
+
+		adapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
+			new ReflectiveItemProviderAdapterFactory(),
+			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
+
+		final ViewSubstitutionLabelProviderFactory substitutionLabelProviderFactory = getSubstitutionLabelProviderFactory();
+
+		SubstitutionLabelProvider substitutionLabelProvider;
+		if (substitutionLabelProviderFactory != null) {
+			substitutionLabelProvider = substitutionLabelProviderFactory
+				.createSubstitutionLabelProvider(adapterFactory);
+		} else {
+			substitutionLabelProvider = new ECPSubstitutionLabelProvider(adapterFactory);
+		}
+
+		validationService.setSubstitutionLabelProvider(substitutionLabelProvider);
+
+		registerValidationProviders();
 
 		domainChangeListener = new ValidationDomainModelChangeListener();
 		viewChangeListener = new ViewModelChangeListener();
 		context.registerDomainChangeListener(domainChangeListener);
 		context.registerViewChangeListener(viewChangeListener);
 		context.registerEMFFormsContextListener(this);
-		// validate(getAllEObjects(domainModel));
 	}
 
 	private void cleanControlDiagnostics(EObject parent, EReference parentReference, EObject removedEObject) {
@@ -383,7 +424,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 				if (diagnostic.getData().size() < 1) {
 					continue;
 				}
-				if (removedEObject.equals(getFirstInternalEObject(diagnostic.getData()))) {
+				if (removedEObject.equals(DiagnosticHelper.getFirstInternalEObject(diagnostic.getData()))) {
 					diagnosticsToRemove.add(diagnostic);
 				}
 			}
@@ -391,20 +432,9 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 		}
 	}
 
-	private void readValidationProvider() {
-		final IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
-		if (extensionRegistry == null) {
-			return;
-		}
-		final IConfigurationElement[] controls = extensionRegistry
-			.getConfigurationElementsFor("org.eclipse.emf.ecp.view.validation.validationProvider"); //$NON-NLS-1$
-		for (final IConfigurationElement e : controls) {
-			try {
-				final ValidationProvider validationProvider = (ValidationProvider) e.createExecutableExtension("class"); //$NON-NLS-1$
-				validationProviders.add(validationProvider);
-			} catch (final CoreException e1) {
-				Activator.logException(e1);
-			}
+	private void registerValidationProviders() {
+		for (final ValidationProvider provider : ValidationProviderHelper.fetchValidationProviders()) {
+			validationService.addValidator(provider);
 		}
 	}
 
@@ -418,6 +448,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 		context.unregisterEMFFormsContextListener(this);
 		context.unregisterDomainChangeListener(domainChangeListener);
 		context.unregisterViewChangeListener(viewChangeListener);
+		adapterFactory.dispose();
 	}
 
 	/**
@@ -461,16 +492,8 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	 */
 	@Override
 	public void validate(Collection<EObject> eObjects) {
-
-		for (final EObject eObject : eObjects) {
-			if (validated.contains(eObject)) {
-				continue;
-			}
-			validated.add(eObject);
-			validationQueue.offer(eObject);
-		}
+		validationQueue.addAll(eObjects);
 		processValidationQueue();
-
 	}
 
 	/**
@@ -479,25 +502,31 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	 * @param eObject the eObject to validate
 	 */
 	public void validate(EObject eObject) {
-		if (!validated.contains(eObject)) {
-			validated.add(eObject);
-			validationQueue.offer(eObject);
-			processValidationQueue();
-		}
+		/**
+		 * We are using a queue here to allow validators to add additional eObjects
+		 * to the current validation run. This is because we actually want a diagnostics aggregate,
+		 * otherwise consecutive runs would replace already existing diagnostics on the UI.
+		 * This is probably not the best way to solve this problem, but it will do for now.
+		 */
+		validationQueue.offer(eObject);
+		processValidationQueue();
 	}
 
 	private void processValidationQueue() {
 		if (!initialized) {
 			return;
 		}
-		// prohibit reentry in recursion
+		// prohibit re-entry in recursion
 		if (validationRunning) {
 			return;
 		}
 		validationRunning = true;
 		EObject toValidate;
 		while ((toValidate = validationQueue.poll()) != null) {
+			final ValidationTimerTask timerTask = new ValidationTimerTask(toValidate);
+			timer.schedule(timerTask, 1000);
 			validateAndCollectSettings(toValidate);
+			timerTask.cancel();
 		}
 		update();
 		notifyListeners();
@@ -546,8 +575,9 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 					if (diagnostic.getData().size() < 2) {
 						continue;
 					}
-					final EObject diagnosticEobject = getFirstInternalEObject(diagnostic.getData());
-					final EStructuralFeature eStructuralFeature = getFirstEStructuralFeature(diagnostic.getData());
+					final EObject diagnosticEobject = DiagnosticHelper.getFirstInternalEObject(diagnostic.getData());
+					final EStructuralFeature eStructuralFeature = DiagnosticHelper
+						.getEStructuralFeature(diagnostic.getData());
 					if (diagnosticEobject == null || eStructuralFeature == null) {
 						continue;
 					}
@@ -566,7 +596,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 			}
 		}
 
-		updateAndPropagate(controlDiagnosticMap);
+		 updateAndPropagate(controlDiagnosticMap);
 	}
 
 	private boolean isObjectStillValid(EObject diagnosticEobject) {
@@ -613,7 +643,10 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	}
 
 	private void validateAndCollectSettings(EObject eObject) {
-		final Diagnostic diagnostic = getDiagnosticForEObject(eObject);
+		final Diagnostic diagnostic = validationService.validate(eObject);
+		if (diagnostic == null) { // happens if the eObject is being filtered
+			return;
+		}
 		for (final EStructuralFeature feature : eObject.eClass().getEAllStructuralFeatures()) {
 			final UniqueSetting uniqueSetting = UniqueSetting.createSetting(eObject, feature);
 			if (!currentUpdates.containsKey(uniqueSetting)) {
@@ -621,14 +654,13 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 			}
 		}
 		analyzeDiagnostic(diagnostic);
-
 	}
 
 	private void analyzeDiagnostic(Diagnostic diagnostic) {
 		if (diagnostic.getData().size() > 1) {
 
-			final InternalEObject internalEObject = getFirstInternalEObject(diagnostic.getData());
-			final EStructuralFeature eStructuralFeature = getFirstEStructuralFeature(diagnostic.getData());
+			final InternalEObject internalEObject = DiagnosticHelper.getFirstInternalEObject(diagnostic.getData());
+			final EStructuralFeature eStructuralFeature = DiagnosticHelper.getEStructuralFeature(diagnostic.getData());
 			if (internalEObject == null || eStructuralFeature == null) {
 				return;
 			}
@@ -655,84 +687,6 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 		}
 	}
 
-	private EStructuralFeature getFirstEStructuralFeature(List<?> data) {
-		// Exclude first object for cases when we validate an EStructuralFeature.
-		for (final Object object : data.subList(1, data.size())) {
-			if (EStructuralFeature.class.isInstance(object)) {
-				return EStructuralFeature.class.cast(object);
-			}
-		}
-		return null;
-	}
-
-	private InternalEObject getFirstInternalEObject(List<?> data) {
-		for (final Object object : data) {
-			if (InternalEObject.class.isInstance(object)) {
-				return InternalEObject.class.cast(object);
-			}
-		}
-		return null;
-	}
-
-	/**
-	 * Computes the {@link Diagnostic} for the given eObject.
-	 *
-	 * @param object the eObject to validate
-	 * @return the diagnostic
-	 */
-	public Diagnostic getDiagnosticForEObject(EObject object) {
-		EValidator validator = EValidator.Registry.INSTANCE.getEValidator(object.eClass().getEPackage());
-		final BasicDiagnostic diagnostics = Diagnostician.INSTANCE.createDefaultDiagnostic(object);
-
-		if (validator == null) {
-			validator = new EObjectValidator();
-		}
-		final ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
-			new ReflectiveItemProviderAdapterFactory(),
-			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
-		final Map<Object, Object> context = new LinkedHashMap<Object, Object>();
-		context.put(EValidator.SubstitutionLabelProvider.class, new ECPSubstitutionLabelProvider(adapterFactory));
-		context.put(EValidator.class, validator);
-
-		validator.validate(object, diagnostics, context);
-
-		adapterFactory.dispose();
-
-		final Map<EStructuralFeature, DiagnosticChain> diagnosticMap = new LinkedHashMap<EStructuralFeature, DiagnosticChain>();
-		for (final Diagnostic child : diagnostics.getChildren()) {
-			if (DiagnosticChain.class.isInstance(child) && checkDiagnosticData(child)) {
-				diagnosticMap.put(getFirstEStructuralFeature(child.getData()), (DiagnosticChain) child);
-			}
-		}
-
-		for (final ValidationProvider validationProvider : validationProviders) {
-			final List<Diagnostic> additionValidation = validationProvider.validate(object);
-			for (final Diagnostic additionDiagnostic : additionValidation) {
-				if (diagnosticMap.containsKey(getFirstEStructuralFeature(additionDiagnostic.getData()))) {
-					diagnosticMap.get(getFirstEStructuralFeature(additionDiagnostic.getData())).add(additionDiagnostic);
-				} else {
-					diagnostics.add(additionDiagnostic);
-				}
-
-			}
-		}
-		return diagnostics;
-	}
-
-	private boolean checkDiagnosticData(Diagnostic diagnostic) {
-		final List<?> data = diagnostic.getData();
-		if (data.size() < 2) {
-			return false;
-		}
-		if (getFirstInternalEObject(data) == null) {
-			return false;
-		}
-		if (getFirstEStructuralFeature(data) == null) {
-			return false;
-		}
-		return true;
-	}
-
 	/**
 	 *
 	 * {@inheritDoc}
@@ -752,7 +706,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	 */
 	@Override
 	public void addValidationProvider(ValidationProvider validationProvider, boolean revalidate) {
-		validationProviders.add(validationProvider);
+		validationService.addValidator(validationProvider);
 		if (revalidate) {
 			validate(getAllEObjectsToValidate());
 		}
@@ -777,7 +731,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	 */
 	@Override
 	public void removeValidationProvider(ValidationProvider validationProvider, boolean revalidate) {
-		validationProviders.remove(validationProvider);
+		validationService.removeValidator(validationProvider);
 		if (revalidate) {
 			validate(getAllEObjectsToValidate());
 		}
@@ -840,6 +794,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	@Override
 	public void childContextAdded(VElement parentElement, EMFFormsViewContext childContext) {
 		validate(getAllEObjectsToValidate());
+		childContext.registerViewChangeListener(viewChangeListener);
 	}
 
 	/**
@@ -874,4 +829,60 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 		// do nothing
 	}
 
+	/**
+	 * Returns a {@link ViewSubstitutionLabelProviderFactory}, if any is registered.
+	 *
+	 * @return an instance of a {@link ViewSubstitutionLabelProviderFactory}, if any is available,
+	 *         {@code null} otherwise
+	 */
+	protected ViewSubstitutionLabelProviderFactory getSubstitutionLabelProviderFactory() {
+		final BundleContext bundleContext = FrameworkUtil.getBundle(getClass()).getBundleContext();
+		final ServiceReference<ViewSubstitutionLabelProviderFactory> serviceReference = bundleContext
+			.getServiceReference(ViewSubstitutionLabelProviderFactory.class);
+
+		if (serviceReference == null) {
+			return null;
+		}
+
+		final ViewSubstitutionLabelProviderFactory labelProviderFactory = bundleContext
+			.getService(serviceReference);
+		bundleContext.ungetService(serviceReference);
+		return labelProviderFactory;
+	}
+
+	/**
+	 * TimerTask that reports that the validation is taking longer than expected. This task should be cancelled when
+	 * the validation is done.
+	 */
+	class ValidationTimerTask extends TimerTask {
+
+		private boolean cancelled;
+		private final EObject validatedEObject;
+
+		/**
+		 * Constructor.
+		 *
+		 * @param validatedEObject the EObject being validated
+		 */
+		ValidationTimerTask(EObject validatedEObject) {
+			super();
+			this.validatedEObject = validatedEObject;
+		}
+
+		@Override
+		public void run() {
+			if (!cancelled) {
+				Activator.getDefault().getReportService()
+					.report(new AbstractReport(MessageFormat.format(
+						"Validation took longer than expected for EObject {0}", validatedEObject, //$NON-NLS-1$
+						IStatus.INFO)));
+			}
+		}
+
+		@Override
+		public boolean cancel() {
+			cancelled = true;
+			return super.cancel();
+		}
+	}
 }

@@ -43,17 +43,16 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public static VViewFactory init() {
 		try {
-			final VViewFactory theViewFactory = (VViewFactory) EPackage.Registry.INSTANCE
-				.getEFactory(VViewPackage.eNS_URI);
+			VViewFactory theViewFactory = (VViewFactory) EPackage.Registry.INSTANCE.getEFactory(VViewPackage.eNS_URI);
 			if (theViewFactory != null) {
 				return theViewFactory;
 			}
-		} catch (final Exception exception) {
+		} catch (Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new VViewFactoryImpl();
@@ -63,7 +62,7 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 * Creates an instance of the factory.
 	 * <!-- begin-user-doc --> <!--
 	 * end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public VViewFactoryImpl() {
@@ -72,7 +71,7 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -100,7 +99,7 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -120,7 +119,7 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -140,34 +139,34 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public VDiagnostic createDiagnostic() {
-		final VDiagnosticImpl diagnostic = new VDiagnosticImpl();
+		VDiagnosticImpl diagnostic = new VDiagnosticImpl();
 		return diagnostic;
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public VView createView() {
-		final VViewImpl view = new VViewImpl();
+		VViewImpl view = new VViewImpl();
 		return view;
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public VControl createControl() {
-		final VControlImpl control = new VControlImpl();
+		VControlImpl control = new VControlImpl();
 		return control;
 	}
 
@@ -180,7 +179,7 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 */
 	@Override
 	public VViewModelLoadingProperties createViewModelLoadingProperties() {
-		final VViewModelLoadingPropertiesImpl viewModelLoadingProperties = new VViewModelLoadingPropertiesImpl();
+		VViewModelLoadingPropertiesImpl viewModelLoadingProperties = new VViewModelLoadingPropertiesImpl();
 		return viewModelLoadingProperties;
 	}
 
@@ -192,7 +191,7 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 * @generated
 	 */
 	public Map.Entry<String, Object> createStringToObjectMapEntry() {
-		final VStringToObjectMapEntryImpl stringToObjectMapEntry = new VStringToObjectMapEntryImpl();
+		VStringToObjectMapEntryImpl stringToObjectMapEntry = new VStringToObjectMapEntryImpl();
 		return stringToObjectMapEntry;
 	}
 
@@ -201,34 +200,32 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 * 
 	 * @since 1.8
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
 	public VDateTimeDisplayAttachment createDateTimeDisplayAttachment() {
-		final VDateTimeDisplayAttachmentImpl dateTimeDisplayAttachment = new VDateTimeDisplayAttachmentImpl();
+		VDateTimeDisplayAttachmentImpl dateTimeDisplayAttachment = new VDateTimeDisplayAttachmentImpl();
 		return dateTimeDisplayAttachment;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public LabelAlignment createLabelAlignmentFromString(EDataType eDataType, String initialValue) {
-		final LabelAlignment result = LabelAlignment.get(initialValue);
-		if (result == null) {
+		LabelAlignment result = LabelAlignment.get(initialValue);
+		if (result == null)
 			throw new IllegalArgumentException(
 				"The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-		}
 		return result;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public String convertLabelAlignmentToString(EDataType eDataType, Object instanceValue) {
@@ -240,15 +237,13 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 *
 	 * @since 1.8
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	public DateTimeDisplayType createDateTimeDisplayTypeFromString(EDataType eDataType, String initialValue) {
-		final DateTimeDisplayType result = DateTimeDisplayType.get(initialValue);
-		if (result == null) {
+		DateTimeDisplayType result = DateTimeDisplayType.get(initialValue);
+		if (result == null)
 			throw new IllegalArgumentException(
 				"The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-		}
 		return result;
 	}
 
@@ -257,7 +252,6 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	 *
 	 * @since 1.8
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	public String convertDateTimeDisplayTypeToString(EDataType eDataType, Object instanceValue) {
@@ -290,18 +284,18 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public VFeaturePathDomainModelReference createFeaturePathDomainModelReference() {
-		final VFeaturePathDomainModelReferenceImpl featurePathDomainModelReference = new VFeaturePathDomainModelReferenceImpl();
+		VFeaturePathDomainModelReferenceImpl featurePathDomainModelReference = new VFeaturePathDomainModelReferenceImpl();
 		return featurePathDomainModelReference;
 	}
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -311,7 +305,7 @@ public class VViewFactoryImpl extends EFactoryImpl implements VViewFactory {
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 *
+	 * 
 	 * @deprecated
 	 * @generated
 	 */

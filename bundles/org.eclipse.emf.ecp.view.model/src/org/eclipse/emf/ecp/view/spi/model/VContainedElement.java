@@ -14,8 +14,9 @@ package org.eclipse.emf.ecp.view.spi.model;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Composite</b></em>'.
+ * 
  * @since 1.2
- * <!-- end-user-doc -->
+ *        <!-- end-user-doc -->
  *
  *
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getContainedElement()

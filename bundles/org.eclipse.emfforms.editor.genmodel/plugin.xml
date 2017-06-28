@@ -45,5 +45,11 @@
             toolbarAction="org.eclipse.emfforms.internal.editor.genmodel.toolbaractions.GenerateJavaCodeAction">
       </action>
    </extension>
+   <extension
+         point="org.eclipse.emfforms.editor.toolbarActions">
+      <action
+            toolbarAction="org.eclipse.emfforms.internal.editor.genmodel.toolbaractions.GenerateEcoreEditorJavaCodeAction">
+      </action>
+   </extension>
 
 </plugin>

@@ -23,6 +23,7 @@ import org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContent;
 import org.eclipse.emf.ecp.view.validation.test.model.Librarian;
 import org.eclipse.emf.ecp.view.validation.test.model.Library;
 import org.eclipse.emf.ecp.view.validation.test.model.Mainboard;
+import org.eclipse.emf.ecp.view.validation.test.model.Person;
 import org.eclipse.emf.ecp.view.validation.test.model.PowerBlock;
 import org.eclipse.emf.ecp.view.validation.test.model.Referencer;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContent;
@@ -275,6 +276,14 @@ public class TestSwitch<T> extends Switch<T> {
 		case TestPackage.CROSS_REFERENCE_CONTENT: {
 			final CrossReferenceContent crossReferenceContent = (CrossReferenceContent) theEObject;
 			T result = caseCrossReferenceContent(crossReferenceContent);
+			if (result == null) {
+				result = defaultCase(theEObject);
+			}
+			return result;
+		}
+		case TestPackage.PERSON: {
+			final Person person = (Person) theEObject;
+			T result = casePerson(person);
 			if (result == null) {
 				result = defaultCase(theEObject);
 			}
@@ -618,6 +627,22 @@ public class TestSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseCrossReferenceContent(CrossReferenceContent object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Person</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 *
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Person</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T casePerson(Person object) {
 		return null;
 	}
 

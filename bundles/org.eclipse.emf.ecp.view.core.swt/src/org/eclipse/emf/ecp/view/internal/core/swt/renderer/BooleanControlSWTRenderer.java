@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 import javax.inject.Inject;
 
 import org.eclipse.core.databinding.Binding;
+import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.emf.ecp.view.internal.core.swt.MessageKeys;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTControlSWTRenderer;
@@ -65,13 +66,14 @@ public class BooleanControlSWTRenderer extends SimpleControlSWTControlSWTRendere
 		// checkbox button representing Boolean value can not grow
 		final SWTGridCell booleanControlCell = super.createControlCell(column);
 		booleanControlCell.setHorizontalGrab(false);
+		booleanControlCell.setHorizontalFill(false);
 		return booleanControlCell;
 	}
 
 	@Override
 	protected Binding[] createBindings(Control control) throws DatabindingFailedException {
 		final Binding binding = getDataBindingContext().bindValue(WidgetProperties.selection().observe(control),
-			getModelValue());
+			getModelValue(), withPreSetValidation(new UpdateValueStrategy()), null);
 		return new Binding[] { binding };
 	}
 

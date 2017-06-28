@@ -29,21 +29,20 @@ import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
- * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.categorization.model.impl.VCategorizationImpl#getCategorizations <em>
- * Categorizations</em>}</li>
- * </ul>
  * </p>
+ * <ul>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.categorization.model.impl.VCategorizationImpl#getCategorizations
+ * <em>Categorizations</em>}</li>
+ * </ul>
  *
  * @generated
  */
-public class VCategorizationImpl extends VAbstractCategorizationImpl implements VCategorization
-{
+public class VCategorizationImpl extends VAbstractCategorizationImpl implements VCategorization {
 	/**
 	 * The cached value of the '{@link #getCategorizations() <em>Categorizations</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getCategorizations()
 	 * @generated
 	 * @ordered
@@ -53,37 +52,33 @@ public class VCategorizationImpl extends VAbstractCategorizationImpl implements 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	protected VCategorizationImpl()
-	{
+	protected VCategorizationImpl() {
 		super();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return VCategorizationPackage.Literals.CATEGORIZATION;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public EList<VAbstractCategorization> getCategorizations()
-	{
-		if (categorizations == null)
-		{
+	public EList<VAbstractCategorization> getCategorizations() {
+		if (categorizations == null) {
 			categorizations = new EObjectContainmentEList<VAbstractCategorization>(VAbstractCategorization.class, this,
 				VCategorizationPackage.CATEGORIZATION__CATEGORIZATIONS);
 		}
@@ -93,14 +88,12 @@ public class VCategorizationImpl extends VAbstractCategorizationImpl implements 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-	{
-		switch (featureID)
-		{
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
 		case VCategorizationPackage.CATEGORIZATION__CATEGORIZATIONS:
 			return ((InternalEList<?>) getCategorizations()).basicRemove(otherEnd, msgs);
 		}
@@ -110,14 +103,12 @@ public class VCategorizationImpl extends VAbstractCategorizationImpl implements 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
-		switch (featureID)
-		{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 		case VCategorizationPackage.CATEGORIZATION__CATEGORIZATIONS:
 			return getCategorizations();
 		}
@@ -127,15 +118,13 @@ public class VCategorizationImpl extends VAbstractCategorizationImpl implements 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
-		switch (featureID)
-		{
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 		case VCategorizationPackage.CATEGORIZATION__CATEGORIZATIONS:
 			getCategorizations().clear();
 			getCategorizations().addAll((Collection<? extends VAbstractCategorization>) newValue);
@@ -147,14 +136,12 @@ public class VCategorizationImpl extends VAbstractCategorizationImpl implements 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
-		switch (featureID)
-		{
+	public void eUnset(int featureID) {
+		switch (featureID) {
 		case VCategorizationPackage.CATEGORIZATION__CATEGORIZATIONS:
 			getCategorizations().clear();
 			return;
@@ -165,14 +152,12 @@ public class VCategorizationImpl extends VAbstractCategorizationImpl implements 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
-		switch (featureID)
-		{
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 		case VCategorizationPackage.CATEGORIZATION__CATEGORIZATIONS:
 			return categorizations != null && !categorizations.isEmpty();
 		}

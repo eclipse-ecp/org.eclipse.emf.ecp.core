@@ -34,9 +34,11 @@ import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
+import org.eclipse.jface.resource.FontDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ExpandEvent;
 import org.eclipse.swt.events.ExpandListener;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
@@ -103,6 +105,10 @@ public class CollapsableGroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 		GridLayoutFactory.fillDefaults().margins(MARGIN, MARGIN).applyTo(composite);
 		final ExpandItem item0 = new ExpandItem(bar, SWT.NONE, 0);
 		bar.setInitialHeaderHeight(item0.getHeaderHeight());
+
+		final FontDescriptor boldDescriptor = FontDescriptor.createFrom(bar.getFont()).setStyle(SWT.BOLD);
+		final Font boldFont = boldDescriptor.createFont(bar.getDisplay());
+		bar.setFont(boldFont);
 
 		final ISWTObservableValue target = WidgetProperties.text().observe(item0);
 		final IObservableValue modelValue = EMFEditObservables.observeValue(
@@ -229,6 +235,7 @@ public class CollapsableGroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 					}
 				}
 			}
+			sizeComputedByBar.x = sizeComputedByBar.x + 2 * MARGIN;
 			return sizeComputedByBar;
 		}
 	}

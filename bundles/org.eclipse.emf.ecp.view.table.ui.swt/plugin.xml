@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension-point id="cellReadOnly" name="Cell Read Only" schema="schema/cellReadOnly.exsd"/>  
+   <extension
+         point="org.eclipse.emf.ecp.edit.swt.cellEditor">
+      <cellEditor
+            class="org.eclipse.emf.ecp.view.spi.table.swt.EnumCellEditor"
+            id="org.eclipse.emf.ecp.view.table.ui.swt.enumCellEditor"
+            tester="org.eclipse.emf.ecp.view.spi.table.swt.EnumCellEditorTester">
+      </cellEditor>
+   </extension>
+
+</plugin>

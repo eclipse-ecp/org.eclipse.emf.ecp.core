@@ -30,6 +30,7 @@ import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.Text;
 import org.osgi.framework.Bundle;
 
 public final class CellEditorFactory {
@@ -119,6 +120,13 @@ public final class CellEditorFactory {
 		if (result == null) {
 			result = new TextCellEditor(table);
 		}
+
+		if (Text.class.isInstance(result.getControl())) {
+			PreSetValidationListeners.create().verify(
+				Text.class.cast(result.getControl()),
+				eStructuralFeature);
+		}
+
 		return result;
 	}
 

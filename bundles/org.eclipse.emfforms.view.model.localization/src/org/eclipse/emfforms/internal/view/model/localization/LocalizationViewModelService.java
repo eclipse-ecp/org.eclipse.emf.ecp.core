@@ -21,6 +21,7 @@ import org.eclipse.emf.ecp.view.spi.model.LocalizationAdapter;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VHasTooltip;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emfforms.spi.common.locale.EMFFormsLocaleChangeListener;
 import org.eclipse.emfforms.spi.common.locale.EMFFormsLocaleProvider;
@@ -139,13 +140,28 @@ public class LocalizationViewModelService implements ViewModelService, EMFFormsL
 			if (localizationAdapter != null) {
 				vElement.setLabel(localizationAdapter.localize(vElement.getName().substring(1)));
 			} else {
-				reportService.report(new AbstractReport(
-					"No LocalizationAdapter found for the current view:" + view.toString())); //$NON-NLS-1$
+				reportAboutMissingLocalizationAdapter();
 				vElement.setLabel(vElement.getName());
 			}
 		} else {
 			vElement.setLabel(vElement.getName());
 		}
+
+		if (vElement instanceof VHasTooltip) {
+			final VHasTooltip tooltip = VHasTooltip.class.cast(vElement);
+			if (tooltip.getTooltip() != null && tooltip.getTooltip().startsWith("%")) { //$NON-NLS-1$
+				if (localizationAdapter != null) {
+					tooltip.setTooltip(localizationAdapter.localize(tooltip.getTooltip().substring(1)));
+				} else {
+					reportAboutMissingLocalizationAdapter();
+				}
+			}
+		}
+	}
+
+	private void reportAboutMissingLocalizationAdapter() {
+		reportService.report(new AbstractReport(
+			"No LocalizationAdapter found for the current view:" + view.toString())); //$NON-NLS-1$
 	}
 
 	/**

@@ -19,7 +19,9 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.table.model.VEnablementConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VReadOnlyColumnConfiguration;
+import org.eclipse.emf.ecp.view.spi.table.model.VSingleColumnConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableColumnConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
@@ -143,7 +145,38 @@ public class TableSwitch<T> extends Switch<T> {
 			final VWidthConfiguration widthConfiguration = (VWidthConfiguration) theEObject;
 			T result = caseWidthConfiguration(widthConfiguration);
 			if (result == null) {
+				result = caseSingleColumnConfiguration(widthConfiguration);
+			}
+			if (result == null) {
 				result = caseTableColumnConfiguration(widthConfiguration);
+			}
+			if (result == null) {
+				result = defaultCase(theEObject);
+			}
+			return result;
+		}
+		case VTablePackage.ENABLEMENT_CONFIGURATION: {
+			final VEnablementConfiguration enablementConfiguration = (VEnablementConfiguration) theEObject;
+			T result = caseEnablementConfiguration(enablementConfiguration);
+			if (result == null) {
+				result = caseElement(enablementConfiguration);
+			}
+			if (result == null) {
+				result = caseSingleColumnConfiguration(enablementConfiguration);
+			}
+			if (result == null) {
+				result = caseTableColumnConfiguration(enablementConfiguration);
+			}
+			if (result == null) {
+				result = defaultCase(theEObject);
+			}
+			return result;
+		}
+		case VTablePackage.SINGLE_COLUMN_CONFIGURATION: {
+			final VSingleColumnConfiguration singleColumnConfiguration = (VSingleColumnConfiguration) theEObject;
+			T result = caseSingleColumnConfiguration(singleColumnConfiguration);
+			if (result == null) {
+				result = caseTableColumnConfiguration(singleColumnConfiguration);
 			}
 			if (result == null) {
 				result = defaultCase(theEObject);
@@ -233,6 +266,40 @@ public class TableSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseWidthConfiguration(VWidthConfiguration object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Enablement Configuration</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 *
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Enablement Configuration</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseEnablementConfiguration(VEnablementConfiguration object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Single Column Configuration</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 *
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Single Column Configuration</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseSingleColumnConfiguration(VSingleColumnConfiguration object) {
 		return null;
 	}
 

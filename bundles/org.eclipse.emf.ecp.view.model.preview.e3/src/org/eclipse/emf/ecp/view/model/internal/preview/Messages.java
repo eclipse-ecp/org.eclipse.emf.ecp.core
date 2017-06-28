@@ -25,6 +25,7 @@ public class Messages extends NLS {
 	public static String ManageAdditionalViewsDialog_NoViewModelSelected;
 	public static String ManageAdditionalViewsDialog_RemoveView;
 	public static String ManageAdditionalViewsDialog_Title;
+	public static String OpenPreviewHandler_OpenPreview;
 	public static String PreviewView_AdditionalViews;
 	public static String PreviewView_AutomaticRefresh;
 	public static String PreviewView_ClearSampleDataButton;

@@ -24,6 +24,7 @@ import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategory;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VHasTooltip;
 
 /**
  * <!-- begin-user-doc -->
@@ -34,8 +35,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage
  * @generated
  */
-public class CategorizationAdapterFactory extends AdapterFactoryImpl
-{
+public class CategorizationAdapterFactory extends AdapterFactoryImpl {
 	/**
 	 * The cached model package.
 	 * <!-- begin-user-doc -->
@@ -52,10 +52,8 @@ public class CategorizationAdapterFactory extends AdapterFactoryImpl
 	 *
 	 * @generated
 	 */
-	public CategorizationAdapterFactory()
-	{
-		if (modelPackage == null)
-		{
+	public CategorizationAdapterFactory() {
+		if (modelPackage == null) {
 			modelPackage = VCategorizationPackage.eINSTANCE;
 		}
 	}
@@ -71,14 +69,11 @@ public class CategorizationAdapterFactory extends AdapterFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public boolean isFactoryForType(Object object)
-	{
-		if (object == modelPackage)
-		{
+	public boolean isFactoryForType(Object object) {
+		if (object == modelPackage) {
 			return true;
 		}
-		if (object instanceof EObject)
-		{
+		if (object instanceof EObject) {
 			return ((EObject) object).eClass().getEPackage() == modelPackage;
 		}
 		return false;
@@ -91,63 +86,57 @@ public class CategorizationAdapterFactory extends AdapterFactoryImpl
 	 *
 	 * @generated
 	 */
-	protected CategorizationSwitch<Adapter> modelSwitch =
-		new CategorizationSwitch<Adapter>()
-		{
-			@Override
-			public Adapter caseAbstractCategorization(VAbstractCategorization object)
-			{
-				return createAbstractCategorizationAdapter();
-			}
+	protected CategorizationSwitch<Adapter> modelSwitch = new CategorizationSwitch<Adapter>() {
+		@Override
+		public Adapter caseAbstractCategorization(VAbstractCategorization object) {
+			return createAbstractCategorizationAdapter();
+		}
 
-			@Override
-			public Adapter caseCategorization(VCategorization object)
-			{
-				return createCategorizationAdapter();
-			}
+		@Override
+		public Adapter caseCategorization(VCategorization object) {
+			return createCategorizationAdapter();
+		}
 
-			@Override
-			public Adapter caseCategory(VCategory object)
-			{
-				return createCategoryAdapter();
-			}
+		@Override
+		public Adapter caseCategory(VCategory object) {
+			return createCategoryAdapter();
+		}
 
-			@Override
-			public Adapter caseAction(VAction object)
-			{
-				return createActionAdapter();
-			}
+		@Override
+		public Adapter caseAction(VAction object) {
+			return createActionAdapter();
+		}
 
-			@Override
-			public Adapter caseCategorizationElement(VCategorizationElement object)
-			{
-				return createCategorizationElementAdapter();
-			}
+		@Override
+		public Adapter caseCategorizationElement(VCategorizationElement object) {
+			return createCategorizationElementAdapter();
+		}
 
-			@Override
-			public Adapter caseCategorizableElement(VCategorizableElement object)
-			{
-				return createCategorizableElementAdapter();
-			}
+		@Override
+		public Adapter caseCategorizableElement(VCategorizableElement object) {
+			return createCategorizableElementAdapter();
+		}
 
-			@Override
-			public Adapter caseElement(VElement object)
-			{
-				return createElementAdapter();
-			}
+		@Override
+		public Adapter caseElement(VElement object) {
+			return createElementAdapter();
+		}
 
-			@Override
-			public Adapter caseContainedElement(VContainedElement object)
-			{
-				return createContainedElementAdapter();
-			}
+		@Override
+		public Adapter caseHasTooltip(VHasTooltip object) {
+			return createHasTooltipAdapter();
+		}
 
-			@Override
-			public Adapter defaultCase(EObject object)
-			{
-				return createEObjectAdapter();
-			}
-		};
+		@Override
+		public Adapter caseContainedElement(VContainedElement object) {
+			return createContainedElementAdapter();
+		}
+
+		@Override
+		public Adapter defaultCase(EObject object) {
+			return createEObjectAdapter();
+		}
+	};
 
 	/**
 	 * Creates an adapter for the <code>target</code>.
@@ -159,15 +148,14 @@ public class CategorizationAdapterFactory extends AdapterFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public Adapter createAdapter(Notifier target)
-	{
+	public Adapter createAdapter(Notifier target) {
 		return modelSwitch.doSwitch((EObject) target);
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.spi.categorization.model.VAbstractCategorization
-	 * <em>Abstract Categorization</em>}'.
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emf.ecp.view.spi.categorization.model.VAbstractCategorization <em>Abstract
+	 * Categorization</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
@@ -177,14 +165,13 @@ public class CategorizationAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VAbstractCategorization
 	 * @generated
 	 */
-	public Adapter createAbstractCategorizationAdapter()
-	{
+	public Adapter createAbstractCategorizationAdapter() {
 		return null;
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.spi.categorization.model.VCategorization <em>Categorization</em>}'.
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emf.ecp.view.spi.categorization.model.VCategorization <em>Categorization</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
@@ -194,8 +181,7 @@ public class CategorizationAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorization
 	 * @generated
 	 */
-	public Adapter createCategorizationAdapter()
-	{
+	public Adapter createCategorizationAdapter() {
 		return null;
 	}
 
@@ -211,8 +197,7 @@ public class CategorizationAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategory
 	 * @generated
 	 */
-	public Adapter createCategoryAdapter()
-	{
+	public Adapter createCategoryAdapter() {
 		return null;
 	}
 
@@ -228,14 +213,13 @@ public class CategorizationAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VAction
 	 * @generated
 	 */
-	public Adapter createActionAdapter()
-	{
+	public Adapter createActionAdapter() {
 		return null;
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement <em>Element</em>}'.
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement <em>Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
@@ -245,14 +229,13 @@ public class CategorizationAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement
 	 * @generated
 	 */
-	public Adapter createCategorizationElementAdapter()
-	{
+	public Adapter createCategorizationElementAdapter() {
 		return null;
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizableElement <em>Categorizable Element</em>}'.
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizableElement <em>Categorizable Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
@@ -262,8 +245,7 @@ public class CategorizationAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizableElement
 	 * @generated
 	 */
-	public Adapter createCategorizableElementAdapter()
-	{
+	public Adapter createCategorizableElementAdapter() {
 		return null;
 	}
 
@@ -279,8 +261,25 @@ public class CategorizationAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.spi.model.VElement
 	 * @generated
 	 */
-	public Adapter createElementAdapter()
-	{
+	public Adapter createElementAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VHasTooltip <em>Has
+	 * Tooltip</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * 
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VHasTooltip
+	 * @generated
+	 */
+	public Adapter createHasTooltipAdapter() {
 		return null;
 	}
 
@@ -296,8 +295,7 @@ public class CategorizationAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.spi.model.VContainedElement
 	 * @generated
 	 */
-	public Adapter createContainedElementAdapter()
-	{
+	public Adapter createContainedElementAdapter() {
 		return null;
 	}
 
@@ -310,8 +308,7 @@ public class CategorizationAdapterFactory extends AdapterFactoryImpl
 	 * @return the new adapter.
 	 * @generated
 	 */
-	public Adapter createEObjectAdapter()
-	{
+	public Adapter createEObjectAdapter() {
 		return null;
 	}
 

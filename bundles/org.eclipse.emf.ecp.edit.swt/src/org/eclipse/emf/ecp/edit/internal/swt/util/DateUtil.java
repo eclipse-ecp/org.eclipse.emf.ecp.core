@@ -50,4 +50,24 @@ public final class DateUtil {
 		return cal;
 	}
 
+	/**
+	 * Convert a {@link Calendar} object to an {@link XMLGregorianCalendar} (to the {@link XMLCalendar} implementation).
+	 *
+	 * @param calendar the {@link Calendar} to convert
+	 * @return the {@link XMLGregorianCalendar}
+	 */
+	public static XMLGregorianCalendar convertCalendarToXMLGregorianCalendar(Calendar calendar) {
+		final XMLGregorianCalendar cal = new XMLCalendar(calendar.getTime(), XMLCalendar.DATETIME);
+
+		cal.setYear(calendar.get(Calendar.YEAR));
+		cal.setMonth(calendar.get(Calendar.MONTH) + 1);
+		cal.setDay(calendar.get(Calendar.DAY_OF_MONTH));
+		cal.setTimezone(calendar.get(Calendar.ZONE_OFFSET / 6000));
+		cal.setHour(calendar.get(Calendar.HOUR_OF_DAY));
+		cal.setMinute(calendar.get(Calendar.MINUTE));
+		cal.setSecond(calendar.get(Calendar.SECOND));
+		cal.setMillisecond(calendar.get(Calendar.MILLISECOND));
+		return cal;
+	}
+
 }

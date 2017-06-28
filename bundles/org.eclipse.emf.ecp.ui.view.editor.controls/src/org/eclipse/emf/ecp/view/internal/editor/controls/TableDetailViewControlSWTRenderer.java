@@ -169,27 +169,8 @@ public class TableDetailViewControlSWTRenderer extends SimpleControlSWTControlSW
 		final Binding[] bindings = new Binding[3];
 		final IObservableValue value = WidgetProperties.text().observe(label);
 
-		bindings[0] = getDataBindingContext().bindValue(value, getModelValue(), new UpdateValueStrategy() {
-
-			@Override
-			public Object convert(Object value) {
-				try {
-					return getModelValue().getValue();
-				} catch (final DatabindingFailedException ex) {
-					Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
-					return null;
-				}
-			}
-		}, new UpdateValueStrategy() {
-			@Override
-			public Object convert(Object value) {
-				return getText(value);
-			}
-		});
-
-		final IObservableValue tooltipValue = WidgetProperties.tooltipText().observe(label);
-		bindings[1] = getDataBindingContext().bindValue(tooltipValue, getModelValue(),
-			new UpdateValueStrategy() {
+		bindings[0] = getDataBindingContext().bindValue(value, getModelValue(),
+			withPreSetValidation(new UpdateValueStrategy() {
 
 				@Override
 				public Object convert(Object value) {
@@ -200,7 +181,27 @@ public class TableDetailViewControlSWTRenderer extends SimpleControlSWTControlSW
 						return null;
 					}
 				}
-			}, new UpdateValueStrategy() {
+			}), new UpdateValueStrategy() {
+				@Override
+				public Object convert(Object value) {
+					return getText(value);
+				}
+			});
+
+		final IObservableValue tooltipValue = WidgetProperties.tooltipText().observe(label);
+		bindings[1] = getDataBindingContext().bindValue(tooltipValue, getModelValue(),
+			withPreSetValidation(new UpdateValueStrategy() {
+
+				@Override
+				public Object convert(Object value) {
+					try {
+						return getModelValue().getValue();
+					} catch (final DatabindingFailedException ex) {
+						Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+						return null;
+					}
+				}
+			}), new UpdateValueStrategy() {
 				@Override
 				public Object convert(Object value) {
 					return getText(value);
@@ -208,23 +209,24 @@ public class TableDetailViewControlSWTRenderer extends SimpleControlSWTControlSW
 			});
 
 		final IObservableValue imageValue = WidgetProperties.image().observe(imageLabel);
-		bindings[2] = getDataBindingContext().bindValue(imageValue, getModelValue(), new UpdateValueStrategy() {
+		bindings[2] = getDataBindingContext().bindValue(imageValue, getModelValue(),
+			withPreSetValidation(new UpdateValueStrategy() {
 
-			@Override
-			public Object convert(Object value) {
-				try {
-					return getModelValue().getValue();
-				} catch (final DatabindingFailedException ex) {
-					Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
-					return null;
+				@Override
+				public Object convert(Object value) {
+					try {
+						return getModelValue().getValue();
+					} catch (final DatabindingFailedException ex) {
+						Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+						return null;
+					}
 				}
-			}
-		}, new UpdateValueStrategy() {
-			@Override
-			public Object convert(Object value) {
-				return getImage(value);
-			}
-		});
+			}), new UpdateValueStrategy() {
+				@Override
+				public Object convert(Object value) {
+					return getImage(value);
+				}
+			});
 
 		return bindings;
 	}

@@ -29,7 +29,7 @@ public interface VViewFactory extends EFactory {
 	 * The singleton instance of the factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	VViewFactory eINSTANCE = org.eclipse.emf.ecp.view.spi.model.impl.VViewFactoryImpl.init();
@@ -38,7 +38,7 @@ public interface VViewFactory extends EFactory {
 	 * Returns a new object of class '<em>Diagnostic</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return a new object of class '<em>Diagnostic</em>'.
 	 * @generated
 	 */
@@ -48,7 +48,7 @@ public interface VViewFactory extends EFactory {
 	 * Returns a new object of class '<em>View</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return a new object of class '<em>View</em>'.
 	 * @generated
 	 */
@@ -58,7 +58,7 @@ public interface VViewFactory extends EFactory {
 	 * Returns a new object of class '<em>Control</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return a new object of class '<em>Control</em>'.
 	 * @generated
 	 */
@@ -81,7 +81,6 @@ public interface VViewFactory extends EFactory {
 	 *
 	 * @since 1.8
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return a new object of class '<em>Date Time Display Attachment</em>'.
 	 * @generated
 	 */
@@ -91,7 +90,7 @@ public interface VViewFactory extends EFactory {
 	 * Returns a new object of class '<em>Feature Path Domain Model Reference</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return a new object of class '<em>Feature Path Domain Model Reference</em>'.
 	 * @generated
 	 */
@@ -101,7 +100,7 @@ public interface VViewFactory extends EFactory {
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the package supported by this factory.
 	 * @generated
 	 */

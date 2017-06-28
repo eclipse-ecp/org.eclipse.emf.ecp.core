@@ -28,7 +28,7 @@ public abstract class VContainedElementImpl extends VElementImpl implements VCon
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected VContainedElementImpl() {
@@ -38,7 +38,7 @@ public abstract class VContainedElementImpl extends VElementImpl implements VCon
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override

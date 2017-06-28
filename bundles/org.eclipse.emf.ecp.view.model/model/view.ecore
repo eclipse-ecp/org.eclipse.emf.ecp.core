@@ -92,4 +92,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="DateTimeDisplayAttachment" eSuperTypes="#//Attachment">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="displayType" eType="#//DateTimeDisplayType"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="HasTooltip" abstract="true" interface="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="tooltip" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
 </ecore:EPackage>

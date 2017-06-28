@@ -79,5 +79,6 @@ public interface ValidationService extends GlobalViewModelService {
 	 *
 	 * @param eObjects the eObjects to validate
 	 */
+	// TODO this should be refactored to use an iterator rather than a collection
 	void validate(Collection<EObject> eObjects);
 }

@@ -19,15 +19,20 @@ import java.util.Set;
 
 import javax.inject.Inject;
 
+import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.emf.databinding.edit.EMFEditObservables;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.section.model.VSection;
 import org.eclipse.emf.ecp.view.spi.section.model.VSectionPackage;
 import org.eclipse.emf.ecp.view.spi.section.model.VSectionedArea;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
@@ -232,13 +237,22 @@ public class SectionNodeSWTRenderer extends AbstractSectionSWTRenderer {
 			.extendedMargins(computeLeftMargin(), 0, 0, 0)
 			.applyTo(composite);
 
-		expandableComposite = new ExpandableComposite(
-			composite, SWT.NONE, ExpandableComposite.TWISTIE);
-		expandableComposite.setExpanded(!getVElement().isCollapsed());
+		setExpandableComposite(new ExpandableComposite(
+			composite, SWT.NONE, ExpandableComposite.TWISTIE));
+		getExpandableComposite().setExpanded(!getVElement().isCollapsed());
 		final String text = getVElement().getName() == null ? "" //$NON-NLS-1$
 			: getVElement().getName();
-		expandableComposite.setText(text);
-		initExpandableComposite(expandableComposite);
+		getExpandableComposite().setText(text);
+		initExpandableComposite(getExpandableComposite());
+
+		final EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(getVElement());
+		final IObservableValue modelTooltipValue = EMFEditObservables.observeValue(
+			editingDomain,
+			getVElement(),
+			VViewPackage.eINSTANCE.getHasTooltip_Tooltip());
+		final IObservableValue targetTooltipValue = new ExpandableCompositeTooltipProperty()
+			.observe(getExpandableComposite());
+		getDataBindingContext().bindValue(targetTooltipValue, modelTooltipValue);
 
 		return composite;
 	}
@@ -281,13 +295,13 @@ public class SectionNodeSWTRenderer extends AbstractSectionSWTRenderer {
 
 	@Override
 	protected void applyEnable() {
-		expandableComposite.setEnabled(getVElement().isEnabled());
+		getExpandableComposite().setEnabled(getVElement().isEnabled());
 	}
 
 	@Override
 	protected void applyReadOnly() {
 		super.applyReadOnly();
-		expandableComposite.getParent().setEnabled(true);
+		getExpandableComposite().getParent().setEnabled(true);
 	}
 
 	@Override
@@ -334,8 +348,24 @@ public class SectionNodeSWTRenderer extends AbstractSectionSWTRenderer {
 		}
 		getControls().values().iterator().next().getParent()
 			.layout(false);
-		expandableComposite.setExpanded(!getVElement()
+		getExpandableComposite().setExpanded(!getVElement()
 			.isCollapsed());
+	}
+
+	/**
+	 * @return the expandableComposite
+	 * @since 1.13
+	 */
+	protected ExpandableComposite getExpandableComposite() {
+		return expandableComposite;
+	}
+
+	/**
+	 * @param expandableComposite the expandableComposite to set
+	 * @since 1.13
+	 */
+	protected void setExpandableComposite(ExpandableComposite expandableComposite) {
+		this.expandableComposite = expandableComposite;
 	}
 
 }

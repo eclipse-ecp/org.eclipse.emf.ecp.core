@@ -20,18 +20,17 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.spi.categorization.model.VAction#getBundle <em>Bundle</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.categorization.model.VAction#getClassName <em>Class Name</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage#getAction()
  * @model
  * @generated
  */
-public interface VAction extends EObject
-{
+public interface VAction extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Bundle</b></em>' attribute.
 	 * <!-- begin-user-doc -->
@@ -40,7 +39,7 @@ public interface VAction extends EObject
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the value of the '<em>Bundle</em>' attribute.
 	 * @see #setBundle(String)
 	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage#getAction_Bundle()
@@ -54,7 +53,7 @@ public interface VAction extends EObject
 	 * <em>Bundle</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param value the new value of the '<em>Bundle</em>' attribute.
 	 * @see #getBundle()
 	 * @generated
@@ -69,7 +68,7 @@ public interface VAction extends EObject
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the value of the '<em>Class Name</em>' attribute.
 	 * @see #setClassName(String)
 	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage#getAction_ClassName()
@@ -79,11 +78,11 @@ public interface VAction extends EObject
 	String getClassName();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.spi.categorization.model.VAction#getClassName
-	 * <em>Class Name</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.spi.categorization.model.VAction#getClassName <em>Class
+	 * Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param value the new value of the '<em>Class Name</em>' attribute.
 	 * @see #getClassName()
 	 * @generated

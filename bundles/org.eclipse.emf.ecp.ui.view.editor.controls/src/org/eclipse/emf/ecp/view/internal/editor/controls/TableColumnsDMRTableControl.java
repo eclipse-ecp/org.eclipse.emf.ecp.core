@@ -13,6 +13,7 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.editor.controls;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -48,11 +49,13 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
+import org.eclipse.emf.ecp.view.spi.table.model.VTableColumnConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
+import org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
-import org.eclipse.emf.edit.command.RemoveCommand;
+import org.eclipse.emf.edit.command.DeleteCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -130,8 +133,12 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 	 *
 	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTRenderer#createControl(org.eclipse.swt.widgets.Composite)
 	 */
+	// BEGIN COMPLEX CODE
 	@Override
 	protected Control createControl(final Composite parent) throws DatabindingFailedException {
+
+		tableControl = (VTableControl) getViewModelContext().getDomainModel();
+
 		final IObservableValue observableValue = Activator.getDefault().getEMFFormsDatabinding()
 			.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 		structuralFeature = (EStructuralFeature) observableValue.getValueType();
@@ -205,7 +212,6 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 			.getObservableList(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 		viewer.setInput(list);
 
-		tableControl = (VTableControl) getViewModelContext().getDomainModel();
 		adapter = new TableControlAdapter(parent, viewer);
 		tableControl.eAdapters().add(adapter);
 
@@ -217,6 +223,7 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 
 		return composite;
 	}
+	// END COMPLEX CODE
 
 	/**
 	 * @param viewer
@@ -242,7 +249,7 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 		composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
 			new CustomReflectiveItemProviderAdapterFactory(),
 			new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
-		labelProvider = new AdapterFactoryLabelProvider(composedAdapterFactory);
+		labelProvider = new TableColumnsLabelProvider(composedAdapterFactory);
 	}
 
 	/**
@@ -267,6 +274,22 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 	@Override
 	protected String getUnsetText() {
 		return "No columns set"; //$NON-NLS-1$
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer#rootDomainModelChanged()
+	 */
+	@Override
+	protected void rootDomainModelChanged() throws DatabindingFailedException {
+		final IObservableList oldList = (IObservableList) viewer.getInput();
+		oldList.dispose();
+
+		final IObservableList list = getEMFFormsDatabinding().getObservableList(getVElement().getDomainModelReference(),
+			getViewModelContext().getDomainModel());
+		// addRelayoutListenerIfNeeded(list, composite);
+		viewer.setInput(list);
 	}
 
 	/**
@@ -362,9 +385,9 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 			super.widgetSelected(e);
 			final IStructuredSelection selection = IStructuredSelection.class.cast(viewer.getSelection());
 
+			/* use a delete command as we are the container and thus may leave a dangling hrefs */
 			final EditingDomain editingDomain = getEditingDomain(eObject);
-			editingDomain.getCommandStack().execute(
-				RemoveCommand.create(editingDomain, eObject, structuralFeature, selection.toList()));
+			editingDomain.getCommandStack().execute(DeleteCommand.create(editingDomain, selection.toList()));
 		}
 	}
 
@@ -478,19 +501,38 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 	}
 
 	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer#rootDomainModelChanged()
+	 * The label provider.
+	 *
+	 * @author Johannes Faltermeier
+	 *
 	 */
-	@Override
-	protected void rootDomainModelChanged() throws DatabindingFailedException {
-		final IObservableList oldList = (IObservableList) viewer.getInput();
-		oldList.dispose();
+	private final class TableColumnsLabelProvider extends AdapterFactoryLabelProvider {
 
-		final IObservableList list = getEMFFormsDatabinding().getObservableList(getVElement().getDomainModelReference(),
-			getViewModelContext().getDomainModel());
-		// addRelayoutListenerIfNeeded(list, composite);
-		viewer.setInput(list);
+		private TableColumnsLabelProvider(AdapterFactory adapterFactory) {
+			super(adapterFactory);
+		}
+
+		@Override
+		public String getColumnText(Object object, int columnIndex) {
+			final String text = super.getColumnText(object, columnIndex);
+			if (columnIndex == 0 && VDomainModelReference.class.isInstance(object)) {
+				for (final VTableColumnConfiguration configuration : tableControl.getColumnConfigurations()) {
+					if (!VWidthConfiguration.class.isInstance(configuration)) {
+						continue;
+					}
+					final VWidthConfiguration widthConfiguration = VWidthConfiguration.class.cast(configuration);
+					if (widthConfiguration.getColumnDomainReference() != object) {
+						continue;
+					}
+					return MessageFormat.format(
+						"{0} [minWidth={1}, weight={2}]", //$NON-NLS-1$
+						text,
+						widthConfiguration.getMinWidth(),
+						widthConfiguration.getWeight());
+				}
+			}
+			return text;
+		}
 	}
 
 }

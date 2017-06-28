@@ -35,6 +35,7 @@ import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.template.style.tab.model.VTTabStyleProperty;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
@@ -142,11 +143,20 @@ public abstract class AbstractSWTTabRenderer<VELEMENT extends VElement> extends 
 			categorizationToItemMap.put(categorization, item);
 			itemToCompositeMap.put(item, composite);
 
-			final IObservableValue modelValue = EMFEditObservables.observeValue(
-				AdapterFactoryEditingDomain.getEditingDomainFor(categorization), categorization,
+			final EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(categorization);
+			final IObservableValue modelLabelValue = EMFEditObservables.observeValue(
+				editingDomain,
+				categorization,
 				VViewPackage.eINSTANCE.getElement_Label());
-			final IObservableValue targetValue = WidgetProperties.text().observe(item);
-			dataBindingContext.bindValue(targetValue, modelValue);
+			final IObservableValue targetLabelValue = WidgetProperties.text().observe(item);
+			dataBindingContext.bindValue(targetLabelValue, modelLabelValue);
+
+			final IObservableValue modelTooltipValue = EMFEditObservables.observeValue(
+				editingDomain,
+				categorization,
+				VViewPackage.eINSTANCE.getHasTooltip_Tooltip());
+			final IObservableValue targetTooltipValue = WidgetProperties.tooltipText().observe(item);
+			dataBindingContext.bindValue(targetTooltipValue, modelTooltipValue);
 
 			if (!renderLazy()) {
 				renderItem(item);

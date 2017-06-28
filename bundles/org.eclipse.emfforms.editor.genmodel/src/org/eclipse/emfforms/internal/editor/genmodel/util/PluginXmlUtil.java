@@ -85,15 +85,15 @@ public final class PluginXmlUtil {
 		}
 
 		final Element plugin = document.getDocumentElement();
-		final Element editor = document.createElement("editor");
-		editor.setAttribute("class", editorClass);
-		editor.setAttribute("default", Boolean.toString(defaultEditor));
-		editor.setAttribute("extensions", extensions);
-		editor.setAttribute("icon", icon);
-		editor.setAttribute("id", id);
-		editor.setAttribute("name", name);
-		final Element extension = document.createElement("extension");
-		extension.setAttribute("point", "org.eclipse.ui.editors");
+		final Element editor = document.createElement("editor"); //$NON-NLS-1$
+		editor.setAttribute("class", editorClass); //$NON-NLS-1$
+		editor.setAttribute("default", Boolean.toString(defaultEditor)); //$NON-NLS-1$
+		editor.setAttribute("extensions", extensions); //$NON-NLS-1$
+		editor.setAttribute("icon", icon); //$NON-NLS-1$
+		editor.setAttribute("id", id); //$NON-NLS-1$
+		editor.setAttribute("name", name); //$NON-NLS-1$
+		final Element extension = document.createElement("extension"); //$NON-NLS-1$
+		extension.setAttribute("point", "org.eclipse.ui.editors"); //$NON-NLS-1$ //$NON-NLS-2$
 		plugin.appendChild(extension);
 		extension.appendChild(editor);
 

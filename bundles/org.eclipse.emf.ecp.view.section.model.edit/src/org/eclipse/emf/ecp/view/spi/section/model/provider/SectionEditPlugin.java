@@ -13,7 +13,6 @@ package org.eclipse.emf.ecp.view.spi.section.model.provider;
 
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.ResourceLocator;
-import org.eclipse.emf.ecore.provider.EcoreEditPlugin;
 import org.eclipse.emf.ecp.view.spi.model.provider.ViewEditPlugin;
 
 /**
@@ -42,13 +41,11 @@ public final class SectionEditPlugin extends EMFPlugin {
 	/**
 	 * Create the instance.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public SectionEditPlugin() {
-		super(new ResourceLocator[]
-		{
-			EcoreEditPlugin.INSTANCE,
+		super(new ResourceLocator[] {
 			ViewEditPlugin.INSTANCE,
 		});
 	}
@@ -57,7 +54,7 @@ public final class SectionEditPlugin extends EMFPlugin {
 	 * Returns the singleton instance of the Eclipse plugin.
 	 * <!-- begin-user-doc
 	 * --> <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the singleton instance.
 	 * @generated
 	 */
@@ -70,7 +67,7 @@ public final class SectionEditPlugin extends EMFPlugin {
 	 * Returns the singleton instance of the Eclipse plugin.
 	 * <!-- begin-user-doc
 	 * --> <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the singleton instance.
 	 * @generated
 	 */
@@ -88,7 +85,7 @@ public final class SectionEditPlugin extends EMFPlugin {
 		/**
 		 * Creates an instance.
 		 * <!-- begin-user-doc --> <!-- end-user-doc -->
-		 *
+		 * 
 		 * @generated
 		 */
 		public Implementation() {

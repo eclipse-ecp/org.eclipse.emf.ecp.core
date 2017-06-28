@@ -25,30 +25,25 @@ import org.eclipse.emf.ecp.view.spi.section.model.VSectionedArea;
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Factory</b>.
  * <!-- end-user-doc -->
- *
+ * 
  * @generated
  */
-public class VSectionFactoryImpl extends EFactoryImpl implements VSectionFactory
-{
+public class VSectionFactoryImpl extends EFactoryImpl implements VSectionFactory {
 	/**
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	public static VSectionFactory init()
-	{
-		try
-		{
-			final VSectionFactory theSectionFactory = (VSectionFactory) EPackage.Registry.INSTANCE
+	public static VSectionFactory init() {
+		try {
+			VSectionFactory theSectionFactory = (VSectionFactory) EPackage.Registry.INSTANCE
 				.getEFactory(VSectionPackage.eNS_URI);
-			if (theSectionFactory != null)
-			{
+			if (theSectionFactory != null) {
 				return theSectionFactory;
 			}
-		} catch (final Exception exception)
-		{
+		} catch (Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new VSectionFactoryImpl();
@@ -58,25 +53,22 @@ public class VSectionFactoryImpl extends EFactoryImpl implements VSectionFactory
 	 * Creates an instance of the factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	public VSectionFactoryImpl()
-	{
+	public VSectionFactoryImpl() {
 		super();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public EObject create(EClass eClass)
-	{
-		switch (eClass.getClassifierID())
-		{
+	public EObject create(EClass eClass) {
+		switch (eClass.getClassifierID()) {
 		case VSectionPackage.SECTIONED_AREA:
 			return createSectionedArea();
 		case VSectionPackage.SECTION:
@@ -89,51 +81,47 @@ public class VSectionFactoryImpl extends EFactoryImpl implements VSectionFactory
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public VSectionedArea createSectionedArea()
-	{
-		final VSectionedAreaImpl sectionedArea = new VSectionedAreaImpl();
+	public VSectionedArea createSectionedArea() {
+		VSectionedAreaImpl sectionedArea = new VSectionedAreaImpl();
 		return sectionedArea;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public VSection createSection()
-	{
-		final VSectionImpl section = new VSectionImpl();
+	public VSection createSection() {
+		VSectionImpl section = new VSectionImpl();
 		return section;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public VSectionPackage getSectionPackage()
-	{
+	public VSectionPackage getSectionPackage() {
 		return (VSectionPackage) getEPackage();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @deprecated
 	 * @generated
 	 */
 	@Deprecated
-	public static VSectionPackage getPackage()
-	{
+	public static VSectionPackage getPackage() {
 		return VSectionPackage.eINSTANCE;
 	}
 

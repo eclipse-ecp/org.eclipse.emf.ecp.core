@@ -25,6 +25,7 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.internal.group.swt.GroupTextProperty;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
@@ -32,6 +33,8 @@ import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
+import org.eclipse.jface.databinding.swt.ISWTObservableValue;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
@@ -96,14 +99,22 @@ public class GroupSWTRenderer extends ContainerSWTRenderer<VGroup> {
 	@Override
 	protected Composite getComposite(Composite parent) {
 		final Group group = new Group(parent, SWT.TITLE);
-		final IObservableValue modelValue = EMFEditObservables.observeValue(
-			AdapterFactoryEditingDomain.getEditingDomainFor(getVElement()), getVElement(),
+		final EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(getVElement());
+		final IObservableValue modelLabelValue = EMFEditObservables.observeValue(
+			editingDomain,
+			getVElement(),
 			VViewPackage.eINSTANCE.getElement_Label());
-		final IObservableValue targetValue = new GroupTextProperty().observe(group);
+		final IObservableValue targetLabelValue = new GroupTextProperty().observe(group);
 		// FIXME fixed with JFace-Databinding 4.5
 		// final IObservableValue targetValue = SWTObservables.observeText(group);
+		dbc.bindValue(targetLabelValue, modelLabelValue);
 
-		dbc.bindValue(targetValue, modelValue);
+		final IObservableValue modelTooltipValue = EMFEditObservables.observeValue(
+			editingDomain,
+			getVElement(),
+			VViewPackage.eINSTANCE.getHasTooltip_Tooltip());
+		final ISWTObservableValue targetTooltipValue = WidgetProperties.tooltipText().observe(group);
+		dbc.bindValue(targetTooltipValue, modelTooltipValue);
 
 		return group;
 	}

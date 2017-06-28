@@ -16,9 +16,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.EventObject;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
@@ -39,15 +37,14 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xml.type.AnyType;
 import org.eclipse.emf.ecp.edit.spi.EMFDeleteServiceImpl;
 import org.eclipse.emf.ecp.ide.editor.view.messages.Messages;
+import org.eclipse.emf.ecp.ide.spi.util.EcoreHelper;
 import org.eclipse.emf.ecp.ide.view.service.ViewModelEditorCallback;
-import org.eclipse.emf.ecp.internal.ide.util.EcoreHelper;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.DefaultReferenceService;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
@@ -63,6 +60,7 @@ import org.eclipse.emf.ecp.view.spi.model.reporting.StatusReport;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.ui.util.EditUIUtil;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -79,6 +77,7 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.eclipse.ui.dialogs.ElementTreeSelectionDialog;
 import org.eclipse.ui.dialogs.ISelectionStatusValidator;
 import org.eclipse.ui.dialogs.ListSelectionDialog;
@@ -104,6 +103,7 @@ public class ViewEditorPart extends EditorPart implements
 	private boolean ecoreOutOfSync;
 	private IPartListener2 partListener;
 	private final ViewEditorPart instance;
+	private AdapterFactoryEditingDomain editingDomain;
 
 	/** Default constructor for {@link ViewEditorPart}. */
 	public ViewEditorPart() {
@@ -113,18 +113,35 @@ public class ViewEditorPart extends EditorPart implements
 
 	@Override
 	public void doSave(IProgressMonitor monitor) {
+		// Do the work within an operation because this is a long running activity that modifies the workbench.
+		final WorkspaceModifyOperation operation = new WorkspaceModifyOperation() {
+			@Override
+			public void execute(IProgressMonitor monitor) {
+				try {
+					resource.save(null);
+				} catch (final IOException e) {
+					Activator.getDefault().getLog()
+						.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+				}
+			}
+		};
 		try {
-			resource.save(null);
+			new ProgressMonitorDialog(getSite().getShell()).run(true, false, operation);
 			basicCommandStack.saveIsDone();
 			firePropertyChange(IEditorPart.PROP_DIRTY);
-		} catch (final IOException e) {
-			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+		} catch (final InvocationTargetException e) {
+			Activator.getDefault().getLog()
+				.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+		} catch (final InterruptedException e) {
+			Activator.getDefault().getLog()
+				.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
 		}
+
 	}
 
 	@Override
 	public void doSaveAs() {
-
+		// unsupported
 	}
 
 	@Override
@@ -136,6 +153,13 @@ public class ViewEditorPart extends EditorPart implements
 
 		try {
 			basicCommandStack = new BasicCommandStack();
+			editingDomain = new AdapterFactoryEditingDomain(
+				new ComposedAdapterFactory(new AdapterFactory[] {
+					new CustomReflectiveItemProviderAdapterFactory(),
+					new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) }),
+				basicCommandStack);
+			editingDomain.getResourceSet().getLoadOptions().put(XMLResource.OPTION_RECORD_UNKNOWN_FEATURE,
+				Boolean.TRUE);
 			loadView(false, false);
 		} // BEGIN SUPRESS CATCH EXCEPTION
 		catch (final Exception e) {// END SUPRESS CATCH EXCEPTION
@@ -178,19 +202,6 @@ public class ViewEditorPart extends EditorPart implements
 		ResourcesPlugin.getWorkspace().addResourceChangeListener(listener);
 	}
 
-	private ResourceSet createResourceSet() {
-		final ResourceSet resourceSet = new ResourceSetImpl();
-
-		final AdapterFactoryEditingDomain domain = new AdapterFactoryEditingDomain(
-			new ComposedAdapterFactory(new AdapterFactory[] {
-				new CustomReflectiveItemProviderAdapterFactory(),
-				new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) }),
-			basicCommandStack, resourceSet);
-		resourceSet.eAdapters().add(
-			new AdapterFactoryEditingDomain.EditingDomainProvider(domain));
-		return resourceSet;
-	}
-
 	@Override
 	public boolean isDirty() {
 		return basicCommandStack.isSaveNeeded();
@@ -209,25 +220,19 @@ public class ViewEditorPart extends EditorPart implements
 	 * @throws PartInitException
 	 */
 	private void loadView(boolean migrate, boolean resolve) throws IOException, PartInitException {
-		final FileEditorInput fei = (FileEditorInput) getEditorInput();
 
-		final ResourceSet resourceSet = createResourceSet();
-		final URI resourceURI = URI.createURI(fei.getURI().toURL().toExternalForm());
-
+		// resourceURI must be a platform resource URI
+		final URI resourceURI = EditUIUtil.getURI(getEditorInput(), editingDomain.getResourceSet().getURIConverter());
 		if (migrate) {
 			checkMigration(resourceURI);
 		}
-
-		final Map<Object, Object> loadOptions = new HashMap<Object, Object>();
-		loadOptions
-			.put(XMLResource.OPTION_RECORD_UNKNOWN_FEATURE, Boolean.TRUE);
-		resource = resourceSet.createResource(resourceURI);
-		resource.load(loadOptions);
+		resource = editingDomain.getResourceSet().getResource(resourceURI, true);
 		if (resource.getContents().size() == 0 || !VView.class.isInstance(resource.getContents().get(0))) {
 			throw new PartInitException(Messages.ViewEditorPart_InvalidVView);
 		}
 		if (resolve) {
 			// resolve all proxies
+			final ResourceSet resourceSet = editingDomain.getResourceSet();
 			int rsSize = resourceSet.getResources().size();
 			EcoreUtil.resolveAll(resourceSet);
 			while (rsSize != resourceSet.getResources().size()) {
@@ -386,9 +391,6 @@ public class ViewEditorPart extends EditorPart implements
 		EcoreHelper.registerEcore(ecorePath);
 	}
 
-	/**
-	 * @param view
-	 */
 	private void saveChangedView(VView view) {
 		try {
 			view.eResource().save(null);
@@ -465,7 +467,7 @@ public class ViewEditorPart extends EditorPart implements
 	 */
 	@Override
 	public void reloadViewModel() {
-		Display.getDefault().asyncExec(new ReladViewModelRunnable());
+		Display.getDefault().asyncExec(new ReloadViewModelRunnable());
 	}
 
 	@Override
@@ -557,7 +559,7 @@ public class ViewEditorPart extends EditorPart implements
 	 * @author Jonas
 	 *
 	 */
-	private final class ReladViewModelRunnable implements Runnable {
+	private final class ReloadViewModelRunnable implements Runnable {
 		@Override
 		public void run() {
 			if (parent == null || parent.isDisposed()) {

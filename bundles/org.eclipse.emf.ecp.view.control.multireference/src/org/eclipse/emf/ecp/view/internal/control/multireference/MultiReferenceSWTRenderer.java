@@ -14,6 +14,7 @@
 package org.eclipse.emf.ecp.view.internal.control.multireference;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -23,6 +24,7 @@ import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -41,6 +43,7 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
+import org.eclipse.emf.edit.command.MoveCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -100,6 +103,8 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	private static final String ICON_ADD_EXISTING = "icons/link.png"; //$NON-NLS-1$
 	private static final String ICON_ADD_NEW = "icons/link_add.png"; //$NON-NLS-1$
 	private static final String ICON_DELETE = "icons/unset_reference.png"; //$NON-NLS-1$
+	private static final String ICON_MOVE_DOWN = "icons/move_down.png"; //$NON-NLS-1$
+	private static final String ICON_MOVE_UP = "icons/move_up.png"; //$NON-NLS-1$
 
 	private final ImageRegistryService imageRegistryService;
 
@@ -137,6 +142,8 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	private Button btnAddExisting;
 	private Button btnAddNew;
 	private Button btnDelete;
+	private Button btnMoveUp;
+	private Button btnMoveDown;
 
 	/**
 	 * {@inheritDoc}
@@ -173,6 +180,38 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 */
 	protected boolean showDeleteButton() {
 		return true;
+	}
+
+	/**
+	 * Returns true if the 'MoveUp' button is shown, false otherwise.
+	 *
+	 * @return true if the 'MoveUp' button is shown, false otherwise
+	 */
+	protected boolean showMoveUpButton() {
+		return false;
+	}
+
+	/**
+	 * Returns true if the 'MoveDown' button is shown, false otherwise.
+	 *
+	 * @return true if the 'MoveDown' button is shown, false otherwise
+	 */
+	protected boolean showMoveDownButton() {
+		return false;
+	}
+
+	/**
+	 * Returns the observed {@link EStructuralFeature}.
+	 *
+	 * @return the observed {@link EStructuralFeature}.
+	 * @throws DatabindingFailedException when databinding fails.
+	 */
+	protected EStructuralFeature getEStructuralFeature() throws DatabindingFailedException {
+		final IObservableValue observableValue = getEMFFormsDatabinding()
+			.getObservableValue(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
+		final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+		observableValue.dispose();
+		return structuralFeature;
 	}
 
 	/**
@@ -300,6 +339,68 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	}
 
 	/**
+	 * Creates a button that enables reordering the references by the given {@link EStructuralFeature}.
+	 *
+	 * @param parent The parent of the created {@link Button}
+	 * @param structuralFeature The {@link EStructuralFeature} which's references are moved up.
+	 * @return The newly created {@link Button}
+	 */
+	protected Button createMoveUpButton(Composite parent, final EStructuralFeature structuralFeature) {
+		final Button btnMoveUp = new Button(parent, SWT.PUSH);
+		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(btnMoveUp);
+		btnMoveUp.setImage(getImage(ICON_MOVE_UP));
+		btnMoveUp.setToolTipText(LocalizationServiceHelper.getString(MultiReferenceSWTRenderer.class,
+			MessageKeys.MultiReferenceSWTRenderer_moveUpTooltip));
+		btnMoveUp.addSelectionListener(new SelectionAdapter() {
+
+			/**
+			 * {@inheritDoc}
+			 *
+			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+			 */
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				super.widgetSelected(e);
+				handleMoveUp(tableViewer, container, structuralFeature);
+				updateButtonEnabling();
+			}
+
+		});
+		return btnMoveUp;
+	}
+
+	/**
+	 * Creates a button that enables reordering the references by the given {@link EStructuralFeature}.
+	 *
+	 * @param parent The parent of the created {@link Button}
+	 * @param structuralFeature The {@link EStructuralFeature} which's references are moved down.
+	 * @return The newly created {@link Button}
+	 */
+	protected Button createMoveDownButton(Composite parent, final EStructuralFeature structuralFeature) {
+		final Button btnMoveDown = new Button(parent, SWT.PUSH);
+		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(btnMoveDown);
+		btnMoveDown.setImage(getImage(ICON_MOVE_DOWN));
+		btnMoveDown.setToolTipText(LocalizationServiceHelper.getString(MultiReferenceSWTRenderer.class,
+			MessageKeys.MultiReferenceSWTRenderer_moveDownTooltip));
+		btnMoveDown.addSelectionListener(new SelectionAdapter() {
+
+			/**
+			 * {@inheritDoc}
+			 *
+			 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+			 */
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				super.widgetSelected(e);
+				handleMoveDown(tableViewer, container, structuralFeature);
+				updateButtonEnabling();
+			}
+
+		});
+		return btnMoveDown;
+	}
+
+	/**
 	 * Creates a button that enables the addition of existing references to the given {@link EStructuralFeature}.
 	 *
 	 * @param parent The parent of the created {@link Button}
@@ -391,12 +492,18 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	}
 
 	/**
-	 * Updates the 'addExisting', 'addNew' and 'delete' buttons according to the bound input.
+	 * Updates the 'addExisting', 'addNew', 'delete', 'moveUp' and 'moveDown' buttons according to the bound input.
 	 */
 	protected void updateButtonEnabling() {
 		final boolean isReadOnly = getVElement().isReadonly();
-		final boolean isEmptyList = tableViewerInputList == null || tableViewerInputList.isEmpty();
+		final int listSize = tableViewerInputList != null ? tableViewerInputList.size() : 0;
 
+		if (showMoveUpButton()) {
+			btnMoveUp.setEnabled(!isReadOnly && listSize > 1);
+		}
+		if (showMoveDownButton()) {
+			btnMoveDown.setEnabled(!isReadOnly && listSize > 1);
+		}
 		if (showAddExistingButton()) {
 			btnAddExisting.setEnabled(!isReadOnly);
 		}
@@ -404,7 +511,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 			btnAddNew.setEnabled(!isReadOnly);
 		}
 		if (showDeleteButton()) {
-			btnDelete.setEnabled(!isReadOnly && !isEmptyList);
+			btnDelete.setEnabled(!isReadOnly && listSize > 0);
 		}
 	}
 
@@ -426,6 +533,14 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 
 		int nrButtons = 0;
 
+		if (showMoveUpButton()) {
+			btnMoveUp = createMoveUpButton(buttonComposite, structuralFeature);
+			nrButtons++;
+		}
+		if (showMoveDownButton()) {
+			btnMoveDown = createMoveDownButton(buttonComposite, structuralFeature);
+			nrButtons++;
+		}
 		if (showAddExistingButton()) {
 			btnAddExisting = createAddExistingButton(buttonComposite, structuralFeature);
 			nrButtons++;
@@ -646,6 +761,55 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 			} else {
 				editingDomain.getCommandStack().execute(removeCommand);
 			}
+		}
+	}
+
+	/**
+	 * Method for moving up elements.
+	 *
+	 * @param tableViewer the {@link TableViewer}
+	 * @param eObject The {@link EObject} to delete from
+	 * @param structuralFeature The corresponding {@link EStructuralFeature}
+	 */
+	protected void handleMoveUp(TableViewer tableViewer, EObject eObject, EStructuralFeature structuralFeature) {
+		final List<?> moveUpList = IStructuredSelection.class.cast(tableViewer.getSelection()).toList();
+		final EditingDomain editingDomain = getEditingDomain(eObject);
+
+		for (final Object moveUpObject : moveUpList) {
+			final int currentIndex = EList.class.cast(eObject.eGet(structuralFeature)).indexOf(moveUpObject);
+			if (currentIndex <= 0) {
+				return;
+			}
+			editingDomain.getCommandStack()
+				.execute(
+					new MoveCommand(editingDomain, eObject, structuralFeature, currentIndex, currentIndex - 1));
+		}
+	}
+
+	/**
+	 * Method for moving down elements.
+	 *
+	 * @param tableViewer the {@link TableViewer}
+	 * @param eObject The {@link EObject} to delete from
+	 * @param structuralFeature The corresponding {@link EStructuralFeature}
+	 */
+	protected void handleMoveDown(TableViewer tableViewer, EObject eObject, EStructuralFeature structuralFeature) {
+		final List<?> moveDownList = IStructuredSelection.class.cast(tableViewer.getSelection()).toList();
+		final EditingDomain editingDomain = getEditingDomain(eObject);
+
+		// need to reverse to avoid the moves interfering each other
+		Collections.reverse(moveDownList);
+
+		for (final Object moveDownObject : moveDownList) {
+			final int maxIndex = EList.class.cast(eObject.eGet(structuralFeature)).size() - 1;
+			final int currentIndex = EList.class.cast(eObject.eGet(structuralFeature)).indexOf(moveDownObject);
+			if (currentIndex < 0 || currentIndex == maxIndex) {
+				return;
+
+			}
+			editingDomain.getCommandStack()
+				.execute(
+					new MoveCommand(editingDomain, eObject, structuralFeature, currentIndex, currentIndex + 1));
 		}
 	}
 

@@ -22,12 +22,14 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
+import org.eclipse.emf.ecp.edit.internal.swt.util.PreSetValidationListeners;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditorTester;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Text;
 import org.osgi.framework.Bundle;
 
 /**
@@ -96,7 +98,7 @@ public final class CellEditorFactory {
 	 * @return the cell editor
 	 */
 	@SuppressWarnings("restriction")
-	public CellEditor getCellEditor(EStructuralFeature eStructuralFeature, EObject eObject, Composite table,
+	public CellEditor getCellEditor(final EStructuralFeature eStructuralFeature, final EObject eObject, Composite table,
 		ViewModelContext viewModelContext) {
 		int bestPriority = -1;
 		CellDescriptor bestCandidate = null;
@@ -132,9 +134,16 @@ public final class CellEditorFactory {
 				Activator.logException(e);
 			}
 		}
+
 		if (result == null) {
 			result = new TextCellEditor(table);
 		}
+
+		if (Text.class.isInstance(result.getControl())) {
+			final Text text = (Text) result.getControl();
+			PreSetValidationListeners.create().verify(text, eStructuralFeature);
+		}
+
 		return result;
 	}
 

@@ -23,6 +23,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.edit.internal.swt.util.PreSetValidationListeners;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
@@ -32,6 +33,7 @@ import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.Text;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
@@ -102,7 +104,7 @@ public final class CellEditorFactory {
 	 * @param viewModelContext the {@link ViewModelContext}
 	 * @return a {@link ECPCellEditor} or a {@link TextCellEditor} as a fallback
 	 */
-	public CellEditor createCellEditor(EAttribute multiAttribute, EObject eObject, Table table,
+	public CellEditor createCellEditor(final EAttribute multiAttribute, final EObject eObject, Table table,
 		ViewModelContext viewModelContext) {
 		double bestPriority = -Double.MIN_VALUE;
 		CellEditorDescriptor bestCandidate = null;
@@ -123,6 +125,11 @@ public final class CellEditorFactory {
 		if (result == null) {
 			result = new TextCellEditor(table);
 		}
+
+		if (Text.class.isInstance(result.getControl())) {
+			PreSetValidationListeners.create().verify((Text) result.getControl(), multiAttribute);
+		}
+
 		return result;
 	}
 

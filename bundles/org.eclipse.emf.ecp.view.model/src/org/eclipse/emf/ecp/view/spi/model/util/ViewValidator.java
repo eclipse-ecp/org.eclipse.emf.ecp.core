@@ -37,6 +37,7 @@ import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VHasTooltip;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewModelLoadingProperties;
 import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
@@ -157,6 +158,8 @@ public class ViewValidator extends EObjectValidator {
 			return validateViewModelProperties((VViewModelProperties) value, diagnostics, context);
 		case VViewPackage.DATE_TIME_DISPLAY_ATTACHMENT:
 			return validateDateTimeDisplayAttachment((VDateTimeDisplayAttachment) value, diagnostics, context);
+		case VViewPackage.HAS_TOOLTIP:
+			return validateHasTooltip((VHasTooltip) value, diagnostics, context);
 		case VViewPackage.LABEL_ALIGNMENT:
 			return validateLabelAlignment((LabelAlignment) value, diagnostics, context);
 		case VViewPackage.DATE_TIME_DISPLAY_TYPE:
@@ -499,12 +502,14 @@ public class ViewValidator extends EObjectValidator {
 		}
 		return validateDomainModelReference(domainModelReference, diagnostics, context);
 	}
+	// end of custom code
 
 	/**
-	 * @generated
-	 * 			<!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
+	 *
 	 * @since 1.7
 	 *        <!-- end-user-doc -->
+	 * @generated
 	 */
 	public boolean validateViewModelLoadingProperties(VViewModelLoadingProperties viewModelLoadingProperties,
 		DiagnosticChain diagnostics, Map<Object, Object> context) {
@@ -540,12 +545,23 @@ public class ViewValidator extends EObjectValidator {
 	 *
 	 * @since 1.8
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	public boolean validateDateTimeDisplayAttachment(VDateTimeDisplayAttachment dateTimeDisplayAttachment,
 		DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(dateTimeDisplayAttachment, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @since 1.13
+	 */
+	public boolean validateHasTooltip(VHasTooltip hasTooltip, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(hasTooltip, diagnostics, context);
 	}
 
 	/**
@@ -564,7 +580,6 @@ public class ViewValidator extends EObjectValidator {
 	 *
 	 * @since 1.8
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	public boolean validateDateTimeDisplayType(DateTimeDisplayType dateTimeDisplayType, DiagnosticChain diagnostics,

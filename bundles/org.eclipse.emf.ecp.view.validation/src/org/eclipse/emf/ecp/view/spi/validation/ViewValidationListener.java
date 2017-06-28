@@ -24,6 +24,7 @@ import org.eclipse.emf.common.util.Diagnostic;
  */
 public interface ViewValidationListener {
 
+	// TODO this comment doesn't really fit to the actual functionality (imho)
 	/**
 	 * Returns validation results if the validation severity is higher than {@link Diagnostic#OK}. If there are no
 	 * severities higher than OK an empty Set is returned.

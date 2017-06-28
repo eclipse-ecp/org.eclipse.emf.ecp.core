@@ -21,6 +21,7 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedContainer;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VHasTooltip;
 
 /**
  * <!-- begin-user-doc -->
@@ -49,8 +50,7 @@ public class GroupAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public GroupAdapterFactory() {
-		if (modelPackage == null)
-		{
+		if (modelPackage == null) {
 			modelPackage = VGroupPackage.eINSTANCE;
 		}
 	}
@@ -67,12 +67,10 @@ public class GroupAdapterFactory extends AdapterFactoryImpl {
 	 */
 	@Override
 	public boolean isFactoryForType(Object object) {
-		if (object == modelPackage)
-		{
+		if (object == modelPackage) {
 			return true;
 		}
-		if (object instanceof EObject)
-		{
+		if (object instanceof EObject) {
 			return ((EObject) object).eClass().getEPackage() == modelPackage;
 		}
 		return false;
@@ -85,45 +83,42 @@ public class GroupAdapterFactory extends AdapterFactoryImpl {
 	 *
 	 * @generated
 	 */
-	protected GroupSwitch<Adapter> modelSwitch =
-		new GroupSwitch<Adapter>()
-		{
-			@Override
-			public Adapter caseGroup(VGroup object)
-			{
-				return createGroupAdapter();
-			}
+	protected GroupSwitch<Adapter> modelSwitch = new GroupSwitch<Adapter>() {
+		@Override
+		public Adapter caseGroup(VGroup object) {
+			return createGroupAdapter();
+		}
 
-			@Override
-			public Adapter caseElement(VElement object)
-			{
-				return createElementAdapter();
-			}
+		@Override
+		public Adapter caseElement(VElement object) {
+			return createElementAdapter();
+		}
 
-			@Override
-			public Adapter caseContainedElement(VContainedElement object)
-			{
-				return createContainedElementAdapter();
-			}
+		@Override
+		public Adapter caseContainedElement(VContainedElement object) {
+			return createContainedElementAdapter();
+		}
 
-			@Override
-			public Adapter caseContainer(VContainer object)
-			{
-				return createContainerAdapter();
-			}
+		@Override
+		public Adapter caseContainer(VContainer object) {
+			return createContainerAdapter();
+		}
 
-			@Override
-			public Adapter caseContainedContainer(VContainedContainer object)
-			{
-				return createContainedContainerAdapter();
-			}
+		@Override
+		public Adapter caseContainedContainer(VContainedContainer object) {
+			return createContainedContainerAdapter();
+		}
 
-			@Override
-			public Adapter defaultCase(EObject object)
-			{
-				return createEObjectAdapter();
-			}
-		};
+		@Override
+		public Adapter caseHasTooltip(VHasTooltip object) {
+			return createHasTooltipAdapter();
+		}
+
+		@Override
+		public Adapter defaultCase(EObject object) {
+			return createEObjectAdapter();
+		}
+	};
 
 	/**
 	 * Creates an adapter for the <code>target</code>.
@@ -167,8 +162,7 @@ public class GroupAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.emf.ecp.view.spi.model.VElement
 	 * @generated
 	 */
-	public Adapter createElementAdapter()
-	{
+	public Adapter createElementAdapter() {
 		return null;
 	}
 
@@ -184,8 +178,7 @@ public class GroupAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.emf.ecp.view.spi.model.VContainedElement
 	 * @generated
 	 */
-	public Adapter createContainedElementAdapter()
-	{
+	public Adapter createContainedElementAdapter() {
 		return null;
 	}
 
@@ -201,8 +194,7 @@ public class GroupAdapterFactory extends AdapterFactoryImpl {
 	 * @see org.eclipse.emf.ecp.view.spi.model.VContainer
 	 * @generated
 	 */
-	public Adapter createContainerAdapter()
-	{
+	public Adapter createContainerAdapter() {
 		return null;
 	}
 
@@ -215,13 +207,29 @@ public class GroupAdapterFactory extends AdapterFactoryImpl {
 	 *
 	 * @since 1.4
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VContainedContainer
 	 * @generated
 	 */
-	public Adapter createContainedContainerAdapter()
-	{
+	public Adapter createContainedContainerAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VHasTooltip <em>Has
+	 * Tooltip</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * 
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VHasTooltip
+	 * @generated
+	 */
+	public Adapter createHasTooltipAdapter() {
 		return null;
 	}
 

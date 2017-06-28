@@ -138,28 +138,30 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 		final Binding[] bindings = new Binding[3];
 		final IObservableValue value = WidgetProperties.text().observe(setLabel);
 
-		bindings[0] = getDataBindingContext().bindValue(value, getModelValue(), new UpdateValueStrategy() {
+		bindings[0] = getDataBindingContext().bindValue(value, getModelValue(),
+			withPreSetValidation(new UpdateValueStrategy() {
 
-			@Override
-			public Object convert(Object value) { // target to model
-				try {
-					return getModelValue().getValue();
-				} catch (final DatabindingFailedException ex) {
-					Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
-					return null;
+				@Override
+				public Object convert(Object value) { // target to model
+					try {
+						return getModelValue().getValue();
+					} catch (final DatabindingFailedException ex) {
+						Activator.getDefault().getReportService().report(new DatabindingFailedReport(ex));
+						return null;
+					}
 				}
-			}
-		}, new UpdateValueStrategy() {// model to target
-			@Override
-			public Object convert(Object value) {
-				updateChangeListener((EObject) value);
-				return getText(value);
-			}
-		});
+			}), new UpdateValueStrategy() {// model to target
+				@Override
+				public Object convert(Object value) {
+					updateChangeListener((EObject) value);
+					return getText(value);
+				}
+			});
 
 		final IObservableValue imageValue = WidgetProperties.image().observe(imageLabel);
 		bindings[1] = getDataBindingContext().bindValue(imageValue, getModelValue(),
-			new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER), new UpdateValueStrategy() {
+			withPreSetValidation(new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER)),
+			new UpdateValueStrategy() {
 				@Override
 				public Object convert(Object value) {
 					return getImage(value);
@@ -170,7 +172,7 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 		bindings[2] = getDataBindingContext().bindValue(
 			setLabelTooltip,
 			getModelValue(),
-			new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER),
+			withPreSetValidation(new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER)),
 			new UpdateValueStrategy() {
 				@Override
 				public Object convert(Object value) {
@@ -303,7 +305,8 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 
 		unsetLabel = new Label(mainComposite, SWT.NONE);
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(unsetLabel);
-		unsetLabel.setText(LocalizationServiceHelper.getString(getClass(), "LinkControl_NotSet")); //$NON-NLS-1$
+		unsetLabel.setText(
+			LocalizationServiceHelper.getString(DomainModelReferenceControlSWTRenderer.class, "LinkControl_NotSet")); //$NON-NLS-1$
 		unsetLabel.setBackground(mainComposite.getBackground());
 		unsetLabel.setForeground(parentComposite.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
 		unsetLabel.setAlignment(SWT.CENTER);

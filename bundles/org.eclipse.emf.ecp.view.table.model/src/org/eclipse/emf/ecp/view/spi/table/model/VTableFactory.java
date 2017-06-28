@@ -74,6 +74,17 @@ public interface VTableFactory extends EFactory {
 	VWidthConfiguration createWidthConfiguration();
 
 	/**
+	 * Returns a new object of class '<em>Enablement Configuration</em>'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 * @return a new object of class '<em>Enablement Configuration</em>'.
+	 * @generated
+	 */
+	VEnablementConfiguration createEnablementConfiguration();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

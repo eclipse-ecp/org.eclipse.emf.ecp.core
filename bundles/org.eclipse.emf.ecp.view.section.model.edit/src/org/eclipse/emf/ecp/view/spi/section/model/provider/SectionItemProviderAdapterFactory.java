@@ -51,7 +51,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  * Note that most of the adapters are shared among multiple instances.
  * <!-- begin-user-doc --> <!--
  * end-user-doc -->
- *
+ * 
  * @generated
  */
 public class SectionItemProviderAdapterFactory extends SectionAdapterFactory
@@ -60,7 +60,7 @@ public class SectionItemProviderAdapterFactory extends SectionAdapterFactory
 	/**
 	 * This keeps track of the root adapter factory that delegates to this adapter factory.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected ComposedAdapterFactory parentAdapterFactory;
@@ -77,7 +77,7 @@ public class SectionItemProviderAdapterFactory extends SectionAdapterFactory
 	 * This helps manage the child creation extenders.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected ChildCreationExtenderManager childCreationExtenderManager = new ChildCreationExtenderManager(
@@ -111,7 +111,7 @@ public class SectionItemProviderAdapterFactory extends SectionAdapterFactory
 	 * {@link org.eclipse.emf.ecp.view.spi.section.model.VSectionedArea} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected SectionedAreaItemProvider sectionedAreaItemProvider;
@@ -120,14 +120,12 @@ public class SectionItemProviderAdapterFactory extends SectionAdapterFactory
 	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.section.model.VSectionedArea}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public Adapter createSectionedAreaAdapter()
-	{
-		if (sectionedAreaItemProvider == null)
-		{
+	public Adapter createSectionedAreaAdapter() {
+		if (sectionedAreaItemProvider == null) {
 			sectionedAreaItemProvider = new SectionedAreaItemProvider(this);
 		}
 
@@ -138,7 +136,7 @@ public class SectionItemProviderAdapterFactory extends SectionAdapterFactory
 	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.spi.section.model.VSection}
 	 * instances.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected SectionItemProvider sectionItemProvider;
@@ -151,8 +149,7 @@ public class SectionItemProviderAdapterFactory extends SectionAdapterFactory
 	 */
 	@Override
 	public Adapter createSectionAdapter() {
-		if (sectionItemProvider == null)
-		{
+		if (sectionItemProvider == null) {
 			sectionItemProvider = new SectionItemProvider(this);
 		}
 
@@ -184,7 +181,7 @@ public class SectionItemProviderAdapterFactory extends SectionAdapterFactory
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -195,7 +192,7 @@ public class SectionItemProviderAdapterFactory extends SectionAdapterFactory
 	/**
 	 * This implementation substitutes the factory itself as the key for the adapter.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -205,16 +202,14 @@ public class SectionItemProviderAdapterFactory extends SectionAdapterFactory
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Object adapt(Object object, Object type) {
-		if (isFactoryForType(type))
-		{
-			final Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter))
-			{
+		if (isFactoryForType(type)) {
+			Object adapter = super.adapt(object, type);
+			if (!(type instanceof Class<?>) || (((Class<?>) type).isInstance(adapter))) {
 				return adapter;
 			}
 		}
@@ -224,7 +219,7 @@ public class SectionItemProviderAdapterFactory extends SectionAdapterFactory
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public List<IChildCreationExtender> getChildCreationExtenders() {
@@ -233,7 +228,7 @@ public class SectionItemProviderAdapterFactory extends SectionAdapterFactory
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -244,7 +239,7 @@ public class SectionItemProviderAdapterFactory extends SectionAdapterFactory
 
 	/**
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -255,7 +250,7 @@ public class SectionItemProviderAdapterFactory extends SectionAdapterFactory
 	/**
 	 * This adds a listener.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -266,7 +261,7 @@ public class SectionItemProviderAdapterFactory extends SectionAdapterFactory
 	/**
 	 * This removes a listener.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -285,8 +280,7 @@ public class SectionItemProviderAdapterFactory extends SectionAdapterFactory
 	public void fireNotifyChanged(Notification notification) {
 		changeNotifier.fireNotifyChanged(notification);
 
-		if (parentAdapterFactory != null)
-		{
+		if (parentAdapterFactory != null) {
 			parentAdapterFactory.fireNotifyChanged(notification);
 		}
 	}
@@ -299,12 +293,10 @@ public class SectionItemProviderAdapterFactory extends SectionAdapterFactory
 	 */
 	@Override
 	public void dispose() {
-		if (sectionedAreaItemProvider != null) {
+		if (sectionedAreaItemProvider != null)
 			sectionedAreaItemProvider.dispose();
-		}
-		if (sectionItemProvider != null) {
+		if (sectionItemProvider != null)
 			sectionItemProvider.dispose();
-		}
 	}
 
 	/**
@@ -318,7 +310,7 @@ public class SectionItemProviderAdapterFactory extends SectionAdapterFactory
 		/**
 		 * The switch for creating child descriptors specific to each extended class.
 		 * <!-- begin-user-doc --> <!-- end-user-doc -->
-		 *
+		 * 
 		 * @generated
 		 */
 		protected static class CreationSwitch extends ViewSwitch<Object> {
@@ -326,7 +318,7 @@ public class SectionItemProviderAdapterFactory extends SectionAdapterFactory
 			 * The child descriptors being populated.
 			 * <!-- begin-user-doc -->
 			 * <!-- end-user-doc -->
-			 *
+			 * 
 			 * @generated
 			 */
 			protected List<Object> newChildDescriptors;
@@ -335,7 +327,7 @@ public class SectionItemProviderAdapterFactory extends SectionAdapterFactory
 			 * The domain in which to create the children.
 			 * <!-- begin-user-doc
 			 * --> <!-- end-user-doc -->
-			 *
+			 * 
 			 * @generated
 			 */
 			protected EditingDomain editingDomain;
@@ -343,7 +335,7 @@ public class SectionItemProviderAdapterFactory extends SectionAdapterFactory
 			/**
 			 * Creates the a switch for populating child descriptors in the given domain.
 			 * <!-- begin-user-doc --> <!-- end-user-doc -->
-			 *
+			 * 
 			 * @generated
 			 */
 			CreationSwitch(List<Object> newChildDescriptors,
@@ -354,37 +346,33 @@ public class SectionItemProviderAdapterFactory extends SectionAdapterFactory
 
 			/**
 			 * <!-- begin-user-doc --> <!-- end-user-doc -->
-			 *
+			 * 
 			 * @generated
 			 */
 			@Override
 			public Object caseView(VView object) {
-				newChildDescriptors.add
-					(createChildParameter
-					(VViewPackage.Literals.VIEW__CHILDREN,
-						VSectionFactory.eINSTANCE.createSectionedArea()));
+				newChildDescriptors.add(createChildParameter(VViewPackage.Literals.VIEW__CHILDREN,
+					VSectionFactory.eINSTANCE.createSectionedArea()));
 
 				return null;
 			}
 
 			/**
 			 * <!-- begin-user-doc --> <!-- end-user-doc -->
-			 *
+			 * 
 			 * @generated
 			 */
 			@Override
 			public Object caseContainer(VContainer object) {
-				newChildDescriptors.add
-					(createChildParameter
-					(VViewPackage.Literals.CONTAINER__CHILDREN,
-						VSectionFactory.eINSTANCE.createSectionedArea()));
+				newChildDescriptors.add(createChildParameter(VViewPackage.Literals.CONTAINER__CHILDREN,
+					VSectionFactory.eINSTANCE.createSectionedArea()));
 
 				return null;
 			}
 
 			/**
 			 * <!-- begin-user-doc --> <!-- end-user-doc -->
-			 *
+			 * 
 			 * @generated
 			 */
 			protected CommandParameter createChildParameter(Object feature,
@@ -396,20 +384,20 @@ public class SectionItemProviderAdapterFactory extends SectionAdapterFactory
 
 		/**
 		 * <!-- begin-user-doc --> <!-- end-user-doc -->
-		 *
+		 * 
 		 * @generated
 		 */
 		@Override
 		public Collection<Object> getNewChildDescriptors(Object object,
 			EditingDomain editingDomain) {
-			final ArrayList<Object> result = new ArrayList<Object>();
+			ArrayList<Object> result = new ArrayList<Object>();
 			new CreationSwitch(result, editingDomain).doSwitch((EObject) object);
 			return result;
 		}
 
 		/**
 		 * <!-- begin-user-doc --> <!-- end-user-doc -->
-		 *
+		 * 
 		 * @generated
 		 */
 		@Override

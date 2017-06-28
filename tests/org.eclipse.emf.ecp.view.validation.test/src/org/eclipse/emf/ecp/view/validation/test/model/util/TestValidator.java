@@ -26,16 +26,20 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EObjectValidator;
+import org.eclipse.emf.ecore.xml.type.util.XMLTypeUtil;
 import org.eclipse.emf.ecp.view.internal.validation.ValidationNotification;
 import org.eclipse.emf.ecp.view.validation.test.model.Book;
+import org.eclipse.emf.ecp.view.validation.test.model.Color;
 import org.eclipse.emf.ecp.view.validation.test.model.Computer;
 import org.eclipse.emf.ecp.view.validation.test.model.Container;
 import org.eclipse.emf.ecp.view.validation.test.model.Content;
 import org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContainer;
 import org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContent;
+import org.eclipse.emf.ecp.view.validation.test.model.Gender;
 import org.eclipse.emf.ecp.view.validation.test.model.Librarian;
 import org.eclipse.emf.ecp.view.validation.test.model.Library;
 import org.eclipse.emf.ecp.view.validation.test.model.Mainboard;
+import org.eclipse.emf.ecp.view.validation.test.model.Person;
 import org.eclipse.emf.ecp.view.validation.test.model.PowerBlock;
 import org.eclipse.emf.ecp.view.validation.test.model.Referencer;
 import org.eclipse.emf.ecp.view.validation.test.model.TableContent;
@@ -212,6 +216,26 @@ public class TestValidator extends EObjectValidator {
 			return validateCrossReferenceContainer((CrossReferenceContainer) value, diagnostics, context);
 		case TestPackage.CROSS_REFERENCE_CONTENT:
 			return validateCrossReferenceContent((CrossReferenceContent) value, diagnostics, context);
+		case TestPackage.PERSON:
+			return validatePerson((Person) value, diagnostics, context);
+		case TestPackage.GENDER:
+			return validateGender((Gender) value, diagnostics, context);
+		case TestPackage.COLOR:
+			return validateColor((Color) value, diagnostics, context);
+		case TestPackage.STRING_WITH_MAX_LENGTH8:
+			return validateStringWithMaxLength8((String) value, diagnostics, context);
+		case TestPackage.ONLY_CAPITALS:
+			return validateOnlyCapitals((String) value, diagnostics, context);
+		case TestPackage.CUSTOM_DATA_TYPE:
+			return validateCustomDataType((String) value, diagnostics, context);
+		case TestPackage.PHONE_NUMBER:
+			return validatePhoneNumber((String) value, diagnostics, context);
+		case TestPackage.MIN_LENGTH_OF3:
+			return validateMinLengthOf3((String) value, diagnostics, context);
+		case TestPackage.STRICT_MIN_LENGTH_OF3:
+			return validateStrictMinLengthOf3((String) value, diagnostics, context);
+		case TestPackage.AGE:
+			return validateAge((Integer) value, diagnostics, context);
 		default:
 			return true;
 		}
@@ -658,6 +682,272 @@ public class TestValidator extends EObjectValidator {
 	public boolean validateCrossReferenceContent(CrossReferenceContent crossReferenceContent,
 		DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(crossReferenceContent, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public boolean validatePerson(Person person, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(person, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public boolean validateGender(Gender gender, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return true;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public boolean validateColor(Color color, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return true;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public boolean validateStringWithMaxLength8(String stringWithMaxLength8, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
+		final boolean result = validateStringWithMaxLength8_MaxLength(stringWithMaxLength8, diagnostics, context);
+		return result;
+	}
+
+	/**
+	 * Validates the MaxLength constraint of '<em>String With Max Length8</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public boolean validateStringWithMaxLength8_MaxLength(String stringWithMaxLength8, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
+		final int length = stringWithMaxLength8.length();
+		final boolean result = length <= 8;
+		if (!result && diagnostics != null) {
+			reportMaxLengthViolation(TestPackage.Literals.STRING_WITH_MAX_LENGTH8, stringWithMaxLength8, length, 8,
+				diagnostics, context);
+		}
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public boolean validateOnlyCapitals(String onlyCapitals, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		final boolean result = validateOnlyCapitals_Pattern(onlyCapitals, diagnostics, context);
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @see #validateOnlyCapitals_Pattern
+	 */
+	public static final PatternMatcher[][] ONLY_CAPITALS__PATTERN__VALUES = new PatternMatcher[][] {
+		new PatternMatcher[] {
+			XMLTypeUtil.createPatternMatcher("[A-Z]+")
+		}
+	};
+
+	/**
+	 * Validates the Pattern constraint of '<em>Only Capitals</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public boolean validateOnlyCapitals_Pattern(String onlyCapitals, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
+		return validatePattern(TestPackage.Literals.ONLY_CAPITALS, onlyCapitals, ONLY_CAPITALS__PATTERN__VALUES,
+			diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public boolean validateCustomDataType(String customDataType, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
+		return true;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public boolean validatePhoneNumber(String phoneNumber, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		final boolean result = validatePhoneNumber_Pattern(phoneNumber, diagnostics, context);
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @see #validatePhoneNumber_Pattern
+	 */
+	public static final PatternMatcher[][] PHONE_NUMBER__PATTERN__VALUES = new PatternMatcher[][] {
+		new PatternMatcher[] {
+			XMLTypeUtil.createPatternMatcher("((\\+)?[a-c0-9*#]{1,20}){0,1}")
+		}
+	};
+
+	/**
+	 * Validates the Pattern constraint of '<em>Phone Number</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public boolean validatePhoneNumber_Pattern(String phoneNumber, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
+		return validatePattern(TestPackage.Literals.PHONE_NUMBER, phoneNumber, PHONE_NUMBER__PATTERN__VALUES,
+			diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public boolean validateMinLengthOf3(String minLengthOf3, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		final boolean result = validateMinLengthOf3_MinLength(minLengthOf3, diagnostics, context);
+		return result;
+	}
+
+	/**
+	 * Validates the MinLength constraint of '<em>Min Length Of3</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public boolean validateMinLengthOf3_MinLength(String minLengthOf3, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
+		final int length = minLengthOf3.length();
+		final boolean result = length >= 3;
+		if (!result && diagnostics != null) {
+			reportMinLengthViolation(TestPackage.Literals.MIN_LENGTH_OF3, minLengthOf3, length, 3, diagnostics,
+				context);
+		}
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public boolean validateStrictMinLengthOf3(String strictMinLengthOf3, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
+		final boolean result = validateStrictMinLengthOf3_MinLength(strictMinLengthOf3, diagnostics, context);
+		return result;
+	}
+
+	/**
+	 * Validates the MinLength constraint of '<em>Strict Min Length Of3</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public boolean validateStrictMinLengthOf3_MinLength(String strictMinLengthOf3, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
+		final int length = strictMinLengthOf3.length();
+		final boolean result = length >= 3;
+		if (!result && diagnostics != null) {
+			reportMinLengthViolation(TestPackage.Literals.STRICT_MIN_LENGTH_OF3, strictMinLengthOf3, length, 3,
+				diagnostics, context);
+		}
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public boolean validateAge(Integer age, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		boolean result = validateAge_Min(age, diagnostics, context);
+		if (result || diagnostics != null) {
+			result &= validateAge_Max(age, diagnostics, context);
+		}
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @see #validateAge_Min
+	 */
+	public static final Integer AGE__MIN__VALUE = new Integer(0);
+
+	/**
+	 * Validates the Min constraint of '<em>Age</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public boolean validateAge_Min(Integer age, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		final boolean result = age.compareTo(AGE__MIN__VALUE) >= 0;
+		if (!result && diagnostics != null) {
+			reportMinViolation(TestPackage.Literals.AGE, age, AGE__MIN__VALUE, true, diagnostics, context);
+		}
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @see #validateAge_Max
+	 */
+	public static final Integer AGE__MAX__VALUE = new Integer(100);
+
+	/**
+	 * Validates the Max constraint of '<em>Age</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	public boolean validateAge_Max(Integer age, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		final boolean result = age.compareTo(AGE__MAX__VALUE) <= 0;
+		if (!result && diagnostics != null) {
+			reportMaxViolation(TestPackage.Literals.AGE, age, AGE__MAX__VALUE, true, diagnostics, context);
+		}
+		return result;
 	}
 
 	private boolean validateUniqueness(TableWithUnique tableWithUnique, DiagnosticChain diagnostics,

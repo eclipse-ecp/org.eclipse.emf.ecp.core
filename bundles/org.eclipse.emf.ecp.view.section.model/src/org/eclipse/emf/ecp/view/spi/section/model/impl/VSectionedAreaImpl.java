@@ -27,20 +27,19 @@ import org.eclipse.emf.ecp.view.spi.section.model.VSectionedArea;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.spi.section.model.impl.VSectionedAreaImpl#getRoot <em>Root</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
-public class VSectionedAreaImpl extends VContainedElementImpl implements VSectionedArea
-{
+public class VSectionedAreaImpl extends VContainedElementImpl implements VSectionedArea {
 	/**
 	 * The cached value of the '{@link #getRoot() <em>Root</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getRoot()
 	 * @generated
 	 * @ordered
@@ -50,57 +49,51 @@ public class VSectionedAreaImpl extends VContainedElementImpl implements VSectio
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	protected VSectionedAreaImpl()
-	{
+	protected VSectionedAreaImpl() {
 		super();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return VSectionPackage.Literals.SECTIONED_AREA;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public VSection getRoot()
-	{
+	public VSection getRoot() {
 		return root;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	public NotificationChain basicSetRoot(VSection newRoot, NotificationChain msgs)
-	{
-		final VSection oldRoot = root;
+	public NotificationChain basicSetRoot(VSection newRoot, NotificationChain msgs) {
+		VSection oldRoot = root;
 		root = newRoot;
-		if (eNotificationRequired())
-		{
-			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
 				VSectionPackage.SECTIONED_AREA__ROOT, oldRoot, newRoot);
-			if (msgs == null) {
+			if (msgs == null)
 				msgs = notification;
-			} else {
+			else
 				msgs.add(notification);
-			}
 		}
 		return msgs;
 	}
@@ -108,45 +101,36 @@ public class VSectionedAreaImpl extends VContainedElementImpl implements VSectio
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public void setRoot(VSection newRoot)
-	{
-		if (newRoot != root)
-		{
+	public void setRoot(VSection newRoot) {
+		if (newRoot != root) {
 			NotificationChain msgs = null;
-			if (root != null) {
-				msgs = ((InternalEObject) root).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
-					- VSectionPackage.SECTIONED_AREA__ROOT, null, msgs);
-			}
-			if (newRoot != null) {
-				msgs = ((InternalEObject) newRoot).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
-					- VSectionPackage.SECTIONED_AREA__ROOT, null, msgs);
-			}
+			if (root != null)
+				msgs = ((InternalEObject) root).eInverseRemove(this,
+					EOPPOSITE_FEATURE_BASE - VSectionPackage.SECTIONED_AREA__ROOT, null, msgs);
+			if (newRoot != null)
+				msgs = ((InternalEObject) newRoot).eInverseAdd(this,
+					EOPPOSITE_FEATURE_BASE - VSectionPackage.SECTIONED_AREA__ROOT, null, msgs);
 			msgs = basicSetRoot(newRoot, msgs);
-			if (msgs != null) {
+			if (msgs != null)
 				msgs.dispatch();
-			}
-		}
-		else if (eNotificationRequired()) {
-			eNotify(new ENotificationImpl(this, Notification.SET, VSectionPackage.SECTIONED_AREA__ROOT, newRoot,
-				newRoot));
-		}
+		} else if (eNotificationRequired())
+			eNotify(
+				new ENotificationImpl(this, Notification.SET, VSectionPackage.SECTIONED_AREA__ROOT, newRoot, newRoot));
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-	{
-		switch (featureID)
-		{
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
 		case VSectionPackage.SECTIONED_AREA__ROOT:
 			return basicSetRoot(null, msgs);
 		}
@@ -156,14 +140,12 @@ public class VSectionedAreaImpl extends VContainedElementImpl implements VSectio
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
-		switch (featureID)
-		{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 		case VSectionPackage.SECTIONED_AREA__ROOT:
 			return getRoot();
 		}
@@ -173,14 +155,12 @@ public class VSectionedAreaImpl extends VContainedElementImpl implements VSectio
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
-		switch (featureID)
-		{
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 		case VSectionPackage.SECTIONED_AREA__ROOT:
 			setRoot((VSection) newValue);
 			return;
@@ -191,14 +171,12 @@ public class VSectionedAreaImpl extends VContainedElementImpl implements VSectio
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
-		switch (featureID)
-		{
+	public void eUnset(int featureID) {
+		switch (featureID) {
 		case VSectionPackage.SECTIONED_AREA__ROOT:
 			setRoot((VSection) null);
 			return;
@@ -209,14 +187,12 @@ public class VSectionedAreaImpl extends VContainedElementImpl implements VSectio
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
-		switch (featureID)
-		{
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 		case VSectionPackage.SECTIONED_AREA__ROOT:
 			return root != null;
 		}

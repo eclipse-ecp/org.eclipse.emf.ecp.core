@@ -20,6 +20,7 @@ import static org.mockito.Mockito.when;
 
 import org.eclipse.core.databinding.observable.Observables;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.databinding.property.Properties;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
@@ -62,7 +63,8 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 		setTemplateProvider(mock(VTViewTemplateProvider.class));
 		final EMFFormsEditSupport editSupport = mock(EMFFormsEditSupport.class);
 		setup();
-		setRenderer(new TextControlSWTRenderer(getvControl(), getContext(), reportService, getDatabindingService(), getLabelProvider(),
+		setRenderer(new TextControlSWTRenderer(getvControl(), getContext(), reportService, getDatabindingService(),
+			getLabelProvider(),
 			getTemplateProvider(), editSupport));
 		getRenderer().init();
 	}
@@ -87,8 +89,9 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 		when(mockedObservableValue.getObserved()).thenReturn(mockedEObject);
 		final EStructuralFeature mockedEStructuralFeature = EcorePackage.eINSTANCE.getENamedElement_Name();
 		when(mockedObservableValue.getValueType()).thenReturn(mockedEStructuralFeature);
-		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
-			mockedObservableValue);
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(
+				mockedObservableValue);
 		final Control render = renderControl(new SWTGridCell(0, 1, getRenderer()));
 		assertControl(render);
 	}
@@ -108,8 +111,9 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 		final EStructuralFeature mockedEStructuralFeature = mock(EStructuralFeature.class);
 		when(mockedEStructuralFeature.isUnsettable()).thenReturn(false);
 		when(mockedObservableValue.getValueType()).thenReturn(mockedEStructuralFeature);
-		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
-			mockedObservableValue);
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(
+				mockedObservableValue);
 		final Control render = renderControl(new SWTGridCell(0, 2, getRenderer()));
 
 		assertControl(render);
@@ -203,9 +207,11 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 			Observables.constantObservableValue("antiException"));
 		Mockito.reset(getDatabindingService());
 		mockDatabindingIsUnsettable();
-		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
-			mockedObservable, new ObservingWritableValue(mockedObservable));
-
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(
+				mockedObservable, new ObservingWritableValue(mockedObservable));
+		when(getDatabindingService().getValueProperty(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+			Properties.selfValue(mockedObservable.getValueType()));
 		final Control renderControl = renderControl(new SWTGridCell(0, 2, getRenderer()));
 		final Text text = (Text) Composite.class.cast(renderControl).getChildren()[0];
 		return text;
@@ -236,8 +242,9 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 		when(mockedObservableValue.getObserved()).thenReturn(mockedEObject);
 		final EStructuralFeature mockedEStructuralFeature = EcorePackage.eINSTANCE.getENamedElement_Name();
 		when(mockedObservableValue.getValueType()).thenReturn(mockedEStructuralFeature);
-		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
-			mockedObservableValue);
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(
+				mockedObservableValue);
 
 		final Control renderControl = renderControl(new SWTGridCell(0, 2, getRenderer()));
 		final Control textRender = Composite.class.cast(renderControl).getChildren()[0];

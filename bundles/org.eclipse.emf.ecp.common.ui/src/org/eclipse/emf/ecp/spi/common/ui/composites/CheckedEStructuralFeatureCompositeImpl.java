@@ -72,7 +72,7 @@ public class CheckedEStructuralFeatureCompositeImpl extends SelectModelElementCo
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.TOP).grab(true, false).span(2, 1).applyTo(buttons);
 
 		final Button buttonAll = new Button(buttons, SWT.PUSH);
-		buttonAll.setText(LocalizationServiceHelper.getString(getClass(),
+		buttonAll.setText(LocalizationServiceHelper.getString(CheckedEStructuralFeatureCompositeImpl.class,
 			MessageKeys.CheckedModelElementHelper_SelectAllLabel));
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.TOP).grab(true, false).applyTo(buttonAll);
 		buttonAll.addSelectionListener(new SelectionAdapter() {
@@ -85,7 +85,7 @@ public class CheckedEStructuralFeatureCompositeImpl extends SelectModelElementCo
 		});
 
 		final Button buttonNone = new Button(buttons, SWT.PUSH);
-		buttonNone.setText(LocalizationServiceHelper.getString(getClass(),
+		buttonNone.setText(LocalizationServiceHelper.getString(CheckedEStructuralFeatureCompositeImpl.class,
 			MessageKeys.CheckedModelElementHelper_DeselectAllLabel));
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.TOP).grab(true, false).applyTo(buttonNone);
 		buttonNone.addSelectionListener(new SelectionAdapter() {

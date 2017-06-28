@@ -6,12 +6,12 @@
 	<parent>
 		<groupId>org.eclipse.emf.ecp</groupId>
 		<artifactId>ecp-parent</artifactId>
-		<version>1.12.0-SNAPSHOT</version>
+		<version>1.13.0-SNAPSHOT</version>
 		<relativePath>../../releng/org.eclipse.emf.ecp.releng/</relativePath>
 	</parent>
 	<groupId>org.eclipse.emf.ecp</groupId>
 	<artifactId>ecp-features-parent</artifactId>
-	<version>1.12.0-SNAPSHOT</version>
+	<version>1.13.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<modules>
@@ -39,6 +39,7 @@
 		<module>../../features/org.eclipse.emf.ecp.view.rule.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.validation.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.validation.bean.feature</module>
+		<module>../../features/org.eclipse.emfforms.common.prevalidation.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.unset.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.vertical.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.horizontal.feature</module>
@@ -103,6 +104,7 @@
 		<module>../../features/org.eclipse.emf.ecp.view.table.ui.swt.persistedstate.feature</module>
 		
 		<module>../../features/org.eclipse.emfforms.rulerepository.feature</module>
+		
 	</modules>
 
 	<!-- Parent used for features. This POM contains all build steps for code signing. -->

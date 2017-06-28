@@ -114,7 +114,7 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 
 		final IObservableValue value = WidgetProperties.text().observe(hyperlink);
 		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(),
-			createValueExtractingUpdateStrategy(),
+			withPreSetValidation(createValueExtractingUpdateStrategy()),
 			new UpdateValueStrategy() {
 				@Override
 				public Object convert(Object value) {
@@ -125,7 +125,7 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 
 		final IObservableValue tooltipValue = WidgetProperties.tooltipText().observe(hyperlink);
 		final Binding tooltipBinding = getDataBindingContext().bindValue(tooltipValue, getModelValue(),
-			createValueExtractingUpdateStrategy(),
+			withPreSetValidation(createValueExtractingUpdateStrategy()),
 			new UpdateValueStrategy() {
 				@Override
 				public Object convert(Object value) {
@@ -135,7 +135,7 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 
 		final IObservableValue imageValue = WidgetProperties.image().observe(imageHyperlink);
 		final Binding imageBinding = getDataBindingContext().bindValue(imageValue, getModelValue(),
-			new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER),
+			withPreSetValidation(new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER)),
 			new UpdateValueStrategy() {
 				@Override
 				public Object convert(Object value) {
@@ -145,7 +145,7 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 
 		final IObservableValue deleteButtonEnablement = WidgetProperties.enabled().observe(deleteReferenceButton);
 		final Binding deleteBinding = getDataBindingContext().bindValue(deleteButtonEnablement, getModelValue(),
-			createValueExtractingUpdateStrategy(),
+			withPreSetValidation(createValueExtractingUpdateStrategy()),
 			new UpdateValueStrategy() {
 				@Override
 				public Object convert(Object value) {
@@ -215,8 +215,12 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 		return composite;
 	}
 
-	private void createButtons(Composite parent) {
-
+	/**
+	 * Called by {@link #createSWTControl(Composite)} in order to create the buttons.
+	 *
+	 * @param parent the parent composite
+	 */
+	protected void createButtons(Composite parent) {
 		String elementDisplayName = null;
 		try {
 			elementDisplayName = (String) emfFormsLabelProvider.getDisplayName(getVElement().getDomainModelReference())
@@ -225,6 +229,18 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 			getReportService().report(new AbstractReport(ex));
 		}
 
+		createAddReferenceButton(parent, elementDisplayName);
+		createNewReferenceButton(parent, elementDisplayName);
+		createDeleteReferenceButton(parent, elementDisplayName);
+	}
+
+	/**
+	 * Called by {@link #createButtons(Composite)} to create the add existing reference button.
+	 *
+	 * @param parent the parent composite
+	 * @param elementDisplayName the display name of the reference
+	 */
+	protected void createAddReferenceButton(Composite parent, String elementDisplayName) {
 		addReferenceBtn = new Button(parent, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(false, false).align(SWT.CENTER, SWT.CENTER).applyTo(addReferenceBtn);
 		addReferenceBtn
@@ -245,7 +261,15 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 				}
 			}
 		});
+	}
 
+	/**
+	 * Called by {@link #createButtons(Composite)} to create the create new reference button.
+	 *
+	 * @param parent the parent composite
+	 * @param elementDisplayName the display name of the reference
+	 */
+	protected void createNewReferenceButton(Composite parent, String elementDisplayName) {
 		newReferenceBtn = new Button(parent, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(false, false).align(SWT.CENTER, SWT.CENTER).applyTo(newReferenceBtn);
 		newReferenceBtn
@@ -267,14 +291,21 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 				}
 			}
 		});
+	}
 
+	/**
+	 * Called by {@link #createButtons(Composite)} to create the delete reference button.
+	 *
+	 * @param parent the parent composite
+	 * @param elementDisplayName the display name of the reference
+	 */
+	protected void createDeleteReferenceButton(Composite parent, String elementDisplayName) {
 		deleteReferenceButton = new Button(parent, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(false, false).align(SWT.CENTER, SWT.CENTER).applyTo(deleteReferenceButton);
 		deleteReferenceButton
 			.setImage(imageRegistryService.getImage(getIconBundle(), "icons/unset_reference.png")); //$NON-NLS-1$
 		deleteReferenceButton.setToolTipText(getLocalizedString(MessageKeys.LinkControl_DeleteReference));
 		deleteReferenceButton.addSelectionListener(new DeleteSelectionAdapter());
-
 	}
 
 	private Bundle getIconBundle() {
@@ -365,7 +396,10 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 		referenceService.openInNewContext(value);
 	}
 
-	private ReferenceService getReferenceService() {
+	/**
+	 * @return the {@link ReferenceService}
+	 */
+	protected ReferenceService getReferenceService() {
 		if (referenceService == null) {
 			referenceService = getViewModelContext().getService(ReferenceService.class);
 		}

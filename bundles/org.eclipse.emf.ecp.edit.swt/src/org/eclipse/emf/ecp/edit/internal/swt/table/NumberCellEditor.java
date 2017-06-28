@@ -24,7 +24,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.NumericalHelper;
 import org.eclipse.emf.ecp.edit.spi.ViewLocaleService;
-import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor;
 import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.edit.command.SetCommand;
@@ -35,7 +34,6 @@ import org.eclipse.jface.databinding.viewers.CellEditorProperties;
 import org.eclipse.jface.dialogs.IDialogLabelKeys;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.JFaceResources;
-import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
@@ -47,7 +45,7 @@ import org.eclipse.swt.widgets.Text;
  * @author Eugen Neufeld
  *
  */
-public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
+public class NumberCellEditor extends StringBasedCellEditor {
 
 	/**
 	 * @author Jonas
@@ -163,7 +161,6 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 	}
 
 	private EStructuralFeature eStructuralFeature;
-	private ViewModelContext viewModelContext;
 	@Deprecated
 	private ViewLocaleService localeService;
 	private EMFFormsLocaleProvider localeProvider;
@@ -208,7 +205,6 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 	@Override
 	public void instantiate(EStructuralFeature eStructuralFeature, ViewModelContext viewModelContext) {
 		this.eStructuralFeature = eStructuralFeature;
-		this.viewModelContext = viewModelContext;
 		getControl().setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_edit_cellEditor_numberical"); //$NON-NLS-1$
 		localeService = viewModelContext.getService(ViewLocaleService.class);
 		localeProvider = viewModelContext.getService(EMFFormsLocaleProvider.class);
@@ -223,7 +219,7 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 	@Override
 	public String getFormatedString(Object value) {
 		if (value == null) {
-			setErrorMessage(LocalizationServiceHelper.getString(getClass(),
+			setErrorMessage(LocalizationServiceHelper.getString(NumberCellEditor.class,
 				TableMessageKeys.NumberCellEditor_ValueIsNull));
 			return ""; //$NON-NLS-1$
 		}
@@ -267,7 +263,7 @@ public class NumberCellEditor extends TextCellEditor implements ECPCellEditor {
 	 */
 	@Override
 	public UpdateValueStrategy getTargetToModelStrategy(final DataBindingContext databindingContext) {
-		return new TargetToModelStrategy(databindingContext);
+		return withPreSetValidation(eStructuralFeature, new TargetToModelStrategy(databindingContext));
 	}
 
 	/**

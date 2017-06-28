@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.ecp.view.rule.test" version="2">
+    <resource path="src/org/eclipse/emf/ecp/view/rule/test/RuleService_PTest.java" type="org.eclipse.emf.ecp.view.rule.test.RuleService_PTest$ViewModelContextStub">
+        <filter comment="stub implementation for testing." id="574619656">
+            <message_arguments>
+                <message_argument value="ViewModelContext"/>
+                <message_argument value="ViewModelContextStub"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

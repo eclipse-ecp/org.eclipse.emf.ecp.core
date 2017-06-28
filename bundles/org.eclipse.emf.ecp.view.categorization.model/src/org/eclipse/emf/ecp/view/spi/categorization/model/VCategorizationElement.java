@@ -21,22 +21,21 @@ import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement#getCategorizations <em>
- * Categorizations</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement#getCategorizations
+ * <em>Categorizations</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement#getCurrentSelection <em>Current
  * Selection</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement#getMainCategoryDepth <em>Main
  * Category Depth</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage#getCategorizationElement()
  * @model
  * @generated
  */
-public interface VCategorizationElement extends VContainedElement
-{
+public interface VCategorizationElement extends VContainedElement {
 	/**
 	 * Returns the value of the '<em><b>Categorizations</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.emf.ecp.view.spi.categorization.model.VAbstractCategorization}.
@@ -46,7 +45,7 @@ public interface VCategorizationElement extends VContainedElement
 	 * more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the value of the '<em>Categorizations</em>' containment reference list.
 	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage#getCategorizationElement_Categorizations()
 	 * @model containment="true"
@@ -62,7 +61,7 @@ public interface VCategorizationElement extends VContainedElement
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the value of the '<em>Current Selection</em>' reference.
 	 * @see #setCurrentSelection(VCategorizableElement)
 	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage#getCategorizationElement_CurrentSelection()
@@ -72,12 +71,12 @@ public interface VCategorizationElement extends VContainedElement
 	VCategorizableElement getCurrentSelection();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement#getCurrentSelection
-	 * <em>Current Selection</em>}' reference.
+	 * Sets the value of the
+	 * '{@link org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement#getCurrentSelection <em>Current
+	 * Selection</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param value the new value of the '<em>Current Selection</em>' reference.
 	 * @see #getCurrentSelection()
 	 * @generated
@@ -93,7 +92,7 @@ public interface VCategorizationElement extends VContainedElement
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the value of the '<em>Main Category Depth</em>' attribute.
 	 * @see #setMainCategoryDepth(int)
 	 * @see org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage#getCategorizationElement_MainCategoryDepth()
@@ -103,12 +102,12 @@ public interface VCategorizationElement extends VContainedElement
 	int getMainCategoryDepth();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement#getMainCategoryDepth
-	 * <em>Main Category Depth</em>}' attribute.
+	 * Sets the value of the
+	 * '{@link org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement#getMainCategoryDepth <em>Main
+	 * Category Depth</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param value the new value of the '<em>Main Category Depth</em>' attribute.
 	 * @see #getMainCategoryDepth()
 	 * @generated

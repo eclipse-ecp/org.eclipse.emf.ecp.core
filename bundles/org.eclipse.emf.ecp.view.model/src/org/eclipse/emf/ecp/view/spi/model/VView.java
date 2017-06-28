@@ -45,7 +45,7 @@ public interface VView extends VElement {
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the value of the '<em>Root EClass</em>' reference.
 	 * @see #setRootEClass(EClass)
 	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getView_RootEClass()
@@ -59,7 +59,7 @@ public interface VView extends VElement {
 	 * reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param value the new value of the '<em>Root EClass</em>' reference.
 	 * @see #getRootEClass()
 	 * @generated
@@ -75,7 +75,7 @@ public interface VView extends VElement {
 	 * a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the value of the '<em>Children</em>' containment reference list.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getView_Children()
 	 * @model containment="true"
@@ -133,8 +133,8 @@ public interface VView extends VElement {
 	VViewModelProperties getLoadingProperties();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.spi.model.VView#getLoadingProperties
-	 * <em>Loading Properties</em>}' containment reference.
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.spi.model.VView#getLoadingProperties <em>Loading
+	 * Properties</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 *
 	 * @since 1.7

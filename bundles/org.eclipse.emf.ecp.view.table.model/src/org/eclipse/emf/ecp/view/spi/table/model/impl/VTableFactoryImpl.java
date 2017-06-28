@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecp.view.spi.table.model.DetailEditing;
+import org.eclipse.emf.ecp.view.spi.table.model.VEnablementConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VReadOnlyColumnConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
@@ -81,6 +82,8 @@ public class VTableFactoryImpl extends EFactoryImpl implements VTableFactory {
 			return createReadOnlyColumnConfiguration();
 		case VTablePackage.WIDTH_CONFIGURATION:
 			return createWidthConfiguration();
+		case VTablePackage.ENABLEMENT_CONFIGURATION:
+			return createEnablementConfiguration();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -165,6 +168,19 @@ public class VTableFactoryImpl extends EFactoryImpl implements VTableFactory {
 	public VWidthConfiguration createWidthConfiguration() {
 		final VWidthConfigurationImpl widthConfiguration = new VWidthConfigurationImpl();
 		return widthConfiguration;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public VEnablementConfiguration createEnablementConfiguration() {
+		final VEnablementConfigurationImpl enablementConfiguration = new VEnablementConfigurationImpl();
+		return enablementConfiguration;
 	}
 
 	/**

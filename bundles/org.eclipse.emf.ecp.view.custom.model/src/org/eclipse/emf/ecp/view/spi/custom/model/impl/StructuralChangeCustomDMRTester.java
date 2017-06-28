@@ -109,7 +109,7 @@ public class StructuralChangeCustomDMRTester implements StructuralChangeTesterIn
 		}
 		boolean result = true;
 		for (final VDomainModelReference dmr : customDMR.getDomainModelReferences()) {
-			result &= getEMFFormsStructuralChangeTester().isStructureChanged(dmr, domainRootObject, notification);
+			result |= getEMFFormsStructuralChangeTester().isStructureChanged(dmr, domainRootObject, notification);
 		}
 		return result;
 	}

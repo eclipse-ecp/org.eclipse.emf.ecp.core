@@ -13,7 +13,6 @@ package org.eclipse.emf.ecp.view.spi.table.model.provider;
 
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.ResourceLocator;
-import org.eclipse.emf.ecore.provider.EcoreEditPlugin;
 import org.eclipse.emf.ecp.view.spi.model.provider.ViewEditPlugin;
 
 /**
@@ -51,7 +50,6 @@ public final class TableEditPlugin extends EMFPlugin {
 	 */
 	public TableEditPlugin() {
 		super(new ResourceLocator[] {
-			EcoreEditPlugin.INSTANCE,
 			ViewEditPlugin.INSTANCE,
 		});
 	}

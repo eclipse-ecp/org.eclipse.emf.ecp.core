@@ -17,9 +17,11 @@ import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
 import org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IChildCreationExtender;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -40,13 +42,8 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class WidthConfigurationItemProvider
-	extends ItemProviderAdapter
-	implements
-	IEditingDomainItemProvider,
-	IStructuredItemContentProvider,
-	ITreeItemContentProvider,
-	IItemLabelProvider,
-	IItemPropertySource {
+	extends ItemProviderAdapter implements IEditingDomainItemProvider, IStructuredItemContentProvider,
+	ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -88,10 +85,11 @@ public class WidthConfigurationItemProvider
 		itemPropertyDescriptors
 			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
-				getString("_UI_WidthConfiguration_columnDomainReference_feature"), //$NON-NLS-1$
-				getString("_UI_PropertyDescriptor_description", "_UI_WidthConfiguration_columnDomainReference_feature", //$NON-NLS-1$ //$NON-NLS-2$
-					"_UI_WidthConfiguration_type"), //$NON-NLS-1$
-				VTablePackage.Literals.WIDTH_CONFIGURATION__COLUMN_DOMAIN_REFERENCE,
+				getString("_UI_SingleColumnConfiguration_columnDomainReference_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+					"_UI_SingleColumnConfiguration_columnDomainReference_feature", //$NON-NLS-1$
+					"_UI_SingleColumnConfiguration_type"), //$NON-NLS-1$
+				VTablePackage.Literals.SINGLE_COLUMN_CONFIGURATION__COLUMN_DOMAIN_REFERENCE,
 				true,
 				false,
 				true,
@@ -112,8 +110,7 @@ public class WidthConfigurationItemProvider
 			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_WidthConfiguration_weight_feature"), //$NON-NLS-1$
-				getString("_UI_PropertyDescriptor_description", "_UI_WidthConfiguration_weight_feature", //$NON-NLS-1$ //$NON-NLS-2$
-					"_UI_WidthConfiguration_type"), //$NON-NLS-1$
+				getString("_UI_WidthConfiguration_weight_description"), //$NON-NLS-1$
 				VTablePackage.Literals.WIDTH_CONFIGURATION__WEIGHT,
 				true,
 				false,
@@ -135,8 +132,7 @@ public class WidthConfigurationItemProvider
 			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_WidthConfiguration_minWidth_feature"), //$NON-NLS-1$
-				getString("_UI_PropertyDescriptor_description", "_UI_WidthConfiguration_minWidth_feature", //$NON-NLS-1$ //$NON-NLS-2$
-					"_UI_WidthConfiguration_type"), //$NON-NLS-1$
+				getString("_UI_WidthConfiguration_minWidth_description"), //$NON-NLS-1$
 				VTablePackage.Literals.WIDTH_CONFIGURATION__MIN_WIDTH,
 				true,
 				false,
@@ -163,12 +159,25 @@ public class WidthConfigurationItemProvider
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String getText(Object object) {
 		final VWidthConfiguration widthConfiguration = (VWidthConfiguration) object;
-		return getString("_UI_WidthConfiguration_type") + " " + widthConfiguration.getWeight(); //$NON-NLS-1$ //$NON-NLS-2$
+		final VDomainModelReference columnDomainReference = widthConfiguration.getColumnDomainReference();
+		String label;
+		if (columnDomainReference == null) {
+			label = "<none>"; //$NON-NLS-1$
+		} else {
+			final ComposedAdapterFactory composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
+				new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
+			final IItemLabelProvider adapt = (IItemLabelProvider) composedAdapterFactory.adapt(columnDomainReference,
+				IItemLabelProvider.class);
+			label = adapt == null ? "<none>" : adapt.getText(columnDomainReference); //$NON-NLS-1$
+			composedAdapterFactory.dispose();
+		}
+
+		return getString("_UI_WidthConfiguration_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**

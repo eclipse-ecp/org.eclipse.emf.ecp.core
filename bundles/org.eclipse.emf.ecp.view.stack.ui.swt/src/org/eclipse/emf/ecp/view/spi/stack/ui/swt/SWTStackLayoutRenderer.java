@@ -122,7 +122,7 @@ public class SWTStackLayoutRenderer extends AbstractSWTRenderer<VStackLayout> im
 			} catch (final EMFFormsNoRendererException ex) {
 				getReportService().report(new StatusReport(
 					new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format(
-						LocalizationServiceHelper.getString(getClass(),
+						LocalizationServiceHelper.getString(SWTStackLayoutRenderer.class,
 							MessageKeys.SWTStackLayoutRenderer_NoRendererForItemCompositeFound),
 						item.eClass()
 							.getName(),

@@ -110,12 +110,11 @@ public class CellReadOnly_PTest extends ECPCommonSWTBotTest {
 		final SWTBotTable table = bot.table();
 		table.click(0, 1);
 		bot.sleep(1000);
-		final SWTBotText textCell01 = bot.text();
 		Display.getDefault().syncExec(new Runnable() {
 
 			@Override
 			public void run() {
-				assertFalse(textCell01.widget.getEditable());
+				assertEquals(table.cell(0, 1), "a");
 			}
 		});
 

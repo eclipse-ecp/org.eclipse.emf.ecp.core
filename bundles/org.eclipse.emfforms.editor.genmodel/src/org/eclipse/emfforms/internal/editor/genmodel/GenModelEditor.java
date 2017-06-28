@@ -34,7 +34,7 @@ public class GenModelEditor extends GenericEditor {
 
 	@Override
 	public String getEditorTitle() {
-		return "Genmodel Editor";
+		return Messages.GenModelEditor_editorTitle;
 	}
 
 	@Override

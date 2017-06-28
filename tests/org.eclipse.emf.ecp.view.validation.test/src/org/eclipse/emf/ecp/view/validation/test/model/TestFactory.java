@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.EFactory;
  * The <b>Factory</b> for the model.
  * It provides a create method for each non-abstract class of the model.
  * <!-- end-user-doc -->
- *
+ * 
  * @see org.eclipse.emf.ecp.view.validation.test.model.TestPackage
  * @generated
  */
@@ -27,7 +27,7 @@ public interface TestFactory extends EFactory {
 	 * The singleton instance of the factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	TestFactory eINSTANCE = org.eclipse.emf.ecp.view.validation.test.model.impl.TestFactoryImpl.init();
@@ -36,7 +36,7 @@ public interface TestFactory extends EFactory {
 	 * Returns a new object of class '<em>Library</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return a new object of class '<em>Library</em>'.
 	 * @generated
 	 */
@@ -46,7 +46,7 @@ public interface TestFactory extends EFactory {
 	 * Returns a new object of class '<em>Writer</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return a new object of class '<em>Writer</em>'.
 	 * @generated
 	 */
@@ -56,7 +56,7 @@ public interface TestFactory extends EFactory {
 	 * Returns a new object of class '<em>Book</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return a new object of class '<em>Book</em>'.
 	 * @generated
 	 */
@@ -66,7 +66,7 @@ public interface TestFactory extends EFactory {
 	 * Returns a new object of class '<em>Librarian</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return a new object of class '<em>Librarian</em>'.
 	 * @generated
 	 */
@@ -76,7 +76,7 @@ public interface TestFactory extends EFactory {
 	 * Returns a new object of class '<em>Computer</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return a new object of class '<em>Computer</em>'.
 	 * @generated
 	 */
@@ -86,7 +86,7 @@ public interface TestFactory extends EFactory {
 	 * Returns a new object of class '<em>Mainboard</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return a new object of class '<em>Mainboard</em>'.
 	 * @generated
 	 */
@@ -96,7 +96,7 @@ public interface TestFactory extends EFactory {
 	 * Returns a new object of class '<em>Power Block</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return a new object of class '<em>Power Block</em>'.
 	 * @generated
 	 */
@@ -106,7 +106,7 @@ public interface TestFactory extends EFactory {
 	 * Returns a new object of class '<em>Container</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return a new object of class '<em>Container</em>'.
 	 * @generated
 	 */
@@ -116,7 +116,7 @@ public interface TestFactory extends EFactory {
 	 * Returns a new object of class '<em>Content</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return a new object of class '<em>Content</em>'.
 	 * @generated
 	 */
@@ -126,7 +126,7 @@ public interface TestFactory extends EFactory {
 	 * Returns a new object of class '<em>Table With Multiplicity</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return a new object of class '<em>Table With Multiplicity</em>'.
 	 * @generated
 	 */
@@ -136,7 +136,7 @@ public interface TestFactory extends EFactory {
 	 * Returns a new object of class '<em>Table Content Without Validation</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return a new object of class '<em>Table Content Without Validation</em>'.
 	 * @generated
 	 */
@@ -146,7 +146,7 @@ public interface TestFactory extends EFactory {
 	 * Returns a new object of class '<em>Table Content With Validation</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return a new object of class '<em>Table Content With Validation</em>'.
 	 * @generated
 	 */
@@ -156,7 +156,7 @@ public interface TestFactory extends EFactory {
 	 * Returns a new object of class '<em>Table Without Multiplicity</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return a new object of class '<em>Table Without Multiplicity</em>'.
 	 * @generated
 	 */
@@ -166,7 +166,7 @@ public interface TestFactory extends EFactory {
 	 * Returns a new object of class '<em>Table With Unique</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return a new object of class '<em>Table With Unique</em>'.
 	 * @generated
 	 */
@@ -176,7 +176,7 @@ public interface TestFactory extends EFactory {
 	 * Returns a new object of class '<em>Table Content With Inner Child2</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return a new object of class '<em>Table Content With Inner Child2</em>'.
 	 * @generated
 	 */
@@ -186,7 +186,7 @@ public interface TestFactory extends EFactory {
 	 * Returns a new object of class '<em>Table Content With Inner Child</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return a new object of class '<em>Table Content With Inner Child</em>'.
 	 * @generated
 	 */
@@ -196,7 +196,7 @@ public interface TestFactory extends EFactory {
 	 * Returns a new object of class '<em>Table Without Multiplicity Concrete</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return a new object of class '<em>Table Without Multiplicity Concrete</em>'.
 	 * @generated
 	 */
@@ -206,7 +206,7 @@ public interface TestFactory extends EFactory {
 	 * Returns a new object of class '<em>Referencer</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return a new object of class '<em>Referencer</em>'.
 	 * @generated
 	 */
@@ -216,7 +216,7 @@ public interface TestFactory extends EFactory {
 	 * Returns a new object of class '<em>Cross Reference Container</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return a new object of class '<em>Cross Reference Container</em>'.
 	 * @generated
 	 */
@@ -226,17 +226,27 @@ public interface TestFactory extends EFactory {
 	 * Returns a new object of class '<em>Cross Reference Content</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return a new object of class '<em>Cross Reference Content</em>'.
 	 * @generated
 	 */
 	CrossReferenceContent createCrossReferenceContent();
 
 	/**
+	 * Returns a new object of class '<em>Person</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return a new object of class '<em>Person</em>'.
+	 * @generated
+	 */
+	Person createPerson();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the package supported by this factory.
 	 * @generated
 	 */

@@ -13,6 +13,10 @@
 package org.eclipse.emf.ecp.view.spi.core.swt;
 
 import org.eclipse.core.databinding.Binding;
+import org.eclipse.core.databinding.UpdateValueStrategy;
+import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.edit.spi.swt.util.PreSetValidationStrategy;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
@@ -101,6 +105,37 @@ public abstract class SimpleControlSWTControlSWTRenderer extends SimpleControlSW
 				binding.dispose();
 			}
 		}
+	}
+
+	/**
+	 * Create a {@link PreSetValidationStrategy}.
+	 *
+	 * @param delegate a delegate {@link UpdateValueStrategy}
+	 *
+	 * @return a {@link PreSetValidationStrategy}
+	 * @throws DatabindingFailedException in case the necessary feature can not be obtained
+	 *
+	 * @since 1.13
+	 */
+	protected UpdateValueStrategy withPreSetValidation(UpdateValueStrategy delegate)
+		throws DatabindingFailedException {
+		return new PreSetValidationStrategy(getVElement(), getFeature(), delegate);
+	}
+
+	/**
+	 * Retrieves the associated {@link EStructuralFeature} of this renderer.
+	 *
+	 * @return the feature
+	 * @throws DatabindingFailedException in case the necessary feature can not be obtained
+	 *
+	 * @since 1.13
+	 */
+	protected EStructuralFeature getFeature() throws DatabindingFailedException {
+		final EMFFormsDatabinding databindingService = getEMFFormsDatabinding();
+		final IValueProperty valueProperty = databindingService.getValueProperty(
+			getVElement().getDomainModelReference(),
+			getViewModelContext().getDomainModel());
+		return EStructuralFeature.class.cast(valueProperty.getValueType());
 	}
 
 	/**

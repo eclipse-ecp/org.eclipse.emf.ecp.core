@@ -15,7 +15,6 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VAbstractCategorization;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VAction;
@@ -31,15 +30,14 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Package</b>.
  * <!-- end-user-doc -->
- *
+ * 
  * @generated
  */
-public class VCategorizationPackageImpl extends EPackageImpl implements VCategorizationPackage
-{
+public class VCategorizationPackageImpl extends EPackageImpl implements VCategorizationPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private EClass abstractCategorizationEClass = null;
@@ -47,7 +45,7 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private EClass categorizationEClass = null;
@@ -55,7 +53,7 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private EClass categoryEClass = null;
@@ -63,7 +61,7 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private EClass actionEClass = null;
@@ -71,7 +69,7 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private EClass categorizationElementEClass = null;
@@ -79,7 +77,7 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private EClass categorizableElementEClass = null;
@@ -98,15 +96,14 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 	 * @see #init()
 	 * @generated
 	 */
-	private VCategorizationPackageImpl()
-	{
+	private VCategorizationPackageImpl() {
 		super(eNS_URI, VCategorizationFactory.eINSTANCE);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private static boolean isInited = false;
@@ -124,16 +121,14 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 	 * @see #initializePackageContents()
 	 * @generated
 	 */
-	public static VCategorizationPackage init()
-	{
-		if (isInited) {
+	public static VCategorizationPackage init() {
+		if (isInited)
 			return (VCategorizationPackage) EPackage.Registry.INSTANCE.getEPackage(VCategorizationPackage.eNS_URI);
-		}
 
 		// Obtain or create and register package
-		final VCategorizationPackageImpl theCategorizationPackage = (VCategorizationPackageImpl) (EPackage.Registry.INSTANCE
+		VCategorizationPackageImpl theCategorizationPackage = (VCategorizationPackageImpl) (EPackage.Registry.INSTANCE
 			.get(eNS_URI) instanceof VCategorizationPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
-			: new VCategorizationPackageImpl());
+				: new VCategorizationPackageImpl());
 
 		isInited = true;
 
@@ -157,199 +152,183 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public EClass getAbstractCategorization()
-	{
+	public EClass getAbstractCategorization() {
 		return abstractCategorizationEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public EReference getAbstractCategorization_Actions()
-	{
+	public EReference getAbstractCategorization_Actions() {
 		return (EReference) abstractCategorizationEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public EClass getCategorization()
-	{
+	public EClass getCategorization() {
 		return categorizationEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public EReference getCategorization_Categorizations()
-	{
+	public EReference getCategorization_Categorizations() {
 		return (EReference) categorizationEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public EClass getCategory()
-	{
+	public EClass getCategory() {
 		return categoryEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public EReference getCategory_Composite()
-	{
+	public EReference getCategory_Composite() {
 		return (EReference) categoryEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public EClass getAction()
-	{
+	public EClass getAction() {
 		return actionEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public EAttribute getAction_Bundle()
-	{
+	public EAttribute getAction_Bundle() {
 		return (EAttribute) actionEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public EAttribute getAction_ClassName()
-	{
+	public EAttribute getAction_ClassName() {
 		return (EAttribute) actionEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public EClass getCategorizationElement()
-	{
+	public EClass getCategorizationElement() {
 		return categorizationElementEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public EReference getCategorizationElement_Categorizations()
-	{
+	public EReference getCategorizationElement_Categorizations() {
 		return (EReference) categorizationElementEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public EReference getCategorizationElement_CurrentSelection()
-	{
+	public EReference getCategorizationElement_CurrentSelection() {
 		return (EReference) categorizationElementEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public EAttribute getCategorizationElement_MainCategoryDepth()
-	{
+	public EAttribute getCategorizationElement_MainCategoryDepth() {
 		return (EAttribute) categorizationElementEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public EClass getCategorizableElement()
-	{
+	public EClass getCategorizableElement() {
 		return categorizableElementEClass;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public EReference getCategorizableElement_LabelObject()
-	{
+	public EReference getCategorizableElement_LabelObject() {
 		return (EReference) categorizableElementEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public VCategorizationFactory getCategorizationFactory()
-	{
+	public VCategorizationFactory getCategorizationFactory() {
 		return (VCategorizationFactory) getEFactoryInstance();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private boolean isCreated = false;
@@ -359,14 +338,12 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 	 * guarded to have no affect on any invocation but its first.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	public void createPackageContents()
-	{
-		if (isCreated) {
+	public void createPackageContents() {
+		if (isCreated)
 			return;
-		}
 		isCreated = true;
 
 		// Create classes and their features
@@ -395,7 +372,7 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private boolean isInitialized = false;
@@ -405,14 +382,12 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 	 * method is guarded to have no affect on any invocation but its first.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	public void initializePackageContents()
-	{
-		if (isInitialized) {
+	public void initializePackageContents() {
+		if (isInitialized)
 			return;
-		}
 		isInitialized = true;
 
 		// Initialize package
@@ -421,80 +396,62 @@ public class VCategorizationPackageImpl extends EPackageImpl implements VCategor
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		final VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
-		final EcorePackage theEcorePackage = (EcorePackage) EPackage.Registry.INSTANCE
-			.getEPackage(EcorePackage.eNS_URI);
+		VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
 
 		// Create type parameters
 
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		abstractCategorizationEClass.getESuperTypes().add(getCategorizableElement());
-		categorizationEClass.getESuperTypes().add(getAbstractCategorization());
-		categoryEClass.getESuperTypes().add(getAbstractCategorization());
+		abstractCategorizationEClass.getESuperTypes().add(this.getCategorizableElement());
+		categorizationEClass.getESuperTypes().add(this.getAbstractCategorization());
+		categoryEClass.getESuperTypes().add(this.getAbstractCategorization());
 		categorizationElementEClass.getESuperTypes().add(theViewPackage.getContainedElement());
 		categorizableElementEClass.getESuperTypes().add(theViewPackage.getElement());
+		categorizableElementEClass.getESuperTypes().add(theViewPackage.getHasTooltip());
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(abstractCategorizationEClass, VAbstractCategorization.class,
-			"AbstractCategorization", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-			getAbstractCategorization_Actions(),
-			getAction(),
-			null,
-			"actions", null, 0, -1, VAbstractCategorization.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEClass(abstractCategorizationEClass, VAbstractCategorization.class, "AbstractCategorization", IS_ABSTRACT, //$NON-NLS-1$
+			!IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getAbstractCategorization_Actions(), this.getAction(), null, "actions", null, 0, -1, //$NON-NLS-1$
+			VAbstractCategorization.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+			!IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(categorizationEClass, VCategorization.class,
-			"Categorization", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-			getCategorization_Categorizations(),
-			getAbstractCategorization(),
-			null,
-			"categorizations", null, 0, -1, VCategorization.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEClass(categorizationEClass, VCategorization.class, "Categorization", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
+			IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getCategorization_Categorizations(), this.getAbstractCategorization(), null, "categorizations", //$NON-NLS-1$
+			null, 0, -1, VCategorization.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+			!IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(categoryEClass, VCategory.class,
-			"Category", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-			getCategory_Composite(),
-			theViewPackage.getContainedElement(),
-			null,
-			"composite", null, 0, 1, VCategory.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEClass(categoryEClass, VCategory.class, "Category", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
+			IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getCategory_Composite(), theViewPackage.getContainedElement(), null, "composite", null, 0, 1, //$NON-NLS-1$
+			VCategory.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(actionEClass, VAction.class, "Action", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(
-			getAction_Bundle(),
-			ecorePackage.getEString(),
-			"bundle", null, 1, 1, VAction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(
-			getAction_ClassName(),
-			ecorePackage.getEString(),
-			"className", null, 1, 1, VAction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getAction_Bundle(), ecorePackage.getEString(), "bundle", null, 1, 1, VAction.class, //$NON-NLS-1$
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAction_ClassName(), ecorePackage.getEString(), "className", null, 1, 1, VAction.class, //$NON-NLS-1$
+			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(categorizationElementEClass, VCategorizationElement.class,
-			"CategorizationElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-			getCategorizationElement_Categorizations(),
-			getAbstractCategorization(),
-			null,
-			"categorizations", null, 0, -1, VCategorizationElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(
-			getCategorizationElement_CurrentSelection(),
-			getCategorizableElement(),
-			null,
-			"currentSelection", null, 0, 1, VCategorizationElement.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(
-			getCategorizationElement_MainCategoryDepth(),
-			ecorePackage.getEInt(),
-			"mainCategoryDepth", "0", 0, 1, VCategorizationElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEClass(categorizationElementEClass, VCategorizationElement.class, "CategorizationElement", !IS_ABSTRACT, //$NON-NLS-1$
+			!IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getCategorizationElement_Categorizations(), this.getAbstractCategorization(), null,
+			"categorizations", null, 0, -1, VCategorizationElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
+			IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCategorizationElement_CurrentSelection(), this.getCategorizableElement(), null,
+			"currentSelection", null, 0, 1, VCategorizationElement.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
+			!IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCategorizationElement_MainCategoryDepth(), ecorePackage.getEInt(), "mainCategoryDepth", "0", //$NON-NLS-1$ //$NON-NLS-2$
+			0, 1, VCategorizationElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
+			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(categorizableElementEClass, VCategorizableElement.class,
-			"CategorizableElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(
-			getCategorizableElement_LabelObject(),
-			theEcorePackage.getEObject(),
-			null,
-			"labelObject", null, 0, 1, VCategorizableElement.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEClass(categorizableElementEClass, VCategorizableElement.class, "CategorizableElement", IS_ABSTRACT, //$NON-NLS-1$
+			!IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getCategorizableElement_LabelObject(), ecorePackage.getEObject(), null, "labelObject", null, 0, //$NON-NLS-1$
+			1, VCategorizableElement.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE,
+			!IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

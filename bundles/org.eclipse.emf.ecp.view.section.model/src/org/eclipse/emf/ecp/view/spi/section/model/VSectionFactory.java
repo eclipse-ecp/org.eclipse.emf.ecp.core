@@ -18,17 +18,16 @@ import org.eclipse.emf.ecore.EFactory;
  * The <b>Factory</b> for the model.
  * It provides a create method for each non-abstract class of the model.
  * <!-- end-user-doc -->
- *
+ * 
  * @see org.eclipse.emf.ecp.view.spi.section.model.VSectionPackage
  * @generated
  */
-public interface VSectionFactory extends EFactory
-{
+public interface VSectionFactory extends EFactory {
 	/**
 	 * The singleton instance of the factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	VSectionFactory eINSTANCE = org.eclipse.emf.ecp.view.spi.section.model.impl.VSectionFactoryImpl.init();
@@ -37,7 +36,7 @@ public interface VSectionFactory extends EFactory
 	 * Returns a new object of class '<em>Sectioned Area</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return a new object of class '<em>Sectioned Area</em>'.
 	 * @generated
 	 */
@@ -47,7 +46,7 @@ public interface VSectionFactory extends EFactory
 	 * Returns a new object of class '<em>Section</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return a new object of class '<em>Section</em>'.
 	 * @generated
 	 */
@@ -57,7 +56,7 @@ public interface VSectionFactory extends EFactory
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the package supported by this factory.
 	 * @generated
 	 */

@@ -20,7 +20,9 @@ import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.table.model.DetailEditing;
+import org.eclipse.emf.ecp.view.spi.table.model.VEnablementConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VReadOnlyColumnConfiguration;
+import org.eclipse.emf.ecp.view.spi.table.model.VSingleColumnConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableColumnConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
@@ -76,6 +78,22 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 	 * @generated
 	 */
 	private EClass widthConfigurationEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	private EClass enablementConfigurationEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	private EClass singleColumnConfigurationEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -192,8 +210,19 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 	 * @generated
 	 */
 	@Override
+	public EAttribute getTableControl_MoveUpDownDisabled() {
+		return (EAttribute) tableControlEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
 	public EReference getTableControl_ColumnConfigurations() {
-		return (EReference) tableControlEClass.getEStructuralFeatures().get(1);
+		return (EReference) tableControlEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -204,7 +233,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 	 */
 	@Override
 	public EAttribute getTableControl_DetailEditing() {
-		return (EAttribute) tableControlEClass.getEStructuralFeatures().get(2);
+		return (EAttribute) tableControlEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -215,7 +244,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 	 */
 	@Override
 	public EReference getTableControl_DetailView() {
-		return (EReference) tableControlEClass.getEStructuralFeatures().get(3);
+		return (EReference) tableControlEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -226,7 +255,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 	 */
 	@Override
 	public EAttribute getTableControl_EnableDetailEditingDialog() {
-		return (EAttribute) tableControlEClass.getEStructuralFeatures().get(4);
+		return (EAttribute) tableControlEClass.getEStructuralFeatures().get(5);
 	}
 
 	/**
@@ -316,8 +345,8 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 	 * @generated
 	 */
 	@Override
-	public EReference getWidthConfiguration_ColumnDomainReference() {
-		return (EReference) widthConfigurationEClass.getEStructuralFeatures().get(0);
+	public EAttribute getWidthConfiguration_Weight() {
+		return (EAttribute) widthConfigurationEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -328,20 +357,44 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 	 * @generated
 	 */
 	@Override
-	public EAttribute getWidthConfiguration_Weight() {
+	public EAttribute getWidthConfiguration_MinWidth() {
 		return (EAttribute) widthConfigurationEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
-         * @since 1.9
-	 * <!-- end-user-doc -->
 	 *
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public EAttribute getWidthConfiguration_MinWidth() {
-		return (EAttribute) widthConfigurationEClass.getEStructuralFeatures().get(2);
+	public EClass getEnablementConfiguration() {
+		return enablementConfigurationEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EClass getSingleColumnConfiguration() {
+		return singleColumnConfigurationEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EReference getSingleColumnConfiguration_ColumnDomainReference() {
+		return (EReference) singleColumnConfigurationEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -391,6 +444,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 		// Create classes and their features
 		tableControlEClass = createEClass(TABLE_CONTROL);
 		createEAttribute(tableControlEClass, TABLE_CONTROL__ADD_REMOVE_DISABLED);
+		createEAttribute(tableControlEClass, TABLE_CONTROL__MOVE_UP_DOWN_DISABLED);
 		createEReference(tableControlEClass, TABLE_CONTROL__COLUMN_CONFIGURATIONS);
 		createEAttribute(tableControlEClass, TABLE_CONTROL__DETAIL_EDITING);
 		createEReference(tableControlEClass, TABLE_CONTROL__DETAIL_VIEW);
@@ -406,9 +460,13 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 		createEReference(readOnlyColumnConfigurationEClass, READ_ONLY_COLUMN_CONFIGURATION__COLUMN_DOMAIN_REFERENCES);
 
 		widthConfigurationEClass = createEClass(WIDTH_CONFIGURATION);
-		createEReference(widthConfigurationEClass, WIDTH_CONFIGURATION__COLUMN_DOMAIN_REFERENCE);
 		createEAttribute(widthConfigurationEClass, WIDTH_CONFIGURATION__WEIGHT);
 		createEAttribute(widthConfigurationEClass, WIDTH_CONFIGURATION__MIN_WIDTH);
+
+		enablementConfigurationEClass = createEClass(ENABLEMENT_CONFIGURATION);
+
+		singleColumnConfigurationEClass = createEClass(SINGLE_COLUMN_CONFIGURATION);
+		createEReference(singleColumnConfigurationEClass, SINGLE_COLUMN_CONFIGURATION__COLUMN_DOMAIN_REFERENCE);
 
 		// Create enums
 		detailEditingEEnum = createEEnum(DETAIL_EDITING);
@@ -452,13 +510,19 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 		tableControlEClass.getESuperTypes().add(theViewPackage.getControl());
 		tableDomainModelReferenceEClass.getESuperTypes().add(theViewPackage.getFeaturePathDomainModelReference());
 		readOnlyColumnConfigurationEClass.getESuperTypes().add(getTableColumnConfiguration());
-		widthConfigurationEClass.getESuperTypes().add(getTableColumnConfiguration());
+		widthConfigurationEClass.getESuperTypes().add(getSingleColumnConfiguration());
+		enablementConfigurationEClass.getESuperTypes().add(theViewPackage.getElement());
+		enablementConfigurationEClass.getESuperTypes().add(getSingleColumnConfiguration());
+		singleColumnConfigurationEClass.getESuperTypes().add(getTableColumnConfiguration());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(tableControlEClass, VTableControl.class, "TableControl", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
 			IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getTableControl_AddRemoveDisabled(), ecorePackage.getEBoolean(), "addRemoveDisabled", "false", 1, //$NON-NLS-1$ //$NON-NLS-2$
 			1, VTableControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTableControl_MoveUpDownDisabled(), ecorePackage.getEBoolean(), "moveUpDownDisabled", "true", //$NON-NLS-1$ //$NON-NLS-2$
+			1, 1, VTableControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
 		initEReference(getTableControl_ColumnConfigurations(), getTableColumnConfiguration(), null,
 			"columnConfigurations", null, 0, -1, VTableControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
@@ -495,15 +559,21 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 
 		initEClass(widthConfigurationEClass, VWidthConfiguration.class, "WidthConfiguration", !IS_ABSTRACT, //$NON-NLS-1$
 			!IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getWidthConfiguration_ColumnDomainReference(), theViewPackage.getDomainModelReference(), null,
-			"columnDomainReference", null, 1, 1, VWidthConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
-			!IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getWidthConfiguration_Weight(), ecorePackage.getEInt(), "weight", null, 1, 1, //$NON-NLS-1$
 			VWidthConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
 		initEAttribute(getWidthConfiguration_MinWidth(), ecorePackage.getEInt(), "minWidth", null, 1, 1, //$NON-NLS-1$
 			VWidthConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
+
+		initEClass(enablementConfigurationEClass, VEnablementConfiguration.class, "EnablementConfiguration", //$NON-NLS-1$
+			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(singleColumnConfigurationEClass, VSingleColumnConfiguration.class, "SingleColumnConfiguration", //$NON-NLS-1$
+			IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getSingleColumnConfiguration_ColumnDomainReference(), theViewPackage.getDomainModelReference(),
+			null, "columnDomainReference", null, 1, 1, VSingleColumnConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
+			IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(detailEditingEEnum, DetailEditing.class, "DetailEditing"); //$NON-NLS-1$

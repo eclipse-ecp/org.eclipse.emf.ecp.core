@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- * Jonas - initial API and implementation
+ * Jonas Helming - initial API and implementation
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.validation.test;
 
@@ -25,7 +25,8 @@ import org.junit.runners.Suite.SuiteClasses;
 	SubstitutionLabel_PTest.class,
 	TableValidation_PTest.class,
 	ValidationPerformance_ITest.class,
-	DynamicDMR_PTest.class
+	DynamicDMR_PTest.class,
+	PreSetValidationService_Test.class
 })
 public class AllTests {
 

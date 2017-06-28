@@ -30,7 +30,6 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * 
  * @since 1.8
  *        <!-- end-user-doc -->
- *
  * @generated
  */
 public class DateTimeDisplayAttachmentItemProvider extends AttachmentItemProvider {
@@ -38,7 +37,7 @@ public class DateTimeDisplayAttachmentItemProvider extends AttachmentItemProvide
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public DateTimeDisplayAttachmentItemProvider(AdapterFactory adapterFactory) {
@@ -49,7 +48,7 @@ public class DateTimeDisplayAttachmentItemProvider extends AttachmentItemProvide
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -66,7 +65,7 @@ public class DateTimeDisplayAttachmentItemProvider extends AttachmentItemProvide
 	 * This adds a property descriptor for the Display Type feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected void addDisplayTypePropertyDescriptor(Object object) {
@@ -89,7 +88,7 @@ public class DateTimeDisplayAttachmentItemProvider extends AttachmentItemProvide
 	 * This returns DateTimeDisplayAttachment.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -101,15 +100,15 @@ public class DateTimeDisplayAttachmentItemProvider extends AttachmentItemProvide
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public String getText(Object object) {
-		final DateTimeDisplayType labelValue = ((VDateTimeDisplayAttachment) object).getDisplayType();
-		final String label = labelValue == null ? null : labelValue.toString();
-		return label == null || label.length() == 0 ? getString("_UI_DateTimeDisplayAttachment_type") //$NON-NLS-1$
-			: getString("_UI_DateTimeDisplayAttachment_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
+		DateTimeDisplayType labelValue = ((VDateTimeDisplayAttachment) object).getDisplayType();
+		String label = labelValue == null ? null : labelValue.toString();
+		return label == null || label.length() == 0 ? getString("_UI_DateTimeDisplayAttachment_type") : //$NON-NLS-1$
+			getString("_UI_DateTimeDisplayAttachment_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	/**
@@ -117,7 +116,7 @@ public class DateTimeDisplayAttachmentItemProvider extends AttachmentItemProvide
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -137,7 +136,7 @@ public class DateTimeDisplayAttachmentItemProvider extends AttachmentItemProvide
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override

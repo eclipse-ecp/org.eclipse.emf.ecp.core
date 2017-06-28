@@ -70,6 +70,7 @@ public class TableStylePropertyItemProvider
 			addMaximumHeightPropertyDescriptor(object);
 			addShowValidationSummaryTooltipPropertyDescriptor(object);
 			addEnableSortingPropertyDescriptor(object);
+			addVisibleLinesPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -163,6 +164,28 @@ public class TableStylePropertyItemProvider
 	}
 
 	/**
+	 * This adds a property descriptor for the Visible Lines feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addVisibleLinesPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_TableStyleProperty_visibleLines_feature"), //$NON-NLS-1$
+				 getString("_UI_PropertyDescriptor_description", "_UI_TableStyleProperty_visibleLines_feature", "_UI_TableStyleProperty_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				 VTTableStylePropertyPackage.Literals.TABLE_STYLE_PROPERTY__VISIBLE_LINES,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
 	 * This returns TableStyleProperty.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -201,6 +224,7 @@ public class TableStylePropertyItemProvider
 			case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__MAXIMUM_HEIGHT:
 			case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__SHOW_VALIDATION_SUMMARY_TOOLTIP:
 			case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__ENABLE_SORTING:
+			case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__VISIBLE_LINES:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

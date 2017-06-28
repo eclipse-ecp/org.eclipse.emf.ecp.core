@@ -23,9 +23,14 @@ import javax.inject.Inject;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.eclipse.core.databinding.Binding;
+import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.util.EMap;
+import org.eclipse.emf.ecore.EAnnotation;
+import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.internal.swt.util.DateUtil;
 import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
@@ -195,6 +200,13 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 		}
 	}
 
+	@Override
+	protected Object convert(Text text, EDataType attributeType, String value) throws DatabindingFailedException {
+		final EStructuralFeature eStructuralFeature = (EStructuralFeature) getModelValue().getValueType();
+		final DateTargetToModelUpdateStrategy converter = new DateTargetToModelUpdateStrategy(eStructuralFeature, text);
+		return converter.convert(value);
+	}
+
 	/**
 	 * Model to target strategy.
 	 */
@@ -245,11 +257,30 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 
 		private final EStructuralFeature eStructuralFeature;
 		private final Text text;
+		private final boolean isDate;
 
 		DateTargetToModelUpdateStrategy(EStructuralFeature eStructuralFeature, Text text) {
 			super(eStructuralFeature.isUnsettable());
 			this.eStructuralFeature = eStructuralFeature;
 			this.text = text;
+			final EClassifier eType = eStructuralFeature.getEType();
+			if (eType == null) {
+				isDate = true;
+				return;
+			}
+			final EAnnotation eAnnotation = eType.getEAnnotation("http:///org/eclipse/emf/ecore/util/ExtendedMetaData");//$NON-NLS-1$
+			if (eAnnotation == null) {
+				isDate = true;
+				return;
+			}
+			final EMap<String, String> typeDetails = eAnnotation.getDetails();
+			if (typeDetails.containsKey("name")) {//$NON-NLS-1$
+				isDate = "date".equals(typeDetails.get("name"));//$NON-NLS-1$//$NON-NLS-2$
+			} else if (typeDetails.containsKey("baseType")) {//$NON-NLS-1$
+				isDate = typeDetails.get("baseType").endsWith("date");//$NON-NLS-1$//$NON-NLS-2$
+			} else {
+				isDate = true;
+			}
 
 		}
 
@@ -273,7 +304,10 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 
 				final Calendar targetCal = Calendar.getInstance();
 				targetCal.setTime(date);
-				return DateUtil.convertOnlyDateToXMLGregorianCalendar(targetCal);
+				if (isDate) {
+					return DateUtil.convertOnlyDateToXMLGregorianCalendar(targetCal);
+				}
+				return DateUtil.convertCalendarToXMLGregorianCalendar(targetCal);
 			} catch (final ParseException ex) {
 				return revertToOldValue(value);
 			}
@@ -294,8 +328,10 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 			}
 
 			final MessageDialog messageDialog = new MessageDialog(text.getShell(),
-				LocalizationServiceHelper.getString(getClass(), MessageKeys.XmlDateControlText_InvalidNumber), null,
-				LocalizationServiceHelper.getString(getClass(),
+				LocalizationServiceHelper.getString(XMLDateControlSWTRenderer.class,
+					MessageKeys.XmlDateControlText_InvalidNumber),
+				null,
+				LocalizationServiceHelper.getString(XMLDateControlSWTRenderer.class,
 					MessageKeys.XmlDateControlText_NumberInvalidValueWillBeUnset),
 				MessageDialog.ERROR,
 				new String[] { JFaceResources.getString(IDialogLabelKeys.OK_LABEL_KEY) }, 0);
@@ -330,7 +366,8 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.CENTER).applyTo(control);
 		final Button bDate = new Button(main, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(false, false).align(SWT.CENTER, SWT.CENTER).applyTo(bDate);
-		bDate.setImage(imageRegistryService.getImage(FrameworkUtil.getBundle(getClass()), "icons/date.png")); //$NON-NLS-1$
+		bDate.setImage(
+			imageRegistryService.getImage(FrameworkUtil.getBundle(XMLDateControlSWTRenderer.class), "icons/date.png")); //$NON-NLS-1$
 		bDate.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_xmldate"); //$NON-NLS-1$
 		text = (Text) Composite.class.cast(control).getChildren()[0];
 		bDate.addSelectionListener(new SelectionAdapterExtension(text, bDate));
@@ -354,8 +391,8 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 
 		final IObservableValue value = WidgetProperties.text(SWT.FocusOut).observe(text);
 
-		final DateTargetToModelUpdateStrategy targetToModelUpdateStrategy = new DateTargetToModelUpdateStrategy(
-			structuralFeature, text);
+		final UpdateValueStrategy targetToModelUpdateStrategy = withPreSetValidation(
+			new DateTargetToModelUpdateStrategy(structuralFeature, text));
 
 		final DateModelToTargetUpdateStrategy modelToTargetUpdateStrategy = new DateModelToTargetUpdateStrategy(false);
 

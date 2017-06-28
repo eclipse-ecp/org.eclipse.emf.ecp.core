@@ -30,20 +30,18 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * This is the item provider adapter for a {@link org.eclipse.emf.ecp.view.spi.section.model.VSectionedArea} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
- *
+ * 
  * @generated
  */
-public class SectionedAreaItemProvider extends ContainedElementItemProvider
-{
+public class SectionedAreaItemProvider extends ContainedElementItemProvider {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	public SectionedAreaItemProvider(AdapterFactory adapterFactory)
-	{
+	public SectionedAreaItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -51,14 +49,12 @@ public class SectionedAreaItemProvider extends ContainedElementItemProvider
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object)
-	{
-		if (itemPropertyDescriptors == null)
-		{
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 		}
@@ -71,14 +67,12 @@ public class SectionedAreaItemProvider extends ContainedElementItemProvider
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object)
-	{
-		if (childrenFeatures == null)
-		{
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
+		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(VSectionPackage.Literals.SECTIONED_AREA__ROOT);
 		}
@@ -88,12 +82,11 @@ public class SectionedAreaItemProvider extends ContainedElementItemProvider
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	protected EStructuralFeature getChildFeature(Object object, Object child)
-	{
+	protected EStructuralFeature getChildFeature(Object object, Object child) {
 		// Check the type of the specified child object and return the proper feature to use for
 		// adding (see {@link AddCommand}) it as a child.
 
@@ -104,12 +97,11 @@ public class SectionedAreaItemProvider extends ContainedElementItemProvider
 	 * This returns SectionedArea.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public Object getImage(Object object)
-	{
+	public Object getImage(Object object) {
 		return overlayImage(object, getResourceLocator().getImage("full/obj16/SectionedArea")); //$NON-NLS-1$
 	}
 
@@ -121,14 +113,12 @@ public class SectionedAreaItemProvider extends ContainedElementItemProvider
 	 * @generated NOT
 	 */
 	@Override
-	public String getText(Object object)
-	{
+	public String getText(Object object) {
 		String label = ((VSectionedArea) object).getName();
 		if (label == null) {
 			label = VElementUtil.getCleanName(VElement.class.cast(object));
 		}
-		return label == null || label.length() == 0 ?
-			getString("_UI_SectionedArea_type") : //$NON-NLS-1$
+		return label == null || label.length() == 0 ? getString("_UI_SectionedArea_type") : //$NON-NLS-1$
 			getString("_UI_SectionedArea_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
@@ -137,16 +127,14 @@ public class SectionedAreaItemProvider extends ContainedElementItemProvider
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(Notification notification)
-	{
+	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(VSectionedArea.class))
-		{
+		switch (notification.getFeatureID(VSectionedArea.class)) {
 		case VSectionPackage.SECTIONED_AREA__ROOT:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;
@@ -159,18 +147,15 @@ public class SectionedAreaItemProvider extends ContainedElementItemProvider
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
-	{
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
-		newChildDescriptors.add
-			(createChildParameter
-			(VSectionPackage.Literals.SECTIONED_AREA__ROOT,
-				VSectionFactory.eINSTANCE.createSection()));
+		newChildDescriptors.add(createChildParameter(VSectionPackage.Literals.SECTIONED_AREA__ROOT,
+			VSectionFactory.eINSTANCE.createSection()));
 	}
 
 }

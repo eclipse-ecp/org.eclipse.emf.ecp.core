@@ -197,7 +197,7 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 * @return the image
 	 */
 	protected Image getImage(String path) {
-		return imageRegistryService.getImage(FrameworkUtil.getBundle(getClass()), path);
+		return imageRegistryService.getImage(FrameworkUtil.getBundle(MultiAttributeSWTRenderer.class), path);
 	}
 
 	private Button createRemoveRowButton(final Composite buttonComposite, IObservableList list, EAttribute attribute) {
@@ -405,6 +405,36 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 		return CellEditorFactory.INSTANCE.createCellEditor(attribute, tempInstance, table, getViewModelContext());
 	}
 
+	/**
+	 * Returns the attribute value which should be added as a new element.
+	 *
+	 * @param attribute the {@link EAttribute} with the data type
+	 * @return the new value
+	 * @since 1.13
+	 */
+	protected Object getValueForNewRow(final EAttribute attribute) {
+		try {
+			Object defaultValue = attribute.getEType().getDefaultValue();
+			if (defaultValue == null) {
+				defaultValue = attribute.getEType().getInstanceClass().getConstructor().newInstance();
+			}
+			return defaultValue;
+		} catch (final InstantiationException ex) {
+			getReportService().report(new AbstractReport(ex, Messages.MultiAttributeSWTRenderer_AddFailed));
+		} catch (final IllegalAccessException ex) {
+			getReportService().report(new AbstractReport(ex, Messages.MultiAttributeSWTRenderer_AddFailed));
+		} catch (final IllegalArgumentException ex) {
+			getReportService().report(new AbstractReport(ex, Messages.MultiAttributeSWTRenderer_AddFailed));
+		} catch (final InvocationTargetException ex) {
+			getReportService().report(new AbstractReport(ex, Messages.MultiAttributeSWTRenderer_AddFailed));
+		} catch (final NoSuchMethodException ex) {
+			getReportService().report(new AbstractReport(ex, Messages.MultiAttributeSWTRenderer_AddFailed));
+		} catch (final SecurityException ex) {
+			getReportService().report(new AbstractReport(ex, Messages.MultiAttributeSWTRenderer_AddFailed));
+		}
+		throw new IllegalStateException();
+	}
+
 	@Override
 	protected void applyValidation() {
 		Display.getDefault().asyncExec(new Runnable() {
@@ -575,27 +605,13 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 				final EObject eObject = EObject.class.cast(observing.getObserved());
 				final EAttribute attribute = EAttribute.class.cast(list.getElementType());
 
-				Object defaultValue = attribute.getEType().getDefaultValue();
-				if (defaultValue == null) {
-					defaultValue = attribute.getEType().getInstanceClass().getConstructor().newInstance();
-
-				}
+				final Object defaultValue = getValueForNewRow(attribute);
 				final EditingDomain editingDomain = getEditingDomain(getViewModelContext().getDomainModel());
 				editingDomain.getCommandStack()
 					.execute(AddCommand.create(editingDomain, eObject, attribute, defaultValue));
 				tableViewer.refresh();
-			} catch (final InstantiationException ex) {
-				getReportService().report(new AbstractReport(ex, Messages.MultiAttributeSWTRenderer_AddFailed));
-			} catch (final IllegalAccessException ex) {
-				getReportService().report(new AbstractReport(ex, Messages.MultiAttributeSWTRenderer_AddFailed));
-			} catch (final IllegalArgumentException ex) {
-				getReportService().report(new AbstractReport(ex, Messages.MultiAttributeSWTRenderer_AddFailed));
-			} catch (final InvocationTargetException ex) {
-				getReportService().report(new AbstractReport(ex, Messages.MultiAttributeSWTRenderer_AddFailed));
-			} catch (final NoSuchMethodException ex) {
-				getReportService().report(new AbstractReport(ex, Messages.MultiAttributeSWTRenderer_AddFailed));
-			} catch (final SecurityException ex) {
-				getReportService().report(new AbstractReport(ex, Messages.MultiAttributeSWTRenderer_AddFailed));
+			} catch (final IllegalStateException ex) {
+				/* logged by getValueForNewRow* already */
 			}
 		}
 	}
@@ -795,7 +811,8 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 		final IObservableList oldList = (IObservableList) getTableViewer().getInput();
 		oldList.dispose();
 
-		final IObservableList list = getEMFFormsDatabinding().getObservableList(getVElement().getDomainModelReference(),
+		final IObservableList list = getEMFFormsDatabinding().getObservableList(
+			getVElement().getDomainModelReference(),
 			getViewModelContext().getDomainModel());
 		// addRelayoutListenerIfNeeded(list, composite);
 		getTableViewer().setInput(list);

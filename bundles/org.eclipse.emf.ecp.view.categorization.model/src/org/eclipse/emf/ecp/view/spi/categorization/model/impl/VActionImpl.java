@@ -24,21 +24,20 @@ import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationPackage;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.spi.categorization.model.impl.VActionImpl#getBundle <em>Bundle</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.categorization.model.impl.VActionImpl#getClassName <em>Class Name</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
-public class VActionImpl extends MinimalEObjectImpl.Container implements VAction
-{
+public class VActionImpl extends MinimalEObjectImpl.Container implements VAction {
 	/**
 	 * The default value of the '{@link #getBundle() <em>Bundle</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getBundle()
 	 * @generated
 	 * @ordered
@@ -49,7 +48,7 @@ public class VActionImpl extends MinimalEObjectImpl.Container implements VAction
 	 * The cached value of the '{@link #getBundle() <em>Bundle</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getBundle()
 	 * @generated
 	 * @ordered
@@ -60,7 +59,7 @@ public class VActionImpl extends MinimalEObjectImpl.Container implements VAction
 	 * The default value of the '{@link #getClassName() <em>Class Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getClassName()
 	 * @generated
 	 * @ordered
@@ -71,7 +70,7 @@ public class VActionImpl extends MinimalEObjectImpl.Container implements VAction
 	 * The cached value of the '{@link #getClassName() <em>Class Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getClassName()
 	 * @generated
 	 * @ordered
@@ -81,95 +80,85 @@ public class VActionImpl extends MinimalEObjectImpl.Container implements VAction
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	protected VActionImpl()
-	{
+	protected VActionImpl() {
 		super();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return VCategorizationPackage.Literals.ACTION;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public String getBundle()
-	{
+	public String getBundle() {
 		return bundle;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public void setBundle(String newBundle)
-	{
-		final String oldBundle = bundle;
+	public void setBundle(String newBundle) {
+		String oldBundle = bundle;
 		bundle = newBundle;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, VCategorizationPackage.ACTION__BUNDLE, oldBundle,
 				bundle));
-		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public String getClassName()
-	{
+	public String getClassName() {
 		return className;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public void setClassName(String newClassName)
-	{
-		final String oldClassName = className;
+	public void setClassName(String newClassName) {
+		String oldClassName = className;
 		className = newClassName;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, VCategorizationPackage.ACTION__CLASS_NAME,
 				oldClassName, className));
-		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
-		switch (featureID)
-		{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 		case VCategorizationPackage.ACTION__BUNDLE:
 			return getBundle();
 		case VCategorizationPackage.ACTION__CLASS_NAME:
@@ -181,14 +170,12 @@ public class VActionImpl extends MinimalEObjectImpl.Container implements VAction
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
-		switch (featureID)
-		{
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 		case VCategorizationPackage.ACTION__BUNDLE:
 			setBundle((String) newValue);
 			return;
@@ -202,14 +189,12 @@ public class VActionImpl extends MinimalEObjectImpl.Container implements VAction
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
-		switch (featureID)
-		{
+	public void eUnset(int featureID) {
+		switch (featureID) {
 		case VCategorizationPackage.ACTION__BUNDLE:
 			setBundle(BUNDLE_EDEFAULT);
 			return;
@@ -223,14 +208,12 @@ public class VActionImpl extends MinimalEObjectImpl.Container implements VAction
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
-		switch (featureID)
-		{
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 		case VCategorizationPackage.ACTION__BUNDLE:
 			return BUNDLE_EDEFAULT == null ? bundle != null : !BUNDLE_EDEFAULT.equals(bundle);
 		case VCategorizationPackage.ACTION__CLASS_NAME:
@@ -242,17 +225,15 @@ public class VActionImpl extends MinimalEObjectImpl.Container implements VAction
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public String toString()
-	{
-		if (eIsProxy()) {
+	public String toString() {
+		if (eIsProxy())
 			return super.toString();
-		}
 
-		final StringBuffer result = new StringBuffer(super.toString());
+		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (bundle: "); //$NON-NLS-1$
 		result.append(bundle);
 		result.append(", className: "); //$NON-NLS-1$

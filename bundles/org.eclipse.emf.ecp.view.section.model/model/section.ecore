@@ -6,7 +6,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="root" lowerBound="1" eType="#//Section"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Section" eSuperTypes="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//Container">
+  <eClassifiers xsi:type="ecore:EClass" name="Section" eSuperTypes="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//Container ../../org.eclipse.emf.ecp.view.model/model/view.ecore#//HasTooltip">
     <eStructuralFeatures xsi:type="ecore:EReference" name="childItems" upperBound="-1"
         eType="#//Section" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="collapsed" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"

@@ -11,26 +11,17 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.validation;
 
-import java.util.List;
-
-import org.eclipse.emf.common.util.Diagnostic;
-import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emfforms.common.spi.validation.Validator;
 
 /**
- * The ValidationService calls the providers after the validation with emf. By providing an own provider, one can extend
- * the EMF validation by providing additional validation rules.
+ * The ValidationService calls the providers after the validation with EMF.
+ * By providing an own provider, one can extend the EMF validation by providing additional validation rules.
  *
  * @author Eugen Neufeld
  * @since 1.5
  *
  */
-public interface ValidationProvider {
+// TODO mark as deprecated
+public interface ValidationProvider extends Validator {
 
-	/**
-	 * Method is called by the {@link ValidationService} to get addition validation information for an {@link EObject}.
-	 *
-	 * @param eObject the {@link EObject} to validate
-	 * @return the List of additional {@link Diagnostic Diagnostics} for the {@link EObject}
-	 */
-	List<Diagnostic> validate(EObject eObject);
 }

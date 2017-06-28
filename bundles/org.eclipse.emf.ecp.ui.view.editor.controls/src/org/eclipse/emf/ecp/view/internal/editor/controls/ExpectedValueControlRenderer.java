@@ -149,7 +149,7 @@ public abstract class ExpectedValueControlRenderer extends SimpleControlSWTContr
 		final IObservableValue value = org.eclipse.jface.databinding.swt.WidgetProperties.text().observe(text);
 
 		final Binding binding = getDataBindingContext().bindValue(value, getModelValue(),
-			targetToModelUpdateStrategy, modelToTargetUpdateStrategy);
+			withPreSetValidation(targetToModelUpdateStrategy), modelToTargetUpdateStrategy);
 		return new Binding[] { binding };
 	}
 

@@ -11,6 +11,11 @@
       <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/emf/ecp/view/model/170#//Element/readonly"/>
     </domainModelReference>
   </children>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_OwTEgP0JEea0gu9ZCWtkiA" name="tooltip">
+  	<domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_mfPL2UWAEeWfKJaajyNdyA">
+      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/emf/ecp/view/group/model#//Group/tooltip"/>
+    </domainModelReference>
+  </children>
   <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_mfPLlEWAEeWfKJaajyNdyA" name="Control groupType">
     <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_mfPLlUWAEeWfKJaajyNdyA">
       <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/emf/ecp/view/group/model#//Group/groupType"/>

@@ -33,25 +33,24 @@ import org.eclipse.emf.ecp.view.spi.model.impl.VContainedElementImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.spi.categorization.model.impl.VCategorizationElementImpl#getCategorizations <em>
- * Categorizations</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.spi.categorization.model.impl.VCategorizationElementImpl#getCurrentSelection <em>
- * Current Selection</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.categorization.model.impl.VCategorizationElementImpl#getCategorizations
+ * <em>Categorizations</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.spi.categorization.model.impl.VCategorizationElementImpl#getCurrentSelection
+ * <em>Current Selection</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.spi.categorization.model.impl.VCategorizationElementImpl#getMainCategoryDepth
  * <em>Main Category Depth</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
-public class VCategorizationElementImpl extends VContainedElementImpl implements VCategorizationElement
-{
+public class VCategorizationElementImpl extends VContainedElementImpl implements VCategorizationElement {
 	/**
 	 * The cached value of the '{@link #getCategorizations() <em>Categorizations</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getCategorizations()
 	 * @generated
 	 * @ordered
@@ -62,7 +61,7 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	 * The cached value of the '{@link #getCurrentSelection() <em>Current Selection</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getCurrentSelection()
 	 * @generated
 	 * @ordered
@@ -73,7 +72,7 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	 * The default value of the '{@link #getMainCategoryDepth() <em>Main Category Depth</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getMainCategoryDepth()
 	 * @generated
 	 * @ordered
@@ -84,7 +83,7 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	 * The cached value of the '{@link #getMainCategoryDepth() <em>Main Category Depth</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getMainCategoryDepth()
 	 * @generated
 	 * @ordered
@@ -94,37 +93,33 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	protected VCategorizationElementImpl()
-	{
+	protected VCategorizationElementImpl() {
 		super();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return VCategorizationPackage.Literals.CATEGORIZATION_ELEMENT;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public EList<VAbstractCategorization> getCategorizations()
-	{
-		if (categorizations == null)
-		{
+	public EList<VAbstractCategorization> getCategorizations() {
+		if (categorizations == null) {
 			categorizations = new EObjectContainmentEList<VAbstractCategorization>(VAbstractCategorization.class, this,
 				VCategorizationPackage.CATEGORIZATION_ELEMENT__CATEGORIZATIONS);
 		}
@@ -134,23 +129,19 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public VCategorizableElement getCurrentSelection()
-	{
-		if (currentSelection != null && currentSelection.eIsProxy())
-		{
-			final InternalEObject oldCurrentSelection = (InternalEObject) currentSelection;
+	public VCategorizableElement getCurrentSelection() {
+		if (currentSelection != null && currentSelection.eIsProxy()) {
+			InternalEObject oldCurrentSelection = (InternalEObject) currentSelection;
 			currentSelection = (VCategorizableElement) eResolveProxy(oldCurrentSelection);
-			if (currentSelection != oldCurrentSelection)
-			{
-				if (eNotificationRequired()) {
+			if (currentSelection != oldCurrentSelection) {
+				if (eNotificationRequired())
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
 						VCategorizationPackage.CATEGORIZATION_ELEMENT__CURRENT_SELECTION, oldCurrentSelection,
 						currentSelection));
-				}
 			}
 		}
 		return currentSelection;
@@ -159,72 +150,65 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
-	public VCategorizableElement basicGetCurrentSelection()
-	{
+	public VCategorizableElement basicGetCurrentSelection() {
 		return currentSelection;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public void setCurrentSelection(VCategorizableElement newCurrentSelection)
-	{
-		final VCategorizableElement oldCurrentSelection = currentSelection;
+	public void setCurrentSelection(VCategorizableElement newCurrentSelection) {
+		VCategorizableElement oldCurrentSelection = currentSelection;
 		currentSelection = newCurrentSelection;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
-				VCategorizationPackage.CATEGORIZATION_ELEMENT__CURRENT_SELECTION, oldCurrentSelection, currentSelection));
-		}
+				VCategorizationPackage.CATEGORIZATION_ELEMENT__CURRENT_SELECTION, oldCurrentSelection,
+				currentSelection));
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public int getMainCategoryDepth()
-	{
+	public int getMainCategoryDepth() {
 		return mainCategoryDepth;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public void setMainCategoryDepth(int newMainCategoryDepth)
-	{
-		final int oldMainCategoryDepth = mainCategoryDepth;
+	public void setMainCategoryDepth(int newMainCategoryDepth) {
+		int oldMainCategoryDepth = mainCategoryDepth;
 		mainCategoryDepth = newMainCategoryDepth;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VCategorizationPackage.CATEGORIZATION_ELEMENT__MAIN_CATEGORY_DEPTH, oldMainCategoryDepth,
 				mainCategoryDepth));
-		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-	{
-		switch (featureID)
-		{
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
 		case VCategorizationPackage.CATEGORIZATION_ELEMENT__CATEGORIZATIONS:
 			return ((InternalEList<?>) getCategorizations()).basicRemove(otherEnd, msgs);
 		}
@@ -234,20 +218,17 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
-		switch (featureID)
-		{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 		case VCategorizationPackage.CATEGORIZATION_ELEMENT__CATEGORIZATIONS:
 			return getCategorizations();
 		case VCategorizationPackage.CATEGORIZATION_ELEMENT__CURRENT_SELECTION:
-			if (resolve) {
+			if (resolve)
 				return getCurrentSelection();
-			}
 			return basicGetCurrentSelection();
 		case VCategorizationPackage.CATEGORIZATION_ELEMENT__MAIN_CATEGORY_DEPTH:
 			return getMainCategoryDepth();
@@ -258,15 +239,13 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
-		switch (featureID)
-		{
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 		case VCategorizationPackage.CATEGORIZATION_ELEMENT__CATEGORIZATIONS:
 			getCategorizations().clear();
 			getCategorizations().addAll((Collection<? extends VAbstractCategorization>) newValue);
@@ -284,14 +263,12 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
-		switch (featureID)
-		{
+	public void eUnset(int featureID) {
+		switch (featureID) {
 		case VCategorizationPackage.CATEGORIZATION_ELEMENT__CATEGORIZATIONS:
 			getCategorizations().clear();
 			return;
@@ -308,14 +285,12 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
-		switch (featureID)
-		{
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 		case VCategorizationPackage.CATEGORIZATION_ELEMENT__CATEGORIZATIONS:
 			return categorizations != null && !categorizations.isEmpty();
 		case VCategorizationPackage.CATEGORIZATION_ELEMENT__CURRENT_SELECTION:
@@ -329,17 +304,15 @@ public class VCategorizationElementImpl extends VContainedElementImpl implements
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public String toString()
-	{
-		if (eIsProxy()) {
+	public String toString() {
+		if (eIsProxy())
 			return super.toString();
-		}
 
-		final StringBuffer result = new StringBuffer(super.toString());
+		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (mainCategoryDepth: "); //$NON-NLS-1$
 		result.append(mainCategoryDepth);
 		result.append(')');

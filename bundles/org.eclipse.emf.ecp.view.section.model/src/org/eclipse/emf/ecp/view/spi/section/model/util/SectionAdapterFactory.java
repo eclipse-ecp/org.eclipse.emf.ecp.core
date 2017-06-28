@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VHasTooltip;
 import org.eclipse.emf.ecp.view.spi.section.model.VSection;
 import org.eclipse.emf.ecp.view.spi.section.model.VSectionPackage;
 import org.eclipse.emf.ecp.view.spi.section.model.VSectionedArea;
@@ -31,8 +32,7 @@ import org.eclipse.emf.ecp.view.spi.section.model.VSectionedArea;
  * @see org.eclipse.emf.ecp.view.spi.section.model.VSectionPackage
  * @generated
  */
-public class SectionAdapterFactory extends AdapterFactoryImpl
-{
+public class SectionAdapterFactory extends AdapterFactoryImpl {
 	/**
 	 * The cached model package.
 	 * <!-- begin-user-doc -->
@@ -49,10 +49,8 @@ public class SectionAdapterFactory extends AdapterFactoryImpl
 	 *
 	 * @generated
 	 */
-	public SectionAdapterFactory()
-	{
-		if (modelPackage == null)
-		{
+	public SectionAdapterFactory() {
+		if (modelPackage == null) {
 			modelPackage = VSectionPackage.eINSTANCE;
 		}
 	}
@@ -68,14 +66,11 @@ public class SectionAdapterFactory extends AdapterFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public boolean isFactoryForType(Object object)
-	{
-		if (object == modelPackage)
-		{
+	public boolean isFactoryForType(Object object) {
+		if (object == modelPackage) {
 			return true;
 		}
-		if (object instanceof EObject)
-		{
+		if (object instanceof EObject) {
 			return ((EObject) object).eClass().getEPackage() == modelPackage;
 		}
 		return false;
@@ -88,45 +83,42 @@ public class SectionAdapterFactory extends AdapterFactoryImpl
 	 *
 	 * @generated
 	 */
-	protected SectionSwitch<Adapter> modelSwitch =
-		new SectionSwitch<Adapter>()
-		{
-			@Override
-			public Adapter caseSectionedArea(VSectionedArea object)
-			{
-				return createSectionedAreaAdapter();
-			}
+	protected SectionSwitch<Adapter> modelSwitch = new SectionSwitch<Adapter>() {
+		@Override
+		public Adapter caseSectionedArea(VSectionedArea object) {
+			return createSectionedAreaAdapter();
+		}
 
-			@Override
-			public Adapter caseSection(VSection object)
-			{
-				return createSectionAdapter();
-			}
+		@Override
+		public Adapter caseSection(VSection object) {
+			return createSectionAdapter();
+		}
 
-			@Override
-			public Adapter caseElement(VElement object)
-			{
-				return createElementAdapter();
-			}
+		@Override
+		public Adapter caseElement(VElement object) {
+			return createElementAdapter();
+		}
 
-			@Override
-			public Adapter caseContainedElement(VContainedElement object)
-			{
-				return createContainedElementAdapter();
-			}
+		@Override
+		public Adapter caseContainedElement(VContainedElement object) {
+			return createContainedElementAdapter();
+		}
 
-			@Override
-			public Adapter caseContainer(VContainer object)
-			{
-				return createContainerAdapter();
-			}
+		@Override
+		public Adapter caseContainer(VContainer object) {
+			return createContainerAdapter();
+		}
 
-			@Override
-			public Adapter defaultCase(EObject object)
-			{
-				return createEObjectAdapter();
-			}
-		};
+		@Override
+		public Adapter caseHasTooltip(VHasTooltip object) {
+			return createHasTooltipAdapter();
+		}
+
+		@Override
+		public Adapter defaultCase(EObject object) {
+			return createEObjectAdapter();
+		}
+	};
 
 	/**
 	 * Creates an adapter for the <code>target</code>.
@@ -138,8 +130,7 @@ public class SectionAdapterFactory extends AdapterFactoryImpl
 	 * @generated
 	 */
 	@Override
-	public Adapter createAdapter(Notifier target)
-	{
+	public Adapter createAdapter(Notifier target) {
 		return modelSwitch.doSwitch((EObject) target);
 	}
 
@@ -155,8 +146,7 @@ public class SectionAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.spi.section.model.VSectionedArea
 	 * @generated
 	 */
-	public Adapter createSectionedAreaAdapter()
-	{
+	public Adapter createSectionedAreaAdapter() {
 		return null;
 	}
 
@@ -172,8 +162,7 @@ public class SectionAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.spi.section.model.VSection
 	 * @generated
 	 */
-	public Adapter createSectionAdapter()
-	{
+	public Adapter createSectionAdapter() {
 		return null;
 	}
 
@@ -189,8 +178,7 @@ public class SectionAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.spi.model.VElement
 	 * @generated
 	 */
-	public Adapter createElementAdapter()
-	{
+	public Adapter createElementAdapter() {
 		return null;
 	}
 
@@ -206,8 +194,7 @@ public class SectionAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.spi.model.VContainedElement
 	 * @generated
 	 */
-	public Adapter createContainedElementAdapter()
-	{
+	public Adapter createContainedElementAdapter() {
 		return null;
 	}
 
@@ -223,8 +210,24 @@ public class SectionAdapterFactory extends AdapterFactoryImpl
 	 * @see org.eclipse.emf.ecp.view.spi.model.VContainer
 	 * @generated
 	 */
-	public Adapter createContainerAdapter()
-	{
+	public Adapter createContainerAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.model.VHasTooltip <em>Has
+	 * Tooltip</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VHasTooltip
+	 * @generated
+	 * @since 1.13
+	 */
+	public Adapter createHasTooltipAdapter() {
 		return null;
 	}
 
@@ -237,8 +240,7 @@ public class SectionAdapterFactory extends AdapterFactoryImpl
 	 * @return the new adapter.
 	 * @generated
 	 */
-	public Adapter createEObjectAdapter()
-	{
+	public Adapter createEObjectAdapter() {
 		return null;
 	}
 

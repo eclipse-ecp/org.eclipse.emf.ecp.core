@@ -185,24 +185,32 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	 * @param changedResources A List of changed Resources
 	 * @param removedResources A List of removed Resources
 	 */
-	protected void handleResourceChange(Collection<Resource> changedResources, Collection<Resource> removedResources) {
+	protected void handleResourceChange(final Collection<Resource> changedResources,
+		final Collection<Resource> removedResources) {
 		if (!isDirty()) {
-			if (resourceSet == null || rootView.isDisposed()) {
-				return;
-			}
-			reloading = true;
-			resourceSet.getResources().removeAll(removedResources);
-			for (final Resource changed : changedResources) {
-				changed.unload();
-				try {
-					changed.load(null);
-				} catch (final IOException ex) {
+			getSite().getShell().getDisplay().asyncExec(new Runnable() {
+				@Override
+				public void run() {
+					if (resourceSet == null || rootView.isDisposed()) {
+						return;
+					}
+					reloading = true;
+					resourceSet.getResources().removeAll(removedResources);
+					for (final Resource changed : changedResources) {
+						changed.unload();
+						try {
+							changed.load(null);
+						} catch (final IOException ex) {
+						}
+					}
+
+					rootView.getSelectionProvider().refresh();
+
+					reloading = false;
+					getCommandStack().flush();
+					initMarkers();
 				}
-			}
-			rootView.getSelectionProvider().refresh();
-			reloading = false;
-			getCommandStack().flush();
-			initMarkers();
+			});
 		} else {
 			filesChangedWithConflict = true;
 		}

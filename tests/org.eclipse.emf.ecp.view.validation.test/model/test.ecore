@@ -19,6 +19,7 @@
         eType="#//Book" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="librarian" eType="#//Librarian"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="phoneNumber" eType="#//PhoneNumber"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Writer">
     <eOperations name="validate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
@@ -40,6 +41,8 @@
         defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="library" eType="#//Library"
         eOpposite="#//Library/writers"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="initials" eType="#//MinLengthOf3"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="title" eType="#//StrictMinLengthOf3"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Book">
     <eOperations name="validate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
@@ -75,6 +78,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="powerBlock" eType="#//PowerBlock"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="colors" upperBound="-1"
+        eType="#//Color"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Mainboard">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -138,5 +143,56 @@
         eOpposite="#//CrossReferenceContainer/contents"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="singleParent" eType="#//CrossReferenceContainer"
         eOpposite="#//CrossReferenceContainer/singleContent"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Person">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="firstName" eType="#//StringWithMaxLength8"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="gender" eType="#//Gender"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="lastName" eType="#//OnlyCapitals"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="custom" eType="#//CustomDataType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="age" eType="#//Age"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="StringWithMaxLength8" instanceClassName="java.lang.String">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="maxLength" value="8"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Gender">
+    <eLiterals name="Male"/>
+    <eLiterals name="Female" value="1" literal="Female"/>
+    <eLiterals name="Both" value="2" literal="Both"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="OnlyCapitals" instanceClassName="java.lang.String">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="pattern" value="[A-Z]+"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="CustomDataType" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="PhoneNumber" instanceClassName="java.lang.String">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="pattern" value="((\+)?[a-c0-9*#]{1,20}){0,1}"/>
+      <details key="loosePattern" value="[+0-9]+"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="MinLengthOf3" instanceClassName="java.lang.String">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="minLength" value="3"/>
+      <details key="looseMinLength" value="0"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="StrictMinLengthOf3" instanceClassName="java.lang.String">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="minLength" value="3"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="Age" instanceClassName="java.lang.Integer">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="minInclusive" value="0"/>
+      <details key="maxInclusive" value="100"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Color">
+    <eLiterals name="Red" literal=""/>
+    <eLiterals name="Green" value="1"/>
+    <eLiterals name="Blue" value="2"/>
   </eClassifiers>
 </ecore:EPackage>

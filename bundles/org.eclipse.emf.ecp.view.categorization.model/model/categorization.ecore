@@ -30,7 +30,7 @@
         defaultValueLiteral="0"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CategorizableElement" abstract="true"
-      eSuperTypes="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//Element">
+      eSuperTypes="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//Element ../../org.eclipse.emf.ecp.view.model/model/view.ecore#//HasTooltip">
     <eStructuralFeatures xsi:type="ecore:EReference" name="labelObject" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
         changeable="false" volatile="true" transient="true" derived="true" resolveProxies="false"/>
   </eClassifiers>

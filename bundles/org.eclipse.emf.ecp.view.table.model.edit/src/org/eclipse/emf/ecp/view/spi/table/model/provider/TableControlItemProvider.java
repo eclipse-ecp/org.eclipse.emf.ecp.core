@@ -63,6 +63,7 @@ public class TableControlItemProvider
 			super.getPropertyDescriptors(object);
 
 			addAddRemoveDisabledPropertyDescriptor(object);
+			addMoveUpDownDisabledPropertyDescriptor(object);
 			addDetailEditingPropertyDescriptor(object);
 			addDetailViewPropertyDescriptor(object);
 			addEnableDetailEditingDialogPropertyDescriptor(object);
@@ -85,6 +86,30 @@ public class TableControlItemProvider
 				getString("_UI_PropertyDescriptor_description", "_UI_TableControl_addRemoveDisabled_feature", //$NON-NLS-1$ //$NON-NLS-2$
 					"_UI_TableControl_type"), //$NON-NLS-1$
 				VTablePackage.Literals.TABLE_CONTROL__ADD_REMOVE_DISABLED,
+				true,
+				false,
+				false,
+				ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+				null,
+				null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Move Up Down Disabled feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @since 1.13
+	 */
+	protected void addMoveUpDownDisabledPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_TableControl_moveUpDownDisabled_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_TableControl_moveUpDownDisabled_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_TableControl_type"), //$NON-NLS-1$
+				VTablePackage.Literals.TABLE_CONTROL__MOVE_UP_DOWN_DISABLED,
 				true,
 				false,
 				false,
@@ -238,6 +263,7 @@ public class TableControlItemProvider
 
 		switch (notification.getFeatureID(VTableControl.class)) {
 		case VTablePackage.TABLE_CONTROL__ADD_REMOVE_DISABLED:
+		case VTablePackage.TABLE_CONTROL__MOVE_UP_DOWN_DISABLED:
 		case VTablePackage.TABLE_CONTROL__DETAIL_EDITING:
 		case VTablePackage.TABLE_CONTROL__ENABLE_DETAIL_EDITING_DIALOG:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
@@ -270,6 +296,9 @@ public class TableControlItemProvider
 
 		newChildDescriptors.add(createChildParameter(VTablePackage.Literals.TABLE_CONTROL__COLUMN_CONFIGURATIONS,
 			VTableFactory.eINSTANCE.createWidthConfiguration()));
+
+		newChildDescriptors.add(createChildParameter(VTablePackage.Literals.TABLE_CONTROL__COLUMN_CONFIGURATIONS,
+			VTableFactory.eINSTANCE.createEnablementConfiguration()));
 
 		newChildDescriptors.add(createChildParameter(VTablePackage.Literals.TABLE_CONTROL__DETAIL_VIEW,
 			VViewFactory.eINSTANCE.createView()));
