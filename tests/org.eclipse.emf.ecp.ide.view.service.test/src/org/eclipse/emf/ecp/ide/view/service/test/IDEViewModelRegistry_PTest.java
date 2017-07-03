@@ -38,6 +38,7 @@ import org.eclipse.emf.ecp.ide.view.service.IDEViewModelRegistry;
 import org.eclipse.emf.ecp.ide.view.service.ViewModelEditorCallback;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
+import org.eclipse.jface.resource.JFaceResources;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -55,6 +56,11 @@ public class IDEViewModelRegistry_PTest {
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		try {
+			JFaceResources.getImageRegistry();
+		} catch (final RuntimeException e) {
+			// expected fail, some strange initialization error is happing
+		}
 		final IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		final IProject project = root.getProject("TestEcoreHelperProjectResources");
 		// create resources to register and unregister
@@ -112,7 +118,8 @@ public class IDEViewModelRegistry_PTest {
 			e.printStackTrace();
 		}
 
-		assertFalse("Registry already contains ecore path in ecoreViewMapping", ecoreViewMapping.containsKey(ecorePath));
+		assertFalse("Registry already contains ecore path in ecoreViewMapping",
+			ecoreViewMapping.containsKey(ecorePath));
 		assertFalse("Registry already contains ecore path in resourceChangeListeners",
 			resourceChangeListeners.containsKey(ecorePath));
 
@@ -160,7 +167,8 @@ public class IDEViewModelRegistry_PTest {
 			e.printStackTrace();
 		}
 
-		assertFalse("Registry already contains ecore path in ecoreViewMapping", ecoreViewMapping.containsKey(ecorePath));
+		assertFalse("Registry already contains ecore path in ecoreViewMapping",
+			ecoreViewMapping.containsKey(ecorePath));
 		assertFalse("Registry already contains ecore path in resourceChangeListeners",
 			resourceChangeListeners.containsKey(ecorePath));
 
@@ -298,8 +306,7 @@ public class IDEViewModelRegistry_PTest {
 		assertEquals(path, viewModelviewModelFileMapping.get(view));
 	}
 
-	private Object getFieldByName(Object instance, String fieldName) throws Exception
-	{
+	private Object getFieldByName(Object instance, String fieldName) throws Exception {
 		final Field f = instance.getClass().getDeclaredField(fieldName);
 		f.setAccessible(true);
 

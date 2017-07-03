@@ -132,6 +132,7 @@ public class EMFFormsSpreadsheetTableControlRendererService implements
 	}
 
 	private ServiceReference<EMFFormsSpreadsheetRendererFactory> serviceReference;
+	private BundleContext bundleContext;
 
 	/**
 	 * The activate method.
@@ -140,10 +141,7 @@ public class EMFFormsSpreadsheetTableControlRendererService implements
 	 */
 	@Activate
 	public void activate(BundleContext bundleContext) {
-		serviceReference = bundleContext
-			.getServiceReference(EMFFormsSpreadsheetRendererFactory.class);
-		emfformsSpreadsheetRendererFactory = bundleContext
-			.getService(serviceReference);
+		this.bundleContext = bundleContext;
 	}
 
 	/**
@@ -171,6 +169,16 @@ public class EMFFormsSpreadsheetTableControlRendererService implements
 		return NOT_APPLICABLE;
 	}
 
+	private EMFFormsSpreadsheetRendererFactory getFactory() {
+		if (emfformsSpreadsheetRendererFactory == null) {
+			serviceReference = bundleContext
+				.getServiceReference(EMFFormsSpreadsheetRendererFactory.class);
+			emfformsSpreadsheetRendererFactory = bundleContext
+				.getService(serviceReference);
+		}
+		return emfformsSpreadsheetRendererFactory;
+	}
+
 	/**
 	 * {@inheritDoc}
 	 *
@@ -181,7 +189,7 @@ public class EMFFormsSpreadsheetTableControlRendererService implements
 	public EMFFormsAbstractSpreadsheetRenderer<VTableControl> getRendererInstance(
 		VTableControl vElement, ViewModelContext viewModelContext) {
 		return new EMFFormsSpreadsheetTableControlRenderer(emfformsDatabinding, emfformsLabelProvider, reportService,
-			emfformsSpreadsheetRendererFactory, vtViewTemplateProvider, emfFormsIdProvider, converterRegistry,
+			getFactory(), vtViewTemplateProvider, emfFormsIdProvider, converterRegistry,
 			formatDescriptionProvider, domainExpander);
 	}
 

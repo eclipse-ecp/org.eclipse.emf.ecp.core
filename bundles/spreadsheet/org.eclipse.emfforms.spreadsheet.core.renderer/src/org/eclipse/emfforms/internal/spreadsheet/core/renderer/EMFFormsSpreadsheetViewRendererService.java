@@ -48,6 +48,7 @@ public class EMFFormsSpreadsheetViewRendererService implements
 	}
 
 	private ServiceReference<EMFFormsSpreadsheetRendererFactory> serviceReference;
+	private BundleContext bundleContext;
 
 	/**
 	 * The activate method.
@@ -56,10 +57,7 @@ public class EMFFormsSpreadsheetViewRendererService implements
 	 */
 	@Activate
 	public void activate(BundleContext bundleContext) {
-		serviceReference = bundleContext
-			.getServiceReference(EMFFormsSpreadsheetRendererFactory.class);
-		emfformsSpreadsheetRendererFactory = bundleContext
-			.getService(serviceReference);
+		this.bundleContext = bundleContext;
 	}
 
 	/**
@@ -87,6 +85,16 @@ public class EMFFormsSpreadsheetViewRendererService implements
 		return NOT_APPLICABLE;
 	}
 
+	private EMFFormsSpreadsheetRendererFactory getFactory() {
+		if (emfformsSpreadsheetRendererFactory == null) {
+			serviceReference = bundleContext
+				.getServiceReference(EMFFormsSpreadsheetRendererFactory.class);
+			emfformsSpreadsheetRendererFactory = bundleContext
+				.getService(serviceReference);
+		}
+		return emfformsSpreadsheetRendererFactory;
+	}
+
 	/**
 	 * {@inheritDoc}
 	 *
@@ -96,7 +104,7 @@ public class EMFFormsSpreadsheetViewRendererService implements
 	@Override
 	public EMFFormsAbstractSpreadsheetRenderer<VView> getRendererInstance(
 		VView vElement, ViewModelContext viewModelContext) {
-		return new EMFFormsSpreadsheetViewRenderer(emfformsSpreadsheetRendererFactory, reportService);
+		return new EMFFormsSpreadsheetViewRenderer(getFactory(), reportService);
 	}
 
 }
