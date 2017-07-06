@@ -2,10 +2,10 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: View Model Label UI SWT
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.label.ui.swt
-Bundle-Version: 1.13.0.qualifier
+Bundle-Version: 1.13.1.qualifier
 Bundle-Vendor: Eclipse Modeling Project
-Export-Package: org.eclipse.emf.ecp.view.internal.label.swt;version="1.13.0";x-internal:=true,
- org.eclipse.emf.ecp.view.spi.label.swt;version="1.13.0"
+Export-Package: org.eclipse.emf.ecp.view.internal.label.swt;version="1.13.1";x-internal:=true,
+ org.eclipse.emf.ecp.view.spi.label.swt;version="1.13.1"
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.emf.ecp.view.label.model;bundle-version="[1.13.0,1.14.0)",
  org.eclipse.emf.ecp.ui.view.swt;bundle-version="[1.13.0,1.14.0)",
