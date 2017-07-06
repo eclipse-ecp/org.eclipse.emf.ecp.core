@@ -83,6 +83,7 @@ public class OpenEditor_PTest extends ECPCommonSWTBotTest {
 	public void logic() {
 		final SWTBotTree tree = bot.tree();
 		tree.getTreeItem("parent").getNode("foo").getNode("2").select();
+		bot.activeShell().setFocus();
 	}
 
 	@Override
