@@ -109,7 +109,7 @@ public class GenerateJavaCodeAction implements IToolbarAction {
 	class CreateJavaCodeAction extends Action {
 		private final Object[] types;
 		private final ISelectionProvider selectionProvider;
-		private final GenModel genModel;
+		private GenModel genModel;
 		private static final String FILE_NAME_PLUGIN_XML = "plugin.xml"; //$NON-NLS-1$
 		private static final String FILE_NAME_META_INF = "META-INF"; //$NON-NLS-1$
 		private static final String FILE_NAME_MANIFEST_MF = "MANIFEST.MF"; //$NON-NLS-1$
@@ -125,13 +125,11 @@ public class GenerateJavaCodeAction implements IToolbarAction {
 		 *
 		 * @param text the string used as the text for the action, or null if there is no text
 		 * @param types the project types
-		 * @param genModel the {@link GenModel}
 		 * @param selectionProvider the {@link ISelectionProvider}
 		 */
-		CreateJavaCodeAction(String text, Object[] types, GenModel genModel, ISelectionProvider selectionProvider) {
+		CreateJavaCodeAction(String text, Object[] types, ISelectionProvider selectionProvider) {
 			super(text);
 			this.types = types;
-			this.genModel = genModel;
 			this.selectionProvider = selectionProvider;
 		}
 
@@ -142,9 +140,32 @@ public class GenerateJavaCodeAction implements IToolbarAction {
 		 * @param selectionProvider the {@link ISelectionProvider}
 		 */
 		CreateJavaCodeAction(GenModel genModel, ISelectionProvider selectionProvider) {
+			this(selectionProvider);
+			this.genModel = genModel;
+		}
+
+		/**
+		 * Constructor.
+		 *
+		 * @param genModel the {@link GenModel}
+		 * @param text the string used as the text for the action, or null if there is no text
+		 * @param types the project types
+		 * @param selectionProvider the {@link ISelectionProvider}
+		 */
+		CreateJavaCodeAction(GenModel genModel, String text, Object[] types,
+			ISelectionProvider selectionProvider) {
+			this(text, types, selectionProvider);
+			this.genModel = genModel;
+		}
+
+		/**
+		 * Constructor.
+		 *
+		 * @param selectionProvider the {@link ISelectionProvider}
+		 */
+		CreateJavaCodeAction(ISelectionProvider selectionProvider) {
 			super(Messages.GenerateJavaCodeAction_generateAll, SWT.DROP_DOWN);
 			this.selectionProvider = selectionProvider;
-			this.genModel = genModel;
 
 			types = new Object[] {
 				GenBaseGeneratorAdapter.MODEL_PROJECT_TYPE,
@@ -153,7 +174,7 @@ public class GenerateJavaCodeAction implements IToolbarAction {
 				GenBaseGeneratorAdapter.TESTS_PROJECT_TYPE
 			};
 
-			setMenuCreator(new GenmodelDropdownCreator(selectionProvider));
+			setMenuCreator(new GenmodelDropdownCreator());
 
 			setImageDescriptor(ImageDescriptor.createFromURL(FrameworkUtil.getBundle(
 				this.getClass()).getResource("icons/page_white_cup.png"))); //$NON-NLS-1$
@@ -167,7 +188,16 @@ public class GenerateJavaCodeAction implements IToolbarAction {
 		 * @return a new Action
 		 */
 		protected Action getJavaCodeAction(String text, Object[] types) {
-			return new CreateJavaCodeAction(text, types, getGenModel(), selectionProvider);
+			return new CreateJavaCodeAction(genModel, text, types, selectionProvider);
+		}
+
+		/**
+		 * Sets the {@link GenModel} for the java code generation action.
+		 *
+		 * @param genModel the genModel to set
+		 */
+		public void setGenModel(GenModel genModel) {
+			this.genModel = genModel;
 		}
 
 		@Override
@@ -364,11 +394,6 @@ public class GenerateJavaCodeAction implements IToolbarAction {
 		 */
 		private class GenmodelDropdownCreator implements IMenuCreator {
 			private Menu dropDown;
-			private final ISelectionProvider selectionProvider;
-
-			GenmodelDropdownCreator(ISelectionProvider selectionProvider) {
-				this.selectionProvider = selectionProvider;
-			}
 
 			@Override
 			public void dispose() {
