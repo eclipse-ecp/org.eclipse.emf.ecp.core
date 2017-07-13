@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 
 /**
  * Tree like datastructure representing EPackages and their dependencies to each other. Offers an Iterator to
@@ -79,6 +80,7 @@ public class PackageDependencyGraph {
 
 		/* resolve direct nsURIs */
 		final EPackage rootPackage = Registry.INSTANCE.getEPackage(node.getNSURI());
+		EcoreUtil.resolveAll(rootPackage);
 		if (rootPackage == null) {
 			Activator.log(MessageFormat.format("No Package found for the ns-uri {0}", node.getNSURI())); //$NON-NLS-1$
 		} else {
