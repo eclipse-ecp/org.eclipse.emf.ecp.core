@@ -65,7 +65,7 @@ public class MappingDMRTest extends AbstractMigrationTest {
 		assertEquals(TestPackage.eINSTANCE.getD(), firstMappingSegment.getMappedClass());
 		final VMappingDomainModelReferenceSegment cascadedMappingSegment = (VMappingDomainModelReferenceSegment) cascadedSegments
 			.get(5);
-		assertEquals("eClassToA", cascadedMappingSegment.getDomainModelFeature());
+		assertEquals("eClassToE", cascadedMappingSegment.getDomainModelFeature());
 		assertEquals(TestPackage.eINSTANCE.getA(), cascadedMappingSegment.getMappedClass());
 	}
 

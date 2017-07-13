@@ -70,7 +70,6 @@ public class FeaturePathDMRRemovalMigration extends CustomMigration {
 		}
 
 		// -------------------------
-		// TODO Fix Bug described in commit 1d8e1d9548c417e104ea8513a81973fb04c4ce62
 		// Mapping final DMR Migration
 		final EClass mappingDmrEClass = metamodel.getEClass(MAPPING_DOMAIN_MODEL_REFERENCE);
 		EList<Instance> mappingDmrs = model.getInstances(mappingDmrEClass);
@@ -95,6 +94,7 @@ public class FeaturePathDMRRemovalMigration extends CustomMigration {
 	 * @param metamodel
 	 */
 	private void fixMappingMetaModel(Metamodel metamodel) {
+		// This method is a hack to fix the bug described in commit 1d8e1d9548c417e104ea8513a81973fb04c4ce62
 		final EClass viewEClass = metamodel
 			.getEClass("http://org/eclipse/emf/ecp/view/model/200.View"); //$NON-NLS-1$
 		final EReference rootClassRef = (EReference) viewEClass.getEStructuralFeature("rootEClass"); //$NON-NLS-1$
