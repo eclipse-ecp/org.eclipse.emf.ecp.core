@@ -277,11 +277,6 @@
   </releases>
   <releases xmi:id="__Y5vxd4nEeabEcLsrgXAXQ" date="2014-10-23T15:19:11.006+0200" label="150">
     <changes xsi:type="history:MigrationChange" xmi:id="__Y6W0N4nEeabEcLsrgXAXQ" migration="org.eclipse.emf.ecp.view.table.edapt._140to150.AddedDMRToTableDMRMigration"/>
-    <changes xsi:type="history:Set" xmi:id="__Y6W0d4nEeabEcLsrgXAXQ" featureName="nsURI" dataValue="http://org/eclipse/emf/ecp/view/table/model/150" oldDataValue="http://org/eclipse/emf/ecp/view/table/model">
-      <element href="table.ecore#/"/>
-    </changes>
-  </releases>
-  <releases xmi:id="__Y6W0t4nEeabEcLsrgXAXQ" date="2017-01-19T10:28:49.726+0100" label="190">
     <changes xsi:type="history:OperationChange" xmi:id="__Y6W094nEeabEcLsrgXAXQ">
       <changes xsi:type="history:Create" xmi:id="__Y6W1N4nEeabEcLsrgXAXQ" referenceName="eClassifiers">
         <target href="table.ecore#/"/>
@@ -397,11 +392,51 @@
         </parameters>
       </operation>
     </changes>
-    <changes xsi:type="history:Set" xmi:id="__Y7k-t4nEeabEcLsrgXAXQ" featureName="eType">
-      <element href="table.ecore#//WidthConfiguration/weight"/>
-      <referenceValue href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-      <oldReferenceValue href="http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <changes xsi:type="history:OperationChange" xmi:id="_CbG2cGfmEeeTZuLUHxhi-w">
+      <changes xsi:type="history:Create" xmi:id="_CbG2cWfmEeeTZuLUHxhi-w" referenceName="eStructuralFeatures">
+        <target href="table.ecore#//WidthConfiguration"/>
+        <element href="table.ecore#//WidthConfiguration/minWidth"/>
+        <changes xsi:type="history:Set" xmi:id="_CbG2cmfmEeeTZuLUHxhi-w" featureName="name" dataValue="minWidth">
+          <element href="table.ecore#//WidthConfiguration/minWidth"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_CbG2c2fmEeeTZuLUHxhi-w" featureName="lowerBound" dataValue="1" oldDataValue="0">
+          <element href="table.ecore#//WidthConfiguration/minWidth"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_CbG2dGfmEeeTZuLUHxhi-w" featureName="eType">
+          <element href="table.ecore#//WidthConfiguration/minWidth"/>
+          <referenceValue href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+        </changes>
+      </changes>
+      <operation xmi:id="_CbG2dWfmEeeTZuLUHxhi-w" name="newAttribute">
+        <parameters xmi:id="_CbG2dmfmEeeTZuLUHxhi-w" name="eClass">
+          <referenceValue xmi:id="_CbG2d2fmEeeTZuLUHxhi-w">
+            <element href="table.ecore#//WidthConfiguration"/>
+          </referenceValue>
+        </parameters>
+        <parameters xmi:id="_CbG2eGfmEeeTZuLUHxhi-w" name="name">
+          <dataValue>minWidth</dataValue>
+        </parameters>
+        <parameters xmi:id="_CbG2eWfmEeeTZuLUHxhi-w" name="type">
+          <referenceValue xmi:id="_CbG2emfmEeeTZuLUHxhi-w">
+            <element href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+          </referenceValue>
+        </parameters>
+        <parameters xmi:id="_CbG2e2fmEeeTZuLUHxhi-w" name="lowerBound">
+          <dataValue>1</dataValue>
+        </parameters>
+        <parameters xmi:id="_CbG2fGfmEeeTZuLUHxhi-w" name="upperBound">
+          <dataValue>1</dataValue>
+        </parameters>
+        <parameters xmi:id="_CbG2fWfmEeeTZuLUHxhi-w" name="defaultValue">
+          <dataValue xsi:nil="true"/>
+        </parameters>
+      </operation>
     </changes>
+    <changes xsi:type="history:Set" xmi:id="__Y6W0d4nEeabEcLsrgXAXQ" featureName="nsURI" dataValue="http://org/eclipse/emf/ecp/view/table/model/150" oldDataValue="http://org/eclipse/emf/ecp/view/table/model">
+      <element href="table.ecore#/"/>
+    </changes>
+  </releases>
+  <releases xmi:id="__Y6W0t4nEeabEcLsrgXAXQ" date="2017-01-19T10:28:49.726+0100" label="190">
     <changes xsi:type="history:Set" xmi:id="_r0lwsN4pEeabEcLsrgXAXQ" featureName="nsURI" dataValue="http://org/eclipse/emf/ecp/view/table/model/190" oldDataValue="http://org/eclipse/emf/ecp/view/table/model/150">
       <element href="table.ecore#/"/>
     </changes>

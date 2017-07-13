@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ASCII"?>
+<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/170" xmlns:org.eclipse.emf.ecp.view.table.model="http://org/eclipse/emf/ecp/view/table/model/150" xmi:id="_VPVZMGfgEeeTZuLUHxhi-w" name="B" ecorePath="/org.eclipse.emfforms.core.services.databinding.testmodel/model/test.ecore">
+  <rootEClass href="test#//B"/>
+  <children xsi:type="org.eclipse.emf.ecp.view.table.model:TableControl" xmi:id="_WOMOIGfgEeeTZuLUHxhi-w">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.table.model:TableDomainModelReference" xmi:id="_bnTn4GfgEeeTZuLUHxhi-w">
+      <columnDomainModelReferences xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_di-DUGfgEeeTZuLUHxhi-w">
+        <domainModelEFeature xsi:type="ecore:EReference" href="test#//C/a"/>
+      </columnDomainModelReferences>
+      <columnDomainModelReferences xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_o2F9YGfgEeeTZuLUHxhi-w">
+        <domainModelEFeature xsi:type="ecore:EAttribute" href="test#//D/x"/>
+        <domainModelEReferencePath href="test#//C/d"/>
+      </columnDomainModelReferences>
+      <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_bnTn4WfgEeeTZuLUHxhi-w">
+        <domainModelEFeature xsi:type="ecore:EReference" href="test#//B/cList"/>
+      </domainModelReference>
+    </domainModelReference>
+    <columnConfigurations xsi:type="org.eclipse.emf.ecp.view.table.model:WidthConfiguration" xmi:id="_XAo-wGfgEeeTZuLUHxhi-w" columnDomainReference="_di-DUGfgEeeTZuLUHxhi-w" weight="50" minWidth="25"/>
+    <columnConfigurations xsi:type="org.eclipse.emf.ecp.view.table.model:WidthConfiguration" xmi:id="_pWNA0GfgEeeTZuLUHxhi-w" columnDomainReference="_o2F9YGfgEeeTZuLUHxhi-w" weight="30" minWidth="20"/>
+  </children>
+</org.eclipse.emf.ecp.view.model:View>
