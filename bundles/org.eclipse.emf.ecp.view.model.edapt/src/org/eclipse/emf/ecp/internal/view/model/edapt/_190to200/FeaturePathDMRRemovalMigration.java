@@ -50,6 +50,8 @@ public class FeaturePathDMRRemovalMigration extends CustomMigration {
 	 */
 	@Override
 	public void migrateBefore(Model model, Metamodel metamodel) throws MigrationException {
+		fixMappingMetaModel(metamodel);
+
 		// Get all FPDMRs excluding sub classes.
 		final EList<Instance> allFeaturePathDMRs = model
 			.getInstances(FEATURE_PATH_DOMAIN_MODEL_REFERENCE);
@@ -69,14 +71,14 @@ public class FeaturePathDMRRemovalMigration extends CustomMigration {
 
 		// -------------------------
 		// TODO Fix Bug described in commit 1d8e1d9548c417e104ea8513a81973fb04c4ce62
-		// Mapping DMR Migration
-		// final EClass mappingDmrEClass = metamodel.getEClass(MAPPING_DOMAIN_MODEL_REFERENCE);
-		// EList<Instance> mappingDmrs = model.getInstances(mappingDmrEClass);
-		// while (!mappingDmrs.isEmpty()) {
-		// final Instance mappingDmr = mappingDmrs.get(0);
-		// migrateMappingDmr(model, metamodel, mappingDmr);
-		// mappingDmrs = model.getInstances(mappingDmrEClass);
-		// }
+		// Mapping final DMR Migration
+		final EClass mappingDmrEClass = metamodel.getEClass(MAPPING_DOMAIN_MODEL_REFERENCE);
+		EList<Instance> mappingDmrs = model.getInstances(mappingDmrEClass);
+		while (!mappingDmrs.isEmpty()) {
+			final Instance mappingDmr = mappingDmrs.get(0);
+			migrateMappingDmr(model, metamodel, mappingDmr);
+			mappingDmrs = model.getInstances(mappingDmrEClass);
+		}
 
 		// -------------------------
 		// Table DMR Migration
@@ -89,11 +91,29 @@ public class FeaturePathDMRRemovalMigration extends CustomMigration {
 		}
 	}
 
+	/**
+	 * @param metamodel
+	 */
+	private void fixMappingMetaModel(Metamodel metamodel) {
+		final EClass viewEClass = metamodel
+			.getEClass("http://org/eclipse/emf/ecp/view/model/200.View"); //$NON-NLS-1$
+		final EReference rootClassRef = (EReference) viewEClass.getEStructuralFeature("rootEClass"); //$NON-NLS-1$
+		final EClass rootClassRefType = rootClassRef.getEReferenceType();
+
+		final EClass mappingSegmentEClass = metamodel
+			.getEClass("http://www/eclipse/org/emf/ecp/view/mappingdmr/model/200.MappingDomainModelReferenceSegment"); //$NON-NLS-1$
+		if (mappingSegmentEClass == null) {
+			return;
+		}
+		final EReference mappedClassRef = (EReference) mappingSegmentEClass.getEStructuralFeature("mappedClass"); //$NON-NLS-1$
+		mappedClassRef.setEType(rootClassRefType);
+	}
+
 	private void migrateDmr(Model model, Metamodel metamodel, Instance dmr) throws MigrationException {
 		final EClass dmrEClass = metamodel.getEClass(DOMAIN_MODEL_REFERENCE);
 		final EClass featurePathDmrEClass = metamodel.getEClass(FEATURE_PATH_DOMAIN_MODEL_REFERENCE);
 		final EClass indexDmrEClass = metamodel.getEClass(INDEX_DOMAIN_MODEL_REFERENCE);
-		// final EClass mappingDmrEClass = metamodel.getEClass(MAPPING_DOMAIN_MODEL_REFERENCE);
+		final EClass mappingDmrEClass = metamodel.getEClass(MAPPING_DOMAIN_MODEL_REFERENCE);
 		final EClass tableDmrEClass = metamodel.getEClass(TABLE_DOMAIN_MODEL_REFERENCE);
 
 		if (dmrEClass.equals(dmr.getEClass())) {
@@ -107,10 +127,9 @@ public class FeaturePathDMRRemovalMigration extends CustomMigration {
 			migrateIndexDmr(model, metamodel, dmr);
 		}
 		// TODO uncomment when mapping migration works
-		// else if (mappingDmrEClass != null && mappingDmrEClass.equals(dmr.getEClass())) {
-		// migrateMappingDmr(model, metamodel, dmr);
-		// }
-		else if (tableDmrEClass != null && tableDmrEClass.equals(dmr.getEClass())) {
+		else if (mappingDmrEClass != null && mappingDmrEClass.equals(dmr.getEClass())) {
+			migrateMappingDmr(model, metamodel, dmr);
+		} else if (tableDmrEClass != null && tableDmrEClass.equals(dmr.getEClass())) {
 			migrateTableDmr(model, metamodel, dmr);
 		}
 	}
