@@ -67,6 +67,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
@@ -479,9 +480,20 @@ public class AdvancedCreateDomainModelReferenceWizard extends Wizard {
 				segmentClassesMap.put(segmentClass.getName(), segmentClass);
 			}
 
-			// configure combo box
-			final Combo segmentTypeSelector = new Combo(composite, SWT.READ_ONLY | SWT.DROP_DOWN);
+			final Composite segmentTypeComposite = new Composite(composite, SWT.FILL);
+			GridLayoutFactory.fillDefaults().numColumns(2).applyTo(segmentTypeComposite);
 			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false)
+				.applyTo(segmentTypeComposite);
+
+			// combo box label
+			final Label segmentSelectionLabel = new Label(segmentTypeComposite, SWT.NONE);
+			segmentSelectionLabel.setText("Select Segment Type:"); //$NON-NLS-1$
+			GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.CENTER).grab(false, false)
+				.applyTo(segmentSelectionLabel);
+
+			// configure combo box
+			final Combo segmentTypeSelector = new Combo(segmentTypeComposite, SWT.READ_ONLY | SWT.DROP_DOWN);
+			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false)
 				.applyTo(segmentTypeSelector);
 			final String[] items = segmentClassesMap.keySet().toArray(new String[segmentClassesMap.size()]);
 			Arrays.sort(items);
