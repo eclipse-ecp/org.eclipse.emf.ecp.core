@@ -12,9 +12,13 @@
 package org.eclipse.emf.ecp.view.internal.table.nebula.grid;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 import org.eclipse.core.databinding.observable.IObserving;
@@ -58,6 +62,8 @@ import org.osgi.framework.ServiceReference;
  */
 public class GridPasteKeyListener implements KeyListener {
 
+	private static final String TAB = "\t"; //$NON-NLS-1$
+	private static final String NT = "\n\t"; //$NON-NLS-1$
 	private static final String IS_INPUTTABLE = "isInputtable"; //$NON-NLS-1$
 	private final Clipboard clipboard;
 	private final EMFFormsDatabindingEMF dataBinding;
@@ -135,10 +141,12 @@ public class GridPasteKeyListener implements KeyListener {
 		}
 
 		final List<Point> pastedCells = new ArrayList<Point>();
-		if (grid.getCellSelection().length > 1 && new StringTokenizer(contents, "\n\t", false).countTokens() == 1) { //$NON-NLS-1$
+		if (grid.getCellSelection().length > 1 /* more than one cell selected */ &&
+			new StringTokenizer(contents, NT, false).countTokens() == 1 /* contents are on one line */ &&
+			fillSelectionWithMultipleCopies(grid.getCellSelection(), contents)) {
 
 			// fill selection
-			for (final Point startItem : grid.getCellSelection()) {
+			for (final Point startItem : getFillStartPoints(grid.getCellSelection())) {
 				pastedCells.addAll(pasteContents(startItem, grid, contents));
 			}
 
@@ -153,6 +161,90 @@ public class GridPasteKeyListener implements KeyListener {
 			grid.setCellSelection(pastedCells.toArray(new Point[] {}));
 		}
 
+	}
+
+	/**
+	 * Extract the start points for filling paste from the grid's cell selection.
+	 *
+	 * @param cellSelection the cell selection
+	 * @return the start points
+	 */
+	static Point[] getFillStartPoints(Point[] cellSelection) {
+		final Map<Integer, Set<Integer>> rowToSelectedColumns = createSelectionMap(cellSelection);
+		final Point[] result = new Point[rowToSelectedColumns.size()];
+
+		final Set<Integer> columns = rowToSelectedColumns.values().iterator().next();
+		final int startColumn = Collections.min(columns);
+
+		int i = 0;
+		for (final Integer startRow : rowToSelectedColumns.keySet()) {
+			result[i++] = new Point(startColumn, startRow);
+		}
+
+		return result;
+	}
+
+	/**
+	 * Whether the paste logic which will paste the same contents in every selected row is applicable.
+	 * Precondition is that multiple cells are selected and contents does not contain a new line.
+	 *
+	 * @param cellSelection the selected cells
+	 * @param contents the contents to paste
+	 * @return <code>true</code> if paste should happen, <code>false</code> otherwise
+	 */
+	static boolean fillSelectionWithMultipleCopies(Point[] cellSelection, String contents) {
+		/* build up data struc to analyse selection */
+		final Map<Integer, Set<Integer>> rowToSelectedColumns = createSelectionMap(cellSelection);
+
+		/* multiple rows have to be selected */
+		if (rowToSelectedColumns.size() < 2) {
+			return false;
+		}
+
+		/* column selection has to be uniform */
+		final Iterator<Set<Integer>> columnSetInterator = rowToSelectedColumns.values().iterator();
+		final Set<Integer> referenceSet = columnSetInterator.next();
+		while (columnSetInterator.hasNext()) {
+			final Set<Integer> next = columnSetInterator.next();
+			if (!referenceSet.equals(next)) {
+				return false;
+			}
+		}
+
+		/* if only one column selected, we are fine */
+		if (referenceSet.size() == 1) {
+			return true;
+		}
+
+		/* otherwise selected column count and pasted column count has to match */
+		if (contents.split(TAB).length != referenceSet.size()) {
+			return false;
+		}
+
+		/* and selected columns have to lie next to each other */
+		final ArrayList<Integer> selectedColumnIndices = new ArrayList<Integer>(referenceSet);
+		Collections.sort(selectedColumnIndices);
+		final Iterator<Integer> selectedColumnIndicesIterator = selectedColumnIndices.iterator();
+		Integer ref = selectedColumnIndicesIterator.next();
+		while (selectedColumnIndicesIterator.hasNext()) {
+			if (++ref != selectedColumnIndicesIterator.next()) {
+				return false;
+			}
+		}
+
+		/* all fine */
+		return true;
+	}
+
+	private static Map<Integer, Set<Integer>> createSelectionMap(Point[] cellSelection) {
+		final Map<Integer, Set<Integer>> rowToSelectedColumns = new LinkedHashMap<Integer, Set<Integer>>();
+		for (final Point point : cellSelection) {
+			if (!rowToSelectedColumns.containsKey(point.y)) {
+				rowToSelectedColumns.put(point.y, new LinkedHashSet<Integer>());
+			}
+			rowToSelectedColumns.get(point.y).add(point.x);
+		}
+		return rowToSelectedColumns;
 	}
 
 	/**
@@ -177,7 +269,7 @@ public class GridPasteKeyListener implements KeyListener {
 
 			int relativeColumn = 0;
 
-			for (final String cellValue : row.split("\t", -1)) { //$NON-NLS-1$
+			for (final String cellValue : row.split(TAB, -1)) {
 
 				final int insertionColumnIndex = startColumn + relativeColumn;
 				final int insertionRowIndex = startRow + relativeRow;
