@@ -67,7 +67,6 @@
       <feature id="org.eclipse.emf.emfstore.client.feature"/>
       <feature id="org.eclipse.emf.emfstore.client.ui.feature"/>
       <feature id="org.eclipse.emf.emfstore.common.feature"/>
-      <feature id="org.eclipse.emf.emfstore.ecore.feature"/>
       <feature id="org.eclipse.emf.emfstore.server.feature"/>
       <!--
       <feature id="org.eclipse.emf.ecp.emfforms.idetooling.feature"/>
