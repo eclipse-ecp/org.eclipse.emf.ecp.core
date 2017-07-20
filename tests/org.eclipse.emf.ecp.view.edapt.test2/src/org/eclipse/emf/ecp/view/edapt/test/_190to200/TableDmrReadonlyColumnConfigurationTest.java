@@ -16,17 +16,17 @@ import static org.junit.Assert.assertEquals;
 import org.eclipse.emf.ecp.view.edapt.test.AbstractMigrationTest;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.table.model.VReadOnlyColumnConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
-import org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration;
 import org.eclipse.emfforms.view.spi.multisegment.model.VMultiDomainModelReferenceSegment;
 
 /**
- * Tests the correct migration of a TableControl's width configurations.
+ * Tests the correct migration of a TableControl's {@link VReadOnlyColumnConfiguration readonly configurations}.
  *
  * @author Lucas Koehler
  *
  */
-public class TableDmrWidthConfigurationTest extends AbstractMigrationTest {
+public class TableDmrReadonlyColumnConfigurationTest extends AbstractMigrationTest {
 
 	/**
 	 * {@inheritDoc}
@@ -43,22 +43,19 @@ public class TableDmrWidthConfigurationTest extends AbstractMigrationTest {
 		final VMultiDomainModelReferenceSegment multiSegment = (VMultiDomainModelReferenceSegment) tableDmr
 			.getSegments().get(0);
 
-		assertEquals(2, tableControl.getColumnConfigurations().size());
-		final VWidthConfiguration aWidthConfig = (VWidthConfiguration) tableControl.getColumnConfigurations().get(0);
-		final VWidthConfiguration xWidthConfig = (VWidthConfiguration) tableControl.getColumnConfigurations().get(1);
+		assertEquals(1, tableControl.getColumnConfigurations().size());
+		final VReadOnlyColumnConfiguration readOnlyConfig = (VReadOnlyColumnConfiguration) tableControl
+			.getColumnConfigurations().get(0);
 
-		assertEquals(25, aWidthConfig.getMinWidth());
-		assertEquals(50, aWidthConfig.getWeight());
-		assertEquals(20, xWidthConfig.getMinWidth());
-		assertEquals(30, xWidthConfig.getWeight());
+		assertEquals(2, readOnlyConfig.getColumnDomainReferences().size());
 
 		final VDomainModelReference aDmr = multiSegment.getChildDomainModelReferences().get(0);
 		assertEquals(1, aDmr.getSegments().size());
 		final VDomainModelReference xDmr = multiSegment.getChildDomainModelReferences().get(1);
 		assertEquals(2, xDmr.getSegments().size());
 
-		assertEquals(aDmr, aWidthConfig.getColumnDomainReference());
-		assertEquals(xDmr, xWidthConfig.getColumnDomainReference());
+		assertEquals(xDmr, readOnlyConfig.getColumnDomainReferences().get(0));
+		assertEquals(aDmr, readOnlyConfig.getColumnDomainReferences().get(1));
 	}
 
 	/**
@@ -68,7 +65,7 @@ public class TableDmrWidthConfigurationTest extends AbstractMigrationTest {
 	 */
 	@Override
 	protected String getPath() {
-		return "200/TableWidthConfig.view";
+		return "200/TableReadOnlyColumnConfig.view";
 	}
 
 }

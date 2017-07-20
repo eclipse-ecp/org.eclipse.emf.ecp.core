@@ -16,12 +16,15 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 /**
+ * Contains all JUnit tests testing the custom migration which migrates the "old" DMRs to "new" ones with segments.
+ *
  * @author Lucas Koehler
  *
  */
 @RunWith(Suite.class)
 @SuiteClasses({ FeaturePathDMRTest.class, MappingDMRTest.class, TableDmrTest.class, CascadedTableDmrTest.class,
-	CascadedChildTableDmrTest.class, TableDmrWidthConfigurationTest.class })
+	CascadedChildTableDmrTest.class, TableDmrWidthConfigurationTest.class,
+	TableDmrReadonlyColumnConfigurationTest.class })
 public class All190to200Tests {
 
 }
