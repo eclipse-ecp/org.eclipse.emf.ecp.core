@@ -53,8 +53,7 @@
 <unit id="org.eclipse.emf.emfstore.server.feature.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.emf.emfstore.example.feature.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.emf.emfstore.client.ui.feature.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.emf.emfstore.ecore.feature.feature.group" version="0.0.0"/>
-<repository location="http://download.eclipse.org/emfstore/releases_18"/>
+<repository location="http://download.eclipse.org/emfstore/releases_19"/>
 </location>
 </locations>
 </target>
