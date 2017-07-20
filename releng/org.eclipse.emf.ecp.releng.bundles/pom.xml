@@ -213,9 +213,7 @@
 		<module>../../bundles/org.eclipse.emf.ecp.diffmerge.model.edit</module>
 
 		<!-- mapping dmr -->
-		<!--
 		<module>../../bundles/org.eclipse.emf.ecp.view.mappingdmr.tooling</module>
-		-->
 		<module>../../bundles/org.eclipse.emf.ecp.view.mappingdmr.model</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.mappingdmr.model.edit</module>
 		
@@ -251,13 +249,12 @@
 		<!-- Index Attribute DMR-->
 		<module>../../bundles/org.eclipse.emf.ecp.view.indexdmr.model</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.indexdmr.model.edit</module>
-		<!--
 		<module>../../bundles/org.eclipse.emf.ecp.view.indexdmr.tooling</module>
-		-->
 		
 		<!-- Multi Segment -->
 		<module>../../bundles/org.eclipse.emfforms.view.multisegment.model</module>
 		<module>../../bundles/org.eclipse.emfforms.view.multisegment.model.edit</module>
+		<module>../../bundles/org.eclipse.emfforms.view.multisegment.tooling</module>
 
 		<!-- Migration -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.migrator</module>
