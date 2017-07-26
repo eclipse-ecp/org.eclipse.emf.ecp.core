@@ -30,6 +30,7 @@ public abstract class KeybindedMasterDetailAction extends MasterDetailAction
 
 	private TreeViewer registeredTreeViewer;
 	private ISelection currentSelection;
+	private boolean executeOnKeyRelease;
 
 	/**
 	 * {@inheritDoc}
@@ -75,6 +76,7 @@ public abstract class KeybindedMasterDetailAction extends MasterDetailAction
 	 */
 	@Override
 	public void keyPressed(KeyEvent event) {
+		setExecuteOnKeyRelease(isExecuteOnKeyRelease(event));
 		if (isExecuteOnKeyPressed(event)) {
 			executeOnKeyPressed(currentSelection);
 		}
@@ -86,7 +88,7 @@ public abstract class KeybindedMasterDetailAction extends MasterDetailAction
 	 * @param event
 	 *            The {@link KeyEvent} which triggers this method.
 	 * @return
-	 *         {@code true} if {@link #executeOnKeyPressed(ISelection)} method shall be called, {@code false} otherwise.
+	 * 		{@code true} if {@link #executeOnKeyPressed(ISelection)} method shall be called, {@code false} otherwise.
 	 */
 	protected boolean isExecuteOnKeyPressed(KeyEvent event) {
 		return false;
@@ -110,18 +112,19 @@ public abstract class KeybindedMasterDetailAction extends MasterDetailAction
 	 */
 	@Override
 	public void keyReleased(KeyEvent event) {
-		if (isExecuteOnKeyRelease(event)) {
+		if (isExecuteOnKeyRelease()) {
 			executeOnKeyRelease(currentSelection);
 		}
+		setExecuteOnKeyRelease(false);
 	}
 
 	/**
 	 * Determines if the {@link #executeOnKeyRelease(ISelection)} method shall be executed.
 	 *
 	 * @param event
-	 *            The {@link KeyEvent} which triggers this method.
+	 *            The {@link KeyEvent} on Keypress. This allows to react on key combinations even on key release
 	 * @return
-	 *         {@code true} if {@link #executeOnKeyRelease(ISelection)} method shall be called, {@code false} otherwise.
+	 * 		{@code true} if {@link #executeOnKeyRelease(ISelection)} method shall be called, {@code false} otherwise.
 	 */
 	protected abstract boolean isExecuteOnKeyRelease(KeyEvent event);
 
@@ -146,9 +149,23 @@ public abstract class KeybindedMasterDetailAction extends MasterDetailAction
 	 *            The additional pressed char. Use {@link KeyEvent#keyCode} if you only want to check for
 	 *            {@code swtMask}.
 	 * @return
-	 *         {@code true} if the keys indicated by {@code swtMask} and {@code c} are active, {@code false} otherwise.
+	 * 		{@code true} if the keys indicated by {@code swtMask} and {@code c} are active, {@code false} otherwise.
 	 */
 	protected static boolean isActivated(KeyEvent event, int swtMask, char c) {
 		return (event.stateMask & swtMask) == swtMask && event.keyCode == c;
+	}
+
+	/**
+	 * @return the executeOnKeyRelease
+	 */
+	protected boolean isExecuteOnKeyRelease() {
+		return executeOnKeyRelease;
+	}
+
+	/**
+	 * @param executeOnKeyRelease the executeOnKeyRelease to set
+	 */
+	protected void setExecuteOnKeyRelease(boolean executeOnKeyRelease) {
+		this.executeOnKeyRelease = executeOnKeyRelease;
 	}
 }
