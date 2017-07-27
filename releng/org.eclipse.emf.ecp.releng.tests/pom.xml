@@ -144,8 +144,8 @@
 		<module>../../tests/org.eclipse.emf.ecp.changebroker.provider.test</module>
 		
 		<!-- Migration -->
-		<module>../../tests/org.eclipse.emf.ecp.view.edapt.test2</module>
 		<!--
+		<module>../../tests/org.eclipse.emf.ecp.view.edapt.test2</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.edapt.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.edapt.util.test</module>
 		-->
