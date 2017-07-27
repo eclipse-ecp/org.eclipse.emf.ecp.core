@@ -18,11 +18,6 @@
    <feature id="org.eclipse.emf.ecp.sdk.feature" version="0.0.0">
       <category name="org.eclipse.emf.ecp.sdk"/>
    </feature>
-   <!--
-   <feature id="org.eclipse.emf.ecp.view.custom.feature.source" version="0.0.0">
-      <category name="org.eclipse.emf.ecp.view"/>
-   </feature>
-   -->
    <feature id="org.eclipse.emf.ecp.viewmodel.feature.source" version="0.0.0">
       <category name="org.eclipse.emf.ecp.view"/>
    </feature>
@@ -44,11 +39,6 @@
    <feature id="org.eclipse.emf.ecp.view.vertical.feature.source" version="0.0.0">
       <category name="org.eclipse.emf.ecp.view"/>
    </feature>
-   <!--
-   <feature id="org.eclipse.emf.ecp.view.custom.feature.source" version="0.0.0">
-      <category name="org.eclipse.emf.ecp.view"/>
-   </feature>
-   -->
    <feature id="org.eclipse.emf.ecp.view.group.feature.source" version="0.0.0">
       <category name="org.eclipse.emf.ecp.view"/>
    </feature>
@@ -67,11 +57,6 @@
    <feature id="org.eclipse.emf.ecp.view.categorization.feature.source" version="0.0.0">
       <category name="org.eclipse.emf.ecp.view"/>
    </feature>
-   <!--
-   <feature id="org.eclipse.emf.ecp.view.model.editor.feature.source" version="0.0.0">
-      <category name="org.eclipse.emf.ecp.emfforms"/>
-   </feature>
-   -->
    <feature id="org.eclipse.emf.ecp.view.unset.feature.source" version="0.0.0">
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
@@ -93,22 +78,12 @@
    <feature id="org.eclipse.emf.ecp.demo.e3.feature.source" version="0.0.0">
       <category name="org.eclipse.emf.ecp.category"/>
    </feature>
-   <!--
-   <feature id="org.eclipse.emf.ecp.view.model.controls.feature.source" version="0.0.0">
-      <category name="org.eclipse.emf.ecp.emfforms"/>
-   </feature>
-   -->
    <feature id="org.eclipse.emf.ecp.diffmerge.feature.source" version="0.0.0">
       <category name="org.eclipse.emf.ecp.category"/>
    </feature>
    <feature id="org.eclipse.emf.ecp.validation.view.feature.source" version="0.0.0">
       <category name="org.eclipse.emf.ecp.category"/>
    </feature>
-   <!--
-   <feature id="org.eclipse.emf.ecp.emfforms.idetooling.feature.source" version="0.0.0">
-      <category name="org.eclipse.emf.ecp.emfforms"/>
-   </feature>
-   -->
    <feature id="org.eclipse.emf.ecp.makeithappen.feature.source" version="0.0.0">
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
@@ -130,11 +105,6 @@
    <feature id="org.eclipse.emf.ecp.view.viewproxy.feature.source" version="0.0.0">
       <category name="org.eclipse.emf.ecp.view"/>
    </feature>
-   <!--
-   <feature id="org.eclipse.emf.ecp.view.keyattributedmr.feature.source" version="0.0.0">
-      <category name="org.eclipse.emf.ecp.emfforms"/>
-   </feature>
-   -->
    <feature id="org.eclipse.emf.ecp.view.indexdmr.feature.source" version="0.0.0">
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
@@ -174,11 +144,6 @@
    <feature id="org.eclipse.emfforms.editor.feature.source" version="0.0.0">
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
-   <!--
-   <feature id="org.eclipse.emf.ecp.emf2web.feature" version="0.0.0">
-      <category name="org.eclipse.emf.ecp.jsonforms"/>
-   </feature>
-   -->
    <feature id="org.eclipse.emf.ecp.view.table.ui.swt.persistedstate.feature.source" version="0.0.0">
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
