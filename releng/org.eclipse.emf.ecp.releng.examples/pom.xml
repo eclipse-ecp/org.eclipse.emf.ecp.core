@@ -26,8 +26,11 @@
 		<module>../../examples/org.eclipse.emf.ecp.makeithappen.wizards</module>
 		<module>../../examples/org.eclipse.emf.ecp.makeithappen.application.sample.e3</module>
 		<module>../../examples/org.eclipse.emf.ecp.makeithappen.application.sample.e4</module>
+
+		<!--
 		<module>../../examples/org.eclipse.emf.ecp.makeithappen.application.sample.rap</module>
-		<module>../../examples/org.eclipse.emf.ecp.makeithappen.application.sample.rap.j2ee</module>		
+		<module>../../examples/org.eclipse.emf.ecp.makeithappen.application.sample.rap.j2ee</module>
+		-->
 	</modules>
 
 	<build>

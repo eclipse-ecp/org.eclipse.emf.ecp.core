@@ -51,7 +51,7 @@
 		<module>../../features/org.eclipse.emf.ecp.view.mappingdmr.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.view.stack.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.e4.feature</module>
-		<module>../../features/org.eclipse.emf.ecp.rap.util.feature</module>
+		<!-- <module>../../features/org.eclipse.emf.ecp.rap.util.feature</module> -->
 		<module>../../features/org.eclipse.emf.ecp.transaction.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.diffmerge.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.validation.view.feature</module>
@@ -62,13 +62,13 @@
 		<!-- demo -->
 		<module>../../features/org.eclipse.emf.ecp.demo.e4.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.demo.e3.feature</module>
-		<module>../../features/org.eclipse.emf.ecp.rap.feature</module>
+		<!-- <module>../../features/org.eclipse.emf.ecp.rap.feature</module> -->
 		<!-- composite features -->
 		<module>../../features/org.eclipse.emf.ecp.emfforms.runtime.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.emfforms.sdk.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.sdk.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.sdk.e4.feature</module>
-		<module>../../features/org.eclipse.emf.ecp.rap.sdk.feature</module>
+		<!-- <module>../../features/org.eclipse.emf.ecp.rap.sdk.feature</module> -->
 		
 		<!-- key attribute mapping -->
 		<!--
