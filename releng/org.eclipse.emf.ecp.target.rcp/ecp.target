@@ -407,8 +407,6 @@
 <plugin id="org.eclipse.emf.emfstore.common.model.edit.source"/>
 <plugin id="org.eclipse.emf.emfstore.common.model.source"/>
 <plugin id="org.eclipse.emf.emfstore.common.source"/>
-<plugin id="org.eclipse.emf.emfstore.ecore"/>
-<plugin id="org.eclipse.emf.emfstore.ecore.source"/>
 <plugin id="org.eclipse.emf.emfstore.example.installer"/>
 <plugin id="org.eclipse.emf.emfstore.examplemodel"/>
 <plugin id="org.eclipse.emf.emfstore.examplemodel.edit"/>
