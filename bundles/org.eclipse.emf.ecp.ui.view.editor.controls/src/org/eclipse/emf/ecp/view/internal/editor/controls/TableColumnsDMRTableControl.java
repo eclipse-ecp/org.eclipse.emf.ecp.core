@@ -33,8 +33,8 @@ import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.view.internal.editor.handler.AdvancedCreateDomainModelReferenceWizard;
 import org.eclipse.emf.ecp.view.internal.editor.handler.FeatureSegmentGenerator;
-import org.eclipse.emf.ecp.view.internal.editor.handler.SimpleCreateDomainModelReferenceWizard;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTRenderer;
@@ -434,9 +434,13 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 			}
 			final EClass eclass = EReference.class.cast(valueProperty.getValueType()).getEReferenceType();
 
-			final SimpleCreateDomainModelReferenceWizard wizard = new SimpleCreateDomainModelReferenceWizard(
-				getMultiSegment(), getChildDmrsEReference(), getEditingDomain(getMultiSegment()), eclass,
-				"New Column DMR", null, //$NON-NLS-1$
+			final AdvancedCreateDomainModelReferenceWizard wizard = new AdvancedCreateDomainModelReferenceWizard(
+				getMultiSegment(),
+				getChildDmrsEReference(),
+				getEditingDomain(getMultiSegment()),
+				eclass,
+				"New Column DMR", //$NON-NLS-1$
+				null,
 				new EStructuralFeatureSelectionValidator() {
 
 					@Override
@@ -444,7 +448,10 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 						// Every selection is valid
 						return null;
 					}
-				}, new FeatureSegmentGenerator());
+				},
+				new FeatureSegmentGenerator(),
+				null,
+				false);
 
 			final WizardDialog wd = new WizardDialog(Display.getDefault().getActiveShell(), wizard);
 			wd.open();
