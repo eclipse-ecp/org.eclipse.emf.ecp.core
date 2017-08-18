@@ -11,8 +11,10 @@
   <genPackages prefix="Indexdmr" basePackage="org.eclipse.emf.ecp.view.spi" disposableProviderFactory="true"
       interfacePackageSuffix="model" metaDataPackageSuffix="model" classPackageSuffix="model.impl"
       utilityPackageSuffix="model.util" providerPackageSuffix="model.provider" presentationPackageSuffix="model.presentation"
-      testsPackageSuffix="model.tests" extensibleProviderFactory="true" childCreationExtenders="true"
-      ecorePackage="indexdmr.ecore#/">
+      testsPackageSuffix="model.tests" extensibleProviderFactory="true" ecorePackage="indexdmr.ecore#/">
+    <genClasses ecoreClass="indexdmr.ecore#//IndexDomainModelReferenceSegment">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute indexdmr.ecore#//IndexDomainModelReferenceSegment/index"/>
+    </genClasses>
     <genClasses ecoreClass="indexdmr.ecore#//IndexDomainModelReference">
       <genFeatures children="true" createChild="true" ecoreFeature="ecore:EReference indexdmr.ecore#//IndexDomainModelReference/prefixDMR"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute indexdmr.ecore#//IndexDomainModelReference/index"/>

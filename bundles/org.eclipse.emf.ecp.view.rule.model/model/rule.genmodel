@@ -19,7 +19,7 @@
     <genClasses ecoreClass="rule.ecore#//LeafCondition">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rule.ecore#//LeafCondition/expectedValue"/>
       <genFeatures property="None" createChild="false" ecoreFeature="ecore:EReference rule.ecore#//LeafCondition/domainModelReference"/>
-      <genFeatures property="None" children="true" createChild="false" ecoreFeature="ecore:EReference rule.ecore#//LeafCondition/valueDomainModelReference"/>
+      <genFeatures property="None" createChild="false" ecoreFeature="ecore:EReference rule.ecore#//LeafCondition/valueDomainModelReference"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rule.ecore#//LeafCondition/compareType"/>
     </genClasses>
     <genClasses ecoreClass="rule.ecore#//OrCondition">

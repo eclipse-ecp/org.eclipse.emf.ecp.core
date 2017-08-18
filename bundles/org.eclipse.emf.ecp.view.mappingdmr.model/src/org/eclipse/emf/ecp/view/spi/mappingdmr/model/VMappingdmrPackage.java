@@ -328,7 +328,9 @@ public interface VMappingdmrPackage extends EPackage {
 		/**
 		 * The meta object literal for the '<em><b>Mapped Class</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
+		 * 
+		 * @since 2.0
+		 *        <!-- end-user-doc -->
 		 *
 		 * @generated
 		 */
