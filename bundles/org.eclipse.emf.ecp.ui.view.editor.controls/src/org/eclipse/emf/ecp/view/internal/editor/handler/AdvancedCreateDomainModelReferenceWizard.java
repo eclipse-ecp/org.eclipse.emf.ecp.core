@@ -283,6 +283,7 @@ public class AdvancedCreateDomainModelReferenceWizard extends Wizard {
 		if (advancedDmr.getSegments().isEmpty() || !getContainer().getCurrentPage().isPageComplete()) {
 			return false;
 		}
+		// TODO check with segment validator
 		final EList<VDomainModelReferenceSegment> segments = advancedDmr.getSegments();
 		final VDomainModelReferenceSegment lastSegment = segments.get(segments.size() - 1);
 		final SegmentIdeDescriptor descriptor = segmentToIdeDescriptorMap.get(lastSegment.eClass());
