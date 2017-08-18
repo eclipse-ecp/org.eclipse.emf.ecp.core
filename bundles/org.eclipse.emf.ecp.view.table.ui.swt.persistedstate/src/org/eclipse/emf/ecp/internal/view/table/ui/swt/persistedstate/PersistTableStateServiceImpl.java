@@ -31,17 +31,18 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContextDisposeListener;
 import org.eclipse.emf.ecp.view.spi.model.VAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.util.VViewResourceFactoryImpl;
 import org.eclipse.emf.ecp.view.spi.model.util.VViewResourceImpl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableColumnConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
-import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
 import org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration;
 import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.view.spi.multisegment.model.VMultiDomainModelReferenceSegment;
 
 /**
  * Implementation of the {@link PersistTableStateService}.
@@ -99,14 +100,23 @@ public class PersistTableStateServiceImpl implements PersistTableStateService {
 			if (!VTableControl.class.isInstance(persistedTable)) {
 				continue;
 			}
-			final VTableDomainModelReference realTableDMR = VTableDomainModelReference.class
-				.cast(realTable.getDomainModelReference());
+			final VDomainModelReference realTableDMR = realTable.getDomainModelReference();
 			final Map<VDomainModelReference, VWidthConfiguration> persistedDMRIDToConfig = getDMRToConfig(
 				VTableControl.class.cast(persistedTable));
+			// get multi segment from the table control's dmr
+			if (realTableDMR.getSegments().isEmpty()) {
+				continue;
+			}
+			final VDomainModelReferenceSegment lastSegment = realTableDMR.getSegments()
+				.get(realTableDMR.getSegments().size() - 1);
+			if (!VMultiDomainModelReferenceSegment.class.isInstance(lastSegment)) {
+				continue;
+			}
+			final VMultiDomainModelReferenceSegment multiSegment = (VMultiDomainModelReferenceSegment) lastSegment;
 			for (final Entry<VDomainModelReference, VWidthConfiguration> entry : persistedDMRIDToConfig.entrySet()) {
 				/* find matching real column dmr */
 				VDomainModelReference realMatchingDMR = null;
-				for (final VDomainModelReference realDMR : realTableDMR.getColumnDomainModelReferences()) {
+				for (final VDomainModelReference realDMR : multiSegment.getChildDomainModelReferences()) {
 					if (EcoreUtil.equals(entry.getKey(), realDMR)) {
 						realMatchingDMR = realDMR;
 						break;
