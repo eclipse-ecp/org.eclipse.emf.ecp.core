@@ -16,7 +16,6 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.RulePackage;
@@ -111,38 +110,6 @@ public class LeafConditionItemProvider extends ConditionItemProvider {
 	}
 
 	/**
-	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
-	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
-	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	@Override
-	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
-		if (childrenFeatures == null) {
-			super.getChildrenFeatures(object);
-			childrenFeatures.add(RulePackage.Literals.LEAF_CONDITION__VALUE_DOMAIN_MODEL_REFERENCE);
-		}
-		return childrenFeatures;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated
-	 */
-	@Override
-	protected EStructuralFeature getChildFeature(Object object, Object child) {
-		// Check the type of the specified child object and return the proper feature to use for
-		// adding (see {@link AddCommand}) it as a child.
-
-		return super.getChildFeature(object, child);
-	}
-
-	/**
 	 * This returns LeafCondition.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -184,11 +151,9 @@ public class LeafConditionItemProvider extends ConditionItemProvider {
 		switch (notification.getFeatureID(LeafCondition.class)) {
 		case RulePackage.LEAF_CONDITION__EXPECTED_VALUE:
 		case RulePackage.LEAF_CONDITION__DOMAIN_MODEL_REFERENCE:
+		case RulePackage.LEAF_CONDITION__VALUE_DOMAIN_MODEL_REFERENCE:
 		case RulePackage.LEAF_CONDITION__COMPARE_TYPE:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-			return;
-		case RulePackage.LEAF_CONDITION__VALUE_DOMAIN_MODEL_REFERENCE:
-			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;
 		}
 		super.notifyChanged(notification);
@@ -199,16 +164,13 @@ public class LeafConditionItemProvider extends ConditionItemProvider {
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
-	 * @generated NOT
+	 * 
+	 * @generated
 	 */
 	@Override
 	protected void collectNewChildDescriptors(
 		Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
-
-		newChildDescriptors.add(createChildParameter(RulePackage.Literals.LEAF_CONDITION__DOMAIN_MODEL_REFERENCE,
-			VViewFactory.eINSTANCE.createDomainModelReference()));
 	}
 
 }

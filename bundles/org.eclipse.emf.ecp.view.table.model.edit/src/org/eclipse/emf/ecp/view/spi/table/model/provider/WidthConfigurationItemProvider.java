@@ -48,7 +48,7 @@ public class WidthConfigurationItemProvider
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public WidthConfigurationItemProvider(AdapterFactory adapterFactory) {
@@ -59,7 +59,7 @@ public class WidthConfigurationItemProvider
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -78,7 +78,7 @@ public class WidthConfigurationItemProvider
 	 * This adds a property descriptor for the Column Domain Reference feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected void addColumnDomainReferencePropertyDescriptor(Object object) {
@@ -102,7 +102,7 @@ public class WidthConfigurationItemProvider
 	 * This adds a property descriptor for the Weight feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected void addWeightPropertyDescriptor(Object object) {
@@ -124,7 +124,7 @@ public class WidthConfigurationItemProvider
 	 * This adds a property descriptor for the Min Width feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected void addMinWidthPropertyDescriptor(Object object) {
@@ -146,7 +146,7 @@ public class WidthConfigurationItemProvider
 	 * This returns WidthConfiguration.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -158,12 +158,12 @@ public class WidthConfigurationItemProvider
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated NOT
 	 */
 	@Override
 	public String getText(Object object) {
-		final VWidthConfiguration widthConfiguration = (VWidthConfiguration) object;
+		VWidthConfiguration widthConfiguration = (VWidthConfiguration) object;
 		final VDomainModelReference columnDomainReference = widthConfiguration.getColumnDomainReference();
 		String label;
 		if (columnDomainReference == null) {
@@ -185,7 +185,7 @@ public class WidthConfigurationItemProvider
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -206,7 +206,7 @@ public class WidthConfigurationItemProvider
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -218,7 +218,7 @@ public class WidthConfigurationItemProvider
 	 * Return the resource locator for this item provider's resources.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
