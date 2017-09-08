@@ -144,6 +144,8 @@
       <plugin id="org.eclipse.emfforms.swt.core.plugin"/>
       <plugin id="org.eclipse.emfforms.swt.table"/>
       <plugin id="org.eclipse.emfforms.view.model.localization"/>
+      <plugin id="org.eclipse.emfforms.view.multisegment.model"/>
+      <plugin id="org.eclipse.emfforms.view.multisegment.model.edit"/>
       <plugin id="org.eclipse.equinox.app"/>
       <plugin id="org.eclipse.equinox.common"/>
       <plugin id="org.eclipse.equinox.ds"/>
