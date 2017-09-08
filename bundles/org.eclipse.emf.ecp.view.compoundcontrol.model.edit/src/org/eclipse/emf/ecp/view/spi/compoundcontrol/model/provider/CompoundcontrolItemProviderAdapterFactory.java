@@ -340,7 +340,7 @@ public class CompoundcontrolItemProviderAdapterFactory extends
 			/**
 			 * <!-- begin-user-doc -->
 			 * Container case.
-			 * 
+			 *
 			 * @param object object
 			 * @return object
 			 *         <!-- end-user-doc -->
@@ -357,7 +357,7 @@ public class CompoundcontrolItemProviderAdapterFactory extends
 
 			private VCompoundControl createCompoundControlWithDummyDMR() {
 				final VCompoundControl compoundControl = VCompoundcontrolFactory.eINSTANCE.createCompoundControl();
-				compoundControl.setDomainModelReference(VViewFactory.eINSTANCE.createFeaturePathDomainModelReference());
+				compoundControl.setDomainModelReference(VViewFactory.eINSTANCE.createDomainModelReference());
 				return compoundControl;
 			}
 

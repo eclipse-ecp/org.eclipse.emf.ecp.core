@@ -163,7 +163,7 @@ public class DMRLocationItemProvider
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
 		newChildDescriptors.add(createChildParameter(ErrorPackage.Literals.DMR_LOCATION__DOMAIN_MODEL_REFERENCE,
-			VViewFactory.eINSTANCE.createFeaturePathDomainModelReference()));
+			VViewFactory.eINSTANCE.createDomainModelReference()));
 	}
 
 	/**
