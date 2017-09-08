@@ -54,7 +54,7 @@ public class VTableControlImpl extends VControlImpl implements VTableControl {
 	 * The default value of the '{@link #isAddRemoveDisabled() <em>Add Remove Disabled</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #isAddRemoveDisabled()
 	 * @generated
 	 * @ordered
@@ -65,7 +65,7 @@ public class VTableControlImpl extends VControlImpl implements VTableControl {
 	 * The cached value of the '{@link #isAddRemoveDisabled() <em>Add Remove Disabled</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #isAddRemoveDisabled()
 	 * @generated
 	 * @ordered
@@ -77,7 +77,7 @@ public class VTableControlImpl extends VControlImpl implements VTableControl {
 	 * list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getColumnConfigurations()
 	 * @generated
 	 * @ordered
@@ -88,7 +88,7 @@ public class VTableControlImpl extends VControlImpl implements VTableControl {
 	 * The default value of the '{@link #getDetailEditing() <em>Detail Editing</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getDetailEditing()
 	 * @generated
 	 * @ordered
@@ -99,7 +99,7 @@ public class VTableControlImpl extends VControlImpl implements VTableControl {
 	 * The cached value of the '{@link #getDetailEditing() <em>Detail Editing</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getDetailEditing()
 	 * @generated
 	 * @ordered
@@ -110,7 +110,7 @@ public class VTableControlImpl extends VControlImpl implements VTableControl {
 	 * The cached value of the '{@link #getDetailView() <em>Detail View</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getDetailView()
 	 * @generated
 	 * @ordered
@@ -122,7 +122,7 @@ public class VTableControlImpl extends VControlImpl implements VTableControl {
 	 * attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #isEnableDetailEditingDialog()
 	 * @generated
 	 * @ordered
@@ -133,7 +133,7 @@ public class VTableControlImpl extends VControlImpl implements VTableControl {
 	 * The cached value of the '{@link #isEnableDetailEditingDialog() <em>Enable Detail Editing Dialog</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #isEnableDetailEditingDialog()
 	 * @generated
 	 * @ordered
@@ -143,7 +143,7 @@ public class VTableControlImpl extends VControlImpl implements VTableControl {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected VTableControlImpl() {
@@ -153,7 +153,7 @@ public class VTableControlImpl extends VControlImpl implements VTableControl {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -164,7 +164,7 @@ public class VTableControlImpl extends VControlImpl implements VTableControl {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -175,22 +175,23 @@ public class VTableControlImpl extends VControlImpl implements VTableControl {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	public void setAddRemoveDisabled(boolean newAddRemoveDisabled) {
-		boolean oldAddRemoveDisabled = addRemoveDisabled;
+		final boolean oldAddRemoveDisabled = addRemoveDisabled;
 		addRemoveDisabled = newAddRemoveDisabled;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, VTablePackage.TABLE_CONTROL__ADD_REMOVE_DISABLED,
 				oldAddRemoveDisabled, addRemoveDisabled));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -205,7 +206,7 @@ public class VTableControlImpl extends VControlImpl implements VTableControl {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -216,22 +217,23 @@ public class VTableControlImpl extends VControlImpl implements VTableControl {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	public void setDetailEditing(DetailEditing newDetailEditing) {
-		DetailEditing oldDetailEditing = detailEditing;
+		final DetailEditing oldDetailEditing = detailEditing;
 		detailEditing = newDetailEditing == null ? DETAIL_EDITING_EDEFAULT : newDetailEditing;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, VTablePackage.TABLE_CONTROL__DETAIL_EDITING,
 				oldDetailEditing, detailEditing));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -242,19 +244,20 @@ public class VTableControlImpl extends VControlImpl implements VTableControl {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public NotificationChain basicSetDetailView(VView newDetailView, NotificationChain msgs) {
-		VView oldDetailView = detailView;
+		final VView oldDetailView = detailView;
 		detailView = newDetailView;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
+			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
 				VTablePackage.TABLE_CONTROL__DETAIL_VIEW, oldDetailView, newDetailView);
-			if (msgs == null)
+			if (msgs == null) {
 				msgs = notification;
-			else
+			} else {
 				msgs.add(notification);
+			}
 		}
 		return msgs;
 	}
@@ -262,25 +265,29 @@ public class VTableControlImpl extends VControlImpl implements VTableControl {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	public void setDetailView(VView newDetailView) {
 		if (newDetailView != detailView) {
 			NotificationChain msgs = null;
-			if (detailView != null)
+			if (detailView != null) {
 				msgs = ((InternalEObject) detailView).eInverseRemove(this,
 					EOPPOSITE_FEATURE_BASE - VTablePackage.TABLE_CONTROL__DETAIL_VIEW, null, msgs);
-			if (newDetailView != null)
+			}
+			if (newDetailView != null) {
 				msgs = ((InternalEObject) newDetailView).eInverseAdd(this,
 					EOPPOSITE_FEATURE_BASE - VTablePackage.TABLE_CONTROL__DETAIL_VIEW, null, msgs);
+			}
 			msgs = basicSetDetailView(newDetailView, msgs);
-			if (msgs != null)
+			if (msgs != null) {
 				msgs.dispatch();
-		} else if (eNotificationRequired())
+			}
+		} else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, VTablePackage.TABLE_CONTROL__DETAIL_VIEW,
 				newDetailView, newDetailView));
+		}
 	}
 
 	/**
@@ -306,18 +313,19 @@ public class VTableControlImpl extends VControlImpl implements VTableControl {
 	@Deprecated
 	@Override
 	public void setEnableDetailEditingDialog(boolean newEnableDetailEditingDialog) {
-		boolean oldEnableDetailEditingDialog = enableDetailEditingDialog;
+		final boolean oldEnableDetailEditingDialog = enableDetailEditingDialog;
 		enableDetailEditingDialog = newEnableDetailEditingDialog;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(
 				new ENotificationImpl(this, Notification.SET, VTablePackage.TABLE_CONTROL__ENABLE_DETAIL_EDITING_DIALOG,
 					oldEnableDetailEditingDialog, enableDetailEditingDialog));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -334,7 +342,7 @@ public class VTableControlImpl extends VControlImpl implements VTableControl {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -357,7 +365,7 @@ public class VTableControlImpl extends VControlImpl implements VTableControl {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -387,7 +395,7 @@ public class VTableControlImpl extends VControlImpl implements VTableControl {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -415,7 +423,7 @@ public class VTableControlImpl extends VControlImpl implements VTableControl {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -438,15 +446,16 @@ public class VTableControlImpl extends VControlImpl implements VTableControl {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy())
+		if (eIsProxy()) {
 			return super.toString();
+		}
 
-		StringBuffer result = new StringBuffer(super.toString());
+		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (addRemoveDisabled: "); //$NON-NLS-1$
 		result.append(addRemoveDisabled);
 		result.append(", detailEditing: "); //$NON-NLS-1$
@@ -456,45 +465,4 @@ public class VTableControlImpl extends VControlImpl implements VTableControl {
 		result.append(')');
 		return result.toString();
 	}
-
-	// /**
-	// * {@inheritDoc}
-	// *
-	// * @see org.eclipse.emf.ecp.view.model.AbstractControl#getDomainModelReferences()
-	// */
-	// @Override
-	// public EList<VDomainModelReference> getDomainModelReferences() {
-	// final EList<VDomainModelReference> result = super.getDomainModelReferences();
-	// if (result.isEmpty()) {
-	// return result;
-	// }
-	// final Iterator<Setting> settings = result.get(0).getIterator();
-	// if (settings.hasNext()) {
-	// final Setting setting = settings.next();
-	// if (setting != null) {
-	// @SuppressWarnings("unchecked")
-	// final List<? extends EObject> objects =
-	// (List<? extends EObject>) setting.getEObject().eGet(
-	// setting.getEStructuralFeature());
-	//
-	// for (final EObject object : objects) {
-	// for (final VTableColumn tc : getColumns()) {
-	// final VFeaturePathDomainModelReference modelReference = ViewFactory.eINSTANCE
-	// .createVFeaturePathDomainModelReference();
-	// modelReference.setDomainModelEFeature(tc.getAttribute());
-	//
-	// final boolean resolve = modelReference.resolve(object);
-	// if (!resolve) {
-	// // TODO: log
-	// }
-	//
-	// result.add(modelReference);
-	// }
-	// }
-	// }
-	// }
-	//
-	// return result;
-	// }
-
 } // VTableControlImpl

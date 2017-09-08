@@ -35,7 +35,6 @@ import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.rule.model.Condition;
 import org.eclipse.emf.ecp.view.spi.rule.model.EnableRule;
 import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
@@ -446,7 +445,7 @@ public class RuleService implements ViewModelService, EMFFormsContextListener {
 
 		@Override
 		public void notifyChange(ModelChangeNotification notification) {
-			if (VFeaturePathDomainModelReference.class.isInstance(notification.getNotifier())) {
+			if (VDomainModelReference.class.isInstance(notification.getNotifier())) {
 				final VDomainModelReference domainModelReference = VDomainModelReference.class.cast(notification
 					.getNotifier());
 				final EObject eContainer = domainModelReference.eContainer();

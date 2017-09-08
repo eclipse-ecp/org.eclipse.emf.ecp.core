@@ -9,12 +9,6 @@
                testClass="org.eclipse.emf.ecp.view.mappingdmr.tooling.MappedEClassTester">
          </dynamicTest>
       </renderer>
-      <renderer
-            renderer="org.eclipse.emf.ecp.view.mappingdmr.tooling.FeaturePathDMRSubMappedEClassControlSWTRenderer">
-         <dynamicTest
-               testClass="org.eclipse.emf.ecp.view.mappingdmr.tooling.FeaturePathDMRSubMappedEClassReferenceTester">
-         </dynamicTest>
-      </renderer>
    </extension>
 
 

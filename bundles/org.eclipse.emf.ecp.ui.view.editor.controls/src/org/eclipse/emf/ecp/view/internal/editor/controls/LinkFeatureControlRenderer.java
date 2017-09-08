@@ -33,7 +33,6 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment;
-import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
@@ -45,7 +44,7 @@ import org.eclipse.swt.widgets.Shell;
 
 /**
  * SWT Renderer for linking a {@link EStructuralFeature domain model feature} to a
- * {@link VFeaturePathDomainModelReference}.
+ * {@link VDomainModelReference}.
  */
 public class LinkFeatureControlRenderer extends EditableEReferenceLabelControlSWTRenderer {
 
@@ -155,7 +154,7 @@ public class LinkFeatureControlRenderer extends EditableEReferenceLabelControlSW
 		 *
 		 * @param structuralFeature The {@link EStructuralFeature} that defines the path part represented by the created
 		 *            segment
-		 * @return The created {@link VDomainModelReference}
+		 * @return The created {@link VDomainModelReferenceSegment}
 		 */
 		private VDomainModelReferenceSegment createDMRSegment(final EStructuralFeature structuralFeature) {
 			final VFeatureDomainModelReferenceSegment pathSegment = VViewFactory.eINSTANCE
@@ -167,7 +166,7 @@ public class LinkFeatureControlRenderer extends EditableEReferenceLabelControlSW
 	}
 
 	/**
-	 * Allows to retrieve the root eclass necessary to select the {@link VFeaturePathDomainModelReference}.
+	 * Allows to retrieve the root eclass necessary to select the {@link VDomainModelReference}.
 	 *
 	 * @param notifier The {@link Notifier} triggering the selection
 	 * @return The {@link EClass} that should be used as root
