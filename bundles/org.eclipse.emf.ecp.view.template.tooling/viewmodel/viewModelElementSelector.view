@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="ASCII"?>
-<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/170" xmi:id="_s4z8wEWAEeWfKJaajyNdyA" ecorePath="/org.eclipse.emf.ecp.view.template.model/model/viewModelElementSelector.ecore">
+<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/200" xmi:id="_s4z8wEWAEeWfKJaajyNdyA" ecorePath="/org.eclipse.emf.ecp.view.template.model/model/viewModelElementSelector.ecore">
   <rootEClass href="http://www.eclipse.org/emf/ecp/view/template/selector/viewmodelelement/model#//ViewModelElementSelector"/>
   <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_s4z8wUWAEeWfKJaajyNdyA" name="Control selectSubclasses">
-    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_s4z8wkWAEeWfKJaajyNdyA">
-      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/ecp/view/template/selector/viewmodelelement/model#//ViewModelElementSelector/selectSubclasses"/>
+    <domainModelReference xmi:id="_I1T7ZJhaEeepEKecExmz4A">
+      <segments xsi:type="org.eclipse.emf.ecp.view.model:FeatureDomainModelReferenceSegment" xmi:id="_I1T7aJhaEeepEKecExmz4A" domainModelFeature="selectSubclasses"/>
     </domainModelReference>
   </children>
   <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_s4z8w0WAEeWfKJaajyNdyA" name="Control classType">
-    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_s4z8xEWAEeWfKJaajyNdyA">
-      <domainModelEFeature xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/ecp/view/template/selector/viewmodelelement/model#//ViewModelElementSelector/classType"/>
+    <domainModelReference xmi:id="_I1T7ZZhaEeepEKecExmz4A">
+      <segments xsi:type="org.eclipse.emf.ecp.view.model:FeatureDomainModelReferenceSegment" xmi:id="_I1T7aZhaEeepEKecExmz4A" domainModelFeature="classType"/>
     </domainModelReference>
   </children>
   <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_s4z8xUWAEeWfKJaajyNdyA" name="Control attribute">
-    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_s4z8xkWAEeWfKJaajyNdyA">
-      <domainModelEFeature xsi:type="ecore:EReference" href="http://www.eclipse.org/emf/ecp/view/template/selector/viewmodelelement/model#//ViewModelElementSelector/attribute"/>
+    <domainModelReference xmi:id="_I1T7ZphaEeepEKecExmz4A">
+      <segments xsi:type="org.eclipse.emf.ecp.view.model:FeatureDomainModelReferenceSegment" xmi:id="_I1T7aphaEeepEKecExmz4A" domainModelFeature="attribute"/>
     </domainModelReference>
   </children>
   <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_s4z8x0WAEeWfKJaajyNdyA" name="Control attributeValue">
-    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_s4z8yEWAEeWfKJaajyNdyA">
-      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/ecp/view/template/selector/viewmodelelement/model#//ViewModelElementSelector/attributeValue"/>
+    <domainModelReference xmi:id="_I1T7Z5haEeepEKecExmz4A">
+      <segments xsi:type="org.eclipse.emf.ecp.view.model:FeatureDomainModelReferenceSegment" xmi:id="_I1T7a5haEeepEKecExmz4A" domainModelFeature="attributeValue"/>
     </domainModelReference>
   </children>
 </org.eclipse.emf.ecp.view.model:View>

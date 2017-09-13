@@ -1,49 +1,49 @@
 <?xml version="1.0" encoding="ASCII"?>
-<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/170" ecorePath="/org.eclipse.emf.codegen.ecore/model/GenModel.ecore">
+<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/200" xmi:id="_XwMXkJhgEeexUOv286lk0A" ecorePath="/org.eclipse.emf.codegen.ecore/model/GenModel.ecore">
   <rootEClass href="http://www.eclipse.org/emf/2002/GenModel#//GenFeature"/>
-  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control children">
-    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
-      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/GenModel#//GenFeature/children"/>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_XwOMwJhgEeexUOv286lk0A" name="Control children">
+    <domainModelReference xmi:id="_XwoceZhgEeexUOv286lk0A">
+      <segments xsi:type="org.eclipse.emf.ecp.view.model:FeatureDomainModelReferenceSegment" xmi:id="_XwocgphgEeexUOv286lk0A" domainModelFeature="children"/>
     </domainModelReference>
   </children>
-  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control createChild">
-    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
-      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/GenModel#//GenFeature/createChild"/>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_XwTsUJhgEeexUOv286lk0A" name="Control createChild">
+    <domainModelReference xmi:id="_XwocephgEeexUOv286lk0A">
+      <segments xsi:type="org.eclipse.emf.ecp.view.model:FeatureDomainModelReferenceSegment" xmi:id="_Xwocg5hgEeexUOv286lk0A" domainModelFeature="createChild"/>
     </domainModelReference>
   </children>
-  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control notify">
-    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
-      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/GenModel#//GenFeature/notify"/>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_XwTsUphgEeexUOv286lk0A" name="Control notify">
+    <domainModelReference xmi:id="_Xwoce5hgEeexUOv286lk0A">
+      <segments xsi:type="org.eclipse.emf.ecp.view.model:FeatureDomainModelReferenceSegment" xmi:id="_XwochJhgEeexUOv286lk0A" domainModelFeature="notify"/>
     </domainModelReference>
   </children>
-  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control propertyCategory">
-    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
-      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/GenModel#//GenFeature/propertyCategory"/>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_XwTsVJhgEeexUOv286lk0A" name="Control propertyCategory">
+    <domainModelReference xmi:id="_XwocfJhgEeexUOv286lk0A">
+      <segments xsi:type="org.eclipse.emf.ecp.view.model:FeatureDomainModelReferenceSegment" xmi:id="_XwochZhgEeexUOv286lk0A" domainModelFeature="propertyCategory"/>
     </domainModelReference>
   </children>
-  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control propertyDescription">
-    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
-      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/GenModel#//GenFeature/propertyDescription"/>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_XwTsVphgEeexUOv286lk0A" name="Control propertyDescription">
+    <domainModelReference xmi:id="_XwocfZhgEeexUOv286lk0A">
+      <segments xsi:type="org.eclipse.emf.ecp.view.model:FeatureDomainModelReferenceSegment" xmi:id="_XwochphgEeexUOv286lk0A" domainModelFeature="propertyDescription"/>
     </domainModelReference>
   </children>
-  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control propertyFilterFlags">
-    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
-      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/GenModel#//GenFeature/propertyFilterFlags"/>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_XwTsWJhgEeexUOv286lk0A" name="Control propertyFilterFlags">
+    <domainModelReference xmi:id="_XwocfphgEeexUOv286lk0A">
+      <segments xsi:type="org.eclipse.emf.ecp.view.model:FeatureDomainModelReferenceSegment" xmi:id="_Xwoch5hgEeexUOv286lk0A" domainModelFeature="propertyFilterFlags"/>
     </domainModelReference>
   </children>
-  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control propertyMultiLine">
-    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
-      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/GenModel#//GenFeature/propertyMultiLine"/>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_XwTsWphgEeexUOv286lk0A" name="Control propertyMultiLine">
+    <domainModelReference xmi:id="_Xwocf5hgEeexUOv286lk0A">
+      <segments xsi:type="org.eclipse.emf.ecp.view.model:FeatureDomainModelReferenceSegment" xmi:id="_XwociJhgEeexUOv286lk0A" domainModelFeature="propertyMultiLine"/>
     </domainModelReference>
   </children>
-  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control propertySortChoices">
-    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
-      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/GenModel#//GenFeature/propertySortChoices"/>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_XwUTYJhgEeexUOv286lk0A" name="Control propertySortChoices">
+    <domainModelReference xmi:id="_XwocgJhgEeexUOv286lk0A">
+      <segments xsi:type="org.eclipse.emf.ecp.view.model:FeatureDomainModelReferenceSegment" xmi:id="_XwociZhgEeexUOv286lk0A" domainModelFeature="propertySortChoices"/>
     </domainModelReference>
   </children>
-  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" name="Control property">
-    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference">
-      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/emf/2002/GenModel#//GenFeature/property"/>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_XwUTYphgEeexUOv286lk0A" name="Control property">
+    <domainModelReference xmi:id="_XwocgZhgEeexUOv286lk0A">
+      <segments xsi:type="org.eclipse.emf.ecp.view.model:FeatureDomainModelReferenceSegment" xmi:id="_XwociphgEeexUOv286lk0A" domainModelFeature="property"/>
     </domainModelReference>
   </children>
 </org.eclipse.emf.ecp.view.model:View>
