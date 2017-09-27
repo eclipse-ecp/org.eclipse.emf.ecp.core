@@ -113,4 +113,12 @@
             genModel="model/tableStyleProperty.genmodel"/>
    </extension>
 
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated unsettableStyle -->
+      <package
+            uri="http://www.eclipse.org/emf/ecp/view/template/style/unsettable/model"
+            class="org.eclipse.emf.ecp.view.template.style.unsettable.model.VTUnsettablePackage"
+            genModel="model/unsettableStyle.genmodel"/>
+   </extension>
+
 </plugin>

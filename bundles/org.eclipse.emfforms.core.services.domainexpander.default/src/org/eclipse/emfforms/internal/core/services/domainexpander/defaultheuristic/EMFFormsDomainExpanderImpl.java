@@ -17,6 +17,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.common.spi.asserts.Assert;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emfforms.common.RankingHelper;
 import org.eclipse.emfforms.spi.core.services.domainexpander.EMFFormsDMRExpander;
 import org.eclipse.emfforms.spi.core.services.domainexpander.EMFFormsDomainExpander;
 import org.eclipse.emfforms.spi.core.services.domainexpander.EMFFormsExpandingFailedException;
@@ -33,7 +34,12 @@ import org.osgi.service.component.annotations.ReferencePolicy;
  */
 @Component(name = "EMFFormsDomainExpanderImpl")
 public class EMFFormsDomainExpanderImpl implements EMFFormsDomainExpander {
+
 	private final Set<EMFFormsDMRExpander> emfFormsDMRExpanders = new CopyOnWriteArraySet<EMFFormsDMRExpander>();
+
+	private static final RankingHelper<EMFFormsDMRExpander> RANKING_HELPER = //
+		new RankingHelper<EMFFormsDMRExpander>(
+			EMFFormsDMRExpander.class, EMFFormsDMRExpander.NOT_APPLICABLE, EMFFormsDMRExpander.NOT_APPLICABLE);
 
 	/**
 	 * Called by the framework to add an {@link EMFFormsDMRExpander} to the set of DMR expanders.
@@ -61,19 +67,21 @@ public class EMFFormsDomainExpanderImpl implements EMFFormsDomainExpander {
 	 *      org.eclipse.emf.ecore.EObject)
 	 */
 	@Override
-	public void prepareDomainObject(VDomainModelReference domainModelReference, EObject domainObject)
+	public void prepareDomainObject(final VDomainModelReference domainModelReference, final EObject domainObject)
 		throws EMFFormsExpandingFailedException {
 		Assert.create(domainModelReference).notNull();
 		Assert.create(domainObject).notNull();
 
-		EMFFormsDMRExpander bestDMRExpander = null;
-		double bestScore = Double.NEGATIVE_INFINITY;
-		for (final EMFFormsDMRExpander dmrExpander : emfFormsDMRExpanders) {
-			if (dmrExpander.isApplicable(domainModelReference) > bestScore) {
-				bestScore = dmrExpander.isApplicable(domainModelReference);
-				bestDMRExpander = dmrExpander;
-			}
-		}
+		final EMFFormsDMRExpander bestDMRExpander = RANKING_HELPER.getHighestRankingElement(
+			emfFormsDMRExpanders,
+			new RankingHelper.RankTester<EMFFormsDMRExpander>() {
+
+				@Override
+				public double getRank(final EMFFormsDMRExpander dmrExpander) {
+					return dmrExpander.isApplicable(domainModelReference);
+				}
+
+			});
 
 		if (bestDMRExpander == null) {
 			throw new EMFFormsExpandingFailedException(

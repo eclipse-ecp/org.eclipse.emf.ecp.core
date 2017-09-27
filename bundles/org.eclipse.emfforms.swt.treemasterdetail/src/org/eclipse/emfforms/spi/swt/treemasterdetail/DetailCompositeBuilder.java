@@ -15,7 +15,7 @@ import org.eclipse.swt.widgets.Composite;
 
 /**
  * Interface to influence the creation of the detail composite of the tree master detail.
- * 
+ *
  * @author Johannes Faltermeier
  *
  */
@@ -29,4 +29,11 @@ public interface DetailCompositeBuilder {
 	 */
 	Composite createDetailComposite(Composite parent);
 
+	/**
+	 * Defines whether the grid will allow to vertically copy values.
+	 *
+	 * @return true if copy is allowed, false otherwise
+	 * @since 1.14
+	 */
+	boolean enableVerticalCopy();
 }

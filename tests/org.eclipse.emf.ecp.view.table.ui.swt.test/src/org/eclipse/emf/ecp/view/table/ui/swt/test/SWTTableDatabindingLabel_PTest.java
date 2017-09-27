@@ -56,6 +56,7 @@ import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
@@ -134,6 +135,7 @@ public class SWTTableDatabindingLabel_PTest {
 		renderer = new TableControlSWTRenderer(vTableControl, viewContext, reportservice, databindingService,
 			labelProvider, vtViewTemplateProvider, imageRegistryService, emfFormsEditSupport);
 		renderer.init();
+		renderer.getGridDescription(new SWTGridDescription());
 	}
 
 	private VTableDomainModelReference createTableDomainModelReference(EStructuralFeature eStructuralFeature) {

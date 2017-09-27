@@ -27,6 +27,7 @@ import org.eclipse.swt.events.KeyEvent;
 public class PasteMasterDetailAction extends DelegatingMasterDetailAction {
 
 	private static final String ICON_PATH = "icons/paste.gif"; //$NON-NLS-1$
+	private boolean alreadyPasted;
 
 	/**
 	 * Constructor.
@@ -50,6 +51,34 @@ public class PasteMasterDetailAction extends DelegatingMasterDetailAction {
 
 	@Override
 	protected boolean isExecuteOnKeyRelease(KeyEvent event) {
+		return false;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.swt.treemasterdetail.actions.KeybindedMasterDetailAction#keyPressed(org.eclipse.swt.events.KeyEvent)
+	 */
+	@Override
+	public void keyPressed(KeyEvent event) {
+		if (isExecuteOnKeyPressed(event)) {
+			if (!alreadyPasted) {
+				executeOnKeyRelease(getCurrentSelection());
+				alreadyPasted = true;
+			}
+		} else {
+			alreadyPasted = false;
+		}
+
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.swt.treemasterdetail.actions.KeybindedMasterDetailAction#isExecuteOnKeyPressed(org.eclipse.swt.events.KeyEvent)
+	 */
+	@Override
+	protected boolean isExecuteOnKeyPressed(KeyEvent event) {
 		return isActivated(event, SWT.CTRL, 'v');
 	}
 }

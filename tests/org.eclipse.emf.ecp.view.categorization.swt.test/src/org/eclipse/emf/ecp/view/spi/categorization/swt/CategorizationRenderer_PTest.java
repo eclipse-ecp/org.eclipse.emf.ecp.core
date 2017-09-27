@@ -20,23 +20,36 @@ import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.ui.view.ECPRendererException;
+import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
+import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
+import org.eclipse.emf.ecp.view.categorization.swt.test.CategoryRendererTestHelper;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VAbstractCategorization;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorization;
 import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationElement;
+import org.eclipse.emf.ecp.view.spi.categorization.model.VCategorizationFactory;
+import org.eclipse.emf.ecp.view.spi.categorization.model.VCategory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
+import org.eclipse.emf.ecp.view.spi.model.VView;
+import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
+import org.eclipse.emf.emfstore.bowling.BowlingFactory;
+import org.eclipse.emf.emfstore.bowling.Player;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -131,6 +144,45 @@ public class CategorizationRenderer_PTest {
 		assertEquals(2, Composite.class.cast(render).getChildren().length);
 		assertTrue(Tree.class.isInstance(Composite.class.cast(render).getChildren()[0]));
 		assertTrue(ScrolledComposite.class.isInstance(Composite.class.cast(render).getChildren()[1]));
+	}
+
+	@Test
+	public void testTreeRendererSingleSelection() throws ECPRendererException {
+		final VView view = VViewFactory.eINSTANCE.createView();
+
+		final VCategorizationElement categorizationElement = VCategorizationFactory.eINSTANCE
+			.createCategorizationElement();
+
+		final VCategory category1 = VCategorizationFactory.eINSTANCE.createCategory();
+		final VCategory category2 = VCategorizationFactory.eINSTANCE.createCategory();
+
+		final VCategorization categorization = VCategorizationFactory.eINSTANCE.createCategorization();
+		categorization.getCategorizations().add(category1);
+
+		categorizationElement.getCategorizations().add(categorization);
+		final VCategorization compositeCategory = VCategorizationFactory.eINSTANCE.createCategorization();
+		compositeCategory.getCategorizations().add(category2);
+
+		categorizationElement.getCategorizations().add(compositeCategory);
+
+		view.getChildren().add(categorizationElement);
+
+		final Shell shell = new Shell();
+		shell.setLayout(new FillLayout());
+		final Player player = BowlingFactory.eINSTANCE.createPlayer();
+
+		final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(view, player);
+		final ECPSWTView ecpSwtView = ECPSWTViewRenderer.INSTANCE.render(shell, vmc);
+		final Tree tree = CategoryRendererTestHelper.getTree(ecpSwtView.getSWTControl());
+
+		tree.setSelection(tree.getItems());
+		assertEquals("Categorization Tree allows multi selection", 0, tree.getSelectionCount());
+		final TreeItem[] items = tree.getItems();
+		for (final TreeItem treeItem : items) {
+			tree.setSelection(treeItem);
+			assertEquals(1, tree.getSelectionCount());
+		}
+
 	}
 
 	@Test

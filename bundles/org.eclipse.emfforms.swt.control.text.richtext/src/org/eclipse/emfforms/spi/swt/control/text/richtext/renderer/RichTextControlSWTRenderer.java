@@ -38,10 +38,13 @@ import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.events.TraverseEvent;
+import org.eclipse.swt.events.TraverseListener;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.layout.GridData;
@@ -50,7 +53,8 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 
 /**
- * The multi line text control renderer displays the text in a read only fashion. Once the control gains focus a
+ * The multi line text control renderer displays the text in a read only fashion. Once the user starts editing (pressing
+ * any key except tab), a
  * popupcontrol is displayed allowing the user to edit the contents.
  *
  * @author Jonas Helming
@@ -60,13 +64,17 @@ public class RichTextControlSWTRenderer extends TextControlSWTRenderer {
 	private GridData textGridData;
 	private StyledText text;
 
+	private static final String RETURN_PATTERN = "[\n]"; //$NON-NLS-1$
+	private static final String CARRIAGE_PATTERN = "[\r]"; //$NON-NLS-1$
+	private PopupWindow popupWindow;
+	private Text innerText;
+	private Binding binding;
+
 	/**
 	 * @author Jonas Helming
 	 *
 	 */
 	private final class OpenPopupHandler implements MouseListener {
-		private static final String RETURN_PATTERN = "[\n]"; //$NON-NLS-1$
-		private static final String CARRIAGE_PATTERN = "[\r]"; //$NON-NLS-1$
 		private final StyledText text;
 
 		private OpenPopupHandler(StyledText text) {
@@ -75,67 +83,89 @@ public class RichTextControlSWTRenderer extends TextControlSWTRenderer {
 
 		@Override
 		public void mouseUp(MouseEvent e) {
-			// do nothing
+			openPopUp(text, false);
 		}
 
 		@Override
 		public void mouseDown(MouseEvent e) {
 
-			final PopupWindow popupWindow = createPopupWindow();
-
-			final Text innerText = new Text(popupWindow.getContent(),
-				SWT.MULTI | SWT.WRAP | SWT.V_SCROLL | SWT.H_SCROLL);
-			final GridData layoutData = new GridData(SWT.FILL, SWT.FILL, true, true);
-			layoutData.heightHint = getPreferrredPopupHeight();
-			innerText.setLayoutData(layoutData);
-			innerText.setSize(300, getPreferrredPopupHeight());
-			popupWindow.getContent().pack();
-			innerText.setText(text.getText());
-			innerText.setSelection(text.getCaretOffset());
-
-			innerText.addVerifyListener(new VerifyListener() {
-
-				@Override
-				public void verifyText(VerifyEvent e) {
-					if (e.text != null) {
-						e.text = e.text.replaceAll(CARRIAGE_PATTERN, "").replaceAll(RETURN_PATTERN, Text.DELIMITER); //$NON-NLS-1$
-					}
-				}
-			});
-			innerText.addFocusListener(new FocusListener() {
-				@Override
-				public void focusLost(FocusEvent e) {
-					popupWindow.close();
-				}
-
-				@Override
-				public void focusGained(FocusEvent e) {
-					// do nothing
-				}
-			});
-			innerText.addDisposeListener(new DisposeListener() {
-
-				@Override
-				public void widgetDisposed(DisposeEvent e) {
-					text.setText(innerText.getText());
-				}
-			});
-			innerText.addKeyListener(new KeyAdapter() {
-				@Override
-				public void keyPressed(KeyEvent e) {
-					if (e.keyCode == 'a' && (isCtrlKeyPressed(e) || isCommandKeyPressed(e))) {
-						innerText.selectAll();
-					}
-				}
-			});
-			popupWindow.open();
-
 		}
 
 		@Override
 		public void mouseDoubleClick(MouseEvent e) {
-			// do nothing
 		}
+	}
+
+	private void openPopUp(final StyledText text, boolean selectAll) {
+		popupWindow = createPopupWindow();
+
+		innerText = new Text(popupWindow.getContent(),
+			SWT.MULTI | SWT.WRAP | SWT.V_SCROLL | SWT.H_SCROLL);
+		final GridData layoutData = new GridData(SWT.FILL, SWT.FILL, true, true);
+		layoutData.heightHint = getPreferrredPopupHeight();
+		innerText.setLayoutData(layoutData);
+		innerText.setSize(300, getPreferrredPopupHeight());
+		popupWindow.getContent().pack();
+		popupWindow.open();
+
+		innerText.setFocus();
+		innerText.setText(text.getText());
+
+		if (selectAll) {
+			innerText.selectAll();
+		} else {
+			innerText.setSelection(text.getSelectionRange().x, text.getSelectionRange().x + text.getSelectionCount());
+		}
+
+		innerText.addVerifyListener(new VerifyListener() {
+
+			@Override
+			public void verifyText(VerifyEvent e) {
+				if (e.text != null) {
+					e.text = e.text.replaceAll(CARRIAGE_PATTERN, "").replaceAll(RETURN_PATTERN, Text.DELIMITER); //$NON-NLS-1$
+				}
+			}
+		});
+
+		innerText.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.keyCode == 'a' && (isCtrlKeyPressed(e) || isCommandKeyPressed(e))) {
+					innerText.selectAll();
+				}
+			}
+		});
+
+		innerText.addFocusListener(new FocusListener() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				storePopUpInOriginalText(text, innerText);
+				popupWindow.close();
+			}
+
+			@Override
+			public void focusGained(FocusEvent e) {
+				// do nothing
+			}
+		});
+
+		innerText.addDisposeListener(new DisposeListener() {
+
+			@Override
+			public void widgetDisposed(DisposeEvent e) {
+				storePopUpInOriginalText(text, innerText);
+				text.setCaretOffset(innerText.getCaretPosition());
+
+			}
+
+		});
+
+	}
+
+	private void storePopUpInOriginalText(final StyledText originalText, Text popUpText) {
+		originalText.setText(popUpText.getText());
+		originalText.setSelection(popUpText.getCaretPosition());
+		binding.updateTargetToModel();
 	}
 
 	private static boolean isCtrlKeyPressed(KeyEvent e) {
@@ -201,8 +231,8 @@ public class RichTextControlSWTRenderer extends TextControlSWTRenderer {
 	@Override
 	protected Binding bindValue(Control text, IObservableValue modelValue, DataBindingContext dataBindingContext,
 		UpdateValueStrategy targetToModel, UpdateValueStrategy modelToTarget) {
-		final IObservableValue value = WidgetProperties.text(SWT.Modify).observe(this.text);
-		final Binding binding = dataBindingContext.bindValue(value, modelValue, targetToModel, modelToTarget);
+		final IObservableValue value = WidgetProperties.text(SWT.NONE).observe(this.text);
+		binding = dataBindingContext.bindValue(value, modelValue, targetToModel, modelToTarget);
 		return binding;
 	}
 
@@ -212,7 +242,7 @@ public class RichTextControlSWTRenderer extends TextControlSWTRenderer {
 		GridLayoutFactory.fillDefaults().numColumns(1).equalWidth(true).applyTo(composite);
 		text = new StyledText(composite, getTextWidgetStyle());
 		text.setData(CUSTOM_VARIANT, getTextVariantID());
-		text.setEditable(false);
+		text.setEditable(true);
 		text.setToolTipText(getTextMessage());
 		final GridDataFactory gdf = GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER)
 			.grab(true, true).span(1, 1);
@@ -223,6 +253,35 @@ public class RichTextControlSWTRenderer extends TextControlSWTRenderer {
 		textGridData = gdf.create();
 		text.setLayoutData(textGridData);
 		text.addMouseListener(new OpenPopupHandler(text));
+		text.addTraverseListener(new TraverseListener() {
+
+			@Override
+			public void keyTraversed(TraverseEvent e) {
+				e.doit = true;
+
+			}
+		});
+		text.addKeyListener(new KeyListener() {
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+
+				if (isOpenKey(e)) {
+					boolean selectAll = false;
+					if ((isCommandKeyPressed(e) || isCtrlKeyPressed(e)) && e.keyCode == 'a') {
+						selectAll = true;
+					}
+					openPopUp(text, selectAll);
+				}
+
+			}
+		});
+
 		text.addModifyListener(new ModifyListener() {
 
 			@Override
@@ -237,13 +296,37 @@ public class RichTextControlSWTRenderer extends TextControlSWTRenderer {
 	}
 
 	/**
+	 * Determines, whether the popup shall be opened on a specific KeyEvent on the regular Text Control. By default the
+	 * popup opens on any key except SHIFT and ALT, but additional keys can be added by overriding the method.
+	 *
+	 * @param e the {@link KeyEvent} on the regular {@link Text}
+	 * @return whether the popup should open
+	 * @since 1.14
+	 */
+	protected boolean isOpenKey(KeyEvent e) {
+		if (e.keyCode == SWT.SHIFT) {
+			return false;
+		}
+		if (e.keyCode == SWT.ALT) {
+			return false;
+		}
+		if (e.keyCode == SWT.CTRL) {
+			return false;
+		}
+		if (e.keyCode == SWT.COMMAND) {
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer#postInit()
 	 */
 	@Override
 	protected void postInit() {
-		// TODO Auto-generated method stub
 		super.postInit();
 	}
 

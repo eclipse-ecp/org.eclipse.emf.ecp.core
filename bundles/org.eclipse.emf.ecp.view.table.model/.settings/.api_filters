@@ -50,6 +50,20 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/table/model/VTableControl.java" type="org.eclipse.emf.ecp.view.spi.table.model.VTableControl">
+        <filter comment="SPI Change" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTableControl"/>
+                <message_argument value="isMoveUpDownDisabled()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTableControl"/>
+                <message_argument value="setMoveUpDownDisabled(boolean)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/ecp/view/spi/table/model/VTableDomainModelReference.java" type="org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference">
         <filter comment="SPI Change with 1.5.0" id="403804204">
             <message_arguments>
@@ -127,6 +141,13 @@
                 <message_argument value="14"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="TABLE_CONTROL_FEATURE_COUNT"/>
+                <message_argument value="15"/>
+            </message_arguments>
+        </filter>
         <filter comment="Changes due to new label field in 1.6" id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
@@ -155,6 +176,13 @@
                 <message_argument value="10"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="TABLE_CONTROL__COLUMN_CONFIGURATIONS"/>
+                <message_argument value="11"/>
+            </message_arguments>
+        </filter>
         <filter comment="Changes due to new label field in 1.6" id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
@@ -176,6 +204,13 @@
                 <message_argument value="11"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="TABLE_CONTROL__DETAIL_EDITING"/>
+                <message_argument value="12"/>
+            </message_arguments>
+        </filter>
         <filter comment="Changes due to new label field in 1.6" id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
@@ -188,6 +223,13 @@
                 <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
                 <message_argument value="TABLE_CONTROL__DETAIL_VIEW"/>
                 <message_argument value="12"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="TABLE_CONTROL__DETAIL_VIEW"/>
+                <message_argument value="13"/>
             </message_arguments>
         </filter>
         <filter comment="Changes due to new label field in 1.6" id="388194388">
@@ -230,6 +272,13 @@
                 <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
                 <message_argument value="TABLE_CONTROL__ENABLE_DETAIL_EDITING_DIALOG"/>
                 <message_argument value="13"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="TABLE_CONTROL__ENABLE_DETAIL_EDITING_DIALOG"/>
+                <message_argument value="14"/>
             </message_arguments>
         </filter>
         <filter comment="Changes due to new label field in 1.6" id="388194388">
@@ -382,6 +431,12 @@
                 <message_argument value="TABLE_CONTROL__LABEL"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="TABLE_CONTROL__MOVE_UP_DOWN_DISABLED"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI Change 1.9.0" id="403767336">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
@@ -466,6 +521,12 @@
                 <message_argument value="getSingleColumnConfiguration_ColumnDomainReference()"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
+                <message_argument value="getTableControl_MoveUpDownDisabled()"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI Change with 1.5.0" id="403804204">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage"/>
@@ -544,6 +605,12 @@
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage.Literals"/>
                 <message_argument value="SINGLE_COLUMN_CONFIGURATION__COLUMN_DOMAIN_REFERENCE"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.model.VTablePackage.Literals"/>
+                <message_argument value="TABLE_CONTROL__MOVE_UP_DOWN_DISABLED"/>
             </message_arguments>
         </filter>
         <filter comment="SPI Change with 1.5.0" id="403767336">

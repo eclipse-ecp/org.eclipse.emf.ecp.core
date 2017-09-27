@@ -55,6 +55,7 @@ import org.eclipse.emf.ecp.view.spi.model.reporting.StatusReport;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.emf.edit.ui.util.EditUIMarkerHelper;
+import org.eclipse.emf.edit.ui.util.EditUIUtil;
 import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.internal.editor.Activator;
 import org.eclipse.emfforms.internal.editor.toolbaractions.LoadEcoreAction;
@@ -91,7 +92,6 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IPartListener;
-import org.eclipse.ui.IURIEditorInput;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.contexts.IContextService;
@@ -393,7 +393,18 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 		return false;
 	}
 
-	private TreeMasterDetailComposite createRootView(Composite parent, String editorTitle, Object editorInput,
+	/**
+	 * Creates the top area of the editor.
+	 *
+	 * @param parent The parent {@link Composite}
+	 * @param editorTitle The title of the editor
+	 * @param editorInput the editor input
+	 * @param toolbarActions The actions shown on the top area
+	 * @param createElementCallback a call back if elements are created
+	 * @return a {@link TreeMasterDetailComposite}
+	 * @since 1.14
+	 */
+	protected TreeMasterDetailComposite createRootView(Composite parent, String editorTitle, Object editorInput,
 		List<Action> toolbarActions, CreateElementCallback createElementCallback) {
 		final Composite composite = new Composite(parent, SWT.NONE);
 
@@ -470,10 +481,8 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 	 * @return the resource set
 	 */
 	protected ResourceSet loadResource(IEditorInput editorInput) {
-		final IURIEditorInput uei = (IURIEditorInput) editorInput;
-		final String uriString = URI.decode(uei.getURI().toString());
-		return ResourceSetHelpers.loadResourceSetWithProxies(URI.createURI(uriString, false),
-			getCommandStack());
+		final URI resourceURI = EditUIUtil.getURI(editorInput, null);
+		return ResourceSetHelpers.loadResourceSetWithProxies(resourceURI, getCommandStack());
 	}
 
 	@Override

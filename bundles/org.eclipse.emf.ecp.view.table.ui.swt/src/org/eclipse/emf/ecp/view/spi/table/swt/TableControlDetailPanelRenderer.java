@@ -30,6 +30,7 @@ import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.LocalizationAdapter;
+import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
@@ -312,14 +313,17 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 		final EStructuralFeature structuralFeature) {
 		super.deleteRows(deletionList, eObject, structuralFeature);
 		final Set<Diagnostic> toDelete = new LinkedHashSet<Diagnostic>();
+		final VDiagnostic diagnostic = getVElement().getDiagnostic();
+		if (diagnostic == null) {
+			return;
+		}
 		for (final EObject deleteObject : deletionList) {
-			// getViewModelContext().removeChildContext(eObject);
-			toDelete.addAll(getVElement().getDiagnostic().getDiagnostics(deleteObject));
+			toDelete.addAll(diagnostic.getDiagnostics(deleteObject));
 			final TreeIterator<EObject> eAllContents = deleteObject.eAllContents();
 			while (eAllContents.hasNext()) {
-				toDelete.addAll(getVElement().getDiagnostic().getDiagnostics(eAllContents.next()));
+				toDelete.addAll(diagnostic.getDiagnostics(eAllContents.next()));
 			}
 		}
-		getVElement().getDiagnostic().getDiagnostics().removeAll(toDelete);
+		diagnostic.getDiagnostics().removeAll(toDelete);
 	}
 }

@@ -16,7 +16,10 @@ package org.eclipse.emf.ecp.view.spi.treemasterdetail.ui.swt;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedHashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -26,12 +29,17 @@ import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.common.spi.ChildrenDescriptorCollector;
 import org.eclipse.emf.ecp.edit.internal.swt.util.OverlayImageDescriptor;
 import org.eclipse.emf.ecp.edit.spi.DeleteService;
@@ -44,6 +52,7 @@ import org.eclipse.emf.ecp.view.internal.swt.ContextMenuViewModelService;
 import org.eclipse.emf.ecp.view.internal.treemasterdetail.ui.swt.Activator;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
@@ -60,6 +69,7 @@ import org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.internal.RootObject;
 import org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.internal.TreeMasterDetailSelectionManipulatorHelper;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.CommandParameter;
+import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -87,6 +97,7 @@ import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -835,8 +846,9 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 		@Override
 		public void selectionChanged(SelectionChangedEvent event) {
+			final IStructuredSelection selection = (IStructuredSelection) event.getSelection();
+			final Object treeSelected = getSelection(selection);
 
-			final Object treeSelected = ((IStructuredSelection) event.getSelection()).getFirstElement();
 			final Object selected = treeSelected == null ? treeSelected : manipulateSelection(treeSelected);
 			if (selected instanceof EObject) {
 				try {
@@ -869,8 +881,14 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 					final ReferenceService referenceService = getViewModelContext().getService(
 						ReferenceService.class);
-					final ViewModelContext childContext = getViewModelContext().getChildContext((EObject) selected,
-						getVElement(), view, new TreeMasterDetailReferenceService(referenceService));
+					ViewModelContext childContext;
+					if (getViewModelContext().getContextValue("enableMultiEdit") == Boolean.TRUE) {
+						childContext = ViewModelContextFactory.INSTANCE.createViewModelContext(view, (EObject) selected,
+							new TreeMasterDetailReferenceService(referenceService));
+					} else {
+						childContext = getViewModelContext().getChildContext((EObject) selected,
+							getVElement(), view, new TreeMasterDetailReferenceService(referenceService));
+					}
 
 					manipulateViewContext(childContext);
 					ECPSWTViewRenderer.INSTANCE.render(childComposite, childContext);
@@ -886,6 +904,68 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 				}
 			}
 
+		}
+
+		private Object getSelection(IStructuredSelection selection) {
+			Object treeSelected = selection != null ? selection.getFirstElement() : null;
+			if (getViewModelContext().getContextValue("enableMultiEdit") == Boolean.TRUE
+				&& treeSelected instanceof EObject && selection.size() > 1) {
+				boolean allOfSameType = true;
+				final EObject dummy = EcoreUtil.create(((EObject) treeSelected).eClass());
+
+				final Iterator iterator = selection.iterator();
+				final Set<EObject> selectedEObjects = new LinkedHashSet<EObject>();
+				while (iterator.hasNext()) {
+					final EObject eObject = (EObject) iterator.next();
+					allOfSameType &= eObject.eClass() == dummy.eClass();
+					if (allOfSameType) {
+						for (final EAttribute attribute : dummy.eClass().getEAllAttributes()) {
+							if (eObject == treeSelected) {
+								dummy.eSet(attribute, eObject.eGet(attribute));
+							} else if (dummy.eGet(attribute) != null
+								&& !dummy.eGet(attribute).equals(eObject.eGet(attribute))) {
+								dummy.eUnset(attribute);
+							}
+						}
+						selectedEObjects.add(eObject);
+					} else {
+						break;
+					}
+				}
+				if (allOfSameType) {
+					treeSelected = dummy;
+					dummy.eAdapters().add(new AdapterImpl() {
+
+						@Override
+						public void notifyChanged(Notification notification) {
+							final EditingDomain editingDomain = AdapterFactoryEditingDomain
+								.getEditingDomainFor(getViewModelContext().getDomainModel());
+							if (dummy.eClass().getEAllAttributes().contains(notification.getFeature())) {
+								final CompoundCommand cc = new CompoundCommand();
+								for (final EObject selected : selectedEObjects) {
+									Command command = null;
+									switch (notification.getEventType()) {
+									case Notification.SET:
+										command = SetCommand.create(editingDomain, selected,
+											notification.getFeature(), notification.getNewValue());
+										break;
+									case Notification.UNSET:
+										command = SetCommand.create(editingDomain, selected,
+											notification.getFeature(), SetCommand.UNSET_VALUE);
+										break;
+									default:
+										continue;
+									}
+									cc.append(command);
+								}
+								editingDomain.getCommandStack().execute(cc);
+							}
+						}
+
+					});
+				}
+			}
+			return treeSelected;
 		}
 
 		private Composite createComposite() {
@@ -988,9 +1068,10 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#applyValidation()
+	 * @since 1.14
 	 */
 	@Override
-	protected void applyValidation() {
+	protected void applyValidation(final VDiagnostic oldDia, final VDiagnostic newDia) {
 		super.applyValidation();
 
 		if (treeViewer == null) {
@@ -1003,9 +1084,40 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 				if (treeViewer.getTree().isDisposed()) {
 					return;
 				}
-				treeViewer.refresh();
+				updateTree(oldDia, newDia);
 			}
 		});
+	}
+
+	private void updateTree(VDiagnostic oldDia, VDiagnostic newDia) {
+		final List<Object> diff = new ArrayList<Object>();
+		if (newDia != null) {
+			diff.addAll(newDia.getDiagnostics());
+		}
+		if (oldDia != null) {
+			diff.removeAll(oldDia.getDiagnostics());
+		}
+		final List<Object> diff2 = new ArrayList<Object>();
+		if (oldDia != null) {
+			diff2.addAll(oldDia.getDiagnostics());
+		}
+		if (newDia != null) {
+			diff2.removeAll(newDia.getDiagnostics());
+		}
+		diff.addAll(diff2);
+		final Set<Object> toUpdate = new LinkedHashSet<Object>();
+		final ITreeContentProvider provider = ITreeContentProvider.class.cast(treeViewer.getContentProvider());
+		for (final Object o : diff) {
+			final EObject toAdd = (EObject) Diagnostic.class.cast(o).getData().get(0);
+			toUpdate.add(toAdd);
+
+			Object parent = provider.getParent(toAdd);
+			while (EObject.class.isInstance(parent)) {
+				toUpdate.add(parent);
+				parent = provider.getParent(parent);
+			}
+		}
+		treeViewer.update(toUpdate.toArray(), null);
 	}
 
 	/**

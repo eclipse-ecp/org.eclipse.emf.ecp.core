@@ -44,6 +44,7 @@ import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.template.style.alignment.model.AlignmentType;
 import org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.textControlEnablement.model.VTTextControlEnablementStyleProperty;
+import org.eclipse.emf.ecp.view.template.style.unsettable.model.ButtonPlacementType;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.common.validation.PreSetValidationService;
@@ -334,7 +335,7 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 				// return;
 				// }
 				controlToUnset = Composite.class
-					.cast(Composite.class.cast(Composite.class.cast(control).getChildren()[0]).getChildren()[0])
+					.cast(Composite.class.cast(getControlCompositeFromControl(control)).getChildren()[0])
 					.getChildren()[0];
 			} else {
 				controlToUnset = Composite.class.cast(control).getChildren()[0];
@@ -343,7 +344,7 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 		} else {
 			if (getVElement().getLabelAlignment() == LabelAlignment.NONE && gridCell.getColumn() == 1
 				|| hasLeftLabelAlignment() && gridCell.getColumn() == 2) {
-				super.setControlEnabled(gridCell, Composite.class.cast(control).getChildren()[0], enabled);
+				super.setControlEnabled(gridCell, getControlCompositeFromControl(control), enabled);
 			} else {
 				super.setControlEnabled(gridCell, control, enabled);
 			}
@@ -521,11 +522,39 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 
 	@Override
 	protected void setValidationColor(Control control, Color validationColor) {
-		super.setValidationColor(Composite.class.cast(control).getChildren()[0], validationColor);
+		super.setValidationColor(getControlCompositeFromControl(control), validationColor);
 	}
 
 	@Override
 	protected void setValidationForegroundColor(Control control, Color validationColor) {
-		super.setValidationForegroundColor(Composite.class.cast(control).getChildren()[0], validationColor);
+		super.setValidationForegroundColor(getControlCompositeFromControl(control), validationColor);
+	}
+
+	/**
+	 * Returns whether the unset button is placed left of the control composite containing the text field.
+	 *
+	 * @return <code>true</code> if the control is unsettable and the unset button is left of the text field,
+	 *         <code>false</code> otherwise
+	 * @since 1.14
+	 */
+	protected boolean isUnsetButtonLeftOfControlComposite() {
+		return isControlUnsettable()
+			&& getUnsettableStyleProperty().getButtonPlacement() == ButtonPlacementType.LEFT_OF_LABEL;
+	}
+
+	/**
+	 * Returns the control composite that contains the text field from the parent composite created by the
+	 * {@link org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTRenderer SimpleControlSWTRenderer}.
+	 *
+	 * @param control The edit control created by the
+	 *            {@link org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlSWTRenderer SimpleControlSWTRenderer}
+	 * @return the control composite containing the text field
+	 * @since 1.14
+	 */
+	protected Control getControlCompositeFromControl(Control control) {
+		if (isUnsetButtonLeftOfControlComposite()) {
+			return Composite.class.cast(control).getChildren()[1];
+		}
+		return Composite.class.cast(control).getChildren()[0];
 	}
 }

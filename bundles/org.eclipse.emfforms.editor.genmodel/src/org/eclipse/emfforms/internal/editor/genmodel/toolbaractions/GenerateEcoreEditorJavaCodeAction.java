@@ -20,7 +20,6 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
@@ -49,13 +48,13 @@ public class GenerateEcoreEditorJavaCodeAction extends GenerateJavaCodeAction {
 		}
 		// We can execute our Action only if the ResourceSet contains an EPackage
 		return getEPackage((ResourceSet) object) != null;
+
 	}
 
 	@Override
 	public Action getAction(Object currentObject, ISelectionProvider selectionProvider) {
 		final ResourceSet resourceSet = (ResourceSet) currentObject;
-		final GenModel genModel = getGenModel(resourceSet);
-		return new CreateEcoreJavaCodeAction(genModel, selectionProvider);
+		return new CreateEcoreJavaCodeAction(resourceSet, selectionProvider);
 	}
 
 	@Override
@@ -65,9 +64,9 @@ public class GenerateEcoreEditorJavaCodeAction extends GenerateJavaCodeAction {
 			return null;
 		}
 		final URI resourceURI = ePackage.eResource().getURI();
+		final URI uri = ePackage.eResource().getResourceSet().getURIConverter().normalize(resourceURI);
 		final IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-		final IPath path = new Path(resourceURI.toFileString());
-		final IFile file = root.getFileForLocation(path);
+		final IFile file = root.getFile(new Path(uri.toPlatformString(true)));
 		final IContainer parent = file.getParent();
 		return getGenModelFile(parent, resourceSet, ePackage);
 	}
@@ -83,6 +82,7 @@ public class GenerateEcoreEditorJavaCodeAction extends GenerateJavaCodeAction {
 			for (final GenPackage genPackage : genModel.getGenPackages()) {
 				if (ePackage.getNsURI() != null && genPackage.getEcorePackage() != null
 					&& ePackage.getNsURI().equals(genPackage.getEcorePackage().getNsURI())) {
+					resourceSet.getResources().remove(emfResource);
 					return genModel;
 				}
 			}
@@ -92,7 +92,6 @@ public class GenerateEcoreEditorJavaCodeAction extends GenerateJavaCodeAction {
 
 	private List<IResource> getGenModelFiles(IContainer parent) {
 		final List<IResource> genModelFiles = new ArrayList<IResource>();
-		parent.exists();
 		try {
 			for (final IResource member : parent.members()) {
 				if (member.getFileExtension().equals("genmodel")) { //$NON-NLS-1$
@@ -127,41 +126,47 @@ public class GenerateEcoreEditorJavaCodeAction extends GenerateJavaCodeAction {
 	 */
 	class CreateEcoreJavaCodeAction extends CreateJavaCodeAction {
 
+		private final ResourceSet resourceSet;
+
 		/**
 		 * Constructor.
 		 *
-		 * @param genModel the {@link GenModel}
+		 * @param resourceSet the {@link ResourceSet} containing the genModel file
 		 * @param selectionProvider the {@link ISelectionProvider}
 		 */
-		CreateEcoreJavaCodeAction(GenModel genModel, ISelectionProvider selectionProvider) {
-			super(genModel, selectionProvider);
+		CreateEcoreJavaCodeAction(ResourceSet resourceSet, ISelectionProvider selectionProvider) {
+			super(selectionProvider);
+			this.resourceSet = resourceSet;
 		}
 
 		/**
 		 * Constructor.
 		 *
+		 * @param resourceSet the {@link ResourceSet} containing the genModel file
 		 * @param text the string used as the text for the action, or null if there is no text
 		 * @param types the project types
-		 * @param genModel the {@link GenModel}
 		 * @param selectionProvider the {@link ISelectionProvider}
 		 */
-		CreateEcoreJavaCodeAction(String text, Object[] types, GenModel genModel,
+		CreateEcoreJavaCodeAction(ResourceSet resourceSet, String text, Object[] types,
 			ISelectionProvider selectionProvider) {
-			super(text, types, genModel, selectionProvider);
+			super(text, types, selectionProvider);
+			this.resourceSet = resourceSet;
 		}
 
 		@Override
 		public void run() {
-			if (getGenModel() == null) {
+			final GenModel genModel = GenerateEcoreEditorJavaCodeAction.this.getGenModel(resourceSet);
+			if (genModel == null) {
 				showNoGenModelDialog();
 				return;
 			}
+			setGenModel(genModel);
 			super.run();
 		}
 
 		@Override
 		protected Action getJavaCodeAction(String text, Object[] types) {
-			return new CreateEcoreJavaCodeAction(text, types, getGenModel(), getSelectionProvider());
+			return new CreateEcoreJavaCodeAction(resourceSet, text, types, getSelectionProvider());
 		}
 
 		private void showNoGenModelDialog() {

@@ -16,6 +16,7 @@ import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emfforms.common.RankingHelper;
 import org.eclipse.emfforms.spi.common.converter.EStructuralFeatureValueConverter;
 import org.eclipse.emfforms.spi.common.converter.EStructuralFeatureValueConverter.Direction;
 import org.eclipse.emfforms.spi.common.converter.EStructuralFeatureValueConverterService;
@@ -33,6 +34,12 @@ public class EStructuralFeatureValueConverterServiceImpl implements EStructuralF
 	private final Set<EStructuralFeatureValueConverter> converters = //
 		new LinkedHashSet<EStructuralFeatureValueConverter>();
 
+	private static final RankingHelper<EStructuralFeatureValueConverter> RANKING_HELPER = //
+		new RankingHelper<EStructuralFeatureValueConverter>(
+			EStructuralFeatureValueConverter.class,
+			EStructuralFeatureValueConverter.NOT_APPLICABLE,
+			EStructuralFeatureValueConverter.NOT_APPLICABLE);
+
 	@Override
 	@Reference(cardinality = ReferenceCardinality.MULTIPLE)
 	public void addValueConverter(EStructuralFeatureValueConverter converter) {
@@ -44,22 +51,19 @@ public class EStructuralFeatureValueConverterServiceImpl implements EStructuralF
 		converters.remove(converter);
 	}
 
-	private EStructuralFeatureValueConverter getHighestRankingConverter(EObject eObject, EStructuralFeature feature,
-		Object value, Direction direction) {
-		double priority = EStructuralFeatureValueConverter.NOT_APPLICABLE;
-		EStructuralFeatureValueConverter highestRankingConverter = null;
-		for (final EStructuralFeatureValueConverter converter : converters) {
+	private EStructuralFeatureValueConverter getHighestRankingConverter(
+		final EObject eObject, final EStructuralFeature feature, final Object value, final Direction direction) {
 
-			final double applicable = converter.isApplicable(eObject, feature, value, direction);
-			if (applicable == EStructuralFeatureValueConverter.NOT_APPLICABLE || applicable <= priority) {
-				continue;
-			}
+		return RANKING_HELPER.getHighestRankingElement(converters,
+			new RankingHelper.RankTester<EStructuralFeatureValueConverter>() {
 
-			highestRankingConverter = converter;
-			priority = applicable;
+				@Override
+				public double getRank(final EStructuralFeatureValueConverter converter) {
+					return converter.isApplicable(eObject, feature, value, direction);
+				}
 
-		}
-		return highestRankingConverter;
+			});
+
 	}
 
 	@Override

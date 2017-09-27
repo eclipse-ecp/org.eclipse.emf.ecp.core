@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="%productName" uid="org.eclipse.emf.ecp.3x" id="org.eclipse.emf.ecp.application.e3.product" application="org.eclipse.emf.ecp.application.e3.application" version="1.13.0.qualifier" useFeatures="true" includeLaunchers="true">
+<product name="%productName" uid="org.eclipse.emf.ecp.3x" id="org.eclipse.emf.ecp.application.e3.product" application="org.eclipse.emf.ecp.application.e3.application" version="1.14.0.qualifier" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
       <image path="/org.eclipse.emf.ecp.application.e3/icons/eclipse_lg.gif"/>
@@ -21,7 +21,6 @@
    <windowImages i16="/org.eclipse.emf.ecp.ui.e3/icons/bricks.png"/>
 
    <launcher name="ecp">
-      <solaris/>
       <win useIco="false">
          <bmp/>
       </win>
@@ -63,6 +62,8 @@
       <feature id="org.eclipse.emf.emfstore.common.feature"/>
       <feature id="org.eclipse.emf.emfstore.server.feature"/>
       <feature id="org.eclipse.emf.ecp.emfforms.idetooling.feature"/>
+      <feature id="org.eclipse.e4.rcp"/>
+      <feature id="org.eclipse.rcp"/>
    </features>
 
    <configurations>

@@ -18,6 +18,7 @@ import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emfforms.common.RankingHelper;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
@@ -34,7 +35,14 @@ import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService;
 public class EMFFormsDIRendererFactory implements EMFFormsRendererService<VElement> {
 
 	private ReportService reportService;
-	private final Set<EMFFormsDIRendererService<VElement>> diRendererServices = new LinkedHashSet<EMFFormsDIRendererService<VElement>>();
+	private final Set<EMFFormsDIRendererService<VElement>> diRendererServices = //
+		new LinkedHashSet<EMFFormsDIRendererService<VElement>>();
+
+	private static final RankingHelper<EMFFormsDIRendererService<VElement>> RANKING_HELPER = //
+		new RankingHelper<EMFFormsDIRendererService<VElement>>(
+			EMFFormsDIRendererService.class,
+			Double.MIN_VALUE,
+			EMFFormsRendererService.NOT_APPLICABLE);
 
 	/**
 	 * Called by the initializer to add a {@link ReportService}.
@@ -72,6 +80,27 @@ public class EMFFormsDIRendererFactory implements EMFFormsRendererService<VEleme
 		diRendererServices.remove(diRendererService);
 	}
 
+	private EMFFormsDIRendererService<VElement> getHighestRankingRender(
+		final VElement vElement, final ViewModelContext viewModelContext) {
+
+		// Use a copy of the registered renderers to avoid exceptions from OSGI
+		// which can occur if renderer services are (de)registered during the iteration.
+		final Set<EMFFormsDIRendererService<VElement>> rendererServicesCopy = //
+			new LinkedHashSet<EMFFormsDIRendererService<VElement>>(diRendererServices);
+
+		return RANKING_HELPER.getHighestRankingElement(
+			rendererServicesCopy,
+			new RankingHelper.RankTester<EMFFormsDIRendererService<VElement>>() {
+
+				@Override
+				public double getRank(final EMFFormsDIRendererService<VElement> renderer) {
+					return renderer.isApplicable(vElement, viewModelContext);
+				}
+
+			});
+
+	}
+
 	/**
 	 * {@inheritDoc}
 	 *
@@ -79,24 +108,12 @@ public class EMFFormsDIRendererFactory implements EMFFormsRendererService<VEleme
 	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
 	 */
 	@Override
-	public double isApplicable(VElement vElement, ViewModelContext viewModelContext) {
-		double highestPriority = Double.MIN_VALUE;
-		EMFFormsDIRendererService<VElement> bestRendererService = null;
+	public double isApplicable(final VElement vElement, final ViewModelContext viewModelContext) {
 
-		// Use a copy of the registered renderers to avoid exceptions from OSGI which could occur if renderer services
-		// are (de)registered during the iteration.
-		final Set<EMFFormsDIRendererService<VElement>> rendererServicesCopy = new LinkedHashSet<EMFFormsDIRendererService<VElement>>(
-			diRendererServices);
-		for (final EMFFormsDIRendererService<VElement> rendererService : rendererServicesCopy) {
-			final double isCurrentApplicable = rendererService.isApplicable(vElement, viewModelContext);
-			if (!Double.isNaN(isCurrentApplicable) && isCurrentApplicable > highestPriority) {
-				highestPriority = isCurrentApplicable;
-				bestRendererService = rendererService;
-			}
-		}
-
+		final EMFFormsDIRendererService<VElement> bestRendererService = //
+			getHighestRankingRender(vElement, viewModelContext);
 		if (bestRendererService != null) {
-			return highestPriority;
+			return bestRendererService.isApplicable(vElement, viewModelContext);
 		}
 		return NOT_APPLICABLE;
 	}
@@ -111,20 +128,9 @@ public class EMFFormsDIRendererFactory implements EMFFormsRendererService<VEleme
 	@SuppressWarnings("unchecked")
 	@Override
 	public AbstractSWTRenderer<VElement> getRendererInstance(VElement vElement, ViewModelContext viewModelContext) {
-		double highestPriority = Double.MIN_VALUE;
-		EMFFormsDIRendererService<VElement> bestRendererService = null;
 
-		// Use a copy of the registered renderers to avoid exceptions from OSGI which could occur if renderer services
-		// are (de)registered during the iteration.
-		final Set<EMFFormsDIRendererService<VElement>> rendererServicesCopy = new LinkedHashSet<EMFFormsDIRendererService<VElement>>(
-			diRendererServices);
-		for (final EMFFormsDIRendererService<VElement> rendererService : rendererServicesCopy) {
-			final double isCurrentApplicable = rendererService.isApplicable(vElement, viewModelContext);
-			if (!Double.isNaN(isCurrentApplicable) && isCurrentApplicable > highestPriority) {
-				highestPriority = isCurrentApplicable;
-				bestRendererService = rendererService;
-			}
-		}
+		final EMFFormsDIRendererService<VElement> bestRendererService = //
+			getHighestRankingRender(vElement, viewModelContext);
 		if (bestRendererService == null) {
 			return null;
 		}

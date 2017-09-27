@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emfforms.common.RankingHelper;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.DomainModelReferenceConverterEMF;
@@ -40,6 +41,12 @@ import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindin
 public class EMFFormsDatabindingImpl implements EMFFormsDatabindingEMF {
 
 	private final Set<DomainModelReferenceConverterEMF> referenceConverters = new LinkedHashSet<DomainModelReferenceConverterEMF>();
+
+	private static final RankingHelper<DomainModelReferenceConverterEMF> RANKING_HELPER = //
+		new RankingHelper<DomainModelReferenceConverterEMF>(
+			DomainModelReferenceConverter.class,
+			DomainModelReferenceConverter.NOT_APPLICABLE,
+			DomainModelReferenceConverter.NOT_APPLICABLE);
 
 	/**
 	 * {@inheritDoc}
@@ -162,20 +169,21 @@ public class EMFFormsDatabindingImpl implements EMFFormsDatabindingEMF {
 	 * @return The most suitable {@link DomainModelReferenceConverter}
 	 */
 	private DomainModelReferenceConverterEMF getBestDomainModelReferenceConverter(
-		VDomainModelReference domainModelReference) {
+		final VDomainModelReference domainModelReference) {
 		if (domainModelReference == null) {
 			throw new IllegalArgumentException("The given VDomainModelReference must not be null."); //$NON-NLS-1$
 		}
-		double highestPriority = DomainModelReferenceConverter.NOT_APPLICABLE;
-		DomainModelReferenceConverterEMF bestConverter = null;
-		for (final DomainModelReferenceConverterEMF converter : referenceConverters) {
-			final double priority = converter.isApplicable(domainModelReference);
-			if (priority > highestPriority) {
-				highestPriority = priority;
-				bestConverter = converter;
-			}
-		}
-		return bestConverter;
+
+		return RANKING_HELPER.getHighestRankingElement(
+			referenceConverters,
+			new RankingHelper.RankTester<DomainModelReferenceConverterEMF>() {
+
+				@Override
+				public double getRank(final DomainModelReferenceConverterEMF converter) {
+					return converter.isApplicable(domainModelReference);
+				}
+
+			});
 	}
 
 	/**

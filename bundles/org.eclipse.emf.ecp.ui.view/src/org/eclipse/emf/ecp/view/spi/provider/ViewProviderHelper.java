@@ -28,6 +28,13 @@ import org.osgi.framework.ServiceReference;
  *
  */
 public final class ViewProviderHelper {
+	static {
+		final Bundle bundle = FrameworkUtil.getBundle(ViewProviderHelper.class);
+		if (bundle != null) {
+			bundleContext = bundle.getBundleContext();
+		}
+	}
+	private static BundleContext bundleContext;
 
 	private ViewProviderHelper() {
 	}
@@ -42,11 +49,6 @@ public final class ViewProviderHelper {
 	 * @since 1.7
 	 */
 	public static VView getView(EObject eObject, VViewModelProperties properties) {
-		final Bundle bundle = FrameworkUtil.getBundle(ViewProviderHelper.class);
-		if (bundle == null) {
-			return null;
-		}
-		final BundleContext bundleContext = bundle.getBundleContext();
 		if (bundleContext == null) {
 			return null;
 		}

@@ -15,6 +15,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecp.ide.spi.util.EcoreHelper;
+import org.eclipse.jface.resource.JFaceResources;
 import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -35,6 +36,11 @@ public class EcoreHelperTwoDependencies_PTest {
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		try {
+			JFaceResources.getImageRegistry();
+		} catch (final RuntimeException e) {
+			// expected fail, some strange initialization error is happing
+		}
 		final IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		final IProject project = root.getProject("TestEcoreHelperProjectResources");
 		// create resources to register and unregister

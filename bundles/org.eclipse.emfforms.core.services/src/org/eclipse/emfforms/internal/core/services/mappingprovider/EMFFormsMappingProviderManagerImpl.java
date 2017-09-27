@@ -18,6 +18,7 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.common.spi.UniqueSetting;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emfforms.common.RankingHelper;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.mappingprovider.EMFFormsMappingProvider;
@@ -36,6 +37,11 @@ public class EMFFormsMappingProviderManagerImpl implements EMFFormsMappingProvid
 
 	private final Set<EMFFormsMappingProvider> mappingProviders = new LinkedHashSet<EMFFormsMappingProvider>();
 	private ReportService reportService;
+
+	private static final RankingHelper<EMFFormsMappingProvider> RANKING_HELPER = //
+		new RankingHelper<EMFFormsMappingProvider>(
+			EMFFormsMappingProvider.class,
+			EMFFormsMappingProvider.NOT_APPLICABLE);
 
 	/**
 	 * Called by the framework to add an {@link EMFFormsMappingProvider}.
@@ -74,17 +80,20 @@ public class EMFFormsMappingProviderManagerImpl implements EMFFormsMappingProvid
 	 *      org.eclipse.emf.ecore.EObject)
 	 */
 	@Override
-	public Set<UniqueSetting> getAllSettingsFor(VDomainModelReference domainModelReference, EObject domainObject) {
-		EMFFormsMappingProvider bestMappingProvider = null;
-		double bestScore = EMFFormsMappingProvider.NOT_APPLICABLE;
+	public Set<UniqueSetting> getAllSettingsFor(
+		final VDomainModelReference domainModelReference, final EObject domainObject) {
 
-		for (final EMFFormsMappingProvider mappingProvider : mappingProviders) {
-			final double score = mappingProvider.isApplicable(domainModelReference, domainObject);
-			if (score > bestScore) {
-				bestMappingProvider = mappingProvider;
-				bestScore = score;
-			}
-		}
+		final EMFFormsMappingProvider bestMappingProvider = RANKING_HELPER.getHighestRankingElement(
+			mappingProviders,
+			new RankingHelper.RankTester<EMFFormsMappingProvider>() {
+
+				@Override
+				public double getRank(final EMFFormsMappingProvider mappingProvider) {
+					return mappingProvider.isApplicable(domainModelReference, domainObject);
+				}
+
+			});
+
 		if (bestMappingProvider == null) {
 			reportService.report(new AbstractReport("Warning: No applicable EMFFormsMappingProvider was found.")); //$NON-NLS-1$
 			return Collections.emptySet();

@@ -11,30 +11,24 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import org.eclipse.core.databinding.property.value.IValueProperty;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EEnumLiteral;
-import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.view.internal.core.swt.ComboUtil;
 import org.eclipse.emf.ecp.view.internal.core.swt.MatchItemComboViewer;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.spi.common.report.ReportService;
-import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
-import org.eclipse.jface.viewers.ArrayContentProvider;
-import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.events.FocusEvent;
@@ -48,8 +42,6 @@ import org.eclipse.swt.widgets.Listener;
  *
  */
 public class EnumLiteralFilteredComboViewerSWTRenderer extends EnumComboViewerSWTRenderer {
-
-	private final EMFFormsEditSupport emfFormsEditSupport;
 
 	/**
 	 * Default constructor.
@@ -69,39 +61,23 @@ public class EnumLiteralFilteredComboViewerSWTRenderer extends EnumComboViewerSW
 		VTViewTemplateProvider vtViewTemplateProvider, EMFFormsEditSupport emfFormsEditSupport) {
 		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider,
 			emfFormsEditSupport);
-		this.emfFormsEditSupport = emfFormsEditSupport;
 	}
 
 	/**
-	 *
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.EnumComboViewerSWTRenderer#createJFaceViewer(org.eclipse.swt.widgets.Composite)
+	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.EnumComboViewerSWTRenderer#createComboViewer(org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
-	protected Viewer createJFaceViewer(final Composite parent) throws DatabindingFailedException {
-		final IValueProperty valueProperty = getEMFFormsDatabinding()
-			.getValueProperty(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
-		final EStructuralFeature structuralFeature = (EStructuralFeature) valueProperty.getValueType();
-		final EList<EEnumLiteral> eLiterals = EEnum.class.cast(structuralFeature.getEType()).getELiterals();
-
+	protected ComboViewer createComboViewer(final Composite parent, final EEnum eEnum) {
 		final CCombo combo = new CCombo(parent, SWT.BORDER);
-		final MatchItemComboViewer viewer = new MatchItemComboViewer(combo) {
+		combo.addListener(SWT.Resize, new Listener() {
 			@Override
-			public void onEnter(int selectedIndex) {
-				if (!isEmptyBuffer() && selectedIndex > -1) {
-					final String closestMatch = getCCombo().getItems()[selectedIndex];
-					final Optional<EEnumLiteral> findLiteral = findLiteral(eLiterals, closestMatch);
-					if (findLiteral.isPresent()) {
-						setSelection(new StructuredSelection(findLiteral.get().getInstance()));
-					}
-				} else {
-					setClosestMatch(getCCombo().getText());
-				}
-				combo.clearSelection();
+			public void handleEvent(final Event argEvent) {
+				combo.setText(combo.getText());
 			}
-		};
-		viewer.getCCombo().addFocusListener(new FocusListener() {
+		});
+		combo.addFocusListener(new FocusListener() {
 
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -113,32 +89,26 @@ public class EnumLiteralFilteredComboViewerSWTRenderer extends EnumComboViewerSW
 
 			}
 		});
-		viewer.getCCombo().setEditable(true);
-		viewer.setContentProvider(new ArrayContentProvider());
-		viewer.setLabelProvider(new LabelProvider() {
+		combo.setEditable(true);
 
+		final MatchItemComboViewer viewer = new MatchItemComboViewer(combo) {
 			@Override
-			public String getText(Object element) {
-				return emfFormsEditSupport
-					.getText(
-						getVElement().getDomainModelReference(),
-						getViewModelContext().getDomainModel(),
-						element);
+			public void onEnter() {
+				final int selectedIndex = ComboUtil.getClosestMatchIndex(getCCombo().getItems(),
+					getBuffer().asString());
+				if (!getBuffer().isEmpty() && selectedIndex > -1) {
+					final String closestMatch = getCCombo().getItems()[selectedIndex];
+					final Optional<EEnumLiteral> findLiteral = findLiteral(eEnum.getELiterals(), closestMatch);
+					if (findLiteral.isPresent()) {
+						setSelection(new StructuredSelection(findLiteral.get().getInstance()));
+					}
+				} else {
+					setClosestMatch(getCCombo().getText());
+				}
+				combo.clearSelection();
 			}
+		};
 
-		});
-		final List<Object> inputValues = new ArrayList<Object>();
-		for (final EEnumLiteral literal : eLiterals) {
-			inputValues.add(literal.getInstance());
-		}
-		viewer.setInput(inputValues);
-		viewer.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_enum"); //$NON-NLS-1$
-		combo.addListener(SWT.Resize, new Listener() {
-			@Override
-			public void handleEvent(final Event argEvent) {
-				combo.setText(combo.getText());
-			}
-		});
 		return viewer;
 	}
 
@@ -149,8 +119,8 @@ public class EnumLiteralFilteredComboViewerSWTRenderer extends EnumComboViewerSW
 	 * @param literal the literal to be searched for as a string
 	 * @return an {@link Optional} containing the matched literal
 	 */
-	private static Optional<EEnumLiteral> findLiteral(List<EEnumLiteral> enumerators,
-		String literal) {
+	private static Optional<EEnumLiteral> findLiteral(
+		List<EEnumLiteral> enumerators, String literal) {
 
 		for (final EEnumLiteral e : enumerators) {
 			if (e.getLiteral().equals(literal)) {

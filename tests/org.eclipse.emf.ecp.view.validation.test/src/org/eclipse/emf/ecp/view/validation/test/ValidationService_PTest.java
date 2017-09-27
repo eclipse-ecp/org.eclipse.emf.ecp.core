@@ -11,9 +11,11 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.validation.test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -22,6 +24,7 @@ import java.util.List;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.test.common.DefaultRealm;
+import org.eclipse.emf.ecp.view.internal.validation.ValidationTimerTask;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -32,6 +35,7 @@ import org.eclipse.emf.ecp.view.spi.validation.ValidationProvider;
 import org.eclipse.emf.ecp.view.spi.validation.ValidationService;
 import org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContainer;
 import org.eclipse.emf.ecp.view.validation.test.model.CrossReferenceContent;
+import org.eclipse.emf.ecp.view.validation.test.model.TableContentWithInnerChild;
 import org.eclipse.emf.ecp.view.validation.test.model.TestFactory;
 import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
@@ -59,8 +63,6 @@ public class ValidationService_PTest {
 	private CrossReferenceContent content;
 
 	private CrossReferenceContainer otherContainer;
-
-	private ReportService reportService;
 
 	/**
 	 * @throws java.lang.Exception
@@ -239,7 +241,8 @@ public class ValidationService_PTest {
 
 			@Override
 			public void reported(AbstractReport reportEntity) {
-				assertTrue(reportEntity.getMessage().startsWith("Validation took longer than expected for"));
+				assertTrue("Real Message:" + reportEntity.getMessage(),
+					reportEntity.getMessage().startsWith("Validation took longer than expected for"));
 				called.set(0, true);
 
 			}
@@ -248,7 +251,7 @@ public class ValidationService_PTest {
 			@Override
 			public List<Diagnostic> validate(EObject eObject) {
 				try {
-					Thread.sleep(1000);
+					Thread.sleep(2000);
 				} catch (final InterruptedException ex) {
 				}
 				return Collections.emptyList();
@@ -285,6 +288,67 @@ public class ValidationService_PTest {
 
 		validationService.validate(Arrays.asList(content.eContainer()));
 		assertFalse("Validation report present", called.get(0));
+	}
+
+	@Test
+	public void testValidationTimerTaskNullReferenceAfterCancel()
+		throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		setupContent();
+		final ValidationTimerTask timerTask = new ValidationTimerTask(
+			content);
+
+		final Class<? extends ValidationTimerTask> taskClass = timerTask.getClass();
+		final Field validatedEObjectField = taskClass.getDeclaredField("validatedEObject");
+		validatedEObjectField.setAccessible(true);
+		assertEquals(content, validatedEObjectField.get(timerTask));
+		timerTask.cancel();
+		assertEquals(null, validatedEObjectField.get(timerTask));
+	}
+
+	@Test
+	public void testValidationTimerTaskNullReferenceAfterRun()
+		throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		setupContent();
+		final ValidationTimerTask timerTask = new ValidationTimerTask(content);
+
+		final Class<? extends ValidationTimerTask> taskClass = timerTask.getClass();
+		final Field validatedEObjectField = taskClass.getDeclaredField("validatedEObject");
+		validatedEObjectField.setAccessible(true);
+		assertEquals(content, validatedEObjectField.get(timerTask));
+		timerTask.run();
+		assertEquals(null, validatedEObjectField.get(timerTask));
+	}
+
+	@Test
+	public void testViewModelChangeListenerCutOffDMR() {
+		/* setup domain */
+		final TableContentWithInnerChild parent = TestFactory.eINSTANCE.createTableContentWithInnerChild();
+		final TableContentWithInnerChild middle = TestFactory.eINSTANCE.createTableContentWithInnerChild();
+		final TableContentWithInnerChild child = TestFactory.eINSTANCE.createTableContentWithInnerChild();
+		parent.setInnerChild(middle);
+		middle.setInnerChild(child);
+
+		/* setup view */
+		final VView view = VViewFactory.eINSTANCE.createView();
+
+		final VControl vControl = VViewFactory.eINSTANCE.createControl();
+		view.getChildren().add(vControl);
+		vControl.setDomainModelReference(
+			TestPackage.eINSTANCE.getTableContentWithInnerChild_Stuff(),
+			Arrays.asList(
+				TestPackage.eINSTANCE.getTableContentWithInnerChild_InnerChild(),
+				TestPackage.eINSTANCE.getTableContentWithInnerChild_InnerChild()));
+
+		/* setup rendering */
+		ViewModelContextFactory.INSTANCE.createViewModelContext(view, parent);
+
+		/* act */
+		parent.setInnerChild(null); /* cut off */
+		vControl.setEnabled(false); /* produce view notifications */
+		vControl.setEnabled(true);/* produce view notifications */
+
+		/* assert */
+		/* cutting of should not produce NPEs as this is legit */
 	}
 
 	private ReportService getReportService() {

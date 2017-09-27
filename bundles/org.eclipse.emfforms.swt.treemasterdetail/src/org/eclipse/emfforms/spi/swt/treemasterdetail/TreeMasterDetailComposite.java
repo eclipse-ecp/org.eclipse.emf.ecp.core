@@ -12,14 +12,21 @@
  ******************************************************************************/
 package org.eclipse.emfforms.spi.swt.treemasterdetail;
 
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.eclipse.core.databinding.observable.ChangeEvent;
 import org.eclipse.core.databinding.observable.IChangeListener;
 import org.eclipse.core.internal.databinding.observable.DelayedObservableValue;
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.CompoundCommand;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
@@ -31,6 +38,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewModelProperties;
 import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.ecp.view.treemasterdetail.model.VTreeMasterDetail;
+import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
@@ -44,6 +52,7 @@ import org.eclipse.jface.resource.FontDescriptor;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
@@ -296,10 +305,8 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 		// Create a new detail panel in the scrollable composite. Disposes any old panels.
 		// createDetailPanel();
 		// TODO create detail panel at the right location
-
-		// Get the selected object, if it is an EObject, render the details using EMF Forms
-		final Object selectedObject = treeViewer.getSelection() != null ? ((StructuredSelection) treeViewer
-			.getSelection()).getFirstElement() : null;
+		final IStructuredSelection selection = (StructuredSelection) treeViewer.getSelection();
+		final Object selectedObject = getSelectedObject(selection);
 
 		boolean asyncRendering = false;
 		if (selectedObject instanceof EObject) {
@@ -362,6 +369,65 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 				callback.renderingFinished(selectedObject);
 			}
 		}
+	}
+
+	private Object getSelectedObject(IStructuredSelection selection) {
+		// Get the selected object, if it is an EObject, render the details using EMF Forms
+		Object selectedObject = selection != null ? selection.getFirstElement() : null;
+		if (customization.enableVerticalCopy() && selectedObject instanceof EObject && selection.size() > 1) {
+			boolean allOfSameType = true;
+			final EObject dummy = EcoreUtil.create(((EObject) selectedObject).eClass());
+
+			final Iterator iterator = selection.iterator();
+			final Set<EObject> selectedEObjects = new LinkedHashSet<EObject>();
+			while (iterator.hasNext()) {
+				final EObject eObject = (EObject) iterator.next();
+				allOfSameType &= eObject.eClass() == dummy.eClass();
+				if (allOfSameType) {
+					for (final EAttribute attribute : dummy.eClass().getEAllAttributes()) {
+						if (eObject == selectedObject) {
+							dummy.eSet(attribute, eObject.eGet(attribute));
+						} else if (dummy.eGet(attribute) != null
+							&& !dummy.eGet(attribute).equals(eObject.eGet(attribute))) {
+							dummy.eUnset(attribute);
+						}
+					}
+					selectedEObjects.add(eObject);
+				} else {
+					break;
+				}
+			}
+			if (allOfSameType) {
+				selectedObject = dummy;
+				dummy.eAdapters().add(new AdapterImpl() {
+
+					@Override
+					public void notifyChanged(Notification notification) {
+						if (dummy.eClass().getEAllAttributes().contains(notification.getFeature())) {
+							final CompoundCommand cc = new CompoundCommand();
+							for (final EObject selected : selectedEObjects) {
+								Command command = null;
+								switch (notification.getEventType()) {
+								case Notification.SET:
+									command = SetCommand.create(editingDomain, selected,
+										notification.getFeature(), notification.getNewValue());
+									break;
+								case Notification.UNSET:
+									command = SetCommand.create(editingDomain, selected,
+										notification.getFeature(), SetCommand.UNSET_VALUE);
+									break;
+								default:
+									continue;
+								}
+								cc.append(command);
+							}
+							editingDomain.getCommandStack().execute(cc);
+						}
+					}
+				});
+			}
+		}
+		return selectedObject;
 	}
 
 	private void updateScrolledComposite() {

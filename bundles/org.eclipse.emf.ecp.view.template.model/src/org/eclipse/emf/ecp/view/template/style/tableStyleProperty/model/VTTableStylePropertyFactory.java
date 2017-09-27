@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.EFactory;
  * <!-- begin-user-doc -->
  * The <b>Factory</b> for the model.
  * It provides a create method for each non-abstract class of the model.
- * 
+ *
  * @since 1.9
  *        <!-- end-user-doc -->
  * @see org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage
@@ -28,14 +28,17 @@ public interface VTTableStylePropertyFactory extends EFactory {
 	 * The singleton instance of the factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
-	VTTableStylePropertyFactory eINSTANCE = org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.impl.VTTableStylePropertyFactoryImpl.init();
+	VTTableStylePropertyFactory eINSTANCE = org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.impl.VTTableStylePropertyFactoryImpl
+		.init();
 
 	/**
 	 * Returns a new object of class '<em>Table Style Property</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return a new object of class '<em>Table Style Property</em>'.
 	 * @generated
 	 */
@@ -45,6 +48,7 @@ public interface VTTableStylePropertyFactory extends EFactory {
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the package supported by this factory.
 	 * @generated
 	 */

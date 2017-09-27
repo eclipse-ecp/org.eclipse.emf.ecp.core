@@ -15,8 +15,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
@@ -33,7 +39,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>VDiagnostic</b></em>'.
- * 
+ *
  * @since 1.2
  *        <!-- end-user-doc -->
  *        <p>
@@ -51,27 +57,98 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic {
 	 * The cached value of the '{@link #getDiagnostics() <em>Diagnostics</em>}' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #getDiagnostics()
 	 * @generated
 	 * @ordered
 	 */
 	protected EList<Object> diagnostics;
+	private final Map<EObject, Set<Diagnostic>> diagnosticMap = new LinkedHashMap<EObject, Set<Diagnostic>>();
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected VDiagnosticImpl() {
 		super();
+		eAdapters().add(new AdapterImpl() {
+
+			/**
+			 * {@inheritDoc}
+			 *
+			 * @see
+			 * 		org.eclipse.emf.common.notify.impl.AdapterImpl#notifyChanged(org.eclipse.emf.common.notify.Notification)
+			 */
+			@SuppressWarnings("unchecked")
+			@Override
+			public void notifyChanged(Notification msg) {
+				super.notifyChanged(msg);
+				if (msg.getFeature() != VViewPackage.eINSTANCE.getDiagnostic_Diagnostics()) {
+					return;
+				}
+				switch (msg.getEventType()) {
+				case Notification.ADD:
+					addNewDiagnostic((Diagnostic) msg.getNewValue());
+					break;
+				case Notification.ADD_MANY:
+					if (msg.getNewValue() != null) {
+						for (final Diagnostic diagnostic : (Collection<Diagnostic>) msg.getNewValue()) {
+							addNewDiagnostic(diagnostic);
+						}
+					}
+					break;
+				case Notification.REMOVE:
+					removeOldDiagnostic((Diagnostic) msg.getOldValue());
+					break;
+				case Notification.REMOVE_MANY:
+					if (msg.getOldValue() != null) {
+						for (final Diagnostic diagnostic : (Collection<Diagnostic>) msg.getOldValue()) {
+							removeOldDiagnostic(diagnostic);
+						}
+					}
+					break;
+				}
+			}
+
+		});
+	}
+
+	private void removeOldDiagnostic(Diagnostic diagnostic) {
+		if (diagnostic == null) {
+			return;
+		}
+		final EObject eObject = (EObject) diagnostic.getData().get(0);
+		if (!diagnosticMap.containsKey(eObject)) {
+			return;
+		}
+		final Set<Diagnostic> diagnostics = diagnosticMap.get(eObject);
+		diagnostics.remove(diagnostic);
+		if (diagnostics.size() == 0) {
+			diagnosticMap.remove(eObject);
+		}
+	}
+
+	private void addNewDiagnostic(Diagnostic diagnostic) {
+		if (diagnostic == null) {
+			return;
+		}
+		final EObject eObject = (EObject) diagnostic.getData().get(0);
+		EObject parent = eObject;
+		while (parent != null) {
+			if (!diagnosticMap.containsKey(parent)) {
+				diagnosticMap.put(parent, new LinkedHashSet<Diagnostic>());
+			}
+			diagnosticMap.get(parent).add(diagnostic);
+			parent = parent.eContainer();
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -82,7 +159,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -96,7 +173,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -111,7 +188,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -129,7 +206,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -145,7 +222,7 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -160,15 +237,16 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy())
+		if (eIsProxy()) {
 			return super.toString();
+		}
 
-		StringBuffer result = new StringBuffer(super.toString());
+		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (diagnostics: "); //$NON-NLS-1$
 		result.append(diagnostics);
 		result.append(')');
@@ -186,8 +264,9 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic {
 		if (getDiagnostics().size() > 0) {
 			for (final Object o : getDiagnostics()) {
 				final Diagnostic diagnostic = (Diagnostic) o;
-				highestSeverity = highestSeverity >= diagnostic.getSeverity() ? highestSeverity : diagnostic
-					.getSeverity();
+				highestSeverity = highestSeverity >= diagnostic.getSeverity() ? highestSeverity
+					: diagnostic
+						.getSeverity();
 			}
 		}
 		return highestSeverity;
@@ -230,13 +309,16 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic {
 	 */
 	@Override
 	public List<Diagnostic> getDiagnostics(EObject eObject) {
-		final EList<Diagnostic> result = new BasicEList<Diagnostic>();
-		for (final Object objectDiagnostic : getDiagnostics()) {
-			final Diagnostic diagnostic = (Diagnostic) objectDiagnostic;
-			if (diagnostic.getSeverity() == Diagnostic.OK) {
-				continue;
+		final List<Diagnostic> result = new ArrayList<Diagnostic>();
+		final Set<Diagnostic> set = diagnosticMap.get(eObject);
+		if (set != null) {
+			for (final Object objectDiagnostic : set) { // getDiagnostics()
+				final Diagnostic diagnostic = (Diagnostic) objectDiagnostic;
+				if (diagnostic.getSeverity() == Diagnostic.OK) {
+					continue;
+				}
+				result.addAll(getDiagnostics(diagnostic, eObject));
 			}
-			result.addAll(getDiagnostics(diagnostic, eObject));
 		}
 		sortDiagnostics(result);
 		return result;
@@ -261,12 +343,15 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic {
 	@Override
 	public List<Diagnostic> getDiagnostic(EObject eObject, EStructuralFeature eStructuralFeature) {
 		final EList<Diagnostic> result = new BasicEList<Diagnostic>();
-		for (final Object objectDiagnostic : getDiagnostics()) {
-			final Diagnostic diagnostic = (Diagnostic) objectDiagnostic;
-			if (diagnostic.getSeverity() == Diagnostic.OK) {
-				continue;
+		final Set<Diagnostic> set = diagnosticMap.get(eObject);
+		if (set != null) {
+			for (final Object objectDiagnostic : set) { // getDiagnostics()
+				final Diagnostic diagnostic = (Diagnostic) objectDiagnostic;
+				if (diagnostic.getSeverity() == Diagnostic.OK) {
+					continue;
+				}
+				result.addAll(getDiagnostics(diagnostic, eObject, eStructuralFeature));
 			}
-			result.addAll(getDiagnostics(diagnostic, eObject, eStructuralFeature));
 		}
 		sortDiagnostics(result);
 		return result;

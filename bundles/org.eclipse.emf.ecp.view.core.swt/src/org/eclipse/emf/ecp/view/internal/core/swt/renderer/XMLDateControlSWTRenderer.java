@@ -439,20 +439,25 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 	 */
 	@Override
 	protected void setValidationColor(Control control, Color validationColor) {
-		super.setValidationColor(Composite.class.cast(control).getChildren()[0], validationColor);
+		super.setValidationColor(getControlCompositeFromControl(control), validationColor);
 	}
 
 	@Override
 	protected void setValidationForegroundColor(Control control, Color validationColor) {
-		super.setValidationForegroundColor(Composite.class.cast(control).getChildren()[0], validationColor);
+		super.setValidationForegroundColor(getControlCompositeFromControl(control), validationColor);
 	}
 
 	@Override
 	protected void setControlEnabled(SWTGridCell gridCell, Control control, boolean enabled) {
 		if (getVElement().getLabelAlignment() == LabelAlignment.NONE && gridCell.getColumn() == 1
 			|| hasLeftLabelAlignment() && gridCell.getColumn() == 2) {
-			super.setControlEnabled(gridCell, Composite.class.cast(control).getChildren()[0], enabled);
-			((Button) ((Composite) control).getChildren()[1]).setVisible(enabled);
+			if (isUnsetButtonLeftOfControlComposite()) {
+				super.setControlEnabled(gridCell, control, enabled);
+				((Button) ((Composite) control).getChildren()[0]).setVisible(enabled);
+			} else {
+				super.setControlEnabled(gridCell, control, enabled);
+				((Button) ((Composite) control).getChildren()[1]).setVisible(enabled);
+			}
 		} else {
 			super.setControlEnabled(gridCell, control, enabled);
 		}

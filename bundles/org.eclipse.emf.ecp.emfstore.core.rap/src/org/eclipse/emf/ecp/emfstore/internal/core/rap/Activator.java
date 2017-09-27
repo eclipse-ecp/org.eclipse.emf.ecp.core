@@ -28,8 +28,8 @@ public class Activator extends Plugin {
 
 	@Override
 	public final void start(final BundleContext context) throws Exception {
-		final Dictionary<String, Object> dictionary =
-			new Hashtable<String, Object>();
+
+		final Dictionary<String, Object> dictionary = new Hashtable<String, Object>();
 		dictionary.put(Constants.SERVICE_RANKING, 1000);
 		context.registerService(ESWorkspaceProviderProvider.class,
 			new ESWorkspaceProviderProviderFactory(), dictionary);

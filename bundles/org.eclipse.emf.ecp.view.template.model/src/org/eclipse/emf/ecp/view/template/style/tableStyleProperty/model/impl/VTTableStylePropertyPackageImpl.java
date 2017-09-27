@@ -13,9 +13,11 @@ package org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.impl;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecp.view.template.model.VTTemplatePackage;
+import org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.RenderMode;
 import org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyFactory;
 import org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage;
@@ -35,6 +37,14 @@ public class VTTableStylePropertyPackageImpl extends EPackageImpl implements VTT
 	 * @generated
 	 */
 	private EClass tableStylePropertyEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	private EEnum renderModeEEnum = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -182,6 +192,28 @@ public class VTTableStylePropertyPackageImpl extends EPackageImpl implements VTT
 	 * @generated
 	 */
 	@Override
+	public EAttribute getTableStyleProperty_RenderMode() {
+		return (EAttribute) tableStylePropertyEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
+	public EEnum getRenderMode() {
+		return renderModeEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
 	public VTTableStylePropertyFactory getTableStylePropertyFactory() {
 		return (VTTableStylePropertyFactory) getEFactoryInstance();
 	}
@@ -215,6 +247,10 @@ public class VTTableStylePropertyPackageImpl extends EPackageImpl implements VTT
 		createEAttribute(tableStylePropertyEClass, TABLE_STYLE_PROPERTY__SHOW_VALIDATION_SUMMARY_TOOLTIP);
 		createEAttribute(tableStylePropertyEClass, TABLE_STYLE_PROPERTY__ENABLE_SORTING);
 		createEAttribute(tableStylePropertyEClass, TABLE_STYLE_PROPERTY__VISIBLE_LINES);
+		createEAttribute(tableStylePropertyEClass, TABLE_STYLE_PROPERTY__RENDER_MODE);
+
+		// Create enums
+		renderModeEEnum = createEEnum(RENDER_MODE);
 	}
 
 	/**
@@ -273,6 +309,14 @@ public class VTTableStylePropertyPackageImpl extends EPackageImpl implements VTT
 		initEAttribute(getTableStyleProperty_VisibleLines(), ecorePackage.getEInt(), "visibleLines", null, 0, 1, //$NON-NLS-1$
 			VTTableStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTableStyleProperty_RenderMode(), getRenderMode(), "renderMode", null, 0, 1, //$NON-NLS-1$
+			VTTableStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+			!IS_DERIVED, IS_ORDERED);
+
+		// Initialize enums and add enum literals
+		initEEnum(renderModeEEnum, RenderMode.class, "RenderMode"); //$NON-NLS-1$
+		addEEnumLiteral(renderModeEEnum, RenderMode.DEFAULT);
+		addEEnumLiteral(renderModeEEnum, RenderMode.COMPACT_VERTICALLY);
 
 		// Create resource
 		createResource(eNS_URI);

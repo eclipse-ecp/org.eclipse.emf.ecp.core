@@ -32,7 +32,20 @@
 							
 						</args>
 					</aut>
-					
+					<testOptions>
+					    <!-- Timeout for all tests, in seconds -->
+					    <execTimeout>10800</execTimeout>
+					    <!-- Timeout for a single test case, in seconds -->
+					    <testexectimeout>600</testexectimeout>
+
+					    <!-- When set to true, in case of test failure
+						 AUT will be restarted. This significantly
+						 slows down execution, but may be useful 
+						 for some test suites -->
+					    <!--
+					    <restartAUTOnFailure>true</restartAUTOnFailure>
+					    -->
+					  </testOptions>
 				</configuration>
 			</plugin>
 		</plugins>

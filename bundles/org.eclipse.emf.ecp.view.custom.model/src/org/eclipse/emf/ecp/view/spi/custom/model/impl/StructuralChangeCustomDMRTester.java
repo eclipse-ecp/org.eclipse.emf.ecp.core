@@ -107,7 +107,7 @@ public class StructuralChangeCustomDMRTester implements StructuralChangeTesterIn
 		if (!customDMR.isControlChecked()) {
 			return false;
 		}
-		boolean result = true;
+		boolean result = false;
 		for (final VDomainModelReference dmr : customDMR.getDomainModelReferences()) {
 			result |= getEMFFormsStructuralChangeTester().isStructureChanged(dmr, domainRootObject, notification);
 		}

@@ -352,6 +352,7 @@ public class NumberControlSWTRenderer extends TextControlSWTRenderer {
 				}
 			}.execute();
 
+			dataBindingContext.updateTargets();
 			if (eStructuralFeature.isUnsettable() && result == null) {
 				// showUnsetLabel();
 				return SetCommand.UNSET_VALUE;

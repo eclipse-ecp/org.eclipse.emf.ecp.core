@@ -17,13 +17,13 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 /**
- * Junit Test cases for core.locale .
- * 
+ * Junit Test cases for emfforms.common.
+ *
  * @author Eugen Neufeld
  *
  */
 @RunWith(Suite.class)
-@SuiteClasses({ AbstractEMFFormsLocaleProvider_Test.class })
+@SuiteClasses({ AbstractEMFFormsLocaleProvider_Test.class, RankingHelper_Test.class })
 public class AllTests {
 	// JUnit 4 Test Suite
 }

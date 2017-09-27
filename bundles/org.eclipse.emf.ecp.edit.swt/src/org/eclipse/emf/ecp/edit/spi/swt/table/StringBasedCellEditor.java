@@ -9,11 +9,10 @@
  * Contributors:
  * Edgar Mueller - initial API and implementation
  ******************************************************************************/
-package org.eclipse.emf.ecp.edit.internal.swt.table;
+package org.eclipse.emf.ecp.edit.spi.swt.table;
 
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor;
 import org.eclipse.emf.ecp.edit.spi.swt.util.PreSetValidationStrategy;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
 import org.eclipse.jface.viewers.TextCellEditor;
@@ -23,6 +22,8 @@ import org.eclipse.swt.widgets.Composite;
 /**
  * Cell editor for string based cell editors that implements a custom
  * activate method that propagates changes on first key stroke.
+ *
+ * @since 1.14
  *
  */
 public abstract class StringBasedCellEditor extends TextCellEditor implements ECPCellEditor {

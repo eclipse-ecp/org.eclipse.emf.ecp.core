@@ -12,6 +12,7 @@
 package org.eclipse.emf.ecp.view.core.swt.tests;
 
 import org.eclipse.emf.ecp.view.internal.core.swt.renderer.ViewRenderer_PTest;
+import org.eclipse.emf.ecp.view.spi.core.swt.renderer.TextControlRendererUnsettable_PTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
@@ -23,7 +24,8 @@ import org.junit.runners.Suite.SuiteClasses;
  *
  */
 @RunWith(Suite.class)
-@SuiteClasses({ CorrectDipose_PTest.class, DynamicDMR_PTest.class, ViewRenderer_PTest.class })
+@SuiteClasses({ CorrectDipose_PTest.class, DynamicDMR_PTest.class, ViewRenderer_PTest.class,
+	TextControlRendererUnsettable_PTest.class })
 public class AllPluginTests {
 
 }

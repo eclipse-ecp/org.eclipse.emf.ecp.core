@@ -22,6 +22,7 @@ import org.eclipse.emf.ecp.view.model.common.AbstractRenderer;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
+import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
@@ -119,6 +120,9 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 					}
 					if (notification.getStructuralFeature() == VViewPackage.eINSTANCE
 						.getElement_Diagnostic()) {
+						final VDiagnostic newDia = (VDiagnostic) notification.getRawNotification().getNewValue();
+						final VDiagnostic oldDia = (VDiagnostic) notification.getRawNotification().getOldValue();
+						applyValidation(oldDia, newDia);
 						applyValidation();
 					}
 				}
@@ -330,6 +334,19 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	 * @since 1.3
 	 */
 	protected void applyValidation() {
+
+	}
+
+	/**
+	 * Called before the {@link #applyValidation()}. This method allows to create a diff between the old diagnostic and
+	 * the new diagnostic and thus improve the performance of the overlay apply by triggering it only on the relevant
+	 * elements.
+	 *
+	 * @param oldDiagnostic The previous {@link VDiagnostic}
+	 * @param newDiagnostic The current {@link VDiagnostic}
+	 * @since 1.14
+	 */
+	protected void applyValidation(VDiagnostic oldDiagnostic, VDiagnostic newDiagnostic) {
 
 	}
 

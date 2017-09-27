@@ -57,7 +57,8 @@ public class GridTableViewerComposite extends AbstractTableViewerComposite {
 	 * @param title the title
 	 * @param tooltip the tooltip
 	 */
-	GridTableViewerComposite(Composite parent, int style, Object inputObject, TableViewerSWTCustomization customization,
+	public GridTableViewerComposite(Composite parent, int style, Object inputObject,
+		TableViewerSWTCustomization customization,
 		IObservableValue title, IObservableValue tooltip) {
 		super(parent, style, inputObject, customization, title, tooltip);
 	}

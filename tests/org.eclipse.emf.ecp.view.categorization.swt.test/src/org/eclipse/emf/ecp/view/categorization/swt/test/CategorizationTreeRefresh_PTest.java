@@ -39,8 +39,6 @@ import org.eclipse.emf.emfstore.bowling.Player;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
@@ -139,15 +137,6 @@ public class CategorizationTreeRefresh_PTest {
 		shell.dispose();
 	}
 
-	/**
-	 * @param swtControl
-	 * @return
-	 */
-	private Tree getTree(Control swtControl) {
-		final Composite composite = (Composite) swtControl;
-		return (Tree) ((Composite) composite.getChildren()[0]).getChildren()[0];
-	}
-
 	private boolean checkData(TreeItem item) {
 		if (item.getData() == categorization) {
 			return Arrays.equals(idCategorization.getImageData().data, item.getImage().getImageData().data);
@@ -174,7 +163,7 @@ public class CategorizationTreeRefresh_PTest {
 		player.getEMails().add("bla");
 		final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(view, player);
 		ecpSwtView = ECPSWTViewRenderer.INSTANCE.render(shell, vmc);
-		final Tree tree = getTree(ecpSwtView.getSWTControl());
+		final Tree tree = CategoryRendererTestHelper.getTree(ecpSwtView.getSWTControl());
 
 		// assert
 		waitForUIThread();
@@ -185,8 +174,7 @@ public class CategorizationTreeRefresh_PTest {
 	public void testValidationErrorOnInit() throws ECPRendererException {
 		final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(view, player);
 		ecpSwtView = ECPSWTViewRenderer.INSTANCE.render(shell, vmc);
-		final Tree tree = getTree(ecpSwtView.getSWTControl());
-
+		final Tree tree = CategoryRendererTestHelper.getTree(ecpSwtView.getSWTControl());
 		// assert
 		waitForUIThread();
 		assertError(tree);
@@ -197,7 +185,7 @@ public class CategorizationTreeRefresh_PTest {
 		player.getEMails().add("bla");
 		final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(view, player);
 		ecpSwtView = ECPSWTViewRenderer.INSTANCE.render(shell, vmc);
-		final Tree tree = getTree(ecpSwtView.getSWTControl());
+		final Tree tree = CategoryRendererTestHelper.getTree(ecpSwtView.getSWTControl());
 
 		// assert init state
 		assertNoError(tree);
@@ -214,7 +202,7 @@ public class CategorizationTreeRefresh_PTest {
 	public void testNoValidationErrorDynamic() throws ECPRendererException {
 		final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(view, player);
 		ecpSwtView = ECPSWTViewRenderer.INSTANCE.render(shell, vmc);
-		final Tree tree = getTree(ecpSwtView.getSWTControl());
+		final Tree tree = CategoryRendererTestHelper.getTree(ecpSwtView.getSWTControl());
 
 		// assert init state
 		assertError(tree);

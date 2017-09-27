@@ -75,6 +75,13 @@ import org.osgi.framework.ServiceReference;
  */
 public class ViewModelContextImpl implements ViewModelContext {
 
+	static {
+		final Bundle bundle = FrameworkUtil.getBundle(ViewModelContextImpl.class);
+		if (bundle != null) {
+			bundleContext = bundle.getBundleContext();
+		}
+	}
+	private static BundleContext bundleContext;
 	private static final String MODEL_CHANGE_LISTENER_MUST_NOT_BE_NULL = "ModelChangeAddRemoveListener must not be null."; //$NON-NLS-1$
 
 	private static final String ROOT_DOMAIN_MODEL_CHANGE_LISTENER_MUST_NOT_BE_NULL = "RootDomainModelChangeListener must not be null."; //$NON-NLS-1$
@@ -263,14 +270,14 @@ public class ViewModelContextImpl implements ViewModelContext {
 		addResourceIfNecessary();
 
 		resolveDomainReferences(getViewModel(), getDomainModel());
-		loadImmediateServices();
-
-		viewModelContentAdapter = new ViewModelContentAdapter();
-
 		if (parentContext == null) {
 			domainModelContentAdapter = new DomainModelContentAdapter();
 			domainObject.eAdapters().add(domainModelContentAdapter);
 		}
+		loadImmediateServices();
+
+		viewModelContentAdapter = new ViewModelContentAdapter();
+
 		view.eAdapters().add(viewModelContentAdapter);
 
 		for (final ViewModelService viewService : viewServices) {
@@ -366,7 +373,15 @@ public class ViewModelContextImpl implements ViewModelContext {
 	@Deprecated
 	@Override
 	public Set<VControl> getControlsFor(Setting setting) {
-		return getService(EMFFormsSettingToControlMapper.class).getControlsFor(setting);
+		final Set<VElement> elements = getService(EMFFormsSettingToControlMapper.class)
+			.getControlsFor(UniqueSetting.createSetting(setting));
+		final Set<VControl> controls = new LinkedHashSet<VControl>();
+		for (final VElement element : elements) {
+			if (VControl.class.isInstance(element)) {
+				controls.add((VControl) element);
+			}
+		}
+		return controls;
 	}
 
 	/**
@@ -481,6 +496,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 						break;
 					}
 				}
+
 				if (positionToInsert == -1) {
 					domainModelChangeListener.add(modelChangeListener);
 				} else {
@@ -559,9 +575,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 			return parentContext.getService(serviceType);
 		}
 
-		final Bundle bundle = FrameworkUtil.getBundle(getClass());
-		if (bundle != null) {
-			final BundleContext bundleContext = bundle.getBundleContext();
+		if (bundleContext != null) {
 			final ServiceReference<T> serviceReference = bundleContext.getServiceReference(serviceType);
 			if (serviceReference != null) {
 				usedOSGiServices.put(serviceReference, serviceType);

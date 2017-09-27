@@ -17,6 +17,7 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emfforms.common.RankingHelper;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.structuralchange.EMFFormsStructuralChangeTester;
@@ -37,6 +38,12 @@ public class EMFFormsStructuralChangeTesterImpl implements EMFFormsStructuralCha
 
 	private ReportService reportService;
 	private final Set<StructuralChangeTesterInternal> structuralChangeTesters = new LinkedHashSet<StructuralChangeTesterInternal>();
+
+	private static final RankingHelper<StructuralChangeTesterInternal> RANKING_HELPER = //
+		new RankingHelper<StructuralChangeTesterInternal>(
+			StructuralChangeTesterInternal.class,
+			StructuralChangeTesterInternal.NOT_APPLICABLE,
+			StructuralChangeTesterInternal.NOT_APPLICABLE);
 
 	/**
 	 * Sets the {@link ReportService}.
@@ -74,17 +81,19 @@ public class EMFFormsStructuralChangeTesterImpl implements EMFFormsStructuralCha
 	 *      org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification)
 	 */
 	@Override
-	public boolean isStructureChanged(VDomainModelReference reference, EObject domainRootObject,
+	public boolean isStructureChanged(final VDomainModelReference reference, final EObject domainRootObject,
 		ModelChangeNotification notification) {
-		double bestPriority = StructuralChangeTesterInternal.NOT_APPLICABLE;
-		StructuralChangeTesterInternal bestTester = null;
-		for (final StructuralChangeTesterInternal tester : structuralChangeTesters) {
-			final double priority = tester.isApplicable(reference);
-			if (priority > bestPriority) {
-				bestPriority = priority;
-				bestTester = tester;
-			}
-		}
+
+		final StructuralChangeTesterInternal bestTester = RANKING_HELPER.getHighestRankingElement(
+			structuralChangeTesters,
+			new RankingHelper.RankTester<StructuralChangeTesterInternal>() {
+
+				@Override
+				public double getRank(final StructuralChangeTesterInternal tester) {
+					return tester.isApplicable(reference);
+				}
+
+			});
 
 		if (bestTester == null) {
 			reportService.report(new AbstractReport("Warning: Structural changes of the DMR: " + reference //$NON-NLS-1$

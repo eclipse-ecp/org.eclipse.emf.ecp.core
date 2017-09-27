@@ -18,13 +18,16 @@ import javax.inject.Inject;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.property.value.IValueProperty;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.internal.core.swt.MessageKeys;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlJFaceViewerSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
+import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
@@ -41,7 +44,7 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.widgets.Composite;
 
 /**
- * Renderer Enums.
+ * Renderer for Enums.
  *
  * @author Eugen Neufeld
  *
@@ -81,16 +84,30 @@ public class EnumComboViewerSWTRenderer extends SimpleControlJFaceViewerSWTRende
 	}
 
 	/**
+	 * Create a new {@link ComboViewer} instance. Overwrite this method in case you need a custom CCombo instance.
+	 *
+	 * @param parent the parent container
+	 * @param eEnum the enum being rendered
+	 * @return a {@link ComboViewer}
+	 */
+	protected ComboViewer createComboViewer(Composite parent, EEnum eEnum) {
+		return new ComboViewer(parent);
+	}
+
+	/**
 	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.emf.ecp.view.spi.core.swt.SimpleControlJFaceViewerSWTRenderer#createJFaceViewer(org.eclipse.swt.widgets.Composite)
 	 */
+	@SuppressWarnings("rawtypes")
 	@Override
 	protected Viewer createJFaceViewer(Composite parent) throws DatabindingFailedException {
 		final IValueProperty valueProperty = getEMFFormsDatabinding()
 			.getValueProperty(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
 		final EStructuralFeature structuralFeature = (EStructuralFeature) valueProperty.getValueType();
-		final ComboViewer combo = new ComboViewer(parent);
+		final EEnum eEnum = EEnum.class.cast(structuralFeature.getEType());
+
+		final ComboViewer combo = createComboViewer(parent, eEnum);
 		combo.setContentProvider(new ArrayContentProvider());
 		combo.setLabelProvider(new LabelProvider() {
 
@@ -102,12 +119,36 @@ public class EnumComboViewerSWTRenderer extends SimpleControlJFaceViewerSWTRende
 
 		});
 		final List<Object> inputValues = new ArrayList<Object>();
-		for (final EEnumLiteral literal : EEnum.class.cast(structuralFeature.getEType()).getELiterals()) {
+		for (final EEnumLiteral literal : getELiterals(eEnum)) {
 			inputValues.add(literal.getInstance());
 		}
 		combo.setInput(inputValues);
 		combo.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_enum"); //$NON-NLS-1$
+
 		return combo;
+	}
+
+	/**
+	 * Returns the list of literals of the enum.
+	 *
+	 * @param eEnum the enum to get the literals for
+	 * @return a list of literals
+	 *
+	 */
+	public List<EEnumLiteral> getELiterals(EEnum eEnum) {
+		final List<EEnumLiteral> filtered = new ArrayList<EEnumLiteral>();
+		final EList<EEnumLiteral> eLiterals = eEnum.getELiterals();
+		for (final EEnumLiteral literal : eLiterals) {
+
+			final String isInputtable = EcoreUtil.getAnnotation(literal,
+				VViewPackage.eNS_URI,
+				"isInputtable"); //$NON-NLS-1$
+
+			if (isInputtable == null || Boolean.getBoolean(isInputtable)) {
+				filtered.add(literal);
+			}
+		}
+		return filtered;
 	}
 
 	/**
@@ -121,7 +162,12 @@ public class EnumComboViewerSWTRenderer extends SimpleControlJFaceViewerSWTRende
 			.getString(getClass(), MessageKeys.EEnumControl_NoValueSetClickToSetValue);
 	}
 
-	private EMFFormsEditSupport getEMFFormsEditSupport() {
+	/**
+	 * Return the {@link EMFFormsEditSupport}.
+	 *
+	 * @return the {@link EMFFormsEditSupport}
+	 */
+	protected EMFFormsEditSupport getEMFFormsEditSupport() {
 		return emfFormsEditSupport;
 	}
 

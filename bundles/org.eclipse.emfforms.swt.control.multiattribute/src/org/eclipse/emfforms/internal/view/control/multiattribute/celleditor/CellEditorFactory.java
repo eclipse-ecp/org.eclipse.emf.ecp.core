@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.internal.swt.util.PreSetValidationListeners;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emfforms.common.RankingHelper;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.view.control.multiattribute.celleditor.MultiAttributeSWTRendererCellEditorTester;
@@ -58,6 +59,12 @@ public final class CellEditorFactory {
 	private static final String TESTER = "tester";//$NON-NLS-1$
 
 	private final Set<CellEditorDescriptor> descriptors = new LinkedHashSet<CellEditorDescriptor>();
+
+	private static final RankingHelper<CellEditorDescriptor> RANKING_HELPER = //
+		new RankingHelper<CellEditorDescriptor>(
+			CellEditorDescriptor.class,
+			-Double.MIN_VALUE,
+			MultiAttributeSWTRendererCellEditorTester.NOT_APPLICABLE);
 
 	private CellEditorFactory() {
 		parseExtensionPoint();
@@ -105,19 +112,19 @@ public final class CellEditorFactory {
 	 * @return a {@link ECPCellEditor} or a {@link TextCellEditor} as a fallback
 	 */
 	public CellEditor createCellEditor(final EAttribute multiAttribute, final EObject eObject, Table table,
-		ViewModelContext viewModelContext) {
-		double bestPriority = -Double.MIN_VALUE;
-		CellEditorDescriptor bestCandidate = null;
-		for (final CellEditorDescriptor descriptor : descriptors) {
-			final double priority = descriptor.getTester().isApplicable(eObject, multiAttribute, viewModelContext);
-			if (Double.isNaN(priority)) {
-				continue;
-			}
-			if (priority > bestPriority) {
-				bestCandidate = descriptor;
-				bestPriority = priority;
-			}
-		}
+		final ViewModelContext viewModelContext) {
+
+		final CellEditorDescriptor bestCandidate = RANKING_HELPER.getHighestRankingElement(
+			descriptors,
+			new RankingHelper.RankTester<CellEditorDescriptor>() {
+
+				@Override
+				public double getRank(final CellEditorDescriptor descriptor) {
+					return descriptor.getTester().isApplicable(eObject, multiAttribute, viewModelContext);
+				}
+
+			});
+
 		CellEditor result = null;
 		if (bestCandidate != null) {
 			result = createCellEditor(multiAttribute, table, viewModelContext, bestCandidate, result);

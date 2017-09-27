@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.internal.swt.Activator;
 import org.eclipse.emf.ecp.edit.internal.swt.controls.NumericalHelper;
 import org.eclipse.emf.ecp.edit.spi.ViewLocaleService;
+import org.eclipse.emf.ecp.edit.spi.swt.table.StringBasedCellEditor;
 import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.edit.command.SetCommand;

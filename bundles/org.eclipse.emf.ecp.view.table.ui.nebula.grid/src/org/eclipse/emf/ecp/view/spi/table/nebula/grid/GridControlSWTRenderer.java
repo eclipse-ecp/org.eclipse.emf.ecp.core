@@ -11,29 +11,46 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.nebula.grid;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.CompoundCommand;
+import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.internal.table.nebula.grid.GridClearKeyListener;
 import org.eclipse.emf.ecp.view.internal.table.nebula.grid.GridCopyKeyListener;
 import org.eclipse.emf.ecp.view.internal.table.nebula.grid.GridCutKeyListener;
 import org.eclipse.emf.ecp.view.internal.table.nebula.grid.GridPasteKeyListener;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.template.style.background.model.VTBackgroundStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontPropertiesStyleProperty;
+import org.eclipse.emf.edit.command.SetCommand;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.spi.common.converter.EStructuralFeatureValueConverterService;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.common.validation.PreSetValidationService;
+import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
+import org.eclipse.emfforms.spi.swt.table.AbstractTableViewerComposite;
 import org.eclipse.emfforms.spi.swt.table.TableControl;
 import org.eclipse.emfforms.spi.swt.table.TableViewerCompositeBuilder;
 import org.eclipse.emfforms.spi.swt.table.TableViewerCreator;
@@ -42,12 +59,22 @@ import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.viewers.ColumnViewerEditor;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.nebula.jface.gridviewer.GridTableViewer;
 import org.eclipse.nebula.jface.gridviewer.GridViewerEditor;
+import org.eclipse.nebula.widgets.grid.Grid;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.ScrollBar;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author Jonas Helming
@@ -89,6 +116,135 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 	}
 
 	/**
+	 * A Mouse and SelectionChanged listener which allows to copy values like in spreadsheets.
+	 *
+	 * @author Eugen Neufeld
+	 *
+	 */
+	private class CopyDragListener implements MouseListener, ISelectionChangedListener {
+
+		private IStructuredSelection lastSelection;
+		private EObject masterObject;
+		private final PreSetValidationService preSetValidationService;
+
+		CopyDragListener() {
+			final BundleContext bundleContext = FrameworkUtil
+				.getBundle(getClass())
+				.getBundleContext();
+
+			final ServiceReference<PreSetValidationService> serviceReference = bundleContext
+				.getServiceReference(PreSetValidationService.class);
+
+			preSetValidationService = serviceReference != null ? bundleContext.getService(serviceReference) : null;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @see org.eclipse.swt.events.MouseListener#mouseDoubleClick(org.eclipse.swt.events.MouseEvent)
+		 */
+		@Override
+		public void mouseDoubleClick(MouseEvent e) {
+		}
+
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @see org.eclipse.swt.events.MouseListener#mouseDown(org.eclipse.swt.events.MouseEvent)
+		 */
+		@Override
+		public void mouseDown(MouseEvent e) {
+		}
+
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @see org.eclipse.swt.events.MouseListener#mouseUp(org.eclipse.swt.events.MouseEvent)
+		 */
+		@Override
+		public void mouseUp(MouseEvent e) {
+			if (e.button == 1) {
+				if ((e.stateMask & SWT.SHIFT) != 0 && lastSelection != null && lastSelection.size() > 1
+					&& masterObject != null) {
+					final List list = lastSelection.toList();
+					final Grid grid = (Grid) e.widget;
+					final VDomainModelReference dmr = (VDomainModelReference) grid.getColumn(new Point(e.x, e.y))
+						.getData(AbstractTableViewerComposite.DMR);
+
+					Object masterValue = null;
+					EStructuralFeature structuralFeature = null;
+					IObservableValue masterOV = null;
+					try {
+						masterOV = getEMFFormsDatabinding().getObservableValue(dmr, masterObject);
+						masterValue = masterOV.getValue();
+						structuralFeature = (EStructuralFeature) masterOV.getValueType();
+					} catch (final DatabindingFailedException ex) {
+						getReportService().report(new AbstractReport(ex));
+					} finally {
+						if (masterOV != null) {
+							masterOV.dispose();
+						}
+					}
+					final EditingDomain editingDomain = getEditingDomain(masterObject);
+					final CompoundCommand cc = new CompoundCommand();
+					final List<String> invalidValues = new ArrayList<String>();
+					for (int i = 0; i < list.size(); i++) {
+						final EObject eObject = (EObject) list.get(i);
+						if (masterObject == eObject) {
+							continue;
+						}
+						final Diagnostic diagnostic = validate(eObject, dmr, structuralFeature);
+						final boolean valid = diagnostic.getSeverity() == Diagnostic.OK;
+						if (!valid) {
+							invalidValues.add(diagnostic.getChildren().get(0).getMessage());
+						} else {
+							final Command setCommand = SetCommand.create(editingDomain, eObject,
+								structuralFeature, masterValue);
+							cc.append(setCommand);
+						}
+					}
+					editingDomain.getCommandStack().execute(cc);
+				}
+			}
+		}
+
+		private Diagnostic validate(EObject eObject, VDomainModelReference dmr, EStructuralFeature structuralFeature) {
+			IObservableValue value = null;
+			try {
+				if (preSetValidationService != null) {
+					value = getEMFFormsDatabinding().getObservableValue(dmr, eObject);
+					final Map<Object, Object> context = new LinkedHashMap<Object, Object>();
+					context.put("rootEObject", IObserving.class.cast(value).getObserved());//$NON-NLS-1$
+					final Diagnostic diag = preSetValidationService.validate(
+						structuralFeature, value.getValue(), context);
+					return diag;
+				}
+			} catch (final DatabindingFailedException ex) {
+				getReportService().report(new AbstractReport(ex));
+			} finally {
+				if (value != null) {
+					value.dispose();
+				}
+			}
+			return Diagnostic.OK_INSTANCE;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @see org.eclipse.jface.viewers.ISelectionChangedListener#selectionChanged(org.eclipse.jface.viewers.SelectionChangedEvent)
+		 */
+		@Override
+		public void selectionChanged(SelectionChangedEvent event) {
+			lastSelection = event.getStructuredSelection();
+			if (lastSelection.size() == 1) {
+				masterObject = (EObject) lastSelection.getFirstElement();
+			}
+		}
+
+	}
+
+	/**
 	 * {@link TableViewerCreator} for the table control swt renderer. It will create a GridTableViewer with the expected
 	 * custom variant data and the correct style properties as defined in the template model.
 	 *
@@ -107,6 +263,11 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 			tableViewer.getGrid().setFooterVisible(false);
 
 			addKeyListener(tableViewer);
+			if (getViewModelContext().getContextValue("enableMultiEdit") == Boolean.TRUE) {
+				final CopyDragListener mdl = new CopyDragListener();
+				tableViewer.addSelectionChangedListener(mdl);
+				tableViewer.getGrid().addMouseListener(mdl);
+			}
 			// TODO MS
 			// tableViewer.getGrid().addKeyListener(new GridNewLineKeyListener() {
 			//

@@ -17,6 +17,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.emfstore.internal.client.model.ESWorkspaceProviderImpl;
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
@@ -108,7 +109,10 @@ public class Activator extends Plugin {
 	public static ESWorkspaceProviderImpl getESWorkspaceProviderInstance() {
 		// TODO Auto-generated method stub
 		ESWorkspaceProviderProvider esWorkspaceProviderProvider = null;
-		final ServiceReference<ESWorkspaceProviderProvider> serviceRef = plugin.getBundle().getBundleContext()
+
+		final Bundle bndl = plugin.getBundle();
+		final BundleContext cxt = bndl.getBundleContext();
+		final ServiceReference<ESWorkspaceProviderProvider> serviceRef = cxt
 			.getServiceReference(ESWorkspaceProviderProvider.class);
 		esWorkspaceProviderProvider = plugin.getBundle().getBundleContext().getService(serviceRef);
 		// because we are using a service factory for the RAP implementation we must unget

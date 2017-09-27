@@ -226,6 +226,7 @@ public class ViewEditorPart extends EditorPart implements
 		if (migrate) {
 			checkMigration(resourceURI);
 		}
+		editingDomain.getResourceSet().getResources().clear();
 		resource = editingDomain.getResourceSet().getResource(resourceURI, true);
 		if (resource.getContents().size() == 0 || !VView.class.isInstance(resource.getContents().get(0))) {
 			throw new PartInitException(Messages.ViewEditorPart_InvalidVView);

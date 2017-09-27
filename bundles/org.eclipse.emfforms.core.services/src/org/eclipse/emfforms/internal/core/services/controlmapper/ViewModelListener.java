@@ -90,6 +90,9 @@ public class ViewModelListener implements ModelChangeListener {
 	 */
 	@Override
 	public void notifyChange(ModelChangeNotification notification) {
+		if (notification.getRawNotification().isTouch()) {
+			return;
+		}
 		if (notification.getRawNotification().getEventType() == Notification.REMOVING_ADAPTER) {
 			return;
 		}

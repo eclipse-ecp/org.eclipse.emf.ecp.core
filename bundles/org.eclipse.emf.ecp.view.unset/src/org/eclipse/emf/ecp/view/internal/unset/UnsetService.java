@@ -20,14 +20,13 @@ import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
-import org.eclipse.emf.ecp.view.spi.model.ModelChangeAddRemoveListener;
+import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
@@ -52,7 +51,7 @@ public class UnsetService implements ViewModelService, EMFFormsContextListener {
 	private static final String VIEW_MODEL_NULL_EXCEPTION = "View model must not be null."; //$NON-NLS-1$
 
 	private ViewModelContext context;
-	private ModelChangeAddRemoveListener viewChangeListener;
+	private ModelChangeListener viewChangeListener;
 
 	private final Map<EObject, Set<FeatureWrapper>> objectToFeatureMap;
 	private final Map<FeatureWrapper, Set<VControl>> settingToControlMap;
@@ -322,7 +321,7 @@ public class UnsetService implements ViewModelService, EMFFormsContextListener {
 	@Override
 	public void contextInitialised() {
 
-		viewChangeListener = new ModelChangeAddRemoveListener() {
+		viewChangeListener = new ModelChangeListener() {
 			@Override
 			public void notifyChange(ModelChangeNotification notification) {
 				if (notification.getStructuralFeature() == VViewPackage.eINSTANCE.getElement_Visible()) {
@@ -337,14 +336,6 @@ public class UnsetService implements ViewModelService, EMFFormsContextListener {
 					hide((VElement) notifier);
 
 				}
-			}
-
-			@Override
-			public void notifyAdd(Notifier notifier) {
-			}
-
-			@Override
-			public void notifyRemove(Notifier notifier) {
 			}
 		};
 		context.registerViewChangeListener(viewChangeListener);

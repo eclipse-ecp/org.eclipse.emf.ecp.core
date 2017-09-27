@@ -89,4 +89,14 @@ public class DefaultTreeMasterDetailCustomization extends DefaultTreeViewerCusto
 		this.viewServiceProvider = viewServiceProvider;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emfforms.spi.swt.treemasterdetail.DetailCompositeBuilder#enableVerticalCopy()
+	 */
+	@Override
+	public boolean enableVerticalCopy() {
+		return false;
+	}
+
 }

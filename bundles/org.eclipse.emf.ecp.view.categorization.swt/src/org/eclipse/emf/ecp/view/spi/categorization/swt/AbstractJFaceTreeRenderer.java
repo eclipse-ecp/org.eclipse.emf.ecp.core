@@ -108,6 +108,7 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 	}
 
 	private SWTGridDescription gridDescription;
+	private AbstractJFaceTreeRenderer<VELEMENT>.TreeSelectionChangedListener treeSelectionChangedListener;
 
 	@Override
 	public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
@@ -125,6 +126,7 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 	@Override
 	protected void dispose() {
 		gridDescription = null;
+		getViewModelContext().unregisterViewChangeListener(treeSelectionChangedListener);
 		super.dispose();
 	}
 
@@ -163,7 +165,7 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 
 		final Object detailPane = getViewModelContext().getContextValue("detailPane"); //$NON-NLS-1$
 		if (detailPane != null && Composite.class.isInstance(detailPane)) {
-			treeViewer = new TreeViewer(parent);
+			treeViewer = createTreeViewer(parent);
 
 			final ScrolledComposite editorComposite = createdEditorPane(Composite.class.cast(detailPane));
 
@@ -179,7 +181,7 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 		final SashForm sashForm = new SashForm(parent, SWT.HORIZONTAL);
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(sashForm);
 
-		treeViewer = new TreeViewer(sashForm);
+		treeViewer = createTreeViewer(sashForm);
 
 		final ScrolledComposite editorComposite = createdEditorPane(sashForm);
 
@@ -191,6 +193,17 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 			getViewModelContext());
 		SWTDataElementIdHelper.setElementIdDataWithSubId(sashForm, getVElement(), "sash", getViewModelContext()); //$NON-NLS-1$
 		return sashForm;
+	}
+
+	/**
+	 * Creates a {@link TreeViewer}. Sub classes can override to influence the {@link TreeViewer}.
+	 *
+	 * @param parent the parent {@link Composite}
+	 * @return a {@link TreeViewer}
+	 * @since 1.14
+	 */
+	protected TreeViewer createTreeViewer(Composite parent) {
+		return new TreeViewer(parent, SWT.SINGLE);
 	}
 
 	/**
@@ -300,7 +313,7 @@ public abstract class AbstractJFaceTreeRenderer<VELEMENT extends VElement> exten
 		treeViewer.setContentProvider(contentProvider);
 		treeViewer.setLabelProvider(treeTableLabelProvider);
 
-		final AbstractJFaceTreeRenderer<VELEMENT>.TreeSelectionChangedListener treeSelectionChangedListener = new TreeSelectionChangedListener(
+		treeSelectionChangedListener = new TreeSelectionChangedListener(
 			getViewModelContext(), editorComposite,
 			getCategorizationElement(),
 			treeViewer, editors);

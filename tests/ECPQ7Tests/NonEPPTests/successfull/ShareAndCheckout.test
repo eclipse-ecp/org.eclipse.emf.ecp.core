@@ -1,13 +1,13 @@
---- Q7 testcase ---
+--- RCPTT testcase ---
 Format-Version: 1.0
-Q7-vendor: www.xored.com/q7
 Contexts: _mY5uUKEgEeKX8e34E6tWIg,_rr2EEFpSEeKcnaHGSt8OwA,_f3qEUVpSEeKcnaHGSt8OwA,_IuFcgFpZEeKcnaHGSt8OwA,_YQj0cT-VEeK-yuKsz0Lang
 Element-Name: ShareAndCheckout
 Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _knOZsD-WEeK-yuKsz0Lang
-Save-Time: 3/24/13 3:40 PM
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 9/5/17 10:31 PM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -24,6 +24,7 @@ with [get-window "Progress Information" | get-window "Authentication required"] 
     get-button OK | click
 }
 get-view "Model Explorer" | get-tree | select TestProject | get-menu Share | click
+get-view "Model Explorer" | get-tree | select TestProject | get-menu Share | click
 with [get-window "ECPRepository Wizard"] {
     get-button "Select existing repository" | click
     get-button "Next >" | click
@@ -31,6 +32,7 @@ with [get-window "ECPRepository Wizard"] {
     get-button Finish | click
 }
 get-window "Share succeeded" | get-button OK | click
+get-view "Model Repositories" | get-tree | select "Local EMFStore/TestProject" | get-menu "Checkout..." | click
 get-view "Model Repositories" | get-tree | select "Local EMFStore/TestProject" | get-menu "Checkout..." | click
 with [get-window Checkout] {
     get-editbox -after [get-label "Project name:"] | set-text TestProjectSecondCheckOut

@@ -6,12 +6,12 @@
 	<parent>
 		<groupId>org.eclipse.emf.ecp</groupId>
 		<artifactId>ecp-parent</artifactId>
-		<version>1.13.0-SNAPSHOT</version>
+		<version>1.14.0-SNAPSHOT</version>
 		<relativePath>../../releng/org.eclipse.emf.ecp.releng/</relativePath>
 	</parent>
 	<groupId>org.eclipse.emf.ecp</groupId>
 	<artifactId>ecp-bundles-parent</artifactId>
-	<version>1.13.0-SNAPSHOT</version>
+	<version>1.14.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<modules>
@@ -190,14 +190,13 @@
 		<!-- RAP -->
 		<module>../../bundles/org.eclipse.emf.ecp.rap.util</module>
 		<module>../../bundles/org.eclipse.emf.rap.edit.ui.minimal</module>
-		<module>../../bundles/org.eclipse.emf.ecp.view.util.swt.rap</module>
-		
-		<module>../../bundles/org.eclipse.emf.ecp.rap</module>
-		
-		
+		<module>../../bundles/org.eclipse.emf.ecp.view.util.swt.rap</module>	
+		<module>../../bundles/org.eclipse.emf.ecp.rap</module>	
 		<module>../../bundles/org.eclipse.emf.ecp.ui.rap</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.label.ui.rap</module>		
+		<module>../../bundles/org.eclipse.emf.ecp.workspace.ui.rap</module>
 		
-		<module>../../bundles/org.eclipse.emf.ecp.view.label.ui.rap</module>
+		
 
 		<!-- e4 demo application -->
 		<module>../../bundles/org.eclipse.emf.ecp.application.e4</module>

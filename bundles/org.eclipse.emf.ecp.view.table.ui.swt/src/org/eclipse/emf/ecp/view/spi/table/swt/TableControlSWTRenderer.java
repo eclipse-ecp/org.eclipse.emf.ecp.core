@@ -23,7 +23,6 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -60,9 +59,11 @@ import org.eclipse.emf.ecp.view.internal.table.swt.CellReadOnlyTesterHelper;
 import org.eclipse.emf.ecp.view.internal.table.swt.MessageKeys;
 import org.eclipse.emf.ecp.view.internal.table.swt.RunnableManager;
 import org.eclipse.emf.ecp.view.internal.table.swt.TableConfigurationHelper;
+import org.eclipse.emf.ecp.view.model.common.util.RendererUtil;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.DiagnosticMessageExtractor;
+import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.reporting.StatusReport;
@@ -80,6 +81,7 @@ import org.eclipse.emf.ecp.view.template.style.background.model.VTBackgroundFact
 import org.eclipse.emf.ecp.view.template.style.background.model.VTBackgroundStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontPropertiesFactory;
 import org.eclipse.emf.ecp.view.template.style.fontProperties.model.VTFontPropertiesStyleProperty;
+import org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.RenderMode;
 import org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyFactory;
 import org.eclipse.emf.ecp.view.template.style.tableValidation.model.VTTableValidationFactory;
@@ -261,7 +263,17 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	@Override
 	public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
 		if (rendererGridDescription == null) {
-			rendererGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 1, this);
+			// create special grid for compact mode
+			if (getTableStyleProperty().getRenderMode() == RenderMode.COMPACT_VERTICALLY) {
+				if (getVElement().getLabelAlignment() == LabelAlignment.NONE) {
+					rendererGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 2, this);
+				} else {
+					rendererGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 3, this);
+				}
+			} else {
+				rendererGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 1, this);
+			}
+
 		}
 		return rendererGridDescription;
 	}
@@ -273,6 +285,56 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	@Override
 	protected Control renderControl(SWTGridCell gridCell, final Composite parent) throws NoRendererFoundException,
+		NoPropertyDescriptorFoundExeption {
+		// Compact
+		if (gridCell.getColumn() == 0 && rendererGridDescription.getColumns() == 3) {
+			return createLabel(parent);
+		}
+		if (gridCell.getColumn() == 0 && rendererGridDescription.getColumns() == 2
+			|| gridCell.getColumn() == 1 && rendererGridDescription.getColumns() == 3) {
+			validationIcon = createValidationIcon(parent);
+			return validationIcon;
+		}
+		// Default
+		return renderTableControl(gridCell, parent);
+	}
+
+	@Override
+	protected Control createLabel(final Composite parent) {
+		final VDomainModelReference dmrToCheck = getDMRToMultiReference();
+		final IObservableValue labelText = getLabelText(dmrToCheck, false);
+		final IObservableValue labelTooltipText = getLabelTooltipText(dmrToCheck, false);
+
+		final Label titleLabel = new Label(parent, SWT.NONE);
+		titleLabel.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_label"); //$NON-NLS-1$
+		titleLabel.setBackground(parent.getBackground());
+
+		viewModelDBC.bindValue(
+			WidgetProperties.text().observe(titleLabel),
+			labelText);
+		viewModelDBC.bindValue(
+			WidgetProperties.tooltipText().observe(titleLabel),
+			labelTooltipText);
+
+		return titleLabel;
+	}
+
+	/**
+	 * Renders the Table Control.
+	 *
+	 * Renders the Table Control including title and validation when {@link RenderMode} is set to
+	 * {@link RenderMode#DEFAULT}. Only renders the
+	 * Table Control without title and validation when renderMode is set to {@link RenderMode#COMPACT_VERTICALLY}.
+	 *
+	 * @param gridCell the {@link SWTGridCell}.
+	 * @param parent the {@link Composite}.
+	 * @return the rendered {@link Control}.
+	 * @throws NoRendererFoundException the {@link NoRendererFoundException}.
+	 * @throws NoPropertyDescriptorFoundExeption the {@link NoPropertyDescriptorFoundExeption}.
+	 * @since 1.14
+	 */
+	protected Control renderTableControl(SWTGridCell gridCell, final Composite parent)
+		throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
 		try {
 			/* get the list-setting which is displayed */
@@ -323,7 +385,6 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			setupValidation(tableViewerComposite);
 
 			/* create the table viewer editor */
-
 			setTableViewer(tableViewerComposite.getTableViewer());
 
 			SWTDataElementIdHelper.setElementIdDataForVControl(tableViewerComposite, getVElement(),
@@ -356,6 +417,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * @since 1.13
 	 */
 	protected TableViewerCompositeBuilder createTableViewerCompositeBuilder() {
+		if (getTableStyleProperty().getRenderMode() == RenderMode.COMPACT_VERTICALLY) {
+			return new CompactVerticallyTableControlSWTRendererCompositeBuilder(false, false);
+		}
 		return new TableControlSWTRendererCompositeBuilder();
 	}
 
@@ -904,16 +968,28 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		return imageRegistryService.getImage(FrameworkUtil.getBundle(TableControlSWTRenderer.class), path);
 	}
 
-	private VTTableValidationStyleProperty getTableValidationStyleProperty() {
+	/**
+	 * Returns the {@link VTTableValidationStyleProperty}.
+	 *
+	 * @return the {@link VTTableValidationStyleProperty}
+	 * @since 1.14
+	 */
+	protected VTTableValidationStyleProperty getTableValidationStyleProperty() {
 		VTTableValidationStyleProperty tableValidationStyleProperties = getStyleProperty(
 			VTTableValidationStyleProperty.class);
 		if (tableValidationStyleProperties == null) {
-			tableValidationStyleProperties = getDefaultTableValidationStyleProperty();
+			tableValidationStyleProperties = createDefaultTableValidationStyleProperty();
 		}
 		return tableValidationStyleProperties;
 	}
 
-	private VTTableValidationStyleProperty getDefaultTableValidationStyleProperty() {
+	/**
+	 * Creates the default {@link VTTableValidationStyleProperty}.
+	 *
+	 * @return the default {@link VTTableValidationStyleProperty}
+	 * @since 1.14
+	 */
+	protected VTTableValidationStyleProperty createDefaultTableValidationStyleProperty() {
 		final VTTableValidationStyleProperty tableValidationProp = VTTableValidationFactory.eINSTANCE
 			.createTableValidationStyleProperty();
 		tableValidationProp.setColumnWidth(80);
@@ -933,24 +1009,42 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	protected VTBackgroundStyleProperty getBackgroundStyleProperty() {
 		VTBackgroundStyleProperty styleProperty = getStyleProperty(VTBackgroundStyleProperty.class);
 		if (styleProperty == null) {
-			styleProperty = getDefaultBackgroundStyleProperty();
+			styleProperty = createDefaultBackgroundStyleProperty();
 		}
 		return styleProperty;
 	}
 
-	private VTBackgroundStyleProperty getDefaultBackgroundStyleProperty() {
+	/**
+	 * Creates the default {@link VTBackgroundStyleProperty}.
+	 *
+	 * @return the default {@link VTBackgroundStyleProperty}
+	 * @since 1.14
+	 */
+	protected VTBackgroundStyleProperty createDefaultBackgroundStyleProperty() {
 		return VTBackgroundFactory.eINSTANCE.createBackgroundStyleProperty();
 	}
 
-	private VTTableStyleProperty getTableStyleProperty() {
+	/**
+	 * Returns the {@link VTTableStyleProperty}.
+	 *
+	 * @return the {@link VTTableStyleProperty}
+	 * @since 1.14
+	 */
+	protected VTTableStyleProperty getTableStyleProperty() {
 		VTTableStyleProperty styleProperty = getStyleProperty(VTTableStyleProperty.class);
 		if (styleProperty == null) {
-			styleProperty = getDefaultTableStyleProperty();
+			styleProperty = createDefaultTableStyleProperty();
 		}
 		return styleProperty;
 	}
 
-	private VTTableStyleProperty getDefaultTableStyleProperty() {
+	/**
+	 * Creates the default {@link VTTableStyleProperty}.
+	 *
+	 * @return the default {@link VTTableStyleProperty}
+	 * @since 1.14
+	 */
+	protected VTTableStyleProperty createDefaultTableStyleProperty() {
 		final VTTableStyleProperty tableStyleProperty = VTTableStylePropertyFactory.eINSTANCE
 			.createTableStyleProperty();
 		tableStyleProperty.setMaximumHeight(200);
@@ -969,33 +1063,27 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	protected VTFontPropertiesStyleProperty getFontPropertiesStyleProperty() {
 		VTFontPropertiesStyleProperty styleProperty = getStyleProperty(VTFontPropertiesStyleProperty.class);
 		if (styleProperty == null) {
-			styleProperty = getDefaultFontPropertiesStyleProperty();
+			styleProperty = createDefaultFontPropertiesStyleProperty();
 		}
 		return styleProperty;
 	}
 
-	private VTFontPropertiesStyleProperty getDefaultFontPropertiesStyleProperty() {
+	/**
+	 * Creates the default {@link VTFontPropertiesStyleProperty}.
+	 *
+	 * @return the default {@link VTFontPropertiesStyleProperty}
+	 * @since 1.14
+	 */
+	protected VTFontPropertiesStyleProperty createDefaultFontPropertiesStyleProperty() {
 		final VTFontPropertiesStyleProperty property = VTFontPropertiesFactory.eINSTANCE
 			.createFontPropertiesStyleProperty();
 		property.setColorHEX("000000"); //$NON-NLS-1$
 		return property;
 	}
 
-	/**
-	 * Returns a {@link VTStyleProperty} of the given class or <code>null</code> if none was found.
-	 *
-	 * @param stylePropertyClass the style property class
-	 * @return the property or <code>null</code>
-	 */
 	private <SP extends VTStyleProperty> SP getStyleProperty(Class<SP> stylePropertyClass) {
-		final Set<VTStyleProperty> styleProperties = getVTViewTemplateProvider()
-			.getStyleProperties(getVElement(), getViewModelContext());
-		for (final VTStyleProperty styleProperty : styleProperties) {
-			if (stylePropertyClass.isInstance(styleProperty)) {
-				return stylePropertyClass.cast(styleProperty);
-			}
-		}
-		return null;
+		return RendererUtil.getStyleProperty(getVTViewTemplateProvider(), getVElement(), getViewModelContext(),
+			stylePropertyClass);
 	}
 
 	/**
@@ -1311,6 +1399,14 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		viewModelDBC.dispose();
 		if (list != null) {
 			list.dispose();
+		}
+		if (columnIndexToComparatorMap != null) {
+			for (final ECPCellEditorComparator value : columnIndexToComparatorMap.values()) {
+				if (value instanceof CellEditor) {
+					((CellEditor) value).dispose();
+				}
+			}
+			columnIndexToComparatorMap.clear();
 		}
 		super.dispose();
 	}
@@ -2017,6 +2113,39 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		@Override
 		protected Label createValidationLabel(Composite topComposite) {
 			final Label validationLabel = createValidationIcon(topComposite);
+			GridDataFactory.fillDefaults().hint(16, 17).grab(false, false).applyTo(validationLabel);
+			return validationLabel;
+		}
+
+		@Override
+		protected Composite createViewerComposite(Composite composite) {
+			return createControlComposite(composite);
+		}
+	}
+
+	/**
+	 * {@link org.eclipse.emfforms.spi.swt.table.TableViewerCompositeBuilder TableViewerCompositeBuilder} which calls
+	 * the existing template method to create the validation label.
+	 *
+	 * @since 1.14
+	 *
+	 */
+	protected class CompactVerticallyTableControlSWTRendererCompositeBuilder
+		extends org.eclipse.emfforms.spi.swt.table.CompactVerticallyTableViewerCompositeBuilder {
+		/**
+		 * Constructor.
+		 *
+		 * @param createTitleLabel indicates whether to create a title label.
+		 * @param createValidationLabel indicates whether to create a validation label.
+		 */
+		public CompactVerticallyTableControlSWTRendererCompositeBuilder(
+			boolean createTitleLabel, boolean createValidationLabel) {
+			super(createTitleLabel, createValidationLabel);
+		}
+
+		@Override
+		protected Label createValidationLabel(Composite composite) {
+			final Label validationLabel = createValidationIcon(composite);
 			GridDataFactory.fillDefaults().hint(16, 17).grab(false, false).applyTo(validationLabel);
 			return validationLabel;
 		}

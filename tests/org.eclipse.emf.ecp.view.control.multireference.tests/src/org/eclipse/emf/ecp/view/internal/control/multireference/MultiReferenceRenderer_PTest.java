@@ -12,10 +12,12 @@
 package org.eclipse.emf.ecp.view.internal.control.multireference;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -34,7 +36,10 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
+import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
+import org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.RenderMode;
+import org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.D;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestFactory;
@@ -44,8 +49,13 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedExcep
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
+import org.eclipse.emfforms.spi.swt.core.SWTDataElementIdHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -69,6 +79,7 @@ public class MultiReferenceRenderer_PTest {
 	private static Realm realm;
 	private EMFFormsDatabinding databindingService;
 	private MultiReferenceSWTRenderer renderer;
+	private MultiReferenceSWTRenderer compactVerticallyRenderer;
 	private Shell shell;
 	private EMFFormsLabelProvider labelProvider;
 
@@ -124,9 +135,21 @@ public class MultiReferenceRenderer_PTest {
 		renderer = new MultiReferenceSWTRenderer(vControl, viewContext, reportService, databindingService,
 			labelProvider, templateProvider, imageRegistryService);
 		renderer.init();
+		renderer.getGridDescription(new SWTGridDescription());
+
+		final VTViewTemplateProvider compactTemplateProvider = mock(VTViewTemplateProvider.class);
+		final VTTableStyleProperty tableStyleProperty = mock(VTTableStyleProperty.class);
+		when(compactTemplateProvider.getStyleProperties(vControl, viewContext))
+			.thenReturn(Collections.singleton((VTStyleProperty) tableStyleProperty));
+		when(tableStyleProperty.getRenderMode()).thenReturn(RenderMode.COMPACT_VERTICALLY);
+		compactVerticallyRenderer = new MultiReferenceSWTRenderer(vControl, viewContext, reportService,
+			databindingService, labelProvider, compactTemplateProvider, imageRegistryService);
+		compactVerticallyRenderer.init();
+		compactVerticallyRenderer.getGridDescription(new SWTGridDescription());
 	}
 
 	/**
+	 *
 	 * Unregister databinding and label service after every test.
 	 */
 	@After
@@ -269,6 +292,72 @@ public class MultiReferenceRenderer_PTest {
 		final TableColumn column = table.getColumn(0);
 		assertEquals(TEST_DISPLAYNAME, column.getText());
 		assertEquals(TEST_DESCRIPTION, column.getToolTipText());
+	}
+
+	@Test
+	public void testRenderModeDefaultGridDescription() {
+		final SWTGridDescription description = renderer.getGridDescription(new SWTGridDescription());
+		assertEquals(1, description.getColumns());
+	}
+
+	@Test
+	public void testRenderModeCompactVerticallyGridDescription() {
+		final SWTGridDescription description = compactVerticallyRenderer.getGridDescription(new SWTGridDescription());
+		assertEquals(2, description.getColumns());
+	}
+
+	@Test
+	public void testRenderModeCompactVerticallyRenderValidation()
+		throws NoPropertyDescriptorFoundExeption, NoRendererFoundException {
+		final Control renderedControl = compactVerticallyRenderer
+			.render(new SWTGridCell(0, 0, compactVerticallyRenderer), shell);
+		assertTrue(Label.class.isInstance(renderedControl));
+		assertTrue(String.class.isInstance(renderedControl.getData(SWTDataElementIdHelper.ELEMENT_ID_KEY)));
+		assertTrue(
+			String.class.cast(renderedControl.getData(SWTDataElementIdHelper.ELEMENT_ID_KEY)).contains("validation")); //$NON-NLS-1$
+	}
+
+	@Test
+	public void testRenderModeCompactVerticallyRenderTable()
+		throws NoPropertyDescriptorFoundExeption, NoRendererFoundException, DatabindingFailedException {
+
+		final TestObservableValue observableValue = mock(TestObservableValue.class);
+		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+			observableValue);
+		when(observableValue.getObserved()).thenReturn(mock(EObject.class));
+
+		final Control renderedControl = compactVerticallyRenderer
+			.render(new SWTGridCell(0, 1, compactVerticallyRenderer), shell);
+		assertTrue(Composite.class.isInstance(renderedControl));
+
+		final Composite tableAndButtonsComposite = Composite.class.cast(renderedControl);
+		assertTrue(Composite.class.isInstance(tableAndButtonsComposite.getChildren()[0]));
+
+		final Composite tableComposite = Composite.class.cast(tableAndButtonsComposite.getChildren()[0]);
+		assertTrue(Composite.class.isInstance(tableComposite.getChildren()[0]));
+
+		final Composite tableControlComposite = Composite.class.cast(tableComposite.getChildren()[0]);
+		assertTrue(Table.class.isInstance(tableControlComposite.getChildren()[0]));
+	}
+
+	@Test
+	public void testRenderModeCompactVerticallyRenderButtons()
+		throws NoPropertyDescriptorFoundExeption, NoRendererFoundException, DatabindingFailedException {
+
+		final TestObservableValue observableValue = mock(TestObservableValue.class);
+		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+			observableValue);
+		when(observableValue.getObserved()).thenReturn(mock(EObject.class));
+
+		final Control renderedControl = compactVerticallyRenderer
+			.render(new SWTGridCell(0, 1, compactVerticallyRenderer), shell);
+		assertTrue(Composite.class.isInstance(renderedControl));
+
+		final Composite tableAndButtonsComposite = Composite.class.cast(renderedControl);
+		assertTrue(Composite.class.isInstance(tableAndButtonsComposite.getChildren()[1]));
+
+		final Composite buttonsComposite = Composite.class.cast(tableAndButtonsComposite.getChildren()[1]);
+		assertTrue(Button.class.isInstance(buttonsComposite.getChildren()[0]));
 	}
 
 	/**

@@ -58,7 +58,7 @@ public class SettingToControlMapFactoryImpl implements EMFFormsViewServiceFactor
 	 */
 	@Override
 	public EMFFormsViewServiceScope getScope() {
-		return EMFFormsViewServiceScope.LOCAL;
+		return EMFFormsViewServiceScope.GLOBAL;
 	}
 
 	/**

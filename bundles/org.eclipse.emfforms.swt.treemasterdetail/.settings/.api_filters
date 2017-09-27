@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.emfforms.swt.treemasterdetail" version="2">
     <resource path="META-INF/MANIFEST.MF">
+        <filter comment="SPI Changes for 1.14.0" id="923795461">
+            <message_arguments>
+                <message_argument value="1.14.0"/>
+                <message_argument value="1.13.0"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI Change 1.8.0" id="923795461">
             <message_arguments>
                 <message_argument value="1.8.0"/>
@@ -35,6 +41,14 @@
             <message_arguments>
                 <message_argument value="org.eclipse.emfforms.spi.swt.treemasterdetail.util.TreeMasterDetailRenderer"/>
                 <message_argument value="org.eclipse.emfforms.swt.treemasterdetail_1.8.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emfforms/spi/swt/treemasterdetail/DetailCompositeBuilder.java" type="org.eclipse.emfforms.spi.swt.treemasterdetail.DetailCompositeBuilder">
+        <filter comment="SPI Changes for 1.14.0" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emfforms.spi.swt.treemasterdetail.DetailCompositeBuilder"/>
+                <message_argument value="enableVerticalCopy()"/>
             </message_arguments>
         </filter>
     </resource>
@@ -78,9 +92,6 @@
                 <message_argument value="getLabelDecorator(TreeViewer)"/>
             </message_arguments>
         </filter>
-    </resource>
-    <resource path="src/org/eclipse/emfforms/spi/swt/treemasterdetail/actions/MasterDetailAction.java">
-        <filter id="0"/>
     </resource>
     <resource path="src/org/eclipse/emfforms/spi/swt/treemasterdetail/actions/MasterDetailAction.java" type="org.eclipse.emfforms.spi.swt.treemasterdetail.actions.MasterDetailAction">
         <filter comment="SPI Change 1.10.0" id="336695337">

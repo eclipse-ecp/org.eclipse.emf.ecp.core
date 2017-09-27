@@ -70,6 +70,7 @@ import org.eclipse.emfforms.spi.swt.core.EMFFormsNoRendererException;
 import org.eclipse.emfforms.spi.swt.core.EMFFormsRendererFactory;
 import org.eclipse.emfforms.spi.swt.core.di.EMFFormsContextProvider;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
+import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
@@ -232,7 +233,7 @@ public class SWTTable_PTest {
 		final AbstractSWTRenderer<VElement> tableRenderer = rendererFactory.getRendererInstance(
 			handle.getTableControl(),
 			new ViewModelContextWithoutServices(handle.getTableControl()));
-
+		tableRenderer.getGridDescription(new SWTGridDescription());
 		final Control render = tableRenderer.render(new SWTGridCell(0, 0, tableRenderer), shell);
 		if (render == null) {
 			fail();
@@ -271,7 +272,7 @@ public class SWTTable_PTest {
 		final AbstractSWTRenderer<VElement> tableRenderer = rendererFactory.getRendererInstance(
 			handle.getTableControl(),
 			new ViewModelContextWithoutServices(handle.getTableControl()));
-
+		tableRenderer.getGridDescription(new SWTGridDescription());
 		final Control render = tableRenderer.render(new SWTGridCell(0, 0, tableRenderer), shell);
 		if (render == null) {
 			fail();
@@ -291,7 +292,7 @@ public class SWTTable_PTest {
 		final AbstractSWTRenderer<VElement> tableRenderer = rendererFactory.getRendererInstance(
 			handle.getTableControl(),
 			new ViewModelContextWithoutServices(handle.getTableControl()));
-
+		tableRenderer.getGridDescription(new SWTGridDescription());
 		final Control control = tableRenderer.render(new SWTGridCell(0, 0, tableRenderer), shell);
 		if (control == null) {
 			fail("No control was rendered");
@@ -310,7 +311,7 @@ public class SWTTable_PTest {
 		final AbstractSWTRenderer<VElement> tableRenderer = rendererFactory.getRendererInstance(
 			handle.getTableControl(),
 			new ViewModelContextWithoutServices(handle.getTableControl()));
-
+		tableRenderer.getGridDescription(new SWTGridDescription());
 		final Control control = tableRenderer.render(new SWTGridCell(0, 0, tableRenderer), shell);
 		if (control == null) {
 			fail("No control was rendered");
@@ -331,7 +332,7 @@ public class SWTTable_PTest {
 		final AbstractSWTRenderer<VElement> tableRenderer = rendererFactory.getRendererInstance(
 			handle.getTableControl(),
 			new ViewModelContextWithoutServices(handle.getTableControl()));
-
+		tableRenderer.getGridDescription(new SWTGridDescription());
 		final Control control = tableRenderer.render(new SWTGridCell(0, 0, tableRenderer), shell);
 		if (control == null) {
 			fail("No control was rendered");
@@ -353,6 +354,7 @@ public class SWTTable_PTest {
 		final AbstractSWTRenderer<VElement> tableRenderer = rendererFactory.getRendererInstance(
 			handle.getTableControl(),
 			new ViewModelContextWithoutServices(handle.getTableControl()));
+		tableRenderer.getGridDescription(new SWTGridDescription());
 		final Control render = tableRenderer.render(new SWTGridCell(0, 0, tableRenderer), shell);
 		final Control control = Composite.class.cast(render).getChildren()[0];
 		if (control == null) {
@@ -413,6 +415,7 @@ public class SWTTable_PTest {
 		// render
 		final AbstractSWTRenderer<VElement> tableRenderer = rendererFactory.getRendererInstance(tableControl,
 			new ViewModelContextWithoutServices(tableControl));
+		tableRenderer.getGridDescription(new SWTGridDescription());
 		final Control control = tableRenderer.render(new SWTGridCell(0, 0, tableRenderer), shell);
 		if (control == null) {
 			fail("No control was rendered");
@@ -473,6 +476,7 @@ public class SWTTable_PTest {
 
 		// render
 		final TableControlSWTRenderer tableRenderer = createRendererInstanceWithCustomCellEditor(tableControl);
+		tableRenderer.getGridDescription(new SWTGridDescription());
 		final Control control = tableRenderer.render(new SWTGridCell(0, 0, tableRenderer), shell);
 		if (control == null) {
 			fail("No control was rendered");

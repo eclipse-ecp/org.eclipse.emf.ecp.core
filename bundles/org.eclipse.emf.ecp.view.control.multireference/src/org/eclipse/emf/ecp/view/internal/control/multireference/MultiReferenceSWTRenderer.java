@@ -34,6 +34,7 @@ import org.eclipse.emf.ecp.edit.spi.DeleteService;
 import org.eclipse.emf.ecp.edit.spi.EMFDeleteServiceImpl;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
+import org.eclipse.emf.ecp.view.model.common.util.RendererUtil;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -43,6 +44,9 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
+import org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.RenderMode;
+import org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty;
+import org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyFactory;
 import org.eclipse.emf.edit.command.MoveCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -144,15 +148,20 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	private Button btnDelete;
 	private Button btnMoveUp;
 	private Button btnMoveDown;
+	private SWTGridDescription rendererGridDescription;
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#getGridDescription(org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription)
-	 */
 	@Override
 	public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
-		return GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 1, this);
+		if (rendererGridDescription == null) {
+			// create special grid for compact mode
+			if (getTableStyleProperty().getRenderMode() == RenderMode.COMPACT_VERTICALLY) {
+				rendererGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 2, this);
+			} else {
+				rendererGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 1, this);
+			}
+
+		}
+		return rendererGridDescription;
 	}
 
 	/**
@@ -215,27 +224,90 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Creates the default {@link VTTableStyleProperty}.
 	 *
-	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#renderControl(org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell,
-	 *      org.eclipse.emf.ecp.view.spi.swt.Composite)
+	 * @return the default {@link VTTableStyleProperty}
+	 * @since 1.14
 	 */
+	protected VTTableStyleProperty createDefaultTableStyleProperty() {
+		return VTTableStylePropertyFactory.eINSTANCE.createTableStyleProperty();
+	}
+
+	/**
+	 * Returns the {@link VTTableStyleProperty}.
+	 *
+	 * @return the {@link VTTableStyleProperty}
+	 * @since 1.14
+	 */
+	protected VTTableStyleProperty getTableStyleProperty() {
+		VTTableStyleProperty styleProperty = RendererUtil.getStyleProperty(getVTViewTemplateProvider(), getVElement(),
+			getViewModelContext(), VTTableStyleProperty.class);
+		if (styleProperty == null) {
+			styleProperty = createDefaultTableStyleProperty();
+		}
+		return styleProperty;
+	}
+
 	@Override
 	protected Control renderControl(SWTGridCell cell, Composite parent) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption {
-		if (cell.getRow() != 0 || cell.getColumn() != 0 || cell.getRenderer() != this) {
+		if (rendererGridDescription.getColumns() == 1) {
+			// Default
+			return renderMultiReferenceControl(cell, parent);
+		}
+		// Compact
+		if (cell.getColumn() == 0 && rendererGridDescription.getColumns() > 1) {
+			validationIcon = createValidationIcon(parent);
+			return validationIcon;
+		}
+		final Composite composite = new Composite(parent, SWT.NONE);
+		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(composite);
+		renderMultiReferenceControl(cell, composite);
+		try {
+			createButtonComposite(composite);
+		} catch (final DatabindingFailedException ex) {
+			getReportService().report(new RenderingFailedReport(ex));
+			return createErrorLabel(composite, ex);
+		}
+		updateButtonEnabling();
+		return composite;
+	}
+
+	/**
+	 * Renders the MultiReference Control.
+	 *
+	 * Renders the MultiReference control including validation and buttons when {@link RenderMode} is set to
+	 * {@link RenderMode#DEFAULT}. Only renders the
+	 * MultiReference control without validation and buttons when renderMode is set to
+	 * {@link RenderMode#COMPACT_VERTICALLY}.
+	 *
+	 * @param cell the {@link SWTGridCell}.
+	 * @param parent the {@link Composite}.
+	 * @return the rendered {@link Control}
+	 * @throws NoRendererFoundException the {@link NoRendererFoundException}.
+	 * @throws NoPropertyDescriptorFoundExeption the {@link NoPropertyDescriptorFoundExeption}.
+	 * @since 1.14
+	 */
+	protected Control renderMultiReferenceControl(SWTGridCell cell, Composite parent) throws NoRendererFoundException,
+		NoPropertyDescriptorFoundExeption {
+		if (cell.getRow() != 0 || cell.getRenderer() != this) {
 			throw new IllegalArgumentException("Wrong parameter passed!"); //$NON-NLS-1$
 		}
 
 		final Composite composite = new Composite(parent, SWT.NONE);
-		composite.setLayout(new GridLayout(1, false));
 		composite.setBackgroundMode(SWT.INHERIT_FORCE);
 
-		try {
-			createTitleComposite(composite);
-		} catch (final DatabindingFailedException ex) {
-			getReportService().report(new RenderingFailedReport(ex));
-			return createErrorLabel(parent, ex);
+		if (getTableStyleProperty().getRenderMode() == RenderMode.COMPACT_VERTICALLY) {
+			// avoid the default margins set by new GridLayout()
+			GridLayoutFactory.fillDefaults().applyTo(composite);
+		} else {
+			composite.setLayout(new GridLayout(1, false));
+			try {
+				createTitleComposite(composite);
+			} catch (final DatabindingFailedException ex) {
+				getReportService().report(new RenderingFailedReport(ex));
+				return createErrorLabel(parent, ex);
+			}
 		}
 
 		adapterFactory = createAdapterFactory();
@@ -248,7 +320,11 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 			getReportService().report(new RenderingFailedReport(ex));
 			return createErrorLabel(parent, ex);
 		}
-		updateButtonEnabling();
+
+		if (getTableStyleProperty().getRenderMode() == RenderMode.DEFAULT) {
+			updateButtonEnabling();
+		}
+
 		SWTDataElementIdHelper.setElementIdDataForVControl(composite, getVElement(), getViewModelContext());
 
 		return composite;

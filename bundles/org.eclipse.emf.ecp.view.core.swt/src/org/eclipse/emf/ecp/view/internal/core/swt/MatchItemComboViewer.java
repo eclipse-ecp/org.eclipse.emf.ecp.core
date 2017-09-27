@@ -18,19 +18,16 @@ import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.widgets.Composite;
 
 /**
  * A {@link ComboViewer} that allows typed text to be matched against
  * the combo viewer's items and also allows setting the selection via arrow keys.
- *
+ * If the escape key pressed, the content of the editor is set back to its initial state.
  */
 public class MatchItemComboViewer extends ComboViewer {
 
-	private static final int TIMEOUT = 1000;
-	private long lastKeyPressMillis = -1;
-	private final StringBuffer searchBuffer;
+	private final TimeBoundStringBuffer searchBuffer;
+	private String initialText;
 
 	/**
 	 * Constructor.
@@ -39,20 +36,8 @@ public class MatchItemComboViewer extends ComboViewer {
 	 */
 	public MatchItemComboViewer(CCombo combo) {
 		super(combo);
-		searchBuffer = new StringBuffer();
-		init();
-	}
-
-	/**
-	 * Constructor.
-	 *
-	 * @param area the parent {@link Composite}
-	 * @param style SWT style bits
-	 */
-	public MatchItemComboViewer(Composite area, int style) {
-		super(area, style);
-		searchBuffer = new StringBuffer();
-		init();
+		searchBuffer = new TimeBoundStringBuffer();
+		setupListeners();
 	}
 
 	/**
@@ -61,132 +46,69 @@ public class MatchItemComboViewer extends ComboViewer {
 	 * that matches the text within the combo, ignoring the given
 	 * parameter.
 	 *
-	 * @param selectedIndex the index of the item that is the closest match
 	 */
-	public void onEnter(int selectedIndex) {
+	public void onEnter() {
 		setClosestMatch(getCCombo().getText());
+	}
+
+	/**
+	 * Returns the search buffer used during matching.
+	 *
+	 * @return the {@link TimeBoundStringBuffer}
+	 */
+	public TimeBoundStringBuffer getBuffer() {
+		return searchBuffer;
+	}
+
+	/**
+	 * Match given text against items of combo and set selection, if applicable.
+	 * If no match has been found, reset to initial state.
+	 *
+	 * @param text the string to be matched
+	 */
+	public void setClosestMatch(String text) {
+		final boolean matchFound = ComboUtil.setClosestMatch(getCCombo(), text);
+		// if no literal matches, reset to initial state
+		if (!matchFound) {
+			reset();
+		}
+	}
+
+	/**
+	 * Callback that is called when the escape key is released.
+	 * By default, this method does nothing, but note that at this
+	 * point in time the text already has been reset to the initial text.
+	 */
+	protected void onEscape() {
+
 	}
 
 	/**
 	 * Initializes this viewer.
 	 */
-	protected void init() {
+	protected void setupListeners() {
 		getCCombo().addKeyListener(new MatchItemKeyAdapter());
 		getCCombo().addFocusListener(new FocusListener() {
+
 			@Override
 			public void focusLost(FocusEvent e) {
 				// reset buffer when focus has been lost
-				resetBuffer();
+				searchBuffer.reset();
 			}
 
 			@Override
 			public void focusGained(FocusEvent e) {
+				initialText = getCCombo().getText();
 			}
 		});
 	}
 
 	/**
-	 * Returns the index of the closest match.
-	 *
-	 * @param str the String to be matched
-	 * @return the index of the closest match
+	 * Reset to initial state, i.e. the initial text is restored and the search buffer is emptied.
 	 */
-	public int getClosestMatchIndex(String str) {
-		final String[] cItems = getCCombo().getItems();
-		// Find Item in Combo Items. If full match returns index
-		for (int i = 0; i < cItems.length; i++) {
-			if (cItems[i].toLowerCase().startsWith(str.toLowerCase())) {
-				return i;
-			}
-		}
-
-		return -1;
-	}
-
-	/**
-	 * Set the closest match based on the given String.
-	 *
-	 * @param s the String the closest match should be selected by
-	 */
-	protected void setClosestMatch(String s) {
-		final CCombo combo = getCCombo();
-		final String[] comboItems = combo.getItems();
-		final int index = getClosestMatchIndex(s);
-		if (index != -1) {
-			final String item = comboItems[index];
-			final Point pt = combo.getSelection();
-			combo.select(index);
-			combo.setText(item);
-			combo.setSelection(new Point(pt.x, item.length()));
-		}
-	}
-
-	/**
-	 * Whether the key press timeout has been hit.
-	 *
-	 * @return {@code true}, if the timeout has been hit, {@code false} otherwise
-	 */
-	protected boolean keyPressTimedOut() {
-		long timeElapsed = -1;
-		if (lastKeyPressMillis > 0) {
-			timeElapsed = System.currentTimeMillis() - lastKeyPressMillis;
-		}
-		return timeElapsed != -1 && timeElapsed > TIMEOUT;
-	}
-
-	/**
-	 * Reset the key pressed timer.
-	 */
-	public void resetKeyPressedTimer() {
-		lastKeyPressMillis = -1;
-	}
-
-	/**
-	 * Reset the key pressed timeout.
-	 */
-	protected void resetKeyPressedTimeout() {
-		lastKeyPressMillis = System.currentTimeMillis();
-	}
-
-	/**
-	 * Append a character to the search buffer.
-	 *
-	 * @param character the {@link Character} to be appended
-	 */
-	public void addToBuffer(Character character) {
-		searchBuffer.append(Character.toString(character));
-	}
-
-	/**
-	 * Removes the last character from the search buffer.
-	 */
-	private void removeLastFromBuffer() {
-		searchBuffer.deleteCharAt(searchBuffer.length() - 1);
-	}
-
-	/**
-	 * Clears the search buffer.
-	 */
-	public void resetBuffer() {
-		searchBuffer.setLength(0);
-	}
-
-	/**
-	 * Whether the search buffer is empty.
-	 *
-	 * @return {@code true}, in case the buffer is empty, {@code false} otherwise
-	 */
-	public boolean isEmptyBuffer() {
-		return searchBuffer.length() == 0;
-	}
-
-	/**
-	 * Returns the search buffer as a string.
-	 *
-	 * @return the string representation of the buffer
-	 */
-	private String bufferAsString() {
-		return searchBuffer.toString();
+	protected void reset() {
+		getCCombo().setText(initialText);
+		searchBuffer.reset();
 	}
 
 	/**
@@ -196,23 +118,23 @@ public class MatchItemComboViewer extends ComboViewer {
 	class MatchItemKeyAdapter extends KeyAdapter {
 		@Override
 		public void keyReleased(KeyEvent keyEvent) {
-			if (keyEvent.keyCode == SWT.CR) {
+			if (keyEvent.keyCode == SWT.ESC) {
+				onEscape();
+			} else if (keyEvent.keyCode == SWT.CR) {
 				keyEvent.doit = true;
-				final int selectedIndex = getClosestMatchIndex(bufferAsString());
-				onEnter(selectedIndex);
-				resetBuffer();
-				resetKeyPressedTimer();
+				onEnter();
+				searchBuffer.reset();
 			} else if (keyEvent.keyCode == SWT.ARROW_DOWN || keyEvent.keyCode == SWT.ARROW_UP) {
 				// enable skipping through the list item by item
 				keyEvent.doit = true;
-				resetBuffer();
+				searchBuffer.reset();
 			} else {
 				// only update buffer in case it is a visible character
 				keyEvent.doit = false;
 				if (!Character.isISOControl(keyEvent.character) || keyEvent.keyCode == SWT.BS) {
-					setClosestMatch(bufferAsString());
+					setClosestMatch(searchBuffer.asString());
 				} else if (keyEvent.keyCode != SWT.SHIFT) {
-					resetBuffer();
+					searchBuffer.reset();
 				}
 			}
 		}
@@ -220,16 +142,17 @@ public class MatchItemComboViewer extends ComboViewer {
 		@Override
 		public void keyPressed(KeyEvent keyEvent) {
 			keyEvent.doit = false;
-			if (keyPressTimedOut() && keyEvent.keyCode != SWT.CR) {
-				resetBuffer();
+			if (searchBuffer.timedOut() && keyEvent.keyCode != SWT.CR) {
+				searchBuffer.reset();
 			}
 
-			if (!Character.isISOControl(keyEvent.character)) {
-				addToBuffer(keyEvent.character);
-				resetKeyPressedTimeout();
-			} else if (keyEvent.keyCode == SWT.BS && !isEmptyBuffer()) {
-				removeLastFromBuffer();
-				resetKeyPressedTimeout();
+			if (keyEvent.keyCode == SWT.ESC) {
+				// reset to initial text
+				getCCombo().setText(initialText);
+			} else if (!Character.isISOControl(keyEvent.character)) {
+				searchBuffer.addLast(keyEvent.character);
+			} else if (keyEvent.keyCode == SWT.BS) {
+				searchBuffer.removeLast();
 			} else if (keyEvent.keyCode == SWT.ARROW_DOWN || keyEvent.keyCode == SWT.ARROW_UP) {
 				// enable skipping through the list item by item
 				keyEvent.doit = true;

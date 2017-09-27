@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
+import org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.RenderMode;
 import org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage;
 
@@ -37,6 +38,8 @@ import org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableS
  * <em>Enable Sorting</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.impl.VTTableStylePropertyImpl#getVisibleLines
  * <em>Visible Lines</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.impl.VTTableStylePropertyImpl#getRenderMode
+ * <em>Render Mode</em>}</li>
  * </ul>
  *
  * @generated
@@ -185,6 +188,28 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	 * @ordered
 	 */
 	protected boolean visibleLinesESet;
+
+	/**
+	 * The default value of the '{@link #getRenderMode() <em>Render Mode</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see #getRenderMode()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final RenderMode RENDER_MODE_EDEFAULT = RenderMode.DEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getRenderMode() <em>Render Mode</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see #getRenderMode()
+	 * @generated
+	 * @ordered
+	 */
+	protected RenderMode renderMode = RENDER_MODE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -449,6 +474,33 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 	 * @generated
 	 */
 	@Override
+	public RenderMode getRenderMode() {
+		return renderMode;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
+	public void setRenderMode(RenderMode newRenderMode) {
+		final RenderMode oldRenderMode = renderMode;
+		renderMode = newRenderMode == null ? RENDER_MODE_EDEFAULT : newRenderMode;
+		if (eNotificationRequired()) {
+			eNotify(new ENotificationImpl(this, Notification.SET,
+				VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__RENDER_MODE, oldRenderMode, renderMode));
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__MINIMUM_HEIGHT:
@@ -461,6 +513,8 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 			return isEnableSorting();
 		case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__VISIBLE_LINES:
 			return getVisibleLines();
+		case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__RENDER_MODE:
+			return getRenderMode();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -488,6 +542,9 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 			return;
 		case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__VISIBLE_LINES:
 			setVisibleLines((Integer) newValue);
+			return;
+		case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__RENDER_MODE:
+			setRenderMode((RenderMode) newValue);
 			return;
 		}
 		super.eSet(featureID, newValue);
@@ -517,6 +574,9 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 		case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__VISIBLE_LINES:
 			unsetVisibleLines();
 			return;
+		case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__RENDER_MODE:
+			setRenderMode(RENDER_MODE_EDEFAULT);
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -540,6 +600,8 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 			return enableSorting != ENABLE_SORTING_EDEFAULT;
 		case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__VISIBLE_LINES:
 			return isSetVisibleLines();
+		case VTTableStylePropertyPackage.TABLE_STYLE_PROPERTY__RENDER_MODE:
+			return renderMode != RENDER_MODE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -579,6 +641,8 @@ public class VTTableStylePropertyImpl extends MinimalEObjectImpl.Container imple
 		} else {
 			result.append("<unset>"); //$NON-NLS-1$
 		}
+		result.append(", renderMode: "); //$NON-NLS-1$
+		result.append(renderMode);
 		result.append(')');
 		return result.toString();
 	}

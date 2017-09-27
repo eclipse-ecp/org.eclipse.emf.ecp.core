@@ -31,7 +31,8 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses({ BooleanControlRenderer_PTest.class, DateTimeControlRenderer_PTest.class,
 	EnumComboViewerRenderer_PTest.class,
 	NumberControlRenderer_PTest.class, XMLDateControlRenderer_PTest.class,
-	TextControlRenderer_PTest.class })
+	TextControlRenderer_PTest.class,
+	TimeBoundStringBuffer_Test.class })
 public class AllTests {
 	// JUnit 4 Test Suite
 }

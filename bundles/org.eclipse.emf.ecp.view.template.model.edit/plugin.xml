@@ -242,4 +242,23 @@
             uri="http://org/eclipse/emf/ecp/view/template/model"
             class="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.provider.TableStylePropertyItemProviderAdapterFactory$TemplateChildCreationExtender"/>
    </extension>
+   <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
+      <!-- @generated unsettableStyle -->
+      <factory
+            uri="http://www.eclipse.org/emf/ecp/view/template/style/unsettable/model"
+            class="org.eclipse.emf.ecp.view.template.style.unsettable.model.provider.UnsettableItemProviderAdapterFactory"
+            supportedTypes=
+              "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
+               org.eclipse.emf.edit.provider.IStructuredItemContentProvider
+               org.eclipse.emf.edit.provider.ITreeItemContentProvider
+               org.eclipse.emf.edit.provider.IItemLabelProvider
+               org.eclipse.emf.edit.provider.IItemPropertySource"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.edit.childCreationExtenders">
+      <!-- @generated unsettableStyle -->
+      <extender
+            uri="http://org/eclipse/emf/ecp/view/template/model"
+            class="org.eclipse.emf.ecp.view.template.style.unsettable.model.provider.UnsettableItemProviderAdapterFactory$TemplateChildCreationExtender"/>
+   </extension>
 </plugin>

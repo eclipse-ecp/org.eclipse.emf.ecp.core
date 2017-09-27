@@ -26,7 +26,8 @@ import org.junit.runners.Suite.SuiteClasses;
 	TableValidation_PTest.class,
 	ValidationPerformance_ITest.class,
 	DynamicDMR_PTest.class,
-	PreSetValidationService_Test.class
+	PreSetValidationService_Test.class,
+	ParallelValidationService_PTest.class
 })
 public class AllTests {
 

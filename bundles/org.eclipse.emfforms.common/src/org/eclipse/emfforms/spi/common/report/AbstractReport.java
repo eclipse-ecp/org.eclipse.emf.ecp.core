@@ -8,8 +8,11 @@
  *
  * Contributors:
  * Edgar Mueller - initial API and implementation
+ * Mat Hansen - MessageFormat support
  ******************************************************************************/
 package org.eclipse.emfforms.spi.common.report;
+
+import java.text.MessageFormat;
 
 /**
  * Common base type for reports that may be reported.
@@ -25,9 +28,7 @@ public class AbstractReport {
 	private final int severity;
 
 	/**
-	 * <p>
-	 * Default constructor.
-	 * </p>
+	 * Default constructor with empty message.
 	 *
 	 * Sets the severity to <code>IStatus.ERROR</code>.
 	 */
@@ -37,14 +38,11 @@ public class AbstractReport {
 	}
 
 	/**
-	 * <p>
 	 * Constructor.
-	 * </p>
 	 *
 	 * Sets the severity to <code>IStatus.ERROR</code>.
 	 *
-	 * @param exception
-	 *            the exception this report is based on
+	 * @param exception the exception this report is based on
 	 */
 	public AbstractReport(Throwable exception) {
 		this.exception = exception;
@@ -52,14 +50,11 @@ public class AbstractReport {
 	}
 
 	/**
-	 * <p>
 	 * Constructor.
-	 * </p>
 	 *
 	 * Sets the severity to <code>IStatus.ERROR</code>.
 	 *
-	 * @param message
-	 *            the report message
+	 * @param message the report message
 	 */
 	public AbstractReport(String message) {
 		this.message = message;
@@ -67,16 +62,27 @@ public class AbstractReport {
 	}
 
 	/**
-	 * <p>
-	 * Constructor.
-	 * </p>
+	 * Constructor with MessageFormat support.
 	 *
 	 * Sets the severity to <code>IStatus.ERROR</code>.
 	 *
-	 * @param message
-	 *            the report message
-	 * @param severity
-	 *            the severity of the report
+	 * @param message the report message
+	 * @param arguments the arguments for the message
+	 *
+	 * @since 1.14
+	 */
+	public AbstractReport(String message, Object... arguments) {
+		this.message = MessageFormat.format(message, arguments);
+		severity = 4; // == IStatus.ERROR
+	}
+
+	/**
+	 * Constructor.
+	 *
+	 * Sets the severity to <code>IStatus.ERROR</code>.
+	 *
+	 * @param message the report message
+	 * @param severity the severity of the report
 	 */
 	public AbstractReport(String message, int severity) {
 		this.message = message;
@@ -84,16 +90,26 @@ public class AbstractReport {
 	}
 
 	/**
-	 * <p>
+	 * Constructor with MessageFormat support.
+	 *
+	 * @param message the report message
+	 * @param severity the message severity
+	 * @param arguments the arguments for the message
+	 *
+	 * @since 1.14
+	 */
+	public AbstractReport(String message, int severity, Object... arguments) {
+		this.message = MessageFormat.format(message, arguments);
+		this.severity = severity;
+	}
+
+	/**
 	 * Constructor.
-	 * </p>
 	 *
 	 * Sets the severity to <code>IStatus.ERROR</code>.
 	 *
-	 * @param exception
-	 *            the exception this report is based on
-	 * @param message
-	 *            the report message
+	 * @param exception the exception this report is based on
+	 * @param message the report message
 	 */
 	public AbstractReport(Throwable exception, String message) {
 		this.exception = exception;
@@ -102,12 +118,25 @@ public class AbstractReport {
 	}
 
 	/**
+	 * Constructor with MessageFormat support.
+	 *
+	 * @param exception the exception this report is based on
+	 * @param message the report message
+	 * @param arguments the arguments for the message
+	 *
+	 * @since 1.14
+	 */
+	public AbstractReport(Throwable exception, String message, Object... arguments) {
+		this.exception = exception;
+		this.message = MessageFormat.format(message, arguments);
+		severity = 4; // == IStatus.ERROR
+	}
+
+	/**
 	 * Constructor.
 	 *
-	 * @param exception
-	 *            the exception this report is based on
-	 * @param severity
-	 *            the severity of the report
+	 * @param exception the exception this report is based on
+	 * @param severity the severity of the report
 	 */
 	public AbstractReport(Throwable exception, int severity) {
 		this.exception = exception;

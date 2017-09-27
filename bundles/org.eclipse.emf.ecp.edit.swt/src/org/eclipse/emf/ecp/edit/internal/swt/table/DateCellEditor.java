@@ -76,12 +76,6 @@ public class DateCellEditor extends CellEditor implements ECPCellEditor {
 		super(parent, style);
 	}
 
-	/**
-	 *
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getValueProperty()
-	 */
 	@Override
 	public IValueProperty getValueProperty() {
 		return new WidgetValueProperty() {
@@ -111,12 +105,6 @@ public class DateCellEditor extends CellEditor implements ECPCellEditor {
 		};
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#instantiate(org.eclipse.emf.ecore.EStructuralFeature,
-	 *      org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
-	 */
 	@Override
 	public void instantiate(EStructuralFeature eStructuralFeature, ViewModelContext viewModelContext) {
 
@@ -199,10 +187,6 @@ public class DateCellEditor extends CellEditor implements ECPCellEditor {
 		dateWidget.setTime(cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), cal.get(Calendar.SECOND));
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.jface.viewers.CellEditor#focusLost()
-	 */
 	@Override
 	protected void focusLost() {
 		if (isActivated()) {
@@ -210,10 +194,6 @@ public class DateCellEditor extends CellEditor implements ECPCellEditor {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.jface.viewers.CellEditor#keyReleaseOccured(org.eclipse.swt.events.KeyEvent)
-	 */
 	@Override
 	protected void keyReleaseOccured(KeyEvent keyEvent) {
 		super.keyReleaseOccured(keyEvent);
@@ -243,12 +223,6 @@ public class DateCellEditor extends CellEditor implements ECPCellEditor {
 		deactivate();
 	}
 
-	/**
-	 *
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getFormatedString(java.lang.Object)
-	 */
 	@Override
 	public String getFormatedString(Object value) {
 		final Date cal = (Date) value;
@@ -258,46 +232,23 @@ public class DateCellEditor extends CellEditor implements ECPCellEditor {
 		return dateFormat.format(cal);
 	}
 
-	/**
-	 *
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getColumnWidthWeight()
-	 */
 	@Override
 	public int getColumnWidthWeight() {
 		return 75;
 	}
 
-	/**
-	 *
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getTargetToModelStrategy(org.eclipse.core.databinding.DataBindingContext)
-	 */
 	@Override
 	public UpdateValueStrategy getTargetToModelStrategy(DataBindingContext databindingContext) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/**
-	 *
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getModelToTargetStrategy(org.eclipse.core.databinding.DataBindingContext)
-	 */
 	@Override
 	public UpdateValueStrategy getModelToTargetStrategy(DataBindingContext databindingContext) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#setEditable(boolean)
-	 */
 	@Override
 	public void setEditable(boolean editable) {
 		if (dateWidget != null) {
@@ -305,21 +256,11 @@ public class DateCellEditor extends CellEditor implements ECPCellEditor {
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getImage(java.lang.Object)
-	 */
 	@Override
 	public Image getImage(Object value) {
 		return null;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor#getMinWidth()
-	 */
 	@Override
 	public int getMinWidth() {
 		return 0;

@@ -157,8 +157,19 @@
       <cellEditor
             class="org.eclipse.emf.ecp.edit.spi.swt.table.StringCellEditor"
             id="org.eclipse.emf.ecp.edit.swt.cellEditor.text"
-            tester="org.eclipse.emf.ecp.edit.internal.swt.table.StringCellEditorTester">
+            tester="org.eclipse.emf.ecp.edit.spi.swt.table.StringCellEditorTester">
       </cellEditor>
+      <cellEditor
+            class="org.eclipse.emf.ecp.edit.spi.swt.table.MultiStringCellEditor"
+            id="org.eclipse.emf.ecp.edit.swt.cellEditor.multiString"
+            tester="org.eclipse.emf.ecp.edit.spi.swt.table.MultiStringCellEditorTester">
+      </cellEditor>
+   </extension>
+   <extension
+         point="org.eclipse.emf.ecp.ui.view.tooltipModifier">
+      <modifier
+            class="org.eclipse.emf.ecp.edit.internal.swt.table.DateCellStringTooltipModifier">
+      </modifier>
    </extension>
 
 </plugin>

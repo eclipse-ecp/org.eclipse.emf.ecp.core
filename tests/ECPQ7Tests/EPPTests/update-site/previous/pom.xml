@@ -12,8 +12,8 @@
   <packaging>rcpttTest</packaging>
 
   <properties>
-    <eclipse-name>mars</eclipse-name>
-	<eclipse-sr>2</eclipse-sr>
+    <eclipse-name>neon</eclipse-name>
+	<eclipse-sr>3</eclipse-sr>
   </properties>
   <build>
   	<plugins>

@@ -34,6 +34,8 @@ import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
  *        <em>Enable Sorting</em>}</li>
  *        <li>{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getVisibleLines
  *        <em>Visible Lines</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getRenderMode
+ *        <em>Render Mode</em>}</li>
  *        </ul>
  *
  * @see org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage#getTableStyleProperty()
@@ -273,10 +275,9 @@ public interface VTTableStyleProperty extends VTStyleProperty {
 	 * '{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getVisibleLines
 	 * <em>Visible Lines</em>}' attribute.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.13
 	 *        <!-- end-user-doc -->
-	 *
 	 * @see #isSetVisibleLines()
 	 * @see #getVisibleLines()
 	 * @see #setVisibleLines(int)
@@ -289,10 +290,9 @@ public interface VTTableStyleProperty extends VTStyleProperty {
 	 * '{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getVisibleLines
 	 * <em>Visible Lines</em>}' attribute is set.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.13
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return whether the value of the '<em>Visible Lines</em>' attribute is set.
 	 * @see #unsetVisibleLines()
 	 * @see #getVisibleLines()
@@ -300,5 +300,43 @@ public interface VTTableStyleProperty extends VTStyleProperty {
 	 * @generated
 	 */
 	boolean isSetVisibleLines();
+
+	/**
+	 * Returns the value of the '<em><b>Render Mode</b></em>' attribute.
+	 * The literals are from the enumeration
+	 * {@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.RenderMode}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Render Mode</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 *
+	 * @since 1.14
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the value of the '<em>Render Mode</em>' attribute.
+	 * @see org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.RenderMode
+	 * @see #setRenderMode(RenderMode)
+	 * @see org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage#getTableStyleProperty_RenderMode()
+	 * @model
+	 * @generated
+	 */
+	RenderMode getRenderMode();
+
+	/**
+	 * Sets the value of the
+	 * '{@link org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty#getRenderMode
+	 * <em>Render Mode</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 1.14
+	 *        <!-- end-user-doc -->
+	 *
+	 * @param value the new value of the '<em>Render Mode</em>' attribute.
+	 * @see org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.RenderMode
+	 * @see #getRenderMode()
+	 * @generated
+	 */
+	void setRenderMode(RenderMode value);
 
 } // VTTableStyleProperty

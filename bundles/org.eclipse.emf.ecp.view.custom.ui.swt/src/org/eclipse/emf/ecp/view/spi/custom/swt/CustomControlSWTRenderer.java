@@ -16,6 +16,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecp.edit.spi.swt.util.SWTValidationHelper;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.custom.model.VCustomControl;
+import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emfforms.spi.common.report.ReportService;
@@ -146,7 +147,7 @@ public class CustomControlSWTRenderer extends AbstractSWTRenderer<VCustomControl
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#render(org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell,
 	 *      org.eclipse.swt.widgets.Composite)
 	 */
@@ -255,9 +256,11 @@ public class CustomControlSWTRenderer extends AbstractSWTRenderer<VCustomControl
 					break;
 				}
 
-				if (validationIcon != null && !validationIcon.isDisposed()) {
-					validationIcon.setImage(getValidationIcon(getVElement().getDiagnostic().getHighestSeverity()));
-					validationIcon.setToolTipText(getVElement().getDiagnostic().getMessage());
+				final VDiagnostic diag = getVElement().getDiagnostic();
+
+				if (diag != null && validationIcon != null && !validationIcon.isDisposed()) {
+					validationIcon.setImage(getValidationIcon(diag.getHighestSeverity()));
+					validationIcon.setToolTipText(diag.getMessage());
 				}
 				if (swtCustomControl != null) {
 					swtCustomControl.applyValidation();

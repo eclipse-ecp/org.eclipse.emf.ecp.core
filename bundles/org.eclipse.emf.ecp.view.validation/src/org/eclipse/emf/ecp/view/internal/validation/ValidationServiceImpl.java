@@ -17,13 +17,14 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 import java.util.Timer;
-import java.util.TimerTask;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
@@ -139,7 +140,10 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 			// validate(observed);
 			// TODO: add test case for this
 			final Set<EObject> eObjectsToValidate = new LinkedHashSet<EObject>();
-			eObjectsToValidate.add(observed);
+			if (observed != null) {
+				/* possible e.g. when feature path dmr gets cut off during runtime */
+				eObjectsToValidate.add(observed);
+			}
 			final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
 			final Object value = observableValue.getValue();
 			if (EReference.class.isInstance(structuralFeature) && value != null) {
@@ -327,10 +331,10 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	private ValidationDomainModelChangeListener domainChangeListener;
 	private ViewModelChangeListener viewChangeListener;
 	private ViewModelContext context;
-	private final Queue<EObject> validationQueue = new LinkedList<EObject>();
-	private final Set<EObject> validated = new LinkedHashSet<EObject>();
-	private boolean validationRunning;
-	private final Map<UniqueSetting, VDiagnostic> currentUpdates = new LinkedHashMap<UniqueSetting, VDiagnostic>();
+	private final Queue<EObject> validationQueue = new ConcurrentLinkedQueue<EObject>();
+	private final Set<EObject> validated = Collections.newSetFromMap(new ConcurrentHashMap<EObject, Boolean>());
+	private final AtomicBoolean validationRunning = new AtomicBoolean(false);
+	private final Map<UniqueSetting, VDiagnostic> currentUpdates = new ConcurrentHashMap<UniqueSetting, VDiagnostic>();
 	private ComposedAdapterFactory adapterFactory;
 	private final Timer timer = new Timer();
 
@@ -517,10 +521,9 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 			return;
 		}
 		// prohibit re-entry in recursion
-		if (validationRunning) {
+		if (!validationRunning.compareAndSet(false, true)) {
 			return;
 		}
-		validationRunning = true;
 		EObject toValidate;
 		while ((toValidate = validationQueue.poll()) != null) {
 			final ValidationTimerTask timerTask = new ValidationTimerTask(toValidate);
@@ -532,7 +535,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 		notifyListeners();
 		currentUpdates.clear();
 		validated.clear();
-		validationRunning = false;
+		validationRunning.compareAndSet(true, false);
 	}
 
 	/**
@@ -548,55 +551,73 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	}
 
 	private void update() {
+		// prepare Map
+		final Map<VElement, Set<UniqueSetting>> vElementToSettingMap = prepareVElementToSettingMap();
+
 		final Map<VElement, VDiagnostic> controlDiagnosticMap = new LinkedHashMap<VElement, VDiagnostic>();
+
+		for (final VElement control : vElementToSettingMap.keySet()) {
+
+			if (!controlDiagnosticMap.containsKey(control)) {
+				controlDiagnosticMap.put(control, VViewFactory.eINSTANCE.createDiagnostic());
+			}
+			for (final UniqueSetting uniqueSetting : vElementToSettingMap.get(control)) {
+				// TODO Performance
+				// controlDiagnosticMap.get(control).getDiagnostics()
+				// .removeAll(currentUpdates.get(uniqueSetting).getDiagnostics());
+				controlDiagnosticMap.get(control).getDiagnostics()
+					.addAll(currentUpdates.get(uniqueSetting).getDiagnostics());
+			}
+
+			// add all diagnostics of control which are not in the currentUpdates
+			if (control.getDiagnostic() == null) {
+				continue;
+			}
+
+			for (final Object diagnosticObject : control.getDiagnostic().getDiagnostics()) {
+				final Diagnostic diagnostic = Diagnostic.class.cast(diagnosticObject);
+				if (diagnostic.getData().size() < 2) {
+					continue;
+				}
+				final EObject diagnosticEobject = DiagnosticHelper.getFirstInternalEObject(diagnostic.getData());
+				final EStructuralFeature eStructuralFeature = DiagnosticHelper
+					.getEStructuralFeature(diagnostic.getData());
+				if (diagnosticEobject == null || eStructuralFeature == null) {
+					continue;
+				}
+				// TODO performance
+				if (!isObjectStillValid(diagnosticEobject)) {
+					continue;
+				}
+				final UniqueSetting uniqueSetting2 = UniqueSetting.createSetting(
+					diagnosticEobject, eStructuralFeature);
+				if (!currentUpdates.containsKey(uniqueSetting2)) {
+					controlDiagnosticMap.get(control).getDiagnostics().add(diagnosticObject);
+				}
+
+			}
+
+		}
+
+		updateAndPropagate(controlDiagnosticMap);
+
+	}
+
+	private Map<VElement, Set<UniqueSetting>> prepareVElementToSettingMap() {
+		final Map<VElement, Set<UniqueSetting>> result = new LinkedHashMap<VElement, Set<UniqueSetting>>();
 		for (final UniqueSetting uniqueSetting : currentUpdates.keySet()) {
 			final Set<VElement> controls = controlMapper.getControlsFor(uniqueSetting);
 			if (controls == null) {
 				continue;
 			}
-
 			for (final VElement control : controls) {
-				if (!controlDiagnosticMap.containsKey(control)) {
-					controlDiagnosticMap.put(control, VViewFactory.eINSTANCE.createDiagnostic());
+				if (!result.containsKey(control)) {
+					result.put(control, new LinkedHashSet<UniqueSetting>());
 				}
-				// TODO Performance
-				controlDiagnosticMap.get(control).getDiagnostics()
-					.removeAll(currentUpdates.get(uniqueSetting).getDiagnostics());
-				controlDiagnosticMap.get(control).getDiagnostics()
-					.addAll(currentUpdates.get(uniqueSetting).getDiagnostics());
-
-				// add all diagnostics of control which are not in the currentUpdates
-				if (control.getDiagnostic() == null) {
-					continue;
-				}
-
-				for (final Object diagnosticObject : control.getDiagnostic().getDiagnostics()) {
-					final Diagnostic diagnostic = Diagnostic.class.cast(diagnosticObject);
-					if (diagnostic.getData().size() < 2) {
-						continue;
-					}
-					final EObject diagnosticEobject = DiagnosticHelper.getFirstInternalEObject(diagnostic.getData());
-					final EStructuralFeature eStructuralFeature = DiagnosticHelper
-						.getEStructuralFeature(diagnostic.getData());
-					if (diagnosticEobject == null || eStructuralFeature == null) {
-						continue;
-					}
-					// TODO performance
-					if (!isObjectStillValid(diagnosticEobject)) {
-						continue;
-					}
-					final UniqueSetting uniqueSetting2 = UniqueSetting.createSetting(
-						diagnosticEobject, eStructuralFeature);
-					if (!currentUpdates.containsKey(uniqueSetting2)) {
-						controlDiagnosticMap.get(control).getDiagnostics().add(diagnosticObject);
-					}
-
-				}
-
+				result.get(control).add(uniqueSetting);
 			}
 		}
-
-		 updateAndPropagate(controlDiagnosticMap);
+		return result;
 	}
 
 	private boolean isObjectStillValid(EObject diagnosticEobject) {
@@ -848,41 +869,5 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 			.getService(serviceReference);
 		bundleContext.ungetService(serviceReference);
 		return labelProviderFactory;
-	}
-
-	/**
-	 * TimerTask that reports that the validation is taking longer than expected. This task should be cancelled when
-	 * the validation is done.
-	 */
-	class ValidationTimerTask extends TimerTask {
-
-		private boolean cancelled;
-		private final EObject validatedEObject;
-
-		/**
-		 * Constructor.
-		 *
-		 * @param validatedEObject the EObject being validated
-		 */
-		ValidationTimerTask(EObject validatedEObject) {
-			super();
-			this.validatedEObject = validatedEObject;
-		}
-
-		@Override
-		public void run() {
-			if (!cancelled) {
-				Activator.getDefault().getReportService()
-					.report(new AbstractReport(MessageFormat.format(
-						"Validation took longer than expected for EObject {0}", validatedEObject, //$NON-NLS-1$
-						IStatus.INFO)));
-			}
-		}
-
-		@Override
-		public boolean cancel() {
-			cancelled = true;
-			return super.cancel();
-		}
 	}
 }

@@ -13,5 +13,10 @@
         defaultValueLiteral="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="visibleLines" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
         unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="renderMode" eType="#//RenderMode"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="RenderMode">
+    <eLiterals name="DEFAULT" literal="DEFAULT"/>
+    <eLiterals name="COMPACT_VERTICALLY" value="1" literal="COMPACT_VERTICALLY"/>
   </eClassifiers>
 </ecore:EPackage>

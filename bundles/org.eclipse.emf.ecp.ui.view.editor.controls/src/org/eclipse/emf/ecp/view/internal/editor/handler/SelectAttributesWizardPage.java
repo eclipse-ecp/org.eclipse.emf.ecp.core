@@ -95,29 +95,16 @@ public class SelectAttributesWizardPage extends WizardPage {
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false).span(2, 1)
 			.applyTo(bUnreferenced);
 
-		final ScrolledComposite scrolledComposite = new ScrolledComposite(composite, SWT.H_SCROLL | SWT.V_SCROLL
-			| SWT.BORDER);
-		scrolledComposite.setShowFocusedControl(true);
-		scrolledComposite.setExpandVertical(true);
-		scrolledComposite.setExpandHorizontal(true);
-		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(scrolledComposite);
-		GridLayoutFactory.fillDefaults().applyTo(scrolledComposite);
-
-		final Composite tableComposite = new Composite(scrolledComposite, SWT.FILL);
+		final Composite tableComposite = new Composite(composite, SWT.FILL);
 		tableComposite.setLayout(GridLayoutFactory.fillDefaults().create());
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(tableComposite);
-		tableComposite.setBackground(scrolledComposite.getBackground());
+		tableComposite.setBackground(composite.getBackground());
 
 		tvAttributes = CheckboxTableViewer.newCheckList(tableComposite, SWT.NONE);
 		tvAttributes.setLabelProvider(labelProvider);
 		tvAttributes.setContentProvider(ArrayContentProvider.getInstance());
-		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false).hint(SWT.DEFAULT, 200)
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).hint(SWT.DEFAULT, 200)
 			.applyTo(tvAttributes.getControl());
-
-		scrolledComposite.setContent(tableComposite);
-
-		final Point point = tableComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-		scrolledComposite.setMinSize(point);
 
 		tvAttributes.addCheckStateListener(new ICheckStateListener() {
 
@@ -198,11 +185,10 @@ public class SelectAttributesWizardPage extends WizardPage {
 		});
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false).applyTo(bDeSelectAll);
 		parent.layout(true);
-		scrolledComposite.layout(true);
 	}
 
 	public void onEnterPage() {
-		/* if (isCurrentPage()) */{
+		/* if (isCurrentPage()) */ {
 			// clear composite
 			clear();
 			composite = new Composite(parent, SWT.NONE);

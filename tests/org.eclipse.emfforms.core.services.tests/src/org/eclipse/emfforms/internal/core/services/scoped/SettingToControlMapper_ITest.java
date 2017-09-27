@@ -11,8 +11,10 @@
  ******************************************************************************/
 package org.eclipse.emfforms.internal.core.services.scoped;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashSet;
@@ -26,16 +28,14 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.common.spi.UniqueSetting;
-import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emfforms.internal.core.services.controlmapper.SettingToControlMapperImpl;
 import org.eclipse.emfforms.spi.core.services.mappingprovider.EMFFormsMappingProviderManager;
-import org.eclipse.emfforms.spi.core.services.view.EMFFormsContextListener;
-import org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext;
-import org.eclipse.emfforms.spi.core.services.view.RootDomainModelChangeListener;
+import org.junit.Before;
 import org.junit.Test;
 
 public class SettingToControlMapper_ITest {
@@ -43,13 +43,20 @@ public class SettingToControlMapper_ITest {
 	private static final int NR_UPDATES = 100;
 	private static final int NR_RUNNABLES = 100;
 
-	@Test
-	public void updateMappingsConcurrently() throws InterruptedException {
-		// setup
-		final CountDownLatch latch = new CountDownLatch(NR_RUNNABLES);
-		final VControl control = VViewFactory.eINSTANCE.createControl();
-		final EObject domainObject = EcoreUtil.create(EcorePackage.eINSTANCE.getEClass());
-		final SettingToControlMapperImpl settingToControlMapper = new SettingToControlMapperImpl(
+	private SettingToControlMapperImpl mapper;
+	private EObject domainObject;
+	private VControl control;
+	private FakeViewContext context;
+
+	@Before
+	public void setup() {
+		final VView view = VViewFactory.eINSTANCE.createView();
+		control = VViewFactory.eINSTANCE.createControl();
+		control.setDomainModelReference(EcorePackage.eINSTANCE.getEClass_EAttributes());
+		view.getChildren().add(control);
+		domainObject = EcoreUtil.create(EcorePackage.eINSTANCE.getEClass());
+		context = new FakeViewContext(domainObject, view);
+		mapper = new SettingToControlMapperImpl(
 			new EMFFormsMappingProviderManager() {
 				@Override
 				public Set<UniqueSetting> getAllSettingsFor(VDomainModelReference domainModelReference,
@@ -59,8 +66,13 @@ public class SettingToControlMapper_ITest {
 						UniqueSetting.createSetting(domainObject, EcorePackage.eINSTANCE.getEClass_EAttributes()));
 					return settings;
 				}
-			},
-			new FakeViewContext(domainObject, control));
+			}, context);
+	}
+
+	@Test
+	public void updateMappingsConcurrently() throws InterruptedException {
+		// setup
+		final CountDownLatch latch = new CountDownLatch(NR_RUNNABLES);
 
 		final List<Throwable> exceptions = Collections.synchronizedList(new ArrayList<Throwable>());
 		final ArrayList<Runnable> runnables = new ArrayList<Runnable>();
@@ -71,7 +83,7 @@ public class SettingToControlMapper_ITest {
 					try {
 						int j = 0;
 						while (j < NR_UPDATES) {
-							settingToControlMapper.updateControlMapping(control);
+							mapper.updateControlMapping(control);
 							Thread.sleep(1);
 							j += 1;
 						}
@@ -99,75 +111,88 @@ public class SettingToControlMapper_ITest {
 		assertTrue(exceptions.isEmpty());
 	}
 
-	class FakeViewContext implements EMFFormsViewContext {
+	@Test
+	public void getControlsForDirectControlAdd() {
+		mapper.vControlAdded(control);
+		final Set<VElement> controlsFor = mapper
+			.getControlsFor(UniqueSetting.createSetting(domainObject, EcorePackage.eINSTANCE.getEClass_EAttributes()));
+		assertEquals(1, controlsFor.size());
+		assertTrue(controlsFor.contains(control));
+	}
 
-		private final EObject domainObject;
-		private final VElement viewModel;
+	@Test
+	public void getControlsForChildContextAdd() {
+		final VView childView = VViewFactory.eINSTANCE.createView();
+		final VControl childControl = VViewFactory.eINSTANCE.createControl();
+		childControl.setDomainModelReference(EcorePackage.eINSTANCE.getEClass_EAttributes());
+		childView.getChildren().add(childControl);
+		final EObject childDomainObject = EcoreUtil.create(EcorePackage.eINSTANCE.getEClass());
+		final FakeViewContext childContext = new FakeViewContext(childDomainObject, childView);
+		context.addChildContext(control, childContext);
+		final Set<VElement> controlsFor = mapper
+			.getControlsFor(
+				UniqueSetting.createSetting(childDomainObject, EcorePackage.eINSTANCE.getEClass_EAttributes()));
+		assertEquals(2, controlsFor.size());
+		assertTrue(controlsFor.contains(control));
+		assertTrue(controlsFor.contains(childControl));
+	}
 
-		FakeViewContext(EObject domainObject, VElement viewModel) {
-			this.domainObject = domainObject;
-			this.viewModel = viewModel;
+	@Test
+	public void getControlsForGrandChildContextAdd() {
+		final VView childView = VViewFactory.eINSTANCE.createView();
+		final VControl childControl = VViewFactory.eINSTANCE.createControl();
+		childControl.setDomainModelReference(EcorePackage.eINSTANCE.getEClass_EAttributes());
+		childView.getChildren().add(childControl);
+		final EObject childDomainObject = EcoreUtil.create(EcorePackage.eINSTANCE.getEClass());
+		final FakeViewContext childContext = new FakeViewContext(childDomainObject, childView);
+		context.addChildContext(control, childContext);
+
+		final VView grandChildView = VViewFactory.eINSTANCE.createView();
+		final VControl grandChildControl = VViewFactory.eINSTANCE.createControl();
+		grandChildControl.setDomainModelReference(EcorePackage.eINSTANCE.getEClass_EAttributes());
+		grandChildView.getChildren().add(grandChildControl);
+		final EObject grandChildDomainObject = EcoreUtil.create(EcorePackage.eINSTANCE.getEClass());
+		final FakeViewContext grandChildContext = new FakeViewContext(grandChildDomainObject, grandChildView);
+		childContext.addChildContext(childControl, grandChildContext);
+
+		final Set<VElement> controlsFor = mapper
+			.getControlsFor(
+				UniqueSetting.createSetting(grandChildDomainObject, EcorePackage.eINSTANCE.getEClass_EAttributes()));
+		assertEquals(3, controlsFor.size());
+		assertTrue(controlsFor.contains(control));
+		assertTrue(controlsFor.contains(childControl));
+		assertTrue(controlsFor.contains(grandChildControl));
+	}
+
+	@Test
+	public void getControlsForChildContextPerformance() {
+
+		for (int i = 0; i < 4999; i++) {
+			final VView childView = VViewFactory.eINSTANCE.createView();
+			final VControl childControl = VViewFactory.eINSTANCE.createControl();
+			childControl.setDomainModelReference(EcorePackage.eINSTANCE.getEClass_EAttributes());
+			childView.getChildren().add(childControl);
+			final EObject childDomainObject = EcoreUtil.create(EcorePackage.eINSTANCE.getEClass());
+			final FakeViewContext childContext = new FakeViewContext(childDomainObject, childView);
+			context.addChildContext(control, childContext);
 		}
-
-		@Override
-		public void unregisterViewChangeListener(ModelChangeListener modelChangeListener) {
-		}
-
-		@Override
-		public void unregisterRootDomainModelChangeListener(
-			RootDomainModelChangeListener rootDomainModelChangeListener) {
-
-		}
-
-		@Override
-		public void unregisterEMFFormsContextListener(EMFFormsContextListener contextListener) {
-
-		}
-
-		@Override
-		public void unregisterDomainChangeListener(ModelChangeListener modelChangeListener) {
-
-		}
-
-		@Override
-		public void registerViewChangeListener(ModelChangeListener modelChangeListener) {
-
-		}
-
-		@Override
-		public void registerRootDomainModelChangeListener(
-			RootDomainModelChangeListener rootDomainModelChangeListener) {
-
-		}
-
-		@Override
-		public void registerEMFFormsContextListener(EMFFormsContextListener contextListener) {
-
-		}
-
-		@Override
-		public void registerDomainChangeListener(ModelChangeListener modelChangeListener) {
-
-		}
-
-		@Override
-		public VElement getViewModel() {
-			return viewModel;
-		}
-
-		@Override
-		public <T> T getService(Class<T> serviceType) {
-			return null;
-		}
-
-		@Override
-		public EObject getDomainModel() {
-			return domainObject;
-		}
-
-		@Override
-		public void changeDomainModel(EObject newDomainModel) {
-
-		}
+		final VView childView = VViewFactory.eINSTANCE.createView();
+		final VControl childControl = VViewFactory.eINSTANCE.createControl();
+		childControl.setDomainModelReference(EcorePackage.eINSTANCE.getEClass_EAttributes());
+		childView.getChildren().add(childControl);
+		final EObject childDomainObject = EcoreUtil.create(EcorePackage.eINSTANCE.getEClass());
+		final FakeViewContext childContext = new FakeViewContext(childDomainObject, childView);
+		context.addChildContext(control, childContext);
+		final long startTime = System.nanoTime();
+		final Set<VElement> controlsFor = mapper
+			.getControlsFor(
+				UniqueSetting.createSetting(childDomainObject, EcorePackage.eINSTANCE.getEClass_EAttributes()));
+		final long endTime = System.nanoTime();
+		assertEquals(2, controlsFor.size());
+		assertTrue(controlsFor.contains(control));
+		assertTrue(controlsFor.contains(childControl));
+		final long durationYs = (endTime - startTime) / 1000;
+		// half a millisecond should be more then enough time
+		assertTrue(MessageFormat.format("Duration was {0}.", durationYs), durationYs < 500); //$NON-NLS-1$
 	}
 }

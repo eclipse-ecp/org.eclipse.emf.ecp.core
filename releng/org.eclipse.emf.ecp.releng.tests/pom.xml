@@ -5,12 +5,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.eclipse.emf.ecp</groupId>
 	<artifactId>ecp-tests-parent</artifactId>
-	<version>1.13.0-SNAPSHOT</version>
+	<version>1.14.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<parent>
 		<groupId>org.eclipse.emf.ecp</groupId>
 		<artifactId>ecp-parent</artifactId>
-		<version>1.13.0-SNAPSHOT</version>
+		<version>1.14.0-SNAPSHOT</version>
 		<relativePath>../../releng/org.eclipse.emf.ecp.releng/</relativePath>
 	</parent>
 	<profiles>
@@ -71,6 +71,7 @@
 		<module>../../tests/org.eclipse.emf.ecp.test.model.edit</module>
 		<module>../../tests/org.eclipse.emf.ecp.test.model.feature</module>
 		<module>../../tests/org.eclipse.emf.ecp.core.rap.sessionprovider.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.core.rap.sessionprovider.concurrent.test</module>
 
 		<!-- Tests -->
 		<module>../../tests/org.eclipse.emf.ecp.view.treemasterdetail.ui.swt.test</module>
@@ -94,6 +95,7 @@
 		
 		
 		<module>../../tests/org.eclipse.emf.ecp.view.table.ui.swt.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.view.table.ui.nebula.grid.test</module>
 		
 		<module>../../tests/org.eclipse.emf.ecp.view.validation.bean.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.vertical.ui.swt.test</module>
@@ -114,8 +116,12 @@
 		<module>../../tests/org.eclipse.emf.ecp.view.model.common.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.common.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.control.multireference.tests</module>
+		
+		<module>../../tests/org.eclipse.emfforms.editor.ecore.test</module>
 
 		<module>../../tests/org.eclipse.emf.ecp.core.rap.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.core.rap.concurrent.test</module>
+		<module>../../tests/org.eclipse.emf.ecp.workspace.ui.rap.test</module>
 		
 		<!-- Key Attribute DMR -->
 		<module>../../tests/org.eclipse.emf.ecp.view.keyattributedmr.model.test</module>	

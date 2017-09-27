@@ -6,8 +6,8 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _s2yJMDsaEeOSoJrMKArUHA
-Runtime-Version: 1.5.4.201412181238
-Save-Time: 11/23/15 2:43 PM
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 9/5/17 10:29 PM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -21,9 +21,10 @@ with [get-view "Model Explorer" | get-tree] {
 
 with [get-editor "League America" | get-table] {
     select Jonas -column Name | activate-cell-edit -column 9
-    get-editbox | set-text Male
-    apply-cell-edit
+    get-combo | select Male
+    apply-cell-edit -deactivate
 }
+
 get-editor "Player Jonas" | get-combo -after [get-label Gender] | get-property selection | equals Male | verify-true
 get-view "Model Explorer" | get-tree | select "TestProject \\[trunk, Version 0\\]" | get-menu Commit | click
 get-window Commit | get-button OK | click

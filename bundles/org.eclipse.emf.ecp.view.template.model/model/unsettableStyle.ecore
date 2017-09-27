@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="unsettable" nsURI="http://www.eclipse.org/emf/ecp/view/template/style/unsettable/model"
+    nsPrefix="org.eclipse.emf.ecp.view.template.style.unsettable.model">
+  <eClassifiers xsi:type="ecore:EClass" name="UnsettableStyleProperty" eSuperTypes="template.ecore#//StyleProperty">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="buttonAlignment" lowerBound="1"
+        eType="#//ButtonAlignmentType" defaultValueLiteral="RIGHT"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="buttonPlacement" lowerBound="1"
+        eType="#//ButtonPlacementType" defaultValueLiteral="RIGHT_OF_LABEL"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="ButtonAlignmentType">
+    <eLiterals name="RIGHT"/>
+    <eLiterals name="LEFT"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="ButtonPlacementType">
+    <eLiterals name="RIGHT_OF_LABEL"/>
+    <eLiterals name="LEFT_OF_LABEL" value="1"/>
+  </eClassifiers>
+</ecore:EPackage>

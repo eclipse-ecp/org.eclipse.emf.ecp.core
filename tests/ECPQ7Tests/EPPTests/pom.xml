@@ -23,7 +23,7 @@
 		</profile>
 	</profiles>
 	<properties>
-		<emfstore-update-site>http://download.eclipse.org/emfstore/releases_18</emfstore-update-site>
+		<emfstore-update-site>http://download.eclipse.org/emfstore/releases_19</emfstore-update-site>
 		<aut-path>/home/data/httpd/download.eclipse.org/ecp</aut-path>
 	</properties>
 	<build>
@@ -72,7 +72,6 @@
 								<site>${emfstore-update-site}</site>
 								<features>
 									<feature>org.eclipse.emf.emfstore.server.feature.feature.group</feature>
-									<feature>org.eclipse.emf.emfstore.ecore.feature.feature.group</feature>
 									<feature>org.eclipse.emf.emfstore.example.feature.feature.group</feature>
 									<feature>org.eclipse.emf.emfstore.client.feature.feature.group</feature>
 									<feature>org.eclipse.emf.emfstore.common.feature.feature.group</feature>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         id="org.eclipse.emf.ecp.workspace.provider"
+         name="Eclipse Workspace (Experimental)"
+         point="org.eclipse.emf.ecp.ui.uiProviders">
+      <uiProvider
+            class="org.eclipse.emf.ecp.workspace.internal.ui.WorkspaceUIProvider"
+            provider="org.eclipse.emf.ecp.workspace.provider">
+      </uiProvider>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="org.eclipse.emf.ecp.workspace.internal.ui.undoLastCommand"
+            name="Undo Last Command">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.eclipse.emf.ecp.workspace.internal.ui.UndoLastCommandHandler"
+            commandId="org.eclipse.emf.ecp.workspace.internal.ui.undoLastCommand">
+         <enabledWhen>
+            <with
+                  variable="activeMenuSelection">
+               <iterate
+                     ifEmpty="false"
+                     operator="or">
+                  <test
+                        property="org.eclipse.emf.ecp.core.project.open"
+                        value="true">
+                  </test>
+                  <test
+                        property="org.eclipse.emf.ecp.workspace.ui.testers.canUndo"
+                        value="true">
+                  </test>
+               </iterate>
+            </with>
+         </enabledWhen>
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.eclipse.emf.ecp.ui.ModelExplorerView?after=org.eclipse.emf.ecp.ui.separatorProvider">
+         <command
+               commandId="org.eclipse.emf.ecp.workspace.internal.ui.undoLastCommand"
+               icon="icons/arrow_undo.png"
+               label="Undo Last Command"
+               style="push"
+               tooltip="Undo the last executed operation">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="activeMenuSelection">
+                  <and>
+                     <count
+                           value="1">
+                     </count>
+                     <iterate>
+                        <instanceof
+                              value="org.eclipse.emf.ecp.core.ECPProject">
+                        </instanceof>
+                        <test
+                              property="org.eclipse.emf.ecp.core.project.providerName"
+                              value="org.eclipse.emf.ecp.workspace.provider">
+                        </test>
+                     </iterate>
+                  </and>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.core.expressions.propertyTesters">
+      <propertyTester
+            class="org.eclipse.emf.ecp.workspace.internal.ui.WorkspaceCanUndoTester"
+            id="org.eclipse.emf.ecp.workspace.ui.canUndo"
+            namespace="org.eclipse.emf.ecp.workspace.ui.testers"
+            properties="canUndo"
+            type="org.eclipse.emf.ecp.core.ECPProject">
+      </propertyTester>
+   </extension>
+
+</plugin>

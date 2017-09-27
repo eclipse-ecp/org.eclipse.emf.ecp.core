@@ -29,4 +29,14 @@ public final class DefaultDetailCompositeBuilder implements DetailCompositeBuild
 		detailScrollableComposite.setExpandVertical(true);
 		return detailScrollableComposite;
 	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see org.eclipse.emfforms.spi.swt.treemasterdetail.DetailCompositeBuilder#enableVerticalCopy()
+	 */
+	@Override
+	public boolean enableVerticalCopy() {
+		return false;
+	}
 }

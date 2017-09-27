@@ -17,11 +17,7 @@ import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.ecore.EDataType;
 
 /**
- * Common interface for
- * {@link org.eclipse.emf.ecp.view.internal.validation.PreSetValidationServiceImpl.LooseEValidatorLooseEValidator}
- * and
- * {@link org.eclipse.emfforms.spi.common.prevalidation.PreSetValidationServiceImpl.DynamicLoosePatternEValidator
- * DynamicLoosePatternEValidator}.
+ * A {@link PreSetValidator} validates a value against a given data type, before it gets set in the model.
  *
  */
 public interface PreSetValidator {

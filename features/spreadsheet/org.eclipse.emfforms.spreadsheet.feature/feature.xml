@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipse.emfforms.spreadsheet.feature"
-      label="EMFForms Spreadsheet Renderer (Export &amp; Import) SDK"
+      label="EMF Forms Spreadsheet Renderer (Export &amp; Import) SDK"
       version="1.0.0.qualifier"
       provider-name="%providerName"
       plugin="org.eclipse.emfforms.spreadsheet.core"
       image="eclipse_update_120.jpg"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.13.0.qualifier">
+      license-feature-version="1.14.0.qualifier">
 
    <description>
       %description

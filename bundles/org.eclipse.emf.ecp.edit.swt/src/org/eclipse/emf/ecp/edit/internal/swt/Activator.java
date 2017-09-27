@@ -21,6 +21,7 @@ import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecp.edit.spi.ECPControlFactory;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
+import org.eclipse.emfforms.spi.common.locale.EMFFormsLocaleProvider;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
@@ -271,6 +272,21 @@ public class Activator extends Plugin {
 			.getServiceReference(ReportService.class);
 
 		final ReportService service = plugin.getBundle().getBundleContext()
+			.getService(serviceReference);
+		plugin.getBundle().getBundleContext().ungetService(serviceReference);
+
+		return service;
+	}
+
+	/**
+	 * Returns the {@link EMFFormsLocaleProvider}.
+	 *
+	 * @return The {@link EMFFormsLocaleProvider}
+	 */
+	public EMFFormsLocaleProvider getLocaleProvider() {
+		final ServiceReference<EMFFormsLocaleProvider> serviceReference = plugin.getBundle().getBundleContext()
+			.getServiceReference(EMFFormsLocaleProvider.class);
+		final EMFFormsLocaleProvider service = plugin.getBundle().getBundleContext()
 			.getService(serviceReference);
 		plugin.getBundle().getBundleContext().ungetService(serviceReference);
 

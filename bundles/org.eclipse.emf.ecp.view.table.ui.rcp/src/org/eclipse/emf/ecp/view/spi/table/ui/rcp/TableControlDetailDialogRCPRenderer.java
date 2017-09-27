@@ -82,9 +82,9 @@ public class TableControlDetailDialogRCPRenderer extends TableControlDetailDialo
 	}
 
 	@Override
-	protected Control renderControl(SWTGridCell gridCell, Composite parent)
+	protected Control renderTableControl(SWTGridCell gridCell, Composite parent)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
-		final Control control = super.renderControl(gridCell, parent);
+		final Control control = super.renderTableControl(gridCell, parent);
 		if (AbstractTableViewerComposite.class.isInstance(control)) {
 			try {
 				final AbstractTableViewer tableViewer = AbstractTableViewerComposite.class.cast(control)

@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecp.edit.spi.swt.table.ECPCellEditor;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
+import org.eclipse.emf.ecp.view.model.common.util.RendererUtil;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
@@ -38,6 +39,9 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
+import org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.RenderMode;
+import org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty;
+import org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyFactory;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.MoveCommand;
 import org.eclipse.emf.edit.command.RemoveCommand;
@@ -123,6 +127,9 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 	private UpButtonSelectionAdapter upButtonSelectionAdapter;
 	private DownButtonSelectionAdapter downButtonSelectionAdapter;
 	private ECPListEditingSupport observableSupport;
+	private SWTGridDescription rendererGridDescription;
+	private Button upButton;
+	private Button downButton;
 
 	/**
 	 * Default constructor.
@@ -151,9 +158,43 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 		viewModelDBC = new EMFDataBindingContext();
 	}
 
+	/**
+	 * Creates the default {@link VTTableStyleProperty}.
+	 *
+	 * @return the default {@link VTTableStyleProperty}
+	 * @since 1.14
+	 */
+	protected VTTableStyleProperty createDefaultTableStyleProperty() {
+		return VTTableStylePropertyFactory.eINSTANCE.createTableStyleProperty();
+	}
+
+	/**
+	 * Returns the {@link VTTableStyleProperty}.
+	 *
+	 * @return the {@link VTTableStyleProperty}
+	 * @since 1.14
+	 */
+	protected VTTableStyleProperty getTableStyleProperty() {
+		VTTableStyleProperty styleProperty = RendererUtil.getStyleProperty(getVTViewTemplateProvider(), getVElement(),
+			getViewModelContext(), VTTableStyleProperty.class);
+		if (styleProperty == null) {
+			styleProperty = createDefaultTableStyleProperty();
+		}
+		return styleProperty;
+	}
+
 	@Override
 	public SWTGridDescription getGridDescription(SWTGridDescription gridDescription) {
-		return GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 1, this);
+		if (rendererGridDescription == null) {
+			// create special grid for compact mode
+			if (getTableStyleProperty().getRenderMode() == RenderMode.COMPACT_VERTICALLY) {
+				rendererGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 2, this);
+			} else {
+				rendererGridDescription = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, 1, this);
+			}
+
+		}
+		return rendererGridDescription;
 	}
 
 	/**
@@ -200,8 +241,9 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 		return imageRegistryService.getImage(FrameworkUtil.getBundle(MultiAttributeSWTRenderer.class), path);
 	}
 
-	private Button createRemoveRowButton(final Composite buttonComposite, IObservableList list, EAttribute attribute) {
-		removeButton = new Button(buttonComposite, SWT.None);
+	private Button createRemoveRowButton(final Composite buttonComposite, IObservableList list) {
+		final EAttribute attribute = EAttribute.class.cast(list.getElementType());
+		final Button removeButton = new Button(buttonComposite, SWT.None);
 		final Image image = getImage(ICON_DELETE);
 		removeButton.setImage(image);
 		removeButton.setEnabled(!getVElement().isReadonly());
@@ -211,8 +253,9 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 		return removeButton;
 	}
 
-	private Button createAddRowButton(final Composite buttonComposite, IObservableList list, EAttribute attribute) {
-		addButton = new Button(buttonComposite, SWT.None);
+	private Button createAddRowButton(final Composite buttonComposite, IObservableList list) {
+		final EAttribute attribute = EAttribute.class.cast(list.getElementType());
+		final Button addButton = new Button(buttonComposite, SWT.None);
 		final Image image = getImage(ICON_ADD);
 		addButton.setImage(image);
 		if (attribute.getUpperBound() != -1 && list.size() >= attribute.getUpperBound()) {
@@ -221,19 +264,72 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 		return addButton;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.swt.AbstractSWTRenderer#renderControl(org.eclipse.emf.ecp.view.spi.swt.layout.SWTGridCell,
-	 *      org.eclipse.swt.widgets.Composite)
-	 */
+	@Override
+	protected void applyReadOnly() {
+		applyEnable();
+	}
+
 	@Override
 	protected Control renderControl(SWTGridCell cell, Composite parent)
+		throws NoPropertyDescriptorFoundExeption, NoRendererFoundException {
+		if (rendererGridDescription.getColumns() == 1) {
+			// Default
+			return renderMultiAttributeControl(cell, parent);
+		}
+		// Compact
+		if (cell.getColumn() == 0 && rendererGridDescription.getColumns() > 1) {
+			validationIcon = createValidationIcon(parent);
+			GridDataFactory.fillDefaults().hint(16, 17).grab(false, false).applyTo(validationIcon);
+			return validationIcon;
+		}
+		final Composite composite = new Composite(parent, SWT.NONE);
+		try {
+			final IObservableList list = getEMFFormsDatabinding().getObservableList(
+				getVElement().getDomainModelReference(),
+				getViewModelContext().getDomainModel());
+
+			GridLayoutFactory.fillDefaults().numColumns(2).applyTo(composite);
+			final Control multiAttributeComposite = renderMultiAttributeControl(cell, composite);
+			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(multiAttributeComposite);
+			final Composite buttonComposite = createButtonComposite(composite, list);
+			GridDataFactory.fillDefaults().align(SWT.END, SWT.BEGINNING).grab(false, false).applyTo(buttonComposite);
+			initButtons(list);
+		} catch (final DatabindingFailedException ex) {
+			getReportService().report(new RenderingFailedReport(ex));
+			return createErrorLabel(composite, ex);
+		}
+		return composite;
+	}
+
+	/**
+	 * Renders the MultiAttribute Control.
+	 *
+	 * Renders the MultiReference control including validation and buttons when {@link RenderMode} is set to
+	 * {@link RenderMode#DEFAULT}. Only renders the
+	 * MultiReferfence control without validation and buttons when renderMode is set to
+	 * {@link RenderMode#COMPACT_VERTICALLY}.
+	 *
+	 * @param cell the {@link SWTGridCell}.
+	 * @param parent the {@link Composite}.
+	 * @return the rendered {@link Control}
+	 * @throws NoRendererFoundException the {@link NoRendererFoundException}.
+	 * @throws NoPropertyDescriptorFoundExeption the {@link NoPropertyDescriptorFoundExeption}.
+	 * @since 1.14
+	 */
+	protected Control renderMultiAttributeControl(SWTGridCell cell, Composite parent)
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
 
 		final Composite composite = new Composite(parent, SWT.NONE);
-		composite.setLayout(new GridLayout(1, false));
 		composite.setBackground(parent.getBackground());
+
+		if (getTableStyleProperty().getRenderMode() == RenderMode.COMPACT_VERTICALLY) {
+			// Avoid the default margins of "new GridLayout()"
+			GridLayoutFactory.fillDefaults().applyTo(composite);
+		} else {
+			composite.setLayout(new GridLayout(1, false));
+		}
+
+		createLabelProvider();
 
 		IObservableList list;
 		try {
@@ -244,21 +340,55 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 			return composite;
 		}
 
-		final EAttribute attribute = EAttribute.class.cast(list.getElementType());
+		if (getTableStyleProperty().getRenderMode() == RenderMode.DEFAULT) {
+			final Composite titleComposite = createTitleComposite(composite);
+			createButtonComposite(titleComposite, list);
+		}
 
-		final Composite titleComposite = new Composite(composite, SWT.NONE);
+		final Composite controlComposite = createControlComposite(composite);
+		createContent(controlComposite, list);
+
+		SWTDataElementIdHelper.setElementIdDataForVControl(composite, getVElement(), getViewModelContext());
+
+		if (getTableStyleProperty().getRenderMode() == RenderMode.DEFAULT) {
+			initButtons(list);
+		}
+
+		return composite;
+	}
+
+	/**
+	 * Creates the Title Composite containing validation and buttons. Buttons have to be initialized afterwards.
+	 *
+	 * @param parent the parent {@link Composite}.
+	 * @return the created {@link Composite}.
+	 * @since 1.14
+	 */
+	protected Composite createTitleComposite(Composite parent) {
+		final Composite titleComposite = new Composite(parent, SWT.NONE);
 		titleComposite.setBackground(parent.getBackground());
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(titleComposite);
-		GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(titleComposite);
-		createLabelProvider();
+		GridLayoutFactory.fillDefaults().numColumns(2).equalWidth(false).applyTo(titleComposite);
 
 		validationIcon = createValidationIcon(titleComposite);
 		GridDataFactory.fillDefaults().hint(16, 17).grab(false, false).applyTo(validationIcon);
+		return titleComposite;
+	}
 
-		Button addButton = null;
-		Button removeButton = null;
-		final Composite buttonComposite = new Composite(titleComposite, SWT.NONE);
-		buttonComposite.setBackground(titleComposite.getBackground());
+	/**
+	 * Create the button composite. Buttons have to be initialized after the table is created.
+	 *
+	 * @param parent the {@link Composite} parent.
+	 * @param list the {@link IObservableList}.
+	 * @return the created {@link Composite}.
+	 * @since 1.14
+	 */
+	protected Composite createButtonComposite(Composite parent, IObservableList list) {
+		final Composite buttonComposite = new Composite(parent, SWT.NONE);
+
+		final EAttribute attribute = EAttribute.class.cast(list.getElementType());
+
+		buttonComposite.setBackground(parent.getBackground());
 		GridDataFactory.fillDefaults().align(SWT.END, SWT.BEGINNING).grab(true, false).applyTo(buttonComposite);
 		int numButtons = 0;
 		if (attribute.isOrdered()) {
@@ -266,27 +396,32 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 			numButtons += 2;
 		}
 
-		addButton = createAddRowButton(buttonComposite, list, attribute);
-		removeButton = createRemoveRowButton(buttonComposite, list, attribute);
+		addButton = createAddRowButton(buttonComposite, list);
+		removeButton = createRemoveRowButton(buttonComposite, list);
 		numButtons += 2;
 
 		GridLayoutFactory.fillDefaults().numColumns(numButtons).equalWidth(false).applyTo(buttonComposite);
-		final Composite controlComposite = createControlComposite(composite);
-		createContent(controlComposite, attribute, list);
+		return buttonComposite;
+	}
 
+	/**
+	 * Initializes the buttons. Call this after table is created.
+	 *
+	 * @param list the {@link IObservableList}.
+	 * @since 1.14
+	 */
+	protected void initButtons(IObservableList list) {
 		initAddButton(addButton, list);
 		initRemoveButton(removeButton, list);
+		initUpButton(upButton, list);
+		initDownButton(downButton, list);
 
 		getTableViewer().addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
-				MultiAttributeSWTRenderer.this.removeButton.setEnabled(!event.getSelection().isEmpty());
+				removeButton.setEnabled(!event.getSelection().isEmpty());
 			}
 		});
-
-		SWTDataElementIdHelper.setElementIdDataForVControl(composite, getVElement(), getViewModelContext());
-
-		return composite;
 	}
 
 	private void createLabelProvider() {
@@ -313,27 +448,41 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 		removeButton.addSelectionListener(removeButtonSelectionAdapter);
 	}
 
+	private void initUpButton(Button upButton, IObservableList list) {
+		if (upButton == null) {
+			return;
+		}
+		upButtonSelectionAdapter = new UpButtonSelectionAdapter(list);
+		upButton.addSelectionListener(upButtonSelectionAdapter);
+	}
+
+	private void initDownButton(Button downButton, IObservableList list) {
+		if (downButton == null) {
+			return;
+		}
+		downButtonSelectionAdapter = new DownButtonSelectionAdapter(list);
+		downButton.addSelectionListener(downButtonSelectionAdapter);
+	}
+
 	private void createUpDownButtons(Composite composite, IObservableList list) {
 		final Image up = getImage(ICONS_ARROW_UP_PNG);
 		final Image down = getImage(ICONS_ARROW_DOWN_PNG);
 
-		final Button upB = new Button(composite, SWT.PUSH);
-		upB.setImage(up);
-		upB.setEnabled(!getVElement().isReadonly());
-		upButtonSelectionAdapter = new UpButtonSelectionAdapter(list);
-		upB.addSelectionListener(upButtonSelectionAdapter);
-		final Button downB = new Button(composite, SWT.PUSH);
-		downB.setImage(down);
-		downB.setEnabled(!getVElement().isReadonly());
-		downButtonSelectionAdapter = new DownButtonSelectionAdapter(list);
-		downB.addSelectionListener(downButtonSelectionAdapter);
+		upButton = new Button(composite, SWT.PUSH);
+		upButton.setImage(up);
+		upButton.setEnabled(!getVElement().isReadonly());
+
+		downButton = new Button(composite, SWT.PUSH);
+		downButton.setImage(down);
+		downButton.setEnabled(!getVElement().isReadonly());
 	}
 
 	private InternalEObject getInstanceOf(EClass clazz) {
 		return InternalEObject.class.cast(clazz.getEPackage().getEFactoryInstance().create(clazz));
 	}
 
-	private void createContent(Composite composite, EAttribute attribute, IObservableList list) {
+	private void createContent(Composite composite, IObservableList list) {
+		final EAttribute attribute = EAttribute.class.cast(list.getElementType());
 		tableViewer = new TableViewer(composite, SWT.MULTI | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
 		tableViewer.getTable().setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_multiattribute"); //$NON-NLS-1$
 		tableViewer.getTable().setHeaderVisible(true);
@@ -455,6 +604,55 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 					.getMessage(), null));
 			}
 		});
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer#applyEnable()
+	 */
+	@Override
+	protected void applyEnable() {
+		if (getAddButton() != null) {
+			getAddButton().setVisible(getVElement().isEnabled() && !getVElement().isReadonly());
+		}
+		if (getRemoveButton() != null) {
+			getRemoveButton().setVisible(getVElement().isEnabled() && !getVElement().isReadonly());
+		}
+		if (getMoveUpButton() != null) {
+			getMoveUpButton().setVisible(getVElement().isEnabled() && !getVElement().isReadonly());
+		}
+		if (getMoveDownButton() != null) {
+			getMoveDownButton().setVisible(getVElement().isEnabled() && !getVElement().isReadonly());
+		}
+	}
+
+	/**
+	 * @return
+	 */
+	private Button getMoveDownButton() {
+		return downButton;
+	}
+
+	/**
+	 * @return
+	 */
+	private Button getMoveUpButton() {
+		return upButton;
+	}
+
+	/**
+	 * @return
+	 */
+	private Button getRemoveButton() {
+		return removeButton;
+	}
+
+	/**
+	 * @return
+	 */
+	private Button getAddButton() {
+		return addButton;
 	}
 
 	/**
@@ -654,7 +852,7 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 
 			if (ECPCellEditor.class.isInstance(cellEditor)) {
 				ECPCellEditor.class.cast(cellEditor).setEditable(editable);
-				return true;
+				return editable;
 			}
 			return editable;
 		}
@@ -691,7 +889,6 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 		 */
 		@Override
 		protected void initializeCellEditorValue(CellEditor cellEditor, ViewerCell cell) {
-
 			final IObservableValue target = doCreateCellEditorObservable(cellEditor);
 			final TableViewerRow viewerRow = (TableViewerRow) cell.getViewerRow();
 			final TableItem item = (TableItem) viewerRow.getItem();
@@ -822,6 +1019,20 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 		upButtonSelectionAdapter.setObservableList(list);
 		downButtonSelectionAdapter.setObservableList(list);
 		observableSupport.setObservableList(list);
+	}
+
+	/**
+	 * Creates an error label for the given {@link Exception}.
+	 *
+	 * @param parent The parent of the {@link Label}
+	 * @param ex The {@link Exception} causing the error
+	 * @return The error {@link Label}
+	 * @since 1.14
+	 */
+	protected Control createErrorLabel(Composite parent, final Exception ex) {
+		final Label errorLabel = new Label(parent, SWT.NONE);
+		errorLabel.setText(ex.getMessage());
+		return errorLabel;
 	}
 
 }

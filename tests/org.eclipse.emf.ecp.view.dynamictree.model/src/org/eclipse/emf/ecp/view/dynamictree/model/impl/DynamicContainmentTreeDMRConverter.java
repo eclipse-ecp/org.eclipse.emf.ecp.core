@@ -42,6 +42,7 @@ import org.osgi.framework.ServiceReference;
 public class DynamicContainmentTreeDMRConverter implements DomainModelReferenceConverterEMF {
 	private EMFFormsDatabindingEMF emfFormsDatabinding;
 	private ServiceReference<EMFFormsDatabindingEMF> databindingServiceReference;
+	private BundleContext bundleContext;
 
 	/**
 	 * Sets the {@link EMFFormsDatabindingEMF}.
@@ -66,9 +67,7 @@ public class DynamicContainmentTreeDMRConverter implements DomainModelReferenceC
 	 * @param bundleContext The {@link BundleContext} of this classes bundle.
 	 */
 	protected final void activate(BundleContext bundleContext) {
-		databindingServiceReference = bundleContext.getServiceReference(EMFFormsDatabindingEMF.class);
-		setEMFFormsDatabinding(bundleContext.getService(databindingServiceReference));
-
+		this.bundleContext = bundleContext;
 	}
 
 	/**
@@ -98,6 +97,14 @@ public class DynamicContainmentTreeDMRConverter implements DomainModelReferenceC
 		return NOT_APPLICABLE;
 	}
 
+	private EMFFormsDatabindingEMF getEMFFormsDatabinding() {
+		if (emfFormsDatabinding == null) {
+			databindingServiceReference = bundleContext.getServiceReference(EMFFormsDatabindingEMF.class);
+			setEMFFormsDatabinding(bundleContext.getService(databindingServiceReference));
+		}
+		return emfFormsDatabinding;
+	}
+
 	/**
 	 * {@inheritDoc}
 	 *
@@ -114,7 +121,7 @@ public class DynamicContainmentTreeDMRConverter implements DomainModelReferenceC
 		final EMFValuePropertyDecorator indexedProperty = getIndexedRootProperty(
 			dynamicContainmentTreeReference, index, object);
 
-		final IEMFValueProperty valuePropertyFromBase = emfFormsDatabinding
+		final IEMFValueProperty valuePropertyFromBase = getEMFFormsDatabinding()
 			.getValueProperty(dynamicContainmentTreeReference.getPathFromBase(), object);
 
 		return indexedProperty.value(valuePropertyFromBase);
@@ -135,7 +142,7 @@ public class DynamicContainmentTreeDMRConverter implements DomainModelReferenceC
 
 		final EMFValuePropertyDecorator indexedProperty = getIndexedRootProperty(
 			dynamicContainmentTreeReference, index, object);
-		final IEMFListProperty listPropertyFromBase = emfFormsDatabinding
+		final IEMFListProperty listPropertyFromBase = getEMFFormsDatabinding()
 			.getListProperty(dynamicContainmentTreeReference.getPathFromBase(), object);
 
 		return indexedProperty.list(listPropertyFromBase);
@@ -144,8 +151,8 @@ public class DynamicContainmentTreeDMRConverter implements DomainModelReferenceC
 	private EMFValuePropertyDecorator getIndexedRootProperty(
 		final DynamicContainmentTreeDomainModelReference dynamicContainmentTreeReference, final int index,
 		EObject object)
-			throws DatabindingFailedException, IllegalListTypeException {
-		final IValueProperty valuePropertyFromRoot = emfFormsDatabinding
+		throws DatabindingFailedException, IllegalListTypeException {
+		final IValueProperty valuePropertyFromRoot = getEMFFormsDatabinding()
 			.getValueProperty(dynamicContainmentTreeReference.getPathFromRoot(), object);
 		final EStructuralFeature structuralFeature = (EStructuralFeature) valuePropertyFromRoot.getValueType();
 		checkListType(structuralFeature);

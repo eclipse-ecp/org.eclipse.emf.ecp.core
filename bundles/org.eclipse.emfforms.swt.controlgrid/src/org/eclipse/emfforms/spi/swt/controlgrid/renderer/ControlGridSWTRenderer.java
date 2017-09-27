@@ -276,19 +276,16 @@ public class ControlGridSWTRenderer extends AbstractSWTRenderer<VControlGrid> {
 	protected GridData createGridDataForControlWithoutHorizontalGrab(final SWTGridDescription swtGridDescription,
 		final SWTGridCell swtGridCell, final Control control) {
 		GridData gridData;
-		GridDataFactory gridDataFactory = GridDataFactory
+		final GridDataFactory gridDataFactory = GridDataFactory
 			.fillDefaults()
 			.span(1, 1)
 			.grab(false, false)
 			.align(SWT.FILL, SWT.CENTER);
-		if (swtGridDescription.getColumns() == 3 && swtGridCell.getColumn() == 1
-			|| swtGridDescription.getColumns() == 2 && swtGridCell.getColumn() == 0
-				&& !"org_eclipse_emf_ecp_control_label" //$NON-NLS-1$
-					.equals(control.getData("org.eclipse.rap.rwt.customVariant"))) { //$NON-NLS-1$
-			// XXX hacky way to make validation labels visible because as stated above min size is
-			// not working
-			gridDataFactory = gridDataFactory.hint(16, SWT.DEFAULT);
+
+		if (swtGridCell.getPreferredSize() != null) {
+			gridDataFactory.hint(swtGridCell.getPreferredSize());
 		}
+
 		gridData = gridDataFactory.create();
 		return gridData;
 	}
@@ -313,6 +310,10 @@ public class ControlGridSWTRenderer extends AbstractSWTRenderer<VControlGrid> {
 			.grab(true, false)
 			.align(SWT.FILL, SWT.CENTER)
 			.create();
+		if (swtGridCell.getPreferredSize() != null) {
+			gridData.widthHint = swtGridCell.getPreferredSize().x;
+			gridData.heightHint = swtGridCell.getPreferredSize().y;
+		}
 		return gridData;
 	}
 

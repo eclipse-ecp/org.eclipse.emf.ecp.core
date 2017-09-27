@@ -13,6 +13,18 @@
                 <message_argument value="1.11.0"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI change" id="923795461">
+            <message_arguments>
+                <message_argument value="1.13.0"/>
+                <message_argument value="1.12.0"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change for 1.14" id="923795461">
+            <message_arguments>
+                <message_argument value="1.14.0"/>
+                <message_argument value="1.13.0"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI Change in 1.6" id="923795461">
             <message_arguments>
                 <message_argument value="1.6.0"/>
@@ -305,6 +317,90 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/template/selector/viewModelElement/model/impl/VTViewModelElementFactoryImpl.java" type="org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.impl.VTViewModelElementFactoryImpl">
+        <filter comment="Removed Impl packages from export" id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.impl.VTViewModelElementFactoryImpl"/>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model_1.14.0"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Removed Impl packages from export" id="305426566">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.impl.VTViewModelElementFactoryImpl"/>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model.edit_1.13.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/template/selector/viewModelElement/model/impl/VTViewModelElementPackageImpl.java" type="org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.impl.VTViewModelElementPackageImpl">
+        <filter comment="Removed Impl packages from export" id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.impl.VTViewModelElementPackageImpl"/>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model_1.14.0"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Removed Impl packages from export" id="305426566">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.impl.VTViewModelElementPackageImpl"/>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model.edit_1.13.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/template/selector/viewModelElement/model/impl/VTViewModelElementSelectorImpl.java" type="org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.impl.VTViewModelElementSelectorImpl">
+        <filter comment="Removed Impl packages from export" id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.impl.VTViewModelElementSelectorImpl"/>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model_1.14.0"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Removed Impl packages from export" id="305426566">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.selector.viewModelElement.model.impl.VTViewModelElementSelectorImpl"/>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model.edit_1.13.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/template/style/fontProperties/model/impl/VTFontPropertiesFactoryImpl.java" type="org.eclipse.emf.ecp.view.template.style.fontProperties.model.impl.VTFontPropertiesFactoryImpl">
+        <filter comment="Removed Impl packages from export" id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.fontProperties.model.impl.VTFontPropertiesFactoryImpl"/>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model_1.14.0"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Removed Impl packages from export" id="305426566">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.fontProperties.model.impl.VTFontPropertiesFactoryImpl"/>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model.edit_1.13.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/template/style/fontProperties/model/impl/VTFontPropertiesPackageImpl.java" type="org.eclipse.emf.ecp.view.template.style.fontProperties.model.impl.VTFontPropertiesPackageImpl">
+        <filter comment="Removed Impl packages from export" id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.fontProperties.model.impl.VTFontPropertiesPackageImpl"/>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model_1.14.0"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Removed Impl packages from export" id="305426566">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.fontProperties.model.impl.VTFontPropertiesPackageImpl"/>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model.edit_1.13.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/template/style/fontProperties/model/impl/VTFontPropertiesStylePropertyImpl.java" type="org.eclipse.emf.ecp.view.template.style.fontProperties.model.impl.VTFontPropertiesStylePropertyImpl">
+        <filter comment="Removed Impl packages from export" id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.fontProperties.model.impl.VTFontPropertiesStylePropertyImpl"/>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model_1.14.0"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Removed Impl packages from export" id="305426566">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.fontProperties.model.impl.VTFontPropertiesStylePropertyImpl"/>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model.edit_1.13.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/ecp/view/template/style/tab/model/VTTabPackage.java" type="org.eclipse.emf.ecp.view.template.style.tab.model.VTTabPackage">
         <filter comment="SPI change 1.10.0" id="388194388">
             <message_arguments>
@@ -468,7 +564,55 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/template/style/tab/model/impl/VTTabFactoryImpl.java" type="org.eclipse.emf.ecp.view.template.style.tab.model.impl.VTTabFactoryImpl">
+        <filter comment="Removed Impl packages from export" id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tab.model.impl.VTTabFactoryImpl"/>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model_1.14.0"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Removed Impl packages from export" id="305426566">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tab.model.impl.VTTabFactoryImpl"/>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model.edit_1.13.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/template/style/tab/model/impl/VTTabPackageImpl.java" type="org.eclipse.emf.ecp.view.template.style.tab.model.impl.VTTabPackageImpl">
+        <filter comment="Removed Impl packages from export" id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tab.model.impl.VTTabPackageImpl"/>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model_1.14.0"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Removed Impl packages from export" id="305426566">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tab.model.impl.VTTabPackageImpl"/>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model.edit_1.13.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/template/style/tab/model/impl/VTTabStylePropertyImpl.java" type="org.eclipse.emf.ecp.view.template.style.tab.model.impl.VTTabStylePropertyImpl">
+        <filter comment="Removed Impl packages from export" id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tab.model.impl.VTTabStylePropertyImpl"/>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model_1.14.0"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Removed Impl packages from export" id="305426566">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tab.model.impl.VTTabStylePropertyImpl"/>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model.edit_1.13.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/ecp/view/template/style/tableStyleProperty/model/VTTableStyleProperty.java" type="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty">
+        <filter comment="SPI Change" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty"/>
+                <message_argument value="getRenderMode()"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI Changes for 1.13" id="403804204">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty"/>
@@ -497,6 +641,12 @@
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty"/>
                 <message_argument value="setEnableSorting(boolean)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStyleProperty"/>
+                <message_argument value="setRenderMode(RenderMode)"/>
             </message_arguments>
         </filter>
         <filter comment="Model Additions in 1.12" id="403804204">
@@ -533,10 +683,29 @@
                 <message_argument value="4"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Changes for 1.14" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage"/>
+                <message_argument value="TABLE_STYLE_PROPERTY_FEATURE_COUNT"/>
+                <message_argument value="5"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage"/>
+                <message_argument value="RENDER_MODE"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI Changes for 1.12" id="403767336">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage"/>
                 <message_argument value="TABLE_STYLE_PROPERTY__ENABLE_SORTING"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage"/>
+                <message_argument value="TABLE_STYLE_PROPERTY__RENDER_MODE"/>
             </message_arguments>
         </filter>
         <filter comment="Model Additions in 1.12" id="403767336">
@@ -551,10 +720,22 @@
                 <message_argument value="TABLE_STYLE_PROPERTY__VISIBLE_LINES"/>
             </message_arguments>
         </filter>
+        <filter comment="SPI Change" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage"/>
+                <message_argument value="getRenderMode()"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI Changes for 1.12" id="403804204">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage"/>
                 <message_argument value="getTableStyleProperty_EnableSorting()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage"/>
+                <message_argument value="getTableStyleProperty_RenderMode()"/>
             </message_arguments>
         </filter>
         <filter comment="Model Additions in 1.12" id="403804204">
@@ -571,10 +752,22 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/ecp/view/template/style/tableStyleProperty/model/VTTableStylePropertyPackage.java" type="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage$Literals">
+        <filter comment="SPI Change" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage.Literals"/>
+                <message_argument value="RENDER_MODE"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI Changes for 1.12" id="403767336">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage.Literals"/>
                 <message_argument value="TABLE_STYLE_PROPERTY__ENABLE_SORTING"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage.Literals"/>
+                <message_argument value="TABLE_STYLE_PROPERTY__RENDER_MODE"/>
             </message_arguments>
         </filter>
         <filter comment="Model Additions in 1.12" id="403767336">
@@ -587,6 +780,48 @@
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.template.style.tableStyleProperty.model.VTTableStylePropertyPackage.Literals"/>
                 <message_argument value="TABLE_STYLE_PROPERTY__VISIBLE_LINES"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/template/style/tableValidation/model/impl/VTTableValidationFactoryImpl.java" type="org.eclipse.emf.ecp.view.template.style.tableValidation.model.impl.VTTableValidationFactoryImpl">
+        <filter comment="Removed Impl packages from export" id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tableValidation.model.impl.VTTableValidationFactoryImpl"/>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model_1.14.0"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Removed Impl packages from export" id="305426566">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tableValidation.model.impl.VTTableValidationFactoryImpl"/>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model.edit_1.13.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/template/style/tableValidation/model/impl/VTTableValidationPackageImpl.java" type="org.eclipse.emf.ecp.view.template.style.tableValidation.model.impl.VTTableValidationPackageImpl">
+        <filter comment="Removed Impl packages from export" id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tableValidation.model.impl.VTTableValidationPackageImpl"/>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model_1.14.0"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Removed Impl packages from export" id="305426566">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tableValidation.model.impl.VTTableValidationPackageImpl"/>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model.edit_1.13.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/template/style/tableValidation/model/impl/VTTableValidationStylePropertyImpl.java" type="org.eclipse.emf.ecp.view.template.style.tableValidation.model.impl.VTTableValidationStylePropertyImpl">
+        <filter comment="Removed Impl packages from export" id="305365105">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tableValidation.model.impl.VTTableValidationStylePropertyImpl"/>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model_1.14.0"/>
+            </message_arguments>
+        </filter>
+        <filter comment="Removed Impl packages from export" id="305426566">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.style.tableValidation.model.impl.VTTableValidationStylePropertyImpl"/>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model.edit_1.13.0"/>
             </message_arguments>
         </filter>
     </resource>

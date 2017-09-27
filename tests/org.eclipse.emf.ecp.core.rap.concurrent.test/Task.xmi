@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<org.eclipse.emf.ecp.makeithappen.model.task:Task
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:org.eclipse.emf.ecp.makeithappen.model.task="http://eclipse/org/emf/ecp/makeithappen/model/task"
+    xsi:schemaLocation="http://eclipse/org/emf/ecp/makeithappen/model/task task.ecore"
+    name="task1">
+  <subTasks
+      name="subtask1">
+    <subTasks
+        name="subtask2"/>
+  </subTasks>
+  <subTasks
+      name="subtask3"/>
+</org.eclipse.emf.ecp.makeithappen.model.task:Task>

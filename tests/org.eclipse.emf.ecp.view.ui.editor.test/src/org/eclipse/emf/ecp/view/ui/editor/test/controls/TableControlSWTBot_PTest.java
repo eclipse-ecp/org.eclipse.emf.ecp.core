@@ -78,7 +78,7 @@ public class TableControlSWTBot_PTest extends ECPCommonSWTBotTest {
 	@AfterClass
 	public static void afterClass() {
 		final double diff = Math.abs((memBefore - memAfter) / memBefore);
-		assertTrue(diff < 0.05);
+		assertTrue(String.format("Diff was %1$s.", diff), diff < 0.05);
 	}
 
 	@Parameters
