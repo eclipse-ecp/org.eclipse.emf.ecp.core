@@ -131,7 +131,8 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic {
 	}
 
 	private void addNewDiagnostic(Diagnostic diagnostic) {
-		if (diagnostic == null) {
+		if (diagnostic == null || diagnostic.getData().isEmpty()
+			|| !EObject.class.isInstance(diagnostic.getData().get(0))) {
 			return;
 		}
 		final EObject eObject = (EObject) diagnostic.getData().get(0);
