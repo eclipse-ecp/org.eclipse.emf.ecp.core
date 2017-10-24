@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Table UI SWT
-Bundle-SymbolicName: org.eclipse.emf.ecp.view.table.ui.swt
+Bundle-SymbolicName: org.eclipse.emf.ecp.view.table.ui.swt;singleton:=true
 Bundle-Version: 2.0.0.qualifier
 Bundle-Activator: org.eclipse.emf.ecp.view.internal.table.swt.Activator
 Bundle-Vendor: Eclipse Modeling Project

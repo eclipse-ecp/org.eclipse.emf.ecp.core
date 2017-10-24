@@ -19,7 +19,8 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.emfforms.common;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.emf.ecp.ide.editor.view;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.emfforms.editor.viewmodel;bundle-version="[2.0.0,3.0.0)";resolution:=optional,
- org.eclipse.emfforms.editor;bundle-version="[2.0.0,3.0.0)";resolution:=optional
+ org.eclipse.emfforms.editor;bundle-version="[2.0.0,3.0.0)";resolution:=optional,
+ org.eclipse.emf.common.ui;bundle-version="[2.11.0,3.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.eclipse.core.commands;version="0.0.0",
  org.eclipse.core.resources;version="0.0.0",
@@ -28,6 +29,7 @@ Import-Package: org.eclipse.core.commands;version="0.0.0",
  org.eclipse.jface.layout;version="0.0.0",
  org.eclipse.jface.resource;version="0.0.0",
  org.eclipse.jface.viewers;version="0.0.0",
+ org.eclipse.jface.window;version="0.0.0",
  org.eclipse.swt;version="0.0.0",
  org.eclipse.swt.custom;version="0.0.0",
  org.eclipse.swt.events;version="0.0.0",
@@ -35,6 +37,7 @@ Import-Package: org.eclipse.core.commands;version="0.0.0",
  org.eclipse.swt.layout;version="0.0.0",
  org.eclipse.swt.widgets;version="0.0.0",
  org.eclipse.ui;ui.workbench=split;version="0.0.0",
+ org.eclipse.ui.model;version="0.0.0",
  org.eclipse.ui.part;ui.workbench=split;version="0.0.0",
  org.eclipse.ui.plugin;version="0.0.0"
 Bundle-ActivationPolicy: lazy

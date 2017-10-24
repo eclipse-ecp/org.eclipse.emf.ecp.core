@@ -24,6 +24,8 @@ import org.eclipse.emf.ecp.common.spi.asserts.Assert;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
+import org.eclipse.emfforms.common.RankingHelper;
+import org.eclipse.emfforms.common.RankingHelper.RankTester;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
@@ -48,11 +50,11 @@ public class EMFFormsStructuralChangeTesterImpl implements EMFFormsStructuralCha
 	private final Set<StructuralChangeSegmentTester> structuralChangeTesters = new LinkedHashSet<StructuralChangeSegmentTester>();
 	private EMFFormsSegmentResolver segmentResolver;
 
-	private static final RankingHelper<StructuralChangeTesterInternal> RANKING_HELPER = //
-		new RankingHelper<StructuralChangeTesterInternal>(
-			StructuralChangeTesterInternal.class,
-			StructuralChangeTesterInternal.NOT_APPLICABLE,
-			StructuralChangeTesterInternal.NOT_APPLICABLE);
+	private static final RankingHelper<StructuralChangeSegmentTester> RANKING_HELPER = //
+		new RankingHelper<StructuralChangeSegmentTester>(
+			StructuralChangeSegmentTester.class,
+			StructuralChangeSegmentTester.NOT_APPLICABLE,
+			StructuralChangeSegmentTester.NOT_APPLICABLE);
 
 	/**
 	 * Sets the {@link ReportService}.
@@ -114,7 +116,6 @@ public class EMFFormsStructuralChangeTesterImpl implements EMFFormsStructuralCha
 			return false;
 		}
 
-
 		final EList<VDomainModelReferenceSegment> segments = reference.getSegments();
 
 		boolean relevantChange = false;
@@ -164,18 +165,15 @@ public class EMFFormsStructuralChangeTesterImpl implements EMFFormsStructuralCha
 	 * @return The most suitable {@link StructuralChangeSegmentTester} for the given
 	 *         {@link VDomainModelReferenceSegment segment}, <code>null</code> if there is none
 	 */
-	private StructuralChangeSegmentTester getBestSegmentTester(VDomainModelReferenceSegment segment) {
-		double bestPriority = StructuralChangeSegmentTester.NOT_APPLICABLE;
-		StructuralChangeSegmentTester bestTester = null;
+	private StructuralChangeSegmentTester getBestSegmentTester(final VDomainModelReferenceSegment segment) {
+		return RANKING_HELPER.getHighestRankingElement(structuralChangeTesters,
+			new RankTester<StructuralChangeSegmentTester>() {
 
-		for (final StructuralChangeSegmentTester tester : structuralChangeTesters) {
-			final double priority = tester.isApplicable(segment);
-			if (priority > bestPriority) {
-				bestPriority = priority;
-				bestTester = tester;
-			}
-		}
-		return bestTester;
+				@Override
+				public double getRank(StructuralChangeSegmentTester tester) {
+					return tester.isApplicable(segment);
+				}
+			});
 	}
 
 }

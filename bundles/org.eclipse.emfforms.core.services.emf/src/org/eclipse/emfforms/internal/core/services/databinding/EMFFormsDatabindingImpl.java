@@ -33,6 +33,8 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfforms.common.RankingHelper;
+import org.eclipse.emfforms.common.RankingHelper.RankTester;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsSegmentResolver;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.DomainModelReferenceSegmentConverterEMF;
@@ -49,6 +51,11 @@ import org.eclipse.emfforms.spi.core.services.databinding.emf.SegmentConverterVa
 public class EMFFormsDatabindingImpl implements EMFFormsDatabindingEMF, EMFFormsSegmentResolver {
 
 	private final Set<DomainModelReferenceSegmentConverterEMF> segmentConverters = new LinkedHashSet<DomainModelReferenceSegmentConverterEMF>();
+
+	private static final RankingHelper<DomainModelReferenceSegmentConverterEMF> RANKING_HELPER = //
+		new RankingHelper<DomainModelReferenceSegmentConverterEMF>(
+			DomainModelReferenceSegmentConverterEMF.class, DomainModelReferenceSegmentConverterEMF.NOT_APPLICABLE,
+			DomainModelReferenceSegmentConverterEMF.NOT_APPLICABLE);
 
 	/**
 	 * {@inheritDoc}
@@ -305,24 +312,24 @@ public class EMFFormsDatabindingImpl implements EMFFormsDatabindingEMF, EMFForms
 	 * @throws DatabindingFailedException if no suitable segment converter could be found
 	 */
 	private DomainModelReferenceSegmentConverterEMF getBestDomainModelReferenceSegmentConverter(
-		VDomainModelReferenceSegment segment) throws DatabindingFailedException {
+		final VDomainModelReferenceSegment segment) throws DatabindingFailedException {
 
 		Assert.create(segment).notNull();
 
-		double highestPriority = DomainModelReferenceSegmentConverterEMF.NOT_APPLICABLE;
-		DomainModelReferenceSegmentConverterEMF bestConverter = null;
-		for (final DomainModelReferenceSegmentConverterEMF converter : segmentConverters) {
-			final double priority = converter.isApplicable(segment);
+		final DomainModelReferenceSegmentConverterEMF bestConverter = RANKING_HELPER.getHighestRankingElement(
+			segmentConverters, new RankTester<DomainModelReferenceSegmentConverterEMF>() {
 
 				@Override
-				public double getRank(final DomainModelReferenceConverterEMF converter) {
-					return converter.isApplicable(domainModelReference);
+				public double getRank(DomainModelReferenceSegmentConverterEMF converter) {
+					return converter.isApplicable(segment);
 				}
+			});
 
 		if (bestConverter == null) {
 			throw new DatabindingFailedException(String
 				.format("No suitable DomainModelReferenceSegmentConverter could be found for segment %1$s", segment)); //$NON-NLS-1$
 		}
+		return bestConverter;
 
 	}
 

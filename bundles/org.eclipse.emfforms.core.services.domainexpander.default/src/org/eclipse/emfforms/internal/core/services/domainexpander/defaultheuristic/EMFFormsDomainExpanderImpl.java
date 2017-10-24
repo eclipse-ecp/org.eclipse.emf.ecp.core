@@ -20,6 +20,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.common.spi.asserts.Assert;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
+import org.eclipse.emfforms.common.RankingHelper;
+import org.eclipse.emfforms.common.RankingHelper.RankTester;
 import org.eclipse.emfforms.spi.core.services.domainexpander.EMFFormsDMRSegmentExpander;
 import org.eclipse.emfforms.spi.core.services.domainexpander.EMFFormsDomainExpander;
 import org.eclipse.emfforms.spi.core.services.domainexpander.EMFFormsExpandingFailedException;
@@ -38,9 +40,10 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 public class EMFFormsDomainExpanderImpl implements EMFFormsDomainExpander {
 	private final Set<EMFFormsDMRSegmentExpander> emfFormsDMRSegmentExpanders = new CopyOnWriteArraySet<EMFFormsDMRSegmentExpander>();
 
-	private static final RankingHelper<EMFFormsDMRExpander> RANKING_HELPER = //
-		new RankingHelper<EMFFormsDMRExpander>(
-			EMFFormsDMRExpander.class, EMFFormsDMRExpander.NOT_APPLICABLE, EMFFormsDMRExpander.NOT_APPLICABLE);
+	private static final RankingHelper<EMFFormsDMRSegmentExpander> RANKING_HELPER = //
+		new RankingHelper<EMFFormsDMRSegmentExpander>(
+			EMFFormsDMRSegmentExpander.class, EMFFormsDMRSegmentExpander.NOT_APPLICABLE,
+			EMFFormsDMRSegmentExpander.NOT_APPLICABLE);
 
 	/**
 	 * Called by the framework to add an {@link EMFFormsDMRSegmentExpander} to the set of DMR segment expanders.
@@ -102,16 +105,16 @@ public class EMFFormsDomainExpanderImpl implements EMFFormsDomainExpander {
 	 * @return the most suitable {@link EMFFormsDMRSegmentExpander} for the given segment
 	 * @throws EMFFormsExpandingFailedException if no {@link EMFFormsDMRSegmentExpander} could be found
 	 */
-	private EMFFormsDMRSegmentExpander getBestSegmentExpander(VDomainModelReferenceSegment segment)
+	private EMFFormsDMRSegmentExpander getBestSegmentExpander(final VDomainModelReferenceSegment segment)
 		throws EMFFormsExpandingFailedException {
-		EMFFormsDMRSegmentExpander bestSegmentExpander = null;
-		double bestScore = EMFFormsDMRSegmentExpander.NOT_APPLICABLE;
-		for (final EMFFormsDMRSegmentExpander expander : emfFormsDMRSegmentExpanders) {
-			if (expander.isApplicable(segment) > bestScore) {
-				bestScore = expander.isApplicable(segment);
-				bestSegmentExpander = expander;
-			}
-		}
+		final EMFFormsDMRSegmentExpander bestSegmentExpander = RANKING_HELPER
+			.getHighestRankingElement(emfFormsDMRSegmentExpanders, new RankTester<EMFFormsDMRSegmentExpander>() {
+
+				@Override
+				public double getRank(EMFFormsDMRSegmentExpander element) {
+					return element.isApplicable(segment);
+				}
+			});
 
 		if (bestSegmentExpander == null) {
 			throw new EMFFormsExpandingFailedException(
