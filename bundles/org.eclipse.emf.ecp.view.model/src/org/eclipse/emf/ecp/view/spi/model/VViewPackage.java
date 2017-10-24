@@ -163,7 +163,7 @@ public interface VViewPackage extends EPackage {
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.impl.VDomainModelReferenceImpl <em>Domain
-	 * Reference</em>}' class.
+	 * Model Reference</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
@@ -1133,6 +1133,37 @@ public interface VViewPackage extends EPackage {
 	int FEATURE_PATH_DOMAIN_MODEL_REFERENCE_FEATURE_COUNT = DOMAIN_MODEL_REFERENCE_FEATURE_COUNT + 2;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.VHasTooltip <em>Has Tooltip</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see org.eclipse.emf.ecp.view.spi.model.VHasTooltip
+	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getHasTooltip()
+	 * @generated
+	 */
+	int HAS_TOOLTIP = 16;
+
+	/**
+	 * The feature id for the '<em><b>Tooltip</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int HAS_TOOLTIP__TOOLTIP = 0;
+
+	/**
+	 * The number of structural features of the '<em>Has Tooltip</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int HAS_TOOLTIP_FEATURE_COUNT = 1;
+
+	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.LabelAlignment <em>Label Alignment</em>}'
 	 * enum.
 	 * <!-- begin-user-doc -->
@@ -1142,7 +1173,7 @@ public interface VViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getLabelAlignment()
 	 * @generated
 	 */
-	int LABEL_ALIGNMENT = 16;
+	int LABEL_ALIGNMENT = 17;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.model.DateTimeDisplayType <em>Date Time Display
@@ -1155,7 +1186,7 @@ public interface VViewPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getDateTimeDisplayType()
 	 * @generated
 	 */
-	int DATE_TIME_DISPLAY_TYPE = 17;
+	int DATE_TIME_DISPLAY_TYPE = 18;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.model.VElement <em>Element</em>}'.
@@ -1561,6 +1592,30 @@ public interface VViewPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getFeaturePathDomainModelReference_DomainModelEReferencePath();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.model.VHasTooltip <em>Has Tooltip</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for class '<em>Has Tooltip</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VHasTooltip
+	 * @generated
+	 */
+	EClass getHasTooltip();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.emf.ecp.view.spi.model.VHasTooltip#getTooltip
+	 * <em>Tooltip</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the attribute '<em>Tooltip</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VHasTooltip#getTooltip()
+	 * @see #getHasTooltip()
+	 * @generated
+	 */
+	EAttribute getHasTooltip_Tooltip();
 
 	/**
 	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Object Map Entry</em>}'.
@@ -2074,6 +2129,27 @@ public interface VViewPackage extends EPackage {
 			.getFeaturePathDomainModelReference_DomainModelEReferencePath();
 
 		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.model.VHasTooltip <em>Has Tooltip</em>}'
+		 * class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @see org.eclipse.emf.ecp.view.spi.model.VHasTooltip
+		 * @see org.eclipse.emf.ecp.view.spi.model.impl.VViewPackageImpl#getHasTooltip()
+		 * @generated
+		 */
+		EClass HAS_TOOLTIP = eINSTANCE.getHasTooltip();
+
+		/**
+		 * The meta object literal for the '<em><b>Tooltip</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EAttribute HAS_TOOLTIP__TOOLTIP = eINSTANCE.getHasTooltip_Tooltip();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.model.impl.VStringToObjectMapEntryImpl
 		 * <em>String To Object Map Entry</em>}' class.
 		 * <!-- begin-user-doc -->
@@ -2176,7 +2252,7 @@ public interface VViewPackage extends EPackage {
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.model.impl.VDomainModelReferenceImpl
-		 * Model Reference</em>}' class.
+		 * <em>Domain Model Reference</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * 

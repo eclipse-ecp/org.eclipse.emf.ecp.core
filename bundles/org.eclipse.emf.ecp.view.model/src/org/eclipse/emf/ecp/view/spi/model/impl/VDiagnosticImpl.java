@@ -20,9 +20,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
@@ -73,46 +70,6 @@ public class VDiagnosticImpl extends EObjectImpl implements VDiagnostic {
 	 */
 	protected VDiagnosticImpl() {
 		super();
-		eAdapters().add(new AdapterImpl() {
-
-			/**
-			 * {@inheritDoc}
-			 *
-			 * @see
-			 * 		org.eclipse.emf.common.notify.impl.AdapterImpl#notifyChanged(org.eclipse.emf.common.notify.Notification)
-			 */
-			@SuppressWarnings("unchecked")
-			@Override
-			public void notifyChanged(Notification msg) {
-				super.notifyChanged(msg);
-				if (msg.getFeature() != VViewPackage.eINSTANCE.getDiagnostic_Diagnostics()) {
-					return;
-				}
-				switch (msg.getEventType()) {
-				case Notification.ADD:
-					addNewDiagnostic((Diagnostic) msg.getNewValue());
-					break;
-				case Notification.ADD_MANY:
-					if (msg.getNewValue() != null) {
-						for (final Diagnostic diagnostic : (Collection<Diagnostic>) msg.getNewValue()) {
-							addNewDiagnostic(diagnostic);
-						}
-					}
-					break;
-				case Notification.REMOVE:
-					removeOldDiagnostic((Diagnostic) msg.getOldValue());
-					break;
-				case Notification.REMOVE_MANY:
-					if (msg.getOldValue() != null) {
-						for (final Diagnostic diagnostic : (Collection<Diagnostic>) msg.getOldValue()) {
-							removeOldDiagnostic(diagnostic);
-						}
-					}
-					break;
-				}
-			}
-
-		});
 	}
 
 	private void removeOldDiagnostic(Diagnostic diagnostic) {

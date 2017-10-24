@@ -19,6 +19,7 @@ import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.EObjectValidator;
+import org.eclipse.emf.ecp.view.spi.model.*;
 import org.eclipse.emf.ecp.view.spi.model.DateTimeDisplayType;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VAttachment;
@@ -157,6 +158,8 @@ public class ViewValidator extends EObjectValidator {
 		case VViewPackage.FEATURE_PATH_DOMAIN_MODEL_REFERENCE:
 			return validateFeaturePathDomainModelReference((VFeaturePathDomainModelReference) value, diagnostics,
 				context);
+		case VViewPackage.HAS_TOOLTIP:
+			return validateHasTooltip((VHasTooltip) value, diagnostics, context);
 		case VViewPackage.LABEL_ALIGNMENT:
 			return validateLabelAlignment((LabelAlignment) value, diagnostics, context);
 		case VViewPackage.DATE_TIME_DISPLAY_TYPE:
@@ -259,6 +262,17 @@ public class ViewValidator extends EObjectValidator {
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public boolean validateHasTooltip(VHasTooltip hasTooltip, DiagnosticChain diagnostics,
+		Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(hasTooltip, diagnostics, context);
 	}
 
 	/**

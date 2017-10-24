@@ -77,9 +77,8 @@
       <genFeatures property="None" notify="false" createChild="false" propertySortChoices="true"
           ecoreFeature="ecore:EReference view.ecore#//FeaturePathDomainModelReference/domainModelEReferencePath"/>
     </genClasses>
-    </genClasses>
     <genClasses image="false" ecoreClass="view.ecore#//HasTooltip">
-      <genFeatures createChild="false" propertyDescription="" propertyMultiLine="true"
-          ecoreFeature="ecore:EAttribute view.ecore#//HasTooltip/tooltip"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute view.ecore#//HasTooltip/tooltip"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

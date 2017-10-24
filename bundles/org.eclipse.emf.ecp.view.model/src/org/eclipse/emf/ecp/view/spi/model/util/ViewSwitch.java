@@ -231,11 +231,10 @@ public class ViewSwitch<T> extends Switch<T> {
 			return result;
 		}
 		case VViewPackage.HAS_TOOLTIP: {
-			final VHasTooltip hasTooltip = (VHasTooltip) theEObject;
+			VHasTooltip hasTooltip = (VHasTooltip) theEObject;
 			T result = caseHasTooltip(hasTooltip);
-			if (result == null) {
+			if (result == null)
 				result = defaultCase(theEObject);
-			}
 			return result;
 		}
 		default:
@@ -430,12 +429,11 @@ public class ViewSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Has Tooltip</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
-	 * @since 1.13
 	 */
 	public T caseHasTooltip(VHasTooltip object) {
 		return null;

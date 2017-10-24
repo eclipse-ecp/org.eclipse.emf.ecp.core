@@ -778,6 +778,72 @@
     <changes xsi:type="history:Set" xmi:id="_8w3mN0NeEeaFtY2yvf2yjQ" featureName="defaultValueLiteral" dataValue="Default" oldDataValue="Left">
       <element href="view.ecore#//Control/labelAlignment"/>
     </changes>
+    <changes xsi:type="history:OperationChange" xmi:id="_a1-YULjDEeeV2-OUCvRNNQ">
+      <changes xsi:type="history:Create" xmi:id="_a1-YUbjDEeeV2-OUCvRNNQ" referenceName="eClassifiers">
+        <target href="view.ecore#/"/>
+        <element href="view.ecore#//HasTooltip"/>
+        <changes xsi:type="history:Set" xmi:id="_a1-YUrjDEeeV2-OUCvRNNQ" featureName="name" dataValue="HasTooltip">
+          <element href="view.ecore#//HasTooltip"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_a1-YU7jDEeeV2-OUCvRNNQ" featureName="abstract" dataValue="true" oldDataValue="false">
+          <element href="view.ecore#//HasTooltip"/>
+        </changes>
+      </changes>
+      <operation xmi:id="_a1-YVLjDEeeV2-OUCvRNNQ" name="newClass">
+        <parameters xmi:id="_a1-YVbjDEeeV2-OUCvRNNQ" name="ePackage">
+          <referenceValue xmi:id="_a1-YVrjDEeeV2-OUCvRNNQ">
+            <element href="view.ecore#/"/>
+          </referenceValue>
+        </parameters>
+        <parameters xmi:id="_a1-YV7jDEeeV2-OUCvRNNQ" name="name">
+          <dataValue>HasTooltip</dataValue>
+        </parameters>
+        <parameters xmi:id="_a1-YWLjDEeeV2-OUCvRNNQ" name="superClasses"/>
+        <parameters xmi:id="_a1-YWbjDEeeV2-OUCvRNNQ" name="abstr">
+          <dataValue>true</dataValue>
+        </parameters>
+      </operation>
+    </changes>
+    <changes xsi:type="history:Set" xmi:id="_fW_scLjDEeeV2-OUCvRNNQ" featureName="interface" dataValue="true" oldDataValue="false">
+      <element href="view.ecore#//HasTooltip"/>
+    </changes>
+    <changes xsi:type="history:OperationChange" xmi:id="__m3tQLjDEeeV2-OUCvRNNQ">
+      <changes xsi:type="history:Create" xmi:id="__m3tQbjDEeeV2-OUCvRNNQ" referenceName="eStructuralFeatures">
+        <target href="view.ecore#//HasTooltip"/>
+        <element href="view.ecore#//HasTooltip/tooltip"/>
+        <changes xsi:type="history:Set" xmi:id="__m3tQrjDEeeV2-OUCvRNNQ" featureName="name" dataValue="tooltip">
+          <element href="view.ecore#//HasTooltip/tooltip"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="__m3tQ7jDEeeV2-OUCvRNNQ" featureName="eType">
+          <element href="view.ecore#//HasTooltip/tooltip"/>
+          <referenceValue href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </changes>
+      </changes>
+      <operation xmi:id="__m3tRLjDEeeV2-OUCvRNNQ" name="newAttribute">
+        <parameters xmi:id="__m3tRbjDEeeV2-OUCvRNNQ" name="eClass">
+          <referenceValue xmi:id="__m3tRrjDEeeV2-OUCvRNNQ">
+            <element href="view.ecore#//HasTooltip"/>
+          </referenceValue>
+        </parameters>
+        <parameters xmi:id="__m3tR7jDEeeV2-OUCvRNNQ" name="name">
+          <dataValue>tooltip</dataValue>
+        </parameters>
+        <parameters xmi:id="__m3tSLjDEeeV2-OUCvRNNQ" name="type">
+          <referenceValue xmi:id="__m3tSbjDEeeV2-OUCvRNNQ">
+            <element href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+          </referenceValue>
+        </parameters>
+        <parameters xmi:id="__m3tSrjDEeeV2-OUCvRNNQ" name="lowerBound">
+          <dataValue>0</dataValue>
+        </parameters>
+        <parameters xmi:id="__m3tS7jDEeeV2-OUCvRNNQ" name="upperBound">
+          <dataValue>1</dataValue>
+        </parameters>
+        <parameters xmi:id="__m3tTLjDEeeV2-OUCvRNNQ" name="defaultValue">
+          <dataValue xsi:nil="true"/>
+        </parameters>
+      </operation>
+    </changes>
     <changes xsi:type="history:MigrationChange" xmi:id="_8w3mOENeEeaFtY2yvf2yjQ" migration="org.eclipse.emf.ecp.internal.view.model.edapt._160to170.LabelAlignmentMigration"/>
     <changes xsi:type="history:Set" xmi:id="_8w3mOUNeEeaFtY2yvf2yjQ" featureName="nsURI" dataValue="http://org/eclipse/emf/ecp/view/model/170" oldDataValue="http://org/eclipse/emf/ecp/view/model">
       <element href="view.ecore#/"/>

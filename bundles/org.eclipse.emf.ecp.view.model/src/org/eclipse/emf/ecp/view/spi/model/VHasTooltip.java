@@ -28,7 +28,6 @@ import org.eclipse.emf.ecore.EObject;
  * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getHasTooltip()
  * @model interface="true" abstract="true"
  * @generated
- * @since 1.13
  */
 public interface VHasTooltip extends EObject {
 	/**
@@ -39,7 +38,7 @@ public interface VHasTooltip extends EObject {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the value of the '<em>Tooltip</em>' attribute.
 	 * @see #setTooltip(String)
 	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getHasTooltip_Tooltip()
@@ -53,7 +52,7 @@ public interface VHasTooltip extends EObject {
 	 * attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param value the new value of the '<em>Tooltip</em>' attribute.
 	 * @see #getTooltip()
 	 * @generated

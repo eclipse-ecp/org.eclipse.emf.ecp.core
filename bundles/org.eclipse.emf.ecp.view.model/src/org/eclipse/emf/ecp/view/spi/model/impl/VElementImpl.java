@@ -55,7 +55,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getName()
 	 * @generated
 	 * @ordered
@@ -66,7 +66,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getName()
 	 * @generated
 	 * @ordered
@@ -77,7 +77,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 	 * The default value of the '{@link #isVisible() <em>Visible</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #isVisible()
 	 * @generated
 	 * @ordered
@@ -88,7 +88,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 	 * The cached value of the '{@link #isVisible() <em>Visible</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #isVisible()
 	 * @generated
 	 * @ordered
@@ -99,7 +99,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 	 * The default value of the '{@link #isEnabled() <em>Enabled</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #isEnabled()
 	 * @generated
 	 * @ordered
@@ -110,7 +110,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 	 * The cached value of the '{@link #isEnabled() <em>Enabled</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #isEnabled()
 	 * @generated
 	 * @ordered
@@ -121,7 +121,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 	 * The default value of the '{@link #isReadonly() <em>Readonly</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #isReadonly()
 	 * @generated
 	 * @ordered
@@ -132,7 +132,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 	 * The cached value of the '{@link #isReadonly() <em>Readonly</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #isReadonly()
 	 * @generated
 	 * @ordered
@@ -143,7 +143,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 	 * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getLabel()
 	 * @generated
 	 * @ordered
@@ -154,7 +154,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 	 * The cached value of the '{@link #getLabel() <em>Label</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getLabel()
 	 * @generated
 	 * @ordered
@@ -165,7 +165,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 	 * The cached value of the '{@link #getDiagnostic() <em>Diagnostic</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getDiagnostic()
 	 * @generated
 	 * @ordered
@@ -176,7 +176,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 	 * The cached value of the '{@link #getAttachments() <em>Attachments</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #getAttachments()
 	 * @generated
 	 * @ordered
@@ -210,7 +210,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected VElementImpl() {
@@ -220,7 +220,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -231,7 +231,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -242,22 +242,21 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void setName(String newName) {
-		final String oldName = name;
+		String oldName = name;
 		name = newName;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, VViewPackage.ELEMENT__NAME, oldName, name));
-		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -268,22 +267,21 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void setVisible(boolean newVisible) {
-		final boolean oldVisible = visible;
+		boolean oldVisible = visible;
 		visible = newVisible;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, VViewPackage.ELEMENT__VISIBLE, oldVisible, visible));
-		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -294,22 +292,21 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void setEnabled(boolean newEnabled) {
-		final boolean oldEnabled = enabled;
+		boolean oldEnabled = enabled;
 		enabled = newEnabled;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, VViewPackage.ELEMENT__ENABLED, oldEnabled, enabled));
-		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -320,23 +317,22 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void setReadonly(boolean newReadonly) {
-		final boolean oldReadonly = readonly;
+		boolean oldReadonly = readonly;
 		readonly = newReadonly;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(
 				new ENotificationImpl(this, Notification.SET, VViewPackage.ELEMENT__READONLY, oldReadonly, readonly));
-		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -347,22 +343,21 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void setLabel(String newLabel) {
-		final String oldLabel = label;
+		String oldLabel = label;
 		label = newLabel;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, VViewPackage.ELEMENT__LABEL, oldLabel, label));
-		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -373,20 +368,19 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public NotificationChain basicSetDiagnostic(VDiagnostic newDiagnostic, NotificationChain msgs) {
-		final VDiagnostic oldDiagnostic = diagnostic;
+		VDiagnostic oldDiagnostic = diagnostic;
 		diagnostic = newDiagnostic;
 		if (eNotificationRequired()) {
-			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
 				VViewPackage.ELEMENT__DIAGNOSTIC, oldDiagnostic, newDiagnostic);
-			if (msgs == null) {
+			if (msgs == null)
 				msgs = notification;
-			} else {
+			else
 				msgs.add(notification);
-			}
 		}
 		return msgs;
 	}
@@ -394,35 +388,31 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void setDiagnostic(VDiagnostic newDiagnostic) {
 		if (newDiagnostic != diagnostic) {
 			NotificationChain msgs = null;
-			if (diagnostic != null) {
+			if (diagnostic != null)
 				msgs = ((InternalEObject) diagnostic).eInverseRemove(this,
 					EOPPOSITE_FEATURE_BASE - VViewPackage.ELEMENT__DIAGNOSTIC, null, msgs);
-			}
-			if (newDiagnostic != null) {
+			if (newDiagnostic != null)
 				msgs = ((InternalEObject) newDiagnostic).eInverseAdd(this,
 					EOPPOSITE_FEATURE_BASE - VViewPackage.ELEMENT__DIAGNOSTIC, null, msgs);
-			}
 			msgs = basicSetDiagnostic(newDiagnostic, msgs);
-			if (msgs != null) {
+			if (msgs != null)
 				msgs.dispatch();
-			}
-		} else if (eNotificationRequired()) {
+		} else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, VViewPackage.ELEMENT__DIAGNOSTIC, newDiagnostic,
 				newDiagnostic));
-		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -455,17 +445,16 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 	 */
 	@Override
 	public void setUuid(String newUuid) {
-		final String oldUuid = uuid;
+		String oldUuid = uuid;
 		uuid = newUuid;
-		if (eNotificationRequired()) {
+		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, VViewPackage.ELEMENT__UUID, oldUuid, uuid));
-		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -482,7 +471,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -511,7 +500,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@SuppressWarnings("unchecked")
@@ -550,7 +539,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -587,7 +576,7 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -616,16 +605,15 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) {
+		if (eIsProxy())
 			return super.toString();
-		}
 
-		final StringBuffer result = new StringBuffer(super.toString());
+		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (name: "); //$NON-NLS-1$
 		result.append(name);
 		result.append(", visible: "); //$NON-NLS-1$
