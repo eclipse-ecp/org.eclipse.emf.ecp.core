@@ -59,6 +59,7 @@ import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.viewers.ColumnViewerEditor;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -236,7 +237,16 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 		 */
 		@Override
 		public void selectionChanged(SelectionChangedEvent event) {
-			lastSelection = event.getStructuredSelection();
+			// was implemented using
+			// lastSelection = event.getStructuredSelection();
+			// this method throws a class cast exception in case no structured selection is present,
+			// so doing below null check should be fine
+			final ISelection selection = event.getSelection();
+			if (!IStructuredSelection.class.isInstance(selection)) {
+				lastSelection = null;
+				return;
+			}
+			lastSelection = (IStructuredSelection) event.getSelection();
 			if (lastSelection.size() == 1) {
 				masterObject = (EObject) lastSelection.getFirstElement();
 			}

@@ -38,7 +38,7 @@ import org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration;
  * until a non-null result is returned,
  * which is the result of the switch.
  * <!-- end-user-doc -->
- * 
+ *
  * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage
  * @generated
  */
@@ -47,7 +47,7 @@ public class TableSwitch<T> extends Switch<T> {
 	 * The cached model package
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected static VTablePackage modelPackage;
@@ -56,7 +56,7 @@ public class TableSwitch<T> extends Switch<T> {
 	 * Creates an instance of the switch.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public TableSwitch() {
@@ -69,7 +69,7 @@ public class TableSwitch<T> extends Switch<T> {
 	 * Checks whether this is a switch for the given package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param ePackage the package in question.
 	 * @return whether this is a switch for the given package.
 	 * @generated
@@ -84,7 +84,7 @@ public class TableSwitch<T> extends Switch<T> {
 	 * result.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the first non-null result returned by a <code>caseXXX</code> call.
 	 * @generated
 	 */
@@ -92,55 +92,67 @@ public class TableSwitch<T> extends Switch<T> {
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
 		case VTablePackage.TABLE_CONTROL: {
-			VTableControl tableControl = (VTableControl) theEObject;
+			final VTableControl tableControl = (VTableControl) theEObject;
 			T result = caseTableControl(tableControl);
-			if (result == null)
+			if (result == null) {
 				result = caseControl(tableControl);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseContainedElement(tableControl);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseElement(tableControl);
-			if (result == null)
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case VTablePackage.TABLE_COLUMN_CONFIGURATION: {
-			VTableColumnConfiguration tableColumnConfiguration = (VTableColumnConfiguration) theEObject;
+			final VTableColumnConfiguration tableColumnConfiguration = (VTableColumnConfiguration) theEObject;
 			T result = caseTableColumnConfiguration(tableColumnConfiguration);
-			if (result == null)
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case VTablePackage.TABLE_DOMAIN_MODEL_REFERENCE: {
-			VTableDomainModelReference tableDomainModelReference = (VTableDomainModelReference) theEObject;
+			final VTableDomainModelReference tableDomainModelReference = (VTableDomainModelReference) theEObject;
 			T result = caseTableDomainModelReference(tableDomainModelReference);
-			if (result == null)
+			if (result == null) {
 				result = caseFeaturePathDomainModelReference(tableDomainModelReference);
-			if (result == null)
+			}
+			if (result == null) {
 				result = caseDomainModelReference(tableDomainModelReference);
-			if (result == null)
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case VTablePackage.READ_ONLY_COLUMN_CONFIGURATION: {
-			VReadOnlyColumnConfiguration readOnlyColumnConfiguration = (VReadOnlyColumnConfiguration) theEObject;
+			final VReadOnlyColumnConfiguration readOnlyColumnConfiguration = (VReadOnlyColumnConfiguration) theEObject;
 			T result = caseReadOnlyColumnConfiguration(readOnlyColumnConfiguration);
-			if (result == null)
+			if (result == null) {
 				result = caseTableColumnConfiguration(readOnlyColumnConfiguration);
-			if (result == null)
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case VTablePackage.WIDTH_CONFIGURATION: {
-			VWidthConfiguration widthConfiguration = (VWidthConfiguration) theEObject;
+			final VWidthConfiguration widthConfiguration = (VWidthConfiguration) theEObject;
 			T result = caseWidthConfiguration(widthConfiguration);
-			if (result == null)
+			if (result == null) {
 				result = caseSingleColumnConfiguration(widthConfiguration);
 			}
 			if (result == null) {
 				result = caseTableColumnConfiguration(widthConfiguration);
-			if (result == null)
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
+			}
 			return result;
 		}
 		case VTablePackage.ENABLEMENT_CONFIGURATION: {
@@ -182,7 +194,7 @@ public class TableSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Control</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -198,7 +210,7 @@ public class TableSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Column Configuration</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -214,7 +226,7 @@ public class TableSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Domain Model Reference</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -230,7 +242,7 @@ public class TableSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Read Only Column Configuration</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -297,7 +309,7 @@ public class TableSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Element</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -313,7 +325,7 @@ public class TableSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Contained Element</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -329,7 +341,7 @@ public class TableSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Control</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -345,7 +357,7 @@ public class TableSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Domain Model Reference</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -361,7 +373,7 @@ public class TableSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Feature Path Domain Model Reference</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -377,7 +389,7 @@ public class TableSwitch<T> extends Switch<T> {
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch, but this is the last case anyway.
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>EObject</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject)

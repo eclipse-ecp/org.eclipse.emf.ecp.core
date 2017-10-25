@@ -307,8 +307,8 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	@Override
 	protected Control createLabel(final Composite parent) {
 		final VDomainModelReference dmrToCheck = getDMRToMultiReference();
-		final IObservableValue labelText = getLabelText(dmrToCheck, false);
-		final IObservableValue labelTooltipText = getLabelTooltipText(dmrToCheck, false);
+		final IObservableValue labelText = getLabelText(dmrToCheck, null, false);
+		final IObservableValue labelTooltipText = getLabelTooltipText(dmrToCheck, null, false);
 
 		final Label titleLabel = new Label(parent, SWT.NONE);
 		titleLabel.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_label"); //$NON-NLS-1$
@@ -683,6 +683,16 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		tableViewerComposite.setComparator(comparator, sortableColumns);
 	}
 
+	/**
+	 *
+	 * @param dmrToCheck DMR pointing to the feature whose label is returned
+	 * @param dmrRootEClass The root EClass of the DMR. May be <code>null</code> if <code>forColumn</code> is
+	 *            <code>false</code>. In this case the label is based on the root e object of the renderer's view model
+	 *            context.
+	 * @param forColumn <code>true</code>: The label is for a column of the table;
+	 *            <code>false</code> the label is for the table itself
+	 * @return The {@link IObservableValue} containing the label
+	 */
 	private IObservableValue getLabelText(VDomainModelReference dmrToCheck, EClass dmrRootEClass, boolean forColumn) {
 		final EMFFormsLabelProvider labelService = getEMFFormsLabelProvider();
 		if (forColumn) {
@@ -708,6 +718,16 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		}
 	}
 
+	/**
+	 *
+	 * @param dmrToCheck DMR pointing to the feature whose label is returned
+	 * @param dmrRootEClass The root EClass of the DMR. May be <code>null</code> if <code>forColumn</code> is
+	 *            <code>false</code>. In this case the label tooltip is based on the root e object of the renderer's
+	 *            view model context.
+	 * @param forColumn <code>true</code>: The label tooltip is for a column of the table;
+	 *            <code>false</code> the label tooltip is for the table itself
+	 * @return The {@link IObservableValue} containing the label tooltip text
+	 */
 	private IObservableValue getLabelTooltipText(VDomainModelReference dmrToCheck, EClass dmrRootEClass,
 		boolean forColumn) {
 		final EMFFormsLabelProvider labelService = getEMFFormsLabelProvider();

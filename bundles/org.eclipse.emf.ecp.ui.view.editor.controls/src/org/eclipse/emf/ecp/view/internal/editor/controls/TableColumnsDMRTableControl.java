@@ -196,7 +196,6 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 		viewer.setLabelProvider(labelProvider);
 		viewer.setContentProvider(new ObservableListContentProvider());
 
-
 		/*
 		 * The actual EObject on which the DND is executed is the list of child dmrs of the multi segment. But the multi
 		 * segment is null when the table control's dmr is not set. It works by using the table control's editing domain
@@ -332,8 +331,7 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 		final IObservableList oldList = (IObservableList) viewer.getInput();
 		oldList.dispose();
 
-		final IObservableList list = getEMFFormsDatabinding().getObservableList(getVElement().getDomainModelReference(),
-			getViewModelContext().getDomainModel());
+		final IObservableList list = getChildDmrsObservableList();
 		// addRelayoutListenerIfNeeded(list, composite);
 		viewer.setInput(list);
 	}
@@ -410,9 +408,9 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 			final IStructuredSelection selection = IStructuredSelection.class.cast(viewer.getSelection());
 
 			/* use a delete command as we are the container and thus may leave a dangling reference */
-
+			final EditingDomain editingDomain = getEditingDomain(getMultiSegment());
 			editingDomain.getCommandStack().execute(
-				DeleteCommand.create(editingDomain, getMultiSegment(), getChildDmrsEReference(), selection.toList()));
+				DeleteCommand.create(editingDomain, selection.toList()));
 		}
 	}
 
@@ -521,21 +519,6 @@ public class TableColumnsDMRTableControl extends SimpleControlSWTRenderer {
 			editingDomain.getCommandStack().execute(
 				SetCommand.create(editingDomain, getMultiSegment(), getChildDmrsEReference(), list));
 		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.core.swt.AbstractControlSWTRenderer#rootDomainModelChanged()
-	 */
-	@Override
-	protected void rootDomainModelChanged() throws DatabindingFailedException {
-		final IObservableList oldList = (IObservableList) viewer.getInput();
-		oldList.dispose();
-
-		final IObservableList list = getChildDmrsObservableList();
-		// addRelayoutListenerIfNeeded(list, composite);
-		viewer.setInput(list);
 	}
 
 	/**

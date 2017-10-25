@@ -12,8 +12,8 @@
     </domainModelReference>
   </children>
   <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_OwTEgP0JEea0gu9ZCWtkiA" name="tooltip">
-  	<domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_mfPL2UWAEeWfKJaajyNdyA">
-      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/emf/ecp/view/group/model#//Group/tooltip"/>
+    <domainModelReference xmi:id="_mfPL2UWAEeWfKJaajyNdyA">
+      <segments xsi:type="org.eclipse.emf.ecp.view.model:FeatureDomainModelReferenceSegment" xmi:id="_DnSUIXlSEeaycIO3gg5WLQ" domainModelFeature="tooltip"/>
     </domainModelReference>
   </children>
   <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_mfPLlEWAEeWfKJaajyNdyA" name="Control groupType">
