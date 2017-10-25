@@ -38,7 +38,6 @@ import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestFactory;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
-import org.eclipse.emfforms.spi.core.services.databinding.DomainModelReferenceConverter;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.DomainModelReferenceSegmentConverterEMF;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.SegmentConverterListResultEMF;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.SegmentConverterValueResultEMF;
@@ -187,7 +186,7 @@ public class EMFFormsDatabindingImpl_Test {
 		when(converter1.isApplicable(segment)).thenReturn(0d);
 		when(converter1.convertToValueProperty(same(segment), any(EClass.class), any(EditingDomain.class)))
 			.thenReturn(converterResult);
-		when(converter2.isApplicable(segment)).thenReturn(DomainModelReferenceConverter.NOT_APPLICABLE);
+		when(converter2.isApplicable(segment)).thenReturn(DomainModelReferenceSegmentConverterEMF.NOT_APPLICABLE);
 		when(converter2.convertToValueProperty(same(segment), any(EClass.class), any(EditingDomain.class)))
 			.thenReturn(mock(SegmentConverterValueResultEMF.class));
 
@@ -453,8 +452,8 @@ public class EMFFormsDatabindingImpl_Test {
 	 * Test method for
 	 * {@link org.eclipse.emfforms.internal.core.services.databinding.EMFFormsDatabindingImpl#getValueProperty(VDomainModelReference,EObject)}
 	 * .
-	 * Tests whether the {@link EMFFormsDatabindingImpl} considers all {@link DomainModelReferenceConverter}s, that are
-	 * registered to it, for its conversions.
+	 * Tests whether the {@link EMFFormsDatabindingImpl} considers all {@link DomainModelReferenceSegmentConverterEMF}s,
+	 * that are registered to it, for its conversions.
 	 *
 	 * @throws DatabindingFailedException if the databinding failed
 	 */
