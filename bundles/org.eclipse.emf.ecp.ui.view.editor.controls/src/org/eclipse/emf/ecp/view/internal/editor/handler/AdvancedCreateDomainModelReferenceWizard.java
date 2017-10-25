@@ -31,9 +31,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
-import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
-import org.eclipse.emf.ecp.view.internal.validation.ValidationServiceImpl;
 import org.eclipse.emf.ecp.view.spi.editor.controls.EStructuralFeatureSelectionValidator;
 import org.eclipse.emf.ecp.view.spi.editor.controls.SegmentIdeDescriptor;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
@@ -42,13 +40,13 @@ import org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.model.util.SegmentResolvementUtil;
-import org.eclipse.emf.ecp.view.spi.validation.ValidationService;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.emfforms.common.internal.validation.ValidationServiceImpl;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -82,7 +80,6 @@ import org.osgi.framework.ServiceReference;
  * @author Lucas Koehler
  *
  */
-@SuppressWarnings("restriction")
 public class AdvancedCreateDomainModelReferenceWizard extends Wizard {
 
 	private final EditingDomain editingDomain;
@@ -382,7 +379,6 @@ public class AdvancedCreateDomainModelReferenceWizard extends Wizard {
 		private EClass segmentType;
 		private VFeatureDomainModelReferenceSegment createdSegment;
 		private Composite renderComposite;
-		private ECPSWTView segmentECPSWTView;
 		private SegmentCreationPage nextPage;
 		private TableViewer tableViewer;
 
@@ -591,7 +587,7 @@ public class AdvancedCreateDomainModelReferenceWizard extends Wizard {
 						renderComposite.dispose();
 					}
 					renderComposite = createRenderComposite(composite);
-					segmentECPSWTView = ECPSWTViewRenderer.INSTANCE.render(renderComposite, createdSegment);
+					ECPSWTViewRenderer.INSTANCE.render(renderComposite, createdSegment);
 					composite.layout();
 				} catch (final ECPRendererException ex) {
 					MessageDialog.openError(getShell(), "Rendering Error", //$NON-NLS-1$
@@ -697,10 +693,8 @@ public class AdvancedCreateDomainModelReferenceWizard extends Wizard {
 		 * @return <code>true</code> if the segment is valid, <code>false</code> otherwise
 		 */
 		private boolean validateSegment() {
-			// FIXME get new validation service over OSGI after rebase
-			final ValidationServiceImpl validationService = (ValidationServiceImpl) segmentECPSWTView
-				.getViewModelContext().getService(ValidationService.class);
-			final Diagnostic diagnostic = validationService.getDiagnosticForEObject(createdSegment);
+			final ValidationServiceImpl validator = new ValidationServiceImpl();
+			final Diagnostic diagnostic = validator.validate(createdSegment);
 			if (diagnostic.getSeverity() == Diagnostic.INFO) {
 				setMessage("Validation Information: " + diagnostic.getMessage()); //$NON-NLS-1$
 			} else if (diagnostic.getSeverity() == Diagnostic.WARNING) {
