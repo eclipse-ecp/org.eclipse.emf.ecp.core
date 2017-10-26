@@ -71,11 +71,6 @@
 		<module>../../features/org.eclipse.emf.ecp.sdk.e4.feature</module>
 		<module>../../features/org.eclipse.emf.ecp.rap.sdk.feature</module>
 		
-		<!-- key attribute mapping -->
-		<!--
-		<module>../../features/org.eclipse.emf.ecp.view.keyattributedmr.feature</module>
-		-->
-		
 		<!-- index mapping -->
 		<module>../../features/org.eclipse.emf.ecp.view.indexdmr.feature</module>
 		

@@ -131,12 +131,7 @@
 		<module>../../tests/org.eclipse.emf.ecp.view.control.multireference.tests</module>
 
 		<module>../../tests/org.eclipse.emf.ecp.core.rap.test</module>
-		
-		<!-- Key Attribute DMR -->
-		<!--
-		<module>../../tests/org.eclipse.emf.ecp.view.keyattributedmr.model.test</module>	
-		-->
-		
+
 		<module>../../tests/org.eclipse.emf.ecp.view.indexdmr.model.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.mappingdmr.model.test</module>
 		<module>../../tests/org.eclipse.emf.ecp.view.table.model.test</module>
@@ -153,18 +148,12 @@
 		<!-- Core Services -->
 		<module>../../tests/org.eclipse.emfforms.core.services.databinding.featurepath.tests</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.databinding.index.tests</module>
-		<!--
-		<module>../../tests/org.eclipse.emfforms.core.services.databinding.keyattribute.tests</module>
-		-->
 		<module>../../tests/org.eclipse.emfforms.core.services.databinding.mapping.tests</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.databinding.multi.tests</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.databinding.integrationtest</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.databinding.testmodel</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.domainexpander.default.tests</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.domainexpander.index.tests</module>
-		<!--
-		<module>../../tests/org.eclipse.emfforms.core.services.domainexpander.keyattribute.tests</module>
-		-->
 		<module>../../tests/org.eclipse.emfforms.core.services.domainexpander.mapping.tests</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.domainexpander.multi.tests</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.mappingprovider.default.tests</module>
@@ -172,9 +161,6 @@
 		<module>../../tests/org.eclipse.emfforms.core.services.structuralchange.tests</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.structuralchange.default.tests</module>
 		<module>../../tests/org.eclipse.emfforms.core.services.structuralchange.index.tests</module>
-		<!--
-		<module>../../tests/org.eclipse.emfforms.core.services.structuralchange.keyattribute.tests</module>
-		-->
 		<module>../../tests/org.eclipse.emfforms.core.services.structuralchange.mapping.tests</module>
 		<module>../../tests/org.eclipse.emfforms.swt.core.tests</module>
 		<module>../../tests/org.eclipse.emfforms.swt.core.di.tests</module>

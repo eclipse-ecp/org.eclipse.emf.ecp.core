@@ -132,11 +132,6 @@
             id="org.eclipse.emf.ecp.view.editor.controls.generateDefault">
       </command>
       <command
-            name="Migrate"
-            defaultHandler="org.eclipse.emf.ecp.view.internal.editor.handler.MigrateHandler"
-            id="org.eclipse.emf.ecp.view.editor.controls.migrate">
-      </command>
-      <command
             name="Generate Controls"
             defaultHandler="org.eclipse.emf.ecp.view.internal.editor.handler.GenerateControlsHandler"
             id="org.eclipse.emf.ecp.view.editor.controls.generateDefaultOnView">
