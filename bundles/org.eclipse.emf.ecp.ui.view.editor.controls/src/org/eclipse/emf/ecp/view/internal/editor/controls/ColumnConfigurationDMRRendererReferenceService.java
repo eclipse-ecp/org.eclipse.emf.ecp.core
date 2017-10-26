@@ -14,16 +14,18 @@ package org.eclipse.emf.ecp.view.internal.editor.controls;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
 import org.eclipse.emf.ecp.spi.common.ui.SelectModelElementWizardFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.table.model.VSingleColumnConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableColumnConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
-import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emfforms.view.spi.multisegment.model.VMultiDomainModelReferenceSegment;
 
 /**
  * Special {@link ReferenceService} allowing stream lined DMR selection for the width configuration.
@@ -73,13 +75,18 @@ public class ColumnConfigurationDMRRendererReferenceService implements Reference
 			return;
 		}
 		final VTableControl tableControl = VTableControl.class.cast(eObject.eContainer());
-		if (!VTableDomainModelReference.class.isInstance(tableControl.getDomainModelReference())) {
+		final EList<VDomainModelReferenceSegment> segments = tableControl.getDomainModelReference().getSegments();
+		if (segments.size() < 1) {
 			return;
 		}
-		final VTableDomainModelReference tableDMR = VTableDomainModelReference.class
-			.cast(tableControl.getDomainModelReference());
+		final VDomainModelReferenceSegment lastSegment = segments.get(segments.size() - 1);
+		if (!VMultiDomainModelReferenceSegment.class.isInstance(lastSegment)) {
+			return;
+		}
+		final VMultiDomainModelReferenceSegment multiSegment = (VMultiDomainModelReferenceSegment) lastSegment;
+
 		final Set<EObject> unconfiguredColumns = new LinkedHashSet<EObject>(
-			tableDMR.getColumnDomainModelReferences());
+			multiSegment.getChildDomainModelReferences());
 		for (final VTableColumnConfiguration columnConfiguration : tableControl.getColumnConfigurations()) {
 			if (!columnConfigClass.isInstance(columnConfiguration)) {
 				continue;
