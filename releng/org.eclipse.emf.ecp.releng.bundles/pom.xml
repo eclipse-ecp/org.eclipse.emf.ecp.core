@@ -49,8 +49,11 @@
 		<module>../../bundles/org.eclipse.emf.ecp.application.e3</module>
 		<module>../../bundles/org.eclipse.emf.ecp.editor.e3</module>
 
+		<!-- Validation -->
 		<module>../../bundles/org.eclipse.emf.ecp.validation</module>
 		<module>../../bundles/org.eclipse.emf.ecp.validation.connector</module>
+		<module>../../bundles/org.eclipse.emfforms.common.validation</module>
+		<module>../../bundles/org.eclipse.emfforms.common.prevalidation</module>
 
 		<module>../../bundles/org.eclipse.emf.ecp.workspace.core</module>
 		<module>../../bundles/org.eclipse.emf.ecp.workspace.ui</module>
@@ -195,6 +198,7 @@
 		
 		<module>../../bundles/org.eclipse.emf.ecp.rap</module>
 		
+		<module>../../bundles/org.eclipse.emf.ecp.workspace.ui.rap</module>
 		
 		<module>../../bundles/org.eclipse.emf.ecp.ui.rap</module>
 		
