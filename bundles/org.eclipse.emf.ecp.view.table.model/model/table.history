@@ -311,15 +311,15 @@
     <changes xsi:type="history:OperationChange" xmi:id="__Y694d4nEeabEcLsrgXAXQ">
       <changes xsi:type="history:Create" xmi:id="__Y694t4nEeabEcLsrgXAXQ" referenceName="eStructuralFeatures">
         <target href="table.ecore#//WidthConfiguration"/>
-        <element href="table.ecore#//WidthConfiguration/columnDomainReference"/>
+        <element href="table.ecore#//SingleColumnConfiguration/columnDomainReference"/>
         <changes xsi:type="history:Set" xmi:id="__Y69494nEeabEcLsrgXAXQ" featureName="name" dataValue="columnDomainReference">
-          <element href="table.ecore#//WidthConfiguration/columnDomainReference"/>
+          <element href="table.ecore#//SingleColumnConfiguration/columnDomainReference"/>
         </changes>
         <changes xsi:type="history:Set" xmi:id="__Y695N4nEeabEcLsrgXAXQ" featureName="lowerBound" dataValue="1" oldDataValue="0">
-          <element href="table.ecore#//WidthConfiguration/columnDomainReference"/>
+          <element href="table.ecore#//SingleColumnConfiguration/columnDomainReference"/>
         </changes>
         <changes xsi:type="history:Set" xmi:id="__Y695d4nEeabEcLsrgXAXQ" featureName="eType">
-          <element href="table.ecore#//WidthConfiguration/columnDomainReference"/>
+          <element href="table.ecore#//SingleColumnConfiguration/columnDomainReference"/>
           <referenceValue href="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"/>
         </changes>
       </changes>
@@ -429,6 +429,118 @@
         </parameters>
         <parameters xmi:id="_CbG2fWfmEeeTZuLUHxhi-w" name="defaultValue">
           <dataValue xsi:nil="true"/>
+        </parameters>
+      </operation>
+    </changes>
+    <changes xsi:type="history:OperationChange" xmi:id="_PVYQYLorEeeiPPV-AG6qQA">
+      <changes xsi:type="history:Create" xmi:id="_PVYQYborEeeiPPV-AG6qQA" referenceName="eClassifiers">
+        <target href="table.ecore#/"/>
+        <element href="table.ecore#//SingleColumnConfiguration"/>
+        <changes xsi:type="history:Set" xmi:id="_PVYQYrorEeeiPPV-AG6qQA" featureName="name" dataValue="SingleColumnConfiguration">
+          <element href="table.ecore#//SingleColumnConfiguration"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_PVYQY7orEeeiPPV-AG6qQA" featureName="abstract" dataValue="true" oldDataValue="false">
+          <element href="table.ecore#//SingleColumnConfiguration"/>
+        </changes>
+      </changes>
+      <operation xmi:id="_PVYQZLorEeeiPPV-AG6qQA" name="newClass">
+        <parameters xmi:id="_PVYQZborEeeiPPV-AG6qQA" name="ePackage">
+          <referenceValue xmi:id="_PVYQZrorEeeiPPV-AG6qQA">
+            <element href="table.ecore#/"/>
+          </referenceValue>
+        </parameters>
+        <parameters xmi:id="_PVYQZ7orEeeiPPV-AG6qQA" name="name">
+          <dataValue>SingleColumnConfiguration</dataValue>
+        </parameters>
+        <parameters xmi:id="_PVYQaLorEeeiPPV-AG6qQA" name="superClasses"/>
+        <parameters xmi:id="_PVYQaborEeeiPPV-AG6qQA" name="abstr">
+          <dataValue>true</dataValue>
+        </parameters>
+      </operation>
+    </changes>
+    <changes xsi:type="history:Set" xmi:id="_QZVnwLorEeeiPPV-AG6qQA" featureName="interface" dataValue="true" oldDataValue="false">
+      <element href="table.ecore#//SingleColumnConfiguration"/>
+    </changes>
+    <changes xsi:type="history:Add" xmi:id="_YuDagLosEeeiPPV-AG6qQA" featureName="eSuperTypes">
+      <element href="table.ecore#//SingleColumnConfiguration"/>
+      <referenceValue href="table.ecore#//TableColumnConfiguration"/>
+    </changes>
+    <changes xsi:type="history:OperationChange" xmi:id="_mBhRILorEeeiPPV-AG6qQA">
+      <changes xsi:type="history:Remove" xmi:id="_mBh4MLorEeeiPPV-AG6qQA" featureName="eSuperTypes">
+        <element href="table.ecore#//WidthConfiguration"/>
+        <referenceValue href="table.ecore#//TableColumnConfiguration"/>
+      </changes>
+      <operation xmi:id="_mBh4MborEeeiPPV-AG6qQA" name="removeSuperType">
+        <parameters xmi:id="_mBh4MrorEeeiPPV-AG6qQA" name="eClass">
+          <referenceValue xmi:id="_mBh4M7orEeeiPPV-AG6qQA">
+            <element href="table.ecore#//WidthConfiguration"/>
+          </referenceValue>
+        </parameters>
+        <parameters xmi:id="_mBh4NLorEeeiPPV-AG6qQA" name="superType">
+          <referenceValue xmi:id="_mBh4NborEeeiPPV-AG6qQA">
+            <element href="table.ecore#//TableColumnConfiguration"/>
+          </referenceValue>
+        </parameters>
+      </operation>
+    </changes>
+    <changes xsi:type="history:Add" xmi:id="_sIRM8LorEeeiPPV-AG6qQA" featureName="eSuperTypes">
+      <element href="table.ecore#//WidthConfiguration"/>
+      <referenceValue href="table.ecore#//SingleColumnConfiguration"/>
+    </changes>
+    <changes xsi:type="history:OperationChange" xmi:id="_vahA0LorEeeiPPV-AG6qQA">
+      <changes xsi:type="history:Move" xmi:id="_vahA0borEeeiPPV-AG6qQA" referenceName="eStructuralFeatures">
+        <target href="table.ecore#//SingleColumnConfiguration"/>
+        <element href="table.ecore#//SingleColumnConfiguration/columnDomainReference"/>
+        <source href="table.ecore#//WidthConfiguration"/>
+      </changes>
+      <operation xmi:id="_vahA0rorEeeiPPV-AG6qQA" name="pullFeature">
+        <parameters xmi:id="_vahA07orEeeiPPV-AG6qQA" name="features">
+          <referenceValue xmi:id="_vahA1LorEeeiPPV-AG6qQA">
+            <element href="table.ecore#//SingleColumnConfiguration/columnDomainReference"/>
+          </referenceValue>
+        </parameters>
+        <parameters xmi:id="_vahA1borEeeiPPV-AG6qQA" name="targetClass">
+          <referenceValue xmi:id="_vahA1rorEeeiPPV-AG6qQA">
+            <element href="table.ecore#//SingleColumnConfiguration"/>
+          </referenceValue>
+        </parameters>
+      </operation>
+    </changes>
+    <changes xsi:type="history:OperationChange" xmi:id="_5Y1rILorEeeiPPV-AG6qQA">
+      <changes xsi:type="history:Create" xmi:id="_5Y1rIborEeeiPPV-AG6qQA" referenceName="eClassifiers">
+        <target href="table.ecore#/"/>
+        <element href="table.ecore#//EnablementConfiguration"/>
+        <changes xsi:type="history:Set" xmi:id="_5Y1rIrorEeeiPPV-AG6qQA" featureName="name" dataValue="EnablementConfiguration">
+          <element href="table.ecore#//EnablementConfiguration"/>
+        </changes>
+        <changes xsi:type="history:Add" xmi:id="_5Y1rI7orEeeiPPV-AG6qQA" featureName="eSuperTypes">
+          <element href="table.ecore#//EnablementConfiguration"/>
+          <referenceValue href="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//Element"/>
+        </changes>
+        <changes xsi:type="history:Add" xmi:id="_5Y1rJLorEeeiPPV-AG6qQA" featureName="eSuperTypes">
+          <element href="table.ecore#//EnablementConfiguration"/>
+          <referenceValue href="table.ecore#//SingleColumnConfiguration"/>
+        </changes>
+      </changes>
+      <operation xmi:id="_5Y1rJborEeeiPPV-AG6qQA" name="newClass">
+        <parameters xmi:id="_5Y1rJrorEeeiPPV-AG6qQA" name="ePackage">
+          <referenceValue xmi:id="_5Y1rJ7orEeeiPPV-AG6qQA">
+            <element href="table.ecore#/"/>
+          </referenceValue>
+        </parameters>
+        <parameters xmi:id="_5Y1rKLorEeeiPPV-AG6qQA" name="name">
+          <dataValue>EnablementConfiguration</dataValue>
+        </parameters>
+        <parameters xmi:id="_5Y1rKborEeeiPPV-AG6qQA" name="superClasses">
+          <referenceValue xmi:id="_5Y1rKrorEeeiPPV-AG6qQA">
+            <element href="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//Element"/>
+          </referenceValue>
+          <referenceValue xmi:id="_5Y1rK7orEeeiPPV-AG6qQA">
+            <element href="table.ecore#//SingleColumnConfiguration"/>
+          </referenceValue>
+        </parameters>
+        <parameters xmi:id="_5Y1rLLorEeeiPPV-AG6qQA" name="abstr">
+          <dataValue>false</dataValue>
         </parameters>
       </operation>
     </changes>

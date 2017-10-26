@@ -39,7 +39,7 @@ public interface VWidthConfiguration extends VSingleColumnConfiguration {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the value of the '<em>Weight</em>' attribute.
 	 * @see #setWeight(int)
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage#getWidthConfiguration_Weight()
@@ -53,7 +53,7 @@ public interface VWidthConfiguration extends VSingleColumnConfiguration {
 	 * <em>Weight</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param value the new value of the '<em>Weight</em>' attribute.
 	 * @see #getWeight()
 	 * @generated
@@ -68,7 +68,7 @@ public interface VWidthConfiguration extends VSingleColumnConfiguration {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the value of the '<em>Min Width</em>' attribute.
 	 * @see #setMinWidth(int)
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage#getWidthConfiguration_MinWidth()
@@ -82,7 +82,7 @@ public interface VWidthConfiguration extends VSingleColumnConfiguration {
 	 * Width</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param value the new value of the '<em>Min Width</em>' attribute.
 	 * @see #getMinWidth()
 	 * @generated

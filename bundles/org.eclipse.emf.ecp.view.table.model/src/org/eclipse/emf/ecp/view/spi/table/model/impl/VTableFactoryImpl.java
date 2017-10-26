@@ -180,7 +180,7 @@ public class VTableFactoryImpl extends EFactoryImpl implements VTableFactory {
 	 */
 	@Override
 	public VEnablementConfiguration createEnablementConfiguration() {
-		final VEnablementConfigurationImpl enablementConfiguration = new VEnablementConfigurationImpl();
+		VEnablementConfigurationImpl enablementConfiguration = new VEnablementConfigurationImpl();
 		return enablementConfiguration;
 	}
 

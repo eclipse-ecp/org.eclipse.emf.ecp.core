@@ -35,14 +35,14 @@ import org.eclipse.emf.ecp.view.spi.table.model.util.TableValidator;
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Package</b>.
  * <!-- end-user-doc -->
- *
+ * 
  * @generated
  */
 public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private EClass tableControlEClass = null;
@@ -50,7 +50,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private EClass tableColumnConfigurationEClass = null;
@@ -58,7 +58,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private EClass tableDomainModelReferenceEClass = null;
@@ -66,7 +66,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private EClass readOnlyColumnConfigurationEClass = null;
@@ -74,7 +74,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private EClass widthConfigurationEClass = null;
@@ -82,7 +82,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private EClass enablementConfigurationEClass = null;
@@ -90,7 +90,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private EClass singleColumnConfigurationEClass = null;
@@ -98,7 +98,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private EEnum detailEditingEEnum = null;
@@ -124,32 +124,31 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private static boolean isInited = false;
 
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-	 *
+	 * 
 	 * <p>
 	 * This method is used to initialize {@link VTablePackage#eINSTANCE} when that field is accessed.
 	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @see #eNS_URI
 	 * @see #createPackageContents()
 	 * @see #initializePackageContents()
 	 * @generated
 	 */
 	public static VTablePackage init() {
-		if (isInited) {
+		if (isInited)
 			return (VTablePackage) EPackage.Registry.INSTANCE.getEPackage(VTablePackage.eNS_URI);
-		}
 
 		// Obtain or create and register package
-		final VTablePackageImpl theTablePackage = (VTablePackageImpl) (EPackage.Registry.INSTANCE
+		VTablePackageImpl theTablePackage = (VTablePackageImpl) (EPackage.Registry.INSTANCE
 			.get(eNS_URI) instanceof VTablePackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
 				: new VTablePackageImpl());
 
@@ -167,7 +166,6 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 		// Register package validator
 		EValidator.Registry.INSTANCE.put(theTablePackage,
 			new EValidator.Descriptor() {
-				@Override
 				public EValidator getEValidator() {
 					return TableValidator.INSTANCE;
 				}
@@ -184,7 +182,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -195,7 +193,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -206,7 +204,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -217,7 +215,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -228,7 +226,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -239,7 +237,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -250,7 +248,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -261,7 +259,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -272,7 +270,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -283,7 +281,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -306,7 +304,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -317,7 +315,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -400,7 +398,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -411,7 +409,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -422,7 +420,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private boolean isCreated = false;
@@ -432,13 +430,12 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 	 * guarded to have no affect on any invocation but its first.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public void createPackageContents() {
-		if (isCreated) {
+		if (isCreated)
 			return;
-		}
 		isCreated = true;
 
 		// Create classes and their features
@@ -463,10 +460,10 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 		createEAttribute(widthConfigurationEClass, WIDTH_CONFIGURATION__WEIGHT);
 		createEAttribute(widthConfigurationEClass, WIDTH_CONFIGURATION__MIN_WIDTH);
 
-		enablementConfigurationEClass = createEClass(ENABLEMENT_CONFIGURATION);
-
 		singleColumnConfigurationEClass = createEClass(SINGLE_COLUMN_CONFIGURATION);
 		createEReference(singleColumnConfigurationEClass, SINGLE_COLUMN_CONFIGURATION__COLUMN_DOMAIN_REFERENCE);
+
+		enablementConfigurationEClass = createEClass(ENABLEMENT_CONFIGURATION);
 
 		// Create enums
 		detailEditingEEnum = createEEnum(DETAIL_EDITING);
@@ -475,7 +472,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	private boolean isInitialized = false;
@@ -485,13 +482,12 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 	 * method is guarded to have no affect on any invocation but its first.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public void initializePackageContents() {
-		if (isInitialized) {
+		if (isInitialized)
 			return;
-		}
 		isInitialized = true;
 
 		// Initialize package
@@ -500,7 +496,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		final VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
+		VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
 
 		// Create type parameters
 
@@ -509,11 +505,11 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 		// Add supertypes to classes
 		tableControlEClass.getESuperTypes().add(theViewPackage.getControl());
 		tableDomainModelReferenceEClass.getESuperTypes().add(theViewPackage.getFeaturePathDomainModelReference());
-		readOnlyColumnConfigurationEClass.getESuperTypes().add(getTableColumnConfiguration());
-		widthConfigurationEClass.getESuperTypes().add(getSingleColumnConfiguration());
+		readOnlyColumnConfigurationEClass.getESuperTypes().add(this.getTableColumnConfiguration());
+		widthConfigurationEClass.getESuperTypes().add(this.getSingleColumnConfiguration());
+		singleColumnConfigurationEClass.getESuperTypes().add(this.getTableColumnConfiguration());
 		enablementConfigurationEClass.getESuperTypes().add(theViewPackage.getElement());
-		enablementConfigurationEClass.getESuperTypes().add(getSingleColumnConfiguration());
-		singleColumnConfigurationEClass.getESuperTypes().add(getTableColumnConfiguration());
+		enablementConfigurationEClass.getESuperTypes().add(this.getSingleColumnConfiguration());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(tableControlEClass, VTableControl.class, "TableControl", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
@@ -524,10 +520,10 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 		initEAttribute(getTableControl_MoveUpDownDisabled(), ecorePackage.getEBoolean(), "moveUpDownDisabled", "true", //$NON-NLS-1$ //$NON-NLS-2$
 			1, 1, VTableControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
-		initEReference(getTableControl_ColumnConfigurations(), getTableColumnConfiguration(), null,
+		initEReference(getTableControl_ColumnConfigurations(), this.getTableColumnConfiguration(), null,
 			"columnConfigurations", null, 0, -1, VTableControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
 			IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTableControl_DetailEditing(), getDetailEditing(), "detailEditing", "None", 1, 1, //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(getTableControl_DetailEditing(), this.getDetailEditing(), "detailEditing", "None", 1, 1, //$NON-NLS-1$ //$NON-NLS-2$
 			VTableControl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
 		initEReference(getTableControl_DetailView(), theViewPackage.getView(), null, "detailView", null, 0, 1, //$NON-NLS-1$
@@ -566,14 +562,14 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 			VWidthConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
 
-		initEClass(enablementConfigurationEClass, VEnablementConfiguration.class, "EnablementConfiguration", //$NON-NLS-1$
-			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
 		initEClass(singleColumnConfigurationEClass, VSingleColumnConfiguration.class, "SingleColumnConfiguration", //$NON-NLS-1$
 			IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getSingleColumnConfiguration_ColumnDomainReference(), theViewPackage.getDomainModelReference(),
 			null, "columnDomainReference", null, 1, 1, VSingleColumnConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
 			IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(enablementConfigurationEClass, VEnablementConfiguration.class, "EnablementConfiguration", //$NON-NLS-1$
+			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		// Initialize enums and add enum literals
 		initEEnum(detailEditingEEnum, DetailEditing.class, "DetailEditing"); //$NON-NLS-1$
@@ -598,7 +594,7 @@ public class VTablePackageImpl extends EPackageImpl implements VTablePackage {
 	 * @generated
 	 */
 	protected void createEcoreAnnotations() {
-		final String source = "http://www.eclipse.org/emf/2002/Ecore"; //$NON-NLS-1$
+		String source = "http://www.eclipse.org/emf/2002/Ecore"; //$NON-NLS-1$
 		addAnnotation(tableControlEClass,
 			source,
 			new String[] {

@@ -179,10 +179,10 @@ public class TableValidator extends EObjectValidator {
 			return validateReadOnlyColumnConfiguration((VReadOnlyColumnConfiguration) value, diagnostics, context);
 		case VTablePackage.WIDTH_CONFIGURATION:
 			return validateWidthConfiguration((VWidthConfiguration) value, diagnostics, context);
-		case VTablePackage.ENABLEMENT_CONFIGURATION:
-			return validateEnablementConfiguration((VEnablementConfiguration) value, diagnostics, context);
 		case VTablePackage.SINGLE_COLUMN_CONFIGURATION:
 			return validateSingleColumnConfiguration((VSingleColumnConfiguration) value, diagnostics, context);
+		case VTablePackage.ENABLEMENT_CONFIGURATION:
+			return validateEnablementConfiguration((VEnablementConfiguration) value, diagnostics, context);
 		case VTablePackage.DETAIL_EDITING:
 			return validateDetailEditing((DetailEditing) value, diagnostics, context);
 		default:

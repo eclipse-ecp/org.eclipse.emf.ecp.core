@@ -80,7 +80,7 @@ public interface VTableControl extends VControl {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @return the value of the '<em>Move Up Down Disabled</em>' attribute.
 	 * @see #setMoveUpDownDisabled(boolean)
 	 * @see org.eclipse.emf.ecp.view.spi.table.model.VTablePackage#getTableControl_MoveUpDownDisabled()
@@ -94,7 +94,7 @@ public interface VTableControl extends VControl {
 	 * <em>Move Up Down Disabled</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @param value the new value of the '<em>Move Up Down Disabled</em>' attribute.
 	 * @see #isMoveUpDownDisabled()
 	 * @generated

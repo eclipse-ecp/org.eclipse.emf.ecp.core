@@ -20,6 +20,7 @@ import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.table.model.*;
 import org.eclipse.emf.ecp.view.spi.table.model.VEnablementConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VReadOnlyColumnConfiguration;
 import org.eclipse.emf.ecp.view.spi.table.model.VSingleColumnConfiguration;
@@ -116,13 +117,13 @@ public class TableAdapterFactory extends AdapterFactoryImpl {
 		}
 
 		@Override
-		public Adapter caseEnablementConfiguration(VEnablementConfiguration object) {
-			return createEnablementConfigurationAdapter();
+		public Adapter caseSingleColumnConfiguration(VSingleColumnConfiguration object) {
+			return createSingleColumnConfigurationAdapter();
 		}
 
 		@Override
-		public Adapter caseSingleColumnConfiguration(VSingleColumnConfiguration object) {
-			return createSingleColumnConfigurationAdapter();
+		public Adapter caseEnablementConfiguration(VEnablementConfiguration object) {
+			return createEnablementConfigurationAdapter();
 		}
 
 		@Override

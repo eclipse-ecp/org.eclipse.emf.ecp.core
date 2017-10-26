@@ -44,8 +44,8 @@ public class FeaturePathDMRRemovalMigration extends CustomMigration {
 	private static final String TABLE_DOMAIN_MODEL_REFERENCE = "http://org/eclipse/emf/ecp/view/table/model/190.TableDomainModelReference"; //$NON-NLS-1$
 	private static final String MULTI_SEGMENT = "http://org/eclipse/emfforms/view/multisegment/model/200.MultiDomainModelReferenceSegment"; //$NON-NLS-1$
 
-	private static final String TABLE_WIDTH_CONFIGURATION = "http://org/eclipse/emf/ecp/view/table/model/190.WidthConfiguration"; //$NON-NLS-1$
 	private static final String TABLE_READ_ONLY_CONFIGURATION = "http://org/eclipse/emf/ecp/view/table/model/190.ReadOnlyColumnConfiguration"; //$NON-NLS-1$ ;
+	private static final String TABLE_SINGLE_COLUM_CONFIGURATION = "http://org/eclipse/emf/ecp/view/table/model/190.SingleColumnConfiguration"; //$NON-NLS-1$
 
 	/**
 	 * {@inheritDoc}
@@ -57,31 +57,42 @@ public class FeaturePathDMRRemovalMigration extends CustomMigration {
 	public void migrateBefore(Model model, Metamodel metamodel) throws MigrationException {
 		fixMappingMetaModel(metamodel);
 
-		// Prepare table width configuration migrations
+		// Prepare table single column configuration migrations if necessary
+		final EClass singleColConfigEClass = metamodel.getEClass(TABLE_SINGLE_COLUM_CONFIGURATION);
 		final Map<Instance, Integer> configIndices = new LinkedHashMap<Instance, Integer>();
-		final EClass widthConfigEClass = metamodel.getEClass(TABLE_WIDTH_CONFIGURATION);
-		final EList<Instance> allTableWidthConfigs = model.getInstances(widthConfigEClass);
-		for (final Instance tableWidthConfig : allTableWidthConfigs) {
-			prepareWidthConfigMigration(model, metamodel, tableWidthConfig, configIndices);
+		final boolean migrateSingleColConfigs = singleColConfigEClass != null;
+		if (migrateSingleColConfigs) {
+			final EList<Instance> allTableSingleColConfigs = model.getAllInstances(singleColConfigEClass);
+			for (final Instance singleColConfig : allTableSingleColConfigs) {
+				prepareSingleColumnConfigMigration(model, metamodel, singleColConfig, configIndices);
+			}
 		}
-		// Prepare table read only configuration migrations
+
+		// Prepare table read only configuration migrations if necessary
 		final Map<Instance, List<Integer>> readOnlyConfigIndices = new LinkedHashMap<Instance, List<Integer>>();
 		final EClass readOnlyConfigEClass = metamodel.getEClass(TABLE_READ_ONLY_CONFIGURATION);
-		final EList<Instance> readOnlyConfigs = model.getInstances(readOnlyConfigEClass);
-		for (final Instance readOnlyConfig : readOnlyConfigs) {
-			prepareReadOnlyConfigMigration(model, metamodel, readOnlyConfig, readOnlyConfigIndices);
+		final boolean migrateReadOnlyConfigs = readOnlyConfigEClass != null;
+		if (migrateReadOnlyConfigs) {
+			final EList<Instance> readOnlyConfigs = model.getInstances(readOnlyConfigEClass);
+			for (final Instance readOnlyConfig : readOnlyConfigs) {
+				prepareReadOnlyConfigMigration(model, metamodel, readOnlyConfig, readOnlyConfigIndices);
+			}
 		}
 
 		migrateDmrs(model, metamodel);
 
-		// finish width configuration migration after all dmrs have been migrated
-		for (final Instance tableConfig : configIndices.keySet()) {
-			migrateWidthConfig(model, metamodel, tableConfig, configIndices.get(tableConfig));
+		// finish single column configuration migration after all dmrs have been migrated
+		if (migrateSingleColConfigs) {
+			for (final Instance singleColConfig : configIndices.keySet()) {
+				migrateSingleColConfig(model, metamodel, singleColConfig, configIndices.get(singleColConfig));
+			}
 		}
 
 		// finish read only configuration migration after all dmrs have been migrated
-		for (final Instance readOnlyConfig : readOnlyConfigIndices.keySet()) {
-			migrateReadOnlyConfig(model, metamodel, readOnlyConfig, readOnlyConfigIndices.get(readOnlyConfig));
+		if (migrateReadOnlyConfigs) {
+			for (final Instance readOnlyConfig : readOnlyConfigIndices.keySet()) {
+				migrateReadOnlyConfig(model, metamodel, readOnlyConfig, readOnlyConfigIndices.get(readOnlyConfig));
+			}
 		}
 	}
 
@@ -129,25 +140,25 @@ public class FeaturePathDMRRemovalMigration extends CustomMigration {
 		}
 	}
 
-	private void migrateWidthConfig(Model model, Metamodel metamodel, Instance tableConfig, int index) {
-		final Instance tableControlDmr = tableConfig.getContainer().get("domainModelReference"); //$NON-NLS-1$
+	private void migrateSingleColConfig(Model model, Metamodel metamodel, Instance singleColConfig, int index) {
+		final Instance tableControlDmr = singleColConfig.getContainer().get("domainModelReference"); //$NON-NLS-1$
 		final EList<Instance> segments = tableControlDmr.get("segments"); //$NON-NLS-1$
 		final Instance multiSegment = segments.get(segments.size() - 1);
 		final EList<Instance> childDmrs = multiSegment.get("childDomainModelReferences"); //$NON-NLS-1$
-		tableConfig.set("columnDomainReference", childDmrs.get(index)); //$NON-NLS-1$
+		singleColConfig.set("columnDomainReference", childDmrs.get(index)); //$NON-NLS-1$
 	}
 
 	/**
-	 * Prepares the migration of VWidthConfiguration.
+	 * Prepares the migration of VSingleColumnConfigurations.
 	 * Therefore, the index of the config's referenced column dmr in the TableControl containing it is stored.
 	 * Later, this index is used to reference the correct dmr after its migration.
 	 *
 	 * @param model
 	 * @param metamodel
-	 * @param readOnlyConfig
+	 * @param tableConfig
 	 * @param configIndices
 	 */
-	private void prepareWidthConfigMigration(Model model, Metamodel metamodel, Instance tableConfig,
+	private void prepareSingleColumnConfigMigration(Model model, Metamodel metamodel, Instance tableConfig,
 		Map<Instance, Integer> configIndices) {
 		final Instance columnDmr = tableConfig.get("columnDomainReference"); //$NON-NLS-1$
 		if (columnDmr == null) {
