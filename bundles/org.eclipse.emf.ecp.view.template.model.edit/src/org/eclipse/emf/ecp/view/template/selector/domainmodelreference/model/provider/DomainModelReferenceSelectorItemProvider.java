@@ -70,6 +70,7 @@ public class DomainModelReferenceSelectorItemProvider
 			super.getPropertyDescriptors(object);
 
 			addDomainModelReferencePropertyDescriptor(object);
+			addDmrRootEClassPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -86,14 +87,36 @@ public class DomainModelReferenceSelectorItemProvider
 			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_DomainModelReferenceSelector_domainModelReference_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
 					"_UI_DomainModelReferenceSelector_domainModelReference_feature", //$NON-NLS-1$
 					"_UI_DomainModelReferenceSelector_type"), //$NON-NLS-1$
 				VTDomainmodelreferencePackage.Literals.DOMAIN_MODEL_REFERENCE_SELECTOR__DOMAIN_MODEL_REFERENCE,
 				true,
 				false,
 				false,
+				null,
+				null,
+				null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Dmr Root EClass feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected void addDmrRootEClassPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+				getResourceLocator(),
+				getString("_UI_DomainModelReferenceSelector_dmrRootEClass_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+					"_UI_DomainModelReferenceSelector_dmrRootEClass_feature", "_UI_DomainModelReferenceSelector_type"), //$NON-NLS-1$ //$NON-NLS-2$
+				VTDomainmodelreferencePackage.Literals.DOMAIN_MODEL_REFERENCE_SELECTOR__DMR_ROOT_ECLASS,
+				true,
+				false,
+				true,
 				null,
 				null,
 				null));

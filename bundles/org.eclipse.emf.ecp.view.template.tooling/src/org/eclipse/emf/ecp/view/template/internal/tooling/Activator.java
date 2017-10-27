@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.view.template.internal.tooling;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emfforms.spi.common.report.ReportService;
-import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -87,15 +87,15 @@ public class Activator extends AbstractUIPlugin {
 	}
 
 	/**
-	 * Returns the {@link EMFFormsDatabinding} service.
+	 * Returns the {@link EMFFormsDatabindingEMF} service.
 	 *
-	 * @return The {@link EMFFormsDatabinding}
+	 * @return The {@link EMFFormsDatabindingEMF}
 	 */
-	public EMFFormsDatabinding getEMFFormsDatabinding() {
-		final ServiceReference<EMFFormsDatabinding> serviceReference = plugin.getBundle().getBundleContext()
-			.getServiceReference(EMFFormsDatabinding.class);
+	public EMFFormsDatabindingEMF getEMFFormsDatabinding() {
+		final ServiceReference<EMFFormsDatabindingEMF> serviceReference = plugin.getBundle().getBundleContext()
+			.getServiceReference(EMFFormsDatabindingEMF.class);
 
-		final EMFFormsDatabinding service = plugin.getBundle().getBundleContext()
+		final EMFFormsDatabindingEMF service = plugin.getBundle().getBundleContext()
 			.getService(serviceReference);
 		plugin.getBundle().getBundleContext().ungetService(serviceReference);
 

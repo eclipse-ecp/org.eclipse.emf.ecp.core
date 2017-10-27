@@ -51,7 +51,7 @@
    <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
       <!-- @generated domainModelReferenceSelector -->
       <factory
-            uri="http://www.eclipse.org/emf/ecp/view/template/selector/domainmodelreference/model"
+            uri="http://www.eclipse.org/emf/ecp/view/template/selector/domainmodelreference/model/200"
             class="org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.provider.DomainmodelreferenceItemProviderAdapterFactory"
             supportedTypes=
               "org.eclipse.emf.edit.provider.IEditingDomainItemProvider

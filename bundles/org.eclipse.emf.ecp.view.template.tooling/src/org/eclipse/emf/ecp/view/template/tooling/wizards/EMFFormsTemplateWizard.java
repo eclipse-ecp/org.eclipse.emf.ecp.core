@@ -258,6 +258,14 @@ public class EMFFormsTemplateWizard extends Wizard implements INewWizard {
 			return false;
 		}
 
+		/*
+		 * We need to set the root e class for a dmr selector.
+		 * This must be done before checking whether it is present to ensure an equivalent selector is found.
+		 */
+		if (VTDomainModelReferenceSelector.class.isInstance(styleSelector)) {
+			VTDomainModelReferenceSelector.class.cast(styleSelector).setDmrRootEClass(getView().getRootEClass());
+		}
+
 		/* check if there is a style with the same selector already present */
 		final TreeIterator<EObject> templateContents = EcoreUtil.getAllContents(template, true);
 		while (templateContents.hasNext()) {
@@ -281,11 +289,7 @@ public class EMFFormsTemplateWizard extends Wizard implements INewWizard {
 			VTTemplatePackage.eINSTANCE.getViewTemplate_Styles(), style);
 
 		if (VTDomainModelReferenceSelector.class.isInstance(styleSelector)) {
-			EObject view = vElement.get();
-			while (!VView.class.isInstance(view) && view != null) {
-				view = view.eContainer();
-			}
-			command = addEcorePathIfRequired(template, domain, command, view);
+			command = addEcorePathIfRequired(template, domain, command, getView());
 		}
 
 		if (!command.canExecute()) {
@@ -297,6 +301,17 @@ public class EMFFormsTemplateWizard extends Wizard implements INewWizard {
 		return true;
 	}
 
+	/**
+	 * @return the {@link VView} containing the {@link VElement}.
+	 */
+	private VView getView() {
+		EObject view = vElement.get();
+		while (!VView.class.isInstance(view) && view != null) {
+			view = view.eContainer();
+		}
+		return VView.class.cast(view);
+	}
+
 	private Command addEcorePathIfRequired(
 		final VTViewTemplate template,
 		final EditingDomain domain,
@@ -306,6 +321,9 @@ public class EMFFormsTemplateWizard extends Wizard implements INewWizard {
 			return command;
 		}
 		final String ecorePath = VView.class.cast(view).getEcorePath();
+		if (ecorePath == null) {
+			return command;
+		}
 		if (template.getReferencedEcores().contains(ecorePath)) {
 			return command;
 		}

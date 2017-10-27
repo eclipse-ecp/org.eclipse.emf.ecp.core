@@ -22,8 +22,7 @@ import org.eclipse.emf.ecore.EFactory;
  * @see org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainmodelreferencePackage
  * @generated
  */
-public interface VTDomainmodelreferenceFactory extends EFactory
-{
+public interface VTDomainmodelreferenceFactory extends EFactory {
 	/**
 	 * The singleton instance of the factory.
 	 * <!-- begin-user-doc -->

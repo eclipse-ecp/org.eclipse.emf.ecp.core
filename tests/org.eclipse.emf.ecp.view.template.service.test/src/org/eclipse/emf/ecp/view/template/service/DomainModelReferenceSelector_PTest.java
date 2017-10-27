@@ -19,7 +19,9 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
@@ -28,7 +30,7 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
-import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.template.model.VTStyleSelector;
 import org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainModelReferenceSelector;
@@ -51,6 +53,19 @@ public class DomainModelReferenceSelector_PTest {
 
 	}
 
+	/**
+	 * @return
+	 */
+	private VDomainModelReference createDMR(EStructuralFeature feature) {
+		final VDomainModelReference dmr = VViewFactory.eINSTANCE
+			.createDomainModelReference();
+		final VFeatureDomainModelReferenceSegment segment = VViewFactory.eINSTANCE
+			.createFeatureDomainModelReferenceSegment();
+		segment.setDomainModelFeature(feature.getName());
+		dmr.getSegments().add(segment);
+		return dmr;
+	}
+
 	@Test
 	public void testNotAControl() {
 		final double specificity = domainModelReferenceSelector.isApplicable(
@@ -71,11 +86,8 @@ public class DomainModelReferenceSelector_PTest {
 
 	@Test
 	public void testSelectorDomainModelReferenceNotResolvable() {
-		final VFeaturePathDomainModelReference selectorDomainModelReference = VViewFactory.eINSTANCE
-			.createFeaturePathDomainModelReference();
-		selectorDomainModelReference
-			.setDomainModelEFeature(EcorePackage.eINSTANCE
-				.getENamedElement_Name());
+		final VDomainModelReference selectorDomainModelReference = createDMR(
+			EcorePackage.eINSTANCE.getENamedElement_Name());
 		domainModelReferenceSelector
 			.setDomainModelReference(selectorDomainModelReference);
 
@@ -90,19 +102,16 @@ public class DomainModelReferenceSelector_PTest {
 
 	@Test
 	public void testControlDomainModelReferenceDifferentEFeatures() {
-		final VFeaturePathDomainModelReference selectorDomainModelReference = VViewFactory.eINSTANCE
-			.createFeaturePathDomainModelReference();
-		selectorDomainModelReference
-			.setDomainModelEFeature(EcorePackage.eINSTANCE
-				.getENamedElement_Name());
+		final VDomainModelReference selectorDomainModelReference = createDMR(
+			EcorePackage.eINSTANCE.getENamedElement_Name());
 		domainModelReferenceSelector
 			.setDomainModelReference(selectorDomainModelReference);
+		domainModelReferenceSelector.setDmrRootEClass(EcorePackage.eINSTANCE.getEClass());
 
 		final VControl vControl = mock(VControl.class);
-		final VFeaturePathDomainModelReference controlDomainModelReference = VViewFactory.eINSTANCE
-			.createFeaturePathDomainModelReference();
+		final VDomainModelReference controlDomainModelReference = createDMR(
+			EcorePackage.eINSTANCE.getEClass_Abstract());
 		when(vControl.getDomainModelReference()).thenReturn(controlDomainModelReference);
-		controlDomainModelReference.setDomainModelEFeature(EcorePackage.eINSTANCE.getEClass_Abstract());
 
 		final ViewModelContext viewModelContext = mock(ViewModelContext.class);
 		when(viewModelContext.getDomainModel()).thenReturn(EcoreFactory.eINSTANCE.createEClass());
@@ -116,17 +125,14 @@ public class DomainModelReferenceSelector_PTest {
 	@Ignore
 	@Test
 	public void testControlDomainModelReferenceLong() {
-		final VFeaturePathDomainModelReference selectorDomainModelReference = VViewFactory.eINSTANCE
-			.createFeaturePathDomainModelReference();
-		selectorDomainModelReference
-			.setDomainModelEFeature(EcorePackage.eINSTANCE
-				.getENamedElement_Name());
+		final VDomainModelReference selectorDomainModelReference = createDMR(
+			EcorePackage.eINSTANCE.getENamedElement_Name());
 		domainModelReferenceSelector
 			.setDomainModelReference(selectorDomainModelReference);
 
 		final VControl vControl = mock(VControl.class);
-		final VFeaturePathDomainModelReference controlDomainModelReference = VViewFactory.eINSTANCE
-			.createFeaturePathDomainModelReference();
+		final VDomainModelReference controlDomainModelReference = VViewFactory.eINSTANCE
+			.createDomainModelReference();
 		when(vControl.getDomainModelReference()).thenReturn(controlDomainModelReference);
 		final Set<Setting> settings = new LinkedHashSet<Setting>();
 		final EClass eClass = EcoreFactory.eINSTANCE.createEClass();
@@ -146,21 +152,16 @@ public class DomainModelReferenceSelector_PTest {
 
 	@Test
 	public void testControlDomainModelReferenceCorrect() {
-		final VFeaturePathDomainModelReference selectorDomainModelReference = VViewFactory.eINSTANCE
-			.createFeaturePathDomainModelReference();
-		selectorDomainModelReference
-			.setDomainModelEFeature(EcorePackage.eINSTANCE
-				.getENamedElement_Name());
+		final EClass eClass = EcoreFactory.eINSTANCE.createEClass();
+		final VDomainModelReference selectorDomainModelReference = createDMR(
+			EcorePackage.eINSTANCE.getENamedElement_Name());
 		domainModelReferenceSelector
 			.setDomainModelReference(selectorDomainModelReference);
-
+		domainModelReferenceSelector.setDmrRootEClass(eClass.eClass());
 		final VControl vControl = mock(VControl.class);
-		final VFeaturePathDomainModelReference controlDomainModelReference = VViewFactory.eINSTANCE
-			.createFeaturePathDomainModelReference();
+		final VDomainModelReference controlDomainModelReference = createDMR(
+			EcorePackage.eINSTANCE.getENamedElement_Name());
 		when(vControl.getDomainModelReference()).thenReturn(controlDomainModelReference);
-		controlDomainModelReference.setDomainModelEFeature(EcorePackage.eINSTANCE.getENamedElement_Name());
-
-		final EClass eClass = EcoreFactory.eINSTANCE.createEClass();
 
 		final ViewModelContext viewModelContext = mock(ViewModelContext.class);
 		when(viewModelContext.getDomainModel()).thenReturn(eClass);
@@ -171,14 +172,82 @@ public class DomainModelReferenceSelector_PTest {
 			0d);
 	}
 
+	@Test
+	public void testControlDomainModelReferenceDifferentRootClasses() {
+		final VDomainModelReference selectorDomainModelReference = createDMR(
+			EcorePackage.eINSTANCE.getENamedElement_Name());
+		domainModelReferenceSelector
+			.setDomainModelReference(selectorDomainModelReference);
+		domainModelReferenceSelector.setDmrRootEClass(EcorePackage.eINSTANCE.getEEnum());
+		final VControl vControl = mock(VControl.class);
+		final VDomainModelReference controlDomainModelReference = createDMR(
+			EcorePackage.eINSTANCE.getENamedElement_Name());
+		when(vControl.getDomainModelReference()).thenReturn(controlDomainModelReference);
+
+		final EClass eClass = EcoreFactory.eINSTANCE.createEClass();
+		final ViewModelContext viewModelContext = mock(ViewModelContext.class);
+		when(viewModelContext.getDomainModel()).thenReturn(eClass);
+
+		final double specificity = domainModelReferenceSelector.isApplicable(
+			vControl, viewModelContext);
+		assertEquals(VTStyleSelector.NOT_APPLICABLE.doubleValue(), specificity, 0d);
+	}
+
+	/**
+	 * Tests that the selector is applicable when the domain model's class is a subclass of the selector's root class.
+	 */
+	@Test
+	public void testControlDomainModelReferenceSubclassOfRoot() {
+		final VDomainModelReference selectorDomainModelReference = createDMR(
+			EcorePackage.eINSTANCE.getENamedElement_Name());
+		domainModelReferenceSelector
+			.setDomainModelReference(selectorDomainModelReference);
+		domainModelReferenceSelector.setDmrRootEClass(EcorePackage.eINSTANCE.getENamedElement());
+		final VControl vControl = mock(VControl.class);
+		final VDomainModelReference controlDomainModelReference = createDMR(
+			EcorePackage.eINSTANCE.getENamedElement_Name());
+		when(vControl.getDomainModelReference()).thenReturn(controlDomainModelReference);
+
+		final EClass eClass = EcoreFactory.eINSTANCE.createEClass();
+		final ViewModelContext viewModelContext = mock(ViewModelContext.class);
+		when(viewModelContext.getDomainModel()).thenReturn(eClass);
+
+		final double specificity = domainModelReferenceSelector.isApplicable(
+			vControl, viewModelContext);
+		assertEquals(10d, specificity, 0d);
+	}
+
+	/**
+	 * Tests that the selector is not applicable when the domain model's class is a superclass of the selector's root
+	 * class.
+	 * TODO adapt test case
+	 */
+	@Test
+	public void testControlDomainModelReferenceSuperclassOfRoot() {
+		final VDomainModelReference selectorDomainModelReference = createDMR(
+			EcorePackage.eINSTANCE.getENamedElement_Name());
+		domainModelReferenceSelector
+			.setDomainModelReference(selectorDomainModelReference);
+		domainModelReferenceSelector.setDmrRootEClass(EcorePackage.eINSTANCE.getEEnum());
+		final VControl vControl = mock(VControl.class);
+		final VDomainModelReference controlDomainModelReference = createDMR(
+			EcorePackage.eINSTANCE.getENamedElement_Name());
+		when(vControl.getDomainModelReference()).thenReturn(controlDomainModelReference);
+
+		final EDataType eDataType = EcoreFactory.eINSTANCE.createEDataType();
+		final ViewModelContext viewModelContext = mock(ViewModelContext.class);
+		when(viewModelContext.getDomainModel()).thenReturn(eDataType);
+
+		final double specificity = domainModelReferenceSelector.isApplicable(
+			vControl, viewModelContext);
+		assertEquals(VTStyleSelector.NOT_APPLICABLE.doubleValue(), specificity, 0d);
+	}
+
 	@Ignore
 	@Test
 	public void testControlDomainModelReferenceDifferentEObjects() {
-		final VFeaturePathDomainModelReference selectorDomainModelReference = VViewFactory.eINSTANCE
-			.createFeaturePathDomainModelReference();
-		selectorDomainModelReference
-			.setDomainModelEFeature(EcorePackage.eINSTANCE
-				.getENamedElement_Name());
+		final VDomainModelReference selectorDomainModelReference = createDMR(
+			EcorePackage.eINSTANCE.getENamedElement_Name());
 		domainModelReferenceSelector
 			.setDomainModelReference(selectorDomainModelReference);
 

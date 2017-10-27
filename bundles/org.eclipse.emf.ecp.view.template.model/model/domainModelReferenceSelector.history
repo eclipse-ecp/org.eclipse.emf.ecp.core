@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="ASCII"?>
+<history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:history="http://www.eclipse.org/emf/edapt/history/0.3" xmi:id="_0MAgMLr3EeeQXZNhT7QpJQ">
+  <releases xmi:id="_0MAgMbr3EeeQXZNhT7QpJQ" date="2017-10-27T11:18:58.096+0200" label="1140">
+    <changes xsi:type="history:CompositeChange" xmi:id="_0MAgMrr3EeeQXZNhT7QpJQ">
+      <changes xsi:type="history:Create" xmi:id="_0MAgM7r3EeeQXZNhT7QpJQ">
+        <element href="domainModelReferenceSelector.ecore#/"/>
+        <changes xsi:type="history:Set" xmi:id="_0MAgNLr3EeeQXZNhT7QpJQ" featureName="name" dataValue="domainmodelreference">
+          <element href="domainModelReferenceSelector.ecore#/"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_0MAgNbr3EeeQXZNhT7QpJQ" featureName="nsURI" dataValue="http://www.eclipse.org/emf/ecp/view/template/selector/domainmodelreference/model">
+          <element href="domainModelReferenceSelector.ecore#/"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_0MAgNrr3EeeQXZNhT7QpJQ" featureName="nsPrefix" dataValue="org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model">
+          <element href="domainModelReferenceSelector.ecore#/"/>
+        </changes>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_0MAgN7r3EeeQXZNhT7QpJQ" referenceName="eClassifiers">
+        <target href="domainModelReferenceSelector.ecore#/"/>
+        <element href="domainModelReferenceSelector.ecore#//DomainModelReferenceSelector"/>
+        <changes xsi:type="history:Set" xmi:id="_0MAgOLr3EeeQXZNhT7QpJQ" featureName="name" dataValue="DomainModelReferenceSelector">
+          <element href="domainModelReferenceSelector.ecore#//DomainModelReferenceSelector"/>
+        </changes>
+        <changes xsi:type="history:Add" xmi:id="_0MAgObr3EeeQXZNhT7QpJQ" featureName="eSuperTypes">
+          <element href="domainModelReferenceSelector.ecore#//DomainModelReferenceSelector"/>
+          <referenceValue href="template.ecore#//StyleSelector"/>
+        </changes>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_0MAgOrr3EeeQXZNhT7QpJQ" referenceName="eStructuralFeatures">
+        <target href="domainModelReferenceSelector.ecore#//DomainModelReferenceSelector"/>
+        <element href="domainModelReferenceSelector.ecore#//DomainModelReferenceSelector/domainModelReference"/>
+        <changes xsi:type="history:Set" xmi:id="_0MAgO7r3EeeQXZNhT7QpJQ" featureName="name" dataValue="domainModelReference">
+          <element href="domainModelReferenceSelector.ecore#//DomainModelReferenceSelector/domainModelReference"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_0MAgPLr3EeeQXZNhT7QpJQ" featureName="lowerBound" dataValue="1" oldDataValue="0">
+          <element href="domainModelReferenceSelector.ecore#//DomainModelReferenceSelector/domainModelReference"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_0MAgPbr3EeeQXZNhT7QpJQ" featureName="containment" dataValue="true" oldDataValue="false">
+          <element href="domainModelReferenceSelector.ecore#//DomainModelReferenceSelector/domainModelReference"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_0MAgPrr3EeeQXZNhT7QpJQ" featureName="eType">
+          <element href="domainModelReferenceSelector.ecore#//DomainModelReferenceSelector/domainModelReference"/>
+          <referenceValue href="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"/>
+        </changes>
+      </changes>
+    </changes>
+  </releases>
+  <releases xmi:id="_3LoTALr3EeeQXZNhT7QpJQ" date="2017-10-27T11:26:53.577+0200" label="200">
+    <changes xsi:type="history:Create" xmi:id="_0tRkwLr4EeeQXZNhT7QpJQ" referenceName="eStructuralFeatures">
+      <target href="domainModelReferenceSelector.ecore#//DomainModelReferenceSelector"/>
+      <element href="domainModelReferenceSelector.ecore#//DomainModelReferenceSelector/dmrRootEClass"/>
+    </changes>
+    <changes xsi:type="history:Set" xmi:id="_3NOZALr4EeeQXZNhT7QpJQ" featureName="name" dataValue="dmrRootEClass">
+      <element href="domainModelReferenceSelector.ecore#//DomainModelReferenceSelector/dmrRootEClass"/>
+    </changes>
+    <changes xsi:type="history:Set" xmi:id="_30jewLr4EeeQXZNhT7QpJQ" featureName="lowerBound" dataValue="1" oldDataValue="0">
+      <element href="domainModelReferenceSelector.ecore#//DomainModelReferenceSelector/dmrRootEClass"/>
+    </changes>
+    <changes xsi:type="history:Set" xmi:id="_44cksLr4EeeQXZNhT7QpJQ" featureName="eType">
+      <element href="domainModelReferenceSelector.ecore#//DomainModelReferenceSelector/dmrRootEClass"/>
+      <referenceValue href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
+    </changes>
+    <changes xsi:type="history:Set" xmi:id="_7dkz4Lr4EeeQXZNhT7QpJQ" featureName="nsURI" dataValue="http://www.eclipse.org/emf/ecp/view/template/selector/domainmodelreference/model/200" oldDataValue="http://www.eclipse.org/emf/ecp/view/template/selector/domainmodelreference/model">
+      <element href="domainModelReferenceSelector.ecore#/"/>
+    </changes>
+  </releases>
+  <releases xmi:id="_-CK3kLr4EeeQXZNhT7QpJQ"/>
+</history:History>
