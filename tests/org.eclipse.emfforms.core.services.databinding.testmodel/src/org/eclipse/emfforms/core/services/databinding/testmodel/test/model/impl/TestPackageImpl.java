@@ -94,6 +94,14 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	private EClass eClassToEMapEClass = null;
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	private EClass fEClass = null;
+
+	/**
 	 * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
 	 * EPackage.Registry} by the package
 	 * package URI value.
@@ -442,6 +450,36 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * 
 	 * @generated
 	 */
+	public EClass getF() {
+		return fEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EAttribute getF_Name() {
+		return (EAttribute) fEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public EReference getF_C() {
+		return (EReference) fEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
 	@Override
 	public TestFactory getTestFactory() {
 		return (TestFactory) getEFactoryInstance();
@@ -502,6 +540,10 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		eClassToEMapEClass = createEClass(ECLASS_TO_EMAP);
 		createEReference(eClassToEMapEClass, ECLASS_TO_EMAP__KEY);
 		createEReference(eClassToEMapEClass, ECLASS_TO_EMAP__VALUE);
+
+		fEClass = createEClass(F);
+		createEAttribute(fEClass, F__NAME);
+		createEReference(fEClass, F__C);
 	}
 
 	/**
@@ -536,6 +578,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 
 		// Add supertypes to classes
 		aEClass.getESuperTypes().add(this.getE());
+		fEClass.getESuperTypes().add(this.getE());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(aEClass, org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A.class, "A", //$NON-NLS-1$
@@ -614,6 +657,15 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		initEReference(getEClassToEMap_Value(), this.getE(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, //$NON-NLS-1$
 			!IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
 			IS_ORDERED);
+
+		initEClass(fEClass, org.eclipse.emfforms.core.services.databinding.testmodel.test.model.F.class, "F", //$NON-NLS-1$
+			!IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getF_Name(), ecorePackage.getEString(), "name", null, 0, 1, //$NON-NLS-1$
+			org.eclipse.emfforms.core.services.databinding.testmodel.test.model.F.class, !IS_TRANSIENT, !IS_VOLATILE,
+			IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getF_C(), this.getC(), null, "c", null, 0, 1, //$NON-NLS-1$
+			org.eclipse.emfforms.core.services.databinding.testmodel.test.model.F.class, !IS_TRANSIENT, !IS_VOLATILE,
+			IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

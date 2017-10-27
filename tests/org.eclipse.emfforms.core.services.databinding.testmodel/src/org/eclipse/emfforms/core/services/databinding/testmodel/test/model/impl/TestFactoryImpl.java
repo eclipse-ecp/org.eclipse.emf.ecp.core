@@ -87,6 +87,8 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 			return (EObject) createEClassToAMap();
 		case TestPackage.ECLASS_TO_EMAP:
 			return (EObject) createEClassToEMap();
+		case TestPackage.F:
+			return createF();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -171,6 +173,17 @@ public class TestFactoryImpl extends EFactoryImpl implements TestFactory {
 	public Map.Entry<EClass, E> createEClassToEMap() {
 		EClassToEMapImpl eClassToEMap = new EClassToEMapImpl();
 		return eClassToEMap;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 */
+	public F createF() {
+		FImpl f = new FImpl();
+		return f;
 	}
 
 	/**

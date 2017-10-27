@@ -430,6 +430,48 @@ public interface TestPackage extends EPackage {
 	int ECLASS_TO_EMAP_FEATURE_COUNT = 2;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.FImpl
+	 * <em>F</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.FImpl
+	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.TestPackageImpl#getF()
+	 * @generated
+	 */
+	int F = 8;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int F__NAME = E_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>C</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int F__C = E_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of structural features of the '<em>F</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @generated
+	 * @ordered
+	 */
+	int F_FEATURE_COUNT = E_FEATURE_COUNT + 2;
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A
 	 * <em>A</em>}'.
 	 * <!-- begin-user-doc -->
@@ -760,6 +802,44 @@ public interface TestPackage extends EPackage {
 	EReference getEClassToEMap_Value();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.F
+	 * <em>F</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for class '<em>F</em>'.
+	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.F
+	 * @generated
+	 */
+	EClass getF();
+
+	/**
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.F#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.F#getName()
+	 * @see #getF()
+	 * @generated
+	 */
+	EAttribute getF_Name();
+
+	/**
+	 * Returns the meta object for the containment reference
+	 * '{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.F#getC <em>C</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return the meta object for the containment reference '<em>C</em>'.
+	 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.F#getC()
+	 * @see #getF()
+	 * @generated
+	 */
+	EReference getF_C();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1043,6 +1123,36 @@ public interface TestPackage extends EPackage {
 		 * @generated
 		 */
 		EReference ECLASS_TO_EMAP__VALUE = eINSTANCE.getEClassToEMap_Value();
+
+		/**
+		 * The meta object literal for the
+		 * '{@link org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.FImpl <em>F</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.FImpl
+		 * @see org.eclipse.emfforms.core.services.databinding.testmodel.test.model.impl.TestPackageImpl#getF()
+		 * @generated
+		 */
+		EClass F = eINSTANCE.getF();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EAttribute F__NAME = eINSTANCE.getF_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>C</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * 
+		 * @generated
+		 */
+		EReference F__C = eINSTANCE.getF_C();
 
 	}
 
