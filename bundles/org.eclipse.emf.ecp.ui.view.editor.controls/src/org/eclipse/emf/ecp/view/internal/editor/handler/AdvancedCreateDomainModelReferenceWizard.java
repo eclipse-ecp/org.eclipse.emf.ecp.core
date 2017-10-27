@@ -32,14 +32,19 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 import org.eclipse.emf.ecp.view.spi.editor.controls.EStructuralFeatureSelectionValidator;
 import org.eclipse.emf.ecp.view.spi.editor.controls.SegmentIdeDescriptor;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VFeatureDomainModelReferenceSegment;
+import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.model.util.SegmentResolvementUtil;
+import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -244,7 +249,7 @@ public class AdvancedCreateDomainModelReferenceWizard extends Wizard {
 			// remove validation adapters - they are only needed during the dmr creation
 			for (final VDomainModelReferenceSegment segment : advancedDmr.getSegments()) {
 				for (final Adapter adapter : segment.eAdapters()) {
-					if (SegmentCreationPage.SegmentValidationAdapter.class.isInstance(adapter)) {
+					if (SegmentCreationPage.SegmentAdapter.class.isInstance(adapter)) {
 						segment.eAdapters().remove(adapter);
 						// only one is registered, avoid concurrent modification exception
 						break;
@@ -371,6 +376,7 @@ public class AdvancedCreateDomainModelReferenceWizard extends Wizard {
 	private class SegmentCreationPage extends WizardPage {
 		private static final String PLEASE_SELECT_A_SEGMENT_TYPE_ERROR_MSG = "Please select a segment type."; //$NON-NLS-1$
 		private final int index;
+		private Composite pageComposite;
 
 		private ComposedAdapterFactory composedAdapterFactory;
 		private AdapterFactoryLabelProvider labelProvider;
@@ -381,6 +387,7 @@ public class AdvancedCreateDomainModelReferenceWizard extends Wizard {
 		private Composite renderComposite;
 		private SegmentCreationPage nextPage;
 		private TableViewer tableViewer;
+		private EStructuralFeature selectedFeature;
 
 		/**
 		 * Set to true, if the page is complete except for the successful validation of the current segment. Is still
@@ -459,9 +466,9 @@ public class AdvancedCreateDomainModelReferenceWizard extends Wizard {
 			nextPage = new SegmentCreationPage(getName(), null, index + 1);
 			addPage(nextPage);
 
-			final Composite composite = new Composite(parent, SWT.FILL);
-			GridLayoutFactory.fillDefaults().applyTo(composite);
-			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(composite);
+			pageComposite = new Composite(parent, SWT.FILL);
+			GridLayoutFactory.fillDefaults().applyTo(pageComposite);
+			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(pageComposite);
 
 			composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
 				new ReflectiveItemProviderAdapterFactory(),
@@ -477,7 +484,7 @@ public class AdvancedCreateDomainModelReferenceWizard extends Wizard {
 				segmentClassesMap.put(segmentClass.getName(), segmentClass);
 			}
 
-			final Composite segmentTypeComposite = new Composite(composite, SWT.FILL);
+			final Composite segmentTypeComposite = new Composite(pageComposite, SWT.FILL);
 			GridLayoutFactory.fillDefaults().numColumns(2).applyTo(segmentTypeComposite);
 			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false)
 				.applyTo(segmentTypeComposite);
@@ -497,14 +504,14 @@ public class AdvancedCreateDomainModelReferenceWizard extends Wizard {
 			segmentTypeSelector.setItems(items);
 
 			// table viewer
-			tableViewer = new TableViewer(composite);
+			tableViewer = new TableViewer(pageComposite);
 			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(tableViewer.getControl());
 			tableViewer.setContentProvider(contentProvider);
 			tableViewer.setLabelProvider(labelProvider);
 			tableViewer.setInput(rootEClass);
 			tableViewer.addSelectionChangedListener(new FeatureSelectionChangedListerner());
 			segmentTypeSelector.addListener(SWT.Selection,
-				new SegmentTypeSelectionListener(composite, segmentClassesMap, tableViewer, segmentTypeSelector));
+				new SegmentTypeSelectionListener(pageComposite, segmentClassesMap, tableViewer, segmentTypeSelector));
 
 			// If available, select the feature segment by default
 			if (segmentClassesMap.values().contains(VViewPackage.eINSTANCE.getFeatureDomainModelReferenceSegment())) {
@@ -516,17 +523,21 @@ public class AdvancedCreateDomainModelReferenceWizard extends Wizard {
 				}
 			}
 
-			setControl(composite);
+			setControl(pageComposite);
 		}
 
 		/**
 		 * Creates the {@link Composite} used to render the advanced properties of the current segment.
+		 * If it already exists, the existing one is disposed and a new one created.
 		 *
 		 * @param parent The created {@link Composite Composite's} parent.
 		 * @return The {@link Composite}
 		 */
-		private Composite createRenderComposite(final Composite parent) {
-			final Composite renderComposite = new Composite(parent, SWT.FILL);
+		private Composite initRenderComposite() {
+			if (renderComposite != null) {
+				renderComposite.dispose();
+			}
+			renderComposite = new Composite(pageComposite, SWT.FILL);
 			GridLayoutFactory.fillDefaults().applyTo(renderComposite);
 			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(renderComposite);
 			return renderComposite;
@@ -539,14 +550,12 @@ public class AdvancedCreateDomainModelReferenceWizard extends Wizard {
 		 *
 		 */
 		private final class SegmentTypeSelectionListener implements Listener {
-			private final Composite composite;
 			private final Map<String, EClass> segmentClassesMap;
 			private final TableViewer tableViewer;
 			private final Combo segmentTypeSelector;
 
 			private SegmentTypeSelectionListener(Composite composite, Map<String, EClass> segmentClassesMap,
 				TableViewer tableViewer, Combo segmentTypeSelector) {
-				this.composite = composite;
 				this.segmentClassesMap = segmentClassesMap;
 				this.tableViewer = tableViewer;
 				this.segmentTypeSelector = segmentTypeSelector;
@@ -573,26 +582,8 @@ public class AdvancedCreateDomainModelReferenceWizard extends Wizard {
 					setDescription(desc.substring(0, desc.length() - lastSegmentTypeInfo.length()));
 				}
 				// create segment and add to dmr
-				createdSegment = (VFeatureDomainModelReferenceSegment) EcoreUtil.create(segmentType);
-				createdSegment.eAdapters().add(new SegmentValidationAdapter());
-				if (advancedDmr.getSegments().size() > index) {
-					advancedDmr.getSegments().set(index, createdSegment);
-				} else {
-					advancedDmr.getSegments().add(createdSegment);
-				}
+				initializeSegment();
 
-				// render segment properties
-				try {
-					if (renderComposite != null) {
-						renderComposite.dispose();
-					}
-					renderComposite = createRenderComposite(composite);
-					ECPSWTViewRenderer.INSTANCE.render(renderComposite, createdSegment);
-					composite.layout();
-				} catch (final ECPRendererException ex) {
-					MessageDialog.openError(getShell(), "Rendering Error", //$NON-NLS-1$
-						"The current segment could not be rendered: " + ex.getMessage()); //$NON-NLS-1$
-				}
 				// trigger selection changed event to apply current selection to the selected segment type
 				tableViewer.setSelection(tableViewer.getSelection(), true);
 			}
@@ -600,11 +591,13 @@ public class AdvancedCreateDomainModelReferenceWizard extends Wizard {
 
 		/**
 		 * An adapter that is registered at the createdSegment to re-validate it on change.
+		 * Additionally, it re-sets the root e class of the next page because it may be affected by the change (e.g. in
+		 * case of a mapping segment).
 		 *
 		 * @author Lucas Koehler
 		 *
 		 */
-		private class SegmentValidationAdapter extends AdapterImpl {
+		private class SegmentAdapter extends AdapterImpl {
 			/**
 			 * {@inheritDoc}
 			 *
@@ -621,6 +614,43 @@ public class AdvancedCreateDomainModelReferenceWizard extends Wizard {
 						setPageComplete(true);
 					}
 				}
+				if (EReference.class.isInstance(selectedFeature)) {
+					final SegmentIdeDescriptor ideDescriptor = segmentToIdeDescriptorMap.get(createdSegment.eClass());
+					nextPage.setRootEClass(ideDescriptor.getReferenceTypeResolver()
+						.resolveNextEClass(EReference.class.cast(selectedFeature), createdSegment));
+				}
+			}
+		}
+
+		/**
+		 * Creates a new instance of the selected segment type and renders its features below the tree viewer.
+		 * Also, the segment is added at the correct position in the wizard's DMR.
+		 */
+		private void initializeSegment() {
+			if (segmentType == null) {
+				return;
+			}
+			// create segment and add to dmr
+			createdSegment = (VFeatureDomainModelReferenceSegment) EcoreUtil.create(segmentType);
+			createdSegment.eAdapters().add(new SegmentAdapter());
+			if (advancedDmr.getSegments().size() > index) {
+				advancedDmr.getSegments().set(index, createdSegment);
+			} else {
+				advancedDmr.getSegments().add(createdSegment);
+			}
+
+			// render segment properties
+			try {
+				initRenderComposite();
+				final VView segmentView = ViewProviderHelper.getView(createdSegment, null);
+				final ViewModelContext context = ViewModelContextFactory.INSTANCE
+					.createViewModelContext(segmentView, createdSegment, new SelectedFeatureViewServiceImpl());
+
+				ECPSWTViewRenderer.INSTANCE.render(renderComposite, context);
+				pageComposite.layout();
+			} catch (final ECPRendererException ex) {
+				MessageDialog.openError(getShell(), "Rendering Error", //$NON-NLS-1$
+					"The current segment could not be rendered: " + ex.getMessage()); //$NON-NLS-1$
 			}
 		}
 
@@ -653,14 +683,21 @@ public class AdvancedCreateDomainModelReferenceWizard extends Wizard {
 					return;
 				}
 
+				// Reset segment whenever a new feature is selected because segment configurations may depend on the
+				// selected feature.
+				initializeSegment();
+
+				// Set the selected feature to the page
+				final EStructuralFeature structuralFeature = (EStructuralFeature) structuredSelection
+					.getFirstElement();
+				selectedFeature = structuralFeature;
+
 				if (createdSegment == null) {
 					setErrorMessage(PLEASE_SELECT_A_SEGMENT_TYPE_ERROR_MSG);
 					return;
 				}
 
 				// Validate that a valid structural feature was selected
-				final EStructuralFeature structuralFeature = (EStructuralFeature) structuredSelection
-					.getFirstElement();
 				final SegmentIdeDescriptor ideDescriptor = segmentToIdeDescriptorMap.get(createdSegment.eClass());
 				final String errorMessage = ideDescriptor.getEStructuralFeatureSelectionValidator()
 					.isValid(structuralFeature);
@@ -672,7 +709,8 @@ public class AdvancedCreateDomainModelReferenceWizard extends Wizard {
 				createdSegment.setDomainModelFeature(structuralFeature.getName());
 				if (EReference.class.isInstance(structuralFeature)) {
 					final EReference reference = (EReference) structuralFeature;
-					nextPage.setRootEClass(ideDescriptor.getReferenceTypeResolver().resolveNextEClass(reference));
+					nextPage.setRootEClass(
+						ideDescriptor.getReferenceTypeResolver().resolveNextEClass(reference, createdSegment));
 					if (nextPage.rootEClass == null) {
 						return;
 					}
@@ -704,6 +742,34 @@ public class AdvancedCreateDomainModelReferenceWizard extends Wizard {
 				return false;
 			}
 			return true;
+		}
+
+		/**
+		 * {@link ViewModelService} returning the currently selected feature of this {@link SegmentCreationPage}.
+		 *
+		 * @author Lucas Koehler
+		 */
+		private class SelectedFeatureViewServiceImpl implements SelectedFeatureViewService {
+
+			@Override
+			public void instantiate(ViewModelContext context) {
+				// not needed
+			}
+
+			@Override
+			public void dispose() {
+				// not needed
+			}
+
+			@Override
+			public int getPriority() {
+				return 0;
+			}
+
+			@Override
+			public EStructuralFeature getFeature() {
+				return selectedFeature;
+			}
 		}
 	}
 }

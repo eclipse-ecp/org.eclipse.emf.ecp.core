@@ -12,7 +12,6 @@
 package org.eclipse.emf.ecp.view.internal.editor.controls;
 
 import java.text.MessageFormat;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -25,6 +24,7 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.databinding.IEMFValueProperty;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -46,7 +46,6 @@ import org.eclipse.emf.ecp.view.spi.label.model.VLabel;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
-import org.eclipse.emf.ecp.view.spi.model.util.SegmentResolvementUtil;
 import org.eclipse.emf.ecp.view.spi.model.util.VViewResourceImpl;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.edit.command.SetCommand;
@@ -202,16 +201,20 @@ public class DomainModelReferenceControlSWTRenderer extends SimpleControlSWTCont
 			return adapterFactoryItemDelegator.getText(object);
 		}
 
-		final List<EStructuralFeature> featurePath = SegmentResolvementUtil
-			.resolveSegmentsToFeatureList(segments, Helper.getRootEClass(modelReference));
-		if (segments.size() != featurePath.size()) {
-			return adapterFactoryItemDelegator.getText(object);
+		String attributeType = null;
+		try {
+			final IEMFValueProperty valueProperty = Activator.getDefault().getEMFFormsDatabinding().getValueProperty(
+				modelReference, Helper.getRootEClass(modelReference));
+			attributeType = valueProperty.getStructuralFeature().getEType().getName();
+		} catch (final DatabindingFailedException ex) {
+			// TODO handle?
 		}
 
-		final EStructuralFeature attributeFeature = featurePath.get(featurePath.size() - 1);
 		final String className = Helper.getRootEClass(modelReference).getName();
-		final String attributeName = " -> " + adapterFactoryItemDelegator.getText(segments.get(segments.size() - 1)) //$NON-NLS-1$
-			+ " : " + attributeFeature.getEType().getName(); //$NON-NLS-1$
+		String attributeName = " -> " + adapterFactoryItemDelegator.getText(segments.get(segments.size() - 1)); //$NON-NLS-1$
+		if (attributeType != null && !attributeType.isEmpty()) {
+			attributeName += " : " + attributeType; //$NON-NLS-1$
+		}
 		String referencePath = ""; //$NON-NLS-1$
 
 		for (int i = 0; i < segments.size() - 1; i++) {

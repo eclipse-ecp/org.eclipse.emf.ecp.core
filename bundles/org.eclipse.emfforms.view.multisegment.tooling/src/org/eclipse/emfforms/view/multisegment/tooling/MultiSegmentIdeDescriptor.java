@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.spi.editor.controls.EStructuralFeatureSelectionValidator;
 import org.eclipse.emf.ecp.view.spi.editor.controls.ReferenceTypeResolver;
 import org.eclipse.emf.ecp.view.spi.editor.controls.SegmentIdeDescriptor;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emfforms.view.spi.multisegment.model.VMultisegmentPackage;
 import org.osgi.service.component.annotations.Component;
 
@@ -91,7 +92,7 @@ public class MultiSegmentIdeDescriptor implements SegmentIdeDescriptor {
 		return new ReferenceTypeResolver() {
 
 			@Override
-			public EClass resolveNextEClass(EReference reference) {
+			public EClass resolveNextEClass(EReference reference, VDomainModelReferenceSegment segment) {
 				return reference.getEReferenceType();
 			}
 		};
@@ -99,7 +100,7 @@ public class MultiSegmentIdeDescriptor implements SegmentIdeDescriptor {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.editor.controls.SegmentIdeDescriptor#isAllowedAsLastElementInPath()
 	 */
 	@Override

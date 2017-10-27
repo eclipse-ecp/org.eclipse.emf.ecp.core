@@ -20,6 +20,7 @@ import org.eclipse.emf.ecp.view.spi.editor.controls.ReferenceTypeResolver;
 import org.eclipse.emf.ecp.view.spi.editor.controls.SegmentIdeDescriptor;
 import org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingdmrPackage;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -135,7 +136,13 @@ public class MappingSegmentIdeDescriptor implements SegmentIdeDescriptor {
 		return new ReferenceTypeResolver() {
 
 			@Override
-			public EClass resolveNextEClass(EReference reference) {
+			public EClass resolveNextEClass(EReference reference, VDomainModelReferenceSegment segment) {
+				if (VMappingDomainModelReferenceSegment.class.isInstance(segment)) {
+					final VMappingDomainModelReferenceSegment mappingSegment = (VMappingDomainModelReferenceSegment) segment;
+					if (mappingSegment.getMappedClass() != null) {
+						return mappingSegment.getMappedClass();
+					}
+				}
 				return getMapValueType(reference.getEReferenceType());
 			}
 		};
@@ -143,7 +150,7 @@ public class MappingSegmentIdeDescriptor implements SegmentIdeDescriptor {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.editor.controls.SegmentIdeDescriptor#isAllowedAsLastElementInPath()
 	 */
 	@Override

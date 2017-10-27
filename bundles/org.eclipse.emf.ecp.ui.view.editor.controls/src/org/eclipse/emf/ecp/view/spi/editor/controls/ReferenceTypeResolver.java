@@ -13,6 +13,7 @@ package org.eclipse.emf.ecp.view.spi.editor.controls;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 
 /**
  * Used to resolve the root EClass for the next path segment from an EReference for a certain type of
@@ -33,7 +34,9 @@ public interface ReferenceTypeResolver {
 	 * Returns <strong>null</strong> if no valid type can be resolved.
 	 *
 	 * @param reference The {@link EReference} to resolve the {@link EClass} from
+	 * @param segment The segment that contains the {@link EReference}. For some segment types (e.g. mapping segments)
+	 *            this allows to return a more precise {@link EClass}. May be <code>null</code>.
 	 * @return the resolved {@link EClass} or <strong>null</strong> if no valid type can be resolved
 	 */
-	EClass resolveNextEClass(EReference reference);
+	EClass resolveNextEClass(EReference reference, VDomainModelReferenceSegment segment);
 }

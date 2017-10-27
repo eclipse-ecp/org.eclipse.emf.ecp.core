@@ -106,8 +106,7 @@ public class EMFFormsDMRSegmentExpanderMapping implements EMFFormsDMRSegmentExpa
 		final EMap<EClass, EObject> map = (EMap<EClass, EObject>) domainObject.eGet(structuralFeature);
 		final EClass mappedClass = mappingSegment.getMappedClass();
 		if (map.get(mappedClass) == null) {
-			checkReferenceInstantiable(mappingSegment, valueReference);
-			final EObject newElement = EcoreUtil.create(valueReference.getEReferenceType());
+			final EObject newElement = instantiateMappedObject(mappingSegment, valueReference);
 			map.put(mappedClass, newElement);
 		}
 
@@ -115,20 +114,31 @@ public class EMFFormsDMRSegmentExpanderMapping implements EMFFormsDMRSegmentExpa
 	}
 
 	/**
-	 * Checks that the type of the given {@link EReference} is instantiable.
+	 * If the mappingSegment's mappedClass is a subtype of the reference's type, instantiate it.
+	 * Otherwise instantiate the reference's type.
 	 *
-	 * @param segment The source segment (only for the exception message)
-	 * @param reference The {@link EReference} to check
-	 * @throws EMFFormsExpandingFailedException If the given {@link EReference} is not instantiable
+	 * @param mappingSegment the {@link VMappingDomainModelReferenceSegment}
+	 * @param reference The value reference of the map feature
+	 * @return The instantiated EObject.
+	 * @throws EMFFormsExpandingFailedException If the type to instantiate cannot be instantiated
 	 */
-	private void checkReferenceInstantiable(VDomainModelReferenceSegment segment, final EReference reference)
-		throws EMFFormsExpandingFailedException {
-		if (reference.getEReferenceType().isAbstract() || reference.getEReferenceType().isInterface()) {
+	private EObject instantiateMappedObject(VMappingDomainModelReferenceSegment segment,
+		EReference reference) throws EMFFormsExpandingFailedException {
+		EClass eClass;
+		if (reference.getEReferenceType().isSuperTypeOf(segment.getMappedClass())) {
+			eClass = segment.getMappedClass();
+		} else {
+			eClass = reference.getEReferenceType();
+		}
+
+		if (eClass.isAbstract() || eClass.isInterface()) {
 			throw new EMFFormsExpandingFailedException(String.format(
 				"The reference type of the segment's map's value feature is either abstract or an interface. " //$NON-NLS-1$
 					+ "Therefore, no instance can be created. The segment was %1$s.", //$NON-NLS-1$
 				segment));
 		}
+
+		return EcoreUtil.create(eClass);
 	}
 
 	/**
@@ -188,7 +198,7 @@ public class EMFFormsDMRSegmentExpanderMapping implements EMFFormsDMRSegmentExpa
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emfforms.spi.core.services.domainexpander.EMFFormsDMRSegmentExpander#needsToExpandLastSegment()
 	 */
 	@Override

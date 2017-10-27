@@ -82,6 +82,10 @@ public class MappingDomainModelReferenceSegmentConverter implements DomainModelR
 			mappingSegment.getMappedClass(), structuralFeature);
 		final EMFValuePropertyDecorator resultProperty = new EMFValuePropertyDecorator(mappingProperty,
 			structuralFeature);
+
+		if (valueReference.getEReferenceType().isSuperTypeOf(mappingSegment.getMappedClass())) {
+			return new SegmentConverterValueResultImpl(resultProperty, mappingSegment.getMappedClass());
+		}
 		return new SegmentConverterValueResultImpl(resultProperty, valueReference.getEReferenceType());
 
 	}

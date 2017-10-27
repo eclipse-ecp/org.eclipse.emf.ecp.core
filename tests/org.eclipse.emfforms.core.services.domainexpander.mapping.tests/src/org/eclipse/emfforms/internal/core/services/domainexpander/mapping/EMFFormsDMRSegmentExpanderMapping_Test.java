@@ -315,4 +315,30 @@ public class EMFFormsDMRSegmentExpanderMapping_Test {
 
 		expander.prepareDomainObject(mappingSegment, domain);
 	}
+
+	/**
+	 * Test method for
+	 * {@link org.eclipse.emfforms.internal.core.services.domainexpander.mapping.EMFFormsDMRSegmentExpanderMapping#prepareDomainObject(org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment, org.eclipse.emf.ecore.EObject)}.
+	 *
+	 * @throws EMFFormsExpandingFailedException
+	 */
+	@SuppressWarnings("unchecked")
+	@Test
+	public void testPrepareDomainObjectValueRefAbstractWithConcreteMappedClass()
+		throws EMFFormsExpandingFailedException {
+		final EReference structuralFeature = TestPackage.eINSTANCE.getC_EClassToE();
+		final C domain = TestFactory.eINSTANCE.createC();
+		final EClass key = TestPackage.eINSTANCE.getA();
+		final EMap<EClass, E> map = (EMap<EClass, E>) domain.eGet(structuralFeature);
+		map.put(key, null);
+
+		final VMappingDomainModelReferenceSegment mappingSegment = VMappingdmrFactory.eINSTANCE
+			.createMappingDomainModelReferenceSegment();
+		mappingSegment.setDomainModelFeature(structuralFeature.getName());
+		mappingSegment.setMappedClass(key);
+
+		expander.prepareDomainObject(mappingSegment, domain);
+
+		assertEquals(TestPackage.eINSTANCE.getA(), domain.getEClassToE().get(key).eClass());
+	}
 }

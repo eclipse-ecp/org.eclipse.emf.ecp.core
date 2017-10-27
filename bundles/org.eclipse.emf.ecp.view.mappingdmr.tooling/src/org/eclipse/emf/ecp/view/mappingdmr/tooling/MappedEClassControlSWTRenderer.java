@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,10 +8,12 @@
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
+ * Lucas Koehler - adapted to segments
  */
 package org.eclipse.emf.ecp.view.mappingdmr.tooling;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -26,10 +28,12 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Descriptor;
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.common.spi.EMFUtils;
 import org.eclipse.emf.ecp.view.internal.editor.controls.EditableEReferenceLabelControlSWTRenderer;
+import org.eclipse.emf.ecp.view.internal.editor.handler.SelectedFeatureViewService;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
@@ -45,7 +49,7 @@ import org.eclipse.ui.dialogs.ElementTreeSelectionDialog;
 import org.eclipse.ui.dialogs.ISelectionStatusValidator;
 
 /**
- * Control for a {@link VMappingDomainModelReference}.
+ * Control for the mappedClass feature of {@link VMappingDomainModelReferenceSegment}.
  *
  * @author Eugen Neufeld
  *
@@ -142,7 +146,7 @@ public class MappedEClassControlSWTRenderer extends
 			showLinkValueFailedMessageDialog(shell, ex);
 			return;
 		}
-		final VMappingDomainModelReference dmr = (VMappingDomainModelReference) ((IObserving) observableValue)
+		final VMappingDomainModelReferenceSegment mappingSegment = (VMappingDomainModelReferenceSegment) ((IObserving) observableValue)
 			.getObserved();
 		observableValue.dispose();
 		final ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
@@ -165,7 +169,7 @@ public class MappedEClassControlSWTRenderer extends
 					"This is not an EClass."); //$NON-NLS-1$
 			}
 		});
-		dialog.setInput(getInput(dmr));
+		dialog.setInput(getInput(mappingSegment));
 		dialog.setMessage("Select an EClass."); //$NON-NLS-1$
 		dialog.setTitle("Select an EClass."); //$NON-NLS-1$
 		dialog.setComparator(new ViewerComparator());
@@ -175,7 +179,7 @@ public class MappedEClassControlSWTRenderer extends
 			if (EClass.class.isInstance(selection)) {
 				final EClass selectedFeature = (EClass) selection;
 
-				dmr.setMappedClass(selectedFeature);
+				mappingSegment.setMappedClass(selectedFeature);
 
 			}
 		}
@@ -187,17 +191,27 @@ public class MappedEClassControlSWTRenderer extends
 	}
 
 	/**
-	 * @return an instance of the {@link org.eclipse.emf.ecore.EPackage.Registry}
+	 * @return a collection of the selectable {@link org.eclipse.emf.ecore.EClass EClasses}.
+	 *         The selectable EClasses are all subclasses of the map's values' class.
 	 */
-	private Object getInput(VMappingDomainModelReference dmr) {
-		final EClass referenceMap = EReference.class.cast(dmr.getDomainModelEFeature()).getEReferenceType();
-
-		final EReference valueReference = EReference.class.cast(referenceMap.getEStructuralFeature("value")); //$NON-NLS-1$
-		if (valueReference == null) {
-			return null;
+	private Object getInput(VMappingDomainModelReferenceSegment mappingSegment) {
+		// get map type from a view model service set by the advanced dmr creation wizard
+		final SelectedFeatureViewService service = getViewModelContext().getService(SelectedFeatureViewService.class);
+		if (service == null) {
+			return Collections.EMPTY_SET;
 		}
+		final EStructuralFeature mapFeature = service.getFeature();
+		if (!EReference.class.isInstance(mapFeature)) {
+			return Collections.EMPTY_SET;
+		}
+		final EClass referenceMap = EReference.class.cast(mapFeature).getEReferenceType();
+		final EStructuralFeature valueFeature = referenceMap.getEStructuralFeature("value"); //$NON-NLS-1$
+		if (!EReference.class.isInstance(valueFeature)) {
+			return Collections.EMPTY_SET;
+		}
+		final EReference valueReference = EReference.class.cast(valueFeature);
+
 		return EMFUtils.getSubClasses(valueReference.getEReferenceType());
-		// return Registry.INSTANCE;
 	}
 
 }

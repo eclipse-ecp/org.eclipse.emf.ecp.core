@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
+ * Lucas Koehler - adapted to segments
  */
 package org.eclipse.emf.ecp.view.mappingdmr.tooling;
 
@@ -15,7 +16,7 @@ import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.model.common.ECPRendererTester;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingDomainModelReferenceSegment;
 import org.eclipse.emf.ecp.view.spi.mappingdmr.model.VMappingdmrPackage;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
@@ -32,7 +33,7 @@ public class MappedEClassTester implements ECPRendererTester {
 
 	@Override
 	public int isApplicable(VElement vElement, ViewModelContext viewModelContext) {
-		if (!VMappingDomainModelReference.class.isInstance(viewModelContext
+		if (!VMappingDomainModelReferenceSegment.class.isInstance(viewModelContext
 			.getDomainModel())) {
 			return NOT_APPLICABLE;
 		}
@@ -53,7 +54,7 @@ public class MappedEClassTester implements ECPRendererTester {
 			return NOT_APPLICABLE;
 		}
 		final EStructuralFeature feature = (EStructuralFeature) valueProperty.getValueType();
-		if (VMappingdmrPackage.eINSTANCE.getMappingDomainModelReference_MappedClass() == feature) {
+		if (VMappingdmrPackage.eINSTANCE.getMappingDomainModelReferenceSegment_MappedClass() == feature) {
 			return 5;
 		}
 		return NOT_APPLICABLE;

@@ -18,6 +18,7 @@ import org.eclipse.emf.ecp.view.spi.editor.controls.EStructuralFeatureSelectionV
 import org.eclipse.emf.ecp.view.spi.editor.controls.ReferenceTypeResolver;
 import org.eclipse.emf.ecp.view.spi.editor.controls.SegmentIdeDescriptor;
 import org.eclipse.emf.ecp.view.spi.indexdmr.model.VIndexdmrPackage;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -90,7 +91,7 @@ public class IndexSegmentIdeDescriptor implements SegmentIdeDescriptor {
 		return new ReferenceTypeResolver() {
 
 			@Override
-			public EClass resolveNextEClass(EReference reference) {
+			public EClass resolveNextEClass(EReference reference, VDomainModelReferenceSegment segment) {
 				return reference.getEReferenceType();
 			}
 		};
@@ -98,7 +99,7 @@ public class IndexSegmentIdeDescriptor implements SegmentIdeDescriptor {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @see org.eclipse.emf.ecp.view.spi.editor.controls.SegmentIdeDescriptor#isAllowedAsLastElementInPath()
 	 */
 	@Override
