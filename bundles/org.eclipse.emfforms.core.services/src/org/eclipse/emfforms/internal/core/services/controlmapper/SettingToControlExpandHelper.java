@@ -14,6 +14,7 @@ package org.eclipse.emfforms.internal.core.services.controlmapper;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VDomainModelReferenceSegment;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.domainexpander.EMFFormsDomainExpander;
@@ -58,7 +59,7 @@ public final class SettingToControlExpandHelper {
 	private static void expandAndInitDMR(EObject domainModelRoot, final EMFFormsDomainExpander domainExpander,
 		final EObject eObject, EMFFormsViewContext viewModelContext) {
 		if (VDomainModelReference.class.isInstance(eObject)
-			&& !VDomainModelReference.class.isInstance(eObject.eContainer())) {
+			&& !VDomainModelReferenceSegment.class.isInstance(eObject.eContainer())) {
 			final VDomainModelReference domainModelReference = VDomainModelReference.class.cast(eObject);
 			try {
 				domainExpander.prepareDomainObject(domainModelReference, domainModelRoot);
