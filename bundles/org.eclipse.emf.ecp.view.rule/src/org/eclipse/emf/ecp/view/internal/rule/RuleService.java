@@ -34,7 +34,6 @@ import org.eclipse.emf.ecp.common.spi.UniqueSetting;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeAddRemoveListener;
-import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
 import org.eclipse.emf.ecp.view.spi.model.VAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
@@ -61,7 +60,7 @@ public class RuleService implements ViewModelService, EMFFormsContextListener {
 	private static final String DOMAIN_MODEL_NULL_EXCEPTION = "Domain model must not be null."; //$NON-NLS-1$
 	private static final String VIEW_MODEL_NULL_EXCEPTION = "View model must not be null."; //$NON-NLS-1$
 	private ViewModelContext context;
-	private ModelChangeListener domainChangeListener;
+	private ModelChangeAddRemoveListener domainChangeListener;
 	private ModelChangeAddRemoveListener viewChangeListener;
 
 	private RuleRegistry<EnableRule> enableRuleRegistry;
@@ -476,8 +475,7 @@ public class RuleService implements ViewModelService, EMFFormsContextListener {
 				}
 				final Rule rule = Rule.class.cast(parent);
 				final VElement renderable = VElement.class.isInstance(rule.eContainer())
-					? VElement.class.cast(rule.eContainer())
-					: null;
+					? VElement.class.cast(rule.eContainer()) : null;
 
 				if (renderable == null) {
 					return;
@@ -602,7 +600,7 @@ public class RuleService implements ViewModelService, EMFFormsContextListener {
 	@Override
 	public void contextInitialised() {
 		final VElement view = context.getViewModel();
-		domainChangeListener = new ModelChangeListener() {
+		domainChangeListener = new ModelChangeAddRemoveListener() {
 
 			@Override
 			public void notifyChange(ModelChangeNotification notification) {
@@ -614,6 +612,16 @@ public class RuleService implements ViewModelService, EMFFormsContextListener {
 					.getStructuralFeature());
 				evalShow(UniqueSetting.createSetting(setting));
 				evalEnable(UniqueSetting.createSetting(setting));
+			}
+
+			@Override
+			public void notifyAdd(Notifier notifier) {
+				// no op
+			}
+
+			@Override
+			public void notifyRemove(Notifier notifier) {
+				// no op
 			}
 		};
 		context.registerDomainChangeListener(domainChangeListener);

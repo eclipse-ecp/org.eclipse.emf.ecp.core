@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -64,8 +63,6 @@ import org.eclipse.emf.ecp.view.spi.rule.model.OrCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.Rule;
 import org.eclipse.emf.ecp.view.spi.rule.model.RuleFactory;
 import org.eclipse.emf.ecp.view.spi.rule.model.ShowRule;
-import org.eclipse.emf.ecp.view.spi.validation.ValidationProvider;
-import org.eclipse.emf.ecp.view.spi.validation.ValidationService;
 import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalFactory;
 import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalLayout;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
@@ -2896,142 +2893,5 @@ public class RuleService_PTest extends CommonRuleTest {
 
 		// assert
 		assertTrue(involvedControls.isEmpty());
-	}
-
-	@Test
-	public void testRuleAndValidationForChildContext() {
-
-		final Fan fan = BowlingFactory.eINSTANCE.createFan();
-		final Merchandise merchandise = BowlingFactory.eINSTANCE.createMerchandise();
-		fan.setFavouriteMerchandise(merchandise);
-
-		// Fan
-		final VView view1 = VViewFactory.eINSTANCE.createView();
-		view1.setRootEClass(fan.eClass());
-
-		final VControl control1 = VViewFactory.eINSTANCE.createControl();
-		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
-			.createFeaturePathDomainModelReference();
-		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getFan_Gender());
-		control1.setDomainModelReference(domainModelReference);
-		view1.getChildren().add(control1);
-
-		final ShowRule showRule = addShowRule(control1, false);
-		showRule.setCondition(createLeafCondition(BowlingPackage.eINSTANCE.getMerchandise_Price(), new BigDecimal(5),
-			BowlingPackage.eINSTANCE.getFan_FavouriteMerchandise()));
-
-		// merchandise
-		final VView view2 = VViewFactory.eINSTANCE.createView();
-		view2.setRootEClass(merchandise.eClass());
-
-		final VControl control2 = VViewFactory.eINSTANCE.createControl();
-		final VFeaturePathDomainModelReference domainModelReference2 = VViewFactory.eINSTANCE
-			.createFeaturePathDomainModelReference();
-		domainModelReference2.setDomainModelEFeature(BowlingPackage.eINSTANCE.getMerchandise_Price());
-		control2.setDomainModelReference(domainModelReference2);
-		view2.getChildren().add(control2);
-
-		final RuleService ruleService = new RuleService();
-		final RuleServiceHelperImpl ruleServiceHelper = new RuleServiceHelperImpl();
-
-		context = ViewModelContextFactory.INSTANCE.createViewModelContext(view2, merchandise);
-		context.getChildContext(fan, view2, view1);
-
-		ruleService.instantiate(context);
-		ruleServiceHelper.instantiate(context);
-
-		final ValidationService validationService = context.getService(ValidationService.class);
-		final List<Boolean> validated = new ArrayList<Boolean>(1);
-
-		validationService.addValidationProvider(new ValidationProvider() {
-
-			@Override
-			public List<Diagnostic> validate(EObject eObject) {
-				if (eObject == fan) {
-					validated.add(0, true);
-				}
-				return null;
-			}
-		});
-
-		validated.add(0, false);
-		merchandise.setPrice(new BigDecimal(5));
-		assertTrue(validated.get(0));
-		assertTrue(control1.isVisible());
-		validated.add(0, false);
-		merchandise.setPrice(new BigDecimal(55));
-		assertFalse(control1.isVisible());
-		assertTrue(validated.get(0));
-
-	}
-
-	@Test
-	@Ignore // Scenario is currently not supported
-	public void testRuleAndValidationForChildContextOnNonContainedAttribute() {
-
-		final Game game = BowlingFactory.eINSTANCE.createGame();
-		game.setPlayer(player);
-		game.getFrames().add(1);
-
-		// Game
-		final VView view1 = VViewFactory.eINSTANCE.createView();
-		view1.setRootEClass(game.eClass());
-
-		final VControl control1 = VViewFactory.eINSTANCE.createControl();
-		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
-			.createFeaturePathDomainModelReference();
-		domainModelReference.setDomainModelEFeature(BowlingPackage.eINSTANCE.getGame_Frames());
-		control1.setDomainModelReference(domainModelReference);
-		view1.getChildren().add(control1);
-
-		final ShowRule showRule = addShowRule(control1, false);
-		showRule.setCondition(createLeafCondition(BowlingPackage.eINSTANCE.getPlayer_Name(), "foo",
-			BowlingPackage.eINSTANCE.getGame_Player()));
-
-		// player
-		final VView view2 = VViewFactory.eINSTANCE.createView();
-		view2.setRootEClass(player.eClass());
-
-		final VControl control2 = VViewFactory.eINSTANCE.createControl();
-		final VFeaturePathDomainModelReference domainModelReference2 = VViewFactory.eINSTANCE
-			.createFeaturePathDomainModelReference();
-		domainModelReference2.setDomainModelEFeature(BowlingPackage.eINSTANCE.getPlayer_Name());
-		control2.setDomainModelReference(domainModelReference2);
-		view2.getChildren().add(control2);
-
-		final RuleService ruleService = new RuleService();
-		final RuleServiceHelperImpl ruleServiceHelper = new RuleServiceHelperImpl();
-
-		context = ViewModelContextFactory.INSTANCE.createViewModelContext(view1, game);
-		context.getChildContext(player, view1, view2);
-
-		ruleService.instantiate(context);
-		ruleServiceHelper.instantiate(context);
-
-		final ValidationService validationService = context.getService(ValidationService.class);
-
-		final List<Boolean> validated = new ArrayList<Boolean>(1);
-
-		validationService.addValidationProvider(new ValidationProvider() {
-
-			@Override
-			public List<Diagnostic> validate(EObject eObject) {
-				if (game == player) {
-					validated.add(0, true);
-				}
-				return null;
-			}
-		});
-
-		validated.add(0, false);
-		player.setName("foo");
-		assertTrue(control1.isVisible());
-		assertTrue(validated.get(0));
-
-		validated.add(0, false);
-		player.setName("bar");
-		assertTrue(validated.get(0));
-		assertFalse(control1.isVisible());
-
 	}
 }

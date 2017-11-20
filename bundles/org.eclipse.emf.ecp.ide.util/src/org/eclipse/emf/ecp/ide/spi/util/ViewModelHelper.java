@@ -165,6 +165,7 @@ public final class ViewModelHelper {
 	 *
 	 * @param view the {@link VView} to be checked
 	 * @return {@code true}, if the view is not a proxy, {@code false} otherwise
+	 * @since 1.15
 	 */
 	public static boolean viewIsResolved(VView view) {
 		return !view.getRootEClass().eIsProxy();

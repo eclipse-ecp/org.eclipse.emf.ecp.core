@@ -97,7 +97,6 @@ import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -1075,7 +1074,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 	 * @since 1.14
 	 */
 	@Override
-	protected void applyValidation(final VDiagnostic oldDia, final VDiagnostic newDia) {
+	protected void applyValidation() {
 		super.applyValidation();
 
 		if (treeViewer == null) {
@@ -1088,40 +1087,9 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 				if (treeViewer.getTree().isDisposed()) {
 					return;
 				}
-				updateTree(oldDia, newDia);
+				treeViewer.refresh();
 			}
 		});
-	}
-
-	private void updateTree(VDiagnostic oldDia, VDiagnostic newDia) {
-		final List<Object> diff = new ArrayList<Object>();
-		if (newDia != null) {
-			diff.addAll(newDia.getDiagnostics());
-		}
-		if (oldDia != null) {
-			diff.removeAll(oldDia.getDiagnostics());
-		}
-		final List<Object> diff2 = new ArrayList<Object>();
-		if (oldDia != null) {
-			diff2.addAll(oldDia.getDiagnostics());
-		}
-		if (newDia != null) {
-			diff2.removeAll(newDia.getDiagnostics());
-		}
-		diff.addAll(diff2);
-		final Set<Object> toUpdate = new LinkedHashSet<Object>();
-		final ITreeContentProvider provider = ITreeContentProvider.class.cast(treeViewer.getContentProvider());
-		for (final Object o : diff) {
-			final EObject toAdd = (EObject) Diagnostic.class.cast(o).getData().get(0);
-			toUpdate.add(toAdd);
-
-			Object parent = provider.getParent(toAdd);
-			while (EObject.class.isInstance(parent)) {
-				toUpdate.add(parent);
-				parent = provider.getParent(parent);
-			}
-		}
-		treeViewer.update(toUpdate.toArray(), null);
 	}
 
 	/**

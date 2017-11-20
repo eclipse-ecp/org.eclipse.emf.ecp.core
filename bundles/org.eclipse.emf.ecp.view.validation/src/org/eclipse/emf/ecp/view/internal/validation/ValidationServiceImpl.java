@@ -132,12 +132,36 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 				control.setDiagnostic(null);
 			}
 
-			final Set<UniqueSetting> settingsForControl = controlMapper.getSettingsForControl(control);
+			IObservableValue observableValue;
+			observableValue = Activator.getDefault().getEMFFormsDatabinding()
+				.getObservableValue(domainModelReference, context.getDomainModel());
+
+			final EObject observed = (EObject) ((IObserving) observableValue).getObserved();
+			// validate(observed);
+			// TODO: add test case for this
 			final Set<EObject> eObjectsToValidate = new LinkedHashSet<EObject>();
-			for (final UniqueSetting setting : settingsForControl) {
-				eObjectsToValidate.add(setting.getEObject());
+			if (observed != null) {
+				/* possible e.g. when feature path dmr gets cut off during runtime */
+				eObjectsToValidate.add(observed);
+			}
+			final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
+			final Object value = observableValue.getValue();
+			if (EReference.class.isInstance(structuralFeature) && value != null) {
+				/*
+				 * the value may be null! this is possible e.g. when there is a longer feature path dmr on
+				 * which an element on the path gets deleted/replaced during runtime.
+				 * Adding null to the set is no advised as we will get exception immediately or in the future.
+				 */
+				if (structuralFeature.isMany()) {
+					@SuppressWarnings("unchecked")
+					final List<EObject> list = (List<EObject>) value;
+					eObjectsToValidate.addAll(list);
+				} else {
+					eObjectsToValidate.add((EObject) value);
+				}
 			}
 			validate(eObjectsToValidate);
+			observableValue.dispose();
 
 		}
 
@@ -158,7 +182,6 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 						eObjectsToValidate.add(setting.getEObject());
 					}
 				} else {
-					@SuppressWarnings("rawtypes")
 					IObservableValue observableValue;
 					try {
 						observableValue = Activator.getDefault().getEMFFormsDatabinding()
@@ -439,7 +462,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	 */
 	@Override
 	public int getPriority() {
-		return 1;
+		return 3;
 	}
 
 	/**
@@ -528,73 +551,55 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	}
 
 	private void update() {
-		// prepare Map
-		final Map<VElement, Set<UniqueSetting>> vElementToSettingMap = prepareVElementToSettingMap();
-
 		final Map<VElement, VDiagnostic> controlDiagnosticMap = new LinkedHashMap<VElement, VDiagnostic>();
-
-		for (final VElement control : vElementToSettingMap.keySet()) {
-
-			if (!controlDiagnosticMap.containsKey(control)) {
-				controlDiagnosticMap.put(control, VViewFactory.eINSTANCE.createDiagnostic());
-			}
-			for (final UniqueSetting uniqueSetting : vElementToSettingMap.get(control)) {
-				// TODO Performance
-				// controlDiagnosticMap.get(control).getDiagnostics()
-				// .removeAll(currentUpdates.get(uniqueSetting).getDiagnostics());
-				controlDiagnosticMap.get(control).getDiagnostics()
-					.addAll(currentUpdates.get(uniqueSetting).getDiagnostics());
-			}
-
-			// add all diagnostics of control which are not in the currentUpdates
-			if (control.getDiagnostic() == null) {
-				continue;
-			}
-
-			for (final Object diagnosticObject : control.getDiagnostic().getDiagnostics()) {
-				final Diagnostic diagnostic = Diagnostic.class.cast(diagnosticObject);
-				if (diagnostic.getData().size() < 2) {
-					continue;
-				}
-				final EObject diagnosticEobject = DiagnosticHelper.getFirstInternalEObject(diagnostic.getData());
-				final EStructuralFeature eStructuralFeature = DiagnosticHelper
-					.getEStructuralFeature(diagnostic.getData());
-				if (diagnosticEobject == null || eStructuralFeature == null) {
-					continue;
-				}
-				// TODO performance
-				if (!isObjectStillValid(diagnosticEobject)) {
-					continue;
-				}
-				final UniqueSetting uniqueSetting2 = UniqueSetting.createSetting(
-					diagnosticEobject, eStructuralFeature);
-				if (!currentUpdates.containsKey(uniqueSetting2)) {
-					controlDiagnosticMap.get(control).getDiagnostics().add(diagnosticObject);
-				}
-
-			}
-
-		}
-
-		updateAndPropagate(controlDiagnosticMap);
-
-	}
-
-	private Map<VElement, Set<UniqueSetting>> prepareVElementToSettingMap() {
-		final Map<VElement, Set<UniqueSetting>> result = new LinkedHashMap<VElement, Set<UniqueSetting>>();
 		for (final UniqueSetting uniqueSetting : currentUpdates.keySet()) {
 			final Set<VElement> controls = controlMapper.getControlsFor(uniqueSetting);
 			if (controls == null) {
 				continue;
 			}
+
 			for (final VElement control : controls) {
-				if (!result.containsKey(control)) {
-					result.put(control, new LinkedHashSet<UniqueSetting>());
+				if (!controlDiagnosticMap.containsKey(control)) {
+					controlDiagnosticMap.put(control, VViewFactory.eINSTANCE.createDiagnostic());
 				}
-				result.get(control).add(uniqueSetting);
+				// TODO Performance
+				controlDiagnosticMap.get(control).getDiagnostics()
+					.removeAll(currentUpdates.get(uniqueSetting).getDiagnostics());
+				controlDiagnosticMap.get(control).getDiagnostics()
+					.addAll(currentUpdates.get(uniqueSetting).getDiagnostics());
+
+				// add all diagnostics of control which are not in the currentUpdates
+				if (control.getDiagnostic() == null) {
+					continue;
+				}
+
+				for (final Object diagnosticObject : control.getDiagnostic().getDiagnostics()) {
+					final Diagnostic diagnostic = Diagnostic.class.cast(diagnosticObject);
+					if (diagnostic.getData().size() < 2) {
+						continue;
+					}
+					final EObject diagnosticEobject = DiagnosticHelper.getFirstInternalEObject(diagnostic.getData());
+					final EStructuralFeature eStructuralFeature = DiagnosticHelper
+						.getEStructuralFeature(diagnostic.getData());
+					if (diagnosticEobject == null || eStructuralFeature == null) {
+						continue;
+					}
+					// TODO performance
+					if (!isObjectStillValid(diagnosticEobject)) {
+						continue;
+					}
+					final UniqueSetting uniqueSetting2 = UniqueSetting.createSetting(
+						diagnosticEobject, eStructuralFeature);
+					if (!currentUpdates.containsKey(uniqueSetting2)) {
+						controlDiagnosticMap.get(control).getDiagnostics().add(diagnosticObject);
+					}
+
+				}
+
 			}
 		}
-		return result;
+
+		updateAndPropagate(controlDiagnosticMap);
 	}
 
 	private boolean isObjectStillValid(EObject diagnosticEobject) {
