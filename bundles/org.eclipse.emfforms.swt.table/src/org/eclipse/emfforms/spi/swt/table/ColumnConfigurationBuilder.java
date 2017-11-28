@@ -312,7 +312,7 @@ public final class ColumnConfigurationBuilder extends AbstractFeatureAwareBuilde
 			resizeable,
 			moveable,
 			styleBits,
-			weight,
+			minWidth == 0 && weight == ColumnConfiguration.NO_WEIGHT ? 100 : weight,
 			minWidth,
 			textObservable,
 			tooltipObservable,
