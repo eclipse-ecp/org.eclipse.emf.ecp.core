@@ -22,12 +22,15 @@
 package org.eclipse.emf.ecp.workspace.internal.core;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CommandStack;
@@ -54,6 +57,9 @@ import org.eclipse.emf.edit.command.ChangeCommand;
 import org.eclipse.emf.edit.command.DeleteCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.transaction.impl.InternalTransactionalEditingDomain;
+import org.eclipse.emf.transaction.impl.TransactionChangeRecorder;
+import org.eclipse.emf.transaction.impl.TransactionalEditingDomainImpl;
 
 /**
  * @author Eike Stepper
@@ -69,6 +75,12 @@ public class WorkspaceProvider extends DefaultProvider {
 
 	/** Constant which is used to indicated the the {@link #PROP_ROOT_URI root uri} is not existing yet. */
 	public static final String VIRTUAL_ROOT_URI = "VIRTUAL_URI"; //$NON-NLS-1$
+
+	/** command line argument to trigger monitoring of model write operations. */
+	private static final String COMMAND_MONITORING_ARG = "-monitorCommand"; //$NON-NLS-1$
+
+	/** Filter applied to the stack traces to reduce log size. */
+	private static final String MONITOR_FILTER = initPackagefilter();
 
 	/**
 	 * The Workspace Provider Instance.
@@ -262,10 +274,8 @@ public class WorkspaceProvider extends DefaultProvider {
 
 	@Override
 	public EditingDomain createEditingDomain(final InternalProject project) {
-
-		final CommandStack commandStack = new BasicCommandStack();
-		final EditingDomain editingDomain = new AdapterFactoryEditingDomain(InternalProvider.EMF_ADAPTER_FACTORY,
-			commandStack);
+		final EditingDomain editingDomain = isCommandMonitoring() ? createMonitoringEditingdomain()
+			: createBasicEditingdomain();
 
 		editingDomain.getResourceSet().eAdapters().add(new ECPModelContextAdapter(project));
 		final URI uri = URI.createURI(project.getProperties().getValue(PROP_ROOT_URI));
@@ -280,6 +290,31 @@ public class WorkspaceProvider extends DefaultProvider {
 		}
 
 		return editingDomain;
+	}
+
+	private EditingDomain createMonitoringEditingdomain() {
+		return new MonitoringEditingDomain();
+	}
+
+	private EditingDomain createBasicEditingdomain() {
+		final CommandStack commandStack = new BasicCommandStack();
+		final EditingDomain editingDomain = new AdapterFactoryEditingDomain(InternalProvider.EMF_ADAPTER_FACTORY,
+			commandStack);
+		return editingDomain;
+	}
+
+	private boolean isCommandMonitoring() {
+		return !MONITOR_FILTER.isEmpty();
+	}
+
+	private static String initPackagefilter() {
+		for (final String arg : Platform.getApplicationArgs()) {
+			if (arg.startsWith(COMMAND_MONITORING_ARG) && arg.length() > COMMAND_MONITORING_ARG.length()
+				&& arg.charAt(COMMAND_MONITORING_ARG.length()) == '=') {
+				return arg.substring(COMMAND_MONITORING_ARG.length() + 1, arg.length());
+			}
+		}
+		return ""; //$NON-NLS-1$
 	}
 
 	@Override
@@ -377,4 +412,103 @@ public class WorkspaceProvider extends DefaultProvider {
 		throw new IllegalStateException("Delete was not successful."); //$NON-NLS-1$
 
 	}
+
+	/**
+	 * Specific EditingDomain that overrides change recorder creation to allow monitoring of write actions on model.
+	 */
+	private static class MonitoringEditingDomain extends TransactionalEditingDomainImpl {
+
+		/**
+		 * Creates a new {@link MonitoringEditingDomain}.
+		 */
+		MonitoringEditingDomain() {
+			super(InternalProvider.EMF_ADAPTER_FACTORY);
+		}
+
+		@Override
+		protected TransactionChangeRecorder createChangeRecorder(ResourceSet rset) {
+			return new MonitoringChangeRecorder(this, rset);
+		}
+	}
+
+	/**
+	 * Specific TransactionChangeRecorder that do not throw exception on write access outside a transaction.
+	 * It rather checks if a command was present in the stack trace that lead to this write operation.
+	 */
+	private static class MonitoringChangeRecorder extends TransactionChangeRecorder {
+
+		private final Map<String, Object> methodToStack = new HashMap<String, Object>();
+
+		/**
+		 * Creates a new {@link MonitoringChangeRecorder}.
+		 *
+		 * @param domain my editing domain
+		 * @param rset my resource set
+		 */
+		MonitoringChangeRecorder(InternalTransactionalEditingDomain domain, ResourceSet rset) {
+			super(domain, rset);
+		}
+
+		@Override
+		protected void assertWriting() {
+			final List<StackTraceElement> stes = Arrays.asList(Thread.currentThread().getStackTrace());
+
+			// check if a command is in the stack trace...
+			boolean commandInStack = false;
+			for (final StackTraceElement ste : stes) {
+				try {
+					final Class<?> callerClass = Class.forName(ste.getClassName());
+					if (Command.class.isAssignableFrom(callerClass)) {
+						commandInStack = true;
+					}
+
+				} catch (final ClassNotFoundException ex) {
+					// ex.printStackTrace();
+				}
+			}
+			if (!commandInStack) {
+				// check this is not already present in the map
+				final List<StackTraceElement> reduced = compactStack(stes, 6);
+				final String key = reduced.get(0).toString();
+				if (!methodToStack.containsKey(key)) {
+					methodToStack.put(key, reduced);
+					log(reduced);
+				}
+			}
+		}
+
+		private String prettyPrintStack(List<StackTraceElement> reduced) {
+			final StringBuffer buf = new StringBuffer();
+			buf.append("[Monitor]: "); //$NON-NLS-1$
+			for (final StackTraceElement e : reduced) {
+				buf.append(e);
+				buf.append(" <- "); //$NON-NLS-1$
+			}
+			buf.append("[...]\n"); //$NON-NLS-1$
+			return buf.toString();
+		}
+
+		/**
+		 * @param reduced
+		 */
+		private void log(List<StackTraceElement> reduced) {
+			Activator.log(prettyPrintStack(reduced));
+		}
+
+		private List<StackTraceElement> compactStack(List<StackTraceElement> stes, int max) {
+			final List<StackTraceElement> compact = new ArrayList<StackTraceElement>(max);
+			int i = 0;
+			for (final StackTraceElement e : stes) {
+				if (e.getClassName().startsWith(MONITOR_FILTER)) {
+					compact.add(e);
+					i++;
+					if (i == max) {
+						break;
+					}
+				}
+			}
+			return compact;
+		}
+	}
+
 }
