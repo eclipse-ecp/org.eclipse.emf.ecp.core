@@ -469,8 +469,8 @@ public class WorkspaceProvider extends DefaultProvider {
 			if (!commandInStack) {
 				// check this is not already present in the map
 				final List<StackTraceElement> reduced = compactStack(stes, 6);
-				final String key = reduced.get(0).toString();
-				if (!methodToStack.containsKey(key)) {
+				final String key = !reduced.isEmpty() ? reduced.get(0).toString() : null;
+				if (key != null && !methodToStack.containsKey(key)) {
 					methodToStack.put(key, reduced);
 					log(reduced);
 				}
