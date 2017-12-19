@@ -49,16 +49,14 @@ public final class ECPSubstitutionLabelProvider implements EValidator.Substituti
 	 * @see org.eclipse.emf.ecore.EValidator.SubstitutionLabelProvider#getObjectLabel(org.eclipse.emf.ecore.EObject)
 	 */
 	@Override
-	public String getObjectLabel(EObject eObject)
-	{
-		final IItemLabelProvider provider =
-			(IItemLabelProvider) factory.adapt(
-				eObject,
-				IItemLabelProvider.class);
-		if (provider == null) {
+	public String getObjectLabel(EObject eObject) {
+		final Object provider = factory.adapt(
+			eObject,
+			IItemLabelProvider.class);
+		if (provider == null || !IItemLabelProvider.class.isInstance(provider)) {
 			return EcoreUtil.getIdentification(eObject);
 		}
-		return provider.getText(eObject);
+		return IItemLabelProvider.class.cast(provider).getText(eObject);
 	}
 
 	/**
@@ -67,8 +65,7 @@ public final class ECPSubstitutionLabelProvider implements EValidator.Substituti
 	 * @see org.eclipse.emf.ecore.EValidator.SubstitutionLabelProvider#getFeatureLabel(org.eclipse.emf.ecore.EStructuralFeature)
 	 */
 	@Override
-	public String getFeatureLabel(EStructuralFeature eStructuralFeature)
-	{
+	public String getFeatureLabel(EStructuralFeature eStructuralFeature) {
 		final EClass eClass = eStructuralFeature.getEContainingClass();
 		if (eClass.isInterface() || eClass.isAbstract()) {
 			return eStructuralFeature.getName();
@@ -90,8 +87,7 @@ public final class ECPSubstitutionLabelProvider implements EValidator.Substituti
 	 *      java.lang.Object)
 	 */
 	@Override
-	public String getValueLabel(EDataType eDataType, Object value)
-	{
+	public String getValueLabel(EDataType eDataType, Object value) {
 		return EcoreUtil.convertToString(eDataType, value);
 	}
 }
