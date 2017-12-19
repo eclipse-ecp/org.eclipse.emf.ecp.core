@@ -155,10 +155,12 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 					final Set<UniqueSetting> settings = mappingProviderManager.getAllSettingsFor(domainModelReference,
 						context.getDomainModel());
 					for (final UniqueSetting setting : settings) {
-						eObjectsToValidate.add(setting.getEObject());
+						final EObject object = setting.getEObject();
+						if (object != null) {
+							eObjectsToValidate.add(object);
+						}
 					}
 				} else {
-					@SuppressWarnings("rawtypes")
 					IObservableValue observableValue;
 					try {
 						observableValue = Activator.getDefault().getEMFFormsDatabinding()
@@ -169,7 +171,10 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 					}
 					final EObject observed = (EObject) ((IObserving) observableValue).getObserved();
 					observableValue.dispose();
-					eObjectsToValidate.add(observed);
+					if (observed != null) {
+						eObjectsToValidate.add(observed);
+					}
+
 				}
 				validate(eObjectsToValidate);
 
