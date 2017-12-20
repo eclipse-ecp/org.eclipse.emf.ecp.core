@@ -16,8 +16,8 @@ package org.eclipse.emf.ecp.view.spi.treemasterdetail.ui.swt;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedHashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -271,6 +271,8 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		if (getViewModelContext() != null && domainModelListener != null) {
 			getViewModelContext().unregisterDomainChangeListener(domainModelListener);
 		}
+		domainModelListener = null;
+		treeViewer.setInput(null);
 		super.dispose();
 	}
 
@@ -427,7 +429,8 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		}
 
 		// Selection Listener
-		treeViewer.addSelectionChangedListener(new TreeMasterViewSelectionListener());
+		final TreeMasterViewSelectionListener treeMasterViewSelectionListener = new TreeMasterViewSelectionListener();
+		treeViewer.addSelectionChangedListener(treeMasterViewSelectionListener);
 		treeViewer.setSelection(new StructuredSelection(modelElement));
 		if (hasContextMenu()) {
 			fillContextMenu(treeViewer, editingDomain);
@@ -452,6 +455,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 				if (headerBgColor != null) {
 					headerBgColor.dispose();
 				}
+				treeViewer.removeSelectionChangedListener(treeMasterViewSelectionListener);
 			}
 		});
 		return treeViewer;

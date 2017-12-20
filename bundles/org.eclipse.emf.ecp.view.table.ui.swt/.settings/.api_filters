@@ -69,6 +69,12 @@
                 <message_argument value="getTableViewer()"/>
             </message_arguments>
         </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer"/>
+                <message_argument value="getTableViewerSWTBuilder(Composite, IObservableList, IObservableValue, IObservableValue, TableViewerCompositeBuilder, ObservableListContentProvider, TableControlSWTRenderer.ECPTableViewerComparator, TableControlSWTRenderer.TableControlSWTRendererButtonBarBuilder)"/>
+            </message_arguments>
+        </filter>
         <filter comment="SPI Change 1.10.0" id="338792546">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer"/>

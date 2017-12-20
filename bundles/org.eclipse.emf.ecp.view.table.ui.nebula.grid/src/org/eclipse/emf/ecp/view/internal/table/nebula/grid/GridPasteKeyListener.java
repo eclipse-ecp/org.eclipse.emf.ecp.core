@@ -28,6 +28,8 @@ import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
@@ -37,7 +39,7 @@ import org.eclipse.emfforms.spi.common.converter.EStructuralFeatureValueConverte
 import org.eclipse.emfforms.spi.common.validation.PreSetValidationService;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
 import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
-import org.eclipse.emfforms.spi.swt.table.AbstractTableViewerComposite;
+import org.eclipse.emfforms.spi.swt.table.TableConfiguration;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.nebula.widgets.grid.Grid;
 import org.eclipse.swt.SWT;
@@ -136,7 +138,7 @@ public class GridPasteKeyListener implements KeyListener {
 	 */
 	public void pasteSelection(Grid grid, String contents) {
 
-		if (grid.getCellSelection().length == 0 || !vControl.isEnabled() || vControl.isReadonly()) {
+		if (grid.getCellSelection().length == 0 || !getControl().isEnabled() || getControl().isReadonly()) {
 			return;
 		}
 
@@ -255,6 +257,7 @@ public class GridPasteKeyListener implements KeyListener {
 	 * @param contents the pasted contents
 	 * @return the pasted cells
 	 */
+	// BEGIN COMPLEX CODE
 	@SuppressWarnings("restriction")
 	public List<Point> pasteContents(Point startItem, Grid grid, String contents) {
 		final int startColumn = startItem.x;
@@ -265,82 +268,159 @@ public class GridPasteKeyListener implements KeyListener {
 		int relativeRow = 0;
 		final String[] rows = contents.split("\r\n|\n", -1); //$NON-NLS-1$
 
-		for (final String row : rows) {
+		prePasteContents();
 
-			int relativeColumn = 0;
+		try {
+			for (final String row : rows) {
 
-			for (final String cellValue : row.split(TAB, -1)) {
+				int relativeColumn = 0;
 
-				final int insertionColumnIndex = startColumn + relativeColumn;
-				final int insertionRowIndex = startRow + relativeRow;
+				for (final String cellValueSplit : row.split(TAB, -1)) {
 
-				if (insertionColumnIndex >= grid.getColumnCount()) {
-					relativeColumn++;
-					continue;
-				}
+					final String cellValue = modifyCellValue(cellValueSplit);
 
-				final VDomainModelReference dmr = (VDomainModelReference) grid.getColumn(insertionColumnIndex)
-					.getData(AbstractTableViewerComposite.DMR);
+					final int insertionColumnIndex = startColumn + relativeColumn;
+					final int insertionRowIndex = startRow + relativeRow;
 
-				if (dmr == null || vControl instanceof VTableControl
-					&& org.eclipse.emf.ecp.view.internal.table.swt.TableConfigurationHelper
-						.isReadOnly((VTableControl) vControl, dmr)) {
-					relativeColumn++;
-					continue;
-				}
+					if (insertionColumnIndex >= grid.getColumnCount()) {
+						relativeColumn++;
+						continue;
+					}
 
-				if (insertionRowIndex < grid.getItemCount()) {
+					final VDomainModelReference dmr = (VDomainModelReference) grid.getColumn(insertionColumnIndex)
+						.getData(TableConfiguration.DMR);
 
-					final EObject eObject = (EObject) grid.getItem(insertionRowIndex).getData();
+					if (dmr == null || getControl() instanceof VTableControl
+						&& org.eclipse.emf.ecp.view.internal.table.swt.TableConfigurationHelper
+							.isReadOnly((VTableControl) getControl(), dmr)) {
+						relativeColumn++;
+						continue;
+					}
 
-					IObservableValue value = null;
-					try {
-						value = dataBinding.getObservableValue(dmr, eObject);
-						final EStructuralFeature feature = (EStructuralFeature) value.getValueType();
-						final Object convertedValue = getConverterService().convertToModelValue(eObject,
-							feature, cellValue);
+					if (insertionRowIndex < grid.getItemCount()) {
 
-						boolean valid = convertedValue != null;
+						final EObject eObject = (EObject) grid.getItem(insertionRowIndex).getData();
 
-						if (preSetValidationService != null) {
-							final Map<Object, Object> context = new LinkedHashMap<Object, Object>();
-							context.put("rootEObject", IObserving.class.cast(value).getObserved());//$NON-NLS-1$
-							final Diagnostic diag = preSetValidationService.validate(
-								feature, cellValue, context);
-							valid = diag.getSeverity() == Diagnostic.OK;
-							if (!valid) {
-								invalidValues.add(extractDiagnosticMessage(diag, feature, cellValue));
+						if (isEObjectReadOnly(eObject)) {
+							continue;
+						}
+
+						IObservableValue value = null;
+						try {
+							value = dataBinding.getObservableValue(dmr, eObject);
+							final EStructuralFeature feature = (EStructuralFeature) value.getValueType();
+							final Object convertedValue = getConverterService().convertToModelValue(eObject,
+								feature, cellValue);
+
+							if (isSettingReadOnly(eObject, feature, convertedValue)) {
+								continue;
+							}
+
+							boolean valid = convertedValue != null;
+
+							if (preSetValidationService != null) {
+								final Map<Object, Object> context = new LinkedHashMap<Object, Object>();
+								context.put("rootEObject", IObserving.class.cast(value).getObserved());//$NON-NLS-1$
+								final Diagnostic diag = preSetValidationService.validate(
+									feature, valid ? convertedValue : cellValue, context);
+								valid = diag.getSeverity() == Diagnostic.OK;
+								if (!valid) {
+									invalidValues.add(extractDiagnosticMessage(diag, feature, cellValue));
+								}
+							}
+
+							final EObject observedEobject = (EObject) ((IObserving) value).getObserved();
+							final Setting setting = ((InternalEObject) observedEobject).eSetting(feature);
+							if (!canBePasted(feature, cellValue, eObject, setting)) {
+								invalidValues.add(cellValue);
+							} else if (valid) {
+								setValue(value, convertedValue);
+								pastedCells.add(new Point(insertionColumnIndex, insertionRowIndex));
+							}
+						}
+						// BEGIN SUPRESS CATCH EXCEPTION
+						catch (final Exception ex) {// END SUPRESS CATCH EXCEPTION
+							// silently ignore this
+						} finally {
+							if (value != null) {
+								value.dispose();
 							}
 						}
 
-						if (!canBePasted(feature, cellValue)) {
-							invalidValues.add(cellValue);
-						} else if (valid) {
-							setValue(value, convertedValue);
-							pastedCells.add(new Point(insertionColumnIndex, insertionRowIndex));
-						}
 					}
-					// BEGIN SUPRESS CATCH EXCEPTION
-					catch (final Exception ex) {// END SUPRESS CATCH EXCEPTION
-						// silently ignore this
-					} finally {
-						if (value != null) {
-							value.dispose();
-						}
-					}
-
+					relativeColumn++;
 				}
-				relativeColumn++;
+				relativeRow++;
 			}
-			relativeRow++;
+		} finally {
+			postPasteContents();
 		}
 
 		showErrors(invalidValues);
 
 		return pastedCells;
 	}
+	// END COMPLEX CODE
 
-	private void showErrors(List<String> msgs) {
+	/**
+	 * This method gets called by {@link #pasteContents(Point, Grid, String)} before it will start to loop over the to
+	 * be pasted values and begins the pasting.
+	 * Clients may use this to notify the user about the paste, setting global variables, showing progress, etc.
+	 */
+	protected void prePasteContents() {
+		/* default implementation does nothing */
+	}
+
+	/**
+	 * This method get called by {@link #pasteContents(Point, Grid, String)} directely after the paste is done but
+	 * before {@link #showErrors(List)} is called. Please note that the call comes from a finally block meaning that the
+	 * paste process may have been stoped by an unhandled exception beforehand.
+	 * Clients may use this clean up things done in {@link #prePasteContents()} for example.
+	 */
+	protected void postPasteContents() {
+		/* default implementation does nothing */
+	}
+
+	/**
+	 * This method is called by {@link #pasteContents(Point, Grid, String)} with the determined value for a cell.
+	 * Clients may override this method in order to trim the string or change its formatting.
+	 *
+	 * @param cellValueSplit the cell value determined from the clipboard for the cell.
+	 * @return the string to use
+	 */
+	protected String modifyCellValue(String cellValueSplit) {
+		return cellValueSplit;
+	}
+
+	/**
+	 * Called by {@link #pasteContents(Point, Grid, String)} to determine whether the values of an EObject should be
+	 * changed at all.
+	 *
+	 * @param eObject the EObject in question
+	 * @return <code>true</code> if paste for this object should be skipped, <code>false</code> otherwise
+	 */
+	protected boolean isEObjectReadOnly(EObject eObject) {
+		return false;
+	}
+
+	/**
+	 * Called by {@link #pasteContents(Point, Grid, String)} to determine whether a setting should be changed at all.
+	 *
+	 * @param eObject the EObject in question
+	 * @param feature the Feature in question
+	 * @param convertedValue the converted cell value
+	 * @return <code>true</code> if paste for this setting should be skipped, <code>false</code> otherwise
+	 */
+	protected boolean isSettingReadOnly(EObject eObject, EStructuralFeature feature, Object convertedValue) {
+		return false;
+	}
+
+	/**
+	 * Shows the errors to the user.
+	 *
+	 * @param msgs the collected messages, may be empty if no errors
+	 */
+	protected void showErrors(List<String> msgs) {
 		if (!msgs.isEmpty()) {
 			showDialog(
 				display.getActiveShell(),
@@ -350,7 +430,17 @@ public class GridPasteKeyListener implements KeyListener {
 		}
 	}
 
-	private boolean canBePasted(EStructuralFeature feature, String cellValue) {
+	/**
+	 * Checks whether a given value may be pasted.
+	 *
+	 * @param feature the feature of the {@code eObject}
+	 * @param cellValue the cell value to be pasted
+	 * @param eObject the parent {@link EObject}
+	 * @param setting {@link Setting}
+	 * @return {@code true}, if the value may be pasted, {@code false} otherwise
+	 */
+	protected boolean canBePasted(EStructuralFeature feature, String cellValue,
+		EObject eObject, Setting setting) {
 
 		if (!EEnum.class.isInstance(feature.getEType())) {
 			return true;
@@ -408,5 +498,12 @@ public class GridPasteKeyListener implements KeyListener {
 	 */
 	protected EStructuralFeatureValueConverterService getConverterService() {
 		return converterService;
+	}
+
+	/**
+	 * @return the {@link VControl}
+	 */
+	protected VControl getControl() {
+		return vControl;
 	}
 }

@@ -16,25 +16,39 @@ import java.util.List;
 
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
-import org.eclipse.emfforms.common.Optional;
+import org.eclipse.emf.ecp.view.spi.table.nebula.grid.GridControlSWTRenderer.CustomGridTableViewer;
+import org.eclipse.emf.ecp.view.spi.table.nebula.grid.menu.GridColumnAction;
+import org.eclipse.emf.ecp.view.spi.table.nebula.grid.messages.Messages;
+import org.eclipse.emfforms.internal.common.PropertyHelper;
 import org.eclipse.emfforms.spi.swt.table.AbstractTableViewerComposite;
+import org.eclipse.emfforms.spi.swt.table.ColumnConfiguration;
+import org.eclipse.emfforms.spi.swt.table.TableConfiguration;
 import org.eclipse.emfforms.spi.swt.table.TableControl;
 import org.eclipse.emfforms.spi.swt.table.TableViewerComparator;
 import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization;
-import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization.ColumnDescription;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.action.IMenuListener;
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.layout.AbstractColumnLayout;
-import org.eclipse.jface.viewers.AbstractTableViewer;
-import org.eclipse.jface.viewers.EditingSupport;
+import org.eclipse.jface.viewers.CellLabelProvider;
+import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.jface.viewers.ViewerColumn;
+import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.nebula.jface.gridviewer.GridColumnLayout;
 import org.eclipse.nebula.jface.gridviewer.GridTableViewer;
 import org.eclipse.nebula.jface.gridviewer.GridViewerColumn;
+import org.eclipse.nebula.jface.gridviewer.GridViewerRow;
+import org.eclipse.nebula.widgets.grid.Grid;
 import org.eclipse.nebula.widgets.grid.GridColumn;
+import org.eclipse.nebula.widgets.grid.GridItem;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Widget;
 
 /**
@@ -43,7 +57,7 @@ import org.eclipse.swt.widgets.Widget;
  * @author Jonas Helming
  *
  */
-public class GridTableViewerComposite extends AbstractTableViewerComposite {
+public class GridTableViewerComposite extends AbstractTableViewerComposite<GridTableViewer> {
 
 	private GridTableViewer gridTableViewer;
 
@@ -69,11 +83,34 @@ public class GridTableViewerComposite extends AbstractTableViewerComposite {
 	}
 
 	@Override
-	protected AbstractTableViewer createTableViewer(TableViewerSWTCustomization customization,
+	protected GridTableViewer createTableViewer(TableViewerSWTCustomization<GridTableViewer> customization,
 		Composite viewerComposite) {
-		// TODO: Grid ugly cast
-		gridTableViewer = (GridTableViewer) customization.createTableViewer(viewerComposite);
+		gridTableViewer = customization.createTableViewer(viewerComposite);
 		return gridTableViewer;
+	}
+
+	@Override
+	protected void configureContextMenu(GridTableViewer tableViewer) {
+		final MenuManager menuMgr = new MenuManager();
+		menuMgr.setRemoveAllWhenShown(true);
+
+		if (getEnabledFeatures().contains(TableConfiguration.FEATURE_COLUMN_HIDE_SHOW)) {
+			menuMgr.addMenuListener(new ColumnHideShowMenuListener());
+		}
+
+		if (getEnabledFeatures().contains(TableConfiguration.FEATURE_COLUMN_FILTER)) {
+			menuMgr.addMenuListener(new ColumnFilterMenuListener());
+		}
+
+		final Menu menu = menuMgr.createContextMenu(tableViewer.getControl());
+		tableViewer.getControl().setMenu(menu);
+	}
+
+	@Override
+	protected void configureViewerFilters(GridTableViewer tableViewer) {
+		if (getEnabledFeatures().contains(TableConfiguration.FEATURE_COLUMN_FILTER)) {
+			tableViewer.addFilter(new GridColumnFilterViewerFilter(this, tableViewer));
+		}
 	}
 
 	@Override
@@ -94,7 +131,6 @@ public class GridTableViewerComposite extends AbstractTableViewerComposite {
 			final GridColumn gridColumn = gridTableViewer.getGrid().getColumns()[i];
 			gridColumn.addControlListener(columnlistener);
 		}
-
 	}
 
 	@Override
@@ -128,47 +164,14 @@ public class GridTableViewerComposite extends AbstractTableViewerComposite {
 		};
 	}
 
-	// TODO: could be refactored to reduce overlap with TableViewerComposite
-	// TODO: refactor (ms)
 	@Override
-	protected ViewerColumn createColumn(ColumnDescription columnDescription,
-		EMFDataBindingContext emfDataBindingContext, AbstractTableViewer tableViewer) {
-		final GridViewerColumnBuilder builder = GridViewerColumnBuilder
-			.create();
+	protected ViewerColumn createColumn(final ColumnConfiguration config,
+		EMFDataBindingContext emfDataBindingContext, final GridTableViewer tableViewer) {
 
-		// TODO: set correct colors here
-		// builder.setCellRenderer(new CustomSelectionColorCellRenderer(
-		// getDisplay().getSystemColor(SWT.COLOR_WHITE),
-		// getDisplay().getSystemColor(SWT.COLOR_CYAN)));
+		final GridViewerColumn column = new GridViewerColumnBuilder(config)
+			.withDatabinding(emfDataBindingContext)
+			.build(tableViewer);
 
-		final GridViewerColumn column = builder
-			.setData(columnDescription.getData())
-			.setData(RESIZABLE, columnDescription.isResizeable())
-			.setMoveable(columnDescription.isMoveable())
-			.setStyle(columnDescription.getStyleBits())
-			.setData(WEIGHT, columnDescription.getWeight())
-			.setData(MIN_WIDTH, columnDescription.getMinWidth())
-			.build(getTableViewer());
-
-		/* bind text and tooltip */
-		final IObservableValue text = columnDescription.getColumnText();
-		emfDataBindingContext.bindValue(WidgetProperties.text().observe(column.getColumn()), text);
-		// TODO: Grid fix
-		// final IObservableValue tooltipText = columnDescription.getColumnTooltip();
-		// emfDataBindingContext.bindValue(WidgetProperties.tooltipText().observe(column.getColumn()), tooltipText);
-
-		/* set label provider */
-		column.setLabelProvider(columnDescription.createLabelProvider(tableViewer));
-
-		/* set editing support */
-		final Optional<EditingSupport> editingSupport = columnDescription.createEditingSupport(tableViewer);
-		if (editingSupport.isPresent()) {
-			column.setEditingSupport(editingSupport.get());
-		}
-
-		if (columnDescription.getColumnImage().isPresent()) {
-			column.getColumn().setImage(columnDescription.getColumnImage().get());
-		}
 		return column;
 	}
 
@@ -189,6 +192,204 @@ public class GridTableViewerComposite extends AbstractTableViewerComposite {
 				}
 			};
 			tableColumn.addSelectionListener(selectionAdapter);
+		}
+
+	}
+
+	private ColumnConfiguration getCurrentColumnConfig() {
+		final Grid grid = getTableViewer().getGrid();
+		final Point cursorLocation = grid.getDisplay().getCursorLocation();
+		final GridColumn column = grid.getColumn(grid.toControl(cursorLocation));
+		if (column == null) {
+			return null;
+		}
+		return getColumnConfiguration(column);
+	}
+
+	/**
+	 * Column hide/show menu listener.
+	 *
+	 * @author Mat Hansen
+	 *
+	 */
+	private class ColumnHideShowMenuListener implements IMenuListener {
+
+		@Override
+		public void menuAboutToShow(IMenuManager manager) {
+			final ColumnConfiguration columnConfiguration = getCurrentColumnConfig();
+			if (columnConfiguration == null) {
+				return;
+			}
+			manager.add(new GridColumnAction(GridTableViewerComposite.this,
+				Messages.GridTableViewerComposite_hideColumnAction) {
+				@Override
+				public void run() {
+					columnConfiguration.visible().setValue(Boolean.FALSE);
+				}
+
+				@Override
+				public boolean isEnabled() {
+					if (!super.isEnabled()) {
+						return false;
+					}
+					return columnConfiguration.getEnabledFeatures()
+						.contains(ColumnConfiguration.FEATURE_COLUMN_HIDE_SHOW);
+				}
+			});
+			manager.add(new GridColumnAction(GridTableViewerComposite.this,
+				Messages.GridTableViewerComposite_showAllColumnsAction) {
+				@Override
+				public void run() {
+					for (final Widget widget : getColumns()) {
+						getGridTableViewer().getColumnConfiguration(widget).visible().setValue(Boolean.TRUE);
+					}
+				}
+
+				@Override
+				public boolean isEnabled() {
+					return getEnabledFeatures().contains(TableConfiguration.FEATURE_COLUMN_HIDE_SHOW)
+						&& hasHiddenColumns();
+				}
+
+				boolean hasHiddenColumns() {
+					for (final Widget widget : getColumns()) {
+						if (!getGridTableViewer().getColumnConfiguration(widget).visible().getValue()) {
+							return true;
+						}
+					}
+					return false;
+				}
+			});
+		}
+
+	}
+
+	/**
+	 * Column hide/show menu listener.
+	 *
+	 * @author Mat Hansen
+	 *
+	 */
+	private class ColumnFilterMenuListener implements IMenuListener {
+
+		@Override
+		public void menuAboutToShow(IMenuManager manager) {
+			final ColumnConfiguration columnConfiguration = getCurrentColumnConfig();
+			if (columnConfiguration == null) {
+				return;
+			}
+			manager.add(new GridColumnAction(GridTableViewerComposite.this,
+				Messages.GridTableViewerComposite_toggleFilterControlsAction) {
+				@Override
+				public void run() {
+					for (final Widget widget : getColumns()) {
+						PropertyHelper.toggle(
+							getGridTableViewer().getColumnConfiguration(widget).showFilterControl());
+					}
+					getGrid().recalculateHeader();
+				}
+
+				@Override
+				public boolean isEnabled() {
+					if (!super.isEnabled()) {
+						return false;
+					}
+					return columnConfiguration.getEnabledFeatures()
+						.contains(ColumnConfiguration.FEATURE_COLUMN_FILTER);
+				}
+			});
+		}
+
+	}
+
+	/**
+	 * Viewer filter for column filter support.
+	 *
+	 * @author Mat Hansen
+	 *
+	 */
+	private class GridColumnFilterViewerFilter extends ViewerFilter {
+
+		private final GridTableViewerComposite tableViewerComposite;
+		private final GridTableViewer tableViewer;
+		private final Grid grid;
+
+		/**
+		 * The Constructor.
+		 *
+		 * @param tableViewerComposite the Grid table viewer composite.
+		 * @param tableViewer the Grid table viewer.
+		 */
+		GridColumnFilterViewerFilter(
+			GridTableViewerComposite tableViewerComposite,
+			GridTableViewer tableViewer) {
+			super();
+			this.tableViewerComposite = tableViewerComposite;
+			this.tableViewer = tableViewer;
+			grid = tableViewer.getGrid();
+		}
+
+		@Override
+		public boolean select(Viewer viewer, Object parentElement, Object element) {
+
+			if (grid.getItemCount() == 0) {
+				return true;
+			}
+
+			grid.setRedraw(false);
+			final GridItem dummyItem = new GridItem(grid, SWT.NONE);
+
+			try {
+
+				dummyItem.setData(element);
+				final GridViewerRow viewerRow = (GridViewerRow) ((CustomGridTableViewer) tableViewer)
+					.getViewerRowFromItem(dummyItem);
+
+				for (final Widget widget : getColumns()) {
+
+					final ColumnConfiguration config = tableViewerComposite.getColumnConfiguration(widget);
+
+					final Object filter = config.matchFilter().getValue();
+					if (filter == null || String.valueOf(filter).isEmpty()) {
+						continue;
+					}
+
+					final GridColumn column = (GridColumn) widget;
+					final int columnIndex = tableViewer.getGrid().indexOf(column);
+
+					final ViewerCell cell = viewerRow.getCell(columnIndex);
+					final CellLabelProvider labelProvider = tableViewer.getLabelProvider(columnIndex);
+					labelProvider.update(cell);
+
+					if (!matchesColumnFilter(cell.getText(), filter)) {
+						return false;
+					}
+
+				}
+
+			} finally {
+				dummyItem.dispose();
+				grid.setRedraw(true);
+			}
+
+			return true;
+		}
+
+		/**
+		 * Test whether the given value/filter combination matches.
+		 *
+		 * @param value the value to test
+		 * @param filterValue the filter value
+		 * @return true if the value matches the filter value
+		 */
+		protected boolean matchesColumnFilter(Object value, Object filterValue) {
+
+			if (filterValue == null) {
+				return false;
+			}
+
+			return String.valueOf(value).toLowerCase()
+				.contains(String.valueOf(filterValue).toLowerCase());
 		}
 
 	}

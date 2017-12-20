@@ -193,6 +193,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 
 	/**
 	 * Returns true if the 'MoveUp' button is shown, false otherwise.
+	 * Returning true will disable any sorting behavior.
 	 *
 	 * @return true if the 'MoveUp' button is shown, false otherwise
 	 */
@@ -202,6 +203,7 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 
 	/**
 	 * Returns true if the 'MoveDown' button is shown, false otherwise.
+	 * Returning true will disable any sorting behavior.
 	 *
 	 * @return true if the 'MoveDown' button is shown, false otherwise
 	 */
@@ -694,7 +696,10 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		ColumnViewerToolTipSupport.enableFor(tableViewer);
 
 		final ECPTableViewerComparator comparator = new ECPTableViewerComparator();
-		tableViewer.setComparator(comparator);
+		final boolean isMoveDisabled = !showMoveUpButton() && !showMoveDownButton();
+		if (isMoveDisabled) {
+			tableViewer.setComparator(comparator);
+		}
 
 		final ObservableListContentProvider cp = new ObservableListContentProvider();
 
@@ -722,8 +727,11 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 			getReportService().report(new RenderingFailedReport(e));
 		}
 
-		column.getColumn().addSelectionListener(
-			getSelectionAdapter(tableViewer, comparator, column.getColumn(), 0));
+		// only enable column sorting if move is disabled
+		if (isMoveDisabled) {
+			column.getColumn().addSelectionListener(
+				getSelectionAdapter(tableViewer, isMoveDisabled ? comparator : null, column.getColumn(), 0));
+		}
 
 		tableViewer.setLabelProvider(labelProvider);
 		tableViewer.setContentProvider(cp);

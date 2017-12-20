@@ -30,7 +30,8 @@ public class GridTableViewerSWTBuilder extends TableViewerSWTBuilder {
 	 * @param title the title of the table viewer
 	 * @param tooltip the tooltip
 	 */
-	public GridTableViewerSWTBuilder(Composite composite, int swtStyleBits, Object input, IObservableValue title,
+	public GridTableViewerSWTBuilder(Composite composite, int swtStyleBits, Object input,
+		IObservableValue title,
 		IObservableValue tooltip) {
 		super(composite, swtStyleBits, input, title, tooltip);
 	}
@@ -42,7 +43,7 @@ public class GridTableViewerSWTBuilder extends TableViewerSWTBuilder {
 	 * @return the {@link GridTableViewerComposite}
 	 */
 	@Override
-	public GridTableViewerComposite create() {
+	public GridTableViewerComposite build() {
 		return new GridTableViewerComposite(getComposite(), getSwtStyleBits(), getInput(), getCustomization(),
 			getTitle(), getTooltip());
 	}

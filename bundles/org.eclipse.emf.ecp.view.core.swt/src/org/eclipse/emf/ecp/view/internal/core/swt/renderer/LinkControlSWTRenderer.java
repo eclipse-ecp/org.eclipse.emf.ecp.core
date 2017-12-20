@@ -422,6 +422,14 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 		return getLocalizedString(MessageKeys.LinkControl_NoLinkSetClickToSetLink);
 	}
 
+	@Override
+	protected void dispose() {
+		if (modelElementChangeListener != null) {
+			modelElementChangeListener.remove();
+		}
+		super.dispose();
+	}
+
 	private void updateChangeListener(EObject value) {
 		if (modelElementChangeListener != null) {
 			if (modelElementChangeListener.getTarget().equals(value)) {

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emfforms.common" version="2">
+    <resource path="src/org/eclipse/emfforms/common/NameSpace.java" type="org.eclipse.emfforms.common.NameSpace">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.emfforms.common.NameSpace"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

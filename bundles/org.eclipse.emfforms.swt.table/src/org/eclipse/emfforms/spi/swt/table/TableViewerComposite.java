@@ -16,15 +16,9 @@ import java.util.List;
 
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
-import org.eclipse.emfforms.common.Optional;
-import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization.ColumnDescription;
-import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.layout.AbstractColumnLayout;
 import org.eclipse.jface.layout.TableColumnLayout;
-import org.eclipse.jface.viewers.AbstractTableViewer;
-import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.ViewerColumn;
 import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -40,7 +34,7 @@ import org.eclipse.swt.widgets.Widget;
  * @author Johannes Faltermeier
  *
  */
-public class TableViewerComposite extends AbstractTableViewerComposite {
+public class TableViewerComposite extends AbstractTableViewerComposite<TableViewer> {
 
 	private TableViewer tableViewer;
 
@@ -75,9 +69,9 @@ public class TableViewerComposite extends AbstractTableViewerComposite {
 	 *      org.eclipse.swt.widgets.Composite)
 	 */
 	@Override
-	protected AbstractTableViewer createTableViewer(TableViewerSWTCustomization customization,
+	protected TableViewer createTableViewer(TableViewerSWTCustomization<TableViewer> customization,
 		Composite viewerComposite) {
-		tableViewer = (TableViewer) customization.createTableViewer(viewerComposite);
+		tableViewer = customization.createTableViewer(viewerComposite);
 		return tableViewer;
 	}
 
@@ -132,40 +126,12 @@ public class TableViewerComposite extends AbstractTableViewerComposite {
 	}
 
 	@Override
-	// TODO: refactor (ms)
-	protected ViewerColumn createColumn(ColumnDescription columnDescription,
-		EMFDataBindingContext emfDataBindingContext, AbstractTableViewer tableViewer) {
-		final TableViewerColumnBuilder builder = TableViewerColumnBuilder
-			.create();
+	protected ViewerColumn createColumn(ColumnConfiguration config,
+		EMFDataBindingContext emfDataBindingContext, TableViewer tableViewer) {
 
-		final TableViewerColumn column = builder
-			.setData(columnDescription.getData())
-			.setData(RESIZABLE, columnDescription.isResizeable())
-			.setMoveable(columnDescription.isMoveable())
-			.setStyle(columnDescription.getStyleBits())
-			.setData(WEIGHT, columnDescription.getWeight())
-			.setData(MIN_WIDTH, columnDescription.getMinWidth())
-			.build(getTableViewer());
-
-		/* bind text and tooltip */
-		final IObservableValue text = columnDescription.getColumnText();
-		emfDataBindingContext.bindValue(WidgetProperties.text().observe(column.getColumn()), text);
-		final IObservableValue tooltipText = columnDescription.getColumnTooltip();
-		emfDataBindingContext.bindValue(WidgetProperties.tooltipText().observe(column.getColumn()), tooltipText);
-
-		/* set label provider */
-		column.setLabelProvider(columnDescription.createLabelProvider(tableViewer));
-
-		/* set editing support */
-		final Optional<EditingSupport> editingSupport = columnDescription.createEditingSupport(tableViewer);
-		if (editingSupport.isPresent()) {
-			column.setEditingSupport(editingSupport.get());
-		}
-
-		if (columnDescription.getColumnImage().isPresent()) {
-			column.getColumn().setImage(columnDescription.getColumnImage().get());
-		}
-		return column;
+		return new DefaultTableViewerColumnBuilder(config)
+			.withDatabinding(emfDataBindingContext)
+			.build(tableViewer);
 	}
 
 	@Override
@@ -189,6 +155,13 @@ public class TableViewerComposite extends AbstractTableViewerComposite {
 			tableColumn.addSelectionListener(selectionAdapter);
 		}
 
+	}
+
+	@Override
+	public void dispose() {
+		tableViewer.getControl().dispose();
+		tableViewer = null;
+		super.dispose();
 	}
 
 }

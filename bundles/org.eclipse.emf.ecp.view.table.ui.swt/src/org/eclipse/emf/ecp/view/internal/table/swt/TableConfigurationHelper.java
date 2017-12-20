@@ -19,7 +19,7 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
 import org.eclipse.emf.ecp.view.spi.table.model.VWidthConfiguration;
 import org.eclipse.emfforms.common.Optional;
-import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization.ColumnDescription;
+import org.eclipse.emfforms.spi.swt.table.ColumnConfiguration;
 import org.eclipse.jface.viewers.ColumnPixelData;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.swt.widgets.Widget;
@@ -160,7 +160,7 @@ public final class TableConfigurationHelper {
 		if (ColumnPixelData.class.isInstance(layoutData)) {
 			final ColumnPixelData columnPixelData = ColumnPixelData.class.cast(layoutData);
 			widthConfiguration.setMinWidth(columnPixelData.width);
-			widthConfiguration.setWeight(ColumnDescription.NO_WEIGHT);
+			widthConfiguration.setWeight(ColumnConfiguration.NO_WEIGHT);
 		} else {
 			final ColumnWeightData columnWeightData = ColumnWeightData.class.cast(layoutData);
 			widthConfiguration.setMinWidth(columnWeightData.minimumWidth);

@@ -87,7 +87,7 @@ public class AttributeSelectControlSWTRenderer extends EditableEReferenceLabelCo
 		final int open = ld.open();
 		adapterFactory.dispose();
 		labelProvider.dispose();
-		if (Window.CANCEL == open) {
+		if (Window.CANCEL == open || ld.getResult() == null || ld.getResult().length == 0) {
 			return;
 		}
 

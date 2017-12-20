@@ -97,7 +97,7 @@ public class SelectEClassWizardPage extends WizardPage {
 							final Object selectedItem = iterator.next();
 							if (EClass.class.isInstance(selectedItem)) {
 								selectedEClasses.add((EClass) selectedItem);
-								setPageComplete(true);
+								setPageComplete(getErrorMessage() == null);
 							}
 						}
 					}
@@ -118,6 +118,7 @@ public class SelectEClassWizardPage extends WizardPage {
 		generateViewModelChkBox.setSelection(true);
 
 		setControl(container);
+
 		setPageComplete(false);
 	}
 
@@ -159,6 +160,11 @@ public class SelectEClassWizardPage extends WizardPage {
 	 */
 	public void setSelectedEPackage(EPackage selectedEPackage) {
 		this.selectedEPackage = selectedEPackage;
+		if (selectedEPackage == null || selectedEPackage.getNsURI() == null || selectedEPackage.getNsURI().isEmpty()) {
+			setErrorMessage(ViewEditorPlugin.INSTANCE.getString("_UI_SelectEClassWizardPage_invalid_package_URI")); //$NON-NLS-1$
+		} else {
+			setErrorMessage(null);
+		}
 	}
 
 	/**

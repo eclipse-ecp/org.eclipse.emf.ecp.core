@@ -112,14 +112,19 @@ import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.emfforms.spi.swt.table.AbstractTableViewerComposite;
 import org.eclipse.emfforms.spi.swt.table.ButtonBarBuilder;
 import org.eclipse.emfforms.spi.swt.table.CellLabelProviderFactory;
+import org.eclipse.emfforms.spi.swt.table.ColumnConfiguration;
+import org.eclipse.emfforms.spi.swt.table.ColumnConfigurationBuilder;
 import org.eclipse.emfforms.spi.swt.table.DNDProvider;
 import org.eclipse.emfforms.spi.swt.table.EditingSupportCreator;
+import org.eclipse.emfforms.spi.swt.table.TableConfiguration;
+import org.eclipse.emfforms.spi.swt.table.TableConfigurationBuilder;
 import org.eclipse.emfforms.spi.swt.table.TableControl;
 import org.eclipse.emfforms.spi.swt.table.TableViewerComparator;
 import org.eclipse.emfforms.spi.swt.table.TableViewerCompositeBuilder;
 import org.eclipse.emfforms.spi.swt.table.TableViewerCreator;
 import org.eclipse.emfforms.spi.swt.table.TableViewerFactory;
 import org.eclipse.emfforms.spi.swt.table.TableViewerSWTBuilder;
+import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ObservableMapCellLabelProvider;
@@ -161,6 +166,8 @@ import org.eclipse.swt.dnd.DropTargetListener;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
@@ -186,6 +193,7 @@ import org.osgi.framework.FrameworkUtil;
  *
  */
 public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableControl> {
+
 	/**
 	 * @since 1.10
 	 */
@@ -221,12 +229,14 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	private Optional<Integer> maximumHeight;
 	private Optional<Integer> visibleLines;
 	private TableControlSWTRendererButtonBarBuilder tableControlSWTRendererButtonBarBuilder;
-	private AbstractTableViewerComposite tableViewerComposite;
+	private AbstractTableViewerComposite<AbstractTableViewer> tableViewerComposite;
 	private int regularColumnsStartIndex;
 	private boolean isDisposing;
 	private IObservableList list;
 	private boolean isFeatureOrdered;
 	private final RunnableManager runnableManager = new RunnableManager(Display.getDefault());
+
+	private TableViewerSWTCustomization<?> customization;
 
 	/**
 	 * Default constructor.
@@ -351,14 +361,21 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			/* content provider */
 			final ObservableListContentProvider cp = new ObservableListContentProvider();
 
-			final ECPTableViewerComparator comparator = new ECPTableViewerComparator();
+			final ECPTableViewerComparator comparator = getVElement().isMoveUpDownDisabled()
+				? new ECPTableViewerComparator() : null;
 
 			/* render */
 			final TableViewerCompositeBuilder compositeBuilder = createTableViewerCompositeBuilder();
 			tableControlSWTRendererButtonBarBuilder = new TableControlSWTRendererButtonBarBuilder();
 
-			final TableViewerSWTBuilder tableViewerSWTBuilder = getTableViewerSWTBuilder(parent, list, labelText,
+			final TableViewerSWTBuilder tableViewerSWTBuilder = createTableViewerSWTBuilder(parent, list, labelText,
 				labelTooltipText, compositeBuilder, cp, comparator, tableControlSWTRendererButtonBarBuilder);
+
+			tableViewerSWTBuilder
+				.configureTable(TableConfigurationBuilder.usingDefaults()
+					.inheritFeatures(tableViewerSWTBuilder.getEnabledFeatures())
+					.dataMapEntry(TableConfiguration.DMR, dmrToCheck)
+					.build());
 
 			regularColumnsStartIndex = 0;
 
@@ -372,14 +389,16 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 			initCompositeHeight();
 
-			tableViewerComposite = tableViewerSWTBuilder.create();
+			tableViewerComposite = tableViewerSWTBuilder.build();
 
 			/* setup selection changes listener */
 			tableViewerComposite.getTableViewer().addSelectionChangedListener(new ViewerSelectionChangedListener());
 			tableViewerComposite.getTableViewer().addDoubleClickListener(new DoubleClickListener());
 
 			/* setup sorting via column selection */
-			setupSorting(comparator, regularColumnsStartIndex, tableViewerComposite);
+			if (getVElement().isMoveUpDownDisabled()) {
+				setupSorting(comparator, regularColumnsStartIndex, tableViewerComposite);
+			}
 
 			/* get validation icon */
 			setupValidation(tableViewerComposite);
@@ -399,6 +418,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 			addResizeListener(tableViewerComposite.getTableViewer().getControl(), regularColumnsStartIndex);
 
+			customization = tableViewerSWTBuilder.getCustomization();
 			return tableViewerComposite;
 
 		} catch (final DatabindingFailedException ex) {
@@ -432,14 +452,15 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * @param labelTooltipText the tooltip
 	 * @param compositeBuilder the {@link TableViewerCompositeBuilder}
 	 * @param cp the content provider
-	 * @param comparator the {@link ViewerComparator}
+	 * @param comparator the {@link ViewerComparator}; has no effect if move up/down
+	 *            functionality is enabled
 	 * @param tableControlSWTRendererButtonBarBuilder2 the {@link ButtonBarBuilder}
 	 * @return the {@link TableViewerSWTBuilder}
-	 * @since 1.10
+	 * @since 1.15
 	 *
 	 */
 	// CHECKSTYLE.OFF: ParameterNumber
-	protected TableViewerSWTBuilder getTableViewerSWTBuilder(Composite parent, IObservableList list,
+	protected TableViewerSWTBuilder createTableViewerSWTBuilder(Composite parent, IObservableList list,
 		IObservableValue labelText, IObservableValue labelTooltipText, TableViewerCompositeBuilder compositeBuilder,
 		ObservableListContentProvider cp, ECPTableViewerComparator comparator,
 		TableControlSWTRendererButtonBarBuilder tableControlSWTRendererButtonBarBuilder2) {
@@ -582,6 +603,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * @param tableViewerSWTBuilder the builder
 	 * @param clazz the {@EClass} of the rendered object
 	 * @param cp the content provider
+	 * @param tableConfiguration
 	 *
 	 */
 	private void addColumns(TableViewerSWTBuilder tableViewerSWTBuilder, EClass clazz,
@@ -625,18 +647,29 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 					weight = weightConfig.get();
 				} else {
 					// TODO ugly: we need this temporary cell editor so early just to get size information
+					final Shell tempShell = new Shell();
 					final CellEditor tempCellEditor = createCellEditor(tempInstance, eStructuralFeature,
-						new Table(new Shell(), SWT.NONE));
+						new Table(tempShell, SWT.NONE));
 					weight = ECPCellEditor.class.isInstance(tempCellEditor)
-						? ECPCellEditor.class.cast(tempCellEditor).getColumnWidthWeight() : 100;
+						? ECPCellEditor.class.cast(tempCellEditor).getColumnWidthWeight()
+						: 100;
 					minWidth = ECPCellEditor.class.isInstance(tempCellEditor)
-						? ECPCellEditor.class.cast(tempCellEditor).getMinWidth() : 10;
+						? ECPCellEditor.class.cast(tempCellEditor).getMinWidth()
+						: 10;
+					tempShell.dispose();
 				}
 
-				// TODO: rewrite builder (ms)
-				tableViewerSWTBuilder.setData(AbstractTableViewerComposite.DMR, dmr);
-				tableViewerSWTBuilder.addColumn(true, false, SWT.NONE, weight, minWidth, text, tooltip,
-					labelProvider, editingSupportCreator, null);
+				tableViewerSWTBuilder.addColumn(
+					ColumnConfigurationBuilder.usingDefaults()
+						.inheritFeatures(tableViewerSWTBuilder.getEnabledFeatures())
+						.weight(weight)
+						.minWidth(minWidth)
+						.text(text)
+						.tooltip(tooltip)
+						.labelProviderFactory(labelProvider)
+						.editingSupportCreator(editingSupportCreator)
+						.dataMapEntry(ColumnConfiguration.DMR, dmr)
+						.build());
 
 			} catch (final DatabindingFailedException ex) {
 				getReportService().report(new RenderingFailedReport(ex));
@@ -646,7 +679,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 
 	}
 
-	private void setupValidation(final AbstractTableViewerComposite tableViewerComposite) {
+	private void setupValidation(final AbstractTableViewerComposite<AbstractTableViewer> tableViewerComposite) {
 		if (tableViewerComposite.getValidationControls().isPresent()) {
 			final List<Control> validationControls = tableViewerComposite.getValidationControls().get();
 			if (validationControls.size() == 1 && Label.class.isInstance(validationControls.get(0))) {
@@ -659,7 +692,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	}
 
 	private void setupSorting(final ECPTableViewerComparator comparator, int regularColumnsStartIndex,
-		final AbstractTableViewerComposite tableViewerComposite) {
+		final AbstractTableViewerComposite<AbstractTableViewer> tableViewerComposite) {
 
 		final VTTableStyleProperty tableStyleProperty = getTableStyleProperty();
 		if (!tableStyleProperty.isEnableSorting()) {
@@ -676,10 +709,10 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	}
 
 	private IObservableValue getLabelText(VDomainModelReference dmrToCheck, boolean forColumn) {
-		final EMFFormsLabelProvider labelService = getEMFFormsLabelProvider();
+		final EMFFormsLabelProvider labelProvider = getEMFFormsLabelProvider();
 		if (forColumn) {
 			try {
-				return labelService.getDisplayName(dmrToCheck);
+				return labelProvider.getDisplayName(dmrToCheck);
 			} catch (final NoLabelFoundException e) {
 				// FIXME Expectation?
 				getReportService().report(new RenderingFailedReport(e));
@@ -691,7 +724,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			return Observables.constantObservableValue("", String.class); //$NON-NLS-1$
 		default:
 			try {
-				return labelService.getDisplayName(dmrToCheck, getViewModelContext().getDomainModel());
+				return labelProvider.getDisplayName(dmrToCheck, getViewModelContext().getDomainModel());
 			} catch (final NoLabelFoundException e) {
 				// FIXME Expectation?
 				getReportService().report(new RenderingFailedReport(e));
@@ -933,16 +966,13 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		}
 
 		tableViewerSWTBuilder.addColumn(
-			true,
-			false,
-			SWT.NONE,
-			0,
-			columnWidth,
-			columnName,
-			columnName,
-			new ValidationStatusCellLabelProvider(getVElement()),
-			null,
-			image);
+			ColumnConfigurationBuilder.usingDefaults()
+				.minWidth(columnWidth)
+				.text(columnName)
+				.tooltip(columnName)
+				.labelProvider(new ValidationStatusCellLabelProvider(getVElement()))
+				.image(image)
+				.build());
 
 	}
 
@@ -1408,6 +1438,20 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			}
 			columnIndexToComparatorMap.clear();
 		}
+		tableControlSWTRendererButtonBarBuilder = null;
+		tableViewerComposite.dispose();
+		tableViewerComposite = null;
+		tableViewer.getControl().dispose();
+		tableViewer = null;
+
+		if (customization != null) {
+			for (final ColumnConfiguration columnConfig : customization.getColumnConfigurations()) {
+				columnConfig.visible().dispose();
+				columnConfig.dispose();
+			}
+			customization.getTableConfiguration().dispose();
+		}
+
 		super.dispose();
 	}
 
@@ -1849,6 +1893,13 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		private void init(AbstractTableViewer tableViewer) {
 			cellEditor = createCellEditor(tempInstance, eStructuralFeature,
 				(Composite) tableViewer.getControl());
+			tableViewer.getControl().addDisposeListener(new DisposeListener() {
+
+				@Override
+				public void widgetDisposed(DisposeEvent arg0) {
+					cellEditor.dispose();
+				}
+			});
 			if (ECPCellEditorComparator.class.isInstance(cellEditor)) {
 				columnIndexToComparatorMap.put(indexOfColumn, ECPCellEditorComparator.class.cast(cellEditor));
 			}
@@ -2329,8 +2380,9 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				return getValidationBackgroundColor(Diagnostic.OK);
 			}
 			final List<Diagnostic> diagnostic = vDiagnostic.getDiagnostic((EObject) element, feature);
-			return getValidationBackgroundColor(diagnostic.size() == 0 ? Diagnostic.OK : diagnostic.get(0)
-				.getSeverity());
+			return getValidationBackgroundColor(diagnostic.size() == 0 ? Diagnostic.OK
+				: diagnostic.get(0)
+					.getSeverity());
 		}
 
 		/**

@@ -11,218 +11,219 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.table.nebula.grid;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import org.eclipse.emfforms.spi.swt.table.AbstractTableViewerComposite;
+import org.eclipse.emfforms.common.Optional;
+import org.eclipse.emfforms.common.Property;
+import org.eclipse.emfforms.common.Property.ChangeListener;
+import org.eclipse.emfforms.spi.swt.table.AbstractTableViewerColumnBuilder;
+import org.eclipse.emfforms.spi.swt.table.ColumnConfiguration;
+import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.layout.GridLayoutFactory;
+import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.nebula.jface.gridviewer.GridTableViewer;
 import org.eclipse.nebula.jface.gridviewer.GridViewerColumn;
-import org.eclipse.nebula.widgets.grid.GridCellRenderer;
+import org.eclipse.nebula.widgets.grid.GridColumn;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ControlEditor;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Item;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Text;
 
 /**
- * @author Jonas Helming
+ * Nebula Grid viewer configuration helper class.
+ *
+ * @author Mat Hansen <mhansen@eclipsesource.com>
  *
  */
-public class GridViewerColumnBuilder {
-
-	private int columnId;
+public class GridViewerColumnBuilder extends AbstractTableViewerColumnBuilder<GridTableViewer, GridViewerColumn> {
 
 	/**
-	 * Creates a new viewer column.
+	 * The constructor.
 	 *
-	 * @param tableViewer the parent table viewer
-	 * @return the {@link GridViewerColumn}
+	 * @param config the {@link ColumnConfiguration}
 	 */
-	protected GridViewerColumn buildViewerColumn(GridTableViewer tableViewer) {
-		return new GridViewerColumn(tableViewer, style);
+	public GridViewerColumnBuilder(ColumnConfiguration config) {
+		super(config);
 	}
 
-	/**
-	 *
-	 * @return creates an instance of a {@link GridViewerColumnBuilder}
-	 */
-	public static GridViewerColumnBuilder create() {
-		return new GridViewerColumnBuilder();
+	@Override
+	public GridViewerColumn createViewerColumn(GridTableViewer tableViewer) {
+		return new GridViewerColumn(tableViewer, getConfig().getStyleBits());
 	}
 
-	/**
-	 * Creates and customizes a {@link GridViewerColumn} for the given table viewer.
-	 *
-	 * @param tableViewer the target {@link GridTableViewer}
-	 * @return the {@link GridViewerColumn}
-	 * @see #setText(GridViewerColumn)
-	 * @see #setToolTipText(GridViewerColumn)
-	 * @see #setResizable(boolean)
-	 * @see #setMoveable(boolean)
-	 * @see #setData(GridViewerColumn)
-	 * @see #setWidth(GridViewerColumn)
-	 */
-	public GridViewerColumn build(GridTableViewer tableViewer) {
-		final GridViewerColumn column = buildViewerColumn(tableViewer);
-		setData(AbstractTableViewerComposite.COLUMN_ID, columnId++);
-		setText(column);
-		setToolTipText(column);
-		setResizable(column);
-		setMoveable(column);
-		setData(column);
-		setWidth(column);
-		setCellRenderer(column);
-		return column;
+	@Override
+	protected void configure(GridTableViewer tableViewer, GridViewerColumn viewerColumn) {
+		super.configure(tableViewer, viewerColumn);
+
+		// Nebula Grid supports a few more things
+		configureHideShow(tableViewer, viewerColumn);
+		configureFiltering(tableViewer, viewerColumn);
+
 	}
 
-	private Boolean isResizable;
-	private Boolean isMoveable;
-	private String text;
-	private String tooltip;
-	private final Map<String, Object> data = new LinkedHashMap<String, Object>();
-	private Integer width;
-	private Integer style = SWT.NONE;
-	private GridCellRenderer cellRenderer;
-
-	/**
-	 * Configures the text of the {@link GridViewerColumn}.
-	 *
-	 * @param text the text to set
-	 * @return the GridViewerColumnBuilder instance
-	 */
-	public GridViewerColumnBuilder setText(String text) {
-		this.text = text;
-		return this;
+	@Override
+	protected Item getTableColumn(GridViewerColumn viewerColumn) {
+		return viewerColumn.getColumn();
 	}
 
-	/**
-	 * Configures the tooltip text of the {@link GridViewerColumn}.
-	 *
-	 * @param tooltip the tooltip text to set
-	 * @return the GridViewerColumnBuilder instance
-	 */
-	public GridViewerColumnBuilder setToolTipText(String tooltip) {
-		this.tooltip = tooltip;
-		return this;
+	@Override
+	protected void configureViewerColumn(GridViewerColumn viewerColumn) {
+		final GridColumn column = viewerColumn.getColumn();
+
+		column.setResizeable(getConfig().isResizeable());
+		column.setMoveable(getConfig().isMoveable());
+		column.setVisible(getConfig().visible().getValue());
+		// column.getColumn().setWidth(width);
 	}
 
-	/**
-	 * Configures whether the {@link GridViewerColumn} is resizable.
-	 *
-	 * @param isResizable the value to set
-	 * @return the GridViewerColumnBuilder instance
-	 */
-	public GridViewerColumnBuilder setResizable(boolean isResizable) {
-		this.isResizable = isResizable;
-		return this;
-	}
-
-	/**
-	 * Configures whether the {@link GridViewerColumn} is moveable.
-	 *
-	 * @param isMoveable the value to set
-	 * @return the GridViewerColumnBuilder instance
-	 */
-	public GridViewerColumnBuilder setMoveable(boolean isMoveable) {
-		this.isMoveable = isMoveable;
-		return this;
-	}
-
-	/**
-	 * Configures the application data entries to be set for the {@link GridViewerColumn}.
-	 *
-	 * @param data the data entries to be added
-	 * @return the TableViewerColumnBuilder instance
-	 */
-	public GridViewerColumnBuilder setData(Map<String, Object> data) {
-		this.data.putAll(data);
-		return this;
-	}
-
-	/**
-	 * Configures the application data to be set for the {@link GridViewerColumn}.
-	 *
-	 * @param key the data key
-	 * @param value the value
-	 * @return the GridViewerColumnBuilder instance
-	 */
-	public GridViewerColumnBuilder setData(String key, Object value) {
-		data.put(key, value);
-		return this;
-	}
-
-	/**
-	 * Configures the style of the {@link GridViewerColumn}.
-	 *
-	 * @param style the style bits to set
-	 * @return the GridViewerColumnBuilder instance
-	 */
-	public GridViewerColumnBuilder setStyle(int style) {
-		this.style = style;
-		return this;
-	}
-
-	/**
-	 * Configures the width of the {@link GridViewerColumn}.
-	 *
-	 * @param width the width of the column
-	 * @return the GridViewerColumnBuilder instance
-	 */
-	public GridViewerColumnBuilder setWidth(int width) {
-		this.width = width;
-		return this;
-	}
-
-	/**
-	 * Overwrites the DefaultGridCellRenderer.
-	 *
-	 * @param cellRenderer the cell renderer
-	 * @return self
-	 */
-	public GridViewerColumnBuilder setCellRenderer(GridCellRenderer cellRenderer) {
-		this.cellRenderer = cellRenderer;
-		return this;
-	}
-
-	private void setText(GridViewerColumn column) {
-		if (text != null) {
-			column.getColumn().setText(text);
+	@Override
+	protected void configureEditingSupport(GridViewerColumn viewerColumn, GridTableViewer tableViewer) {
+		final Optional<EditingSupport> editingSupport = getConfig().createEditingSupport(tableViewer);
+		if (editingSupport.isPresent()) {
+			viewerColumn.setEditingSupport(editingSupport.get());
 		}
 	}
 
-	private void setToolTipText(GridViewerColumn column) {
-		if (tooltip != null) {
-			// TODO: Grid: correct?
-			column.getColumn().setHeaderTooltip(tooltip);
-		}
+	/**
+	 * Configure hide/show columns toggle.
+	 *
+	 * @param tableViewer the table viewer
+	 * @param viewerColumn the viewer column to configure
+	 */
+	protected void configureHideShow(final GridTableViewer tableViewer, final GridViewerColumn viewerColumn) {
+
+		getConfig().visible().addChangeListener(new ChangeListener<Boolean>() {
+			@Override
+			public void valueChanged(Property<Boolean> property, Boolean oldValue, Boolean newValue) {
+				getConfig().matchFilter().resetToDefault();
+
+				final GridColumn column = viewerColumn.getColumn();
+				Listener hideShowListener = extractShowListener(viewerColumn.getColumn());
+				if (column.getHeaderControl() == null && hideShowListener != null) {
+					column.removeListener(SWT.Show, hideShowListener);
+					column.removeListener(SWT.Hide, hideShowListener);
+				} else {
+					hideShowListener = null;
+				}
+				column.setVisible(newValue);
+				if (hideShowListener != null) {
+					column.addListener(SWT.Show, hideShowListener);
+					column.addListener(SWT.Hide, hideShowListener);
+				}
+			}
+		});
+
 	}
 
-	private void setResizable(GridViewerColumn column) {
-		if (isResizable != null) {
-			// TODO Grid needed?
-			// column.getColumn().setResizable(isResizable);
+	private static Listener extractShowListener(final GridColumn column) {
+		for (final Listener listener : column.getListeners(SWT.Show)) {
+			if (listener.getClass().getEnclosingClass() != null
+				&& ControlEditor.class.isAssignableFrom(listener.getClass().getEnclosingClass())) {
+				return listener;
+			}
 		}
+		return null;
 	}
 
-	private void setMoveable(GridViewerColumn column) {
-		if (isMoveable != null) {
-			column.getColumn().setMoveable(true);
-		}
+	/**
+	 * Configure column filter.
+	 *
+	 * @param tableViewer the table viewer
+	 * @param viewerColumn the viewer column to configure
+	 */
+	protected void configureFiltering(final GridTableViewer tableViewer, final GridViewerColumn viewerColumn) {
+		final GridColumn column = viewerColumn.getColumn();
+
+		getConfig().showFilterControl().addChangeListener(new ChangeListener<Boolean>() {
+
+			private Control filterControl;
+
+			@Override
+			public void valueChanged(Property<Boolean> property, Boolean oldValue, Boolean newValue) {
+				if (newValue) {
+					filterControl = createHeaderFilterControl(column.getParent());
+					column.setHeaderControl(filterControl);
+				} else {
+					column.setHeaderControl(null);
+					if (filterControl != null) {
+						filterControl.dispose();
+					}
+
+					getConfig().matchFilter().resetToDefault();
+				}
+				// hack: force header height recalculation
+				column.setWidth(column.getWidth());
+			}
+
+		});
+
+		getConfig().matchFilter().addChangeListener(new ChangeListener<Object>() {
+			@Override
+			public void valueChanged(Property<Object> property, Object oldValue, Object newValue) {
+				tableViewer.refresh();
+			}
+		});
+
 	}
 
-	private void setData(GridViewerColumn column) {
-		for (final Entry<String, Object> entry : data.entrySet()) {
-			column.getColumn().setData(entry.getKey(), entry.getValue());
-		}
-	}
+	/**
+	 * Creates a column filter control.
+	 *
+	 * @param parent the parent composite
+	 * @return new filter control instance
+	 */
+	protected Control createHeaderFilterControl(Composite parent) {
 
-	private void setWidth(GridViewerColumn column) {
-		if (width != null) {
-			column.getColumn().setWidth(width);
-		}
-	}
+		final Composite filterComposite = new Composite(parent, SWT.NONE);
+		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(filterComposite);
 
-	private void setCellRenderer(GridViewerColumn column) {
-		if (cellRenderer != null) {
-			column.getColumn().setCellRenderer(cellRenderer);
-		}
+		final Text txtFilter = new Text(filterComposite, SWT.BORDER);
+		GridDataFactory.fillDefaults().grab(true, false).applyTo(txtFilter);
+
+		txtFilter.addModifyListener(new ModifyListener() {
+			private final Runnable runnable = new Runnable() {
+				@Override
+				public void run() {
+					if (!txtFilter.isDisposed()) {
+						getConfig().matchFilter().setValue(txtFilter.getText());
+					}
+				}
+			};
+
+			@Override
+			public void modifyText(ModifyEvent e) {
+				Display.getDefault().timerExec(300, runnable);
+			}
+		});
+
+		filterComposite.addListener(SWT.Show, new Listener() {
+			@Override
+			public void handleEvent(Event event) {
+				if (!txtFilter.isDisposed() && getConfig().matchFilter().getValue() != null) {
+					txtFilter.setText(String.valueOf(getConfig().matchFilter().getValue()));
+				}
+			}
+		});
+
+		final Button btnClear = new Button(filterComposite, SWT.PUSH);
+		GridDataFactory.fillDefaults().grab(false, false).applyTo(btnClear);
+		btnClear.setText("x"); //$NON-NLS-1$
+		btnClear.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				txtFilter.setText(""); //$NON-NLS-1$
+			}
+		});
+
+		return filterComposite;
 	}
 
 }

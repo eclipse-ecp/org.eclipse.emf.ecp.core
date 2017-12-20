@@ -11,11 +11,14 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.ide.spi.util;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.URI;
@@ -24,6 +27,9 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Descriptor;
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
@@ -32,7 +38,7 @@ import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 
 /**
  * Helper class for view model objects.
- * 
+ *
  * @author Alexandra Buzila
  *
  * @since 1.13
@@ -114,4 +120,63 @@ public final class ViewModelHelper {
 		return view;
 	}
 
+	/**
+	 * Tries to load a view from the given file.
+	 *
+	 * @param file the {@link IFile} that contains the view model to be loaded
+	 * @param registeredEcores a {@link Collection} that will contain the paths of all
+	 *            Ecores that are necessary to load the view. call
+	 * @return the {@link VView}. Note that view resolution may fail, so callers should check
+	 *         whether the view has been resolved successfully
+	 * @throws IOException in case an error occurs while loading the view
+	 */
+	public static VView loadView(IFile file, Collection<String> registeredEcores) throws IOException {
+		final String path = file.getLocation().toString();
+		final VView view = loadView(path);
+		if (view != null && !viewIsResolved(view)) {
+			return tryResolve(view, path, registeredEcores);
+		}
+
+		return view;
+	}
+
+	private static VView tryResolve(VView view, String path, Collection<String> registeredEcores) throws IOException {
+		EcoreUtil.resolveAll(view);
+		if (viewIsResolved(view)) {
+			return view;
+		}
+
+		if (view.getEcorePath() == null
+			|| ResourcesPlugin.getWorkspace().getRoot().findMember(view.getEcorePath()) == null) {
+			throw new FileNotFoundException(path);
+		}
+
+		EcoreHelper.registerEcore(view.getEcorePath());
+		registeredEcores.add(view.getEcorePath());
+		final VView reloadView = loadView(path);
+		if (reloadView != null && !viewIsResolved(reloadView)) {
+			EcoreUtil.resolveAll(reloadView);
+		}
+		return reloadView;
+	}
+
+	/**
+	 * Check whether the given view has been resolved, i.e. whether it is a proxy or not
+	 *
+	 * @param view the {@link VView} to be checked
+	 * @return {@code true}, if the view is not a proxy, {@code false} otherwise
+	 */
+	public static boolean viewIsResolved(VView view) {
+		return !view.getRootEClass().eIsProxy();
+	}
+
+	private static VView loadView(String path) {
+		final ResourceSet resourceSet = new ResourceSetImpl();
+		final URI fileURI = URI.createFileURI(path);
+		final Resource resource = resourceSet.getResource(fileURI, true);
+		if (resource != null) {
+			return (VView) resource.getContents().get(0);
+		}
+		return null;
+	}
 }

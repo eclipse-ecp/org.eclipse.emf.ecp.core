@@ -588,8 +588,8 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 		}
 
 		final IConfigurationElement[] config = registry.getConfigurationElementsFor(ITOOLBAR_ACTIONS_ID);
-		try {
-			for (final IConfigurationElement e : config) {
+		for (final IConfigurationElement e : config) {
+			try {
 				final Object o = e.createExecutableExtension("toolbarAction");
 				if (o instanceof IToolbarAction) {
 					final IToolbarAction action = (IToolbarAction) o;
@@ -599,10 +599,10 @@ public class GenericEditor extends EditorPart implements IEditingDomainProvider,
 
 					result.add(action.getAction(resourceSet, selectionProvider));
 				}
+			} catch (final CoreException ex) {
+				Activator.getDefault().getReportService().report(
+					new StatusReport(new Status(IStatus.ERROR, Activator.PLUGIN_ID, ex.getMessage(), ex)));
 			}
-		} catch (final CoreException ex) {
-			Activator.getDefault().getReportService().report(
-				new StatusReport(new Status(IStatus.ERROR, Activator.PLUGIN_ID, ex.getMessage(), ex)));
 		}
 		return result;
 	}

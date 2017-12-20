@@ -10,7 +10,7 @@
  * Eugen Neufeld - initial API and implementation
  * Lucas Koehler - adjustments for databinding tests
  ******************************************************************************/
-package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
+package org.eclipse.emfforms.swt.common.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -60,14 +60,15 @@ import org.eclipse.swt.widgets.Shell;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-public abstract class AbstractControl_PTest {
+public abstract class AbstractControl_PTest<C extends VControl> {
+	
 	protected static final String CUSTOM_VARIANT = "org.eclipse.rap.rwt.customVariant"; //$NON-NLS-1$
 	private EMFFormsDatabinding databindingService;
 	private VTViewTemplateProvider templateProvider;
-	private AbstractControlSWTRenderer<VControl> renderer;
+	private AbstractControlSWTRenderer<C> renderer;
 	private EMFFormsLabelProvider labelProvider;
 
-	private Resource createResource() {
+	protected Resource createResource() {
 		final Resource.Factory.Registry registry = Resource.Factory.Registry.INSTANCE;
 		final Map<String, Object> extToFactoryMap = registry
 			.getExtensionToFactoryMap();
@@ -120,11 +121,12 @@ public abstract class AbstractControl_PTest {
 	}
 
 	private ViewModelContext context;
-	private VControl vControl;
+	private C vControl;
 	private Shell shell;
 
+	@SuppressWarnings("unchecked")
 	protected void setup() throws DatabindingFailedException {
-		setvControl(Mockito.mock(VControl.class));
+		setvControl((C) Mockito.mock(VControl.class));
 		mockControl();
 		setContext(Mockito.mock(ViewModelContext.class));
 		when(getContext().getDomainModel()).thenReturn(mock(EObject.class));
@@ -231,16 +233,16 @@ public abstract class AbstractControl_PTest {
 	}
 
 	/**
-	 * @return the vControl
+	 * @return the VControl
 	 */
-	public VControl getvControl() {
+	public C getvControl() {
 		return vControl;
 	}
 
 	/**
-	 * @param vControl the vControl to set
+	 * @param vControl the VControl to set
 	 */
-	public void setvControl(VControl vControl) {
+	public void setvControl(C vControl) {
 		this.vControl = vControl;
 	}
 
@@ -289,14 +291,14 @@ public abstract class AbstractControl_PTest {
 	/**
 	 * @return the renderer
 	 */
-	public AbstractControlSWTRenderer<VControl> getRenderer() {
+	public AbstractControlSWTRenderer<C> getRenderer() {
 		return renderer;
 	}
 
 	/**
 	 * @param renderer the renderer to set
 	 */
-	public void setRenderer(AbstractControlSWTRenderer<VControl> renderer) {
+	public void setRenderer(AbstractControlSWTRenderer<C> renderer) {
 		this.renderer = renderer;
 	}
 

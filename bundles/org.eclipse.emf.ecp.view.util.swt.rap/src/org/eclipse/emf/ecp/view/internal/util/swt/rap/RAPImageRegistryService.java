@@ -11,18 +11,20 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.util.swt.rap;
 
-import java.util.HashMap;
+import java.lang.ref.WeakReference;
+import java.net.URL;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.eclipse.emf.ecp.view.internal.util.swt.RCPImageRegistryService;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.rap.rwt.RWT;
 import org.eclipse.rap.rwt.service.UISession;
 import org.eclipse.rap.rwt.service.UISessionEvent;
 import org.eclipse.rap.rwt.service.UISessionListener;
+import org.eclipse.swt.graphics.Image;
 import org.osgi.framework.Bundle;
-import org.osgi.framework.ServiceFactory;
-import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * The RAP instance of the ImageRegistryService.
@@ -30,41 +32,52 @@ import org.osgi.framework.ServiceRegistration;
  * @author Eugen Neufeld
  *
  */
-public class RAPImageRegistryService implements ServiceFactory<ImageRegistryService>, UISessionListener {
+@Component(service = { ImageRegistryService.class }, property = { "service.ranking:Integer=5" })
+public class RAPImageRegistryService implements ImageRegistryService, UISessionListener {
 
-	private final Map<String, ImageRegistryService> sessionRegistry = new HashMap<String, ImageRegistryService>();
+	private static final long serialVersionUID = 1223772305074418261L;
+	private final Map<String, Map<String, WeakReference<Image>>> sessionRegistry = new LinkedHashMap<String, Map<String, WeakReference<Image>>>();
 
+	/** Constructor. */
 	public RAPImageRegistryService() {
 	}
 
 	@Override
-	public ImageRegistryService getService(Bundle bundle,
-		ServiceRegistration<ImageRegistryService> registration) {
+	public void beforeDestroy(UISessionEvent event) {
+		sessionRegistry.remove(event.getUISession().getId());
+	}
 
+	@Override
+	public Image getImage(Bundle bundle, String path) {
+		final URL url = bundle.getResource(path);
+		if (url == null) {
+			return null;
+		}
+		return getImage(url);
+	}
+
+	@Override
+	public Image getImage(URL url) {
 		final UISession uiSession = RWT.getUISession();
 		uiSession.addUISessionListener(this);
 		final String sessionId = uiSession.getId();
 		if (!sessionRegistry.containsKey(sessionId)) {
-			sessionRegistry.put(sessionId, new RCPImageRegistryService());
+			sessionRegistry.put(sessionId, new LinkedHashMap<String, WeakReference<Image>>());
 		}
-		return sessionRegistry.get(sessionId);
-	}
+		final Map<String, WeakReference<Image>> registry = sessionRegistry.get(sessionId);
+		final WeakReference<Image> weakRef = registry.get(url.toString());
+		boolean loadImage = weakRef == null;
+		Image image = null;
+		if (weakRef != null) {
+			image = weakRef.get();
+			loadImage = image == null;
+		}
 
-	@Override
-	public void ungetService(Bundle bundle,
-		ServiceRegistration<ImageRegistryService> registration,
-		ImageRegistryService service) {
-		// do nothing
-	}
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.rap.rwt.service.UISessionListener#beforeDestroy(org.eclipse.rap.rwt.service.UISessionEvent)
-	 */
-	@Override
-	public void beforeDestroy(UISessionEvent event) {
-		sessionRegistry.remove(event.getUISession().getId());
+		if (loadImage) {
+			image = ImageDescriptor.createFromURL(url).createImage();
+			registry.put(url.toString(), new WeakReference<Image>(image));
+		}
+		return image;
 	}
 
 }

@@ -2,11 +2,11 @@
 <feature
       id="org.eclipse.emfforms.common.prevalidation.feature"
       label="EMFForms PreValidation Feature"
-      version="1.14.0.qualifier"
+      version="1.15.0.qualifier"
       provider-name="Eclipse Modeling Project"
       plugin="org.eclipse.emfforms.common.prevalidation"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.14.0.qualifier">
+      license-feature-version="1.15.0.qualifier">
 
    <description>
       %description

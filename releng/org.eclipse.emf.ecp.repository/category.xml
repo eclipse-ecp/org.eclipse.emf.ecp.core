@@ -177,6 +177,15 @@
    <feature id="org.eclipse.emfforms.common.prevalidation.feature.source" version="0.0.0">
       <category name="org.eclipse.emf.ecp.emfforms"/>
    </feature>
+   <feature id="org.eclipse.emf.edapt.runtime.feature" version="0.0.0">
+      <category name="org.eclipse.emf.ecp.edapt"/>
+   </feature>
+   <feature id="org.eclipse.emf.edapt.runtime.feature.source" version="0.0.0">
+      <category name="org.eclipse.emf.ecp.edapt"/>
+   </feature>
+   <feature id="org.eclipse.emf.ecp.ide.migration.feature.source" version="0.0.0">
+      <category name="org.eclipse.emf.ecp.edapt"/>
+   </feature>
    <category-def name="org.eclipse.emf.ecp.sdk" label="All SDKs  (install one of these)">
       <description>
          Contains the ECP SDKs. Please install only one of these.
@@ -202,4 +211,5 @@
          The EMF Forms to JSON Forms Features.
       </description>
    </category-def>
+   <category-def name="org.eclipse.emf.ecp.edapt" label="Edapt Migration Support"/>
 </site>

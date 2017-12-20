@@ -25,7 +25,6 @@ import org.eclipse.core.databinding.property.value.IValueProperty;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.test.common.DefaultRealm;
-import org.eclipse.emf.ecp.view.internal.core.swt.renderer.AbstractControl_PTest;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
@@ -45,6 +44,7 @@ import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
+import org.eclipse.emfforms.swt.common.test.AbstractControl_PTest;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
@@ -108,7 +108,7 @@ public class TextControlRendererUnsettable_PTest extends AbstractControl_PTest {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emf.ecp.view.internal.core.swt.renderer.AbstractControl_PTest#mockControl()
+	 * @see org.eclipse.emfforms.swt.common.test.AbstractControl_PTest#mockControl()
 	 */
 	@SuppressWarnings("rawtypes")
 	@Override

@@ -132,36 +132,12 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 				control.setDiagnostic(null);
 			}
 
-			IObservableValue observableValue;
-			observableValue = Activator.getDefault().getEMFFormsDatabinding()
-				.getObservableValue(domainModelReference, context.getDomainModel());
-
-			final EObject observed = (EObject) ((IObserving) observableValue).getObserved();
-			// validate(observed);
-			// TODO: add test case for this
+			final Set<UniqueSetting> settingsForControl = controlMapper.getSettingsForControl(control);
 			final Set<EObject> eObjectsToValidate = new LinkedHashSet<EObject>();
-			if (observed != null) {
-				/* possible e.g. when feature path dmr gets cut off during runtime */
-				eObjectsToValidate.add(observed);
-			}
-			final EStructuralFeature structuralFeature = (EStructuralFeature) observableValue.getValueType();
-			final Object value = observableValue.getValue();
-			if (EReference.class.isInstance(structuralFeature) && value != null) {
-				/*
-				 * the value may be null! this is possible e.g. when there is a longer feature path dmr on
-				 * which an element on the path gets deleted/replaced during runtime.
-				 * Adding null to the set is no advised as we will get exception immediately or in the future.
-				 */
-				if (structuralFeature.isMany()) {
-					@SuppressWarnings("unchecked")
-					final List<EObject> list = (List<EObject>) value;
-					eObjectsToValidate.addAll(list);
-				} else {
-					eObjectsToValidate.add((EObject) value);
-				}
+			for (final UniqueSetting setting : settingsForControl) {
+				eObjectsToValidate.add(setting.getEObject());
 			}
 			validate(eObjectsToValidate);
-			observableValue.dispose();
 
 		}
 
@@ -182,6 +158,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 						eObjectsToValidate.add(setting.getEObject());
 					}
 				} else {
+					@SuppressWarnings("rawtypes")
 					IObservableValue observableValue;
 					try {
 						observableValue = Activator.getDefault().getEMFFormsDatabinding()
@@ -462,7 +439,7 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 	 */
 	@Override
 	public int getPriority() {
-		return 3;
+		return 1;
 	}
 
 	/**

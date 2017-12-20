@@ -18,7 +18,7 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindingEMF;
-import org.eclipse.emfforms.spi.swt.table.AbstractTableViewerComposite;
+import org.eclipse.emfforms.spi.swt.table.TableConfiguration;
 import org.eclipse.nebula.widgets.grid.Grid;
 import org.eclipse.swt.graphics.Point;
 
@@ -55,7 +55,7 @@ public final class KeyListenerUtil {
 			final int row = itemCoord.y;
 
 			final VDomainModelReference dmr = (VDomainModelReference) grid.getColumn(column)
-				.getData(AbstractTableViewerComposite.DMR);
+				.getData(TableConfiguration.DMR);
 
 			if (dmr == null || vControl instanceof VTableControl
 				&& org.eclipse.emf.ecp.view.internal.table.swt.TableConfigurationHelper

@@ -57,6 +57,8 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.graphics.Color;
@@ -211,6 +213,14 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 			@Override
 			public void handleChange(ChangeEvent event) {
 				doUpdateDetailPanel(false);
+			}
+		});
+
+		treeComposite.addDisposeListener(new DisposeListener() {
+			@Override
+			public void widgetDisposed(DisposeEvent e) {
+				treeViewerSelectionObservable.dispose();
+				delayedObservableValue.dispose();
 			}
 		});
 

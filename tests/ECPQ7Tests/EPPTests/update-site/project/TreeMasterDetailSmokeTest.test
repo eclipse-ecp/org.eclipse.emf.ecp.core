@@ -1,0 +1,285 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _D4Pj4C3lEeSwhO5Nwx0hPg,_Iu0EsS36EeSYRYqCbC6LMQ
+Element-Name: TreeMasterDetailSmokeTest
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _cR1mwLKLEeebScL4g4WExw
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 10/19/17 3:41 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+//setup 
+get-view "Project Explorer" | get-tree 
+    | select "org.eclipse.emf.ecp.makeithappen.model.viewmodel/viewmodels/UserGroup.view" | double-click
+get-editor "UserGroup.view" | get-tree | select View | get-menu -path "Tree Master Detail" | click
+with [get-view "EMF Forms Preview"] {
+    get-button "Automatically refresh Preview View" | click
+    get-tree | select "User Group"
+}
+
+with [get-view "EMF Forms Preview" | get-tree] {
+    get-property itemCount | equals 1 | verify-true
+    get-item -path "User Group" | get-property caption | equals "User Group" | verify-true
+    get-item -path "User Group" | get-property childCount | equals 0 | verify-true
+}
+
+
+with [get-view "EMF Forms Preview" | get-control Any -after [get-label Details] -index 2] {
+    get-property "getChildren().length" | equals 3 | verify-true
+    get-property "getChildren().Control[0].getText()" | equals Name | verify-true
+    get-property "getChildren().Control[2].getChildren().Control[0].getText()" | equals "" | verify-true
+    get-property "getChildren().Control[2].getChildren().Control[0].getMessage()" | equals Name | verify-true
+}
+with [get-view "EMF Forms Preview"] {
+    with [get-editbox -after [get-label Name]] {
+        set-text "My User Group"
+    }
+    get-tree | select "User Group My User Group"
+}
+
+get-view "EMF Forms Preview" | get-tree | get-item -path "User Group My User Group" | get-property caption 
+    | equals "User Group My User Group" | verify-true
+    
+//add new user   
+get-view "EMF Forms Preview" | get-tree | select "User Group My User Group" | get-menu -path "Users User" | click
+with [get-view "EMF Forms Preview" | get-tree] {
+    get-item -path "User Group My User Group" | get-property childCount | equals 1 | verify-true
+    get-item -path "User Group My User Group/User" | get-property caption | equals User | verify-true
+    get-item -path "User Group My User Group/User" | get-property childCount | equals 0 | verify-true
+}
+
+//verify user detail contents
+get-view "EMF Forms Preview" | get-tree | select "User Group My User Group/User"
+with [get-view "EMF Forms Preview" | get-control Any -after [get-label Details] -index 2] {
+    get-property "getChildren().Control[0].getText()" | equals "First Name" | verify-true
+    get-property "getChildren().Control[1].getImage()" | equals null | verify-true
+    get-property "getChildren().Control[2].getChildren().Control[0].getText()" | equals "" | verify-true
+    get-property "getChildren().Control[3].getText()" | equals "Last Name*" | verify-true
+    get-property "getChildren().Control[4].getImage().getClassName()" | equals "org.eclipse.swt.graphics.Image" 
+        | verify-true
+    get-property "getChildren().Control[5].getChildren().Control[0].getText()" | equals "" | verify-true
+    get-property "getChildren().Control[6].getText()" | equals Gender | verify-true
+    get-property "getChildren().Control[9].getText()" | equals Active | verify-true
+    get-property "getChildren().Control[12].getText()" | equals "Time Of Registration" | verify-true
+    get-property "getChildren().Control[15].getText()" | equals Weight | verify-true
+    get-property "getChildren().Control[18].getText()" | equals Heigth | verify-true
+    get-property "getChildren().Control[21].getText()" | equals Nationality | verify-true
+    get-property "getChildren().Control[24].getText()" | equals "Date Of Birth" | verify-true
+    get-property "getChildren().Control[27].getText()" | equals "Email*" | verify-true
+}
+
+//add new user and change selection in tree
+with [get-view "EMF Forms Preview" | get-tree] {
+    select "User Group My User Group" | select "User Group My User Group" | get-menu -path "Users User" | click
+    select [get-item -path "User Group My User Group" | get-item -path User -index 1]
+}
+with [get-view "EMF Forms Preview" | get-control Any -after [get-label Details] -index 2] {
+    get-property "getChildren().Control[0].getText()" | equals "First Name" | verify-true
+    get-property "getChildren().Control[1].getImage()" | equals null | verify-true
+    get-property "getChildren().Control[2].getChildren().Control[0].getText()" | equals "" | verify-true
+    get-property "getChildren().Control[3].getText()" | equals "Last Name*" | verify-true
+    get-property "getChildren().Control[4].getImage().getClassName()" | equals "org.eclipse.swt.graphics.Image" 
+        | verify-true
+    get-property "getChildren().Control[5].getChildren().Control[0].getText()" | equals "" | verify-true
+    get-property "getChildren().Control[6].getText()" | equals Gender | verify-true
+    get-property "getChildren().Control[9].getText()" | equals Active | verify-true
+    get-property "getChildren().Control[12].getText()" | equals "Time Of Registration" | verify-true
+    get-property "getChildren().Control[15].getText()" | equals Weight | verify-true
+    get-property "getChildren().Control[18].getText()" | equals Heigth | verify-true
+    get-property "getChildren().Control[21].getText()" | equals Nationality | verify-true
+    get-property "getChildren().Control[24].getText()" | equals "Date Of Birth" | verify-true
+    get-property "getChildren().Control[27].getText()" | equals "Email*" | verify-true
+}
+//change user2 details
+with [get-view "EMF Forms Preview"] {
+    get-editbox -after [get-label "First Name"] | set-text user2
+    get-editbox -after [get-label "Last Name*"] | set-text lastname2
+    get-editbox -after [get-label "First Name"] | click-text 6
+    get-combo -after [get-label Gender] | select Female
+}
+get-view "EMF Forms Preview" | get-tree | get-item -path "User Group My User Group/User user2" | get-property caption 
+    | equals "User user2" | verify-true
+get-view "EMF Forms Preview" | get-tree | select "User Group My User Group/User" 
+    | select "User Group My User Group/User user2"
+with [get-view "EMF Forms Preview" | get-control Any -after [get-label Details] -index 2] {
+    get-property "getChildren().Control[3].getText()" | equals "Last Name*" | verify-true
+    get-property "getChildren().Control[4].getImage()" | equals null | verify-true
+}
+
+//select user1 and verify update of detail
+get-view "EMF Forms Preview" | get-tree | select "User Group My User Group/User"
+with [get-view "EMF Forms Preview"] {
+    get-editbox -after [get-label "First Name"] | get-property "getText()" | equals "" | verify-true
+    get-editbox -after [get-label "Last Name*"] | get-property "getText()" | equals "" | verify-true
+    get-label "" -after [get-label "Last Name*"] | get-property "image.path" 
+        | equals "org.eclipse.emf.ecp.edit.swt/icons/validation_error.png" | verify-true
+    get-combo -after [get-label Gender] | get-property selection | equals Male | verify-true
+}
+//change user1 details
+with [get-view "EMF Forms Preview"] {
+    with [get-editbox -after [get-label "First Name"]] {
+        set-text user1
+        key-type "TRAVERSE_TAB_NEXT"
+    }
+    with [get-editbox -after [get-label "Last Name*"]] {
+        set-text lastname1
+        key-type "TRAVERSE_TAB_NEXT"
+    }
+    with [get-button -after [get-label Active]] {
+        check
+    }
+    get-tree | select "User Group My User Group/User user2"
+}
+//select user2 and verify details update
+with [get-view "EMF Forms Preview"] {
+    get-editbox -after [get-label "First Name"] | get-property text | equals user2 | verify-true
+    get-editbox -after [get-label "Last Name*"] | get-property text | equals lastname2 | verify-true
+    get-label "" -after [get-label "Last Name*"] | get-property "getImage()" | equals null | verify-true
+    get-button -after [get-label Active] | get-property selected | equals false | verify-true
+}
+
+//add more users
+with [get-view "EMF Forms Preview" | get-tree] {
+    select "User Group My User Group" | select "User Group My User Group" | get-menu -path "Users User" | click
+    select "User Group My User Group" | get-menu -path "Users User" | click
+    select "User Group My User Group" | get-menu -path "Users User" | click
+    select "User Group My User Group" | get-menu -path "Users User" | click
+}
+get-view "EMF Forms Preview" | get-tree | get-property "getItems().TreeItem[0].getItems().length" | equals 6 
+    | verify-true
+with [get-view "EMF Forms Preview"] {
+    get-tree | select "User Group My User Group/User"
+    get-editbox -after [get-label "First Name"] | set-text user3
+    get-tree | select [get-item -path "User Group My User Group" | get-item -path User]
+    get-editbox -after [get-label "First Name"] | set-text user4
+    get-tree | select [get-item -path "User Group My User Group" | get-item -path User]
+    get-editbox -after [get-label "First Name"] | set-text user5
+    get-tree | select [get-item -path "User Group My User Group" | get-item -path User]
+    get-editbox -after [get-label "First Name"] | set-text user6
+ 
+    //drag and drop  single item (move user4 before user1)
+    with [get-tree] {
+        select "User Group My User Group/User user4" | select "User Group My User Group/User user4"
+        get-item -path "User Group My User Group/User user4" | drag-start 33 12
+        get-item -path "User Group My User Group/User user4" | drag-enter 53 7 -detail move
+        get-item -path "User Group My User Group/User user4" | drag-over 63 1 -detail move
+        get-item -path "User Group My User Group/User user3" | drag-over 65 19 -detail move
+        get-item -path "User Group My User Group/User user4" | drag-exit
+        get-item -path "User Group My User Group" | drag-enter 121 2 -detail move
+        get-item -path "User Group My User Group" | drag-over 127 0 -detail move
+        get-item -path "User Group My User Group" | drag-exit
+        get-item -path "User Group My User Group" | drag-enter 120 0 -detail move
+        get-item -path "User Group My User Group" | drag-over 114 22 -detail move
+        get-item -path "User Group My User Group/User user1" | drag-over 107 7 -detail move
+        get-item -path "User Group My User Group" | drag-exit
+        get-item -path "User Group My User Group/User user1" | drag-accept 107 7 -detail move
+        drag-set-data
+        get-item -path "User Group My User Group/User user1" | drop 107 7 -detail move
+        drag-end -detail move
+    }
+}
+
+//verify drag and drop
+with [get-view "EMF Forms Preview" | get-tree] {
+    get-item -path "User Group My User Group" | get-property "getItems().TreeItem[0].getText()" | equals "User user4" 
+        | verify-true
+    get-item -path "User Group My User Group" | get-property "getItems().TreeItem[1].getText()" 
+        | equals "User user1" | verify-true
+    get-item -path "User Group My User Group" | get-property "getItems().TreeItem[2].getText()" | equals "User user2" 
+        | verify-true
+    get-item -path "User Group My User Group" | get-property "getItems().TreeItem[3].getText()" | equals "User user3" 
+        | verify-true
+    get-item -path "User Group My User Group" | get-property "getItems().TreeItem[4].getText()" | equals "User user5" 
+        | verify-true
+    get-item -path "User Group My User Group" | get-property "getItems().TreeItem[5].getText()" | equals "User user6" 
+        | verify-true
+}
+
+//drag and drop multiple selection
+with [get-view "EMF Forms Preview" | get-tree] {
+    select "User Group My User Group/User user2" 
+        | select "User Group My User Group/User user6" "User Group My User Group/User user2"
+    get-item -path "User Group My User Group/User user2" | drag-start 39 13
+    get-item -path "User Group My User Group/User user2" | drag-enter 55 11 -detail move
+    get-item -path "User Group My User Group/User user2" | drag-over 86 1 -detail move
+    get-item -path "User Group My User Group/User user1" | drag-over 89 22 -detail move
+    get-item -path "User Group My User Group/User user2" | drag-exit
+    get-item -path "User Group My User Group/User user1" | drag-enter 90 6 -detail move
+    get-item -path "User Group My User Group/User user1" | drag-over 88 1 -detail move
+    get-item -path "User Group My User Group/User user4" | drag-over 70 9 -detail move
+    get-item -path "User Group My User Group/User user1" | drag-exit
+    get-item -path "User Group My User Group/User user4" | drag-accept 70 9 -detail move
+    drag-set-data
+    get-item -path "User Group My User Group/User user4" | drop 70 9 -detail move
+    drag-end -detail move
+}
+//verify dnd
+with [get-view "EMF Forms Preview" | get-tree] {
+    get-property "getItems().TreeItem[0].getItems().TreeItem[0].getText()" | equals "User user2" | verify-true
+    get-property "getItems().TreeItem[0].getItems().TreeItem[1].getText()" | equals "User user6" | verify-true
+    get-property "getItems().TreeItem[0].getItems().TreeItem[2].getText()" | equals "User user4" | verify-true
+    get-property "getItems().TreeItem[0].getItems().TreeItem[3].getText()" | equals "User user1" | verify-true
+    get-property "getItems().TreeItem[0].getItems().TreeItem[4].getText()" | equals "User user3" | verify-true
+    get-property "getItems().TreeItem[0].getItems().TreeItem[5].getText()" | equals "User user5" | verify-true
+}
+
+//verify detail content for multiple selection in tree
+with [get-view "EMF Forms Preview" | get-tree] {
+    select "User Group My User Group/User user4" 
+        | select "User Group My User Group/User user1" "User Group My User Group/User user4"
+    select "User Group My User Group/User user3" "User Group My User Group/User user1" "User Group My User Group/User user4"
+}
+with [get-view "EMF Forms Preview"] {
+    get-control Any -after [get-label Details] -index 2 | get-property "getChildren().length" | equals 31 | verify-true
+    get-label "Time Of Registration" | get-property caption | equals "Time Of Registration" | verify-true
+    get-control Any -after [get-label Details] -index 2 | get-property "getChildren().Control[12].getText()" 
+        | equals "Time Of Registration" | verify-true
+}
+
+//verify element deletion
+get-view "EMF Forms Preview" | get-tree | select "User Group My User Group/User user6" 
+    | select "User Group My User Group/User user6" | get-menu -path Delete | click
+get-view "EMF Forms Preview" | get-tree | get-item -path "User Group My User Group" | get-property childCount 
+    | equals 5 | verify-true
+with [get-view "EMF Forms Preview" | get-tree] {
+    select "User Group My User Group/User user4" 
+        | select "User Group My User Group/User user3" "User Group My User Group/User user1" "User Group My User Group/User user4"
+    select "User Group My User Group/User user3" "User Group My User Group/User user1" "User Group My User Group/User user4"
+    get-menu -path Delete | click
+}
+with [get-view "EMF Forms Preview" | get-tree] {
+    get-item -path "User Group My User Group" | get-property childCount | equals 2 | verify-true
+    get-item -path "User Group My User Group" | get-property "getItems().TreeItem[0].getText()" | equals "User user2" 
+        | verify-true
+    get-item -path "User Group My User Group" | get-property "getItems().TreeItem[1].getText()" | equals "User user5" 
+        | verify-true
+}
+with [get-view "EMF Forms Preview" | get-tree] {
+    select "User Group My User Group/User user2" | select "User Group My User Group/User user2" | get-menu -path Delete 
+        | click
+    select "User Group My User Group/User user5" | select "User Group My User Group/User user5" | get-menu -path Delete 
+        | click
+}
+with [get-view "EMF Forms Preview"] {
+    with [get-control Any -after [get-label Details] -index 2] {
+        get-property "getChildren().length" | equals 3 | verify-true
+        get-property "getChildren().Control[0].getText()" | equals Name | verify-true
+    }
+    get-tree | get-property "selection[0].path[0]" | equals "User Group My User Group" | verify-true
+}
+//verify readonly setting on the TMD control
+with [get-editor "UserGroup.view"] {
+    get-tree | select "View/Tree Master Detail"
+    get-button -after [get-label Readonly] | check
+}
+with [get-view "EMF Forms Preview"] {
+    get-tree | get-property enablement | equals false | verify-true
+    get-control Any -after [get-label Details] -index 2 | get-property enablement | equals false | verify-true
+}
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

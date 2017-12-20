@@ -93,4 +93,12 @@ public interface EMFFormsSettingToControlMapper {
 	 */
 	Collection<EObject> getEObjectsWithSettings();
 
+	/**
+	 * Returns a collection of all settings for the given control.
+	 *
+	 * @param control the control to get the settings for
+	 * @return the unique settings for the given control
+	 */
+	Set<UniqueSetting> getSettingsForControl(VControl control);
+
 }

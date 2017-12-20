@@ -400,7 +400,7 @@ public class XMLDateControlSWTRenderer extends TextControlSWTRenderer {
 			targetToModelUpdateStrategy, modelToTargetUpdateStrategy);
 
 		final Binding tooltipBinding = createTooltipBinding(control, getModelValue(), getDataBindingContext(),
-			targetToModelUpdateStrategy, new DateModelToTargetUpdateStrategy(true));
+			new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER), new DateModelToTargetUpdateStrategy(true));
 
 		emfFormsLocaleChangeListener = new EMFFormsLocaleChangeListener() {
 

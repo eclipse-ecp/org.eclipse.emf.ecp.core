@@ -62,11 +62,6 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 				&& !VDomainModelReference.class.isInstance(EObject.class.cast(notifier).eContainer())) {
 				final VDomainModelReference domainModelReference = VDomainModelReference.class.cast(notifier);
 
-				// FIXME remove
-				SettingToControlExpandHelper.resolveDomainReferences(domainModelReference,
-					viewModelContext.getDomainModel(),
-					viewModelContext);
-
 				final VControl control = findControl(domainModelReference);
 				if (control != null) {
 					vControlAdded(control);
@@ -273,13 +268,25 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 			return;
 		}
 
-		checkAndUpdateSettingToControlMapping(vControl);
 		final EMFFormsViewContext viewContext = controlContextMap.get(vControl);
+		resolveDMR(vControl, viewContext);
+
+		checkAndUpdateSettingToControlMapping(vControl);
 		if (viewContext != null) {
 			contextListenerMap.get(viewContext).addVControl(vControl);
 		} else {
 			dataModelListener.addVControl(vControl);
 		}
+	}
+
+	private void resolveDMR(VControl vControl, EMFFormsViewContext childContext) {
+		/* if child context is null use root context */
+		final EMFFormsViewContext viewContext = childContext != null ? childContext : viewModelContext;
+		// FIXME remove
+		SettingToControlExpandHelper.resolveDomainReferences(
+			vControl.getDomainModelReference(),
+			viewContext.getDomainModel(),
+			viewContext);
 	}
 
 	/**
@@ -384,5 +391,10 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 		final Set<EObject> result = new LinkedHashSet<EObject>();
 		result.addAll(eObjectToMappedSettings.keySet());
 		return result;
+	}
+
+	@Override
+	public Set<UniqueSetting> getSettingsForControl(VControl control) {
+		return controlToSettingMap.get(control);
 	}
 }

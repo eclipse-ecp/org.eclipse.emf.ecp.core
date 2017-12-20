@@ -11,7 +11,6 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.emf2web.ui.json.internal.handler;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
@@ -21,12 +20,6 @@ import java.util.List;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.emf2web.controller.GenerationController;
 import org.eclipse.emf.ecp.emf2web.exporter.FileGenerationExporter;
 import org.eclipse.emf.ecp.emf2web.exporter.GenerationExporter;
@@ -35,6 +28,7 @@ import org.eclipse.emf.ecp.emf2web.ui.handler.AbstractSchemaExportCommandHandler
 import org.eclipse.emf.ecp.emf2web.ui.json.Activator;
 import org.eclipse.emf.ecp.emf2web.ui.json.internal.messages.Messages;
 import org.eclipse.emf.ecp.ide.spi.util.EcoreHelper;
+import org.eclipse.emf.ecp.ide.spi.util.ViewModelHelper;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -72,18 +66,15 @@ public class ExportJSONFormsHandler extends AbstractSchemaExportCommandHandler {
 			final Object selectedObject = it.next();
 			if (selectedObject instanceof IFile) {
 				final IFile file = (IFile) selectedObject;
-				final String path = file.getLocation().toString();
-				VView view = loadView(path);
-				if (!viewIsResolved(view)) {
-					try {
-						view = tryResolve(view, path, registeredEcores);
-					} catch (final IOException e) {
-						Activator.logException(e);
-					}
-					if (!viewIsResolved(view)) {
-						failedFiles.add(file);
-						continue;
-					}
+				VView view = null;
+				try {
+					view = ViewModelHelper.loadView(file, registeredEcores);
+				} catch (final IOException ex) {
+					Activator.logException(ex);
+				}
+				if (view == null || !ViewModelHelper.viewIsResolved(view)) {
+					failedFiles.add(file);
+					continue;
 				}
 				views.add(view);
 			}
@@ -97,40 +88,6 @@ public class ExportJSONFormsHandler extends AbstractSchemaExportCommandHandler {
 		}
 
 		return views;
-	}
-
-	private boolean viewIsResolved(VView view) {
-		return !view.getRootEClass().eIsProxy();
-	}
-
-	private VView tryResolve(VView view, String path, Collection<String> registeredEcores) throws IOException {
-		EcoreUtil.resolveAll(view);
-		if (viewIsResolved(view)) {
-			return view;
-		}
-
-		if (view.getEcorePath() == null
-			|| ResourcesPlugin.getWorkspace().getRoot().findMember(view.getEcorePath()) == null) {
-			throw new FileNotFoundException(path);
-		}
-
-		EcoreHelper.registerEcore(view.getEcorePath());
-		registeredEcores.add(view.getEcorePath());
-		final VView reloadView = loadView(path);
-		if (!viewIsResolved(reloadView)) {
-			EcoreUtil.resolveAll(reloadView);
-		}
-		return reloadView;
-	}
-
-	private VView loadView(String path) {
-		final ResourceSet resourceSet = new ResourceSetImpl();
-		final URI fileURI = URI.createFileURI(path);
-		final Resource resource = resourceSet.getResource(fileURI, true);
-		if (resource != null) {
-			return (VView) resource.getContents().get(0);
-		}
-		return null;
 	}
 
 	private void showErrorMessage(Collection<IFile> files, boolean allFailed) {
@@ -160,5 +117,4 @@ public class ExportJSONFormsHandler extends AbstractSchemaExportCommandHandler {
 	protected GenerationExporter getGenerationExporter() {
 		return new FileGenerationExporter();
 	}
-
 }

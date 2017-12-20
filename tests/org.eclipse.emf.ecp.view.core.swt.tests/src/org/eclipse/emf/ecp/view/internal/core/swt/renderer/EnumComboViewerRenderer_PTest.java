@@ -35,6 +35,7 @@ import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
+import org.eclipse.emfforms.swt.common.test.AbstractControl_PTest;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Control;
@@ -81,7 +82,7 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest {
 	 *
 	 * @throws DatabindingFailedException
 	 *
-	 * @see org.AbstractControl_PTest.eclipse.emf.ecp.view.internal.core.swt.renderer.AbstractControl_PTest#mockControl()
+	 * @see org.eclipse.emfforms.swt.common.test.AbstractControl_PTest.eclipse.emf.ecp.view.internal.core.swt.renderer.AbstractControl_PTest#mockControl()
 	 */
 	@Override
 	protected void mockControl() throws DatabindingFailedException {

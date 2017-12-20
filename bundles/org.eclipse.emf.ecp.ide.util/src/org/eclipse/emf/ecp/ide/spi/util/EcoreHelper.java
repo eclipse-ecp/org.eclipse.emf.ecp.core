@@ -146,6 +146,11 @@ public final class EcoreHelper {
 
 	private static void updateRegistryAndLocalCache(EPackage ePackage,
 		Resource oldResource, ResourceSet newResourceSet) {
+		if (ePackage.getNsURI() == null || ePackage.getNsURI().isEmpty()) {
+			Activator.log(IStatus.WARNING,
+				String.format("Package does not have a valid Ns URI [%1$s].", ePackage)); //$NON-NLS-1$
+			return;
+		}
 		final String platformResourceURI = oldResource.getURI().toString();
 		oldResource.getContents().remove(ePackage);
 		final Resource virtualResource = newResourceSet.createResource(URI.createURI(ePackage.getNsURI()));

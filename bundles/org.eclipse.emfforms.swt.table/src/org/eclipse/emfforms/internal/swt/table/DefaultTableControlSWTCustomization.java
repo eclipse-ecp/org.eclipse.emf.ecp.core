@@ -17,10 +17,12 @@ import java.util.List;
 
 import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.spi.swt.table.ButtonBarBuilder;
+import org.eclipse.emfforms.spi.swt.table.ColumnConfiguration;
 import org.eclipse.emfforms.spi.swt.table.DNDProvider;
 import org.eclipse.emfforms.spi.swt.table.DefaultButtonBarBuilder;
 import org.eclipse.emfforms.spi.swt.table.DefaultTableViewerCompositeBuilder;
 import org.eclipse.emfforms.spi.swt.table.NewElementCreator;
+import org.eclipse.emfforms.spi.swt.table.TableConfiguration;
 import org.eclipse.emfforms.spi.swt.table.TableViewerCompositeBuilder;
 import org.eclipse.emfforms.spi.swt.table.TableViewerCreator;
 import org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization;
@@ -47,7 +49,8 @@ import org.eclipse.swt.widgets.Label;
  */
 public class DefaultTableControlSWTCustomization implements TableViewerSWTCustomization {
 
-	private final List<ColumnDescription> columns = new ArrayList<TableViewerSWTCustomization.ColumnDescription>();
+	private TableConfiguration tableConfiguration;
+	private final List<ColumnConfiguration> configuredColumns = new ArrayList<ColumnConfiguration>();
 
 	private TableViewerCompositeBuilder tableViewerCompositeBuilder = new DefaultTableViewerCompositeBuilder();
 
@@ -122,8 +125,13 @@ public class DefaultTableControlSWTCustomization implements TableViewerSWTCustom
 	}
 
 	@Override
-	public List<ColumnDescription> getColumns() {
-		return columns;
+	public TableConfiguration getTableConfiguration() {
+		return tableConfiguration;
+	}
+
+	@Override
+	public List<ColumnConfiguration> getColumnConfigurations() {
+		return configuredColumns;
 	}
 
 	/**
@@ -173,14 +181,23 @@ public class DefaultTableControlSWTCustomization implements TableViewerSWTCustom
 	}
 
 	/**
+	 * Sets the table configuration.
+	 *
+	 * @param tableConfiguration the {@link TableConfiguration}
+	 */
+	public void configureTable(TableConfiguration tableConfiguration) {
+		this.tableConfiguration = tableConfiguration;
+	}
+
+	/**
 	 * Adds a column to the table.
 	 *
-	 * @param columnDescription the
-	 *            {@link org.eclipse.emfforms.spi.swt.table.TableViewerSWTCustomization.ColumnDescription
+	 * @param columnConfiguration the
+	 *            {@link org.eclipse.emfforms.spi.swt.table.ColumnConfiguration
 	 *            ColumnDescription}
 	 */
-	public void addColumn(ColumnDescription columnDescription) {
-		columns.add(columnDescription);
+	public void addColumn(ColumnConfiguration columnConfiguration) {
+		configuredColumns.add(columnConfiguration);
 	}
 
 	/**

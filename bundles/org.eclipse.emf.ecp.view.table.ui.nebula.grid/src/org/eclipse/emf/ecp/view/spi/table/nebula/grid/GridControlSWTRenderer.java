@@ -50,7 +50,7 @@ import org.eclipse.emfforms.spi.core.services.databinding.emf.EMFFormsDatabindin
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
-import org.eclipse.emfforms.spi.swt.table.AbstractTableViewerComposite;
+import org.eclipse.emfforms.spi.swt.table.TableConfiguration;
 import org.eclipse.emfforms.spi.swt.table.TableControl;
 import org.eclipse.emfforms.spi.swt.table.TableViewerCompositeBuilder;
 import org.eclipse.emfforms.spi.swt.table.TableViewerCreator;
@@ -59,9 +59,11 @@ import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.viewers.ColumnViewerEditor;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.ViewerRow;
 import org.eclipse.nebula.jface.gridviewer.GridTableViewer;
 import org.eclipse.nebula.jface.gridviewer.GridViewerEditor;
 import org.eclipse.nebula.widgets.grid.Grid;
@@ -72,6 +74,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.ScrollBar;
+import org.eclipse.swt.widgets.Widget;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
@@ -85,6 +88,36 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 
 	private final EStructuralFeatureValueConverterService converterService;
 	private final EMFFormsLocalizationService localizationService;
+
+	/**
+	 * Custom Nebula Grid table viewer to expose getViewerRowFromItem() method.
+	 *
+	 * @author Mat Hansen
+	 *
+	 */
+	public class CustomGridTableViewer extends GridTableViewer {
+
+		/**
+		 * Creates a grid viewer on a newly-created grid control under the given
+		 * parent. The grid control is created using the given SWT style bits. The
+		 * viewer has no input, no content provider, a default label provider, no
+		 * sorter, and no filters.
+		 *
+		 * @param parent
+		 *            the parent control
+		 * @param style
+		 *            the SWT style bits used to create the grid.
+		 */
+		public CustomGridTableViewer(Composite parent, int style) {
+			super(parent, style);
+		}
+
+		// make method public
+		@Override
+		public ViewerRow getViewerRowFromItem(Widget item) {
+			return super.getViewerRowFromItem(item);
+		}
+	}
 
 	/**
 	 * Default constructor.
@@ -169,7 +202,7 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 					final List list = lastSelection.toList();
 					final Grid grid = (Grid) e.widget;
 					final VDomainModelReference dmr = (VDomainModelReference) grid.getColumn(new Point(e.x, e.y))
-						.getData(AbstractTableViewerComposite.DMR);
+						.getData(TableConfiguration.DMR);
 
 					Object masterValue = null;
 					EStructuralFeature structuralFeature = null;
@@ -236,7 +269,16 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 		 */
 		@Override
 		public void selectionChanged(SelectionChangedEvent event) {
-			lastSelection = event.getStructuredSelection();
+			// was implemented using
+			// lastSelection = event.getStructuredSelection();
+			// this method throws a class cast exception in case no structured selection is present,
+			// so doing below null check should be fine
+			final ISelection selection = event.getSelection();
+			if (!IStructuredSelection.class.isInstance(selection)) {
+				lastSelection = null;
+				return;
+			}
+			lastSelection = (IStructuredSelection) event.getSelection();
 			if (lastSelection.size() == 1) {
 				masterObject = (EObject) lastSelection.getFirstElement();
 			}
@@ -254,7 +296,7 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 		@Override
 		public GridTableViewer createTableViewer(Composite parent) {
 
-			final GridTableViewer tableViewer = new GridTableViewer(parent,
+			final GridTableViewer tableViewer = new CustomGridTableViewer(parent,
 				SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
 			tableViewer.getGrid().setData(CUSTOM_VARIANT, TABLE_CUSTOM_VARIANT);
 			tableViewer.getGrid().setHeaderVisible(true);
@@ -268,27 +310,6 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 				tableViewer.addSelectionChangedListener(mdl);
 				tableViewer.getGrid().addMouseListener(mdl);
 			}
-			// TODO MS
-			// tableViewer.getGrid().addKeyListener(new GridNewLineKeyListener() {
-			//
-			// @Override
-			// public void appendNewRow() {
-			//
-			// try {
-			// final Setting setting = getEMFFormsDatabinding().getSetting(getDMRToMultiReference(),
-			// getViewModelContext().getDomainModel());
-			// final EObject eObject = setting.getEObject();
-			// final EStructuralFeature structuralFeature = setting.getEStructuralFeature();
-			// final EClass clazz = ((EReference) structuralFeature).getEReferenceType();
-			//
-			// addRow(clazz, eObject, structuralFeature);
-			// } catch (final DatabindingFailedException ex) {
-			// // nothing to do
-			// }
-			//
-			// }
-			//
-			// });
 
 			/* Set background color */
 			final VTBackgroundStyleProperty backgroundStyleProperty = getBackgroundStyleProperty();
@@ -359,7 +380,7 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 
 	@Override
 	// CHECKSTYLE.OFF: ParameterNumber
-	protected TableViewerSWTBuilder getTableViewerSWTBuilder(Composite parent, IObservableList list,
+	protected TableViewerSWTBuilder createTableViewerSWTBuilder(Composite parent, IObservableList list,
 		IObservableValue labelText, IObservableValue labelTooltipText, TableViewerCompositeBuilder compositeBuilder,
 		ObservableListContentProvider cp, ECPTableViewerComparator comparator,
 		TableControlSWTRendererButtonBarBuilder tableControlSWTRendererButtonBarBuilder) {
@@ -369,7 +390,9 @@ public class GridControlSWTRenderer extends TableControlSWTRenderer {
 			.customizeButtons(tableControlSWTRendererButtonBarBuilder)
 			.customizeTableViewerCreation(getTableViewerCreator())
 			.customizeContentProvider(cp)
-			.customizeComparator(comparator);
+			.customizeComparator(comparator)
+			.enableFeature(TableConfiguration.FEATURE_COLUMN_HIDE_SHOW)
+			.enableFeature(TableConfiguration.FEATURE_COLUMN_FILTER);
 
 	}
 
