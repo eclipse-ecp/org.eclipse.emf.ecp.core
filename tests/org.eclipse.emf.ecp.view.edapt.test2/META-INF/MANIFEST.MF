@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Edapt Test 2
-Bundle-SymbolicName: org.eclipse.emf.ecp.view.edapt.test2
+Bundle-SymbolicName: org.eclipse.emf.ecp.view.edapt.test2;singleton:=true
 Bundle-Version: 2.0.0.qualifier
 Fragment-Host: org.eclipse.emf.ecp.view.edapt;bundle-version="[2.0.0,3.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
@@ -11,7 +11,11 @@ Require-Bundle: org.junit;bundle-version="[4.12.0,5.0.0)",
  org.eclipse.emf.ecp.view.mappingdmr.model;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.emfforms.core.services.databinding.testmodel;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.emf.ecp.view.table.model;bundle-version="[2.0.0,3.0.0)",
- org.eclipse.emfforms.view.multisegment.model;bundle-version="[2.0.0,3.0.0)"
+ org.eclipse.emfforms.view.multisegment.model;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emf.ecore;bundle-version="[2.13.0,3.0.0)";visibility:=reexport
 Bundle-Vendor: Eclipse Modeling Project
 Export-Package: org.eclipse.emf.ecp.view.edapt.test;version="2.0.0";x-internal:=true,
- org.eclipse.emf.ecp.view.edapt.test._190to200;version="2.0.0";x-internal:=true
+ org.eclipse.emf.ecp.view.edapt.test._190to200;version="2.0.0";x-internal:=true,
+ test.localmodel.localmodel;version="2.0.0";x-internal:=true,
+ test.localmodel.localmodel.impl;version="2.0.0";x-internal:=true,
+ test.localmodel.localmodel.util;version="2.0.0";x-internal:=true
