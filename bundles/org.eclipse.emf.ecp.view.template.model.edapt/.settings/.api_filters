@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emfforms.core.services" version="2">
+    <resource path="META-INF/MANIFEST.MF">
+        <filter comment="SPI Change for 1.9.0" id="923795461">
+            <message_arguments>
+                <message_argument value="1.9.0"/>
+                <message_argument value="1.8.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emfforms/spi/core/services/controlmapper/EMFFormsSettingToControlMapper.java" type="org.eclipse.emfforms.spi.core.services.controlmapper.EMFFormsSettingToControlMapper">
+        <filter comment="SPI Change 1.9.0" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emfforms.spi.core.services.controlmapper.EMFFormsSettingToControlMapper"/>
+                <message_argument value="getEObjectsWithSettings()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.9.0" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emfforms.spi.core.services.controlmapper.EMFFormsSettingToControlMapper"/>
+                <message_argument value="hasControlsFor(EObject)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emfforms/spi/core/services/view/EMFFormsViewContext.java" type="org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext">
+        <filter comment="SPI Change for 1.9.0" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext"/>
+                <message_argument value="changeDomainModel(EObject)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change for 1.9.0" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext"/>
+                <message_argument value="registerRootDomainModelChangeListener(RootDomainModelChangeListener)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change for 1.9.0" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emfforms.spi.core.services.view.EMFFormsViewContext"/>
+                <message_argument value="unregisterRootDomainModelChangeListener(RootDomainModelChangeListener)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

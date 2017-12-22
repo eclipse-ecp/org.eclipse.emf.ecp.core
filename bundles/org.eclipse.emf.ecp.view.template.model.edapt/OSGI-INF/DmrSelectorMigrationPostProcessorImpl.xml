@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="DmrSelectorMigrationPostProcessorImpl">
+   <service>
+      <provide interface="org.eclipse.emf.ecp.internal.view.model.edapt._190to200.DmrSelectorMigrationPostProcessor"/>
+   </service>
+   <implementation class="org.eclipse.emf.ecp.internal.view.template.selector.domainmodelreference.model.edapt.DmrSelectorMigrationPostProcessorImpl"/>
+</scr:component>

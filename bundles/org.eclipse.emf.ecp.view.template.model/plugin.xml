@@ -43,7 +43,7 @@
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated domainModelReferenceSelector -->
       <package
-            uri="http://www.eclipse.org/emf/ecp/view/template/selector/domainmodelreference/model/200"
+            uri="http://www/eclipse/org/emf/ecp/view/template/selector/domainmodelreference/model/200"
             class="org.eclipse.emf.ecp.view.template.selector.domainmodelreference.model.VTDomainmodelreferencePackage"
             genModel="model/domainModelReferenceSelector.genmodel"/>
    </extension>
@@ -119,6 +119,18 @@
             uri="http://www.eclipse.org/emf/ecp/view/template/style/unsettable/model"
             class="org.eclipse.emf.ecp.view.template.style.unsettable.model.VTUnsettablePackage"
             genModel="model/unsettableStyle.genmodel"/>
+   </extension>
+   <extension
+         point="org.eclipse.emf.edapt.migrators">
+      <migrator
+            path="model/domainModelReferenceSelector.history">
+      </migrator>
+   </extension>
+   <extension
+         point="org.eclipse.emf.edapt.migrators">
+      <migrator
+            path="model/template.history">
+      </migrator>
    </extension>
 
 </plugin>

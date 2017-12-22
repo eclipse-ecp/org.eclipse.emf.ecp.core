@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="ASCII"?>
+<history:History xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:history="http://www.eclipse.org/emf/edapt/history/0.3" xmi:id="_Gt7xUOWMEeeMldJfOTg7uQ">
+  <releases xmi:id="_Gt7xUeWMEeeMldJfOTg7uQ" date="2017-12-20T14:46:34.570+0100" label="1140">
+    <changes xsi:type="history:CompositeChange" xmi:id="_Gt7xUuWMEeeMldJfOTg7uQ">
+      <changes xsi:type="history:Create" xmi:id="_Gt7xU-WMEeeMldJfOTg7uQ">
+        <element href="template.ecore#/"/>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xVOWMEeeMldJfOTg7uQ" featureName="name" dataValue="template">
+          <element href="template.ecore#/"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xVeWMEeeMldJfOTg7uQ" featureName="nsURI" dataValue="http://org/eclipse/emf/ecp/view/template/model">
+          <element href="template.ecore#/"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xVuWMEeeMldJfOTg7uQ" featureName="nsPrefix" dataValue="org.eclipse.emf.ecp.view.template.model">
+          <element href="template.ecore#/"/>
+        </changes>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_Gt7xV-WMEeeMldJfOTg7uQ" referenceName="eClassifiers">
+        <target href="template.ecore#/"/>
+        <element href="template.ecore#//ViewTemplate"/>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xWOWMEeeMldJfOTg7uQ" featureName="name" dataValue="ViewTemplate">
+          <element href="template.ecore#//ViewTemplate"/>
+        </changes>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_Gt7xWeWMEeeMldJfOTg7uQ" referenceName="eStructuralFeatures">
+        <target href="template.ecore#//ViewTemplate"/>
+        <element href="template.ecore#//ViewTemplate/referencedEcores"/>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xWuWMEeeMldJfOTg7uQ" featureName="name" dataValue="referencedEcores">
+          <element href="template.ecore#//ViewTemplate/referencedEcores"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xW-WMEeeMldJfOTg7uQ" featureName="upperBound" dataValue="-1" oldDataValue="1">
+          <element href="template.ecore#//ViewTemplate/referencedEcores"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xXOWMEeeMldJfOTg7uQ" featureName="eType">
+          <element href="template.ecore#//ViewTemplate/referencedEcores"/>
+          <referenceValue href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </changes>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_Gt7xXeWMEeeMldJfOTg7uQ" referenceName="eClassifiers">
+        <target href="template.ecore#/"/>
+        <element href="template.ecore#//ControlValidationTemplate"/>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xXuWMEeeMldJfOTg7uQ" featureName="name" dataValue="ControlValidationTemplate">
+          <element href="template.ecore#//ControlValidationTemplate"/>
+        </changes>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_Gt7xX-WMEeeMldJfOTg7uQ" referenceName="eStructuralFeatures">
+        <target href="template.ecore#//ViewTemplate"/>
+        <element href="template.ecore#//ViewTemplate/controlValidationConfiguration"/>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xYOWMEeeMldJfOTg7uQ" featureName="name" dataValue="controlValidationConfiguration">
+          <element href="template.ecore#//ViewTemplate/controlValidationConfiguration"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xYeWMEeeMldJfOTg7uQ" featureName="lowerBound" dataValue="1" oldDataValue="0">
+          <element href="template.ecore#//ViewTemplate/controlValidationConfiguration"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xYuWMEeeMldJfOTg7uQ" featureName="containment" dataValue="true" oldDataValue="false">
+          <element href="template.ecore#//ViewTemplate/controlValidationConfiguration"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xY-WMEeeMldJfOTg7uQ" featureName="eType">
+          <element href="template.ecore#//ViewTemplate/controlValidationConfiguration"/>
+          <referenceValue href="template.ecore#//ControlValidationTemplate"/>
+        </changes>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_Gt7xZOWMEeeMldJfOTg7uQ" referenceName="eStructuralFeatures">
+        <target href="template.ecore#//ControlValidationTemplate"/>
+        <element href="template.ecore#//ControlValidationTemplate/okColorHEX"/>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xZeWMEeeMldJfOTg7uQ" featureName="name" dataValue="okColorHEX">
+          <element href="template.ecore#//ControlValidationTemplate/okColorHEX"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xZuWMEeeMldJfOTg7uQ" featureName="eType">
+          <element href="template.ecore#//ControlValidationTemplate/okColorHEX"/>
+          <referenceValue href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </changes>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_Gt7xZ-WMEeeMldJfOTg7uQ" referenceName="eStructuralFeatures">
+        <target href="template.ecore#//ControlValidationTemplate"/>
+        <element href="template.ecore#//ControlValidationTemplate/okForegroundColorHEX"/>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xaOWMEeeMldJfOTg7uQ" featureName="name" dataValue="okForegroundColorHEX">
+          <element href="template.ecore#//ControlValidationTemplate/okForegroundColorHEX"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xaeWMEeeMldJfOTg7uQ" featureName="eType">
+          <element href="template.ecore#//ControlValidationTemplate/okForegroundColorHEX"/>
+          <referenceValue href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </changes>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_Gt7xauWMEeeMldJfOTg7uQ" referenceName="eStructuralFeatures">
+        <target href="template.ecore#//ControlValidationTemplate"/>
+        <element href="template.ecore#//ControlValidationTemplate/okImageURL"/>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xa-WMEeeMldJfOTg7uQ" featureName="name" dataValue="okImageURL">
+          <element href="template.ecore#//ControlValidationTemplate/okImageURL"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xbOWMEeeMldJfOTg7uQ" featureName="eType">
+          <element href="template.ecore#//ControlValidationTemplate/okImageURL"/>
+          <referenceValue href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </changes>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_Gt7xbeWMEeeMldJfOTg7uQ" referenceName="eStructuralFeatures">
+        <target href="template.ecore#//ControlValidationTemplate"/>
+        <element href="template.ecore#//ControlValidationTemplate/okOverlayURL"/>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xbuWMEeeMldJfOTg7uQ" featureName="name" dataValue="okOverlayURL">
+          <element href="template.ecore#//ControlValidationTemplate/okOverlayURL"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xb-WMEeeMldJfOTg7uQ" featureName="eType">
+          <element href="template.ecore#//ControlValidationTemplate/okOverlayURL"/>
+          <referenceValue href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </changes>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_Gt7xcOWMEeeMldJfOTg7uQ" referenceName="eStructuralFeatures">
+        <target href="template.ecore#//ControlValidationTemplate"/>
+        <element href="template.ecore#//ControlValidationTemplate/infoColorHEX"/>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xceWMEeeMldJfOTg7uQ" featureName="name" dataValue="infoColorHEX">
+          <element href="template.ecore#//ControlValidationTemplate/infoColorHEX"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xcuWMEeeMldJfOTg7uQ" featureName="eType">
+          <element href="template.ecore#//ControlValidationTemplate/infoColorHEX"/>
+          <referenceValue href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </changes>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_Gt7xc-WMEeeMldJfOTg7uQ" referenceName="eStructuralFeatures">
+        <target href="template.ecore#//ControlValidationTemplate"/>
+        <element href="template.ecore#//ControlValidationTemplate/infoForegroundColorHEX"/>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xdOWMEeeMldJfOTg7uQ" featureName="name" dataValue="infoForegroundColorHEX">
+          <element href="template.ecore#//ControlValidationTemplate/infoForegroundColorHEX"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xdeWMEeeMldJfOTg7uQ" featureName="eType">
+          <element href="template.ecore#//ControlValidationTemplate/infoForegroundColorHEX"/>
+          <referenceValue href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </changes>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_Gt7xduWMEeeMldJfOTg7uQ" referenceName="eStructuralFeatures">
+        <target href="template.ecore#//ControlValidationTemplate"/>
+        <element href="template.ecore#//ControlValidationTemplate/infoImageURL"/>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xd-WMEeeMldJfOTg7uQ" featureName="name" dataValue="infoImageURL">
+          <element href="template.ecore#//ControlValidationTemplate/infoImageURL"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xeOWMEeeMldJfOTg7uQ" featureName="eType">
+          <element href="template.ecore#//ControlValidationTemplate/infoImageURL"/>
+          <referenceValue href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </changes>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_Gt7xeeWMEeeMldJfOTg7uQ" referenceName="eStructuralFeatures">
+        <target href="template.ecore#//ControlValidationTemplate"/>
+        <element href="template.ecore#//ControlValidationTemplate/infoOverlayURL"/>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xeuWMEeeMldJfOTg7uQ" featureName="name" dataValue="infoOverlayURL">
+          <element href="template.ecore#//ControlValidationTemplate/infoOverlayURL"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xe-WMEeeMldJfOTg7uQ" featureName="eType">
+          <element href="template.ecore#//ControlValidationTemplate/infoOverlayURL"/>
+          <referenceValue href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </changes>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_Gt7xfOWMEeeMldJfOTg7uQ" referenceName="eStructuralFeatures">
+        <target href="template.ecore#//ControlValidationTemplate"/>
+        <element href="template.ecore#//ControlValidationTemplate/warningColorHEX"/>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xfeWMEeeMldJfOTg7uQ" featureName="name" dataValue="warningColorHEX">
+          <element href="template.ecore#//ControlValidationTemplate/warningColorHEX"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xfuWMEeeMldJfOTg7uQ" featureName="eType">
+          <element href="template.ecore#//ControlValidationTemplate/warningColorHEX"/>
+          <referenceValue href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </changes>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_Gt7xf-WMEeeMldJfOTg7uQ" referenceName="eStructuralFeatures">
+        <target href="template.ecore#//ControlValidationTemplate"/>
+        <element href="template.ecore#//ControlValidationTemplate/warningForegroundColorHEX"/>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xgOWMEeeMldJfOTg7uQ" featureName="name" dataValue="warningForegroundColorHEX">
+          <element href="template.ecore#//ControlValidationTemplate/warningForegroundColorHEX"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xgeWMEeeMldJfOTg7uQ" featureName="eType">
+          <element href="template.ecore#//ControlValidationTemplate/warningForegroundColorHEX"/>
+          <referenceValue href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </changes>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_Gt7xguWMEeeMldJfOTg7uQ" referenceName="eStructuralFeatures">
+        <target href="template.ecore#//ControlValidationTemplate"/>
+        <element href="template.ecore#//ControlValidationTemplate/warningImageURL"/>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xg-WMEeeMldJfOTg7uQ" featureName="name" dataValue="warningImageURL">
+          <element href="template.ecore#//ControlValidationTemplate/warningImageURL"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xhOWMEeeMldJfOTg7uQ" featureName="eType">
+          <element href="template.ecore#//ControlValidationTemplate/warningImageURL"/>
+          <referenceValue href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </changes>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_Gt7xheWMEeeMldJfOTg7uQ" referenceName="eStructuralFeatures">
+        <target href="template.ecore#//ControlValidationTemplate"/>
+        <element href="template.ecore#//ControlValidationTemplate/warningOverlayURL"/>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xhuWMEeeMldJfOTg7uQ" featureName="name" dataValue="warningOverlayURL">
+          <element href="template.ecore#//ControlValidationTemplate/warningOverlayURL"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xh-WMEeeMldJfOTg7uQ" featureName="eType">
+          <element href="template.ecore#//ControlValidationTemplate/warningOverlayURL"/>
+          <referenceValue href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </changes>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_Gt7xiOWMEeeMldJfOTg7uQ" referenceName="eStructuralFeatures">
+        <target href="template.ecore#//ControlValidationTemplate"/>
+        <element href="template.ecore#//ControlValidationTemplate/errorColorHEX"/>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xieWMEeeMldJfOTg7uQ" featureName="name" dataValue="errorColorHEX">
+          <element href="template.ecore#//ControlValidationTemplate/errorColorHEX"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xiuWMEeeMldJfOTg7uQ" featureName="eType">
+          <element href="template.ecore#//ControlValidationTemplate/errorColorHEX"/>
+          <referenceValue href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </changes>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_Gt7xi-WMEeeMldJfOTg7uQ" referenceName="eStructuralFeatures">
+        <target href="template.ecore#//ControlValidationTemplate"/>
+        <element href="template.ecore#//ControlValidationTemplate/errorForegroundColorHEX"/>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xjOWMEeeMldJfOTg7uQ" featureName="name" dataValue="errorForegroundColorHEX">
+          <element href="template.ecore#//ControlValidationTemplate/errorForegroundColorHEX"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xjeWMEeeMldJfOTg7uQ" featureName="eType">
+          <element href="template.ecore#//ControlValidationTemplate/errorForegroundColorHEX"/>
+          <referenceValue href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </changes>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_Gt7xjuWMEeeMldJfOTg7uQ" referenceName="eStructuralFeatures">
+        <target href="template.ecore#//ControlValidationTemplate"/>
+        <element href="template.ecore#//ControlValidationTemplate/errorImageURL"/>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xj-WMEeeMldJfOTg7uQ" featureName="name" dataValue="errorImageURL">
+          <element href="template.ecore#//ControlValidationTemplate/errorImageURL"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xkOWMEeeMldJfOTg7uQ" featureName="eType">
+          <element href="template.ecore#//ControlValidationTemplate/errorImageURL"/>
+          <referenceValue href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </changes>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_Gt7xkeWMEeeMldJfOTg7uQ" referenceName="eStructuralFeatures">
+        <target href="template.ecore#//ControlValidationTemplate"/>
+        <element href="template.ecore#//ControlValidationTemplate/errorOverlayURL"/>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xkuWMEeeMldJfOTg7uQ" featureName="name" dataValue="errorOverlayURL">
+          <element href="template.ecore#//ControlValidationTemplate/errorOverlayURL"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xk-WMEeeMldJfOTg7uQ" featureName="eType">
+          <element href="template.ecore#//ControlValidationTemplate/errorOverlayURL"/>
+          <referenceValue href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </changes>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_Gt7xlOWMEeeMldJfOTg7uQ" referenceName="eStructuralFeatures">
+        <target href="template.ecore#//ControlValidationTemplate"/>
+        <element href="template.ecore#//ControlValidationTemplate/cancelColorHEX"/>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xleWMEeeMldJfOTg7uQ" featureName="name" dataValue="cancelColorHEX">
+          <element href="template.ecore#//ControlValidationTemplate/cancelColorHEX"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xluWMEeeMldJfOTg7uQ" featureName="eType">
+          <element href="template.ecore#//ControlValidationTemplate/cancelColorHEX"/>
+          <referenceValue href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </changes>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_Gt7xl-WMEeeMldJfOTg7uQ" referenceName="eStructuralFeatures">
+        <target href="template.ecore#//ControlValidationTemplate"/>
+        <element href="template.ecore#//ControlValidationTemplate/cancelForegroundColorHEX"/>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xmOWMEeeMldJfOTg7uQ" featureName="name" dataValue="cancelForegroundColorHEX">
+          <element href="template.ecore#//ControlValidationTemplate/cancelForegroundColorHEX"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xmeWMEeeMldJfOTg7uQ" featureName="eType">
+          <element href="template.ecore#//ControlValidationTemplate/cancelForegroundColorHEX"/>
+          <referenceValue href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </changes>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_Gt7xmuWMEeeMldJfOTg7uQ" referenceName="eStructuralFeatures">
+        <target href="template.ecore#//ControlValidationTemplate"/>
+        <element href="template.ecore#//ControlValidationTemplate/cancelImageURL"/>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xm-WMEeeMldJfOTg7uQ" featureName="name" dataValue="cancelImageURL">
+          <element href="template.ecore#//ControlValidationTemplate/cancelImageURL"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xnOWMEeeMldJfOTg7uQ" featureName="eType">
+          <element href="template.ecore#//ControlValidationTemplate/cancelImageURL"/>
+          <referenceValue href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </changes>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_Gt7xneWMEeeMldJfOTg7uQ" referenceName="eStructuralFeatures">
+        <target href="template.ecore#//ControlValidationTemplate"/>
+        <element href="template.ecore#//ControlValidationTemplate/cancelOverlayURL"/>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xnuWMEeeMldJfOTg7uQ" featureName="name" dataValue="cancelOverlayURL">
+          <element href="template.ecore#//ControlValidationTemplate/cancelOverlayURL"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xn-WMEeeMldJfOTg7uQ" featureName="eType">
+          <element href="template.ecore#//ControlValidationTemplate/cancelOverlayURL"/>
+          <referenceValue href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </changes>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_Gt7xoOWMEeeMldJfOTg7uQ" referenceName="eClassifiers">
+        <target href="template.ecore#/"/>
+        <element href="template.ecore#//Style"/>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xoeWMEeeMldJfOTg7uQ" featureName="name" dataValue="Style">
+          <element href="template.ecore#//Style"/>
+        </changes>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_Gt7xouWMEeeMldJfOTg7uQ" referenceName="eStructuralFeatures">
+        <target href="template.ecore#//ViewTemplate"/>
+        <element href="template.ecore#//ViewTemplate/styles"/>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xo-WMEeeMldJfOTg7uQ" featureName="name" dataValue="styles">
+          <element href="template.ecore#//ViewTemplate/styles"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xpOWMEeeMldJfOTg7uQ" featureName="upperBound" dataValue="-1" oldDataValue="1">
+          <element href="template.ecore#//ViewTemplate/styles"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xpeWMEeeMldJfOTg7uQ" featureName="containment" dataValue="true" oldDataValue="false">
+          <element href="template.ecore#//ViewTemplate/styles"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xpuWMEeeMldJfOTg7uQ" featureName="eType">
+          <element href="template.ecore#//ViewTemplate/styles"/>
+          <referenceValue href="template.ecore#//Style"/>
+        </changes>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_Gt7xp-WMEeeMldJfOTg7uQ" referenceName="eClassifiers">
+        <target href="template.ecore#/"/>
+        <element href="template.ecore#//StyleProperty"/>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xqOWMEeeMldJfOTg7uQ" featureName="name" dataValue="StyleProperty">
+          <element href="template.ecore#//StyleProperty"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xqeWMEeeMldJfOTg7uQ" featureName="abstract" dataValue="true" oldDataValue="false">
+          <element href="template.ecore#//StyleProperty"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xquWMEeeMldJfOTg7uQ" featureName="interface" dataValue="true" oldDataValue="false">
+          <element href="template.ecore#//StyleProperty"/>
+        </changes>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_Gt7xq-WMEeeMldJfOTg7uQ" referenceName="eStructuralFeatures">
+        <target href="template.ecore#//Style"/>
+        <element href="template.ecore#//Style/properties"/>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xrOWMEeeMldJfOTg7uQ" featureName="name" dataValue="properties">
+          <element href="template.ecore#//Style/properties"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xreWMEeeMldJfOTg7uQ" featureName="upperBound" dataValue="-1" oldDataValue="1">
+          <element href="template.ecore#//Style/properties"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xruWMEeeMldJfOTg7uQ" featureName="containment" dataValue="true" oldDataValue="false">
+          <element href="template.ecore#//Style/properties"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xr-WMEeeMldJfOTg7uQ" featureName="eType">
+          <element href="template.ecore#//Style/properties"/>
+          <referenceValue href="template.ecore#//StyleProperty"/>
+        </changes>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_Gt7xsOWMEeeMldJfOTg7uQ" referenceName="eClassifiers">
+        <target href="template.ecore#/"/>
+        <element href="template.ecore#//StyleSelector"/>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xseWMEeeMldJfOTg7uQ" featureName="name" dataValue="StyleSelector">
+          <element href="template.ecore#//StyleSelector"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xsuWMEeeMldJfOTg7uQ" featureName="abstract" dataValue="true" oldDataValue="false">
+          <element href="template.ecore#//StyleSelector"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xs-WMEeeMldJfOTg7uQ" featureName="interface" dataValue="true" oldDataValue="false">
+          <element href="template.ecore#//StyleSelector"/>
+        </changes>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_Gt7xtOWMEeeMldJfOTg7uQ" referenceName="eStructuralFeatures">
+        <target href="template.ecore#//Style"/>
+        <element href="template.ecore#//Style/selector"/>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xteWMEeeMldJfOTg7uQ" featureName="name" dataValue="selector">
+          <element href="template.ecore#//Style/selector"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xtuWMEeeMldJfOTg7uQ" featureName="lowerBound" dataValue="1" oldDataValue="0">
+          <element href="template.ecore#//Style/selector"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xt-WMEeeMldJfOTg7uQ" featureName="containment" dataValue="true" oldDataValue="false">
+          <element href="template.ecore#//Style/selector"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_Gt7xuOWMEeeMldJfOTg7uQ" featureName="eType">
+          <element href="template.ecore#//Style/selector"/>
+          <referenceValue href="template.ecore#//StyleSelector"/>
+        </changes>
+      </changes>
+    </changes>
+  </releases>
+  <releases xmi:id="_MXASoOWMEeeMldJfOTg7uQ"/>
+</history:History>

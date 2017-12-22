@@ -24,7 +24,9 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({ FeaturePathDMRTest.class, MappingDMRTest.class, TableDmrTest.class, CascadedTableDmrTest.class,
 	CascadedChildTableDmrTest.class, TableDmrWidthConfigurationTest.class,
-	TableDmrReadonlyColumnConfigurationTest.class, TableDmrEnablementConfigurationTest.class })
+	TableDmrReadonlyColumnConfigurationTest.class, TableDmrEnablementConfigurationTest.class,
+	DmrSelector_FeatureDmr_NoRefPath.class, DmrSelector_LocalEcore.class
+})
 public class All190to200Tests {
 
 }

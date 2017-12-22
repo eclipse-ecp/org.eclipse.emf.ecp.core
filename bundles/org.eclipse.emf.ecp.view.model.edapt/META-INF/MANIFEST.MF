@@ -5,7 +5,9 @@ Bundle-SymbolicName: org.eclipse.emf.ecp.view.model.edapt;singleton:=true
 Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: Eclipse Modeling Project
 Export-Package: org.eclipse.emf.ecp.internal.view.model.edapt._160to170;version="2.0.0";x-internal:=true,
- org.eclipse.emf.ecp.internal.view.model.edapt._190to200;version="2.0.0";x-internal:=true
-Require-Bundle: org.eclipse.emf.edapt.migration;bundle-version="[1.1.0,2.0.0)"
+ org.eclipse.emf.ecp.internal.view.model.edapt._190to200;version="2.0.0";x-friends:="org.eclipse.emf.ecp.view.template.model.edapt"
+Require-Bundle: org.eclipse.emf.edapt.migration;bundle-version="[1.1.0,2.0.0)",
+ org.eclipse.emf.ecp.view.edapt;bundle-version="[2.0.0,3.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
+Import-Package: org.osgi.framework;version="[1.8.0,2.0.0)"

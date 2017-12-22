@@ -89,7 +89,14 @@ public final class EcoreHelper {
 		// actually load the ecore reusing already loaded packages from the workspace
 		final ResourceSet physicalResourceSet = new ResourceSetImpl();
 		initResourceSet(physicalResourceSet, true);
-		final URI uri = URI.createPlatformResourceURI(ecorePath, false);
+
+		final URI uri;
+		if (ecorePath.startsWith("/")) { //$NON-NLS-1$
+			uri = URI.createPlatformResourceURI(ecorePath, false);
+		} else {
+			uri = URI.createURI(ecorePath);
+		}
+
 		final Resource r = physicalResourceSet.createResource(uri);
 		r.load(null);
 		// resolve the proxies

@@ -182,6 +182,7 @@
 		<!-- Template Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.template.model</module>
 		<module>../../bundles/org.eclipse.emf.ecp.view.template.model.edit</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.template.model.edapt</module>
 		<!-- Template Helper Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.template.service</module>
 

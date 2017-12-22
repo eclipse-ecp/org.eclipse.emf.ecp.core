@@ -59,7 +59,7 @@
       <element href="domainModelReferenceSelector.ecore#//DomainModelReferenceSelector/dmrRootEClass"/>
       <referenceValue href="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
     </changes>
-    <changes xsi:type="history:Set" xmi:id="_7dkz4Lr4EeeQXZNhT7QpJQ" featureName="nsURI" dataValue="http://www.eclipse.org/emf/ecp/view/template/selector/domainmodelreference/model/200" oldDataValue="http://www.eclipse.org/emf/ecp/view/template/selector/domainmodelreference/model">
+    <changes xsi:type="history:Set" xmi:id="_7dkz4Lr4EeeQXZNhT7QpJQ" featureName="nsURI" dataValue="http://www/eclipse/org/emf/ecp/view/template/selector/domainmodelreference/model/200" oldDataValue="http://www.eclipse.org/emf/ecp/view/template/selector/domainmodelreference/model">
       <element href="domainModelReferenceSelector.ecore#/"/>
     </changes>
   </releases>

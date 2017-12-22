@@ -18,7 +18,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -39,6 +41,7 @@ import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecp.ide.spi.util.EcoreHelper;
 import org.eclipse.emf.ecp.spi.view.migrator.NameSpaceHandler;
 import org.eclipse.emf.ecp.spi.view.migrator.SAXUtil;
 import org.eclipse.emf.ecp.spi.view.migrator.string.StringViewModelMigrator;
@@ -57,6 +60,10 @@ import org.eclipse.emf.edapt.spi.history.MigrationChange;
 import org.eclipse.emf.edapt.spi.history.Release;
 import org.eclipse.emf.edapt.spi.migration.MigrationPlugin;
 import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.ServiceReference;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -146,11 +153,60 @@ public class EdaptViewModelMigrator implements ViewModelMigrator, StringViewMode
 		}
 	}
 
+	// TODO selector mig.: refactor: split into ViewModelMigrator and TemplateModelMigrator
 	@Override
 	public void performMigration(final URI resourceURI) throws ViewModelMigrationException {
 		final History history = HistoryFactory.eINSTANCE.createHistory();
 		final Release sourceRelease = HistoryFactory.eINSTANCE.createRelease();
 		final List<Release> targetReleases = new ArrayList<Release>();
+
+		final BundleContext bundleContext = FrameworkUtil.getBundle(EdaptViewModelMigrator.class)
+			.getBundleContext();
+		final ResourceSetImpl resourceSet = new ResourceSetImpl();
+		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
+			Resource.Factory.Registry.DEFAULT_EXTENSION, new VViewResourceFactoryImpl());
+		final Resource resource = resourceSet.createResource(resourceURI);
+
+		// read root package namespace uri with SAX
+		// final RootPackageHandler handler = new RootPackageHandler();
+		// executeContentHandler(file, handler);
+		// if (handler.foundRootEClass()) {
+		// return Collections.singleton(handler.getRootPackageURI());
+		// }
+
+		// TODO extract method
+		@SuppressWarnings("restriction")
+		final File file = org.eclipse.emf.edapt.internal.common.URIUtils.getJavaFile(resourceURI);
+		final ViewTemplateReferencedPackagesHandler referencedPackagesHandler = new ViewTemplateReferencedPackagesHandler();
+		executeContentHandler(file, referencedPackagesHandler);
+		referencedPackagesHandler.getReferencedEcorePaths();
+		for (final String ecorePath : referencedPackagesHandler.getReferencedEcorePaths()) {
+			try {
+				EcoreHelper.registerEcore(ecorePath);
+			} catch (final IOException e) {
+				throw new ViewModelMigrationException(e);
+			}
+		}
+
+		// Migration Pre Processing
+		// try {
+		// resource.load(null);
+		// final Collection<ServiceReference<MigrationPreProcessor>> serviceReferences = bundleContext
+		// .getServiceReferences(MigrationPreProcessor.class, null);
+		// for (final ServiceReference<MigrationPreProcessor> serviceReference : serviceReferences) {
+		// final MigrationPreProcessor service = bundleContext.getService(serviceReference);
+		// service.process(resource);
+		// }
+		// resource.save(null);
+		// resource.unload();
+		// } catch (final IOException ex) {
+		// throw new ViewModelMigrationException(ex);
+		// } catch (final InvalidSyntaxException ex) {
+		// throw new ViewModelMigrationException(ex);
+		// } catch (final MigrationException ex) {
+		// throw new ViewModelMigrationException(ex);
+		// }
+
 		/*
 		 * Analyse the domain model of the view. Generate a history for ecores which have no registered history and add
 		 * them to source release. Mapping contains information about which uris from the domain have histories and
@@ -188,9 +244,24 @@ public class EdaptViewModelMigrator implements ViewModelMigrator, StringViewMode
 			migrator.migrateAndSave(Collections.singletonList(resourceURI), release, null,
 				new NullProgressMonitor());
 
+			// TODO need load options?
+			resource.load(null);
+
+			final Collection<ServiceReference<MigrationPostProcessor>> serviceReferences = bundleContext
+				.getServiceReferences(MigrationPostProcessor.class, null);
+			for (final ServiceReference<MigrationPostProcessor> serviceReference : serviceReferences) {
+				final MigrationPostProcessor service = bundleContext.getService(serviceReference);
+				service.process(resource);
+			}
+
+			// TODO need save options?
+			resource.save(null);
+			resource.unload();
 		} catch (final IOException ex) {
 			throw new ViewModelMigrationException(ex);
 		} catch (final MigrationException ex) {
+			throw new ViewModelMigrationException(ex);
+		} catch (final InvalidSyntaxException ex) {
 			throw new ViewModelMigrationException(ex);
 		} finally {
 			reregisterExtensionMigrators();
@@ -311,8 +382,8 @@ public class EdaptViewModelMigrator implements ViewModelMigrator, StringViewMode
 		final Map<String, List<Change>> targetReleaseNameToChangesMap) {
 		final List<String> sourceReleaseNames = new ArrayList<String>(sourceReleaseNameToChangesMap.keySet());
 		final List<String> targetReleaseNames = new ArrayList<String>(targetReleaseNameToChangesMap.keySet());
-		Collections.sort(sourceReleaseNames);
-		Collections.sort(targetReleaseNames);
+		Collections.sort(sourceReleaseNames, new ReleaseLabelComparator());
+		Collections.sort(targetReleaseNames, new ReleaseLabelComparator());
 
 		for (final String release : sourceReleaseNames) {
 			final List<Change> list = sourceReleaseNameToChangesMap.get(release);
@@ -377,6 +448,8 @@ public class EdaptViewModelMigrator implements ViewModelMigrator, StringViewMode
 		final PackageDependencyGraph domainModelPackageGraph = new PackageDependencyGraph();
 		domainModelPackageGraph.addPackage(ECORE_NS_URI);
 		final Set<String> rootPackageURIs = getRootPackageURI(resourceURI);
+		// TODO to migrate template models, nested packages (for dmr selectors need to be found)
+		// currently this is implicitly done in getRootPackageURI
 		for (String rootPackageNsUri : rootPackageURIs) {
 			final Migrator rootMigrator = MigratorRegistry.getInstance().getMigrator(rootPackageNsUri);
 			if (rootMigrator != null) {
@@ -449,6 +522,28 @@ public class EdaptViewModelMigrator implements ViewModelMigrator, StringViewMode
 	private Set<String> getRootPackageURI(URI resourceURI) {
 		@SuppressWarnings("restriction")
 		final File file = org.eclipse.emf.edapt.internal.common.URIUtils.getJavaFile(resourceURI);
+		/*
+		 * TODO when refactoring into view and template migrator is complete,
+		 * comment in stricter code below and use DmrSelectorPackage handler to find packages for the selectors
+		 */
+
+		// read root package namespace uri with SAX
+		// final RootPackageHandler handler = new RootPackageHandler();
+		// executeContentHandler(file, handler);
+		// if (handler.foundRootEClass()) {
+		// return Collections.singleton(handler.getRootPackageURI());
+		// }
+		final RootPackageCalculationHandler calcHandler = new RootPackageCalculationHandler();
+		executeContentHandler(file, calcHandler);
+		return calcHandler.getUsedPackages();
+	}
+
+	/**
+	 * @return the namespaces of all models used in the given resource.
+	 */
+	private Set<String> getInnerPackageURIs(URI resourceURI) {
+		@SuppressWarnings("restriction")
+		final File file = org.eclipse.emf.edapt.internal.common.URIUtils.getJavaFile(resourceURI);
 		// read root package namespace uri with SAX
 		final RootPackageHandler handler = new RootPackageHandler();
 		executeContentHandler(file, handler);
@@ -498,6 +593,66 @@ public class EdaptViewModelMigrator implements ViewModelMigrator, StringViewMode
 		}
 	}
 
+	/**
+	 * Comparator to compare Release labels and consider that minor versions can have 2 digits.
+	 * XXX: Needs to be adjusted when the label format is changed or double-digit major or patch versions occur.
+	 *
+	 * @author Lucas Koehler
+	 *
+	 */
+	private class ReleaseLabelComparator implements Comparator<String> {
+
+		@Override
+		public int compare(String o1, String o2) {
+			int minorLength1;
+			int minorLength2;
+			String major1, minor1, patch1;
+			String major2, minor2, patch2;
+			if (o1.length() == 3) {
+				minorLength1 = 1;
+			} else if (o1.length() == 4) {
+				minorLength1 = 2;
+			} else {
+				throw new IllegalArgumentException(String.format(
+					"Label %s has an invalid format. Labels must have 1 number for the major release, 1 or 2 numbers for the minor release and 1 number for the patch version (e.g. 140 or 1140).", //$NON-NLS-1$
+					o1));
+			}
+			if (o2.length() == 3) {
+				minorLength2 = 1;
+			} else if (o2.length() == 4) {
+				minorLength2 = 2;
+			} else {
+				throw new IllegalArgumentException(String.format(
+					"Label %s has an invalid format. Labels must have 1 number for the major release, 1 or 2 numbers for the minor release and 1 number for the patch version (e.g. 140 or 1140).", //$NON-NLS-1$
+					o2));
+			}
+
+			major1 = o1.substring(0, 1);
+			minor1 = o1.substring(1, 1 + minorLength1);
+			patch1 = o1.substring(1 + minorLength1);
+
+			major2 = o2.substring(0, 1);
+			minor2 = o2.substring(1, 1 + minorLength2);
+			patch2 = o2.substring(1 + minorLength2);
+
+			if (!major1.equals(major2)) {
+				return major1.compareTo(major2);
+			}
+			if (minorLength1 != minorLength2) {
+				return compare(minorLength1, minorLength2);
+			}
+			if (!minor1.equals(minor2)) {
+				return compare(Integer.parseInt(minor1), Integer.parseInt(minor2));
+			}
+			return patch1.compareTo(patch2);
+		}
+
+		private int compare(int x, int y) {
+			return x < y ? -1 : x == y ? 0 : 1;
+		}
+
+	}
+
 	/** Content handler for extraction of the root package namespace URI using SAX. */
 	private static class RootPackageHandler extends DefaultHandler {
 
@@ -535,6 +690,109 @@ public class EdaptViewModelMigrator implements ViewModelMigrator, StringViewMode
 		/** Returns the root package's namespace URI. */
 		public String getRootPackageURI() {
 			return rootPackageURI;
+		}
+	}
+
+	/** Content handler for extraction of the DMR selector's package namespace URI using SAX. */
+	private static class DMRSelectorPackageHandler extends DefaultHandler {
+
+		/** The root package's namespace URI. */
+		private final Set<String> packageURIs = new LinkedHashSet<String>();
+		private boolean inSelector;
+
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @see org.xml.sax.helpers.DefaultHandler#startElement(java.lang.String, java.lang.String, java.lang.String,
+		 *      org.xml.sax.Attributes)
+		 */
+		@Override
+		public void startElement(String uri, String localName, String qName, Attributes attributes)
+			throws SAXException {
+			super.startElement(uri, localName, qName, attributes);
+
+			if (localName.equals("selector")) { //$NON-NLS-1$
+				inSelector = true;
+				return;
+			}
+			if (inSelector
+				&& (localName.equals("domainModelEFeature") || localName.equals("domainModelEReferencePath"))) { //$NON-NLS-1$ //$NON-NLS-2$
+				final String rawUri = attributes.getValue("href"); //$NON-NLS-1$
+				packageURIs.add(rawUri.split("#")[0]); //$NON-NLS-1$
+			}
+		}
+
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @see org.xml.sax.helpers.DefaultHandler#endElement(java.lang.String, java.lang.String, java.lang.String)
+		 */
+		@Override
+		public void endElement(String uri, String localName, String qName) throws SAXException {
+			super.endElement(uri, localName, qName);
+			if (localName.equals("selector")) { //$NON-NLS-1$
+				inSelector = false;
+			}
+		}
+
+		/** Returns the namespace URI of the packages used in DMR selectors. */
+		public Set<String> getPackageURIs() {
+			return packageURIs;
+		}
+	}
+
+	/** Content handler for extraction of a ViewTemplate's referenced packages' locations using SAX. */
+	private static class ViewTemplateReferencedPackagesHandler extends DefaultHandler {
+		// TODO move to template migrator
+
+		private static final String REFERENCED_ECORES_ELEMENT = "referencedEcores"; //$NON-NLS-1$
+		private static final String VIEW_TEMPLATE_ELEMENT = "ViewTemplate"; //$NON-NLS-1$
+		/** The root package's namespace URI. */
+		private final Set<String> referencedEcorePaths = new LinkedHashSet<String>();
+		private boolean inViewTemplate;
+		private boolean inReferencedEcore;
+
+		@Override
+		public void startElement(String uri, String localName, String qName, Attributes attributes)
+			throws SAXException {
+			super.startElement(uri, localName, qName, attributes);
+
+			if (localName.equals(VIEW_TEMPLATE_ELEMENT)) {
+				inViewTemplate = true;
+				return;
+			}
+			if (!inViewTemplate) {
+				// If root element was no ViewTemplate cancel parse
+				throw new SAXException();
+			}
+			if (localName.equals(REFERENCED_ECORES_ELEMENT)) {
+				inReferencedEcore = true;
+			}
+		}
+
+		@Override
+		public void endElement(String uri, String localName, String qName) throws SAXException {
+			super.endElement(uri, localName, qName);
+			if (localName.equals(VIEW_TEMPLATE_ELEMENT)) {
+				inViewTemplate = false;
+				return;
+			}
+			if (localName.equals(REFERENCED_ECORES_ELEMENT)) {
+				inReferencedEcore = false;
+			}
+		}
+
+		@Override
+		public void characters(char[] ch, int start, int length) throws SAXException {
+			super.characters(ch, start, length);
+			if (inReferencedEcore && length > 0) {
+				referencedEcorePaths.add(new String(ch).substring(start, start + length));
+			}
+		}
+
+		/** Returns the paths of refrenced ecores. */
+		public Set<String> getReferencedEcorePaths() {
+			return referencedEcorePaths;
 		}
 	}
 

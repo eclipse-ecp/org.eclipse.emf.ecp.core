@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Template Model Edapt Migration
+Bundle-SymbolicName: org.eclipse.emf.ecp.view.template.model.edapt
+Bundle-Version: 2.0.0.qualifier
+Bundle-Vendor: Eclipse Modeling Project
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: org.eclipse.emf.ecp.view.edapt;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emf.edapt.migration;bundle-version="[1.2.2,2.0.0)",
+ org.eclipse.emf.ecp.view.template.model;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emf.ecp.view.model.edapt;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emf.ecp.ide.util;bundle-version="[2.0.0,3.0.0)"
+Service-Component: OSGI-INF/DmrSelectorMigrationPostProcessorImpl.xml
+Bundle-ActivationPolicy: lazy
+Export-Package: org.eclipse.emf.ecp.internal.view.template.selector.domainmodelreference.model.edapt;version="2.0.0";x-internal:=true

@@ -20,11 +20,16 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecp.view.edapt.MigrationPostProcessor;
 import org.eclipse.emf.edapt.migration.CustomMigration;
 import org.eclipse.emf.edapt.migration.MigrationException;
 import org.eclipse.emf.edapt.spi.migration.Instance;
 import org.eclipse.emf.edapt.spi.migration.Metamodel;
 import org.eclipse.emf.edapt.spi.migration.Model;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * {@link CustomMigration} that migrates feature path DMRs and subclasses to "normal" DMRs with segments.
@@ -34,6 +39,9 @@ import org.eclipse.emf.edapt.spi.migration.Model;
  */
 public class FeaturePathDMRRemovalMigration extends CustomMigration {
 
+	// TODO refactor this giant class: maybe into different services for different dmrs/migrations
+
+	private static final String DOMAIN_MODEL_REFERENCE_SELECTOR = "http://www/eclipse/org/emf/ecp/view/template/selector/domainmodelreference/model/200.DomainModelReferenceSelector"; //$NON-NLS-1$
 	private static final String MAPPING_DOMAIN_MODEL_REFERENCE = "http://www/eclipse/org/emf/ecp/view/mappingdmr/model/200.MappingDomainModelReference"; //$NON-NLS-1$
 	private static final String INDEX = "index"; //$NON-NLS-1$
 	private static final String DOMAIN_MODEL_FEATURE = "domainModelFeature"; //$NON-NLS-1$
@@ -46,6 +54,7 @@ public class FeaturePathDMRRemovalMigration extends CustomMigration {
 
 	private static final String TABLE_READ_ONLY_CONFIGURATION = "http://org/eclipse/emf/ecp/view/table/model/190.ReadOnlyColumnConfiguration"; //$NON-NLS-1$ ;
 	private static final String TABLE_SINGLE_COLUM_CONFIGURATION = "http://org/eclipse/emf/ecp/view/table/model/190.SingleColumnConfiguration"; //$NON-NLS-1$
+	private BundleContext bundleContext;
 
 	/**
 	 * {@inheritDoc}
@@ -79,6 +88,9 @@ public class FeaturePathDMRRemovalMigration extends CustomMigration {
 			}
 		}
 
+		// migrate VTDomainModelReferenceSelector
+		migrateDmrSelectors(model, metamodel);
+
 		migrateDmrs(model, metamodel);
 
 		// finish single column configuration migration after all dmrs have been migrated
@@ -94,6 +106,121 @@ public class FeaturePathDMRRemovalMigration extends CustomMigration {
 				migrateReadOnlyConfig(model, metamodel, readOnlyConfig, readOnlyConfigIndices.get(readOnlyConfig));
 			}
 		}
+	}
+
+	/**
+	 * Migrates VTDomainModelReferenceSelectors. The root class of the old dmr is extracted and explicitly set in the
+	 * selector.
+	 *
+	 * @param model
+	 * @param metamodel
+	 * @throws MigrationException if the root e class can not be determined from the selector's dmr.
+	 */
+	private void migrateDmrSelectors(Model model, Metamodel metamodel) throws MigrationException {
+		final EClass dmrSelectorEClass = metamodel.getEClass(DOMAIN_MODEL_REFERENCE_SELECTOR);
+		if (dmrSelectorEClass == null) {
+			return;
+		}
+
+		final EList<Instance> dmrSelectors = model.getInstances(dmrSelectorEClass);
+		if (dmrSelectors.isEmpty()) {
+			return;
+		}
+		final ServiceReference<DmrSelectorMigrationPostProcessor> serviceReference = getBundleContext()
+			.getServiceReference(DmrSelectorMigrationPostProcessor.class);
+		if (serviceReference == null) {
+			throw new MigrationException(new IllegalStateException(
+				"Cannot migrate Domain Model Reference Selectors without a registered DmrSelectorMigrationPostProcessor service")); //$NON-NLS-1$
+		}
+		final DmrSelectorMigrationPostProcessor selectorPostProcessor = getBundleContext().getService(serviceReference);
+		getBundleContext().registerService(MigrationPostProcessor.class, selectorPostProcessor, null);
+
+		for (final Instance dmrSelector : dmrSelectors) {
+			final Instance dmr = dmrSelector.get("domainModelReference"); //$NON-NLS-1$
+			final EClass rootEClass = getRootEClass(model, metamodel, dmr);
+			final String uuid = dmrSelector.getUuid();
+			if (uuid == null || uuid.isEmpty()) {
+				throw new MigrationException(
+					new IllegalStateException("Cannot migrate a DomainModelReferenceSelector that has no UUID.")); //$NON-NLS-1$
+			}
+			selectorPostProcessor.addSelectorToRootEClassMapping(uuid, rootEClass);
+		}
+	}
+
+	/**
+	 * @return this classes {@link BundleContext}
+	 */
+	private BundleContext getBundleContext() throws MigrationException {
+		if (bundleContext == null) {
+			final Bundle bundle = FrameworkUtil.getBundle(FeaturePathDMRRemovalMigration.class);
+			if (bundle == null) {
+				throw new MigrationException(
+					new IllegalStateException("Could not get Bundle for FeaturePathDMRRemovalMigration")); //$NON-NLS-1$
+			}
+			bundleContext = FrameworkUtil.getBundle(FeaturePathDMRRemovalMigration.class)
+				.getBundleContext();
+			if (bundleContext == null) {
+				throw new MigrationException(
+					new IllegalStateException("Could not get BundleContext for FeaturePathDMRRemovalMigration")); //$NON-NLS-1$
+			}
+		}
+		return bundleContext;
+	}
+
+	/**
+	 * Get the root EClass of a domain model reference.
+	 * The method recursively calls itself to deal with cascaded DMRs.
+	 *
+	 * @param dmr the instance of the domain model reference
+	 * @return the instance of the root e class
+	 */
+	private EClass getRootEClass(Model model, Metamodel metamodel, Instance dmr) throws MigrationException {
+		final EClass featurePathDmrEClass = metamodel.getEClass(FEATURE_PATH_DOMAIN_MODEL_REFERENCE);
+		final EClass indexDmrEClass = metamodel.getEClass(INDEX_DOMAIN_MODEL_REFERENCE);
+		final EClass mappingDmrEClass = metamodel.getEClass(MAPPING_DOMAIN_MODEL_REFERENCE);
+		final EClass tableDmrEClass = metamodel.getEClass(TABLE_DOMAIN_MODEL_REFERENCE);
+
+		if (featurePathDmrEClass.equals(dmr.getEClass())) {
+			return getRootClassFromFeatureDMR(metamodel, model, dmr);
+		}
+		// additional null checks necessary because an EClass is null if it is not used in the model
+		else if (indexDmrEClass != null && indexDmrEClass.equals(dmr.getEClass())) {
+			final Instance prefixDmr = dmr.get("prefixDMR"); //$NON-NLS-1$
+			if (prefixDmr != null) {
+				return getRootEClass(model, metamodel, prefixDmr);
+			}
+			// if the index dmr does not have an index dmr, the relevant part is inherited from the feature dmr
+			return getRootClassFromFeatureDMR(metamodel, model, dmr);
+		} else if (mappingDmrEClass != null && mappingDmrEClass.equals(dmr.getEClass())) {
+			// The relevant part of the mapping dmr is inherited from the feature path dmr
+			return getRootClassFromFeatureDMR(metamodel, model, dmr);
+		} else if (tableDmrEClass != null && tableDmrEClass.equals(dmr.getEClass())) {
+			final Instance innerDmr = dmr.get("domainModelReference"); //$NON-NLS-1$
+			getRootClassFromFeatureDMR(metamodel, model, innerDmr);
+		}
+		throw new MigrationException(
+			new IllegalArgumentException(String.format("The given dmr %s was of an unknown type.", dmr))); //$NON-NLS-1$
+	}
+
+	/**
+	 * @param dmr
+	 * @return The root EClass of the given domain model reference
+	 */
+	private EClass getRootClassFromFeatureDMR(Metamodel metamodel, Model model, Instance dmr) {
+		final EList<Instance> referencePath = dmr.get("domainModelEReferencePath"); //$NON-NLS-1$
+		Instance rootFeature;
+		if (!referencePath.isEmpty()) {
+			rootFeature = referencePath.get(0);
+		} else {
+			rootFeature = dmr.get("domainModelEFeature"); //$NON-NLS-1$
+		}
+
+		// Have to extract the name from the feature's uri because the feature always is a proxy.
+		final String[] featureUriParts = rootFeature.getUri().toString().split("#//"); //$NON-NLS-1$
+		final String nsUri = featureUriParts[0];
+		final String className = featureUriParts[1].split("/")[0]; //$NON-NLS-1$
+		final String eClassId = nsUri + "." + className; //$NON-NLS-1$
+		return metamodel.getEClass(eClassId);
 	}
 
 	/**
