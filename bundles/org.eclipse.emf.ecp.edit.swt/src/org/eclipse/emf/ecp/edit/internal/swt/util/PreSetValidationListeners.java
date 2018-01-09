@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xml.type.InvalidDatatypeValueException;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VDiagnostic;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
@@ -48,19 +49,41 @@ public final class PreSetValidationListeners {
 	/**
 	 * Singleton instance.
 	 */
-	private static PreSetValidationListeners validationListeners = new PreSetValidationListeners();
+	private static PreSetValidationListeners validationListeners;
 	private static PreSetValidationService preSetValidationService;
 
 	private PreSetValidationListeners() {
 		init();
 	}
 
+	private PreSetValidationListeners(ViewModelContext context) {
+		init(context);
+	}
+
 	/**
 	 * Returns the validation listeners factory.
 	 *
 	 * @return the factory that can be used to create and attach listeners
+	 * @deprecated use {@link #create(ViewModelContext)} instead
 	 */
+	@Deprecated
 	public static PreSetValidationListeners create() {
+		if (validationListeners == null) {
+			validationListeners = new PreSetValidationListeners();
+		}
+		return validationListeners;
+	}
+
+	/**
+	 * Returns the validation listeners factory.
+	 *
+	 * @param context The {@link ViewModelContext} of the entity that needs pre-validation
+	 * @return the factory that can be used to create and attach listeners
+	 */
+	public static PreSetValidationListeners create(ViewModelContext context) {
+		if (validationListeners == null) {
+			validationListeners = new PreSetValidationListeners(context);
+		}
 		return validationListeners;
 	}
 
@@ -74,7 +97,15 @@ public final class PreSetValidationListeners {
 				.getServiceReference(PreSetValidationService.class);
 
 			preSetValidationService = serviceReference != null
-				? bundleContext.getService(serviceReference) : null;
+				? bundleContext.getService(serviceReference)
+				: null;
+		}
+	}
+
+	private void init(ViewModelContext context) {
+		if (preSetValidationService == null) {
+			// The PreSetValidationService is allowed to be null => no further check necessary
+			preSetValidationService = context.getService(PreSetValidationService.class);
 		}
 	}
 

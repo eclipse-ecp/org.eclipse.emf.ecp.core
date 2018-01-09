@@ -12,9 +12,11 @@
 package org.eclipse.emf.ecp.view.validation.test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -237,5 +239,34 @@ public class PreSetValidationService_Test {
 		final Diagnostic valid = service.validate(TestPackage.eINSTANCE.getComputer_Colors(),
 			Arrays.asList(Color.GREEN, Color.BLUE), null);
 		assertEquals(valid.getSeverity(), Diagnostic.OK);
+	}
+
+	/**
+	 * Bug 529514.
+	 */
+	@Test
+	public void multiEnumAdditionalConstrains() {
+		/* setup */
+		final AtomicBoolean contraintCalled = new AtomicBoolean(false);
+		service.addConstraintValidator(TestPackage.eINSTANCE.getColor(), new IFeatureConstraint() {
+
+			@Override
+			public Diagnostic validate(
+				EStructuralFeature eStructuralFeature,
+				Object value,
+				Map<Object, Object> context) {
+				contraintCalled.set(true);
+				return new BasicDiagnostic();
+			}
+		});
+
+		/* act */
+		final Diagnostic valid = service.validate(TestPackage.eINSTANCE.getComputer_Colors(),
+			Arrays.asList(Color.GREEN, Color.BLUE), null);
+
+		/* assert */
+		assertEquals(valid.getSeverity(), Diagnostic.OK);
+		assertTrue(contraintCalled.get());
+
 	}
 }

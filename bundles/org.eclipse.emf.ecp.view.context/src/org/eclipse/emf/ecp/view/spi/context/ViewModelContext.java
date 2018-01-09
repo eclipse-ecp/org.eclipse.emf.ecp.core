@@ -160,8 +160,16 @@ public interface ViewModelContext extends EMFFormsViewContext {
 	void putContextValue(String key, Object value);
 
 	/**
+	 * <p>
 	 * This returns the childContext for the provided EObject and the provided {@link VElement}. If a child context
 	 * already exists it will be returned otherwise a new {@link ViewModelContext} will be created.
+	 * </p>
+	 * <p>
+	 * Note that the injection of {@code viewModelServices} is useful for
+	 * services that are not registered externally (via extension point or OSGi). If any of these
+	 * services locally override registered implementations of the same interface, then it is better
+	 * to use a {@link ViewModelServiceProvider} that can propagate the override to child contexts.
+	 * </p>
 	 *
 	 * @param eObject The {@link EObject} to get the child context for
 	 * @param parent The {@link VElement} which requests the child context
@@ -170,10 +178,8 @@ public interface ViewModelContext extends EMFFormsViewContext {
 	 * @return a {@link ViewModelContext} witch is a child of the current context
 	 * @since 1.5
 	 *
-	 * @deprecated As of 1.16, use the {@link #getChildContext(EObject, VElement, VView, ViewModelServiceProvider)} API,
-	 *             instead
+	 * @see #getChildContext(EObject, VElement, VView, ViewModelServiceProvider)
 	 */
-	@Deprecated
 	ViewModelContext getChildContext(EObject eObject, VElement parent, VView vView,
 		ViewModelService... viewModelServices);
 

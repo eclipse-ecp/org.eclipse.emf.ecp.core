@@ -21,6 +21,7 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.common.validation.PreSetValidationService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
@@ -119,7 +120,10 @@ public abstract class SimpleControlSWTControlSWTRenderer extends SimpleControlSW
 	 */
 	protected UpdateValueStrategy withPreSetValidation(UpdateValueStrategy delegate)
 		throws DatabindingFailedException {
-		return new PreSetValidationStrategy(getVElement(), getFeature(), delegate);
+		if (getViewModelContext().hasService(PreSetValidationService.class)) {
+			return new PreSetValidationStrategy(getVElement(), getFeature(), delegate);
+		}
+		return delegate;
 	}
 
 	/**

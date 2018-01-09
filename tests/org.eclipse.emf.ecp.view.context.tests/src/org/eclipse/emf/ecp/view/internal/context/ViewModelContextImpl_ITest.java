@@ -871,4 +871,30 @@ public class ViewModelContextImpl_ITest {
 		assertThat(context, notNullValue());
 		context.dispose();
 	}
+
+	@Test
+	public void testContextDispose() {
+		final EObject model = EcoreFactory.eINSTANCE.createEObject();
+		final VElement view = VViewFactory.eINSTANCE.createView();
+		final ViewModelContext context = ViewModelContextFactory.INSTANCE.createViewModelContext(
+			view, model, (ViewModelServiceProvider) null);
+		final EObject child = EcoreFactory.eINSTANCE.createEObject();
+		final VView childView1 = VViewFactory.eINSTANCE.createView();
+		final VView childView2 = VViewFactory.eINSTANCE.createView();
+		final VElement parent1 = VViewFactory.eINSTANCE.createView();
+		final VElement parent2 = VViewFactory.eINSTANCE.createView();
+		final Object user = new Object();
+		final ViewModelContext childContext1 = context.getChildContext(child, parent1, childView1);
+		childContext1.addContextUser(user);
+		final ViewModelContext childContext2 = context.getChildContext(child, parent2, childView2);
+		childContext2.addContextUser(user);
+
+		final ViewModelContext childContextToRemove1 = context.getChildContext(child, parent1, childView1);
+		childContextToRemove1.removeContextUser(user);
+		final ViewModelContext childContextToRemove2 = context.getChildContext(child, parent2, childView2);
+		childContextToRemove2.removeContextUser(user);
+
+		assertSame(childContext1, childContextToRemove1);
+		assertSame(childContext2, childContextToRemove2);
+	}
 }

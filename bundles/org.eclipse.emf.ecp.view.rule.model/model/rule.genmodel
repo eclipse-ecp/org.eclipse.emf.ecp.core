@@ -11,11 +11,20 @@
       utilityPackageSuffix="model.util" providerPackageSuffix="model.provider" presentationPackageSuffix="model.presentation"
       testsPackageSuffix="model.tests" extensibleProviderFactory="true" childCreationExtenders="true"
       ecorePackage="rule.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="rule.ecore#//CompareType">
+      <genEnumLiterals ecoreEnumLiteral="rule.ecore#//CompareType/EQUALS"/>
+      <genEnumLiterals ecoreEnumLiteral="rule.ecore#//CompareType/NOT_EQUALS"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="rule.ecore#//Quantifier">
+      <genEnumLiterals ecoreEnumLiteral="rule.ecore#//Quantifier/all"/>
+      <genEnumLiterals ecoreEnumLiteral="rule.ecore#//Quantifier/any"/>
+    </genEnums>
     <genClasses image="false" ecoreClass="rule.ecore#//Condition"/>
     <genClasses ecoreClass="rule.ecore#//LeafCondition">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rule.ecore#//LeafCondition/expectedValue"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rule.ecore#//LeafCondition/domainModelReference"/>
       <genFeatures property="None" children="true" createChild="false" ecoreFeature="ecore:EReference rule.ecore#//LeafCondition/valueDomainModelReference"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rule.ecore#//LeafCondition/compareType"/>
     </genClasses>
     <genClasses ecoreClass="rule.ecore#//OrCondition">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rule.ecore#//OrCondition/conditions"/>
@@ -31,6 +40,17 @@
     </genClasses>
     <genClasses ecoreClass="rule.ecore#//EnableRule">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rule.ecore#//EnableRule/disable"/>
+    </genClasses>
+    <genClasses ecoreClass="rule.ecore#//IterateCondition">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rule.ecore#//IterateCondition/quantifier"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute rule.ecore#//IterateCondition/ifEmpty"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rule.ecore#//IterateCondition/itemReference"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rule.ecore#//IterateCondition/itemCondition"/>
+    </genClasses>
+    <genClasses ecoreClass="rule.ecore#//True"/>
+    <genClasses ecoreClass="rule.ecore#//False"/>
+    <genClasses ecoreClass="rule.ecore#//NotCondition">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference rule.ecore#//NotCondition/condition"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

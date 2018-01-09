@@ -30,7 +30,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
  *
  * @since 1.16
  */
-public class OneShotViewModelServiceProvider implements ViewModelServiceProvider {
+public class ArrayOnceViewModelServiceProvider implements ViewModelServiceProvider {
 
 	private List<ViewModelService> services;
 
@@ -39,7 +39,7 @@ public class OneShotViewModelServiceProvider implements ViewModelServiceProvider
 	 *
 	 * @param services the one-shot services to provide
 	 */
-	public OneShotViewModelServiceProvider(ViewModelService... services) {
+	public ArrayOnceViewModelServiceProvider(ViewModelService... services) {
 		super();
 
 		this.services = Arrays.asList(services);

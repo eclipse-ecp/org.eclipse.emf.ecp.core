@@ -1,169 +1,183 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-      
+
    <extension
+         name=""
          point="org.eclipse.ui.editors">
       <editor
-            class="org.eclipse.emfforms.internal.editor.ecore.EcoreEditor"
-            contributorClass="org.eclipse.emfforms.spi.editor.EMFUndoRedoActionBarContributor"
+            name="Ecore Editor"
             default="false"
-            extensions="ecore"
             icon="icons/EcoreModelFile.gif"
-            id="EcoreEditor"
-            name="Ecore Editor">
+            extensions="ecore"
+            contributorClass="org.eclipse.emfforms.spi.editor.EMFUndoRedoActionBarContributor"
+            class="org.eclipse.emfforms.internal.editor.ecore.EcoreEditor"
+            id="EcoreEditor">
       </editor>
       <editor
-            class="org.eclipse.emfforms.spi.editor.GenericEditor"
-            contributorClass="org.eclipse.emfforms.spi.editor.EMFUndoRedoActionBarContributor"
+            name="Generic XMI Editor"
             default="false"
-            id="org.eclipse.emfforms.editor.ecore.genericxmieditor"
-            name="Generic XMI Editor">
+            contributorClass="org.eclipse.emfforms.spi.editor.EMFUndoRedoActionBarContributor"
+            class="org.eclipse.emfforms.spi.editor.GenericEditor"
+            id="org.eclipse.emfforms.editor.ecore.genericxmieditor">
       </editor>
    </extension>
    <extension
-        point="org.eclipse.emf.ecp.view.context.viewServices">
-     <viewService
-           class="org.eclipse.emfforms.internal.editor.ecore.referenceservices.EcoreReferenceService">
-     </viewService>
-   </extension>
-   
-   
-   
-
-
-<extension  point="org.eclipse.emf.ecp.view.model.provider.xmi.file">
-<file filePath="simple_viewmodels/EOperation.view"/>
-
-<file filePath="viewmodels/EAnnotation.view"/>
-
-<file filePath="viewmodels/EOperation.view">
-	<filter key="detail" value="true">
-	</filter>
-</file>
-
-<file filePath="viewmodels/EParameter.view">
-	<filter
-       key="detail"
-       value="true">
-	</filter>
-</file>
-
-<file filePath="viewmodels/EEnum.view">
-	<filter
-       key="detail"
-       value="true">
-	</filter>
-</file>
-
-<file filePath="viewmodels/EDataType.view">
-	<filter
-       key="detail"
-       value="true">
-	</filter>
-</file>
-
-<file filePath="viewmodels/EReference.view">
-	<filter
-       key="detail"
-       value="true">
-	</filter>
-</file>
-
-<file filePath="viewmodels/EAttribute.view">
-	<filter
-       key="detail"
-       value="true">
-	</filter>
-</file>
-
-<file filePath="viewmodels/EClass.view">
-	<filter
-       key="detail"
-       value="true">
-	</filter>
-</file>
-
-<file filePath="viewmodels/EPackage.view">
-	<filter
-       key="detail"
-       value="true">
-	</filter>
-</file>
-
-
-<file filePath="simple_viewmodels/EParameter.view"/>
-
-<file filePath="simple_viewmodels/EEnum.view"/>
-
-<file filePath="simple_viewmodels/EDataType.view"/>
-
-<file filePath="simple_viewmodels/EReference.view"/>
-
-<file filePath="simple_viewmodels/EAttribute.view"/>
-
-<file filePath="simple_viewmodels/EClass.view"/>
-
-<file filePath="simple_viewmodels/EPackage.view"/>
-
-</extension>
-<extension
-      point="org.eclipse.ui.contexts">
-   <context
-         id="org.eclipse.emfforms.editor.ecore.context"
-         name="Ecore Editor"
-         parentId="org.eclipse.ui.contexts.window">
-   </context>
-</extension>
- <extension
-         point="org.eclipse.ui.commands">
-      <command
-            id="org.eclipse.emfforms.editor.ecore.new"
-            name="New Child Element">
-      </command>
-      <command
-            id="org.eclipse.emfforms.editor.ecore.new.sibling"
-            name="New Sibling">
-      </command>
-      <command
-            id="org.eclipse.emfforms.editor.ecore.delete"
-            name="Delete Element">
-      </command>
-   </extension>
- <extension
-         point="org.eclipse.ui.handlers">
-      <handler
-            class="org.eclipse.emfforms.internal.editor.ecore.EcoreShortcutHandler"
-            commandId="org.eclipse.emfforms.editor.ecore.delete">
-      </handler>
-      <handler
-            class="org.eclipse.emfforms.internal.editor.ecore.EcoreShortcutHandler"
-            commandId="org.eclipse.emfforms.editor.ecore.new">
-      </handler>
-      <handler
-            class="org.eclipse.emfforms.internal.editor.ecore.EcoreShortcutHandler"
-            commandId="org.eclipse.emfforms.editor.ecore.new.sibling">
-      </handler>      
+         name=""
+         point="org.eclipse.emf.ecp.view.context.viewServices">
+      <viewService
+            class="org.eclipse.emfforms.internal.editor.ecore.referenceservices.EcoreReferenceService">
+      </viewService>
    </extension>
    <extension
+         name=""
+         point="org.eclipse.emf.ecp.view.model.provider.xmi.file">
+      <file
+            filePath="simple_viewmodels/EOperation.view">
+      </file>
+      <file
+            filePath="viewmodels/EAnnotation.view">
+      </file>
+      <file
+            filePath="viewmodels/EOperation.view">
+         <filter
+               key="detail"
+               value="true">
+         </filter>
+      </file>
+      <file
+            filePath="viewmodels/EParameter.view">
+         <filter
+               key="detail"
+               value="true">
+         </filter>
+      </file>
+      <file
+            filePath="viewmodels/EEnum.view">
+         <filter
+               key="detail"
+               value="true">
+         </filter>
+      </file>
+      <file
+            filePath="viewmodels/EDataType.view">
+         <filter
+               key="detail"
+               value="true">
+         </filter>
+      </file>
+      <file
+            filePath="viewmodels/EReference.view">
+         <filter
+               key="detail"
+               value="true">
+         </filter>
+      </file>
+      <file
+            filePath="viewmodels/EAttribute.view">
+         <filter
+               key="detail"
+               value="true">
+         </filter>
+      </file>
+      <file
+            filePath="viewmodels/EClass.view">
+         <filter
+               key="detail"
+               value="true">
+         </filter>
+      </file>
+      <file
+            filePath="viewmodels/EPackage.view">
+         <filter
+               key="detail"
+               value="true">
+         </filter>
+      </file>
+      <file
+            filePath="simple_viewmodels/EParameter.view">
+      </file>
+      <file
+            filePath="simple_viewmodels/EEnum.view">
+      </file>
+      <file
+            filePath="simple_viewmodels/EDataType.view">
+      </file>
+      <file
+            filePath="simple_viewmodels/EReference.view">
+      </file>
+      <file
+            filePath="simple_viewmodels/EAttribute.view">
+      </file>
+      <file
+            filePath="simple_viewmodels/EClass.view">
+      </file>
+      <file
+            filePath="simple_viewmodels/EPackage.view">
+      </file>
+   </extension>
+   <extension
+         name=""
+         point="org.eclipse.ui.contexts">
+      <context
+            name="Ecore Editor"
+            parentId="org.eclipse.ui.contexts.window"
+            id="org.eclipse.emfforms.editor.ecore.context">
+      </context>
+   </extension>
+   <extension
+         name=""
+         point="org.eclipse.ui.commands">
+      <command
+            name="New Child Element"
+            id="org.eclipse.emfforms.editor.ecore.new">
+      </command>
+      <command
+            name="New Sibling"
+            id="org.eclipse.emfforms.editor.ecore.new.sibling">
+      </command>
+      <command
+            name="Delete Element"
+            id="org.eclipse.emfforms.editor.ecore.delete">
+      </command>
+   </extension>
+   <extension
+         name=""
+         point="org.eclipse.ui.handlers">
+      <handler
+            commandId="org.eclipse.emfforms.editor.ecore.delete"
+            class="org.eclipse.emfforms.internal.editor.ecore.EcoreShortcutHandler">
+      </handler>
+      <handler
+            commandId="org.eclipse.emfforms.editor.ecore.new"
+            class="org.eclipse.emfforms.internal.editor.ecore.EcoreShortcutHandler">
+      </handler>
+      <handler
+            commandId="org.eclipse.emfforms.editor.ecore.new.sibling"
+            class="org.eclipse.emfforms.internal.editor.ecore.EcoreShortcutHandler">
+      </handler>
+   </extension>
+   <extension
+         name=""
          point="org.eclipse.ui.bindings">
       <key
             commandId="org.eclipse.emfforms.editor.ecore.new"
             contextId="org.eclipse.emfforms.editor.ecore.context"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="Ctrl+N">
+            sequence="Ctrl+N"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
       </key>
       <key
             commandId="org.eclipse.emfforms.editor.ecore.new.sibling"
             contextId="org.eclipse.emfforms.editor.ecore.context"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="Ctrl+Shift+N">
+            sequence="Ctrl+Shift+N"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
       </key>
       <key
             commandId="org.eclipse.emfforms.editor.ecore.delete"
             contextId="org.eclipse.emfforms.editor.ecore.context"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="DEL">
+            sequence="DEL"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
       </key>
    </extension>
+
 </plugin>

@@ -40,6 +40,7 @@ import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTTestUtil;
 import org.eclipse.emfforms.spi.common.locale.EMFFormsLocaleProvider;
 import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.emfforms.spi.common.validation.PreSetValidationService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.editsupport.EMFFormsEditSupport;
@@ -54,9 +55,10 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
-@SuppressWarnings("restriction")
+@SuppressWarnings("rawtypes")
 public class NumberControlRenderer_PTest extends AbstractControl_PTest {
 
 	private DefaultRealm realm;
@@ -116,7 +118,7 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest {
 		assertControl(render);
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings({ "unchecked" })
 	@Test
 	public void renderControlLabelAlignmentLeft()
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException {
@@ -241,6 +243,53 @@ public class NumberControlRenderer_PTest extends AbstractControl_PTest {
 
 		assertEquals(changedValue, mockedObservable.getValue());
 
+	}
+
+	@Test
+	public void testControlTextUpdateWithoutPrevalidation_InputTooBig()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException {
+		when(getContext().hasService(PreSetValidationService.class)).thenReturn(false);
+		when(getContext().getService(PreSetValidationService.class)).thenReturn(null);
+
+		final int initialValue = 0;
+		final String tooBig = "11111111111111111111111111111111";
+		final ObservingWritableValue mockedObservable = new ObservingWritableValue(realm, initialValue,
+			EcorePackage.eINSTANCE.getETypedElement_LowerBound());
+
+		final Text text = setUpDatabindingTest(mockedObservable);
+
+		SWTTestUtil.typeAndFocusOut(text, tooBig);
+
+		assertEquals(Integer.MAX_VALUE, mockedObservable.getValue());
+		final DecimalFormat format = getDecimalFormat(Integer.class);
+		assertEquals(format.format(Integer.MAX_VALUE), text.getText());
+	}
+
+	@Test
+	public void testControlTextUpdateWithoutPrevalidation_InputTooSmall()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException {
+		when(getContext().hasService(PreSetValidationService.class)).thenReturn(false);
+		when(getContext().getService(PreSetValidationService.class)).thenReturn(null);
+
+		final int initialValue = 0;
+		final String tooSmall = "-11111111111111111111111111111111";
+		final ObservingWritableValue mockedObservable = new ObservingWritableValue(realm, initialValue,
+			EcorePackage.eINSTANCE.getETypedElement_LowerBound());
+
+		final Text text = setUpDatabindingTest(mockedObservable);
+
+		SWTTestUtil.typeAndFocusOut(text, tooSmall);
+
+		assertEquals(Integer.MIN_VALUE, mockedObservable.getValue());
+		final DecimalFormat format = getDecimalFormat(Integer.class);
+		assertEquals(format.format(Integer.MIN_VALUE), text.getText());
+	}
+
+	@Ignore
+	@Test
+	public void testControlTextUpdateWithPrevalidation() {
+		// TODO implement when PreSetValidationListeners does not use a static instance of PreSetValidationService
+		// anymore
 	}
 
 	/**

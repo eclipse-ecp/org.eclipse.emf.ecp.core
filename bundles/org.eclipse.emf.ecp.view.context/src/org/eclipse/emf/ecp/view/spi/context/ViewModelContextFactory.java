@@ -13,7 +13,7 @@
 package org.eclipse.emf.ecp.view.spi.context;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.view.internal.context.OneShotViewModelServiceProvider;
+import org.eclipse.emf.ecp.view.internal.context.ArrayOnceViewModelServiceProvider;
 import org.eclipse.emf.ecp.view.internal.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 
@@ -45,24 +45,29 @@ public final class ViewModelContextFactory {
 	}
 
 	/**
-	 * Instantiates a new view model context with specific services.
+	 * Instantiates a new view model context with specific services. Note that this is useful for
+	 * services that are not registered externally (via extension point or OSGi). If any of these
+	 * services locally override registered implementations of the same interface, then it is better
+	 * to use a {@link ViewModelServiceProvider} that can propagate the override to child contexts.
 	 *
 	 * @param view the view
 	 * @param domainObject the domain object
 	 * @param modelServices an array of services to use in the {@link ViewModelContext}
 	 * @return the created {@link ViewModelContext}
 	 *
-	 * @deprecated As of 1.16, use the {@link #createViewModelContext(VElement, EObject, ViewModelServiceProvider)} API,
-	 *             instead
+	 * @see #createViewModelContext(VElement, EObject, ViewModelServiceProvider)
+	 * @see ViewModelContext#getChildContext(EObject, VElement, org.eclipse.emf.ecp.view.spi.model.VView,
+	 *      ViewModelService...)
 	 */
-	@Deprecated
 	public ViewModelContext createViewModelContext(VElement view, EObject domainObject,
 		ViewModelService... modelServices) {
-		return createViewModelContext(view, domainObject, new OneShotViewModelServiceProvider(modelServices));
+		return createViewModelContext(view, domainObject, new ArrayOnceViewModelServiceProvider(modelServices));
 	}
 
 	/**
 	 * Instantiates a new view model context with a provider of local service overrides.
+	 * The {@code serviceProvider} is propagated to child contexts to override registered
+	 * services in their scope, too.
 	 *
 	 * @param view the view
 	 * @param domainObject the domain object

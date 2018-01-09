@@ -35,4 +35,25 @@
     <eLiterals name="EQUALS"/>
     <eLiterals name="NOT_EQUALS" value="1"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IterateCondition" eSuperTypes="#//Condition">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="quantifier" lowerBound="1"
+        eType="#//Quantifier" defaultValueLiteral="all"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ifEmpty" lowerBound="1"
+        eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="itemReference" lowerBound="1"
+        eType="ecore:EClass ../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="itemCondition" lowerBound="1"
+        eType="#//Condition" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Quantifier">
+    <eLiterals name="all"/>
+    <eLiterals name="any" value="1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="True" eSuperTypes="#//Condition"/>
+  <eClassifiers xsi:type="ecore:EClass" name="False" eSuperTypes="#//Condition"/>
+  <eClassifiers xsi:type="ecore:EClass" name="NotCondition" eSuperTypes="#//Condition">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="condition" lowerBound="1"
+        eType="#//Condition" containment="true"/>
+  </eClassifiers>
 </ecore:EPackage>

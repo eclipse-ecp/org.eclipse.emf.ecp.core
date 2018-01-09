@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * EclipseSource Munich GmbH - initial API and implementation
+ * Christian W. Damus - bug 527753
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.rule.model.provider;
 
@@ -245,6 +246,108 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.spi.rule.model.IterateCondition}
+	 * instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected IterateConditionItemProvider iterateConditionItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.rule.model.IterateCondition}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public Adapter createIterateConditionAdapter() {
+		if (iterateConditionItemProvider == null) {
+			iterateConditionItemProvider = new IterateConditionItemProvider(this);
+		}
+
+		return iterateConditionItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.spi.rule.model.True} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected TrueItemProvider trueItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.rule.model.True}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public Adapter createTrueAdapter() {
+		if (trueItemProvider == null) {
+			trueItemProvider = new TrueItemProvider(this);
+		}
+
+		return trueItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.spi.rule.model.False} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected FalseItemProvider falseItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.rule.model.False}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public Adapter createFalseAdapter() {
+		if (falseItemProvider == null) {
+			falseItemProvider = new FalseItemProvider(this);
+		}
+
+		return falseItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.spi.rule.model.NotCondition}
+	 * instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected NotConditionItemProvider notConditionItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.rule.model.NotCondition}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public Adapter createNotConditionAdapter() {
+		if (notConditionItemProvider == null) {
+			notConditionItemProvider = new NotConditionItemProvider(this);
+		}
+
+		return notConditionItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -409,6 +512,18 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 		}
 		if (enableRuleItemProvider != null) {
 			enableRuleItemProvider.dispose();
+		}
+		if (iterateConditionItemProvider != null) {
+			iterateConditionItemProvider.dispose();
+		}
+		if (trueItemProvider != null) {
+			trueItemProvider.dispose();
+		}
+		if (falseItemProvider != null) {
+			falseItemProvider.dispose();
+		}
+		if (notConditionItemProvider != null) {
+			notConditionItemProvider.dispose();
 		}
 	}
 

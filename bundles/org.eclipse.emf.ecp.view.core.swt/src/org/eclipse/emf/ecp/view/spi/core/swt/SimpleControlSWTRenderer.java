@@ -372,7 +372,7 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 		controlCell.setHorizontalGrab(true);
 		controlCell.setVerticalGrab(false);
 		controlCell.setHorizontalFill(true);
-		controlCell.setVerticalFill(false);
+		controlCell.setVerticalFill(true);
 		controlCell.setVerticalAlignment(SWTGridCell.Alignment.CENTER);
 		controlCell.setRenderer(this);
 		return controlCell;

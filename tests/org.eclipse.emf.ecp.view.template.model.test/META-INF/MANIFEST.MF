@@ -2,9 +2,9 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: EMF Forms Template Model Tests
 Bundle-SymbolicName: org.eclipse.emf.ecp.view.template.model.test
-Bundle-Version: 1.15.0.qualifier
-Fragment-Host: org.eclipse.emf.ecp.view.template.model;bundle-version="1.15.0"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Export-Package: org.eclipse.emf.ecp.view.template.style.alignment.model.impl;version="1.15.0";x-internal:=true,
- org.eclipse.emf.ecp.view.template.style.labelwidth.model.impl;version="1.15.0";x-internal:=true
+Bundle-Version: 1.16.0.qualifier
+Fragment-Host: org.eclipse.emf.ecp.view.template.model;bundle-version="[1.16.0,1.17.0)"
+Export-Package: org.eclipse.emf.ecp.view.template.style.alignment.model.impl;version="1.16.0";x-internal:=true,
+  org.eclipse.emf.ecp.view.template.style.labelwidth.model.impl;version="1.16.0";x-internal:=true
 Require-Bundle: org.junit;bundle-version="[4.0.0,5.0.0)"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

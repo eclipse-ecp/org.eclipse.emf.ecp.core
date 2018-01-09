@@ -136,9 +136,20 @@ public class ViewTemplateProviderImpl implements VTViewTemplateProvider {
 	@Override
 	public VTViewTemplate getViewTemplate() {
 		if (registeredTemplate != null) {
-			return registeredTemplate;
+			return EcoreUtil.copy(registeredTemplate);
 		}
 		return null;
+	}
+
+	/**
+	 * Returns a reference to VTViewTemplate. This must not be modified in regular cases, after the
+	 * {@link VTViewTemplateProvider} has returned the
+	 * first {@link VTStyleProperty}, as they might be cashed by callers.
+	 *
+	 * @return the current {@link VTViewTemplate}
+	 */
+	public VTViewTemplate getMutableViewTemplate() {
+		return registeredTemplate;
 	}
 
 	/**
@@ -222,6 +233,16 @@ public class ViewTemplateProviderImpl implements VTViewTemplateProvider {
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider#hasControlValidationTemplate()
+	 */
+	@Override
+	public boolean hasControlValidationTemplate() {
+		return getMutableViewTemplate() != null && getMutableViewTemplate().getControlValidationConfiguration() != null;
 	}
 
 }

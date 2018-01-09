@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * EclipseSource Munich GmbH - initial API and implementation
+ * Christian W. Damus - bug 527753
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.rule.model.util;
 
@@ -19,11 +20,15 @@ import org.eclipse.emf.ecp.view.spi.model.VAttachment;
 import org.eclipse.emf.ecp.view.spi.rule.model.AndCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.Condition;
 import org.eclipse.emf.ecp.view.spi.rule.model.EnableRule;
+import org.eclipse.emf.ecp.view.spi.rule.model.False;
+import org.eclipse.emf.ecp.view.spi.rule.model.IterateCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
+import org.eclipse.emf.ecp.view.spi.rule.model.NotCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.OrCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.Rule;
 import org.eclipse.emf.ecp.view.spi.rule.model.RulePackage;
 import org.eclipse.emf.ecp.view.spi.rule.model.ShowRule;
+import org.eclipse.emf.ecp.view.spi.rule.model.True;
 
 /**
  * <!-- begin-user-doc -->
@@ -131,6 +136,30 @@ public class RuleAdapterFactory extends AdapterFactoryImpl {
 		public Adapter caseEnableRule(EnableRule object)
 		{
 			return createEnableRuleAdapter();
+		}
+
+		@Override
+		public Adapter caseIterateCondition(IterateCondition object)
+		{
+			return createIterateConditionAdapter();
+		}
+
+		@Override
+		public Adapter caseTrue(True object)
+		{
+			return createTrueAdapter();
+		}
+
+		@Override
+		public Adapter caseFalse(False object)
+		{
+			return createFalseAdapter();
+		}
+
+		@Override
+		public Adapter caseNotCondition(NotCondition object)
+		{
+			return createNotConditionAdapter();
 		}
 
 		@Override
@@ -269,6 +298,70 @@ public class RuleAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createEnableRuleAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.rule.model.IterateCondition
+	 * <em>Iterate Condition</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.spi.rule.model.IterateCondition
+	 * @generated
+	 */
+	public Adapter createIterateConditionAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.rule.model.True
+	 * <em>True</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.spi.rule.model.True
+	 * @generated
+	 */
+	public Adapter createTrueAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.rule.model.False
+	 * <em>False</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.spi.rule.model.False
+	 * @generated
+	 */
+	public Adapter createFalseAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.spi.rule.model.NotCondition <em>Not
+	 * Condition</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.spi.rule.model.NotCondition
+	 * @generated
+	 */
+	public Adapter createNotConditionAdapter() {
 		return null;
 	}
 

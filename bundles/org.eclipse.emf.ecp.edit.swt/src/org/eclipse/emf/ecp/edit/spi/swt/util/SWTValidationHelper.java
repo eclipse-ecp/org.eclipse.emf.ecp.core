@@ -40,7 +40,7 @@ import org.eclipse.swt.widgets.Display;
  * @since 1.5
  *
  */
-public final class SWTValidationHelper {
+public class SWTValidationHelper {
 
 	/**
 	 * The instance of the SWTValidationHelper.
@@ -48,10 +48,6 @@ public final class SWTValidationHelper {
 	public static final SWTValidationHelper INSTANCE = new SWTValidationHelper();
 	private final Map<String, Color> colorMap = new LinkedHashMap<String, Color>();
 	private VTViewTemplate defaultTemplate;
-
-	private SWTValidationHelper() {
-		// singleton
-	}
 
 	/**
 	 * Returns the background color for a control with the given validation severity, VElement
@@ -605,8 +601,7 @@ public final class SWTValidationHelper {
 
 	private VTViewTemplate getTemplate() {
 		final VTViewTemplateProvider vtViewTemplateProvider = Activator.getDefault().getVTViewTemplateProvider();
-		if (vtViewTemplateProvider == null || vtViewTemplateProvider.getViewTemplate() == null
-			|| vtViewTemplateProvider.getViewTemplate().getControlValidationConfiguration() == null) {
+		if (vtViewTemplateProvider == null || !vtViewTemplateProvider.hasControlValidationTemplate()) {
 			if (defaultTemplate == null) {
 				defaultTemplate = VTTemplateFactory.eINSTANCE.createViewTemplate();
 				final VTControlValidationTemplate validationTemplate = VTTemplateFactory.eINSTANCE

@@ -197,7 +197,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 */
 	@Deprecated
 	public ViewModelContextImpl(VElement view, EObject domainObject, ViewModelService... modelServices) {
-		this(view, domainObject, new OneShotViewModelServiceProvider(modelServices));
+		this(view, domainObject, new ArrayOnceViewModelServiceProvider(modelServices));
 	}
 
 	/**
@@ -231,7 +231,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	public ViewModelContextImpl(VElement view, EObject domainObject, ViewModelContext parent,
 		VElement parentVElement, ViewModelService... modelServices) {
 
-		this(view, domainObject, parent, parentVElement, new OneShotViewModelServiceProvider(modelServices));
+		this(view, domainObject, parent, parentVElement, new ArrayOnceViewModelServiceProvider(modelServices));
 	}
 
 	/**
@@ -561,15 +561,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 */
 	@Override
 	public <T> boolean hasService(Class<T> serviceType) {
-		for (final ViewModelService service : viewServices) {
-			if (serviceType.isInstance(service)) {
-				return true;
-			}
-		}
-		if (parentContext != null) {
-			return parentContext.hasService(serviceType);
-		}
-		return false;
+		return getServiceWithoutLog(serviceType) != null;
 	}
 
 	/**
@@ -578,8 +570,26 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getService(java.lang.Class)
 	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public <T> T getService(Class<T> serviceType) {
+		final T service = getServiceWithoutLog(serviceType);
+		if (service == null) {
+			report(new ViewModelServiceNotAvailableReport(serviceType));
+		}
+		return service;
+	}
+
+	/**
+	 * Retrieve an {@link ViewModelService} of type {@code serviceType} without reporting an error if none is found.
+	 *
+	 * @param <T>
+	 *            the type of the desired service
+	 *
+	 * @param serviceType
+	 *            the type of the service to be retrieved
+	 * @return the service
+	 */
+	@SuppressWarnings("unchecked")
+	protected <T> T getServiceWithoutLog(Class<T> serviceType) {
 		// legacy stuff
 		for (final ViewModelService service : viewServices) {
 			if (serviceType.isInstance(service)) {
@@ -618,7 +628,6 @@ public class ViewModelContextImpl implements ViewModelContext {
 				return service;
 			}
 		}
-		report(new ViewModelServiceNotAvailableReport(serviceType));
 		return null;
 	}
 
@@ -816,14 +825,14 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	}
 
-	private void removeChildContext(EObject eObject) {
-		final Set<ViewModelContext> removedContexts = childContexts.remove(eObject);
-		if (removedContexts != null) {
-			for (final ViewModelContext removedContext : removedContexts) {
-				childContextUsers.remove(removedContext);
-			}
+	private void removeChildContext(EObject eObject, ViewModelContext context) {
+		final boolean removed = childContexts.get(eObject).remove(context);
+		if (removed) {
+			childContextUsers.remove(context);
 		}
-
+		if (childContexts.get(eObject).size() == 0) {
+			childContexts.remove(eObject);
+		}
 	}
 
 	/**
@@ -842,7 +851,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	public ViewModelContext getChildContext(final EObject eObject, VElement parent, VView vView,
 		ViewModelService... viewModelServices) {
 
-		return getChildContext(eObject, parent, vView, new OneShotViewModelServiceProvider(viewModelServices));
+		return getChildContext(eObject, parent, vView, new ArrayOnceViewModelServiceProvider(viewModelServices));
 	}
 
 	@Override
@@ -873,9 +882,9 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 			@Override
 			public void contextDisposed(ViewModelContext viewModelContext) {
-				removeChildContext(eObject);
+				removeChildContext(eObject, viewModelContext);
 				for (final EMFFormsContextListener contextListener : contextListeners) {
-					contextListener.childContextDisposed(childContext);
+					contextListener.childContextDisposed(viewModelContext);
 				}
 			}
 		});

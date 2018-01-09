@@ -49,8 +49,8 @@
          name=""
          point="org.eclipse.ui.editors">
       <editor
-            name="ECP Graphiti Editor"
             default="false"
+            name="ECP Graphiti Editor"
             class="org.eclipse.emf.ecp.graphiti.internal.integration.GenericECPGraphitiDiagramEditor"
             id="org.eclipse.emf.ecp.graphiti.editor">
       </editor>

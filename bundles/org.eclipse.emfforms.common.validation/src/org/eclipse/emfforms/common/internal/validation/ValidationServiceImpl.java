@@ -30,7 +30,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.EValidator.SubstitutionLabelProvider;
 import org.eclipse.emf.ecore.util.Diagnostician;
-import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.common.spi.validation.ValidationResultListener;
 import org.eclipse.emfforms.common.spi.validation.ValidationService;
@@ -201,9 +200,6 @@ public class ValidationServiceImpl implements ValidationService {
 	 * @return the {@link EValidator}
 	 */
 	protected EValidator getEValidatorForEObject(EObject eObject) {
-		if (EValidator.Registry.INSTANCE.getEValidator(eObject.eClass().getEPackage()) == null) {
-			return new EObjectValidator();
-		}
 		return diagnostician;
 	}
 
@@ -368,17 +364,17 @@ public class ValidationServiceImpl implements ValidationService {
 		@Override
 		public boolean validate(EClass eClass, EObject eObject, DiagnosticChain diagnostics,
 			Map<Object, Object> context) {
-			Object eValidator;
+			EValidator eValidator;
 			EClass eType = eClass;
-			while ((eValidator = eValidatorRegistry.get(eType.eContainer())) == null) {
+			while ((eValidator = eValidatorRegistry.getEValidator(eType.getEPackage())) == null) {
 				final List<EClass> eSuperTypes = eType.getESuperTypes();
 				if (eSuperTypes.isEmpty()) {
-					eValidator = eValidatorRegistry.get(null);
+					eValidator = eValidatorRegistry.getEValidator(null);
 					break;
 				}
 				eType = eSuperTypes.get(0);
 			}
-			return doValidate((EValidator) eValidator, eClass, eObject, diagnostics, context);
+			return doValidate(eValidator, eType, eObject, diagnostics, context);
 		}
 	}
 }

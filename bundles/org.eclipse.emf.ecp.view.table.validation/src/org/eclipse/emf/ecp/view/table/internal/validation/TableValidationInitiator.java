@@ -12,7 +12,9 @@
 package org.eclipse.emf.ecp.view.table.internal.validation;
 
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.core.databinding.observable.IObserving;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
@@ -70,7 +72,7 @@ public class TableValidationInitiator implements GlobalViewModelService, EMFForm
 		private final ViewModelContext context;
 	}
 
-	private final Map<UniqueSetting, TableContextMapping> mapping = new LinkedHashMap<UniqueSetting, TableContextMapping>();
+	private final Map<UniqueSetting, Set<TableContextMapping>> mapping = new LinkedHashMap<UniqueSetting, Set<TableContextMapping>>();
 	private ViewModelContext context;
 
 	@Override
@@ -83,14 +85,16 @@ public class TableValidationInitiator implements GlobalViewModelService, EMFForm
 				if (notification.getRawNotification().isTouch() || mapping.isEmpty()) {
 					return;
 				}
-				final TableContextMapping tableContextMapping = mapping.get(UniqueSetting.createSetting(
+				final Set<TableContextMapping> tableContextMappings = mapping.get(UniqueSetting.createSetting(
 					notification.getNotifier(), notification.getStructuralFeature()));
-				if (tableContextMapping == null) {
+				if (tableContextMappings == null) {
 					return;
 				}
-				checkAdditions(notification, tableContextMapping);
+				for (final TableContextMapping tableContextMapping : tableContextMappings) {
+					checkAdditions(notification, tableContextMapping);
 
-				checkRemovals(notification, tableContextMapping);
+					checkRemovals(notification, tableContextMapping);
+				}
 			}
 		});
 		checkForTables(context);
@@ -130,8 +134,11 @@ public class TableValidationInitiator implements GlobalViewModelService, EMFForm
 					final EObject observed = (EObject) observing.getObserved();
 					observableValue.dispose();
 
-					mapping.put(UniqueSetting.createSetting(observed, structuralFeature), new TableContextMapping(
-						tableControl, context));
+					final UniqueSetting setting = UniqueSetting.createSetting(observed, structuralFeature);
+					if (!mapping.containsKey(setting)) {
+						mapping.put(setting, new LinkedHashSet<TableValidationInitiator.TableContextMapping>());
+					}
+					mapping.get(setting).add(new TableContextMapping(tableControl, context));
 					final EList<EObject> tableContents = (EList<EObject>) observed.eGet(structuralFeature, true);
 					for (final EObject tableEObject : tableContents) {
 						try {

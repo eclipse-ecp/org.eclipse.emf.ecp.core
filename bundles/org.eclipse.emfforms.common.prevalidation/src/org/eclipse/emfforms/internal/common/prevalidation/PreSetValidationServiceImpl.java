@@ -119,22 +119,24 @@ public class PreSetValidationServiceImpl implements PreSetValidationService {
 			final EDataType eDataType = EDataType.class.cast(eType);
 			diagnostics = Diagnostician.INSTANCE.createDefaultDiagnostic(eDataType, value);
 
+			boolean skipValidator = false;
+
 			// try to validate given value as enum literal
 			if (eDataType instanceof EEnum && value instanceof String) {
 				if (validateEEnum((EEnum) eDataType, (String) value)) {
-					return new BasicDiagnostic();
+					skipValidator = true;
 				}
 			} else if (eDataType instanceof EEnum && value instanceof List<?>) {
 				try {
 					if (validateEEnum((EEnum) eDataType, (List<Enumerator>) value)) {
-						return new BasicDiagnostic();
+						skipValidator = true;
 					}
 				} catch (final ClassCastException ex) {
 					// ignore and continue with regular validation
 				}
 			}
 
-			if (validator != null) {
+			if (validator != null && !skipValidator) {
 				validator.validate(eDataType, value, diagnostics, context);
 			}
 

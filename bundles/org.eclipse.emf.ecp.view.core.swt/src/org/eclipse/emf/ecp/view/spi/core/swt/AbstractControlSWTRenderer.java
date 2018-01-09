@@ -11,6 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.core.swt;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.databinding.DataBindingContext;
@@ -71,11 +73,16 @@ import org.eclipse.swt.widgets.Label;
 public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> extends AbstractSWTRenderer<VCONTROL>
 	implements RootDomainModelChangeListener {
 
+	private SWTValidationHelper swtValidationHelper = SWTValidationHelper.INSTANCE;
 	private final EMFFormsDatabinding emfFormsDatabinding;
 	private final EMFFormsLabelProvider emfFormsLabelProvider;
 	private final VTViewTemplateProvider vtViewTemplateProvider;
 	private boolean isDisposed;
 	private IObservableValue modelValue;
+
+	private final Map<Integer, Color> severityBackgroundColorMap = new LinkedHashMap<Integer, Color>();
+	private final Map<Integer, Color> severityForegroundColorMap = new LinkedHashMap<Integer, Color>();
+	private final Map<Integer, Image> severityIconMap = new LinkedHashMap<Integer, Image>();
 
 	/**
 	 * Default constructor.
@@ -98,6 +105,25 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 		viewModelDBC = new EMFDataBindingContext();
 		viewContext.registerRootDomainModelChangeListener(this);
 		isDisposed = false;
+	}
+
+	/**
+	 * Default constructor.
+	 *
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
+	 * @param emfFormsLabelProvider The {@link EMFFormsLabelProvider}
+	 * @param reportService The {@link ReportService}
+	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
+	 * @param swtValidationHelper The {@link SWTValidationHelper}
+	 * @since 1.6
+	 */
+	public AbstractControlSWTRenderer(VCONTROL vElement, ViewModelContext viewContext, ReportService reportService,
+		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
+		VTViewTemplateProvider vtViewTemplateProvider, SWTValidationHelper swtValidationHelper) {
+		this(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
+		this.swtValidationHelper = swtValidationHelper;
 	}
 
 	/**
@@ -269,7 +295,12 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	 * @return the icon to be displayed, or <code>null</code> when no icon is to be displayed
 	 */
 	protected final Image getValidationIcon(int severity) {
-		return SWTValidationHelper.INSTANCE.getValidationIcon(severity, getVElement(), getViewModelContext());
+		if (!severityIconMap.containsKey(severity)) {
+			final Image validationIcon = swtValidationHelper.getValidationIcon(severity, getVElement(),
+				getViewModelContext());
+			severityIconMap.put(severity, validationIcon);
+		}
+		return severityIconMap.get(severity);
 	}
 
 	/**
@@ -282,8 +313,13 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 		if (isDisposed) {
 			return null;
 		}
-		return SWTValidationHelper.INSTANCE
-			.getValidationBackgroundColor(severity, getVElement(), getViewModelContext());
+
+		if (!severityBackgroundColorMap.containsKey(severity)) {
+			final Color validationBackgroundColor = swtValidationHelper
+				.getValidationBackgroundColor(severity, getVElement(), getViewModelContext());
+			severityBackgroundColorMap.put(severity, validationBackgroundColor);
+		}
+		return severityBackgroundColorMap.get(severity);
 	}
 
 	/**
@@ -297,8 +333,14 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 		if (isDisposed) {
 			return null;
 		}
-		return SWTValidationHelper.INSTANCE
-			.getValidationForegroundColor(severity, getVElement(), getViewModelContext());
+
+		if (!severityForegroundColorMap.containsKey(severity)) {
+			final Color validationForegroundColor = swtValidationHelper
+				.getValidationForegroundColor(severity, getVElement(), getViewModelContext());
+			severityForegroundColorMap.put(severity, validationForegroundColor);
+		}
+		return severityForegroundColorMap.get(severity);
+
 	}
 
 	/**

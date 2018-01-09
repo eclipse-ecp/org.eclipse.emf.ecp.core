@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * EclipseSource Munich GmbH - initial API and implementation
+ * Christian W. Damus - bug 527753
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.rule.model;
 
@@ -82,6 +83,46 @@ public interface RuleFactory extends EFactory {
 	 * @generated
 	 */
 	EnableRule createEnableRule();
+
+	/**
+	 * Returns a new object of class '<em>Iterate Condition</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return a new object of class '<em>Iterate Condition</em>'.
+	 * @generated
+	 */
+	IterateCondition createIterateCondition();
+
+	/**
+	 * Returns a new object of class '<em>True</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return a new object of class '<em>True</em>'.
+	 * @generated
+	 */
+	True createTrue();
+
+	/**
+	 * Returns a new object of class '<em>False</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return a new object of class '<em>False</em>'.
+	 * @generated
+	 */
+	False createFalse();
+
+	/**
+	 * Returns a new object of class '<em>Not Condition</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * 
+	 * @return a new object of class '<em>Not Condition</em>'.
+	 * @generated
+	 */
+	NotCondition createNotCondition();
 
 	/**
 	 * Returns the package supported by this factory.

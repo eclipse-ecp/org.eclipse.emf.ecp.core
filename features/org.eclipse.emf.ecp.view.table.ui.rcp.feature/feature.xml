@@ -2,11 +2,11 @@
 <feature
       id="org.eclipse.emf.ecp.view.table.ui.rcp.feature"
       label="EMF Forms Table UI RCP Feature"
-      version="1.15.0.qualifier"
+      version="1.16.0.qualifier"
       provider-name="Eclipse Modeling Project"
       plugin="org.eclipse.emf.ecp.view.table.ui.rcp"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.15.0.qualifier">
+      license-feature-version="1.16.0.qualifier">
 
    <description>
       %description

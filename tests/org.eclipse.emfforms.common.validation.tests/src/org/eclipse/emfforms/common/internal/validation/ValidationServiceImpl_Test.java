@@ -16,6 +16,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assume.assumeThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyMapOf;
@@ -26,17 +27,24 @@ import java.util.Collections;
 import java.util.IdentityHashMap;
 import java.util.Set;
 
+import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticChain;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.EValidator.SubstitutionLabelProvider;
+import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.emf.emfstore.bowling.League;
 import org.eclipse.emf.emfstore.bowling.Player;
+import org.eclipse.emf.emfstore.bowling.util.BowlingValidator;
 import org.eclipse.emfforms.common.spi.validation.exception.ValidationCanceledException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -145,6 +153,59 @@ public class ValidationServiceImpl_Test {
 
 		assumeThat("No validation occurred", validationContexts.size(), not(0));
 		assertThat("Too many validation contexts", validationContexts.size(), is(1));
+	}
+
+	@Test
+	public void diagnosticValidateUsesExistingCustomValidator() {
+
+		final EPackage ePackage = EcoreFactory.eINSTANCE.createEPackage();
+		final EClass extendedPlayerClass = EcoreFactory.eINSTANCE.createEClass();
+		extendedPlayerClass.setName("ExtendedPlayer");
+		extendedPlayerClass.getESuperTypes().add(BowlingPackage.eINSTANCE.getPlayer());
+		ePackage.setName("extendedPlayerPackage");
+		ePackage.setNsPrefix("extendedPlayerPackage");
+		ePackage.setNsURI("extendedPlayerPackage");
+		ePackage.getEClassifiers().add(extendedPlayerClass);
+
+		final EObject extendedPlayer = EcoreUtil.create(extendedPlayerClass);
+		extendedPlayer.eSet(BowlingPackage.eINSTANCE.getPlayer_Height(), 20d);
+
+		final EValidator validatorForEObject = fixture.getEValidatorForEObject(extendedPlayer);
+		final BasicDiagnostic diagnostic = new BasicDiagnostic();
+		validatorForEObject.validate(extendedPlayerClass, extendedPlayer, diagnostic, null);
+		assertSame(Diagnostic.ERROR, diagnostic.getSeverity());
+		assertSame(2, diagnostic.getChildren().size());
+		assertSame(EObjectValidator.DIAGNOSTIC_SOURCE, diagnostic.getChildren().get(0).getSource());
+		assertSame(BowlingPackage.eINSTANCE.getPlayer_EMails(), diagnostic.getChildren().get(0).getData().get(1));
+		assertSame(BowlingValidator.DIAGNOSTIC_SOURCE, diagnostic.getChildren().get(1).getSource());
+		assertSame(BowlingPackage.eINSTANCE.getPlayer_Height(), diagnostic.getChildren().get(1).getData().get(1));
+	}
+
+	@Test
+	public void diagnosticValidateUsesDefaultValidator() {
+
+		final EPackage ePackage = EcoreFactory.eINSTANCE.createEPackage();
+		final EClass myClass = EcoreFactory.eINSTANCE.createEClass();
+		myClass.setName("MyClass");
+		final EAttribute nameAttribute = EcoreFactory.eINSTANCE.createEAttribute();
+		nameAttribute.setName("name");
+		nameAttribute.setEType(EcorePackage.eINSTANCE.getEString());
+		nameAttribute.setLowerBound(1);
+		myClass.getEStructuralFeatures().add(nameAttribute);
+		ePackage.setName("standalone");
+		ePackage.setNsPrefix("standalone");
+		ePackage.setNsURI("standalone");
+		ePackage.getEClassifiers().add(myClass);
+
+		final EObject my = EcoreUtil.create(myClass);
+
+		final EValidator validatorForEObject = fixture.getEValidatorForEObject(my);
+		final BasicDiagnostic diagnostic = new BasicDiagnostic();
+		validatorForEObject.validate(myClass, my, diagnostic, null);
+		assertSame(Diagnostic.ERROR, diagnostic.getSeverity());
+		assertSame(1, diagnostic.getChildren().size());
+		assertSame(EObjectValidator.DIAGNOSTIC_SOURCE, diagnostic.getChildren().get(0).getSource());
+		assertSame(nameAttribute, diagnostic.getChildren().get(0).getData().get(1));
 	}
 
 }
