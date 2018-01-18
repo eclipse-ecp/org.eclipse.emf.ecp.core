@@ -13,6 +13,7 @@ package org.eclipse.emfforms.bazaar.internal;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -42,7 +43,7 @@ import org.eclipse.emfforms.bazaar.Vendor;
  */
 public class BazaarImpl<T> implements Bazaar<T> {
 
-	private final List<Vendor<T>> mountebanks = new ArrayList<Vendor<T>>();
+	private final Set<Vendor<T>> mountebanks = new LinkedHashSet<Vendor<T>>();
 
 	private PriorityOverlapCallBack<T> priorityOverlapCallBack;
 
@@ -51,16 +52,6 @@ public class BazaarImpl<T> implements Bazaar<T> {
 	@Override
 	public void addVendor(Vendor<T> mountebank) {
 		mountebanks.add(mountebank);
-	}
-
-	/**
-	 * Returns the ware which is provided by the {@link Vendor}.
-	 *
-	 * @return T
-	 */
-	public T createWare(Vendor<T> mountebank) {
-		final IEclipseContext context = EclipseContextFactory.create();
-		return createWare(mountebank, context);
 	}
 
 	/**
@@ -162,7 +153,6 @@ public class BazaarImpl<T> implements Bazaar<T> {
 	}
 
 	/**
-	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.emfforms.bazaar.Bazaar#createWare(org.eclipse.emfforms.bazaar.BazaarContext)
 	 */
@@ -184,7 +174,6 @@ public class BazaarImpl<T> implements Bazaar<T> {
 	}
 
 	/**
-	 * {@inheritDoc}
 	 *
 	 * @see org.eclipse.emfforms.bazaar.Bazaar#createWares(org.eclipse.emfforms.bazaar.BazaarContext)
 	 */

@@ -139,7 +139,7 @@ public class BazaarTest {
 		final MyWare myWareMock = mock(MyWare.class);
 		final Vendor<MyWare> mountebank = new MountebankCreatingWareParameter0(myWareMock);
 
-		final MyWare myWare = bazaar.createWare(mountebank);
+		final MyWare myWare = bazaar.createWare(mountebank, EclipseContextFactory.create());
 		assertSame(myWareMock, myWare);
 	}
 

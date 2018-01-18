@@ -18,9 +18,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
- * Marks a mthod within a {@link BazaarContextFunction}. This method can request arbitrary parameters from the
+ * Marks a method within a {@link BazaarContextFunction}. This method can request arbitrary parameters from the
  * {@link BazaarContext} and exchanges them to a parameter. This parameter is returned by the method.
- * 
+ *
  * @author jonas
  *
  */
