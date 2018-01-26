@@ -703,6 +703,7 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 				editingDomain.getCommandStack()
 					.execute(new MoveCommand(editingDomain, eObject, attribute, currentIndex, currentIndex + 1));
 				tableViewer.refresh();
+				tableViewer.reveal(tableViewer.getStructuredSelection().getFirstElement());
 			}
 		}
 	}
@@ -739,6 +740,7 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 				editingDomain.getCommandStack()
 					.execute(new MoveCommand(editingDomain, eObject, attribute, currentIndex, currentIndex - 1));
 				tableViewer.refresh();
+				tableViewer.reveal(tableViewer.getStructuredSelection().getFirstElement());
 			}
 		}
 	}
