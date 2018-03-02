@@ -192,6 +192,8 @@
 		<module>../../tests/org.eclipse.emf.ecp.view.compoundcontrol.swt.test</module>
 		
 		<module>../../tests/org.eclipse.emfforms.swt.controlgrid.test</module>
+        
+        <module>../../tests/org.eclipse.emfforms.swt.control.multiattribute.tests</module>
 	</modules>
 	
 	<build>
