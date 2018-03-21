@@ -311,7 +311,7 @@ public class ECPAbstractCustomControlSWT_PTest {
 
 	/**
 	 * Test method for
-	 * {@link org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#handleValidation(org.eclipse.emf.common.util.Diagnostic)}
+	 * {@link org.eclipse.emf.ecp.view.spi.custom.swt.ECPAbstractCustomControlSWT#applyValidation()}
 	 * .
 	 *
 	 * @throws NoPropertyDescriptorFoundExeption

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
+ * Christian W. Damus - bug 527740
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.context;
 
@@ -159,8 +160,16 @@ public interface ViewModelContext extends EMFFormsViewContext {
 	void putContextValue(String key, Object value);
 
 	/**
+	 * <p>
 	 * This returns the childContext for the provided EObject and the provided {@link VElement}. If a child context
 	 * already exists it will be returned otherwise a new {@link ViewModelContext} will be created.
+	 * </p>
+	 * <p>
+	 * Note that the injection of {@code viewModelServices} is useful for
+	 * services that are not registered externally (via extension point or OSGi). If any of these
+	 * services locally override registered implementations of the same interface, then it is better
+	 * to use a {@link ViewModelServiceProvider} that can propagate the override to child contexts.
+	 * </p>
 	 *
 	 * @param eObject The {@link EObject} to get the child context for
 	 * @param parent The {@link VElement} which requests the child context
@@ -168,9 +177,30 @@ public interface ViewModelContext extends EMFFormsViewContext {
 	 * @param viewModelServices The list of {@link ViewModelService} which should be part of a child context
 	 * @return a {@link ViewModelContext} witch is a child of the current context
 	 * @since 1.5
+	 *
+	 * @see #getChildContext(EObject, VElement, VView, ViewModelServiceProvider)
 	 */
 	ViewModelContext getChildContext(EObject eObject, VElement parent, VView vView,
 		ViewModelService... viewModelServices);
+
+	/**
+	 * This returns a child context for the provided {@link EObject} and {@link VElement}. If a child context
+	 * already exists it will be returned otherwise a new {@link ViewModelContext} will be created.
+	 *
+	 * @param eObject The {@link EObject} to get the child context for
+	 * @param parent The {@link VElement} which requests the child context
+	 * @param vView The {@link VView} of the {@link EObject}
+	 * @param viewModelServiceProvider a provider of view model services to inject into the child context,
+	 *            which will only be used in the case that it is necessary to create the context. Thus no services
+	 *            will be created if not needed. May be {@code null} if additional local service overrides are not
+	 *            needed
+	 *
+	 * @return a {@link ViewModelContext} which is a child of the current context
+	 *
+	 * @since 1.16
+	 */
+	ViewModelContext getChildContext(EObject eObject, VElement parent, VView vView,
+		ViewModelServiceProvider viewModelServiceProvider);
 
 	/**
 	 * This returns the parent context. This may be <code>null</code> for the topmost context.

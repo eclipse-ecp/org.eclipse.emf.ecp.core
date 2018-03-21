@@ -13,6 +13,7 @@
 package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
@@ -40,6 +41,7 @@ import org.eclipse.emf.ecp.view.internal.core.swt.MessageKeys;
 import org.eclipse.emf.ecp.view.spi.model.DateTimeDisplayType;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.VAttachment;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDateTimeDisplayAttachment;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
@@ -70,7 +72,7 @@ import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
-public class DateTimeControlRenderer_PTest extends AbstractControl_PTest {
+public class DateTimeControlRenderer_PTest extends AbstractControl_PTest<VControl> {
 
 	private DefaultRealm realm;
 	private static final String NOTIME = "No time set! Click to set time.";
@@ -81,6 +83,7 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest {
 	private static final String SELECTTIME = "Select Time";
 
 	@Before
+	@SuppressWarnings("unchecked")
 	public void before() throws DatabindingFailedException {
 		realm = new DefaultRealm();
 		final ReportService reportService = mock(ReportService.class);
@@ -115,7 +118,8 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest {
 					.thenReturn(SELECTTIME);
 
 		setup();
-		setRenderer(new DateTimeControlSWTRenderer(getvControl(), getContext(), reportService, getDatabindingService(), getLabelProvider(),
+		setRenderer(new DateTimeControlSWTRenderer(getvControl(), getContext(), reportService, getDatabindingService(),
+			getLabelProvider(),
 			getTemplateProvider(), localizationService, imageRegistryService));
 		getRenderer().init();
 	}
@@ -127,6 +131,7 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest {
 	}
 
 	@Test
+	@SuppressWarnings("unchecked")
 	public void renderControlLabelAlignmentNone()
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		setMockLabelAlignment(LabelAlignment.NONE);
@@ -136,13 +141,15 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest {
 		when(mockedEObject.eIsSet(any(EStructuralFeature.class))).thenReturn(true);
 		when(mockedObservableValue.getObserved()).thenReturn(mockedEObject);
 
-		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
-			mockedObservableValue);
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(
+				mockedObservableValue);
 		final Control render = renderControl(new SWTGridCell(0, 1, getRenderer()));
 		assertControl(render, true, true);
 	}
 
 	@Test
+	@SuppressWarnings("unchecked")
 	public void renderControlLabelAlignmentLeft()
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		setMockLabelAlignment(LabelAlignment.LEFT);
@@ -151,8 +158,9 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest {
 		final EObject mockedEObject = mock(EObject.class);
 		when(mockedEObject.eIsSet(any(EStructuralFeature.class))).thenReturn(true);
 		when(mockedObservableValue.getObserved()).thenReturn(mockedEObject);
-		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
-			mockedObservableValue);
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(
+				mockedObservableValue);
 		final Control render = renderControl(new SWTGridCell(0, 2, getRenderer()));
 		assertControl(render, true, true);
 	}
@@ -224,6 +232,7 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest {
 	}
 
 	@Test
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void testDatabindingServiceUsageChangeObservable() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final Date initialValue = new Date();
@@ -262,6 +271,7 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest {
 	}
 
 	@Test
+	@SuppressWarnings("unchecked")
 	public void testDatabindingServiceUsageChangeControl() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final Date initialValue = new Date();
@@ -319,11 +329,13 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest {
 	 * @throws NoPropertyDescriptorFoundExeption
 	 * @throws DatabindingFailedException
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private DateTime[] setUpDatabindingTest(final IObservableValue mockedObservable) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		mockDatabindingIsUnsettable();
-		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
-			mockedObservable);
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(
+				mockedObservable);
 
 		final Control renderControl = renderControl(new SWTGridCell(0, 2, getRenderer()));
 
@@ -378,6 +390,7 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest {
 	 * The control should behave the same way as the default one (with no VDateTimeDisplayAttachment set).
 	 */
 	@Test
+	@SuppressWarnings("unchecked")
 	public void testDateTimeDisplayAttachmentDateAndTime()
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 
@@ -388,8 +401,9 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest {
 		final EObject mockedEObject = mock(EObject.class);
 		when(mockedEObject.eIsSet(any(EStructuralFeature.class))).thenReturn(true);
 		when(mockedObservableValue.getObserved()).thenReturn(mockedEObject);
-		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
-			mockedObservableValue);
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(
+				mockedObservableValue);
 
 		final Control render = renderControl(new SWTGridCell(0, 2, getRenderer()));
 		assertControl(render, true, true);
@@ -407,6 +421,7 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest {
 	 * The control should have only the date widget visible.
 	 */
 	@Test
+	@SuppressWarnings("unchecked")
 	public void testDateTimeDisplayAttachmentDateOnly()
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 
@@ -417,8 +432,9 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest {
 		final EObject mockedEObject = mock(EObject.class);
 		when(mockedEObject.eIsSet(any(EStructuralFeature.class))).thenReturn(true);
 		when(mockedObservableValue.getObserved()).thenReturn(mockedEObject);
-		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
-			mockedObservableValue);
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(
+				mockedObservableValue);
 
 		final Control render = renderControl(new SWTGridCell(0, 2, getRenderer()));
 		assertControl(render, true, false);
@@ -437,6 +453,7 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest {
 	 * The control should have only the time widget visible.
 	 */
 	@Test
+	@SuppressWarnings("unchecked")
 	public void testDateTimeDisplayAttachmentTimeOnly()
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 
@@ -447,8 +464,9 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest {
 		final EObject mockedEObject = mock(EObject.class);
 		when(mockedEObject.eIsSet(any(EStructuralFeature.class))).thenReturn(true);
 		when(mockedObservableValue.getObserved()).thenReturn(mockedEObject);
-		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
-			mockedObservableValue);
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(
+				mockedObservableValue);
 
 		final Control render = renderControl(new SWTGridCell(0, 2, getRenderer()));
 		assertControl(render, false, true);
@@ -459,6 +477,27 @@ public class DateTimeControlRenderer_PTest extends AbstractControl_PTest {
 		assertEquals(NOTIME, unsetLabel.getText());
 		final Button unsetButton = getUnsetButton(render);
 		assertEquals(CLEANTIME, unsetButton.getToolTipText());
+	}
+
+	@Test
+	@SuppressWarnings("unchecked")
+	public void testEffectivelyReadOnlyDeactivatesControl()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException {
+		final EStructuralFeature mockedEStructuralFeature = mock(EStructuralFeature.class);
+		final EObject mockedEObject = mock(EObject.class);
+		when(mockedEObject.eIsSet(mockedEStructuralFeature)).thenReturn(true);
+		final TestObservableValue mockedObservable = mock(TestObservableValue.class);
+		when(mockedObservable.getRealm()).thenReturn(realm);
+		when(mockedObservable.getValueType()).thenReturn(mockedEStructuralFeature);
+		when(mockedObservable.getObserved()).thenReturn(mockedEObject);
+		when(mockedObservable.getValue()).thenReturn(null);
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(mockedObservable);
+
+		when(getvControl().isEffectivelyReadonly()).thenReturn(true);
+		final Control renderControl = renderControl(new SWTGridCell(0, 2, getRenderer()));
+		getRenderer().finalizeRendering(getShell());
+		assertFalse(renderControl.isEnabled());
 	}
 
 	private void setMockDateTimeDisplayAttachment(DateTimeDisplayType displayType) {

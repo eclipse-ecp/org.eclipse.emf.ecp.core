@@ -10,4 +10,9 @@
     <eLiterals name="LEFT"/>
     <eLiterals name="RIGHT" value="1"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ControlLabelAlignmentStyleProperty"
+      eSuperTypes="template.ecore#//StyleProperty">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//AlignmentType"
+        defaultValueLiteral="LEFT"/>
+  </eClassifiers>
 </ecore:EPackage>

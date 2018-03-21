@@ -32,6 +32,7 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
+import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.swt.core.AbstractAdditionalSWTRenderer;
@@ -189,7 +190,11 @@ public abstract class ContainerSWTRenderer<VELEMENT extends VElement> extends Ab
 
 				// TODO who should apply the layout
 				if (control == null) {
-					continue;
+					// instead of continuing: log and create empty cell using Composite
+					getReportService().report(new AbstractReport(
+						String.format("No Control created for Column %1$s of Control %2$s. Filled in with blank.", //$NON-NLS-1$
+							childGridCell.getColumn(), childGridCell.getRenderer().getClass().getName())));
+					control = new Composite(columnComposite, SWT.NONE);
 				}
 
 				// TODO possible layout issues?

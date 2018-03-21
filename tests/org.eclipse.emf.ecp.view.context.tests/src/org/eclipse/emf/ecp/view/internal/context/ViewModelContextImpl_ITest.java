@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,9 +8,14 @@
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
+ * Christian W. Damus - bug 527740
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.context;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
@@ -23,13 +28,19 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecp.view.spi.context.EMFFormsLegacyServicesManager;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelServiceProvider;
+import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
@@ -49,7 +60,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
 
-@SuppressWarnings("rawtypes")
+@SuppressWarnings({ "rawtypes", "deprecation" })
 public class ViewModelContextImpl_ITest {
 
 	private static BundleContext bundleContext;
@@ -132,6 +143,7 @@ public class ViewModelContextImpl_ITest {
 		final InOrder inOrder = inOrder(vmc, scopedServiceProvider, vmcChild);
 		inOrder.verify(scopedServiceProvider, times(1)).createService(any(EMFFormsViewContext.class));
 		inOrder.verify(vmcChild, times(1)).getService(Object.class);
+		inOrder.verify(vmc, times(1)).hasService(Object.class);
 		inOrder.verify(vmc, times(1)).getService(Object.class);
 	}
 
@@ -324,8 +336,9 @@ public class ViewModelContextImpl_ITest {
 
 		final InOrder inOrder = inOrder(vmc, scopedServiceProvider, vmcChild);
 		inOrder.verify(vmcChild, times(1)).getService(Object.class);
-		inOrder.verify(vmc, times(1)).getService(Object.class);
+		inOrder.verify(vmc, times(1)).hasService(Object.class);
 		inOrder.verify(scopedServiceProvider, times(1)).createService(any(EMFFormsViewContext.class));
+		inOrder.verify(vmc, times(1)).getService(Object.class);
 		inOrder.verify(vmc, times(1)).getService(Object.class);
 	}
 
@@ -727,5 +740,163 @@ public class ViewModelContextImpl_ITest {
 
 		serviceRegistrationGI.unregister();
 		serviceRegistrationGL.unregister();
+	}
+
+	/**
+	 * Test the inheritance of provided view-model services from the parent context in a child,
+	 * and overriding of the same by services additionally injected in the child.
+	 */
+	// BEGIN COMPLEX CODE
+	@Test
+	public void testChildContextWithProvider() {
+		final EObject parentModel = EcoreFactory.eINSTANCE.createEObject();
+		final VElement parentView = VViewFactory.eINSTANCE.createView();
+		final EObject childModel = EcoreFactory.eINSTANCE.createEObject();
+		final VElement childView = VViewFactory.eINSTANCE.createView();
+
+		class Service implements ViewModelService {
+			ViewModelContext context;
+			boolean disposed;
+
+			@Override
+			public void instantiate(ViewModelContext context) {
+				this.context = context;
+			}
+
+			@Override
+			public void dispose() {
+				context = null;
+				disposed = true;
+			}
+
+			@Override
+			public int getPriority() {
+				return 1;
+			}
+		}
+		class Service2 extends Service {
+			// Pass
+		}
+		class Service3 extends Service {
+			// Pass
+		}
+
+		abstract class ServiceProvider implements ViewModelServiceProvider {
+			VElement view;
+			EObject model;
+			Service service1;
+			Service service2;
+			Service service3;
+		}
+
+		final ServiceProvider provider1 = new ServiceProvider() {
+			@Override
+			public Collection<? extends ViewModelService> getViewModelServices(VElement view, EObject eObject) {
+				this.view = view;
+				model = eObject;
+
+				service1 = new Service();
+				service2 = new Service2();
+				// No Service3
+				return Arrays.asList(service1, service2);
+			}
+		};
+		final ServiceProvider provider2 = new ServiceProvider() {
+			@Override
+			public Collection<? extends ViewModelService> getViewModelServices(VElement view, EObject eObject) {
+				this.view = view;
+				model = eObject;
+
+				service1 = new Service();
+				// No Service2
+				service3 = new Service3();
+				return Arrays.asList(service1, service3);
+			}
+		};
+
+		final ViewModelContext parentCtx = new ViewModelContextImpl(parentView, parentModel, provider1);
+		assertThat(provider1.view, is(parentView));
+		assertThat(provider1.model, is(parentModel));
+		assertThat(provider1.service1, notNullValue());
+		assertThat(provider1.service1.context, is(parentCtx));
+		assertThat(provider1.service1.disposed, is(false));
+		assertThat(provider1.service2, notNullValue());
+		assertThat(provider1.service2.context, is(parentCtx));
+		assertThat(provider1.service2.disposed, is(false));
+
+		final ViewModelContext childCtx = parentCtx.getChildContext(childModel, parentView,
+			(VView) childView, provider2);
+
+		// Check that provider1 provided for this child context, but only the unique service
+		assertThat(provider1.view, is(childView));
+		assertThat(provider1.model, is(childModel));
+		assertThat(provider1.service1, notNullValue());
+		assertThat(provider1.service1.context, nullValue());
+		assertThat(provider1.service1.disposed, is(true));
+		assertThat(provider1.service2, notNullValue());
+		assertThat(provider1.service2.context, is(childCtx));
+		assertThat(provider1.service2.disposed, is(false));
+
+		// The provider2's services took priority
+		assertThat(provider2.view, is(childView));
+		assertThat(provider2.model, is(childModel));
+		assertThat(provider2.service1, notNullValue());
+		assertThat(provider2.service1.context, is(childCtx));
+		assertThat(provider2.service1.disposed, is(false));
+		assertThat(provider2.service3, notNullValue());
+		assertThat(provider2.service3.context, is(childCtx));
+		assertThat(provider2.service3.disposed, is(false));
+
+		childCtx.dispose();
+
+		// As usual
+		assertThat(provider1.service1.context, nullValue());
+		assertThat(provider1.service1.disposed, is(true));
+		assertThat(provider1.service2.context, nullValue());
+		assertThat(provider1.service2.disposed, is(true));
+		assertThat(provider2.service3, notNullValue());
+		assertThat(provider2.service3.context, nullValue());
+		assertThat(provider2.service3.disposed, is(true));
+	}
+	// END COMPLEX CODE
+
+	/**
+	 * Test that it's okay to create contexts with null service-override providers.
+	 */
+	@Test
+	public void testContextWithNullServiceProvider() {
+		final EObject model = EcoreFactory.eINSTANCE.createEObject();
+		final VElement view = VViewFactory.eINSTANCE.createView();
+
+		final ViewModelContext context = ViewModelContextFactory.INSTANCE.createViewModelContext(
+			view, model, (ViewModelServiceProvider) null);
+		assertThat(context, notNullValue());
+		context.dispose();
+	}
+
+	@Test
+	public void testContextDispose() {
+		final EObject model = EcoreFactory.eINSTANCE.createEObject();
+		final VElement view = VViewFactory.eINSTANCE.createView();
+		final ViewModelContext context = ViewModelContextFactory.INSTANCE.createViewModelContext(
+			view, model, (ViewModelServiceProvider) null);
+		final EObject child = EcoreFactory.eINSTANCE.createEObject();
+		final VView childView1 = VViewFactory.eINSTANCE.createView();
+		final VView childView2 = VViewFactory.eINSTANCE.createView();
+		final VElement parent1 = VViewFactory.eINSTANCE.createView();
+		final VElement parent2 = VViewFactory.eINSTANCE.createView();
+		final Object user = new Object();
+		final ViewModelContext childContext1 = context.getChildContext(child, parent1, childView1);
+		childContext1.addContextUser(user);
+		final ViewModelContext childContext2 = context.getChildContext(child, parent2, childView2);
+		childContext2.addContextUser(user);
+
+		final ViewModelContext childContextToRemove1 = context.getChildContext(child, parent1, childView1);
+		childContextToRemove1.removeContextUser(user);
+		final ViewModelContext childContextToRemove2 = context.getChildContext(child, parent2, childView2);
+		childContextToRemove2.removeContextUser(user);
+
+		assertSame(childContext1, childContextToRemove1);
+		assertSame(childContext2, childContextToRemove2);
 	}
 }

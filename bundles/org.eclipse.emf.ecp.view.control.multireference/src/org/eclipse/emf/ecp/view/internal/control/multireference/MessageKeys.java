@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
+ * Christian W. Damus - bug 527736
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.control.multireference;
 
@@ -38,4 +39,10 @@ public interface MessageKeys {
 	 * Move Down Tooltip.
 	 */
 	String MultiReferenceSWTRenderer_moveDownTooltip = "MultiReferenceSWTRenderer_moveDownTooltip"; //$NON-NLS-1$
+	/**
+	 * Default display name for a reference, in case the model's edit support is not available.
+	 * 
+	 * @since 1.16
+	 */
+	String MultiReferenceSWTRenderer_defaultReferenceDisplayName = "MultiReferenceSWTRenderer_defaultReferenceDisplayName"; //$NON-NLS-1$
 }

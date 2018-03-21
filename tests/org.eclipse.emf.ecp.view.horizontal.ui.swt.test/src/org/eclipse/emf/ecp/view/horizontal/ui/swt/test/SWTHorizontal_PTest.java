@@ -25,6 +25,7 @@ import org.eclipse.emf.ecp.view.spi.horizontal.model.VHorizontalLayout;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
@@ -121,8 +122,7 @@ public class SWTHorizontal_PTest {
 	public void testHorizontalWithTwoHorizontalAsChildrenAndControlAsSubChildren() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
 		// setup model
-		final HierarchyViewModelHandle handle =
-			createHorizontalWithTwoHorizontalAsChildrenAndControlAsSubChildren();
+		final HierarchyViewModelHandle handle = createHorizontalWithTwoHorizontalAsChildrenAndControlAsSubChildren();
 		final Control render = SWTViewTestHelper.render(handle.getRoot(), domainElement, shell);
 		assertTrue(render instanceof Composite);
 		final Composite composite = (Composite) render;
@@ -141,4 +141,27 @@ public class SWTHorizontal_PTest {
 		assertTrue(SWTViewTestHelper.checkIfThereIsATextControlWithLabel(secondHorizontal.getChildren()[1]));
 	}
 
+	@Test
+	public void testReadOnlyDoesNotDisableComposite() throws NoRendererFoundException,
+		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
+		final HierarchyViewModelHandle handle = createHorizontalWithoutChildren();
+		handle.getRoot().setReadonly(true);
+		final Control render = SWTViewTestHelper.render(handle.getRoot(), domainElement, shell);
+		assertTrue(render instanceof Composite);
+		final Composite composite = (Composite) render;
+		assertTrue(composite.isEnabled());
+	}
+
+	@Test
+	public void testEffectivelyReadOnlyDoesNotDisableComposite() throws NoRendererFoundException,
+		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
+		final VView view = VViewFactory.eINSTANCE.createView();
+		view.setReadonly(true);
+		final VHorizontalLayout horizontal = VHorizontalFactory.eINSTANCE.createHorizontalLayout();
+		view.getChildren().add(horizontal);
+		final Control render = SWTViewTestHelper.render(horizontal, domainElement, shell);
+		assertTrue(render instanceof Composite);
+		final Composite composite = (Composite) render;
+		assertTrue(composite.isEnabled());
+	}
 }

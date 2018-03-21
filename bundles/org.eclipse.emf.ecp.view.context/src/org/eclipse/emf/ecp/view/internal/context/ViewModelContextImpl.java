@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
+ * Christian W. Damus - bug 527740
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.context;
 
@@ -42,6 +43,7 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextDisposeListener;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelServiceNotAvailableReport;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelServiceProvider;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeAddRemoveListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
@@ -125,6 +127,9 @@ public class ViewModelContextImpl implements ViewModelContext {
 			}
 		});
 
+	/** Provider of view service overrides. */
+	private final ViewModelServiceProvider viewServiceProvider;
+
 	/**
 	 * The disposed state.
 	 */
@@ -145,7 +150,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	private final Map<EObject, Set<ViewModelContext>> childContexts = new LinkedHashMap<EObject, Set<ViewModelContext>>();
 	private final Map<ViewModelContext, VElement> childContextUsers = new LinkedHashMap<ViewModelContext, VElement>();
 
-	private ViewModelContext parentContext;
+	private final ViewModelContext parentContext;
 
 	private final Set<ViewModelContextDisposeListener> disposeListeners = new LinkedHashSet<ViewModelContextDisposeListener>();
 
@@ -156,7 +161,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	private ServiceListener serviceListener;
 
-	private VElement parentVElement;
+	private final VElement parentVElement;
 
 	/**
 	 * Instantiates a new view model context impl.
@@ -165,10 +170,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 * @param domainObject the domain object
 	 */
 	public ViewModelContextImpl(VElement view, EObject domainObject) {
-		this.view = view;
-		this.domainObject = domainObject;
-
-		instantiate();
+		this(view, domainObject, ViewModelServiceProvider.NULL);
 	}
 
 	/**
@@ -181,11 +183,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 */
 	public ViewModelContextImpl(VElement view, EObject domainObject, ViewModelContext parent,
 		VElement parentVElement) {
-		this.view = view;
-		this.domainObject = domainObject;
-		parentContext = parent;
-		this.parentVElement = parentVElement;
-		instantiate();
+		this(view, domainObject, parent, parentVElement, ViewModelServiceProvider.NULL);
 	}
 
 	/**
@@ -194,15 +192,26 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 * @param view the view
 	 * @param domainObject the domain object
 	 * @param modelServices an array of services to use in the {@link ViewModelContext}
+	 *
+	 * @deprecated As of 1.16, use the {@link #ViewModelContextImpl(VElement, EObject, ViewModelServiceProvider)} API
 	 */
+	@Deprecated
 	public ViewModelContextImpl(VElement view, EObject domainObject, ViewModelService... modelServices) {
-		this.view = view;
-		this.domainObject = domainObject;
+		this(view, domainObject, new ArrayOnceViewModelServiceProvider(modelServices));
+	}
 
-		for (final ViewModelService vms : modelServices) {
-			viewServices.add(vms);
-		}
-		instantiate();
+	/**
+	 * Instantiates a new view model context impl.
+	 *
+	 * @param view the view
+	 * @param domainObject the domain object
+	 * @param modelServiceProvider a provider of services to use in the {@link ViewModelContext}. May be {@code null} if
+	 *            local service overrides are not needed
+	 *
+	 * @since 1.16
+	 */
+	public ViewModelContextImpl(VElement view, EObject domainObject, ViewModelServiceProvider modelServiceProvider) {
+		this(view, domainObject, null, null, modelServiceProvider);
 	}
 
 	/**
@@ -210,19 +219,44 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 *
 	 * @param view the view
 	 * @param domainObject the domain object
-	 * @param modelServices an array of services to use in the {@link ViewModelContext}
 	 * @param parent The parent {@link ViewModelContext}
 	 * @param parentVElement The parent {@link VElement}
+	 * @param modelServices an array of services to use in the {@link ViewModelContext}
+	 *
+	 * @deprecated As of 1.16, use the
+	 *             {@link #ViewModelContextImpl(VElement, EObject, ViewModelContext, VElement, ViewModelServiceProvider)}
+	 *             API
+	 */
+	@Deprecated
+	public ViewModelContextImpl(VElement view, EObject domainObject, ViewModelContext parent,
+		VElement parentVElement, ViewModelService... modelServices) {
+
+		this(view, domainObject, parent, parentVElement, new ArrayOnceViewModelServiceProvider(modelServices));
+	}
+
+	/**
+	 * Instantiates a new view model context impl with a parent context.
+	 *
+	 * @param view the view
+	 * @param domainObject the domain object
+	 * @param parent The parent {@link ViewModelContext}
+	 * @param parentVElement The parent {@link VElement}
+	 * @param modelServiceProvider a provider of services to use in the {@link ViewModelContext}. May be {@code null} if
+	 *            local service overrides are not needed
+	 *
+	 * @since 1.16
 	 */
 	public ViewModelContextImpl(VElement view, EObject domainObject, ViewModelContext parent,
-		VElement parentVElement,
-		ViewModelService... modelServices) {
+		VElement parentVElement, ViewModelServiceProvider modelServiceProvider) {
 		this.view = view;
 		this.domainObject = domainObject;
 		parentContext = parent;
-		for (final ViewModelService vms : modelServices) {
-			viewServices.add(vms);
+		if (modelServiceProvider == null) {
+			viewServiceProvider = ViewModelServiceProvider.NULL;
+		} else {
+			viewServiceProvider = modelServiceProvider;
 		}
+		viewServices.addAll(viewServiceProvider.getViewModelServices(view, domainObject));
 		this.parentVElement = parentVElement;
 		instantiate();
 	}
@@ -527,15 +561,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 */
 	@Override
 	public <T> boolean hasService(Class<T> serviceType) {
-		for (final ViewModelService service : viewServices) {
-			if (serviceType.isInstance(service)) {
-				return true;
-			}
-		}
-		if (parentContext != null) {
-			return parentContext.hasService(serviceType);
-		}
-		return false;
+		return getServiceWithoutLog(serviceType) != null;
 	}
 
 	/**
@@ -544,8 +570,26 @@ public class ViewModelContextImpl implements ViewModelContext {
 	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getService(java.lang.Class)
 	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public <T> T getService(Class<T> serviceType) {
+		final T service = getServiceWithoutLog(serviceType);
+		if (service == null) {
+			report(new ViewModelServiceNotAvailableReport(serviceType));
+		}
+		return service;
+	}
+
+	/**
+	 * Retrieve an {@link ViewModelService} of type {@code serviceType} without reporting an error if none is found.
+	 *
+	 * @param <T>
+	 *            the type of the desired service
+	 *
+	 * @param serviceType
+	 *            the type of the service to be retrieved
+	 * @return the service
+	 */
+	@SuppressWarnings("unchecked")
+	protected <T> T getServiceWithoutLog(Class<T> serviceType) {
 		// legacy stuff
 		for (final ViewModelService service : viewServices) {
 			if (serviceType.isInstance(service)) {
@@ -571,7 +615,7 @@ public class ViewModelContextImpl implements ViewModelContext {
 				return t;
 			}
 		}
-		if (parentContext != null) {
+		if (parentContext != null && parentContext.hasService(serviceType)) {
 			return parentContext.getService(serviceType);
 		}
 
@@ -584,7 +628,6 @@ public class ViewModelContextImpl implements ViewModelContext {
 				return service;
 			}
 		}
-		report(new ViewModelServiceNotAvailableReport(serviceType));
 		return null;
 	}
 
@@ -782,19 +825,39 @@ public class ViewModelContextImpl implements ViewModelContext {
 
 	}
 
-	private void removeChildContext(EObject eObject) {
-		final Set<ViewModelContext> removedContexts = childContexts.remove(eObject);
-		if (removedContexts != null) {
-			for (final ViewModelContext removedContext : removedContexts) {
-				childContextUsers.remove(removedContext);
-			}
+	private void removeChildContext(EObject eObject, ViewModelContext context) {
+		final boolean removed = childContexts.get(eObject).remove(context);
+		if (removed) {
+			childContextUsers.remove(context);
 		}
+		if (childContexts.get(eObject).size() == 0) {
+			childContexts.remove(eObject);
+		}
+	}
 
+	/**
+	 * Obtains the provider of local view-model service overrides.
+	 *
+	 * @return the local view-model service provider
+	 *
+	 * @since 1.16
+	 */
+	protected ViewModelServiceProvider getViewModelServiceProvider() {
+		return viewServiceProvider;
+	}
+
+	@Deprecated
+	@Override
+	public ViewModelContext getChildContext(final EObject eObject, VElement parent, VView vView,
+		ViewModelService... viewModelServices) {
+
+		return getChildContext(eObject, parent, vView, new ArrayOnceViewModelServiceProvider(viewModelServices));
 	}
 
 	@Override
 	public ViewModelContext getChildContext(final EObject eObject, VElement parent, VView vView,
-		ViewModelService... viewModelServices) {
+		ViewModelServiceProvider viewModelServiceProvider) {
+
 		final Set<ViewModelContext> contexts = childContexts.get(eObject);
 		if (contexts != null) {
 			for (final ViewModelContext context : contexts) {
@@ -804,15 +867,24 @@ public class ViewModelContextImpl implements ViewModelContext {
 				}
 			}
 		}
+
 		// no context found -> create a new one
-		final ViewModelContext childContext = new ViewModelContextImpl(vView, eObject, this, parent, viewModelServices);
+
+		ViewModelServiceProvider serviceProvider = getViewModelServiceProvider();
+		if (viewModelServiceProvider != null) {
+			// Compose the client's provided service first as they must override ours
+			serviceProvider = new ViewModelServiceProvider.Composed(
+				viewModelServiceProvider, serviceProvider);
+		}
+
+		final ViewModelContext childContext = new ViewModelContextImpl(vView, eObject, this, parent, serviceProvider);
 		childContext.registerDisposeListener(new ViewModelContextDisposeListener() {
 
 			@Override
 			public void contextDisposed(ViewModelContext viewModelContext) {
-				removeChildContext(eObject);
+				removeChildContext(eObject, viewModelContext);
 				for (final EMFFormsContextListener contextListener : contextListeners) {
-					contextListener.childContextDisposed(childContext);
+					contextListener.childContextDisposed(viewModelContext);
 				}
 			}
 		});

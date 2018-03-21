@@ -20,10 +20,11 @@ import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
  *
  * <p>
  * The following features are supported:
- * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentStyleProperty#getType <em>Type</em>}</li>
- * </ul>
  * </p>
+ * <ul>
+ * <li>{@link org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentStyleProperty#getType
+ * <em>Type</em>}</li>
+ * </ul>
  *
  * @see org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentPackage#getAlignmentStyleProperty()
  * @model
@@ -51,8 +52,8 @@ public interface VTAlignmentStyleProperty extends VTStyleProperty {
 	AlignmentType getType();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentStyleProperty#getType <em>Type</em>}'
+	 * Sets the value of the
+	 * '{@link org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentStyleProperty#getType <em>Type</em>}'
 	 * attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

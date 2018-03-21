@@ -71,7 +71,7 @@ location "http://download.eclipse.org/tools/orbit/downloads/drops/R2016022119215
 	org.hamcrest.library.source
 }
 
-location "http://download.eclipse.org/edapt/releases/12x" {
+location "http://download.eclipse.org/edapt/releases/13x" {
 	org.eclipse.emf.edapt.runtime.feature.feature.group
 	org.eclipse.emf.edapt.runtime.feature.source.feature.group
 }

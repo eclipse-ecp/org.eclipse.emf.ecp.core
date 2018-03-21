@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * Eugen Neufeld - initial API and implementation
+ * Christian W. Damus - bug 527826
  */
 package org.eclipse.emf.ecp.view.spi.model.impl;
 
@@ -646,10 +647,6 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 	}
 
 	/**
-	 *
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.model.VElement#isEffectivelyVisible()
 	 * @since 1.12
 	 */
 	@Override
@@ -663,10 +660,6 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 	}
 
 	/**
-	 *
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.model.VElement#isEffectivelyEnabled()
 	 * @since 1.12
 	 */
 	@Override
@@ -680,18 +673,14 @@ public abstract class VElementImpl extends EObjectImpl implements VElement {
 	}
 
 	/**
-	 *
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.model.VElement#isEffectivelyReadonly()
 	 * @since 1.12
 	 */
 	@Override
 	public boolean isEffectivelyReadonly() {
 		boolean result = isReadonly();
 		final VElement parent = getVElementParent();
-		if (parent != null) {
-			result &= parent.isEffectivelyReadonly();
+		if (!result && parent != null) {
+			result |= parent.isEffectivelyReadonly();
 		}
 		return result;
 	}

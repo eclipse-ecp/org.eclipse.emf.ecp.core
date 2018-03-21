@@ -26,7 +26,6 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.core.ECPProject;
 import org.eclipse.emf.ecp.spi.core.InternalProvider;
 import org.eclipse.emf.ecp.spi.ui.ECPDeleteServiceImpl;
 import org.eclipse.emf.ecp.spi.ui.ECPReferenceServiceImpl;
@@ -82,12 +81,11 @@ public class ECPE4Editor {
 	 * Sets the input of the editor part.
 	 *
 	 * @param modelElement the {@link EObject} to be opened
-	 * @param ecpProject the {@link ECPProject} in which the {@link EObject} is contained
 	 * @param part the corresponding {@link MPart}
 	 */
 	@Inject
-	public void setInput(@Optional @Named(INPUT) EObject modelElement, @Optional ECPProject ecpProject, MPart part) {
-		if (modelElement == null || ecpProject == null) {
+	public void setInput(@Optional @Named(INPUT) EObject modelElement, MPart part) {
+		if (modelElement == null) {
 			return;
 		}
 		this.part = part;

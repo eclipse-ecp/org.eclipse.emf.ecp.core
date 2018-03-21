@@ -21,6 +21,7 @@ import org.eclipse.emf.ecp.view.template.style.alignment.model.AlignmentType;
 import org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentFactory;
 import org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentPackage;
 import org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentStyleProperty;
+import org.eclipse.emf.ecp.view.template.style.alignment.model.VTControlLabelAlignmentStyleProperty;
 
 /**
  * <!-- begin-user-doc -->
@@ -37,6 +38,14 @@ public class VTAlignmentPackageImpl extends EPackageImpl implements VTAlignmentP
 	 * @generated
 	 */
 	private EClass alignmentStylePropertyEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	private EClass controlLabelAlignmentStylePropertyEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -93,7 +102,7 @@ public class VTAlignmentPackageImpl extends EPackageImpl implements VTAlignmentP
 		// Obtain or create and register package
 		final VTAlignmentPackageImpl theAlignmentPackage = (VTAlignmentPackageImpl) (EPackage.Registry.INSTANCE
 			.get(eNS_URI) instanceof VTAlignmentPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
-			: new VTAlignmentPackageImpl());
+				: new VTAlignmentPackageImpl());
 
 		isInited = true;
 
@@ -134,6 +143,28 @@ public class VTAlignmentPackageImpl extends EPackageImpl implements VTAlignmentP
 	@Override
 	public EAttribute getAlignmentStyleProperty_Type() {
 		return (EAttribute) alignmentStylePropertyEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EClass getControlLabelAlignmentStyleProperty() {
+		return controlLabelAlignmentStylePropertyEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EAttribute getControlLabelAlignmentStyleProperty_Type() {
+		return (EAttribute) controlLabelAlignmentStylePropertyEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -184,6 +215,9 @@ public class VTAlignmentPackageImpl extends EPackageImpl implements VTAlignmentP
 		alignmentStylePropertyEClass = createEClass(ALIGNMENT_STYLE_PROPERTY);
 		createEAttribute(alignmentStylePropertyEClass, ALIGNMENT_STYLE_PROPERTY__TYPE);
 
+		controlLabelAlignmentStylePropertyEClass = createEClass(CONTROL_LABEL_ALIGNMENT_STYLE_PROPERTY);
+		createEAttribute(controlLabelAlignmentStylePropertyEClass, CONTROL_LABEL_ALIGNMENT_STYLE_PROPERTY__TYPE);
+
 		// Create enums
 		alignmentTypeEEnum = createEEnum(ALIGNMENT_TYPE);
 	}
@@ -225,14 +259,20 @@ public class VTAlignmentPackageImpl extends EPackageImpl implements VTAlignmentP
 
 		// Add supertypes to classes
 		alignmentStylePropertyEClass.getESuperTypes().add(theTemplatePackage.getStyleProperty());
+		controlLabelAlignmentStylePropertyEClass.getESuperTypes().add(theTemplatePackage.getStyleProperty());
 
 		// Initialize classes, features, and operations; add parameters
-		initEClass(alignmentStylePropertyEClass, VTAlignmentStyleProperty.class,
-			"AlignmentStyleProperty", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(
-			getAlignmentStyleProperty_Type(),
-			getAlignmentType(),
-			"type", "LEFT", 1, 1, VTAlignmentStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEClass(alignmentStylePropertyEClass, VTAlignmentStyleProperty.class, "AlignmentStyleProperty", !IS_ABSTRACT, //$NON-NLS-1$
+			!IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getAlignmentStyleProperty_Type(), getAlignmentType(), "type", "LEFT", 1, 1, //$NON-NLS-1$ //$NON-NLS-2$
+			VTAlignmentStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
+			IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(controlLabelAlignmentStylePropertyEClass, VTControlLabelAlignmentStyleProperty.class,
+			"ControlLabelAlignmentStyleProperty", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEAttribute(getControlLabelAlignmentStyleProperty_Type(), getAlignmentType(), "type", "LEFT", 1, 1, //$NON-NLS-1$ //$NON-NLS-2$
+			VTControlLabelAlignmentStyleProperty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
+			!IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(alignmentTypeEEnum, AlignmentType.class, "AlignmentType"); //$NON-NLS-1$

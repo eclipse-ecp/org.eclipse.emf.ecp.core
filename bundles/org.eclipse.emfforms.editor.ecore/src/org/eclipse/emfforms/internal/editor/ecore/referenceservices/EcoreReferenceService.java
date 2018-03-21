@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -9,6 +9,7 @@
  * Contributors:
  * Clemens Elflein - initial API and implementation
  * Martin Fleck - bug 487101
+ * Christian W. Damus - bug 529542
  ******************************************************************************/
 package org.eclipse.emfforms.internal.editor.ecore.referenceservices;
 
@@ -37,7 +38,16 @@ import org.eclipse.emfforms.spi.editor.helpers.ResourceSetHelpers;
 
 /**
  * The ReferenceService provides all widgets with Ecore specific references.
+ *
+ * @deprecated As of 1.16, the responsibilities of this class are subsumed into the
+ *             {@link EcoreReferenceStrategyProvider} and related classes.
+ * 
+ * @see EcoreAttachmentStrategyProvider
+ * @see EcoreEObjectSelectionStrategyProvider
+ * @see EcoreOpenInNewContextStrategyProvider
+ * @see EcoreReferenceStrategyProvider
  */
+@Deprecated
 @SuppressWarnings("restriction")
 public class EcoreReferenceService extends DefaultReferenceService {
 

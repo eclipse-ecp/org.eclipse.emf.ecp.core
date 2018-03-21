@@ -6,12 +6,12 @@
 	<parent>
 		<groupId>org.eclipse.emf.ecp</groupId>
 		<artifactId>ecp-parent</artifactId>
-		<version>1.15.0-SNAPSHOT</version>
+		<version>1.16.0-SNAPSHOT</version>
 		<relativePath>../../releng/org.eclipse.emf.ecp.releng/</relativePath>
 	</parent>
 	<groupId>org.eclipse.emf.ecp</groupId>
 	<artifactId>ecp-bundles-parent</artifactId>
-	<version>1.15.0-SNAPSHOT</version>
+	<version>1.16.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<modules>
@@ -340,6 +340,9 @@
 		
 		<!-- Nebula Table -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.ui.nebula.grid</module>
+		
+		<!-- Bazaar -->
+		<module>../../bundles/org.eclipse.emfforms.core.bazaar</module>
 		
 	</modules>
 

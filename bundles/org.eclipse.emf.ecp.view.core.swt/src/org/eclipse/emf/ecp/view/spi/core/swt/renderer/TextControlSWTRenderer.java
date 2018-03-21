@@ -123,8 +123,8 @@ public class TextControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 		text.setMessage(getTextMessage());
 
 		try {
-			PreSetValidationListeners.create().verify(text, getFeature(), getVElement());
-			PreSetValidationListeners.create().focus(text, getFeature(),
+			PreSetValidationListeners.create(getViewModelContext()).verify(text, getFeature(), getVElement());
+			PreSetValidationListeners.create(getViewModelContext()).focus(text, getFeature(),
 				new PreSetValidationServiceRunnable() {
 					@Override
 					public void run(PreSetValidationService service) {

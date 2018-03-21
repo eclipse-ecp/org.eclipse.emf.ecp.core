@@ -21,7 +21,6 @@ import javax.inject.Inject;
 
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeNotification;
@@ -29,7 +28,6 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.section.model.VSection;
 import org.eclipse.emf.ecp.view.spi.section.model.VSectionPackage;
-import org.eclipse.emf.ecp.view.spi.section.model.VSectionedArea;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -271,16 +269,6 @@ public class SectionNodeSWTRenderer extends AbstractSectionSWTRenderer {
 		});
 	}
 
-	private int computeLeftMargin() {
-		int numberOfParents = 0;
-		EObject current = getVElement().eContainer();
-		while (!VSectionedArea.class.isInstance(current)) {
-			numberOfParents++;
-			current = current.eContainer();
-		}
-		return (numberOfParents + 1) * 8;
-	}
-
 	@Override
 	protected void adjustLayoutData(boolean vis) {
 		super.adjustLayoutData(vis);
@@ -296,12 +284,6 @@ public class SectionNodeSWTRenderer extends AbstractSectionSWTRenderer {
 	@Override
 	protected void applyEnable() {
 		getExpandableComposite().setEnabled(getVElement().isEnabled());
-	}
-
-	@Override
-	protected void applyReadOnly() {
-		super.applyReadOnly();
-		getExpandableComposite().getParent().setEnabled(true);
 	}
 
 	@Override

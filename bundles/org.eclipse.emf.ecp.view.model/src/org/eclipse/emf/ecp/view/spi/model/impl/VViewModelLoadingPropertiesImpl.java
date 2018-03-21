@@ -245,22 +245,36 @@ public class VViewModelLoadingPropertiesImpl extends EObjectImpl implements VVie
 		return properties;
 	}
 
+	/**
+	 * Adds a inheritable property and removes the same property from non inheritable properties.
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.model.VViewModelProperties#addInheritableProperty(java.lang.String,
+	 *      java.lang.Object)
+	 */
 	@Override
 	public Object addInheritableProperty(String key, Object value) {
 		if (getNonInheritableProperties().containsKey(key)) {
-			final Object oldValue = getNonInheritableProperties().get(key);
-			getNonInheritableProperties().remove(key);
+			// removes the entry with the given key (due to EMap interface instead of Map)
+			final Object oldValue = getNonInheritableProperties().removeKey(key);
 			getInheritableProperties().put(key, value);
 			return oldValue;
 		}
 		return getInheritableProperties().put(key, value);
 	}
 
+	/**
+	 * Adds a non inheritable property and removes the same property from inheritable properties.
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.model.VViewModelProperties#addNonInheritableProperty(java.lang.String,
+	 *      java.lang.Object)
+	 */
 	@Override
 	public Object addNonInheritableProperty(String key, Object value) {
 		if (getInheritableProperties().containsKey(key)) {
-			final Object oldValue = getInheritableProperties().get(key);
-			getInheritableProperties().remove(key);
+			// removes the entry with the given key (due to EMap interface instead of Map)
+			final Object oldValue = getInheritableProperties().removeKey(key);
 			getNonInheritableProperties().put(key, value);
 			return oldValue;
 		}

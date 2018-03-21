@@ -16,17 +16,22 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.lang.reflect.Field;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.common.spi.BidirectionalMap;
 import org.eclipse.emf.ecp.common.spi.UniqueSetting;
 import org.eclipse.emf.ecp.test.common.DefaultRealm;
 import org.eclipse.emf.ecp.view.internal.rule.RuleRegistry;
 import org.eclipse.emf.ecp.view.internal.rule.RuleService;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelServiceProvider;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
@@ -130,7 +135,15 @@ public class RuleRegistry_PTest {
 	}
 
 	private void initialize() {
-		ViewModelContextFactory.INSTANCE.createViewModelContext(view, fan, ruleService);
+		ViewModelContextFactory.INSTANCE.createViewModelContext(view, fan,
+			new ViewModelServiceProvider() {
+
+				@Override
+				public Collection<? extends ViewModelService> getViewModelServices(VElement view, EObject eObject) {
+					return Collections.singleton(ruleService);
+				}
+
+			});
 	}
 
 	private static ShowRule addFavMerchandiseRule(VElement element) {
@@ -706,6 +719,37 @@ public class RuleRegistry_PTest {
 			assertEquals(rule.getCondition(), entry.getKey());
 			assertEquals(1, entry.getValue().size());
 			assertEquals(newSetting, entry.getValue().iterator().next());
+		}
+	}
+
+	@Test
+	public void testDynamicOneSingleRefRuleChangeDomainToNull() {
+		// setup
+		addFavMerchandiseRule(control1);
+		initialize();
+
+		// act
+		final Merchandise newMerchandise = BowlingFactory.eINSTANCE.createMerchandise();
+		fan.setFavouriteMerchandise(newMerchandise);
+		fan.setFavouriteMerchandise(null);
+
+		// assert settingsToRules
+		{
+			final Map<UniqueSetting, BidirectionalMap<Condition, ShowRule>> settingsToRules = getSettingsToRules();
+			assertEquals(0, settingsToRules.size());
+		}
+
+		// assert rulesToRenderables
+		{
+			final BidirectionalMap<ShowRule, VElement> rulesToRenderables = getRulesToRenderables();
+			assertEquals(0, rulesToRenderables.keys().size());
+			assertEquals(0, rulesToRenderables.values().size());
+		}
+
+		// assert conditionToSettings
+		{
+			final Map<Condition, Set<UniqueSetting>> conditionsToSettings = getConditionsToSettings();
+			assertEquals(0, conditionsToSettings.size());
 		}
 	}
 

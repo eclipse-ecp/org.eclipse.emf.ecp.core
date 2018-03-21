@@ -13,6 +13,7 @@
 package org.eclipse.emf.ecp.view.spi.core.swt.renderer;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
@@ -55,6 +56,7 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 	private DefaultRealm realm;
 
 	@Before
+	@SuppressWarnings("unchecked")
 	public void before() throws DatabindingFailedException {
 		realm = new DefaultRealm();
 		final ReportService reportService = mock(ReportService.class);
@@ -76,6 +78,7 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 	}
 
 	@Test
+	@SuppressWarnings("unchecked")
 	public void renderControlLabelAlignmentNone()
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException,
 		NoLabelFoundException {
@@ -97,6 +100,7 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 	}
 
 	@Test
+	@SuppressWarnings("unchecked")
 	public void renderControlLabelAlignmentLeft()
 		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException,
 		NoLabelFoundException {
@@ -162,6 +166,7 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 	}
 
 	@Test
+	@SuppressWarnings("unchecked")
 	public void testDatabindingServiceUsageChangeObservable() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException, NoLabelFoundException {
 		final String initialValue = "initial";
@@ -201,6 +206,7 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 	 * @throws DatabindingFailedException if the databinding failed
 	 * @throws NoLabelFoundException
 	 */
+	@SuppressWarnings("unchecked")
 	private Text setUpDatabindingTest(final ObservingWritableValue mockedObservable) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException, NoLabelFoundException {
 		when(getLabelProvider().getDisplayName(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
@@ -227,6 +233,7 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 	 * @throws NoLabelFoundException
 	 */
 	@Test
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void testLabelServiceUsageTextField() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
 		DatabindingFailedException, NoLabelFoundException {
 		final IObservableValue testDisplayName = Observables.constantObservableValue("test-displayname", String.class);
@@ -252,5 +259,25 @@ public class TextControlRenderer_PTest extends AbstractControl_PTest {
 
 		final Text text = (Text) textRender;
 		assertEquals(testDisplayName.getValue(), text.getMessage());
+	}
+
+	@Test
+	@SuppressWarnings("unchecked")
+	public void testEffectivelyReadOnlyDeactivatesControl()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException,
+		NoLabelFoundException {
+		final ObservingWritableValue mockedObservable = new ObservingWritableValue(realm, "",
+			EcorePackage.eINSTANCE.getENamedElement_Name());
+		when(getLabelProvider().getDisplayName(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+			Observables.constantObservableValue("antiException"));
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(mockedObservable, new ObservingWritableValue(mockedObservable));
+		when(getDatabindingService().getValueProperty(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+			Properties.selfValue(mockedObservable.getValueType()));
+
+		when(getvControl().isEffectivelyReadonly()).thenReturn(true);
+		final Control renderControl = renderControl(new SWTGridCell(0, 2, getRenderer()));
+		getRenderer().finalizeRendering(getShell());
+		assertFalse(renderControl.isEnabled());
 	}
 }

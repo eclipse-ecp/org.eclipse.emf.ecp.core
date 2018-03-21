@@ -68,6 +68,7 @@ import org.eclipse.nebula.widgets.grid.Grid;
 import org.eclipse.nebula.widgets.grid.GridColumn;
 import org.eclipse.nebula.widgets.grid.GridItem;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
@@ -446,4 +447,31 @@ public class GridControlRenderer_PTest extends AbstractControl_PTest<VTableContr
 	public void testGridDescriptionLabelAlignmentNone() {
 	}
 
+	@Test
+	public void testEffectivelyReadOnlyHidesAddRemoveButtons()
+		throws DatabindingFailedException, NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		when(getvControl().isAddRemoveDisabled()).thenReturn(false);
+		when(getvControl().isEffectivelyEnabled()).thenReturn(true);
+		when(getvControl().isEffectivelyReadonly()).thenReturn(true);
+		when(getvControl().isVisible()).thenReturn(true);
+		mockSampleDataSet();
+
+		getShell().open();
+		final Control rendered = renderControl(new SWTGridCell(0, 2, getRenderer()));
+		getRenderer().finalizeRendering(getShell());
+		assertControl(rendered);
+		final GridTableViewerComposite tableViewerComposite = (GridTableViewerComposite) rendered;
+		final Composite gridComposite = Composite.class.cast(tableViewerComposite.getChildren()[0]);
+		final Composite buttonComposite = (Composite) Composite.class.cast(gridComposite.getChildren()[0])
+			.getChildren()[2];
+		assertEquals(4, buttonComposite.getChildren().length);
+
+		final Button addButton = (Button) buttonComposite.getChildren()[2];
+		final Button removeButton = (Button) buttonComposite.getChildren()[3];
+		assertFalse(addButton.isVisible());
+		assertFalse(removeButton.isVisible());
+
+		// final Grid grid = getGrid(tableViewerComposite);
+		// GridItem item = grid.getItem(new Point(0,0));
+	}
 }

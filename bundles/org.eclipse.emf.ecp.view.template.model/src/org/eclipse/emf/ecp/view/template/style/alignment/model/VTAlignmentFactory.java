@@ -44,6 +44,18 @@ public interface VTAlignmentFactory extends EFactory {
 	VTAlignmentStyleProperty createAlignmentStyleProperty();
 
 	/**
+	 * Returns a new object of class '<em>Control Label Alignment Style Property</em>'.
+	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 1.16
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return a new object of class '<em>Control Label Alignment Style Property</em>'.
+	 * @generated
+	 */
+	VTControlLabelAlignmentStyleProperty createControlLabelAlignmentStyleProperty();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -1,0 +1,189 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _D4Pj4C3lEeSwhO5Nwx0hPg,_Iu0EsS36EeSYRYqCbC6LMQ
+Element-Name: TableControlMoveUpDownTooling
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _2IkQMNnHEee0McrTbR2zPw
+Runtime-Version: 2.2.0.201706152316
+Save-Time: 12/5/17 5:22 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+with [get-view "Project Explorer" | get-tree] {
+    select "org.eclipse.emf.ecp.makeithappen.model.viewmodel" | double-click
+    select "org.eclipse.emf.ecp.makeithappen.model.viewmodel/viewmodels" | double-click
+    select "org.eclipse.emf.ecp.makeithappen.model.viewmodel/viewmodels/UserGroup.view" | double-click
+}
+with [get-editor "UserGroup.view"] {
+    with [get-tree] {
+        select View | get-menu -path TableControl | click
+        select "View/TableControl"
+    }
+    get-button "Create and link new Domain Model Reference" | click
+}
+with [get-window "Configure TableDomainModelReference"] {
+    get-button "Create and link new Domain Model Reference" | click
+    with [get-window "New Reference Element"] {
+        get-tree | select "model/FeaturePathDomainModelReference" | double-click
+        get-button "Next >" | click
+        get-button "Link Domain Model EFeature" | click
+        with [get-window "Select a EStructuralFeature"] {
+            get-tree | select "users : User" | double-click
+            get-button OK | click
+        }
+        get-button Finish | click
+    }
+    get-button Finish | click
+}
+get-view "EMF Forms Preview" | get-button "Refresh Preview View" | click
+
+get-editor "UserGroup.view" | get-button -after [get-label "Move Up Down Disabled*"] | get-property selected 
+    | equals true | verify-true
+with [get-view "EMF Forms Preview" | get-control Any -after [get-label "View Editor Preview"] -index 13] {
+    //only two buttons: add/remove
+    get-property "getChildren().Control[2].getChildren().length" | equals 2 | verify-true
+    get-property "getChildren().Control[2].getChildren().Control[0].getClassName()" 
+        | equals "org.eclipse.swt.widgets.Button" | verify-true
+    get-property "getChildren().Control[2].getChildren().Control[0].isVisible()" | equals true | verify-true
+    get-property "getChildren().Control[2].getChildren().Control[0].getToolTipText()" | equals "Add an instance of" 
+        | verify-true
+    get-property "getChildren().Control[2].getChildren().Control[0].isEnabled()" | equals true | verify-true
+    get-property "getChildren().Control[2].getChildren().Control[1].getClassName()" 
+        | equals "org.eclipse.swt.widgets.Button" | verify-true
+    get-property "getChildren().Control[2].getChildren().Control[1].isVisible()" | equals true | verify-true
+    get-property "getChildren().Control[2].getChildren().Control[1].getToolTipText()" | equals "Remove the selected" 
+        | verify-true
+    get-property "getChildren().Control[2].getChildren().Control[1].isEnabled()" | equals false | verify-true
+}
+get-editor "UserGroup.view" | get-button -after [get-label "Move Up Down Disabled*"] | uncheck
+get-view "EMF Forms Preview" | get-button "Refresh Preview View" | click
+with [get-view "EMF Forms Preview" | get-control Any -after [get-label "View Editor Preview"] -index 13] {
+	//4 buttons: up/down, add/remove
+    get-property "getChildren().Control[2].getChildren().length" | equals 4 | verify-true
+    get-property "getChildren().Control[2].getChildren().Control[0].getClassName()" 
+        | equals "org.eclipse.swt.widgets.Button" | verify-true
+    get-property "getChildren().Control[2].getChildren().Control[0].isVisible()" | equals true | verify-true
+    get-property "getChildren().Control[2].getChildren().Control[0].getToolTipText()" | equals "Move up the selected" 
+        | verify-true
+    get-property "getChildren().Control[2].getChildren().Control[0].isEnabled()" | equals false | verify-true
+    get-property "getChildren().Control[2].getChildren().Control[1].getClassName()" 
+        | equals "org.eclipse.swt.widgets.Button" | verify-true
+    get-property "getChildren().Control[2].getChildren().Control[1].isVisible()" | equals true | verify-true
+    get-property "getChildren().Control[2].getChildren().Control[1].getToolTipText()" | equals "Move down the selected" 
+        | verify-true
+    get-property "getChildren().Control[2].getChildren().Control[1].isEnabled()" | equals false | verify-true
+    get-property "getChildren().Control[2].getChildren().Control[2].getClassName()" 
+        | equals "org.eclipse.swt.widgets.Button" | verify-true
+    get-property "getChildren().Control[2].getChildren().Control[2].isVisible()" | equals true | verify-true
+    get-property "getChildren().Control[2].getChildren().Control[2].getToolTipText()" | equals "Add an instance of" 
+        | verify-true
+    get-property "getChildren().Control[2].getChildren().Control[2].isEnabled()" | equals true | verify-true
+    get-property "getChildren().Control[2].getChildren().Control[3].getClassName()" 
+        | equals "org.eclipse.swt.widgets.Button" | verify-true
+    get-property "getChildren().Control[2].getChildren().Control[3].isVisible()" | equals true | verify-true
+    get-property "getChildren().Control[2].getChildren().Control[3].getToolTipText()" | equals "Remove the selected" 
+        | verify-true
+    get-property "getChildren().Control[2].getChildren().Control[3].isEnabled()" | equals false | verify-true
+}
+
+//add items to table
+with [get-view "EMF Forms Preview"] {
+    with [get-button "Add an instance of"] {
+        click
+        click
+        click
+    }
+    with [get-table] {
+        select Male -column Gender | activate-cell-edit -column 1 -type MouseClickSelection
+        get-editbox | set-text qwe
+        select Male -column Gender | apply-cell-edit -deactivate
+        select qwe -column "First Name" | activate-cell-edit -column 2 -type MouseClickSelection
+        get-editbox | set-text rtz
+        select [get-item -path Male -column Gender -index 1] | apply-cell-edit -deactivate
+        select [get-item -path Male -column Gender -index 1] | activate-cell-edit -column 1 -type MouseClickSelection
+        get-editbox | set-text asd
+        select [get-item -path Male -column Gender -index 1] | apply-cell-edit -deactivate
+        select asd -column "First Name" | activate-cell-edit -column 2 -type MouseClickSelection
+        get-editbox | set-text fgh
+        select [get-item -path Male -column Gender -index 2] | apply-cell-edit -deactivate
+        select [get-item -path Male -column Gender -index 2] | activate-cell-edit -column 1 -type MouseClickSelection
+        get-editbox | set-text yxc
+        select [get-item -path Male -column Gender -index 2] | apply-cell-edit -deactivate
+        select yxc -column "First Name" | activate-cell-edit -column 2 -type MouseClickSelection
+        get-editbox | set-text vbn
+        apply-cell-edit -deactivate
+    }
+}
+with [get-view "EMF Forms Preview" | get-table] {
+   get-cell -row 0 -column 2 | get-property "values['Last Name']" | equals rtz | verify-true
+   get-cell -row 1 -column 2 | get-property "values['Last Name']" | equals fgh | verify-true
+   get-cell -row 2 -column 2 | get-property "values['Last Name']" | equals vbn | verify-true
+}
+
+//move UP
+with [get-view "EMF Forms Preview"] {
+    get-table | select asd -column "First Name"
+    get-button "Move up the selected" | click
+}
+with [get-view "EMF Forms Preview" | get-table] {
+   get-cell -row 0 -column 2 | get-property "values['Last Name']" | equals fgh | verify-true
+   get-cell -row 1 -column 2 | get-property "values['Last Name']" | equals rtz | verify-true
+   get-cell -row 2 -column 2 | get-property "values['Last Name']" | equals vbn | verify-true
+}
+
+//move first item UP: nothing should happen
+with [get-view "EMF Forms Preview"] {
+    get-table | select asd -column "First Name"
+    get-button "Move up the selected" | click
+}
+with [get-view "EMF Forms Preview" | get-table] {
+   get-cell -row 0 -column 2 | get-property "values['Last Name']" | equals fgh | verify-true
+   get-cell -row 1 -column 2 | get-property "values['Last Name']" | equals rtz | verify-true
+   get-cell -row 2 -column 2 | get-property "values['Last Name']" | equals vbn | verify-true
+}
+
+//move last item DOWN: nothing should happen
+with [get-view "EMF Forms Preview"] {
+    get-table | select yxc -column "First Name"
+    get-button "Move down the selected" | click
+}
+with [get-view "EMF Forms Preview" | get-table] {
+   get-cell -row 0 -column 2 | get-property "values['Last Name']" | equals fgh | verify-true
+   get-cell -row 1 -column 2 | get-property "values['Last Name']" | equals rtz | verify-true
+   get-cell -row 2 -column 2 | get-property "values['Last Name']" | equals vbn | verify-true
+}
+
+//move second item DOWN
+with [get-view "EMF Forms Preview"] {
+    get-table | select qwe -column "First Name"
+    get-button "Move down the selected" | click
+}
+with [get-view "EMF Forms Preview" | get-table] {
+   get-cell -row 0 -column 2 | get-property "values['Last Name']" | equals fgh | verify-true
+   get-cell -row 1 -column 2 | get-property "values['Last Name']" | equals vbn | verify-true
+   get-cell -row 2 -column 2 | get-property "values['Last Name']" | equals rtz | verify-true
+}
+
+//check that ordering is disabled for the table header
+get-view "EMF Forms Preview" | get-table | get-column-header "Last Name" | click
+with [get-view "EMF Forms Preview" | get-table] {
+   get-cell -row 0 -column 2 | get-property "values['Last Name']" | equals fgh | verify-true
+   get-cell -row 1 -column 2 | get-property "values['Last Name']" | equals vbn | verify-true
+   get-cell -row 2 -column 2 | get-property "values['Last Name']" | equals rtz | verify-true
+}
+
+//disable UP/DOWN buttons -> sorting from table header should be enabled
+get-editor "UserGroup.view" | get-button -after [get-label "Move Up Down Disabled*"] | check
+get-view "EMF Forms Preview" | get-button "Refresh Preview View" | click
+get-view "EMF Forms Preview" | get-table | get-column-header "First Name" | click
+with [get-view "EMF Forms Preview" | get-table] {
+   get-cell -row 0 -column 1 | get-property "values['First Name']" | equals asd | verify-true
+   get-cell -row 1 -column 1 | get-property "values['First Name']" | equals qwe | verify-true
+   get-cell -row 2 -column 1 | get-property "values['First Name']" | equals yxc | verify-true
+}
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

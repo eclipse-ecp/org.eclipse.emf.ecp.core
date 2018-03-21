@@ -31,7 +31,7 @@ class EmfStoreLocalTreeItem extends TreeItem<Object> {
 	private final ObservableList<TreeItem<Object>> children;
 	private final TreeView<Object> view;
 
-	public EmfStoreLocalTreeItem(ProjectsView projectsView, final ESWorkspace root,
+	EmfStoreLocalTreeItem(ProjectsView projectsView, final ESWorkspace root,
 		TreeView<Object> view) {
 		super(root);
 		this.projectsView = projectsView;
@@ -59,7 +59,7 @@ class EmfStoreLocalTreeItem extends TreeItem<Object> {
 	}
 
 	@SuppressWarnings("restriction")
-	public EmfStoreLocalTreeItem(ProjectsView projectsView, final ESLocalProject root,
+	EmfStoreLocalTreeItem(ProjectsView projectsView, final ESLocalProject root,
 		TreeView<Object> view) {
 		super(root);
 		this.projectsView = projectsView;

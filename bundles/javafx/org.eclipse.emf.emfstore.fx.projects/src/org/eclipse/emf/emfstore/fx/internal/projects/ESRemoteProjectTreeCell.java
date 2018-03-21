@@ -3,25 +3,7 @@ package org.eclipse.emf.emfstore.fx.internal.projects;
 import java.util.Arrays;
 import java.util.List;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TreeCell;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.HBoxBuilder;
-import javafx.scene.layout.VBoxBuilder;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
+import javax.swing.text.html.ImageView;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.emfstore.client.ESRemoteProject;
@@ -34,6 +16,24 @@ import org.eclipse.emf.emfstore.internal.client.model.ESWorkspaceProviderImpl;
 import org.eclipse.emf.emfstore.internal.server.EMFStoreController;
 import org.eclipse.emf.emfstore.internal.server.exceptions.FatalESException;
 import org.eclipse.emf.emfstore.server.exceptions.ESException;
+
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TreeCell;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.HBoxBuilder;
+import javafx.scene.layout.VBoxBuilder;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public final class ESRemoteProjectTreeCell extends TreeCell<Object> {
 
@@ -92,7 +92,7 @@ public final class ESRemoteProjectTreeCell extends TreeCell<Object> {
 	private class CheckoutNameStage extends Stage {
 		private String result;
 
-		public CheckoutNameStage() {
+		CheckoutNameStage() {
 			super();
 			initModality(Modality.WINDOW_MODAL);
 			setTitle("Enter Name for LocalProject");
@@ -207,8 +207,7 @@ public final class ESRemoteProjectTreeCell extends TreeCell<Object> {
 				// .children(label).build();
 
 			} else if (ESRemoteProject.class.isInstance(item)) {
-				cellText =
-					ESRemoteProject.class.cast(item).getProjectName();
+				cellText = ESRemoteProject.class.cast(item).getProjectName();
 				graphics = new ImageView(Activator.getContext()
 					.getBundle().getResource("icons/remoteProject.png")
 					.toExternalForm());
@@ -226,8 +225,7 @@ public final class ESRemoteProjectTreeCell extends TreeCell<Object> {
 					// graphics = HBoxBuilder.create().alignment(Pos.CENTER_LEFT)
 					// .children(image, label).build();
 				}
-				if (localURLs.contains(server.getURL()) && EMFStoreController.getInstance() == null)
-				{
+				if (localURLs.contains(server.getURL()) && EMFStoreController.getInstance() == null) {
 					final MenuItem startServerItem = new MenuItem();
 					final ImageView image = new ImageView(Activator.getContext()
 						.getBundle().getResource("icons/server_go.png")

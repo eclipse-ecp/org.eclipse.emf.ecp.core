@@ -135,6 +135,33 @@ public class AlignmentItemProviderAdapterFactory extends AlignmentAdapterFactory
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all
+	 * {@link org.eclipse.emf.ecp.view.template.style.alignment.model.VTControlLabelAlignmentStyleProperty} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected ControlLabelAlignmentStylePropertyItemProvider controlLabelAlignmentStylePropertyItemProvider;
+
+	/**
+	 * This creates an adapter for a
+	 * {@link org.eclipse.emf.ecp.view.template.style.alignment.model.VTControlLabelAlignmentStyleProperty}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public Adapter createControlLabelAlignmentStylePropertyAdapter() {
+		if (controlLabelAlignmentStylePropertyItemProvider == null) {
+			controlLabelAlignmentStylePropertyItemProvider = new ControlLabelAlignmentStylePropertyItemProvider(this);
+		}
+
+		return controlLabelAlignmentStylePropertyItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -283,6 +310,9 @@ public class AlignmentItemProviderAdapterFactory extends AlignmentAdapterFactory
 		if (alignmentStylePropertyItemProvider != null) {
 			alignmentStylePropertyItemProvider.dispose();
 		}
+		if (controlLabelAlignmentStylePropertyItemProvider != null) {
+			controlLabelAlignmentStylePropertyItemProvider.dispose();
+		}
 	}
 
 	/**
@@ -339,10 +369,11 @@ public class AlignmentItemProviderAdapterFactory extends AlignmentAdapterFactory
 			 */
 			@Override
 			public Object caseStyle(VTStyle object) {
-				newChildDescriptors.add
-					(createChildParameter
-					(VTTemplatePackage.Literals.STYLE__PROPERTIES,
-						VTAlignmentFactory.eINSTANCE.createAlignmentStyleProperty()));
+				newChildDescriptors.add(createChildParameter(VTTemplatePackage.Literals.STYLE__PROPERTIES,
+					VTAlignmentFactory.eINSTANCE.createAlignmentStyleProperty()));
+
+				newChildDescriptors.add(createChildParameter(VTTemplatePackage.Literals.STYLE__PROPERTIES,
+					VTAlignmentFactory.eINSTANCE.createControlLabelAlignmentStyleProperty()));
 
 				return null;
 			}

@@ -24,7 +24,6 @@ import org.eclipse.emf.common.util.Enumerator;
  *
  * @since 1.11
  *        <!-- end-user-doc -->
- *
  * @see org.eclipse.emf.ecp.view.spi.rule.model.RulePackage#getCompareType()
  * @model
  * @generated

@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.util.Switch;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentPackage;
 import org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentStyleProperty;
+import org.eclipse.emf.ecp.view.template.style.alignment.model.VTControlLabelAlignmentStyleProperty;
 
 /**
  * <!-- begin-user-doc -->
@@ -60,7 +61,7 @@ public class AlignmentSwitch<T> extends Switch<T> {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
-	 * @parameter ePackage the package in question.
+	 * @param ePackage the package in question.
 	 * @return whether this is a switch for the given package.
 	 * @generated
 	 */
@@ -92,6 +93,17 @@ public class AlignmentSwitch<T> extends Switch<T> {
 			}
 			return result;
 		}
+		case VTAlignmentPackage.CONTROL_LABEL_ALIGNMENT_STYLE_PROPERTY: {
+			final VTControlLabelAlignmentStyleProperty controlLabelAlignmentStyleProperty = (VTControlLabelAlignmentStyleProperty) theEObject;
+			T result = caseControlLabelAlignmentStyleProperty(controlLabelAlignmentStyleProperty);
+			if (result == null) {
+				result = caseStyleProperty(controlLabelAlignmentStyleProperty);
+			}
+			if (result == null) {
+				result = defaultCase(theEObject);
+			}
+			return result;
+		}
 		default:
 			return defaultCase(theEObject);
 		}
@@ -110,6 +122,24 @@ public class AlignmentSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseAlignmentStyleProperty(VTAlignmentStyleProperty object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Control Label Alignment Style
+	 * Property</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 *
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Control Label Alignment Style
+	 *         Property</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseControlLabelAlignmentStyleProperty(VTControlLabelAlignmentStyleProperty object) {
 		return null;
 	}
 

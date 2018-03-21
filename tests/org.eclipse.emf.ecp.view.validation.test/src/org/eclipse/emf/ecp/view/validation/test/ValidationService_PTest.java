@@ -23,7 +23,9 @@ import java.util.List;
 
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.common.spi.UniqueSetting;
 import org.eclipse.emf.ecp.test.common.DefaultRealm;
+import org.eclipse.emf.ecp.view.internal.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.internal.validation.ValidationTimerTask;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
@@ -41,9 +43,11 @@ import org.eclipse.emf.ecp.view.validation.test.model.TestPackage;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.common.report.ReportServiceConsumer;
+import org.eclipse.emfforms.spi.core.services.mappingprovider.EMFFormsMappingProviderManager;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
@@ -349,6 +353,54 @@ public class ValidationService_PTest {
 
 		/* assert */
 		/* cutting of should not produce NPEs as this is legit */
+	}
+
+	@SuppressWarnings("restriction")
+	@Test
+	public void testBug529403controlAdded() {
+		/* setup domain */
+		final TableContentWithInnerChild parent = TestFactory.eINSTANCE.createTableContentWithInnerChild();
+		final TableContentWithInnerChild middle = TestFactory.eINSTANCE.createTableContentWithInnerChild();
+		final TableContentWithInnerChild child = TestFactory.eINSTANCE.createTableContentWithInnerChild();
+		parent.setInnerChild(middle);
+		middle.setInnerChild(child);
+
+		/* setup view */
+		final VView view = VViewFactory.eINSTANCE.createView();
+
+		/* setup control to add */
+		final VControl vControl = VViewFactory.eINSTANCE.createControl();
+		vControl.setDomainModelReference(
+			TestPackage.eINSTANCE.getTableContentWithInnerChild_Stuff(),
+			Arrays.asList(
+				TestPackage.eINSTANCE.getTableContentWithInnerChild_InnerChild(),
+				TestPackage.eINSTANCE.getTableContentWithInnerChild_InnerChild()));
+
+		/*
+		 * construct a situation where the observed object is null. This is valid according to
+		 * org.eclipse.core.databinding.observable.IObserving.getObserved() javadoc, so we have to prepare for this.
+		 * Easiest way to achieve this for testing is to mock the mapping provider
+		 */
+		new ViewModelContextImpl(view, parent) {
+
+			@SuppressWarnings("unchecked")
+			@Override
+			public <T> T getService(Class<T> serviceType) {
+				if (EMFFormsMappingProviderManager.class == serviceType) {
+					final EMFFormsMappingProviderManager mock = Mockito.mock(EMFFormsMappingProviderManager.class);
+					Mockito.doReturn(Collections.singleton(UniqueSetting.createSetting(null, null))).when(mock)
+						.getAllSettingsFor(vControl.getDomainModelReference(), parent);
+					return (T) mock;
+				}
+				return super.getService(serviceType);
+			}
+		};
+		ViewModelContextFactory.INSTANCE.createViewModelContext(view, parent);
+
+		/* act */
+		view.getChildren().add(vControl);
+
+		/* assert no NPE */
 	}
 
 	private ReportService getReportService() {

@@ -55,7 +55,9 @@ public final class ResourceSetHelpers {
 	public static boolean save(ResourceSet resourceSet) {
 		try {
 			for (final Resource resource : resourceSet.getResources()) {
-				resource.save(null);
+				if (!resource.getURI().isPlatformPlugin()) {
+					resource.save(null);
+				}
 			}
 			return true;
 		} catch (final IOException ex) {

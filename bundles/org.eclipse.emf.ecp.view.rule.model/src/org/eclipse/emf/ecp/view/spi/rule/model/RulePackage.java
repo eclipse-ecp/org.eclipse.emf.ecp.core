@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * EclipseSource Munich GmbH - initial API and implementation
+ * Christian W. Damus - bugs 527753, 530900
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.rule.model;
 
@@ -74,8 +75,8 @@ public interface RulePackage extends EPackage {
 	RulePackage eINSTANCE = org.eclipse.emf.ecp.view.spi.rule.model.impl.RulePackageImpl.init();
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.ConditionImpl <em>Condition</em>}
-	 * ' class.
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.ConditionImpl
+	 * <em>Condition</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -96,8 +97,8 @@ public interface RulePackage extends EPackage {
 	int CONDITION_FEATURE_COUNT = 0;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.LeafConditionImpl
-	 * <em>Leaf Condition</em>}' class.
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.LeafConditionImpl <em>Leaf
+	 * Condition</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -144,7 +145,6 @@ public interface RulePackage extends EPackage {
 	 *
 	 * @since 1.11
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -161,8 +161,8 @@ public interface RulePackage extends EPackage {
 	int LEAF_CONDITION_FEATURE_COUNT = CONDITION_FEATURE_COUNT + 4;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.OrConditionImpl
-	 * <em>Or Condition</em>}' class.
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.OrConditionImpl <em>Or
+	 * Condition</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -193,8 +193,8 @@ public interface RulePackage extends EPackage {
 	int OR_CONDITION_FEATURE_COUNT = CONDITION_FEATURE_COUNT + 1;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.AndConditionImpl
-	 * <em>And Condition</em>}' class.
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.AndConditionImpl <em>And
+	 * Condition</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -298,8 +298,8 @@ public interface RulePackage extends EPackage {
 	int SHOW_RULE_FEATURE_COUNT = RULE_FEATURE_COUNT + 1;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.EnableRuleImpl
-	 * <em>Enable Rule</em>}' class.
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.EnableRuleImpl <em>Enable
+	 * Rule</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -340,18 +340,196 @@ public interface RulePackage extends EPackage {
 	int ENABLE_RULE_FEATURE_COUNT = RULE_FEATURE_COUNT + 1;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.IterateConditionImpl <em>Iterate
+	 * Condition</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.IterateConditionImpl
+	 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.RulePackageImpl#getIterateCondition()
+	 * @generated
+	 */
+	int ITERATE_CONDITION = 7;
+
+	/**
+	 * The feature id for the '<em><b>Quantifier</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATE_CONDITION__QUANTIFIER = CONDITION_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>If Empty</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATE_CONDITION__IF_EMPTY = CONDITION_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Item Reference</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATE_CONDITION__ITEM_REFERENCE = CONDITION_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Item Condition</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATE_CONDITION__ITEM_CONDITION = CONDITION_FEATURE_COUNT + 3;
+
+	/**
+	 * The number of structural features of the '<em>Iterate Condition</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int ITERATE_CONDITION_FEATURE_COUNT = CONDITION_FEATURE_COUNT + 4;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.TrueImpl <em>True</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.TrueImpl
+	 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.RulePackageImpl#getTrue()
+	 * @generated
+	 */
+	int TRUE = 8;
+
+	/**
+	 * The number of structural features of the '<em>True</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int TRUE_FEATURE_COUNT = CONDITION_FEATURE_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.FalseImpl <em>False</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.FalseImpl
+	 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.RulePackageImpl#getFalse()
+	 * @generated
+	 */
+	int FALSE = 9;
+
+	/**
+	 * The number of structural features of the '<em>False</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int FALSE_FEATURE_COUNT = CONDITION_FEATURE_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.NotConditionImpl <em>Not
+	 * Condition</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.NotConditionImpl
+	 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.RulePackageImpl#getNotCondition()
+	 * @generated
+	 */
+	int NOT_CONDITION = 10;
+
+	/**
+	 * The feature id for the '<em><b>Condition</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int NOT_CONDITION__CONDITION = CONDITION_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Not Condition</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int NOT_CONDITION_FEATURE_COUNT = CONDITION_FEATURE_COUNT + 1;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.IsProxyConditionImpl <em>Is Proxy
+	 * Condition</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.IsProxyConditionImpl
+	 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.RulePackageImpl#getIsProxyCondition()
+	 * @generated
+	 */
+	int IS_PROXY_CONDITION = 11;
+
+	/**
+	 * The feature id for the '<em><b>Domain Model Reference</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int IS_PROXY_CONDITION__DOMAIN_MODEL_REFERENCE = CONDITION_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Is Proxy Condition</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int IS_PROXY_CONDITION_FEATURE_COUNT = CONDITION_FEATURE_COUNT + 1;
+
+	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.rule.model.CompareType <em>Compare Type</em>}'
 	 * enum.
 	 * <!-- begin-user-doc -->
 	 *
 	 * @since 1.11
 	 *        <!-- end-user-doc -->
-	 *
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.CompareType
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.RulePackageImpl#getCompareType()
 	 * @generated
 	 */
-	int COMPARE_TYPE = 7;
+	int COMPARE_TYPE = 12;
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.spi.rule.model.Quantifier <em>Quantifier</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @see org.eclipse.emf.ecp.view.spi.rule.model.Quantifier
+	 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.RulePackageImpl#getQuantifier()
+	 * @generated
+	 */
+	int QUANTIFIER = 13;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.rule.model.Condition <em>Condition</em>}'.
@@ -365,8 +543,8 @@ public interface RulePackage extends EPackage {
 	EClass getCondition();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition
-	 * <em>Leaf Condition</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition <em>Leaf
+	 * Condition</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -377,8 +555,8 @@ public interface RulePackage extends EPackage {
 	EClass getLeafCondition();
 
 	/**
-	 * Returns the meta object for the attribute '
-	 * {@link org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition#getExpectedValue <em>Expected Value</em>}'.
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition#getExpectedValue <em>Expected Value</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -390,9 +568,9 @@ public interface RulePackage extends EPackage {
 	EAttribute getLeafCondition_ExpectedValue();
 
 	/**
-	 * Returns the meta object for the containment reference '
-	 * {@link org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition#getDomainModelReference
-	 * <em>Domain Model Reference</em>}'.
+	 * Returns the meta object for the containment reference
+	 * '{@link org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition#getDomainModelReference <em>Domain Model
+	 * Reference</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -404,9 +582,9 @@ public interface RulePackage extends EPackage {
 	EReference getLeafCondition_DomainModelReference();
 
 	/**
-	 * Returns the meta object for the containment reference '
-	 * {@link org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition#getValueDomainModelReference
-	 * <em>Value Domain Model Reference</em>}'.
+	 * Returns the meta object for the containment reference
+	 * '{@link org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition#getValueDomainModelReference <em>Value Domain Model
+	 * Reference</em>}'.
 	 * <!-- begin-user-doc -->
 	 *
 	 * @since 1.5
@@ -425,7 +603,6 @@ public interface RulePackage extends EPackage {
 	 *
 	 * @since 1.11
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the meta object for the attribute '<em>Compare Type</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition#getCompareType()
 	 * @see #getLeafCondition()
@@ -446,8 +623,8 @@ public interface RulePackage extends EPackage {
 	EClass getOrCondition();
 
 	/**
-	 * Returns the meta object for the containment reference list '
-	 * {@link org.eclipse.emf.ecp.view.spi.rule.model.OrCondition#getConditions <em>Conditions</em>}'.
+	 * Returns the meta object for the containment reference list
+	 * '{@link org.eclipse.emf.ecp.view.spi.rule.model.OrCondition#getConditions <em>Conditions</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -459,8 +636,8 @@ public interface RulePackage extends EPackage {
 	EReference getOrCondition_Conditions();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.rule.model.AndCondition
-	 * <em>And Condition</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.rule.model.AndCondition <em>And
+	 * Condition</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -471,8 +648,8 @@ public interface RulePackage extends EPackage {
 	EClass getAndCondition();
 
 	/**
-	 * Returns the meta object for the containment reference list '
-	 * {@link org.eclipse.emf.ecp.view.spi.rule.model.AndCondition#getConditions <em>Conditions</em>}'.
+	 * Returns the meta object for the containment reference list
+	 * '{@link org.eclipse.emf.ecp.view.spi.rule.model.AndCondition#getConditions <em>Conditions</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -495,8 +672,8 @@ public interface RulePackage extends EPackage {
 	EClass getRule();
 
 	/**
-	 * Returns the meta object for the containment reference '
-	 * {@link org.eclipse.emf.ecp.view.spi.rule.model.Rule#getCondition <em>Condition</em>}'.
+	 * Returns the meta object for the containment reference
+	 * '{@link org.eclipse.emf.ecp.view.spi.rule.model.Rule#getCondition <em>Condition</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -532,8 +709,8 @@ public interface RulePackage extends EPackage {
 	EAttribute getShowRule_Hide();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.rule.model.EnableRule
-	 * <em>Enable Rule</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.rule.model.EnableRule <em>Enable
+	 * Rule</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -557,18 +734,166 @@ public interface RulePackage extends EPackage {
 	EAttribute getEnableRule_Disable();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.rule.model.IterateCondition <em>Iterate
+	 * Condition</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for class '<em>Iterate Condition</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.rule.model.IterateCondition
+	 * @generated
+	 */
+	EClass getIterateCondition();
+
+	/**
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.spi.rule.model.IterateCondition#getQuantifier <em>Quantifier</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the attribute '<em>Quantifier</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.rule.model.IterateCondition#getQuantifier()
+	 * @see #getIterateCondition()
+	 * @generated
+	 */
+	EAttribute getIterateCondition_Quantifier();
+
+	/**
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.spi.rule.model.IterateCondition#isIfEmpty <em>If Empty</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the attribute '<em>If Empty</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.rule.model.IterateCondition#isIfEmpty()
+	 * @see #getIterateCondition()
+	 * @generated
+	 */
+	EAttribute getIterateCondition_IfEmpty();
+
+	/**
+	 * Returns the meta object for the containment reference
+	 * '{@link org.eclipse.emf.ecp.view.spi.rule.model.IterateCondition#getItemReference <em>Item Reference</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the containment reference '<em>Item Reference</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.rule.model.IterateCondition#getItemReference()
+	 * @see #getIterateCondition()
+	 * @generated
+	 */
+	EReference getIterateCondition_ItemReference();
+
+	/**
+	 * Returns the meta object for the containment reference
+	 * '{@link org.eclipse.emf.ecp.view.spi.rule.model.IterateCondition#getItemCondition <em>Item Condition</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the containment reference '<em>Item Condition</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.rule.model.IterateCondition#getItemCondition()
+	 * @see #getIterateCondition()
+	 * @generated
+	 */
+	EReference getIterateCondition_ItemCondition();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.rule.model.True <em>True</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for class '<em>True</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.rule.model.True
+	 * @generated
+	 */
+	EClass getTrue();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.rule.model.False <em>False</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for class '<em>False</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.rule.model.False
+	 * @generated
+	 */
+	EClass getFalse();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.rule.model.NotCondition <em>Not
+	 * Condition</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for class '<em>Not Condition</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.rule.model.NotCondition
+	 * @generated
+	 */
+	EClass getNotCondition();
+
+	/**
+	 * Returns the meta object for the containment reference
+	 * '{@link org.eclipse.emf.ecp.view.spi.rule.model.NotCondition#getCondition <em>Condition</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the containment reference '<em>Condition</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.rule.model.NotCondition#getCondition()
+	 * @see #getNotCondition()
+	 * @generated
+	 */
+	EReference getNotCondition_Condition();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.spi.rule.model.IsProxyCondition <em>Is Proxy
+	 * Condition</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for class '<em>Is Proxy Condition</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.rule.model.IsProxyCondition
+	 * @generated
+	 */
+	EClass getIsProxyCondition();
+
+	/**
+	 * Returns the meta object for the containment reference
+	 * '{@link org.eclipse.emf.ecp.view.spi.rule.model.IsProxyCondition#getDomainModelReference <em>Domain Model
+	 * Reference</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the containment reference '<em>Domain Model Reference</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.rule.model.IsProxyCondition#getDomainModelReference()
+	 * @see #getIsProxyCondition()
+	 * @generated
+	 */
+	EReference getIsProxyCondition_DomainModelReference();
+
+	/**
 	 * Returns the meta object for enum '{@link org.eclipse.emf.ecp.view.spi.rule.model.CompareType <em>Compare
 	 * Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 *
 	 * @since 1.11
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the meta object for enum '<em>Compare Type</em>'.
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.CompareType
 	 * @generated
 	 */
 	EEnum getCompareType();
+
+	/**
+	 * Returns the meta object for enum '{@link org.eclipse.emf.ecp.view.spi.rule.model.Quantifier
+	 * <em>Quantifier</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the meta object for enum '<em>Quantifier</em>'.
+	 * @see org.eclipse.emf.ecp.view.spi.rule.model.Quantifier
+	 * @generated
+	 */
+	EEnum getQuantifier();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -653,7 +978,6 @@ public interface RulePackage extends EPackage {
 		 *
 		 * @since 1.11
 		 *        <!-- end-user-doc -->
-		 *
 		 * @generated
 		 */
 		EAttribute LEAF_CONDITION__COMPARE_TYPE = eINSTANCE.getLeafCondition_CompareType();
@@ -680,8 +1004,8 @@ public interface RulePackage extends EPackage {
 		EReference OR_CONDITION__CONDITIONS = eINSTANCE.getOrCondition_Conditions();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.AndConditionImpl
-		 * <em>And Condition</em>}' class.
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.AndConditionImpl <em>And
+		 * Condition</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 *
@@ -722,8 +1046,8 @@ public interface RulePackage extends EPackage {
 		EReference RULE__CONDITION = eINSTANCE.getRule_Condition();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.ShowRuleImpl
-		 * <em>Show Rule</em>}' class.
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.ShowRuleImpl <em>Show
+		 * Rule</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 *
@@ -764,18 +1088,143 @@ public interface RulePackage extends EPackage {
 		EAttribute ENABLE_RULE__DISABLE = eINSTANCE.getEnableRule_Disable();
 
 		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.IterateConditionImpl
+		 * <em>Iterate Condition</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.IterateConditionImpl
+		 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.RulePackageImpl#getIterateCondition()
+		 * @generated
+		 */
+		EClass ITERATE_CONDITION = eINSTANCE.getIterateCondition();
+
+		/**
+		 * The meta object literal for the '<em><b>Quantifier</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EAttribute ITERATE_CONDITION__QUANTIFIER = eINSTANCE.getIterateCondition_Quantifier();
+
+		/**
+		 * The meta object literal for the '<em><b>If Empty</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EAttribute ITERATE_CONDITION__IF_EMPTY = eINSTANCE.getIterateCondition_IfEmpty();
+
+		/**
+		 * The meta object literal for the '<em><b>Item Reference</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EReference ITERATE_CONDITION__ITEM_REFERENCE = eINSTANCE.getIterateCondition_ItemReference();
+
+		/**
+		 * The meta object literal for the '<em><b>Item Condition</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EReference ITERATE_CONDITION__ITEM_CONDITION = eINSTANCE.getIterateCondition_ItemCondition();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.TrueImpl <em>True</em>}'
+		 * class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.TrueImpl
+		 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.RulePackageImpl#getTrue()
+		 * @generated
+		 */
+		EClass TRUE = eINSTANCE.getTrue();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.FalseImpl
+		 * <em>False</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.FalseImpl
+		 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.RulePackageImpl#getFalse()
+		 * @generated
+		 */
+		EClass FALSE = eINSTANCE.getFalse();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.NotConditionImpl <em>Not
+		 * Condition</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.NotConditionImpl
+		 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.RulePackageImpl#getNotCondition()
+		 * @generated
+		 */
+		EClass NOT_CONDITION = eINSTANCE.getNotCondition();
+
+		/**
+		 * The meta object literal for the '<em><b>Condition</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EReference NOT_CONDITION__CONDITION = eINSTANCE.getNotCondition_Condition();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.IsProxyConditionImpl
+		 * <em>Is Proxy Condition</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.IsProxyConditionImpl
+		 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.RulePackageImpl#getIsProxyCondition()
+		 * @generated
+		 */
+		EClass IS_PROXY_CONDITION = eINSTANCE.getIsProxyCondition();
+
+		/**
+		 * The meta object literal for the '<em><b>Domain Model Reference</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EReference IS_PROXY_CONDITION__DOMAIN_MODEL_REFERENCE = eINSTANCE.getIsProxyCondition_DomainModelReference();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.rule.model.CompareType <em>Compare
 		 * Type</em>}' enum.
 		 * <!-- begin-user-doc -->
 		 *
 		 * @since 1.11
 		 *        <!-- end-user-doc -->
-		 *
 		 * @see org.eclipse.emf.ecp.view.spi.rule.model.CompareType
 		 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.RulePackageImpl#getCompareType()
 		 * @generated
 		 */
 		EEnum COMPARE_TYPE = eINSTANCE.getCompareType();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.spi.rule.model.Quantifier
+		 * <em>Quantifier</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 *
+		 * @see org.eclipse.emf.ecp.view.spi.rule.model.Quantifier
+		 * @see org.eclipse.emf.ecp.view.spi.rule.model.impl.RulePackageImpl#getQuantifier()
+		 * @generated
+		 */
+		EEnum QUANTIFIER = eINSTANCE.getQuantifier();
 
 	}
 

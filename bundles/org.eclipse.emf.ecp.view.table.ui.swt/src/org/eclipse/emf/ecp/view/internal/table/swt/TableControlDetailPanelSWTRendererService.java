@@ -27,11 +27,6 @@ import org.eclipse.emfforms.spi.swt.core.di.EMFFormsDIRendererService;
  */
 public class TableControlDetailPanelSWTRendererService implements EMFFormsDIRendererService<VTableControl> {
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emfforms.spi.swt.core.EMFFormsRendererService#isApplicable(VElement,ViewModelContext)
-	 */
 	@Override
 	public double isApplicable(VElement vElement, ViewModelContext viewModelContext) {
 		if (!VTableControl.class.isInstance(vElement)) {
@@ -43,14 +38,8 @@ public class TableControlDetailPanelSWTRendererService implements EMFFormsDIRend
 		return NOT_APPLICABLE;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see org.eclipse.emfforms.spi.swt.core.di.EMFFormsDIRendererService#getRendererClass()
-	 */
 	@Override
 	public Class<? extends AbstractSWTRenderer<VTableControl>> getRendererClass() {
-		// TODO Auto-generated method stub
 		return TableControlDetailPanelRenderer.class;
 	}
 

@@ -42,17 +42,31 @@ public final class EMFFormsSWTLayoutUtil {
 
 	private static synchronized EMFFormsSWTLayoutOptimizer getLayoutOptimizer() {
 		if (layoutOptimizer == null) {
-			final Bundle bundle = FrameworkUtil.getBundle(EMFFormsSWTLayoutUtil.class);
-			final BundleContext bundleContext = bundle.getBundleContext();
-			final ServiceReference<EMFFormsSWTLayoutOptimizer> serviceReference = bundleContext
-				.getServiceReference(EMFFormsSWTLayoutOptimizer.class);
-			if (serviceReference != null) {
-				layoutOptimizer = bundleContext.getService(serviceReference);
+			final EMFFormsSWTLayoutOptimizer optimizerService = getOptimizerService();
+			if (optimizerService != null) {
+				layoutOptimizer = optimizerService;
 			} else {
 				layoutOptimizer = new EMFFormsSWTLayoutDelayed();
 			}
 		}
 		return layoutOptimizer;
+	}
+
+	private static EMFFormsSWTLayoutOptimizer getOptimizerService() {
+		final Bundle bundle = FrameworkUtil.getBundle(EMFFormsSWTLayoutUtil.class);
+		if (bundle == null) {
+			return null;
+		}
+		final BundleContext bundleContext = bundle.getBundleContext();
+		if (bundleContext == null) {
+			return null;
+		}
+		final ServiceReference<EMFFormsSWTLayoutOptimizer> serviceReference = bundleContext
+			.getServiceReference(EMFFormsSWTLayoutOptimizer.class);
+		if (serviceReference != null) {
+			return bundleContext.getService(serviceReference);
+		}
+		return null;
 	}
 
 	/**

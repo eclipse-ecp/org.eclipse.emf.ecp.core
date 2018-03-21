@@ -11,6 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.core.swt;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.databinding.DataBindingContext;
@@ -22,6 +24,7 @@ import org.eclipse.emf.databinding.EMFDataBindingContext;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.edit.spi.swt.util.SWTValidationHelper;
+import org.eclipse.emf.ecp.view.model.common.util.RendererUtil;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
@@ -33,6 +36,7 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
+import org.eclipse.emf.ecp.view.template.style.alignment.model.VTControlLabelAlignmentStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.mandatory.model.VTMandatoryFactory;
 import org.eclipse.emf.ecp.view.template.style.mandatory.model.VTMandatoryStyleProperty;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
@@ -69,11 +73,16 @@ import org.eclipse.swt.widgets.Label;
 public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> extends AbstractSWTRenderer<VCONTROL>
 	implements RootDomainModelChangeListener {
 
+	private SWTValidationHelper swtValidationHelper = SWTValidationHelper.INSTANCE;
 	private final EMFFormsDatabinding emfFormsDatabinding;
 	private final EMFFormsLabelProvider emfFormsLabelProvider;
 	private final VTViewTemplateProvider vtViewTemplateProvider;
 	private boolean isDisposed;
 	private IObservableValue modelValue;
+
+	private final Map<Integer, Color> severityBackgroundColorMap = new LinkedHashMap<Integer, Color>();
+	private final Map<Integer, Color> severityForegroundColorMap = new LinkedHashMap<Integer, Color>();
+	private final Map<Integer, Image> severityIconMap = new LinkedHashMap<Integer, Image>();
 
 	/**
 	 * Default constructor.
@@ -96,6 +105,25 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 		viewModelDBC = new EMFDataBindingContext();
 		viewContext.registerRootDomainModelChangeListener(this);
 		isDisposed = false;
+	}
+
+	/**
+	 * Default constructor.
+	 *
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
+	 * @param emfFormsLabelProvider The {@link EMFFormsLabelProvider}
+	 * @param reportService The {@link ReportService}
+	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
+	 * @param swtValidationHelper The {@link SWTValidationHelper}
+	 * @since 1.6
+	 */
+	public AbstractControlSWTRenderer(VCONTROL vElement, ViewModelContext viewContext, ReportService reportService,
+		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
+		VTViewTemplateProvider vtViewTemplateProvider, SWTValidationHelper swtValidationHelper) {
+		this(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
+		this.swtValidationHelper = swtValidationHelper;
 	}
 
 	/**
@@ -267,7 +295,12 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	 * @return the icon to be displayed, or <code>null</code> when no icon is to be displayed
 	 */
 	protected final Image getValidationIcon(int severity) {
-		return SWTValidationHelper.INSTANCE.getValidationIcon(severity, getVElement(), getViewModelContext());
+		if (!severityIconMap.containsKey(severity)) {
+			final Image validationIcon = swtValidationHelper.getValidationIcon(severity, getVElement(),
+				getViewModelContext());
+			severityIconMap.put(severity, validationIcon);
+		}
+		return severityIconMap.get(severity);
 	}
 
 	/**
@@ -280,8 +313,13 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 		if (isDisposed) {
 			return null;
 		}
-		return SWTValidationHelper.INSTANCE
-			.getValidationBackgroundColor(severity, getVElement(), getViewModelContext());
+
+		if (!severityBackgroundColorMap.containsKey(severity)) {
+			final Color validationBackgroundColor = swtValidationHelper
+				.getValidationBackgroundColor(severity, getVElement(), getViewModelContext());
+			severityBackgroundColorMap.put(severity, validationBackgroundColor);
+		}
+		return severityBackgroundColorMap.get(severity);
 	}
 
 	/**
@@ -295,8 +333,14 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 		if (isDisposed) {
 			return null;
 		}
-		return SWTValidationHelper.INSTANCE
-			.getValidationForegroundColor(severity, getVElement(), getViewModelContext());
+
+		if (!severityForegroundColorMap.containsKey(severity)) {
+			final Color validationForegroundColor = swtValidationHelper
+				.getValidationForegroundColor(severity, getVElement(), getViewModelContext());
+			severityForegroundColorMap.put(severity, validationForegroundColor);
+		}
+		return severityForegroundColorMap.get(severity);
+
 	}
 
 	/**
@@ -368,7 +412,7 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 			}
 
 			final EMFFormsLabelProvider labelProvider = getEMFFormsLabelProvider();
-			label = new Label(parent, SWT.NONE);
+			label = new Label(parent, getLabelStyleBits());
 			label.setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_label"); //$NON-NLS-1$
 			SWTDataElementIdHelper.setElementIdDataWithSubId(label, getVElement(), "control_label", //$NON-NLS-1$
 				getViewModelContext());
@@ -410,6 +454,27 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 
 		}
 		return label;
+	}
+
+	/**
+	 * @return the style bits for the control's label
+	 * @since 1.16
+	 */
+	protected int getLabelStyleBits() {
+		final VTControlLabelAlignmentStyleProperty styleProperty = RendererUtil.getStyleProperty(
+			getVTViewTemplateProvider(),
+			getVElement(),
+			getViewModelContext(),
+			VTControlLabelAlignmentStyleProperty.class);
+		if (styleProperty == null) {
+			return SWT.NONE;
+		}
+		switch (styleProperty.getType()) {
+		case RIGHT:
+			return SWT.RIGHT;
+		default:
+			return SWT.NONE;
+		}
 	}
 
 	/**
@@ -509,5 +574,17 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	 * @since 1.9
 	 */
 	protected void rootDomainModelChanged() throws DatabindingFailedException {
+	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#applyReadOnly()
+	 */
+	@Override
+	protected void applyReadOnly() {
+		for (final SWTGridCell gridCell : getControls().keySet()) {
+			setControlEnabled(gridCell, getControls().get(gridCell), !getVElement().isEffectivelyReadonly());
+		}
 	}
 }

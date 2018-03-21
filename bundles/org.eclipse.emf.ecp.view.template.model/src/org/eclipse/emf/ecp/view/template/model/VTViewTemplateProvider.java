@@ -17,7 +17,7 @@ import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 
 /**
- * This interface defines a service cappable of providing an instance of the {@link VTViewTemplate}.
+ * This interface defines a service capable of providing an instance of the {@link VTViewTemplate}.
  *
  * @author Eugen Neufeld
  *
@@ -25,14 +25,9 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
 public interface VTViewTemplateProvider {
 
 	/**
-	 * Returns the view template.
-	 *
-	 * @return the {@link VTViewTemplate}
-	 */
-	VTViewTemplate getViewTemplate();
-
-	/**
 	 * Return all {@link VTStyleProperty StyleProperties} which are applicable to the provided {@link VElement}.
+	 * The returned values might be cached by the caller. Therefore on the same arguments, the
+	 * {@link VTViewTemplateProvider} is expected to return the same set of VTStyleProperty
 	 *
 	 * @param vElement the {@link VElement} to get the {@link VTStyleProperty StyleProperties} for
 	 * @param viewModelContext the {@link ViewModelContext} currently in use
@@ -40,4 +35,17 @@ public interface VTViewTemplateProvider {
 	 *         {@link VElement} or an empty set
 	 */
 	Set<VTStyleProperty> getStyleProperties(VElement vElement, ViewModelContext viewModelContext);
+
+	/**
+	 * Returns a copy of the view template.
+	 * Modifications on this copy will not influence any future calls on the {@link VTViewTemplateProvider}
+	 *
+	 * @return a copy of the {@link VTViewTemplate}
+	 */
+	VTViewTemplate getViewTemplate();
+
+	/**
+	 * @return whether the {@link VTViewTemplateProvider} provides a {@link VTControlValidationTemplate}
+	 */
+	boolean hasControlValidationTemplate();
 }

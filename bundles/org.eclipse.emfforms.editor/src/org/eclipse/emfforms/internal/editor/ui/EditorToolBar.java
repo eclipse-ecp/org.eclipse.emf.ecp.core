@@ -47,6 +47,7 @@ public class EditorToolBar extends Composite {
 	 * @param titleText The text in the toolbar
 	 * @param toolbarActions a List of actions for the toolbar
 	 */
+	@SuppressWarnings("deprecation")
 	public EditorToolBar(Composite parent, int style, String titleText, List<Action> toolbarActions) {
 		super(parent, style);
 

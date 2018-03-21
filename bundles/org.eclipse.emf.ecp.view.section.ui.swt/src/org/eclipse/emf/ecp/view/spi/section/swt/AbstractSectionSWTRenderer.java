@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.databinding.EMFDataBindingContext;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.internal.section.ui.swt.Activator;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
@@ -26,6 +27,7 @@ import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.section.model.VSection;
+import org.eclipse.emf.ecp.view.spi.section.model.VSectionedArea;
 import org.eclipse.emf.ecp.view.spi.swt.layout.LayoutProviderHelper;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
@@ -279,4 +281,18 @@ public abstract class AbstractSectionSWTRenderer extends
 	 * @since 1.6
 	 */
 	protected abstract void initCollapseState();
+
+	/**
+	 * @return the left margin
+	 * @since 1.16
+	 */
+	protected int computeLeftMargin() {
+		int numberOfParents = 0;
+		EObject current = getVElement().eContainer();
+		while (!VSectionedArea.class.isInstance(current)) {
+			numberOfParents++;
+			current = current.eContainer();
+		}
+		return (numberOfParents + 1) * 16;
+	}
 }

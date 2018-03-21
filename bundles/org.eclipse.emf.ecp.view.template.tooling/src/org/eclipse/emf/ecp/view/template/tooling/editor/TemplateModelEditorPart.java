@@ -40,7 +40,6 @@ import org.eclipse.ui.part.FileEditorInput;
  * @author Eugen Neufeld
  *
  */
-@SuppressWarnings("restriction")
 public class TemplateModelEditorPart extends GenericEditor {
 
 	private VTViewTemplate template;

@@ -34,12 +34,14 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.swt.reporting.RenderingFailedReport;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
+import org.eclipse.emf.ecp.view.template.style.labelwidth.model.VTLabelWidthStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.unsettable.model.ButtonAlignmentType;
 import org.eclipse.emf.ecp.view.template.style.unsettable.model.ButtonPlacementType;
 import org.eclipse.emf.ecp.view.template.style.unsettable.model.VTUnsettableFactory;
 import org.eclipse.emf.ecp.view.template.style.unsettable.model.VTUnsettableStyleProperty;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
@@ -315,7 +317,27 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 		labelCell.setVerticalFill(false);
 		labelCell.setVerticalAlignment(SWTGridCell.Alignment.CENTER);
 		labelCell.setRenderer(this);
+		final Optional<Integer> labelWidth = getLabelWidth();
+		if (labelWidth.isPresent()) {
+			labelCell.setPreferredSize(labelWidth.get(), SWT.DEFAULT);
+		}
 		return labelCell;
+	}
+
+	/**
+	 * @return an optional width for the control's label
+	 * @since 1.16
+	 */
+	protected Optional<Integer> getLabelWidth() {
+		final VTLabelWidthStyleProperty styleProperty = RendererUtil.getStyleProperty(
+			getVTViewTemplateProvider(),
+			getVElement(),
+			getViewModelContext(),
+			VTLabelWidthStyleProperty.class);
+		if (styleProperty == null || !styleProperty.isSetWidth()) {
+			return Optional.empty();
+		}
+		return Optional.of(styleProperty.getWidth());
 	}
 
 	/**
@@ -350,7 +372,7 @@ public abstract class SimpleControlSWTRenderer extends AbstractControlSWTRendere
 		controlCell.setHorizontalGrab(true);
 		controlCell.setVerticalGrab(false);
 		controlCell.setHorizontalFill(true);
-		controlCell.setVerticalFill(false);
+		controlCell.setVerticalFill(true);
 		controlCell.setVerticalAlignment(SWTGridCell.Alignment.CENTER);
 		controlCell.setRenderer(this);
 		return controlCell;

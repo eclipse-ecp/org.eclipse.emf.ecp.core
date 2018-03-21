@@ -33,7 +33,9 @@ import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.CommandStackListener;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -172,11 +174,17 @@ public class ViewEditorPart extends EditorPart implements
 
 		try {
 			registerEcore();
+			// BEGIN SUPRESS CATCH EXCEPTION
+		} catch (final Exception e) {
+			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+			throw new PartInitException(
+				MessageFormat.format(Messages.ViewEditorPart_ViewCannotBeDisplayed, e.getLocalizedMessage()), e);
+		} // END SUPRESS CATCH EXCEPTION
+
+		try {
 			// reload view resource after EClass' package resource was loaded into the package registry
 			loadView(true, true);
-			if (getView() == null) {
-				throw new IllegalArgumentException(Messages.ViewEditorPart_InvalidVView);
-			}
+			checkLoadedView();
 			// BEGIN SUPRESS CATCH EXCEPTION
 		} catch (final Exception e) {
 			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
@@ -200,6 +208,46 @@ public class ViewEditorPart extends EditorPart implements
 
 		final IResourceChangeListener listener = new EditorResourceChangedListener();
 		ResourcesPlugin.getWorkspace().addResourceChangeListener(listener);
+	}
+
+	/**
+	 * Checks whether the loaded VView is valid:
+	 * <ul>
+	 * <li>not null</li>
+	 * <li>the root EClass is set</li>
+	 * <li>the root EClass is resolved (no proxy)</li>
+	 * </ul>
+	 * If the VView is invalid, an Exception with a proper error description is thrown.
+	 *
+	 * @throws IllegalArgumentException If the VView is null or no root EClass was set.
+	 * @throws IllegalStateException If the VView's root EClass cannot be resolved.
+	 */
+	private void checkLoadedView() throws IllegalArgumentException, IllegalStateException {
+		if (getView() == null) {
+			throw new IllegalArgumentException(Messages.ViewEditorPart_InvalidVView);
+		}
+		final EClass rootEClass = getView().getRootEClass();
+		if (rootEClass == null) {
+			throw new IllegalArgumentException(
+				Messages.ViewEditorPart_invalidVView_noRootEClass);
+		}
+		if (rootEClass.eIsProxy()) {
+			final String proxyUri = EcoreUtil.getURI(rootEClass).toString();
+			final String packageNsUri = proxyUri.split("#")[0]; //$NON-NLS-1$
+			final String rootEClassName = proxyUri.split("#")[1].substring(2); //$NON-NLS-1$
+			final EPackage ePackage = EPackage.Registry.INSTANCE.getEPackage(packageNsUri);
+			if (ePackage == null || ePackage.eIsProxy()) {
+				// the whole ecore is not present in the registry
+				throw new IllegalStateException(MessageFormat.format(
+					Messages.ViewEditorPart_invalidVView_rootEClassPackageNotResolved,
+					rootEClassName, packageNsUri));
+			}
+			// The package is resolved but the Root EClass is not => Ecore was registered but misses the needed
+			// class.
+			throw new IllegalStateException(MessageFormat.format(
+				Messages.ViewEditorPart_invalidVView_rootEClassNotInPackage,
+				rootEClassName, ePackage.getName(), ePackage.getNsURI()));
+		}
 	}
 
 	@Override

@@ -20,6 +20,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.common.spi.BidirectionalMap;
 import org.eclipse.emf.ecp.common.spi.UniqueSetting;
@@ -278,6 +279,11 @@ public class RuleRegistry<T extends Rule> {
 						final VElement element = removeRule(rule);
 						if (element == null) {
 							return;
+						}
+						if (notification.getRawNotification().getEventType() == Notification.SET
+							&& notification.getRawNotification().getNewValue() == null
+							|| notification.getRawNotification().getEventType() == Notification.UNSET) {
+							continue;
 						}
 						register(element, rule, rule.getCondition(), context.getDomainModel());
 					}

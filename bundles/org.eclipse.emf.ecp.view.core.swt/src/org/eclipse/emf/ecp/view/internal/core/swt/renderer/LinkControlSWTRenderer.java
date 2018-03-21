@@ -341,7 +341,6 @@ public class LinkControlSWTRenderer extends SimpleControlSWTControlSWTRenderer {
 		if (imageDescription == null) {
 			return null;
 		}
-		@SuppressWarnings("restriction")
 		final Image image = org.eclipse.emf.ecp.edit.internal.swt.SWTImageHelper.getImage(imageDescription);
 		return image;
 	}

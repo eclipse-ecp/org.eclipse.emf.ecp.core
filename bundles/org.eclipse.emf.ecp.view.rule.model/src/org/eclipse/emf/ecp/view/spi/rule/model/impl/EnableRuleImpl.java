@@ -25,10 +25,10 @@ import org.eclipse.emf.ecp.view.spi.rule.model.RulePackage;
  *        <!-- end-user-doc -->
  *        <p>
  *        The following features are implemented:
+ *        </p>
  *        <ul>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.EnableRuleImpl#isDisable <em>Disable</em>}</li>
  *        </ul>
- *        </p>
  *
  * @generated
  */
@@ -98,7 +98,8 @@ public class EnableRuleImpl extends RuleImpl implements EnableRule {
 		final boolean oldDisable = disable;
 		disable = newDisable;
 		if (eNotificationRequired()) {
-			eNotify(new ENotificationImpl(this, Notification.SET, RulePackage.ENABLE_RULE__DISABLE, oldDisable, disable));
+			eNotify(
+				new ENotificationImpl(this, Notification.SET, RulePackage.ENABLE_RULE__DISABLE, oldDisable, disable));
 		}
 	}
 
@@ -110,8 +111,7 @@ public class EnableRuleImpl extends RuleImpl implements EnableRule {
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID)
-		{
+		switch (featureID) {
 		case RulePackage.ENABLE_RULE__DISABLE:
 			return isDisable();
 		}
@@ -126,8 +126,7 @@ public class EnableRuleImpl extends RuleImpl implements EnableRule {
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID)
-		{
+		switch (featureID) {
 		case RulePackage.ENABLE_RULE__DISABLE:
 			setDisable((Boolean) newValue);
 			return;
@@ -143,8 +142,7 @@ public class EnableRuleImpl extends RuleImpl implements EnableRule {
 	 */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID)
-		{
+		switch (featureID) {
 		case RulePackage.ENABLE_RULE__DISABLE:
 			setDisable(DISABLE_EDEFAULT);
 			return;
@@ -160,8 +158,7 @@ public class EnableRuleImpl extends RuleImpl implements EnableRule {
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID)
-		{
+		switch (featureID) {
 		case RulePackage.ENABLE_RULE__DISABLE:
 			return disable != DISABLE_EDEFAULT;
 		}

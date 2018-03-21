@@ -281,7 +281,7 @@ public abstract class TreeContentProvider<INPUT> extends StructuredContentProvid
 
 		private boolean complete;
 
-		public SlowChildrenList(Object parent) {
+		SlowChildrenList(Object parent) {
 			super(parent);
 		}
 

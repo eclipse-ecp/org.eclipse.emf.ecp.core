@@ -94,7 +94,9 @@
 						</args>
 						<vmArgs>
 							<vmArg>-Xmx2g</vmArg>
+							<vmArg>-DinstallationURL=${currentBuild}/org.eclipse.emf.ecp.repository.target/target/repository</vmArg>
 							<vmArg>-Dorg.eclipse.swt.browser.DefaultType=mozilla</vmArg>
+                        	<vmArg>${failsafeArgline}</vmArg>
 						</vmArgs>
 					</aut>
 					<projects>

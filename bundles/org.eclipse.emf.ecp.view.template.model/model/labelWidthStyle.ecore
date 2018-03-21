@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="labelwidth" nsURI="http://www.eclipse.org/emf/ecp/view/template/style/labelwidth/model"
+    nsPrefix="org.eclipse.emf.ecp.view.template.style.labelwidth.model">
+  <eClassifiers xsi:type="ecore:EClass" name="LabelWidthStyleProperty" eSuperTypes="template.ecore#//StyleProperty">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="width" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
+        unsettable="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The width of the control's label."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+</ecore:EPackage>

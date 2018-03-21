@@ -89,11 +89,10 @@ public enum AlignmentType implements Enumerator {
 	 *
 	 * @generated
 	 */
-	private static final AlignmentType[] VALUES_ARRAY =
-		new AlignmentType[] {
-			LEFT,
-			RIGHT,
-		};
+	private static final AlignmentType[] VALUES_ARRAY = new AlignmentType[] {
+		LEFT,
+		RIGHT,
+	};
 
 	/**
 	 * A public read-only list of all the '<em><b>Type</b></em>' enumerators.
@@ -109,6 +108,8 @@ public enum AlignmentType implements Enumerator {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
+	 * @param literal the literal.
+	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
 	public static AlignmentType get(String literal) {
@@ -126,6 +127,8 @@ public enum AlignmentType implements Enumerator {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
+	 * @param name the name.
+	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
 	public static AlignmentType getByName(String name) {
@@ -143,6 +146,8 @@ public enum AlignmentType implements Enumerator {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
+	 * @param value the integer value.
+	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
 	public static AlignmentType get(int value) {

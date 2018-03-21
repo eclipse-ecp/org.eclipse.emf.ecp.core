@@ -12,9 +12,11 @@
 package org.eclipse.emf.ecp.view.validation.test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -132,6 +134,48 @@ public class PreSetValidationService_Test {
 		assertEquals(result.getSeverity(), Diagnostic.ERROR);
 	}
 
+	@Test // regression test for bug #527891
+	public void invalidCustomWithTwoValidators() {
+		final PreSetValidationServiceImpl s = new PreSetValidationServiceImpl();
+
+		final IFeatureConstraint constraint1 = new IFeatureConstraint() {
+			@Override
+			public Diagnostic validate(EStructuralFeature eStructuralFeature, Object value,
+				Map<Object, Object> context) {
+
+				if (value.equals("FOO")) {
+					return new BasicDiagnostic();
+				}
+
+				return BasicDiagnostic.toDiagnostic(
+					new Status(IStatus.ERROR, "test", IStatus.ERROR, "Value is not FOO", null));
+			}
+		};
+
+		final IFeatureConstraint constraint2 = new IFeatureConstraint() {
+			@Override
+			public Diagnostic validate(EStructuralFeature eStructuralFeature, Object value,
+				Map<Object, Object> context) {
+
+				if (value.equals("FOO")) {
+					return new BasicDiagnostic();
+				}
+
+				return BasicDiagnostic.toDiagnostic(
+					new Status(IStatus.ERROR, "test", IStatus.ERROR, "Value is still not FOO", null));
+			}
+		};
+
+		s.addConstraintValidator(TestPackage.eINSTANCE.getCustomDataType(), constraint1);
+		s.addConstraintValidator(TestPackage.eINSTANCE.getCustomDataType(), constraint2);
+
+		final Diagnostic result = s.validate(
+			TestPackage.eINSTANCE.getPerson_Custom(), "BAR", null);
+
+		assertEquals(result.getSeverity(), Diagnostic.ERROR);
+		assertEquals(2, result.getChildren().size());
+	}
+
 	@Test
 	public void loosePhoneNumberPattern() {
 		final Diagnostic result = service.validateLoose(TestPackage.eINSTANCE.getLibrary_PhoneNumber(), "+");
@@ -195,5 +239,34 @@ public class PreSetValidationService_Test {
 		final Diagnostic valid = service.validate(TestPackage.eINSTANCE.getComputer_Colors(),
 			Arrays.asList(Color.GREEN, Color.BLUE), null);
 		assertEquals(valid.getSeverity(), Diagnostic.OK);
+	}
+
+	/**
+	 * Bug 529514.
+	 */
+	@Test
+	public void multiEnumAdditionalConstrains() {
+		/* setup */
+		final AtomicBoolean contraintCalled = new AtomicBoolean(false);
+		service.addConstraintValidator(TestPackage.eINSTANCE.getColor(), new IFeatureConstraint() {
+
+			@Override
+			public Diagnostic validate(
+				EStructuralFeature eStructuralFeature,
+				Object value,
+				Map<Object, Object> context) {
+				contraintCalled.set(true);
+				return new BasicDiagnostic();
+			}
+		});
+
+		/* act */
+		final Diagnostic valid = service.validate(TestPackage.eINSTANCE.getComputer_Colors(),
+			Arrays.asList(Color.GREEN, Color.BLUE), null);
+
+		/* assert */
+		assertEquals(valid.getSeverity(), Diagnostic.OK);
+		assertTrue(contraintCalled.get());
+
 	}
 }

@@ -12,6 +12,7 @@
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.editor.handler;
 
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -27,7 +28,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.internal.editor.controls.Activator;
 import org.eclipse.emf.ecp.view.model.common.edit.provider.CustomReflectiveItemProviderAdapterFactory;
-import org.eclipse.emf.ecp.view.spi.model.VContainedContainer;
+import org.eclipse.emf.ecp.view.spi.model.VContainer;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.treemasterdetail.ui.swt.MasterDetailAction;
@@ -61,13 +62,11 @@ public class GenerateControlsHandler extends MasterDetailAction {
 		final Set<EStructuralFeature> featuresToAdd = new LinkedHashSet<EStructuralFeature>();
 		IItemPropertyDescriptor propertyDescriptor = null;
 		for (final EStructuralFeature feature : features) {
-			propertyDescriptor =
-				adapterFactoryItemDelegator
-					.getPropertyDescriptor(EcoreUtil.create(sad.getRootClass()), feature);
+			propertyDescriptor = adapterFactoryItemDelegator
+				.getPropertyDescriptor(EcoreUtil.create(sad.getRootClass()), feature);
 			if (propertyDescriptor != null) {
 				featuresToAdd.add(feature);
-			}
-			else {
+			} else {
 				logInvalidFeature(feature.getName(), sad.getRootClass().getName());
 			}
 		}
@@ -87,51 +86,60 @@ public class GenerateControlsHandler extends MasterDetailAction {
 				Activator.PLUGIN_ID, infoMessage));
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.treemasterdetail.ui.swt.MasterDetailAction#execute(EObject)
-	 */
 	@Override
 	public void execute(final EObject object) {
-		if (!(VView.class.isInstance(object) || VContainedContainer.class.isInstance(object))) {
-			return;
-		}
+		final CallbackFeatureSupplier callBack = new CallbackFeatureSupplier() {
 
-		final Object obj = getView(object);
-		if (obj == null) {
-			return;
-		}
+			@Override
+			public Set<EStructuralFeature> get(VView view) {
+				final Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+				final SelectAttributesDialog sad = new SelectAttributesDialog(new SelectAttributesWizard(), view,
+					view.getRootEClass(),
+					shell);
+				final int result = sad.open();
+				if (result == Window.OK) {
+					return getFeaturesToCreate(sad);
+				}
+				return Collections.emptySet();
+			}
+		};
+		execute(object, callBack);
 
-		final VView view = (VView) obj;
-		final EClass rootEClass = view.getRootEClass();
-		final VElement container = getContainer(object);
-
-		final Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-		final SelectAttributesDialog sad = new SelectAttributesDialog(new SelectAttributesWizard(), view, rootEClass,
-			shell);
-		final int result = sad.open();
-		if (result == Window.OK) {
-			final Set<EStructuralFeature> featuresToAdd = getFeaturesToCreate(sad);
-			AdapterFactoryEditingDomain.getEditingDomainFor(view).getCommandStack()
-				.execute(new ChangeCommand(view) {
-					@Override
-					protected void doExecute() {
-						ControlGenerator.addControls(rootEClass, container, featuresToAdd);
-					}
-				});
-		}
 	}
 
 	/**
-	 * @param object
+	 * Creates controls based on the features supplied by the {@link CallbackFeatureSupplier}.
+	 *
+	 * @param vElement The element the action was executed on
+	 * @param featureSupplier The Supplier which provides the features to create controls for
 	 */
+	void execute(final EObject vElement, CallbackFeatureSupplier featureSupplier) {
+		if (!(VView.class.isInstance(vElement) || VContainer.class.isInstance(vElement))) {
+			return;
+		}
+
+		final VView view = getView(vElement);
+		if (view == null) {
+			return;
+		}
+
+		final EClass rootEClass = view.getRootEClass();
+
+		final Set<EStructuralFeature> featuresToAdd = featureSupplier.get(view);
+		if (featuresToAdd.isEmpty()) {
+			return;
+		}
+		AdapterFactoryEditingDomain.getEditingDomainFor(view).getCommandStack()
+			.execute(new ChangeCommand(view) {
+				@Override
+				protected void doExecute() {
+					ControlGenerator.addControls(rootEClass, (VElement) vElement, featuresToAdd);
+				}
+			});
+	}
+
 	private VView getView(EObject object) {
 
-		if (object == null) {
-			return null;
-		}
-		// TODO Create test cases for this method
 		while (!(object instanceof VView)) {
 			object = object.eContainer();
 			if (object == null) {
@@ -142,40 +150,14 @@ public class GenerateControlsHandler extends MasterDetailAction {
 
 	}
 
-	private VElement getContainer(EObject object) {
-
-		if (object == null) {
-			return null;
-		}
-		// TODO Create test cases for this method
-		while (!(object instanceof VView || object instanceof VContainedContainer)) {
-			object = object.eContainer();
-			if (object == null) {
-				return null;
-			}
-		}
-		return (VElement) object;
-
-	}
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.treemasterdetail.ui.swt.MasterDetailAction#shouldShow(org.eclipse.emf.ecore.EObject)
-	 */
 	@Override
 	public boolean shouldShow(EObject object) {
 		if (object == null) {
 			return false;
 		}
-		return object instanceof VView || object instanceof VContainedContainer;
+		return object instanceof VView || object instanceof VContainer;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.core.commands.IHandler#execute(org.eclipse.core.commands.ExecutionEvent)
-	 */
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		final Object selection = ((IStructuredSelection) HandlerUtil.getActiveMenuSelection(event)).getFirstElement();
@@ -184,5 +166,19 @@ public class GenerateControlsHandler extends MasterDetailAction {
 		}
 		execute((EObject) selection);
 		return null;
+	}
+
+	/**
+	 * Internal Interface defined for testability. It is used to get the list of features which should be used to create
+	 * controls.
+	 */
+	interface CallbackFeatureSupplier {
+		/**
+		 * Gets the result based on the provided view.
+		 *
+		 * @param view The {@link VView} which is the root
+		 * @return The Set of {@link EStructuralFeature EStructuralFeatures} supplied by this supplier
+		 */
+		Set<EStructuralFeature> get(VView view);
 	}
 }

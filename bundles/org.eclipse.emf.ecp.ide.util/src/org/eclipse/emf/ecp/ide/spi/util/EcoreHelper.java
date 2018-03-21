@@ -13,6 +13,7 @@
 package org.eclipse.emf.ecp.ide.spi.util;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -30,6 +31,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.ide.internal.Activator;
+import org.eclipse.emf.ecp.internal.ide.util.messages.Messages;
 
 /**
  * Helper methods for dealing with ecores.
@@ -91,7 +93,9 @@ public final class EcoreHelper {
 		initResourceSet(physicalResourceSet, true);
 		final URI uri = URI.createPlatformResourceURI(ecorePath, false);
 		final Resource r = physicalResourceSet.createResource(uri);
-		r.load(null);
+
+		loadResource(ecorePath, r);
+
 		// resolve the proxies
 		int rsSize = physicalResourceSet.getResources().size();
 		EcoreUtil.resolveAll(physicalResourceSet);
@@ -127,6 +131,30 @@ public final class EcoreHelper {
 			updateRegistryAndLocalCache(ePackage, physicalResource, virtualResourceSet);
 		}
 
+	}
+
+	/**
+	 * Wraps loading a {@link Resource} in order to catch thrown IOExceptions and rethrow them with more informative
+	 * messages.
+	 *
+	 * @param ecorePath The path of the resource. Needed for informative messages
+	 * @param resource The {@link Resource} to load
+	 * @throws IOException if the loading of the Resource fails
+	 */
+	protected static void loadResource(String ecorePath, final Resource resource) throws IOException {
+		try {
+			resource.load(null);
+		} catch (final IOException e) {
+			if (e.getMessage().contains("does not exist")) { //$NON-NLS-1$
+				throw new IOException(MessageFormat.format(
+					Messages.EcoreHelper_invalidEcorePath,
+					ecorePath), e.getCause());
+			}
+			throw new IOException(
+				MessageFormat.format(Messages.EcoreHelper_invalidEcore,
+					ecorePath, e.getMessage()),
+				e.getCause());
+		}
 	}
 
 	/**

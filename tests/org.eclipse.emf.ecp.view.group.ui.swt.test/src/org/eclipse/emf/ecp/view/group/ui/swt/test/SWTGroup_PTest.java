@@ -277,4 +277,40 @@ public class SWTGroup_PTest {
 			fail("Renderer throws IlleaglArgument on empty group name" + e.getStackTrace());
 		}
 	}
+
+	@Test
+	public void testReadOnlyDoesNotDisableGroup()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
+		// setup model
+		final VView view = createViewWithOneGroup();
+		view.getChildren().get(0).setReadonly(true);
+
+		// setup ui
+		final Shell shell = SWTViewTestHelper.createShell();
+		try {
+			final Composite control = (Composite) SWTViewTestHelper.render(view, shell);
+			final org.eclipse.swt.widgets.Group renderedControl = (Group) control.getChildren()[0];
+			assertTrue(renderedControl.isEnabled());
+		} catch (final IllegalArgumentException e) {
+			fail("Renderer throws IlleaglArgument on empty group name" + e.getStackTrace());
+		}
+	}
+
+	@Test
+	public void testEffectiveReadOnlyDoesNotDisableGroup()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
+		// setup model
+		final VView view = createViewWithOneGroup();
+		view.setReadonly(true);
+
+		// setup ui
+		final Shell shell = SWTViewTestHelper.createShell();
+		try {
+			final Composite control = (Composite) SWTViewTestHelper.render(view, shell);
+			final org.eclipse.swt.widgets.Group renderedControl = (Group) control.getChildren()[0];
+			assertTrue(renderedControl.isEnabled());
+		} catch (final IllegalArgumentException e) {
+			fail("Renderer throws IlleaglArgument on empty group name" + e.getStackTrace());
+		}
+	}
 }

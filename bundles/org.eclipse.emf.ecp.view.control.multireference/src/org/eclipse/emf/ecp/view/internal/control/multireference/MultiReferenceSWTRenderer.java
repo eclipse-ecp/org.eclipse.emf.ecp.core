@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -10,6 +10,7 @@
  * Eugen Neufeld - initial API and implementation
  * Lucas Koehler - use data binding services
  * Martin Fleck - bug 487101
+ * Christian W. Damus - bug 527736
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.control.multireference;
 
@@ -26,6 +27,7 @@ import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.databinding.EMFDataBindingContext;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -53,11 +55,15 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IDisposable;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.emfforms.internal.core.services.label.BundleResolver;
+import org.eclipse.emfforms.internal.core.services.label.BundleResolver.NoBundleFoundException;
+import org.eclipse.emfforms.internal.core.services.label.BundleResolverImpl;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
 import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.emfforms.spi.core.services.label.NoLabelFoundException;
+import org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService;
 import org.eclipse.emfforms.spi.localization.LocalizationServiceHelper;
 import org.eclipse.emfforms.spi.swt.core.SWTDataElementIdHelper;
 import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
@@ -82,6 +88,7 @@ import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.TableViewerEditor;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -93,6 +100,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TableColumn;
+import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 
 /**
@@ -110,7 +118,9 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	private static final String ICON_MOVE_DOWN = "icons/move_down.png"; //$NON-NLS-1$
 	private static final String ICON_MOVE_UP = "icons/move_up.png"; //$NON-NLS-1$
 
+	private final BundleResolver bundleResolver = new BundleResolverImpl();
 	private final ImageRegistryService imageRegistryService;
+	private EMFFormsLocalizationService l10n;
 
 	/**
 	 * The {@link EObject} that contains the elements rendered in this multi reference.
@@ -118,7 +128,13 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	private EObject container;
 
 	/**
-	 * Default constructor.
+	 * A user-presentable display name for the reference, used in tool-tips.
+	 */
+	private String referenceDisplayName;
+
+	/**
+	 * Legacy constructor, initializing me without a localization service. When needed,
+	 * I will attempt to get it from the {@code viewContext}.
 	 *
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
@@ -128,12 +144,37 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
 	 * @param imageRegistryService The {@link ImageRegistryService}
 	 */
-	@Inject
 	public MultiReferenceSWTRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService,
 		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
 		VTViewTemplateProvider vtViewTemplateProvider, ImageRegistryService imageRegistryService) {
+		this(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider,
+			imageRegistryService, null);
+	}
+
+	/**
+	 * Complete constructor, supplying all dependencies.
+	 *
+	 * @param vElement the view model element to be rendered
+	 * @param viewContext the view context
+	 * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
+	 * @param emfFormsLabelProvider The {@link EMFFormsLabelProvider}
+	 * @param reportService The {@link ReportService}
+	 * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
+	 * @param imageRegistryService The {@link ImageRegistryService}
+	 * @param localizationService the localization service
+	 *
+	 * @since 1.16
+	 */
+	// BEGIN COMPLEX CODE
+	@Inject
+	public MultiReferenceSWTRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService,
+		EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider,
+		VTViewTemplateProvider vtViewTemplateProvider, ImageRegistryService imageRegistryService,
+		EMFFormsLocalizationService localizationService) {
+		// END COMPLEX CODE
 		super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
 		this.imageRegistryService = imageRegistryService;
+		l10n = localizationService;
 		viewModelDBC = new EMFDataBindingContext();
 	}
 
@@ -489,8 +530,8 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		final Button btnAddExisting = new Button(parent, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(btnAddExisting);
 		btnAddExisting.setImage(getImage(ICON_ADD_EXISTING));
-		btnAddExisting.setToolTipText(LocalizationServiceHelper.getString(MultiReferenceSWTRenderer.class,
-			MessageKeys.MultiReferenceSWTRenderer_addExistingTooltip));
+		btnAddExisting.setToolTipText(NLS.bind(LocalizationServiceHelper.getString(MultiReferenceSWTRenderer.class,
+			MessageKeys.MultiReferenceSWTRenderer_addExistingTooltip), getReferenceDisplayName()));
 		btnAddExisting.addSelectionListener(new SelectionAdapter() {
 
 			/**
@@ -520,8 +561,8 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 		final Button btnAddNew = new Button(parent, SWT.PUSH);
 		GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(btnAddNew);
 		btnAddNew.setImage(getImage(ICON_ADD_NEW));
-		btnAddNew.setToolTipText(LocalizationServiceHelper.getString(MultiReferenceSWTRenderer.class,
-			MessageKeys.MultiReferenceSWTRenderer_addNewTooltip));
+		btnAddNew.setToolTipText(NLS.bind(LocalizationServiceHelper.getString(MultiReferenceSWTRenderer.class,
+			MessageKeys.MultiReferenceSWTRenderer_addNewTooltip), getReferenceDisplayName()));
 		btnAddNew.addSelectionListener(new SelectionAdapter() {
 
 			/**
@@ -671,6 +712,47 @@ public class MultiReferenceSWTRenderer extends AbstractControlSWTRenderer<VContr
 	 */
 	protected Image getImage(String path) {
 		return imageRegistryService.getImage(FrameworkUtil.getBundle(MultiReferenceSWTRenderer.class), path);
+	}
+
+	/**
+	 * Obtains a user-presentable name for the reference that I edit, to be used for example
+	 * in button tool-tips.
+	 *
+	 * @return the reference display name
+	 * @since 1.16
+	 */
+	protected String getReferenceDisplayName() {
+		if (referenceDisplayName == null) {
+			try {
+				if (l10n == null) {
+					// Maybe the view-model context has one
+					l10n = getViewModelContext().getService(EMFFormsLocalizationService.class);
+				}
+
+				final EStructuralFeature feature = getEStructuralFeature();
+
+				if (feature != null && l10n != null) {
+					// Use type of the reference so that we don't get a plural (Ecore models typically
+					// have plural names for many-valued references)
+					final EClassifier type = feature.getEType();
+					try {
+						final Bundle editBundle = bundleResolver.getEditBundle(type);
+						referenceDisplayName = l10n.getString(editBundle, String.format("_UI_%s_type", type.getName())); //$NON-NLS-1$
+					} catch (final NoBundleFoundException ex) {
+						referenceDisplayName = type.getName();
+					}
+				}
+			} catch (final DatabindingFailedException e) {
+				// We'll default it, below
+			}
+
+			if (referenceDisplayName == null) {
+				referenceDisplayName = LocalizationServiceHelper.getString(MultiReferenceSWTRenderer.class,
+					MessageKeys.MultiReferenceSWTRenderer_defaultReferenceDisplayName);
+			}
+		}
+
+		return referenceDisplayName;
 	}
 
 	private void createContent(Composite composite) throws DatabindingFailedException {

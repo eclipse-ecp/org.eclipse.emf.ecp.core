@@ -155,7 +155,10 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 					final Set<UniqueSetting> settings = mappingProviderManager.getAllSettingsFor(domainModelReference,
 						context.getDomainModel());
 					for (final UniqueSetting setting : settings) {
-						eObjectsToValidate.add(setting.getEObject());
+						final EObject object = setting.getEObject();
+						if (object != null) {
+							eObjectsToValidate.add(object);
+						}
 					}
 				} else {
 					@SuppressWarnings("rawtypes")
@@ -169,7 +172,10 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 					}
 					final EObject observed = (EObject) ((IObserving) observableValue).getObserved();
 					observableValue.dispose();
-					eObjectsToValidate.add(observed);
+					if (observed != null) {
+						eObjectsToValidate.add(observed);
+					}
+
 				}
 				validate(eObjectsToValidate);
 
@@ -235,6 +241,9 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 		 * @return {@code true} if the given notification should be ignored, {@code false} otherwise.
 		 */
 		private boolean isIgnore(ModelChangeNotification notification) {
+			if (notification.getRawNotification().isTouch()) {
+				return true;
+			}
 			final int eventType = notification.getRawNotification().getEventType();
 			if (eventType == Notification.REMOVING_ADAPTER) {
 				return true;

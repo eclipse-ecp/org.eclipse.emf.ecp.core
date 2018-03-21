@@ -36,7 +36,7 @@ public class ShowRuleItemProvider extends RuleItemProvider {
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public ShowRuleItemProvider(AdapterFactory adapterFactory) {
@@ -47,13 +47,12 @@ public class ShowRuleItemProvider extends RuleItemProvider {
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (itemPropertyDescriptors == null)
-		{
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addHidePropertyDescriptor(object);
@@ -65,13 +64,12 @@ public class ShowRuleItemProvider extends RuleItemProvider {
 	 * This adds a property descriptor for the Hide feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected void addHidePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_ShowRule_hide_feature"), //$NON-NLS-1$
 				getString("_UI_PropertyDescriptor_description", "_UI_ShowRule_hide_feature", "_UI_ShowRule_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -88,7 +86,7 @@ public class ShowRuleItemProvider extends RuleItemProvider {
 	 * This returns ShowRule.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -100,12 +98,12 @@ public class ShowRuleItemProvider extends RuleItemProvider {
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public String getText(Object object) {
-		final ShowRule showRule = (ShowRule) object;
+		ShowRule showRule = (ShowRule) object;
 		return getString("_UI_ShowRule_type") + " " + showRule.isHide(); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
@@ -114,15 +112,14 @@ public class ShowRuleItemProvider extends RuleItemProvider {
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(ShowRule.class))
-		{
+		switch (notification.getFeatureID(ShowRule.class)) {
 		case RulePackage.SHOW_RULE__HIDE:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
@@ -135,7 +132,7 @@ public class ShowRuleItemProvider extends RuleItemProvider {
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override

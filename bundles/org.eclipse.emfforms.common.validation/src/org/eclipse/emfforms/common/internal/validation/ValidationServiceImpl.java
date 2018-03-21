@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * Mat Hansen - initial API and implementation
+ * Christian W. Damus - bug 526224
  ******************************************************************************/
 package org.eclipse.emfforms.common.internal.validation;
 
@@ -23,12 +24,12 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.EValidator.SubstitutionLabelProvider;
 import org.eclipse.emf.ecore.util.Diagnostician;
-import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.common.spi.validation.ValidationResultListener;
 import org.eclipse.emfforms.common.spi.validation.ValidationService;
@@ -59,29 +60,14 @@ public class ValidationServiceImpl implements ValidationService {
 	private boolean validationRunning;
 	private boolean cancelationRequested;
 
-	private Diagnostician diagnostician;
+	private final Diagnostician diagnostician;
+	private Map<Object, Object> validationContext;
 
 	/**
 	 * Default constructor.
 	 */
 	public ValidationServiceImpl() {
-		diagnostician = new Diagnostician(EValidator.Registry.INSTANCE) {
-			@Override
-			public boolean validate(EClass eClass, EObject eObject, DiagnosticChain diagnostics,
-				Map<Object, Object> context) {
-				Object eValidator;
-				EClass eType = eClass;
-				while ((eValidator = eValidatorRegistry.get(eType.eContainer())) == null) {
-					final List<EClass> eSuperTypes = eType.getESuperTypes();
-					if (eSuperTypes.isEmpty()) {
-						eValidator = eValidatorRegistry.get(null);
-						break;
-					}
-					eType = eSuperTypes.get(0);
-				}
-				return doValidate((EValidator) eValidator, eClass, eObject, diagnostics, context);
-			}
-		};
+		diagnostician = new DiagnosticianImpl();
 	}
 
 	private boolean isFiltered(EObject object) {
@@ -151,6 +137,7 @@ public class ValidationServiceImpl implements ValidationService {
 		}
 
 		validationRunning = true;
+		validationContext = new LinkedHashMap<Object, Object>(); // Shared context
 		try {
 
 			final boolean isTreeIterator = eObjectsIterator instanceof TreeIterator<?>;
@@ -183,6 +170,7 @@ public class ValidationServiceImpl implements ValidationService {
 			}
 		} finally {
 			validationRunning = false;
+			validationContext = null; // Forget the shared context
 		}
 
 		if (cancelationRequested) {
@@ -212,9 +200,6 @@ public class ValidationServiceImpl implements ValidationService {
 	 * @return the {@link EValidator}
 	 */
 	protected EValidator getEValidatorForEObject(EObject eObject) {
-		if (EValidator.Registry.INSTANCE.getEValidator(eObject.eClass().getEPackage()) == null) {
-			return new EObjectValidator();
-		}
 		return diagnostician;
 	}
 
@@ -227,12 +212,8 @@ public class ValidationServiceImpl implements ValidationService {
 	protected Diagnostic getDiagnosticForEObject(EObject object) {
 
 		final EValidator eValidator = getEValidatorForEObject(object);
-		final BasicDiagnostic diagnostic = Diagnostician.INSTANCE.createDefaultDiagnostic(object);
-		final Map<Object, Object> context = new LinkedHashMap<Object, Object>();
-		context.put(EValidator.class, eValidator);
-		if (substitutionLabelProvider != null) {
-			context.put(EValidator.SubstitutionLabelProvider.class, substitutionLabelProvider);
-		}
+		final BasicDiagnostic diagnostic = diagnostician.createDefaultDiagnostic(object);
+		final Map<Object, Object> context = getValidationContext(eValidator);
 
 		eValidator.validate(object, diagnostic, context);
 
@@ -264,6 +245,29 @@ public class ValidationServiceImpl implements ValidationService {
 			}
 		}
 		return diagnostic;
+	}
+
+	/**
+	 * Obtains the shared validation context for a validation of multiple objects
+	 * or a one-off context for validation of a single object. If I have a
+	 * {@link #setSubstitutionLabelProvider(SubstitutionLabelProvider) substitution label provider},
+	 * thn it will also be put into the context. Subclasses may extend this to populate
+	 * the context with anything else of interest.
+	 *
+	 * @param eValidator the validator to put into the context
+	 * @return the context
+	 */
+	protected Map<Object, Object> getValidationContext(EValidator eValidator) {
+		final Map<Object, Object> result = validationContext == null
+			? new LinkedHashMap<Object, Object>()
+			: validationContext;
+
+		result.put(EValidator.class, eValidator);
+		if (substitutionLabelProvider != null) {
+			result.put(EValidator.SubstitutionLabelProvider.class, substitutionLabelProvider);
+		}
+
+		return result;
 	}
 
 	@Override
@@ -321,4 +325,56 @@ public class ValidationServiceImpl implements ValidationService {
 		cancelationRequested = true;
 	}
 
+	//
+	// Nested types
+	//
+
+	/**
+	 * A private diagnostician that uses the service's {@link SubstitutionLabelProvider}
+	 * for creating diagnostic messages and delegates validation of each object back
+	 * to the service.
+	 */
+	private final class DiagnosticianImpl extends Diagnostician {
+
+		DiagnosticianImpl() {
+			super(EValidator.Registry.INSTANCE);
+		}
+
+		@Override
+		public String getObjectLabel(EObject eObject) {
+			return substitutionLabelProvider != null
+				? substitutionLabelProvider.getObjectLabel(eObject)
+				: super.getObjectLabel(eObject);
+		}
+
+		@Override
+		public String getFeatureLabel(EStructuralFeature eStructuralFeature) {
+			return substitutionLabelProvider != null
+				? substitutionLabelProvider.getFeatureLabel(eStructuralFeature)
+				: super.getFeatureLabel(eStructuralFeature);
+		}
+
+		@Override
+		public String getValueLabel(EDataType eDataType, Object value) {
+			return substitutionLabelProvider != null
+				? substitutionLabelProvider.getValueLabel(eDataType, value)
+				: super.getValueLabel(eDataType, value);
+		}
+
+		@Override
+		public boolean validate(EClass eClass, EObject eObject, DiagnosticChain diagnostics,
+			Map<Object, Object> context) {
+			EValidator eValidator;
+			EClass eType = eClass;
+			while ((eValidator = eValidatorRegistry.getEValidator(eType.getEPackage())) == null) {
+				final List<EClass> eSuperTypes = eType.getESuperTypes();
+				if (eSuperTypes.isEmpty()) {
+					eValidator = eValidatorRegistry.getEValidator(null);
+					break;
+				}
+				eType = eSuperTypes.get(0);
+			}
+			return doValidate(eValidator, eType, eObject, diagnostics, context);
+		}
+	}
 }

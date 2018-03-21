@@ -380,7 +380,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			regularColumnsStartIndex = 0;
 
 			/* validation column */
-			if (!getVElement().isReadonly()) {
+			if (!getVElement().isEffectivelyReadonly()) {
 				regularColumnsStartIndex++;
 				createFixedValidationStatusColumn(tableViewerSWTBuilder);
 			}
@@ -1078,7 +1078,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 		final VTTableStyleProperty tableStyleProperty = VTTableStylePropertyFactory.eINSTANCE
 			.createTableStyleProperty();
 		tableStyleProperty.setMaximumHeight(200);
-		if (!getVElement().isReadonly()) {
+		if (!getVElement().isEffectivelyReadonly()) {
 			tableStyleProperty.setMinimumHeight(200);
 		}
 		return tableStyleProperty;
@@ -1395,10 +1395,11 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	@Override
 	protected void applyEnable() {
 		if (getAddButton() != null) {
-			getAddButton().setVisible(getVElement().isEnabled() && !getVElement().isReadonly());
+			getAddButton().setVisible(getVElement().isEffectivelyEnabled() && !getVElement().isEffectivelyReadonly());
 		}
 		if (getRemoveButton() != null) {
-			getRemoveButton().setVisible(getVElement().isEnabled() && !getVElement().isReadonly());
+			getRemoveButton()
+				.setVisible(getVElement().isEffectivelyEnabled() && !getVElement().isEffectivelyReadonly());
 		}
 	}
 
@@ -1410,10 +1411,11 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	@Override
 	protected void applyReadOnly() {
 		if (getAddButton() != null) {
-			getAddButton().setVisible(getVElement().isEnabled() && !getVElement().isReadonly());
+			getAddButton().setVisible(getVElement().isEffectivelyEnabled() && !getVElement().isEffectivelyReadonly());
 		}
 		if (getRemoveButton() != null) {
-			getRemoveButton().setVisible(getVElement().isEnabled() && !getVElement().isReadonly());
+			getRemoveButton()
+				.setVisible(getVElement().isEffectivelyEnabled() && !getVElement().isEffectivelyReadonly());
 		}
 	}
 
@@ -1566,7 +1568,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 			return false;
 		}
 		final boolean editable = getVElement().isEnabled()
-			&& !getVElement().isReadonly();
+			&& !getVElement().isEffectivelyReadonly();
 		return editable;
 	}
 

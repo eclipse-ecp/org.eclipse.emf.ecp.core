@@ -16,7 +16,10 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ ChildrenDescriptorExtension_PTest.class })
+@SuiteClasses({
+	ChildrenDescriptorExtension_PTest.class,
+	TemplateChildrenDescriptorExtension_PTest.class
+})
 public class AllTests {
 
 }

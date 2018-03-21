@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2014 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,6 +8,7 @@
  *
  * Contributors:
  * Johannes Faltermeier - initial API and implementation
+ * Christian W. Damus - bug 527740
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.internal.viewproxy.resolver;
 
@@ -24,6 +25,7 @@ import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextDisposeListener;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelServiceProvider;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
@@ -222,17 +224,18 @@ public class ResolverViewService_PTest {
 			context.put(key, value);
 		}
 
-		/**
-		 * {@inheritDoc}
-		 *
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getChildContext(org.eclipse.emf.ecore.EObject,
-		 *      org.eclipse.emf.ecp.view.spi.model.VElement, org.eclipse.emf.ecp.view.spi.model.VView,
-		 *      org.eclipse.emf.ecp.view.spi.context.ViewModelService[])
-		 */
+		@Deprecated
 		@Override
 		public ViewModelContext getChildContext(EObject eObject, VElement parent, VView vView,
 			ViewModelService... viewModelServices) {
-			// TODO Auto-generated method stub
+
+			return null;
+		}
+
+		@Override
+		public ViewModelContext getChildContext(EObject eObject, VElement parent, VView vView,
+			ViewModelServiceProvider viewModelServiceProvider) {
+
 			return null;
 		}
 

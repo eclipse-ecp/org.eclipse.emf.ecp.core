@@ -420,6 +420,12 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
 				removeButton.setEnabled(!event.getSelection().isEmpty());
+				if (upButton != null) {
+					upButton.setEnabled(!event.getSelection().isEmpty() && !getVElement().isReadonly());
+				}
+				if (downButton != null) {
+					downButton.setEnabled(!event.getSelection().isEmpty() && !getVElement().isReadonly());
+				}
 			}
 		});
 	}
@@ -454,6 +460,7 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 		}
 		upButtonSelectionAdapter = new UpButtonSelectionAdapter(list);
 		upButton.addSelectionListener(upButtonSelectionAdapter);
+		upButton.setEnabled(false);
 	}
 
 	private void initDownButton(Button downButton, IObservableList list) {
@@ -462,6 +469,8 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 		}
 		downButtonSelectionAdapter = new DownButtonSelectionAdapter(list);
 		downButton.addSelectionListener(downButtonSelectionAdapter);
+		// by default, button should not be enabled (selection is empty)
+		downButton.setEnabled(false);
 	}
 
 	private void createUpDownButtons(Composite composite, IObservableList list) {
@@ -703,6 +712,10 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 				editingDomain.getCommandStack()
 					.execute(new MoveCommand(editingDomain, eObject, attribute, currentIndex, currentIndex + 1));
 				tableViewer.refresh();
+				final Object selected = tableViewer.getStructuredSelection().getFirstElement();
+				if (selected != null) {
+					tableViewer.reveal(selected);
+				}
 			}
 		}
 	}
@@ -739,6 +752,10 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 				editingDomain.getCommandStack()
 					.execute(new MoveCommand(editingDomain, eObject, attribute, currentIndex, currentIndex - 1));
 				tableViewer.refresh();
+				final Object selected = tableViewer.getStructuredSelection().getFirstElement();
+				if (selected != null) {
+					tableViewer.reveal(selected);
+				}
 			}
 		}
 	}
@@ -893,7 +910,6 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 			final TableViewerRow viewerRow = (TableViewerRow) cell.getViewerRow();
 			final TableItem item = (TableItem) viewerRow.getItem();
 			final int index = item.getParent().indexOf(item);
-			@SuppressWarnings("restriction")
 			final IObservableValue model = new org.eclipse.emf.ecp.edit.internal.swt.util.ECPObservableValue(
 				valueProperty, index,
 				EAttribute.class.cast(valueProperty.getElementType()).getEAttributeType().getInstanceClass());

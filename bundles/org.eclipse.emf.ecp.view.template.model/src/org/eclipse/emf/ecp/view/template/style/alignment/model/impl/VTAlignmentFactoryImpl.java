@@ -21,6 +21,7 @@ import org.eclipse.emf.ecp.view.template.style.alignment.model.AlignmentType;
 import org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentFactory;
 import org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentPackage;
 import org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentStyleProperty;
+import org.eclipse.emf.ecp.view.template.style.alignment.model.VTControlLabelAlignmentStyleProperty;
 
 /**
  * <!-- begin-user-doc -->
@@ -72,6 +73,8 @@ public class VTAlignmentFactoryImpl extends EFactoryImpl implements VTAlignmentF
 		switch (eClass.getClassifierID()) {
 		case VTAlignmentPackage.ALIGNMENT_STYLE_PROPERTY:
 			return createAlignmentStyleProperty();
+		case VTAlignmentPackage.CONTROL_LABEL_ALIGNMENT_STYLE_PROPERTY:
+			return createControlLabelAlignmentStyleProperty();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -127,10 +130,21 @@ public class VTAlignmentFactoryImpl extends EFactoryImpl implements VTAlignmentF
 	 *
 	 * @generated
 	 */
+	@Override
+	public VTControlLabelAlignmentStyleProperty createControlLabelAlignmentStyleProperty() {
+		final VTControlLabelAlignmentStylePropertyImpl controlLabelAlignmentStyleProperty = new VTControlLabelAlignmentStylePropertyImpl();
+		return controlLabelAlignmentStyleProperty;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
 	public AlignmentType createAlignmentTypeFromString(EDataType eDataType, String initialValue) {
 		final AlignmentType result = AlignmentType.get(initialValue);
-		if (result == null)
-		{
+		if (result == null) {
 			throw new IllegalArgumentException(
 				"The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		}

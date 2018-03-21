@@ -46,9 +46,10 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedRepor
  *        <!-- end-user-doc -->
  *        <p>
  *        The following features are implemented:
+ *        </p>
  *        <ul>
- *        <li>{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.LeafConditionImpl#getExpectedValue <em>Expected Value
- *        </em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.LeafConditionImpl#getExpectedValue <em>Expected
+ *        Value</em>}</li>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.LeafConditionImpl#getDomainModelReference <em>Domain
  *        Model Reference</em>}</li>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.LeafConditionImpl#getValueDomainModelReference
@@ -56,7 +57,6 @@ import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedRepor
  *        <li>{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.LeafConditionImpl#getCompareType <em>Compare
  *        Type</em>}</li>
  *        </ul>
- *        </p>
  *
  * @generated
  */
@@ -114,7 +114,6 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 *
 	 * @since 1.11
 	 *        <!-- end-user-doc -->
-	 *
 	 * @see #getCompareType()
 	 * @generated
 	 * @ordered
@@ -127,7 +126,6 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 *
 	 * @since 1.11
 	 *        <!-- end-user-doc -->
-	 *
 	 * @see #getCompareType()
 	 * @generated
 	 * @ordered
@@ -226,12 +224,12 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 		if (newDomainModelReference != domainModelReference) {
 			NotificationChain msgs = null;
 			if (domainModelReference != null) {
-				msgs = ((InternalEObject) domainModelReference).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
-					- RulePackage.LEAF_CONDITION__DOMAIN_MODEL_REFERENCE, null, msgs);
+				msgs = ((InternalEObject) domainModelReference).eInverseRemove(this,
+					EOPPOSITE_FEATURE_BASE - RulePackage.LEAF_CONDITION__DOMAIN_MODEL_REFERENCE, null, msgs);
 			}
 			if (newDomainModelReference != null) {
-				msgs = ((InternalEObject) newDomainModelReference).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
-					- RulePackage.LEAF_CONDITION__DOMAIN_MODEL_REFERENCE, null, msgs);
+				msgs = ((InternalEObject) newDomainModelReference).eInverseAdd(this,
+					EOPPOSITE_FEATURE_BASE - RulePackage.LEAF_CONDITION__DOMAIN_MODEL_REFERENCE, null, msgs);
 			}
 			msgs = basicSetDomainModelReference(newDomainModelReference, msgs);
 			if (msgs != null) {
@@ -291,21 +289,21 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 		if (newValueDomainModelReference != valueDomainModelReference) {
 			NotificationChain msgs = null;
 			if (valueDomainModelReference != null) {
-				msgs = ((InternalEObject) valueDomainModelReference).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
-					- RulePackage.LEAF_CONDITION__VALUE_DOMAIN_MODEL_REFERENCE, null, msgs);
+				msgs = ((InternalEObject) valueDomainModelReference).eInverseRemove(this,
+					EOPPOSITE_FEATURE_BASE - RulePackage.LEAF_CONDITION__VALUE_DOMAIN_MODEL_REFERENCE, null, msgs);
 			}
 			if (newValueDomainModelReference != null) {
-				msgs = ((InternalEObject) newValueDomainModelReference).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
-					- RulePackage.LEAF_CONDITION__VALUE_DOMAIN_MODEL_REFERENCE, null, msgs);
+				msgs = ((InternalEObject) newValueDomainModelReference).eInverseAdd(this,
+					EOPPOSITE_FEATURE_BASE - RulePackage.LEAF_CONDITION__VALUE_DOMAIN_MODEL_REFERENCE, null, msgs);
 			}
 			msgs = basicSetValueDomainModelReference(newValueDomainModelReference, msgs);
 			if (msgs != null) {
 				msgs.dispatch();
 			}
 		} else if (eNotificationRequired()) {
-			eNotify(new ENotificationImpl(this, Notification.SET,
-				RulePackage.LEAF_CONDITION__VALUE_DOMAIN_MODEL_REFERENCE, newValueDomainModelReference,
-				newValueDomainModelReference));
+			eNotify(
+				new ENotificationImpl(this, Notification.SET, RulePackage.LEAF_CONDITION__VALUE_DOMAIN_MODEL_REFERENCE,
+					newValueDomainModelReference, newValueDomainModelReference));
 		}
 	}
 
@@ -314,7 +312,6 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 *
 	 * @since 1.11
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
@@ -327,7 +324,6 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	 *
 	 * @since 1.11
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
@@ -438,8 +434,8 @@ public class LeafConditionImpl extends ConditionImpl implements LeafCondition {
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case RulePackage.LEAF_CONDITION__EXPECTED_VALUE:
-			return EXPECTED_VALUE_EDEFAULT == null ? expectedValue != null : !EXPECTED_VALUE_EDEFAULT
-				.equals(expectedValue);
+			return EXPECTED_VALUE_EDEFAULT == null ? expectedValue != null
+				: !EXPECTED_VALUE_EDEFAULT.equals(expectedValue);
 		case RulePackage.LEAF_CONDITION__DOMAIN_MODEL_REFERENCE:
 			return domainModelReference != null;
 		case RulePackage.LEAF_CONDITION__VALUE_DOMAIN_MODEL_REFERENCE:

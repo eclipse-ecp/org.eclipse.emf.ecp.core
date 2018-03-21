@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Bazaar Tests
+Bundle-SymbolicName: org.eclipse.emfforms.core.bazaar.tests
+Bundle-Version: 1.16.0.qualifier
+Fragment-Host: org.eclipse.emfforms.core.bazaar;bundle-version="[1.16.0,1.17.0)"
+Require-Bundle: org.junit;bundle-version="[4.12.0,5.0.0)",
+ org.mockito.mockito-core-hamcrest-modified;bundle-version="[1.9.5,2.0.0)",
+ org.objenesis;bundle-version="[1.0.0,2.0.0)"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Import-Package: org.eclipse.core.runtime;version="[3.5.0,4.0.0)",
+ org.eclipse.e4.core.contexts;version="[1.6.0,2.0.0)",
+ org.eclipse.emfforms.bazaar;version="1.16.0",
+ org.osgi.framework;version="[1.3.0,2.0.0)"
+Export-Package: org.eclipse.emfforms.bazaar.internal;version="1.16.0";x-internal:=true

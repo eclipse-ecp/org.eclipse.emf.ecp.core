@@ -26,26 +26,31 @@
       <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/emf/ecp/view/table/model/150#//TableControl/addRemoveDisabled"/>
     </domainModelReference>
   </children>
-  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_pXvpy0WAEeWfKJaajyNdyA" name="Control columns">
-    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_pXvpzEWAEeWfKJaajyNdyA">
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_sADU8ND8EeelrbphwT5uew" name="Control moveUpDownDisabled">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_sADU8dD8EeelrbphwT5uew">
+      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/emf/ecp/view/table/model/150#//TableControl/moveUpDownDisabled"/>
+    </domainModelReference>
+  </children>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_twMc4ND8EeelrbphwT5uew" name="Control columns">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_twMc4dD8EeelrbphwT5uew">
       <domainModelEFeature xsi:type="ecore:EReference" href="http://org/eclipse/emf/ecp/view/table/model/150#//TableDomainModelReference/columnDomainModelReferences"/>
       <domainModelEReferencePath href="http://org/eclipse/emf/ecp/view/model/170#//Control/domainModelReference"/>
     </domainModelReference>
   </children>
-  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_pXvpzUWAEeWfKJaajyNdyA" name="Control detailEditing">
-    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_pXvpzkWAEeWfKJaajyNdyA">
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_twMc4tD8EeelrbphwT5uew" name="Control detailEditing">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_twMc49D8EeelrbphwT5uew">
       <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/emf/ecp/view/table/model/150#//TableControl/detailEditing"/>
     </domainModelReference>
   </children>
-  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_pXvpz0WAEeWfKJaajyNdyA" name="Control detailView">
-    <attachments xsi:type="org.eclipse.emf.ecp.view.rule.model:ShowRule" xmi:id="_pXvp0EWAEeWfKJaajyNdyA" hide="true">
-      <condition xsi:type="org.eclipse.emf.ecp.view.rule.model:LeafCondition" xmi:id="_pXvp0UWAEeWfKJaajyNdyA" expectedValue="ACED00057400044E6F6E65">
-        <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_pXvp0kWAEeWfKJaajyNdyA">
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_twMc5ND8EeelrbphwT5uew" name="Control detailView">
+    <attachments xsi:type="org.eclipse.emf.ecp.view.rule.model:ShowRule" xmi:id="_twMc5dD8EeelrbphwT5uew" hide="true">
+      <condition xsi:type="org.eclipse.emf.ecp.view.rule.model:LeafCondition" xmi:id="_twMc5tD8EeelrbphwT5uew" expectedValue="ACED00057400044E6F6E65">
+        <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_twMc59D8EeelrbphwT5uew">
           <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/emf/ecp/view/table/model/150#//TableControl/detailEditing"/>
         </domainModelReference>
       </condition>
     </attachments>
-    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_pXvp00WAEeWfKJaajyNdyA">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_twMc6ND8EeelrbphwT5uew">
       <domainModelEFeature xsi:type="ecore:EReference" href="http://org/eclipse/emf/ecp/view/table/model/150#//TableControl/detailView"/>
     </domainModelReference>
   </children>

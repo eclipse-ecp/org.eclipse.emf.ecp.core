@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2016 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,11 +8,13 @@
  *
  * Contributors:
  * Johannes Faltermeier
+ * Christian W. Damus - bug 527740
  *
  *******************************************************************************/
 package org.eclipse.emf.ecp.view.table.ui.swt.test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -39,6 +41,7 @@ import org.eclipse.emf.ecp.edit.spi.swt.table.StringCellEditor;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContextDisposeListener;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelService;
+import org.eclipse.emf.ecp.view.spi.context.ViewModelServiceProvider;
 import org.eclipse.emf.ecp.view.spi.model.ModelChangeListener;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
@@ -75,6 +78,7 @@ import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
@@ -515,6 +519,30 @@ public class SWTTable_PTest {
 		assertTableItemOrder(table, class1, class2, class3);
 	}
 
+	@Test
+	public void testTableReadonlyHidesAddRemoveButtons()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
+		EMFFormsNoRendererException {
+		// setup model
+		final TableControlHandle handle = createTableWithTwoTableColumns();
+		handle.getTableControl().setReadonly(true);
+		shell.open();
+		final Control render = SWTViewTestHelper.render(handle.getTableControl(), domainElement, shell);
+		assertTrue(render instanceof Composite);
+
+		Composite buttonComposite = (Composite) render;
+		buttonComposite = (Composite) buttonComposite.getChildren()[0];
+		buttonComposite = (Composite) buttonComposite.getChildren()[0];
+		buttonComposite = (Composite) buttonComposite.getChildren()[2];
+
+		final Button addButton = (Button) buttonComposite.getChildren()[0];
+		final Button removeButton = (Button) buttonComposite.getChildren()[1];
+
+		assertFalse(addButton.getVisible());
+		assertFalse(removeButton.getVisible());
+
+	}
+
 	private TableControlSWTRenderer createRendererInstanceWithCustomCellEditor(final VTableControl tableControl)
 		throws EMFFormsNoRendererException {
 		final ViewModelContextWithoutServices viewModelContext = new ViewModelContextWithoutServices(tableControl);
@@ -847,20 +875,20 @@ public class SWTTable_PTest {
 
 		}
 
-		/**
-		 * {@inheritDoc}
-		 *
-		 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelContext#getChildContext(org.eclipse.emf.ecore.EObject,
-		 *      org.eclipse.emf.ecp.view.spi.model.VElement, org.eclipse.emf.ecp.view.spi.model.VView,
-		 *      org.eclipse.emf.ecp.view.spi.context.ViewModelService[])
-		 */
+		@Deprecated
 		@Override
 		public ViewModelContext getChildContext(EObject eObject, VElement parent, VView vView,
 			ViewModelService... viewModelServices) {
-			// TODO Auto-generated method stub
-			final ViewModelContextWithoutServices vmcws = new ViewModelContextWithoutServices(vView);
 
+			final ViewModelContextWithoutServices vmcws = new ViewModelContextWithoutServices(vView);
 			return vmcws;
+		}
+
+		@Override
+		public ViewModelContext getChildContext(EObject eObject, VElement parent, VView vView,
+			ViewModelServiceProvider viewModelServiceProvider) {
+
+			return new ViewModelContextWithoutServices(vView);
 		}
 
 		/**

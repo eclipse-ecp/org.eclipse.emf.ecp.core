@@ -35,4 +35,36 @@
     <eLiterals name="EQUALS"/>
     <eLiterals name="NOT_EQUALS" value="1"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IterateCondition" eSuperTypes="#//Condition">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="quantifier" lowerBound="1"
+        eType="#//Quantifier" defaultValueLiteral="all"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ifEmpty" lowerBound="1"
+        eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="itemReference" lowerBound="1"
+        eType="ecore:EClass ../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="itemCondition" lowerBound="1"
+        eType="#//Condition" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Quantifier">
+    <eLiterals name="all"/>
+    <eLiterals name="any" value="1"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="True" eSuperTypes="#//Condition"/>
+  <eClassifiers xsi:type="ecore:EClass" name="False" eSuperTypes="#//Condition"/>
+  <eClassifiers xsi:type="ecore:EClass" name="NotCondition" eSuperTypes="#//Condition">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="condition" lowerBound="1"
+        eType="#//Condition" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IsProxyCondition" eSuperTypes="#//Condition">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Matches {@link org.eclipse.emf.ecore.EObject EObject}s that are unresolved proxies.  Does not make sense for rules on attributes."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="domainModelReference" eType="ecore:EClass ../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"
+        containment="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Optional reference to check for proxies.  If set, must indicate an {@link org.eclipse.emf.ecore.EReference EReference}.  The condition evaluates {@code true} if the reference contains a proxy; {@code false}, otherwise.  If omitted, the condition tests whether the domain object itself is a proxy, which is particularly useful in {@link IterateCondition}s."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
 </ecore:EPackage>

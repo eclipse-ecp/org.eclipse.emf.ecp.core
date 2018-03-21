@@ -13,11 +13,16 @@ package org.eclipse.emf.ecp.view.validation.test;
 
 import static org.junit.Assert.assertEquals;
 
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.internal.validation.ECPSubstitutionLabelProvider;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -61,6 +66,24 @@ public class SubstitutionLabel_PTest {
 	public void testEObjectLabelProvider() {
 		final String eObjectLabel = labelProvider.getObjectLabel(modelReference);
 		assertEquals("Table Domain Model Reference", eObjectLabel);
+	}
+
+	@Test
+	public void testBug529402() {
+		/* setup factory which is not implemented as expected (contract does not guarantee that) */
+		adapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) {
+			@Override
+			public Adapter adapt(Notifier target, Object type) {
+				if (target == modelReference && type == IItemLabelProvider.class) {
+					return new AdapterImpl();
+				}
+				return super.adapt(target, type);
+			}
+		};
+		labelProvider = new ECPSubstitutionLabelProvider(adapterFactory);
+		final String eObjectLabel = labelProvider.getObjectLabel(modelReference);
+		assertEquals(EcoreUtil.getIdentification(modelReference),
+			eObjectLabel);
 	}
 
 }

@@ -91,16 +91,6 @@ public final class EmptyVElementSWTRenderer extends AbstractSWTRenderer<VElement
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#applyReadOnly()
-	 */
-	@Override
-	protected void applyReadOnly() {
-		// do nothing
-	}
-
-	/**
-	 * {@inheritDoc}
-	 *
 	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#applyValidation()
 	 */
 	@Override

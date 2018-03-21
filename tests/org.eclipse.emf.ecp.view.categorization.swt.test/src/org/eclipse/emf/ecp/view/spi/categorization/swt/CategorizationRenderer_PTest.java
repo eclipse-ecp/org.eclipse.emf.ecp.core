@@ -207,4 +207,71 @@ public class CategorizationRenderer_PTest {
 		final Control render = categorizatrionElementRenderer.render(gridCell, shell);
 		assertTrue(CTabFolder.class.isInstance(render));
 	}
+
+	@Test
+	public void testCategorizationElementTreeRendererReadOnlyBehavior_ViewIsReadOnly() throws ECPRendererException {
+		final VView view = VViewFactory.eINSTANCE.createView();
+		view.setReadonly(true);
+
+		final VCategorizationElement categorizationElement = VCategorizationFactory.eINSTANCE
+			.createCategorizationElement();
+
+		final VCategory category1 = VCategorizationFactory.eINSTANCE.createCategory();
+
+		final VCategorization categorization = VCategorizationFactory.eINSTANCE.createCategorization();
+		categorization.getCategorizations().add(category1);
+
+		categorizationElement.getCategorizations().add(categorization);
+		final VCategorization compositeCategory = VCategorizationFactory.eINSTANCE.createCategorization();
+
+		categorizationElement.getCategorizations().add(compositeCategory);
+
+		view.getChildren().add(categorizationElement);
+
+		final Shell shell = new Shell();
+		shell.setLayout(new FillLayout());
+		final Player player = BowlingFactory.eINSTANCE.createPlayer();
+
+		final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(view, player);
+		final ECPSWTView ecpSwtView = ECPSWTViewRenderer.INSTANCE.render(shell, vmc);
+		final Tree tree = CategoryRendererTestHelper.getTree(ecpSwtView.getSWTControl());
+		final Composite detailComposite = CategoryRendererTestHelper.getDetailComposite(ecpSwtView.getSWTControl());
+
+		assertTrue(tree.isEnabled());
+		assertTrue(detailComposite.isEnabled());
+	}
+
+	@Test
+	public void testCategorizationElementTreeRendererReadOnlyBehavior_CategorizationIsReadOnly()
+		throws ECPRendererException {
+		final VView view = VViewFactory.eINSTANCE.createView();
+
+		final VCategorizationElement categorizationElement = VCategorizationFactory.eINSTANCE
+			.createCategorizationElement();
+		categorizationElement.setReadonly(true);
+
+		final VCategory category1 = VCategorizationFactory.eINSTANCE.createCategory();
+
+		final VCategorization categorization = VCategorizationFactory.eINSTANCE.createCategorization();
+		categorization.getCategorizations().add(category1);
+
+		categorizationElement.getCategorizations().add(categorization);
+		final VCategorization compositeCategory = VCategorizationFactory.eINSTANCE.createCategorization();
+
+		categorizationElement.getCategorizations().add(compositeCategory);
+
+		view.getChildren().add(categorizationElement);
+
+		final Shell shell = new Shell();
+		shell.setLayout(new FillLayout());
+		final Player player = BowlingFactory.eINSTANCE.createPlayer();
+
+		final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(view, player);
+		final ECPSWTView ecpSwtView = ECPSWTViewRenderer.INSTANCE.render(shell, vmc);
+		final Tree tree = CategoryRendererTestHelper.getTree(ecpSwtView.getSWTControl());
+		final Composite detailComposite = CategoryRendererTestHelper.getDetailComposite(ecpSwtView.getSWTControl());
+
+		assertTrue(tree.isEnabled());
+		assertTrue(detailComposite.isEnabled());
+	}
 }

@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.eclipse.emf.ecp</groupId>
 		<artifactId>ecp-tests-parent</artifactId>
-		<version>1.15.0-SNAPSHOT</version>
+		<version>1.16.0-SNAPSHOT</version>
 		<relativePath>../../releng/org.eclipse.emf.ecp.releng.tests/</relativePath>
 	</parent>
 	<groupId>org.eclipse.emf.ecp</groupId>
@@ -27,17 +27,62 @@
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>target-platform-configuration</artifactId>
-				<configuration>
+			<configuration>
 					<dependency-resolution>
 						<extraRequirements>
 							<requirement>
 								<type>p2-installable-unit</type>
-								<id>org.eclipse.equinox.event</id>
+								<id>org.eclipse.emf.ecp.view.swt.layout</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+							<requirement>
+								<type>p2-installable-unit</type>
+								<id>org.eclipse.emfforms.core.services.databinding.featurepath</id>
 								<versionRange>0.0.0</versionRange>
 							</requirement>
 							<requirement>
 								<type>p2-installable-unit</type>
 								<id>org.eclipse.emfforms.core.services.emf</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+							<requirement>
+								<type>p2-installable-unit</type>
+								<id>org.eclipse.emfforms.core.services.locale.default</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+							<requirement>
+								<type>eclipse-feature</type>
+								<id>org.eclipse.emf.ecp.target.feature</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+							<requirement>
+								<type>eclipse-feature</type>
+								<id>org.eclipse.emf.ecp.feature</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+							<requirement>
+								<type>eclipse-feature</type>
+								<id>org.eclipse.emf.ecp.viewmodel.feature</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+							<requirement>
+								<type>eclipse-feature</type>
+								<id>org.eclipse.emf.ecp.view.table.feature</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+							<requirement>
+								<type>eclipse-feature</type>
+								<id>org.eclipse.emf.ecp.view.template.feature</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+							<requirement>
+								<type>eclipse-feature</type>
+								<id>org.eclipse.emf.ecp.view.validation.feature</id>
+								<versionRange>0.0.0</versionRange>
+							</requirement>
+							<requirement>
+								<type>eclipse-feature</type>
+								<id>org.eclipse.emf.ecp.emfstore.feature</id>
 								<versionRange>0.0.0</versionRange>
 							</requirement>
 						</extraRequirements>

@@ -26,11 +26,11 @@ import org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentStyleP
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
- * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.template.style.alignment.model.impl.VTAlignmentStylePropertyImpl#getType <em>Type
- * </em>}</li>
- * </ul>
  * </p>
+ * <ul>
+ * <li>{@link org.eclipse.emf.ecp.view.template.style.alignment.model.impl.VTAlignmentStylePropertyImpl#getType
+ * <em>Type</em>}</li>
+ * </ul>
  *
  * @generated
  */

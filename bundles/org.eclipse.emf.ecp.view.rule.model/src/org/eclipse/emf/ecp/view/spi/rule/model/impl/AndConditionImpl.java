@@ -36,11 +36,11 @@ import org.eclipse.emf.ecp.view.spi.rule.model.util.ConditionEvaluationUtil;
  *        <!-- end-user-doc -->
  *        <p>
  *        The following features are implemented:
- *        <ul>
- *        <li>{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.AndConditionImpl#getConditions <em>Conditions</em>}
- *        </li>
- *        </ul>
  *        </p>
+ *        <ul>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.AndConditionImpl#getConditions
+ *        <em>Conditions</em>}</li>
+ *        </ul>
  *
  * @generated
  */

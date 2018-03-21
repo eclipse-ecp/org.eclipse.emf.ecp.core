@@ -61,7 +61,7 @@ public abstract class AbstractReferenceHelper implements ReferenceHelper {
 	 */
 	protected EStructuralFeature getEStructuralFeature(VDomainModelReference reference) {
 		try {
-			final IValueProperty valueProperty = dataBinding.getValueProperty(reference, null);
+			final IValueProperty<?, ?> valueProperty = dataBinding.getValueProperty(reference, null);
 
 			if (valueProperty != null) {
 				return (EStructuralFeature) valueProperty.getValueType();
@@ -98,7 +98,7 @@ public abstract class AbstractReferenceHelper implements ReferenceHelper {
 				final ServiceReference<EMFFormsLabelProvider> serviceReference = bundleContext
 					.getServiceReference(EMFFormsLabelProvider.class);
 				final EMFFormsLabelProvider labelProvider = bundleContext.getService(serviceReference);
-				final IObservableValue observableValue = labelProvider.getDisplayName(reference);
+				final IObservableValue<?> observableValue = labelProvider.getDisplayName(reference);
 				final String result = (String) observableValue.getValue();
 				observableValue.dispose();
 				bundleContext.ungetService(serviceReference);

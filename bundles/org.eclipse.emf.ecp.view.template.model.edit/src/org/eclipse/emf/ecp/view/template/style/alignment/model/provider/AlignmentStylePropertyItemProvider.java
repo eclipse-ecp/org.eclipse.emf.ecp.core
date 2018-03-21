@@ -85,13 +85,11 @@ public class AlignmentStylePropertyItemProvider
 	 */
 	protected void addTypePropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_AlignmentStyleProperty_type_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_AlignmentStyleProperty_type_feature", "_UI_AlignmentStyleProperty_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				getString("_UI_PropertyDescriptor_description", "_UI_AlignmentStyleProperty_type_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_AlignmentStyleProperty_type"), //$NON-NLS-1$
 				VTAlignmentPackage.Literals.ALIGNMENT_STYLE_PROPERTY__TYPE,
 				true,
 				false,
@@ -124,8 +122,7 @@ public class AlignmentStylePropertyItemProvider
 	public String getText(Object object) {
 		final AlignmentType labelValue = ((VTAlignmentStyleProperty) object).getType();
 		final String label = labelValue == null ? null : labelValue.toString();
-		return label == null || label.length() == 0 ?
-			getString("_UI_AlignmentStyleProperty_type") : //$NON-NLS-1$
+		return label == null || label.length() == 0 ? getString("_UI_AlignmentStyleProperty_type") : //$NON-NLS-1$
 			getString("_UI_AlignmentStyleProperty_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 

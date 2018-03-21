@@ -15,11 +15,9 @@ import javax.inject.Inject;
 
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.databinding.edit.EMFEditObservables;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.section.model.VSection;
-import org.eclipse.emf.ecp.view.spi.section.model.VSectionedArea;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.spi.common.report.ReportService;
@@ -86,16 +84,6 @@ public class SectionLeafSWTRenderer extends AbstractSectionSWTRenderer {
 		getDataBindingContext().bindValue(targetTooltipValue, modelTooltipValue);
 
 		return composite;
-	}
-
-	private int computeLeftMargin() {
-		int numberOfParents = 0;
-		EObject current = getVElement().eContainer();
-		while (!VSectionedArea.class.isInstance(current)) {
-			numberOfParents++;
-			current = current.eContainer();
-		}
-		return (numberOfParents + 1) * 8;
 	}
 
 	/**

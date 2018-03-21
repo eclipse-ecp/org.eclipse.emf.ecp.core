@@ -25,10 +25,10 @@ import org.eclipse.emf.ecp.view.spi.rule.model.ShowRule;
  *        <!-- end-user-doc -->
  *        <p>
  *        The following features are implemented:
+ *        </p>
  *        <ul>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.ShowRuleImpl#isHide <em>Hide</em>}</li>
  *        </ul>
- *        </p>
  *
  * @generated
  */
@@ -110,8 +110,7 @@ public class ShowRuleImpl extends RuleImpl implements ShowRule {
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID)
-		{
+		switch (featureID) {
 		case RulePackage.SHOW_RULE__HIDE:
 			return isHide();
 		}
@@ -126,8 +125,7 @@ public class ShowRuleImpl extends RuleImpl implements ShowRule {
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID)
-		{
+		switch (featureID) {
 		case RulePackage.SHOW_RULE__HIDE:
 			setHide((Boolean) newValue);
 			return;
@@ -143,8 +141,7 @@ public class ShowRuleImpl extends RuleImpl implements ShowRule {
 	 */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID)
-		{
+		switch (featureID) {
 		case RulePackage.SHOW_RULE__HIDE:
 			setHide(HIDE_EDEFAULT);
 			return;
@@ -160,8 +157,7 @@ public class ShowRuleImpl extends RuleImpl implements ShowRule {
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID)
-		{
+		switch (featureID) {
 		case RulePackage.SHOW_RULE__HIDE:
 			return hide != HIDE_EDEFAULT;
 		}

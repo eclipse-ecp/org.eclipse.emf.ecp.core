@@ -48,7 +48,6 @@ public class DefaultTableViewerColumnBuilder
 		return viewerColumn.getColumn();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	protected void configureDatabinding(Widget column) {
 		super.configureDatabinding(column);

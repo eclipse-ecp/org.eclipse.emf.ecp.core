@@ -38,7 +38,7 @@ public class LeafConditionItemProvider extends ConditionItemProvider {
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public LeafConditionItemProvider(AdapterFactory adapterFactory) {
@@ -49,13 +49,12 @@ public class LeafConditionItemProvider extends ConditionItemProvider {
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (itemPropertyDescriptors == null)
-		{
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addExpectedValuePropertyDescriptor(object);
@@ -68,18 +67,16 @@ public class LeafConditionItemProvider extends ConditionItemProvider {
 	 * This adds a property descriptor for the Expected Value feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	protected void addExpectedValuePropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_LeafCondition_expectedValue_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_LeafCondition_expectedValue_feature", "_UI_LeafCondition_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				getString("_UI_PropertyDescriptor_description", "_UI_LeafCondition_expectedValue_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_LeafCondition_type"), //$NON-NLS-1$
 				RulePackage.Literals.LEAF_CONDITION__EXPECTED_VALUE,
 				true,
 				false,
@@ -95,7 +92,6 @@ public class LeafConditionItemProvider extends ConditionItemProvider {
 	 *
 	 * @since 1.11
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	protected void addCompareTypePropertyDescriptor(Object object) {
@@ -120,14 +116,12 @@ public class LeafConditionItemProvider extends ConditionItemProvider {
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object)
-	{
-		if (childrenFeatures == null)
-		{
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
+		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(RulePackage.Literals.LEAF_CONDITION__DOMAIN_MODEL_REFERENCE);
 			childrenFeatures.add(RulePackage.Literals.LEAF_CONDITION__VALUE_DOMAIN_MODEL_REFERENCE);
@@ -138,12 +132,11 @@ public class LeafConditionItemProvider extends ConditionItemProvider {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
-	protected EStructuralFeature getChildFeature(Object object, Object child)
-	{
+	protected EStructuralFeature getChildFeature(Object object, Object child) {
 		// Check the type of the specified child object and return the proper feature to use for
 		// adding (see {@link AddCommand}) it as a child.
 
@@ -154,7 +147,7 @@ public class LeafConditionItemProvider extends ConditionItemProvider {
 	 * This returns LeafCondition.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -166,15 +159,14 @@ public class LeafConditionItemProvider extends ConditionItemProvider {
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public String getText(Object object) {
-		final Object labelValue = ((LeafCondition) object).getExpectedValue();
-		final String label = labelValue == null ? null : labelValue.toString();
-		return label == null || label.length() == 0 ?
-			getString("_UI_LeafCondition_type") : //$NON-NLS-1$
+		Object labelValue = ((LeafCondition) object).getExpectedValue();
+		String label = labelValue == null ? null : labelValue.toString();
+		return label == null || label.length() == 0 ? getString("_UI_LeafCondition_type") : //$NON-NLS-1$
 			getString("_UI_LeafCondition_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
@@ -183,15 +175,14 @@ public class LeafConditionItemProvider extends ConditionItemProvider {
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(LeafCondition.class))
-		{
+		switch (notification.getFeatureID(LeafCondition.class)) {
 		case RulePackage.LEAF_CONDITION__EXPECTED_VALUE:
 		case RulePackage.LEAF_CONDITION__COMPARE_TYPE:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
@@ -209,7 +200,7 @@ public class LeafConditionItemProvider extends ConditionItemProvider {
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -217,10 +208,8 @@ public class LeafConditionItemProvider extends ConditionItemProvider {
 		Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
-		newChildDescriptors.add
-			(createChildParameter
-			(RulePackage.Literals.LEAF_CONDITION__DOMAIN_MODEL_REFERENCE,
-				VViewFactory.eINSTANCE.createFeaturePathDomainModelReference()));
+		newChildDescriptors.add(createChildParameter(RulePackage.Literals.LEAF_CONDITION__DOMAIN_MODEL_REFERENCE,
+			VViewFactory.eINSTANCE.createFeaturePathDomainModelReference()));
 	}
 
 }

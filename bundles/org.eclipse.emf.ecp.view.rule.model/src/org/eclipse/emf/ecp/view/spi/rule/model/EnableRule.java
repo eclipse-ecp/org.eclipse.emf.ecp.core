@@ -20,10 +20,10 @@ package org.eclipse.emf.ecp.view.spi.rule.model;
  *
  *        <p>
  *        The following features are supported:
+ *        </p>
  *        <ul>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.rule.model.EnableRule#isDisable <em>Disable</em>}</li>
  *        </ul>
- *        </p>
  *
  * @see org.eclipse.emf.ecp.view.spi.rule.model.RulePackage#getEnableRule()
  * @model

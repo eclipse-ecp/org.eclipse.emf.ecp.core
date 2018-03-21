@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentPackage;
 import org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentStyleProperty;
+import org.eclipse.emf.ecp.view.template.style.alignment.model.VTControlLabelAlignmentStyleProperty;
 
 /**
  * <!-- begin-user-doc -->
@@ -79,23 +80,27 @@ public class AlignmentAdapterFactory extends AdapterFactoryImpl {
 	 *
 	 * @generated
 	 */
-	protected AlignmentSwitch<Adapter> modelSwitch =
-		new AlignmentSwitch<Adapter>() {
-			@Override
-			public Adapter caseAlignmentStyleProperty(VTAlignmentStyleProperty object) {
-				return createAlignmentStylePropertyAdapter();
-			}
+	protected AlignmentSwitch<Adapter> modelSwitch = new AlignmentSwitch<Adapter>() {
+		@Override
+		public Adapter caseAlignmentStyleProperty(VTAlignmentStyleProperty object) {
+			return createAlignmentStylePropertyAdapter();
+		}
 
-			@Override
-			public Adapter caseStyleProperty(VTStyleProperty object) {
-				return createStylePropertyAdapter();
-			}
+		@Override
+		public Adapter caseControlLabelAlignmentStyleProperty(VTControlLabelAlignmentStyleProperty object) {
+			return createControlLabelAlignmentStylePropertyAdapter();
+		}
 
-			@Override
-			public Adapter defaultCase(EObject object) {
-				return createEObjectAdapter();
-			}
-		};
+		@Override
+		public Adapter caseStyleProperty(VTStyleProperty object) {
+			return createStylePropertyAdapter();
+		}
+
+		@Override
+		public Adapter defaultCase(EObject object) {
+			return createEObjectAdapter();
+		}
+	};
 
 	/**
 	 * Creates an adapter for the <code>target</code>.
@@ -112,9 +117,9 @@ public class AlignmentAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentStyleProperty <em>Style Property</em>}
-	 * '.
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentStyleProperty <em>Style
+	 * Property</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
@@ -125,6 +130,23 @@ public class AlignmentAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createAlignmentStylePropertyAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emf.ecp.view.template.style.alignment.model.VTControlLabelAlignmentStyleProperty <em>Control
+	 * Label Alignment Style Property</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 *
+	 * @return the new adapter.
+	 * @see org.eclipse.emf.ecp.view.template.style.alignment.model.VTControlLabelAlignmentStyleProperty
+	 * @generated
+	 */
+	public Adapter createControlLabelAlignmentStylePropertyAdapter() {
 		return null;
 	}
 

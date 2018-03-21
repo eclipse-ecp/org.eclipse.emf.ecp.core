@@ -15,6 +15,7 @@ import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
@@ -30,6 +31,7 @@ import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTViewTestHelper;
 import org.eclipse.emf.emfstore.bowling.BowlingFactory;
 import org.eclipse.emf.emfstore.bowling.BowlingPackage;
 import org.eclipse.emf.emfstore.bowling.Player;
+import org.eclipse.emfforms.spi.common.validation.PreSetValidationService;
 import org.eclipse.swt.widgets.Shell;
 import org.junit.Before;
 import org.junit.Test;
@@ -52,6 +54,8 @@ public class CorrectDipose_PTest {
 		final ViewModelContext toSpy = ViewModelContextFactory.INSTANCE.createViewModelContext(view,
 			domain);
 		viewContext = spy(toSpy);
+		// TODO remove when PreSetValidationListeners does not use static PreSetValidationService anymore.
+		when(viewContext.getService(PreSetValidationService.class)).thenReturn(null);
 	}
 
 	@Test

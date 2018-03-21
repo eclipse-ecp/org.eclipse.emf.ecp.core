@@ -116,6 +116,7 @@ public class DefaultFilter implements ECPFilterProvider {
 
 		packages.add("http://org/eclipse/emf/emfforms/view/controlgrid/model"); //$NON-NLS-1$
 
+		packages.add("http://www.eclipse.org/emf/ecp/view/template/style/labelwidth/model"); //$NON-NLS-1$
 	}
 
 	private void addQ7Models1(Set<String> packages) {
@@ -212,6 +213,10 @@ public class DefaultFilter implements ECPFilterProvider {
 
 		packages.add("http://eclipse.org/rcptt/tesla/nebula"); //$NON-NLS-1$
 		packages.add("http://eclipse.org/rcptt/tesla/nebula/ecl"); //$NON-NLS-1$
+
+		packages.add("http://eclipse.org/rcptt/testrail/ecl"); //$NON-NLS-1$
+
+		packages.add("http://www.eclipse.org/ecl/data/apache/poi/commands.ecore"); //$NON-NLS-1$
 	}
 
 	private void addGraphitiModels(Set<String> packages) {

@@ -12,6 +12,9 @@
 package org.eclipse.emf.ecp.view.template.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.isNull;
 import static org.mockito.Matchers.notNull;
@@ -22,13 +25,16 @@ import java.util.Set;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
+import org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate;
 import org.eclipse.emf.ecp.view.template.model.VTStyle;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.model.VTStyleSelector;
+import org.eclipse.emf.ecp.view.template.model.VTTemplateFactory;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplate;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,6 +47,33 @@ public class ViewTemplateService_Test {
 	@Before
 	public void setup() {
 		templateProvider = new ViewTemplateProviderImpl();
+	}
+
+	@Test
+	public void testGetTemplateModel() {
+		final VTViewTemplate viewTemplate = VTTemplateFactory.eINSTANCE.createViewTemplate();
+		final VTStyle style = VTTemplateFactory.eINSTANCE.createStyle();
+		viewTemplate.getStyles().add(style);
+		templateProvider.setViewTemplate(viewTemplate);
+
+		assertSame(viewTemplate, templateProvider.getMutableViewTemplate());
+		final VTViewTemplate copy = templateProvider.getViewTemplate();
+		assertNotSame(viewTemplate, copy);
+		assertTrue(EcoreUtil.equals(viewTemplate, copy));
+	}
+
+	@Test
+	public void testhasControlValidationTemplate() {
+		assertFalse(templateProvider.hasControlValidationTemplate());
+
+		final VTViewTemplate viewTemplate = VTTemplateFactory.eINSTANCE.createViewTemplate();
+		templateProvider.setViewTemplate(viewTemplate);
+		assertFalse(templateProvider.hasControlValidationTemplate());
+
+		final VTControlValidationTemplate controlValidationTemplate = VTTemplateFactory.eINSTANCE
+			.createControlValidationTemplate();
+		viewTemplate.setControlValidationConfiguration(controlValidationTemplate);
+		assertTrue(templateProvider.hasControlValidationTemplate());
 	}
 
 	@Test
@@ -84,7 +117,7 @@ public class ViewTemplateService_Test {
 	public void testMultipleStyles() {
 		mockTemplate(1d);
 		final VTStyle mockedStyle2 = mockStyle(1d);
-		templateProvider.getViewTemplate().getStyles().add(mockedStyle2);
+		templateProvider.getMutableViewTemplate().getStyles().add(mockedStyle2);
 
 		final VControl vElement = mock(VControl.class);
 		final VDomainModelReference dmr = mock(VDomainModelReference.class);
@@ -94,7 +127,7 @@ public class ViewTemplateService_Test {
 
 		assertEquals(2, styleProperties.size());
 		assertTrue(styleProperties.contains(mockedStyle2.getProperties().get(0)));
-		assertTrue(styleProperties.contains(templateProvider.getViewTemplate().getStyles().get(0).getProperties()
+		assertTrue(styleProperties.contains(templateProvider.getMutableViewTemplate().getStyles().get(0).getProperties()
 			.get(0)));
 
 	}
@@ -103,9 +136,9 @@ public class ViewTemplateService_Test {
 	public void testOnlyOneStyleProperty() {
 		mockTemplate(1d);
 		final VTStyle mockedStyle2 = mockStyle(10);
-		templateProvider.getViewTemplate().getStyles().add(mockedStyle2);
+		templateProvider.getMutableViewTemplate().getStyles().add(mockedStyle2);
 		when(
-			templateProvider.getViewTemplate().getStyles().get(0).getProperties().get(0)
+			templateProvider.getMutableViewTemplate().getStyles().get(0).getProperties().get(0)
 				.equalStyles(mockedStyle2.getProperties().get(0))).thenReturn(true);
 		final VControl vElement = mock(VControl.class);
 		final VDomainModelReference dmr = mock(VDomainModelReference.class);

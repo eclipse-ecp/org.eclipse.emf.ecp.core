@@ -175,25 +175,35 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 	 *
 	 * @return the view
 	 */
+	@Deprecated
 	protected VView getView() {
+		IValueProperty valueProperty;
+		try {
+			valueProperty = getEMFFormsDatabinding()
+				.getValueProperty(getVElement().getDomainModelReference(),
+					getViewModelContext().getDomainModel());
+		} catch (final DatabindingFailedException ex) {
+			getReportService().report(new DatabindingFailedReport(ex));
+			return null; // possible because the only caller is null safe.
+		}
+		final EReference reference = (EReference) valueProperty.getValueType();
+		return getView(EcoreUtil.create(reference.getEReferenceType()));
+	}
+	/**
+	 * Returns a fresh copy of the {@link VView} used for detail editing based on the provided EObject.
+         *
+	 * @param selectedEObject The selected EObject for which to provide the View
+	 * @return the view
+	 */
+	protected VView getView(EObject selectedEObject) {
 		if (view == null) {
 			VView detailView = getVElement().getDetailView();
 			if (detailView == null) {
-				IValueProperty valueProperty;
-				try {
-					valueProperty = getEMFFormsDatabinding()
-						.getValueProperty(getVElement().getDomainModelReference(),
-							getViewModelContext().getDomainModel());
-				} catch (final DatabindingFailedException ex) {
-					getReportService().report(new DatabindingFailedReport(ex));
-					return null; // possible because the only caller is null safe.
-				}
-				final EReference reference = (EReference) valueProperty.getValueType();
+
 				final VElement viewModel = getViewModelContext().getViewModel();
 				final VViewModelProperties properties = ViewModelPropertiesHelper
 					.getInhertitedPropertiesOrEmpty(viewModel);
-				detailView = ViewProviderHelper.getView(EcoreUtil.create(reference.getEReferenceType()),
-					properties);
+				detailView = ViewProviderHelper.getView(selectedEObject, properties);
 			}
 			view = detailView;
 		}
@@ -256,7 +266,7 @@ public class TableControlDetailPanelRenderer extends TableControlSWTRenderer {
 	 * @since 1.9
 	 */
 	protected void renderSelectedObject(final Composite composite, final EObject eObject) {
-		final VView detailView = getView();
+		final VView detailView = getView(eObject);
 		if (detailView == null) {
 
 			final Label label = new Label(composite, SWT.NONE);

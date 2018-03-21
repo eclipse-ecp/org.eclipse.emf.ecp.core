@@ -73,9 +73,9 @@ public interface VTAlignmentPackage extends EPackage {
 		.init();
 
 	/**
-	 * The meta object id for the '
-	 * {@link org.eclipse.emf.ecp.view.template.style.alignment.model.impl.VTAlignmentStylePropertyImpl
-	 * <em>Style Property</em>}' class.
+	 * The meta object id for the
+	 * '{@link org.eclipse.emf.ecp.view.template.style.alignment.model.impl.VTAlignmentStylePropertyImpl <em>Style
+	 * Property</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -116,6 +116,57 @@ public interface VTAlignmentPackage extends EPackage {
 	int ALIGNMENT_STYLE_PROPERTY_OPERATION_COUNT = VTTemplatePackage.STYLE_PROPERTY_OPERATION_COUNT + 0;
 
 	/**
+	 * The meta object id for the
+	 * '{@link org.eclipse.emf.ecp.view.template.style.alignment.model.impl.VTControlLabelAlignmentStylePropertyImpl
+	 * <em>Control Label Alignment Style Property</em>}' class.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.16
+	 *        <!-- end-user-doc -->
+	 *
+	 * @see org.eclipse.emf.ecp.view.template.style.alignment.model.impl.VTControlLabelAlignmentStylePropertyImpl
+	 * @see org.eclipse.emf.ecp.view.template.style.alignment.model.impl.VTAlignmentPackageImpl#getControlLabelAlignmentStyleProperty()
+	 * @generated
+	 */
+	int CONTROL_LABEL_ALIGNMENT_STYLE_PROPERTY = 1;
+
+	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.16
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int CONTROL_LABEL_ALIGNMENT_STYLE_PROPERTY__TYPE = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Control Label Alignment Style Property</em>' class.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.16
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int CONTROL_LABEL_ALIGNMENT_STYLE_PROPERTY_FEATURE_COUNT = VTTemplatePackage.STYLE_PROPERTY_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>Control Label Alignment Style Property</em>' class.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.16
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int CONTROL_LABEL_ALIGNMENT_STYLE_PROPERTY_OPERATION_COUNT = VTTemplatePackage.STYLE_PROPERTY_OPERATION_COUNT + 0;
+
+	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.template.style.alignment.model.AlignmentType
 	 * <em>Type</em>}' enum.
 	 * <!-- begin-user-doc -->
@@ -125,12 +176,12 @@ public interface VTAlignmentPackage extends EPackage {
 	 * @see org.eclipse.emf.ecp.view.template.style.alignment.model.impl.VTAlignmentPackageImpl#getAlignmentType()
 	 * @generated
 	 */
-	int ALIGNMENT_TYPE = 1;
+	int ALIGNMENT_TYPE = 2;
 
 	/**
-	 * Returns the meta object for class '
-	 * {@link org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentStyleProperty <em>Style Property</em>}
-	 * '.
+	 * Returns the meta object for class
+	 * '{@link org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentStyleProperty <em>Style
+	 * Property</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -141,8 +192,8 @@ public interface VTAlignmentPackage extends EPackage {
 	EClass getAlignmentStyleProperty();
 
 	/**
-	 * Returns the meta object for the attribute '
-	 * {@link org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentStyleProperty#getType <em>Type</em>}'.
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentStyleProperty#getType <em>Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -152,6 +203,37 @@ public interface VTAlignmentPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getAlignmentStyleProperty_Type();
+
+	/**
+	 * Returns the meta object for class
+	 * '{@link org.eclipse.emf.ecp.view.template.style.alignment.model.VTControlLabelAlignmentStyleProperty <em>Control
+	 * Label Alignment Style Property</em>}'.
+	 * <!-- begin-user-doc -->
+	 * 
+	 * @since 1.16
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the meta object for class '<em>Control Label Alignment Style Property</em>'.
+	 * @see org.eclipse.emf.ecp.view.template.style.alignment.model.VTControlLabelAlignmentStyleProperty
+	 * @generated
+	 */
+	EClass getControlLabelAlignmentStyleProperty();
+
+	/**
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.template.style.alignment.model.VTControlLabelAlignmentStyleProperty#getType
+	 * <em>Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.16
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the attribute '<em>Type</em>'.
+	 * @see org.eclipse.emf.ecp.view.template.style.alignment.model.VTControlLabelAlignmentStyleProperty#getType()
+	 * @see #getControlLabelAlignmentStyleProperty()
+	 * @generated
+	 */
+	EAttribute getControlLabelAlignmentStyleProperty_Type();
 
 	/**
 	 * Returns the meta object for enum '{@link org.eclipse.emf.ecp.view.template.style.alignment.model.AlignmentType
@@ -191,9 +273,9 @@ public interface VTAlignmentPackage extends EPackage {
 	 */
 	interface Literals {
 		/**
-		 * The meta object literal for the '
-		 * {@link org.eclipse.emf.ecp.view.template.style.alignment.model.impl.VTAlignmentStylePropertyImpl
-		 * <em>Style Property</em>}' class.
+		 * The meta object literal for the
+		 * '{@link org.eclipse.emf.ecp.view.template.style.alignment.model.impl.VTAlignmentStylePropertyImpl <em>Style
+		 * Property</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 *
@@ -213,8 +295,35 @@ public interface VTAlignmentPackage extends EPackage {
 		EAttribute ALIGNMENT_STYLE_PROPERTY__TYPE = eINSTANCE.getAlignmentStyleProperty_Type();
 
 		/**
-		 * The meta object literal for the '
-		 * {@link org.eclipse.emf.ecp.view.template.style.alignment.model.AlignmentType <em>Type</em>}' enum.
+		 * The meta object literal for the
+		 * '{@link org.eclipse.emf.ecp.view.template.style.alignment.model.impl.VTControlLabelAlignmentStylePropertyImpl
+		 * <em>Control Label Alignment Style Property</em>}' class.
+		 * <!-- begin-user-doc -->
+		 *
+		 * @since 1.16
+		 *        <!-- end-user-doc -->
+		 *
+		 * @see org.eclipse.emf.ecp.view.template.style.alignment.model.impl.VTControlLabelAlignmentStylePropertyImpl
+		 * @see org.eclipse.emf.ecp.view.template.style.alignment.model.impl.VTAlignmentPackageImpl#getControlLabelAlignmentStyleProperty()
+		 * @generated
+		 */
+		EClass CONTROL_LABEL_ALIGNMENT_STYLE_PROPERTY = eINSTANCE.getControlLabelAlignmentStyleProperty();
+
+		/**
+		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 *
+		 * @since 1.16
+		 *        <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EAttribute CONTROL_LABEL_ALIGNMENT_STYLE_PROPERTY__TYPE = eINSTANCE
+			.getControlLabelAlignmentStyleProperty_Type();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.template.style.alignment.model.AlignmentType
+		 * <em>Type</em>}' enum.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 *

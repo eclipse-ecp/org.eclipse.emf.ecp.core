@@ -158,7 +158,6 @@ public abstract class AbstractTableViewerColumnBuilder<V extends AbstractTableVi
 	 *
 	 * @param column the column widget to configure
 	 */
-	@SuppressWarnings("unchecked")
 	protected void configureDatabinding(Widget column) {
 		bindValue(column, WidgetProperties.text(), config.getColumnText());
 	}
