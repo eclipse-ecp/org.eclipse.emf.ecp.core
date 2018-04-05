@@ -1,4 +1,13 @@
 /**
+ * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ * EclipseSource Munich - initial API and implementation
  */
 package org.eclipse.emf.ecp.view.keyattribute.test.example.impl;
 
@@ -17,7 +26,7 @@ import org.eclipse.emf.ecp.view.keyattribute.test.example.KeyContainer;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.emf.ecp.view.keyattribute.test.example.impl.KeyContainerImpl#getKey <em>Key</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.keyattribute.test.example.impl.KeyContainerImpl#getKey <em>Key</em>}</li>
  * </ul>
  *
  * @generated
@@ -27,6 +36,7 @@ public class KeyContainerImpl extends MinimalEObjectImpl.Container implements Ke
 	 * The default value of the '{@link #getKey() <em>Key</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @see #getKey()
 	 * @generated
 	 * @ordered
@@ -37,6 +47,7 @@ public class KeyContainerImpl extends MinimalEObjectImpl.Container implements Ke
 	 * The cached value of the '{@link #getKey() <em>Key</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @see #getKey()
 	 * @generated
 	 * @ordered
@@ -46,6 +57,7 @@ public class KeyContainerImpl extends MinimalEObjectImpl.Container implements Ke
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	protected KeyContainerImpl() {
@@ -55,6 +67,7 @@ public class KeyContainerImpl extends MinimalEObjectImpl.Container implements Ke
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
@@ -65,6 +78,7 @@ public class KeyContainerImpl extends MinimalEObjectImpl.Container implements Ke
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
@@ -75,26 +89,29 @@ public class KeyContainerImpl extends MinimalEObjectImpl.Container implements Ke
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
 	public void setKey(String newKey) {
-		String oldKey = key;
+		final String oldKey = key;
 		key = newKey;
-		if (eNotificationRequired())
+		if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET, ExamplePackage.KEY_CONTAINER__KEY, oldKey, key));
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ExamplePackage.KEY_CONTAINER__KEY:
-				return getKey();
+		case ExamplePackage.KEY_CONTAINER__KEY:
+			return getKey();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -102,14 +119,15 @@ public class KeyContainerImpl extends MinimalEObjectImpl.Container implements Ke
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ExamplePackage.KEY_CONTAINER__KEY:
-				setKey((String)newValue);
-				return;
+		case ExamplePackage.KEY_CONTAINER__KEY:
+			setKey((String) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -117,14 +135,15 @@ public class KeyContainerImpl extends MinimalEObjectImpl.Container implements Ke
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ExamplePackage.KEY_CONTAINER__KEY:
-				setKey(KEY_EDEFAULT);
-				return;
+		case ExamplePackage.KEY_CONTAINER__KEY:
+			setKey(KEY_EDEFAULT);
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -132,13 +151,14 @@ public class KeyContainerImpl extends MinimalEObjectImpl.Container implements Ke
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ExamplePackage.KEY_CONTAINER__KEY:
-				return KEY_EDEFAULT == null ? key != null : !KEY_EDEFAULT.equals(key);
+		case ExamplePackage.KEY_CONTAINER__KEY:
+			return KEY_EDEFAULT == null ? key != null : !KEY_EDEFAULT.equals(key);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -146,13 +166,16 @@ public class KeyContainerImpl extends MinimalEObjectImpl.Container implements Ke
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
+		if (eIsProxy()) {
+			return super.toString();
+		}
 
-		StringBuffer result = new StringBuffer(super.toString());
+		final StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (key: "); //$NON-NLS-1$
 		result.append(key);
 		result.append(')');

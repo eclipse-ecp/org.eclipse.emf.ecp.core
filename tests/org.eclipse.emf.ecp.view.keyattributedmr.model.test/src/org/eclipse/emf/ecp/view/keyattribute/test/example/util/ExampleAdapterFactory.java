@@ -1,4 +1,13 @@
 /**
+ * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ * EclipseSource Munich - initial API and implementation
  */
 package org.eclipse.emf.ecp.view.keyattribute.test.example.util;
 
@@ -20,6 +29,7 @@ import org.eclipse.emf.ecp.view.keyattribute.test.example.Target;
  * The <b>Adapter Factory</b> for the model.
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
+ *
  * @see org.eclipse.emf.ecp.view.keyattribute.test.example.ExamplePackage
  * @generated
  */
@@ -28,6 +38,7 @@ public class ExampleAdapterFactory extends AdapterFactoryImpl {
 	 * The cached model package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	protected static ExamplePackage modelPackage;
@@ -36,6 +47,7 @@ public class ExampleAdapterFactory extends AdapterFactoryImpl {
 	 * Creates an instance of the adapter factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
 	public ExampleAdapterFactory() {
@@ -50,6 +62,7 @@ public class ExampleAdapterFactory extends AdapterFactoryImpl {
 	 * This implementation returns <code>true</code> if the object is either the model's package or is an instance
 	 * object of the model.
 	 * <!-- end-user-doc -->
+	 *
 	 * @return whether this factory is applicable for the type of the object.
 	 * @generated
 	 */
@@ -59,7 +72,7 @@ public class ExampleAdapterFactory extends AdapterFactoryImpl {
 			return true;
 		}
 		if (object instanceof EObject) {
-			return ((EObject)object).eClass().getEPackage() == modelPackage;
+			return ((EObject) object).eClass().getEPackage() == modelPackage;
 		}
 		return false;
 	}
@@ -68,63 +81,73 @@ public class ExampleAdapterFactory extends AdapterFactoryImpl {
 	 * The switch that delegates to the <code>createXXX</code> methods.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
-	protected ExampleSwitch<Adapter> modelSwitch =
-		new ExampleSwitch<Adapter>() {
-			@Override
-			public Adapter caseRoot(Root object) {
-				return createRootAdapter();
-			}
-			@Override
-			public Adapter caseIntermediate(Intermediate object) {
-				return createIntermediateAdapter();
-			}
-			@Override
-			public Adapter caseContainer(Container object) {
-				return createContainerAdapter();
-			}
-			@Override
-			public Adapter caseChild(Child object) {
-				return createChildAdapter();
-			}
-			@Override
-			public Adapter caseIntermediateTarget(IntermediateTarget object) {
-				return createIntermediateTargetAdapter();
-			}
-			@Override
-			public Adapter caseTarget(Target object) {
-				return createTargetAdapter();
-			}
-			@Override
-			public Adapter caseKeyContainer(KeyContainer object) {
-				return createKeyContainerAdapter();
-			}
-			@Override
-			public Adapter defaultCase(EObject object) {
-				return createEObjectAdapter();
-			}
-		};
+	protected ExampleSwitch<Adapter> modelSwitch = new ExampleSwitch<Adapter>() {
+		@Override
+		public Adapter caseRoot(Root object) {
+			return createRootAdapter();
+		}
+
+		@Override
+		public Adapter caseIntermediate(Intermediate object) {
+			return createIntermediateAdapter();
+		}
+
+		@Override
+		public Adapter caseContainer(Container object) {
+			return createContainerAdapter();
+		}
+
+		@Override
+		public Adapter caseChild(Child object) {
+			return createChildAdapter();
+		}
+
+		@Override
+		public Adapter caseIntermediateTarget(IntermediateTarget object) {
+			return createIntermediateTargetAdapter();
+		}
+
+		@Override
+		public Adapter caseTarget(Target object) {
+			return createTargetAdapter();
+		}
+
+		@Override
+		public Adapter caseKeyContainer(KeyContainer object) {
+			return createKeyContainerAdapter();
+		}
+
+		@Override
+		public Adapter defaultCase(EObject object) {
+			return createEObjectAdapter();
+		}
+	};
 
 	/**
 	 * Creates an adapter for the <code>target</code>.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 *
 	 * @param target the object to adapt.
 	 * @return the adapter for the <code>target</code>.
 	 * @generated
 	 */
 	@Override
 	public Adapter createAdapter(Notifier target) {
-		return modelSwitch.doSwitch((EObject)target);
+		return modelSwitch.doSwitch((EObject) target);
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.keyattribute.test.example.Root <em>Root</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.keyattribute.test.example.Root
+	 * <em>Root</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
+	 *
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.keyattribute.test.example.Root
 	 * @generated
@@ -134,11 +157,13 @@ public class ExampleAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.keyattribute.test.example.Intermediate <em>Intermediate</em>}'.
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emf.ecp.view.keyattribute.test.example.Intermediate <em>Intermediate</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
+	 *
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.keyattribute.test.example.Intermediate
 	 * @generated
@@ -148,11 +173,13 @@ public class ExampleAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.keyattribute.test.example.Container <em>Container</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.keyattribute.test.example.Container
+	 * <em>Container</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
+	 *
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.keyattribute.test.example.Container
 	 * @generated
@@ -162,11 +189,13 @@ public class ExampleAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.keyattribute.test.example.Child <em>Child</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.keyattribute.test.example.Child
+	 * <em>Child</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
+	 *
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.keyattribute.test.example.Child
 	 * @generated
@@ -176,11 +205,13 @@ public class ExampleAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.keyattribute.test.example.IntermediateTarget <em>Intermediate Target</em>}'.
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emf.ecp.view.keyattribute.test.example.IntermediateTarget <em>Intermediate Target</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
+	 *
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.keyattribute.test.example.IntermediateTarget
 	 * @generated
@@ -190,11 +221,13 @@ public class ExampleAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.keyattribute.test.example.Target <em>Target</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.keyattribute.test.example.Target
+	 * <em>Target</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
+	 *
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.keyattribute.test.example.Target
 	 * @generated
@@ -204,11 +237,13 @@ public class ExampleAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.ecp.view.keyattribute.test.example.KeyContainer <em>Key Container</em>}'.
+	 * Creates a new adapter for an object of class
+	 * '{@link org.eclipse.emf.ecp.view.keyattribute.test.example.KeyContainer <em>Key Container</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
+	 *
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.keyattribute.test.example.KeyContainer
 	 * @generated
@@ -222,6 +257,7 @@ public class ExampleAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null.
 	 * <!-- end-user-doc -->
+	 *
 	 * @return the new adapter.
 	 * @generated
 	 */

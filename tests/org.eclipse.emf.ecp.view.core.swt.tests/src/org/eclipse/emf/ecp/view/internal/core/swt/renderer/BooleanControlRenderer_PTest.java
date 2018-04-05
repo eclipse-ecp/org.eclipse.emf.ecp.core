@@ -13,6 +13,7 @@
 package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
@@ -26,6 +27,7 @@ import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecp.test.common.DefaultRealm;
 import org.eclipse.emf.ecp.view.core.swt.tests.ObservingWritableValue;
 import org.eclipse.emf.ecp.view.spi.model.LabelAlignment;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
@@ -46,7 +48,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-public class BooleanControlRenderer_PTest extends AbstractControl_PTest {
+public class BooleanControlRenderer_PTest extends AbstractControl_PTest<VControl> {
 
 	private DefaultRealm realm;
 
@@ -58,7 +60,8 @@ public class BooleanControlRenderer_PTest extends AbstractControl_PTest {
 		setLabelProvider(mock(EMFFormsLabelProvider.class));
 		setTemplateProvider(mock(VTViewTemplateProvider.class));
 		setup();
-		setRenderer(new BooleanControlSWTRenderer(getvControl(), getContext(), reportService, getDatabindingService(), getLabelProvider(),
+		setRenderer(new BooleanControlSWTRenderer(getvControl(), getContext(), reportService, getDatabindingService(),
+			getLabelProvider(),
 			getTemplateProvider()));
 		getRenderer().init();
 	}
@@ -75,8 +78,9 @@ public class BooleanControlRenderer_PTest extends AbstractControl_PTest {
 		setMockLabelAlignment(LabelAlignment.NONE);
 		final TestObservableValue mockedObservableValue = mock(TestObservableValue.class);
 		when(mockedObservableValue.getRealm()).thenReturn(realm);
-		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
-			mockedObservableValue);
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(
+				mockedObservableValue);
 		final Control render = renderControl(new SWTGridCell(0, 1, getRenderer()));
 		assertControl(render);
 	}
@@ -87,8 +91,9 @@ public class BooleanControlRenderer_PTest extends AbstractControl_PTest {
 		setMockLabelAlignment(LabelAlignment.LEFT);
 		final TestObservableValue mockedObservableValue = mock(TestObservableValue.class);
 		when(mockedObservableValue.getRealm()).thenReturn(realm);
-		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
-			mockedObservableValue);
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(
+				mockedObservableValue);
 		final Control render = renderControl(new SWTGridCell(0, 2, getRenderer()));
 
 		assertControl(render);
@@ -121,6 +126,7 @@ public class BooleanControlRenderer_PTest extends AbstractControl_PTest {
 	}
 
 	@Test
+	@SuppressWarnings("unchecked")
 	public void testDatabindingServiceUsageChangeObservable() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final boolean initialValue = true;
@@ -160,8 +166,9 @@ public class BooleanControlRenderer_PTest extends AbstractControl_PTest {
 		Mockito.reset(getDatabindingService());
 
 		mockDatabindingIsUnsettable();
-		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
-			mockedObservable);
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(
+				mockedObservable);
 
 		final Control renderControl = renderControl(new SWTGridCell(0, 2, getRenderer()));
 		final Button button = (Button) renderControl;
@@ -179,5 +186,17 @@ public class BooleanControlRenderer_PTest extends AbstractControl_PTest {
 	public void testLabelServiceUsage() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
 		NoLabelFoundException {
 		labelServiceUsage();
+	}
+
+	@Test
+	public void testEffectivelyReadOnlyDeactivatesControl()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException {
+		final ObservingWritableValue mockedObservable = new ObservingWritableValue(realm, true, Boolean.class);
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(mockedObservable);
+		when(getvControl().isEffectivelyReadonly()).thenReturn(true);
+		final Control renderControl = renderControl(new SWTGridCell(0, 2, getRenderer()));
+		getRenderer().finalizeRendering(getShell());
+		assertFalse(renderControl.isEnabled());
 	}
 }

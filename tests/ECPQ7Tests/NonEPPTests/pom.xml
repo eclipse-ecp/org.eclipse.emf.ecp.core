@@ -10,7 +10,21 @@
 		<artifactId>q7tests</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-
+	
+	<profiles>
+		<profile>
+			<id>release-build</id>
+			<properties>
+				<currentBuild>${project.basedir}/../../../releng</currentBuild>
+			</properties>
+		</profile>
+		<profile>
+			<id>full-build</id>
+			<properties>
+				<currentBuild>${project.basedir}/../../../releng</currentBuild>
+			</properties>
+		</profile>
+	</profiles>
 	<build>
 		<plugins>
 			<plugin>
@@ -31,6 +45,9 @@
 							<arg>-changeableClass</arg>
 							
 						</args>
+						<vmArgs>
+	                        <vmArg>${failsafeArgline}</vmArg>
+	                    </vmArgs>
 					</aut>
 					<testOptions>
 					    <!-- Timeout for all tests, in seconds -->

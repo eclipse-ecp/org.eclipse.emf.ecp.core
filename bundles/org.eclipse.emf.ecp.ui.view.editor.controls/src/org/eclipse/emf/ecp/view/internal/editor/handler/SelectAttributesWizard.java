@@ -119,7 +119,7 @@ public class SelectAttributesWizard extends Wizard {
 	}
 
 	/**
-	 * @param view
+	 * @param view The VView to use
 	 */
 	protected void setView(VView view) {
 		this.view = view;

@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2017 Christian W. Damus and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Christian W. Damus - initial API and implementation
  */
@@ -43,7 +43,7 @@ public interface IterateCondition extends Condition {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Quantifier</em>' attribute.
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.Quantifier
 	 * @see #setQuantifier(Quantifier)
@@ -58,7 +58,7 @@ public interface IterateCondition extends Condition {
 	 * <em>Quantifier</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Quantifier</em>' attribute.
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.Quantifier
 	 * @see #getQuantifier()
@@ -74,7 +74,7 @@ public interface IterateCondition extends Condition {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>If Empty</em>' attribute.
 	 * @see #setIfEmpty(boolean)
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.RulePackage#getIterateCondition_IfEmpty()
@@ -88,7 +88,7 @@ public interface IterateCondition extends Condition {
 	 * Empty</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>If Empty</em>' attribute.
 	 * @see #isIfEmpty()
 	 * @generated
@@ -103,7 +103,7 @@ public interface IterateCondition extends Condition {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Item Reference</em>' containment reference.
 	 * @see #setItemReference(VDomainModelReference)
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.RulePackage#getIterateCondition_ItemReference()
@@ -117,7 +117,7 @@ public interface IterateCondition extends Condition {
 	 * Reference</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Item Reference</em>' containment reference.
 	 * @see #getItemReference()
 	 * @generated
@@ -132,7 +132,7 @@ public interface IterateCondition extends Condition {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Item Condition</em>' containment reference.
 	 * @see #setItemCondition(Condition)
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.RulePackage#getIterateCondition_ItemCondition()
@@ -146,7 +146,7 @@ public interface IterateCondition extends Condition {
 	 * Condition</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Item Condition</em>' containment reference.
 	 * @see #getItemCondition()
 	 * @generated

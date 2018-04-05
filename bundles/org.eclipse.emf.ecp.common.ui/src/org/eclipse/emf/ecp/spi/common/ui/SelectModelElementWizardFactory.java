@@ -37,9 +37,12 @@ public abstract class SelectModelElementWizardFactory {
 	 * @param elements The elements to be selected
 	 * @param isMany whether multi selection is allowed
 	 * @return The selected elements
+	 *
+	 * @param <T> the type to select
 	 */
-	public static Set<EObject> openModelElementSelectionDialog(
-		final Set<EObject> elements, boolean isMany) {
+	@SuppressWarnings("unchecked")
+	public static <T extends EObject> Set<T> openModelElementSelectionDialog(
+		final Set<T> elements, boolean isMany) {
 
 		final SelectionComposite<TableViewer> tableSelectionComposite = CompositeFactory
 			.getTableSelectionComposite(elements.toArray(), isMany);
@@ -52,9 +55,10 @@ public abstract class SelectModelElementWizardFactory {
 			LocalizationServiceHelper.getString(SelectModelElementWizardFactory.class,
 				MessageKeys.ModelelementSelectionDialog_DialogTitle),
 			LocalizationServiceHelper.getString(SelectModelElementWizardFactory.class,
-				MessageKeys.ModelelementSelectionDialog_DialogMessage_SearchPattern), EObject.class);
+				MessageKeys.ModelelementSelectionDialog_DialogMessage_SearchPattern),
+			EObject.class);
 
-		final HashSet<EObject> selectedElements = new HashSet<EObject>();
+		final HashSet<T> selectedElements = new HashSet<T>();
 		wizard.setCompositeProvider(tableSelectionComposite);
 
 		final WizardDialog wd = new WizardDialog(Display.getDefault().getActiveShell(), wizard);
@@ -67,7 +71,7 @@ public abstract class SelectModelElementWizardFactory {
 
 			for (final Object object : selection) {
 				if (object instanceof EObject) {
-					selectedElements.add((EObject) object);
+					selectedElements.add((T) object);
 				}
 			}
 

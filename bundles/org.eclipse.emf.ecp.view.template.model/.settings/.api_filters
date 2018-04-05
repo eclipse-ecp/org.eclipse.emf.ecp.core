@@ -254,6 +254,60 @@
                 <message_argument value="CONTROL_VALIDATION_TEMPLATE__WARNING_FOREGROUND_COLOR_HEX"/>
             </message_arguments>
         </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model.VTTemplatePackage"/>
+                <message_argument value="MULTI_STYLE_SELECTOR_CONTAINER"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.17.0" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model.VTTemplatePackage"/>
+                <message_argument value="MULTI_STYLE_SELECTOR_CONTAINER_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.17.0" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model.VTTemplatePackage"/>
+                <message_argument value="MULTI_STYLE_SELECTOR_CONTAINER_OPERATION_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.17.0" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model.VTTemplatePackage"/>
+                <message_argument value="MULTI_STYLE_SELECTOR_CONTAINER__SELECTOR"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.17.0" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model.VTTemplatePackage"/>
+                <message_argument value="MULTI_STYLE_SELECTOR_CONTAINER__SELECTORS"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.17.0" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model.VTTemplatePackage"/>
+                <message_argument value="STYLE_SELECTOR_CONTAINER"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.17.0" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model.VTTemplatePackage"/>
+                <message_argument value="STYLE_SELECTOR_CONTAINER_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.17.0" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model.VTTemplatePackage"/>
+                <message_argument value="STYLE_SELECTOR_CONTAINER_OPERATION_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.17.0" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model.VTTemplatePackage"/>
+                <message_argument value="STYLE_SELECTOR_CONTAINER__SELECTOR"/>
+            </message_arguments>
+        </filter>
         <filter comment="spi change" id="403804204">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.template.model.VTTemplatePackage"/>
@@ -282,6 +336,42 @@
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.template.model.VTTemplatePackage"/>
                 <message_argument value="getControlValidationTemplate_WarningForegroundColorHEX()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.17.0" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model.VTTemplatePackage"/>
+                <message_argument value="getMultiStyleSelectorContainer()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.17.0" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model.VTTemplatePackage"/>
+                <message_argument value="getMultiStyleSelectorContainer_Selector()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.17.0" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model.VTTemplatePackage"/>
+                <message_argument value="getMultiStyleSelectorContainer_Selectors()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.17.0" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model.VTTemplatePackage"/>
+                <message_argument value="getStyleSelectorContainer()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.17.0" id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model.VTTemplatePackage"/>
+                <message_argument value="getStyleSelectorContainer_Selector()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.17.0" id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model.VTTemplatePackage"/>
+                <message_argument value="getStyle_Selector()"/>
             </message_arguments>
         </filter>
     </resource>
@@ -314,6 +404,52 @@
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.template.model.VTTemplatePackage.Literals"/>
                 <message_argument value="CONTROL_VALIDATION_TEMPLATE__WARNING_FOREGROUND_COLOR_HEX"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.17.0" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model.VTTemplatePackage.Literals"/>
+                <message_argument value="MULTI_STYLE_SELECTOR_CONTAINER"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.17.0" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model.VTTemplatePackage.Literals"/>
+                <message_argument value="MULTI_STYLE_SELECTOR_CONTAINER__SELECTOR"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.17.0" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model.VTTemplatePackage.Literals"/>
+                <message_argument value="MULTI_STYLE_SELECTOR_CONTAINER__SELECTORS"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.17.0" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model.VTTemplatePackage.Literals"/>
+                <message_argument value="STYLE_SELECTOR_CONTAINER"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.17.0" id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model.VTTemplatePackage.Literals"/>
+                <message_argument value="STYLE_SELECTOR_CONTAINER__SELECTOR"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.17.0" id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.ecp.view.template.model.VTTemplatePackage.Literals"/>
+                <message_argument value="STYLE__SELECTOR"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="STYLE_SELECTOR_CONTAINER"/>
+            </message_arguments>
+        </filter>
+        <filter comment="SPI Change 1.17.0" id="1211105284">
+            <message_arguments>
+                <message_argument value="STYLE_SELECTOR_CONTAINER__SELECTOR"/>
             </message_arguments>
         </filter>
     </resource>

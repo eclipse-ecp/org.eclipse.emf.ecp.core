@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>VFeature Path Domain Model Reference</b></em>'.
- * 
+ *
  * @since 1.2
  *        <!-- end-user-doc -->
  *
@@ -46,7 +46,7 @@ public interface VFeaturePathDomainModelReference extends VDomainModelReference 
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Domain Model EFeature</em>' reference.
 	 * @see #setDomainModelEFeature(EStructuralFeature)
 	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getFeaturePathDomainModelReference_DomainModelEFeature()
@@ -61,7 +61,7 @@ public interface VFeaturePathDomainModelReference extends VDomainModelReference 
 	 * Model EFeature</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Domain Model EFeature</em>' reference.
 	 * @see #getDomainModelEFeature()
 	 * @generated
@@ -77,7 +77,7 @@ public interface VFeaturePathDomainModelReference extends VDomainModelReference 
 	 * more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Domain Model EReference Path</em>' reference list.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getFeaturePathDomainModelReference_DomainModelEReferencePath()
 	 * @model

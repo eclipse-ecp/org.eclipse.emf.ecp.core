@@ -12,6 +12,7 @@
 package org.eclipse.emf.ecp.view.internal.core.swt.renderer;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -24,6 +25,7 @@ import org.eclipse.emf.ecp.view.core.swt.test.model.TestEnum;
 import org.eclipse.emf.ecp.view.core.swt.test.model.TestFactory;
 import org.eclipse.emf.ecp.view.core.swt.test.model.TestPackage;
 import org.eclipse.emf.ecp.view.core.swt.tests.ObservingWritableValue;
+import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
@@ -51,12 +53,13 @@ import org.mockito.Matchers;
  * @author Lucas Koehler
  *
  */
-public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest {
+public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest<VControl> {
 
 	private EMFFormsEditSupport editSupport;
 	private DefaultRealm realm;
 
 	@Before
+	@SuppressWarnings("unchecked")
 	public void before() throws DatabindingFailedException {
 		realm = new DefaultRealm();
 		final ReportService reportService = mock(ReportService.class);
@@ -66,7 +69,8 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest {
 		editSupport = mock(EMFFormsEditSupport.class);
 
 		setup();
-		setRenderer(new EnumComboViewerSWTRenderer(getvControl(), getContext(), reportService, getDatabindingService(), getLabelProvider(),
+		setRenderer(new EnumComboViewerSWTRenderer(getvControl(), getContext(), reportService, getDatabindingService(),
+			getLabelProvider(),
 			getTemplateProvider(), editSupport));
 		getRenderer().init();
 	}
@@ -101,7 +105,7 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest {
 		when(
 			editSupport.getText(any(VDomainModelReference.class), any(EObject.class),
 				Matchers.eq(mockedObservable.getValue())))
-			.thenReturn(mockedObservable.getValue().toString());
+					.thenReturn(mockedObservable.getValue().toString());
 
 		final Combo combo = setUpDatabindingTest(mockedObservable);
 		assertEquals(initialValue.getName(), combo.getText());
@@ -109,6 +113,7 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest {
 	}
 
 	@Test
+	@SuppressWarnings("unchecked")
 	public void testDatabindingServiceUsageChangeObservable() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		final TestEnum initialValue = TestEnum.B;
@@ -118,12 +123,12 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest {
 		when(
 			editSupport.getText(any(VDomainModelReference.class), any(EObject.class),
 				Matchers.same(initialValue)))
-			.thenReturn(initialValue.toString());
+					.thenReturn(initialValue.toString());
 
 		when(
 			editSupport.getText(any(VDomainModelReference.class), any(EObject.class),
 				Matchers.same(changedValue)))
-			.thenReturn(changedValue.toString());
+					.thenReturn(changedValue.toString());
 
 		final Combo combo = setUpDatabindingTest(mockedObservable);
 		mockedObservable.setValue(changedValue);
@@ -157,11 +162,13 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest {
 	 * @throws NoPropertyDescriptorFoundExeption
 	 * @throws DatabindingFailedException
 	 */
+	@SuppressWarnings("unchecked")
 	private Combo setUpDatabindingTest(final ObservingWritableValue mockedObservable) throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, DatabindingFailedException {
 		mockDatabindingIsUnsettable();
-		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
-			mockedObservable);
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(
+				mockedObservable);
 		when(getDatabindingService().getValueProperty(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
 			Properties.selfValue(mockedObservable.getValueType()));
 
@@ -183,5 +190,22 @@ public class EnumComboViewerRenderer_PTest extends AbstractControl_PTest {
 	public void testLabelServiceUsage() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
 		DatabindingFailedException, NoLabelFoundException {
 		labelServiceUsage();
+	}
+
+	@Test
+	@SuppressWarnings("unchecked")
+	public void testEffectivelyReadOnlyDeactivatesControl()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, DatabindingFailedException {
+		final ObservingWritableValue mockedObservable = new ObservingWritableValue(realm, TestEnum.B,
+			TestPackage.eINSTANCE.getSimpleTestObject_MyEnum());
+		when(getDatabindingService().getObservableValue(any(VDomainModelReference.class), any(EObject.class)))
+			.thenReturn(mockedObservable);
+		when(getDatabindingService().getValueProperty(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+			Properties.selfValue(mockedObservable.getValueType()));
+
+		when(getvControl().isEffectivelyReadonly()).thenReturn(true);
+		final Control renderControl = renderControl(new SWTGridCell(0, 2, getRenderer()));
+		getRenderer().finalizeRendering(getShell());
+		assertFalse(renderControl.isEnabled());
 	}
 }

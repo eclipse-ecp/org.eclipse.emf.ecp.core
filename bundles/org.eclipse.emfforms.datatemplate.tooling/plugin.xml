@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="org.eclipse.emfforms.spi.editor.GenericEditor"
+            default="true"
+            extensions="datatemplate"
+            icon="icons/Template.gif"
+            id="org.eclipse.emfforms.datatemplate.tooling.editor1"
+            name="DataTemplate Model Editor">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            category="org.eclipse.emf.ecp.view.ide"
+            class="org.eclipse.emfforms.internal.datatemplate.tooling.wizard.NewDataTemplateWizard"
+            icon="icons/Add_Template.gif"
+            id="org.eclipse.emfforms.datatemplate.tooling.wizard1"
+            name="DataTemplate">
+      </wizard>
+   </extension>
+
+</plugin>

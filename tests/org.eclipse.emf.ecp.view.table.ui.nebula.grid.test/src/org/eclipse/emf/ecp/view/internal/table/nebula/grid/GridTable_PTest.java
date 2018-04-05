@@ -53,11 +53,11 @@ import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.table.model.DetailEditing;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
-import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
 import org.eclipse.emf.ecp.view.spi.table.nebula.grid.GridControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.table.swt.TableControlSWTRenderer;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
-import org.eclipse.emf.ecp.view.table.ui.swt.test.TableControlHandle;
+import org.eclipse.emf.ecp.view.table.test.common.TableControlHandle;
+import org.eclipse.emf.ecp.view.table.test.common.TableTestUtil;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.DatabindingClassRunner;
 import org.eclipse.emf.ecp.view.test.common.swt.spi.SWTTestUtil;
@@ -149,7 +149,7 @@ public class GridTable_PTest {
 	public void testUninitializedTableWithoutColumns() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
 		// setup model
-		final TableControlHandle handle = createUninitializedTableWithoutColumns();
+		final TableControlHandle handle = TableTestUtil.createUninitializedTableWithoutColumns();
 		//
 		final Control render = SWTViewTestHelper.render(handle.getTableControl(), domainElement, shell);
 		assertTrue(Label.class.isInstance(render));// Error label with error text
@@ -164,7 +164,7 @@ public class GridTable_PTest {
 		final EClass createEClass = EcoreFactory.eINSTANCE.createEClass();
 		createEClass.eUnset(EcorePackage.eINSTANCE.getEClass_ESuperTypes());
 		domainElement = createEClass;
-		final TableControlHandle handle = createInitializedTableWithoutTableColumns();
+		final TableControlHandle handle = TableTestUtil.createInitializedTableWithoutTableColumns();
 
 		try {
 			SWTViewTestHelper.render(handle.getTableControl(), domainElement, shell);
@@ -182,7 +182,7 @@ public class GridTable_PTest {
 		final VView view = VViewFactory.eINSTANCE.createView();
 		view.setRootEClass(VViewPackage.eINSTANCE.getView());
 		domainElement = view;
-		final TableControlHandle handle = createInitializedTableWithoutTableColumns();
+		final TableControlHandle handle = TableTestUtil.createInitializedTableWithoutTableColumns();
 		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
 			.createFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(VViewPackage.eINSTANCE.getView_RootEClass());
@@ -204,7 +204,7 @@ public class GridTable_PTest {
 		// setup model
 		final VView view = VViewFactory.eINSTANCE.createView();
 		domainElement = view;
-		final TableControlHandle handle = createInitializedTableWithoutTableColumns();
+		final TableControlHandle handle = TableTestUtil.createInitializedTableWithoutTableColumns();
 		final VFeaturePathDomainModelReference domainModelReference = VViewFactory.eINSTANCE
 			.createFeaturePathDomainModelReference();
 		domainModelReference.setDomainModelEFeature(VViewPackage.eINSTANCE.getView_RootEClass());
@@ -222,7 +222,7 @@ public class GridTable_PTest {
 	public void testTableWithoutColumns() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption,
 		EMFFormsNoRendererException {
 		// setup model
-		final TableControlHandle handle = createInitializedTableWithoutTableColumns();
+		final TableControlHandle handle = TableTestUtil.createInitializedTableWithoutTableColumns();
 
 		final Control render = SWTViewTestHelper.render(handle.getTableControl(), domainElement, shell);
 		assertTrue(render instanceof Composite);
@@ -240,7 +240,7 @@ public class GridTable_PTest {
 	@Test
 	public void testTableWithoutColumnsWithoutViewServices() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
-		final TableControlHandle handle = createInitializedTableWithoutTableColumns();
+		final TableControlHandle handle = TableTestUtil.createInitializedTableWithoutTableColumns();
 		final AbstractSWTRenderer<VElement> tableRenderer = rendererFactory.getRendererInstance(
 			handle.getTableControl(),
 			new ViewModelContextWithoutServices(handle.getTableControl()));
@@ -416,7 +416,7 @@ public class GridTable_PTest {
 		((EClass) domainElement).getESuperTypes().add(class3);
 
 		// table control
-		final VTableControl tableControl = createTableControl();
+		final VTableControl tableControl = TableTestUtil.createTableControl();
 		final VTableDomainModelReference tableDMR = (VTableDomainModelReference) tableControl.getDomainModelReference();
 		tableDMR.setDomainModelEFeature(EcorePackage.eINSTANCE.getEClass_ESuperTypes());
 		tableDMR.getColumnDomainModelReferences().add(createDMR(EcorePackage.eINSTANCE.getENamedElement_Name()));
@@ -478,7 +478,7 @@ public class GridTable_PTest {
 		((EClass) domainElement).getESuperTypes().add(class3);
 
 		// table control
-		final VTableControl tableControl = createTableControl();
+		final VTableControl tableControl = TableTestUtil.createTableControl();
 		final VTableDomainModelReference tableDMR = (VTableDomainModelReference) tableControl.getDomainModelReference();
 		tableDMR.setDomainModelEFeature(EcorePackage.eINSTANCE.getEClass_ESuperTypes());
 		tableDMR.getColumnDomainModelReferences().add(createDMR(EcorePackage.eINSTANCE.getENamedElement_Name()));
@@ -605,44 +605,15 @@ public class GridTable_PTest {
 	}
 
 	private static TableControlHandle createTableWithTwoTableColumns() {
-		final TableControlHandle tableControlHandle = createInitializedTableWithoutTableColumns();
-		final VDomainModelReference tableColumn1 = createTableColumn(EcorePackage.eINSTANCE.getEClass_Abstract());
+		final TableControlHandle tableControlHandle = TableTestUtil.createInitializedTableWithoutTableColumns();
+		final VDomainModelReference tableColumn1 = TableTestUtil
+			.createTableColumn(EcorePackage.eINSTANCE.getEClass_Abstract());
 
 		tableControlHandle.addFirstTableColumn(tableColumn1);
-		final VDomainModelReference tableColumn2 = createTableColumn(EcorePackage.eINSTANCE.getEClass_Abstract());
+		final VDomainModelReference tableColumn2 = TableTestUtil
+			.createTableColumn(EcorePackage.eINSTANCE.getEClass_Abstract());
 		tableControlHandle.addSecondTableColumn(tableColumn2);
 		return tableControlHandle;
-	}
-
-	public static VDomainModelReference createTableColumn(EStructuralFeature feature) {
-		final VFeaturePathDomainModelReference reference = VViewFactory.eINSTANCE
-			.createFeaturePathDomainModelReference();
-		reference.setDomainModelEFeature(feature);
-		return reference;
-	}
-
-	public static TableControlHandle createInitializedTableWithoutTableColumns() {
-		final TableControlHandle tableControlHandle = createUninitializedTableWithoutColumns();
-		final VFeaturePathDomainModelReference domainModelReference = VTableFactory.eINSTANCE
-			.createTableDomainModelReference();
-		domainModelReference.setDomainModelEFeature(EcorePackage.eINSTANCE.getEClass_ESuperTypes());
-		tableControlHandle.getTableControl().setDomainModelReference(domainModelReference);
-
-		return tableControlHandle;
-	}
-
-	public static TableControlHandle createUninitializedTableWithoutColumns() {
-		final VTableControl tableControl = createTableControl();
-		return new TableControlHandle(tableControl);
-	}
-
-	/**
-	 * @return
-	 */
-	private static VTableControl createTableControl() {
-		final VTableControl tc = VTableFactory.eINSTANCE.createTableControl();
-		tc.setDomainModelReference(VTableFactory.eINSTANCE.createTableDomainModelReference());
-		return tc;
 	}
 
 	private GridTableViewer getTableViewerFromRenderer(AbstractSWTRenderer<VElement> renderer) {

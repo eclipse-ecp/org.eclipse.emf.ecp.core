@@ -11,6 +11,8 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.emf2web.ui.wizard;
 
+import java.io.File;
+
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.PojoProperties;
@@ -26,7 +28,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.ui.dialogs.WorkspaceResourceDialog;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecp.emf2web.controller.GenerationInfo;
+import org.eclipse.emf.ecp.emf2web.controller.xtend.GenerationInfo;
 import org.eclipse.emf.ecp.emf2web.ui.messages.Messages;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.wizard.WizardPageSupport;
@@ -190,7 +192,7 @@ public class SelectLocationPage extends WizardPage {
 	 * Indicates if this page was already shown to the user.
 	 *
 	 * @return
-	 *         {@code true} if this page was already shown to the user, {@code false} if this page was never shown to
+	 * 		{@code true} if this page was already shown to the user, {@code false} if this page was never shown to
 	 *         the user.
 	 */
 	public boolean wasAlreadyVisible() {
@@ -213,14 +215,14 @@ public class SelectLocationPage extends WizardPage {
 			// preselect if file exists in workspace
 			if (generationInfo.getLocation() != null && generationInfo.getLocation().isPlatform()) {
 				final IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-				final IResource resource = root.findMember(generationInfo.getLocation().toPlatformString(true));
+				final IResource resource = root
+					.findMember(generationInfo.getLocation().trimSegments(1).toPlatformString(true));
 				if (resource != null && resource.isAccessible()) {
-					if (resource instanceof IContainer) {
-						dialog.setInitialSelection(resource);
-					} else {
-						dialog.setInitialSelection(resource.getParent());
-						dialog.setFileText(resource.getName());
-					}
+					dialog.setInitialSelection(resource);
+					final int segment = generationInfo.getLocation().segmentCount() > 0
+						? generationInfo.getLocation().segmentCount() - 1
+						: 0;
+					dialog.setFileText(generationInfo.getLocation().segment(segment));
 				}
 			}
 
@@ -241,6 +243,15 @@ public class SelectLocationPage extends WizardPage {
 		@Override
 		public void widgetSelected(final SelectionEvent e) {
 			final FileDialog fileDialog = new FileDialog(getShell(), SWT.SINGLE | SWT.SAVE);
+			// preselect if proposal is not in workspace
+			if (generationInfo.getLocation() != null && !generationInfo.getLocation().isPlatform()) {
+				final File file = new File(generationInfo.getLocation().toFileString());
+				final File parent = file.getParentFile();
+				if (parent != null && parent.exists()) {
+					fileDialog.setFilterPath(parent.getAbsolutePath());
+				}
+				fileDialog.setFileName(file.getName());
+			}
 			final String result = fileDialog.open();
 			if (result != null) {
 				final URI newLocation = URI.createFileURI(result);
@@ -270,6 +281,27 @@ public class SelectLocationPage extends WizardPage {
 			if (value == null) {
 				requiredLocationDecoration.show();
 				return ValidationStatus.error(Messages.getString("SelectLocationPage.LocationError")); //$NON-NLS-1$
+			}
+			if (URI.class.isInstance(value)) {
+				final URI uri = URI.class.cast(value);
+				if (uri.isPlatform()) {
+					final IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+					final IResource resource = root.findMember(uri.toPlatformString(true));
+					if (IContainer.class.isInstance(resource)) {
+						requiredLocationDecoration.show();
+						return ValidationStatus.error(Messages.getString("SelectLocationPage.LocationDirectoryError")); //$NON-NLS-1$
+					}
+				} else {
+					if (uri.toFileString() == null) {
+						requiredLocationDecoration.show();
+						return ValidationStatus.error(Messages.getString("SelectLocationPage.LocationValidError")); //$NON-NLS-1$
+					}
+					final File file = new File(uri.toFileString());
+					if (file.isDirectory()) {
+						requiredLocationDecoration.show();
+						return ValidationStatus.error(Messages.getString("SelectLocationPage.LocationDirectoryError")); //$NON-NLS-1$
+					}
+				}
 			}
 			requiredLocationDecoration.hide();
 			return ValidationStatus.ok();

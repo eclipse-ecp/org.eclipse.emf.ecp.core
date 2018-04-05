@@ -79,6 +79,7 @@ import org.eclipse.emf.edit.ui.dnd.LocalTransfer;
 import org.eclipse.emf.edit.ui.dnd.ViewerDragAdapter;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.emfforms.common.Optional;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer;
 import org.eclipse.emfforms.spi.swt.core.layout.GridDescriptionFactory;
@@ -135,6 +136,8 @@ import org.osgi.framework.FrameworkUtil;
  */
 @SuppressWarnings("deprecation")
 public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMasterDetail> {
+
+	private static final String ENABLE_MULTI_EDIT = "enableMultiEdit"; //$NON-NLS-1$
 
 	/**
 	 * Default Constructor.
@@ -206,6 +209,9 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 		@Override
 		public void menuAboutToShow(IMenuManager manager) {
+			if (getVElement().isEffectivelyReadonly() || !getVElement().isEffectivelyEnabled()) {
+				return;
+			}
 			if (treeViewer.getSelection().isEmpty()) {
 				fillMenu(null, manager);
 				return;
@@ -272,7 +278,9 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 			getViewModelContext().unregisterDomainChangeListener(domainModelListener);
 		}
 		domainModelListener = null;
-		treeViewer.setInput(null);
+		if (treeViewer != null) {
+			treeViewer.setInput(null);
+		}
 		super.dispose();
 	}
 
@@ -886,13 +894,18 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 					final ReferenceService referenceService = getViewModelContext().getService(
 						ReferenceService.class);
 					ViewModelContext childContext;
-					if (getViewModelContext().getContextValue("enableMultiEdit") == Boolean.TRUE) {
+					if (getViewModelContext().getContextValue(ENABLE_MULTI_EDIT) == Boolean.TRUE) {
 						childContext = ViewModelContextFactory.INSTANCE.createViewModelContext(view, (EObject) selected,
 							new TreeMasterDetailReferenceService(referenceService));
 					} else {
 						childContext = getViewModelContext().getChildContext((EObject) selected,
 							getVElement(), view, new TreeMasterDetailReferenceService(referenceService));
 					}
+					childContext.getViewModel().setReadonly(
+						childContext.getViewModel().isEffectivelyReadonly() || getVElement().isEffectivelyReadonly());
+					childContext.getViewModel().setEnabled(
+						childContext.getViewModel().isEffectivelyEnabled() && getVElement().isEffectivelyEnabled());
+					// visible does not make any sense
 
 					manipulateViewContext(childContext);
 					ECPSWTViewRenderer.INSTANCE.render(childComposite, childContext);
@@ -912,7 +925,7 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 		private Object getSelection(IStructuredSelection selection) {
 			Object treeSelected = selection != null ? selection.getFirstElement() : null;
-			if (getViewModelContext().getContextValue("enableMultiEdit") == Boolean.TRUE
+			if (getViewModelContext().getContextValue(ENABLE_MULTI_EDIT) == Boolean.TRUE
 				&& treeSelected instanceof EObject && selection.size() > 1) {
 				boolean allOfSameType = true;
 				final EObject dummy = EcoreUtil.create(((EObject) treeSelected).eClass());
@@ -1068,6 +1081,11 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 
 	}
 
+	@Override
+	protected void applyEnable() {
+		treeViewer.setSelection(new StructuredSelection(treeViewer.getStructuredSelection().getFirstElement()));
+	}
+
 	/**
 	 * {@inheritDoc}
 	 *
@@ -1180,10 +1198,21 @@ public class TreeMasterDetailSWTRenderer extends AbstractSWTRenderer<VTreeMaster
 		 */
 		@Override
 		public void addNewModelElements(EObject eObject, EReference eReference) {
+			addNewModelElements(eObject, eReference, true);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 *
+		 * @see org.eclipse.emf.ecp.edit.spi.ReferenceService#addNewModelElements(org.eclipse.emf.ecore.EObject,
+		 *      org.eclipse.emf.ecore.EReference)
+		 */
+		@Override
+		public Optional<EObject> addNewModelElements(EObject eObject, EReference eReference, boolean openInNewContext) {
 			if (delegate == null) {
-				return;
+				return Optional.empty();
 			}
-			delegate.addNewModelElements(eObject, eReference);
+			return delegate.addNewModelElements(eObject, eReference, openInNewContext);
 		}
 
 		/**

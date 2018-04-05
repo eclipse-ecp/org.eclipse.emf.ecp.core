@@ -605,7 +605,11 @@ public class TreeMasterDetailComposite extends Composite implements IEditingDoma
 				final ViewModelContext modelContext = ViewModelContextFactory.INSTANCE
 					.createViewModelContext(
 						view, eObject, customization.getViewModelServices(view, eObject));
+				if (limbo.isDisposed()) {
+					return;
+				}
 				renderedView = ECPSWTViewRenderer.INSTANCE.render(limbo, modelContext);
+
 				label.dispose();
 				if (detailPanel.isDisposed()) {
 					return;

@@ -166,6 +166,9 @@ public class NotConditionItemProvider extends ConditionItemProvider {
 
 		newChildDescriptors.add(createChildParameter(RulePackage.Literals.NOT_CONDITION__CONDITION,
 			RuleFactory.eINSTANCE.createNotCondition()));
+
+		newChildDescriptors.add(createChildParameter(RulePackage.Literals.NOT_CONDITION__CONDITION,
+			RuleFactory.eINSTANCE.createIsProxyCondition()));
 	}
 
 }

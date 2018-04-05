@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+ Copyright Text	Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others....
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated datatemplate -->
+      <package
+            uri="http://org/eclipse/emfforms/datatemplate/model"
+            class="org.eclipse.emfforms.datatemplate.DataTemplatePackage"
+            genModel="model/datatemplate.genmodel"/>
+   </extension>
+
+</plugin>

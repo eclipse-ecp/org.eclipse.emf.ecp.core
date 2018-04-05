@@ -9,12 +9,6 @@
                testClass="org.eclipse.emf.ecp.view.keyattributedmr.tooling.FeaturePathDMRReferenceTester">
          </dynamicTest>
       </renderer>
-      <renderer
-            renderer="org.eclipse.emf.ecp.view.keyattributedmr.tooling.KeyValueControlRenderer">
-         <dynamicTest
-               testClass="org.eclipse.emf.ecp.view.keyattributedmr.tooling.KeyValueControlTester">
-         </dynamicTest>
-      </renderer>
    </extension>
 
 </plugin>

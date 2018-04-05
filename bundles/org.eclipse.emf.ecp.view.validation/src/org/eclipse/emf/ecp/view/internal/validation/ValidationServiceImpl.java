@@ -240,6 +240,9 @@ public class ValidationServiceImpl implements ValidationService, EMFFormsContext
 		 * @return {@code true} if the given notification should be ignored, {@code false} otherwise.
 		 */
 		private boolean isIgnore(ModelChangeNotification notification) {
+			if (notification.getRawNotification().isTouch()) {
+				return true;
+			}
 			final int eventType = notification.getRawNotification().getEventType();
 			if (eventType == Notification.REMOVING_ADAPTER) {
 				return true;

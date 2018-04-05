@@ -12,15 +12,8 @@
 		<rcptt-maven-version>2.2.0</rcptt-maven-version>
 		<build_job>ecp-develop-nightly</build_job>
 		<currentBuild>https://hudson.eclipse.org/ecp/job/${build_job}/lastSuccessfulBuild/artifact/releng/</currentBuild>
+		<jacoco-version>0.7.9</jacoco-version>
 	</properties> 
-	<profiles>
-		<profile>
-			<id>release-build</id>
-			<properties>
-				<build_job>ecp-relaeseBranch</build_job>
-			</properties>
-		</profile>
-	</profiles>
 
 	<pluginRepositories>
 		<pluginRepository>
@@ -43,4 +36,27 @@
 		<module>NonEPPTests</module>
 	</modules>
 	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${jacoco-version}</version>
+				<executions>
+					<execution>
+						<id>init-agent-rcptt</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+						<!-- crap URL to be possible to generate report (impossible otherwise 
+							to find the report if generated in this project) -->
+						<configuration>
+							<destFile>${project.basedir}/target/jacoco-rcptt.exec</destFile>
+							<propertyName>failsafeArgline</propertyName>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>

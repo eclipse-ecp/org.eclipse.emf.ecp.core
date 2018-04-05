@@ -48,8 +48,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  * @generated
  */
 public class TemplateItemProviderAdapterFactory extends TemplateAdapterFactory implements ComposeableAdapterFactory,
-	IChangeNotifier, IDisposable, IChildCreationExtender
-{
+	IChangeNotifier, IDisposable, IChildCreationExtender {
 	/**
 	 * This keeps track of the root adapter factory that delegates to this adapter factory.
 	 * <!-- begin-user-doc -->
@@ -94,8 +93,7 @@ public class TemplateItemProviderAdapterFactory extends TemplateAdapterFactory i
 	 *
 	 * @generated
 	 */
-	public TemplateItemProviderAdapterFactory()
-	{
+	public TemplateItemProviderAdapterFactory() {
 		supportedTypes.add(IEditingDomainItemProvider.class);
 		supportedTypes.add(IStructuredItemContentProvider.class);
 		supportedTypes.add(ITreeItemContentProvider.class);
@@ -121,10 +119,8 @@ public class TemplateItemProviderAdapterFactory extends TemplateAdapterFactory i
 	 * @generated
 	 */
 	@Override
-	public Adapter createViewTemplateAdapter()
-	{
-		if (viewTemplateItemProvider == null)
-		{
+	public Adapter createViewTemplateAdapter() {
+		if (viewTemplateItemProvider == null) {
 			viewTemplateItemProvider = new ViewTemplateItemProvider(this);
 		}
 
@@ -149,10 +145,8 @@ public class TemplateItemProviderAdapterFactory extends TemplateAdapterFactory i
 	 * @generated
 	 */
 	@Override
-	public Adapter createControlValidationTemplateAdapter()
-	{
-		if (controlValidationTemplateItemProvider == null)
-		{
+	public Adapter createControlValidationTemplateAdapter() {
+		if (controlValidationTemplateItemProvider == null) {
 			controlValidationTemplateItemProvider = new ControlValidationTemplateItemProvider(this);
 		}
 
@@ -177,10 +171,8 @@ public class TemplateItemProviderAdapterFactory extends TemplateAdapterFactory i
 	 * @generated
 	 */
 	@Override
-	public Adapter createStyleAdapter()
-	{
-		if (styleItemProvider == null)
-		{
+	public Adapter createStyleAdapter() {
+		if (styleItemProvider == null) {
 			styleItemProvider = new StyleItemProvider(this);
 		}
 
@@ -195,8 +187,7 @@ public class TemplateItemProviderAdapterFactory extends TemplateAdapterFactory i
 	 * @generated
 	 */
 	@Override
-	public ComposeableAdapterFactory getRootAdapterFactory()
-	{
+	public ComposeableAdapterFactory getRootAdapterFactory() {
 		return parentAdapterFactory == null ? this : parentAdapterFactory.getRootAdapterFactory();
 	}
 
@@ -208,8 +199,7 @@ public class TemplateItemProviderAdapterFactory extends TemplateAdapterFactory i
 	 * @generated
 	 */
 	@Override
-	public void setParentAdapterFactory(ComposedAdapterFactory parentAdapterFactory)
-	{
+	public void setParentAdapterFactory(ComposedAdapterFactory parentAdapterFactory) {
 		this.parentAdapterFactory = parentAdapterFactory;
 	}
 
@@ -220,8 +210,7 @@ public class TemplateItemProviderAdapterFactory extends TemplateAdapterFactory i
 	 * @generated
 	 */
 	@Override
-	public boolean isFactoryForType(Object type)
-	{
+	public boolean isFactoryForType(Object type) {
 		return supportedTypes.contains(type) || super.isFactoryForType(type);
 	}
 
@@ -233,8 +222,7 @@ public class TemplateItemProviderAdapterFactory extends TemplateAdapterFactory i
 	 * @generated
 	 */
 	@Override
-	public Adapter adapt(Notifier notifier, Object type)
-	{
+	public Adapter adapt(Notifier notifier, Object type) {
 		return super.adapt(notifier, this);
 	}
 
@@ -245,13 +233,10 @@ public class TemplateItemProviderAdapterFactory extends TemplateAdapterFactory i
 	 * @generated
 	 */
 	@Override
-	public Object adapt(Object object, Object type)
-	{
-		if (isFactoryForType(type))
-		{
+	public Object adapt(Object object, Object type) {
+		if (isFactoryForType(type)) {
 			final Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter))
-			{
+			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter)) {
 				return adapter;
 			}
 		}
@@ -265,8 +250,7 @@ public class TemplateItemProviderAdapterFactory extends TemplateAdapterFactory i
 	 *
 	 * @generated
 	 */
-	public List<IChildCreationExtender> getChildCreationExtenders()
-	{
+	public List<IChildCreationExtender> getChildCreationExtenders() {
 		return childCreationExtenderManager.getChildCreationExtenders();
 	}
 
@@ -277,8 +261,7 @@ public class TemplateItemProviderAdapterFactory extends TemplateAdapterFactory i
 	 * @generated
 	 */
 	@Override
-	public Collection<?> getNewChildDescriptors(Object object, EditingDomain editingDomain)
-	{
+	public Collection<?> getNewChildDescriptors(Object object, EditingDomain editingDomain) {
 		return childCreationExtenderManager.getNewChildDescriptors(object, editingDomain);
 	}
 
@@ -289,8 +272,7 @@ public class TemplateItemProviderAdapterFactory extends TemplateAdapterFactory i
 	 * @generated
 	 */
 	@Override
-	public ResourceLocator getResourceLocator()
-	{
+	public ResourceLocator getResourceLocator() {
 		return childCreationExtenderManager;
 	}
 
@@ -302,8 +284,7 @@ public class TemplateItemProviderAdapterFactory extends TemplateAdapterFactory i
 	 * @generated
 	 */
 	@Override
-	public void addListener(INotifyChangedListener notifyChangedListener)
-	{
+	public void addListener(INotifyChangedListener notifyChangedListener) {
 		changeNotifier.addListener(notifyChangedListener);
 	}
 
@@ -315,8 +296,7 @@ public class TemplateItemProviderAdapterFactory extends TemplateAdapterFactory i
 	 * @generated
 	 */
 	@Override
-	public void removeListener(INotifyChangedListener notifyChangedListener)
-	{
+	public void removeListener(INotifyChangedListener notifyChangedListener) {
 		changeNotifier.removeListener(notifyChangedListener);
 	}
 
@@ -328,12 +308,10 @@ public class TemplateItemProviderAdapterFactory extends TemplateAdapterFactory i
 	 * @generated
 	 */
 	@Override
-	public void fireNotifyChanged(Notification notification)
-	{
+	public void fireNotifyChanged(Notification notification) {
 		changeNotifier.fireNotifyChanged(notification);
 
-		if (parentAdapterFactory != null)
-		{
+		if (parentAdapterFactory != null) {
 			parentAdapterFactory.fireNotifyChanged(notification);
 		}
 	}
@@ -346,8 +324,7 @@ public class TemplateItemProviderAdapterFactory extends TemplateAdapterFactory i
 	 * @generated
 	 */
 	@Override
-	public void dispose()
-	{
+	public void dispose() {
 		if (viewTemplateItemProvider != null) {
 			viewTemplateItemProvider.dispose();
 		}

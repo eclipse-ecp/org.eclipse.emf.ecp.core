@@ -11,6 +11,9 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.emf2web.json.util;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecp.emf2web.util.AbstractReferenceHelper;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
@@ -27,7 +30,7 @@ public class ReferenceHelperImpl extends AbstractReferenceHelper {
 	private static final String SEPARATOR = "/"; //$NON-NLS-1$
 	private static final String PROPERTIES = "properties"; //$NON-NLS-1$
 	private static final String ITEMS = "items"; //$NON-NLS-1$
-	private String ecorePath;
+	private final Set<String> ecorePaths = new LinkedHashSet<String>();
 
 	@Override
 	public String getStringRepresentation(VDomainModelReference reference) {
@@ -69,21 +72,16 @@ public class ReferenceHelperImpl extends AbstractReferenceHelper {
 	}
 
 	/**
-	 * Allows to set the ecore path to the current view model.
-	 * 
+	 * Allows to add an ecore path to the current view model.
+	 *
 	 * @param ecorePath The path to the ecore of the current view model
 	 */
-	public void setEcorePath(String ecorePath) {
-		this.ecorePath = ecorePath;
+	public void addEcorePath(String ecorePath) {
+		ecorePaths.add(ecorePath);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.emf2web.util.AbstractReferenceHelper#getEcorePath()
-	 */
 	@Override
-	protected String getEcorePath() {
-		return ecorePath;
+	protected Set<String> getEcorePaths() {
+		return ecorePaths;
 	}
 }

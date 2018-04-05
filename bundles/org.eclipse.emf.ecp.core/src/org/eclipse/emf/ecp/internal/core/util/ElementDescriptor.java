@@ -110,7 +110,7 @@ public abstract class ElementDescriptor<ELEMENT extends ECPElement> extends Elem
 
 					resolvedElement(resolvedElement);
 				} catch (final Throwable t) {
-					throw new Error("Unable to resolve " + this, t);
+					throw new Error("Unable to resolve " + this, t); //$NON-NLS-1$
 				}
 
 				resolved = true;

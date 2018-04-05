@@ -22,8 +22,7 @@ import org.eclipse.emf.ecore.EFactory;
  * @see org.eclipse.emf.ecp.view.template.model.VTTemplatePackage
  * @generated
  */
-public interface VTTemplateFactory extends EFactory
-{
+public interface VTTemplateFactory extends EFactory {
 	/**
 	 * The singleton instance of the factory.
 	 * <!-- begin-user-doc -->

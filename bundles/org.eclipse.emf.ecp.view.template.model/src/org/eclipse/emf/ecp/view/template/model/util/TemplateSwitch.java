@@ -15,9 +15,11 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
 import org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate;
+import org.eclipse.emf.ecp.view.template.model.VTMultiStyleSelectorContainer;
 import org.eclipse.emf.ecp.view.template.model.VTStyle;
 import org.eclipse.emf.ecp.view.template.model.VTStyleProperty;
 import org.eclipse.emf.ecp.view.template.model.VTStyleSelector;
+import org.eclipse.emf.ecp.view.template.model.VTStyleSelectorContainer;
 import org.eclipse.emf.ecp.view.template.model.VTTemplatePackage;
 import org.eclipse.emf.ecp.view.template.model.VTViewTemplate;
 
@@ -35,8 +37,7 @@ import org.eclipse.emf.ecp.view.template.model.VTViewTemplate;
  * @see org.eclipse.emf.ecp.view.template.model.VTTemplatePackage
  * @generated
  */
-public class TemplateSwitch<T> extends Switch<T>
-{
+public class TemplateSwitch<T> extends Switch<T> {
 	/**
 	 * The cached model package
 	 * <!-- begin-user-doc -->
@@ -53,10 +54,8 @@ public class TemplateSwitch<T> extends Switch<T>
 	 *
 	 * @generated
 	 */
-	public TemplateSwitch()
-	{
-		if (modelPackage == null)
-		{
+	public TemplateSwitch() {
+		if (modelPackage == null) {
 			modelPackage = VTTemplatePackage.eINSTANCE;
 		}
 	}
@@ -66,13 +65,12 @@ public class TemplateSwitch<T> extends Switch<T>
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
-	 * @parameter ePackage the package in question.
+	 * @param ePackage the package in question.
 	 * @return whether this is a switch for the given package.
 	 * @generated
 	 */
 	@Override
-	protected boolean isSwitchFor(EPackage ePackage)
-	{
+	protected boolean isSwitchFor(EPackage ePackage) {
 		return ePackage == modelPackage;
 	}
 
@@ -86,10 +84,8 @@ public class TemplateSwitch<T> extends Switch<T>
 	 * @generated
 	 */
 	@Override
-	protected T doSwitch(int classifierID, EObject theEObject)
-	{
-		switch (classifierID)
-		{
+	protected T doSwitch(int classifierID, EObject theEObject) {
+		switch (classifierID) {
 		case VTTemplatePackage.VIEW_TEMPLATE: {
 			final VTViewTemplate viewTemplate = (VTViewTemplate) theEObject;
 			T result = caseViewTemplate(viewTemplate);
@@ -110,6 +106,9 @@ public class TemplateSwitch<T> extends Switch<T>
 			final VTStyle style = (VTStyle) theEObject;
 			T result = caseStyle(style);
 			if (result == null) {
+				result = caseStyleSelectorContainer(style);
+			}
+			if (result == null) {
 				result = defaultCase(theEObject);
 			}
 			return result;
@@ -125,6 +124,22 @@ public class TemplateSwitch<T> extends Switch<T>
 		case VTTemplatePackage.STYLE_SELECTOR: {
 			final VTStyleSelector styleSelector = (VTStyleSelector) theEObject;
 			T result = caseStyleSelector(styleSelector);
+			if (result == null) {
+				result = defaultCase(theEObject);
+			}
+			return result;
+		}
+		case VTTemplatePackage.STYLE_SELECTOR_CONTAINER: {
+			final VTStyleSelectorContainer styleSelectorContainer = (VTStyleSelectorContainer) theEObject;
+			T result = caseStyleSelectorContainer(styleSelectorContainer);
+			if (result == null) {
+				result = defaultCase(theEObject);
+			}
+			return result;
+		}
+		case VTTemplatePackage.MULTI_STYLE_SELECTOR_CONTAINER: {
+			final VTMultiStyleSelectorContainer multiStyleSelectorContainer = (VTMultiStyleSelectorContainer) theEObject;
+			T result = caseMultiStyleSelectorContainer(multiStyleSelectorContainer);
 			if (result == null) {
 				result = defaultCase(theEObject);
 			}
@@ -147,8 +162,7 @@ public class TemplateSwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseViewTemplate(VTViewTemplate object)
-	{
+	public T caseViewTemplate(VTViewTemplate object) {
 		return null;
 	}
 
@@ -164,8 +178,7 @@ public class TemplateSwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseControlValidationTemplate(VTControlValidationTemplate object)
-	{
+	public T caseControlValidationTemplate(VTControlValidationTemplate object) {
 		return null;
 	}
 
@@ -181,8 +194,7 @@ public class TemplateSwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseStyle(VTStyle object)
-	{
+	public T caseStyle(VTStyle object) {
 		return null;
 	}
 
@@ -198,8 +210,7 @@ public class TemplateSwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseStyleProperty(VTStyleProperty object)
-	{
+	public T caseStyleProperty(VTStyleProperty object) {
 		return null;
 	}
 
@@ -215,8 +226,39 @@ public class TemplateSwitch<T> extends Switch<T>
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseStyleSelector(VTStyleSelector object)
-	{
+	public T caseStyleSelector(VTStyleSelector object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Style Selector Container</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 *
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Style Selector Container</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseStyleSelectorContainer(VTStyleSelectorContainer object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Multi Style Selector Container</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 *
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Multi Style Selector Container</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseMultiStyleSelectorContainer(VTMultiStyleSelectorContainer object) {
 		return null;
 	}
 
@@ -233,8 +275,7 @@ public class TemplateSwitch<T> extends Switch<T>
 	 * @generated
 	 */
 	@Override
-	public T defaultCase(EObject object)
-	{
+	public T defaultCase(EObject object) {
 		return null;
 	}
 

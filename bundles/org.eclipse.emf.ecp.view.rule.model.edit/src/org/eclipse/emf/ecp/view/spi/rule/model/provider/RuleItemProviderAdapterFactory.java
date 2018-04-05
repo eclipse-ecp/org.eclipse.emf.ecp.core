@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,7 +8,7 @@
  *
  * Contributors:
  * EclipseSource Munich GmbH - initial API and implementation
- * Christian W. Damus - bug 527753
+ * Christian W. Damus - bugs 527753, 530900
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.rule.model.provider;
 
@@ -129,8 +129,7 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 	 */
 	@Override
 	public Adapter createLeafConditionAdapter() {
-		if (leafConditionItemProvider == null)
-		{
+		if (leafConditionItemProvider == null) {
 			leafConditionItemProvider = new LeafConditionItemProvider(this);
 		}
 
@@ -156,8 +155,7 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 	 */
 	@Override
 	public Adapter createOrConditionAdapter() {
-		if (orConditionItemProvider == null)
-		{
+		if (orConditionItemProvider == null) {
 			orConditionItemProvider = new OrConditionItemProvider(this);
 		}
 
@@ -183,8 +181,7 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 	 */
 	@Override
 	public Adapter createAndConditionAdapter() {
-		if (andConditionItemProvider == null)
-		{
+		if (andConditionItemProvider == null) {
 			andConditionItemProvider = new AndConditionItemProvider(this);
 		}
 
@@ -210,8 +207,7 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 	 */
 	@Override
 	public Adapter createShowRuleAdapter() {
-		if (showRuleItemProvider == null)
-		{
+		if (showRuleItemProvider == null) {
 			showRuleItemProvider = new ShowRuleItemProvider(this);
 		}
 
@@ -237,8 +233,7 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 	 */
 	@Override
 	public Adapter createEnableRuleAdapter() {
-		if (enableRuleItemProvider == null)
-		{
+		if (enableRuleItemProvider == null) {
 			enableRuleItemProvider = new EnableRuleItemProvider(this);
 		}
 
@@ -348,6 +343,32 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.eclipse.emf.ecp.view.spi.rule.model.IsProxyCondition}
+	 * instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	protected IsProxyConditionItemProvider isProxyConditionItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.eclipse.emf.ecp.view.spi.rule.model.IsProxyCondition}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public Adapter createIsProxyConditionAdapter() {
+		if (isProxyConditionItemProvider == null) {
+			isProxyConditionItemProvider = new IsProxyConditionItemProvider(this);
+		}
+
+		return isProxyConditionItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -403,11 +424,9 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 	 */
 	@Override
 	public Object adapt(Object object, Object type) {
-		if (isFactoryForType(type))
-		{
+		if (isFactoryForType(type)) {
 			final Object adapter = super.adapt(object, type);
-			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter))
-			{
+			if (!(type instanceof Class<?>) || ((Class<?>) type).isInstance(adapter)) {
 				return adapter;
 			}
 		}
@@ -483,8 +502,7 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 	public void fireNotifyChanged(Notification notification) {
 		changeNotifier.fireNotifyChanged(notification);
 
-		if (parentAdapterFactory != null)
-		{
+		if (parentAdapterFactory != null) {
 			parentAdapterFactory.fireNotifyChanged(notification);
 		}
 	}
@@ -524,6 +542,9 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 		}
 		if (notConditionItemProvider != null) {
 			notConditionItemProvider.dispose();
+		}
+		if (isProxyConditionItemProvider != null) {
+			isProxyConditionItemProvider.dispose();
 		}
 	}
 
@@ -582,17 +603,12 @@ public class RuleItemProviderAdapterFactory extends RuleAdapterFactory
 			 * @generated
 			 */
 			@Override
-			public Object caseElement(VElement object)
-			{
-				newChildDescriptors.add
-					(createChildParameter
-					(VViewPackage.Literals.ELEMENT__ATTACHMENTS,
-						RuleFactory.eINSTANCE.createShowRule()));
+			public Object caseElement(VElement object) {
+				newChildDescriptors.add(createChildParameter(VViewPackage.Literals.ELEMENT__ATTACHMENTS,
+					RuleFactory.eINSTANCE.createShowRule()));
 
-				newChildDescriptors.add
-					(createChildParameter
-					(VViewPackage.Literals.ELEMENT__ATTACHMENTS,
-						RuleFactory.eINSTANCE.createEnableRule()));
+				newChildDescriptors.add(createChildParameter(VViewPackage.Literals.ELEMENT__ATTACHMENTS,
+					RuleFactory.eINSTANCE.createEnableRule()));
 
 				return null;
 			}

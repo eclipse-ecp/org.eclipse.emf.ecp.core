@@ -94,7 +94,8 @@ public class EMFFormsMappingProviderTable implements EMFFormsMappingProvider {
 					final Setting columnSetting = emfFormsDatabinding.getSetting(columnDMR, eObject);
 					settingsMap.add(UniqueSetting.createSetting(columnSetting));
 				} catch (final DatabindingFailedException ex) {
-					reportService.report(new DatabindingFailedReport(ex));
+					// ignoring this for now, as we explicitly allow abstract types (i.e. within tables)
+					// reportService.report(new DatabindingFailedReport(ex));
 				}
 			}
 		}

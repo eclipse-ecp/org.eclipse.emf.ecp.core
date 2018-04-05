@@ -554,10 +554,11 @@ public class ViewValidator extends EObjectValidator {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
 	 *
 	 * @generated
-	 * @since 1.13
 	 */
 	public boolean validateHasTooltip(VHasTooltip hasTooltip, DiagnosticChain diagnostics,
 		Map<Object, Object> context) {

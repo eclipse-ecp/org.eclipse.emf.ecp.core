@@ -5,28 +5,31 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.eclipse.emf.ecp</groupId>
 	<artifactId>ecp-parent</artifactId>
-	<version>1.16.0-SNAPSHOT</version>
+	<version>1.17.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<properties>
 		<tycho-version>0.25.0</tycho-version>
 		<tycho-extras-version>0.25.0</tycho-extras-version>
 		<javadoc-version>2.10.3</javadoc-version>
-		<ecp-version>1.16.0</ecp-version>
+		<ecp-version>1.17.0</ecp-version>
 		<javadoc-title>EMF Client Platform ${ecp-version} API</javadoc-title>
 		<maven.antrun.plugin.version>1.7</maven.antrun.plugin.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<tycho.scmUrl>scm:git:git://git.eclipse.org/gitroot/emfclient/org.eclipse.emf.ecp.core.git</tycho.scmUrl>
 		<jarsigner-version>1.1.0</jarsigner-version>
-		<mav-surefire-version>2.16</mav-surefire-version>
-		<junit-version>4.11</junit-version>
-		<checkstyle-version>6.11.2</checkstyle-version>
+		<mav-surefire-version>2.20.1</mav-surefire-version>
+		<junit-version>4.12</junit-version>
+		<mav-checkstyle-version>3.0.0</mav-checkstyle-version>
+		<checkstyle-version>8.8</checkstyle-version>
+		<jacoco-version>0.8.0</jacoco-version>
 		
+		<jacoco.percentage.instruction>0.5</jacoco.percentage.instruction>
 		<!-- Properties to enable jacoco code coverage analysis with sonar -->
 		<sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
 		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
 		<sonar.jacoco.reportPath>../../tests/coverage/jacoco.exec</sonar.jacoco.reportPath>
-		<sonar.exclusions>**/model/**,**/test/**</sonar.exclusions>
+		<sonar.exclusions>**/test/**,**/tests/**, **/*_PTest.java,**/*_Test.java, **/*_ITest.java,**/AllTests.java,**/AllIntegrationTests.java, **/Messages.java,</sonar.exclusions>
 		
 		<target-rcp>ecp</target-rcp>
 		<target-rap>ecpRAP</target-rap>
@@ -72,6 +75,13 @@
 		<pluginRepository>
 			<id>eclipse-maven-releases</id>
 			<url>https://repo.eclipse.org/content/repositories/releases/</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+			<pluginRepository>
+			<id>apache-maven-releases</id>
+			<url>http://repo.maven.apache.org/maven2</url>
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
@@ -212,13 +222,11 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>2.11</version>
+				<version>${mav-checkstyle-version}</version>
 				<!-- https://maven.apache.org/plugins/maven-checkstyle-plugin/history.html -->
 				<configuration>
-					<configLocation>http://download.eclipse.org/ecp/config/esmCheckstyle.xml</configLocation>
-
-					<suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
-					<suppressionsLocation>http://download.eclipse.org/ecp/config/suppressions.xml</suppressionsLocation>
+					<configLocation>../org.eclipse.emf.ecp.releng/checkstyle/esmCheckstyle.xml</configLocation>
+                    <excludes>**/xtend/**/*</excludes>
 					<failsOnError>false</failsOnError>
 				</configuration>
 				<executions>
@@ -256,17 +264,21 @@
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.7.4.201502262128</version>
+				<version>${jacoco-version}</version> 
 				<configuration>
 					<destFile>${sonar.jacoco.reportPath}</destFile>
-					<append>true</append> 
+					<append>true</append>
 				</configuration>
 				<executions>
 					<execution>
+						<phase>process-test-classes</phase>
 						<id>jacoco-initialize</id>
 						<goals>
 							<goal>prepare-agent</goal>
 						</goals>
+						<configuration>
+							<propertyName>jacocoArgs</propertyName>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>

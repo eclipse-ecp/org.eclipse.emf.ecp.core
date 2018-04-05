@@ -23,8 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model interface="true" abstract="true"
  * @generated
  */
-public interface VTStyleProperty extends EObject
-{
+public interface VTStyleProperty extends EObject {
 
 	/**
 	 * Compare this {@link VTStyleProperty} with another.

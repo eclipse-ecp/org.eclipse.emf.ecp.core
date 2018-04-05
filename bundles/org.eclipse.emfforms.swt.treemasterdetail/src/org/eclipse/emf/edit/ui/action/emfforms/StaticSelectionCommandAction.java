@@ -1,6 +1,6 @@
-// REUSED CLASS
 /**
  * Copyright (c) 2002-2007 IBM Corporation and others.
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -9,6 +9,7 @@
  * Contributors:
  * IBM - Initial API and implementation
  */
+// REUSED CLASS
 package org.eclipse.emf.edit.ui.action.emfforms;
 
 import java.util.ArrayList;
@@ -43,8 +44,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
  * action. They may also override {@link #getDefaultImageDescriptor} to provide a default icon and {@link #disable} to
  * set the action's state when a command cannot be created.
  */
-public abstract class StaticSelectionCommandAction extends Action
-{
+public abstract class StaticSelectionCommandAction extends Action {
 
 	/**
 	 * This records the editing domain of the current editor or viewer. For global
@@ -63,16 +63,14 @@ public abstract class StaticSelectionCommandAction extends Action
 	 *
 	 * @since 2.4.0
 	 */
-	public StaticSelectionCommandAction(EditingDomain editingDomain)
-	{
+	public StaticSelectionCommandAction(EditingDomain editingDomain) {
 		this.editingDomain = editingDomain;
 	}
 
 	/**
 	 * This constructs an instance without a specified workbenchPart.
 	 */
-	public StaticSelectionCommandAction()
-	{
+	public StaticSelectionCommandAction() {
 		super();
 	}
 
@@ -86,15 +84,11 @@ public abstract class StaticSelectionCommandAction extends Action
 	 * to create the command, and then configures the action based on the
 	 * result.
 	 */
-	public void configureAction(ISelection selection)
-	{
+	public void configureAction(ISelection selection) {
 		// only handle structured selections
-		if (!(selection instanceof IStructuredSelection))
-		{
+		if (!(selection instanceof IStructuredSelection)) {
 			disable();
-		}
-		else
-		{
+		} else {
 			// convert the selection to a collection of the selected objects
 			final IStructuredSelection sselection = (IStructuredSelection) selection;
 			final List<?> list = sselection.toList();
@@ -102,21 +96,17 @@ public abstract class StaticSelectionCommandAction extends Action
 
 			// if the editing domain wasn't given by the workbench part, try to get
 			// it from the selection
-			if (editingDomain == null)
-			{
-				for (final Object o : collection)
-				{
+			if (editingDomain == null) {
+				for (final Object o : collection) {
 					editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(o);
-					if (editingDomain != null)
-					{
+					if (editingDomain != null) {
 						break;
 					}
 				}
 			}
 
 			// if we found an editing domain, create command
-			if (editingDomain != null)
-			{
+			if (editingDomain != null) {
 				command = createActionCommand(editingDomain, collection);
 				setEnabled(command.canExecute());
 			}
@@ -124,45 +114,31 @@ public abstract class StaticSelectionCommandAction extends Action
 			// give up if we couldn't create the command; otherwise, use a
 			// CommandActionDelegate to set the action's text, tool-tip, icon,
 			// etc. or just use the default icon
-			if (command == null || command == UnexecutableCommand.INSTANCE)
-			{
+			if (command == null || command == UnexecutableCommand.INSTANCE) {
 				disable();
-			}
-			else if (!(command instanceof CommandActionDelegate))
-			{
-				if (getDefaultImageDescriptor() != null)
-				{
+			} else if (!(command instanceof CommandActionDelegate)) {
+				if (getDefaultImageDescriptor() != null) {
 					setImageDescriptor(getDefaultImageDescriptor());
 				}
-			}
-			else
-			{
-				final CommandActionDelegate commandActionDelegate =
-					(CommandActionDelegate) command;
+			} else {
+				final CommandActionDelegate commandActionDelegate = (CommandActionDelegate) command;
 
-				final ImageDescriptor imageDescriptor =
-					objectToImageDescriptor(commandActionDelegate.getImage());
-				if (imageDescriptor != null)
-				{
+				final ImageDescriptor imageDescriptor = objectToImageDescriptor(commandActionDelegate.getImage());
+				if (imageDescriptor != null) {
 					setImageDescriptor(imageDescriptor);
-				}
-				else if (getDefaultImageDescriptor() != null)
-				{
+				} else if (getDefaultImageDescriptor() != null) {
 					setImageDescriptor(getDefaultImageDescriptor());
 				}
 
-				if (commandActionDelegate.getText() != null)
-				{
+				if (commandActionDelegate.getText() != null) {
 					setText(commandActionDelegate.getText());
 				}
 
-				if (commandActionDelegate.getDescription() != null)
-				{
+				if (commandActionDelegate.getDescription() != null) {
 					setDescription(commandActionDelegate.getDescription());
 				}
 
-				if (commandActionDelegate.getToolTipText() != null)
-				{
+				if (commandActionDelegate.getToolTipText() != null) {
 					setToolTipText(commandActionDelegate.getToolTipText());
 				}
 			}
@@ -173,8 +149,7 @@ public abstract class StaticSelectionCommandAction extends Action
 	 * This can be overridden to provide the image descriptor used when the
 	 * command does not provide one. This implementation simply returns null.
 	 */
-	protected ImageDescriptor getDefaultImageDescriptor()
-	{
+	protected ImageDescriptor getDefaultImageDescriptor() {
 		return null;
 	}
 
@@ -184,11 +159,9 @@ public abstract class StaticSelectionCommandAction extends Action
 	 * error conditions. This implementation disables the action and sets its
 	 * icon to the default.
 	 */
-	protected void disable()
-	{
+	protected void disable() {
 		setEnabled(false);
-		if (getDefaultImageDescriptor() != null)
-		{
+		if (getDefaultImageDescriptor() != null) {
 			setImageDescriptor(getDefaultImageDescriptor());
 		}
 	}
@@ -197,11 +170,9 @@ public abstract class StaticSelectionCommandAction extends Action
 	 * This executes the command.
 	 */
 	@Override
-	public void run()
-	{
+	public void run() {
 		// this guard is for extra security, but should not be necessary
-		if (editingDomain != null && command != null)
-		{
+		if (editingDomain != null && command != null) {
 			// use up the command
 			editingDomain.getCommandStack().execute(command);
 		}
@@ -211,8 +182,7 @@ public abstract class StaticSelectionCommandAction extends Action
 	 * If necessary, this converts any image representation into an image
 	 * descriptor.
 	 */
-	protected ImageDescriptor objectToImageDescriptor(Object object)
-	{
+	protected ImageDescriptor objectToImageDescriptor(Object object) {
 		return ExtendedImageRegistry.getInstance().getImageDescriptor(object);
 	}
 }

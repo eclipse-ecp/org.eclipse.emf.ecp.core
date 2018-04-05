@@ -36,7 +36,7 @@ public class OrConditionItemProvider extends ConditionItemProvider {
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public OrConditionItemProvider(AdapterFactory adapterFactory) {
@@ -47,13 +47,12 @@ public class OrConditionItemProvider extends ConditionItemProvider {
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (itemPropertyDescriptors == null)
-		{
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 		}
@@ -66,14 +65,13 @@ public class OrConditionItemProvider extends ConditionItemProvider {
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(
 		Object object) {
-		if (childrenFeatures == null)
-		{
+		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(RulePackage.Literals.OR_CONDITION__CONDITIONS);
 		}
@@ -83,7 +81,7 @@ public class OrConditionItemProvider extends ConditionItemProvider {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -98,7 +96,7 @@ public class OrConditionItemProvider extends ConditionItemProvider {
 	 * This returns OrCondition.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -110,7 +108,7 @@ public class OrConditionItemProvider extends ConditionItemProvider {
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -123,15 +121,14 @@ public class OrConditionItemProvider extends ConditionItemProvider {
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(OrCondition.class))
-		{
+		switch (notification.getFeatureID(OrCondition.class)) {
 		case RulePackage.OR_CONDITION__CONDITIONS:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;
@@ -144,7 +141,7 @@ public class OrConditionItemProvider extends ConditionItemProvider {
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -152,20 +149,29 @@ public class OrConditionItemProvider extends ConditionItemProvider {
 		Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
-		newChildDescriptors.add
-			(createChildParameter
-			(RulePackage.Literals.OR_CONDITION__CONDITIONS,
-				RuleFactory.eINSTANCE.createLeafCondition()));
+		newChildDescriptors.add(createChildParameter(RulePackage.Literals.OR_CONDITION__CONDITIONS,
+			RuleFactory.eINSTANCE.createLeafCondition()));
 
-		newChildDescriptors.add
-			(createChildParameter
-			(RulePackage.Literals.OR_CONDITION__CONDITIONS,
-				RuleFactory.eINSTANCE.createOrCondition()));
+		newChildDescriptors.add(createChildParameter(RulePackage.Literals.OR_CONDITION__CONDITIONS,
+			RuleFactory.eINSTANCE.createOrCondition()));
 
-		newChildDescriptors.add
-			(createChildParameter
-			(RulePackage.Literals.OR_CONDITION__CONDITIONS,
-				RuleFactory.eINSTANCE.createAndCondition()));
+		newChildDescriptors.add(createChildParameter(RulePackage.Literals.OR_CONDITION__CONDITIONS,
+			RuleFactory.eINSTANCE.createAndCondition()));
+
+		newChildDescriptors.add(createChildParameter(RulePackage.Literals.OR_CONDITION__CONDITIONS,
+			RuleFactory.eINSTANCE.createIterateCondition()));
+
+		newChildDescriptors.add(createChildParameter(RulePackage.Literals.OR_CONDITION__CONDITIONS,
+			RuleFactory.eINSTANCE.createTrue()));
+
+		newChildDescriptors.add(createChildParameter(RulePackage.Literals.OR_CONDITION__CONDITIONS,
+			RuleFactory.eINSTANCE.createFalse()));
+
+		newChildDescriptors.add(createChildParameter(RulePackage.Literals.OR_CONDITION__CONDITIONS,
+			RuleFactory.eINSTANCE.createNotCondition()));
+
+		newChildDescriptors.add(createChildParameter(RulePackage.Literals.OR_CONDITION__CONDITIONS,
+			RuleFactory.eINSTANCE.createIsProxyCondition()));
 	}
 
 }

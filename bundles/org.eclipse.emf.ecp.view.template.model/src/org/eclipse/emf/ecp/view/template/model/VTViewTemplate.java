@@ -21,20 +21,20 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  * <li>{@link org.eclipse.emf.ecp.view.template.model.VTViewTemplate#getControlValidationConfiguration <em>Control
  * Validation Configuration</em>}</li>
  * <li>{@link org.eclipse.emf.ecp.view.template.model.VTViewTemplate#getStyles <em>Styles</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.template.model.VTViewTemplate#getReferencedEcores <em>Referenced Ecores</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.model.VTViewTemplate#getReferencedEcores <em>Referenced
+ * Ecores</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.ecp.view.template.model.VTTemplatePackage#getViewTemplate()
  * @model
  * @generated
  */
-public interface VTViewTemplate extends EObject
-{
+public interface VTViewTemplate extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Control Validation Configuration</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
@@ -53,9 +53,9 @@ public interface VTViewTemplate extends EObject
 	VTControlValidationTemplate getControlValidationConfiguration();
 
 	/**
-	 * Sets the value of the '
-	 * {@link org.eclipse.emf.ecp.view.template.model.VTViewTemplate#getControlValidationConfiguration
-	 * <em>Control Validation Configuration</em>}' containment reference.
+	 * Sets the value of the
+	 * '{@link org.eclipse.emf.ecp.view.template.model.VTViewTemplate#getControlValidationConfiguration <em>Control
+	 * Validation Configuration</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *

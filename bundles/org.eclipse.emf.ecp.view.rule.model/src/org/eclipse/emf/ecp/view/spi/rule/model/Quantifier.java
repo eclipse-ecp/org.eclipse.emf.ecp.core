@@ -1,11 +1,11 @@
 /**
  * Copyright (c) 2017 Christian W. Damus and others.
- * 
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  * Christian W. Damus - initial API and implementation
  */
@@ -22,7 +22,7 @@ import org.eclipse.emf.common.util.Enumerator;
  * A representation of the literals of the enumeration '<em><b>Quantifier</b></em>',
  * and utility methods for working with them.
  * <!-- end-user-doc -->
- * 
+ *
  * @see org.eclipse.emf.ecp.view.spi.rule.model.RulePackage#getQuantifier()
  * @model
  * @generated
@@ -32,7 +32,7 @@ public enum Quantifier implements Enumerator {
 	 * The '<em><b>All</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #ALL_VALUE
 	 * @generated
 	 * @ordered
@@ -43,7 +43,7 @@ public enum Quantifier implements Enumerator {
 	 * The '<em><b>Any</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #ANY_VALUE
 	 * @generated
 	 * @ordered
@@ -58,7 +58,7 @@ public enum Quantifier implements Enumerator {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #ALL
 	 * @model name="all"
 	 * @generated
@@ -74,7 +74,7 @@ public enum Quantifier implements Enumerator {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @see #ANY
 	 * @model name="any"
 	 * @generated
@@ -86,7 +86,7 @@ public enum Quantifier implements Enumerator {
 	 * An array of all the '<em><b>Quantifier</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private static final Quantifier[] VALUES_ARRAY = new Quantifier[] {
@@ -98,7 +98,7 @@ public enum Quantifier implements Enumerator {
 	 * A public read-only list of all the '<em><b>Quantifier</b></em>' enumerators.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public static final List<Quantifier> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
@@ -107,14 +107,14 @@ public enum Quantifier implements Enumerator {
 	 * Returns the '<em><b>Quantifier</b></em>' literal with the specified literal value.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param literal the literal.
 	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
 	public static Quantifier get(String literal) {
 		for (int i = 0; i < VALUES_ARRAY.length; ++i) {
-			Quantifier result = VALUES_ARRAY[i];
+			final Quantifier result = VALUES_ARRAY[i];
 			if (result.toString().equals(literal)) {
 				return result;
 			}
@@ -126,14 +126,14 @@ public enum Quantifier implements Enumerator {
 	 * Returns the '<em><b>Quantifier</b></em>' literal with the specified name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param name the name.
 	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
 	 */
 	public static Quantifier getByName(String name) {
 		for (int i = 0; i < VALUES_ARRAY.length; ++i) {
-			Quantifier result = VALUES_ARRAY[i];
+			final Quantifier result = VALUES_ARRAY[i];
 			if (result.getName().equals(name)) {
 				return result;
 			}
@@ -145,7 +145,7 @@ public enum Quantifier implements Enumerator {
 	 * Returns the '<em><b>Quantifier</b></em>' literal with the specified integer value.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the integer value.
 	 * @return the matching enumerator or <code>null</code>.
 	 * @generated
@@ -163,7 +163,7 @@ public enum Quantifier implements Enumerator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private final int value;
@@ -171,7 +171,7 @@ public enum Quantifier implements Enumerator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private final String name;
@@ -179,7 +179,7 @@ public enum Quantifier implements Enumerator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private final String literal;
@@ -188,7 +188,7 @@ public enum Quantifier implements Enumerator {
 	 * Only this class can construct instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	private Quantifier(int value, String name, String literal) {
@@ -200,9 +200,10 @@ public enum Quantifier implements Enumerator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public int getValue() {
 		return value;
 	}
@@ -210,9 +211,10 @@ public enum Quantifier implements Enumerator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public String getName() {
 		return name;
 	}
@@ -220,9 +222,10 @@ public enum Quantifier implements Enumerator {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
+	@Override
 	public String getLiteral() {
 		return literal;
 	}
@@ -231,7 +234,7 @@ public enum Quantifier implements Enumerator {
 	 * Returns the literal value of the enumerator, which is its string representation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override

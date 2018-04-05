@@ -12,6 +12,7 @@
 package org.eclipse.emfforms.spi.view.control.multiattribute;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.Serializable;
@@ -52,6 +53,7 @@ import org.eclipse.emfforms.spi.swt.core.layout.SWTGridCell;
 import org.eclipse.emfforms.spi.swt.core.layout.SWTGridDescription;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Control;
@@ -328,6 +330,56 @@ public class MultiAttributeSWTRenderer_ITest {
 			assertEquals(String.valueOf(i), text);
 		}
 
+	}
+
+	@Test
+	public void buttonsUpDown_enableOnSelection()
+		throws DatabindingFailedException, NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		/* setup domain */
+		final Game game = BowlingFactory.eINSTANCE.createGame();
+		game.getFrames().add(1);
+		game.getFrames().add(1);
+		game.getFrames().add(1);
+		game.getFrames().add(2);
+		game.getFrames().add(2);
+
+		createEditingDomain(game);
+
+		/* setup classes */
+		@SuppressWarnings("rawtypes")
+		final IObservableList observeList = EMFObservables.observeList(
+			realm,
+			game,
+			BowlingPackage.eINSTANCE.getGame_Frames());
+		Mockito.doReturn(observeList).when(emfFormsDatabinding)
+			.getObservableList(Matchers.any(VDomainModelReference.class), Matchers.any(EObject.class));
+
+		final MultiAttributeSWTRenderer renderer = createRenderer();
+
+		/* setup rendering */
+		final SWTGridDescription gridDescription = renderer.getGridDescription(null);
+		final SWTGridCell lastGridCell = gridDescription.getGrid().get(gridDescription.getGrid().size() - 1);
+
+		/* render */
+		final Control control = renderer.render(lastGridCell, shell);
+		final Button upButton = SWTTestUtil.findControl(control, 0, Button.class);
+
+		/* by default, up is disabled (no selection) */
+		assertFalse(upButton.getEnabled());
+
+		/* select an element in list */
+		renderer.getTableViewer().setSelection(new StructuredSelection(observeList.get(0)), true);
+		SWTTestUtil.waitForUIThread();
+
+		/* assert */
+		assertTrue(upButton.getEnabled());
+
+		/* act */
+		renderer.getTableViewer().setSelection(StructuredSelection.EMPTY);
+		SWTTestUtil.waitForUIThread();
+
+		/* assert */
+		assertFalse(upButton.getEnabled());
 	}
 
 }

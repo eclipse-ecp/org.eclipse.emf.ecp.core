@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.view.internal.control.multireference;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -50,6 +51,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
 import org.eclipse.emf.ecp.view.spi.util.swt.ImageRegistryService;
@@ -568,6 +570,54 @@ public class MultiReferenceRenderer_PTest {
 		}
 
 		return result;
+	}
+
+	/**
+	 * Test that the control is disabled when it's set to read only
+	 * 
+	 * @throws DatabindingFailedException
+	 * @throws NoRendererFoundException
+	 * @throws NoPropertyDescriptorFoundExeption
+	 */
+	@Test
+	public void testReadOnlyDisablesControl()
+		throws DatabindingFailedException, NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		when(renderer.getVElement().isReadonly()).thenReturn(true);
+		final TestObservableValue observableValue = mock(TestObservableValue.class);
+		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+			observableValue);
+		when(observableValue.getObserved()).thenReturn(mock(EObject.class));
+		System.out.println(renderer.getVElement().isReadonly());
+		final Composite composite = (Composite) renderer.render(new SWTGridCell(0, 0, renderer), shell);
+		renderer.finalizeRendering(shell);
+		assertFalse(composite.isEnabled());
+	}
+
+	/**
+	 * Test that the control is disabled when it's effectively set to read only because a parent is read only.
+	 *
+	 * @throws DatabindingFailedException
+	 * @throws NoRendererFoundException
+	 * @throws NoPropertyDescriptorFoundExeption
+	 */
+	@Test
+	public void testEffectivelyReadOnlyDisablesControl()
+		throws DatabindingFailedException, NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		when(renderer.getVElement().isReadonly()).thenReturn(false);
+
+		// Simulate control's parent that is set to readOnly
+		final VView parent = mock(VView.class);
+		when(parent.isReadonly()).thenReturn(true);
+		when(renderer.getVElement().eContainer()).thenReturn(parent);
+
+		final TestObservableValue observableValue = mock(TestObservableValue.class);
+		when(databindingService.getObservableValue(any(VDomainModelReference.class), any(EObject.class))).thenReturn(
+			observableValue);
+		when(observableValue.getObserved()).thenReturn(mock(EObject.class));
+		System.out.println(renderer.getVElement().isReadonly());
+		final Composite composite = (Composite) renderer.render(new SWTGridCell(0, 0, renderer), shell);
+		renderer.finalizeRendering(shell);
+		assertFalse(composite.isEnabled());
 	}
 
 	/**

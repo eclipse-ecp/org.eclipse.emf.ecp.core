@@ -32,18 +32,18 @@ import org.osgi.framework.ServiceReference;
  */
 public class SWTDynamicContainmentTreeRenderer extends ContainerSWTRenderer<DynamicContainmentTree> {
 
-	private static final EMFFormsDatabinding emfFormsDatabinding;
-	private static final EMFFormsRendererFactory emfFormsRendererFactory;
+	private static final EMFFormsDatabinding EMFFORMS_DATABINDING;
+	private static final EMFFormsRendererFactory EMFFORMS_RENDERER_FACTORY;
 
 	static {
 		final BundleContext bundleContext = FrameworkUtil.getBundle(SWTDynamicContainmentTreeRenderer.class)
 			.getBundleContext();
 		final ServiceReference<EMFFormsDatabinding> emfFormsDatabindingServiceReference = bundleContext
 			.getServiceReference(EMFFormsDatabinding.class);
-		emfFormsDatabinding = bundleContext.getService(emfFormsDatabindingServiceReference);
+		EMFFORMS_DATABINDING = bundleContext.getService(emfFormsDatabindingServiceReference);
 		final ServiceReference<EMFFormsRendererFactory> emfFormsLabelProviderServiceReference = bundleContext
 			.getServiceReference(EMFFormsRendererFactory.class);
-		emfFormsRendererFactory = bundleContext.getService(emfFormsLabelProviderServiceReference);
+		EMFFORMS_RENDERER_FACTORY = bundleContext.getService(emfFormsLabelProviderServiceReference);
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class SWTDynamicContainmentTreeRenderer extends ContainerSWTRenderer<Dyna
 	 */
 	public SWTDynamicContainmentTreeRenderer(DynamicContainmentTree vElement, ViewModelContext viewContext,
 		ReportService reportService) {
-		super(vElement, viewContext, reportService, emfFormsRendererFactory, emfFormsDatabinding);
+		super(vElement, viewContext, reportService, EMFFORMS_RENDERER_FACTORY, EMFFORMS_DATABINDING);
 	}
 
 	/**

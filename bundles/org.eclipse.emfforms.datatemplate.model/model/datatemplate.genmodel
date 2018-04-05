@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.&#xD;&#xA;&#xD;&#xA;All rights reserved. This program and the accompanying materials&#xD;&#xA;are made available under the terms of the Eclipse Public License v1.0&#xD;&#xA;which accompanies this distribution, and is available at&#xD;&#xA;http://www.eclipse.org/legal/epl-v10.html&#xD;&#xA;&#xD;&#xA;Contributors:&#xD;&#xA;EclipseSource Muenchen GmbH - initial API and implementation"
+    modelDirectory="/org.eclipse.emfforms.datatemplate.model/src" modelPluginID="org.eclipse.emfforms.datatemplate.model"
+    modelName="DataTemplate" modelPluginClass="" editPluginClass="org.eclipse.emfforms.datatemplate.provider.DatatemplateEditPlugin"
+    editorPluginClass="org.eclipse.emfforms.datatemplate.presentation.DatatemplateEditorPlugin"
+    nonNLSMarkers="true" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    codeFormatting="true" importerID="org.eclipse.emf.importer.ecore" complianceLevel="6.0"
+    copyrightFields="false" usedGenPackages="../../org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore"
+    operationReflection="true" importOrganizing="true" cleanup="true">
+  <foreignModel>datatemplate.ecore</foreignModel>
+  <genPackages prefix="DataTemplate" basePackage="org.eclipse.emfforms" disposableProviderFactory="true"
+      ecorePackage="datatemplate.ecore#/">
+    <genClasses ecoreClass="datatemplate.ecore#//Template">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute datatemplate.ecore#//Template/name"/>
+      <genFeatures children="true" createChild="false" ecoreFeature="ecore:EReference datatemplate.ecore#//Template/instance"/>
+    </genClasses>
+    <genClasses ecoreClass="datatemplate.ecore#//TemplateCollection">
+      <genFeatures children="true" createChild="true" ecoreFeature="ecore:EReference datatemplate.ecore#//TemplateCollection/templates"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

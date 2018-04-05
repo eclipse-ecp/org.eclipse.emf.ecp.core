@@ -46,8 +46,7 @@ public class DomainModelReferenceSelectorItemProvider
 	IStructuredItemContentProvider,
 	ITreeItemContentProvider,
 	IItemLabelProvider,
-	IItemPropertySource
-{
+	IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -55,8 +54,7 @@ public class DomainModelReferenceSelectorItemProvider
 	 *
 	 * @generated
 	 */
-	public DomainModelReferenceSelectorItemProvider(AdapterFactory adapterFactory)
-	{
+	public DomainModelReferenceSelectorItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -68,10 +66,8 @@ public class DomainModelReferenceSelectorItemProvider
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object)
-	{
-		if (itemPropertyDescriptors == null)
-		{
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addDomainModelReferencePropertyDescriptor(object);
@@ -86,16 +82,14 @@ public class DomainModelReferenceSelectorItemProvider
 	 *
 	 * @generated
 	 */
-	protected void addDomainModelReferencePropertyDescriptor(Object object)
-	{
+	protected void addDomainModelReferencePropertyDescriptor(Object object) {
 		itemPropertyDescriptors
-			.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_DomainModelReferenceSelector_domainModelReference_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_DomainModelReferenceSelector_domainModelReference_feature", "_UI_DomainModelReferenceSelector_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				getString("_UI_PropertyDescriptor_description", //$NON-NLS-1$
+					"_UI_DomainModelReferenceSelector_domainModelReference_feature", //$NON-NLS-1$
+					"_UI_DomainModelReferenceSelector_type"), //$NON-NLS-1$
 				VTDomainmodelreferencePackage.Literals.DOMAIN_MODEL_REFERENCE_SELECTOR__DOMAIN_MODEL_REFERENCE,
 				true,
 				false,
@@ -113,8 +107,7 @@ public class DomainModelReferenceSelectorItemProvider
 	 * @generated
 	 */
 	@Override
-	public Object getImage(Object object)
-	{
+	public Object getImage(Object object) {
 		return overlayImage(object, getResourceLocator().getImage("full/obj16/DomainModelReferenceSelector")); //$NON-NLS-1$
 	}
 
@@ -126,8 +119,7 @@ public class DomainModelReferenceSelectorItemProvider
 	 * @generated
 	 */
 	@Override
-	public String getText(Object object)
-	{
+	public String getText(Object object) {
 		return getString("_UI_DomainModelReferenceSelector_type"); //$NON-NLS-1$
 	}
 
@@ -140,12 +132,10 @@ public class DomainModelReferenceSelectorItemProvider
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(Notification notification)
-	{
+	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(VTDomainModelReferenceSelector.class))
-		{
+		switch (notification.getFeatureID(VTDomainModelReferenceSelector.class)) {
 		case VTDomainmodelreferencePackage.DOMAIN_MODEL_REFERENCE_SELECTOR__DOMAIN_MODEL_REFERENCE:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
@@ -162,14 +152,12 @@ public class DomainModelReferenceSelectorItemProvider
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
-	{
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
-		newChildDescriptors.add
-			(createChildParameter
-			(VTDomainmodelreferencePackage.Literals.DOMAIN_MODEL_REFERENCE_SELECTOR__DOMAIN_MODEL_REFERENCE,
-				VViewFactory.eINSTANCE.createFeaturePathDomainModelReference()));
+		newChildDescriptors.add(createChildParameter(
+			VTDomainmodelreferencePackage.Literals.DOMAIN_MODEL_REFERENCE_SELECTOR__DOMAIN_MODEL_REFERENCE,
+			VViewFactory.eINSTANCE.createFeaturePathDomainModelReference()));
 	}
 
 	/**
@@ -180,8 +168,7 @@ public class DomainModelReferenceSelectorItemProvider
 	 * @generated
 	 */
 	@Override
-	public ResourceLocator getResourceLocator()
-	{
+	public ResourceLocator getResourceLocator() {
 		return ((IChildCreationExtender) adapterFactory).getResourceLocator();
 	}
 

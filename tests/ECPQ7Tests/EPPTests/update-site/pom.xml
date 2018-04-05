@@ -10,7 +10,21 @@
 
 	<artifactId>q7-epp-tests-updatesite</artifactId>
 	<packaging>pom</packaging>
-
+	
+	<profiles>
+		<profile>
+			<id>release-build</id>
+			<properties>
+				<currentBuild>${project.baseUri}/../../../../../releng</currentBuild>
+			</properties>
+		</profile>
+		<profile>
+			<id>full-build</id>
+			<properties>
+				<currentBuild>${project.baseUri}/../../../../../releng</currentBuild>
+			</properties>
+		</profile>
+	</profiles>
 	<modules>
 		<module>previous</module>
 		<module>current</module>

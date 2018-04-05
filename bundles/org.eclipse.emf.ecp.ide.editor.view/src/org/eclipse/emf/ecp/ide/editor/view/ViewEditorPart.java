@@ -33,17 +33,17 @@ import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.command.CommandStackListener;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.xmi.XMLResource;
-import org.eclipse.emf.ecore.xml.type.AnyType;
 import org.eclipse.emf.ecp.edit.spi.EMFDeleteServiceImpl;
 import org.eclipse.emf.ecp.ide.editor.view.messages.Messages;
 import org.eclipse.emf.ecp.ide.spi.util.EcoreHelper;
+import org.eclipse.emf.ecp.ide.spi.util.ViewModelHelper;
 import org.eclipse.emf.ecp.ide.view.service.ViewModelEditorCallback;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.DefaultReferenceService;
@@ -172,11 +172,17 @@ public class ViewEditorPart extends EditorPart implements
 
 		try {
 			registerEcore();
+			// BEGIN SUPRESS CATCH EXCEPTION
+		} catch (final Exception e) {
+			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+			throw new PartInitException(
+				MessageFormat.format(Messages.ViewEditorPart_ViewCannotBeDisplayed, e.getLocalizedMessage()), e);
+		} // END SUPRESS CATCH EXCEPTION
+
+		try {
 			// reload view resource after EClass' package resource was loaded into the package registry
 			loadView(true, true);
-			if (getView() == null) {
-				throw new IllegalArgumentException(Messages.ViewEditorPart_InvalidVView);
-			}
+			checkLoadedView();
 			// BEGIN SUPRESS CATCH EXCEPTION
 		} catch (final Exception e) {
 			Activator.getDefault().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
@@ -200,6 +206,46 @@ public class ViewEditorPart extends EditorPart implements
 
 		final IResourceChangeListener listener = new EditorResourceChangedListener();
 		ResourcesPlugin.getWorkspace().addResourceChangeListener(listener);
+	}
+
+	/**
+	 * Checks whether the loaded VView is valid:
+	 * <ul>
+	 * <li>not null</li>
+	 * <li>the root EClass is set</li>
+	 * <li>the root EClass is resolved (no proxy)</li>
+	 * </ul>
+	 * If the VView is invalid, an Exception with a proper error description is thrown.
+	 *
+	 * @throws IllegalArgumentException If the VView is null or no root EClass was set.
+	 * @throws IllegalStateException If the VView's root EClass cannot be resolved.
+	 */
+	private void checkLoadedView() throws IllegalArgumentException, IllegalStateException {
+		if (getView() == null) {
+			throw new IllegalArgumentException(Messages.ViewEditorPart_InvalidVView);
+		}
+		final EClass rootEClass = getView().getRootEClass();
+		if (rootEClass == null) {
+			throw new IllegalArgumentException(
+				Messages.ViewEditorPart_invalidVView_noRootEClass);
+		}
+		if (rootEClass.eIsProxy()) {
+			final String proxyUri = EcoreUtil.getURI(rootEClass).toString();
+			final String packageNsUri = proxyUri.split("#")[0]; //$NON-NLS-1$
+			final String rootEClassName = proxyUri.split("#")[1].substring(2); //$NON-NLS-1$
+			final EPackage ePackage = EPackage.Registry.INSTANCE.getEPackage(packageNsUri);
+			if (ePackage == null || ePackage.eIsProxy()) {
+				// the whole ecore is not present in the registry
+				throw new IllegalStateException(MessageFormat.format(
+					Messages.ViewEditorPart_invalidVView_rootEClassPackageNotResolved,
+					rootEClassName, packageNsUri));
+			}
+			// The package is resolved but the Root EClass is not => Ecore was registered but misses the needed
+			// class.
+			throw new IllegalStateException(MessageFormat.format(
+				Messages.ViewEditorPart_invalidVView_rootEClassNotInPackage,
+				rootEClassName, ePackage.getName(), ePackage.getNsURI()));
+		}
 	}
 
 	@Override
@@ -385,11 +431,12 @@ public class ViewEditorPart extends EditorPart implements
 	}
 
 	private void registerEcore() throws IOException {
-		final String ecorePath = getEcorePath();
-		if (ecorePath == null) {
-			return;
+		for (final String ecorePath : ViewModelHelper.getEcorePaths(resource)) {
+			if (ecorePath == null) {
+				return;
+			}
+			EcoreHelper.registerEcore(ecorePath);
 		}
-		EcoreHelper.registerEcore(ecorePath);
 	}
 
 	private void saveChangedView(VView view) {
@@ -497,27 +544,6 @@ public class ViewEditorPart extends EditorPart implements
 		return (VView) eObject;
 	}
 
-	private String getEcorePath() {
-		if (resource == null || resource.getContents().isEmpty()) {
-			return null;
-		}
-		final EObject eObject = resource.getContents().get(0);
-		if (VView.class.isInstance(eObject)) {
-			return VView.class.cast(eObject).getEcorePath();
-		}
-		if (AnyType.class.isInstance(eObject)) {
-			/* view model has older ns uri */
-			final FeatureMap anyAttribute = AnyType.class.cast(eObject).getAnyAttribute();
-			for (int i = 0; i < anyAttribute.size(); i++) {
-				final EStructuralFeature feature = anyAttribute.getEStructuralFeature(i);
-				if ("ecorePath".equals(feature.getName())) { //$NON-NLS-1$
-					return (String) anyAttribute.getValue(i);
-				}
-			}
-		}
-		return null;
-	}
-
 	/**
 	 * Runnable to check if a migration is needed.
 	 *
@@ -573,13 +599,14 @@ public class ViewEditorPart extends EditorPart implements
 				render.getSWTControl().dispose();
 			}
 
-			final String ecorePath = getView().getEcorePath();
-			if (ecorePath != null) {
-				try {
-					EcoreHelper.registerEcore(ecorePath);
-				} catch (final IOException e) {
-					Activator.getDefault().getLog()
-						.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+			for (final String ecorePath : getView().getEcorePaths()) {
+				if (ecorePath != null) {
+					try {
+						EcoreHelper.registerEcore(ecorePath);
+					} catch (final IOException e) {
+						Activator.getDefault().getLog()
+							.log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e));
+					}
 				}
 			}
 
@@ -632,13 +659,14 @@ public class ViewEditorPart extends EditorPart implements
 
 				final VView view = getView();
 
-				if ((view.getEcorePath() == null
-					|| ResourcesPlugin.getWorkspace().getRoot().findMember(view.getEcorePath()) == null)
+				// TODO: remove? Should probably handled manually by the user instead.
+				if ((view.getEcorePaths().isEmpty()
+					|| ResourcesPlugin.getWorkspace().getRoot().findMember(view.getEcorePaths().get(0)) == null)
 					&& view.getRootEClass() != null && view.getRootEClass().eIsProxy()) {
 
 					final String selectedECorePath = selectEcoreFromWorkspace();
 					if (selectedECorePath != null) {
-						view.setEcorePath(selectedECorePath);
+						view.getEcorePaths().add(selectedECorePath);
 						saveChangedView(view);
 						reloadViewModel();
 					}

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,50 +8,65 @@
  *
  * Contributors:
  * Eugen - initial API and implementation
+ * Christian W. Damus - bug 529542
  ******************************************************************************/
 package org.eclipse.emf.ecp.ui.view.swt;
 
-import java.util.Collection;
-import java.util.HashSet;
+import static java.util.Collections.singleton;
+
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecp.common.spi.EMFUtils;
 import org.eclipse.emf.ecp.edit.spi.ReferenceService;
-import org.eclipse.emf.ecp.edit.spi.swt.util.ECPDialogExecutor;
 import org.eclipse.emf.ecp.internal.edit.ECPControlHelper;
-import org.eclipse.emf.ecp.spi.common.ui.CompositeFactory;
 import org.eclipse.emf.ecp.spi.common.ui.SelectModelElementWizardFactory;
-import org.eclipse.emf.ecp.spi.common.ui.composites.SelectionComposite;
-import org.eclipse.emf.ecp.ui.view.ECPRendererException;
-import org.eclipse.emf.ecp.view.internal.swt.Activator;
+import org.eclipse.emf.ecp.ui.view.swt.reference.AttachmentStrategy;
+import org.eclipse.emf.ecp.ui.view.swt.reference.CreateNewModelElementStrategy;
+import org.eclipse.emf.ecp.ui.view.swt.reference.EObjectSelectionStrategy;
+import org.eclipse.emf.ecp.ui.view.swt.reference.OpenInNewContextStrategy;
+import org.eclipse.emf.ecp.ui.view.swt.reference.ReferenceStrategy;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
-import org.eclipse.emf.ecp.view.spi.context.ViewModelContextFactory;
-import org.eclipse.emf.ecp.view.spi.provider.ViewProviderHelper;
-import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
-import org.eclipse.emfforms.spi.common.report.AbstractReport;
-import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.emfforms.common.Optional;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.layout.GridDataFactory;
-import org.eclipse.jface.layout.GridLayoutFactory;
-import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
 
 /**
- * The DefaultReferenceService provides a sample implementation for the ReferenceService.
+ * <p>
+ * The {@code DefaultReferenceService} is the standard implementation of the {@code ReferenceService}.
+ * It is customizable by registration of {@linkplain org.eclipse.emfforms.bazaar.Vendor vendors}
+ * of <em>customization strategies</em> as OSGi service components that participate in a
+ * {@linkplain org.eclipse.emfforms.bazaar.Bazaar bazaar} to provide their customizations for the
+ * {@link ReferenceService} operations to which they apply. In the
+ * {@link org.eclipse.emfforms.bazaar.BazaarContext context} of that bazaar, the {@code DefaultReferenceService}
+ * supplies supplies the following context variables for injection into <em>customization</em> vendors:
+ * </p>
+ * <ul>
+ * <li>the {@link EObject} that owns the reference that is being edited</li>
+ * <li>the {@link EReference} of the object that is being edited</li>
+ * </ul>
+ * <p>
+ * As of the the 1.16 release, the <em>customization strategies</em> available to plug
+ * application-specific behavior into the {@code DefaultReferenceService} are
+ * </p>
+ * <ul>
+ * <li>{@link org.eclipse.emf.ecp.ui.view.swt.reference.AttachmentStrategy AttachmentStrategy}</li>
+ * <li>{@link org.eclipse.emf.ecp.ui.view.swt.reference.CreateNewModelElementStrategy
+ * CreateNewModelElementStrategy}</li>
+ * <li>{@link org.eclipse.emf.ecp.ui.view.swt.reference.EObjectSelectionStrategy EObjectSelectionStrategy}</li>
+ * <li>{@link org.eclipse.emf.ecp.ui.view.swt.reference.OpenInNewContextStrategy OpenInNewContextStrategy}</li>
+ * <li>{@link org.eclipse.emf.ecp.ui.view.swt.reference.ReferenceStrategy ReferenceStrategy}</li>
+ * </ul>
+ * <p>
+ * For the convenience of distinguishing OSGi service components providing (as bazaar vendors) these
+ * different <em>customization strategies</em>, each of these interfaces defines a {@code Provider}
+ * nested interface that is the OSGi <em>Service Interface</em> binding the particular customization
+ * type as the vendor <em>product</em> type parameter. See, for example, the
+ * {@link org.eclipse.emf.ecp.ui.view.swt.reference.ReferenceStrategy.Provider ReferenceStrategy.Provider} interface.
+ * </p>
  *
  * @author Eugen Neufeld
  * @noextend This class is not intended to be subclassed by clients.
@@ -61,222 +76,165 @@ import org.eclipse.swt.widgets.Shell;
 @SuppressWarnings("restriction")
 public class DefaultReferenceService implements ReferenceService {
 
-	private EditingDomain editingDomain;
+	private EObjectSelectionStrategy eobjectSelectionStrategy = EObjectSelectionStrategy.NULL;
+	private CreateNewModelElementStrategy createNewModelElementStrategy = CreateNewModelElementStrategy.DEFAULT;
+	private AttachmentStrategy attachmentStrategy = AttachmentStrategy.DEFAULT;
+	private ReferenceStrategy referenceStrategy = ReferenceStrategy.DEFAULT;
+	private OpenInNewContextStrategy openInNewContextStrategy = OpenInNewContextStrategy.DEFAULT;
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#instantiate(org.eclipse.emf.ecp.view.spi.context.ViewModelContext)
-	 */
 	@Override
 	public void instantiate(ViewModelContext context) {
-		editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(context.getDomainModel());
+		// Nothing to do
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#dispose()
-	 */
 	@Override
 	public void dispose() {
+		// Nothing to do
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.view.spi.context.ViewModelService#getPriority()
-	 */
 	@Override
 	public int getPriority() {
 		return 2;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @since 1.5
-	 */
-
+	@Deprecated
 	@Override
 	public void addNewModelElements(EObject eObject, EReference eReference) {
-		final EObject newMEInstance = getNewModelElementInstance(eReference);
+		addNewModelElements(eObject, eReference, true);
+	}
 
-		if (newMEInstance == null) {
-			return;
-		}
-
+	@Override
+	public Optional<EObject> addNewModelElements(EObject eObject, EReference eReference, boolean openInNewContext) {
 		if (eReference.isContainer()) {
-			// TODO language
 			MessageDialog.openError(Display.getDefault().getActiveShell(), "Error", //$NON-NLS-1$
 				"Operation not permitted for container references!");//$NON-NLS-1$
-			return;
+			return Optional.empty();
 		}
+
+		final Optional<EObject> newMEInstanceOptional = createNewModelElementStrategy.createNewModelElement(eObject,
+			eReference);
+
+		if (!newMEInstanceOptional.isPresent()) {
+			return Optional.empty();
+		}
+		final EObject newMEInstance = newMEInstanceOptional.get();
 
 		if (!eReference.isContainment()) {
-			addElementToModel(newMEInstance, eObject);
+			attachmentStrategy.addElementToModel(eObject, eReference, newMEInstance);
 		}
 
-		ECPControlHelper.addModelElementInReference(eObject, newMEInstance, eReference,
-			editingDomain);
-		openInNewContext(newMEInstance);
+		referenceStrategy.addElementsToReference(eObject, eReference, singleton(newMEInstance));
+
+		if (openInNewContext) {
+			openInNewContext(newMEInstance);
+		}
+
+		return newMEInstanceOptional;
 	}
 
-	private EObject getNewModelElementInstance(EReference eReference) {
-		final Collection<EClass> classes = EMFUtils.getSubClasses(eReference.getEReferenceType());
-		if (classes.isEmpty()) {
-			final String errorMessage = String.format("No concrete classes for the type %1$s were found!", //$NON-NLS-1$
-				eReference.getEReferenceType().getName());
-			MessageDialog.openError(Display.getDefault().getActiveShell(), "Error", //$NON-NLS-1$
-				errorMessage);
-			Activator.getDefault().getReportService().report(new AbstractReport(errorMessage));
-			return null;
-		}
-		if (classes.size() > 1) {
-			return getModelElementInstanceFromList(classes);
-		}
-		return eReference.getEReferenceType().getEPackage().getEFactoryInstance()
-			.create(classes.iterator().next());
-	}
-
-	private EObject getModelElementInstanceFromList(Collection<EClass> classes) {
-		final SelectionComposite<TreeViewer> helper = CompositeFactory.getSelectModelClassComposite(
-			new HashSet<EPackage>(),
-			new HashSet<EPackage>(), classes);
-
-		return SelectModelElementWizardFactory.openCreateNewModelElementDialog(helper);
-	}
-
-	/**
-	 * Tries to add {@code newElement} recursively upwards starting from {@code eObject}. If no applicable
-	 * {@link EObject} is found, the {@code newElement} will be added to {@code eObject}'s {@link Resource}.
-	 *
-	 * @param newElement
-	 *            The {@link EObject} which is added to the model.
-	 * @param eObject
-	 *            The starting point from which the {@code newElement} is recursively tried to be added upwards.
-	 */
-	private void addElementToModel(EObject newElement, EObject eObject) {
-		for (final EReference ref : eObject.eClass().getEAllContainments()) {
-			if (ref.getEType().isInstance(newElement)) {
-				ECPControlHelper.addModelElementInReference(eObject, newElement, ref, editingDomain);
-				return;
-			}
-		}
-		if (eObject.eContainer() != null) {
-			addElementToModel(newElement, eObject.eContainer());
-		} else {
-			eObject.eResource().getContents().add(newElement);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.ReferenceService#openInNewContext(org.eclipse.emf.ecore.EObject)
-	 */
 	@Override
 	public void openInNewContext(final EObject eObject) {
-
-		final Dialog dialog = new CustomDialog(Display.getDefault().getActiveShell(), eObject);
-
-		new ECPDialogExecutor(dialog) {
-			@Override
-			public void handleResult(int codeResult) {
-
-			}
-		}.execute();
+		final EObject owner = eObject.eContainer();
+		final EReference reference = eObject.eContainmentFeature();
+		openInNewContextStrategy.openInNewContext(owner, reference, eObject);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 *
-	 * @see org.eclipse.emf.ecp.edit.spi.ReferenceService#addExistingModelElements(org.eclipse.emf.ecore.EObject,
-	 *      org.eclipse.emf.ecore.EReference)
-	 * @since 1.5
-	 */
 	@Override
 	public void addExistingModelElements(EObject eObject, EReference eReference) {
 		final Iterator<EObject> allElements = ItemPropertyDescriptor
 			.getReachableObjectsOfType(eObject, eReference.getEType())
 			.iterator();
 
-		final Set<EObject> elements = new LinkedHashSet<EObject>();
+		Set<EObject> elements = new LinkedHashSet<EObject>();
 		while (allElements.hasNext()) {
 			elements.add(allElements.next());
 		}
 
+		elements = new LinkedHashSet<EObject>(
+			eobjectSelectionStrategy.collectExistingObjects(eObject, eReference, elements));
 		ECPControlHelper.removeExistingReferences(eObject, eReference, elements);
 
 		final Set<EObject> addedElements = SelectModelElementWizardFactory
 			.openModelElementSelectionDialog(elements, eReference.isMany());
 
-		ECPControlHelper.addModelElementsInReference(eObject, addedElements, eReference,
-			editingDomain);
-
+		// Don't invoke the Bazaar machinery to find a strategy just to add no elements
+		if (!addedElements.isEmpty()) {
+			referenceStrategy.addElementsToReference(eObject, eReference, addedElements);
+		}
 	}
 
-	/** Custom dialog used for displaying the provided EObject. */
-	private class CustomDialog extends Dialog {
-
-		private final EObject eObject;
-
-		/**
-		 * @param activeShell
-		 * @param eObject
-		 */
-		CustomDialog(Shell activeShell, EObject eObject) {
-			super(activeShell);
-			this.eObject = eObject;
+	/**
+	 * Add a strategy for selection of eligible existing {@link EObject}s to add
+	 * to references.
+	 *
+	 * @param strategy a strategy to set
+	 *
+	 * @since 1.16
+	 */
+	void setEObjectSelectionStrategy(EObjectSelectionStrategy strategy) {
+		if (strategy == null) {
+			strategy = EObjectSelectionStrategy.NULL;
 		}
 
-		@Override
-		protected void configureShell(Shell shell) {
-			super.configureShell(shell);
-			shell.setText(eObject.eClass().getName());
-		}
-
-		@Override
-		protected boolean isResizable() {
-			return true;
-		}
-
-		/**
-		 * {@inheritDoc}
-		 *
-		 * @see org.eclipse.jface.dialogs.Dialog#createDialogArea(org.eclipse.swt.widgets.Composite)
-		 */
-		@Override
-		protected Control createDialogArea(Composite parent) {
-			final Composite composite = (Composite) super.createDialogArea(parent);
-			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).hint(450, 250)
-				.applyTo(composite);
-
-			final ScrolledComposite scrolledComposite = new ScrolledComposite(composite, SWT.H_SCROLL
-				| SWT.V_SCROLL);
-			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(scrolledComposite);
-			scrolledComposite.setExpandVertical(true);
-			scrolledComposite.setExpandHorizontal(true);
-
-			final Composite content = new Composite(scrolledComposite, SWT.NONE);
-			GridLayoutFactory.fillDefaults().applyTo(content);
-			GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(content);
-
-			final ViewModelContext vmc = ViewModelContextFactory.INSTANCE.createViewModelContext(
-				ViewProviderHelper.getView(eObject, null), eObject, new DefaultReferenceService());
-			try {
-				ECPSWTViewRenderer.INSTANCE.render(content, vmc);
-			} catch (final ECPRendererException ex) {
-				Activator.log(ex);
-			}
-
-			scrolledComposite.setContent(content);
-			final Point point = content.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-			scrolledComposite.setMinSize(point);
-			scrolledComposite.layout(true);
-
-			return composite;
-		}
-
+		eobjectSelectionStrategy = strategy;
 	}
+
+	/**
+	 * Add a strategy for the creation of a new model element.
+	 *
+	 * @param strategy The strategy to set
+	 */
+	void setCreateNewModelElementStrategy(CreateNewModelElementStrategy strategy) {
+		if (strategy == null) {
+			strategy = CreateNewModelElementStrategy.DEFAULT;
+		}
+
+		createNewModelElementStrategy = strategy;
+	}
+
+	/**
+	 * Set a new attachment strategy ahead of previously added strategies.
+	 *
+	 * @param strategy an attachment strategy to set
+	 *
+	 * @since 1.16
+	 */
+	void setAttachmentStrategy(AttachmentStrategy strategy) {
+		if (strategy == null) {
+			strategy = AttachmentStrategy.DEFAULT;
+		}
+
+		attachmentStrategy = strategy;
+	}
+
+	/**
+	 * Set a new reference strategy ahead of previously added strategies.
+	 *
+	 * @param strategy an reference strategy to set
+	 *
+	 * @since 1.16
+	 */
+	void setReferenceStrategy(ReferenceStrategy strategy) {
+		if (strategy == null) {
+			strategy = ReferenceStrategy.DEFAULT;
+		}
+
+		referenceStrategy = strategy;
+	}
+
+	/**
+	 * Set a new open strategy ahead of previously added strategies.
+	 *
+	 * @param strategy an open strategy to set
+	 *
+	 * @since 1.16
+	 */
+	void setOpenStrategy(OpenInNewContextStrategy strategy) {
+		if (strategy == null) {
+			strategy = OpenInNewContextStrategy.DEFAULT;
+		}
+
+		openInNewContextStrategy = strategy;
+	}
+
 }

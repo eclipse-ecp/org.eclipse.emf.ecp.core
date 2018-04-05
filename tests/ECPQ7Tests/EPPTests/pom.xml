@@ -83,6 +83,7 @@
 								<site>${currentBuild}/org.eclipse.emf.ecp.repository.target/target/repository</site>
 								<features>
 									<feature>org.eclipse.emf.ecp.sdk.feature.feature.group</feature>
+									<feature>org.eclipse.emf.ecp.emfforms.sdk.feature.feature.group</feature>
 								</features>
 							</injection>
 						</injections>
@@ -94,7 +95,9 @@
 						</args>
 						<vmArgs>
 							<vmArg>-Xmx2g</vmArg>
+							<vmArg>-DinstallationURL=${currentBuild}/org.eclipse.emf.ecp.repository.target/target/repository</vmArg>
 							<vmArg>-Dorg.eclipse.swt.browser.DefaultType=mozilla</vmArg>
+                        	<vmArg>${failsafeArgline}</vmArg>
 						</vmArgs>
 					</aut>
 					<projects>

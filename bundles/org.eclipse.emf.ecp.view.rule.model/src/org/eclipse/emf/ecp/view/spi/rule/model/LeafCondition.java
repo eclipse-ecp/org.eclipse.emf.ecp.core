@@ -25,12 +25,14 @@ import org.eclipse.emf.ecp.view.spi.model.VDomainModelReference;
  *              The following features are supported:
  *              </p>
  *              <ul>
- *              <li>{@link org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition#getExpectedValue <em>Expected Value
- *              </em>}</li>
+ *              <li>{@link org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition#getExpectedValue <em>Expected
+ *              Value</em>}</li>
  *              <li>{@link org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition#getDomainModelReference <em>Domain
  *              Model Reference</em>}</li>
  *              <li>{@link org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition#getValueDomainModelReference <em>Value
  *              Domain Model Reference</em>}</li>
+ *              <li>{@link org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition#getCompareType <em>Compare
+ *              Type</em>}</li>
  *              </ul>
  *
  * @see org.eclipse.emf.ecp.view.spi.rule.model.RulePackage#getLeafCondition()
@@ -56,8 +58,8 @@ public interface LeafCondition extends Condition {
 	Object getExpectedValue();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition#getExpectedValue
-	 * <em>Expected Value</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition#getExpectedValue <em>Expected
+	 * Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -139,7 +141,6 @@ public interface LeafCondition extends Condition {
 	 *
 	 * @since 1.11
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the value of the '<em>Compare Type</em>' attribute.
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.CompareType
 	 * @see #setCompareType(CompareType)
@@ -156,7 +157,6 @@ public interface LeafCondition extends Condition {
 	 *
 	 * @since 1.11
 	 *        <!-- end-user-doc -->
-	 *
 	 * @param value the new value of the '<em>Compare Type</em>' attribute.
 	 * @see org.eclipse.emf.ecp.view.spi.rule.model.CompareType
 	 * @see #getCompareType()

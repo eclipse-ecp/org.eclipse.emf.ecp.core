@@ -14,7 +14,7 @@ package org.eclipse.emf.ecp.emf2web.exporter;
 import java.io.IOException;
 import java.util.Collection;
 
-import org.eclipse.emf.ecp.emf2web.controller.GenerationInfo;
+import org.eclipse.emf.ecp.emf2web.controller.xtend.GenerationInfo;
 
 /**
  * Exporter responsible to export generated content.

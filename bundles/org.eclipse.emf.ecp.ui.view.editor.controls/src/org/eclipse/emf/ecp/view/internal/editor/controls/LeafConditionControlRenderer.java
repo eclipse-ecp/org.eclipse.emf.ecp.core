@@ -33,13 +33,15 @@ import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.RulePackage;
 import org.eclipse.emf.ecp.view.spi.rule.model.impl.LeafConditionImpl;
+import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.edit.command.SetCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedReport;
-import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
+import org.eclipse.emfforms.spi.core.services.label.EMFFormsLabelProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Display;
@@ -57,10 +59,15 @@ public class LeafConditionControlRenderer extends ExpectedValueControlRenderer {
 	 * @param vElement the view model element to be rendered
 	 * @param viewContext the view context
 	 * @param reportService the {@link ReportService}
+	 * @param databindingService The {@link EMFFormsDatabinding}
+	 * @param labelProvider The {@link EMFFormsLabelProvider}
+	 * @param viewTemplateProvider The {@link VTViewTemplateProvider}
 	 */
 	@Inject
-	public LeafConditionControlRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService) {
-		super(vElement, viewContext, reportService);
+	public LeafConditionControlRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService,
+		EMFFormsDatabinding databindingService, EMFFormsLabelProvider labelProvider,
+		VTViewTemplateProvider viewTemplateProvider) {
+		super(vElement, viewContext, reportService, databindingService, labelProvider, viewTemplateProvider);
 	}
 
 	/**
@@ -79,21 +86,13 @@ public class LeafConditionControlRenderer extends ExpectedValueControlRenderer {
 		}
 
 		if (condition.getDomainModelReference() == null) {
-			MessageDialog.openError(control.getShell(), "No Feature Path Domain Model Reference found", //$NON-NLS-1$
-				"A Feature Path Domain Model Reference needs to be added to the condition first. " //$NON-NLS-1$
-			);
+			showError(control.getShell(), "No Feature Path Domain Model Reference found", //$NON-NLS-1$
+				"A Feature Path Domain Model Reference needs to be added to the condition first."); //$NON-NLS-1$
 			return;
 		}
 
 		EStructuralFeature structuralFeature = ((VFeaturePathDomainModelReference) condition
 			.getDomainModelReference()).getDomainModelEFeature();
-
-		if (structuralFeature == null) {
-			MessageDialog.openError(control.getShell(), "No value selected", //$NON-NLS-1$
-				"Please set a value to the Domain Model Reference first. " //$NON-NLS-1$
-			);
-			return;
-		}
 
 		if (EReference.class.isInstance(structuralFeature)) {
 			final EReference reference = EReference.class.cast(structuralFeature);
@@ -116,6 +115,12 @@ public class LeafConditionControlRenderer extends ExpectedValueControlRenderer {
 		if (condition.getValueDomainModelReference() != null) {
 			structuralFeature = ((VFeaturePathDomainModelReference) condition.getValueDomainModelReference())
 				.getDomainModelEFeature();
+		}
+
+		if (structuralFeature == null) {
+			showError(control.getShell(), "No value selected", //$NON-NLS-1$
+				"Please set a value to the Domain Model Reference first."); //$NON-NLS-1$
+			return;
 		}
 
 		if (EReference.class.isInstance(structuralFeature)) {

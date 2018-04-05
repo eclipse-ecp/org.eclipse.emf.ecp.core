@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="audit" nsURI="http://eclipse/org/emfforms/core/services/datatemplate/test/model/audit"
+    nsPrefix="org.eclipse.emfforms.core.services.datatemplate.test.model.audit">
+  <eClassifiers xsi:type="ecore:EClass" name="User" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="displayName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="login" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="password" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="delegates" upperBound="-1"
+        eType="#//RegisteredUser"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subUsers" upperBound="-1"
+        eType="#//AbstractSubUser"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PrivilegedUser" abstract="true" interface="true"
+      eSuperTypes="#//User"/>
+  <eClassifiers xsi:type="ecore:EClass" name="GuestUser" eSuperTypes="#//User"/>
+  <eClassifiers xsi:type="ecore:EClass" name="RegisteredUser" eSuperTypes="#//User"/>
+  <eClassifiers xsi:type="ecore:EClass" name="AdminUser" eSuperTypes="#//RegisteredUser #//PrivilegedUser"/>
+  <eClassifiers xsi:type="ecore:EClass" name="UserGroup">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="users" upperBound="-1"
+        eType="#//User"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="admins" upperBound="-1"
+        eType="#//PrivilegedUser"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="registeredUsers" upperBound="-1"
+        eType="#//RegisteredUser"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="guests" upperBound="-1"
+        eType="#//GuestUser"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AbstractSubUser" abstract="true" eSuperTypes="#//User"/>
+</ecore:EPackage>

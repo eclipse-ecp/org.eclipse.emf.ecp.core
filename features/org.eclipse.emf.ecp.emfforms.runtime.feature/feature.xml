@@ -2,10 +2,10 @@
 <feature
       id="org.eclipse.emf.ecp.emfforms.runtime.feature"
       label="EMF Forms Runtime"
-      version="1.16.0.qualifier"
+      version="1.17.0.qualifier"
       provider-name="%providerName"
       license-feature="org.eclipse.emf.ecp.license.feature"
-      license-feature-version="1.16.0.qualifier">
+      license-feature-version="1.17.0.qualifier">
 
    <description>
       %description
@@ -77,6 +77,14 @@
 
    <includes
          id="org.eclipse.emf.ecp.view.compoundcontrol.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emfforms.core.bazaar.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emfforms.view.annotation.feature"
          version="0.0.0"/>
 
 </feature>

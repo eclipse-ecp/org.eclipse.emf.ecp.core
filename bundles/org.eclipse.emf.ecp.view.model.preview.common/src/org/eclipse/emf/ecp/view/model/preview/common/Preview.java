@@ -128,6 +128,9 @@ public class Preview {
 
 	private void internalRender(VView view) {
 		try {
+			if (view == null) {
+				return;
+			}
 			clear();
 			final EClass myPreviewEClass = view.getRootEClass();
 			if (dummyData == null || dummyData.eClass() != myPreviewEClass) {

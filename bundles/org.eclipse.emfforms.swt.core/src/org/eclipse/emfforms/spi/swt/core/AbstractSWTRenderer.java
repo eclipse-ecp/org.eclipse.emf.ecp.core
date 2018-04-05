@@ -239,7 +239,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 			applyVisible();
 		}
 		applyReadOnly();
-		if (!getVElement().isReadonly()) {
+		if (!getVElement().isEffectivelyReadonly()) {
 			applyEnable();
 		}
 		applyValidation();
@@ -272,9 +272,7 @@ public abstract class AbstractSWTRenderer<VELEMENT extends VElement> extends Abs
 	 *
 	 */
 	protected void applyReadOnly() {
-		for (final SWTGridCell gridCell : controls.keySet()) {
-			setControlEnabled(gridCell, controls.get(gridCell), !getVElement().isReadonly());
-		}
+		// Do nothing, implement behavior in implementing class if needed
 	}
 
 	/**

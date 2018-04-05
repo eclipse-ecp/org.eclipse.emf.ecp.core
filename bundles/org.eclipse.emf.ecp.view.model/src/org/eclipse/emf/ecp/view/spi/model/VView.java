@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2013 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -28,7 +28,7 @@ import org.eclipse.emf.ecore.EClass;
  *        <ul>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.model.VView#getRootEClass <em>Root EClass</em>}</li>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.model.VView#getChildren <em>Children</em>}</li>
- *        <li>{@link org.eclipse.emf.ecp.view.spi.model.VView#getEcorePath <em>Ecore Path</em>}</li>
+ *        <li>{@link org.eclipse.emf.ecp.view.spi.model.VView#getEcorePaths <em>Ecore Paths</em>}</li>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.model.VView#getLoadingProperties <em>Loading Properties</em>}</li>
  *        </ul>
  *
@@ -45,7 +45,7 @@ public interface VView extends VElement {
 	 * here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Root EClass</em>' reference.
 	 * @see #setRootEClass(EClass)
 	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getView_RootEClass()
@@ -59,7 +59,7 @@ public interface VView extends VElement {
 	 * reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Root EClass</em>' reference.
 	 * @see #getRootEClass()
 	 * @generated
@@ -75,7 +75,7 @@ public interface VView extends VElement {
 	 * a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Children</em>' containment reference list.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getView_Children()
 	 * @model containment="true"
@@ -84,35 +84,21 @@ public interface VView extends VElement {
 	EList<VContainedElement> getChildren();
 
 	/**
-	 * Returns the value of the '<em><b>Ecore Path</b></em>' attribute.
+	 * Returns the value of the '<em><b>Ecore Paths</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.String}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Ecore Path</em>' attribute isn't clear, there really should be more of a description
-	 * here...
+	 * If the meaning of the '<em>Ecore Paths</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
 	 * </p>
+	 * <!-- end-user-doc -->
 	 *
-	 * @since 1.3
-	 *        <!-- end-user-doc -->
-	 * @return the value of the '<em>Ecore Path</em>' attribute.
-	 * @see #setEcorePath(String)
-	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getView_EcorePath()
-	 * @model required="true"
+	 * @return the value of the '<em>Ecore Paths</em>' attribute list.
+	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getView_EcorePaths()
+	 * @model
 	 * @generated
 	 */
-	String getEcorePath();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.emf.ecp.view.spi.model.VView#getEcorePath <em>Ecore Path</em>}'
-	 * attribute.
-	 * <!-- begin-user-doc -->
-	 *
-	 * @since 1.3
-	 *        <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Ecore Path</em>' attribute.
-	 * @see #getEcorePath()
-	 * @generated
-	 */
-	void setEcorePath(String value);
+	EList<String> getEcorePaths();
 
 	/**
 	 * Returns the value of the '<em><b>Loading Properties</b></em>' containment reference.

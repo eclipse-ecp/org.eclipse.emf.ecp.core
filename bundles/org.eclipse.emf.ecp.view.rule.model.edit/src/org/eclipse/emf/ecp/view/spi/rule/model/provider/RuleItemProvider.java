@@ -37,7 +37,7 @@ public class RuleItemProvider extends AttachmentItemProvider {
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	public RuleItemProvider(AdapterFactory adapterFactory) {
@@ -48,13 +48,12 @@ public class RuleItemProvider extends AttachmentItemProvider {
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
-		if (itemPropertyDescriptors == null)
-		{
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 		}
@@ -67,14 +66,13 @@ public class RuleItemProvider extends AttachmentItemProvider {
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(
 		Object object) {
-		if (childrenFeatures == null)
-		{
+		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(RulePackage.Literals.RULE__CONDITION);
 		}
@@ -84,7 +82,7 @@ public class RuleItemProvider extends AttachmentItemProvider {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -99,7 +97,7 @@ public class RuleItemProvider extends AttachmentItemProvider {
 	 * This returns the label text for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -112,15 +110,14 @@ public class RuleItemProvider extends AttachmentItemProvider {
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(Rule.class))
-		{
+		switch (notification.getFeatureID(Rule.class)) {
 		case RulePackage.RULE__CONDITION:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 			return;
@@ -133,7 +130,7 @@ public class RuleItemProvider extends AttachmentItemProvider {
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 *
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -141,20 +138,29 @@ public class RuleItemProvider extends AttachmentItemProvider {
 		Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
-		newChildDescriptors.add
-			(createChildParameter
-			(RulePackage.Literals.RULE__CONDITION,
-				RuleFactory.eINSTANCE.createLeafCondition()));
+		newChildDescriptors.add(createChildParameter(RulePackage.Literals.RULE__CONDITION,
+			RuleFactory.eINSTANCE.createLeafCondition()));
 
-		newChildDescriptors.add
-			(createChildParameter
-			(RulePackage.Literals.RULE__CONDITION,
-				RuleFactory.eINSTANCE.createOrCondition()));
+		newChildDescriptors.add(createChildParameter(RulePackage.Literals.RULE__CONDITION,
+			RuleFactory.eINSTANCE.createOrCondition()));
 
-		newChildDescriptors.add
-			(createChildParameter
-			(RulePackage.Literals.RULE__CONDITION,
-				RuleFactory.eINSTANCE.createAndCondition()));
+		newChildDescriptors.add(createChildParameter(RulePackage.Literals.RULE__CONDITION,
+			RuleFactory.eINSTANCE.createAndCondition()));
+
+		newChildDescriptors.add(createChildParameter(RulePackage.Literals.RULE__CONDITION,
+			RuleFactory.eINSTANCE.createIterateCondition()));
+
+		newChildDescriptors.add(createChildParameter(RulePackage.Literals.RULE__CONDITION,
+			RuleFactory.eINSTANCE.createTrue()));
+
+		newChildDescriptors.add(createChildParameter(RulePackage.Literals.RULE__CONDITION,
+			RuleFactory.eINSTANCE.createFalse()));
+
+		newChildDescriptors.add(createChildParameter(RulePackage.Literals.RULE__CONDITION,
+			RuleFactory.eINSTANCE.createNotCondition()));
+
+		newChildDescriptors.add(createChildParameter(RulePackage.Literals.RULE__CONDITION,
+			RuleFactory.eINSTANCE.createIsProxyCondition()));
 	}
 
 }

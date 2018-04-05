@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
+import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.DExtended;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestFactory;
 import org.eclipse.emfforms.core.services.databinding.testmodel.test.model.TestPackage;
 
@@ -76,6 +77,14 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * @generated
 	 */
 	private EClass eClassToAMapEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	private EClass dExtendedEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
@@ -358,6 +367,28 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 	 * @generated
 	 */
 	@Override
+	public EClass getDExtended() {
+		return dExtendedEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EReference getDExtended_A() {
+		return (EReference) dExtendedEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
 	public TestFactory getTestFactory() {
 		return (TestFactory) getEFactoryInstance();
 	}
@@ -409,6 +440,9 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		eClassToAMapEClass = createEClass(ECLASS_TO_AMAP);
 		createEReference(eClassToAMapEClass, ECLASS_TO_AMAP__KEY);
 		createEReference(eClassToAMapEClass, ECLASS_TO_AMAP__VALUE);
+
+		dExtendedEClass = createEClass(DEXTENDED);
+		createEReference(dExtendedEClass, DEXTENDED__A);
 	}
 
 	/**
@@ -443,6 +477,7 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
+		dExtendedEClass.getESuperTypes().add(getD());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(aEClass, org.eclipse.emfforms.core.services.databinding.testmodel.test.model.A.class, "A", //$NON-NLS-1$
@@ -498,6 +533,12 @@ public class TestPackageImpl extends EPackageImpl implements TestPackage {
 			!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
 			!IS_DERIVED, IS_ORDERED);
 		initEReference(getEClassToAMap_Value(), getA(), null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, //$NON-NLS-1$
+			!IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+			IS_ORDERED);
+
+		initEClass(dExtendedEClass, DExtended.class, "DExtended", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
+			IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getDExtended_A(), getA(), null, "a", null, 0, 1, DExtended.class, !IS_TRANSIENT, //$NON-NLS-1$
 			!IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
 			IS_ORDERED);
 

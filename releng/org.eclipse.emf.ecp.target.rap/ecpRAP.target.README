@@ -1,0 +1,9 @@
+We use the The Target Platform Definition DSL and Generator
+(https://github.com/mbarbero/fr.obeo.releng.targetplatform)
+to manage our Target Defintion.
+
+* Changes MUST ONLY be applied to the ecp.tpd file.
+* After every change, the .target file must be re-generated, use the right click action on TPD "Generate Target Defintion File".
+* After every change, you must commit both files (.target and .tpd)
+* Target can be set by right clicking the TPD file.
+

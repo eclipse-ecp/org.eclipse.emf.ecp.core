@@ -91,7 +91,7 @@ public abstract class ExtensionParser<ELEMENT extends InternalRegistryElement> e
 	protected void doActivate() throws Exception {
 		super.doActivate();
 
-		final String extensionPointID = namespace + "." + name;
+		final String extensionPointID = namespace + "." + name; //$NON-NLS-1$
 		final Set<ELEMENT> add = new HashSet<ELEMENT>();
 
 		final IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(extensionPointID);
@@ -115,7 +115,7 @@ public abstract class ExtensionParser<ELEMENT extends InternalRegistryElement> e
 
 		final ELEMENT element = createElement(name, configurationElement);
 		element.setLabel(extension.getLabel());
-		element.setDescription(configurationElement.getAttribute("description"));
+		element.setDescription(configurationElement.getAttribute("description")); //$NON-NLS-1$
 		result.add(element);
 	}
 
@@ -145,17 +145,17 @@ public abstract class ExtensionParser<ELEMENT extends InternalRegistryElement> e
 				final Bundle bundle = Platform.getBundle(bundleName);
 				String location = bundle.getLocation();
 
-				if (location.startsWith("initial@")) {
-					location = location.substring("initial@".length());
+				if (location.startsWith("initial@")) { //$NON-NLS-1$
+					location = location.substring("initial@".length()); //$NON-NLS-1$
 				}
 
-				final String prefix = "reference:file:";
+				final String prefix = "reference:file:"; //$NON-NLS-1$
 				if (location.startsWith(prefix)) {
 					location = location.substring(prefix.length());
 
 					// TODO Trace properly
-					System.out.println(getClass().getSimpleName() + ": " + bundleName + " [" + bundle.getBundleId()
-						+ "] --> file:" + new File(location).getCanonicalPath());
+					System.out.println(getClass().getSimpleName() + ": " + bundleName + " [" + bundle.getBundleId() //$NON-NLS-1$ //$NON-NLS-2$
+						+ "] --> file:" + new File(location).getCanonicalPath()); //$NON-NLS-1$
 				}
 			} catch (final Exception ex) {
 				ex.printStackTrace();
@@ -179,7 +179,7 @@ public abstract class ExtensionParser<ELEMENT extends InternalRegistryElement> e
 		}
 
 		protected String getClassAttributeName() {
-			return "class";
+			return "class"; //$NON-NLS-1$
 		}
 	}
 }

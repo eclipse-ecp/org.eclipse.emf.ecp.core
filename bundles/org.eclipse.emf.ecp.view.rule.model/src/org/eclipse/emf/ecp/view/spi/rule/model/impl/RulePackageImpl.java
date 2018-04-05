@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,7 +8,7 @@
  *
  * Contributors:
  * EclipseSource Munich GmbH - initial API and implementation
- * Christian W. Damus - bug 527753
+ * Christian W. Damus - bugs 527753, 530900
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.rule.model.impl;
 
@@ -25,6 +25,7 @@ import org.eclipse.emf.ecp.view.spi.rule.model.CompareType;
 import org.eclipse.emf.ecp.view.spi.rule.model.Condition;
 import org.eclipse.emf.ecp.view.spi.rule.model.EnableRule;
 import org.eclipse.emf.ecp.view.spi.rule.model.False;
+import org.eclipse.emf.ecp.view.spi.rule.model.IsProxyCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.IterateCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.NotCondition;
@@ -139,6 +140,14 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	 *
 	 * @generated
 	 */
+	private EClass isProxyConditionEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
 	private EEnum compareTypeEEnum = null;
 
 	/**
@@ -179,8 +188,9 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
 	 *
 	 * <p>
-	 * This method is used to initialize {@link RulePackage#eINSTANCE} when that field is accessed. Clients should not
-	 * invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc -->
+	 * This method is used to initialize {@link RulePackage#eINSTANCE} when that field is accessed.
+	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
+	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
 	 * @see #eNS_URI
@@ -194,9 +204,8 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 		}
 
 		// Obtain or create and register package
-		final RulePackageImpl theRulePackage = (RulePackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof RulePackageImpl ? EPackage.Registry.INSTANCE
-			.get(eNS_URI)
-			: new RulePackageImpl());
+		final RulePackageImpl theRulePackage = (RulePackageImpl) (EPackage.Registry.INSTANCE
+			.get(eNS_URI) instanceof RulePackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new RulePackageImpl());
 
 		isInited = true;
 
@@ -258,8 +267,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	 * @generated
 	 */
 	@Override
-	public EReference getLeafCondition_DomainModelReference()
-	{
+	public EReference getLeafCondition_DomainModelReference() {
 		return (EReference) leafConditionEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -271,8 +279,7 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	 * @generated
 	 */
 	@Override
-	public EReference getLeafCondition_ValueDomainModelReference()
-	{
+	public EReference getLeafCondition_ValueDomainModelReference() {
 		return (EReference) leafConditionEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -281,7 +288,6 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 	 *
 	 * @since 1.11
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
@@ -500,10 +506,31 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EClass getIsProxyCondition() {
+		return isProxyConditionEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public EReference getIsProxyCondition_DomainModelReference() {
+		return (EReference) isProxyConditionEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
 	 *
 	 * @since 1.11
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	@Override
@@ -592,6 +619,9 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 		notConditionEClass = createEClass(NOT_CONDITION);
 		createEReference(notConditionEClass, NOT_CONDITION__CONDITION);
 
+		isProxyConditionEClass = createEClass(IS_PROXY_CONDITION);
+		createEReference(isProxyConditionEClass, IS_PROXY_CONDITION__DOMAIN_MODEL_REFERENCE);
+
 		// Create enums
 		compareTypeEEnum = createEEnum(COMPARE_TYPE);
 		quantifierEEnum = createEEnum(QUANTIFIER);
@@ -626,7 +656,8 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 
 		// Obtain other dependent packages
 		final VViewPackage theViewPackage = (VViewPackage) EPackage.Registry.INSTANCE.getEPackage(VViewPackage.eNS_URI);
-		final EcorePackage theEcorePackage = (EcorePackage) EPackage.Registry.INSTANCE.getEPackage(EcorePackage.eNS_URI);
+		final EcorePackage theEcorePackage = (EcorePackage) EPackage.Registry.INSTANCE
+			.getEPackage(EcorePackage.eNS_URI);
 
 		// Create type parameters
 
@@ -643,10 +674,11 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 		trueEClass.getESuperTypes().add(getCondition());
 		falseEClass.getESuperTypes().add(getCondition());
 		notConditionEClass.getESuperTypes().add(getCondition());
+		isProxyConditionEClass.getESuperTypes().add(getCondition());
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(conditionEClass, Condition.class,
-			"Condition", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEClass(conditionEClass, Condition.class, "Condition", IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
+			IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(leafConditionEClass, LeafCondition.class, "LeafCondition", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
 			IS_GENERATED_INSTANCE_CLASS);
@@ -714,6 +746,12 @@ public class RulePackageImpl extends EPackageImpl implements RulePackage {
 		initEReference(getNotCondition_Condition(), getCondition(), null, "condition", null, 1, 1, //$NON-NLS-1$
 			NotCondition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
 			!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(isProxyConditionEClass, IsProxyCondition.class, "IsProxyCondition", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
+			IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getIsProxyCondition_DomainModelReference(), theViewPackage.getDomainModelReference(), null,
+			"domainModelReference", null, 0, 1, IsProxyCondition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
+			IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(compareTypeEEnum, CompareType.class, "CompareType"); //$NON-NLS-1$

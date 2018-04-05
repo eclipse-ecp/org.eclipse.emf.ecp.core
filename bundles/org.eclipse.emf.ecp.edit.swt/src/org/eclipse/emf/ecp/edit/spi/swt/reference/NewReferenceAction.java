@@ -219,7 +219,7 @@ public class NewReferenceAction extends ECPSWTAction {
 		if (referenceService == null) {
 			return;
 		}
-		referenceService.addNewModelElements(eObject, eReference);
+		referenceService.addNewModelElements(eObject, eReference, true);
 	}
 
 	private MessageDialog getContainmentWarningDialog() {

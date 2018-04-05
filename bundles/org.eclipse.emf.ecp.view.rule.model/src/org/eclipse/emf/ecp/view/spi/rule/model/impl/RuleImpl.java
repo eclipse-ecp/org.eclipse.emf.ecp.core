@@ -29,10 +29,10 @@ import org.eclipse.emf.ecp.view.spi.rule.model.RulePackage;
  *        <!-- end-user-doc -->
  *        <p>
  *        The following features are implemented:
+ *        </p>
  *        <ul>
  *        <li>{@link org.eclipse.emf.ecp.view.spi.rule.model.impl.RuleImpl#getCondition <em>Condition</em>}</li>
  *        </ul>
- *        </p>
  *
  * @generated
  */
@@ -90,8 +90,7 @@ public abstract class RuleImpl extends VAttachmentImpl implements Rule {
 		NotificationChain msgs) {
 		final Condition oldCondition = condition;
 		condition = newCondition;
-		if (eNotificationRequired())
-		{
+		if (eNotificationRequired()) {
 			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
 				RulePackage.RULE__CONDITION,
 				oldCondition, newCondition);
@@ -112,25 +111,23 @@ public abstract class RuleImpl extends VAttachmentImpl implements Rule {
 	 */
 	@Override
 	public void setCondition(Condition newCondition) {
-		if (newCondition != condition)
-		{
+		if (newCondition != condition) {
 			NotificationChain msgs = null;
 			if (condition != null) {
-				msgs = ((InternalEObject) condition).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
-					- RulePackage.RULE__CONDITION, null, msgs);
+				msgs = ((InternalEObject) condition).eInverseRemove(this,
+					EOPPOSITE_FEATURE_BASE - RulePackage.RULE__CONDITION, null, msgs);
 			}
 			if (newCondition != null) {
-				msgs = ((InternalEObject) newCondition).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
-					- RulePackage.RULE__CONDITION, null, msgs);
+				msgs = ((InternalEObject) newCondition).eInverseAdd(this,
+					EOPPOSITE_FEATURE_BASE - RulePackage.RULE__CONDITION, null, msgs);
 			}
 			msgs = basicSetCondition(newCondition, msgs);
 			if (msgs != null) {
 				msgs.dispatch();
 			}
-		}
-		else if (eNotificationRequired()) {
-			eNotify(new ENotificationImpl(this, Notification.SET, RulePackage.RULE__CONDITION, newCondition,
-				newCondition));
+		} else if (eNotificationRequired()) {
+			eNotify(
+				new ENotificationImpl(this, Notification.SET, RulePackage.RULE__CONDITION, newCondition, newCondition));
 		}
 	}
 
@@ -143,8 +140,7 @@ public abstract class RuleImpl extends VAttachmentImpl implements Rule {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 		int featureID, NotificationChain msgs) {
-		switch (featureID)
-		{
+		switch (featureID) {
 		case RulePackage.RULE__CONDITION:
 			return basicSetCondition(null, msgs);
 		}
@@ -159,8 +155,7 @@ public abstract class RuleImpl extends VAttachmentImpl implements Rule {
 	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID)
-		{
+		switch (featureID) {
 		case RulePackage.RULE__CONDITION:
 			return getCondition();
 		}
@@ -175,8 +170,7 @@ public abstract class RuleImpl extends VAttachmentImpl implements Rule {
 	 */
 	@Override
 	public void eSet(int featureID, Object newValue) {
-		switch (featureID)
-		{
+		switch (featureID) {
 		case RulePackage.RULE__CONDITION:
 			setCondition((Condition) newValue);
 			return;
@@ -192,8 +186,7 @@ public abstract class RuleImpl extends VAttachmentImpl implements Rule {
 	 */
 	@Override
 	public void eUnset(int featureID) {
-		switch (featureID)
-		{
+		switch (featureID) {
 		case RulePackage.RULE__CONDITION:
 			setCondition((Condition) null);
 			return;
@@ -209,8 +202,7 @@ public abstract class RuleImpl extends VAttachmentImpl implements Rule {
 	 */
 	@Override
 	public boolean eIsSet(int featureID) {
-		switch (featureID)
-		{
+		switch (featureID) {
 		case RulePackage.RULE__CONDITION:
 			return condition != null;
 		}

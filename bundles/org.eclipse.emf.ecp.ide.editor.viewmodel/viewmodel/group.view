@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="ASCII"?>
-<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/170" xmlns:org.eclipse.emf.ecp.view.stack.model="http://org/eclipse/emf/ecp/view/stack/model" xmi:id="_mfOkgEWAEeWfKJaajyNdyA">
+<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/1170" xmlns:org.eclipse.emf.ecp.view.stack.model="http://org/eclipse/emf/ecp/view/stack/model" xmi:id="_mfOkgEWAEeWfKJaajyNdyA">
   <rootEClass href="http://org/eclipse/emf/ecp/view/group/model#//Group"/>
   <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_mfPLkEWAEeWfKJaajyNdyA" name="Control name">
     <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_mfPLkUWAEeWfKJaajyNdyA">
-      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/emf/ecp/view/model/170#//Element/name"/>
+      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/emf/ecp/view/model/1170#//Element/name"/>
     </domainModelReference>
   </children>
   <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_mfPLkkWAEeWfKJaajyNdyA" name="Control readonly">
     <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_mfPLk0WAEeWfKJaajyNdyA">
-      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/emf/ecp/view/model/170#//Element/readonly"/>
+      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://org/eclipse/emf/ecp/view/model/1170#//Element/readonly"/>
     </domainModelReference>
   </children>
   <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_OwTEgP0JEea0gu9ZCWtkiA" name="tooltip">

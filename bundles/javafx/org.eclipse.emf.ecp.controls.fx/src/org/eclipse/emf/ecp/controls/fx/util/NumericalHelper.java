@@ -25,7 +25,7 @@ import org.eclipse.emf.ecp.controls.internal.fx.Activator;
  * @author Eugen Neufeld
  *
  */
-public class NumericalHelper {
+public final class NumericalHelper {
 
 	private static final String REGEX_INT = "^[-+]?[0-9]*$"; //$NON-NLS-1$
 	private static final String REGEX_FLOAT = "^[-+]?[0-9]*\\.?[0-9]*([eE][-+]?[0-9]+)?$"; //$NON-NLS-1$
@@ -233,7 +233,7 @@ public class NumericalHelper {
 
 	/**
 	 * Converts a Number to the given type.
-	 * 
+	 *
 	 * @param number the number to convert
 	 * @param instanceClass the type to convert to
 	 * @return the converted value

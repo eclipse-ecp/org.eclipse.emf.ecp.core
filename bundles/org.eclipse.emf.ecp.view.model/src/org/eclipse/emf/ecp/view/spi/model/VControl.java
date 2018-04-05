@@ -45,7 +45,7 @@ public interface VControl extends VContainedElement {
 	 * more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Domain Model Reference</em>' containment reference.
 	 * @see #setDomainModelReference(VDomainModelReference)
 	 * @see org.eclipse.emf.ecp.view.spi.model.VViewPackage#getControl_DomainModelReference()
@@ -59,7 +59,7 @@ public interface VControl extends VContainedElement {
 	 * Model Reference</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Domain Model Reference</em>' containment reference.
 	 * @see #getDomainModelReference()
 	 * @generated
@@ -76,7 +76,7 @@ public interface VControl extends VContainedElement {
 	 * description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @return the value of the '<em>Label Alignment</em>' attribute.
 	 * @see org.eclipse.emf.ecp.view.spi.model.LabelAlignment
 	 * @see #setLabelAlignment(LabelAlignment)
@@ -91,7 +91,7 @@ public interface VControl extends VContainedElement {
 	 * Alignment</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @param value the new value of the '<em>Label Alignment</em>' attribute.
 	 * @see org.eclipse.emf.ecp.view.spi.model.LabelAlignment
 	 * @see #getLabelAlignment()

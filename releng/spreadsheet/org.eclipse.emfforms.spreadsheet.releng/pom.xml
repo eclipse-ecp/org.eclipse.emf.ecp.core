@@ -17,15 +17,16 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<tycho.scmUrl>scm:git:git://git.eclipse.org/gitroot/emfclient/org.eclipse.emf.ecp.core.git</tycho.scmUrl>
 		<jarsigner-version>1.1.0</jarsigner-version>
-		<mav-surefire-version>2.16</mav-surefire-version>
-		<junit-version>4.11</junit-version>
-		<checkstyle-version>6.11.2</checkstyle-version>
+		<mav-surefire-version>2.20.1</mav-surefire-version>
+		<junit-version>4.12</junit-version>
+		<checkstyle-version>8.5</checkstyle-version>
+		<jacoco-version>0.8.0</jacoco-version>
 		
 		<!-- Properties to enable jacoco code coverage analysis with sonar -->
 		<sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
 		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-		<sonar.jacoco.reportPath>../../tests/coverage/jacoco.exec</sonar.jacoco.reportPath>
-		<sonar.exclusions>**/model/**,**/test/**</sonar.exclusions>
+		<sonar.jacoco.reportPath>../../../tests/coverage/jacoco.exec</sonar.jacoco.reportPath>
+		<sonar.exclusions>**/test/**,**/tests/**, **/*_PTest.java,**/*_Test.java, **/*_ITest.java,**/AllTests.java,**/AllIntegrationTests.java, **/Messages.java,</sonar.exclusions>
 		
 		<target-spreadsheet>emfforms_spreadsheet</target-spreadsheet>
 	</properties>
@@ -194,12 +195,10 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>2.11</version>
+				<version>2.17</version>
 				<configuration>
-					<configLocation>http://download.eclipse.org/ecp/config/esmCheckstyle.xml</configLocation>
-
-					<suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
-					<suppressionsLocation>http://download.eclipse.org/ecp/config/suppressions.xml</suppressionsLocation>
+					<configLocation>../../org.eclipse.emf.ecp.releng/checkstyle/esmCheckstyle.xml</configLocation>
+					<excludes>**/xtend/**/*</excludes>
 					<failsOnError>false</failsOnError>
 				</configuration>
 				<executions>
@@ -237,17 +236,21 @@
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.7.4.201502262128</version>
+				<version>${jacoco-version}</version>
 				<configuration>
 					<destFile>${sonar.jacoco.reportPath}</destFile>
 					<append>true</append> 
 				</configuration>
 				<executions>
 					<execution>
+						<phase>process-test-classes</phase>
 						<id>jacoco-initialize</id>
 						<goals>
 							<goal>prepare-agent</goal>
 						</goals>
+						<configuration>
+							<propertyName>jacocoArgs</propertyName>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>

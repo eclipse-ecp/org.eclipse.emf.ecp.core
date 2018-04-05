@@ -739,5 +739,135 @@
         <parameters xmi:id="_HWZyr9IcEeewte-w2M_x7A" name="opposite"/>
       </operation>
     </changes>
+    <changes xsi:type="history:OperationChange" xmi:id="_k4XiQAzhEei8mtmQsxqBfQ">
+      <changes xsi:type="history:Create" xmi:id="_k4XiQQzhEei8mtmQsxqBfQ" referenceName="eClassifiers">
+        <target href="rule.ecore#/"/>
+        <element href="rule.ecore#//IsProxyCondition"/>
+        <changes xsi:type="history:Set" xmi:id="_k4XiQgzhEei8mtmQsxqBfQ" featureName="name" dataValue="IsProxyCondition">
+          <element href="rule.ecore#//IsProxyCondition"/>
+        </changes>
+        <changes xsi:type="history:Add" xmi:id="_k4XiQwzhEei8mtmQsxqBfQ" featureName="eSuperTypes">
+          <element href="rule.ecore#//IsProxyCondition"/>
+          <referenceValue href="rule.ecore#//Condition"/>
+        </changes>
+      </changes>
+      <operation xmi:id="_k4XiRAzhEei8mtmQsxqBfQ" name="newClass">
+        <parameters xmi:id="_k4XiRQzhEei8mtmQsxqBfQ" name="ePackage">
+          <referenceValue xmi:id="_k4XiRgzhEei8mtmQsxqBfQ">
+            <element href="rule.ecore#/"/>
+          </referenceValue>
+        </parameters>
+        <parameters xmi:id="_k4XiRwzhEei8mtmQsxqBfQ" name="name">
+          <dataValue>IsProxyCondition</dataValue>
+        </parameters>
+        <parameters xmi:id="_k4XiSAzhEei8mtmQsxqBfQ" name="superClasses">
+          <referenceValue xmi:id="_k4XiSQzhEei8mtmQsxqBfQ">
+            <element href="rule.ecore#//Condition"/>
+          </referenceValue>
+        </parameters>
+        <parameters xmi:id="_k4XiSgzhEei8mtmQsxqBfQ" name="abstr">
+          <dataValue>false</dataValue>
+        </parameters>
+      </operation>
+    </changes>
+    <changes xsi:type="history:OperationChange" xmi:id="_K61z0AziEei8mtmQsxqBfQ">
+      <changes xsi:type="history:Create" xmi:id="_K61z0QziEei8mtmQsxqBfQ" referenceName="eAnnotations">
+        <target href="rule.ecore#//IsProxyCondition"/>
+        <element href="rule.ecore#//IsProxyCondition/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FGenModel%"/>
+        <changes xsi:type="history:Set" xmi:id="_K61z0gziEei8mtmQsxqBfQ" featureName="source" dataValue="http://www.eclipse.org/emf/2002/GenModel">
+          <element href="rule.ecore#//IsProxyCondition/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FGenModel%"/>
+        </changes>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_K61z0wziEei8mtmQsxqBfQ" referenceName="details">
+        <target href="rule.ecore#//IsProxyCondition/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FGenModel%"/>
+        <element href="rule.ecore#//IsProxyCondition/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FGenModel%/@details.0"/>
+        <changes xsi:type="history:Set" xmi:id="_K61z1AziEei8mtmQsxqBfQ" featureName="key" dataValue="documentation">
+          <element href="rule.ecore#//IsProxyCondition/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FGenModel%/@details.0"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_K61z1QziEei8mtmQsxqBfQ" featureName="value" dataValue="Matches {@link org.eclipse.emf.ecore.EObject EObject}s that are unresolved proxies.  Does not make sense for rules on attributes.">
+          <element href="rule.ecore#//IsProxyCondition/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FGenModel%/@details.0"/>
+        </changes>
+      </changes>
+      <operation xmi:id="_K61z1gziEei8mtmQsxqBfQ" name="document">
+        <parameters xmi:id="_K61z1wziEei8mtmQsxqBfQ" name="element">
+          <referenceValue xmi:id="_K61z2AziEei8mtmQsxqBfQ">
+            <element href="rule.ecore#//IsProxyCondition"/>
+          </referenceValue>
+        </parameters>
+        <parameters xmi:id="_K61z2QziEei8mtmQsxqBfQ" name="documentation">
+          <dataValue>Matches {@link org.eclipse.emf.ecore.EObject EObject}s that are unresolved proxies.  Does not make sense for rules on attributes.</dataValue>
+        </parameters>
+      </operation>
+    </changes>
+    <changes xsi:type="history:OperationChange" xmi:id="_0GB04A0FEeiappYdMtJgQA">
+      <changes xsi:type="history:Create" xmi:id="_0GB04Q0FEeiappYdMtJgQA" referenceName="eStructuralFeatures">
+        <target href="rule.ecore#//IsProxyCondition"/>
+        <element href="rule.ecore#//IsProxyCondition/domainModelReference"/>
+        <changes xsi:type="history:Set" xmi:id="_0GB04g0FEeiappYdMtJgQA" featureName="name" dataValue="domainModelReference">
+          <element href="rule.ecore#//IsProxyCondition/domainModelReference"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_0GB04w0FEeiappYdMtJgQA" featureName="containment" dataValue="true" oldDataValue="false">
+          <element href="rule.ecore#//IsProxyCondition/domainModelReference"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_0GB05A0FEeiappYdMtJgQA" featureName="eType">
+          <element href="rule.ecore#//IsProxyCondition/domainModelReference"/>
+          <referenceValue href="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"/>
+        </changes>
+      </changes>
+      <operation xmi:id="_0GB05Q0FEeiappYdMtJgQA" name="newReference">
+        <parameters xmi:id="_0GB05g0FEeiappYdMtJgQA" name="eClass">
+          <referenceValue xmi:id="_0GB05w0FEeiappYdMtJgQA">
+            <element href="rule.ecore#//IsProxyCondition"/>
+          </referenceValue>
+        </parameters>
+        <parameters xmi:id="_0GB06A0FEeiappYdMtJgQA" name="name">
+          <dataValue>domainModelReference</dataValue>
+        </parameters>
+        <parameters xmi:id="_0GB06Q0FEeiappYdMtJgQA" name="type">
+          <referenceValue xmi:id="_0GB06g0FEeiappYdMtJgQA">
+            <element href="../../org.eclipse.emf.ecp.view.model/model/view.ecore#//DomainModelReference"/>
+          </referenceValue>
+        </parameters>
+        <parameters xmi:id="_0GB06w0FEeiappYdMtJgQA" name="lowerBound">
+          <dataValue>0</dataValue>
+        </parameters>
+        <parameters xmi:id="_0GB07A0FEeiappYdMtJgQA" name="upperBound">
+          <dataValue>1</dataValue>
+        </parameters>
+        <parameters xmi:id="_0GB07Q0FEeiappYdMtJgQA" name="containment">
+          <dataValue>true</dataValue>
+        </parameters>
+        <parameters xmi:id="_0GB07g0FEeiappYdMtJgQA" name="opposite"/>
+      </operation>
+    </changes>
+    <changes xsi:type="history:OperationChange" xmi:id="_E2mPEA0GEeiappYdMtJgQA">
+      <changes xsi:type="history:Create" xmi:id="_E2mPEQ0GEeiappYdMtJgQA" referenceName="eAnnotations">
+        <target href="rule.ecore#//IsProxyCondition/domainModelReference"/>
+        <element href="rule.ecore#//IsProxyCondition/domainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FGenModel%"/>
+        <changes xsi:type="history:Set" xmi:id="_E2mPEg0GEeiappYdMtJgQA" featureName="source" dataValue="http://www.eclipse.org/emf/2002/GenModel">
+          <element href="rule.ecore#//IsProxyCondition/domainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FGenModel%"/>
+        </changes>
+      </changes>
+      <changes xsi:type="history:Create" xmi:id="_E2mPEw0GEeiappYdMtJgQA" referenceName="details">
+        <target href="rule.ecore#//IsProxyCondition/domainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FGenModel%"/>
+        <element href="rule.ecore#//IsProxyCondition/domainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FGenModel%/@details.0"/>
+        <changes xsi:type="history:Set" xmi:id="_E2mPFA0GEeiappYdMtJgQA" featureName="key" dataValue="documentation">
+          <element href="rule.ecore#//IsProxyCondition/domainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FGenModel%/@details.0"/>
+        </changes>
+        <changes xsi:type="history:Set" xmi:id="_E2mPFQ0GEeiappYdMtJgQA" featureName="value" dataValue="Optional reference to check for proxies.  If set, must indicate an {@link org.eclipse.emf.ecore.EReference EReference}.  The condition evaluates {@code true} if the reference contains a proxy; {@code false}, otherwise.  If omitted, the condition tests whether the domain object itself is a proxy, which is particularly useful in {@link IterateCondition}s.">
+          <element href="rule.ecore#//IsProxyCondition/domainModelReference/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FGenModel%/@details.0"/>
+        </changes>
+      </changes>
+      <operation xmi:id="_E2mPFg0GEeiappYdMtJgQA" name="document">
+        <parameters xmi:id="_E2mPFw0GEeiappYdMtJgQA" name="element">
+          <referenceValue xmi:id="_E2mPGA0GEeiappYdMtJgQA">
+            <element href="rule.ecore#//IsProxyCondition/domainModelReference"/>
+          </referenceValue>
+        </parameters>
+        <parameters xmi:id="_E2mPGQ0GEeiappYdMtJgQA" name="documentation">
+          <dataValue>Optional reference to check for proxies.  If set, must indicate an {@link org.eclipse.emf.ecore.EReference EReference}.  The condition evaluates {@code true} if the reference contains a proxy; {@code false}, otherwise.  If omitted, the condition tests whether the domain object itself is a proxy, which is particularly useful in {@link IterateCondition}s.</dataValue>
+        </parameters>
+      </operation>
+    </changes>
   </releases>
 </history:History>

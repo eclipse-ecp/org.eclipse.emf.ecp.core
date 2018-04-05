@@ -103,8 +103,7 @@ public final class PreSetValidationListeners {
 	}
 
 	private void init(ViewModelContext context) {
-		if (preSetValidationService == null) {
-			// The PreSetValidationService is allowed to be null => no further check necessary
+		if (preSetValidationService == null && context.hasService(PreSetValidationService.class)) {
 			preSetValidationService = context.getService(PreSetValidationService.class);
 		}
 	}

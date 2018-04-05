@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.eclipse.emfforms.internal.datatemplate.tooling.editor.DataTemplateEClassSelectionStrategyProvider">
+   <service>
+      <provide interface="org.eclipse.emf.ecp.ui.view.swt.reference.EClassSelectionStrategy$Provider"/>
+   </service>
+   <implementation class="org.eclipse.emfforms.internal.datatemplate.tooling.editor.DataTemplateEClassSelectionStrategyProvider"/>
+</scr:component>

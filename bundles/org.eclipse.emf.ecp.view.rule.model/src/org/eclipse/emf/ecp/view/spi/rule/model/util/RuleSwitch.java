@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,7 +8,7 @@
  *
  * Contributors:
  * EclipseSource Munich GmbH - initial API and implementation
- * Christian W. Damus - bug 527753
+ * Christian W. Damus - bugs 527753, 530900
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.rule.model.util;
 
@@ -20,6 +20,7 @@ import org.eclipse.emf.ecp.view.spi.rule.model.AndCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.Condition;
 import org.eclipse.emf.ecp.view.spi.rule.model.EnableRule;
 import org.eclipse.emf.ecp.view.spi.rule.model.False;
+import org.eclipse.emf.ecp.view.spi.rule.model.IsProxyCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.IterateCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.NotCondition;
@@ -62,8 +63,7 @@ public class RuleSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public RuleSwitch() {
-		if (modelPackage == null)
-		{
+		if (modelPackage == null) {
 			modelPackage = RulePackage.eINSTANCE;
 		}
 	}
@@ -73,7 +73,7 @@ public class RuleSwitch<T> extends Switch<T> {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
-	 * @parameter ePackage the package in question.
+	 * @param ePackage the package in question.
 	 * @return whether this is a switch for the given package.
 	 * @generated
 	 */
@@ -93,8 +93,7 @@ public class RuleSwitch<T> extends Switch<T> {
 	 */
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
-		switch (classifierID)
-		{
+		switch (classifierID) {
 		case RulePackage.CONDITION: {
 			final Condition condition = (Condition) theEObject;
 			T result = caseCondition(condition);
@@ -213,6 +212,17 @@ public class RuleSwitch<T> extends Switch<T> {
 			T result = caseNotCondition(notCondition);
 			if (result == null) {
 				result = caseCondition(notCondition);
+			}
+			if (result == null) {
+				result = defaultCase(theEObject);
+			}
+			return result;
+		}
+		case RulePackage.IS_PROXY_CONDITION: {
+			final IsProxyCondition isProxyCondition = (IsProxyCondition) theEObject;
+			T result = caseIsProxyCondition(isProxyCondition);
+			if (result == null) {
+				result = caseCondition(isProxyCondition);
 			}
 			if (result == null) {
 				result = defaultCase(theEObject);
@@ -397,6 +407,22 @@ public class RuleSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseNotCondition(NotCondition object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Is Proxy Condition</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 *
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Is Proxy Condition</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseIsProxyCondition(IsProxyCondition object) {
 		return null;
 	}
 

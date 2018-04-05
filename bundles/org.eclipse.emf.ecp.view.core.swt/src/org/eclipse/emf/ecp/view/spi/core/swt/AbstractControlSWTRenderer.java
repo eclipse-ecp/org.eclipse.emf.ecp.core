@@ -575,4 +575,16 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	 */
 	protected void rootDomainModelChanged() throws DatabindingFailedException {
 	}
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @see org.eclipse.emfforms.spi.swt.core.AbstractSWTRenderer#applyReadOnly()
+	 */
+	@Override
+	protected void applyReadOnly() {
+		for (final SWTGridCell gridCell : getControls().keySet()) {
+			setControlEnabled(gridCell, getControls().get(gridCell), !getVElement().isEffectivelyReadonly());
+		}
+	}
 }

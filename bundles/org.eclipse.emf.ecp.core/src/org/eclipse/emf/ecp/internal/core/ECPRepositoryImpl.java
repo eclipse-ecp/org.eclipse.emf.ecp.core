@@ -73,10 +73,10 @@ public final class ECPRepositoryImpl extends PropertiesElement implements Intern
 	public ECPRepositoryImpl(ECPProvider provider, String name, ECPProperties properties) {
 		super(name, properties);
 		label = name;
-		description = "";
+		description = ""; //$NON-NLS-1$
 
 		if (provider == null) {
-			throw new IllegalArgumentException("Provider is null");
+			throw new IllegalArgumentException("Provider is null"); //$NON-NLS-1$
 		}
 
 		this.provider = (InternalProvider) provider;
@@ -99,7 +99,7 @@ public final class ECPRepositoryImpl extends PropertiesElement implements Intern
 		final String providerName = in.readUTF();
 		provider = (InternalProvider) ECPUtil.getECPProviderRegistry().getProvider(providerName);
 		if (provider == null) {
-			throw new IllegalStateException("Provider not found: " + providerName);
+			throw new IllegalStateException("Provider not found: " + providerName); //$NON-NLS-1$
 		}
 
 		provider.addDisposeListener(this);

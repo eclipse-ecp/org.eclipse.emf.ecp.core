@@ -1,0 +1,21 @@
+target "ECP RAP"
+
+with source configurePhase	
+
+include "../org.eclipse.emf.ecp.target.rcp/ecp.tpd"
+
+location "http://download.eclipse.org/releases/oxygen" {
+	org.eclipse.rap.equinox.target.feature.feature.group lazy
+	org.eclipse.rap.feature.feature.group lazy
+	org.eclipse.rap.sdk.feature.feature.group lazy
+	org.eclipse.emf.rap.sdk.feature.group lazy
+}
+
+location "http://download.eclipse.org/emfstore/releases_19" {
+	org.eclipse.emf.emfstore.client.ui.rap.feature.feature.group lazy
+}
+
+
+
+
+

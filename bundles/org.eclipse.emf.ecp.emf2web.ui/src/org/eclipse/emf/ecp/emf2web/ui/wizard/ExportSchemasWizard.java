@@ -19,7 +19,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecp.emf2web.controller.GenerationInfo;
+import org.eclipse.emf.ecp.emf2web.controller.xtend.GenerationInfo;
 import org.eclipse.emf.ecp.emf2web.exporter.DialogToggleInteraction;
 import org.eclipse.emf.ecp.emf2web.exporter.GenerationExporter;
 import org.eclipse.emf.ecp.emf2web.ui.messages.Messages;

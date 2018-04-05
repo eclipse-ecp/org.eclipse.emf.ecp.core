@@ -161,6 +161,12 @@
                 <message_argument value="evaluateChangedValues(Map&lt;EStructuralFeature.Setting,Object&gt;)"/>
             </message_arguments>
         </filter>
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="LeafCondition"/>
+                <message_argument value="LeafConditionImpl"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/ecp/view/spi/rule/model/impl/LeafConditionSettingIterator.java" type="org.eclipse.emf.ecp.view.spi.rule.model.impl.LeafConditionSettingIterator">
         <filter comment="SPI Change for 1.9.0" id="338722907">
@@ -189,6 +195,14 @@
             <message_arguments>
                 <message_argument value="org.eclipse.emf.ecp.view.spi.rule.model.impl.OrConditionImpl"/>
                 <message_argument value="evaluateChangedValues(Map&lt;EStructuralFeature.Setting,Object&gt;)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/ecp/view/spi/rule/model/impl/RulePackageImpl.java" type="org.eclipse.emf.ecp.view.spi.rule.model.impl.RulePackageImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="RulePackage"/>
+                <message_argument value="RulePackageImpl"/>
             </message_arguments>
         </filter>
     </resource>

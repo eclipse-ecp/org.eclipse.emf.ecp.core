@@ -188,7 +188,7 @@ public interface InternalProvider extends ECPProvider, ECPProviderAware, ECPMode
 	 * @param projectToClone the project to be cloned
 	 * @param targetProject the project to add the cloned data to
 	 */
-	void cloneProject(final InternalProject projectToClone, InternalProject targetProject);
+	void cloneProject(InternalProject projectToClone, InternalProject targetProject);
 
 	/**
 	 * Checks whether the data of the project still exists, method is called on startup. {@link DefaultProvider}

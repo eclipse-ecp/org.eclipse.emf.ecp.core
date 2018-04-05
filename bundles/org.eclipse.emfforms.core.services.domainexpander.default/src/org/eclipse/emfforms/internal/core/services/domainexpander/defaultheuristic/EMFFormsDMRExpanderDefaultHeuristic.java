@@ -72,8 +72,7 @@ public class EMFFormsDMRExpanderDefaultHeuristic implements EMFFormsDMRExpander 
 			featurePathDMR.getDomainModelEReferencePath());
 		for (final EReference eReference : featurePathDMR.getDomainModelEReferencePath()) {
 			if (!currentResolvedEObject.eClass().getEAllReferences().contains(eReference)) {
-				throw new EMFFormsExpandingFailedException(
-					"The path defined in the given domain model reference is not compatible with the domain object because the reference requires non available references."); //$NON-NLS-1$
+				break;
 			}
 			if (eReference.isMany()) {
 				break;

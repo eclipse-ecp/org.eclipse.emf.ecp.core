@@ -1,0 +1,16 @@
+target "ECP RAP with ECP"
+
+with source configurePhase	
+
+include "ecpRAP.tpd"
+
+location "http://download.eclipse.org/ecp/releases/releases_target_116"{
+	org.eclipse.emf.ecp.rap.sdk.feature.feature.group lazy
+	org.eclipse.emf.ecp.rap.util.feature.feature.group lazy
+	org.eclipse.emf.ecp.emfforms.sdk.feature.feature.group lazy
+}
+
+
+
+
+

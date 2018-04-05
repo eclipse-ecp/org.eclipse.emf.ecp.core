@@ -322,12 +322,13 @@ public class ViewAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
+	 * 
+	 * @since 1.13
+	 *        <!-- end-user-doc -->
 	 *
 	 * @return the new adapter.
 	 * @see org.eclipse.emf.ecp.view.spi.model.VHasTooltip
 	 * @generated
-	 * @since 1.13
 	 */
 	public Adapter createHasTooltipAdapter() {
 		return null;

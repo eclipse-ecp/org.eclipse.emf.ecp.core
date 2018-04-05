@@ -20,9 +20,11 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecp.ui.view.test.HierarchyViewModelHandle;
+import org.eclipse.emf.ecp.view.spi.model.VContainedElement;
 import org.eclipse.emf.ecp.view.spi.model.VControl;
 import org.eclipse.emf.ecp.view.spi.model.VElement;
 import org.eclipse.emf.ecp.view.spi.model.VFeaturePathDomainModelReference;
+import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.renderer.NoPropertyDescriptorFoundExeption;
 import org.eclipse.emf.ecp.view.spi.renderer.NoRendererFoundException;
@@ -82,8 +84,7 @@ public class SWTVertical_PTest {
 	public void testVerticalWithTwoVerticalAsChildrenAndControlAsSubChildren() throws NoRendererFoundException,
 		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
 		// setup model
-		final HierarchyViewModelHandle handle =
-			createVerticalWithTwoVerticalAsChildrenAndControlAsSubChildren();
+		final HierarchyViewModelHandle handle = createVerticalWithTwoVerticalAsChildrenAndControlAsSubChildren();
 		final Control render = SWTViewTestHelper.render(handle.getRoot(), domainElement, shell);
 		assertTrue(render instanceof Composite);
 		final Composite composite = (Composite) render;
@@ -103,6 +104,31 @@ public class SWTVertical_PTest {
 		assertTrue(SWTViewTestHelper.checkIfThereIsATextControl(secondVertical.getChildren()[2]));
 		assertTrue(SWTViewTestHelper.checkIfThereIsATextControl(firstVertical.getChildren()[5]));
 		assertTrue(SWTViewTestHelper.checkIfThereIsATextControl(secondVertical.getChildren()[5]));
+	}
+
+	@Test
+	public void testReadOnlyDoesNotDisable() throws NoRendererFoundException,
+		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
+		// setup model
+		final HierarchyViewModelHandle handle = createVerticalWithoutChildren();
+		handle.getRoot().setReadonly(true);
+		final Control render = SWTViewTestHelper.render(handle.getRoot(), domainElement, shell);
+		assertTrue(render instanceof Composite);
+		assertTrue(render.isEnabled());
+	}
+
+	@Test
+	public void testEffectivelyReadOnlyDoesNotDisable() throws NoRendererFoundException,
+		NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
+		// setup model
+		final HierarchyViewModelHandle handle = createVerticalWithoutChildren();
+		final VView view = VViewFactory.eINSTANCE.createView();
+		view.setReadonly(true);
+		handle.getRoot().setReadonly(false);
+		view.getChildren().add((VContainedElement) handle.getRoot());
+		final Control render = SWTViewTestHelper.render(handle.getRoot(), domainElement, shell);
+		assertTrue(render instanceof Composite);
+		assertTrue(render.isEnabled());
 	}
 
 	private static HierarchyViewModelHandle createVerticalWithTwoVerticalAsChildrenAndControlAsSubChildren() {

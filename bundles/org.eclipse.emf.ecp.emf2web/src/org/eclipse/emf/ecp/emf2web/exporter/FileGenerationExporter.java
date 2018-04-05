@@ -30,7 +30,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecp.emf2web.controller.GenerationInfo;
+import org.eclipse.emf.ecp.emf2web.controller.xtend.GenerationInfo;
 import org.eclipse.emf.ecp.emf2web.internal.messages.Messages;
 
 /**
@@ -160,7 +160,7 @@ public class FileGenerationExporter implements GenerationExporter {
 	 * @param fileName
 	 *            The name of the file displayed to the user.
 	 * @return
-	 *         {@code true} if the file shall be overwritten, {@code false} otherwise.
+	 * 		{@code true} if the file shall be overwritten, {@code false} otherwise.
 	 */
 	protected boolean askOverwriteAllowed(String fileName) {
 		final String title = Messages.FileGenerationExporter_OverwriteWarning;

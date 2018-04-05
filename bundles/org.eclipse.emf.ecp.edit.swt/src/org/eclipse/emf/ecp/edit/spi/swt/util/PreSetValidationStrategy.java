@@ -34,7 +34,7 @@ import org.osgi.framework.ServiceReference;
  *
  * @since 1.13
  */
-public class PreSetValidationStrategy extends UpdateValueStrategy {
+public class PreSetValidationStrategy extends EMFUpdateValueStrategy {
 
 	private final EStructuralFeature eStructuralFeature;
 	private final VElement vElement;

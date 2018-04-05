@@ -12,6 +12,7 @@
 package org.eclipse.emf.ecp.view.stack.ui.swt.test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
@@ -151,5 +152,19 @@ public class SWTStack_PTest {
 		stackLayout.setTopElement(null);
 		final Composite top = getTop(render);
 		assertEquals(0, top.getChildren().length);
+	}
+
+	@Test
+	public void readOnlyDoesNotDisableComposite() throws ECPRendererException {
+		stackLayout.setReadonly(true);
+		final Composite render = render();
+		assertTrue(render.isEnabled());
+	}
+
+	@Test
+	public void effectivelyReadOnlyDoesNotDisableComposite() throws ECPRendererException {
+		VView.class.cast(stackLayout.eContainer()).setReadonly(true);
+		final Composite render = render();
+		assertTrue(render.isEnabled());
 	}
 }

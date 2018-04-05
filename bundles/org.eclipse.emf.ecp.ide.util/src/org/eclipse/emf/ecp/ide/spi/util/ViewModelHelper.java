@@ -13,8 +13,11 @@ package org.eclipse.emf.ecp.ide.spi.util;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
@@ -23,13 +26,17 @@ import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Descriptor;
 import org.eclipse.emf.ecore.EPackage.Registry;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.FeatureMap;
+import org.eclipse.emf.ecore.xml.type.AnyType;
 import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewPackage;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
@@ -109,8 +116,9 @@ public final class ViewModelHelper {
 		view.setRootEClass(ec);
 		view.setName(selectedEClass.getName());
 		// Update the VView-EClass mapping
-		if (selectedEcore != null) {
-			view.setEcorePath(selectedEcore.getFullPath().toString());
+		if (selectedEcore != null
+			&& !view.getEcorePaths().contains(selectedEcore.getFullPath().toString())) {
+			view.getEcorePaths().add(selectedEcore.getFullPath().toString());
 		}
 
 		// Save the contents of the resource to the file system.
@@ -146,13 +154,18 @@ public final class ViewModelHelper {
 			return view;
 		}
 
-		if (view.getEcorePath() == null
-			|| ResourcesPlugin.getWorkspace().getRoot().findMember(view.getEcorePath()) == null) {
+		if (view.getEcorePaths() == null) {
 			throw new FileNotFoundException(path);
 		}
+		for (final String ecorePath : view.getEcorePaths()) {
+			if (ResourcesPlugin.getWorkspace().getRoot().findMember(ecorePath) == null) {
+				throw new FileNotFoundException(path);
+			}
 
-		EcoreHelper.registerEcore(view.getEcorePath());
-		registeredEcores.add(view.getEcorePath());
+			EcoreHelper.registerEcore(ecorePath);
+			registeredEcores.add(ecorePath);
+		}
+
 		final VView reloadView = loadView(path);
 		if (reloadView != null && !viewIsResolved(reloadView)) {
 			EcoreUtil.resolveAll(reloadView);
@@ -170,6 +183,9 @@ public final class ViewModelHelper {
 		return !view.getRootEClass().eIsProxy();
 	}
 
+	/**
+	 * @since 1.16
+	 */
 	private static VView loadView(String path) {
 		final ResourceSet resourceSet = new ResourceSetImpl();
 		final URI fileURI = URI.createFileURI(path);
@@ -178,5 +194,42 @@ public final class ViewModelHelper {
 			return (VView) resource.getContents().get(0);
 		}
 		return null;
+	}
+
+	/**
+	 * Extract the list of Ecore paths from a view model resource.
+	 *
+	 * @param resource the resource to extract the paths from
+	 * @return list of Ecore paths
+	 *
+	 * @since 1.16
+	 */
+	@SuppressWarnings("unchecked")
+	public static List<String> getEcorePaths(Resource resource) {
+		if (resource == null || resource.getContents().isEmpty()) {
+			return Collections.emptyList();
+		}
+		final EObject eObject = resource.getContents().get(0);
+		if (VView.class.isInstance(eObject)) {
+			return VView.class.cast(eObject).getEcorePaths();
+		}
+		if (AnyType.class.isInstance(eObject)) {
+			/* view model has older ns uri */
+			final FeatureMap anyAttribute = AnyType.class.cast(eObject).getAnyAttribute();
+			for (int i = 0; i < anyAttribute.size(); i++) {
+				final EStructuralFeature feature = anyAttribute.getEStructuralFeature(i);
+
+				// up to 1.16.0
+				if ("ecorePath".equals(feature.getName())) { //$NON-NLS-1$
+					return Arrays.asList(new String[] { (String) anyAttribute.getValue(i) });
+				}
+				// from 1.17.0
+				if ("ecorePaths".equals(feature.getName())) { //$NON-NLS-1$
+					return (List<String>) anyAttribute.getValue(i);
+				}
+
+			}
+		}
+		return Collections.emptyList();
 	}
 }

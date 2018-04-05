@@ -20,26 +20,36 @@
     </genClasses>
     <genClasses ecoreClass="template.ecore#//ControlValidationTemplate">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute template.ecore#//ControlValidationTemplate/okColorHEX"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute template.ecore#//ControlValidationTemplate/okForegroundColorHEX"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute template.ecore#//ControlValidationTemplate/okImageURL"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute template.ecore#//ControlValidationTemplate/okOverlayURL"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute template.ecore#//ControlValidationTemplate/infoColorHEX"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute template.ecore#//ControlValidationTemplate/infoForegroundColorHEX"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute template.ecore#//ControlValidationTemplate/infoImageURL"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute template.ecore#//ControlValidationTemplate/infoOverlayURL"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute template.ecore#//ControlValidationTemplate/warningColorHEX"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute template.ecore#//ControlValidationTemplate/warningForegroundColorHEX"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute template.ecore#//ControlValidationTemplate/warningImageURL"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute template.ecore#//ControlValidationTemplate/warningOverlayURL"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute template.ecore#//ControlValidationTemplate/errorColorHEX"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute template.ecore#//ControlValidationTemplate/errorForegroundColorHEX"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute template.ecore#//ControlValidationTemplate/errorImageURL"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute template.ecore#//ControlValidationTemplate/errorOverlayURL"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute template.ecore#//ControlValidationTemplate/cancelColorHEX"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute template.ecore#//ControlValidationTemplate/cancelForegroundColorHEX"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute template.ecore#//ControlValidationTemplate/cancelImageURL"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute template.ecore#//ControlValidationTemplate/cancelOverlayURL"/>
     </genClasses>
     <genClasses ecoreClass="template.ecore#//Style">
-      <genFeatures children="true" createChild="true" ecoreFeature="ecore:EReference template.ecore#//Style/selector"/>
       <genFeatures children="true" createChild="true" ecoreFeature="ecore:EReference template.ecore#//Style/properties"/>
     </genClasses>
     <genClasses image="false" ecoreClass="template.ecore#//StyleProperty"/>
     <genClasses image="false" ecoreClass="template.ecore#//StyleSelector"/>
+    <genClasses image="false" ecoreClass="template.ecore#//StyleSelectorContainer">
+      <genFeatures children="true" createChild="true" ecoreFeature="ecore:EReference template.ecore#//StyleSelectorContainer/selector"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="template.ecore#//MultiStyleSelectorContainer">
+      <genFeatures children="true" createChild="true" ecoreFeature="ecore:EReference template.ecore#//MultiStyleSelectorContainer/selectors"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

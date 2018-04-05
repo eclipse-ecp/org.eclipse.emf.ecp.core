@@ -39,7 +39,7 @@ import org.eclipse.swt.widgets.Text;
  * @author Eike Stepper
  * @author Eugen Neufeld
  */
-public final class UIProviderRegistryImpl extends ElementRegistry<UIProvider, ECPObserver>implements
+public final class UIProviderRegistryImpl extends ElementRegistry<UIProvider, ECPObserver> implements
 	UIProviderRegistry {
 	/**
 	 * This is the Instance used by the {@link UIProviderRegistry} for providing its instance.
@@ -131,7 +131,7 @@ public final class UIProviderRegistryImpl extends ElementRegistry<UIProvider, EC
 	private final class UIProviderParser extends ExtensionParser<UIProvider> {
 		private static final String EXTENSION_POINT_NAME = "uiProviders"; //$NON-NLS-1$
 
-		public UIProviderParser() {
+		UIProviderParser() {
 			super(UIProviderRegistryImpl.this, Activator.PLUGIN_ID, EXTENSION_POINT_NAME);
 		}
 
@@ -147,8 +147,8 @@ public final class UIProviderRegistryImpl extends ElementRegistry<UIProvider, EC
 	/**
 	 * @author Eike Stepper
 	 */
-	private final class UIProviderDescriptor extends ExtensionDescriptor<UIProvider>implements UIProvider {
-		public UIProviderDescriptor(String name, IConfigurationElement configurationElement) {
+	private final class UIProviderDescriptor extends ExtensionDescriptor<UIProvider> implements UIProvider {
+		UIProviderDescriptor(String name, IConfigurationElement configurationElement) {
 			super(UIProviderRegistryImpl.this, name, TYPE, configurationElement);
 		}
 

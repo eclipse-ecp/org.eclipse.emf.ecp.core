@@ -24,13 +24,6 @@
    </extension>
    <extension
          name=""
-         point="org.eclipse.emf.ecp.view.context.viewServices">
-      <viewService
-            class="org.eclipse.emfforms.internal.editor.ecore.referenceservices.EcoreReferenceService">
-      </viewService>
-   </extension>
-   <extension
-         name=""
          point="org.eclipse.emf.ecp.view.model.provider.xmi.file">
       <file
             filePath="simple_viewmodels/EOperation.view">

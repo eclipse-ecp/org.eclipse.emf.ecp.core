@@ -49,6 +49,7 @@ public class EMFFormsCategorizationElementRendererService implements
 	}
 
 	private ServiceReference<EMFFormsSpreadsheetRendererFactory> serviceReference;
+	private BundleContext bundleContext;
 
 	/**
 	 * The activate method.
@@ -57,10 +58,8 @@ public class EMFFormsCategorizationElementRendererService implements
 	 */
 	@Activate
 	public void activate(BundleContext bundleContext) {
-		serviceReference = bundleContext
-			.getServiceReference(EMFFormsSpreadsheetRendererFactory.class);
-		emfformsSpreadsheetRendererFactory = bundleContext
-			.getService(serviceReference);
+		this.bundleContext = bundleContext;
+
 	}
 
 	/**
@@ -70,7 +69,22 @@ public class EMFFormsCategorizationElementRendererService implements
 	 */
 	@Deactivate
 	public void deactivate(BundleContext bundleContext) {
-		bundleContext.ungetService(serviceReference);
+		if (serviceReference != null) {
+			bundleContext.ungetService(serviceReference);
+		}
+	}
+
+	/**
+	 * Gets and returns the {@link EMFFormsSpreadsheetRendererFactory}.
+	 *
+	 * @return The {@link EMFFormsSpreadsheetRendererFactory}
+	 */
+	protected EMFFormsSpreadsheetRendererFactory getSpreadsheetRendererFactory() {
+		if (emfformsSpreadsheetRendererFactory == null) {
+			serviceReference = bundleContext.getServiceReference(EMFFormsSpreadsheetRendererFactory.class);
+			emfformsSpreadsheetRendererFactory = bundleContext.getService(serviceReference);
+		}
+		return emfformsSpreadsheetRendererFactory;
 	}
 
 	/**
@@ -95,7 +109,7 @@ public class EMFFormsCategorizationElementRendererService implements
 	public EMFFormsAbstractSpreadsheetRenderer<VCategorizationElement> getRendererInstance(
 		VCategorizationElement vElement,
 		ViewModelContext viewModelContext) {
-		return new EMFFormsCategorizationElementRenderer(emfformsSpreadsheetRendererFactory, reportService);
+		return new EMFFormsCategorizationElementRenderer(getSpreadsheetRendererFactory(), reportService);
 	}
 
 }

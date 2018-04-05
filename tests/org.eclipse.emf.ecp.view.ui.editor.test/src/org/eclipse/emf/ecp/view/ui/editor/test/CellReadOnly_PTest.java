@@ -22,8 +22,8 @@ import org.eclipse.emf.ecp.view.spi.model.VView;
 import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.swt.ECPCellReadOnlyTester;
-import org.eclipse.emf.ecp.view.table.ui.swt.test.SWTTable_PTest;
-import org.eclipse.emf.ecp.view.table.ui.swt.test.TableControlHandle;
+import org.eclipse.emf.ecp.view.table.test.common.TableControlHandle;
+import org.eclipse.emf.ecp.view.table.test.common.TableTestUtil;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTable;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotText;
@@ -82,13 +82,13 @@ public class CellReadOnly_PTest extends ECPCommonSWTBotTest {
 		};
 		CellReadOnlyTesterHelper.getInstance().registerCellReadOnlyTester(tester);
 
-		final TableControlHandle tableControlHandle = SWTTable_PTest.createInitializedTableWithoutTableColumns();
+		final TableControlHandle tableControlHandle = TableTestUtil.createInitializedTableWithoutTableColumns();
 
-		final VDomainModelReference tableColumn1 = SWTTable_PTest.createTableColumn(EcorePackage.eINSTANCE
+		final VDomainModelReference tableColumn1 = TableTestUtil.createTableColumn(EcorePackage.eINSTANCE
 			.getENamedElement_Name());
 		tableControlHandle.addFirstTableColumn(tableColumn1);
 
-		final VDomainModelReference tableColumn2 = SWTTable_PTest.createTableColumn(EcorePackage.eINSTANCE
+		final VDomainModelReference tableColumn2 = TableTestUtil.createTableColumn(EcorePackage.eINSTANCE
 			.getEClass_Interface());
 		tableControlHandle.addSecondTableColumn(tableColumn2);
 

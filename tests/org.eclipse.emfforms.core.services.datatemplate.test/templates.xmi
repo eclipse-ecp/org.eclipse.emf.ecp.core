@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="ASCII"?>
+<org.eclipse.emfforms.datatemplate.model:TemplateCollection xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:org.eclipse.emfforms.core.services.datatemplate.test.model.audit="http://eclipse/org/emfforms/core/services/datatemplate/test/model/audit" xmlns:org.eclipse.emfforms.datatemplate.model="http://org/eclipse/emfforms/datatemplate/model">
+  <templates name="AdminTemplate">
+    <instance xsi:type="org.eclipse.emfforms.core.services.datatemplate.test.model.audit:AdminUser" login="admin" password="admin"/>
+  </templates>
+  <templates name="RegisteredUserTemplate">
+    <instance xsi:type="org.eclipse.emfforms.core.services.datatemplate.test.model.audit:RegisteredUser" displayName="Registered"/>
+  </templates>
+</org.eclipse.emfforms.datatemplate.model:TemplateCollection>

@@ -143,6 +143,7 @@ public class ViewModelContextImpl_ITest {
 		final InOrder inOrder = inOrder(vmc, scopedServiceProvider, vmcChild);
 		inOrder.verify(scopedServiceProvider, times(1)).createService(any(EMFFormsViewContext.class));
 		inOrder.verify(vmcChild, times(1)).getService(Object.class);
+		inOrder.verify(vmc, times(1)).hasService(Object.class);
 		inOrder.verify(vmc, times(1)).getService(Object.class);
 	}
 
@@ -335,8 +336,9 @@ public class ViewModelContextImpl_ITest {
 
 		final InOrder inOrder = inOrder(vmc, scopedServiceProvider, vmcChild);
 		inOrder.verify(vmcChild, times(1)).getService(Object.class);
-		inOrder.verify(vmc, times(1)).getService(Object.class);
+		inOrder.verify(vmc, times(1)).hasService(Object.class);
 		inOrder.verify(scopedServiceProvider, times(1)).createService(any(EMFFormsViewContext.class));
+		inOrder.verify(vmc, times(1)).getService(Object.class);
 		inOrder.verify(vmc, times(1)).getService(Object.class);
 	}
 

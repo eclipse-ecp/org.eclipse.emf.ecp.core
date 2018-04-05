@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="BlankTemplateProvider">
+   <service>
+      <provide interface="org.eclipse.emfforms.core.services.datatemplate.TemplateProvider"/>
+   </service>
+   <reference bind="setDefaultNewElementStrategyProvider" interface="org.eclipse.emf.ecp.ui.view.swt.reference.DefaultCreateNewModelElementStrategyProvider" name="DefaultNewElementStrategyProvider"/>
+   <reference bind="setLocalizationService" interface="org.eclipse.emfforms.spi.localization.EMFFormsLocalizationService" name="LocalizationService"/>
+   <implementation class="org.eclipse.emfforms.internal.core.services.datatemplate.BlankTemplateProvider"/>
+</scr:component>

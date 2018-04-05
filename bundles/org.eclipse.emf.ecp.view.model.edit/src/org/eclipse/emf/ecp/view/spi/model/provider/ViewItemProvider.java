@@ -41,7 +41,7 @@ public class ViewItemProvider
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	public ViewItemProvider(AdapterFactory adapterFactory) {
@@ -52,7 +52,7 @@ public class ViewItemProvider
 	 * This returns the property descriptors for the adapted class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -61,7 +61,7 @@ public class ViewItemProvider
 			super.getPropertyDescriptors(object);
 
 			addRootEClassPropertyDescriptor(object);
-			addEcorePathPropertyDescriptor(object);
+			addEcorePathsPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -70,7 +70,7 @@ public class ViewItemProvider
 	 * This adds a property descriptor for the Root EClass feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	protected void addRootEClassPropertyDescriptor(Object object) {
@@ -89,20 +89,22 @@ public class ViewItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Ecore Path feature.
+	 * This adds a property descriptor for the Ecore Paths feature.
 	 * <!-- begin-user-doc -->
 	 *
-	 * @since 1.3
+	 * @since 1.16
+	 *
 	 *        <!-- end-user-doc -->
+	 *
 	 * @generated
 	 */
-	protected void addEcorePathPropertyDescriptor(Object object) {
+	protected void addEcorePathsPropertyDescriptor(Object object) {
 		itemPropertyDescriptors
 			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
-				getString("_UI_View_ecorePath_feature"), //$NON-NLS-1$
-				getString("_UI_PropertyDescriptor_description", "_UI_View_ecorePath_feature", "_UI_View_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				VViewPackage.Literals.VIEW__ECORE_PATH,
+				getString("_UI_View_ecorePaths_feature"), //$NON-NLS-1$
+				getString("_UI_PropertyDescriptor_description", "_UI_View_ecorePaths_feature", "_UI_View_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				VViewPackage.Literals.VIEW__ECORE_PATHS,
 				true,
 				false,
 				false,
@@ -117,7 +119,7 @@ public class ViewItemProvider
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -132,7 +134,7 @@ public class ViewItemProvider
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -147,7 +149,7 @@ public class ViewItemProvider
 	 * This returns View.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -178,7 +180,7 @@ public class ViewItemProvider
 	 * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override
@@ -186,7 +188,7 @@ public class ViewItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(VView.class)) {
-		case VViewPackage.VIEW__ECORE_PATH:
+		case VViewPackage.VIEW__ECORE_PATHS:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 			return;
 		case VViewPackage.VIEW__CHILDREN:
@@ -201,7 +203,7 @@ public class ViewItemProvider
 	 * that can be created under this object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
+	 *
 	 * @generated
 	 */
 	@Override

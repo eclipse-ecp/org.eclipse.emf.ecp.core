@@ -26,7 +26,7 @@ public abstract class Element implements ECPElement {
 	 */
 	public Element(String name) {
 		if (name == null) {
-			throw new IllegalArgumentException("name is null");
+			throw new IllegalArgumentException("name is null"); //$NON-NLS-1$
 		}
 
 		this.name = name;

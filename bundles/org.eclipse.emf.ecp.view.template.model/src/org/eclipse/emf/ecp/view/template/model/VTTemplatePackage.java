@@ -71,8 +71,8 @@ public interface VTTemplatePackage extends EPackage {
 	VTTemplatePackage eINSTANCE = org.eclipse.emf.ecp.view.template.model.impl.VTTemplatePackageImpl.init();
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.template.model.impl.VTViewTemplateImpl
-	 * <em>View Template</em>}' class.
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.template.model.impl.VTViewTemplateImpl <em>View
+	 * Template</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -160,7 +160,6 @@ public interface VTTemplatePackage extends EPackage {
 	 *
 	 * @since 1.10
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -199,10 +198,9 @@ public interface VTTemplatePackage extends EPackage {
 	/**
 	 * The feature id for the '<em><b>Info Foreground Color HEX</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.10
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -241,10 +239,9 @@ public interface VTTemplatePackage extends EPackage {
 	/**
 	 * The feature id for the '<em><b>Warning Foreground Color HEX</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.10
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -283,10 +280,9 @@ public interface VTTemplatePackage extends EPackage {
 	/**
 	 * The feature id for the '<em><b>Error Foreground Color HEX</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.10
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -325,10 +321,9 @@ public interface VTTemplatePackage extends EPackage {
 	/**
 	 * The feature id for the '<em><b>Cancel Foreground Color HEX</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.10
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 * @ordered
 	 */
@@ -375,6 +370,52 @@ public interface VTTemplatePackage extends EPackage {
 	int CONTROL_VALIDATION_TEMPLATE_OPERATION_COUNT = 0;
 
 	/**
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.template.model.impl.VTStyleSelectorContainerImpl
+	 * <em>Style Selector Container</em>}' class.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.17
+	 *        <!-- end-user-doc -->
+	 * @see org.eclipse.emf.ecp.view.template.model.impl.VTStyleSelectorContainerImpl
+	 * @see org.eclipse.emf.ecp.view.template.model.impl.VTTemplatePackageImpl#getStyleSelectorContainer()
+	 * @generated
+	 */
+	int STYLE_SELECTOR_CONTAINER = 5;
+
+	/**
+	 * The feature id for the '<em><b>Selector</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.17
+	 *        <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STYLE_SELECTOR_CONTAINER__SELECTOR = 0;
+
+	/**
+	 * The number of structural features of the '<em>Style Selector Container</em>' class.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.17
+	 *        <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STYLE_SELECTOR_CONTAINER_FEATURE_COUNT = 1;
+
+	/**
+	 * The number of operations of the '<em>Style Selector Container</em>' class.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.17
+	 *        <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STYLE_SELECTOR_CONTAINER_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.template.model.impl.VTStyleImpl <em>Style</em>}'
 	 * class.
 	 * <!-- begin-user-doc -->
@@ -394,7 +435,7 @@ public interface VTTemplatePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int STYLE__SELECTOR = 0;
+	int STYLE__SELECTOR = STYLE_SELECTOR_CONTAINER__SELECTOR;
 
 	/**
 	 * The feature id for the '<em><b>Properties</b></em>' containment reference list.
@@ -404,7 +445,7 @@ public interface VTTemplatePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int STYLE__PROPERTIES = 1;
+	int STYLE__PROPERTIES = STYLE_SELECTOR_CONTAINER_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Style</em>' class.
@@ -414,7 +455,7 @@ public interface VTTemplatePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int STYLE_FEATURE_COUNT = 2;
+	int STYLE_FEATURE_COUNT = STYLE_SELECTOR_CONTAINER_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of operations of the '<em>Style</em>' class.
@@ -424,11 +465,11 @@ public interface VTTemplatePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int STYLE_OPERATION_COUNT = 0;
+	int STYLE_OPERATION_COUNT = STYLE_SELECTOR_CONTAINER_OPERATION_COUNT + 0;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.template.model.VTStyleProperty
-	 * <em>Style Property</em>}' class.
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.template.model.VTStyleProperty <em>Style
+	 * Property</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -459,8 +500,8 @@ public interface VTTemplatePackage extends EPackage {
 	int STYLE_PROPERTY_OPERATION_COUNT = 0;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.template.model.VTStyleSelector
-	 * <em>Style Selector</em>}' class.
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.template.model.VTStyleSelector <em>Style
+	 * Selector</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -491,8 +532,55 @@ public interface VTTemplatePackage extends EPackage {
 	int STYLE_SELECTOR_OPERATION_COUNT = 0;
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.template.model.VTViewTemplate
-	 * <em>View Template</em>}'.
+	 * The meta object id for the '{@link org.eclipse.emf.ecp.view.template.model.impl.VTMultiStyleSelectorContainerImpl
+	 * <em>Multi Style Selector Container</em>}' class.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.17
+	 *        <!-- end-user-doc -->
+	 * @see org.eclipse.emf.ecp.view.template.model.impl.VTMultiStyleSelectorContainerImpl
+	 * @see org.eclipse.emf.ecp.view.template.model.impl.VTTemplatePackageImpl#getMultiStyleSelectorContainer()
+	 * @generated
+	 */
+	int MULTI_STYLE_SELECTOR_CONTAINER = 6;
+
+	/**
+	 * The feature id for the '<em><b>Selectors</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.17
+	 *        <!-- end-user-doc -->
+	 *
+	 * @generated
+	 * @ordered
+	 */
+	int MULTI_STYLE_SELECTOR_CONTAINER__SELECTORS = 0;
+
+	/**
+	 * The number of structural features of the '<em>Multi Style Selector Container</em>' class.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.17
+	 *        <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MULTI_STYLE_SELECTOR_CONTAINER_FEATURE_COUNT = 1;
+
+	/**
+	 * The number of operations of the '<em>Multi Style Selector Container</em>' class.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.17
+	 *        <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MULTI_STYLE_SELECTOR_CONTAINER_OPERATION_COUNT = 0;
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.template.model.VTViewTemplate <em>View
+	 * Template</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -503,9 +591,9 @@ public interface VTTemplatePackage extends EPackage {
 	EClass getViewTemplate();
 
 	/**
-	 * Returns the meta object for the containment reference '
-	 * {@link org.eclipse.emf.ecp.view.template.model.VTViewTemplate#getControlValidationConfiguration
-	 * <em>Control Validation Configuration</em>}'.
+	 * Returns the meta object for the containment reference
+	 * '{@link org.eclipse.emf.ecp.view.template.model.VTViewTemplate#getControlValidationConfiguration <em>Control
+	 * Validation Configuration</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -517,8 +605,8 @@ public interface VTTemplatePackage extends EPackage {
 	EReference getViewTemplate_ControlValidationConfiguration();
 
 	/**
-	 * Returns the meta object for the containment reference list '
-	 * {@link org.eclipse.emf.ecp.view.template.model.VTViewTemplate#getStyles <em>Styles</em>}'.
+	 * Returns the meta object for the containment reference list
+	 * '{@link org.eclipse.emf.ecp.view.template.model.VTViewTemplate#getStyles <em>Styles</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -530,8 +618,8 @@ public interface VTTemplatePackage extends EPackage {
 	EReference getViewTemplate_Styles();
 
 	/**
-	 * Returns the meta object for the attribute list '
-	 * {@link org.eclipse.emf.ecp.view.template.model.VTViewTemplate#getReferencedEcores <em>Referenced Ecores</em>}'.
+	 * Returns the meta object for the attribute list
+	 * '{@link org.eclipse.emf.ecp.view.template.model.VTViewTemplate#getReferencedEcores <em>Referenced Ecores</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -555,8 +643,9 @@ public interface VTTemplatePackage extends EPackage {
 	EClass getControlValidationTemplate();
 
 	/**
-	 * Returns the meta object for the attribute '
-	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getOkColorHEX <em>Ok Color HEX</em>}'.
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getOkColorHEX <em>Ok Color
+	 * HEX</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -568,14 +657,13 @@ public interface VTTemplatePackage extends EPackage {
 	EAttribute getControlValidationTemplate_OkColorHEX();
 
 	/**
-	 * Returns the meta object for the attribute '
-	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getOkForegroundColorHEX
-	 * <em>Ok Foreground Color HEX</em>}'.
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getOkForegroundColorHEX <em>Ok
+	 * Foreground Color HEX</em>}'.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.10
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the meta object for the attribute '<em>Ok Foreground Color HEX</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getOkForegroundColorHEX()
 	 * @see #getControlValidationTemplate()
@@ -584,8 +672,9 @@ public interface VTTemplatePackage extends EPackage {
 	EAttribute getControlValidationTemplate_OkForegroundColorHEX();
 
 	/**
-	 * Returns the meta object for the attribute '
-	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getOkImageURL <em>Ok Image URL</em>}'.
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getOkImageURL <em>Ok Image
+	 * URL</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -597,9 +686,9 @@ public interface VTTemplatePackage extends EPackage {
 	EAttribute getControlValidationTemplate_OkImageURL();
 
 	/**
-	 * Returns the meta object for the attribute '
-	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getOkOverlayURL
-	 * <em>Ok Overlay URL</em>}'.
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getOkOverlayURL <em>Ok Overlay
+	 * URL</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -611,9 +700,9 @@ public interface VTTemplatePackage extends EPackage {
 	EAttribute getControlValidationTemplate_OkOverlayURL();
 
 	/**
-	 * Returns the meta object for the attribute '
-	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getInfoColorHEX
-	 * <em>Info Color HEX</em>}'.
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getInfoColorHEX <em>Info Color
+	 * HEX</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -625,14 +714,13 @@ public interface VTTemplatePackage extends EPackage {
 	EAttribute getControlValidationTemplate_InfoColorHEX();
 
 	/**
-	 * Returns the meta object for the attribute '
-	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getInfoForegroundColorHEX
-	 * <em>Info Foreground Color HEX</em>}'.
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getInfoForegroundColorHEX <em>Info
+	 * Foreground Color HEX</em>}'.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.10
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the meta object for the attribute '<em>Info Foreground Color HEX</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getInfoForegroundColorHEX()
 	 * @see #getControlValidationTemplate()
@@ -641,9 +729,9 @@ public interface VTTemplatePackage extends EPackage {
 	EAttribute getControlValidationTemplate_InfoForegroundColorHEX();
 
 	/**
-	 * Returns the meta object for the attribute '
-	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getInfoImageURL
-	 * <em>Info Image URL</em>}'.
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getInfoImageURL <em>Info Image
+	 * URL</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -655,9 +743,9 @@ public interface VTTemplatePackage extends EPackage {
 	EAttribute getControlValidationTemplate_InfoImageURL();
 
 	/**
-	 * Returns the meta object for the attribute '
-	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getInfoOverlayURL
-	 * <em>Info Overlay URL</em>}'.
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getInfoOverlayURL <em>Info Overlay
+	 * URL</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -669,9 +757,9 @@ public interface VTTemplatePackage extends EPackage {
 	EAttribute getControlValidationTemplate_InfoOverlayURL();
 
 	/**
-	 * Returns the meta object for the attribute '
-	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getWarningColorHEX
-	 * <em>Warning Color HEX</em>}'.
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getWarningColorHEX <em>Warning Color
+	 * HEX</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -683,14 +771,13 @@ public interface VTTemplatePackage extends EPackage {
 	EAttribute getControlValidationTemplate_WarningColorHEX();
 
 	/**
-	 * Returns the meta object for the attribute '
-	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getWarningForegroundColorHEX
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getWarningForegroundColorHEX
 	 * <em>Warning Foreground Color HEX</em>}'.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.10
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the meta object for the attribute '<em>Warning Foreground Color HEX</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getWarningForegroundColorHEX()
 	 * @see #getControlValidationTemplate()
@@ -699,9 +786,9 @@ public interface VTTemplatePackage extends EPackage {
 	EAttribute getControlValidationTemplate_WarningForegroundColorHEX();
 
 	/**
-	 * Returns the meta object for the attribute '
-	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getWarningImageURL
-	 * <em>Warning Image URL</em>}'.
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getWarningImageURL <em>Warning Image
+	 * URL</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -713,9 +800,9 @@ public interface VTTemplatePackage extends EPackage {
 	EAttribute getControlValidationTemplate_WarningImageURL();
 
 	/**
-	 * Returns the meta object for the attribute '
-	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getWarningOverlayURL
-	 * <em>Warning Overlay URL</em>}'.
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getWarningOverlayURL <em>Warning
+	 * Overlay URL</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -727,9 +814,9 @@ public interface VTTemplatePackage extends EPackage {
 	EAttribute getControlValidationTemplate_WarningOverlayURL();
 
 	/**
-	 * Returns the meta object for the attribute '
-	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getErrorColorHEX
-	 * <em>Error Color HEX</em>}'.
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getErrorColorHEX <em>Error Color
+	 * HEX</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -741,14 +828,13 @@ public interface VTTemplatePackage extends EPackage {
 	EAttribute getControlValidationTemplate_ErrorColorHEX();
 
 	/**
-	 * Returns the meta object for the attribute '
-	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getErrorForegroundColorHEX
-	 * <em>Error Foreground Color HEX</em>}'.
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getErrorForegroundColorHEX <em>Error
+	 * Foreground Color HEX</em>}'.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.10
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the meta object for the attribute '<em>Error Foreground Color HEX</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getErrorForegroundColorHEX()
 	 * @see #getControlValidationTemplate()
@@ -757,9 +843,9 @@ public interface VTTemplatePackage extends EPackage {
 	EAttribute getControlValidationTemplate_ErrorForegroundColorHEX();
 
 	/**
-	 * Returns the meta object for the attribute '
-	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getErrorImageURL
-	 * <em>Error Image URL</em>}'.
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getErrorImageURL <em>Error Image
+	 * URL</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -771,9 +857,9 @@ public interface VTTemplatePackage extends EPackage {
 	EAttribute getControlValidationTemplate_ErrorImageURL();
 
 	/**
-	 * Returns the meta object for the attribute '
-	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getErrorOverlayURL
-	 * <em>Error Overlay URL</em>}'.
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getErrorOverlayURL <em>Error Overlay
+	 * URL</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -785,9 +871,9 @@ public interface VTTemplatePackage extends EPackage {
 	EAttribute getControlValidationTemplate_ErrorOverlayURL();
 
 	/**
-	 * Returns the meta object for the attribute '
-	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getCancelColorHEX
-	 * <em>Cancel Color HEX</em>}'.
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getCancelColorHEX <em>Cancel Color
+	 * HEX</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -799,14 +885,13 @@ public interface VTTemplatePackage extends EPackage {
 	EAttribute getControlValidationTemplate_CancelColorHEX();
 
 	/**
-	 * Returns the meta object for the attribute '
-	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getCancelForegroundColorHEX
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getCancelForegroundColorHEX
 	 * <em>Cancel Foreground Color HEX</em>}'.
 	 * <!-- begin-user-doc -->
-	 * 
+	 *
 	 * @since 1.10
 	 *        <!-- end-user-doc -->
-	 *
 	 * @return the meta object for the attribute '<em>Cancel Foreground Color HEX</em>'.
 	 * @see org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getCancelForegroundColorHEX()
 	 * @see #getControlValidationTemplate()
@@ -815,9 +900,9 @@ public interface VTTemplatePackage extends EPackage {
 	EAttribute getControlValidationTemplate_CancelForegroundColorHEX();
 
 	/**
-	 * Returns the meta object for the attribute '
-	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getCancelImageURL
-	 * <em>Cancel Image URL</em>}'.
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getCancelImageURL <em>Cancel Image
+	 * URL</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -829,9 +914,9 @@ public interface VTTemplatePackage extends EPackage {
 	EAttribute getControlValidationTemplate_CancelImageURL();
 
 	/**
-	 * Returns the meta object for the attribute '
-	 * {@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getCancelOverlayURL
-	 * <em>Cancel Overlay URL</em>}'.
+	 * Returns the meta object for the attribute
+	 * '{@link org.eclipse.emf.ecp.view.template.model.VTControlValidationTemplate#getCancelOverlayURL <em>Cancel
+	 * Overlay URL</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -854,21 +939,8 @@ public interface VTTemplatePackage extends EPackage {
 	EClass getStyle();
 
 	/**
-	 * Returns the meta object for the containment reference '
-	 * {@link org.eclipse.emf.ecp.view.template.model.VTStyle#getSelector <em>Selector</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 *
-	 * @return the meta object for the containment reference '<em>Selector</em>'.
-	 * @see org.eclipse.emf.ecp.view.template.model.VTStyle#getSelector()
-	 * @see #getStyle()
-	 * @generated
-	 */
-	EReference getStyle_Selector();
-
-	/**
-	 * Returns the meta object for the containment reference list '
-	 * {@link org.eclipse.emf.ecp.view.template.model.VTStyle#getProperties <em>Properties</em>}'.
+	 * Returns the meta object for the containment reference list
+	 * '{@link org.eclipse.emf.ecp.view.template.model.VTStyle#getProperties <em>Properties</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -880,8 +952,8 @@ public interface VTTemplatePackage extends EPackage {
 	EReference getStyle_Properties();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.template.model.VTStyleProperty
-	 * <em>Style Property</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.template.model.VTStyleProperty <em>Style
+	 * Property</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -892,8 +964,8 @@ public interface VTTemplatePackage extends EPackage {
 	EClass getStyleProperty();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.template.model.VTStyleSelector
-	 * <em>Style Selector</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.template.model.VTStyleSelector <em>Style
+	 * Selector</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 *
@@ -902,6 +974,61 @@ public interface VTTemplatePackage extends EPackage {
 	 * @generated
 	 */
 	EClass getStyleSelector();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.template.model.VTStyleSelectorContainer
+	 * <em>Style Selector Container</em>}'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.17
+	 *        <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Style Selector Container</em>'.
+	 * @see org.eclipse.emf.ecp.view.template.model.VTStyleSelectorContainer
+	 * @generated
+	 */
+	EClass getStyleSelectorContainer();
+
+	/**
+	 * Returns the meta object for the containment reference
+	 * '{@link org.eclipse.emf.ecp.view.template.model.VTStyleSelectorContainer#getSelector <em>Selector</em>}'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.17
+	 *        <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Selector</em>'.
+	 * @see org.eclipse.emf.ecp.view.template.model.VTStyleSelectorContainer#getSelector()
+	 * @see #getStyleSelectorContainer()
+	 * @generated
+	 */
+	EReference getStyleSelectorContainer_Selector();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.emf.ecp.view.template.model.VTMultiStyleSelectorContainer
+	 * <em>Multi Style Selector Container</em>}'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.17
+	 *        <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Multi Style Selector Container</em>'.
+	 * @see org.eclipse.emf.ecp.view.template.model.VTMultiStyleSelectorContainer
+	 * @generated
+	 */
+	EClass getMultiStyleSelectorContainer();
+
+	/**
+	 * Returns the meta object for the containment reference list
+	 * '{@link org.eclipse.emf.ecp.view.template.model.VTMultiStyleSelectorContainer#getSelectors <em>Selectors</em>}'.
+	 * <!-- begin-user-doc -->
+	 *
+	 * @since 1.17
+	 *        <!-- end-user-doc -->
+	 *
+	 * @return the meta object for the containment reference list '<em>Selectors</em>'.
+	 * @see org.eclipse.emf.ecp.view.template.model.VTMultiStyleSelectorContainer#getSelectors()
+	 * @see #getMultiStyleSelectorContainer()
+	 * @generated
+	 */
+	EReference getMultiStyleSelectorContainer_Selectors();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -970,9 +1097,9 @@ public interface VTTemplatePackage extends EPackage {
 		EAttribute VIEW_TEMPLATE__REFERENCED_ECORES = eINSTANCE.getViewTemplate_ReferencedEcores();
 
 		/**
-		 * The meta object literal for the '
-		 * {@link org.eclipse.emf.ecp.view.template.model.impl.VTControlValidationTemplateImpl
-		 * <em>Control Validation Template</em>}' class.
+		 * The meta object literal for the
+		 * '{@link org.eclipse.emf.ecp.view.template.model.impl.VTControlValidationTemplateImpl <em>Control Validation
+		 * Template</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 *
@@ -994,10 +1121,9 @@ public interface VTTemplatePackage extends EPackage {
 		/**
 		 * The meta object literal for the '<em><b>Ok Foreground Color HEX</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
-		 * 
+		 *
 		 * @since 1.10
 		 *        <!-- end-user-doc -->
-		 *
 		 * @generated
 		 */
 		EAttribute CONTROL_VALIDATION_TEMPLATE__OK_FOREGROUND_COLOR_HEX = eINSTANCE
@@ -1033,10 +1159,9 @@ public interface VTTemplatePackage extends EPackage {
 		/**
 		 * The meta object literal for the '<em><b>Info Foreground Color HEX</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
-		 * 
+		 *
 		 * @since 1.10
 		 *        <!-- end-user-doc -->
-		 *
 		 * @generated
 		 */
 		EAttribute CONTROL_VALIDATION_TEMPLATE__INFO_FOREGROUND_COLOR_HEX = eINSTANCE
@@ -1074,10 +1199,9 @@ public interface VTTemplatePackage extends EPackage {
 		/**
 		 * The meta object literal for the '<em><b>Warning Foreground Color HEX</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
-		 * 
+		 *
 		 * @since 1.10
 		 *        <!-- end-user-doc -->
-		 *
 		 * @generated
 		 */
 		EAttribute CONTROL_VALIDATION_TEMPLATE__WARNING_FOREGROUND_COLOR_HEX = eINSTANCE
@@ -1116,10 +1240,9 @@ public interface VTTemplatePackage extends EPackage {
 		/**
 		 * The meta object literal for the '<em><b>Error Foreground Color HEX</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
-		 * 
+		 *
 		 * @since 1.10
 		 *        <!-- end-user-doc -->
-		 *
 		 * @generated
 		 */
 		EAttribute CONTROL_VALIDATION_TEMPLATE__ERROR_FOREGROUND_COLOR_HEX = eINSTANCE
@@ -1158,10 +1281,9 @@ public interface VTTemplatePackage extends EPackage {
 		/**
 		 * The meta object literal for the '<em><b>Cancel Foreground Color HEX</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
-		 * 
+		 *
 		 * @since 1.10
 		 *        <!-- end-user-doc -->
-		 *
 		 * @generated
 		 */
 		EAttribute CONTROL_VALIDATION_TEMPLATE__CANCEL_FOREGROUND_COLOR_HEX = eINSTANCE
@@ -1200,15 +1322,6 @@ public interface VTTemplatePackage extends EPackage {
 		EClass STYLE = eINSTANCE.getStyle();
 
 		/**
-		 * The meta object literal for the '<em><b>Selector</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 *
-		 * @generated
-		 */
-		EReference STYLE__SELECTOR = eINSTANCE.getStyle_Selector();
-
-		/**
 		 * The meta object literal for the '<em><b>Properties</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1218,8 +1331,8 @@ public interface VTTemplatePackage extends EPackage {
 		EReference STYLE__PROPERTIES = eINSTANCE.getStyle_Properties();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.template.model.VTStyleProperty
-		 * <em>Style Property</em>}' class.
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.template.model.VTStyleProperty <em>Style
+		 * Property</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 *
@@ -1230,8 +1343,8 @@ public interface VTTemplatePackage extends EPackage {
 		EClass STYLE_PROPERTY = eINSTANCE.getStyleProperty();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.template.model.VTStyleSelector
-		 * <em>Style Selector</em>}' class.
+		 * The meta object literal for the '{@link org.eclipse.emf.ecp.view.template.model.VTStyleSelector <em>Style
+		 * Selector</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 *
@@ -1240,6 +1353,55 @@ public interface VTTemplatePackage extends EPackage {
 		 * @generated
 		 */
 		EClass STYLE_SELECTOR = eINSTANCE.getStyleSelector();
+
+		/**
+		 * The meta object literal for the
+		 * '{@link org.eclipse.emf.ecp.view.template.model.impl.VTStyleSelectorContainerImpl <em>Style Selector
+		 * Container</em>}' class.
+		 * <!-- begin-user-doc -->
+		 *
+		 * @since 1.17
+		 *        <!-- end-user-doc -->
+		 * @see org.eclipse.emf.ecp.view.template.model.impl.VTStyleSelectorContainerImpl
+		 * @see org.eclipse.emf.ecp.view.template.model.impl.VTTemplatePackageImpl#getStyleSelectorContainer()
+		 * @generated
+		 */
+		EClass STYLE_SELECTOR_CONTAINER = eINSTANCE.getStyleSelectorContainer();
+
+		/**
+		 * The meta object literal for the '<em><b>Selector</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 *
+		 * @since 1.17
+		 *        <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference STYLE_SELECTOR_CONTAINER__SELECTOR = eINSTANCE.getStyleSelectorContainer_Selector();
+
+		/**
+		 * The meta object literal for the
+		 * '{@link org.eclipse.emf.ecp.view.template.model.impl.VTMultiStyleSelectorContainerImpl <em>Multi Style
+		 * Selector Container</em>}' class.
+		 * <!-- begin-user-doc -->
+		 *
+		 * @since 1.17
+		 *        <!-- end-user-doc -->
+		 * @see org.eclipse.emf.ecp.view.template.model.impl.VTMultiStyleSelectorContainerImpl
+		 * @see org.eclipse.emf.ecp.view.template.model.impl.VTTemplatePackageImpl#getMultiStyleSelectorContainer()
+		 * @generated
+		 */
+		EClass MULTI_STYLE_SELECTOR_CONTAINER = eINSTANCE.getMultiStyleSelectorContainer();
+
+		/**
+		 * The meta object literal for the '<em><b>Selectors</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 *
+		 * @since 1.17
+		 *        <!-- end-user-doc -->
+		 *
+		 * @generated
+		 */
+		EReference MULTI_STYLE_SELECTOR_CONTAINER__SELECTORS = eINSTANCE.getMultiStyleSelectorContainer_Selectors();
 
 	}
 

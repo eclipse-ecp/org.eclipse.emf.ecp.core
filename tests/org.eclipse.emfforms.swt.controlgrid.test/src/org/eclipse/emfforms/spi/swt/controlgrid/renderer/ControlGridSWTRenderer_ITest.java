@@ -802,6 +802,52 @@ public class ControlGridSWTRenderer_ITest {
 
 	// END COMPLEX CODE
 
+	@Test
+	public void testReadOnlyDoesNotDisableComposite()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption, EMFFormsNoRendererException {
+		/* setup */
+		final SWTGridCell swtGridCell = mock(SWTGridCell.class);
+		when(swtGridCell.getColumn()).thenReturn(0);
+		when(swtGridCell.getRow()).thenReturn(0);
+
+		controlGrid = VControlgridFactory.eINSTANCE.createControlGrid();
+		controlGrid.setReadonly(true);
+		final VControlGridRow row = VControlgridFactory.eINSTANCE.createControlGridRow();
+		controlGrid.getRows().add(row);
+		final VControlGridCell cell = VControlgridFactory.eINSTANCE.createControlGridCell();
+		row.getCells().add(cell);
+
+		final VControl vControl = VViewFactory.eINSTANCE.createControl();
+		cell.setControl(vControl);
+
+		final DummyRenderer dummyRenderer = new DummyRenderer(vControl, viewModelContext, reportService,
+			createGridDescription(false, false, true));
+		dummyRenderer.init();
+		when(emfFormsRendererFactory.getRendererInstance(vControl, viewModelContext)).thenReturn(dummyRenderer);
+
+		final ControlGridSWTRenderer renderer = createRenderer();
+		renderer.init();
+
+		/* act */
+		final Control control = renderer.render(swtGridCell, shell);
+		renderer.finalizeRendering(shell);
+
+		/* assert */
+
+		assertTrue(Composite.class.isInstance(control));
+		assertTrue(control.isEnabled());
+		final Composite composite = Composite.class.cast(control);
+		assertEquals(4, composite.getChildren().length);
+
+		assertTrue(Composite.class.isInstance(composite.getChildren()[0]));
+		assertTrue(composite.isEnabled());
+
+		// verify that the control wrapper composites are enabled
+		assertTrue(Composite.class.cast(composite.getChildren()[0]).isEnabled());
+		assertTrue(Composite.class.cast(composite.getChildren()[1]).isEnabled());
+		assertTrue(Composite.class.cast(composite.getChildren()[2]).isEnabled());
+	}
+
 	private static SWTGridDescription createGridDescription(Boolean... grab) {
 		final SWTGridDescription grid = GridDescriptionFactory.INSTANCE.createSimpleGrid(1, grab.length, null);
 		for (int i = 0; i < grid.getGrid().size(); i++) {

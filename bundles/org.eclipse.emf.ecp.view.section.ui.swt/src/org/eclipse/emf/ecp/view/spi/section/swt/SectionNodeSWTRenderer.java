@@ -287,12 +287,6 @@ public class SectionNodeSWTRenderer extends AbstractSectionSWTRenderer {
 	}
 
 	@Override
-	protected void applyReadOnly() {
-		super.applyReadOnly();
-		getExpandableComposite().getParent().setEnabled(true);
-	}
-
-	@Override
 	protected void dispose() {
 		getViewModelContext().unregisterViewChangeListener(listener);
 		super.dispose();

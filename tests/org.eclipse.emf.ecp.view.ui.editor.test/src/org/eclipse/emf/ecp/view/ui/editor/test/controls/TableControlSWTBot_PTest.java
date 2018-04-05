@@ -31,7 +31,7 @@ import org.eclipse.emf.ecp.view.spi.model.VViewFactory;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableControl;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableDomainModelReference;
 import org.eclipse.emf.ecp.view.spi.table.model.VTableFactory;
-import org.eclipse.emf.ecp.view.table.ui.swt.test.SWTTable_PTest;
+import org.eclipse.emf.ecp.view.table.test.common.TableTestUtil;
 import org.eclipse.emf.ecp.view.test.common.spi.GCCollectable;
 import org.eclipse.emf.ecp.view.ui.editor.test.ECPCommonSWTBotTest;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
@@ -268,16 +268,16 @@ public class TableControlSWTBot_PTest extends ECPCommonSWTBotTest {
 		domainRef.setDomainModelEFeature(BowlingPackage.eINSTANCE.getLeague_Players());
 		control.setDomainModelReference(domainRef);
 
-		final VDomainModelReference nameColumn = SWTTable_PTest.createTableColumn(BowlingPackage.eINSTANCE
+		final VDomainModelReference nameColumn = TableTestUtil.createTableColumn(BowlingPackage.eINSTANCE
 			.getPlayer_Name());
 
-		final VDomainModelReference birthColumn = SWTTable_PTest.createTableColumn(BowlingPackage.eINSTANCE
+		final VDomainModelReference birthColumn = TableTestUtil.createTableColumn(BowlingPackage.eINSTANCE
 			.getPlayer_DateOfBirth());
 
-		final VDomainModelReference professionalColumn = SWTTable_PTest.createTableColumn(BowlingPackage.eINSTANCE
+		final VDomainModelReference professionalColumn = TableTestUtil.createTableColumn(BowlingPackage.eINSTANCE
 			.getPlayer_IsProfessional());
 
-		final VDomainModelReference eMailsColumn = SWTTable_PTest.createTableColumn(BowlingPackage.eINSTANCE
+		final VDomainModelReference eMailsColumn = TableTestUtil.createTableColumn(BowlingPackage.eINSTANCE
 			.getPlayer_EMails());
 
 		VTableDomainModelReference.class.cast(control.getDomainModelReference()).getColumnDomainModelReferences()

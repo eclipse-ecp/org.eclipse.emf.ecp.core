@@ -6,12 +6,12 @@
 	<parent>
 		<groupId>org.eclipse.emf.ecp</groupId>
 		<artifactId>ecp-parent</artifactId>
-		<version>1.16.0-SNAPSHOT</version>
+		<version>1.17.0-SNAPSHOT</version>
 		<relativePath>../../releng/org.eclipse.emf.ecp.releng/</relativePath>
 	</parent>
 	<groupId>org.eclipse.emf.ecp</groupId>
 	<artifactId>ecp-bundles-parent</artifactId>
-	<version>1.16.0-SNAPSHOT</version>
+	<version>1.17.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<modules>
@@ -180,6 +180,8 @@
 		<module>../../bundles/org.eclipse.emf.ecp.view.template.model.edit</module>
 		<!-- Template Helper Feature -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.template.service</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.template.annotation.model</module>
+		<module>../../bundles/org.eclipse.emf.ecp.view.template.annotation.model.edit</module>
 
 		<!-- IDE -->
 		<module>../../bundles/org.eclipse.emf.ecp.ide.editor.view</module>
@@ -296,7 +298,13 @@
 		<!-- Localization Services -->
 		<module>../../bundles/org.eclipse.emfforms.localization</module>
 		<module>../../bundles/org.eclipse.emfforms.view.model.localization</module>
-		
+	
+        <!-- DataTemplate Services -->
+        <module>../../bundles/org.eclipse.emfforms.core.services.datatemplate</module>
+        <module>../../bundles/org.eclipse.emfforms.datatemplate.model</module>
+        <module>../../bundles/org.eclipse.emfforms.datatemplate.model.edit</module>
+        <module>../../bundles/org.eclipse.emfforms.datatemplate.tooling</module>
+	
 		<module>../../bundles/org.eclipse.emfforms.swt.control.text.autocomplete</module>
 		<module>../../bundles/org.eclipse.emfforms.swt.control.text.richtext</module>
 		
@@ -340,6 +348,9 @@
 		
 		<!-- Nebula Table -->
 		<module>../../bundles/org.eclipse.emf.ecp.view.table.ui.nebula.grid</module>
+		
+		<!-- Bazaar -->
+		<module>../../bundles/org.eclipse.emfforms.core.bazaar</module>
 		
 	</modules>
 

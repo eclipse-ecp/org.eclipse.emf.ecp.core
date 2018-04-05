@@ -24,7 +24,9 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecp.common.spi.UniqueSetting;
@@ -135,6 +137,51 @@ public class SettingToControlMapper_ITest {
 		assertEquals(2, controlsFor.size());
 		assertTrue(controlsFor.contains(control));
 		assertTrue(controlsFor.contains(childControl));
+	}
+
+	@Test
+	public void childContextDisposed() {
+		// Add parent control to later verify that it is not illegally removed during child context disposal
+		mapper.vControlAdded(control);
+
+		// Setup and add child context with one control and one setting
+		final VView childView = VViewFactory.eINSTANCE.createView();
+		final VControl childControl = VViewFactory.eINSTANCE.createControl();
+		childControl.setDomainModelReference(EcorePackage.eINSTANCE.getEClass_EAttributes());
+		childView.getChildren().add(childControl);
+		final EClass childDomainObject = EcoreFactory.eINSTANCE.createEClass();
+		childDomainObject.setName("child"); //$NON-NLS-1$
+		final FakeViewContext childContext = new FakeViewContext(childDomainObject, childView);
+		context.addChildContext(control, childContext);
+
+		// Verification that add control and add child context work is done by other test cases.
+
+		mapper.childContextDisposed(childContext);
+
+		final UniqueSetting setting = UniqueSetting.createSetting(childDomainObject,
+			EcorePackage.eINSTANCE.getEClass_EAttributes());
+
+		// Verify that the mapping for the child setting is empty
+		final Set<UniqueSetting> settingsForControl = mapper.getSettingsForControl(childControl);
+		assertEquals(0, settingsForControl.size());
+
+		// Verify that after disposing the child context, the mapping from setting to parent control is also removed
+		final Set<VElement> controlsForSetting = mapper.getControlsFor(setting);
+		assertEquals(0, controlsForSetting.size());
+
+		final UniqueSetting parentSetting = UniqueSetting.createSetting(domainObject,
+			EcorePackage.eINSTANCE.getEClass_EAttributes());
+
+		// Verify that disposing a child context does not clear the mapping of the parent's control
+		final Set<UniqueSetting> settingsForParentControl = mapper.getSettingsForControl(control);
+		assertEquals(1, settingsForParentControl.size());
+		assertTrue(settingsForParentControl.contains(parentSetting));
+
+		// Verify that disposing a child context does not clear the mapping of the parent's setting
+		final Set<VElement> controlsForParentSetting = mapper.getControlsFor(parentSetting);
+		assertEquals(1, controlsForParentSetting.size());
+		assertTrue(controlsForParentSetting.contains(control));
+
 	}
 
 	@Test

@@ -11,15 +11,15 @@
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.edapt.test;
 
-import org.eclipse.emf.ecp.view.edapt.test._140to170.All140to170Tests;
-import org.eclipse.emf.ecp.view.edapt.test._160to170.All160to170Tests;
+import org.eclipse.emf.ecp.view.edapt.test._140to1170.All140to1170Tests;
+import org.eclipse.emf.ecp.view.edapt.test._160to1170.All160to1170Tests;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-	All140to170Tests.class,
-	All160to170Tests.class
+	All140to1170Tests.class,
+	All160to1170Tests.class
 })
 public class AllTests {
 

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" activate="activate" name="XmiTemplateProvider">
+   <service>
+      <provide interface="org.eclipse.emfforms.core.services.datatemplate.TemplateProvider"/>
+   </service>
+   <reference bind="setReportService" interface="org.eclipse.emfforms.spi.common.report.ReportService" name="ReportService"/>
+   <implementation class="org.eclipse.emfforms.internal.core.services.datatemplate.XmiTemplateProvider"/>
+</scr:component>

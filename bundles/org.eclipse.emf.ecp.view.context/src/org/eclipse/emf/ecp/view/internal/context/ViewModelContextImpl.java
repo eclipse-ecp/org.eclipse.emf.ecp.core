@@ -596,17 +596,12 @@ public class ViewModelContextImpl implements ViewModelContext {
 				return (T) service;
 			}
 		}
-
-		if (serviceMap.containsKey(serviceType)) {
-			return (T) serviceMap.get(serviceType);
-		} else if (servicesManager != null) {
-			final Optional<T> lazyService = servicesManager.createLocalLazyService(serviceType, this);
-			if (lazyService.isPresent()) {
-				final T t = lazyService.get();
-				serviceMap.put(serviceType, t);
-				return t;
-			}
+		// First check local services
+		final T localService = getLocalService(serviceType);
+		if (localService != null) {
+			return localService;
 		}
+		// If context is the root, check global services to be instanciated
 		if (servicesManager != null && parentContext == null) {
 			final Optional<T> lazyService = servicesManager.createGlobalLazyService(serviceType, this);
 			if (lazyService.isPresent()) {
@@ -615,10 +610,11 @@ public class ViewModelContextImpl implements ViewModelContext {
 				return t;
 			}
 		}
-		if (parentContext != null) {
+		// Check the parent context
+		if (parentContext != null && parentContext.hasService(serviceType)) {
 			return parentContext.getService(serviceType);
 		}
-
+		// Check OSGi services
 		if (bundleContext != null) {
 			final ServiceReference<T> serviceReference = bundleContext.getServiceReference(serviceType);
 			if (serviceReference != null) {
@@ -626,6 +622,24 @@ public class ViewModelContextImpl implements ViewModelContext {
 				final T service = bundleContext.getService(serviceReference);
 				serviceMap.put(serviceType, service);
 				return service;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * @return a instance of a local service or a local service service, which can be created or null if neither exists.
+	 */
+	@SuppressWarnings("unchecked")
+	private <T> T getLocalService(Class<T> serviceType) {
+		if (serviceMap.containsKey(serviceType)) {
+			return (T) serviceMap.get(serviceType);
+		} else if (servicesManager != null) {
+			final Optional<T> lazyService = servicesManager.createLocalLazyService(serviceType, this);
+			if (lazyService.isPresent()) {
+				final T t = lazyService.get();
+				serviceMap.put(serviceType, t);
+				return t;
 			}
 		}
 		return null;

@@ -50,8 +50,7 @@ public final class ViewModelElementSelectorEditPlugin extends EMFPlugin {
 	 * @generated
 	 */
 	public ViewModelElementSelectorEditPlugin() {
-		super(new ResourceLocator[]
-		{
+		super(new ResourceLocator[] {
 			EcoreEditPlugin.INSTANCE,
 			TemplateEditPlugin.INSTANCE,
 		});

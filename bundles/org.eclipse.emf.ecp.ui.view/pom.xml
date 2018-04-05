@@ -7,12 +7,14 @@
   <parent>
     <groupId>org.eclipse.emf.ecp</groupId>
     <artifactId>ecp-bundles-parent</artifactId>
-    <version>1.16.0-SNAPSHOT</version>
+    <version>1.17.0-SNAPSHOT</version>
     <relativePath>../../releng/org.eclipse.emf.ecp.releng.bundles/</relativePath>
   </parent>
 
   <artifactId>org.eclipse.emf.ecp.ui.view</artifactId>
   <packaging>eclipse-plugin</packaging>
   
-
+  <properties>
+  	<jacoco.percentage.instruction>0.4</jacoco.percentage.instruction>
+  </properties>
 </project>

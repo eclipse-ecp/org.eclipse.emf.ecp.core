@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,10 +8,17 @@
  *
  * Contributors:
  * Jonas - initial API and implementation
+ * Christian W. Damus - bug 530900
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.model.integrationtest;
 
+import static org.hamcrest.CoreMatchers.hasItem;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.util.URI;
@@ -36,8 +43,11 @@ import org.eclipse.emf.ecp.view.spi.table.model.VTablePackage;
 import org.eclipse.emf.ecp.view.spi.vertical.model.VVerticalPackage;
 import org.eclipse.emf.ecp.view.spi.viewproxy.model.VViewproxyPackage;
 import org.eclipse.emf.ecp.view.treemasterdetail.model.VTreeMasterDetailPackage;
+import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.hamcrest.CustomTypeSafeMatcher;
+import org.hamcrest.Matcher;
 import org.junit.Test;
 
 @SuppressWarnings("restriction")
@@ -65,11 +75,7 @@ public class ChildrenDescriptorExtension_PTest {
 		+ NUMBER_OF_CATEGORIZATIONS;
 	private static final int COMPOSITECOLLECTION_CHILD_COUNT = COMPOSITE_CHILD_COUNT + NUMBER_OF_COMPOSITES;
 	private static final int VIEW_CHILD_COUNT = NUMBER_OF_COMPOSITES + RENDERABLE_CHILD_COUNT;
-	private static final int SHOWRULE_CHILD_COUNT = 3;
-	private static final int ENABLERULE_CHILD_COUNT = 3;
 	private static final int LEAFCONDITION_CHILD_COUNT = 1;
-	private static final int ORCONDITION_CHILD_COUNT = 3;
-	private static final int ANDCONDITION_CHILD_COUNT = 3;
 	// TODO: Should be not - NUMBER_OF_EXTERNAL_COMPOSITES
 	// TODO: upper hierarchy is missing, can't find children +2 because of hardcoded layouts
 	private static final int CATEGORY_CHILD_COUNT = NUMBER_OF_COMPOSITES + ABSTRACTCATEGORIZATION_CHILD_COUNT
@@ -135,14 +141,14 @@ public class ChildrenDescriptorExtension_PTest {
 
 	@Test
 	public void testShowRuleChildDescriptors() {
-		final int size = getChildrenSize(RulePackage.eINSTANCE.getShowRule());
-		assertEquals(SHOWRULE_CHILD_COUNT, size);
+		assertThat(getChildDescriptors(RulePackage.Literals.SHOW_RULE),
+			hasItem(isChildDescriptor(RulePackage.Literals.IS_PROXY_CONDITION)));
 	}
 
 	@Test
 	public void testEnableRuleChildDescriptors() {
-		final int size = getChildrenSize(RulePackage.eINSTANCE.getEnableRule());
-		assertEquals(ENABLERULE_CHILD_COUNT, size);
+		assertThat(getChildDescriptors(RulePackage.Literals.ENABLE_RULE),
+			hasItem(isChildDescriptor(RulePackage.Literals.IS_PROXY_CONDITION)));
 	}
 
 	/**
@@ -161,14 +167,14 @@ public class ChildrenDescriptorExtension_PTest {
 
 	@Test
 	public void testOrConditionChildDescriptors() {
-		final int size = getChildrenSize(RulePackage.eINSTANCE.getOrCondition());
-		assertEquals(ORCONDITION_CHILD_COUNT, size);
+		assertThat(getChildDescriptors(RulePackage.Literals.OR_CONDITION),
+			hasItem(isChildDescriptor(RulePackage.Literals.IS_PROXY_CONDITION)));
 	}
 
 	@Test
 	public void testAndConditionChildDescriptors() {
-		final int size = getChildrenSize(RulePackage.eINSTANCE.getAndCondition());
-		assertEquals(ANDCONDITION_CHILD_COUNT, size);
+		assertThat(getChildDescriptors(RulePackage.Literals.AND_CONDITION),
+			hasItem(isChildDescriptor(RulePackage.Literals.IS_PROXY_CONDITION)));
 	}
 
 	@Test
@@ -312,6 +318,18 @@ public class ChildrenDescriptorExtension_PTest {
 		return DESCRIPTOR_COLLECTOR.getDescriptors(eObject).size();
 	}
 
+	static Collection<CommandParameter> getChildDescriptors(EClass eClass) {
+		final EObject eObject = getEObjectWithResource(eClass);
+		final Collection<?> collected = DESCRIPTOR_COLLECTOR.getDescriptors(eObject);
+		final List<CommandParameter> result = new ArrayList<CommandParameter>(collected.size());
+		for (final Object next : collected) {
+			if (next instanceof CommandParameter) {
+				result.add((CommandParameter) next);
+			}
+		}
+		return result;
+	}
+
 	private static EObject getEObjectWithResource(EClass eClass) {
 		final EObject eObject = EcoreUtil.create(eClass);
 		final AdapterFactoryEditingDomain adapterFactoryEditingDomain = new AdapterFactoryEditingDomain(
@@ -323,4 +341,18 @@ public class ChildrenDescriptorExtension_PTest {
 		return eObject;
 	}
 
+	/**
+	 * Obtain a matcher for {@link CommandParameter}s creating children of the given class.
+	 *
+	 * @param childClass the child class to match
+	 * @return the matcher
+	 */
+	Matcher<CommandParameter> isChildDescriptor(final EClass childClass) {
+		return new CustomTypeSafeMatcher<CommandParameter>("child of type " + childClass.getName()) {
+			@Override
+			public boolean matchesSafely(CommandParameter item) {
+				return childClass.isInstance(item.getEValue());
+			}
+		};
+	}
 }

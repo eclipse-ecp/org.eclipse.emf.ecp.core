@@ -64,7 +64,7 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 	/**
 	 * The file extension that is used for dynamic properties of statically declared repositories.
 	 */
-	private static final String DYNAMIC_PROPERTIES_EXTENSION = ".dynamic_properties";
+	private static final String DYNAMIC_PROPERTIES_EXTENSION = ".dynamic_properties"; //$NON-NLS-1$
 
 	private final RepositoryParser extensionParser = new RepositoryParser();
 
@@ -74,7 +74,7 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 	public ECPRepositoryManagerImpl() {
 
 		final File stateLocation = Activator.getInstance().getStateLocation().toFile();
-		setFolder(new File(stateLocation, "repositories"));
+		setFolder(new File(stateLocation, "repositories")); //$NON-NLS-1$
 	}
 
 	/** {@inheritDoc} **/
@@ -114,8 +114,8 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 	public ECPRepository addRepository(ECPProvider provider, String name, String label, String description,
 		ECPProperties properties) {
 		if (!provider.hasCreateRepositorySupport()) {
-			throw new UnsupportedOperationException("The provider " + provider.getLabel()
-				+ " doesn't support the addition of new repositories.");
+			throw new UnsupportedOperationException("The provider " + provider.getLabel() //$NON-NLS-1$
+				+ " doesn't support the addition of new repositories."); //$NON-NLS-1$
 		}
 		final InternalRepository repository = new ECPRepositoryImpl(provider, name, properties);
 		repository.setLabel(label);
@@ -199,7 +199,7 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 	 * @author Eike Stepper
 	 */
 	private final class RepositoryParser extends ExtensionParser<InternalRepository> {
-		private static final String EXTENSION_POINT_NAME = "repositories";
+		private static final String EXTENSION_POINT_NAME = "repositories"; //$NON-NLS-1$
 
 		RepositoryParser() {
 			super(ECPRepositoryManagerImpl.this, Activator.PLUGIN_ID, EXTENSION_POINT_NAME);
@@ -209,7 +209,7 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 		protected InternalRepository createElement(String name, IConfigurationElement configurationElement) {
 			final RepositoryDescriptor descriptor = new RepositoryDescriptor(name, configurationElement);
 			descriptor.setLabel(configurationElement.getDeclaringExtension().getLabel());
-			descriptor.setDescription(configurationElement.getAttribute("description"));
+			descriptor.setDescription(configurationElement.getAttribute("description")); //$NON-NLS-1$
 			return descriptor;
 		}
 	}
@@ -235,7 +235,7 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 
 			private void excludeDeclaredProperties(String key) {
 				if (declaredPropertyKeys != null && declaredPropertyKeys.contains(key)) {
-					throw new IllegalArgumentException("Statically declared property can not be changed: " + key);
+					throw new IllegalArgumentException("Statically declared property can not be changed: " + key); //$NON-NLS-1$
 				}
 			}
 
@@ -253,9 +253,9 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 
 		RepositoryDescriptor(String name, IConfigurationElement configurationElement) {
 			super(ECPRepositoryManagerImpl.this, name, TYPE, configurationElement);
-			for (final IConfigurationElement property : configurationElement.getChildren("property")) {
-				final String key = property.getAttribute("key");
-				final String value = property.getAttribute("value");
+			for (final IConfigurationElement property : configurationElement.getChildren("property")) { //$NON-NLS-1$
+				final String key = property.getAttribute("key"); //$NON-NLS-1$
+				final String value = property.getAttribute("value"); //$NON-NLS-1$
 				properties.addProperty(key, value);
 			}
 
@@ -305,7 +305,7 @@ public final class ECPRepositoryManagerImpl extends PropertiesStore<InternalRepo
 		/** {@inheritDoc} */
 		@Override
 		public InternalProvider getProvider() {
-			final String providerName = getConfigurationElement().getAttribute("provider");
+			final String providerName = getConfigurationElement().getAttribute("provider"); //$NON-NLS-1$
 			return (InternalProvider) ECPUtil.getECPProviderRegistry().getProvider(providerName);
 		}
 

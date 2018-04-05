@@ -22,8 +22,6 @@ import org.eclipse.emf.ecp.view.spi.rule.model.RulePackage;
  *
  * @since 1.2
  *        <!-- end-user-doc -->
- *        <p>
- *        </p>
  *
  * @generated
  */

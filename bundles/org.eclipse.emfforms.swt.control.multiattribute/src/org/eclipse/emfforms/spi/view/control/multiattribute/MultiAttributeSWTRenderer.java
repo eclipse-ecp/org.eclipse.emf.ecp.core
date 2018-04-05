@@ -912,7 +912,6 @@ public class MultiAttributeSWTRenderer extends AbstractControlSWTRenderer<VContr
 			final TableViewerRow viewerRow = (TableViewerRow) cell.getViewerRow();
 			final TableItem item = (TableItem) viewerRow.getItem();
 			final int index = item.getParent().indexOf(item);
-			@SuppressWarnings("restriction")
 			final IObservableValue model = new org.eclipse.emf.ecp.edit.internal.swt.util.ECPObservableValue(
 				valueProperty, index,
 				EAttribute.class.cast(valueProperty.getElementType()).getEAttributeType().getInstanceClass());

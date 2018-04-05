@@ -230,6 +230,9 @@ public class IterateConditionItemProvider extends ConditionItemProvider {
 
 		newChildDescriptors.add(createChildParameter(RulePackage.Literals.ITERATE_CONDITION__ITEM_CONDITION,
 			RuleFactory.eINSTANCE.createNotCondition()));
+
+		newChildDescriptors.add(createChildParameter(RulePackage.Literals.ITERATE_CONDITION__ITEM_CONDITION,
+			RuleFactory.eINSTANCE.createIsProxyCondition()));
 	}
 
 }

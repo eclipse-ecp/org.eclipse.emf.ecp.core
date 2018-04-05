@@ -575,6 +575,71 @@ public class CompoundControlSWTRenderer_ITest {
 		renderer.renderControl(swtGridCell, shell);
 	}
 
+	@Test
+	public void testEffectivelyReadOnlyDoesNotDisableComposite()
+		throws EMFFormsNoRendererException, NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		/* setup */
+		when(compoundControl.isEffectivelyReadonly()).thenReturn(true);
+		when(compoundControl.isEffectivelyEnabled()).thenReturn(true);
+		when(compoundControl.isEnabled()).thenReturn(true);
+
+		final VControl control1 = mock(VControl.class);
+		final VFeaturePathDomainModelReference dmr1 = mock(VFeaturePathDomainModelReference.class);
+		when(control1.getDomainModelReference()).thenReturn(dmr1);
+
+		final VControl control2 = mock(VControl.class);
+		final VFeaturePathDomainModelReference dmr2 = mock(VFeaturePathDomainModelReference.class);
+		when(control2.getDomainModelReference()).thenReturn(dmr2);
+
+		when(compoundControl.getControls()).thenReturn(ECollections.asEList(control1, control2));
+
+		final EObject domainModel = mock(EObject.class);
+		when(viewModelContext.getDomainModel()).thenReturn(domainModel);
+
+		final DummyRenderer dummyRenderer1 = createDummyRenderer(control1);
+		final DummyRenderer dummyRenderer2 = createDummyRenderer(control2);
+
+		when(emfFormsRendererFactory.getRendererInstance(control1, viewModelContext))
+			.thenReturn(dummyRenderer1);
+
+		when(emfFormsRendererFactory.getRendererInstance(control2, viewModelContext))
+			.thenReturn(dummyRenderer2);
+
+		final CompoundControlSWTRenderer renderer = spy(createRenderer());
+
+		doReturn(GridLayoutFactory.fillDefaults().create()).when(renderer).getColumnLayout(any(Integer.class),
+			any(Boolean.class));
+
+		doReturn(GridDataFactory.fillDefaults().create()).when(renderer).getLayoutData(any(SWTGridCell.class),
+			any(SWTGridDescription.class), any(SWTGridDescription.class),
+			any(SWTGridDescription.class), any(VElement.class), any(EObject.class), any(Control.class));
+
+		doReturn(GridDataFactory.fillDefaults().create()).when(renderer).getSpanningLayoutData(
+			any(VContainedElement.class), any(Integer.class), any(Integer.class));
+
+		/* act */
+		renderer.init();
+		final Control controls = renderer.render(new SWTGridCell(0, 1, renderer), shell);
+		renderer.finalizeRendering(shell);
+
+		/* assert */
+		assertTrue(Composite.class.isInstance(controls));
+		final Composite controlsComposite = Composite.class.cast(controls);
+		assertTrue(controlsComposite.isEnabled());
+
+		assertEquals(2, controlsComposite.getChildren().length);
+		for (final Control control : controlsComposite.getChildren()) {
+			assertTrue(Composite.class.isInstance(control));
+		}
+
+		final Composite control1Composite = Composite.class.cast(controlsComposite.getChildren()[0]);
+		assertTrue(control1Composite.isEnabled());
+
+		final Composite control2Composite = Composite.class.cast(controlsComposite.getChildren()[1]);
+		assertTrue(control2Composite.isEnabled());
+
+	}
+
 	private DummyRenderer createDummyRenderer(final VControl control) {
 		final DummyRenderer dummyRenderer = new DummyRenderer(control, viewModelContext, reportService);
 		dummyRenderer.init();

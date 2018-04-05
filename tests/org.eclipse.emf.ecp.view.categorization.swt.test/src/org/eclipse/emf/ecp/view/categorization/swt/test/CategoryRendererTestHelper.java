@@ -29,4 +29,15 @@ public abstract class CategoryRendererTestHelper {
 		return (Tree) ((Composite) composite.getChildren()[0]).getChildren()[0];
 	}
 
+	/**
+	 * Returns the Composite that is used to render the view of the currently selected category (wrapped in another
+	 * composite).
+	 * 
+	 * @param swtControl The Control renderered by the Categorization Renderer
+	 * @return The detail composite rendered by the Categorization Renderer
+	 */
+	public static Composite getDetailComposite(Control swtControl) {
+		final Composite composite = (Composite) swtControl;
+		return (Composite) ((Composite) composite.getChildren()[0]).getChildren()[1];
+	}
 }

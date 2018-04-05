@@ -18,6 +18,7 @@ import static org.mockito.Mockito.when;
 
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecp.view.internal.context.ArrayOnceViewModelServiceProvider;
 import org.eclipse.emf.ecp.view.internal.context.ViewModelContextImpl;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.LocalizationAdapter;
@@ -134,7 +135,8 @@ public class LocalizationViewModelService_Test {
 		view.eAdapters().add(adapter);
 
 		final ViewModelContext viewModelContext = spy(new ViewModelContextImpl(view,
-			EcoreFactory.eINSTANCE.createEObject(), localizationViewModelService));
+			EcoreFactory.eINSTANCE.createEObject(),
+			new ArrayOnceViewModelServiceProvider(localizationViewModelService)));
 
 		localizationViewModelService.instantiate(viewModelContext);
 		control.setName(controlName2);
@@ -159,7 +161,8 @@ public class LocalizationViewModelService_Test {
 		view.eAdapters().add(adapter);
 
 		final ViewModelContext viewModelContext = spy(new ViewModelContextImpl(view,
-			EcoreFactory.eINSTANCE.createEObject(), localizationViewModelService));
+			EcoreFactory.eINSTANCE.createEObject(),
+			new ArrayOnceViewModelServiceProvider(localizationViewModelService)));
 
 		localizationViewModelService.instantiate(viewModelContext);
 
@@ -192,7 +195,8 @@ public class LocalizationViewModelService_Test {
 		view.eAdapters().add(adapter);
 
 		final ViewModelContext viewModelContext = spy(new ViewModelContextImpl(view,
-			EcoreFactory.eINSTANCE.createEObject(), localizationViewModelService));
+			EcoreFactory.eINSTANCE.createEObject(),
+			new ArrayOnceViewModelServiceProvider(localizationViewModelService)));
 
 		localizationViewModelService.instantiate(viewModelContext);
 		final VControl control2 = VViewFactory.eINSTANCE.createControl();
@@ -223,7 +227,8 @@ public class LocalizationViewModelService_Test {
 		view.eAdapters().add(adapter);
 
 		final ViewModelContext viewModelContext = spy(new ViewModelContextImpl(view,
-			EcoreFactory.eINSTANCE.createEObject(), localizationViewModelService));
+			EcoreFactory.eINSTANCE.createEObject(),
+			new ArrayOnceViewModelServiceProvider(localizationViewModelService)));
 
 		localizationViewModelService.instantiate(viewModelContext);
 		final VVerticalLayout layout = VVerticalFactory.eINSTANCE.createVerticalLayout();
@@ -262,7 +267,8 @@ public class LocalizationViewModelService_Test {
 		when(adapter.localize(getLocalizableString(layoutName))).thenReturn(layoutLabel);
 		view.eAdapters().add(adapter);
 		final ViewModelContext viewModelContext = spy(new ViewModelContextImpl(view,
-			EcoreFactory.eINSTANCE.createEObject(), localizationViewModelService));
+			EcoreFactory.eINSTANCE.createEObject(),
+			new ArrayOnceViewModelServiceProvider(localizationViewModelService)));
 
 		localizationViewModelService.instantiate(viewModelContext);
 

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011-2017 EclipseSource Muenchen GmbH and others.
+ * Copyright (c) 2011-2018 EclipseSource Muenchen GmbH and others.
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -8,7 +8,7 @@
  *
  * Contributors:
  * EclipseSource Munich GmbH - initial API and implementation
- * Christian W. Damus - bug 527753
+ * Christian W. Damus - bugs 527753, 530900
  ******************************************************************************/
 package org.eclipse.emf.ecp.view.spi.rule.model.impl;
 
@@ -22,6 +22,7 @@ import org.eclipse.emf.ecp.view.spi.rule.model.AndCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.CompareType;
 import org.eclipse.emf.ecp.view.spi.rule.model.EnableRule;
 import org.eclipse.emf.ecp.view.spi.rule.model.False;
+import org.eclipse.emf.ecp.view.spi.rule.model.IsProxyCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.IterateCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.LeafCondition;
 import org.eclipse.emf.ecp.view.spi.rule.model.NotCondition;
@@ -49,16 +50,13 @@ public class RuleFactoryImpl extends EFactoryImpl implements RuleFactory {
 	 * @generated
 	 */
 	public static RuleFactory init() {
-		try
-		{
+		try {
 			final RuleFactory theRuleFactory = (RuleFactory) EPackage.Registry.INSTANCE
 				.getEFactory(RulePackage.eNS_URI);
-			if (theRuleFactory != null)
-			{
+			if (theRuleFactory != null) {
 				return theRuleFactory;
 			}
-		} catch (final Exception exception)
-		{
+		} catch (final Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
 		return new RuleFactoryImpl();
@@ -83,8 +81,7 @@ public class RuleFactoryImpl extends EFactoryImpl implements RuleFactory {
 	 */
 	@Override
 	public EObject create(EClass eClass) {
-		switch (eClass.getClassifierID())
-		{
+		switch (eClass.getClassifierID()) {
 		case RulePackage.LEAF_CONDITION:
 			return createLeafCondition();
 		case RulePackage.OR_CONDITION:
@@ -103,6 +100,8 @@ public class RuleFactoryImpl extends EFactoryImpl implements RuleFactory {
 			return createFalse();
 		case RulePackage.NOT_CONDITION:
 			return createNotCondition();
+		case RulePackage.IS_PROXY_CONDITION:
+			return createIsProxyCondition();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -254,10 +253,21 @@ public class RuleFactoryImpl extends EFactoryImpl implements RuleFactory {
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 *
+	 * @generated
+	 */
+	@Override
+	public IsProxyCondition createIsProxyCondition() {
+		final IsProxyConditionImpl isProxyCondition = new IsProxyConditionImpl();
+		return isProxyCondition;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
 	 *
 	 * @since 1.11
 	 *        <!-- end-user-doc -->
-	 *
 	 * @generated
 	 */
 	public CompareType createCompareTypeFromString(EDataType eDataType, String initialValue) {

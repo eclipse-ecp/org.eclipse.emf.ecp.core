@@ -34,19 +34,18 @@ import org.eclipse.emf.ecp.view.template.model.VTViewTemplate;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
- * <ul>
- * <li>{@link org.eclipse.emf.ecp.view.template.model.impl.VTViewTemplateImpl#getControlValidationConfiguration <em>
- * Control Validation Configuration</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.template.model.impl.VTViewTemplateImpl#getStyles <em>Styles</em>}</li>
- * <li>{@link org.eclipse.emf.ecp.view.template.model.impl.VTViewTemplateImpl#getReferencedEcores <em>Referenced Ecores
- * </em>}</li>
- * </ul>
  * </p>
+ * <ul>
+ * <li>{@link org.eclipse.emf.ecp.view.template.model.impl.VTViewTemplateImpl#getControlValidationConfiguration
+ * <em>Control Validation Configuration</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.model.impl.VTViewTemplateImpl#getStyles <em>Styles</em>}</li>
+ * <li>{@link org.eclipse.emf.ecp.view.template.model.impl.VTViewTemplateImpl#getReferencedEcores <em>Referenced
+ * Ecores</em>}</li>
+ * </ul>
  *
  * @generated
  */
-public class VTViewTemplateImpl extends MinimalEObjectImpl.Container implements VTViewTemplate
-{
+public class VTViewTemplateImpl extends MinimalEObjectImpl.Container implements VTViewTemplate {
 	/**
 	 * The cached value of the '{@link #getControlValidationConfiguration() <em>Control Validation Configuration</em>}'
 	 * containment reference.
@@ -87,8 +86,7 @@ public class VTViewTemplateImpl extends MinimalEObjectImpl.Container implements 
 	 *
 	 * @generated
 	 */
-	protected VTViewTemplateImpl()
-	{
+	protected VTViewTemplateImpl() {
 		super();
 	}
 
@@ -99,8 +97,7 @@ public class VTViewTemplateImpl extends MinimalEObjectImpl.Container implements 
 	 * @generated
 	 */
 	@Override
-	protected EClass eStaticClass()
-	{
+	protected EClass eStaticClass() {
 		return VTTemplatePackage.Literals.VIEW_TEMPLATE;
 	}
 
@@ -111,8 +108,7 @@ public class VTViewTemplateImpl extends MinimalEObjectImpl.Container implements 
 	 * @generated
 	 */
 	@Override
-	public VTControlValidationTemplate getControlValidationConfiguration()
-	{
+	public VTControlValidationTemplate getControlValidationConfiguration() {
 		return controlValidationConfiguration;
 	}
 
@@ -123,12 +119,10 @@ public class VTViewTemplateImpl extends MinimalEObjectImpl.Container implements 
 	 * @generated
 	 */
 	public NotificationChain basicSetControlValidationConfiguration(
-		VTControlValidationTemplate newControlValidationConfiguration, NotificationChain msgs)
-	{
+		VTControlValidationTemplate newControlValidationConfiguration, NotificationChain msgs) {
 		final VTControlValidationTemplate oldControlValidationConfiguration = controlValidationConfiguration;
 		controlValidationConfiguration = newControlValidationConfiguration;
-		if (eNotificationRequired())
-		{
+		if (eNotificationRequired()) {
 			final ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
 				VTTemplatePackage.VIEW_TEMPLATE__CONTROL_VALIDATION_CONFIGURATION, oldControlValidationConfiguration,
 				newControlValidationConfiguration);
@@ -148,25 +142,24 @@ public class VTViewTemplateImpl extends MinimalEObjectImpl.Container implements 
 	 * @generated
 	 */
 	@Override
-	public void setControlValidationConfiguration(VTControlValidationTemplate newControlValidationConfiguration)
-	{
-		if (newControlValidationConfiguration != controlValidationConfiguration)
-		{
+	public void setControlValidationConfiguration(VTControlValidationTemplate newControlValidationConfiguration) {
+		if (newControlValidationConfiguration != controlValidationConfiguration) {
 			NotificationChain msgs = null;
 			if (controlValidationConfiguration != null) {
-				msgs = ((InternalEObject) controlValidationConfiguration).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
-					- VTTemplatePackage.VIEW_TEMPLATE__CONTROL_VALIDATION_CONFIGURATION, null, msgs);
+				msgs = ((InternalEObject) controlValidationConfiguration).eInverseRemove(this,
+					EOPPOSITE_FEATURE_BASE - VTTemplatePackage.VIEW_TEMPLATE__CONTROL_VALIDATION_CONFIGURATION, null,
+					msgs);
 			}
 			if (newControlValidationConfiguration != null) {
-				msgs = ((InternalEObject) newControlValidationConfiguration).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
-					- VTTemplatePackage.VIEW_TEMPLATE__CONTROL_VALIDATION_CONFIGURATION, null, msgs);
+				msgs = ((InternalEObject) newControlValidationConfiguration).eInverseAdd(this,
+					EOPPOSITE_FEATURE_BASE - VTTemplatePackage.VIEW_TEMPLATE__CONTROL_VALIDATION_CONFIGURATION, null,
+					msgs);
 			}
 			msgs = basicSetControlValidationConfiguration(newControlValidationConfiguration, msgs);
 			if (msgs != null) {
 				msgs.dispatch();
 			}
-		}
-		else if (eNotificationRequired()) {
+		} else if (eNotificationRequired()) {
 			eNotify(new ENotificationImpl(this, Notification.SET,
 				VTTemplatePackage.VIEW_TEMPLATE__CONTROL_VALIDATION_CONFIGURATION, newControlValidationConfiguration,
 				newControlValidationConfiguration));
@@ -180,10 +173,8 @@ public class VTViewTemplateImpl extends MinimalEObjectImpl.Container implements 
 	 * @generated
 	 */
 	@Override
-	public EList<VTStyle> getStyles()
-	{
-		if (styles == null)
-		{
+	public EList<VTStyle> getStyles() {
+		if (styles == null) {
 			styles = new EObjectContainmentEList<VTStyle>(VTStyle.class, this, VTTemplatePackage.VIEW_TEMPLATE__STYLES);
 		}
 		return styles;
@@ -196,10 +187,8 @@ public class VTViewTemplateImpl extends MinimalEObjectImpl.Container implements 
 	 * @generated
 	 */
 	@Override
-	public EList<String> getReferencedEcores()
-	{
-		if (referencedEcores == null)
-		{
+	public EList<String> getReferencedEcores() {
+		if (referencedEcores == null) {
 			referencedEcores = new EDataTypeUniqueEList<String>(String.class, this,
 				VTTemplatePackage.VIEW_TEMPLATE__REFERENCED_ECORES);
 		}
@@ -213,10 +202,8 @@ public class VTViewTemplateImpl extends MinimalEObjectImpl.Container implements 
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-	{
-		switch (featureID)
-		{
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
 		case VTTemplatePackage.VIEW_TEMPLATE__CONTROL_VALIDATION_CONFIGURATION:
 			return basicSetControlValidationConfiguration(null, msgs);
 		case VTTemplatePackage.VIEW_TEMPLATE__STYLES:
@@ -232,10 +219,8 @@ public class VTViewTemplateImpl extends MinimalEObjectImpl.Container implements 
 	 * @generated
 	 */
 	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType)
-	{
-		switch (featureID)
-		{
+	public Object eGet(int featureID, boolean resolve, boolean coreType) {
+		switch (featureID) {
 		case VTTemplatePackage.VIEW_TEMPLATE__CONTROL_VALIDATION_CONFIGURATION:
 			return getControlValidationConfiguration();
 		case VTTemplatePackage.VIEW_TEMPLATE__STYLES:
@@ -254,10 +239,8 @@ public class VTViewTemplateImpl extends MinimalEObjectImpl.Container implements 
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public void eSet(int featureID, Object newValue)
-	{
-		switch (featureID)
-		{
+	public void eSet(int featureID, Object newValue) {
+		switch (featureID) {
 		case VTTemplatePackage.VIEW_TEMPLATE__CONTROL_VALIDATION_CONFIGURATION:
 			setControlValidationConfiguration((VTControlValidationTemplate) newValue);
 			return;
@@ -280,10 +263,8 @@ public class VTViewTemplateImpl extends MinimalEObjectImpl.Container implements 
 	 * @generated
 	 */
 	@Override
-	public void eUnset(int featureID)
-	{
-		switch (featureID)
-		{
+	public void eUnset(int featureID) {
+		switch (featureID) {
 		case VTTemplatePackage.VIEW_TEMPLATE__CONTROL_VALIDATION_CONFIGURATION:
 			setControlValidationConfiguration((VTControlValidationTemplate) null);
 			return;
@@ -304,10 +285,8 @@ public class VTViewTemplateImpl extends MinimalEObjectImpl.Container implements 
 	 * @generated
 	 */
 	@Override
-	public boolean eIsSet(int featureID)
-	{
-		switch (featureID)
-		{
+	public boolean eIsSet(int featureID) {
+		switch (featureID) {
 		case VTTemplatePackage.VIEW_TEMPLATE__CONTROL_VALIDATION_CONFIGURATION:
 			return controlValidationConfiguration != null;
 		case VTTemplatePackage.VIEW_TEMPLATE__STYLES:
@@ -325,8 +304,7 @@ public class VTViewTemplateImpl extends MinimalEObjectImpl.Container implements 
 	 * @generated
 	 */
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		if (eIsProxy()) {
 			return super.toString();
 		}

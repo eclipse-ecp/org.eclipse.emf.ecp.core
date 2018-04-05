@@ -14,6 +14,7 @@ package org.eclipse.emf.ecp.common.spi;
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Field;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -26,7 +27,7 @@ import org.eclipse.emf.edit.provider.IChildCreationExtender;
 
 /**
  * A helper class which collects all the available descriptors for an {@link EObject}.
- * 
+ *
  * @since 1.5
  */
 public class ChildrenDescriptorCollector {
@@ -45,10 +46,12 @@ public class ChildrenDescriptorCollector {
 	 * @param eObject The {@link EObject} whose descriptors should be returned
 	 * @return The descriptors of the requested {@link EObject}
 	 */
-	public Collection<?> getDescriptors(EObject eObject)
-	{
+	public Collection<?> getDescriptors(EObject eObject) {
 		this.eObject = eObject;
 		domain = AdapterFactoryEditingDomain.getEditingDomainFor(eObject);
+		if (domain == null) {
+			return Collections.emptyList();
+		}
 		descriptors = domain.getNewChildDescriptors(eObject, null);
 		alreadyReadNameSpaces = new LinkedHashSet<String>();
 		alreadyReadNameSpaces.add(eObject.eClass().getEPackage().getNsURI());
@@ -56,8 +59,7 @@ public class ChildrenDescriptorCollector {
 		return descriptors;
 	}
 
-	private void iterateThroughSuperTypes()
-	{
+	private void iterateThroughSuperTypes() {
 		for (final EClass eClass : eObject.eClass().getEAllSuperTypes()) {
 			final String namespace = eClass.getEPackage().getNsURI();
 			if (alreadyReadNameSpaces.contains(namespace)) {
@@ -70,8 +72,7 @@ public class ChildrenDescriptorCollector {
 
 	// EMF API
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private void iterateThroughExtenderDescriptors(String namespace)
-	{
+	private void iterateThroughExtenderDescriptors(String namespace) {
 		for (final IChildCreationExtender.Descriptor descriptor : EMFEditPlugin
 			.getChildCreationExtenderDescriptorRegistry()
 			.getDescriptors(namespace)) {

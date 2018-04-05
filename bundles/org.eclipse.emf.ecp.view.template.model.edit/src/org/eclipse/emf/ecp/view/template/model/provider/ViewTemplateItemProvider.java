@@ -46,8 +46,7 @@ public class ViewTemplateItemProvider
 	IStructuredItemContentProvider,
 	ITreeItemContentProvider,
 	IItemLabelProvider,
-	IItemPropertySource
-{
+	IItemPropertySource {
 	/**
 	 * This constructs an instance from a factory and a notifier.
 	 * <!-- begin-user-doc -->
@@ -55,8 +54,7 @@ public class ViewTemplateItemProvider
 	 *
 	 * @generated
 	 */
-	public ViewTemplateItemProvider(AdapterFactory adapterFactory)
-	{
+	public ViewTemplateItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -68,10 +66,8 @@ public class ViewTemplateItemProvider
 	 * @generated
 	 */
 	@Override
-	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object)
-	{
-		if (itemPropertyDescriptors == null)
-		{
+	public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object) {
+		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
 			addStylesPropertyDescriptor(object);
@@ -86,15 +82,13 @@ public class ViewTemplateItemProvider
 	 *
 	 * @generated
 	 */
-	protected void addStylesPropertyDescriptor(Object object)
-	{
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-			(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
+	protected void addStylesPropertyDescriptor(Object object) {
+		itemPropertyDescriptors
+			.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(),
 				getResourceLocator(),
 				getString("_UI_ViewTemplate_styles_feature"), //$NON-NLS-1$
-				getString(
-					"_UI_PropertyDescriptor_description", "_UI_ViewTemplate_styles_feature", "_UI_ViewTemplate_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				getString("_UI_PropertyDescriptor_description", "_UI_ViewTemplate_styles_feature", //$NON-NLS-1$ //$NON-NLS-2$
+					"_UI_ViewTemplate_type"), //$NON-NLS-1$
 				VTTemplatePackage.Literals.VIEW_TEMPLATE__STYLES,
 				true,
 				false,
@@ -114,10 +108,8 @@ public class ViewTemplateItemProvider
 	 * @generated
 	 */
 	@Override
-	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object)
-	{
-		if (childrenFeatures == null)
-		{
+	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
+		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(VTTemplatePackage.Literals.VIEW_TEMPLATE__CONTROL_VALIDATION_CONFIGURATION);
 			childrenFeatures.add(VTTemplatePackage.Literals.VIEW_TEMPLATE__STYLES);
@@ -132,8 +124,7 @@ public class ViewTemplateItemProvider
 	 * @generated
 	 */
 	@Override
-	protected EStructuralFeature getChildFeature(Object object, Object child)
-	{
+	protected EStructuralFeature getChildFeature(Object object, Object child) {
 		// Check the type of the specified child object and return the proper feature to use for
 		// adding (see {@link AddCommand}) it as a child.
 
@@ -148,8 +139,7 @@ public class ViewTemplateItemProvider
 	 * @generated
 	 */
 	@Override
-	public Object getImage(Object object)
-	{
+	public Object getImage(Object object) {
 		return overlayImage(object, getResourceLocator().getImage("full/obj16/ViewTemplate")); //$NON-NLS-1$
 	}
 
@@ -161,8 +151,7 @@ public class ViewTemplateItemProvider
 	 * @generated
 	 */
 	@Override
-	public String getText(Object object)
-	{
+	public String getText(Object object) {
 		return getString("_UI_ViewTemplate_type"); //$NON-NLS-1$
 	}
 
@@ -175,12 +164,10 @@ public class ViewTemplateItemProvider
 	 * @generated
 	 */
 	@Override
-	public void notifyChanged(Notification notification)
-	{
+	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(VTViewTemplate.class))
-		{
+		switch (notification.getFeatureID(VTViewTemplate.class)) {
 		case VTTemplatePackage.VIEW_TEMPLATE__CONTROL_VALIDATION_CONFIGURATION:
 		case VTTemplatePackage.VIEW_TEMPLATE__STYLES:
 			fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
@@ -198,19 +185,15 @@ public class ViewTemplateItemProvider
 	 * @generated
 	 */
 	@Override
-	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
-	{
+	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
 
-		newChildDescriptors.add
-			(createChildParameter
-			(VTTemplatePackage.Literals.VIEW_TEMPLATE__CONTROL_VALIDATION_CONFIGURATION,
+		newChildDescriptors
+			.add(createChildParameter(VTTemplatePackage.Literals.VIEW_TEMPLATE__CONTROL_VALIDATION_CONFIGURATION,
 				VTTemplateFactory.eINSTANCE.createControlValidationTemplate()));
 
-		newChildDescriptors.add
-			(createChildParameter
-			(VTTemplatePackage.Literals.VIEW_TEMPLATE__STYLES,
-				VTTemplateFactory.eINSTANCE.createStyle()));
+		newChildDescriptors.add(createChildParameter(VTTemplatePackage.Literals.VIEW_TEMPLATE__STYLES,
+			VTTemplateFactory.eINSTANCE.createStyle()));
 	}
 
 	/**
@@ -221,8 +204,7 @@ public class ViewTemplateItemProvider
 	 * @generated
 	 */
 	@Override
-	public ResourceLocator getResourceLocator()
-	{
+	public ResourceLocator getResourceLocator() {
 		return ((IChildCreationExtender) adapterFactory).getResourceLocator();
 	}
 
