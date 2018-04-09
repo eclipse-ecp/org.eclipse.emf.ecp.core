@@ -1,0 +1,43 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _D4Pj4C3lEeSwhO5Nwx0hPg,_Iu0EsS36EeSYRYqCbC6LMQ,_2bS8sTNtEeSiS7b7ptZeHw,_DD4ysDmlEeiV5MMKft7xVA
+Element-Name: TemplateLabelWrapStyle
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _RKICsDmnEeiV5MMKft7xVA
+Runtime-Version: 2.3.0.201804052311
+Save-Time: 4/6/18 4:33 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+with [get-editor "new_file.template"] {
+    get-tree | select "View Template" | get-menu -path Style | click
+    get-button "Create and link new Style Property" | click
+}
+with [get-window "New Reference Element"] {
+    get-tree | select "wrap/LabelWrapStyleProperty"
+    get-button Finish | click
+}
+with [get-window LabelWrapStyleProperty] {
+    get-button | check
+    get-button OK | click
+}
+get-editor "new_file.template" | get-tree | get-item -path "View Template/Style/Label Wrap Style Property true" 
+    | get-property caption | equals "Label Wrap Style Property true" | verify-true
+with [get-editor "new_file.template"] {
+    with [get-tree] {
+        select "View Template" | get-menu -path Style | click
+        select [get-item -path "View Template" | get-item -path Style -index 1] | get-menu 
+            -path "Label Wrap Style Property" | click
+    }
+    get-button -after [get-label "Wrap Label"] | check
+}
+get-editor "new_file.template" | get-tree | get-item -path "View Template" | get-item -path Style -index 1 | get-item 
+    -path "Label Wrap Style Property true" | get-property caption | equals "Label Wrap Style Property true" 
+    | verify-true
+get-eclipse-window | key-type "M1+s"
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

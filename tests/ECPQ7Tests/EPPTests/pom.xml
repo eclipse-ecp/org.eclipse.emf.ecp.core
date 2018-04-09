@@ -84,6 +84,21 @@
 								<features>
 									<feature>org.eclipse.emf.ecp.sdk.feature.feature.group</feature>
 									<feature>org.eclipse.emf.ecp.emfforms.sdk.feature.feature.group</feature>
+									<feature>org.eclipse.emfforms.view.annotation.feature.feature.group</feature>
+								</features>
+							</injection>
+							<injection>
+								<site>http://download.eclipse.org/edapt/releases/13x</site>
+								<features>
+									<feature>org.eclipse.emf.edapt.runtime.feature.feature.group</feature>
+								</features>
+							</injection>
+							<injection>
+								<site>http://download.eclipse.org/releases/oxygen</site>
+								<features>
+									<feature>org.eclipse.net4j.sdk.feature.group</feature>
+									<feature>org.eclipse.ocl.all.sdk.feature.group</feature>
+									<feature>org.eclipse.emf.feature.group</feature>
 								</features>
 							</injection>
 						</injections>

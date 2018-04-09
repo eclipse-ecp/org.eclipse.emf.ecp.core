@@ -55,7 +55,10 @@ Export-Package: org.eclipse.emf.ecp.internal.view.template.model;version="1.17.0
  org.eclipse.emf.ecp.view.template.style.unsettable.model.util;version="1.17.0",
  org.eclipse.emf.ecp.view.template.style.validation.model;version="1.17.0",
  org.eclipse.emf.ecp.view.template.style.validation.model.impl;version="1.17.0";x-internal:=true,
- org.eclipse.emf.ecp.view.template.style.validation.model.util;version="1.17.0";x-friends:="org.eclipse.emf.ecp.view.template.model.edit"
+ org.eclipse.emf.ecp.view.template.style.validation.model.util;version="1.17.0";x-friends:="org.eclipse.emf.ecp.view.template.model.edit",
+ org.eclipse.emf.ecp.view.template.style.wrap.model;version="1.17.0",
+ org.eclipse.emf.ecp.view.template.style.wrap.model.impl;version="1.17.0";x-internal:=true,
+ org.eclipse.emf.ecp.view.template.style.wrap.model.util;version="1.17.0";x-friends:="org.eclipse.emf.ecp.view.template.model.edit"
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.7.0,4.0.0)",
  org.eclipse.emf.ecore;bundle-version="[2.7.0,3.0.0)";visibility:=reexport,
  org.eclipse.emf.ecp.view.model;bundle-version="[1.17.0,1.18.0]";visibility:=reexport,

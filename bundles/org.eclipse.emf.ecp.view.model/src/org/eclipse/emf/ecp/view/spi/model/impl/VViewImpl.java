@@ -75,8 +75,8 @@ public class VViewImpl extends VElementImpl implements VView {
 	/**
 	 * The cached value of the '{@link #getEcorePaths() <em>Ecore Paths</em>}' attribute list.
 	 * <!-- begin-user-doc -->
-	 * 
-	 * @since 1.16
+	 *
+	 * @since 1.17
 	 *        <!-- end-user-doc -->
 	 *
 	 * @see #getEcorePaths()

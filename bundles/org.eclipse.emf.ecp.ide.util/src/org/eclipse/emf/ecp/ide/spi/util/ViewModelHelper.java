@@ -202,7 +202,7 @@ public final class ViewModelHelper {
 	 * @param resource the resource to extract the paths from
 	 * @return list of Ecore paths
 	 *
-	 * @since 1.16
+	 * @since 1.17
 	 */
 	@SuppressWarnings("unchecked")
 	public static List<String> getEcorePaths(Resource resource) {

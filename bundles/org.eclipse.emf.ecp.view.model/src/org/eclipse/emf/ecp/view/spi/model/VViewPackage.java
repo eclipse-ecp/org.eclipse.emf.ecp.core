@@ -446,7 +446,7 @@ public interface VViewPackage extends EPackage {
 	 * The feature id for the '<em><b>Ecore Paths</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 *
-	 * @since 1.16
+	 * @since 1.17
 	 *        <!-- end-user-doc -->
 	 *
 	 * @generated
@@ -1333,8 +1333,8 @@ public interface VViewPackage extends EPackage {
 	 * Returns the meta object for the attribute list '{@link org.eclipse.emf.ecp.view.spi.model.VView#getEcorePaths
 	 * <em>Ecore Paths</em>}'.
 	 * <!-- begin-user-doc -->
-	 * 
-	 * @since 1.16
+	 *
+	 * @since 1.17
 	 *        <!-- end-user-doc -->
 	 *
 	 * @return the meta object for the attribute list '<em>Ecore Paths</em>'.
@@ -1878,7 +1878,7 @@ public interface VViewPackage extends EPackage {
 		 * The meta object literal for the '<em><b>Ecore Paths</b></em>' attribute list feature.
 		 * <!-- begin-user-doc -->
 		 *
-		 * @since 1.16
+		 * @since 1.17
 		 *        <!-- end-user-doc -->
 		 *
 		 * @generated

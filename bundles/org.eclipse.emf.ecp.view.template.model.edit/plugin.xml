@@ -271,4 +271,23 @@
             uri="http://org/eclipse/emf/ecp/view/template/model"
             class="org.eclipse.emf.ecp.view.template.selector.bool.model.provider.BoolItemProviderAdapterFactory$TemplateChildCreationExtender"/>
    </extension>
+   <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
+      <!-- @generated wrapStyle -->
+      <factory
+            uri="http://www.eclipse.org/emf/ecp/view/template/style/wrap/model"
+            class="org.eclipse.emf.ecp.view.template.style.wrap.model.provider.WrapItemProviderAdapterFactory"
+            supportedTypes=
+              "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
+               org.eclipse.emf.edit.provider.IStructuredItemContentProvider
+               org.eclipse.emf.edit.provider.ITreeItemContentProvider
+               org.eclipse.emf.edit.provider.IItemLabelProvider
+               org.eclipse.emf.edit.provider.IItemPropertySource"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.edit.childCreationExtenders">
+      <!-- @generated wrapStyle -->
+      <extender
+            uri="http://org/eclipse/emf/ecp/view/template/model"
+            class="org.eclipse.emf.ecp.view.template.style.wrap.model.provider.WrapItemProviderAdapterFactory$TemplateChildCreationExtender"/>
+   </extension>
 </plugin>

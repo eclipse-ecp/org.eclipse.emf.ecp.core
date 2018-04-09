@@ -1,6 +1,31 @@
+/*******************************************************************************
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ * Lucas Koehler - initial API and implementation
+ ******************************************************************************/
 package org.eclipse.emf.emfstore.fx.internal.projects;
 
 import java.net.URL;
+
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecp.util.fx.EMFUtil;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.ComposedImage;
+import org.eclipse.emf.edit.provider.IItemLabelProvider;
+import org.eclipse.emf.emfstore.client.ESLocalProject;
+import org.eclipse.emf.emfstore.client.ESUsersession;
+import org.eclipse.emf.emfstore.client.ESWorkspaceProvider;
+import org.eclipse.emf.emfstore.server.exceptions.ESException;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -17,20 +42,6 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBoxBuilder;
 import javafx.scene.layout.Pane;
-
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.Notifier;
-import org.eclipse.emf.common.notify.impl.AdapterImpl;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecp.util.fx.EMFUtil;
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.provider.ComposedImage;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
-import org.eclipse.emf.emfstore.client.ESLocalProject;
-import org.eclipse.emf.emfstore.client.ESUsersession;
-import org.eclipse.emf.emfstore.client.ESWorkspaceProvider;
-import org.eclipse.emf.emfstore.server.exceptions.ESException;
 
 public final class ESLocalProjectTreeCell extends TreeCell<Object> {
 	/**
@@ -200,8 +211,7 @@ public final class ESLocalProjectTreeCell extends TreeCell<Object> {
 				ESLocalProject localProject = null;
 				if (EObject.class.isInstance(value)) {
 					localProject = ESWorkspaceProvider.INSTANCE.getWorkspace().getLocalProject((EObject) value);
-				}
-				else if (ESLocalProject.class.isInstance(value)) {
+				} else if (ESLocalProject.class.isInstance(value)) {
 					localProject = (ESLocalProject) value;
 				}
 

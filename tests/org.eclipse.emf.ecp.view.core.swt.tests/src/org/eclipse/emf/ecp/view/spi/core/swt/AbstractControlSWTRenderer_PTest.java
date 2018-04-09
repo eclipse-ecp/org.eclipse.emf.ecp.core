@@ -12,12 +12,14 @@
 package org.eclipse.emf.ecp.view.spi.core.swt;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -40,6 +42,8 @@ import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.template.style.alignment.model.AlignmentType;
 import org.eclipse.emf.ecp.view.template.style.alignment.model.VTAlignmentFactory;
 import org.eclipse.emf.ecp.view.template.style.alignment.model.VTControlLabelAlignmentStyleProperty;
+import org.eclipse.emf.ecp.view.template.style.wrap.model.VTLabelWrapStyleProperty;
+import org.eclipse.emf.ecp.view.template.style.wrap.model.VTWrapFactory;
 import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.emfforms.spi.core.services.databinding.DatabindingFailedException;
 import org.eclipse.emfforms.spi.core.services.databinding.EMFFormsDatabinding;
@@ -160,6 +164,70 @@ public class AbstractControlSWTRenderer_PTest {
 		/* assert */
 		assertTrue(Label.class.isInstance(render));
 		assertEquals(SWT.LEFT, Label.class.cast(render).getAlignment());
+	}
+
+	@Test
+	public void testLabelWrapStylePropertyNull() throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		/* act */
+		final Control render = renderer.renderControl(swtGridCell, shell);
+		/* assert */
+		assertTrue(Label.class.isInstance(render));
+		assertEquals(0, render.getStyle() & SWT.WRAP);
+	}
+
+	@Test
+	public void testLabelWrapStylePropertyNonWrapping()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		/* setup */
+		final VTLabelWrapStyleProperty labelWrapStyleProperty = VTWrapFactory.eINSTANCE.createLabelWrapStyleProperty();
+		labelWrapStyleProperty.setWrapLabel(false);
+		final Set<VTStyleProperty> properties = Collections.<VTStyleProperty> singleton(labelWrapStyleProperty);
+		Mockito.when(viewTemplateProvider.getStyleProperties(vControl, viewModelContext)).thenReturn(properties);
+		/* act */
+		final Control render = renderer.renderControl(swtGridCell, shell);
+		/* assert */
+		assertTrue(Label.class.isInstance(render));
+		assertEquals(0, render.getStyle() & SWT.WRAP);
+	}
+
+	@Test
+	public void testLabelWrapStylePropertyWrapping()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		/* setup */
+		final VTLabelWrapStyleProperty labelWrapStyleProperty = VTWrapFactory.eINSTANCE.createLabelWrapStyleProperty();
+		labelWrapStyleProperty.setWrapLabel(true);
+		final Set<VTStyleProperty> properties = Collections.<VTStyleProperty> singleton(labelWrapStyleProperty);
+		Mockito.when(viewTemplateProvider.getStyleProperties(vControl, viewModelContext)).thenReturn(properties);
+		/* act */
+		final Control render = renderer.renderControl(swtGridCell, shell);
+		/* assert */
+		assertTrue(Label.class.isInstance(render));
+		assertNotEquals(0, render.getStyle() & SWT.WRAP);
+	}
+
+	@Test
+	public void testMixedStylePropertiesInfluencingStyleBits()
+		throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
+		/* setup */
+		final VTControlLabelAlignmentStyleProperty alignProperty = VTAlignmentFactory.eINSTANCE
+			.createControlLabelAlignmentStyleProperty();
+		alignProperty.setType(AlignmentType.RIGHT);
+
+		final VTLabelWrapStyleProperty labelWrapStyleProperty = VTWrapFactory.eINSTANCE.createLabelWrapStyleProperty();
+		labelWrapStyleProperty.setWrapLabel(true);
+
+		final Set<VTStyleProperty> properties = new LinkedHashSet<VTStyleProperty>();
+		properties.add(alignProperty);
+		properties.add(labelWrapStyleProperty);
+		Mockito.when(viewTemplateProvider.getStyleProperties(vControl, viewModelContext)).thenReturn(properties);
+
+		/* act */
+		final Control render = renderer.renderControl(swtGridCell, shell);
+
+		/* assert */
+		assertTrue(Label.class.isInstance(render));
+		assertNotEquals(0, render.getStyle() & SWT.WRAP);
+		assertEquals(SWT.RIGHT, Label.class.cast(render).getAlignment());
 	}
 
 	@Test

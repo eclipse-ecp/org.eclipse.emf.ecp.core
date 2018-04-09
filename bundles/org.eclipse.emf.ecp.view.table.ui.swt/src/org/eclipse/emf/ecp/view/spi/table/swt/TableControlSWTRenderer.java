@@ -1389,7 +1389,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 	 * @param eObject the {@link EObject} to get the setting for
 	 * @return an Optional<Setting>
 	 *
-	 * @since 1.16
+	 * @since 1.17
 	 */
 	protected Optional<Setting> getSettingFromObservable(VDomainModelReference dmr, EObject eObject) {
 		@SuppressWarnings("rawtypes")

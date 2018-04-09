@@ -39,6 +39,7 @@ import org.eclipse.emf.ecp.view.template.model.VTViewTemplateProvider;
 import org.eclipse.emf.ecp.view.template.style.alignment.model.VTControlLabelAlignmentStyleProperty;
 import org.eclipse.emf.ecp.view.template.style.mandatory.model.VTMandatoryFactory;
 import org.eclipse.emf.ecp.view.template.style.mandatory.model.VTMandatoryStyleProperty;
+import org.eclipse.emf.ecp.view.template.style.wrap.model.VTLabelWrapStyleProperty;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emfforms.spi.common.report.AbstractReport;
@@ -461,20 +462,37 @@ public abstract class AbstractControlSWTRenderer<VCONTROL extends VControl> exte
 	 * @since 1.16
 	 */
 	protected int getLabelStyleBits() {
-		final VTControlLabelAlignmentStyleProperty styleProperty = RendererUtil.getStyleProperty(
+		final VTControlLabelAlignmentStyleProperty alignmentStyleProperty = RendererUtil.getStyleProperty(
 			getVTViewTemplateProvider(),
 			getVElement(),
 			getViewModelContext(),
 			VTControlLabelAlignmentStyleProperty.class);
-		if (styleProperty == null) {
-			return SWT.NONE;
+
+		int bits = SWT.NONE;
+
+		if (alignmentStyleProperty != null) {
+			switch (alignmentStyleProperty.getType()) {
+			case RIGHT:
+				bits |= SWT.RIGHT;
+				break;
+			default:
+				break;
+			}
 		}
-		switch (styleProperty.getType()) {
-		case RIGHT:
-			return SWT.RIGHT;
-		default:
-			return SWT.NONE;
+
+		final VTLabelWrapStyleProperty wrapStyleProperty = RendererUtil.getStyleProperty(
+			getVTViewTemplateProvider(),
+			getVElement(),
+			getViewModelContext(),
+			VTLabelWrapStyleProperty.class);
+
+		if (wrapStyleProperty != null) {
+			if (VTLabelWrapStyleProperty.class.cast(wrapStyleProperty).isWrapLabel()) {
+				bits |= SWT.WRAP;
+			}
 		}
+
+		return bits;
 	}
 
 	/**

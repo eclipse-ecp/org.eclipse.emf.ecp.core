@@ -1,13 +1,24 @@
+/*******************************************************************************
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ * Lucas Koehler - initial API and implementation
+ ******************************************************************************/
 package org.eclipse.emf.emfstore.fx.internal.projects;
+
+import javax.annotation.PostConstruct;
+
+import org.eclipse.emf.emfstore.client.ESWorkspaceProvider;
 
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.BorderPane;
 import javafx.util.Callback;
-
-import javax.annotation.PostConstruct;
-
-import org.eclipse.emf.emfstore.client.ESWorkspaceProvider;
 
 public class RemoteProjectsView {
 

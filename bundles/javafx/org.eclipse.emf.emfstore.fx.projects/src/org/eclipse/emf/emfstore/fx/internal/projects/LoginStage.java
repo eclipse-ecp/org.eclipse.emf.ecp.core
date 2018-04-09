@@ -1,4 +1,17 @@
+/*******************************************************************************
+ * Copyright (c) 2011-2015 EclipseSource Muenchen GmbH and others.
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ * Lucas Koehler - initial API and implementation
+ ******************************************************************************/
 package org.eclipse.emf.emfstore.fx.internal.projects;
+
+import org.eclipse.emf.emfstore.client.ESUsersession;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -12,8 +25,6 @@ import javafx.scene.layout.HBoxBuilder;
 import javafx.scene.layout.VBoxBuilder;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
-import org.eclipse.emf.emfstore.client.ESUsersession;
 
 public class LoginStage extends Stage {
 

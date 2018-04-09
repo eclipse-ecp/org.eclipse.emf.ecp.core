@@ -1,0 +1,69 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _D4Pj4C3lEeSwhO5Nwx0hPg,_Iu0EsS36EeSYRYqCbC6LMQ,_2bS8sTNtEeSiS7b7ptZeHw,_DD4ysDmlEeiV5MMKft7xVA
+Element-Name: TemplateAndSelector
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _uCoUgDmmEeiV5MMKft7xVA
+Runtime-Version: 2.3.0.201804052311
+Save-Time: 4/6/18 4:30 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+with [get-editor "new_file.template"] {
+    get-tree | select "View Template" | get-menu -path Style | click
+    get-button "Create and link new Selector" | click
+}
+with [get-window "New Reference Element"] {
+    get-tree | select "bool/AndSelector"
+    get-button Finish | click
+}
+with [get-window AndSelector] {
+    get-button "Create and link new Style Selector" | click
+    with [get-window "New Reference Element"] {
+        get-tree | select "viewModelElement/ViewModelElementSelector"
+        get-button Finish | click
+    }
+    get-window ViewModelElementSelector | get-button OK | click
+    get-button "Create and link new Style Selector" | click
+    with [get-window "New Reference Element"] {
+        get-tree | select "annotation/AnnotationSelector"
+        get-button Finish | click
+    }
+    get-window AnnotationSelector | get-button OK | click
+    get-button OK | click
+}
+with [get-editor "new_file.template" | get-tree] {
+    get-item -path "View Template/Style/And Selector" | get-property caption | equals "And Selector" | verify-true
+    get-item -path "View Template/Style/And Selector" | get-property childCount | equals 2 | verify-true
+    get-item -path "View Template/Style/And Selector/View Model Element Selector false" | get-property caption 
+        | equals "View Model Element Selector false" | verify-true
+    get-item -path "View Template/Style/And Selector/Annotation Selector \\[null, null\\]" | get-property caption 
+        | equals "Annotation Selector [null, null]" | verify-true
+}
+with [get-editor "new_file.template" | get-tree] {
+    select "View Template" | get-menu -path Style | click
+    select [get-item -path "View Template" | get-item -path Style -index 1] | get-menu -path "And Selector" | click
+    select [get-item -path "View Template" | get-item -path Style -index 1 | get-item -path "And Selector"] | get-menu 
+        -path "View Model Element Selector" | click
+    select [get-item -path "View Template" | get-item -path Style -index 1 | get-item -path "And Selector"] | get-menu 
+        -path "Annotation Selector" | click
+}
+with [get-editor "new_file.template" | get-tree] {
+    get-item -path "View Template" | get-item -path Style -index 1 | get-item -path "And Selector" 
+        | get-property caption | equals "And Selector" | verify-true
+    get-item -path "View Template" | get-item -path Style -index 1 | get-item -path "And Selector" 
+        | get-property childCount | equals 2 | verify-true
+    get-item -path "View Template" | get-item -path Style -index 1 | get-item 
+        -path "And Selector/View Model Element Selector false" | get-property caption 
+        | equals "View Model Element Selector false" | verify-true
+    get-item -path "View Template" | get-item -path Style -index 1 | get-item 
+        -path "And Selector/Annotation Selector \\[null, null\\]" | get-property caption 
+        | equals "Annotation Selector [null, null]" | verify-true
+}
+get-eclipse-window | key-type "M1+s"
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--
