@@ -1405,7 +1405,7 @@ public class TableControlSWTRenderer extends AbstractControlSWTRenderer<VTableCo
 				return Optional.empty();
 			}
 
-			return Optional.of(((InternalEObject) eObject).eSetting(feature));
+			return Optional.of(((InternalEObject) observed).eSetting(feature));
 
 		} catch (final DatabindingFailedException ex) {
 			getReportService().report(new DatabindingFailedReport(ex));
