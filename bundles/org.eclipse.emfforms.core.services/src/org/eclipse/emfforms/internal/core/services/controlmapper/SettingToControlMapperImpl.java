@@ -216,9 +216,11 @@ public class SettingToControlMapperImpl implements EMFFormsSettingToControlMappe
 			final Set<UniqueSetting> keysWithEmptySets = new LinkedHashSet<UniqueSetting>();
 			for (final UniqueSetting setting : controlToSettingMap.get(vControl)) {
 				final Set<VElement> controlSet = settingToControlMap.get(setting);
-				controlSet.remove(vControl);
-				if (controlSet.isEmpty()) {
-					keysWithEmptySets.add(setting);
+				if (controlSet != null) {
+					controlSet.remove(vControl);
+					if (controlSet.isEmpty()) {
+						keysWithEmptySets.add(setting);
+					}
 				}
 			}
 			for (final UniqueSetting setting : keysWithEmptySets) {
