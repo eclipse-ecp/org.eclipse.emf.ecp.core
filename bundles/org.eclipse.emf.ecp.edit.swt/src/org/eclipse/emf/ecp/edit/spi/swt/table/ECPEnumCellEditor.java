@@ -68,7 +68,7 @@ public abstract class ECPEnumCellEditor extends CellEditor implements ECPCellEdi
 		for (final EEnumLiteral literal : eLiterals) {
 
 			final String isInputtable = EcoreUtil.getAnnotation(literal,
-				VViewPackage.eNS_URI,
+				VViewPackage.NS_URI_170,
 				"isInputtable"); //$NON-NLS-1$
 
 			if (isInputtable == null || Boolean.getBoolean(isInputtable)) {
